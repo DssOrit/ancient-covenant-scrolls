@@ -4255,6 +4255,57 @@
     ctx.fillText(initials, size / 2, size / 2);
     try { return canvas.toDataURL('image/png'); } catch (e) { return ''; }
   }
+  // Multi-page router injected at share time. When a PWA has multiple
+  // HTML pages (login.html → home.html → etc.) that were bundled by
+  // the zip importer, the bundle shim serves them via fetch() — but
+  // navigation from <a href="home.html">, <form action=".">, and
+  // window.location assignments doesn't naturally route through
+  // fetch. This router intercepts all three and swaps the body
+  // in-place using the fetched HTML. Works both for newly imported
+  // apps (where injectBundleShim also has its own router) and for
+  // older imports that pre-date that change.
+  function buildMultiPageRouterScript() {
+    return '<script>/* Load share-time multi-page router */\n(function(){try{' +
+      'function swap(href){if(!window.fetch)return Promise.resolve(false);' +
+        'return fetch(href).then(function(r){if(!r||!r.ok)return false;' +
+          'return r.text().then(function(body){try{' +
+            'var parser=new DOMParser();var doc=parser.parseFromString(body,"text/html");' +
+            'var t=doc.querySelector("title");if(t)document.title=t.textContent;' +
+            'var hChildren=doc.head?doc.head.children:[];' +
+            'for(var i=0;i<hChildren.length;i++){var tag=hChildren[i].tagName;' +
+              'if(tag==="STYLE"||tag==="LINK"||tag==="META"){document.head.appendChild(hChildren[i].cloneNode(true));}}' +
+            'document.body.innerHTML=doc.body?doc.body.innerHTML:"";' +
+            'var scripts=doc.body?doc.body.querySelectorAll("script"):[];' +
+            'for(var j=0;j<scripts.length;j++){var src=scripts[j].getAttribute("src");' +
+              'var n=document.createElement("script");' +
+              'if(src){n.src=src;}else{n.text=scripts[j].textContent||"";}' +
+              'document.body.appendChild(n);}' +
+            'window.scrollTo(0,0);' +
+            'setTimeout(function(){try{document.dispatchEvent(new Event("DOMContentLoaded"));window.dispatchEvent(new Event("load"));}catch(_){}},0);' +
+            'try{history.pushState({__lp:href},"","#"+href);}catch(_){}' +
+            'return true;}catch(e){console.warn("swap failed",e);return false;}' +
+          '});' +
+        '}).catch(function(){return false;});}' +
+      'document.addEventListener("click",function(ev){var a=ev.target;' +
+        'while(a&&a!==document){if(a.tagName==="A"&&a.getAttribute&&a.getAttribute("href"))break;a=a.parentNode;}' +
+        'if(!a||a===document)return;var href=a.getAttribute("href");' +
+        'if(!href||/^(mailto|tel|javascript|#|https?:|blob:|data:)/i.test(href))return;' +
+        'if(/\\.html?(\\?|#|$)/i.test(href)){ev.preventDefault();swap(href);}' +
+        '},true);' +
+      'document.addEventListener("submit",function(ev){var f=ev.target;' +
+        'if(!f||f.tagName!=="FORM")return;var action=f.getAttribute("action")||"";' +
+        'if(/\\.html?(\\?|#|$)/i.test(action)){' +
+          'setTimeout(function(){swap(action);},30);ev.preventDefault();}' +
+        '},true);' +
+      'try{var origA=location.assign?location.assign.bind(location):null;' +
+        'var origR=location.replace?location.replace.bind(location):null;' +
+        'if(origA)location.assign=function(u){swap(u).then(function(ok){if(!ok)origA(u);});};' +
+        'if(origR)location.replace=function(u){swap(u).then(function(ok){if(!ok)origR(u);});};}catch(_){}' +
+      'window.addEventListener("popstate",function(ev){var p=ev.state&&ev.state.__lp;if(p)swap(p);});' +
+      '}catch(err){console.warn("Load multi-page router init failed",err);}})();' +
+      '<\/script>';
+  }
+
   // Small self-contained banner + script that auto-pops on the first
   // Safari open of the shared file, telling the recipient exactly how
   // to add it to their home screen. Hides forever once dismissed, and
@@ -4317,18 +4368,23 @@
     }
     var headInjection = '\n' + metas.join('\n') + '\n';
     var bodyInjection = buildAddToHomeScreenBanner(app.name);
+    // Multi-page router — only meaningfully useful on bundled PWAs,
+    // but harmless on single-page files (fetch() fails, router yields
+    // to native nav). Inject once per share regardless.
+    var routerInjection = buildMultiPageRouterScript();
     var out = html;
     if (/<head[^>]*>/i.test(out)) {
       out = out.replace(/<head([^>]*)>/i, '<head$1>' + headInjection);
     } else {
       out = '<!DOCTYPE html><html><head>' + headInjection + '<title>' + escHtml(app.name || 'Load PWA') + '</title></head><body>' + out + '</body></html>';
     }
-    // Inject the banner just before </body> so it renders above app
-    // content without shifting layout.
+    // Inject the banner + router just before </body>. Router must run
+    // after the bundle shim so the shim's fetch override is already
+    // in place; appending at end of body satisfies that ordering.
     if (/<\/body>/i.test(out)) {
-      out = out.replace(/<\/body>/i, bodyInjection + '</body>');
+      out = out.replace(/<\/body>/i, bodyInjection + routerInjection + '</body>');
     } else {
-      out += bodyInjection;
+      out += bodyInjection + routerInjection;
     }
     return out;
   }
@@ -5830,6 +5886,53 @@
         'if(navigator.serviceWorker){var r=navigator.serviceWorker.register;' +
           'navigator.serviceWorker.register=function(){console.info("Load: service worker skipped (blob origin).");' +
             'return Promise.resolve({scope:location.href,update:function(){return Promise.resolve();},unregister:function(){return Promise.resolve(true);}});};}' +
+        // ---- In-page navigation for bundled HTML pages ----
+        // When the imported PWA is multi-page (login.html + home.html
+        // + ...), navigation between those pages is normally a real
+        // browser navigate which breaks under blob: origin. Replace
+        // the body contents in place instead so state is preserved.
+        'function swapToPage(href){var e=get(href);if(!e||e.type!=="text")return false;' +
+          'try{var parser=new DOMParser();var doc=parser.parseFromString(e.body,"text/html");' +
+            // Update title
+            'var t=doc.querySelector("title");if(t)document.title=t.textContent;' +
+            // Merge new <link rel=stylesheet> / <style> / <meta> into head
+            'var hChildren=doc.head?doc.head.children:[];' +
+            'for(var i=0;i<hChildren.length;i++){var tag=hChildren[i].tagName;' +
+              'if(tag==="STYLE"||tag==="LINK"||tag==="META"){document.head.appendChild(hChildren[i].cloneNode(true));}}' +
+            // Replace body HTML, then re-execute any inline scripts so
+            // login handlers etc. wire up again.
+            'document.body.innerHTML=doc.body?doc.body.innerHTML:"";' +
+            'var scripts=doc.body?doc.body.querySelectorAll("script"):[];' +
+            'for(var j=0;j<scripts.length;j++){var src=scripts[j].getAttribute("src");' +
+              'var n=document.createElement("script");' +
+              'if(src){n.src=src;}else{n.text=scripts[j].textContent||"";}' +
+              'document.body.appendChild(n);}' +
+            // Scroll top + fire ready events
+            'window.scrollTo(0,0);' +
+            'setTimeout(function(){try{document.dispatchEvent(new Event("DOMContentLoaded"));window.dispatchEvent(new Event("load"));}catch(_){}},0);' +
+            'try{history.pushState({__loadPage:href},"","#"+href);}catch(_){}' +
+            'return true;}catch(err){console.warn("Load swapToPage failed",err);return false;}}' +
+        // Intercept anchor clicks
+        'document.addEventListener("click",function(ev){var a=ev.target;while(a&&a!==document){if(a.tagName==="A"&&a.getAttribute&&a.getAttribute("href"))break;a=a.parentNode;}' +
+          'if(!a||a===document)return;var href=a.getAttribute("href");' +
+          'if(!href||/^(mailto|tel|javascript|#|https?:|blob:|data:)/i.test(href))return;' +
+          'if(/\\.html?(\\?|#|$)/i.test(href)&&swapToPage(href)){ev.preventDefault();}' +
+          '},true);' +
+        // Intercept form submits with action pointing to bundled HTML.
+        // Form handlers fire first; we navigate in the next tick so any
+        // auth/localStorage side effects settle.
+        'document.addEventListener("submit",function(ev){var f=ev.target;' +
+          'if(!f||f.tagName!=="FORM")return;var action=f.getAttribute("action")||"";' +
+          'if(/\\.html?(\\?|#|$)/i.test(action)){' +
+            'setTimeout(function(){swapToPage(action);},30);ev.preventDefault();}' +
+          '},true);' +
+        // Override location.assign / replace so JS-driven nav works too.
+        'try{var origA=location.assign?location.assign.bind(location):null;' +
+          'var origR=location.replace?location.replace.bind(location):null;' +
+          'location.assign=function(u){if(!swapToPage(u)&&origA)origA(u);};' +
+          'location.replace=function(u){if(!swapToPage(u)&&origR)origR(u);};}catch(_){}' +
+        // Hash-based navigation so back button works with our pushState.
+        'window.addEventListener("popstate",function(ev){var p=ev.state&&ev.state.__loadPage;if(p)swapToPage(p);});' +
         '}catch(err){console.warn("Load bundle shim init failed",err);}' +
       '})();';
     var shimTag = '<script>/* Load runtime bundle shim — intercepts fetch/XHR for assets bundled from the imported zip */\n' + shim + '</script>';
