@@ -659,7 +659,7 @@ txt=txt.replace(/\[CRITICAL NOTE\]/g,'Critical note:');
 txt=txt.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'');
 return txt;
 }
-function getVoice(){var voices=window.speechSynthesis.getVoices(),saved=localStorage.getItem('acr_voice');if(saved){for(var i=0;i<voices.length;i++){if(voices[i].name===saved)return voices[i];}}var enh=voices.filter(function(v){return v.name.indexOf('Enhanced')>=0;});if(enh.length)return enh[0];var siri=voices.filter(function(v){return v.name.indexOf('Siri')>=0;});if(siri.length)return siri[0];var idx=parseInt(document.getElementById('vc').value);return(!isNaN(idx)&&voices[idx])||null;}
+function getVoice(){var voices=window.speechSynthesis.getVoices(),saved=localStorage.getItem('acr_voice');if(saved){for(var i=0;i<voices.length;i++){if(voices[i].name===saved)return voices[i];}/* fuzzy fallback: iOS sometimes shifts (Enhanced)/(Premium)/(Compact) suffixes between sessions, breaking strict ===. Trim + lowercase + strip those suffixes and compare again. */ var savedKey=saved.toLowerCase().replace(/\s*\((enhanced|premium|compact)\)/i,'').trim();for(var j=0;j<voices.length;j++){var key=voices[j].name.toLowerCase().replace(/\s*\((enhanced|premium|compact)\)/i,'').trim();if(key===savedKey)return voices[j];}}var enh=voices.filter(function(v){return v.name.indexOf('Enhanced')>=0;});if(enh.length)return enh[0];var siri=voices.filter(function(v){return v.name.indexOf('Siri')>=0;});if(siri.length)return siri[0];var idx=parseInt(document.getElementById('vc').value);return(!isNaN(idx)&&voices[idx])||null;}
 function loadVoices(){var voices=window.speechSynthesis.getVoices(),vc=document.getElementById('vc');if(!voices||!voices.length)return;var saved=localStorage.getItem('acr_voice');vc.innerHTML='';var enh=[],siri=[],other=[];voices.forEach(function(v,i){if(v.name.indexOf('Enhanced')>=0)enh.push({v:v,i:i});else if(v.name.indexOf('Siri')>=0)siri.push({v:v,i:i});else other.push({v:v,i:i});});enh.concat(siri).concat(other).forEach(function(item){var o=document.createElement('option');o.value=item.i;o.textContent=item.v.name.replace('(Enhanced)',' \u2605').replace('(Compact)','').trim();if(saved&&item.v.name===saved)o.selected=true;else if(!saved&&item.v.name.indexOf('Enhanced')>=0&&!vc.querySelector('[selected]'))o.selected=true;vc.appendChild(o);});if(!vc.value&&vc.options.length)vc.options[0].selected=true;}
 window.speechSynthesis.onvoiceschanged=loadVoices;loadVoices();setTimeout(loadVoices,500);setTimeout(loadVoices,1500);setTimeout(loadVoices,3000);
 document.getElementById('vc').addEventListener('change',function(){var voices=window.speechSynthesis.getVoices();var v=voices[parseInt(this.value)];if(v)localStorage.setItem('acr_voice',v.name);});
@@ -735,6 +735,13 @@ document.getElementById('b-pa').style.display='inline';
 // iOS Safari: resume+cancel clears any stuck queued state before we speak
 try{window.speechSynthesis.resume();}catch(e){}
 try{window.speechSynthesis.cancel();}catch(e){}
+// If the voice list hasn't loaded yet (common in the first ~500ms after a refresh on iPad), getVoice() returns null and the saved voice is bypassed in favour of the OS default. Wait once for voiceschanged with an 800ms ceiling — iOS preserves the user-gesture window for ~1s, so the deferred speak still works.
+if(!window.speechSynthesis.getVoices().length){
+var fired=false,go=function(){if(fired)return;fired=true;speakCurrent();};
+try{window.speechSynthesis.addEventListener('voiceschanged',go,{once:true});}catch(e){}
+setTimeout(go,800);
+return true;
+}
 // speak() MUST run synchronously inside the user gesture or iOS Safari rejects it
 return speakCurrent();
 }
