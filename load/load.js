@@ -5887,6 +5887,9 @@ window.LoadAudioFix = {
             toast('Voice Library module didn\'t load.', true);
           }
         }
+        else if (act === 'vid2aud') {
+          openVideoToAudioFlow();
+        }
       });
     });
     // Hide tiles whose backing library didn't load.
@@ -9057,7 +9060,7 @@ window.LoadAudioFix = {
         '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
         '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
         '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
-        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cr</span>' +
+        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cs</span>' +
         '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
           '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
           '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -17002,6 +17005,204 @@ window.LoadAudioFix = {
     var btn2 = $('library-clear-btn-inline');
     if (btn2) btn2.addEventListener('click', promptClearLibrary);
   })();
+
+  /* ---------- Video → Audio quick extract ---------- */
+
+  // Pure AudioBuffer → 16-bit PCM WAV bytes. Same encoder shape used
+  // inside the video editor; inlined here so the quick-extract flow
+  // doesn't depend on the editor being open.
+  function v2aAudioBufferToWavBytes(buf) {
+    var nCh = buf.numberOfChannels, sr = buf.sampleRate, nSamp = buf.length;
+    var dataLen = nSamp * nCh * 2;
+    var ab = new ArrayBuffer(44 + dataLen);
+    var v = new DataView(ab);
+    var off = 0;
+    function ws(s) { for (var i = 0; i < s.length; i++) v.setUint8(off++, s.charCodeAt(i)); }
+    function w16(n) { v.setUint16(off, n, true); off += 2; }
+    function w32(n) { v.setUint32(off, n, true); off += 4; }
+    ws('RIFF'); w32(36 + dataLen); ws('WAVE');
+    ws('fmt '); w32(16); w16(1); w16(nCh); w32(sr);
+    w32(sr * nCh * 2); w16(nCh * 2); w16(16);
+    ws('data'); w32(dataLen);
+    var chs = []; for (var c = 0; c < nCh; c++) chs.push(buf.getChannelData(c));
+    for (var i = 0; i < nSamp; i++) {
+      for (var c2 = 0; c2 < nCh; c2++) {
+        var s = Math.max(-1, Math.min(1, chs[c2][i]));
+        var s16 = s < 0 ? Math.round(s * 32768) : Math.round(s * 32767);
+        v.setInt16(off, s16, true); off += 2;
+      }
+    }
+    return ab;
+  }
+
+  // Real-time encode AudioBuffer → M4A (audio/mp4) via MediaRecorder.
+  // iOS Safari supports audio/mp4 encoding; falls back to null on
+  // browsers that don't.
+  async function v2aEncodeBufferToM4a(buf, onProgress) {
+    if (!window.MediaRecorder ||
+        !MediaRecorder.isTypeSupported ||
+        !MediaRecorder.isTypeSupported('audio/mp4')) {
+      return null;
+    }
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    try {
+      var dest = ctx.createMediaStreamDestination();
+      var src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(dest);
+      var rec = new MediaRecorder(dest.stream, { mimeType: 'audio/mp4' });
+      var chunks = [];
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      var stopped = new Promise(function (res) { rec.onstop = res; });
+      rec.start();
+      src.start();
+      var startMs = performance.now();
+      var totalMs = (buf.duration || 1) * 1000;
+      var progTimer = setInterval(function () {
+        var pct = Math.min(99, ((performance.now() - startMs) / totalMs) * 100);
+        if (onProgress) try { onProgress(pct); } catch (_) {}
+      }, 250);
+      await new Promise(function (res) { src.onended = res; setTimeout(res, totalMs + 1000); });
+      try { rec.stop(); } catch (_) {}
+      await stopped;
+      clearInterval(progTimer);
+      try { src.disconnect(); } catch (_) {}
+      try { ctx.close(); } catch (_) {}
+      return new Blob(chunks, { type: 'audio/mp4' });
+    } catch (e) {
+      try { ctx.close(); } catch (_) {}
+      throw e;
+    }
+  }
+
+  // Tiny format picker for the quick-extract flow. Resolves to
+  // 'wav' | 'm4a' | null. Kept narrow on purpose — power users can
+  // use the full editor's Extract Audio for MP3/FLAC/AIFF/etc.
+  function v2aPickFormat(durSec) {
+    return new Promise(function (resolve) {
+      var canM4a = window.MediaRecorder && MediaRecorder.isTypeSupported &&
+        MediaRecorder.isTypeSupported('audio/mp4');
+      var sheet = document.createElement('div');
+      sheet.style.cssText =
+        'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9700;' +
+        'display:flex;align-items:flex-end;justify-content:center;';
+      sheet.innerHTML =
+        '<div style="background:#1a1a26;color:#fff;width:100%;max-width:480px;' +
+        'border-top-left-radius:16px;border-top-right-radius:16px;' +
+        'padding:14px 14px max(14px,env(safe-area-inset-bottom));' +
+        'display:flex;flex-direction:column;gap:8px;">' +
+          '<h3 style="margin:0 0 4px 0;font-size:16px;font-weight:800;">' +
+            '🎬 ➡️ 🎵 Save audio as…' +
+          '</h3>' +
+          '<button data-fmt="wav" style="background:#2a2a40;border:1px solid #3a3a55;' +
+            'color:#fff;border-radius:10px;padding:12px 14px;text-align:left;' +
+            'cursor:pointer;font-family:inherit;">' +
+            '<strong style="font-size:14px;">WAV</strong>' +
+            '<span style="display:block;font-size:11px;color:#a8a8c4;margin-top:2px;">' +
+              'Instant · uncompressed, lossless · large file</span>' +
+          '</button>' +
+          (canM4a
+            ? '<button data-fmt="m4a" style="background:#2a2a40;border:1px solid #3a3a55;' +
+              'color:#fff;border-radius:10px;padding:12px 14px;text-align:left;' +
+              'cursor:pointer;font-family:inherit;">' +
+              '<strong style="font-size:14px;">M4A</strong>' +
+              '<span style="display:block;font-size:11px;color:#a8a8c4;margin-top:2px;">' +
+                'iOS-friendly · real-time encode (~' + Math.ceil(durSec || 1) + 's) · small file</span>' +
+            '</button>'
+            : '') +
+          '<button data-fmt="cancel" style="background:transparent;border:none;' +
+            'color:#cfcfdc;padding:10px;cursor:pointer;font-family:inherit;">' +
+            'Cancel</button>' +
+        '</div>';
+      document.body.appendChild(sheet);
+      var done = function (v) { try { sheet.remove(); } catch (_) {} resolve(v); };
+      sheet.addEventListener('click', function (e) {
+        if (e.target === sheet) return done(null);
+        var b = e.target.closest('[data-fmt]');
+        if (!b) return;
+        var k = b.getAttribute('data-fmt');
+        done(k === 'cancel' ? null : k);
+      });
+    });
+  }
+
+  // Hidden file picker used by the Workspace tile. Created lazily so
+  // it survives multiple opens.
+  var _v2aPicker = null;
+  function v2aGetPicker() {
+    if (_v2aPicker) return _v2aPicker;
+    _v2aPicker = document.createElement('input');
+    _v2aPicker.type = 'file';
+    _v2aPicker.accept = 'video/*,.mp4,.mov,.m4v,.webm,.mkv';
+    _v2aPicker.style.display = 'none';
+    document.body.appendChild(_v2aPicker);
+    return _v2aPicker;
+  }
+
+  // Public flow: user taps the Workspace tile, picks a video, picks a
+  // format, audio is decoded + encoded, saved as a new library tile,
+  // toast confirms.
+  async function openVideoToAudioFlow() {
+    var picker = v2aGetPicker();
+    picker.value = '';
+    picker.onchange = async function () {
+      var file = picker.files && picker.files[0];
+      if (!file) return;
+      try {
+        toast('Reading video…');
+        var ab = await file.arrayBuffer();
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        toast('Decoding audio…');
+        var buf;
+        try {
+          buf = await ctx.decodeAudioData(ab.slice(0));
+        } catch (decodeErr) {
+          try { ctx.close(); } catch (_) {}
+          toast('Could not decode audio from this video. The codec may not be supported on iPad.', true);
+          return;
+        }
+        try { ctx.close(); } catch (_) {}
+        var fmt = await v2aPickFormat(buf.duration);
+        if (!fmt) { toast('Cancelled.'); return; }
+        var blob, mime, ext;
+        if (fmt === 'wav') {
+          toast('Building WAV…');
+          var wavBytes = v2aAudioBufferToWavBytes(buf);
+          blob = new Blob([wavBytes], { type: 'audio/wav' });
+          mime = 'audio/wav'; ext = '.wav';
+        } else {
+          toast('Encoding M4A in real time… (~' + Math.ceil(buf.duration) + 's)');
+          var m4aBlob = await v2aEncodeBufferToM4a(buf, function (pct) {
+            if (pct != null) toast('M4A encode… ' + Math.round(pct) + '%');
+          });
+          if (!m4aBlob) { toast('M4A encoding not supported on this browser.', true); return; }
+          blob = m4aBlob; mime = 'audio/mp4'; ext = '.m4a';
+        }
+        var srcName = (file.name || 'video').replace(/\.[^.]+$/, '');
+        var rec = {
+          id: newId(),
+          name: srcName + ' (audio)' + ext,
+          kind: 'media',
+          subKind: 'audio',
+          mime: mime,
+          binary: blob,
+          dateAdded: Date.now(),
+          lastOpened: null,
+          sizeBytes: blob.size
+        };
+        await putApp(rec);
+        apps.push(rec);
+        renderLibrary();
+        updateHomeCounts();
+        renderRecent();
+        renderLibraryChips();
+        toast('✓ Saved "' + rec.name + '" to your Library.');
+      } catch (e) {
+        toast('Extract failed: ' + ((e && e.message) || e), true);
+      }
+    };
+    picker.click();
+  }
 
   /* ---------- Viewer ---------- */
 
