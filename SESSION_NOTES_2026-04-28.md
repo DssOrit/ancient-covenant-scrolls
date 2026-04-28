@@ -2,7 +2,11 @@
 
 ## Current state
 
-- Latest commit: `33d8ac3` — ACR v15: forensic MIC TEST marker
+- Latest commit: `624996f` — Add CLAUDE.md (project rules + session-logging mandate)
+- Load is at **v17cp** (`load/sw.js` `CACHE = 'load-v17cp'`, on-screen badge `v17cp`).
+  The v17cp bump landed inside commit `34f9127` (Voice Library + ACR per-chapter
+  recording) — the title doesn't say "Load" so don't be misled by `git log` greps.
+- ACR is at **acr-v15** (latest standalone ACR commit `33d8ac3`).
 - Branch: `main`, pushed to origin
 - All file work for the day is committed; nothing local-only
 
