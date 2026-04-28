@@ -5857,12 +5857,22 @@ window.LoadAudioFix = {
             toast('Voice Studio module didn\'t load.', true);
           }
         }
+        else if (act === 'cvsfx') {
+          if (window.CharacterVoiceStudio && typeof CharacterVoiceStudio.openSoundStudio === 'function') {
+            CharacterVoiceStudio.openSoundStudio({
+              onAddAudioBlob: (window.__loadVeBridge && window.__loadVeBridge.addAudioBlob) || null
+            });
+          } else {
+            toast('Sound Studio module didn\'t load.', true);
+          }
+        }
       });
     });
-    // Hide the Voice Studio tile if the lib failed to load (e.g., the
-    // file was removed or blocked). Keeps the home grid clean.
+    // Hide tiles whose backing library didn't load.
     var cvsTile = $('home-ws-cvs');
     if (cvsTile && !window.CharacterVoiceStudio) cvsTile.style.display = 'none';
+    var cvsFxTile = $('home-ws-cvsfx');
+    if (cvsFxTile && !(window.CharacterVoiceStudio && typeof CharacterVoiceStudio.openSoundStudio === 'function')) cvsFxTile.style.display = 'none';
     // Optional PWA-help modal kept wired (used when user picks Web Apps card)
     var pc = $('pwa-modal-cancel'); if (pc) pc.addEventListener('click', function () { $('pwa-modal').classList.remove('on'); });
     var pp = $('pwa-modal-pick'); if (pp) pp.addEventListener('click', function () {
@@ -9022,7 +9032,7 @@ window.LoadAudioFix = {
         '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
         '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
         '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
-        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ci</span>' +
+        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cj</span>' +
         '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
           '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
           '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -10119,10 +10129,10 @@ window.LoadAudioFix = {
             note: 'Real-time encode · web standard' },
           { key: 'ogg',   label: 'OGG',     ext: '.ogg',  mime: 'audio/ogg;codecs=opus',  realtime: true, available: canOgg,
             note: 'Real-time encode · Firefox' },
-          { key: 'mp3',   label: 'MP3',     ext: '.mp3',  mime: 'audio/mpeg', realtime: true, available: false,
-            note: 'Needs codec library — coming next' },
-          { key: 'flac',  label: 'FLAC',    ext: '.flac', mime: 'audio/flac', realtime: true, available: false,
-            note: 'Needs codec library — coming next' }
+          { key: 'mp3',   label: 'MP3',     ext: '.mp3',  mime: 'audio/mpeg', realtime: false, available: true,
+            note: 'Loads codec on first use (~150 KB)' },
+          { key: 'flac',  label: 'FLAC',    ext: '.flac', mime: 'audio/flac', realtime: false, available: true,
+            note: 'Loads codec on first use (~250 KB)' }
         ];
         var menu = document.createElement('div');
         menu.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9700;display:flex;align-items:flex-end;justify-content:center;';
@@ -10164,6 +10174,12 @@ window.LoadAudioFix = {
       }
       if (fmt.key === 'aiff') {
         return { blob: new Blob([audioBufferToAiff(buf)], { type: 'audio/aiff' }) };
+      }
+      if (fmt.key === 'mp3') {
+        return { blob: await encodeMp3(buf, onProgress) };
+      }
+      if (fmt.key === 'flac') {
+        return { blob: await encodeFlac(buf, onProgress) };
       }
       // Real-time encode via MediaRecorder. Plays the buffer through an
       // OfflineAudioContext is not available for MediaRecorder so we
@@ -10244,6 +10260,119 @@ window.LoadAudioFix = {
       }
       return ab;
     }
+
+    /* MP3 encoder via lamejs (dynamic-imported on first use, cached
+     * by the runtime). Returns a Blob. Encodes per-channel int16 PCM
+     * frames, then writes them in chunks; progress reports run on
+     * 250ms cadence so the UI doesn't freeze for long buffers. */
+    var __lamejsModule = null;
+    async function loadLamejs() {
+      if (__lamejsModule) return __lamejsModule;
+      // @breezystack/lamejs is the maintained ESM-friendly fork.
+      __lamejsModule = await import('https://esm.sh/@breezystack/lamejs@1.2.7');
+      return __lamejsModule;
+    }
+    async function encodeMp3(buf, onProgress) {
+      var mod = await loadLamejs();
+      var Lame = mod.default || mod.Mp3Encoder ? mod : mod;
+      var Mp3Encoder = (mod.Mp3Encoder || (mod.default && mod.default.Mp3Encoder));
+      if (!Mp3Encoder) throw new Error('lamejs Mp3Encoder not exported');
+      var nCh = Math.min(2, buf.numberOfChannels || 1);
+      var sr = buf.sampleRate;
+      var enc = new Mp3Encoder(nCh, sr, 128);
+      var blockSize = 1152;
+      var lInt = new Int16Array(buf.length), rInt = nCh === 2 ? new Int16Array(buf.length) : null;
+      var lF = buf.getChannelData(0);
+      var rF = nCh === 2 ? buf.getChannelData(1) : null;
+      for (var i = 0; i < buf.length; i++) {
+        var sL = Math.max(-1, Math.min(1, lF[i]));
+        lInt[i] = sL < 0 ? sL * 32768 : sL * 32767;
+        if (rInt) {
+          var sR = Math.max(-1, Math.min(1, rF[i]));
+          rInt[i] = sR < 0 ? sR * 32768 : sR * 32767;
+        }
+      }
+      var chunks = [];
+      var lastProg = 0;
+      for (var p = 0; p < buf.length; p += blockSize) {
+        var end = Math.min(p + blockSize, buf.length);
+        var lc = lInt.subarray(p, end);
+        var mp3buf = nCh === 2
+          ? enc.encodeBuffer(lc, rInt.subarray(p, end))
+          : enc.encodeBuffer(lc);
+        if (mp3buf.length) chunks.push(mp3buf);
+        if (onProgress && (Date.now() - lastProg > 250)) {
+          onProgress((p / buf.length) * 100);
+          lastProg = Date.now();
+          await new Promise(function (r) { setTimeout(r, 0); });
+        }
+      }
+      var tail = enc.flush();
+      if (tail.length) chunks.push(tail);
+      if (onProgress) onProgress(100);
+      return new Blob(chunks, { type: 'audio/mpeg' });
+    }
+
+    /* FLAC encoder via libflacjs. Loaded on demand, same dynamic-
+     * import pattern. Lossless, ~50% smaller than WAV. */
+    var __flacModule = null;
+    async function loadFlacjs() {
+      if (__flacModule) return __flacModule;
+      __flacModule = await import('https://esm.sh/libflacjs@5.4.0/dist/libflac.js');
+      return __flacModule;
+    }
+    async function encodeFlac(buf, onProgress) {
+      var mod = await loadFlacjs();
+      var Flac = mod.Flac || (mod.default && mod.default.Flac) || mod.default || mod;
+      if (!Flac || !Flac.create_libflac_encoder) throw new Error('libflacjs not exported as expected');
+      await new Promise(function (res) {
+        if (Flac.isReady && Flac.isReady()) return res();
+        if (Flac.on_ready) Flac.on_ready(res);
+        else setTimeout(res, 200);
+      });
+      var nCh = Math.min(2, buf.numberOfChannels || 1);
+      var sr = buf.sampleRate;
+      var enc = Flac.create_libflac_encoder(sr, nCh, 16, 5, buf.length);
+      var chunks = [];
+      var ok = Flac.init_encoder_stream(enc,
+        function write(data) { chunks.push(new Uint8Array(data)); return Flac.FLAC__STREAM_ENCODER_WRITE_STATUS_OK; },
+        function meta() {}
+      );
+      if (ok !== 0) throw new Error('FLAC init failed: ' + ok);
+      // Interleave channels as 32-bit signed ints
+      var nSamp = buf.length;
+      var pcm = new Int32Array(nSamp * nCh);
+      var c0 = buf.getChannelData(0);
+      var c1 = nCh === 2 ? buf.getChannelData(1) : null;
+      for (var i = 0; i < nSamp; i++) {
+        var s0 = Math.max(-1, Math.min(1, c0[i]));
+        pcm[i * nCh] = (s0 < 0 ? s0 * 32768 : s0 * 32767) | 0;
+        if (c1) {
+          var s1 = Math.max(-1, Math.min(1, c1[i]));
+          pcm[i * nCh + 1] = (s1 < 0 ? s1 * 32768 : s1 * 32767) | 0;
+        }
+      }
+      var blockSize = 4096;
+      var lastProg = 0;
+      for (var p = 0; p < nSamp; p += blockSize) {
+        var n = Math.min(blockSize, nSamp - p);
+        var slice = pcm.subarray(p * nCh, (p + n) * nCh);
+        Flac.FLAC__stream_encoder_process_interleaved(enc, slice, n);
+        if (onProgress && (Date.now() - lastProg > 250)) {
+          onProgress((p / nSamp) * 100);
+          lastProg = Date.now();
+          await new Promise(function (r) { setTimeout(r, 0); });
+        }
+      }
+      Flac.FLAC__stream_encoder_finish(enc);
+      Flac.FLAC__stream_encoder_delete(enc);
+      if (onProgress) onProgress(100);
+      var total = 0; chunks.forEach(function (c) { total += c.length; });
+      var out = new Uint8Array(total); var off = 0;
+      chunks.forEach(function (c) { out.set(c, off); off += c.length; });
+      return new Blob([out], { type: 'audio/flac' });
+    }
+
     function audioBufferToWav(buf) {
       var nCh = buf.numberOfChannels, sr = buf.sampleRate, len = buf.length * nCh * 2 + 44;
       var ab = new ArrayBuffer(len), v = new DataView(ab), off = 0;

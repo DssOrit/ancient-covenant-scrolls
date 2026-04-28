@@ -394,8 +394,249 @@
     if (script) detect(); else { renderCast(); renderLines(); }
   }
 
+  /* Sound Studio — quick voice recorder + FX. Tier-1 of the user's
+   * "funny voice changer" spec: record once, slap any preset onto
+   * the sample (chipmunk / robot / ghost / telephone / etc.), preview
+   * instantly, save or share.
+   */
+  function openSoundStudio(opts) {
+    opts = opts || {};
+    var prev = document.getElementById('cvs-fx-modal');
+    if (prev) prev.remove();
+
+    var lastBuffer = null;       // raw recorded AudioBuffer
+    var lastFxBuffer = null;     // post-FX buffer (used for save/share)
+    var lastFxKey = 'none';
+    var rec = null, recStream = null, recChunks = [], recBlob = null;
+    var ctx = null;
+    var playingSrc = null;       // current preview BufferSource
+
+    var presets = (window.VoiceFX && window.VoiceFX.PRESETS) || [{ key: 'none', label: 'No effect', icon: '🎙', note: '' }];
+
+    var modal = document.createElement('div');
+    modal.id = 'cvs-fx-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(10,10,20,0.78);z-index:9550;display:flex;align-items:center;justify-content:center;padding:20px;';
+    modal.innerHTML =
+      '<div style="background:#1a1a26;color:#fff;border-radius:18px;width:100%;max-width:720px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.55);border:1px solid #2a2a40;overflow:hidden;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #2a2a40;flex-shrink:0;">' +
+          '<h2 style="margin:0;font-size:18px;font-weight:800;">🎤 Sound Studio · Voice FX</h2>' +
+          '<button id="cvsfx-close" style="background:transparent;border:none;color:#cfcfdc;font-size:24px;cursor:pointer;line-height:1;">×</button>' +
+        '</div>' +
+        '<div style="overflow-y:auto;padding:14px 18px;flex:1;">' +
+          '<div id="cvsfx-rec-row" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">' +
+            '<button id="cvsfx-rec" style="background:#ff3b5c;color:#fff;border:none;border-radius:50%;width:64px;height:64px;font-size:24px;cursor:pointer;flex-shrink:0;">⏺</button>' +
+            '<div style="flex:1;min-width:180px;">' +
+              '<div id="cvsfx-status" style="font-size:14px;font-weight:700;">Tap ⏺ to record. Speak, then tap ■ to stop.</div>' +
+              '<div id="cvsfx-time" style="font-size:13px;color:#a8a8c4;font-variant-numeric:tabular-nums;">0:00</div>' +
+            '</div>' +
+            '<button id="cvsfx-import" style="background:#2a2a40;color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;">📂 Import audio</button>' +
+            '<input id="cvsfx-import-file" type="file" accept="audio/*,.mp3,.m4a,.wav,.aac,.ogg,.flac,.aiff,.aif,.webm,.weba,.opus" style="display:none;">' +
+          '</div>' +
+          '<div id="cvsfx-fx-section" style="display:none;">' +
+            '<div style="font-size:12px;color:#a8a8c4;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px;">Effect</div>' +
+            '<div id="cvsfx-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="padding:12px 18px;border-top:1px solid #2a2a40;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;">' +
+          '<button id="cvsfx-play" style="background:#22c55e;color:#0a0a14;border:none;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;flex:1;min-width:130px;" disabled>▶ Preview</button>' +
+          '<button id="cvsfx-stop" style="background:#2a2a40;color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;">■</button>' +
+          '<button id="cvsfx-add" style="background:#1d6fff;color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;flex:1;min-width:130px;" disabled>＋ Add to timeline</button>' +
+          '<button id="cvsfx-save" style="background:#fbbf24;color:#1a1a26;border:none;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;flex:1;min-width:130px;" disabled>💾 Save file</button>' +
+          '<button id="cvsfx-share" style="background:#a855f7;color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;flex:1;min-width:130px;" disabled>↗ Share</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    function close() { stopPlay(); stopRec(); try { modal.remove(); } catch (_) {} }
+    modal.querySelector('#cvsfx-close').addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+
+    var statusEl = modal.querySelector('#cvsfx-status');
+    var timeEl   = modal.querySelector('#cvsfx-time');
+    var recBtn   = modal.querySelector('#cvsfx-rec');
+    var fxSec    = modal.querySelector('#cvsfx-fx-section');
+    var gridEl   = modal.querySelector('#cvsfx-grid');
+    var playBtn  = modal.querySelector('#cvsfx-play');
+    var stopBtn  = modal.querySelector('#cvsfx-stop');
+    var addBtn   = modal.querySelector('#cvsfx-add');
+    var saveBtn  = modal.querySelector('#cvsfx-save');
+    var shareBtn = modal.querySelector('#cvsfx-share');
+    var importBtn= modal.querySelector('#cvsfx-import');
+    var importFile=modal.querySelector('#cvsfx-import-file');
+
+    function ensureCtx() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+
+    function renderGrid() {
+      gridEl.innerHTML = '';
+      presets.forEach(function (p) {
+        var b = document.createElement('button');
+        b.dataset.fx = p.key;
+        b.style.cssText = 'background:#0e0e18;border:1.5px solid ' + (p.key === lastFxKey ? '#fbbf24' : '#2a2a40') +
+          ';color:#fff;border-radius:10px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-family:inherit;';
+        b.innerHTML =
+          '<span style="font-size:22px;">' + p.icon + '</span>' +
+          '<span style="font-size:12px;font-weight:700;text-align:center;">' + p.label + '</span>';
+        b.title = p.note || '';
+        b.addEventListener('click', function () { selectFx(p.key); });
+        gridEl.appendChild(b);
+      });
+    }
+
+    async function selectFx(key) {
+      if (!lastBuffer) return;
+      lastFxKey = key;
+      Array.prototype.forEach.call(gridEl.querySelectorAll('[data-fx]'), function (b) {
+        b.style.borderColor = b.getAttribute('data-fx') === key ? '#fbbf24' : '#2a2a40';
+      });
+      statusEl.textContent = 'Applying ' + key + '…';
+      try {
+        if (window.VoiceFX && VoiceFX.applyToBuffer) {
+          lastFxBuffer = await VoiceFX.applyToBuffer(lastBuffer, key);
+        } else {
+          lastFxBuffer = lastBuffer;
+        }
+        statusEl.textContent = 'Ready — preview, save, share, or add to timeline.';
+        playBtn.disabled = false; addBtn.disabled = false; saveBtn.disabled = false;
+        shareBtn.disabled = !(navigator.share && (lastFxBuffer || lastBuffer));
+      } catch (e) {
+        statusEl.textContent = 'FX failed: ' + ((e && e.message) || e);
+      }
+    }
+
+    function stopPlay() {
+      if (playingSrc) { try { playingSrc.stop(); } catch (_) {} try { playingSrc.disconnect(); } catch (_) {} playingSrc = null; }
+    }
+    playBtn.addEventListener('click', function () {
+      if (!lastFxBuffer) return;
+      stopPlay();
+      var c = ensureCtx();
+      try { c.resume(); } catch (_) {}
+      var s = c.createBufferSource(); s.buffer = lastFxBuffer; s.connect(c.destination); s.start(); playingSrc = s;
+      statusEl.textContent = 'Playing — ' + lastFxKey + '…';
+      s.onended = function () { if (playingSrc === s) { playingSrc = null; statusEl.textContent = 'Done.'; } };
+    });
+    stopBtn.addEventListener('click', stopPlay);
+
+    function bufToWavBlob(buf) {
+      var nCh = buf.numberOfChannels, sr = buf.sampleRate, len = buf.length * nCh * 2 + 44;
+      var ab = new ArrayBuffer(len), v = new DataView(ab), off = 0;
+      function ws(s) { for (var i = 0; i < s.length; i++) v.setUint8(off++, s.charCodeAt(i)); }
+      function w16(n) { v.setUint16(off, n, true); off += 2; }
+      function w32(n) { v.setUint32(off, n, true); off += 4; }
+      ws('RIFF'); w32(len - 8); ws('WAVE'); ws('fmt '); w32(16); w16(1); w16(nCh); w32(sr); w32(sr * nCh * 2); w16(nCh * 2); w16(16); ws('data'); w32(buf.length * nCh * 2);
+      var chs = []; for (var c = 0; c < nCh; c++) chs.push(buf.getChannelData(c));
+      for (var i = 0; i < buf.length; i++) {
+        for (var ch2 = 0; ch2 < nCh; ch2++) {
+          var s = Math.max(-1, Math.min(1, chs[ch2][i]));
+          v.setInt16(off, s < 0 ? s * 32768 : s * 32767, true); off += 2;
+        }
+      }
+      return new Blob([ab], { type: 'audio/wav' });
+    }
+
+    addBtn.addEventListener('click', function () {
+      if (!lastFxBuffer || typeof opts.onAddAudioBlob !== 'function') {
+        if (!opts.onAddAudioBlob) alert('Open a video in the editor first to add audio to its timeline.');
+        return;
+      }
+      opts.onAddAudioBlob(bufToWavBlob(lastFxBuffer), 'voicefx-' + lastFxKey + '-' + Date.now() + '.wav');
+      close();
+    });
+    saveBtn.addEventListener('click', function () {
+      if (!lastFxBuffer) return;
+      var blob = bufToWavBlob(lastFxBuffer);
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'voicefx-' + lastFxKey + '-' + Date.now() + '.wav';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
+    });
+    shareBtn.addEventListener('click', async function () {
+      if (!lastFxBuffer || !navigator.share) return;
+      var blob = bufToWavBlob(lastFxBuffer);
+      var f = new File([blob], 'voicefx-' + lastFxKey + '.wav', { type: 'audio/wav' });
+      try {
+        if (navigator.canShare && !navigator.canShare({ files: [f] })) throw new Error('share-files-unsupported');
+        await navigator.share({ files: [f], title: 'Voice FX', text: 'Voice with ' + lastFxKey + ' effect' });
+      } catch (e) {
+        // Fall back: just trigger download
+        saveBtn.click();
+      }
+    });
+
+    function startRec() {
+      if (!navigator.mediaDevices || !window.MediaRecorder) { statusEl.textContent = 'Recording not supported on this device.'; return; }
+      var mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+               : MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '';
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        recStream = stream;
+        recChunks = [];
+        rec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+        rec.ondataavailable = function (e) { if (e.data && e.data.size) recChunks.push(e.data); };
+        rec.onstop = onRecStopped;
+        rec.start();
+        recBtn.textContent = '■';
+        recBtn.style.background = '#fbbf24'; recBtn.style.color = '#1a1a26';
+        statusEl.textContent = 'Recording…';
+        recStartedAt = Date.now();
+        recTimer = setInterval(updateTime, 250);
+      }).catch(function (e) {
+        statusEl.textContent = 'Mic permission denied: ' + ((e && e.message) || e);
+      });
+    }
+    function stopRec() {
+      if (recTimer) { clearInterval(recTimer); recTimer = null; }
+      if (rec && rec.state !== 'inactive') { try { rec.stop(); } catch (_) {} }
+      if (recStream) { try { recStream.getTracks().forEach(function (t) { t.stop(); }); } catch (_) {} recStream = null; }
+      recBtn.textContent = '⏺'; recBtn.style.background = '#ff3b5c'; recBtn.style.color = '#fff';
+    }
+    var recTimer = null, recStartedAt = 0;
+    function updateTime() {
+      var s = Math.floor((Date.now() - recStartedAt) / 1000);
+      var m = Math.floor(s / 60); s = s % 60;
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+    async function onRecStopped() {
+      var blob = new Blob(recChunks, { type: rec && rec.mimeType ? rec.mimeType : 'audio/webm' });
+      recBlob = blob;
+      statusEl.textContent = 'Decoding…';
+      try {
+        var c = ensureCtx();
+        var buf = await c.decodeAudioData(await blob.arrayBuffer());
+        lastBuffer = buf;
+        fxSec.style.display = '';
+        renderGrid();
+        await selectFx('none');
+      } catch (e) {
+        statusEl.textContent = 'Decode failed: ' + ((e && e.message) || e);
+      }
+    }
+    recBtn.addEventListener('click', function () {
+      if (rec && rec.state === 'recording') stopRec(); else startRec();
+    });
+
+    importBtn.addEventListener('click', function () { importFile.click(); });
+    importFile.addEventListener('change', async function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (!f) return;
+      statusEl.textContent = 'Decoding ' + f.name + '…';
+      try {
+        var c = ensureCtx();
+        var buf = await c.decodeAudioData(await f.arrayBuffer());
+        lastBuffer = buf;
+        fxSec.style.display = '';
+        renderGrid();
+        await selectFx('none');
+      } catch (err) {
+        statusEl.textContent = 'Could not decode: ' + ((err && err.message) || err);
+      }
+      importFile.value = '';
+    });
+  }
+
   global.CharacterVoiceStudio = {
     open: open,
+    openSoundStudio: openSoundStudio,
     parseScript: parseScript,
     estimateSeconds: estimateSeconds
   };
