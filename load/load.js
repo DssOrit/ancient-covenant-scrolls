@@ -8880,7 +8880,7 @@
         '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
         '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
         '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
-        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cd</span>' +
+        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ce</span>' +
         '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
           '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
           '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -8897,7 +8897,7 @@
       '</div>' +
       // ===== Preview stage (black) =====
       '<div id="ve-stage" style="flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;">' +
-        '<video id="ve-video" src="' + blobUrl + '" playsinline preload="auto" controls style="max-width:100%;max-height:100%;background:#000;"></video>' +
+        '<video id="ve-video" src="' + blobUrl + '" playsinline preload="auto" style="max-width:100%;max-height:100%;background:#000;"></video>' +
         '<img id="ve-stage-image" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;pointer-events:none;">' +
         '<canvas id="ve-overlay" style="position:absolute;pointer-events:none;"></canvas>' +
         '<button id="ve-fullscreen" class="ve-iconbtn" style="position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,0.1);" aria-label="Fullscreen">&#10070;</button>' +
