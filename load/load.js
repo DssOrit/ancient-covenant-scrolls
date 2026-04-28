@@ -18,6 +18,129 @@
 //   - TTS via Web Speech API, with enhanced-voice sorting
 //   - Help screen + standalone notes screen
 
+/* LOAD AUDIO STABILITY PATCH
+   Fixes iPad/Safari silent, skipping, chopped, or corrupted audio playback.
+   Public API: window.LoadAudioFix
+*/
+window.LoadAudioFix = {
+  audioContext: null,
+  unlocked: false,
+  activeAudio: null,
+
+  async init() {
+    var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      console.error('AudioContext not supported.');
+      return null;
+    }
+    if (!this.audioContext || this.audioContext.state === 'closed') {
+      this.audioContext = new AudioContextClass();
+    }
+    return this.audioContext;
+  },
+
+  async unlock() {
+    var ctx = await this.init();
+    if (!ctx) return false;
+    if (ctx.state === 'suspended') {
+      try { await ctx.resume(); } catch (e) {}
+    }
+    if (!this.unlocked) {
+      try {
+        var buffer = ctx.createBuffer(1, 1, 22050);
+        var source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.start(0);
+        this.unlocked = true;
+      } catch (e) {}
+    }
+    return ctx.state === 'running';
+  },
+
+  // Synchronous unlock — call from inside a click handler BEFORE any
+  // await, so iPad Safari treats the audio context as gesture-unlocked
+  // even if subsequent play() calls happen after a microtask boundary.
+  unlockSync: function () {
+    var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    if (!this.audioContext || this.audioContext.state === 'closed') {
+      try { this.audioContext = new AudioContextClass(); } catch (_) { return false; }
+    }
+    if (this.audioContext.state === 'suspended') {
+      try { this.audioContext.resume(); } catch (_) {}
+    }
+    if (!this.unlocked) {
+      try {
+        var buf = this.audioContext.createBuffer(1, 1, 22050);
+        var src = this.audioContext.createBufferSource();
+        src.buffer = buf;
+        src.connect(this.audioContext.destination);
+        src.start(0);
+        this.unlocked = true;
+      } catch (_) {}
+    }
+    return true;
+  },
+
+  stopCurrentAudio: function () {
+    if (this.activeAudio) {
+      try {
+        this.activeAudio.pause();
+        this.activeAudio.currentTime = 0;
+      } catch (e) { console.warn('Could not stop active audio:', e); }
+      this.activeAudio = null;
+    }
+  },
+
+  async playElement(audioEl) {
+    if (!audioEl) {
+      console.error('No audio element provided.');
+      return false;
+    }
+    await this.unlock();
+    this.stopCurrentAudio();
+    audioEl.muted = false;
+    audioEl.volume = 1;
+    audioEl.playsInline = true;
+    audioEl.preload = 'auto';
+    this.activeAudio = audioEl;
+    try {
+      await audioEl.play();
+      return true;
+    } catch (err) {
+      console.error('Audio play failed:', err);
+      return false;
+    }
+  },
+
+  async resetBrokenAudioCache() {
+    console.warn('Resetting corrupted audio cache...');
+    var badKeys = [
+      'piperVoiceCache','piper_voice_cache','voiceCache','voice_cache',
+      'ttsCache','tts_cache','audioCache','audio_cache',
+      'selectedPiperVoice','piperSelectedVoice'
+    ];
+    badKeys.forEach(function (key) {
+      try { localStorage.removeItem(key); } catch (e) {}
+      try { sessionStorage.removeItem(key); } catch (e) {}
+    });
+    if (window.indexedDB) {
+      var dbNames = ['piper','piper-cache','piperVoiceCache','voice-cache','tts-cache','audio-cache'];
+      dbNames.forEach(function (name) {
+        try { indexedDB.deleteDatabase(name); } catch (e) {}
+      });
+    }
+    this.stopCurrentAudio();
+    if (this.audioContext && this.audioContext.state !== 'closed') {
+      try { await this.audioContext.close(); } catch (e) {}
+    }
+    this.audioContext = null;
+    this.unlocked = false;
+    console.warn('Audio cache reset complete. Tap Play again.');
+  }
+};
+
 (function () {
   'use strict';
 
@@ -8880,7 +9003,7 @@
         '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
         '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
         '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
-        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ce</span>' +
+        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cf</span>' +
         '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
           '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
           '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -12360,6 +12483,9 @@
     });
 
     document.getElementById('ve-play').addEventListener('click', function () {
+      // Unlock the AudioContext synchronously inside this click so
+      // iPad Safari treats the timeline's playback as gesture-allowed.
+      try { if (window.LoadAudioFix) window.LoadAudioFix.unlockSync(); } catch (_) {}
       // Engine-driven. If clips aren't loaded yet, wait for metadata
       // then call engine.play(). engine.play() handles the case where
       // we're at the end (resets to 0) and starts the rAF loop.
