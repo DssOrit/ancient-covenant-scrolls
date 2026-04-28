@@ -8880,7 +8880,7 @@
         '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
         '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
         '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
-        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cc</span>' +
+        '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17cd</span>' +
         '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
           '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
           '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -10616,6 +10616,14 @@
         if (stageImg) stageImg.style.display = 'none';
         try { video.style.opacity = ''; video.style.display = ''; } catch (_) {}
         try {
+          // Honor the "Mute original audio" checkbox; don't force
+          // muted=false unconditionally, but also don't leave a stale
+          // muted=true from a previous toggle.
+          var muteOrigEl = document.getElementById('ve-mute-orig');
+          video.muted = !!(muteOrigEl && muteOrigEl.checked);
+          if (typeof video.volume === 'number') video.volume = 1;
+        } catch (_) {}
+        try {
           var dur = video.duration;
           var srcTime = srcOffset;
           if (dur && isFinite(dur)) srcTime = Math.max(0, Math.min(srcTime, dur - 0.001));
@@ -10653,6 +10661,7 @@
           vd.preload = 'auto';
           vd.playsInline = true;
           vd.muted = false;
+          vd.volume = 1;
           vd.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:' +
             (clip.fitMode || 'contain') + ';background:#000;';
           vd.setAttribute('data-clip-preview', clip.id);
@@ -11607,9 +11616,16 @@
           self.setTime(newT);
           self.rafId = requestAnimationFrame(step);
         };
-        // mountPreviewForClip handles starting/pausing the right
-        // element each tick, so we no longer blindly play the main
-        // video element here — that would race with per-clip videos.
+        // CRITICAL: start the active clip's playback SYNCHRONOUSLY here
+        // (we're still inside the user-gesture event from the click
+        // that triggered engine.play). If we wait for the rAF tick to
+        // call play() via mountPreviewForClip, iPad Safari has already
+        // dropped the user-gesture context and silently rejects the
+        // play() call — including audio. So mount + play right now.
+        try {
+          var r = self.resolve(self.t);
+          if (r && r.clip) mountPreviewForClip(r.clip, r.srcOffset, true);
+        } catch (e) { try { console.warn('[VE] play mount failed', e); } catch (_) {} }
         this.rafId = requestAnimationFrame(step);
       },
       pause: function () {
