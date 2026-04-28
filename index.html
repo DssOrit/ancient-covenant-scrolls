@@ -716,10 +716,10 @@ var voice=getVoice();if(voice)u.voice=voice;
 u.onend=function(){if(!sp||mySeq!==speakSeq)return;advance();};
 u.onerror=function(ev){if(!sp||mySeq!==speakSeq)return;var err=ev&&ev.error||'';if(err==='canceled'||err==='interrupted')return;advance();};
 // Watchdog: if onend never fires (iOS Safari known to silently stall on long utterances), force advance.
-// Estimate: ~14 chars/sec at rate 1 + 4 second buffer, capped between 8s and 90s.
+// Estimate: ~10 chars/sec (matches iPad Enhanced/Siri voices on long sentences) + 5 second buffer, capped between 8s and 120s.
 clearWatchdog();
-var est=Math.min(90000,Math.max(8000,(txt.length/14)*1000/Math.max(0.5,spd)+4000));
-wd=setTimeout(function(){if(mySeq===speakSeq&&sp&&!advanced){try{window.speechSynthesis.cancel();}catch(e){}advance();}},est);
+var est=Math.min(120000,Math.max(8000,(txt.length/10)*1000/Math.max(0.5,spd)+5000));
+wd=setTimeout(function(){if(mySeq===speakSeq&&sp&&!advanced){try{window.speechSynthesis.cancel();}catch(e){}setTimeout(advance,50);}},est);
 try{window.speechSynthesis.speak(u);return true;}catch(e){return false;}
 }
 function startPlayback(){
