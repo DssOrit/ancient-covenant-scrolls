@@ -5,7 +5,7 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v13';
+const CACHE = 'acr-v14';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
@@ -70,14 +70,33 @@ self.addEventListener('fetch', e => {
   if (url.pathname.indexOf('/study/') >= 0) return;
 
   // Network-first for the HTML shell so edits always take effect.
+  // Append a unique cache-buster query string. iPad Safari has a
+  // known bug where { cache: 'no-store' } alone is silently ignored,
+  // so the device kept serving stale index.html / sw.js from its
+  // HTTP cache after each push. A unique URL forces a real network
+  // hit. Same fix applied to load/sw.js as v17ca.
   if (
     req.mode === 'navigate' ||
     url.pathname.endsWith('/') ||
     url.pathname.endsWith('/index.html') ||
     url.pathname.endsWith('/sw.js')
   ) {
+    let bustUrl;
+    try {
+      const u = new URL(req.url);
+      u.searchParams.set('__v', Date.now());
+      bustUrl = u.toString();
+    } catch (_) { bustUrl = req.url; }
+    const fresh = new Request(bustUrl, {
+      method: 'GET',
+      headers: req.headers,
+      credentials: req.credentials,
+      cache: 'no-store'
+    });
     e.respondWith(
-      fetch(req).then(res => {
+      fetch(fresh).then(res => {
+        // Cache under the original (un-busted) request key so future
+        // matches still find it.
         const clone = res.clone();
         caches.open(CACHE).then(c => c.put(req, clone)).catch(() => {});
         return res;

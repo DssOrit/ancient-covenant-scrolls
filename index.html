@@ -896,6 +896,14 @@ return;
 navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(reg){
 try{reg.update();}catch(e){}
 }).catch(function(){});
+// When a new SW takes control, the page is still running the old
+// HTML/JS. Soft-reload once so the new build's code runs. Same
+// pattern as Load v17ca — eliminates the manual "clear Safari data"
+// step that recurring stale builds otherwise need.
+var __acrJustReloaded=false;
+navigator.serviceWorker.addEventListener('controllerchange',function(){
+if(__acrJustReloaded)return;__acrJustReloaded=true;location.reload();
+});
 })();
 var last=localStorage.getItem('acr_last');if(last&&IDS.indexOf(last)>=0)go(last);
 </script>
