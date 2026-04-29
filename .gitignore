@@ -1,1 +1,46 @@
+# Local snapshots / scratch
 .snapshots/
+
+# Secrets — NEVER commit (public repo)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+private/
+
+# Local config / build
+node_modules/
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+.cache/
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
