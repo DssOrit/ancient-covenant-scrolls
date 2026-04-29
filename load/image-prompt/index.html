@@ -389,18 +389,32 @@ button,[role="button"]{min-height:48px}
     <input class="settings-input" id="k-anthropic-fb" type="password" placeholder="sk-ant-… (same key as above if using Anthropic)">
   </div>
 
-  <!-- Step 3: Image transformer -->
+  <!-- Step 3: Image generation providers (multi-provider auto-fallback) -->
   <div class="panel-section">
-    <h4>Step 3 — Image Transformer (optional)</h4>
-    <p class="panel-hint">Free Hugging Face token to enable actual image transformation. The app tries SDXL → SD 1.5 → FLUX automatically if one fails.</p>
+    <h4>Step 3 — Image Generation Providers</h4>
+    <p class="panel-hint">Image Prompt tries these providers in order and silently swaps when one rate-limits. <strong>Pollinations works with no key</strong> — image gen works the moment you install Image Prompt. Add others below to expand the fallback chain.</p>
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">1. Pollinations (default — no key needed)</p>
+    <p class="panel-hint" style="font-size:11px">Always available. Free, fast, text-to-image only.</p>
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">2. Hugging Face (free token, supports image-to-image)</p>
     <div class="url-pill"><span style="flex:1">huggingface.co/settings/tokens</span><button class="copy-btn" onclick="cpURL(this,'https://huggingface.co/settings/tokens')">Copy</button></div>
     <input class="settings-input" id="k-hf-img" type="password" placeholder="hf_…">
-    <p class="panel-hint" style="margin-top:6px">Preferred model (auto-falls back if unavailable):</p>
+    <p class="panel-hint" style="margin-top:6px">Preferred HF model (auto-falls back if unavailable):</p>
     <div class="seg-btns">
       <button class="seg-btn active" data-hm="stabilityai/stable-diffusion-xl-base-1.0" onclick="setHM(this)">SDXL</button>
       <button class="seg-btn" data-hm="runwayml/stable-diffusion-v1-5" onclick="setHM(this)">SD 1.5</button>
       <button class="seg-btn" data-hm="black-forest-labs/FLUX.1-schnell" onclick="setHM(this)">FLUX</button>
     </div>
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">3. Cloudflare Workers AI (free daily limits)</p>
+    <div class="url-pill"><span style="flex:1">dash.cloudflare.com → AI → API tokens</span><button class="copy-btn" onclick="cpURL(this,'https://dash.cloudflare.com/profile/api-tokens')">Copy</button></div>
+    <input class="settings-input" id="k-cf-acct" type="text" placeholder="Cloudflare Account ID (32-char hex)">
+    <input class="settings-input" id="k-cf-token" type="password" placeholder="Cloudflare API Token" style="margin-top:6px">
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">4. Together AI (free FLUX-schnell)</p>
+    <div class="url-pill"><span style="flex:1">api.together.xyz/settings/api-keys</span><button class="copy-btn" onclick="cpURL(this,'https://api.together.xyz/settings/api-keys')">Copy</button></div>
+    <input class="settings-input" id="k-together" type="password" placeholder="Together API key">
   </div>
 
   <!-- Step 4: Style -->
@@ -412,6 +426,15 @@ button,[role="button"]{min-height:48px}
       <button class="seg-btn" data-mode="anime" onclick="setMode(this)">Anime</button>
       <button class="seg-btn" data-mode="cinematic" onclick="setMode(this)">Cinematic</button>
     </div>
+  </div>
+
+  <!-- Advanced — Anthropic opt-in (security warning) -->
+  <div class="panel-section">
+    <h4>Advanced (optional)</h4>
+    <label style="display:flex;gap:8px;align-items:flex-start;color:var(--ink-mid);font-size:13px;line-height:1.5">
+      <input type="checkbox" id="opt-allow-ant" style="margin-top:3px;flex-shrink:0">
+      <span>Enable Anthropic Claude in chat fallback chain. <strong style="color:var(--warn)">Warning:</strong> Anthropic's browser-direct API exposes your key to anyone inspecting network requests. Only enable for personal use on a trusted device.</span>
+    </label>
   </div>
 
   <button class="save-btn" onclick="saveSettings()">✓ Save &amp; Start</button>
@@ -456,6 +479,20 @@ let C = {
   orModel:    LS.getItem('ps_orm')  || 'deepseek/deepseek-r1:free',
   hfModel:    LS.getItem('ps_hfm') || 'stabilityai/stable-diffusion-xl-base-1.0',
   hfImgKey:   LS.getItem('ps_hfimg')|| '',
+  // Phase 1B image providers — see IMAGE_PROVIDERS below
+  cfToken:    LS.getItem('ps_cftk') || '',
+  cfAccount:  LS.getItem('ps_cfac') || '',
+  togetherKey:LS.getItem('ps_tgk')  || '',
+  // Anthropic excluded from default chat fallback chain because
+  // requires anthropic-dangerous-direct-browser-access which exposes
+  // the API key to anyone inspecting browser requests. Opt-in only.
+  allowAnthropic: LS.getItem('ps_allow_ant') === '1',
+  useProvider: {
+    pollinations: LS.getItem('ps_use_poll') !== '0',
+    huggingface:  LS.getItem('ps_use_hf')   !== '0',
+    cloudflare:   LS.getItem('ps_use_cf')   !== '0',
+    together:     LS.getItem('ps_use_tg')   !== '0'
+  },
   mode:       LS.getItem('ps_mode') || 'realistic',
 };
 
@@ -475,7 +512,11 @@ let img = null, generating = false, history = [];
   Object.entries(km).forEach(([k,id])=>{const el=document.getElementById(id);if(el&&C.keys[k])el.value=C.keys[k];});
   if(C.keys.geminiFB)   document.getElementById('k-gemini-fb').value=C.keys.geminiFB;
   if(C.keys.anthropicFB)document.getElementById('k-anthropic-fb').value=C.keys.anthropicFB;
-  if(C.hfImgKey)document.getElementById('k-hf-img').value=C.hfImgKey;
+  if(C.hfImgKey)        document.getElementById('k-hf-img').value=C.hfImgKey;
+  if(C.cfAccount)       document.getElementById('k-cf-acct').value=C.cfAccount;
+  if(C.cfToken)         document.getElementById('k-cf-token').value=C.cfToken;
+  if(C.togetherKey)     document.getElementById('k-together').value=C.togetherKey;
+  document.getElementById('opt-allow-ant').checked = !!C.allowAnthropic;
   document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===C.mode));
   document.querySelectorAll('[data-orm]').forEach(b=>b.classList.toggle('active',b.dataset.orm===C.orModel));
   document.querySelectorAll('[data-hm]').forEach(b=>b.classList.toggle('active',b.dataset.hm===C.hfModel));
@@ -547,12 +588,19 @@ function saveSettings(){
   C.keys.geminiFB   =document.getElementById('k-gemini-fb').value.trim();
   C.keys.anthropicFB=document.getElementById('k-anthropic-fb').value.trim();
   C.hfImgKey        =document.getElementById('k-hf-img').value.trim();
+  C.cfAccount       =document.getElementById('k-cf-acct').value.trim();
+  C.cfToken         =document.getElementById('k-cf-token').value.trim();
+  C.togetherKey     =document.getElementById('k-together').value.trim();
+  C.allowAnthropic  =document.getElementById('opt-allow-ant').checked;
   LS.setItem('ps_prov',C.provider); LS.setItem('ps_k_gemini',C.keys.gemini);
   LS.setItem('ps_k_or',C.keys.openrouter); LS.setItem('ps_k_cbr',C.keys.cerebras);
   LS.setItem('ps_k_ant',C.keys.anthropic); LS.setItem('ps_k_hfc',C.keys.hfchat);
   LS.setItem('ps_k_gfb',C.keys.geminiFB); LS.setItem('ps_k_afb',C.keys.anthropicFB);
   LS.setItem('ps_hfimg',C.hfImgKey); LS.setItem('ps_orm',C.orModel);
   LS.setItem('ps_hfm',C.hfModel); LS.setItem('ps_mode',C.mode);
+  LS.setItem('ps_cfac',C.cfAccount); LS.setItem('ps_cftk',C.cfToken);
+  LS.setItem('ps_tgk',C.togetherKey);
+  LS.setItem('ps_allow_ant', C.allowAnthropic ? '1' : '0');
   updatePill();
   if(C.provider && hasProviderAccess(C.provider))
     document.getElementById('setup-banner').classList.remove('on');
@@ -647,17 +695,38 @@ async function pipeline(prompt, imgData, tid) {
       }
     }
 
+    /* Intent classification — only generate an image when the LLM
+       included SD_PROMPT (means user asked for an image edit/gen)
+       OR the user attached an image with a clear edit verb. Skips
+       gen for chitchat / questions / thanks. */
     let resultUrl = null;
-    if (C.hfImgKey) {
-      resultUrl = await hfImageWithFallback(imgData, reply);
+    let imageProvUsed = null;
+    const sdMatch = reply.match(/SD_PROMPT:\s*(.+)/s);
+    const editVerb = prompt && /\b(make|create|generate|edit|change|add|remove|turn|transform|render|draw|paint|illustrate|design|stylize|convert|colour|color|crop|enhance|fix|retouch)\b/i.test(prompt);
+    const wantsImage = !!sdMatch || (imgData && editVerb);
+    if (wantsImage) {
+      const cleanPrompt = sdMatch
+        ? sdMatch[1].trim().slice(0, 800)
+        : ((prompt || 'high quality photo') + (C.mode ? ', ' + C.mode + ' style' : '')).slice(0, 800);
+      try {
+        const result = await imageGenWithFallback(cleanPrompt, imgData);
+        resultUrl = result.url;
+        imageProvUsed = result.providerName;
+      } catch (e) {
+        console.warn('[Image] all providers failed:', e.message || e);
+        // Don't block the chat reply — just no image this turn
+      }
     }
 
     removeTyping(tid);
     const displayText = reply.replace(/SD_PROMPT:[\s\S]*/,'').trim() || reply;
     const finalText = resultUrl
-      ? `Here's your result!${prompt?' "'+prompt+'" applied.':''} Tap Save to keep it. Want refinements?`
+      ? (displayText || (`Here's your image!${prompt ? ' "' + prompt + '" applied.' : ''} Tap Save to keep it. Want refinements?`))
       : displayText;
-    addAIMsg(finalText, resultUrl, usedProvider, fallbackNote);
+    const providerBadge = resultUrl
+      ? usedProvider + ' + ' + (imageProvUsed || 'image')
+      : usedProvider;
+    addAIMsg(finalText, resultUrl, providerBadge, fallbackNote);
     history.push({role:'assistant',content:finalText});
 
   } catch(err) {
@@ -674,9 +743,14 @@ function getAvailableProviders(){
 }
 
 function getProviderOrder(){
-  const fallbackOrder = ['puter','openrouter','gemini','anthropic','cerebras','hfchat'];
+  // Anthropic intentionally excluded from default chain. Its
+  // browser-direct API needs the dangerous-direct-browser-access
+  // flag which exposes the key to anyone inspecting requests.
+  // Power users can opt-in via Advanced settings (allowAnthropic).
+  const base = ['puter','openrouter','gemini','cerebras','hfchat'];
+  if (C.allowAnthropic && C.keys.anthropic) base.push('anthropic');
   const first = C.provider || 'puter';
-  return [first, ...fallbackOrder.filter(p => p !== first)];
+  return [first, ...base.filter(p => p !== first)];
 }
 
 function getVisionFallback(exclude) {
@@ -755,7 +829,13 @@ async function callVisionProvider(providerId, prompt, imgData) {
 }
 
 /* ── System prompt ── */
-const SYS = () => `You are a creative AI assistant and image prompt engineer. When the user describes an image edit or style transformation, respond helpfully and conversationally. Also include a line starting with "SD_PROMPT:" followed by a detailed Stable Diffusion img2img prompt for the request. Style preference: ${C.mode}. Keep SD_PROMPT under 200 words.`;
+const SYS = () => `You are a creative AI assistant for Image Prompt — a chat-based visual idea tool. Respond helpfully and conversationally.
+
+When the user clearly wants an image generated, edited, or restyled — or has uploaded one with a clear edit instruction — include a SINGLE line starting exactly with "SD_PROMPT:" followed by a detailed image-generation prompt suitable for Stable Diffusion or FLUX. Keep that line under 200 words. Be specific about subject, lighting, lens, mood.
+
+If the user is just chatting, asking a question, replying with thanks, or has not asked for an image, do NOT include SD_PROMPT. They don't want an image yet.
+
+Default style preference: ${C.mode}.`;
 
 /* ── Individual providers ── */
 async function callPuter(prompt) {
@@ -831,29 +911,137 @@ async function callHFChat(prompt) {
   return Array.isArray(d)?d[0]?.generated_text?.split('Assistant:').pop()?.trim()||prompt:prompt;
 }
 
-/* ── HF Image with model fallback chain ── */
-async function hfImageWithFallback(imgData, responseText) {
-  const m = responseText.match(/SD_PROMPT:\s*(.+)/s);
-  const p = m ? m[1].trim().slice(0,300) : responseText.slice(0,200);
-
-  /* Build ordered model list starting from preferred */
-  const preferred = C.hfModel;
-  const models = [preferred, ...HF_MODELS.filter(x => x !== preferred)];
-
-  for (const model of models) {
-    try {
-      const blob = await hfImageCall(model, p, imgData);
-      if (blob) return URL.createObjectURL(blob);
-    } catch(e) {
-      /* 503 = model loading, other errors = try next model */
-      if (e.message?.includes('cold start')) {
-        /* Re-throw cold start so user sees it — don't silently skip */
-        throw e;
+/* ── IMAGE GENERATION — multi-provider auto-fallback ──
+   Phase 1B: 4 providers in priority order. Pollinations is the
+   zero-key default so image gen works on first install. The app
+   silently swaps to the next when one rate-limits or 503s. */
+const IMAGE_PROVIDERS = [
+  // 1. Pollinations.ai — no key, free, fast text-to-image
+  {
+    id: 'pollinations',
+    name: 'Pollinations',
+    needsKey: false,
+    enabled: () => C.useProvider.pollinations !== false,
+    gen: async (prompt) => {
+      const seed = Math.floor(Math.random() * 999999);
+      const params = new URLSearchParams({
+        width: '1024', height: '1024',
+        nologo: 'true', seed: String(seed)
+      });
+      const url = 'https://image.pollinations.ai/prompt/' +
+        encodeURIComponent(prompt.slice(0,1500)) + '?' + params;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('Pollinations ' + r.status);
+      const b = await r.blob();
+      if (!b.type.startsWith('image/')) throw new Error('Pollinations non-image response');
+      return URL.createObjectURL(b);
+    }
+  },
+  // 2. Hugging Face — needs free token, supports img2img, model cascade
+  {
+    id: 'huggingface',
+    name: 'Hugging Face',
+    needsKey: true,
+    enabled: () => !!C.hfImgKey && C.useProvider.huggingface !== false,
+    supportsImg2Img: true,
+    gen: async (prompt, imgData) => {
+      const preferred = C.hfModel;
+      const models = [preferred, ...HF_MODELS.filter(x => x !== preferred)];
+      let lastErr = null;
+      for (const model of models) {
+        try {
+          const blob = await hfImageCall(model, prompt, imgData);
+          if (blob) return URL.createObjectURL(blob);
+        } catch (e) {
+          if (e.message?.includes('cold start')) throw e;
+          lastErr = e;
+        }
       }
-      /* Otherwise silently try next model */
+      throw lastErr || new Error('HF all models failed');
+    }
+  },
+  // 3. Cloudflare Workers AI — free daily limits, FLUX-schnell
+  {
+    id: 'cloudflare',
+    name: 'Cloudflare AI',
+    needsKey: true,
+    enabled: () => !!(C.cfToken && C.cfAccount) && C.useProvider.cloudflare !== false,
+    gen: async (prompt) => {
+      const url = 'https://api.cloudflare.com/client/v4/accounts/' +
+        C.cfAccount + '/ai/run/@cf/black-forest-labs/flux-1-schnell';
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.cfToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: prompt.slice(0,1500), num_steps: 4 })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'Cloudflare'));
+      const data = await r.json();
+      const b64 = data.result?.image;
+      if (!b64) throw new Error('Cloudflare empty result');
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
+    }
+  },
+  // 4. Together AI — free FLUX-schnell-Free model
+  {
+    id: 'together',
+    name: 'Together AI',
+    needsKey: true,
+    enabled: () => !!C.togetherKey && C.useProvider.together !== false,
+    gen: async (prompt) => {
+      const r = await fetch('https://api.together.xyz/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.togetherKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'black-forest-labs/FLUX.1-schnell-Free',
+          prompt: prompt.slice(0,1500),
+          n: 1, width: 1024, height: 1024, steps: 4,
+          response_format: 'url'
+        })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'Together'));
+      const data = await r.json();
+      const u = data.data?.[0]?.url;
+      if (!u) throw new Error('Together empty response');
+      const imgR = await fetch(u);
+      const b = await imgR.blob();
+      return URL.createObjectURL(b);
     }
   }
-  return null; // all models failed silently — return no image
+];
+
+/* Try each enabled provider in order; silent skip on failure.
+   Pollinations always included as last-resort backstop since it
+   needs no key. */
+async function imageGenWithFallback(prompt, imgData) {
+  let providers = IMAGE_PROVIDERS.filter(p => p.enabled());
+  if (!providers.find(p => p.id === 'pollinations'))
+    providers.push(IMAGE_PROVIDERS[0]);
+  // If user attached an image, prefer providers that support img2img
+  if (imgData) {
+    const img2img = providers.filter(p => p.supportsImg2Img);
+    const others  = providers.filter(p => !p.supportsImg2Img);
+    providers = [...img2img, ...others];
+  }
+  let lastErr = null;
+  for (const p of providers) {
+    try {
+      const url = await p.gen(prompt, imgData);
+      if (url) return { url, providerId: p.id, providerName: p.name };
+    } catch (e) {
+      console.warn('[Image] ' + p.name + ' failed:', e.message);
+      lastErr = e;
+    }
+  }
+  throw lastErr || new Error('All image providers failed');
 }
 
 async function hfImageCall(model, prompt, imgData) {
