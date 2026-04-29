@@ -572,3 +572,153 @@ spread across 3-5 sessions.
 - Source ZIP: `inbox/3rd Load_AI_Image_Editor_PROVIDER_FALLBACK_FIXED.zip`
 - Pre-launch checklist (toggle Gemini Image back on after stable):
   see "PRE-LAUNCH CHECKLIST" at bottom of `PLAN_IMAGE_PROMPT.md`
+
+---
+
+# Full Provider/Tool List (user-supplied 2026-04-29)
+
+User shared a 58-item free / free-tier / open-source provider list.
+Tracked here permanently so future sessions know exactly what's
+wired vs. deferred.
+
+## Cost model (user's framing — accurate)
+
+- Software cost: free
+- Model / tool code: usually free / open-source
+- Running it locally on your own computer: free after you own the computer
+- Running it in the cloud: usually free only with limited free tiers
+- Running it commercially at scale: NOT free because of GPU / server costs
+
+## Wired today (~15% of full list)
+
+| # | Item | Status |
+| --- | --- | --- |
+| 1 | Puter.js | ✅ chat + vision (multimodal GPT-4o-mini class) |
+| 2 | Pollinations AI | ✅ image gen |
+| 3 | HF Inference (image + Mistral chat) | ⚠ partial |
+| 5 | Cloudflare Workers AI | ✅ image gen |
+| 21/22 | SD / SDXL Inpainting | ⚠ via HF only, no proper inpaint route |
+| 36 | Llama (open) | ⚠ via OpenRouter free |
+| 37 | Mistral | ✅ via HF chat |
+
+## Wave 6.5 expansion targets (browser-only / no backend)
+
+These plug into the existing chain via HF Inference API or browser
+WASM. No GPU server required.
+
+| # | Item | Wave 6.5 plan |
+| --- | --- | --- |
+| 4 | HF Spaces | Generic Gradio API caller |
+| 15 | SAM 2 | Browser ONNX port (~150 MB) for masks |
+| 17 | Florence-2 | HF Inference for captioning + object detection |
+| 20 | LaMa Cleaner / IOPaint | HF Space for clean inpainting |
+| 24 | rembg / RMBG-1.4 | HF Inference for background removal |
+| 26 | BiRefNet | HF Inference for fine-edge cutouts |
+| 27 | Real-ESRGAN | HF Inference for upscaling |
+| 29 | GFPGAN | HF Inference for face restoration |
+| 30 | CodeFormer | HF Inference for face repair |
+| 31 | Qwen2.5-VL | HF Inference vision fallback |
+| 32 | LLaVA | HF Inference vision fallback |
+| 34 | BLIP-2 | HF Inference image captioning |
+
+## ⚠ DEFERRED — needs self-hosted GPU server (revisit later)
+
+User direction (2026-04-29): "We will save ComfyUI server for later,
+remind me, keep those providers for then." Capture full list so any
+future session can pick up the backend project quickly.
+
+Required infrastructure when we revisit:
+- A box (cloud GPU rental ~$5-10/mo, or own a GPU PC)
+- ComfyUI / AUTOMATIC1111 / Forge / InvokeAI as the backbone
+- API wrapper exposing endpoints to Image Prompt
+- Optional auth so only Load can hit it
+
+Full deferred provider list, in priority order for that future build:
+
+| # | Item | What it unlocks |
+| --- | --- | --- |
+| 6 | **ComfyUI** | Best node-based pipeline; FLUX, SDXL, IP-Adapter, ControlNet, inpaint, outpaint, ClipVision, etc. |
+| 7 | AUTOMATIC1111 SD WebUI | Stable Diffusion + extension ecosystem |
+| 8 | SD WebUI Forge | Optimized A1111 alt, lower VRAM |
+| 9 | InvokeAI | Friendlier canvas + inpaint UI |
+| 10 | **IP-Adapter** | True reference-image style/identity transfer |
+| 11 | **InstantID** | Face identity preservation across gens |
+| 12 | **ControlNet** | Pose / depth / edge / layout lock |
+| 13 | LoRA | Saved character / style adapters |
+| 14 | DreamBooth | Train a model on a specific subject |
+| 21 | SD Inpainting (proper) | Region-aware fill |
+| 22 | SDXL Inpainting (proper) | Higher-quality regional edits |
+| 23 | Flux Fill | Modern inpaint workflows |
+| 46 | AnimateDiff | Image-to-video animation |
+| 47 | Deforum SD | Prompt-based animation sequences |
+| 48 | Stable Video Diffusion | Image → short video |
+| 49 | Wan open video models | Open video gen workflows |
+
+The 7 free providers Image Prompt already uses don't go away when we
+add the backend — the backend just becomes a NEW provider that gets
+prioritized for editing/consistency tasks. Routing chain expands;
+nothing breaks.
+
+## Voice / audio (separate scope from Image Prompt)
+
+| # | Item | Where it belongs |
+| --- | --- | --- |
+| 40 | Piper TTS | Already parked in Load (see SESSION_NOTES_2026-04-27/28) |
+| 41 | Coqui TTS | Future Voice Studio expansion |
+| 42 | eSpeak NG | Accessibility fallback |
+| 43-44 | Whisper / Whisper.cpp | STT for voice commands (T4-9 in plan v2) |
+| 45 | Vosk | Offline STT fallback |
+| 50 | FFmpeg | Already used for Audio I/O export in Load |
+
+## Hosting / compute / dev (infra, not features)
+
+| # | Item | Notes |
+| --- | --- | --- |
+| 51-53 | Colab / Kaggle / Codespaces | Dev/testing only; not production |
+| 54 | Cloudflare Workers Free | Already used for image gen (#5); could become router for hidden keys |
+| 55-56 | Vercel / Netlify | Static hosting alts to GitHub Pages |
+| 57 | Supabase | Future user-project storage if we go server-backed |
+| 58 | Firebase | Alt to Supabase |
+
+---
+
+# Recommended Routing Order (user-supplied)
+
+Captured for the spec build:
+
+**Image understanding:** Puter vision → OpenRouter free vision → HF
+vision → Qwen2.5-VL → LLaVA → Florence-2
+
+**Image generation:** Puter image → Pollinations → Cloudflare AI → HF
+model/Space → ComfyUI (future) → A1111/Forge/InvokeAI (future)
+
+**Image editing:** Puter image (only if returns image) → Gemini image
+free route → ComfyUI inpaint → A1111/Forge inpaint → InvokeAI canvas
+→ LaMa Cleaner / IOPaint → fallback prompt
+
+**Object selection / masks:** SAM 2 → SAM original → Grounding DINO →
+Florence-2 → YOLO
+
+**Character consistency:** IP-Adapter → InstantID → ControlNet → LoRA
+→ seed locking → saved reference memory → post-output vision verify
+
+**Background removal:** rembg → BiRefNet → U²-Net → SAM 2 mask + transparent export
+
+**Upscaling / restoration:** Real-ESRGAN → SwinIR → GFPGAN → CodeFormer
+
+**Voice / audio:** Piper → Coqui → eSpeak NG → Whisper / Whisper.cpp → Vosk
+
+---
+
+# System Rules (user-supplied — must enforce)
+
+1. Never send image-editing requests to text-only models
+2. Never claim an image was edited unless an actual image (file/blob/URL) is returned
+3. If a provider returns text only on an image-edit request, mark it failed and try next
+4. Keep a provider capability map
+5. Store reference images and character profiles
+6. Add consistency modes: Strict / Moderate / Loose
+7. Add user toggles: preserve face / outfit / hairstyle / style / background / pose / use previous image / use previous character profile
+8. Add manipulation tools: remove / replace object / change background / expand / crop / recolor / change expression / change pose / repair hands / repair face / upscale / background cutout / compare before & after
+9. Add automatic verification — vision check after every gen/edit
+10. Add fallback prompt — if no provider can return an image, return a polished prompt
