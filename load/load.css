@@ -374,8 +374,24 @@ button, .tap, [role="button"] { min-height: 48px; }
 .home-ws-tile:active { transform: scale(0.97); }
 .home-ws-tile:hover { border-color: var(--accent); }
 .home-ws-icon { font-size: 22px; }
-.home-ws-icon-svg { display: inline-flex; width: 26px; height: 26px; color: var(--accent); }
-.home-ws-icon-svg svg { width: 100%; height: 100%; }
+/* Custom monoline icon system — rounded tinted panel behind each glyph,
+   per-category color so the tile row reads at a glance. iOS springboard
+   feel without losing the dyslexia-friendly clean type. */
+.home-ws-icon-svg {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: rgba(124, 124, 255, 0.10);
+  color: var(--accent);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.home-ws-icon-svg svg { width: 22px; height: 22px; }
+.home-ws-tile:active .home-ws-icon-svg { transform: scale(0.92); }
+.home-ws-icon-svg.cat-ai     { color: #9c9cff; background: rgba(156, 156, 255, 0.13); }
+.home-ws-icon-svg.cat-voice  { color: #fbbf24; background: rgba(251, 191, 36, 0.13); }
+.home-ws-icon-svg.cat-tools  { color: #5eb4d6; background: rgba( 94, 180, 214, 0.13); }
+.home-ws-icon-svg.cat-media  { color: #4ade80; background: rgba( 74, 222, 128, 0.13); }
+.home-ws-icon-svg.cat-help   { color: #c8c8dc; background: rgba(200, 200, 220, 0.10); }
 .home-ws-label { font-size: 14px; font-weight: 700; color: var(--ink-hi); }
 .home-ws-dir { font-size: 12px; color: var(--ink-mid); line-height: 1.4; }
 .home-section-title {
