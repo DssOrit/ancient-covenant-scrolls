@@ -1003,6 +1003,28 @@ async function pipeline(prompt, imgData, tid) {
         imageProvUsed = 'Local (' + local.op + ')';
       }
     }
+    // Wave 6.5 — Specialty manipulation router. Detects bg-remove /
+    // upscale / face-restore intents and routes to dedicated HF
+    // Inference endpoints instead of generic image gen. Runs BEFORE
+    // the AI image path so a "remove background" request never gets
+    // sent to Pollinations as a text-to-image prompt.
+    if (!resultUrl && imgData && prompt) {
+      const manipOp = detectManipulation(prompt);
+      if (manipOp) {
+        // Update status while the model warms up (HF cold start ~20s)
+        const tEl = document.getElementById(tid);
+        if (tEl) {
+          const bub = tEl.querySelector('.bubble');
+          if (bub) bub.innerHTML = '<div style="color:var(--ink-mid);font-size:13px">' +
+            esc(manipOp.statusText) + '</div>';
+        }
+        const manip = await tryManipulation(prompt, imgData);
+        if (manip) {
+          resultUrl = manip.url;
+          imageProvUsed = manip.opName + ' (HF)';
+        }
+      }
+    }
     const sdMatch = reply.match(/SD_PROMPT:\s*(.+)/s);
     const editVerb = prompt && /\b(make|create|generate|edit|change|add|remove|turn|transform|render|draw|paint|illustrate|design|stylize|convert|colour|color|crop|enhance|fix|retouch)\b/i.test(prompt);
     const wantsImage = !resultUrl && (!!sdMatch || (imgData && editVerb));
@@ -1584,6 +1606,88 @@ async function tryLocalOp(prompt, imgData) {
     console.warn('[LocalOp] ' + op.id + ' failed:', e.message);
     return null;
   }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Wave 6.5 — SPEC PIPELINE C (specialty manipulation routing)
+   ──────────────────────────────────────────────────────────────
+   When the user asks for a SPECIALTY image edit that has its own
+   dedicated free model (background removal, upscale, face restore,
+   inpainting), route to that model directly via Hugging Face
+   Inference instead of treating it as a generic prompt-to-image
+   task.
+
+   Each MANIPULATION_OP defines:
+   - intent keywords to match
+   - HF model ID (free Inference API)
+   - request shape (binary vs JSON, mime types)
+   - response parser
+
+   Wave 6.5 Part 1 ships background removal. Part 2 will add upscale,
+   face restoration, Florence-2 vision, Qwen2.5-VL.
+*/
+const MANIPULATION_OPS = [
+  {
+    id: 'bg-remove',
+    name: 'Background removal',
+    statusText: 'Removing background via HF rembg…',
+    keywords: /\b(remove\s+(the\s+)?(bg|background)|background\s+remove|cut\s*out|transparent|isolate\s+(the\s+)?subject|make\s+it\s+(transparent|cutout))\b/i,
+    needsKey: () => !!C.hfImgKey,
+    keyHint: 'Add a free Hugging Face token in Settings → Step 2 to enable background removal.',
+    run: async (imgData) => {
+      // briaai/RMBG-1.4 — most-popular open-source bg removal model.
+      // Free tier on HF Inference; takes binary image, returns
+      // RGBA PNG with alpha channel.
+      const r = await fetch('https://api-inference.huggingface.co/models/briaai/RMBG-1.4', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.hfImgKey,
+          'Content-Type': imgData.mime || 'image/png'
+        },
+        body: await (await fetch(imgData.dataUrl)).blob()
+      });
+      if (r.status === 503) {
+        throw new Error('rembg model warming up (~20s cold start). Try again in a few seconds.');
+      }
+      if (!r.ok) throw new Error(await readError(r, 'rembg'));
+      const blob = await r.blob();
+      if (!blob.type.startsWith('image/')) {
+        throw new Error('rembg returned non-image response');
+      }
+      return URL.createObjectURL(blob);
+    }
+  }
+];
+
+/* Detect specialty manipulation intent. Returns the matched op or null. */
+function detectManipulation(prompt) {
+  if (!prompt) return null;
+  for (const op of MANIPULATION_OPS) {
+    if (op.keywords.test(prompt)) return op;
+  }
+  return null;
+}
+
+/* Try to run the specialty op. Returns { url, opId } on success or
+   null on miss; throws on actual failure (so pipeline can show the
+   error rather than silently fall through to wrong-tool generation). */
+async function tryManipulation(prompt, imgData) {
+  if (!imgData || !prompt) return null;
+  const op = detectManipulation(prompt);
+  if (!op) return null;
+  // Capability check — never call a model the user can't access
+  if (!op.needsKey()) {
+    if (op.keyHint) toast(op.keyHint);
+    return null;
+  }
+  try {
+    const url = await op.run(imgData);
+    if (url) return { url, opId: op.id, opName: op.name };
+  } catch (e) {
+    console.warn('[Manipulation] ' + op.id + ' failed:', e.message);
+    toast(op.name + ' failed: ' + (e.message || 'unknown error'));
+  }
+  return null;
 }
 
 /* Provider health-board — circuit-breaker pattern.

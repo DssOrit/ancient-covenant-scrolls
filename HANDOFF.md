@@ -8,9 +8,9 @@ execute without asking the user to re-explain.
 
 ## ⚡ CURRENT STATE (updated after every verified milestone)
 
-**Last verified tip:** `v17dh` — Wave 6 Vision pipeline (image-prompt-v12)
-**SHA:** `86d3b46`
-**Backup:** `backup/2026-04-29-v17dh`
+**Last shipped tip (awaiting user verification):** `v17di` — Wave 6.5 Part 1 (specialty manipulation router + HF rembg)
+**Last user-verified tip:** `v17dh` — Wave 6 Vision pipeline (image-prompt-v12)
+**Verified backup:** `backup/2026-04-29-v17dh`
 
 **Active project:** Image Prompt — multi-pipeline build per `PLAN_IMAGE_PROMPT_v3.md`. User direction (2026-04-29): build the full v3 spec in waves, never use pay-per-use providers, save ComfyUI server work for later.
 
@@ -20,7 +20,8 @@ execute without asking the user to re-explain.
 | --- | --- | --- |
 | W1 | P1 Scene Lock + first-use popup framework | ✅ v17dd |
 | W6 | Pipeline A — Vision / structured JSON | ✅ v17dh |
-| **W6.5** | **HF Inference specialty endpoints** (rembg / Real-ESRGAN / GFPGAN / Florence-2 / Qwen2.5-VL / SDXL inpaint) | 🔜 NEXT |
+| **W6.5 Part 1** | **HF rembg (background removal) + manipulation intent router** | 🚀 v17di shipped, awaiting verify |
+| W6.5 Part 2 | Real-ESRGAN / GFPGAN / Florence-2 / Qwen2.5-VL / SDXL inpaint | 🔜 NEXT |
 | W7 | Pipeline B — Prompt Builder strict/moderate/loose | pending |
 | W8 | Pipeline D — Multi-image continuity + character profiles (subsumes original P2 batch + P3 dual-merge) | pending |
 | W9 | Pipeline E — Output Verification + auto-retry | pending |
