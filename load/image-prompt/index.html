@@ -415,6 +415,36 @@ button,[role="button"]{min-height:48px}
     <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">4. Together AI (free FLUX-schnell)</p>
     <div class="url-pill"><span style="flex:1">api.together.xyz/settings/api-keys</span><button class="copy-btn" onclick="cpURL(this,'https://api.together.xyz/settings/api-keys')">Copy</button></div>
     <input class="settings-input" id="k-together" type="password" placeholder="Together API key">
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">5. Fal.ai (free credits, very fast)</p>
+    <div class="url-pill"><span style="flex:1">fal.ai/dashboard/keys</span><button class="copy-btn" onclick="cpURL(this,'https://fal.ai/dashboard/keys')">Copy</button></div>
+    <input class="settings-input" id="k-fal" type="password" placeholder="Fal.ai API key">
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">6. AI Horde (no key needed)</p>
+    <p class="panel-hint" style="font-size:11px">Free volunteer GPU pool. Slow (~1-3 min per image) but truly unlimited. Anonymous mode used by default.</p>
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">7. Replicate (small free credit on signup)</p>
+    <div class="url-pill"><span style="flex:1">replicate.com/account/api-tokens</span><button class="copy-btn" onclick="cpURL(this,'https://replicate.com/account/api-tokens')">Copy</button></div>
+    <input class="settings-input" id="k-replicate" type="password" placeholder="r8_…">
+    <p class="panel-hint" style="font-size:11px;margin-top:4px">Note: $0.10 free credit then pay-as-you-go. Use sparingly.</p>
+
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">8. Google Imagen (uses your Gemini key)</p>
+    <p class="panel-hint" style="font-size:11px">If you've added a Gemini key in Step 1, Imagen 3 generation is auto-enabled — no extra key needed.</p>
+
+    <div class="panel-section" style="background:rgba(124,124,255,0.06);border:1px solid rgba(124,124,255,0.2);border-radius:8px;padding:10px 12px;margin-top:14px">
+      <h4 style="font-size:13px;margin:0 0 6px 0">Provider toggles</h4>
+      <p class="panel-hint" style="font-size:11px;margin-bottom:8px">Turn off any provider you don't want in the fallback chain. Pollinations always stays on as the no-key backstop.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px;color:var(--ink-mid)">
+        <label><input type="checkbox" id="t-poll" checked disabled> Pollinations</label>
+        <label><input type="checkbox" id="t-hf"> Hugging Face</label>
+        <label><input type="checkbox" id="t-cf"> Cloudflare</label>
+        <label><input type="checkbox" id="t-tg"> Together</label>
+        <label><input type="checkbox" id="t-fal"> Fal.ai</label>
+        <label><input type="checkbox" id="t-horde"> AI Horde</label>
+        <label><input type="checkbox" id="t-rep"> Replicate</label>
+        <label><input type="checkbox" id="t-img"> Imagen</label>
+      </div>
+    </div>
   </div>
 
   <!-- Step 4: Style -->
@@ -483,6 +513,9 @@ let C = {
   cfToken:    LS.getItem('ps_cftk') || '',
   cfAccount:  LS.getItem('ps_cfac') || '',
   togetherKey:LS.getItem('ps_tgk')  || '',
+  // Phase 1B Part 2 — additional image providers
+  falKey:     LS.getItem('ps_falk') || '',
+  replicateKey: LS.getItem('ps_repk') || '',
   // Anthropic excluded from default chat fallback chain because
   // requires anthropic-dangerous-direct-browser-access which exposes
   // the API key to anyone inspecting browser requests. Opt-in only.
@@ -491,7 +524,11 @@ let C = {
     pollinations: LS.getItem('ps_use_poll') !== '0',
     huggingface:  LS.getItem('ps_use_hf')   !== '0',
     cloudflare:   LS.getItem('ps_use_cf')   !== '0',
-    together:     LS.getItem('ps_use_tg')   !== '0'
+    together:     LS.getItem('ps_use_tg')   !== '0',
+    fal:          LS.getItem('ps_use_fal')  !== '0',
+    horde:        LS.getItem('ps_use_horde')!== '0',
+    replicate:    LS.getItem('ps_use_rep')  !== '0',
+    imagen:       LS.getItem('ps_use_img')  !== '0'
   },
   mode:       LS.getItem('ps_mode') || 'realistic',
 };
@@ -516,6 +553,15 @@ let img = null, generating = false, history = [];
   if(C.cfAccount)       document.getElementById('k-cf-acct').value=C.cfAccount;
   if(C.cfToken)         document.getElementById('k-cf-token').value=C.cfToken;
   if(C.togetherKey)     document.getElementById('k-together').value=C.togetherKey;
+  if(C.falKey)          document.getElementById('k-fal').value=C.falKey;
+  if(C.replicateKey)    document.getElementById('k-replicate').value=C.replicateKey;
+  document.getElementById('t-hf').checked    = C.useProvider.huggingface;
+  document.getElementById('t-cf').checked    = C.useProvider.cloudflare;
+  document.getElementById('t-tg').checked    = C.useProvider.together;
+  document.getElementById('t-fal').checked   = C.useProvider.fal;
+  document.getElementById('t-horde').checked = C.useProvider.horde;
+  document.getElementById('t-rep').checked   = C.useProvider.replicate;
+  document.getElementById('t-img').checked   = C.useProvider.imagen;
   document.getElementById('opt-allow-ant').checked = !!C.allowAnthropic;
   document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===C.mode));
   document.querySelectorAll('[data-orm]').forEach(b=>b.classList.toggle('active',b.dataset.orm===C.orModel));
@@ -591,7 +637,16 @@ function saveSettings(){
   C.cfAccount       =document.getElementById('k-cf-acct').value.trim();
   C.cfToken         =document.getElementById('k-cf-token').value.trim();
   C.togetherKey     =document.getElementById('k-together').value.trim();
+  C.falKey          =document.getElementById('k-fal').value.trim();
+  C.replicateKey    =document.getElementById('k-replicate').value.trim();
   C.allowAnthropic  =document.getElementById('opt-allow-ant').checked;
+  C.useProvider.huggingface = document.getElementById('t-hf').checked;
+  C.useProvider.cloudflare  = document.getElementById('t-cf').checked;
+  C.useProvider.together    = document.getElementById('t-tg').checked;
+  C.useProvider.fal         = document.getElementById('t-fal').checked;
+  C.useProvider.horde       = document.getElementById('t-horde').checked;
+  C.useProvider.replicate   = document.getElementById('t-rep').checked;
+  C.useProvider.imagen      = document.getElementById('t-img').checked;
   LS.setItem('ps_prov',C.provider); LS.setItem('ps_k_gemini',C.keys.gemini);
   LS.setItem('ps_k_or',C.keys.openrouter); LS.setItem('ps_k_cbr',C.keys.cerebras);
   LS.setItem('ps_k_ant',C.keys.anthropic); LS.setItem('ps_k_hfc',C.keys.hfchat);
@@ -599,8 +654,16 @@ function saveSettings(){
   LS.setItem('ps_hfimg',C.hfImgKey); LS.setItem('ps_orm',C.orModel);
   LS.setItem('ps_hfm',C.hfModel); LS.setItem('ps_mode',C.mode);
   LS.setItem('ps_cfac',C.cfAccount); LS.setItem('ps_cftk',C.cfToken);
-  LS.setItem('ps_tgk',C.togetherKey);
+  LS.setItem('ps_tgk',C.togetherKey); LS.setItem('ps_falk',C.falKey);
+  LS.setItem('ps_repk',C.replicateKey);
   LS.setItem('ps_allow_ant', C.allowAnthropic ? '1' : '0');
+  LS.setItem('ps_use_hf',    C.useProvider.huggingface ? '1' : '0');
+  LS.setItem('ps_use_cf',    C.useProvider.cloudflare  ? '1' : '0');
+  LS.setItem('ps_use_tg',    C.useProvider.together    ? '1' : '0');
+  LS.setItem('ps_use_fal',   C.useProvider.fal         ? '1' : '0');
+  LS.setItem('ps_use_horde', C.useProvider.horde       ? '1' : '0');
+  LS.setItem('ps_use_rep',   C.useProvider.replicate   ? '1' : '0');
+  LS.setItem('ps_use_img',   C.useProvider.imagen      ? '1' : '0');
   updatePill();
   if(C.provider && hasProviderAccess(C.provider))
     document.getElementById('setup-banner').classList.remove('on');
@@ -1015,17 +1078,194 @@ const IMAGE_PROVIDERS = [
       const b = await imgR.blob();
       return URL.createObjectURL(b);
     }
+  },
+  // 5. Fal.ai — free credits, very fast FLUX-schnell
+  {
+    id: 'fal',
+    name: 'Fal.ai',
+    needsKey: true,
+    enabled: () => !!C.falKey && C.useProvider.fal !== false,
+    gen: async (prompt) => {
+      const r = await fetch('https://fal.run/fal-ai/flux/schnell', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Key ' + C.falKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          prompt: prompt.slice(0, 1500),
+          image_size: 'square_hd',
+          num_inference_steps: 4,
+          num_images: 1
+        })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'Fal.ai'));
+      const data = await r.json();
+      const u = data.images?.[0]?.url;
+      if (!u) throw new Error('Fal.ai empty response');
+      const imgR = await fetch(u);
+      const b = await imgR.blob();
+      return URL.createObjectURL(b);
+    }
+  },
+  // 6. AI Horde — anonymous mode (no key); volunteer GPUs, slow but
+  //    truly free. Async submit + poll. Best as last-resort fallback.
+  {
+    id: 'horde',
+    name: 'AI Horde',
+    needsKey: false,
+    enabled: () => C.useProvider.horde !== false,
+    gen: async (prompt) => {
+      const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
+        method: 'POST',
+        headers: { 'apikey': '0000000000', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: prompt.slice(0, 1500),
+          params: { sampler_name: 'k_euler_a', cfg_scale: 7, steps: 20,
+                    width: 512, height: 512, n: 1 },
+          nsfw: false, censor_nsfw: true, models: ['stable_diffusion']
+        })
+      });
+      if (!sub.ok) throw new Error(await readError(sub, 'AI Horde'));
+      const { id } = await sub.json();
+      if (!id) throw new Error('AI Horde no id');
+      // Poll up to ~3 minutes (volunteer GPUs are slow)
+      for (let i = 0; i < 36; i++) {
+        await new Promise(r => setTimeout(r, 5000));
+        const ck = await fetch('https://stablehorde.net/api/v2/generate/check/' + id);
+        if (!ck.ok) continue;
+        const st = await ck.json();
+        if (st.done) {
+          const fin = await fetch('https://stablehorde.net/api/v2/generate/status/' + id);
+          const data = await fin.json();
+          const g = data.generations?.[0]?.img;
+          if (!g) throw new Error('AI Horde empty result');
+          if (/^https?:\/\//i.test(g)) {
+            const r2 = await fetch(g);
+            const b = await r2.blob();
+            return URL.createObjectURL(b);
+          }
+          const bin = atob(g);
+          const bytes = new Uint8Array(bin.length);
+          for (let j = 0; j < bin.length; j++) bytes[j] = bin.charCodeAt(j);
+          return URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
+        }
+      }
+      throw new Error('AI Horde timeout (~3 min)');
+    }
+  },
+  // 7. Replicate — free signup credit (~$0.10), then pay-as-you-go.
+  //    Most model variety. FLUX-schnell as default for parity.
+  {
+    id: 'replicate',
+    name: 'Replicate',
+    needsKey: true,
+    enabled: () => !!C.replicateKey && C.useProvider.replicate !== false,
+    gen: async (prompt) => {
+      // FLUX-schnell version hash (model: black-forest-labs/flux-schnell)
+      const sub = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Token ' + C.replicateKey,
+          'Content-Type': 'application/json',
+          'Prefer': 'wait'
+        },
+        body: JSON.stringify({
+          input: { prompt: prompt.slice(0, 1500), num_outputs: 1, aspect_ratio: '1:1' }
+        })
+      });
+      if (!sub.ok) throw new Error(await readError(sub, 'Replicate'));
+      const data = await sub.json();
+      let outUrl = Array.isArray(data.output) ? data.output[0] : data.output;
+      // If still processing (Prefer:wait timed out), poll briefly
+      if (!outUrl && data.urls?.get) {
+        for (let i = 0; i < 20; i++) {
+          await new Promise(r => setTimeout(r, 2000));
+          const p = await fetch(data.urls.get, { headers: { 'Authorization': 'Token ' + C.replicateKey } });
+          const pd = await p.json();
+          if (pd.status === 'succeeded') {
+            outUrl = Array.isArray(pd.output) ? pd.output[0] : pd.output;
+            break;
+          }
+          if (pd.status === 'failed' || pd.status === 'canceled') {
+            throw new Error('Replicate ' + pd.status);
+          }
+        }
+      }
+      if (!outUrl) throw new Error('Replicate empty result');
+      const r2 = await fetch(outUrl);
+      const b = await r2.blob();
+      return URL.createObjectURL(b);
+    }
+  },
+  // 8. Google Imagen 3 — uses the existing Gemini API key
+  {
+    id: 'imagen',
+    name: 'Google Imagen',
+    needsKey: true,
+    enabled: () => !!C.keys.gemini && C.useProvider.imagen !== false,
+    gen: async (prompt) => {
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:generateImage?key=' + encodeURIComponent(C.keys.gemini);
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: { text: prompt.slice(0, 1500) },
+          parameters: { sampleCount: 1, aspectRatio: '1:1' }
+        })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'Imagen'));
+      const data = await r.json();
+      const b64 = data.generatedImages?.[0]?.image?.imageBytes;
+      if (!b64) throw new Error('Imagen empty result');
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
+    }
   }
 ];
 
-/* Try each enabled provider in order; silent skip on failure.
-   Pollinations always included as last-resort backstop since it
-   needs no key. */
+/* Provider health-board — circuit-breaker pattern.
+   3+ failures in the last 5 minutes = skip this provider for the
+   next 5 minutes. Auto-recovers when the failure window passes. */
+const PROVIDER_HEALTH = (function loadHealth() {
+  try { return JSON.parse(LS.getItem('ps_health') || '{}'); } catch (e) { return {}; }
+})();
+function saveHealth() { try { LS.setItem('ps_health', JSON.stringify(PROVIDER_HEALTH)); } catch (e) {} }
+function recordSuccess(id) {
+  const h = PROVIDER_HEALTH[id] || (PROVIDER_HEALTH[id] = { ok: 0, fail: 0, lastFail: 0 });
+  h.ok++; saveHealth();
+}
+function recordFailure(id) {
+  const h = PROVIDER_HEALTH[id] || (PROVIDER_HEALTH[id] = { ok: 0, fail: 0, lastFail: 0 });
+  h.fail++; h.lastFail = Date.now(); saveHealth();
+}
+function isHealthy(id) {
+  const h = PROVIDER_HEALTH[id]; if (!h) return true;
+  const window = 5 * 60 * 1000;
+  // Reset stale fail count if outside the window
+  if (Date.now() - h.lastFail > window) {
+    if (h.fail) { h.fail = 0; saveHealth(); }
+    return true;
+  }
+  return h.fail < 3;
+}
+
+/* Try each enabled+healthy provider in order; silent skip on failure
+   and bump health counters. AI Horde is moved to the very end since
+   it polls for ~3 min — only used as truly last resort. Pollinations
+   always included as a final no-key backstop. */
 async function imageGenWithFallback(prompt, imgData) {
-  let providers = IMAGE_PROVIDERS.filter(p => p.enabled());
+  let providers = IMAGE_PROVIDERS.filter(p => p.enabled() && isHealthy(p.id));
+  // Move AI Horde to the end (slow async polling)
+  const horde = providers.find(p => p.id === 'horde');
+  if (horde) providers = providers.filter(p => p.id !== 'horde').concat(horde);
+  // Always include Pollinations as backstop, even if marked unhealthy,
+  // because it needs no key — it's the only thing guaranteed to work.
   if (!providers.find(p => p.id === 'pollinations'))
     providers.push(IMAGE_PROVIDERS[0]);
-  // If user attached an image, prefer providers that support img2img
+  // Prefer img2img-capable providers when the user attached an image
   if (imgData) {
     const img2img = providers.filter(p => p.supportsImg2Img);
     const others  = providers.filter(p => !p.supportsImg2Img);
@@ -1035,9 +1275,13 @@ async function imageGenWithFallback(prompt, imgData) {
   for (const p of providers) {
     try {
       const url = await p.gen(prompt, imgData);
-      if (url) return { url, providerId: p.id, providerName: p.name };
+      if (url) {
+        recordSuccess(p.id);
+        return { url, providerId: p.id, providerName: p.name };
+      }
     } catch (e) {
       console.warn('[Image] ' + p.name + ' failed:', e.message);
+      recordFailure(p.id);
       lastErr = e;
     }
   }
