@@ -1005,25 +1005,56 @@ async function pipeline(prompt, imgData, tid) {
     }
     // Wave 6.5 — Specialty manipulation router. Detects bg-remove /
     // upscale / face-restore intents and routes to dedicated HF
-    // Inference endpoints instead of generic image gen. Runs BEFORE
-    // the AI image path so a "remove background" request never gets
-    // sent to Pollinations as a text-to-image prompt.
+    // Inference endpoints. Runs BEFORE the AI image path so a "remove
+    // background" request never gets sent to Pollinations as a text-
+    // to-image prompt.
+    let manipBlocked = false;
+    let manipBlockedMsg = '';
     if (!resultUrl && imgData && prompt) {
       const manipOp = detectManipulation(prompt);
       if (manipOp) {
-        // Update status while the model warms up (HF cold start ~20s)
-        const tEl = document.getElementById(tid);
-        if (tEl) {
-          const bub = tEl.querySelector('.bubble');
-          if (bub) bub.innerHTML = '<div style="color:var(--ink-mid);font-size:13px">' +
-            esc(manipOp.statusText) + '</div>';
-        }
-        const manip = await tryManipulation(prompt, imgData);
-        if (manip) {
-          resultUrl = manip.url;
-          imageProvUsed = manip.opName + ' (HF)';
+        if (!manipOp.needsKey()) {
+          // No HF token — surface as a clear chat message instead of
+          // silently falling through to text-to-image generation
+          manipBlocked = true;
+          manipBlockedMsg = manipOp.keyHint || ('Sorry — ' + manipOp.name +
+            ' needs a free Hugging Face token. Add one in Settings → Step 2.');
+        } else {
+          // Update status while the model warms up (HF cold start ~20s)
+          const tEl = document.getElementById(tid);
+          if (tEl) {
+            const bub = tEl.querySelector('.bubble');
+            if (bub) bub.innerHTML = '<div style="color:var(--ink-mid);font-size:13px">' +
+              esc(manipOp.statusText) + '</div>';
+          }
+          try {
+            const manip = await tryManipulation(prompt, imgData);
+            if (manip) {
+              resultUrl = manip.url;
+              imageProvUsed = manip.opName + ' (HF)';
+            } else {
+              // tryManipulation returned null → op missed or failed
+              // silently. Block the text-to-image fallthrough since
+              // the user clearly wanted the specialty op.
+              manipBlocked = true;
+              manipBlockedMsg = manipOp.name + ' didn\'t return a result. Try again in a few seconds — HF models go cold after idle and the first call wakes them up.';
+            }
+          } catch (e) {
+            manipBlocked = true;
+            manipBlockedMsg = manipOp.name + ' failed: ' +
+              ((e && e.message) || 'unknown error') +
+              '. Try again, or remove the keywords to use generic image gen instead.';
+          }
         }
       }
+    }
+    // If a specialty op was attempted but blocked, short-circuit the
+    // pipeline — render the blocked message as the AI reply so the
+    // user sees clear feedback instead of a confused gen.
+    if (manipBlocked) {
+      removeTyping(tid);
+      addAIMsg(manipBlockedMsg, null, 'system', null, []);
+      return; // finally block handles generating=false + updSend()
     }
     const sdMatch = reply.match(/SD_PROMPT:\s*(.+)/s);
     const editVerb = prompt && /\b(make|create|generate|edit|change|add|remove|turn|transform|render|draw|paint|illustrate|design|stylize|convert|colour|color|crop|enhance|fix|retouch)\b/i.test(prompt);
@@ -1637,15 +1668,19 @@ const MANIPULATION_OPS = [
     run: async (imgData) => {
       // briaai/RMBG-1.4 — most-popular open-source bg removal model.
       // Free tier on HF Inference; takes binary image, returns
-      // RGBA PNG with alpha channel.
-      const r = await fetch('https://api-inference.huggingface.co/models/briaai/RMBG-1.4', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + C.hfImgKey,
-          'Content-Type': imgData.mime || 'image/png'
-        },
-        body: await (await fetch(imgData.dataUrl)).blob()
-      });
+      // RGBA PNG with alpha channel. 90s timeout covers HF cold start.
+      const reqBlob = await (await fetch(imgData.dataUrl)).blob();
+      const r = await withTimeout(fetch(
+        'https://api-inference.huggingface.co/models/briaai/RMBG-1.4',
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + C.hfImgKey,
+            'Content-Type': imgData.mime || 'image/png'
+          },
+          body: reqBlob
+        }
+      ), 90000, 'rembg');
       if (r.status === 503) {
         throw new Error('rembg model warming up (~20s cold start). Try again in a few seconds.');
       }
@@ -1716,6 +1751,21 @@ function isHealthy(id) {
   return h.fail < 3;
 }
 
+/* Promise timeout helper — wraps an awaitable so a stuck network /
+   sleeping HF Space / unresponsive LLM doesn't freeze the UI forever.
+   On timeout, throws a clean message the caller can surface. */
+function withTimeout(promise, ms, label) {
+  return new Promise(function (resolve, reject) {
+    var timer = setTimeout(function () {
+      reject(new Error((label || 'request') + ' timed out after ' + Math.round(ms/1000) + 's'));
+    }, ms);
+    Promise.resolve(promise).then(
+      function (v) { clearTimeout(timer); resolve(v); },
+      function (e) { clearTimeout(timer); reject(e); }
+    );
+  });
+}
+
 /* ──────────────────────────────────────────────────────────────
    Wave 6 — SPEC PIPELINE A: Vision / Image Analysis
    ──────────────────────────────────────────────────────────────
@@ -1760,7 +1810,13 @@ async function analyzeImageWithVision(imgData) {
     '  "recommended_edit_prompt": "", "can_edit_directly": true\n' +
     '}';
   try {
-    const reply = await callProvider(provider, visionPrompt, imgData);
+    // 30s timeout — Puter / Gemini vision should reply well under that.
+    // Without a timeout, a stuck call freezes the "Analyzing image" pill.
+    const reply = await withTimeout(
+      callProvider(provider, visionPrompt, imgData),
+      30000,
+      'Vision analysis'
+    );
     // LLMs often wrap JSON in ```json ... ``` fences or add
     // commentary. Extract the first {...} block we find.
     const m = reply.match(/\{[\s\S]*\}/);
@@ -1799,7 +1855,12 @@ function refreshAnalyzePill(state) {
   } else if (state === 'ready') {
     lbl.textContent = '✓ Profile ready — refining';
   } else if (state === 'failed') {
-    // Silent fail — leave the existing label, fall back to old behavior
+    // v17dj fix — was silently leaving "✨ Analyzing image…" frozen
+    // on screen forever. Now revert to the source filename or a clear
+    // "ready (no profile)" label so user knows analysis stopped.
+    lbl.textContent = (img && img.name)
+      ? img.name + ' (analysis unavailable)'
+      : 'Image ready';
   }
 }
 

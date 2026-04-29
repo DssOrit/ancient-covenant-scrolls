@@ -8,9 +8,11 @@ execute without asking the user to re-explain.
 
 ## ⚡ CURRENT STATE (updated after every verified milestone)
 
-**Last shipped tip (awaiting user verification):** `v17di` — Wave 6.5 Part 1 (specialty manipulation router + HF rembg)
+**Last shipped tip (awaiting user verification):** `v17dj` — Wave 6.5 Part 1 + bug fixes (timeouts, stuck-state cleanup, no-token feedback as chat message)
 **Last user-verified tip:** `v17dh` — Wave 6 Vision pipeline (image-prompt-v12)
 **Verified backup:** `backup/2026-04-29-v17dh`
+
+**Known issue v17di → fixed in v17dj:** "Analyzing image" pill could get stuck if vision call hung (no timeout). Bg-removal silently fell through to text-to-image when HF token was missing. v17dj adds 30s vision timeout, 90s HF specialty timeout, clears the analyzing pill on failure (shows filename + "(analysis unavailable)"), and renders missing-token feedback as a clear chat message (not just a toast).
 
 **Active project:** Image Prompt — multi-pipeline build per `PLAN_IMAGE_PROMPT_v3.md`. User direction (2026-04-29): build the full v3 spec in waves, never use pay-per-use providers, save ComfyUI server work for later.
 
