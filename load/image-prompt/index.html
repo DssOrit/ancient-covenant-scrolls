@@ -628,7 +628,12 @@ let C = {
     deepinfra:    LS.getItem('ps_use_di')   !== '0',
     stability:    LS.getItem('ps_use_st')   !== '0',
     deepai:       LS.getItem('ps_use_dai')  !== '0',
-    hyperbolic:   LS.getItem('ps_use_hyp')  !== '0'
+    hyperbolic:   LS.getItem('ps_use_hyp')  !== '0',
+    pollflux:     LS.getItem('ps_use_pflux')   !== '0',
+    pollturbo:    LS.getItem('ps_use_pturbo')  !== '0',
+    hordesdxl:    LS.getItem('ps_use_hsdxl')   !== '0',
+    cfsdxllight:  LS.getItem('ps_use_cfsdxl')  !== '0',
+    hfsdxlturbo:  LS.getItem('ps_use_hfturbo') !== '0'
   },
   mode:       LS.getItem('ps_mode') || 'realistic',
 };
@@ -1495,6 +1500,164 @@ const IMAGE_PROVIDERS = [
       if (!u) throw new Error('DeepAI empty');
       const r2 = await fetch(u);
       const b = await r2.blob();
+      return URL.createObjectURL(b);
+    }
+  },
+  // 8. Pollinations Flux variant — same free endpoint as #1, but
+  //    requests the flux model for sharper photoreal output. No key.
+  {
+    id: 'pollflux',
+    name: 'Pollinations Flux',
+    needsKey: false,
+    enabled: () => C.useProvider.pollflux !== false,
+    gen: async (prompt) => {
+      const seed = Math.floor(Math.random() * 999999);
+      const params = new URLSearchParams({
+        model: 'flux', width: '1024', height: '1024',
+        nologo: 'true', seed: String(seed)
+      });
+      const url = 'https://image.pollinations.ai/prompt/' +
+        encodeURIComponent(prompt.slice(0,1500)) + '?' + params;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('Pollinations Flux ' + r.status);
+      const b = await r.blob();
+      if (!b.type.startsWith('image/')) throw new Error('Pollinations Flux non-image');
+      return URL.createObjectURL(b);
+    }
+  },
+  // 9. Pollinations Turbo — same free endpoint, fastest path
+  //    (low-step model) for quick draft renders. No key.
+  {
+    id: 'pollturbo',
+    name: 'Pollinations Turbo',
+    needsKey: false,
+    enabled: () => C.useProvider.pollturbo !== false,
+    gen: async (prompt) => {
+      const seed = Math.floor(Math.random() * 999999);
+      const params = new URLSearchParams({
+        model: 'turbo', width: '1024', height: '1024',
+        nologo: 'true', seed: String(seed)
+      });
+      const url = 'https://image.pollinations.ai/prompt/' +
+        encodeURIComponent(prompt.slice(0,1500)) + '?' + params;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('Pollinations Turbo ' + r.status);
+      const b = await r.blob();
+      if (!b.type.startsWith('image/')) throw new Error('Pollinations Turbo non-image');
+      return URL.createObjectURL(b);
+    }
+  },
+  // 10. AI Horde — SDXL model slot. Same anonymous endpoint as #5
+  //     but requests stable_diffusion_xl for higher-quality output.
+  //     Still no key, still volunteer GPUs (slow ~1-3 min).
+  {
+    id: 'hordesdxl',
+    name: 'AI Horde SDXL',
+    needsKey: false,
+    enabled: () => C.useProvider.hordesdxl !== false,
+    gen: async (prompt) => {
+      const body = {
+        prompt: prompt.slice(0, 1500),
+        params: {
+          sampler_name: 'k_euler_a', cfg_scale: 7, steps: 25,
+          width: 1024, height: 1024, n: 1
+        },
+        nsfw: false, censor_nsfw: true,
+        models: ['SDXL 1.0']
+      };
+      const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
+        method: 'POST',
+        headers: { 'apikey': '0000000000', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!sub.ok) throw new Error(await readError(sub, 'AI Horde SDXL'));
+      const { id } = await sub.json();
+      if (!id) throw new Error('AI Horde SDXL no id');
+      for (let i = 0; i < 36; i++) {
+        await new Promise(r => setTimeout(r, 5000));
+        const ck = await fetch('https://stablehorde.net/api/v2/generate/check/' + id);
+        if (!ck.ok) continue;
+        const st = await ck.json();
+        if (st.done) {
+          const fin = await fetch('https://stablehorde.net/api/v2/generate/status/' + id);
+          const data = await fin.json();
+          const g = data.generations?.[0]?.img;
+          if (!g) throw new Error('AI Horde SDXL empty result');
+          if (/^https?:\/\//i.test(g)) {
+            const r2 = await fetch(g);
+            const b = await r2.blob();
+            return URL.createObjectURL(b);
+          }
+          const bin = atob(g);
+          const bytes = new Uint8Array(bin.length);
+          for (let j = 0; j < bin.length; j++) bytes[j] = bin.charCodeAt(j);
+          return URL.createObjectURL(new Blob([bytes], { type: 'image/webp' }));
+        }
+      }
+      throw new Error('AI Horde SDXL timeout (~3 min)');
+    }
+  },
+  // 11. Cloudflare SDXL-Lightning — same free CF account/token as #3
+  //     but a different model (bytedance/stable-diffusion-xl-lightning).
+  //     Sharper than flux-schnell for photoreal subjects.
+  {
+    id: 'cfsdxllight',
+    name: 'Cloudflare SDXL-Lightning',
+    needsKey: true,
+    enabled: () => !!(C.cfToken && C.cfAccount) && C.useProvider.cfsdxllight !== false,
+    gen: async (prompt) => {
+      const url = 'https://api.cloudflare.com/client/v4/accounts/' +
+        C.cfAccount + '/ai/run/@cf/bytedance/stable-diffusion-xl-lightning';
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.cfToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: prompt.slice(0,1500) })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'Cloudflare SDXL-Lightning'));
+      const ct = r.headers.get('content-type') || '';
+      if (ct.includes('image/')) {
+        const b = await r.blob();
+        return URL.createObjectURL(b);
+      }
+      const data = await r.json();
+      const b64 = data.result?.image;
+      if (!b64) throw new Error('Cloudflare SDXL-Lightning empty result');
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
+    }
+  },
+  // 12. Hugging Face SDXL-Turbo — same free HF token as #2 but a
+  //     dedicated single-model slot. Useful when the main HF cascade
+  //     is failing — this slot tries SDXL-Turbo directly.
+  {
+    id: 'hfsdxlturbo',
+    name: 'HF SDXL-Turbo',
+    needsKey: true,
+    enabled: () => !!C.hfImgKey && C.useProvider.hfsdxlturbo !== false,
+    gen: async (prompt) => {
+      const r = await fetch('https://api-inference.huggingface.co/models/stabilityai/sdxl-turbo', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.hfImgKey,
+          'Content-Type': 'application/json',
+          'Accept': 'image/png'
+        },
+        body: JSON.stringify({
+          inputs: prompt.slice(0,1500),
+          parameters: { num_inference_steps: 4, guidance_scale: 0 }
+        })
+      });
+      if (!r.ok) throw new Error(await readError(r, 'HF SDXL-Turbo'));
+      const ct = r.headers.get('content-type') || '';
+      if (!ct.startsWith('image/')) {
+        throw new Error('HF SDXL-Turbo non-image response');
+      }
+      const b = await r.blob();
       return URL.createObjectURL(b);
     }
   }
