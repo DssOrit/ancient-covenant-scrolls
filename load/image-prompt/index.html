@@ -1008,18 +1008,42 @@ async function pipeline(prompt, imgData, tid) {
     const editVerb = prompt && /\b(make|create|generate|edit|change|add|remove|turn|transform|render|draw|paint|illustrate|design|stylize|convert|colour|color|crop|enhance|fix|retouch)\b/i.test(prompt);
     const wantsImage = !resultUrl && (!!sdMatch || (imgData && editVerb));
     if (wantsImage) {
-      const cleanPrompt = sdMatch
-        ? sdMatch[1].trim().slice(0, 800)
-        : ((prompt || 'high quality photo') + (C.mode ? ', ' + C.mode + ' style' : '')).slice(0, 800);
+      let cleanPrompt;
+      if (sdMatch) {
+        cleanPrompt = sdMatch[1].trim().slice(0, 800);
+      } else {
+        // Fallback when LLM did not emit SD_PROMPT: pull the user's
+        // actual ask out of the augmented Scene Lock prompt and
+        // combine it with the previous SD_PROMPT for continuity. This
+        // prevents shipping the giant preservation template to a
+        // text-to-image provider (which would produce a blurry rerun
+        // of the previous scene with the user's edit ignored).
+        const userMatch = (prompt || '').match(/USER REFINEMENT[^:]*:\s*(.+?)(?:\n|$)/i);
+        const userAsk = userMatch ? userMatch[1].trim() : (prompt || '').slice(0, 200);
+        const baseScene = lastSDPrompt ? lastSDPrompt.slice(0, 500) : '';
+        cleanPrompt = (baseScene ? (baseScene + ', ' + userAsk) : userAsk)
+          .slice(0, 800) + (C.mode ? ', ' + C.mode + ' style' : '');
+      }
       try {
-        const result = await imageGenWithFallback(cleanPrompt, imgData);
+        // Single image-task facade: classifies task, injects character
+        // profile if active, routes to img2img-class providers first,
+        // soft-falls to text-to-image with Scene Lock context if no
+        // img2img provider is configured.
+        const result = await runImageTask({
+          prompt: cleanPrompt,
+          sourceImage: imgData,
+          characterProfile: CHAR.mode ? {
+            description: CHAR.description, outfit: CHAR.outfit,
+            style: CHAR.style, seed: CHAR.seed
+          } : null
+        });
         resultUrl = result.url;
         imageProvUsed = result.providerName;
       } catch (e) {
         if (e && e.message === 'NO_EDIT_PROVIDER') {
-          // Edit task with no img2img provider configured — surface a
-          // ready-to-paste ComfyUI / A1111 / Fooocus prompt rather than
-          // silently regenerating from text (which would cause drift).
+          // Edit task with no img2img provider AND text-to-image also
+          // exhausted — surface a ready-to-paste ComfyUI / A1111 /
+          // Fooocus prompt rather than silently regenerating.
           exportPromptText = buildSDExportPrompt(cleanPrompt, lastSDPrompt);
         } else {
           console.warn('[Image] all providers failed:', e.message || e);
@@ -1302,24 +1326,68 @@ async function callHFChat(prompt) {
   return Array.isArray(d)?d[0]?.generated_text?.split('Assistant:').pop()?.trim()||prompt:prompt;
 }
 
-/* ── TASK CLASSIFIER + ROUTING ── */
+/* ── TASK CLASSIFIER + ROUTING ──
+   Canonical task types (per PLAN_LOAD_AI.md):
+     generate, improve, add_person, modify_character,
+     change_background, remove_object, inpaint, mask_edit,
+     upscale, background_removal */
 function classifyImageTask(prompt, hasImage) {
   const p = (prompt || '').toLowerCase();
   if (!hasImage) return 'generate';
+  // Background removal vs replacement: removal first (cut-out / transparent),
+  // change_background catches "change/replace/swap background" and
+  // background-as-noun edit phrasing.
   if (/\b(remove\s*background|cut\s*out|isolate|transparent\s*bg|alpha\s*channel)\b/.test(p)) return 'background_removal';
-  if (/\b(upscale|enhance|hd|higher\s+res|upres|hi[\s-]?res|2x|4x|sharper|crisp(er)?)\b/.test(p)) return 'upscale';
+  if (/\b(change|replace|swap|new)\s+(the\s+)?background\b/.test(p) || /\bbackground\b/.test(p)) return 'change_background';
+  if (/\b(remove|delete|erase|get\s*rid\s*of)\b/.test(p)) return 'remove_object';
+  if (/\b(add\s+(a\s+|an\s+|another\s+)?(person|man|woman|child|figure|character|someone)|put\s+(a\s+|an\s+)?(person|man|woman|child)\s+in)\b/.test(p)) return 'add_person';
+  if (/\b(upscale|enhance|hd|higher\s+res|upres|hi[\s-]?res|2x|4x|sharper|crisp(er)?|improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p)) return /\b(improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p) ? 'improve' : 'upscale';
+  if (/\b(modify|change|alter)\s+(the\s+)?(character|person|face|hair|outfit|clothing|expression|pose)\b/.test(p)) return 'modify_character';
   if (/\b(mask|inpaint|fill\s*in|paint\s*over|select(ed)?\s*area|only\s*the|just\s*the)\b/.test(p)) return 'inpaint';
   return 'img2img';
 }
 
 function filterImageProvidersForTask(providers, task) {
   if (task === 'generate') return providers;
-  if (task === 'img2img' || task === 'inpaint' || task === 'mask_edit') {
+  // Edit-class tasks all need img2img-capable providers
+  const editClass = ['img2img', 'inpaint', 'mask_edit', 'improve',
+                     'add_person', 'modify_character',
+                     'change_background', 'remove_object'];
+  if (editClass.indexOf(task) !== -1) {
     return providers.filter(p => p.supportsImg2Img === true);
   }
   if (task === 'background_removal') return providers.filter(p => p.supportsBgRemoval === true);
   if (task === 'upscale') return providers.filter(p => p.supportsUpscale === true);
   return providers;
+}
+
+/* ── runImageTask — single facade for every image task in the app.
+   Per Load AI build plan: UI edit buttons, starter chips, send-button
+   image gen — they all call this. It classifies the task (or accepts
+   an explicit taskType), assembles the consistency-aware prompt, and
+   delegates to imageGenWithFallback which handles capability filtering,
+   provider fallback, output validation, and the export-prompt rescue. */
+async function runImageTask(opts) {
+  opts = opts || {};
+  const prompt          = opts.prompt || '';
+  const sourceImage     = opts.sourceImage || null;          // {base64, mime, dataUrl, name}
+  const mask            = opts.mask || null;                 // reserved for future inpaint
+  const characterProfile= opts.characterProfile || null;     // {description, outfit, style, seed} or null
+  const taskType        = opts.taskType || classifyImageTask(prompt, !!sourceImage);
+  // Build prompt with character profile injected if provided/active
+  let finalPrompt = prompt;
+  if (characterProfile && (characterProfile.description || characterProfile.outfit || characterProfile.style)) {
+    const bits = [characterProfile.description, characterProfile.outfit, characterProfile.style].filter(Boolean);
+    finalPrompt = 'CHARACTER: ' + bits.join(' | ') + '\nLOCK these descriptors verbatim across every refinement.\n\n' + finalPrompt;
+  } else if (CHAR.mode) {
+    finalPrompt = injectCharacterContext(finalPrompt);
+  }
+  // Tag the task on the prompt so imageGenWithFallback's classifier
+  // can short-circuit (its classifier sees the tag and returns the
+  // explicit type). This avoids re-classifying and lets explicit UI
+  // buttons override keyword detection.
+  if (opts.taskType) finalPrompt = '[TASK:' + taskType + ']\n' + finalPrompt;
+  return await imageGenWithFallback(finalPrompt, sourceImage, { taskType: taskType, mask: mask });
 }
 
 /* ── CHARACTER CONSISTENCY — localStorage-backed slot.
@@ -1930,8 +1998,22 @@ function isHealthy(id) {
    and bump health counters. AI Horde is moved to the very end since
    it polls for ~3 min — only used as truly last resort. Pollinations
    always included as a final no-key backstop. */
-async function imageGenWithFallback(prompt, imgData) {
-  const task = classifyImageTask(prompt, !!imgData);
+async function imageGenWithFallback(prompt, imgData, opts) {
+  opts = opts || {};
+  // Strip any leading [TASK:xxx] tag from the prompt the LLM emits and
+  // honour it as an explicit task override. Otherwise classify from text.
+  let task = opts.taskType;
+  if (!task) {
+    const tagMatch = (prompt || '').match(/^\[TASK:([a-z_]+)\]\s*/);
+    if (tagMatch) {
+      task = tagMatch[1];
+      prompt = prompt.slice(tagMatch[0].length);
+    } else {
+      task = classifyImageTask(prompt, !!imgData);
+    }
+  } else {
+    prompt = (prompt || '').replace(/^\[TASK:[a-z_]+\]\s*/, '');
+  }
   let providers = IMAGE_PROVIDERS.filter(p => p.enabled() && isHealthy(p.id));
   // Always include Pollinations as backstop, even if marked unhealthy,
   // because it needs no key — it's the only thing guaranteed to work.
@@ -1963,14 +2045,22 @@ async function imageGenWithFallback(prompt, imgData) {
       ...(horde ? [horde] : [])
     ];
   }
-  // Hard route: edits/preservation tasks must run on img2img-class
-  // providers — never silently fall back to text-to-image, which is
-  // the bug that caused multi-turn character drift.
-  providers = filterImageProvidersForTask(providers, task);
-  if (!providers.length && task !== 'generate') {
-    const err = new Error('NO_EDIT_PROVIDER');
-    err.task = task;
-    throw err;
+  // Soft route: prefer img2img-class providers for edit tasks, but
+  // fall back to text-to-image with strong Scene Lock + character
+  // context if no img2img provider is configured. Hard-blocking
+  // every edit when the user has no HF/Gemini key would break the
+  // app for default users; the export-prompt rescue still fires
+  // when even the text-to-image fallback fails (catch in caller).
+  const filtered = filterImageProvidersForTask(providers, task);
+  const editClass = task !== 'generate';
+  if (filtered.length) {
+    providers = filtered;
+  } else if (editClass) {
+    // Keep providers as-is (text-to-image fallback). The Scene Lock
+    // and character context already injected upstream carry the
+    // identity-preservation work the LLM and providers can do.
+    console.warn('[Image] no img2img provider for task ' + task +
+      '; falling back to text-to-image with Scene Lock + character context');
   }
   let lastErr = null;
   for (const p of providers) {
