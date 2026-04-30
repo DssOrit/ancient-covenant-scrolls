@@ -1855,23 +1855,30 @@ function classifyImageTask(prompt, hasImage) {
   // Treat as a localized inpaint, not a full-scene regen.
   if (/\b(add|put|place|insert|include)\s+(a\s+|an\s+|another\s+|some\s+)?[a-z]+/.test(p)) return 'add_object';
   if (/\b(upscale|enhance|hd|higher\s+res|upres|hi[\s-]?res|2x|4x|sharper|crisp(er)?|improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p)) return /\b(improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p) ? 'improve' : 'upscale';
+  // Face restoration: "smooth skin", "fix my face", "retouch", "restore face".
+  // Routes to GFPGAN / CodeFormer (taskOnly providers).
+  if (/\b(smooth\s+(my\s+)?skin|fix\s+(my\s+)?face|retouch(\s+(my\s+)?(face|skin))?|restore\s+(my\s+)?face|repair\s+(my\s+)?face|de.?blur|sharpen\s+(my\s+)?face)\b/.test(p)) return 'face_restore';
   if (/\b(modify|change|alter)\s+(the\s+)?(character|person|face|hair|outfit|clothing|expression|pose)\b/.test(p)) return 'modify_character';
   if (/\b(mask|inpaint|fill\s*in|paint\s*over|select(ed)?\s*area|only\s*the|just\s*the)\b/.test(p)) return 'inpaint';
   return 'img2img';
 }
 
 function filterImageProvidersForTask(providers, task) {
-  if (task === 'generate') return providers;
+  // taskOnly providers (Real-ESRGAN, GFPGAN, CodeFormer) only run when
+  // the task explicitly matches their specialty. For everything else,
+  // strip them so they can't pollute the generic chain.
+  if (task === 'generate') return providers.filter(p => !p.taskOnly);
   // Edit-class tasks all need img2img-capable providers
   const editClass = ['img2img', 'inpaint', 'mask_edit', 'improve',
                      'add_object', 'modify_character',
                      'change_background', 'remove_object'];
   if (editClass.indexOf(task) !== -1) {
-    return providers.filter(p => p.supportsImg2Img === true);
+    return providers.filter(p => p.supportsImg2Img === true && !p.taskOnly);
   }
   if (task === 'background_removal') return providers.filter(p => p.supportsBgRemoval === true);
   if (task === 'upscale') return providers.filter(p => p.supportsUpscale === true);
-  return providers;
+  if (task === 'face_restore') return providers.filter(p => p.supportsFaceRestore === true);
+  return providers.filter(p => !p.taskOnly);
 }
 
 /* ── runImageTask — single facade for every image task in the app.
@@ -2594,8 +2601,6 @@ const IMAGE_PROVIDERS = [
     name: 'Real-ESRGAN (HF)',
     needsKey: true,
     enabled: () => !!C.hfImgKey && C.useProvider.realesrgan !== false,
-    supportsImg2Img: true,
-    supportsImageInput: true,
     supportsImageOutput: true,
     supportsUpscale: true,
     taskOnly: true,
@@ -2612,9 +2617,9 @@ const IMAGE_PROVIDERS = [
     name: 'GFPGAN (face restore)',
     needsKey: true,
     enabled: () => !!C.hfImgKey && C.useProvider.gfpgan !== false,
-    supportsImg2Img: true,
-    supportsImageInput: true,
     supportsImageOutput: true,
+    supportsFaceRestore: true,
+    taskOnly: true,
     gen: async (prompt, imgData) => {
       if (!imgData) throw new Error('GFPGAN requires source image');
       const blob = await hfImageCall('TencentARC/GFPGAN', '', imgData, null);
@@ -2629,9 +2634,9 @@ const IMAGE_PROVIDERS = [
     name: 'CodeFormer (face restore)',
     needsKey: true,
     enabled: () => !!C.hfImgKey && C.useProvider.codeformer !== false,
-    supportsImg2Img: true,
-    supportsImageInput: true,
     supportsImageOutput: true,
+    supportsFaceRestore: true,
+    taskOnly: true,
     gen: async (prompt, imgData) => {
       if (!imgData) throw new Error('CodeFormer requires source image');
       const blob = await hfImageCall('sczhou/CodeFormer', '', imgData, null);
