@@ -302,8 +302,8 @@ before opening more than one in flight.
 | 18e | user direction 2026-04-30 | **Effects layer** — overlay rain / snow / dust / light leaks / lens flares on top of any image OR video output. Canvas-based particle systems composited with FFmpeg.wasm. | Polish; pure browser; free | "add rain" overlays animated rain to the result clip |
 | 7a | user 2026-04-30 | **Add object/person** — explicit one-tap flow on top of Mask painter. UI: 🖌 → paint where → "Add a [bird/dog/person/hat/...]" chip or input. Auto-routes to inpaint with the painted mask. (Builds on v17e0 + ADD_OBJECT auto-placement v17dv.) | User asked explicitly; closes the gap between mask + verb | Paint area → tap "Add bird" → bird appears in painted area only |
 | 7b | user 2026-04-30 | **Remove object/person** — explicit one-tap flow. UI: 🖌 → paint over object → "Erase" button. Routes to inpaint with `inpainting_fill: 1` (LaMa-style fill). Surfaces "Image-edit provider needed" if no inpaint provider configured. | User asked explicitly; mirror of add | Paint a person in a group photo → tap Erase → person gone, scene patched |
-| 7c | user 2026-04-30 | **Merge images** (2+ source images → composed result). Two paths: (a) **browser-side composite** — Canvas drag/scale/rotate of a cut-out (rembg first) onto a background, "flatten" exports a single image; (b) **AI-driven blend** — both images sent to an IP-Adapter / FLUX Kontext / Gemini-Image edit provider with a "blend these naturally" prompt. UI: long-press the upload icon → "Add another image" → second slot appears in input bar. | User asked explicitly; no current path for "put X from photo A into photo B" | Upload portrait + landscape → "put the person on this beach" → composed result |
-| 19a | user 2026-04-30 | **Batch edits** — queue mode. Upload multiple images (or pick from Library) → set one prompt + (optional) one mask template → fire all sequentially with auto-throttling and provider rotation to avoid rate limits. Receipts row per item. Resumable on reconnect via the existing offline queue (#25). | User asked explicitly; spec Ph 5 batch generation pulled forward | Pick 5 photos, prompt "make cinematic", queue runs, 5 results saved to Library |
+| 7c | user 2026-04-30 + original Wave 3 (P3 Dual-image merge from `PLAN_IMAGE_PROMPT_v3.md`) | **Merge images** (2+ source images → composed result). Two paths: (a) **browser-side composite** — Canvas drag/scale/rotate of a cut-out (rembg first) onto a background, "flatten" exports a single image; (b) **AI-driven blend** — both images sent to an IP-Adapter / FLUX Kontext / Gemini-Image edit provider with a "blend these naturally" prompt. UI: long-press the upload icon → "Add another image" → second slot appears in input bar. Vision-pass should support the "multiple reference images" comparison schema from the spec PDF (`shared_identity_features`, `style_consistency_notes`, `differences_detected`, `continuity_recommendations`). | User asked explicitly; was Wave 3 in original plan (got missed during pre-spec phasing); no current path for "put X from photo A into photo B" | Upload portrait + landscape → "put the person on this beach" → composed result |
+| 19a | user 2026-04-30 + original Wave 2 (P2 Batch edit from `PLAN_IMAGE_PROMPT_v3.md`) | **Batch edits** — queue mode. Upload multiple images (or pick from Library) → set one prompt + (optional) one mask template → fire all sequentially with auto-throttling and provider rotation to avoid rate limits. Receipts row per item. Resumable on reconnect via the existing offline queue (#25). | User asked explicitly; was Wave 2 in original plan (got missed); spec Ph 5 batch generation pulled forward | Pick 5 photos, prompt "make cinematic", queue runs, 5 results saved to Library |
 | 19 | spec Ph 5 | Voice tools, plug-in marketplace | Deferred until 1–19a land | n/a |
 
 ### Tier-4 cross-app backlog (carried from `PLAN_IMAGE_PROMPT.md`)
@@ -347,6 +347,27 @@ each one stays a single small commit, with cache bump and an entry
 in `VERIFIED_LOG.md` after sign-off.
 
 ---
+
+## Original-wave → merged-item map (audit cross-reference)
+
+Items from earlier wave plans (`PLAN_IMAGE_PROMPT.md` and
+`PLAN_IMAGE_PROMPT_v3.md`) cross-referenced into this merged plan so
+nothing is silently dropped.
+
+| Original wave | Description | Merged-plan item | Status |
+|---------------|-------------|------------------|--------|
+| Wave 1 | P1 Scene Lock + first-use popup | (shipped v17dd, hardened v17dp) | ✓ |
+| **Wave 2** | **P2 Batch edit** | **#19a** | NOT done |
+| **Wave 3** | **P3 Dual-image merge** | **#7c** | NOT done |
+| Wave 4 | Global help index | (post-spec; not in roadmap) | parked |
+| Wave 5 | Encrypted key vault | covered by #17 (App Store readiness) | NOT done |
+| Wave 6 | Pipeline A — Vision / structured-JSON analysis | (was shipped v17dh, rolled back; needs re-ship as part of orchestrator) | re-do |
+| Wave 7 | Pipeline B — Prompt Builder + 3 modes | #5c (structured rewrite) + #7 (3-mode toggle) | NOT done |
+| Wave 8 | Pipeline D — multi-image continuity + saved profiles | #6 (Character Cards) + #7c (merge) | NOT done |
+| Wave 9 | Pipeline E — Output Verification + auto-retry | #5 | NOT done |
+| Wave 10 | Pipeline C — manipulation tools UI + region edit | #1 (mask painter ✓) + #7a (Add) + #7b (Remove) | partial — #1 ✓ |
+| Wave 11 | Pipeline F + Capability Registry cleanup | shipped v17dq–v17dy | ✓ |
+| Wave 12 | Phase 4 Polish (Lottie / OpenCV / Jimp ops) | #2 (OpenCV bg-rm) + #4 (Jimp ops) + #8 (Lottie) | NOT done |
 
 ## Live tip
 
