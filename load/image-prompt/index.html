@@ -1748,7 +1748,26 @@ async function callPuter(prompt, imgData) {
         { role: 'user',   content: userContent }
       ])
     : await puter.ai.chat(SYS() + '\n\nUser: ' + prompt);
-  return resp?.message?.content || String(resp) || prompt;
+  // Defensive extraction — Puter SDK can return:
+  //   a string directly · {message:{content}} · {content} · {text} ·
+  //   an array of choices, etc. Always return a non-empty string OR
+  //   the original prompt as a guaranteed-string fallback.
+  if (typeof resp === 'string' && resp) return resp;
+  if (resp && typeof resp === 'object') {
+    if (typeof resp.message === 'string' && resp.message) return resp.message;
+    if (resp.message && typeof resp.message.content === 'string' && resp.message.content) return resp.message.content;
+    if (resp.message && Array.isArray(resp.message.content) && resp.message.content[0] && typeof resp.message.content[0].text === 'string') return resp.message.content[0].text;
+    if (typeof resp.content === 'string' && resp.content) return resp.content;
+    if (Array.isArray(resp.content) && resp.content[0] && typeof resp.content[0].text === 'string') return resp.content[0].text;
+    if (typeof resp.text === 'string' && resp.text) return resp.text;
+    if (Array.isArray(resp) && resp[0]) {
+      const first = resp[0];
+      if (typeof first === 'string' && first) return first;
+      if (first.message && typeof first.message.content === 'string') return first.message.content;
+      if (typeof first.text === 'string' && first.text) return first.text;
+    }
+  }
+  return prompt || '';
 }
 
 async function callGemini(prompt, imgData, key) {
@@ -2579,6 +2598,7 @@ const IMAGE_PROVIDERS = [
     supportsImageInput: true,
     supportsImageOutput: true,
     supportsUpscale: true,
+    taskOnly: true,
     gen: async (prompt, imgData) => {
       if (!imgData) throw new Error('Real-ESRGAN requires source image');
       const blob = await hfImageCall('ai-forever/Real-ESRGAN', '', imgData, null);
