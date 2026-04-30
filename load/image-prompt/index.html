@@ -529,6 +529,11 @@ button,[role="button"]{min-height:48px}
     <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">7. Google Gemini Image (default OFF — opt-in)</p>
     <p class="panel-hint" style="font-size:11px">Uses your Gemini key. Does <strong>both text-to-image AND true pixel-edit</strong> via Gemini 2.5 Flash Image — preserves face, pose, and composition very well. <strong>Free tier is tight</strong> (~500 requests/day, 10/min), easy to burn through during testing. <strong>Default OFF</strong>. Toggle ON below when you're ready to use it.</p>
 
+    <p class="panel-hint" style="color:var(--ink-hi);font-weight:700;margin-top:14px">8. SiliconFlow (FLUX Kontext img2img — default OFF, opt-in)</p>
+    <p class="panel-hint" style="font-size:11px"><strong>Free-entry credits, NOT unlimited free.</strong> Hosts FLUX.1 Kontext (instruction-based image edit) and FLUX.1-schnell (text-to-image). Defaults OFF so credits don't burn during testing. Toggle ON below to enable.</p>
+    <div class="url-pill"><span style="flex:1">cloud.siliconflow.cn → API Keys</span><button class="copy-btn" onclick="cpURL(this,'https://cloud.siliconflow.cn/account/ak')">Copy</button></div>
+    <input class="settings-input" id="k-siliconflow" type="password" placeholder="sk-…">
+
     <div class="panel-section" style="background:rgba(124,124,255,0.06);border:1px solid rgba(124,124,255,0.2);border-radius:8px;padding:10px 12px;margin-top:14px">
       <h4 style="font-size:13px;margin:0 0 6px 0">Provider toggles</h4>
       <p class="panel-hint" style="font-size:11px;margin-bottom:8px">Turn off any provider you don't want in the fallback chain. Pollinations always stays on as the no-key backstop. Every provider here has a sustained free tier (no pay-per-use).</p>
@@ -540,6 +545,10 @@ button,[role="button"]{min-height:48px}
         <label><input type="checkbox" id="t-horde"> AI Horde</label>
         <label><input type="checkbox" id="t-dai"> DeepAI</label>
         <label><input type="checkbox" id="t-img"> Gemini Image</label>
+        <label><input type="checkbox" id="t-sf"> SiliconFlow</label>
+        <label><input type="checkbox" id="t-resr" checked> Real-ESRGAN (upscale)</label>
+        <label><input type="checkbox" id="t-gfp" checked> GFPGAN (face restore)</label>
+        <label><input type="checkbox" id="t-cf2" checked> CodeFormer (face restore)</label>
       </div>
     </div>
   </div>
@@ -901,9 +910,14 @@ let C = {
     hordesdxl:    LS.getItem('ps_use_hsdxl')   !== '0',
     cfsdxllight:  LS.getItem('ps_use_cfsdxl')  !== '0',
     hfsdxlturbo:  LS.getItem('ps_use_hfturbo') !== '0',
-    localsd:      LS.getItem('ps_use_localsd') !== '0'
+    localsd:      LS.getItem('ps_use_localsd') !== '0',
+    siliconflow:  LS.getItem('ps_use_sf')      === '1',
+    realesrgan:   LS.getItem('ps_use_resr')    !== '0',
+    gfpgan:       LS.getItem('ps_use_gfp')     !== '0',
+    codeformer:   LS.getItem('ps_use_cf2')     !== '0'
   },
-  localSdUrl:   LS.getItem('ps_local_sd_url') || '',
+  localSdUrl:    LS.getItem('ps_local_sd_url') || '',
+  siliconflowKey:LS.getItem('ps_sfk')          || '',
   mode:       LS.getItem('ps_mode') || 'realistic',
 };
 
@@ -944,6 +958,11 @@ let sceneLocked = LS.getItem('ps_scene_lock') !== '0';
   if(C.cfToken)         document.getElementById('k-cf-token').value=C.cfToken;
   if(C.togetherKey)     document.getElementById('k-together').value=C.togetherKey;
   if(C.daiKey)          document.getElementById('k-deepai').value=C.daiKey;
+  if(C.siliconflowKey)  document.getElementById('k-siliconflow').value=C.siliconflowKey;
+  var _tsf=document.getElementById('t-sf');   if(_tsf) _tsf.checked  = C.useProvider.siliconflow === true;
+  var _tre=document.getElementById('t-resr'); if(_tre) _tre.checked  = C.useProvider.realesrgan !== false;
+  var _tgf=document.getElementById('t-gfp');  if(_tgf) _tgf.checked  = C.useProvider.gfpgan !== false;
+  var _tcf2=document.getElementById('t-cf2'); if(_tcf2)_tcf2.checked = C.useProvider.codeformer !== false;
   document.getElementById('t-hf').checked    = C.useProvider.huggingface;
   document.getElementById('t-cf').checked    = C.useProvider.cloudflare;
   document.getElementById('t-tg').checked    = C.useProvider.together;
@@ -1028,6 +1047,7 @@ function saveSettings(){
   C.cfToken         =document.getElementById('k-cf-token').value.trim();
   C.togetherKey     =document.getElementById('k-together').value.trim();
   C.daiKey          =document.getElementById('k-deepai').value.trim();
+  var _ksf = document.getElementById('k-siliconflow'); if (_ksf) C.siliconflowKey = _ksf.value.trim();
   C.allowAnthropic  =document.getElementById('opt-allow-ant').checked;
   C.useProvider.huggingface = document.getElementById('t-hf').checked;
   C.useProvider.cloudflare  = document.getElementById('t-cf').checked;
@@ -1035,6 +1055,10 @@ function saveSettings(){
   C.useProvider.horde       = document.getElementById('t-horde').checked;
   C.useProvider.imagen      = document.getElementById('t-img').checked;
   C.useProvider.deepai      = document.getElementById('t-dai').checked;
+  var _tsf2=document.getElementById('t-sf');   if (_tsf2)  C.useProvider.siliconflow = _tsf2.checked;
+  var _tre2=document.getElementById('t-resr'); if (_tre2)  C.useProvider.realesrgan  = _tre2.checked;
+  var _tgf2=document.getElementById('t-gfp');  if (_tgf2)  C.useProvider.gfpgan      = _tgf2.checked;
+  var _tcf3=document.getElementById('t-cf2');  if (_tcf3)  C.useProvider.codeformer  = _tcf3.checked;
   LS.setItem('ps_prov',C.provider); LS.setItem('ps_k_puter',C.keys.puter);
   LS.setItem('ps_k_gemini',C.keys.gemini);
   LS.setItem('ps_k_or',C.keys.openrouter); LS.setItem('ps_k_cbr',C.keys.cerebras);
@@ -1052,6 +1076,11 @@ function saveSettings(){
   LS.setItem('ps_use_horde', C.useProvider.horde       ? '1' : '0');
   LS.setItem('ps_use_img',   C.useProvider.imagen      ? '1' : '0');
   LS.setItem('ps_use_dai',   C.useProvider.deepai      ? '1' : '0');
+  LS.setItem('ps_sfk',       C.siliconflowKey || '');
+  LS.setItem('ps_use_sf',    C.useProvider.siliconflow === true ? '1' : '0');
+  LS.setItem('ps_use_resr',  C.useProvider.realesrgan  !== false ? '1' : '0');
+  LS.setItem('ps_use_gfp',   C.useProvider.gfpgan      !== false ? '1' : '0');
+  LS.setItem('ps_use_cf2',   C.useProvider.codeformer  !== false ? '1' : '0');
   updatePill();
   if(C.provider && hasProviderAccess(C.provider))
     document.getElementById('setup-banner').classList.remove('on');
@@ -2487,6 +2516,99 @@ const IMAGE_PROVIDERS = [
       }
       const b = await r.blob();
       return URL.createObjectURL(b);
+    }
+  },
+  // 13. SiliconFlow — free-ENTRY credits (NOT unlimited free) per user
+  //     2026-04-30. Hosts FLUX.1-schnell (text-to-image) and FLUX.1
+  //     Kontext (instruction-based image-to-image edit). Opt-in only:
+  //     defaults OFF so credits don't burn until the user explicitly
+  //     enables it in Settings.
+  {
+    id: 'siliconflow',
+    name: 'SiliconFlow',
+    needsKey: true,
+    enabled: () => !!C.siliconflowKey && C.useProvider.siliconflow === true,
+    supportsImg2Img: true,
+    supportsImageOutput: true,
+    supportsImageInput: true,
+    gen: async (prompt, imgData, opts) => {
+      const url = 'https://api.siliconflow.cn/v1/images/generations';
+      const body = {
+        model: imgData ? 'black-forest-labs/FLUX.1-Kontext-dev' : 'black-forest-labs/FLUX.1-schnell',
+        prompt: prompt.slice(0, 2000),
+        image_size: '1024x1024',
+        num_inference_steps: imgData ? 28 : 4,
+        seed: (opts && opts.seed) || undefined
+      };
+      if (imgData) body.image = 'data:' + (imgData.mime || 'image/png') + ';base64,' + imgData.base64;
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + C.siliconflowKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      if (!r.ok) throw new Error(await readError(r, 'SiliconFlow'));
+      const data = await r.json();
+      const u = (data.images && data.images[0] && data.images[0].url) ||
+                (data.data && data.data[0] && data.data[0].url);
+      if (!u) throw new Error('SiliconFlow empty response');
+      const r2 = await fetch(u);
+      const b = await r2.blob();
+      if (!b.type.startsWith('image/')) throw new Error('SiliconFlow non-image');
+      return URL.createObjectURL(b);
+    }
+  },
+  // 14. Real-ESRGAN (HF Inference) — dedicated upscale slot per Glam
+  //     parity item #14c. Free with HF token. Use for "upscale 4x"
+  //     requests; takes the source image, returns a higher-res copy.
+  {
+    id: 'realesrgan',
+    name: 'Real-ESRGAN (HF)',
+    needsKey: true,
+    enabled: () => !!C.hfImgKey && C.useProvider.realesrgan !== false,
+    supportsImg2Img: true,
+    supportsImageInput: true,
+    supportsImageOutput: true,
+    supportsUpscale: true,
+    gen: async (prompt, imgData) => {
+      if (!imgData) throw new Error('Real-ESRGAN requires source image');
+      const blob = await hfImageCall('ai-forever/Real-ESRGAN', '', imgData, null);
+      return URL.createObjectURL(blob);
+    }
+  },
+  // 15. GFPGAN (HF Inference) — face-restoration per Glam parity #14b.
+  //     Free with HF token. Smooth-skin / fix-face / retouch route.
+  {
+    id: 'gfpgan',
+    name: 'GFPGAN (face restore)',
+    needsKey: true,
+    enabled: () => !!C.hfImgKey && C.useProvider.gfpgan !== false,
+    supportsImg2Img: true,
+    supportsImageInput: true,
+    supportsImageOutput: true,
+    gen: async (prompt, imgData) => {
+      if (!imgData) throw new Error('GFPGAN requires source image');
+      const blob = await hfImageCall('TencentARC/GFPGAN', '', imgData, null);
+      return URL.createObjectURL(blob);
+    }
+  },
+  // 16. CodeFormer (HF Inference) — alternative face-restoration model
+  //     for AI-distorted faces. Free with HF token. Same role as GFPGAN
+  //     but kicks in if GFPGAN's output is unsatisfactory.
+  {
+    id: 'codeformer',
+    name: 'CodeFormer (face restore)',
+    needsKey: true,
+    enabled: () => !!C.hfImgKey && C.useProvider.codeformer !== false,
+    supportsImg2Img: true,
+    supportsImageInput: true,
+    supportsImageOutput: true,
+    gen: async (prompt, imgData) => {
+      if (!imgData) throw new Error('CodeFormer requires source image');
+      const blob = await hfImageCall('sczhou/CodeFormer', '', imgData, null);
+      return URL.createObjectURL(blob);
     }
   }
 ];
