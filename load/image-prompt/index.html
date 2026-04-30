@@ -1458,8 +1458,17 @@ async function runImageTask(opts) {
   if (taskType === 'add_object' && sourceImage) {
     const objectMatch = prompt.match(/\b(?:add|put|place|insert|include)\s+(?:a\s+|an\s+|another\s+|some\s+)?([a-z][a-z\s]*?)(?:\s+(?:to|in|on|at|near|behind|in front of|above|below)\b|[\.\!\?,]|$)/i);
     const object = objectMatch ? objectMatch[1].trim() : 'the requested object';
-    const region = mask ? 'the masked region' : 'a contextually appropriate area';
-    prompt = 'Add ' + object + ' to ' + region + '. ' +
+    // Auto-placement: pick a bounding box based on object type so the
+    // edit prompt has concrete placement guidance. When the user
+    // already supplies a mask we use that; otherwise we infer a safe
+    // default region near (but not overlapping) the existing subject.
+    const placement = mask
+      ? { region: 'the masked region', box: null, hint: 'within the masked region' }
+      : autoPlaceForObject(object);
+    prompt = 'Add ' + object + ' ' + placement.hint + '. ' +
+      'Bounding box (approx. fraction of image, x y w h): ' +
+      (placement.box ? placement.box.map(v => v.toFixed(2)).join(' ') : 'mask-defined') + '. ' +
+      'Place near, but not overlapping, the existing main subject. ' +
       'Preserve the original image, person, background, lighting, camera angle, and style. ' +
       'Do not blur or regenerate the whole image. ' +
       'Only the addition of ' + object + ' should differ from the source.';
@@ -1498,6 +1507,36 @@ async function runImageTask(opts) {
   }
   if (opts.taskType) finalPrompt = '[TASK:' + taskType + ']\n' + finalPrompt;
   return await imageGenWithFallback(finalPrompt, sourceImage, { taskType: taskType, mask: mask });
+}
+
+/* ── autoPlaceForObject — temporary bounding-box auto-placement for
+   ADD_OBJECT when the user did not provide a mask. Returns
+   {region, box: [x, y, w, h] in 0..1, hint} where the box stays
+   "near but not overlapping" the main subject (assumed centred). */
+function autoPlaceForObject(object) {
+  const o = (object || '').toLowerCase();
+  // Sky-region category: birds, planes, kites, sun, moon, clouds, balloons
+  if (/\b(bird|plane|airplane|jet|kite|drone|balloon|cloud|sun|moon|star|helicopter|ufo|butterfly|dragonfly)\b/.test(o)) {
+    return { region: 'upper sky',  box: [0.62, 0.05, 0.30, 0.25], hint: 'in the upper-right sky area, well above the main subject' };
+  }
+  // Ground-near-subject category: dogs, cats, small animals, kids
+  if (/\b(dog|cat|puppy|kitten|rabbit|bunny|fox|deer|squirrel|baby|toddler|child)\b/.test(o)) {
+    return { region: 'foreground beside subject', box: [0.05, 0.55, 0.25, 0.40], hint: 'on the ground in the lower-left foreground, beside but not overlapping the main subject' };
+  }
+  // Person/figure: place to the side at similar height
+  if (/\b(person|man|woman|figure|character|stranger|someone|friend|girl|boy)\b/.test(o)) {
+    return { region: 'beside subject', box: [0.65, 0.30, 0.30, 0.65], hint: 'standing to the right of the main subject, similar scale, not overlapping' };
+  }
+  // Tree / large background object
+  if (/\b(tree|bush|shrub|building|tower|mountain|hill|car|truck|boat|ship)\b/.test(o)) {
+    return { region: 'background',   box: [0.05, 0.10, 0.30, 0.70], hint: 'in the background on the left side, behind the main subject' };
+  }
+  // Hand-held / wearable: very close to existing subject
+  if (/\b(hat|crown|glasses|sunglasses|mask|necklace|earring|ring|watch|scarf|tie|bag|book|cup|flower)\b/.test(o)) {
+    return { region: 'on subject',  box: [0.40, 0.20, 0.20, 0.20], hint: 'on or held by the main subject, scaled appropriately' };
+  }
+  // Default: upper-right safe zone away from typical subject area
+  return { region: 'upper-right',  box: [0.62, 0.10, 0.30, 0.30], hint: 'in the upper-right area of the frame, away from the main subject' };
 }
 
 /* ── imageSimilarity — quick perceptual diff using downsampled
