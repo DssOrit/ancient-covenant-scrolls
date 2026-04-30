@@ -116,6 +116,21 @@ but should not be treated as known-good baselines.
 - **Lesson logged:** No more iPad-side WASM/heavy-model experiments without a memory-budget test on a real device first. Background removal stays parked.
 - **Recovery:** `git checkout backup/2026-04-30-v17e0`
 
+### v17e8 — `1bd6cea` — 2026-04-30
+
+- **Status:** Loading confirmed by user ("Working").
+- **What it adds on top of v17e0:**
+  - SiliconFlow provider (FLUX.1 Kontext img2img + FLUX.1-schnell, opt-in, free-entry credits)
+  - Real-ESRGAN (HF Inference) — upscale slot
+  - GFPGAN (HF Inference) — face restoration
+  - CodeFormer (HF Inference) — alt face restoration
+  - Settings UI for SiliconFlow key + 4 new toggles
+  - `reply.match` error fixed (callPuter response normalized at source)
+  - `taskOnly` flag on Real-ESRGAN (groundwork for next ship)
+- **Image provider count:** 17 (Local SD + 12 from v17e0 + 4 added)
+- **NOT yet tested:** new providers' actual gen calls, Real-ESRGAN/GFPGAN/CodeFormer routing for upscale/face-restore tasks
+- **Recovery:** `git checkout backup/2026-04-30-v17e0` (last known fully-verified state)
+
 ### v17e0 — `593d410` — 2026-04-30
 
 - **Status:** Roadmap item #1 (Manual Mask painter) — verified working by user.
