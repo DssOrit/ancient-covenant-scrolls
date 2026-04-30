@@ -76,7 +76,57 @@ Tools that require Python + a local GPU (ComfyUI, AUTOMATIC1111, Fooocus, Invoke
 
 ## Task types (canonical set)
 
-`generate · improve · add_object · modify_character · change_background · remove_object · inpaint · outpainting · mask_edit · upscale · background_removal · style_transfer · expression_change · pose_change`
+`generate · improve · add_object · modify_character · change_background · remove_object · inpaint · outpainting · mask_edit · upscale · background_removal · style_transfer · expression_change · pose_change · animate · talking_avatar`
+
+## AI Chat orchestrator — the "secret sauce" (per user 2026-04-30)
+
+This is the dispatcher every user prompt flows through. It is the
+piece that makes the app feel intelligent rather than a wrapper
+around one provider. Three jobs, in order:
+
+1. **Understand the image** (vision LLM reads the attached image and
+   extracts identity / scene / style / palette / lighting context)
+2. **Rewrite the prompt internally** (LLM converts "add a bird" into
+   a structured edit prompt that includes preservation context, the
+   user's actual delta, and explicit task tagging)
+3. **Route to the correct model** automatically (`classifyImageTask`
+   + capability filter + provider chain — text-to-image gen,
+   img2img edit, inpaint, animate, talking_avatar)
+
+```
+User input  →  AI Chat orchestrator
+                  ├─ vision: read image
+                  ├─ rewrite: structured prompt + preservation
+                  └─ classify task
+                          ├─ generate    → text-to-image chain
+                          ├─ edit/inpaint → img2img / mask chain
+                          └─ animate     → video chain
+                                  ↓
+                            correct output (image / video / file)
+```
+
+Currently shipped pieces of the orchestrator:
+- Vision read (Puter multimodal, optional Gemini/Anthropic) ✓
+- Prompt rewrite (every chat LLM emits SD_PROMPT under Scene Lock) ✓
+- Classifier (`classifyImageTask` v17ds–v17dv) ✓
+- Capability gate (v17dt) ✓
+- Routing (image vs edit vs video) — image+edit ✓; **video routing not yet wired**
+
+## Identity Lock — face/style embedding (per user 2026-04-30)
+
+"Same face / same style / same identity across edits" requires a
+real embedding-based lock, not just re-uploading the previous image
+each turn. The free, iPad-runnable path:
+
+- **IP-Adapter FaceID** via HF Space (free Gradio API, free HF token if rate-limited)
+- **InstantID** via HF Space (single reference photo → identity-locked gens)
+- **Reference image** stored in `CHAR.refImage` (already in localStorage)
+- **Seed locking** for reproducibility on supporting providers (already in CHAR.seed)
+- **CharacterCard schema** (per inbox zip) carries the embedding-relevant fields
+
+The PWA never needs to run the embedding model itself — it calls a
+public Space that does it. Output is just an image, returned via
+the same `imageGenWithFallback` path.
 
 ## Character profile (from inbox zip schema)
 
@@ -181,18 +231,22 @@ before opening more than one in flight.
 | 15 | spec Ph 2 | **HF Spaces connector** (public Gradio APIs for Florence-2, Qwen2.5-VL, SDXL inpaint, GFPGAN, Real-ESRGAN — many require no token) | More truly-free img2img/inpaint paths | Spaces models appear as separate slots |
 | 16 | original E | **Cohesive icon set across ACR / Attain / Attain Jr / Study** | Unblocked now that Phase 1B + 2 are done | Brand consistency across all 5 apps |
 | 17 | original N | **App Store readiness** — NSFW / safety filter, watermark toggle, privacy text, encrypted key vault, install banner | Submission gate | App Store screening passes |
-| 18 | user direction 2026-04-30 | **Image → Video clip (downloadable .mp4/.webm file)** — every generated/edited image can be brought alive as a short motion clip. iPad path: HF Space hosting **Stable Video Diffusion** or **AnimateDiff** (free, no GPU at user's house) → returned frames encoded in-browser via **FFmpeg.wasm** → saved to camera roll / Load Library. | User explicit: "the image editor/generator should not only animate but should be able to be brought alive as a video clip, i.e file" | Tap "Animate" on any result → 3-5 s mp4 downloads / shares via PWA share sheet |
+| 18a | user direction 2026-04-30 | **Image → Video tier 1 — basic motion** (browser-only): pan, zoom, parallax, slow Ken-Burns drift on a single still. Canvas + Anime.js + FFmpeg.wasm → exports `.mp4` / `.webm` file. No AI call required. | First win, zero cost, works offline | Tap "Animate" → choose Pan / Zoom / Parallax → 3-5 s clip downloads |
+| 18b | user direction 2026-04-30 | **Image → Video tier 2 — Stable Video Diffusion via HF Space** (free, no key for many public Spaces; HF token for rate-limited ones). Image → ~14-frame motion clip → FFmpeg.wasm encode. | Real generative motion (water, wind, hair, slight character motion) | Tap "Animate" → SVD → 3-5 s mp4 |
+| 18c | user direction 2026-04-30 | **Image → Video tier 3 — AnimateDiff via HF Space**. Motion module on top of SDXL. Adds prompt-driven camera move + scene motion. | Cinematic 5-15 s clips with prompted motion | "Animate with slow zoom and rain" returns a clip |
+| 18d | user direction 2026-04-30 | **Image → Video tier 4 — Talking Avatar / Lip-Sync** via HF Space (SadTalker, Wav2Lip). Image + audio (recorded in-app via MediaRecorder OR generated via Puter / browser TTS) → talking-head clip. | Lip-sync was carried over from earlier scope (v17da reinstated SadTalker) | Upload portrait + speak → portrait speaks back in their face |
+| 18e | user direction 2026-04-30 | **Effects layer** — overlay rain / snow / dust / light leaks / lens flares on top of any image OR video output. Canvas-based particle systems composited with FFmpeg.wasm. | Polish; pure browser; free | "add rain" overlays animated rain to the result clip |
 | 19 | spec Ph 5 | Voice tools, batch generation, plug-in marketplace | Deferred until 1–18 land | n/a |
 | OPT | optional companion | **ComfyUI / A1111 / Fooocus on user's Mac/PC** — IP-Adapter, InstantID, ControlNet, LoRA workflows. Requires the user to run Python + GPU on a separate machine; iPad just sends requests. NOT a default path; gated behind explicit `localSdUrl` setting in Settings. Already wired (A1111-compat) at v17dq. | Power-user-only; iPad alone cannot do this | User points iPad at `http://192.168.x.x:7860`, edits route via local HTTP |
 
-**Recommended order:** 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14a → 14b → 14c → 15 → 16 → 17 → 18 → 19. OPT is unblocked at any point but never required.
+**New pre-18 items added per user direction 2026-04-30:**
 
-**Video pipeline (item 18) — iPad-only path:**
-- **Stable Video Diffusion** via HF Space (free, image → ~14-frame clip)
-- **AnimateDiff** via HF Space (motion on top of SDXL, free token)
-- **FFmpeg.wasm** in-browser encode → `.mp4` / `.webm`
-- **Save to Library** + PWA share-target so the file lands as a normal asset alongside images
-- *(Deforum / RIFE require local GPU — companion-machine only, optional)*
+| # | Source | Item | Why this slot | Acceptance test |
+|---|--------|------|----|----|
+| 5b | user 2026-04-30 | **Identity Lock — face/style embedding** via IP-Adapter FaceID + InstantID through HF Spaces. Stores reference embedding via `CHAR.refImage` (browser-only); calls public Gradio Space for the actual lock. | "Same face / same style / same identity across edits" requires real embeddings, not just re-uploading the prior image | Save a face card → 5 successive edits keep the same face |
+| 5c | user 2026-04-30 | **Prompt-rewriting layer** (already partially shipped via Scene Lock LLM SD_PROMPT). Promote to explicit pre-pass: every user prompt + image goes through a vision-LLM rewrite that emits a structured `{positive, negative, preserve, region, taskType}` JSON object before routing. | "Add a bird" → structured edit instruction with preservation directives, not raw text. This is the AI Chat secret sauce. | Console shows structured JSON; the JSON is what reaches the provider, not raw user text |
+
+**Recommended order:** 1 → 2 → 3 → 4 → 5 → 5b → 5c → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14a → 14b → 14c → 15 → 16 → 17 → 18a → 18b → 18c → 18d → 18e → 19. OPT is unblocked at any point but never required.
 
 Any of those can be reordered if a user request shifts priority — but
 each one stays a single small commit, with cache bump and an entry
