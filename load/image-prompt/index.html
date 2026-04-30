@@ -1186,7 +1186,14 @@ async function pipeline(prompt, imgData, tid) {
     }
 
     try {
-      reply = await callProvider(providerToCall, prompt, imageForCall);
+      // v17dm — wrap with 45s timeout so a hung Puter (or any
+      // provider that never responds) falls through to the fallback
+      // chain instead of locking the pipeline forever.
+      reply = await withTimeout(
+        callProvider(providerToCall, prompt, imageForCall),
+        45000,
+        providerName(providerToCall)
+      );
     } catch(e) {
       const fallback = await tryProviderFallbackChain(prompt, imgData, providerToCall);
       if (fallback) {
@@ -1372,7 +1379,12 @@ async function tryProviderFallbackChain(prompt, imgData, exclude) {
   for (const p of chain) {
     try {
       const usableImage = imgData && CAPS[p]?.vision ? imgData : null;
-      const r = await callProvider(p, prompt, usableImage);
+      // v17dm — 45s timeout per fallback try (matches primary call)
+      const r = await withTimeout(
+        callProvider(p, prompt, usableImage),
+        45000,
+        providerName(p)
+      );
       return { id: p, name: providerName(p), reply: r };
     } catch(e) {
       lastError = e;
@@ -2150,7 +2162,14 @@ async function imageGenWithFallback(prompt, imgData) {
   let lastErr = null;
   for (const p of providers) {
     try {
-      const url = await p.gen(prompt, imgData);
+      // v17dm — 90s per-provider timeout (covers HF cold start ~30s
+      // + actual gen). AI Horde has its own 3-min internal poll loop;
+      // we let it self-manage. Without this, a hung Pollinations or
+      // sleeping HF Space could lock the pipeline forever.
+      const isHorde = p.id === 'horde';
+      const url = isHorde
+        ? await p.gen(prompt, imgData)
+        : await withTimeout(p.gen(prompt, imgData), 90000, p.name);
       if (url) {
         recordSuccess(p.id);
         return { url, providerId: p.id, providerName: p.name };

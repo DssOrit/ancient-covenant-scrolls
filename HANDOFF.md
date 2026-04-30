@@ -8,25 +8,30 @@ execute without asking the user to re-explain.
 
 ## ⚡ CURRENT STATE (updated after every verified milestone)
 
-**Last shipped tip:** `v17dl` — bulletproof save banner + Debug panel (image-prompt-v16)
+**Last shipped tip:** `v17dm` — wrap every provider call with timeout (image-prompt-v17)
 **Last user-verified tip:** `v17dh` — Wave 6 Vision pipeline (image-prompt-v12)
 **Verified backup:** `backup/2026-04-29-v17dh`
-**Session-end backup:** `backup/2026-04-29-session-end` at v17dl tip
+**Session-end backup (last night):** `backup/2026-04-29-session-end`
 
-**🚨 OUTSTANDING — RESOLVE BEFORE NEXT BUILD:**
+**Resolved 2026-04-30 morning:** Save in Safari confirmed working — user saw the green "2 settings saved" banner. DDG was the culprit for the storage issue, Safari is fine.
 
-Save / localStorage persistence issue. User reports keys stopped saving after testing HF / bg-removal in v17di-v17dk. v17dk Debug status showed `ps_* entries: 0`. User runs DuckDuckGo browser on iPad — past sessions worked, today's HF testing surfaced the issue.
+**🚨 NEW REGRESSION — v17dm fix shipped, awaiting verification:**
 
-Code review confirmed `saveSettings` logic has no bugs. Cause unconfirmed. v17dl shipped a bulletproof save with `testLocalStorage()` health check, giant green/red result banner, and save trail (ps_last_save + ps_save_count) for diagnosis.
+User reports prompts hang in Safari — "I can't even request to create anything without it hanging." Code review found the cause: `callProvider` was unwrapped (no timeout) at lines 1189 + 1382 of image-prompt/index.html. Also `imageGenWithFallback` per-provider calls had no timeout. If Puter (or any provider) failed to respond, the whole pipeline locked forever.
 
-**To resolve tomorrow** (see SESSION_NOTES_2026-04-29.md "Outstanding" section for full detail):
-1. User opens Image Prompt in **Safari** (not DDG) at `https://dssorit.github.io/ancient-covenant-scrolls/load/?bust=v17dl&_t=fresh`
-2. Paste any one key → tap Save → report banner color + text
-3. Open Settings → Debug → Show status → paste output
-4. Three lines settle the question: `localStorage TEST: ✓/✗`, `total saves: N`, `last save: ts`
-5. If save works in Safari but not DDG → ship v17dm with IndexedDB backup (DDG-resistant)
-6. If save fails in Safari too → real bug to fix
-7. Don't ship Wave 6.5 Part 2 until this is resolved — those features need keys; testing with broken save is wasted effort.
+**v17dm wraps every provider call with `withTimeout`:**
+- Chat primary call: 45s
+- Chat fallback chain (each provider): 45s
+- Image gen providers (each in the 7-provider chain): 90s (covers HF cold start)
+- AI Horde left unwrapped (it manages its own internal 3-min poll loop)
+- Vision analysis already had 30s from v17dj
+- HF rembg already had 90s from v17dj
+
+**To verify v17dm:**
+1. Safari → `https://dssorit.github.io/ancient-covenant-scrolls/load/?bust=v17dm&_t=fresh`
+2. Type any prompt without an image: "make a sunset beach"
+3. Should return result in ~10-30s OR error within 45s — should NOT hang forever
+4. If still hangs → real bug, dig into what provider is unresponsive
 
 **Active project:** Image Prompt — multi-pipeline build per `PLAN_IMAGE_PROMPT_v3.md`. User direction (2026-04-29): build the full v3 spec in waves, never use pay-per-use providers, save ComfyUI server work for later.
 
