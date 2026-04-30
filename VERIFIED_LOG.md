@@ -95,6 +95,20 @@ but should not be treated as known-good baselines.
   → returns live to v17dm. Or `git checkout backup/2026-04-29-v17dg`
   for clean v17dg baseline.
 
+### v17e1 / v17e2 / v17e3 — FAILED — 2026-04-30
+
+- **Status:** Roadmap item #2 (background removal) — **NEVER VERIFIED. Tab crashed on iPad Safari each ship.**
+- **v17e1 (`ff8461c`)**: OpenCV.js GrabCut path — crashed loading 8 MB WASM
+- **v17e2 (`792e86f`)**: Hotfix routing to HF briaai/RMBG-1.4 — also crashed
+- **v17e3 (`583141f`)**: Sentinel-throw to park the feature — site stopped loading entirely
+- **Resolution:** v17e4 (`2fff569`) reverts the image-prompt source to v17e0 (verified working) and bumps caches forward (`load-v17e4` / `image-prompt-v35`) so the broken cached SW is evicted on hard refresh.
+- **Lesson logged:** any iPad-side WASM model (OpenCV, Transformers.js, etc.) needs a strict memory test BEFORE wiring into runImageTask. Background removal stays parked.
+
+### v17e4 — `2fff569` — 2026-04-30
+
+- **Status:** Built. Awaiting user verification that the site loads again on iPad.
+- **Test plan:** Hard-refresh, badge reads v17e4, Manual Mask painter still works (paint mask → "add sunglasses" → result), no crash.
+
 ### v17e0 — `593d410` — 2026-04-30
 
 - **Status:** Roadmap item #1 (Manual Mask painter) — verified working by user.
