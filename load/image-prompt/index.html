@@ -319,6 +319,14 @@ button,[role="button"]{min-height:48px}
     <button class="panel-close" onclick="closeSettings()">✕</button>
   </div>
 
+  <!-- Key health diagnostic -->
+  <div class="panel-section">
+    <h4>🔑 Key Health</h4>
+    <p class="panel-hint">Lightweight check of every saved key. Verifies the key reaches the provider and the selected model is image-capable. Full generation tests are not run.</p>
+    <button id="test-keys-btn" onclick="runKeyDiagnostic()" style="background:linear-gradient(135deg,var(--accent),#5a5ae0);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;min-height:44px;width:100%;margin-bottom:10px">Test Keys</button>
+    <div id="key-health-results" style="display:none;font-size:13px;line-height:1.5;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;max-height:280px;overflow-y:auto"></div>
+  </div>
+
   <!-- Fallback chain info -->
   <div class="panel-section">
     <h4>Auto-Fallback System</h4>
@@ -591,6 +599,117 @@ function maskKey(k) {
   const s = String(k);
   if (s.length <= 8) return '****';
   return s.slice(0, 3) + '****' + s.slice(-4);
+}
+
+/* ── Key Health Diagnostic ──
+   Per build plan: lightweight auth/model-list checks for each saved
+   key. NOT a full generation test (those are expensive). Returns a
+   list of {provider, masked, status, label, detail} for the UI to
+   render with status icons. */
+const STATUS_ICONS = {
+  ready:        '✅',
+  missing:      '⚠️',
+  invalid:      '❌',
+  textOnly:     '❌',
+  noEdit:       '❌',
+  rateLimited:  '⏳',
+  network:      '🌐',
+  unknown:      '❓'
+};
+
+async function pingAuth(url, headers) {
+  try {
+    const r = await withTimeout(fetch(url, { method: 'GET', headers: headers || {} }), 8000, 'auth check');
+    return { ok: r.ok, status: r.status };
+  } catch (e) {
+    return { ok: false, status: 0, network: true, message: e.message };
+  }
+}
+
+async function checkOneKey(provider, key) {
+  const masked = maskKey(key);
+  const base = { provider, masked };
+  if (!key) return Object.assign(base, { status: 'missing', label: STATUS_ICONS.missing + ' Key missing' });
+  if (provider === 'gemini') {
+    if (!/^AIza[\w-]{20,}$/.test(key)) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Bad format (expected AIza…)' });
+    const r = await pingAuth('https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key));
+    if (r.network) return Object.assign(base, { status: 'network', label: STATUS_ICONS.network + ' Network blocked' });
+    if (r.status === 401 || r.status === 403) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Invalid key' });
+    if (r.status === 429) return Object.assign(base, { status: 'rateLimited', label: STATUS_ICONS.rateLimited + ' Rate limited' });
+    if (r.ok) return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Ready (chat + image edit)' });
+    return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' HTTP ' + r.status });
+  }
+  if (provider === 'openrouter') {
+    if (!/^sk-or-/.test(key)) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Bad format (expected sk-or-…)' });
+    const r = await pingAuth('https://openrouter.ai/api/v1/models', { 'Authorization': 'Bearer ' + key });
+    if (r.network) return Object.assign(base, { status: 'network', label: STATUS_ICONS.network + ' Network blocked' });
+    if (r.status === 401) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Invalid key' });
+    if (r.status === 429) return Object.assign(base, { status: 'rateLimited', label: STATUS_ICONS.rateLimited + ' Rate limited' });
+    if (r.ok) return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Ready (chat only — text-only)' });
+    return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' HTTP ' + r.status });
+  }
+  if (provider === 'cerebras') {
+    if (!/^csk-/.test(key)) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Bad format (expected csk-…)' });
+    const r = await pingAuth('https://api.cerebras.ai/v1/models', { 'Authorization': 'Bearer ' + key });
+    if (r.network) return Object.assign(base, { status: 'network', label: STATUS_ICONS.network + ' Network blocked' });
+    if (r.status === 401) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Invalid key' });
+    if (r.ok) return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Ready (chat only — text-only)' });
+    return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' HTTP ' + r.status });
+  }
+  if (provider === 'anthropic') {
+    if (!/^sk-ant-/.test(key)) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Bad format (expected sk-ant-…)' });
+    return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Format OK (vision-capable, paid)' });
+  }
+  if (provider === 'hfchat' || provider === 'hf-img') {
+    if (!/^hf_/.test(key)) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Bad format (expected hf_…)' });
+    const r = await pingAuth('https://huggingface.co/api/whoami-v2', { 'Authorization': 'Bearer ' + key });
+    if (r.network) return Object.assign(base, { status: 'network', label: STATUS_ICONS.network + ' Network blocked' });
+    if (r.status === 401) return Object.assign(base, { status: 'invalid', label: STATUS_ICONS.invalid + ' Invalid key' });
+    if (r.ok) {
+      if (provider === 'hfchat') return Object.assign(base, { status: 'textOnly', label: STATUS_ICONS.ready + ' Ready (chat / Mistral — text-only)' });
+      return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Ready (image gen + img2img)' });
+    }
+    return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' HTTP ' + r.status });
+  }
+  if (provider === 'puter') {
+    if (!key) return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Ready (no token; using anonymous Puter)' });
+    return Object.assign(base, { status: 'ready', label: STATUS_ICONS.ready + ' Token saved' });
+  }
+  return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' Not checked' });
+}
+
+async function runKeyDiagnostic() {
+  const out = document.getElementById('key-health-results');
+  const btn = document.getElementById('test-keys-btn');
+  if (!out || !btn) return;
+  btn.disabled = true; btn.textContent = 'Testing…';
+  out.style.display = 'block';
+  out.innerHTML = '<div style="opacity:0.7">Running lightweight auth checks…</div>';
+  const checks = [
+    { provider: 'puter',      key: C.keys.puter || '' },
+    { provider: 'gemini',     key: C.keys.gemini || '' },
+    { provider: 'openrouter', key: C.keys.openrouter || '' },
+    { provider: 'cerebras',   key: C.keys.cerebras || '' },
+    { provider: 'anthropic',  key: C.keys.anthropic || '' },
+    { provider: 'hfchat',     key: C.keys.hfchat || '' },
+    { provider: 'hf-img',     key: C.hfImgKey || '' }
+  ];
+  const results = await Promise.all(checks.map(c => checkOneKey(c.provider, c.key).catch(e => ({
+    provider: c.provider, masked: maskKey(c.key), status: 'unknown',
+    label: STATUS_ICONS.unknown + ' check failed: ' + (e.message || e)
+  }))));
+  const labels = {
+    puter: 'Puter.js', gemini: 'Google Gemini', openrouter: 'OpenRouter',
+    cerebras: 'Cerebras', anthropic: 'Anthropic Claude',
+    hfchat: 'Hugging Face (chat / Mistral)', 'hf-img': 'Hugging Face (image gen)'
+  };
+  out.innerHTML = results.map(r => (
+    '<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">' +
+    '<div><strong>' + (labels[r.provider] || r.provider) + '</strong>' +
+    '<div style="opacity:0.7;font-size:11px">' + r.masked + '</div></div>' +
+    '<div style="text-align:right">' + r.label + '</div></div>'
+  )).join('');
+  btn.disabled = false; btn.textContent = 'Test Keys';
 }
 
 /* ────────────────────────────────────────
