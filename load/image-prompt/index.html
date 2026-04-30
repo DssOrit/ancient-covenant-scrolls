@@ -913,10 +913,18 @@ function send(){
   let augmentedPrompt = p;
   if (sceneLocked && lastSDPrompt && snap) {
     augmentedPrompt =
-      'SCENE LOCK ENABLED — preserve the previous image\'s subject, character, setting, and mood.\n' +
-      'PREVIOUS SCENE DESCRIPTION: "' + lastSDPrompt.slice(0, 300) + '"\n' +
-      'USER REQUEST (refinement to apply on top of the locked scene): ' + p + '\n\n' +
-      'Write a NEW SD_PROMPT that keeps every element of the previous scene EXACTLY THE SAME unless the user explicitly asked to change it. Only modify what the user requested. Do not start over.';
+      'SCENE LOCK — STRICT PRESERVATION MODE.\n' +
+      'You are refining an existing image. The user is asking for a small delta on top of a locked scene. Reproduce the locked scene with maximum fidelity, then apply ONLY the user\'s requested change.\n\n' +
+      'PREVIOUS SD_PROMPT (treat as authoritative description of the locked scene): "' + lastSDPrompt.slice(0, 1000) + '"\n\n' +
+      'PRESERVE EXACTLY (copy verbatim into the new SD_PROMPT unless the user explicitly changed it):\n' +
+      '  • subject identity — face shape, age, ethnicity, hair colour/length/style, eye colour, build\n' +
+      '  • clothing — every garment, colour, texture, accessories (jewellery, glasses, hats)\n' +
+      '  • pose, framing, camera angle, distance, crop\n' +
+      '  • setting — location, background elements, props, time of day\n' +
+      '  • lighting direction, intensity, colour temperature, shadow placement\n' +
+      '  • overall colour palette, film stock / render style, mood\n\n' +
+      'USER REFINEMENT (apply ONLY this change, leave everything else identical): ' + p + '\n\n' +
+      'Write a NEW SD_PROMPT that begins by re-stating every preserved element above in detail, then incorporates the user\'s refinement. Do NOT abbreviate the preserved scene. Do NOT start fresh. Drift between turns is a failure — match the previous image as closely as text can describe it.';
     // First-use popup — fires on the first refinement turn so the
     // user understands the chained-context behavior.
     showFirstUseHint('fu_scene_lock_v1', {

@@ -1,4 +1,4 @@
-const CACHE = 'image-prompt-v19';
+const CACHE = 'image-prompt-v20';
 const CORE = ['./', './index.html', './manifest.json', './icon.png',
               './fonts/atkinson-400.woff2', './fonts/atkinson-700.woff2'];
 self.addEventListener('install', e => {
