@@ -25,6 +25,40 @@ Update this file at the end of every shipped version.
 
 ---
 
+## Provider lock list (per user 2026-04-29 / 2026-04-30 directives)
+
+Every provider has a hard role. Image jobs must NEVER reach a text-only
+provider. Edit jobs must NEVER reach a text-to-image-only provider.
+
+| Provider | Role | Image gen? | Image edit / img2img? | Inpaint / mask? | Vision input? | Default state | Notes |
+|----------|------|-----------|------------------------|-----------------|---------------|---------------|-------|
+| **HF Mistral** (`mistralai/Mistral-7B-Instruct-v0.3`) | chat / prompt rewrite ONLY | ❌ blocked | ❌ blocked | ❌ blocked | ❌ | ON for chat, BLOCKED for image | Pre-call regex `HF_TEXT_ONLY_MODELS` |
+| **OpenRouter** (free models) | chat / prompt rewrite ONLY | ❌ blocked | ❌ blocked | ❌ blocked | model-dep | ON for chat, BLOCKED for image | Test Keys row labelled TEXT-ONLY |
+| **Cerebras** (Llama 3.1) | chat / prompt rewrite ONLY | ❌ blocked | ❌ blocked | ❌ blocked | ❌ | ON for chat, BLOCKED for image | Test Keys row labelled TEXT-ONLY |
+| **Puter.js** | chat + vision + image gen (no key) | ✓ | partial | ❌ | ✓ | ON | First-try default; multimodal |
+| **Google Gemini** (free tier) | chat + vision + image edit (Gemini 2.5 Flash Image) | ✓ | ✓ | partial | ✓ | OPT-IN (set key) | Real img2img; single Gemini key powers both chat + Imagen |
+| **Anthropic Claude** | chat + vision (paid) | ❌ | ❌ | ❌ | ✓ | OFF (paid; opt-in only) | Excluded from default chain — `dangerous-direct-browser-access` |
+| **Pollinations** (classic + Flux + Turbo) | image GEN only — never preservation | ✓ | ❌ | ❌ | ❌ | ON (no key) | Slot 1 default; sharper Flux variant promoted v17do |
+| **Hugging Face — image** (`hfImgKey`) | img gen + img2img + inpainting + face-restore + upscale | ✓ | ✓ | ✓ | ✓ via Spaces | ON if `hfImgKey` set | SDXL / FLUX / SDXL-Turbo / GFPGAN / Real-ESRGAN |
+| **HF Spaces** (public Gradio) | img2img / inpaint / video / vision (model-dependent, often no token) | ✓ | ✓ | ✓ | ✓ | OPT-IN (item 15) | Florence-2, Qwen2.5-VL, SVD, AnimateDiff, SadTalker, IP-Adapter, InstantID |
+| **Cloudflare Workers AI** (`cfToken` + `cfAccount`) | image GEN only (FLUX-schnell, SDXL-Lightning) | ✓ | ❌ | ❌ | ❌ | ON if CF keys set | |
+| **Together AI** | image GEN only (FLUX-schnell-Free) | ✓ | ❌ | ❌ | ❌ | OFF (free credits, not sustained) | Opt-in flag |
+| **AI Horde** anonymous (SD 1.5 + SDXL slots) | image GEN only, last resort | ✓ | ❌ | ❌ | ❌ | ON (no key) | Slow but free; bottom of chain |
+| **Google Imagen** (Gemini 2.5 Flash Image, same key) | image GEN + true img2img | ✓ | ✓ | ❌ | ✓ via Gemini | OFF (free tier, opt-in) | Best free img2img once enabled |
+| **DeepAI** (`daiKey`) | image GEN only | ✓ | limited | ❌ | ❌ | OFF (free tier, opt-in) | |
+| **SiliconFlow** (`siliconflowKey`) | image GEN + img2img (FLUX Kontext) + image-to-video | ✓ | ✓ | model-dep | ✓ Qwen | OFF (free-**entry** credits, NOT unlimited free) | Per user 2026-04-30 |
+| **Fal.ai / Replicate / DeepInfra / Stability / Hyperbolic** | image GEN, sometimes edit | ✓ | model-dep | model-dep | model-dep | REMOVED from default chain | Pay-per-use after free credit; user explicitly excluded |
+| **Local SD** (A1111 / ComfyUI / Fooocus on user's Mac/PC) | full edit suite | ✓ | ✓ | ✓ | model-dep | OFF (companion-machine-only; iPad cannot run) | Gated by `localSdUrl` setting |
+
+**Lock rules (enforced in code):**
+- `HF_TEXT_ONLY_MODELS` regex (Mistral / Llama / GPT / Qwen / Gemma / Phi / Falcon / MPT / Flan / T5 / BART / Pythia / DeepSeek / Yi / Olmo) blocks pre-call (v17dt)
+- `MODEL_CAPABILITIES` flags `text_only: true` for chat-only providers (v17dt)
+- `IMAGE_PROVIDERS` entries carry `supportsImg2Img` / `supportsImageOutput` / `supportsImageInput` / `supportsInpainting` (v17dt+)
+- `filterImageProvidersForTask` removes incapable providers per task (v17dt)
+- `imageGenWithFallback` capability gate skips with status "Skipped X: text-only model" (v17dt+v17du)
+- `runImageTask` add_object branch hard-routes to `supportsImg2Img===true` only (v17ds)
+- Test Keys diagnostic groups by image-capable vs chat-only and labels TEXT-ONLY explicitly (v17dy)
+
 ## Hard rules (must not be broken)
 
 1. Never send image-editing requests to text-only models
@@ -54,7 +88,7 @@ Tools that require Python + a local GPU (ComfyUI, AUTOMATIC1111, Fooocus, Invoke
 2. **Pollinations** — text-to-image, no key, no preservation
 3. **Hugging Face Inference / Spaces** (free tier with HF token) — img2img, inpainting, face restoration, upscale, vision
 4. **Cloudflare Workers AI** (free tier with CF token) — SDXL-Lightning, FLUX-schnell
-5. **SiliconFlow** (free tier with key — hosts FLUX, Stable Diffusion 3, Qwen vision, image edit, image-to-video) — added per user 2026-04-30
+5. **SiliconFlow** (`api.siliconflow.cn` — free-**entry** credits, NOT truly unlimited free; hosts **FLUX.1 Kontext** for image-to-image / editing, FLUX, Stable Diffusion 3, Qwen vision, image-to-video). Treated as opt-in: default OFF, user adds key in Settings, app warns when credit balance is unknown. Per user 2026-04-30 clarification.
 6. **Puter.js** — vision LLM, no key
 7. **Google Gemini** (free key) — vision + image edit on free tier
 8. **AI Horde anonymous** — last-resort, slow but truly free
@@ -229,7 +263,7 @@ before opening more than one in flight.
 | 14a | Glam parity | **Curated local style library** (~50 hand-picked style prompts in JSON; replace 8 hardcoded chips) | Glam-AI "2,000+ community styles" parity, browser-only | Tap "watercolor" chip, prompt expands and routes |
 | 14b | Glam parity | **Face restoration / photo retouch** via HF Inference (GFPGAN + CodeFormer); chat phrases "smooth skin", "fix my face", "retouch this" | Glam-AI photo-retouch parity, free with HF token | "smooth my face" returns a restored portrait |
 | 14c | Glam parity | **Real-ESRGAN upscale engine** wired to HF Inference; chat phrase "upscale this 4×" | Glam-AI upscale parity, free with HF token | "upscale 4x" returns 4× larger PNG |
-| 14d | user 2026-04-30 | **SiliconFlow connector** — free-tier inference platform hosting FLUX, Stable Diffusion 3, Qwen vision, image edit, image-to-video. Wired as a 13th image-chain slot (text-to-image + img2img + video) and as an additional vision LLM in the chat chain. Endpoint pattern: `https://api.siliconflow.cn/v1/...` with bearer key. Treated as a free public API alongside HF / Cloudflare. | Adds SD3 / FLUX with a different rate-limit budget than HF; free image-to-video without GPU at user's house | Set SiliconFlow key in Settings → image gen + animate routes through it as a separate provider with capability flags `supportsImageOutput / supportsImg2Img / supportsImageToVideo` |
+| 14d | user 2026-04-30 | **SiliconFlow connector** — opt-in only (default OFF). `https://api.siliconflow.cn/v1/...` with bearer key. Hosts **FLUX.1 Kontext** (image-to-image / editing), FLUX, Stable Diffusion 3, Qwen vision, image-to-video. Has cheap / free-**entry** credits but is **NOT truly unlimited free** — must be flagged in Settings the same way Replicate / Together / DeepInfra are flagged for paid-after-credit. Capability flags `supportsImageOutput / supportsImg2Img / supportsImageToVideo`. | Adds FLUX Kontext (best free img2img model currently available) and free-tier SD3 / image-to-video with a different rate-limit budget than HF | Set SiliconFlow key in Settings → image gen + animate routes through it; UI shows "free credits — not unlimited" warning before first call |
 | 15 | spec Ph 2 | **HF Spaces connector** (public Gradio APIs for Florence-2, Qwen2.5-VL, SDXL inpaint, GFPGAN, Real-ESRGAN — many require no token) | More truly-free img2img/inpaint paths | Spaces models appear as separate slots |
 | 16 | original E | **Cohesive icon set across ACR / Attain / Attain Jr / Study** | Unblocked now that Phase 1B + 2 are done | Brand consistency across all 5 apps |
 | 17 | original N | **App Store readiness** — NSFW / safety filter, watermark toggle, privacy text, encrypted key vault, install banner | Submission gate | App Store screening passes |
@@ -239,6 +273,32 @@ before opening more than one in flight.
 | 18d | user direction 2026-04-30 | **Image → Video tier 4 — Talking Avatar / Lip-Sync** via HF Space (SadTalker, Wav2Lip). Image + audio (recorded in-app via MediaRecorder OR generated via Puter / browser TTS) → talking-head clip. | Lip-sync was carried over from earlier scope (v17da reinstated SadTalker) | Upload portrait + speak → portrait speaks back in their face |
 | 18e | user direction 2026-04-30 | **Effects layer** — overlay rain / snow / dust / light leaks / lens flares on top of any image OR video output. Canvas-based particle systems composited with FFmpeg.wasm. | Polish; pure browser; free | "add rain" overlays animated rain to the result clip |
 | 19 | spec Ph 5 | Voice tools, batch generation, plug-in marketplace | Deferred until 1–18 land | n/a |
+
+### Tier-4 cross-app backlog (carried from `PLAN_IMAGE_PROMPT.md`)
+
+| # | Source | Item | Notes |
+|---|--------|------|-------|
+| 20 | T4-7 | **Timeline scrubber + fork** — slide back through edit history; branch a new direction at any earlier point | Builds on Output Receipt log already shipped |
+| 21 | T4-9 | **Multi-language prompts** — type / speak in English / Spanish / Hebrew / Greek / Aramaic / Ge'ez; LLM translates | Pairs with item 9 voice editing |
+| 22 | T4-10 | **Lockscreen wallpaper export** — "Set as wallpaper" → instructions for iPad lock screen | Cross-app, biblical art use case |
+| 23 | T4-12 | **Daily inspiration card** — 3 fresh styles surface on first open each day (no server) | Engagement loop |
+| 24 | T4-13 | **Auto alt-text** — AI captions every result automatically | Accessibility + dyslexia |
+| 25 | T4-14 | **Offline queue** — queued gens auto-fire when network returns | Matches Load's "work offline" tagline |
+| 26 | T4-16 | **Style translation across mediums** — tap a result → "now oil painting / watercolor / stained glass" | Same scene, multiple art mediums |
+
+### Polish backlog (Tier 2 + Tier 3 from `PLAN_IMAGE_PROMPT.md`)
+
+| # | Source | Item | Notes |
+|---|--------|------|-------|
+| 27 | T2-7 | **Side-by-side A/B compare** — current image \| new result, sliding divider | Tap to commit or undo |
+| 28 | T2-8 | **History gallery** — last 20 results in a strip; tap to re-edit / re-prompt / share / save | Builds on IndexedDB receipt log |
+| 29 | T3-10 | **Same-prompt cache** — IndexedDB caches `(prompt + image hash) → result` | Instant retries |
+| 30 | T3-12 | **Auto-enhance pre-processing** — optional OpenCV pass on upload (denoise, white balance, slight sharpen) | Better downstream input |
+| 31 | T3-13 | **Prompt enhance** — user types "make it pro" → LLM expands behind the scenes; "view full prompt" toggle | Power-user transparency |
+| 32 | T3-14 | **Camera roll direct picker** — explicit "Choose from Photos" CTA | iPad UX |
+| 33 | T3-15 | **PWA share-target manifest** — share an image to Image Prompt from Photos / Safari | One-tap input |
+| 34 | T3-17 | **Recipe export** — save edit chain as one-tap recipe, share via JSON | Power user |
+| 35 | T3-9  | **Provider health dashboard UI** (data already collected by `PROVIDER_HEALTH`) | Surface hidden state |
 | OPT | optional companion | **ComfyUI / A1111 / Fooocus on user's Mac/PC** — IP-Adapter, InstantID, ControlNet, LoRA workflows. Requires the user to run Python + GPU on a separate machine; iPad just sends requests. NOT a default path; gated behind explicit `localSdUrl` setting in Settings. Already wired (A1111-compat) at v17dq. | Power-user-only; iPad alone cannot do this | User points iPad at `http://192.168.x.x:7860`, edits route via local HTTP |
 
 **New pre-18 items added per user direction 2026-04-30:**
