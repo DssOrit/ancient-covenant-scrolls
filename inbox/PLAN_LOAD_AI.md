@@ -59,7 +59,35 @@ provider. Edit jobs must NEVER reach a text-to-image-only provider.
 - `runImageTask` add_object branch hard-routes to `supportsImg2Img===true` only (v17ds)
 - Test Keys diagnostic groups by image-capable vs chat-only and labels TEXT-ONLY explicitly (v17dy)
 
-## Hard rules (must not be broken)
+## Editor Tools / Mask Tools (NOT AI providers)
+
+Per user direction 2026-04-30. These are **client-side editing libraries**
+that prepare `sourceImage + mask + prompt` for an AI provider. They
+must NEVER be listed in the AI provider chain — they don't generate or
+edit pixels with AI; they let the user define the region/intent the AI
+provider then acts on.
+
+| Tool | Role | iPad-safe? | Status |
+|------|------|-----------|--------|
+| **Canvas API** (browser native) | Manual mask painting, erase/refine, crop, before/after compare | ✓ | not wired |
+| **Fabric.js** | Object/area selection, layers, manipulable shapes on top of an image | ✓ | not wired |
+| **Konva.js** *(optional)* | Higher-level canvas toolkit for layers + shapes if Fabric is too heavy | ✓ | not wired |
+| **Cropper.js** *(optional)* | Tap-friendly crop UI | ✓ | not wired |
+| **Filerobot Image Editor** *(optional)* | Drop-in editor (filters, text, crop, draw) | ✓ | not wired |
+
+**Lock rules:**
+- Editor tools live under a separate "Editor Tools / Mask Tools" header in Settings — never mixed into the AI provider list
+- They prepare `sourceImage + mask + prompt` and call `runImageTask({...})` with the result
+- If `runImageTask` cannot find a provider that supports image-edit / inpainting, the UI must surface **"Image-edit provider needed"** — never fake the edit, never return the unchanged image as success
+- The AI provider chain stays exactly as locked in the Provider Lock List above
+
+**Where they slot into the build:** these tools power roadmap items #1
+(Manual Mask painter), #4 (Jimp ops resize/crop/flip/compose), #27
+(A/B compare slider), #28 (History gallery), #30 (auto-enhance
+pre-processing). The first ship that introduces a Canvas/Fabric tool
+will also lay down this structural separation in Settings.
+
+
 
 1. Never send image-editing requests to text-only models
 2. Never claim an edit succeeded unless image file/blob/URL is returned
