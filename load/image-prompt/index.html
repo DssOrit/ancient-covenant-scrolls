@@ -1041,10 +1041,29 @@ async function pipeline(prompt, imgData, tid) {
         imageProvUsed = result.providerName;
       } catch (e) {
         if (e && e.message === 'NO_EDIT_PROVIDER') {
-          // Edit task with no img2img provider AND text-to-image also
-          // exhausted — surface a ready-to-paste ComfyUI / A1111 /
-          // Fooocus prompt rather than silently regenerating.
           exportPromptText = buildSDExportPrompt(cleanPrompt, lastSDPrompt);
+        } else if (e && e.message === 'MANUAL_MASK_NEEDED') {
+          // add_object / inpaint without an img2img-class provider.
+          // Don't fake success and don't regenerate the whole scene —
+          // tell the user a manual mask is needed and offer the
+          // export prompt for a real inpaint tool.
+          exportPromptText =
+            '🖌 Manual mask needed.\n\n' +
+            'Adding "' + (e.object || 'an object') + '" to a specific area requires an inpainting provider, ' +
+            'and none is currently configured. Two ways forward:\n\n' +
+            '1) Add a free Hugging Face token in Settings (HF SDXL inpainting will be unlocked).\n' +
+            '2) Or paste the prompt below into a local Stable Diffusion tool that supports masked inpainting (ComfyUI / A1111 / Fooocus / IOPaint).\n\n' +
+            buildSDExportPrompt(cleanPrompt, lastSDPrompt);
+        } else if (e && e.message === 'ADD_OBJECT_NO_CHANGE') {
+          // Provider returned a near-identical copy of the source — no
+          // object was added. Reject and surface a clear message
+          // instead of showing the user a blurry duplicate.
+          exportPromptText =
+            '⚠ The provider returned an image that is nearly identical to the source. ' +
+            '"' + (e.object || 'the object') + '" was not actually added. ' +
+            'This usually means the chain only has text-to-image providers and cannot do localized edits. ' +
+            'Add a free Hugging Face token in Settings for SDXL inpainting, or use the export prompt below in a local SD tool.\n\n' +
+            buildSDExportPrompt(cleanPrompt, lastSDPrompt);
         } else {
           console.warn('[Image] all providers failed:', e.message || e);
         }
@@ -1340,7 +1359,9 @@ function classifyImageTask(prompt, hasImage) {
   if (/\b(remove\s*background|cut\s*out|isolate|transparent\s*bg|alpha\s*channel)\b/.test(p)) return 'background_removal';
   if (/\b(change|replace|swap|new)\s+(the\s+)?background\b/.test(p) || /\bbackground\b/.test(p)) return 'change_background';
   if (/\b(remove|delete|erase|get\s*rid\s*of)\b/.test(p)) return 'remove_object';
-  if (/\b(add\s+(a\s+|an\s+|another\s+)?(person|man|woman|child|figure|character|someone)|put\s+(a\s+|an\s+)?(person|man|woman|child)\s+in)\b/.test(p)) return 'add_person';
+  // ADD_OBJECT: "add a bird", "add dog", "add a person", "put a hat on" etc.
+  // Treat as a localized inpaint, not a full-scene regen.
+  if (/\b(add|put|place|insert|include)\s+(a\s+|an\s+|another\s+|some\s+)?[a-z]+/.test(p)) return 'add_object';
   if (/\b(upscale|enhance|hd|higher\s+res|upres|hi[\s-]?res|2x|4x|sharper|crisp(er)?|improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p)) return /\b(improve|fix\s+quality|make\s+(it\s+)?better)\b/.test(p) ? 'improve' : 'upscale';
   if (/\b(modify|change|alter)\s+(the\s+)?(character|person|face|hair|outfit|clothing|expression|pose)\b/.test(p)) return 'modify_character';
   if (/\b(mask|inpaint|fill\s*in|paint\s*over|select(ed)?\s*area|only\s*the|just\s*the)\b/.test(p)) return 'inpaint';
@@ -1351,7 +1372,7 @@ function filterImageProvidersForTask(providers, task) {
   if (task === 'generate') return providers;
   // Edit-class tasks all need img2img-capable providers
   const editClass = ['img2img', 'inpaint', 'mask_edit', 'improve',
-                     'add_person', 'modify_character',
+                     'add_object', 'modify_character',
                      'change_background', 'remove_object'];
   if (editClass.indexOf(task) !== -1) {
     return providers.filter(p => p.supportsImg2Img === true);
@@ -1369,11 +1390,52 @@ function filterImageProvidersForTask(providers, task) {
    provider fallback, output validation, and the export-prompt rescue. */
 async function runImageTask(opts) {
   opts = opts || {};
-  const prompt          = opts.prompt || '';
-  const sourceImage     = opts.sourceImage || null;          // {base64, mime, dataUrl, name}
-  const mask            = opts.mask || null;                 // reserved for future inpaint
-  const characterProfile= opts.characterProfile || null;     // {description, outfit, style, seed} or null
-  const taskType        = opts.taskType || classifyImageTask(prompt, !!sourceImage);
+  let prompt           = opts.prompt || '';
+  const sourceImage    = opts.sourceImage || null;           // {base64, mime, dataUrl, name}
+  const mask           = opts.mask || null;                  // reserved for future inpaint UI
+  const characterProfile = opts.characterProfile || null;
+  const taskType       = opts.taskType || classifyImageTask(prompt, !!sourceImage);
+  // ── ADD_OBJECT special case ──
+  // Localized addition. Must NOT regenerate the full scene. Build the
+  // prescribed edit prompt verbatim per build plan. If no img2img /
+  // inpaint provider is configured, return Manual-Mask-Needed instead
+  // of falling back to text-to-image (which produced the blurry-copy
+  // bug). Quality check after generation rejects results that are
+  // near-identical to the source (i.e. provider returned a blurred
+  // copy without adding the object).
+  if (taskType === 'add_object' && sourceImage) {
+    const objectMatch = prompt.match(/\b(?:add|put|place|insert|include)\s+(?:a\s+|an\s+|another\s+|some\s+)?([a-z][a-z\s]*?)(?:\s+(?:to|in|on|at|near|behind|in front of|above|below)\b|[\.\!\?,]|$)/i);
+    const object = objectMatch ? objectMatch[1].trim() : 'the requested object';
+    const region = mask ? 'the masked region' : 'a contextually appropriate area';
+    prompt = 'Add ' + object + ' to ' + region + '. ' +
+      'Preserve the original image, person, background, lighting, camera angle, and style. ' +
+      'Do not blur or regenerate the whole image. ' +
+      'Only the addition of ' + object + ' should differ from the source.';
+    // Hard route: add_object requires an img2img-class provider. No
+    // text-to-image fallback (that produces blurry full-scene rerun).
+    const candidates = IMAGE_PROVIDERS
+      .filter(p => p.enabled() && isHealthy(p.id) && p.supportsImg2Img === true);
+    if (!candidates.length) {
+      const err = new Error('MANUAL_MASK_NEEDED');
+      err.task = 'add_object';
+      err.object = object;
+      throw err;
+    }
+    const result = await imageGenWithFallback(prompt, sourceImage, {
+      taskType: 'add_object', mask: mask, hardImg2Img: true
+    });
+    // Quality check: reject near-identical output (provider returned
+    // a blurred copy of the source without adding the object).
+    const similarity = await imageSimilarity(sourceImage.dataUrl, result.url);
+    if (similarity > 0.985) {
+      const err = new Error('ADD_OBJECT_NO_CHANGE');
+      err.task = 'add_object';
+      err.object = object;
+      err.similarity = similarity;
+      throw err;
+    }
+    return result;
+  }
   // Build prompt with character profile injected if provided/active
   let finalPrompt = prompt;
   if (characterProfile && (characterProfile.description || characterProfile.outfit || characterProfile.style)) {
@@ -1382,12 +1444,43 @@ async function runImageTask(opts) {
   } else if (CHAR.mode) {
     finalPrompt = injectCharacterContext(finalPrompt);
   }
-  // Tag the task on the prompt so imageGenWithFallback's classifier
-  // can short-circuit (its classifier sees the tag and returns the
-  // explicit type). This avoids re-classifying and lets explicit UI
-  // buttons override keyword detection.
   if (opts.taskType) finalPrompt = '[TASK:' + taskType + ']\n' + finalPrompt;
   return await imageGenWithFallback(finalPrompt, sourceImage, { taskType: taskType, mask: mask });
+}
+
+/* ── imageSimilarity — quick perceptual diff using downsampled
+   8x8 grayscale pixel comparison. Returns 0..1, where 1 = identical.
+   Used by add_object quality check: if result is too close to source,
+   the provider didn't actually add anything and we reject. */
+async function imageSimilarity(sourceUrl, resultUrl) {
+  try {
+    const [src, res] = await Promise.all([
+      loadBitmapAtSize(sourceUrl, 8),
+      loadBitmapAtSize(resultUrl, 8)
+    ]);
+    if (!src || !res) return 0;
+    let total = 0;
+    for (let i = 0; i < 64; i++) {
+      total += Math.abs(src[i] - res[i]) / 255;
+    }
+    return 1 - (total / 64);
+  } catch (_) { return 0; }
+}
+async function loadBitmapAtSize(url, size) {
+  const r = await fetch(url);
+  const b = await r.blob();
+  const bm = await createImageBitmap(b);
+  const cv = document.createElement('canvas');
+  cv.width = size; cv.height = size;
+  const ctx = cv.getContext('2d');
+  ctx.drawImage(bm, 0, 0, size, size);
+  const id = ctx.getImageData(0, 0, size, size);
+  const out = new Uint8Array(size * size);
+  for (let i = 0, j = 0; i < id.data.length; i += 4, j++) {
+    // Luma approximation
+    out[j] = (id.data[i] * 299 + id.data[i+1] * 587 + id.data[i+2] * 114) / 1000;
+  }
+  return out;
 }
 
 /* ── CHARACTER CONSISTENCY — localStorage-backed slot.
@@ -2055,10 +2148,17 @@ async function imageGenWithFallback(prompt, imgData, opts) {
   const editClass = task !== 'generate';
   if (filtered.length) {
     providers = filtered;
+  } else if (opts.hardImg2Img) {
+    // hardImg2Img caller (e.g. add_object) refuses text-to-image
+    // fallback. No img2img provider available means manual-mask
+    // workflow needed.
+    const err = new Error('MANUAL_MASK_NEEDED');
+    err.task = task;
+    throw err;
   } else if (editClass) {
-    // Keep providers as-is (text-to-image fallback). The Scene Lock
-    // and character context already injected upstream carry the
-    // identity-preservation work the LLM and providers can do.
+    // Soft fallback: keep providers as-is (text-to-image). Scene Lock
+    // and character context injected upstream carry the preservation
+    // work the LLM and providers can do.
     console.warn('[Image] no img2img provider for task ' + task +
       '; falling back to text-to-image with Scene Lock + character context');
   }
