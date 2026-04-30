@@ -633,8 +633,10 @@ let C = {
     pollturbo:    LS.getItem('ps_use_pturbo')  !== '0',
     hordesdxl:    LS.getItem('ps_use_hsdxl')   !== '0',
     cfsdxllight:  LS.getItem('ps_use_cfsdxl')  !== '0',
-    hfsdxlturbo:  LS.getItem('ps_use_hfturbo') !== '0'
+    hfsdxlturbo:  LS.getItem('ps_use_hfturbo') !== '0',
+    localsd:      LS.getItem('ps_use_localsd') !== '0'
   },
+  localSdUrl:   LS.getItem('ps_local_sd_url') || '',
   mode:       LS.getItem('ps_mode') || 'realistic',
 };
 
@@ -910,9 +912,14 @@ function send(){
   // SD_PROMPT that preserves subject/setting/mood and only modifies
   // what the user asked for. When Scene Lock is OFF, pass the prompt
   // as-is and let the LLM start fresh.
-  let augmentedPrompt = p;
+  let augmentedPrompt = injectCharacterContext(p);
   if (sceneLocked && lastSDPrompt && snap) {
-    augmentedPrompt =
+    var charHeader = '';
+    if (CHAR.mode) {
+      var bits = [CHAR.description, CHAR.outfit, CHAR.style].filter(Boolean);
+      if (bits.length) charHeader = 'CHARACTER LOCK (carry verbatim across every turn): ' + bits.join(' | ') + '\n\n';
+    }
+    augmentedPrompt = charHeader +
       'SCENE LOCK — STRICT PRESERVATION MODE.\n' +
       'You are refining an existing image. The user is asking for a small delta on top of a locked scene. Reproduce the locked scene with maximum fidelity, then apply ONLY the user\'s requested change.\n\n' +
       'PREVIOUS SD_PROMPT (treat as authoritative description of the locked scene): "' + lastSDPrompt.slice(0, 1000) + '"\n\n' +
@@ -987,6 +994,7 @@ async function pipeline(prompt, imgData, tid) {
        gen for chitchat / questions / thanks. */
     let resultUrl = null;
     let imageProvUsed = null;
+    let exportPromptText = null;
     // Local-first router — try Jimp for trivial edits before any AI
     // call. If matched + succeeded, skip the AI image path entirely.
     if (imgData && prompt) {
@@ -1008,16 +1016,24 @@ async function pipeline(prompt, imgData, tid) {
         resultUrl = result.url;
         imageProvUsed = result.providerName;
       } catch (e) {
-        console.warn('[Image] all providers failed:', e.message || e);
-        // Don't block the chat reply — just no image this turn
+        if (e && e.message === 'NO_EDIT_PROVIDER') {
+          // Edit task with no img2img provider configured — surface a
+          // ready-to-paste ComfyUI / A1111 / Fooocus prompt rather than
+          // silently regenerating from text (which would cause drift).
+          exportPromptText = buildSDExportPrompt(cleanPrompt, lastSDPrompt);
+        } else {
+          console.warn('[Image] all providers failed:', e.message || e);
+        }
       }
     }
 
     removeTyping(tid);
     const displayText = reply.replace(/SD_PROMPT:[\s\S]*/,'').trim() || reply;
-    const finalText = resultUrl
-      ? (displayText || (`Here's your image!${prompt ? ' "' + prompt + '" applied.' : ''} Tap Save to keep it. Want refinements?`))
-      : displayText;
+    const finalText = exportPromptText
+      ? exportPromptText
+      : (resultUrl
+          ? (displayText || (`Here's your image!${prompt ? ' "' + prompt + '" applied.' : ''} Tap Save to keep it. Want refinements?`))
+          : displayText);
     const providerBadge = resultUrl
       ? usedProvider + ' + ' + (imageProvUsed || 'image')
       : usedProvider;
@@ -1286,11 +1302,154 @@ async function callHFChat(prompt) {
   return Array.isArray(d)?d[0]?.generated_text?.split('Assistant:').pop()?.trim()||prompt:prompt;
 }
 
+/* ── TASK CLASSIFIER + ROUTING ── */
+function classifyImageTask(prompt, hasImage) {
+  const p = (prompt || '').toLowerCase();
+  if (!hasImage) return 'generate';
+  if (/\b(remove\s*background|cut\s*out|isolate|transparent\s*bg|alpha\s*channel)\b/.test(p)) return 'background_removal';
+  if (/\b(upscale|enhance|hd|higher\s+res|upres|hi[\s-]?res|2x|4x|sharper|crisp(er)?)\b/.test(p)) return 'upscale';
+  if (/\b(mask|inpaint|fill\s*in|paint\s*over|select(ed)?\s*area|only\s*the|just\s*the)\b/.test(p)) return 'inpaint';
+  return 'img2img';
+}
+
+function filterImageProvidersForTask(providers, task) {
+  if (task === 'generate') return providers;
+  if (task === 'img2img' || task === 'inpaint' || task === 'mask_edit') {
+    return providers.filter(p => p.supportsImg2Img === true);
+  }
+  if (task === 'background_removal') return providers.filter(p => p.supportsBgRemoval === true);
+  if (task === 'upscale') return providers.filter(p => p.supportsUpscale === true);
+  return providers;
+}
+
+/* ── CHARACTER CONSISTENCY — localStorage-backed slot.
+   Injected into prompt when CHAR.mode is on. Seed is forwarded to
+   any provider that accepts it (currently Local SD). */
+const CHAR = {
+  get description() { return LS.getItem('ps_char_desc') || ''; },
+  get outfit()      { return LS.getItem('ps_char_outfit') || ''; },
+  get style()       { return LS.getItem('ps_char_style') || ''; },
+  get seed()        { var s = parseInt(LS.getItem('ps_char_seed') || '0', 10); return s > 0 ? s : null; },
+  get mode()        { return LS.getItem('ps_char_mode') === '1'; },
+  get refImage()    { return LS.getItem('ps_char_ref') || ''; },
+  set description(v){ LS.setItem('ps_char_desc',   v || ''); },
+  set outfit(v)     { LS.setItem('ps_char_outfit', v || ''); },
+  set style(v)      { LS.setItem('ps_char_style',  v || ''); },
+  set seed(v)       { LS.setItem('ps_char_seed',   v ? String(v) : ''); },
+  set mode(v)       { LS.setItem('ps_char_mode',   v ? '1' : '0'); },
+  set refImage(v)   { LS.setItem('ps_char_ref',    v || ''); }
+};
+
+function injectCharacterContext(prompt) {
+  if (!CHAR.mode) return prompt;
+  var parts = [];
+  if (CHAR.description) parts.push('CHARACTER: ' + CHAR.description);
+  if (CHAR.outfit)      parts.push('OUTFIT: '   + CHAR.outfit);
+  if (CHAR.style)       parts.push('STYLE: '    + CHAR.style);
+  if (!parts.length) return prompt;
+  return parts.join('\n') +
+    '\nLOCK these descriptors verbatim across every refinement.\n\n' + prompt;
+}
+
+/* ── SHARPENING POST-STEP — browser canvas, no deps.
+   Real-ESRGAN-grade upscale needs ~30 MB of WASM weights and isn't
+   shipped here. This applies a contrast/saturation lift through the
+   canvas filter pipeline — perceptibly crisper without a per-pixel
+   kernel. Local SD users typically have a real upscaler in their
+   workflow, so we skip the lift on Local SD output. */
+async function sharpenImageUrl(url, providerId) {
+  if (providerId === 'localsd') return url;
+  try {
+    const r = await fetch(url);
+    const blob = await r.blob();
+    const bmp = await createImageBitmap(blob);
+    const cv = document.createElement('canvas');
+    cv.width = bmp.width; cv.height = bmp.height;
+    const ctx = cv.getContext('2d');
+    ctx.filter = 'contrast(1.06) saturate(1.04)';
+    ctx.drawImage(bmp, 0, 0);
+    return await new Promise(resolve => cv.toBlob(b =>
+      resolve(b ? URL.createObjectURL(b) : url), 'image/png'));
+  } catch (_) { return url; }
+}
+
+/* ── EXPORT PROMPT FALLBACK ──
+   When the task is an edit AND no image-to-image provider is enabled,
+   we cannot pixel-edit. Returning a blurry text-to-image regen would
+   cause character drift, which is the bug the user is fixing. Instead,
+   surface a structured, ready-to-paste prompt for ComfyUI / A1111 /
+   Fooocus. No silent fall-through to text-to-image for edits. */
+function buildSDExportPrompt(userRequest, prevSDPrompt) {
+  const charBits = CHAR.mode
+    ? [CHAR.description, CHAR.outfit, CHAR.style].filter(Boolean).join(', ')
+    : '';
+  const seedNote = CHAR.seed
+    ? 'SEED: ' + CHAR.seed + '   (locked for character consistency)'
+    : 'SEED: random — once you find a face you like, lock the seed and re-use it';
+  return [
+    '⚠ No free image-to-image provider is configured, so I cannot pixel-edit your image directly. ',
+    'Paste the prompt below into a local Stable Diffusion tool (ComfyUI / Automatic1111 / Fooocus) ',
+    'to keep the character consistent.\n',
+    '── POSITIVE PROMPT ──',
+    [charBits, prevSDPrompt, userRequest, 'highly detailed, sharp focus, photorealistic, 8k']
+      .filter(Boolean).join(', '),
+    '',
+    '── NEGATIVE PROMPT ──',
+    'blurry, low quality, deformed, bad anatomy, mangled face, extra limbs, oversaturated, cartoonish, watermark, text',
+    '',
+    '── REFERENCE IMAGE ──',
+    'Drop the previous result into the load-image / IPAdapter / ControlNet input. ' +
+    'Suggested denoise: 0.45-0.6 for small refinements, 0.7-0.85 for larger edits.',
+    '',
+    '── ' + seedNote + ' ──',
+    '',
+    '── CONTROLNET FOR CHARACTER LOCK ──',
+    'IPAdapter-FaceID Plus (strongest face lock) > ReferenceOnly > Canny on source pose. ' +
+    'Combine with the same seed across runs for maximum consistency.'
+  ].join('\n');
+}
+
 /* ── IMAGE GENERATION — multi-provider auto-fallback ──
    Phase 1B: 4 providers in priority order. Pollinations is the
    zero-key default so image gen works on first install. The app
    silently swaps to the next when one rate-limits or 503s. */
 const IMAGE_PROVIDERS = [
+  // 0. Local SD (A1111-compatible) — when user runs ComfyUI / A1111 /
+  //    Fooocus locally and exposes its API, we route here FIRST. Only
+  //    enabled when C.localSdUrl is set. supportsImg2Img + img2img
+  //    endpoint = pixel-perfect character preservation if the user has
+  //    the GPU. Free in the truest sense (their own hardware).
+  {
+    id: 'localsd',
+    name: 'Local SD',
+    needsKey: false,
+    enabled: () => !!C.localSdUrl && C.useProvider.localsd !== false,
+    supportsImg2Img: true,
+    gen: async (prompt, imgData) => {
+      const base = C.localSdUrl.replace(/\/$/, '');
+      const endpoint = imgData ? '/sdapi/v1/img2img' : '/sdapi/v1/txt2img';
+      const body = imgData
+        ? { prompt: prompt.slice(0, 2000),
+            init_images: ['data:' + (imgData.mime || 'image/png') + ';base64,' + imgData.base64],
+            denoising_strength: 0.55, steps: 25, width: 1024, height: 1024,
+            sampler_name: 'DPM++ 2M Karras' }
+        : { prompt: prompt.slice(0, 2000), steps: 25, width: 1024, height: 1024,
+            sampler_name: 'DPM++ 2M Karras' };
+      if (CHAR.seed) body.seed = CHAR.seed;
+      const r = await fetch(base + endpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!r.ok) throw new Error('Local SD ' + r.status);
+      const data = await r.json();
+      const b64 = data.images && data.images[0];
+      if (!b64) throw new Error('Local SD empty response');
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return URL.createObjectURL(new Blob([bytes], { type: 'image/png' }));
+    }
+  },
   // 1. Pollinations Flux — no key, free, sharper photoreal default.
   //    Promoted to top in v17do after user reported blurry faces on
   //    the classic Pollinations endpoint. Same host, model=flux for
@@ -1772,50 +1931,59 @@ function isHealthy(id) {
    it polls for ~3 min — only used as truly last resort. Pollinations
    always included as a final no-key backstop. */
 async function imageGenWithFallback(prompt, imgData) {
+  const task = classifyImageTask(prompt, !!imgData);
   let providers = IMAGE_PROVIDERS.filter(p => p.enabled() && isHealthy(p.id));
   // Always include Pollinations as backstop, even if marked unhealthy,
   // because it needs no key — it's the only thing guaranteed to work.
   if (!providers.find(p => p.id === 'pollinations'))
-    providers.push(IMAGE_PROVIDERS[0]);
-  // Priority strategy (2026-04-29 user direction):
-  //   1. Pollinations FIRST — fast (~10s), no key, free, sustained
-  //      tier. Combined with Scene Lock prompt augmentation it gives
-  //      good concept-consistent results across refinement turns.
-  //   2. img2img providers next (Gemini Image, HF) IF the user has
-  //      enabled them and an image is attached — they preserve pixels.
-  //      Both default OFF unless user opts in.
-  //   3. Other text-to-image providers in array order.
-  //   4. AI Horde LAST — truly free but slow (~1-3 min volunteer GPUs).
-  const poll  = providers.find(p => p.id === 'pollinations');
+    providers.push(IMAGE_PROVIDERS.find(p => p.id === 'pollinations') || IMAGE_PROVIDERS[1]);
+  // Priority order:
+  //   1. Local SD (A1111-compat) — if user runs ComfyUI / A1111 / Fooocus
+  //   2. img2img providers (Gemini Image, HF) — when image attached and
+  //      task is an edit (preserves pixels; required for character lock)
+  //   3. Pollinations Flux — sharper photoreal default
+  //   4. Other text-to-image providers in array order
+  //   5. AI Horde LAST — truly free but slow (~1-3 min volunteer GPUs)
+  const local = providers.find(p => p.id === 'localsd');
   const horde = providers.find(p => p.id === 'horde');
-  const middle = providers.filter(p => p.id !== 'pollinations' && p.id !== 'horde');
+  const rest  = providers.filter(p => p.id !== 'localsd' && p.id !== 'horde');
   if (imgData) {
-    const img2img  = middle.filter(p => p.supportsImg2Img);
-    const textOnly = middle.filter(p => !p.supportsImg2Img);
-    // Pollinations primary even when image attached (Scene Lock makes
-    // its regen concept-consistent and FAST). User can toggle on
-    // Gemini Image to prioritize true edit instead.
+    const img2img  = rest.filter(p => p.supportsImg2Img);
+    const textOnly = rest.filter(p => !p.supportsImg2Img);
     providers = [
-      ...(poll ? [poll] : []),
+      ...(local ? [local] : []),
       ...img2img,
       ...textOnly,
       ...(horde ? [horde] : [])
     ];
   } else {
     providers = [
-      ...(poll ? [poll] : []),
-      ...middle,
+      ...(local ? [local] : []),
+      ...rest,
       ...(horde ? [horde] : [])
     ];
+  }
+  // Hard route: edits/preservation tasks must run on img2img-class
+  // providers — never silently fall back to text-to-image, which is
+  // the bug that caused multi-turn character drift.
+  providers = filterImageProvidersForTask(providers, task);
+  if (!providers.length && task !== 'generate') {
+    const err = new Error('NO_EDIT_PROVIDER');
+    err.task = task;
+    throw err;
   }
   let lastErr = null;
   for (const p of providers) {
     try {
       const url = await p.gen(prompt, imgData);
-      if (url) {
+      // Output rule: provider must return an image URL/blob — empty,
+      // text, or non-blob responses count as failure and we move on.
+      if (typeof url === 'string' && url.length > 0) {
         recordSuccess(p.id);
-        return { url, providerId: p.id, providerName: p.name };
+        const finalUrl = await sharpenImageUrl(url, p.id);
+        return { url: finalUrl, providerId: p.id, providerName: p.name, task: task };
       }
+      throw new Error(p.name + ' returned no image');
     } catch (e) {
       console.warn('[Image] ' + p.name + ' failed:', e.message);
       recordFailure(p.id);
