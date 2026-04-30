@@ -327,6 +327,17 @@ button,[role="button"]{min-height:48px}
     <div id="key-health-results" style="display:none;font-size:13px;line-height:1.5;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;max-height:280px;overflow-y:auto"></div>
   </div>
 
+  <!-- Output receipts -->
+  <div class="panel-section">
+    <h4>🧾 Output Receipts</h4>
+    <p class="panel-hint">Last 20 image tasks. Shows provider, prompt, seed, consistency mode, similarity, and any skipped providers — the audit trail for debugging unexpected results.</p>
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <button onclick="(function(){document.getElementById('receipts-list').style.display='block';renderReceipts();})()" style="flex:1;background:var(--bg-3);color:var(--ink-hi);border:1px solid var(--border);padding:8px;border-radius:8px;min-height:44px">View</button>
+      <button onclick="clearReceipts()" style="flex:1;background:var(--bg-3);color:var(--ink-low);border:1px solid var(--border);padding:8px;border-radius:8px;min-height:44px">Clear</button>
+    </div>
+    <div id="receipts-list" style="display:none;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:10px;max-height:320px;overflow-y:auto"></div>
+  </div>
+
   <!-- Fallback chain info -->
   <div class="panel-section">
     <h4>Auto-Fallback System</h4>
@@ -677,6 +688,42 @@ async function checkOneKey(provider, key) {
   }
   return Object.assign(base, { status: 'unknown', label: STATUS_ICONS.unknown + ' Not checked' });
 }
+
+/* ── Output Receipts — per-edit audit log ──
+   Per character-system + workarounds addendum: store the prompt,
+   provider, model, seed, ref image hash, consistency mode, output
+   URL, similarity (if checked), timedOut, timestamp for every
+   successful image task. Rolling buffer of last 20 in localStorage.
+   Surfaced in Settings → "Receipts" so user can review what was
+   actually run when the result looks wrong. */
+const RECEIPTS_KEY = 'ps_receipts';
+const RECEIPTS_MAX = 20;
+function loadReceipts() { try { return JSON.parse(LS.getItem(RECEIPTS_KEY) || '[]'); } catch (_){ return []; } }
+function saveReceipts(arr) { try { LS.setItem(RECEIPTS_KEY, JSON.stringify(arr.slice(0, RECEIPTS_MAX))); } catch (_){} }
+function recordReceipt(rec) {
+  const list = loadReceipts();
+  list.unshift(Object.assign({ ts: new Date().toISOString() }, rec));
+  saveReceipts(list);
+}
+function renderReceipts() {
+  const out = document.getElementById('receipts-list');
+  if (!out) return;
+  const list = loadReceipts();
+  if (!list.length) { out.innerHTML = '<div style="opacity:0.6;font-size:13px">No receipts yet — run an image task and check back.</div>'; return; }
+  out.innerHTML = list.map(r => (
+    '<div style="border-bottom:1px solid var(--border);padding:8px 0;font-size:12px;line-height:1.5">' +
+    '<div><strong>' + (r.task || 'gen') + '</strong> • ' + (r.providerName || '?') +
+    ' • <span style="opacity:0.7">' + (r.ts ? r.ts.replace('T',' ').replace(/\.\d+Z$/,'Z') : '') + '</span></div>' +
+    '<div>prompt: <code style="font-size:11px">' + ((r.prompt || '').slice(0, 120).replace(/[<>]/g,'')) + (r.prompt && r.prompt.length > 120 ? '…' : '') + '</code></div>' +
+    (r.seed ? '<div>seed: ' + r.seed + '</div>' : '') +
+    (r.consistencyMode ? '<div>consistency: ' + r.consistencyMode + '</div>' : '') +
+    (typeof r.similarity === 'number' ? '<div>similarity to source: ' + r.similarity.toFixed(3) + '</div>' : '') +
+    (r.skipped && r.skipped.length ? '<div style="opacity:0.7">skipped: ' + r.skipped.join(' • ') + '</div>' : '') +
+    (r.timedOut ? '<div style="color:var(--warn)">timed out</div>' : '') +
+    '</div>'
+  )).join('');
+}
+function clearReceipts() { saveReceipts([]); renderReceipts(); }
 
 async function runKeyDiagnostic() {
   const out = document.getElementById('key-health-results');
@@ -1210,6 +1257,17 @@ async function pipeline(prompt, imgData, tid) {
           ' | provider=' + result.providerName +
           ' | canEditImage=' + ((IMAGE_PROVIDERS.find(p=>p.id===result.providerId)||{}).supportsImg2Img===true) +
           ' | timedOut=false | outputChanged=true');
+        // Audit receipt
+        recordReceipt({
+          task: result.task,
+          providerId: result.providerId,
+          providerName: result.providerName,
+          prompt: cleanPrompt,
+          seed: CHAR.mode ? CHAR.seed : null,
+          consistencyMode: sceneLocked ? 'strict' : (CHAR.mode ? 'character-locked' : 'loose'),
+          skipped: result.skipped || [],
+          timedOut: false
+        });
       } catch (e) {
         if (e && e.message === 'NO_EDIT_PROVIDER') {
           exportPromptText = buildSDExportPrompt(cleanPrompt, lastSDPrompt);
