@@ -109,6 +109,19 @@ button,[role="button"]{min-height:48px}
 .upload-prev .upn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .upload-prev .upr{background:none;border:none;color:var(--danger);font-size:18px;padding:4px;min-height:32px}
 /* P1 — Scene Lock pill (sits inside the preview bar, left of the × close button) */
+/* Mask painter (Editor Tool) */
+.mask-overlay{position:fixed;inset:0;background:#000;z-index:9990;display:flex;flex-direction:column}
+.mask-overlay.hidden{display:none}
+.mask-toolbar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#0f0f1e;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.mask-title{flex:1;font-weight:600;color:var(--ink-hi);font-size:14px}
+.mask-toolbar .seg-btn{background:var(--bg-3);color:var(--ink-mid);border:1px solid var(--border);padding:6px 10px;border-radius:8px;min-height:36px;min-width:36px}
+.mask-toolbar .seg-btn.active{background:rgba(124,124,255,0.25);border-color:var(--accent);color:#fff}
+.mask-toolbar #mask-size{flex:1;max-width:160px}
+.mask-toolbar .mask-done{background:linear-gradient(135deg,var(--accent),#5a5ae0);color:#fff;border:none;font-weight:700}
+.mask-stack{flex:1;position:relative;overflow:auto;background:#000;display:flex;align-items:center;justify-content:center}
+.mask-stack canvas{display:block;max-width:100%;max-height:100%;width:100%;object-fit:contain;touch-action:none;-webkit-user-select:none;user-select:none}
+#mask-paint{position:absolute;inset:0;margin:auto}
+
 .scene-lock-btn{display:inline-flex;align-items:center;gap:4px;background:rgba(124,124,255,0.14);
   border:1px solid rgba(124,124,255,0.35);color:var(--accent);
   border-radius:999px;padding:4px 10px;font-size:11px;font-weight:700;
@@ -305,10 +318,28 @@ button,[role="button"]{min-height:48px}
     </div>
     <div class="input-row">
       <button class="ia" onclick="document.getElementById('file-input').click()" title="Upload image">🖼</button>
+      <button class="ia" id="mask-btn" onclick="openMask()" title="Paint mask (define edit area)" disabled>🖌</button>
       <input type="file" id="file-input" accept="image/*">
       <textarea id="prompt-input" rows="1" placeholder="Describe what you want…"></textarea>
       <button id="send-btn" disabled>↑</button>
     </div>
+  </div>
+</div>
+
+<!-- Mask Painter overlay (Editor Tool — NOT an AI provider) -->
+<div id="mask-overlay" class="mask-overlay hidden" role="dialog" aria-label="Mask painter">
+  <div class="mask-toolbar">
+    <button class="nav-btn" onclick="closeMask()" aria-label="Cancel">✕</button>
+    <span class="mask-title">Paint area to edit</span>
+    <button class="seg-btn active" data-tool="brush" onclick="setMaskTool('brush', this)" aria-label="Brush">🖌</button>
+    <button class="seg-btn"        data-tool="eraser" onclick="setMaskTool('eraser', this)" aria-label="Eraser">⌫</button>
+    <input type="range" id="mask-size" min="6" max="100" value="36" aria-label="Brush size">
+    <button class="nav-btn" onclick="clearMask()" aria-label="Clear">Clear</button>
+    <button class="nav-btn mask-done" onclick="doneMask()" aria-label="Done">Done</button>
+  </div>
+  <div class="mask-stack" id="mask-stack">
+    <canvas id="mask-img"></canvas>
+    <canvas id="mask-paint"></canvas>
   </div>
 </div>
 
@@ -325,6 +356,19 @@ button,[role="button"]{min-height:48px}
     <p class="panel-hint">Lightweight check of every saved key. Verifies the key reaches the provider and the selected model is image-capable. Full generation tests are not run.</p>
     <button id="test-keys-btn" onclick="runKeyDiagnostic()" style="background:linear-gradient(135deg,var(--accent),#5a5ae0);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;min-height:44px;width:100%;margin-bottom:10px">Test Keys</button>
     <div id="key-health-results" style="display:none;font-size:13px;line-height:1.5;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;max-height:280px;overflow-y:auto"></div>
+  </div>
+
+  <!-- Editor Tools / Mask Tools (NOT AI providers) -->
+  <div class="panel-section">
+    <h4>🖌 Editor Tools / Mask Tools</h4>
+    <p class="panel-hint">Client-side editing libraries — they prepare <code>sourceImage + mask + prompt</code> for an AI provider. They do NOT generate or edit pixels themselves. Listed separately from AI providers per build plan.</p>
+    <div style="font-size:13px;line-height:1.7">
+      <div>✓ <strong>Canvas API</strong> — mask painter, eraser, brush size, clear (wired v17e0)</div>
+      <div style="opacity:0.55">○ Fabric.js — object/area selection + layers (planned)</div>
+      <div style="opacity:0.55">○ Konva.js — alt layer toolkit (optional)</div>
+      <div style="opacity:0.55">○ Cropper.js — tap-friendly crop (planned)</div>
+      <div style="opacity:0.55">○ Filerobot Image Editor — drop-in editor (optional)</div>
+    </div>
   </div>
 
   <!-- Output receipts -->
@@ -871,6 +915,13 @@ const HF_MODELS = [
 ];
 
 let img = null, generating = false, history = [];
+// Mask painter state. currentMask is a {dataUrl, base64, mime} object
+// when the user has painted a mask for the next edit, else null.
+let currentMask = null;
+let _maskTool = 'brush';
+let _maskCtx = null;
+let _maskBmp = null;
+let _maskDrawing = false;
 // Phase 2 — track the SD_PROMPT that produced the current image so we
 // can build contextual prompts when refining across turns without a
 // vision-capable LLM. Reset when user uploads a new image or starts over.
@@ -1012,6 +1063,7 @@ function onFile(e){
   const file=e.target.files[0];if(!file)return;
   // Fresh upload — reset multi-turn chain (no longer a "previous result")
   lastSDPrompt = '';
+  currentMask = null;
   const r=new FileReader();
   r.onload=ev=>{
     const d=ev.target.result;
@@ -1019,6 +1071,8 @@ function onFile(e){
     document.getElementById('img-thumb').src=d;
     document.getElementById('img-name').textContent=file.name;
     document.getElementById('img-preview-bar').classList.add('on');
+    const mb = document.getElementById('mask-btn');
+    if (mb) { mb.disabled = false; mb.textContent = '🖌'; }
     updSend();
   };
   r.readAsDataURL(file);e.target.value='';
@@ -1026,9 +1080,113 @@ function onFile(e){
 function clearImage(){
   img=null;
   lastSDPrompt = '';
+  currentMask = null;
   document.getElementById('img-preview-bar').classList.remove('on');
   document.getElementById('img-thumb').src='';
+  document.getElementById('mask-btn').disabled = true;
   updSend();
+}
+
+/* ── Mask painter — Editor Tool, NOT an AI provider.
+   Lets the user paint over the area they want edited. The painted
+   region becomes a binary white-on-black mask sent to the chosen
+   inpainting provider together with the source image and prompt.
+   Per build plan: Canvas API only (no Fabric/Konva yet). */
+function openMask() {
+  if (!img) return;
+  const overlay = document.getElementById('mask-overlay');
+  const cvImg   = document.getElementById('mask-img');
+  const cvPaint = document.getElementById('mask-paint');
+  const bm = new Image();
+  bm.onload = () => {
+    const W = bm.naturalWidth, H = bm.naturalHeight;
+    cvImg.width = W; cvImg.height = H;
+    cvPaint.width = W; cvPaint.height = H;
+    cvImg.getContext('2d').drawImage(bm, 0, 0);
+    _maskBmp = bm;
+    _maskCtx = cvPaint.getContext('2d');
+    // Restore previous painted mask if any
+    if (currentMask && currentMask.dataUrl) {
+      const prev = new Image();
+      prev.onload = () => _maskCtx.drawImage(prev, 0, 0, W, H);
+      prev.src = currentMask.dataUrl;
+    }
+    overlay.classList.remove('hidden');
+  };
+  bm.src = img.dataUrl;
+  cvPaint.onpointerdown = (e) => { _maskDrawing = true; cvPaint.setPointerCapture(e.pointerId); _maskDrawAt(e); };
+  cvPaint.onpointermove = (e) => { if (_maskDrawing) _maskDrawAt(e); };
+  cvPaint.onpointerup   = (e) => { _maskDrawing = false; try { cvPaint.releasePointerCapture(e.pointerId); } catch(_){} };
+  cvPaint.onpointercancel = () => { _maskDrawing = false; };
+}
+function _maskDrawAt(e) {
+  const cv = document.getElementById('mask-paint');
+  const rect = cv.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (cv.width / rect.width);
+  const y = (e.clientY - rect.top)  * (cv.height / rect.height);
+  const size = parseInt(document.getElementById('mask-size').value, 10) * (cv.width / rect.width);
+  if (_maskTool === 'eraser') {
+    _maskCtx.globalCompositeOperation = 'destination-out';
+    _maskCtx.beginPath();
+    _maskCtx.arc(x, y, size, 0, Math.PI * 2);
+    _maskCtx.fill();
+  } else {
+    _maskCtx.globalCompositeOperation = 'source-over';
+    _maskCtx.fillStyle = 'rgba(255, 80, 80, 0.55)';
+    _maskCtx.beginPath();
+    _maskCtx.arc(x, y, size, 0, Math.PI * 2);
+    _maskCtx.fill();
+  }
+}
+function setMaskTool(tool, btn) {
+  _maskTool = tool;
+  document.querySelectorAll('.mask-toolbar .seg-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function clearMask() {
+  if (!_maskCtx) return;
+  const cv = document.getElementById('mask-paint');
+  _maskCtx.clearRect(0, 0, cv.width, cv.height);
+}
+function closeMask() {
+  document.getElementById('mask-overlay').classList.add('hidden');
+}
+function doneMask() {
+  // Convert the painted overlay into a binary white-on-black mask.
+  const cv = document.getElementById('mask-paint');
+  const W = cv.width, H = cv.height;
+  const id = _maskCtx.getImageData(0, 0, W, H);
+  const out = document.createElement('canvas');
+  out.width = W; out.height = H;
+  const oc = out.getContext('2d');
+  oc.fillStyle = '#000';
+  oc.fillRect(0, 0, W, H);
+  const od = oc.getImageData(0, 0, W, H);
+  let painted = 0;
+  for (let i = 0; i < id.data.length; i += 4) {
+    if (id.data[i + 3] > 12) {  // any non-transparent pixel = mask
+      od.data[i] = 255; od.data[i + 1] = 255; od.data[i + 2] = 255; od.data[i + 3] = 255;
+      painted++;
+    }
+  }
+  if (!painted) {
+    // No paint = no mask. Treat as cancel.
+    currentMask = null;
+    closeMask();
+    return;
+  }
+  oc.putImageData(od, 0, 0);
+  const dataUrl = out.toDataURL('image/png');
+  currentMask = {
+    dataUrl: dataUrl,
+    base64: dataUrl.split(',')[1],
+    mime: 'image/png',
+    paintedPixels: painted
+  };
+  // Reflect in input bar
+  const btn = document.getElementById('mask-btn');
+  if (btn) btn.textContent = '🖌✓';
+  closeMask();
 }
 
 /* P1 — Scene Lock toggle.
@@ -1099,6 +1257,9 @@ async function setCurrentImageFromUrl(url, name){
     document.getElementById('img-thumb').src = dataUrl;
     document.getElementById('img-name').textContent = '↻ ' + (name || 'Previous result — keep editing');
     document.getElementById('img-preview-bar').classList.add('on');
+    currentMask = null;
+    const mb = document.getElementById('mask-btn');
+    if (mb) { mb.disabled = false; mb.textContent = '🖌'; }
     updSend();
   } catch (e) { console.warn('[setCurrentImageFromUrl]', e); }
 }
@@ -1264,6 +1425,10 @@ async function pipeline(prompt, imgData, tid) {
           runImageTask({
             prompt: cleanPrompt,
             sourceImage: imgData,
+            mask: currentMask,
+            // If a mask is set, treat the request as inpaint regardless of
+            // keyword classification — user explicitly painted the region.
+            taskType: currentMask ? 'inpaint' : undefined,
             characterProfile: CHAR.mode ? {
               description: CHAR.description, outfit: CHAR.outfit,
               style: CHAR.style, seed: CHAR.seed
@@ -1897,16 +2062,28 @@ const IMAGE_PROVIDERS = [
     needsKey: false,
     enabled: () => !!C.localSdUrl && C.useProvider.localsd !== false,
     supportsImg2Img: true,
-    gen: async (prompt, imgData) => {
+    supportsInpainting: true,
+    supportsImageInput: true,
+    supportsImageOutput: true,
+    gen: async (prompt, imgData, opts) => {
+      opts = opts || {};
       const base = C.localSdUrl.replace(/\/$/, '');
       const endpoint = imgData ? '/sdapi/v1/img2img' : '/sdapi/v1/txt2img';
       const body = imgData
         ? { prompt: prompt.slice(0, 2000),
             init_images: ['data:' + (imgData.mime || 'image/png') + ';base64,' + imgData.base64],
-            denoising_strength: 0.55, steps: 25, width: 1024, height: 1024,
+            denoising_strength: opts.mask ? 0.85 : 0.55,
+            steps: 25, width: 1024, height: 1024,
             sampler_name: 'DPM++ 2M Karras' }
         : { prompt: prompt.slice(0, 2000), steps: 25, width: 1024, height: 1024,
             sampler_name: 'DPM++ 2M Karras' };
+      // Mask painter integration — A1111 /img2img inpaint params
+      if (opts.mask && opts.mask.base64) {
+        body.mask = 'data:image/png;base64,' + opts.mask.base64;
+        body.inpainting_fill = 1;            // original
+        body.inpaint_full_res = true;
+        body.mask_blur = 4;
+      }
       if (CHAR.seed) body.seed = CHAR.seed;
       const r = await fetch(base + endpoint, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1975,13 +2152,21 @@ const IMAGE_PROVIDERS = [
     needsKey: true,
     enabled: () => !!C.hfImgKey && C.useProvider.huggingface !== false,
     supportsImg2Img: true,
-    gen: async (prompt, imgData) => {
+    supportsInpainting: true,
+    supportsImageInput: true,
+    supportsImageOutput: true,
+    gen: async (prompt, imgData, opts) => {
+      opts = opts || {};
+      // When a mask is set, route to a real SDXL inpainting model first.
+      const inpaintModels = ['diffusers/stable-diffusion-xl-1.0-inpainting-0.1', 'runwayml/stable-diffusion-inpainting'];
       const preferred = C.hfModel;
-      const models = [preferred, ...HF_MODELS.filter(x => x !== preferred)];
+      const models = opts.mask
+        ? [...inpaintModels, ...HF_MODELS.filter(x => !inpaintModels.includes(x))]
+        : [preferred, ...HF_MODELS.filter(x => x !== preferred)];
       let lastErr = null;
       for (const model of models) {
         try {
-          const blob = await hfImageCall(model, prompt, imgData);
+          const blob = await hfImageCall(model, prompt, imgData, opts.mask || null);
           if (blob) return URL.createObjectURL(blob);
         } catch (e) {
           if (e.message?.includes('cold start')) throw e;
@@ -2507,7 +2692,7 @@ async function imageGenWithFallback(prompt, imgData, opts) {
       }
     }
     try {
-      const url = await p.gen(prompt, imgData);
+      const url = await p.gen(prompt, imgData, { mask: opts.mask, taskType: task });
       // Output rule: provider must return an image URL/blob — empty,
       // text, or non-blob responses count as failure and we move on.
       if (typeof url === 'string' && url.length > 0) {
@@ -2535,12 +2720,16 @@ async function imageGenWithFallback(prompt, imgData, opts) {
 // generation/editing. Per build plan: capability check before call.
 const HF_TEXT_ONLY_MODELS = /\b(mistral|llama|gpt|qwen|gemma|phi|falcon|mpt|flan|t5|bart|pythia|deepseek|yi|olmo)\b/i;
 
-async function hfImageCall(model, prompt, imgData) {
+async function hfImageCall(model, prompt, imgData, mask) {
   if (HF_TEXT_ONLY_MODELS.test(model)) {
     throw new Error('Skipped ' + model + ': text-only model (cannot generate images)');
   }
   const body = {inputs: prompt, parameters:{num_inference_steps:30,guidance_scale:7.5}};
-  if(imgData){body.parameters.image=imgData.base64;body.parameters.strength=0.65;}
+  if(imgData){body.parameters.image=imgData.base64;body.parameters.strength=0.85;}
+  if(mask && mask.base64){
+    body.parameters.mask_image = mask.base64;
+    body.parameters.image      = imgData ? imgData.base64 : body.parameters.image;
+  }
   const r = await fetch(`https://api-inference.huggingface.co/models/${model}`,{
     method:'POST',
     headers:{'Authorization':'Bearer '+C.hfImgKey,'Content-Type':'application/json'},
