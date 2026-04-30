@@ -1283,7 +1283,32 @@ async function callHFChat(prompt) {
    zero-key default so image gen works on first install. The app
    silently swaps to the next when one rate-limits or 503s. */
 const IMAGE_PROVIDERS = [
-  // 1. Pollinations.ai — no key, free, fast text-to-image
+  // 1. Pollinations Flux — no key, free, sharper photoreal default.
+  //    Promoted to top in v17do after user reported blurry faces on
+  //    the classic Pollinations endpoint. Same host, model=flux for
+  //    higher quality at modest extra latency.
+  {
+    id: 'pollflux',
+    name: 'Pollinations Flux',
+    needsKey: false,
+    enabled: () => C.useProvider.pollflux !== false,
+    gen: async (prompt) => {
+      const seed = Math.floor(Math.random() * 999999);
+      const params = new URLSearchParams({
+        model: 'flux', width: '1024', height: '1024',
+        nologo: 'true', seed: String(seed)
+      });
+      const url = 'https://image.pollinations.ai/prompt/' +
+        encodeURIComponent(prompt.slice(0,1500)) + '?' + params;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('Pollinations Flux ' + r.status);
+      const b = await r.blob();
+      if (!b.type.startsWith('image/')) throw new Error('Pollinations Flux non-image');
+      return URL.createObjectURL(b);
+    }
+  },
+  // 2. Pollinations classic — no key, fast fallback if Flux endpoint
+  //    is rate-limited or down.
   {
     id: 'pollinations',
     name: 'Pollinations',
@@ -1503,30 +1528,9 @@ const IMAGE_PROVIDERS = [
       return URL.createObjectURL(b);
     }
   },
-  // 8. Pollinations Flux variant — same free endpoint as #1, but
-  //    requests the flux model for sharper photoreal output. No key.
-  {
-    id: 'pollflux',
-    name: 'Pollinations Flux',
-    needsKey: false,
-    enabled: () => C.useProvider.pollflux !== false,
-    gen: async (prompt) => {
-      const seed = Math.floor(Math.random() * 999999);
-      const params = new URLSearchParams({
-        model: 'flux', width: '1024', height: '1024',
-        nologo: 'true', seed: String(seed)
-      });
-      const url = 'https://image.pollinations.ai/prompt/' +
-        encodeURIComponent(prompt.slice(0,1500)) + '?' + params;
-      const r = await fetch(url);
-      if (!r.ok) throw new Error('Pollinations Flux ' + r.status);
-      const b = await r.blob();
-      if (!b.type.startsWith('image/')) throw new Error('Pollinations Flux non-image');
-      return URL.createObjectURL(b);
-    }
-  },
-  // 9. Pollinations Turbo — same free endpoint, fastest path
-  //    (low-step model) for quick draft renders. No key.
+  // (Pollinations Flux moved to slot 1 in v17do — see top of array.)
+  // Pollinations Turbo — same free endpoint, fastest path
+  // (low-step model) for quick draft renders. No key.
   {
     id: 'pollturbo',
     name: 'Pollinations Turbo',
