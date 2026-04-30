@@ -364,7 +364,6 @@ button,[role="button"]{min-height:48px}
     <p class="panel-hint">Client-side editing libraries — they prepare <code>sourceImage + mask + prompt</code> for an AI provider. They do NOT generate or edit pixels themselves. Listed separately from AI providers per build plan.</p>
     <div style="font-size:13px;line-height:1.7">
       <div>✓ <strong>Canvas API</strong> — mask painter, eraser, brush size, clear (wired v17e0)</div>
-      <div style="opacity:0.55">○ OpenCV.js — disabled v17e2 (8 MB WASM crashed iPad). Background removal now routes to HF briaai/RMBG-1.4. Will revisit with lighter Transformers.js model.</div>
       <div style="opacity:0.55">○ Fabric.js — object/area selection + layers (planned)</div>
       <div style="opacity:0.55">○ Konva.js — alt layer toolkit (optional)</div>
       <div style="opacity:0.55">○ Cropper.js — tap-friendly crop (planned)</div>
@@ -1460,14 +1459,7 @@ async function pipeline(prompt, imgData, tid) {
           timedOut: false
         });
       } catch (e) {
-        if (e && e.message === 'FEATURE_PARKED_BG_REMOVAL') {
-          exportPromptText =
-            '🚧 Background removal is parked.\n\n' +
-            'Both the browser-side OpenCV path and the HF briaai/RMBG-1.4 path ' +
-            'crashed Safari on iPad. Held for a later ship with Transformers.js + WebGPU. ' +
-            'For now, use the Manual Mask painter to paint over the background, then say ' +
-            '"remove this" — that path is verified working (v17e0).';
-        } else if (e && e.message === 'NO_EDIT_PROVIDER') {
+        if (e && e.message === 'NO_EDIT_PROVIDER') {
           exportPromptText = buildSDExportPrompt(cleanPrompt, lastSDPrompt);
         } else if (e && e.message === 'MANUAL_MASK_NEEDED') {
           // add_object / inpaint without an img2img-class provider.
@@ -1848,17 +1840,6 @@ async function runImageTask(opts) {
   // bug). Quality check after generation rejects results that are
   // near-identical to the source (i.e. provider returned a blurred
   // copy without adding the object).
-  // ── BACKGROUND_REMOVAL —
-  // PARKED v17e3 per user 2026-04-30: both OpenCV (8 MB WASM) and HF
-  // briaai/RMBG-1.4 routes crashed iPad Safari. Held for a later ship
-  // with Transformers.js + WebGPU (lighter footprint) per build plan
-  // item #3. Until then, surface a parked-feature message so a stray
-  // "remove background" prompt cannot crash the tab.
-  if (taskType === 'background_removal' && sourceImage) {
-    const err = new Error('FEATURE_PARKED_BG_REMOVAL');
-    err.task = 'background_removal';
-    throw err;
-  }
   if (taskType === 'add_object' && sourceImage) {
     const objectMatch = prompt.match(/\b(?:add|put|place|insert|include)\s+(?:a\s+|an\s+|another\s+|some\s+)?([a-z][a-z\s]*?)(?:\s+(?:to|in|on|at|near|behind|in front of|above|below)\b|[\.\!\?,]|$)/i);
     const object = objectMatch ? objectMatch[1].trim() : 'the requested object';
@@ -1947,84 +1928,6 @@ function autoPlaceForObject(object) {
    8x8 grayscale pixel comparison. Returns 0..1, where 1 = identical.
    Used by add_object quality check: if result is too close to source,
    the provider didn't actually add anything and we reject. */
-/* ── removeBackgroundLocal — browser-side OpenCV.js GrabCut.
-   No key, no AI provider, runs entirely in iPad Safari (lazy-loads
-   ~8 MB of opencv.js the first time). Returns a transparent PNG with
-   the foreground subject preserved. Per build plan item #2: free,
-   browser-only, works offline after first load.
-
-   Hang fix v17e2: downsample to max 768 px before GrabCut so it
-   completes in ~1 s instead of 30-60 s on full-size iPad photos.
-   Alpha mask is then upscaled to the original resolution. Whole
-   path wrapped in a 45 s timeout — if anything stalls we fall
-   through to AI providers instead of hanging. */
-async function removeBackgroundLocal(sourceImage) {
-  return await withTimeout(_removeBackgroundLocalInner(sourceImage), 45000, 'OpenCV bg-removal');
-}
-async function _removeBackgroundLocalInner(sourceImage) {
-  const cv = await withTimeout(loadOpenCV(), 30000, 'OpenCV load');
-  return await new Promise((resolve, reject) => {
-    const im = new Image();
-    im.onload = () => {
-      let small, mask, bgdModel, fgdModel, binMask, binMaskUp, channels, srcFull, out;
-      try {
-        const W = im.naturalWidth, H = im.naturalHeight;
-        const MAX = 768;
-        const scale = Math.min(1, MAX / Math.max(W, H));
-        const sw = Math.max(64, Math.floor(W * scale));
-        const sh = Math.max(64, Math.floor(H * scale));
-        // 1) Draw downsampled into a small canvas — GrabCut runs there.
-        const smallCanvas = document.createElement('canvas');
-        smallCanvas.width = sw; smallCanvas.height = sh;
-        smallCanvas.getContext('2d').drawImage(im, 0, 0, sw, sh);
-        small    = cv.imread(smallCanvas);
-        mask     = new cv.Mat();
-        bgdModel = new cv.Mat();
-        fgdModel = new cv.Mat();
-        const rect = new cv.Rect(
-          Math.floor(sw * 0.10), Math.floor(sh * 0.10),
-          Math.floor(sw * 0.80), Math.floor(sh * 0.80)
-        );
-        cv.grabCut(small, mask, rect, bgdModel, fgdModel, 3, cv.GC_INIT_WITH_RECT);
-        // 2) Build binary alpha at small size.
-        binMask = cv.Mat.zeros(mask.rows, mask.cols, cv.CV_8UC1);
-        for (let i = 0; i < mask.data.length; i++) {
-          const v = mask.data[i];
-          if (v === 1 || v === 3) binMask.data[i] = 255;
-        }
-        // 3) Upscale binary mask back to full resolution.
-        binMaskUp = new cv.Mat();
-        cv.resize(binMask, binMaskUp, new cv.Size(W, H), 0, 0, cv.INTER_LINEAR);
-        // 4) Read full-res source and merge upscaled mask as alpha.
-        const fullCanvas = document.createElement('canvas');
-        fullCanvas.width = W; fullCanvas.height = H;
-        fullCanvas.getContext('2d').drawImage(im, 0, 0);
-        srcFull = cv.imread(fullCanvas);
-        channels = new cv.MatVector();
-        cv.split(srcFull, channels);
-        channels.set(3, binMaskUp);
-        out = new cv.Mat();
-        cv.merge(channels, out);
-        const outCanvas = document.createElement('canvas');
-        outCanvas.width = W; outCanvas.height = H;
-        cv.imshow(outCanvas, out);
-        outCanvas.toBlob((b) => {
-          [small, mask, bgdModel, fgdModel, binMask, binMaskUp, srcFull, out].forEach(m => { try { m && m.delete(); } catch (_){} });
-          try { channels && channels.delete(); } catch (_){}
-          if (!b) return reject(new Error('toBlob failed'));
-          resolve(URL.createObjectURL(b));
-        }, 'image/png');
-      } catch (e) {
-        [small, mask, bgdModel, fgdModel, binMask, binMaskUp, srcFull, out].forEach(m => { try { m && m.delete(); } catch (_){} });
-        try { channels && channels.delete(); } catch (_){}
-        reject(e);
-      }
-    };
-    im.onerror = () => reject(new Error('image decode failed'));
-    im.src = sourceImage.dataUrl;
-  });
-}
-
 async function imageSimilarity(sourceUrl, resultUrl) {
   try {
     const [src, res] = await Promise.all([
@@ -2252,15 +2155,8 @@ const IMAGE_PROVIDERS = [
     supportsInpainting: true,
     supportsImageInput: true,
     supportsImageOutput: true,
-    supportsBgRemoval: true,
     gen: async (prompt, imgData, opts) => {
       opts = opts || {};
-      // Dedicated background-removal path: briaai/RMBG-1.4 returns a
-      // transparent PNG. Replaces the iPad-crashing OpenCV path (v17e2).
-      if (opts.taskType === 'background_removal' && imgData) {
-        const blob = await hfImageCall('briaai/RMBG-1.4', '', imgData, null);
-        if (blob) return URL.createObjectURL(blob);
-      }
       // When a mask is set, route to a real SDXL inpainting model first.
       const inpaintModels = ['diffusers/stable-diffusion-xl-1.0-inpainting-0.1', 'runwayml/stable-diffusion-inpainting'];
       const preferred = C.hfModel;
