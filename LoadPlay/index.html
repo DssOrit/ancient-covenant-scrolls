@@ -688,6 +688,86 @@ a{color:inherit;text-decoration:none}
   .lp-big{font-size:14px;padding:12px 18px;min-height:48px}
   .lp-ws-tile{padding:16px}
 }
+
+/* ── INSTALL BANNER ─────────────────────────────── */
+.lp-install-banner{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:14px 16px 0;background:linear-gradient(90deg,rgba(0,229,255,.08),rgba(124,58,237,.08));border:1px solid rgba(0,229,255,.28);border-radius:10px;font-size:13px;color:var(--text)}
+.lp-install-banner .lp-ib-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.lp-install-banner .lp-ib-icon{font-size:18px;flex-shrink:0}
+.lp-install-banner strong{font-size:13px;font-weight:700;color:#fff;display:block}
+.lp-install-banner .lp-ib-sub{display:block;font-size:12px;color:var(--text2);margin-top:1px}
+.lp-install-banner .lp-ib-btn{padding:7px 12px;border-radius:8px;background:var(--cyan);color:#000;font-weight:700;font-size:12px;flex-shrink:0;border:0}
+.lp-install-banner .lp-ib-btn:hover{background:#33ecff}
+.lp-install-banner .lp-ib-x{width:28px;height:28px;border-radius:50%;color:var(--text2);flex-shrink:0;font-size:18px;line-height:1}
+.lp-install-banner .lp-ib-x:hover{background:var(--bg3);color:#fff}
+
+/* ── LOADPLAY MODALS ────────────────────────────── */
+.lp-modal{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.lp-modal.on{display:flex}
+.lp-modal-box{background:#161616;border:1px solid var(--border);border-radius:14px;padding:24px;max-width:480px;width:100%;max-height:88vh;overflow:auto;color:var(--text);position:relative;box-shadow:0 18px 60px rgba(0,0,0,.55)}
+.lp-modal-box.auth{max-width:520px}
+.lp-modal-box.creator{max-width:640px}
+.lp-modal-box.dev{max-width:480px}
+.lp-modal-x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;color:var(--text2);font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center}
+.lp-modal-x:hover{background:var(--bg3);color:#fff}
+.lp-modal-box h3{font-size:20px;font-weight:800;margin:0 0 6px;color:#fff;letter-spacing:-.01em}
+.lp-modal-box .lp-m-lead{font-size:14px;line-height:1.6;color:var(--text2);margin:0 0 14px}
+.lp-modal-box .lp-m-tip{font-size:13px;line-height:1.6;color:var(--text2);background:rgba(0,229,255,.07);padding:10px 12px;border-radius:8px;border-left:3px solid var(--cyan);margin:14px 0 0}
+.lp-steps{padding-left:20px;margin:8px 0;color:var(--text);font-size:14px;line-height:1.7}
+.lp-steps li{margin-bottom:6px}
+.lp-modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.lp-btn{padding:10px 16px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text);transition:transform .12s,background .12s,border-color .12s}
+.lp-btn:hover{background:var(--bg3);border-color:#444}
+.lp-btn.primary{background:var(--cyan);color:#000;border-color:var(--cyan)}
+.lp-btn.primary:hover{background:#33ecff;border-color:#33ecff}
+.lp-btn.ghost{background:transparent}
+.lp-btn:active{transform:scale(.97)}
+
+/* Auth modal */
+.lp-auth-tabs{display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:10px;margin-bottom:18px}
+.lp-auth-tab{flex:1;padding:8px;border-radius:7px;color:var(--text2);font-weight:600;font-size:14px}
+.lp-auth-tab.active{background:var(--cyan);color:#000}
+.lp-auth-form{display:none;flex-direction:column;gap:10px}
+.lp-auth-form.active{display:flex}
+.lp-field{display:flex;flex-direction:column;gap:5px}
+.lp-field label{font-size:12px;color:var(--text2);font-weight:600}
+.lp-field input{padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px}
+.lp-field input:focus{outline:none;border-color:var(--cyan)}
+.lp-auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0 6px;color:var(--text3);font-size:12px}
+.lp-auth-divider::before,.lp-auth-divider::after{content:"";flex:1;height:1px;background:var(--border)}
+.lp-tour{margin-top:14px;padding:14px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.18);border-radius:10px}
+.lp-tour-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.lp-tour-head strong{color:#fff;font-size:14px}
+.lp-tour-step-num{font-size:12px;color:var(--cyan);font-weight:700}
+.lp-tour-body h4{font-size:15px;color:#fff;margin:0 0 4px;font-weight:700}
+.lp-tour-body p{font-size:13px;color:var(--text2);line-height:1.6;margin:0}
+.lp-tour-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}
+.lp-tour-dots{display:flex;gap:4px}
+.lp-tour-dot{width:6px;height:6px;border-radius:50%;background:var(--bg4)}
+.lp-tour-dot.active{background:var(--cyan)}
+
+/* Creator subscription modal */
+.lp-tier-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0}
+@media (min-width:580px){.lp-tier-grid{grid-template-columns:repeat(3,1fr)}}
+.lp-tier{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.lp-tier.featured{border-color:var(--cyan);background:linear-gradient(180deg,rgba(0,229,255,.10),var(--bg2))}
+.lp-tier-name{font-size:14px;font-weight:800;color:#fff;letter-spacing:.02em;text-transform:uppercase}
+.lp-tier-price{font-size:22px;font-weight:900;color:#fff;line-height:1}
+.lp-tier-price small{font-size:12px;color:var(--text2);font-weight:500}
+.lp-tier ul{list-style:none;padding:0;margin:6px 0 0;font-size:12.5px;color:var(--text2);line-height:1.55}
+.lp-tier ul li{padding:3px 0;display:flex;gap:6px;align-items:flex-start}
+.lp-tier ul li::before{content:"✓";color:var(--cyan);font-weight:700;flex-shrink:0}
+.lp-tier .lp-btn{margin-top:auto;font-size:13px;padding:8px 12px;width:100%;text-align:center;justify-content:center}
+
+/* Developer modal */
+.lp-dev-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;padding:0;list-style:none}
+.lp-dev-tools li{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:12.5px;color:var(--text2);display:flex;align-items:center;gap:6px}
+.lp-dev-tools li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.lp-dev-note{font-size:12px;color:var(--text3);line-height:1.5;margin-top:8px}
+
+/* Sidebar: LoadPlay Menu (top) — surfaces every build-plan feature */
+.lp-feature-section .nav-item{cursor:pointer;width:100%;text-align:left;background:none;border:0}
+.lp-feature-section .nav-item .label{font-size:13.5px}
+.lp-feature-badge{margin-left:auto;font-size:10px;padding:2px 6px;border-radius:10px;background:rgba(0,229,255,.16);color:var(--cyan);font-weight:700}
 </style>
 </head>
 <body>
@@ -783,6 +863,46 @@ a{color:inherit;text-decoration:none}
 
     <!-- SIDEBAR -->
     <nav id="sidebar" class="sidebar">
+
+      <!-- LoadPlay Menu — surfaces every build-plan feature/function -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">LoadPlay Menu</div>
+        <div class="nav-item" data-lp-modal="lp-auth-modal" data-lp-tab="signin">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+          <span class="label">Sign In / Sign Up</span>
+        </div>
+        <div class="nav-item" data-lp-modal="lp-creator-modal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <span class="label">Creator Studio</span>
+          <span class="lp-feature-badge">Upload</span>
+        </div>
+        <div class="nav-item" data-lp-modal="lp-dev-modal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span class="label">Developer Lab</span>
+        </div>
+        <div class="nav-item" data-lp-scroll="chipsBar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="label">Browse</span>
+        </div>
+        <div class="nav-item" data-lp-marketplace="1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-1.5 9a2 2 0 0 1-2 1.7H6.5a2 2 0 0 1-2-1.7L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+          <span class="label">Marketplace</span>
+        </div>
+        <div class="nav-item" data-lp-modal="lp-install-modal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          <span class="label">Install LoadPlay</span>
+        </div>
+        <a class="nav-item" href="../load/">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span class="label">Return to Main Load</span>
+        </a>
+        <a class="nav-item" href="../LoadStudio/">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span class="label">Open Load Studio</span>
+        </a>
+      </div>
+      <div class="sidebar-divider"></div>
+
       <div class="sidebar-section">
         <div class="nav-item" data-view="continue" id="navContinue">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
@@ -881,6 +1001,19 @@ a{color:inherit;text-decoration:none}
       <!-- HOME VIEW -->
       <div id="homeView">
 
+      <!-- A2HS install banner — hidden in standalone mode and after dismiss -->
+      <div id="lp-install-banner" class="lp-install-banner" style="display:none">
+        <div class="lp-ib-left">
+          <span class="lp-ib-icon" aria-hidden="true">📱</span>
+          <div>
+            <strong>Install LoadPlay on your iPad</strong>
+            <span class="lp-ib-sub">Own icon, opens fullscreen, works offline.</span>
+          </div>
+        </div>
+        <button id="lp-install-show" class="lp-ib-btn">Show me how</button>
+        <button id="lp-install-dismiss" class="lp-ib-x" aria-label="Dismiss">×</button>
+      </div>
+
       <!-- ── LOAD-STYLE SPLASH HOME (scrolls into the streaming app) ── -->
   <section id="lp-home" class="lp-home-screen">
     <div class="lp-splash-wrap">
@@ -894,15 +1027,15 @@ a{color:inherit;text-decoration:none}
 
     <!-- Get-started action buttons (Load-style, in LoadPlay color scheme) -->
     <div class="lp-actions">
-      <button class="lp-big primary" id="lp-get-started" onclick="document.getElementById('chipsBar').scrollIntoView({behavior:'smooth',block:'start'})">
+      <button class="lp-big primary" id="lp-get-started" data-lp-modal="lp-auth-modal" data-lp-tab="signup" data-lp-tour="1">
         <span class="lp-big-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/></svg></span>
-        <span class="lp-big-lbl">Start Watching</span>
+        <span class="lp-big-lbl">Get Started</span>
       </button>
-      <button class="lp-big secondary" onclick="document.getElementById('chipsBar').scrollIntoView({behavior:'smooth',block:'start'})">
+      <button class="lp-big secondary" id="lp-browse" onclick="document.getElementById('chipsBar').scrollIntoView({behavior:'smooth',block:'start'})">
         <span class="lp-big-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="14.5" r="1.4" fill="currentColor" stroke="none"/></svg></span>
-        <span class="lp-big-lbl">Load Browse</span>
+        <span class="lp-big-lbl">Browse</span>
       </button>
-      <button class="lp-big tertiary" onclick="document.getElementById('uploadBtn').click()">
+      <button class="lp-big tertiary" id="lp-creator-upload" data-lp-modal="lp-creator-modal">
         <span class="lp-big-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><polyline points="6,10 12,4 18,10"/><path d="M4 20h16"/></svg></span>
         <span class="lp-big-lbl">Creator Upload</span>
       </button>
@@ -1670,6 +1803,349 @@ window.addEventListener('appinstalled', () => toast('✅ LoadPlay installed!'));
 /* ── ONLINE/OFFLINE ──────────────────────────────── */
 window.addEventListener('offline', () => toast('📡 Offline — cached content available'));
 window.addEventListener('online',  () => toast('✅ Back online'));
+</script>
+
+<!-- ─────────────────────────────────────────────────────────────────
+     LoadPlay v9 — A2HS, Sign-In, Creator Subscription, Developer Lab
+     All additive. Does not touch loadplay2 render/state pipeline.
+     ───────────────────────────────────────────────────────────────── -->
+
+<!-- Install: A2HS instructions -->
+<div id="lp-install-modal" class="lp-modal" role="dialog" aria-label="Install LoadPlay on your iPad">
+  <div class="lp-modal-box">
+    <button class="lp-modal-x" data-lp-close="lp-install-modal" aria-label="Close">×</button>
+    <h3>Install LoadPlay on your iPad</h3>
+    <p class="lp-m-lead">Tap an icon on your home screen — LoadPlay opens fullscreen. No App Store needed.</p>
+    <ol class="lp-steps">
+      <li>In Safari, tap the <strong>Share</strong> icon (square with arrow up).</li>
+      <li>Scroll down the share sheet.</li>
+      <li>Tap <strong>Add to Home Screen</strong>.</li>
+      <li>Keep the name <em>LoadPlay</em> (or change it), then tap <strong>Add</strong>.</li>
+    </ol>
+    <p class="lp-m-tip">After that: tap the LoadPlay icon to launch fullscreen — works with Airplane Mode on.</p>
+    <div class="lp-modal-actions">
+      <button class="lp-btn primary" data-lp-close="lp-install-modal">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- Auth: Sign In / Sign Up + interactive site tour -->
+<div id="lp-auth-modal" class="lp-modal" role="dialog" aria-label="Sign in to LoadPlay">
+  <div class="lp-modal-box auth">
+    <button class="lp-modal-x" data-lp-close="lp-auth-modal" aria-label="Close">×</button>
+    <h3>Welcome to LoadPlay</h3>
+    <p class="lp-m-lead">Stream PWA cinema, originals, documentaries, and book films — all offline-friendly. Your account stays on this device.</p>
+
+    <div class="lp-auth-tabs" role="tablist">
+      <button class="lp-auth-tab active" data-lp-auth-tab="signin" role="tab">Sign In</button>
+      <button class="lp-auth-tab" data-lp-auth-tab="signup" role="tab">Sign Up</button>
+    </div>
+
+    <form id="lp-signin-form" class="lp-auth-form active" autocomplete="on">
+      <div class="lp-field"><label for="lp-si-user">Username or email</label><input id="lp-si-user" type="text" autocomplete="username" required></div>
+      <div class="lp-field"><label for="lp-si-pass">Password</label><input id="lp-si-pass" type="password" autocomplete="current-password" required></div>
+      <div class="lp-modal-actions">
+        <button type="button" class="lp-btn ghost" data-lp-close="lp-auth-modal">Cancel</button>
+        <button type="submit" class="lp-btn primary">Sign In</button>
+      </div>
+    </form>
+
+    <form id="lp-signup-form" class="lp-auth-form" autocomplete="on">
+      <div class="lp-field"><label for="lp-su-name">Display name</label><input id="lp-su-name" type="text" autocomplete="nickname" required></div>
+      <div class="lp-field"><label for="lp-su-user">Username</label><input id="lp-su-user" type="text" autocomplete="username" required></div>
+      <div class="lp-field"><label for="lp-su-email">Email</label><input id="lp-su-email" type="email" autocomplete="email" required></div>
+      <div class="lp-field"><label for="lp-su-pass">Password</label><input id="lp-su-pass" type="password" autocomplete="new-password" minlength="6" required></div>
+      <div class="lp-modal-actions">
+        <button type="button" class="lp-btn ghost" data-lp-close="lp-auth-modal">Cancel</button>
+        <button type="submit" class="lp-btn primary">Create Account</button>
+      </div>
+    </form>
+
+    <div class="lp-auth-divider">First time here?</div>
+    <div class="lp-tour" id="lp-tour">
+      <div class="lp-tour-head">
+        <strong>Quick LoadPlay tour</strong>
+        <span class="lp-tour-step-num" id="lp-tour-num">Step 1 of 5</span>
+      </div>
+      <div class="lp-tour-body" id="lp-tour-body"></div>
+      <div class="lp-tour-actions">
+        <button class="lp-btn ghost" id="lp-tour-prev" type="button">Back</button>
+        <div class="lp-tour-dots" id="lp-tour-dots"></div>
+        <button class="lp-btn primary" id="lp-tour-next" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Creator Subscription Benefits + sign-up gate -->
+<div id="lp-creator-modal" class="lp-modal" role="dialog" aria-label="Become a LoadPlay Creator">
+  <div class="lp-modal-box creator">
+    <button class="lp-modal-x" data-lp-close="lp-creator-modal" aria-label="Close">×</button>
+    <h3>Become a LoadPlay Creator</h3>
+    <p class="lp-m-lead">Upload PWA cinema packages, HTML projects, MP4, audio stories, and book films. Get a creator channel, drafts, trailers, and project pages — like YouTube. Tubi-style genre rails distribute your work.</p>
+
+    <div class="lp-tier-grid">
+      <div class="lp-tier">
+        <div class="lp-tier-name">Viewer</div>
+        <div class="lp-tier-price">Free</div>
+        <ul>
+          <li>Watch all originals &amp; cinema</li>
+          <li>My List, Continue Watching</li>
+          <li>Profile photo &amp; banner</li>
+          <li>Subtitle preferences</li>
+        </ul>
+        <button class="lp-btn" data-lp-creator-action="viewer">Sign up free</button>
+      </div>
+      <div class="lp-tier featured">
+        <div class="lp-tier-name">Creator</div>
+        <div class="lp-tier-price">Free<small> · upload-ready</small></div>
+        <ul>
+          <li>Upload videos, PWA &amp; HTML</li>
+          <li>Drafts &amp; published projects</li>
+          <li>Creator channel + trailers</li>
+          <li>Project pages with credits</li>
+          <li>Safety scan (no profanity / nudity)</li>
+        </ul>
+        <button class="lp-btn primary" data-lp-creator-action="creator">Start as Creator</button>
+      </div>
+      <div class="lp-tier">
+        <div class="lp-tier-name">Studio</div>
+        <div class="lp-tier-price">Pro<small> · later</small></div>
+        <ul>
+          <li>Everything in Creator</li>
+          <li>Marketplace asset packs</li>
+          <li>Analytics &amp; monetization</li>
+          <li>Priority validator + larger uploads</li>
+        </ul>
+        <button class="lp-btn" data-lp-creator-action="studio">Notify me</button>
+      </div>
+    </div>
+
+    <p class="lp-dev-note">Each upload runs through the LoadPlay package validator before publishing. No profanity, no nudity, safe thumbnails — every field is scanned.</p>
+  </div>
+</div>
+
+<!-- Developer Lab gate -->
+<div id="lp-dev-modal" class="lp-modal" role="dialog" aria-label="Developer Lab sign-in">
+  <div class="lp-modal-box dev">
+    <button class="lp-modal-x" data-lp-close="lp-dev-modal" aria-label="Close">×</button>
+    <h3>Developer Lab</h3>
+    <p class="lp-m-lead">A separate developer surface from the build manual. Sign in with a developer access key to unlock package-validator tools, diagnostics, and provider tests.</p>
+
+    <form id="lp-dev-form" autocomplete="off">
+      <div class="lp-field"><label for="lp-dev-user">Developer username</label><input id="lp-dev-user" type="text" placeholder="e.g. dev-acr" required></div>
+      <div class="lp-field"><label for="lp-dev-pass">Access key</label><input id="lp-dev-pass" type="password" placeholder="Developer access key" required></div>
+      <div class="lp-modal-actions">
+        <button type="button" class="lp-btn ghost" data-lp-close="lp-dev-modal">Cancel</button>
+        <button type="submit" class="lp-btn primary">Sign In</button>
+      </div>
+    </form>
+
+    <details style="margin-top:14px">
+      <summary style="cursor:pointer;font-size:13px;color:var(--cyan);font-weight:600">Inside the Developer Lab</summary>
+      <ul class="lp-dev-tools">
+        <li>PWA diagnostics</li>
+        <li>Manifest tests</li>
+        <li>Service worker tests</li>
+        <li>API keys panel</li>
+        <li>Provider tests</li>
+        <li>Package validator</li>
+        <li>Storage inspector</li>
+        <li>Session logs</li>
+      </ul>
+      <p class="lp-dev-note">Build-manual reference: §6 Developer Lab + §3 Load Play Developer Login. Only the standalone Load Play developer surface — never the main Load codebase.</p>
+    </details>
+  </div>
+</div>
+
+<script>
+/* ─── LoadPlay v9 — A2HS + Auth + Creator + Developer wire-up ───
+   Pure additive layer. Doesn't reach into loadplay2's state/render. */
+(function () {
+  var $$ = function (id) { return document.getElementById(id); };
+  var LS_USER  = 'lp_user';
+  var LS_INST  = 'lp_install_dismissed';
+
+  // ── A2HS: standalone detection + banner toggle ────────────────
+  function isStandalone() {
+    try {
+      return (navigator.standalone === true) ||
+             (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    } catch (e) { return false; }
+  }
+  function updateInstallBanner() {
+    var b = $$('lp-install-banner'); if (!b) return;
+    var dismissed = false;
+    try { dismissed = localStorage.getItem(LS_INST) === '1'; } catch (e) {}
+    b.style.display = (isStandalone() || dismissed) ? 'none' : 'flex';
+  }
+
+  // ── Generic modal open/close ──────────────────────────────────
+  function openModal(id, opts) {
+    var el = $$(id); if (!el) return;
+    el.classList.add('on');
+    if (id === 'lp-auth-modal') {
+      var tab = (opts && opts.tab) || 'signin';
+      switchAuthTab(tab);
+      if (opts && opts.tour) startTour(0);
+    }
+  }
+  function closeModal(id) { var el = $$(id); if (el) el.classList.remove('on'); }
+
+  // Open via [data-lp-modal]
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-lp-modal]');
+    if (t) {
+      e.preventDefault();
+      openModal(t.getAttribute('data-lp-modal'), {
+        tab:  t.getAttribute('data-lp-tab') || undefined,
+        tour: t.getAttribute('data-lp-tour') === '1'
+      });
+      return;
+    }
+    var c = e.target.closest('[data-lp-close]');
+    if (c) { e.preventDefault(); closeModal(c.getAttribute('data-lp-close')); return; }
+    var bd = e.target.closest('.lp-modal');
+    if (bd && e.target === bd) { bd.classList.remove('on'); return; }
+    var s = e.target.closest('[data-lp-scroll]');
+    if (s) {
+      e.preventDefault();
+      var tgt = $$(s.getAttribute('data-lp-scroll'));
+      if (tgt) tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    var mp = e.target.closest('[data-lp-marketplace]');
+    if (mp) {
+      e.preventDefault();
+      if (window.toast) window.toast('Marketplace — coming soon');
+      else alert('Marketplace — character packs, wardrobe, voices, templates. Coming soon.');
+      return;
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.lp-modal.on').forEach(function (m) { m.classList.remove('on'); });
+  });
+
+  // ── Auth tabs ─────────────────────────────────────────────────
+  function switchAuthTab(name) {
+    document.querySelectorAll('.lp-auth-tab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-lp-auth-tab') === name);
+    });
+    var si = $$('lp-signin-form'), su = $$('lp-signup-form');
+    if (si) si.classList.toggle('active', name === 'signin');
+    if (su) su.classList.toggle('active', name === 'signup');
+  }
+  document.querySelectorAll('.lp-auth-tab').forEach(function (t) {
+    t.addEventListener('click', function () { switchAuthTab(t.getAttribute('data-lp-auth-tab')); });
+  });
+
+  // ── Auth forms (local-only) ───────────────────────────────────
+  function saveUser(u) { try { localStorage.setItem(LS_USER, JSON.stringify(u)); } catch (e) {} }
+  function loadUser()  { try { return JSON.parse(localStorage.getItem(LS_USER) || 'null'); } catch (e) { return null; } }
+
+  var sif = $$('lp-signin-form');
+  if (sif) sif.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var who = ($$('lp-si-user').value || '').trim();
+    if (!who) return;
+    saveUser({ user: who, role: 'viewer', signedInAt: Date.now() });
+    closeModal('lp-auth-modal');
+    if (window.toast) window.toast('Signed in as ' + who);
+  });
+  var suf = $$('lp-signup-form');
+  if (suf) suf.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name  = ($$('lp-su-name').value  || '').trim();
+    var user  = ($$('lp-su-user').value  || '').trim();
+    var email = ($$('lp-su-email').value || '').trim();
+    if (!name || !user) return;
+    saveUser({ user: user, name: name, email: email, role: 'viewer', createdAt: Date.now() });
+    closeModal('lp-auth-modal');
+    if (window.toast) window.toast('Welcome to LoadPlay, ' + name + '!');
+  });
+
+  // ── Creator subscription actions ──────────────────────────────
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-lp-creator-action]'); if (!b) return;
+    var role = b.getAttribute('data-lp-creator-action');
+    closeModal('lp-creator-modal');
+    if (role === 'studio') {
+      if (window.toast) window.toast('Studio tier — we\'ll notify you when it launches.');
+      return;
+    }
+    var existing = loadUser() || {};
+    existing.role = role;
+    existing.creatorSince = existing.creatorSince || Date.now();
+    saveUser(existing);
+    openModal('lp-auth-modal', { tab: existing.user ? 'signin' : 'signup' });
+  });
+
+  // ── Developer Lab ─────────────────────────────────────────────
+  var df = $$('lp-dev-form');
+  if (df) df.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = ($$('lp-dev-user').value || '').trim();
+    var k = ($$('lp-dev-pass').value || '').trim();
+    if (!u || k.length < 4) {
+      if (window.toast) window.toast('Developer access key must be at least 4 characters.');
+      return;
+    }
+    saveUser({ user: u, role: 'developer', devSince: Date.now() });
+    closeModal('lp-dev-modal');
+    if (window.toast) window.toast('Developer Lab unlocked — diagnostics, validator, and provider tests are now available.');
+  });
+
+  // ── Install banner buttons ────────────────────────────────────
+  var sh = $$('lp-install-show');
+  if (sh) sh.addEventListener('click', function () { openModal('lp-install-modal'); });
+  var dm = $$('lp-install-dismiss');
+  if (dm) dm.addEventListener('click', function () {
+    try { localStorage.setItem(LS_INST, '1'); } catch (e) {}
+    updateInstallBanner();
+  });
+
+  // ── Site tour content (5 steps from build manual) ─────────────
+  var TOUR = [
+    { title: 'Browse like Tubi', body: 'Scroll the genre rails — Featured, Newly Added, Originals, Documentaries, Book Cinema, PWA Originals, Kids, News. Tap any tile to play.' },
+    { title: 'Build your list', body: 'Save anything to My List, and Continue Watching keeps your spot — synced to this device, no account needed for basic use.' },
+    { title: 'Watch anything Load creates', body: 'LoadPlay plays MP4, WebM, audio stories, HTML cinema packages, and Load Studio .cinepwa packages. The viewer just presses play.' },
+    { title: 'Become a creator', body: 'Sign up free, then upload your PWA cinema, HTML projects, or MP4. Get a creator channel, drafts, trailers, and project pages — like YouTube.' },
+    { title: 'Developer mode', body: 'A separate Developer Lab unlocks PWA diagnostics, manifest tests, the package validator, and provider tests — for builders extending LoadPlay.' }
+  ];
+  var tourIdx = 0;
+  function renderTour() {
+    var b = $$('lp-tour-body'); if (!b) return;
+    var s = TOUR[tourIdx];
+    b.innerHTML = '<h4>' + s.title + '</h4><p>' + s.body + '</p>';
+    var num = $$('lp-tour-num'); if (num) num.textContent = 'Step ' + (tourIdx + 1) + ' of ' + TOUR.length;
+    var dots = $$('lp-tour-dots');
+    if (dots) {
+      dots.innerHTML = '';
+      TOUR.forEach(function (_, i) {
+        var d = document.createElement('span');
+        d.className = 'lp-tour-dot' + (i === tourIdx ? ' active' : '');
+        dots.appendChild(d);
+      });
+    }
+    var prev = $$('lp-tour-prev'); if (prev) prev.disabled = tourIdx === 0;
+    var next = $$('lp-tour-next'); if (next) next.textContent = tourIdx === TOUR.length - 1 ? 'Get Started' : 'Next';
+  }
+  function startTour(i) { tourIdx = i || 0; renderTour(); }
+  var tn = $$('lp-tour-next');
+  if (tn) tn.addEventListener('click', function () {
+    if (tourIdx < TOUR.length - 1) { tourIdx++; renderTour(); }
+    else { closeModal('lp-auth-modal'); switchAuthTab('signup'); var c = $$('chipsBar'); if (c) c.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+  var tp = $$('lp-tour-prev');
+  if (tp) tp.addEventListener('click', function () { if (tourIdx > 0) { tourIdx--; renderTour(); } });
+  startTour(0);
+
+  // ── Init ──────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', updateInstallBanner);
+  if (document.readyState !== 'loading') updateInstallBanner();
+  window.addEventListener('appinstalled', updateInstallBanner);
+})();
 </script>
 </body>
 </html>
