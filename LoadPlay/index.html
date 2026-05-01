@@ -861,36 +861,181 @@ a{color:inherit;text-decoration:none}
   <!-- LAYOUT -->
   <div class="layout">
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR — full topside menu, all build-plan features grouped by side -->
     <nav id="sidebar" class="sidebar">
 
-      <!-- LoadPlay Menu — surfaces every build-plan feature/function -->
+      <!-- 1. VIEWER ─────────────────────────────────── -->
       <div class="sidebar-section lp-feature-section">
-        <div class="sidebar-heading">LoadPlay Menu</div>
-        <div class="nav-item" data-lp-modal="lp-auth-modal" data-lp-tab="signin">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
-          <span class="label">Sign In / Sign Up</span>
+        <div class="sidebar-heading">Viewer</div>
+        <div class="nav-item" data-lp-act="home">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+          <span class="label">Home</span>
         </div>
-        <div class="nav-item" data-lp-modal="lp-creator-modal">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          <span class="label">Creator Studio</span>
-          <span class="lp-feature-badge">Upload</span>
+        <div class="nav-item" data-lp-act="start-watching">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/></svg>
+          <span class="label">Start Watching</span>
         </div>
+        <div class="nav-item" data-lp-act="continue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16" fill="currentColor" stroke="none"/></svg>
+          <span class="label">Continue Watching</span>
+        </div>
+        <div class="nav-item" data-lp-act="mylist">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3H5a2 2 0 0 0-2 2v16l4-4h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/><path d="M9 11l2 2 4-4"/></svg>
+          <span class="label">My List</span>
+        </div>
+        <div class="nav-item" data-lp-act="favorites">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.5 12 21 12 21z"/></svg>
+          <span class="label">Favorites</span>
+        </div>
+        <div class="nav-item" data-lp-act="profiles">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+          <span class="label">Viewer Profiles</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+
+      <!-- 2. CONTENT SECTIONS ───────────────────────── -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">Content sections</div>
+        <div class="nav-item" data-lp-chip="featured">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/></svg>
+          <span class="label">Featured</span>
+        </div>
+        <div class="nav-item" data-lp-chip="newly-added">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <span class="label">Newly Added</span>
+        </div>
+        <div class="nav-item" data-lp-chip="originals">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="label">Originals</span>
+        </div>
+        <div class="nav-item" data-lp-chip="book-cinema">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M4 16h16"/></svg>
+          <span class="label">Book Cinema</span>
+        </div>
+        <div class="nav-item" data-lp-chip="pwa-originals">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10"/><path d="M12 17v4"/></svg>
+          <span class="label">PWA Originals</span>
+        </div>
+        <div class="nav-item" data-lp-chip="documentaries">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          <span class="label">Documentaries</span>
+        </div>
+        <div class="nav-item" data-lp-chip="reality">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-1 13H4z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+          <span class="label">Reality</span>
+        </div>
+        <div class="nav-item" data-lp-chip="biographies">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/></svg>
+          <span class="label">Biographies</span>
+        </div>
+        <div class="nav-item" data-lp-chip="animations">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12c0-2 4-4 9-4s9 2 9 4-4 4-9 4-9-2-9-4z"/></svg>
+          <span class="label">Animations</span>
+        </div>
+        <div class="nav-item" data-lp-chip="kids">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="5"/><path d="M7 21c0-3 2-5 5-5s5 2 5 5"/><circle cx="10" cy="9" r="0.6" fill="currentColor"/><circle cx="14" cy="9" r="0.6" fill="currentColor"/></svg>
+          <span class="label">Kids</span>
+        </div>
+        <div class="nav-item" data-lp-chip="news">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="7" y1="9" x2="13" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg>
+          <span class="label">News</span>
+        </div>
+        <div class="nav-item" data-lp-act="clips">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          <span class="label">Clips</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+
+      <!-- 3. CREATOR ─────────────────────────────────── -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">Creator</div>
+        <div class="nav-item" data-lp-act="upload">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><polyline points="6,10 12,4 18,10"/><path d="M4 20h16"/></svg>
+          <span class="label">Creator Upload</span>
+        </div>
+        <div class="nav-item" data-lp-act="creator-profile">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><circle cx="12" cy="9" r="2.5"/><path d="M7 17c1-2 3-3 5-3s4 1 5 3"/></svg>
+          <span class="label">Creator Profile</span>
+        </div>
+        <div class="nav-item" data-lp-act="drafts">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          <span class="label">Drafts</span>
+        </div>
+        <div class="nav-item" data-lp-act="upload-wizard">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.5-4 4 1 5.5L12 14.5 7 17l1-5.5-4-4 5.5-.5z"/></svg>
+          <span class="label">Upload Wizard</span>
+        </div>
+        <div class="nav-item" data-lp-act="rights">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-4 9-9 10-5-1-9-5-9-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span class="label">Rights &amp; Credits</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+
+      <!-- 4. SAFETY ──────────────────────────────────── -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">Safety</div>
+        <div class="nav-item" data-lp-act="clean-stream">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-4 8.5-8 9-4-.5-8-4-8-9V7z"/><polyline points="9 12 11.5 14.5 16 10"/></svg>
+          <span class="label">Clean Stream Rules</span>
+        </div>
+        <div class="nav-item" data-lp-act="safety-scan">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16" y2="16"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <span class="label">Safety Scan</span>
+        </div>
+        <div class="nav-item" data-lp-act="content-rules">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="5" y1="5" x2="19" y2="19"/></svg>
+          <span class="label">No Profanity / No Nudity</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+
+      <!-- 5. DEVELOPER ───────────────────────────────── -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">Developer</div>
         <div class="nav-item" data-lp-modal="lp-dev-modal">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span class="label">Developer Lab</span>
         </div>
-        <div class="nav-item" data-lp-scroll="chipsBar">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          <span class="label">Browse</span>
+        <div class="nav-item" data-lp-dev-tool="diagnostics">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+          <span class="label">PWA Diagnostics</span>
         </div>
-        <div class="nav-item" data-lp-marketplace="1">
+        <div class="nav-item" data-lp-dev-tool="manifest">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg>
+          <span class="label">Manifest Checker</span>
+        </div>
+        <div class="nav-item" data-lp-dev-tool="sw">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09c0 .67.39 1.27 1 1.51a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.24.61.84 1 1.51 1H21a2 2 0 1 1 0 4h-.09c-.67 0-1.27.39-1.51 1z"/></svg>
+          <span class="label">Service Worker Checker</span>
+        </div>
+        <div class="nav-item" data-lp-dev-tool="api-keys">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="14" r="4"/><path d="M11 11l9-9"/><path d="M18 4l3 3"/><path d="M15 7l3 3"/></svg>
+          <span class="label">API Keys</span>
+        </div>
+        <div class="nav-item" data-lp-dev-tool="validator">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>
+          <span class="label">Package Validator</span>
+        </div>
+      </div>
+      <div class="sidebar-divider"></div>
+
+      <!-- 6. PLATFORM ────────────────────────────────── -->
+      <div class="sidebar-section lp-feature-section">
+        <div class="sidebar-heading">Platform</div>
+        <div class="nav-item" data-lp-act="marketplace">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-1.5 9a2 2 0 0 1-2 1.7H6.5a2 2 0 0 1-2-1.7L3 7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
           <span class="label">Marketplace</span>
         </div>
-        <div class="nav-item" data-lp-modal="lp-install-modal">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          <span class="label">Install LoadPlay</span>
+        <div class="nav-item" data-lp-act="search">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="label">Search</span>
+        </div>
+        <div class="nav-item" data-lp-act="help">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2-3 4"/><circle cx="12" cy="17" r="0.9" fill="currentColor"/></svg>
+          <span class="label">Help</span>
         </div>
         <a class="nav-item" href="../load/">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -901,95 +1046,7 @@ a{color:inherit;text-decoration:none}
           <span class="label">Open Load Studio</span>
         </a>
       </div>
-      <div class="sidebar-divider"></div>
 
-      <div class="sidebar-section">
-        <div class="nav-item" data-view="continue" id="navContinue">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-          <span class="label">Continue Watching</span>
-        </div>
-        <div class="nav-item" data-view="mylist" id="navMyList">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14l4-4h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 13l-3.5-3.5L10 11l2 2 4.5-4.5L18 10z"/></svg>
-          <span class="label">My List</span>
-        </div>
-        <div class="nav-item" data-view="continue" id="navContinue">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-          <span class="label">Continue Watching</span>
-        </div>
-        <div class="nav-item" data-view="mylist" id="navMyList">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14l4-4h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 13l-3.5-3.5L10 11l2 2 4.5-4.5L18 10z"/></svg>
-          <span class="label">My List</span>
-        </div>
-        <div class="nav-item active" data-view="home" id="navHome">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span class="label">Featured</span>
-        </div>
-        <div class="nav-item" data-view="shorts" id="navShorts">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span class="label">Newly Added</span>
-        </div>
-        <div class="nav-item" data-view="subscriptions">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-          <span class="label">Originals</span>
-        </div>
-      </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        <div class="sidebar-heading">You</div>
-        <div class="nav-item" data-view="library">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg>
-          <span class="label">Book Cinema</span>
-        </div>
-        <div class="nav-item" data-view="history">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
-          <span class="label">PWA Originals</span>
-        </div>
-        <div class="nav-item" data-view="liked">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
-          <span class="label">Documentaries</span>
-        </div>
-        <div class="nav-item" data-view="watchlater">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
-          <span class="label">Reality</span>
-        </div>
-      </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-section">
-        <div class="sidebar-heading">Explore</div>
-        <div class="nav-item" data-view="trending">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-          <span class="label">Biographies</span>
-        </div>
-        <div class="nav-item" data-view="music">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-          <span class="label">Animations</span>
-        </div>
-        <div class="nav-item" data-view="gaming">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5S14.67 12 15.5 12s1.5.67 1.5 1.5S16.33 15 15.5 15zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5S19.33 12 18.5 12z"/></svg>
-          <span class="label">Kids</span>
-        </div>
-        <div class="nav-item" data-view="news">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
-          <span class="label">News</span>
-        </div>
-        <div class="nav-item" data-view="clips" id="navClips">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4l-6 6 6 6V4zm-8 0H4v16h6V4z"/></svg>
-          <span class="label">Clips</span>
-        </div>
-        <div class="nav-item" data-view="clips" id="navClips">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4l-6 6 6 6V4zm-8 0H4v16h6V4z"/></svg>
-          <span class="label">Clips</span>
-        </div>
-        <div class="nav-item" data-view="sports">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4.18 11c.19-1.14.72-2.18 1.49-3l1.63 1.63L6.04 11H4.18zm3.58 5.27L6.13 14.7 5 13.58l1.56-1.56 1.56 1.56.03.03-.39 2.66zm5.24 3.55l-1 .18-1-.18v-1.8l1-.22 1 .22v1.8zm3.52-3.55l-.39-2.66.03-.03L17.72 12 19.28 13.56l-1.12 1.12-1.64 1.59zM17.96 11h-1.86l-1.27-1.37L16.45 8c.76.82 1.28 1.86 1.51 3z"/></svg>
-          <span class="label">Marketplace</span>
-        </div>
-      </div>
-      <div class="sidebar-divider"></div>
-      <div class="nav-item" id="importSidebarBtn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
-        <span class="label">Upload to Load Play</span>
-      </div>
     </nav>
 
     <!-- DRAWER OVERLAY -->
@@ -1980,6 +2037,103 @@ window.addEventListener('online',  () => toast('✅ Back online'));
     b.style.display = (isStandalone() || dismissed) ? 'none' : 'flex';
   }
 
+  // ── Sidebar helpers + action dispatch ─────────────────────────
+  function closeSidebarSafe() {
+    var sb = $$('sidebar'); if (sb) sb.classList.remove('open');
+    var ovl = $$('drawerOverlay'); if (ovl) ovl.classList.remove('show');
+  }
+  function scrollEl(id) {
+    var el = $$(id); if (!el) return false;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return true;
+  }
+  function clickChip(cat) {
+    var c = document.querySelector('.chip[data-cat="' + cat + '"]');
+    if (c) { c.click(); return true; }
+    var all = document.querySelector('.chip[data-cat="all"]');
+    if (all) all.click();
+    return false;
+  }
+  // Map our build-plan content section keys onto the closest loadplay2 chip.
+  // Keys with no direct chip fall back to "all" (full grid) so the user
+  // still lands somewhere meaningful instead of an empty filter.
+  var CHIP_MAP = {
+    'featured':      'all',
+    'newly-added':   'all',
+    'originals':     'all',
+    'book-cinema':   'all',
+    'pwa-originals': 'all',
+    'documentaries': 'documentary',
+    'reality':       'all',
+    'biographies':   'all',
+    'animations':    'all',
+    'kids':          'all',
+    'news':          'news'
+  };
+  function runChip(key) {
+    closeSidebarSafe();
+    scrollEl('chipsBar');
+    clickChip(CHIP_MAP[key] || 'all');
+    if (window.toast) window.toast('Showing ' + key.replace(/-/g, ' '));
+  }
+  // Spec actions (Viewer / Creator / Safety / Platform).
+  var ACT_LABELS = {
+    'clean-stream':  'Clean Stream Rules — no profanity, no nudity, safe thumbnails on every upload.',
+    'safety-scan':   'Safety Scan runs on every upload before publishing.',
+    'content-rules': 'No profanity / no nudity across profiles, uploads, titles, bios, and thumbnails.',
+    'rights':        'Rights & Credits — declared in the upload wizard (creator-side metadata).',
+    'creator-profile': 'Creator Profile — display name, banner, channel, drafts, published projects.',
+    'drafts':        'Drafts — unpublished uploads live here before you publish.',
+    'favorites':     'Favorites — coming soon. Save items from the player.',
+    'profiles':      'Viewer Profiles — sign in or create an account to set yours up.'
+  };
+  function runAct(key) {
+    closeSidebarSafe();
+    switch (key) {
+      case 'home':           scrollEl('lp-home'); return;
+      case 'start-watching': scrollEl('chipsBar'); clickChip('all'); return;
+      case 'continue':       if (!scrollEl('recentRow')) scrollEl('chipsBar'); return;
+      case 'mylist':         if (!scrollEl('recentRow')) scrollEl('chipsBar');
+                              if (window.toast) window.toast('My List — saved items'); return;
+      case 'clips':          scrollEl('chipsBar');
+                              if (window.toast) window.toast('Clips'); return;
+      case 'upload':
+      case 'upload-wizard': {
+        var b = $$('uploadBtn'); if (b) b.click(); return;
+      }
+      case 'drafts': {
+        var b2 = $$('uploadBtn'); if (b2) b2.click();
+        if (window.toast) window.toast(ACT_LABELS.drafts); return;
+      }
+      case 'creator-profile': openModal('lp-creator-modal'); return;
+      case 'profiles':        openModal('lp-auth-modal', { tab: 'signin' }); return;
+      case 'favorites':       if (window.toast) window.toast(ACT_LABELS.favorites); return;
+      case 'rights':
+      case 'clean-stream':
+      case 'safety-scan':
+      case 'content-rules':
+        if (window.toast) window.toast(ACT_LABELS[key]); return;
+      case 'marketplace':
+        if (window.toast) window.toast('Marketplace — character packs, wardrobe, voices, templates. Coming soon.');
+        return;
+      case 'search': {
+        var s = $$('searchInput');
+        if (s) { s.focus(); s.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        return;
+      }
+      case 'help': openModal('lp-auth-modal', { tab: 'signup', tour: true }); return;
+    }
+  }
+  function devToolLabel(k) {
+    return {
+      'diagnostics': 'PWA Diagnostics',
+      'manifest':    'Manifest Checker',
+      'sw':          'Service Worker Checker',
+      'api-keys':    'API Keys',
+      'validator':   'Package Validator'
+    }[k] || 'Developer tool';
+  }
+
   // ── Generic modal open/close ──────────────────────────────────
   function openModal(id, opts) {
     var el = $$(id); if (!el) return;
@@ -2019,6 +2173,19 @@ window.addEventListener('online',  () => toast('✅ Back online'));
       e.preventDefault();
       if (window.toast) window.toast('Marketplace — coming soon');
       else alert('Marketplace — character packs, wardrobe, voices, templates. Coming soon.');
+      return;
+    }
+    var act = e.target.closest('[data-lp-act]');
+    if (act) { e.preventDefault(); runAct(act.getAttribute('data-lp-act')); return; }
+    var chipEl = e.target.closest('[data-lp-chip]');
+    if (chipEl) { e.preventDefault(); runChip(chipEl.getAttribute('data-lp-chip')); return; }
+    var devTool = e.target.closest('[data-lp-dev-tool]');
+    if (devTool) {
+      e.preventDefault();
+      var key = devTool.getAttribute('data-lp-dev-tool');
+      var u = loadUser();
+      if (!u || u.role !== 'developer') { openModal('lp-dev-modal'); return; }
+      if (window.toast) window.toast(devToolLabel(key) + ' — running…');
       return;
     }
   });
