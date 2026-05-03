@@ -345,6 +345,26 @@ html .ls-feat:focus-visible{outline:2px solid rgba(179,136,255,.7);outline-offse
 .ls-eb-direct a{color:#d3a8ff;text-decoration:underline}
 .ls-eb-frame-host{position:relative;width:100%;height:calc(100vh - 80px);min-height:560px;background:#000;border-radius:12px;overflow:hidden;border:1px solid rgba(125,42,232,.32);margin-top:14px}
 .ls-eb-frame-host iframe{width:100%;height:100%;border:0;display:block}
+
+/* v22 — LoadStudio guided tour */
+#ls-tour{position:fixed;inset:0;z-index:9100;font-family:Inter,system-ui,sans-serif}
+#ls-tour .lt-scrim{position:absolute;inset:0;background:rgba(8,4,16,.78);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:opacity .25s}
+#ls-tour .lt-ring{position:absolute;border:3px solid #b388ff;border-radius:14px;box-shadow:0 0 0 9999px rgba(8,4,16,.78),0 0 24px 4px rgba(179,136,255,.55);transition:all .35s cubic-bezier(.2,.7,.2,1);pointer-events:none;display:none}
+#ls-tour .lt-card{position:absolute;background:linear-gradient(180deg,#1c0d35 0%,#150a28 100%);color:#fff;border-radius:18px;padding:22px 22px 18px;max-width:440px;width:calc(100% - 32px);box-shadow:0 18px 50px rgba(0,0,0,.55);border:1px solid rgba(179,136,255,.32);transition:top .35s cubic-bezier(.2,.7,.2,1),left .35s cubic-bezier(.2,.7,.2,1)}
+#ls-tour .lt-dots{display:flex;gap:6px;margin-bottom:12px}
+#ls-tour .lt-dots span{width:8px;height:8px;border-radius:50%;background:rgba(179,136,255,.22);transition:background .2s,transform .2s}
+#ls-tour .lt-dots span.on{background:#b388ff;transform:scale(1.25)}
+#ls-tour .lt-title{margin:0 0 8px;font:600 20px Inter,system-ui,sans-serif;line-height:1.2;letter-spacing:-0.01em;color:#fff}
+#ls-tour .lt-body{margin:0 0 18px;font:300 15px Inter,system-ui,sans-serif;line-height:1.55;color:#d8d2ec}
+#ls-tour .lt-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#ls-tour .lt-spacer{flex:1}
+#ls-tour .lt-btn{background:rgba(125,42,232,.18);color:#e0d8f5;border:1px solid rgba(125,42,232,.4);border-radius:10px;padding:10px 16px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;min-height:42px}
+#ls-tour .lt-btn:active{transform:scale(.97)}
+#ls-tour .lt-skip{background:transparent;color:#a99bcb;border-color:transparent;font-weight:500}
+#ls-tour .lt-back:disabled{opacity:.35;cursor:not-allowed}
+#ls-tour .lt-primary{background:linear-gradient(135deg,#7d2ae8 0%,#b33af0 100%);color:#fff;border:0;font-weight:600;box-shadow:0 4px 16px rgba(125,42,232,.4)}
+#ls-tour .lt-primary:hover{filter:brightness(1.08)}
+@media(max-width:520px){#ls-tour .lt-title{font-size:18px}#ls-tour .lt-body{font-size:14px}}
 </style>
 </style></style></style></head><body><div class="ls-drawer-overlay" id="lsDrawerOverlay"></div><aside class="ls-drawer" id="lsDrawer" aria-label="Studio menu" aria-hidden="true"><div class="ls-drawer-head"><img src="assets/brand/loadstudio-logo.png" alt="" onerror="this.src='icons/icon-72.png'"><span class="t">Load <em>Studio</em></span><button class="ls-drawer-close" id="lsDrawerCloseBtn" type="button" aria-label="Close menu">&times;</button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Studio Lobby</div><button class="ls-drawer-item" type="button" data-section="dashboard" data-ls-drawer-close="1"><span class="dot"></span><span>Studio Lobby</span></button><button class="ls-drawer-item" type="button" data-section="templates" data-ls-drawer-close="1"><span class="dot"></span><span>Project Types and Templates</span></button><button class="ls-drawer-item" type="button" data-section="import-center" data-ls-drawer-close="1"><span class="dot"></span><span>Import Center</span></button><button class="ls-drawer-item" type="button" data-section="asset-library" data-ls-drawer-close="1"><span class="dot"></span><span>Asset Library</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Development Office</div><button class="ls-drawer-item" type="button" data-section="script-tools" data-ls-drawer-close="1"><span class="dot"></span><span>Script Import and Breakdown</span></button><button class="ls-drawer-item" type="button" data-section="book-cinema" data-ls-drawer-close="1"><span class="dot"></span><span>Book PDF Manuscript to Cinema</span></button><button class="ls-drawer-item" type="button" data-section="vn-tools" data-ls-drawer-close="1"><span class="dot"></span><span>Visual Editor</span></button><button class="ls-drawer-item" type="button" data-section="text-tools" data-ls-drawer-close="1"><span class="dot"></span><span>Title and Text Tools</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Scene & Editing</div><button class="ls-drawer-item" type="button" data-section="scene-builder" data-ls-drawer-close="1"><span class="dot"></span><span>Scene Cards</span></button><button class="ls-drawer-item" type="button" data-section="timeline-editor" data-ls-drawer-close="1"><span class="dot"></span><span>Editing Bay</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Cast & Voice</div><button class="ls-drawer-item" type="button" data-section="character-studio" data-ls-drawer-close="1"><span class="dot"></span><span>Character Studio</span></button><button class="ls-drawer-item" type="button" data-section="character-consistency" data-ls-drawer-close="1"><span class="dot"></span><span>Character Consistency</span></button><button class="ls-drawer-item" type="button" data-section="casting" data-ls-drawer-close="1"><span class="dot"></span><span>Talent and Casting List</span></button><button class="ls-drawer-item" type="button" data-section="performance" data-ls-drawer-close="1"><span class="dot"></span><span>Performance Controls</span></button><button class="ls-drawer-item" type="button" data-section="voice-studio" data-ls-drawer-close="1"><span class="dot"></span><span>Voice Studio</span></button><button class="ls-drawer-item" type="button" data-section="voice-manipulator" data-ls-drawer-close="1"><span class="dot"></span><span>Voice Manipulator</span></button><button class="ls-drawer-item" type="button" data-section="character-voice" data-ls-drawer-close="1"><span class="dot"></span><span>Character Voice Changer</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Image Tools</div><button class="ls-drawer-item" type="button" data-section="image-prompt" data-ls-drawer-close="1"><span class="dot"></span><span>Image Prompt Studio</span></button><button class="ls-drawer-item" type="button" data-section="image-editing" data-ls-drawer-close="1"><span class="dot"></span><span>AI Image Editing</span></button><button class="ls-drawer-item" type="button" data-section="provider-routing" data-ls-drawer-close="1"><span class="dot"></span><span>AI Provider Routing</span></button><button class="ls-drawer-item" type="button" data-section="copilot" data-ls-drawer-close="1"><span class="dot"></span><span>AI Copilot</span></button><button class="ls-drawer-item" type="button" data-section="llm-providers" data-ls-drawer-close="1"><span class="dot"></span><span>Chat and LLM Providers</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Sound Stage</div><button class="ls-drawer-item" type="button" data-section="sound-studio" data-ls-drawer-close="1"><span class="dot"></span><span>Sound Studio</span></button><button class="ls-drawer-item" type="button" data-section="soundtrack" data-ls-drawer-close="1"><span class="dot"></span><span>Soundtrack Tools</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Wardrobe & Locations</div><button class="ls-drawer-item" type="button" data-section="wardrobe" data-ls-drawer-close="1"><span class="dot"></span><span>Wardrobe Department</span></button><button class="ls-drawer-item" type="button" data-section="props" data-ls-drawer-close="1"><span class="dot"></span><span>Props Department</span></button><button class="ls-drawer-item" type="button" data-section="locations" data-ls-drawer-close="1"><span class="dot"></span><span>Location Department</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Look & Camera</div><button class="ls-drawer-item" type="button" data-section="look-lab" data-ls-drawer-close="1"><span class="dot"></span><span>Look Lab</span></button><button class="ls-drawer-item" type="button" data-section="camera-tools" data-ls-drawer-close="1"><span class="dot"></span><span>Camera and Shot Tools</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Marketplace</div><button class="ls-drawer-item" type="button" data-section="marketplace" data-ls-drawer-close="1"><span class="dot"></span><span>Creator Marketplace</span></button><button class="ls-drawer-item" type="button" data-section="add-creations" data-ls-drawer-close="1"><span class="dot"></span><span>Add Creations Library</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Export & Distribution</div><button class="ls-drawer-item" type="button" data-section="export-studio" data-ls-drawer-close="1"><span class="dot"></span><span>Export Studio</span></button><button class="ls-drawer-item" type="button" data-section="load-play-prep" data-ls-drawer-close="1"><span class="dot"></span><span>Publish to Load Play Preparation</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Diagnostics & Safety</div><button class="ls-drawer-item" type="button" data-section="asset-doctor" data-ls-drawer-close="1"><span class="dot"></span><span>Asset Doctor</span></button><button class="ls-drawer-item" type="button" data-section="pwa-diagnostics" data-ls-drawer-close="1"><span class="dot"></span><span>PWA Diagnostics</span></button><button class="ls-drawer-item" type="button" data-section="content-safety" data-ls-drawer-close="1"><span class="dot"></span><span>Content Safety and Validation</span></button></div><div class="ls-drawer-section"><div class="ls-drawer-heading">Developer</div><button class="ls-drawer-item" type="button" data-section="developer-lab" data-ls-drawer-close="1"><span class="dot"></span><span>Developer Lab</span></button><button class="ls-drawer-item" type="button" data-section="api-keys" data-ls-drawer-close="1"><span class="dot"></span><span>API Keys Page</span></button><button class="ls-drawer-item" type="button" data-section="connectivity" data-ls-drawer-close="1"><span class="dot"></span><span>Connectivity Between Load Apps</span></button><button class="ls-drawer-item" type="button" data-section="help-tour" data-ls-drawer-close="1"><span class="dot"></span><span>Help and Guided Tour</span></button></div></aside><header class="topbar"><button class="ls-hamb" id="lsHambBtn" type="button" aria-label="Open studio menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div class="brand"><img class="logo" src="icons/icon-192.png" alt="Load Studio" onerror="this.onerror=null;this.src='icon.png';"><div><b>Load Studio</b><span>Production Studio</span></div><div class="ls-toolrow" role="toolbar" aria-label="LoadStudio tools">
 <button class="ls-tool" id="ls-tool-back" type="button" title="Back" aria-label="Back" onclick="history.back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
@@ -765,5 +785,65 @@ document.addEventListener('click',function(e){
   if(exp)exp.style.display='none';
   host.hidden=false;
   host.innerHTML='<iframe src="../load/?lsedit='+encodeURIComponent(mode)+'" allow="camera; microphone; clipboard-write; clipboard-read; fullscreen" allowfullscreen title="Editing Bay (Load Main video editor)"></iframe>';
+},true);
+})();</script><script id="ls-v22-tour">(function(){
+var KEY='ls_tour_seen_v1';
+var STEPS=[
+  {anchor:null,title:'Welcome to LoadStudio',body:"I'll walk you through the basics in under a minute. Tap Next to begin."},
+  {anchor:'#lsBtnStart',title:'Get Started',body:'Open the workspace where you pick a department to work in.'},
+  {anchor:'#lsBtnEditingBay',title:'Editing Bay',body:'Jumps you straight to the video editor. Upload, create, and export.'},
+  {anchor:'#lsBtnCreatorUpload',title:'Creator Upload',body:'Send finished projects to LoadPlay or distribution.'},
+  {anchor:'.ls-feature-row .ls-feat:first-child',title:'Feature highlights',body:'Tap any of the four feature cards for a plain-language description.'},
+  {anchor:'section.ls-workspace .ls-ws-tile:first-child',title:'Workspace tiles',body:'Quick jumps into the four most-used production rooms.'},
+  {anchor:'#lsHambBtn',title:'Studio menu',body:'Every department + tool lives in this drawer. Color-coded by area.'},
+  {anchor:'#ls-tool-help',title:'Help is one tap away',body:'The ? button replays this tour and opens the full guide.'},
+  {anchor:null,title:"You're ready",body:'Have fun making things. Come back to Help any time.'}
+];
+function startTour(){
+  var prev=document.getElementById('ls-tour'); if(prev)prev.remove();
+  var idx=0;
+  var root=document.createElement('div'); root.id='ls-tour';
+  root.innerHTML='<div class="lt-scrim"></div><div class="lt-ring" aria-hidden="true"></div><div class="lt-card" role="dialog" aria-modal="true" aria-labelledby="lt-title"><div class="lt-dots"></div><h2 id="lt-title" class="lt-title"></h2><p class="lt-body"></p><div class="lt-controls"><button class="lt-btn lt-skip" type="button">Skip</button><div class="lt-spacer"></div><button class="lt-btn lt-back" type="button">Back</button><button class="lt-btn lt-next lt-primary" type="button">Next</button></div></div>';
+  document.body.appendChild(root);
+  var ring=root.querySelector('.lt-ring'),card=root.querySelector('.lt-card'),title=root.querySelector('.lt-title'),body=root.querySelector('.lt-body'),dots=root.querySelector('.lt-dots'),back=root.querySelector('.lt-back'),next=root.querySelector('.lt-next'),skip=root.querySelector('.lt-skip');
+  STEPS.forEach(function(){var d=document.createElement('span');dots.appendChild(d);});
+  function position(){
+    var s=STEPS[idx],el=s.anchor?document.querySelector(s.anchor):null;
+    Array.prototype.forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===idx);});
+    title.textContent=s.title; body.textContent=s.body;
+    back.disabled=idx===0; next.textContent=idx===STEPS.length-1?'Done':'Next';
+    if(el){
+      var r=el.getBoundingClientRect();
+      ring.style.display='block';
+      ring.style.top=(r.top-6)+'px'; ring.style.left=(r.left-6)+'px';
+      ring.style.width=(r.width+12)+'px'; ring.style.height=(r.height+12)+'px';
+      try{el.scrollIntoView({behavior:'smooth',block:'center'});}catch(_){}
+      var cardTop=r.bottom+12;
+      if(cardTop+260>window.innerHeight) cardTop=Math.max(20,r.top-260);
+      card.style.top=cardTop+'px';
+      card.style.left=Math.max(16,Math.min(window.innerWidth-456,r.left))+'px';
+    } else {
+      ring.style.display='none';
+      card.style.top=(window.innerHeight/2-160)+'px';
+      card.style.left=Math.max(16,(window.innerWidth-440)/2)+'px';
+    }
+  }
+  function close(){try{localStorage.setItem(KEY,'1');}catch(_){}root.remove();}
+  back.addEventListener('click',function(){if(idx>0){idx--;position();}});
+  next.addEventListener('click',function(){if(idx<STEPS.length-1){idx++;position();}else close();});
+  skip.addEventListener('click',close);
+  document.addEventListener('keydown',function(ev){if(!document.getElementById('ls-tour'))return;if(ev.key==='Escape')close();else if(ev.key==='ArrowRight')next.click();else if(ev.key==='ArrowLeft')back.click();});
+  position();
+  window.addEventListener('resize',position);
+}
+window.lsStartTour=startTour;
+// Auto-run on first visit
+try{if(!localStorage.getItem(KEY))setTimeout(startTour,900);}catch(_){}
+// Replay button: hijack the existing #ls-tool-help so tapping it always
+// starts the tour. (The original handler also opens the help section,
+// which is fine.)
+document.addEventListener('click',function(e){
+  var h=e.target.closest('#ls-tool-help');
+  if(h){e.preventDefault();e.stopPropagation();startTour();}
 },true);
 })();</script></body></html>

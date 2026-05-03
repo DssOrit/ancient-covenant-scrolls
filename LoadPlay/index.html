@@ -1009,6 +1009,26 @@ html .lp-splash-overlay{display:none !important}
 html .lp-splash-text{position:static !important;left:auto !important;right:auto !important;bottom:auto !important;padding:14px 18px 4px;text-shadow:none}
 html .lp-splash-bottom{position:static !important;text-align:center;padding:6px 16px 12px;pointer-events:auto}
 html .lp-bottom-title{font-size:30px;text-shadow:none}
+
+/* v30 — LoadPlay guided tour */
+#lp-tour{position:fixed;inset:0;z-index:9100;font-family:Inter,system-ui,sans-serif}
+#lp-tour .lt-scrim{position:absolute;inset:0;background:rgba(10,5,5,.78);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:opacity .25s}
+#lp-tour .lt-ring{position:absolute;border:3px solid #ff5a5a;border-radius:14px;box-shadow:0 0 0 9999px rgba(10,5,5,.78),0 0 24px 4px rgba(255,90,90,.5);transition:all .35s cubic-bezier(.2,.7,.2,1);pointer-events:none;display:none}
+#lp-tour .lt-card{position:absolute;background:#161616;color:#fff;border-radius:18px;padding:22px 22px 18px;max-width:440px;width:calc(100% - 32px);box-shadow:0 18px 50px rgba(0,0,0,.6);border:1px solid rgba(255,90,90,.32);transition:top .35s cubic-bezier(.2,.7,.2,1),left .35s cubic-bezier(.2,.7,.2,1)}
+#lp-tour .lt-dots{display:flex;gap:6px;margin-bottom:12px}
+#lp-tour .lt-dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,90,90,.22);transition:background .2s,transform .2s}
+#lp-tour .lt-dots span.on{background:#ff5a5a;transform:scale(1.25)}
+#lp-tour .lt-title{margin:0 0 8px;font:600 20px Inter,system-ui,sans-serif;line-height:1.2;letter-spacing:-0.01em;color:#fff}
+#lp-tour .lt-body{margin:0 0 18px;font:300 15px Inter,system-ui,sans-serif;line-height:1.55;color:#e6dada}
+#lp-tour .lt-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#lp-tour .lt-spacer{flex:1}
+#lp-tour .lt-btn{background:rgba(255,90,90,.14);color:#ffd6d6;border:1px solid rgba(255,90,90,.4);border-radius:10px;padding:10px 16px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;min-height:42px}
+#lp-tour .lt-btn:active{transform:scale(.97)}
+#lp-tour .lt-skip{background:transparent;color:#c2a8a8;border-color:transparent;font-weight:500}
+#lp-tour .lt-back:disabled{opacity:.35;cursor:not-allowed}
+#lp-tour .lt-primary{background:linear-gradient(135deg,#ff3838 0%,#ff5a5a 100%);color:#fff;border:0;font-weight:600;box-shadow:0 4px 16px rgba(255,80,80,.42)}
+#lp-tour .lt-primary:hover{filter:brightness(1.08)}
+@media(max-width:520px){#lp-tour .lt-title{font-size:18px}#lp-tour .lt-body{font-size:14px}}
 </style>
 </head>
 <body>
@@ -1416,7 +1436,7 @@ html .lp-bottom-title{font-size:30px;text-shadow:none}
       <div class="lp-footer-tag">Part of Load</div>
       <div class="lp-footer-mark">LoadPlay</div>
       <p class="lp-footer-tagline">Stream, create, publish — clean, free, offline-ready.</p>
-      <div class="lp-footer-links"><a href="../load/">Main Load</a><a href="../loadstudio/">LoadStudio</a><a href="../attain/">Attain</a><a href="../attain-jr/">Attain Jr</a><a href="../study/">Study</a></div>
+      <div class="lp-footer-replay" style="text-align:center;margin:0 0 12px"><a href="#" data-lp-replay-tour="1" style="color:#ff8a8a;font-size:13px;font-weight:600">Replay site tour</a></div><div class="lp-footer-links"><a href="../load/">Main Load</a><a href="../loadstudio/">LoadStudio</a><a href="../attain/">Attain</a><a href="../attain-jr/">Attain Jr</a><a href="../study/">Study</a></div>
     </footer>
 
   </section>
@@ -4300,5 +4320,62 @@ window.addEventListener('online',  () => toast('Back online'));
   });
 })();
 </script>
-</body>
+<script id="lp-v30-tour">(function(){
+var KEY='lp_tour_seen_v1';
+var STEPS=[
+  {anchor:null,title:'Welcome to LoadPlay',body:"I'll show you around in under a minute. Tap Next to begin."},
+  {anchor:'.lp-splash-img',title:'The lobby',body:'This splash is the front of LoadPlay. Everything else lives below it.'},
+  {anchor:'.lp-feature-row .lp-feat:first-child',title:'Feature highlights',body:'Tap any of the four cards for a longer description of what LoadPlay does.'},
+  {anchor:'.lp-actions',title:'Three main actions',body:'Start Watching, Browse, and Creator Upload — your three doors into the app.'},
+  {anchor:'.lp-workspace',title:'Workspace tiles',body:'Quick shortcuts into Viewer, Creator Studio, Cleanstream, and the Dev Lab.'},
+  {anchor:'#lp-tool-home',title:'Top toolbar',body:'Home / refresh / theme controls live here on every screen.'},
+  {anchor:'.lp-footer',title:'Part of Load',body:'LoadPlay is part of the Load suite. Cross-suite links sit in the footer.'},
+  {anchor:null,title:"You're ready",body:'Enjoy LoadPlay. You can replay this tour anytime from the Help page.'}
+];
+function startTour(){
+  var prev=document.getElementById('lp-tour'); if(prev)prev.remove();
+  var idx=0;
+  var root=document.createElement('div'); root.id='lp-tour';
+  root.innerHTML='<div class="lt-scrim"></div><div class="lt-ring" aria-hidden="true"></div><div class="lt-card" role="dialog" aria-modal="true"><div class="lt-dots"></div><h2 class="lt-title"></h2><p class="lt-body"></p><div class="lt-controls"><button class="lt-btn lt-skip" type="button">Skip</button><div class="lt-spacer"></div><button class="lt-btn lt-back" type="button">Back</button><button class="lt-btn lt-next lt-primary" type="button">Next</button></div></div>';
+  document.body.appendChild(root);
+  var ring=root.querySelector('.lt-ring'),card=root.querySelector('.lt-card'),title=root.querySelector('.lt-title'),body=root.querySelector('.lt-body'),dots=root.querySelector('.lt-dots'),back=root.querySelector('.lt-back'),next=root.querySelector('.lt-next'),skip=root.querySelector('.lt-skip');
+  STEPS.forEach(function(){var d=document.createElement('span');dots.appendChild(d);});
+  function position(){
+    var s=STEPS[idx],el=s.anchor?document.querySelector(s.anchor):null;
+    Array.prototype.forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===idx);});
+    title.textContent=s.title; body.textContent=s.body;
+    back.disabled=idx===0; next.textContent=idx===STEPS.length-1?'Done':'Next';
+    if(el){
+      var r=el.getBoundingClientRect();
+      ring.style.display='block';
+      ring.style.top=(r.top-6)+'px'; ring.style.left=(r.left-6)+'px';
+      ring.style.width=(r.width+12)+'px'; ring.style.height=(r.height+12)+'px';
+      try{el.scrollIntoView({behavior:'smooth',block:'center'});}catch(_){}
+      var cardTop=r.bottom+12;
+      if(cardTop+260>window.innerHeight) cardTop=Math.max(20,r.top-260);
+      card.style.top=cardTop+'px';
+      card.style.left=Math.max(16,Math.min(window.innerWidth-456,r.left))+'px';
+    } else {
+      ring.style.display='none';
+      card.style.top=(window.innerHeight/2-160)+'px';
+      card.style.left=Math.max(16,(window.innerWidth-440)/2)+'px';
+    }
+  }
+  function close(){try{localStorage.setItem(KEY,'1');}catch(_){}root.remove();}
+  back.addEventListener('click',function(){if(idx>0){idx--;position();}});
+  next.addEventListener('click',function(){if(idx<STEPS.length-1){idx++;position();}else close();});
+  skip.addEventListener('click',close);
+  document.addEventListener('keydown',function(ev){if(!document.getElementById('lp-tour'))return;if(ev.key==='Escape')close();else if(ev.key==='ArrowRight')next.click();else if(ev.key==='ArrowLeft')back.click();});
+  position();
+  window.addEventListener('resize',position);
+}
+window.lpStartTour=startTour;
+try{if(!localStorage.getItem(KEY))setTimeout(startTour,900);}catch(_){}
+// Replay via existing help anchors (lp-tool-home is the home button —
+// not ideal). Add a replay link at the bottom of the page footer.
+document.addEventListener('click',function(e){
+  var h=e.target.closest('[data-lp-replay-tour]');
+  if(h){e.preventDefault();e.stopPropagation();startTour();}
+},true);
+})();</script></body>
 </html>
