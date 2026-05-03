@@ -1,21 +1,20 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#160b26"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="LoadStudio"><title>Load Studio</title><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icons/icon-192.png"><link rel="stylesheet" href="styles.css"><style id="ls-splash-style">
 :root{--ls-purple:#7d2ae8;--ls-purple-soft:#b33af0;--ls-bg:#10071f;--ls-line:rgba(125,42,232,.28);--ls-text:#f5f0ff;--ls-muted:#c0b8d9}
-.ls-splash{position:relative;width:100%;height:auto;min-height:100vh;overflow:hidden;background:var(--ls-bg);display:flex;align-items:center;justify-content:center;text-align:center;font-family:Inter,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;padding:0 0 32px}
+.ls-splash{position:relative;width:100%;min-height:78vh;overflow:hidden;background:var(--ls-bg);display:flex;align-items:center;justify-content:center;text-align:center;font-family:Inter,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;padding:24px 0 28px}
 .ls-splash-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
-.ls-splash-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 65%,rgba(125,42,232,.2),transparent 60%),linear-gradient(180deg,rgba(16,7,31,.5) 0%,rgba(16,7,31,.85) 75%,var(--ls-bg) 100%)}
-.ls-splash-content{position:relative;z-index:2;padding:24px 18px;max-width:760px;display:flex;flex-direction:column;align-items:center;gap:14px}
-.ls-splash-logo{width:120px;height:120px;border-radius:24px;box-shadow:0 6px 30px rgba(125,42,232,.45);object-fit:cover;background:#1a0f2e}
-.ls-splash-title{margin:8px 0 0;font-size:64px;font-weight:900;letter-spacing:-.02em;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.6);line-height:1.05}
+.ls-splash-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(125,42,232,.18),transparent 62%),linear-gradient(180deg,rgba(16,7,31,.5) 0%,rgba(16,7,31,.85) 80%,var(--ls-bg) 100%)}
+.ls-splash-content{position:relative;z-index:2;padding:18px;max-width:560px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.ls-splash-logo{width:88px;height:88px;border-radius:18px;box-shadow:0 5px 22px rgba(125,42,232,.4);object-fit:cover;background:#1a0f2e}
+.ls-splash-title{margin:8px 0 18px;font-size:46px;font-weight:900;letter-spacing:-.02em;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6);line-height:1.05}
 .ls-splash-title em{font-style:normal;background:linear-gradient(90deg,var(--ls-purple-soft),var(--ls-purple));-webkit-background-clip:text;background-clip:text;color:transparent}
-.ls-splash-tag{margin:0;color:#e0d8f5;font-size:17px;line-height:1.5;max-width:520px;font-weight:400}
-@media(max-width:600px){.ls-splash-title{font-size:42px}.ls-splash-tag{font-size:14.5px}.ls-splash-logo{width:88px;height:88px;border-radius:18px}}
-.ls-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:18px 0 0;width:100%;max-width:540px}
-.ls-big{display:inline-flex;align-items:center;gap:9px;padding:11px 18px;border-radius:11px;border:1px solid rgba(179,58,240,.45);background:rgba(125,42,232,.12);color:#fff;font-weight:700;font-size:14px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 18px rgba(125,42,232,.32),inset 0 1px 0 rgba(255,255,255,.05);transition:transform .14s,background .14s,box-shadow .14s,border-color .14s;font-family:inherit;min-height:42px}
-.ls-big-ic{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;color:#d3a8ff}
+@media(max-width:600px){.ls-splash-title{font-size:34px;margin-bottom:14px}.ls-splash-logo{width:72px;height:72px;border-radius:16px}}
+.ls-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;width:100%;max-width:520px}
+.ls-big{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid rgba(179,58,240,.45);background:rgba(125,42,232,.12);color:#fff;font-weight:700;font-size:13.5px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(125,42,232,.32),inset 0 1px 0 rgba(255,255,255,.05);transition:transform .14s,background .14s,box-shadow .14s,border-color .14s;font-family:inherit;min-height:38px}
+.ls-big-ic{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:#d3a8ff}
 .ls-big-ic svg{width:100%;height:100%}
-.ls-big:hover{background:rgba(125,42,232,.22);border-color:rgba(179,58,240,.7);box-shadow:0 6px 24px rgba(125,42,232,.5)}
+.ls-big:hover{background:rgba(125,42,232,.22);border-color:rgba(179,58,240,.7);box-shadow:0 6px 22px rgba(125,42,232,.5)}
 .ls-big:active{transform:translateY(1px) scale(.98)}
-.ls-big.primary{background:rgba(125,42,232,.26);border-color:rgba(179,58,240,.65);box-shadow:0 6px 24px rgba(125,42,232,.5),inset 0 1px 0 rgba(255,255,255,.08);color:#fff}
+.ls-big.primary{background:rgba(125,42,232,.26);border-color:rgba(179,58,240,.65);box-shadow:0 6px 22px rgba(125,42,232,.5),inset 0 1px 0 rgba(255,255,255,.08)}
 .ls-big.primary .ls-big-ic{color:#fff}
 html,body{overflow-x:hidden}
 aside,.sidebar,.drawer,nav.side,.side-nav,.menu-drawer{overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -27,7 +26,6 @@ aside::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb,.drawer::-webki
 <div class="ls-splash-content">
 <img class="ls-splash-logo" src="assets/brand/loadstudio-logo.png" alt="LoadStudio" onerror="this.src='icons/icon-192.png'">
 <h1 class="ls-splash-title">Load <em>Studio</em></h1>
-<p class="ls-splash-tag">A complete cinema production studio for PWA-native film, TV, animation, book cinema, and HTML projects.</p>
 <div class="ls-actions">
 <button class="ls-big primary" id="lsBtnStart" type="button" aria-label="Start Production">
 <span class="ls-big-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 4 20 12 6 20" fill="currentColor" stroke="none"/></svg></span>
