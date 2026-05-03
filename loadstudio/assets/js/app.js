@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Service worker registration (relative path so it resolves against
-// /LoadStudio/ wherever the site is deployed). Silently ignores
+// /loadstudio/ wherever the site is deployed). Silently ignores
 // failures so a missing SW never blocks the page from loading.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

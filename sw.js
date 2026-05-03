@@ -71,9 +71,9 @@ self.addEventListener('fetch', e => {
   // namespace; intercepting them here would (a) double-cache and (b)
   // potentially serve a stale 404 that this root SW captured before
   // the sub-app's directory existed (which is exactly the bug
-  // reported for /LoadStudio/ on 2026-05-02).
+  // reported for /loadstudio/ on 2026-05-02).
   const SUBAPP_PATHS = [
-    '/study/', '/load/', '/LoadPlay/', '/LoadStudio/',
+    '/study/', '/load/', '/LoadPlay/', '/loadstudio/',
     '/attain/', '/attain-jr/', '/GreatE/'
   ];
   for (let i = 0; i < SUBAPP_PATHS.length; i++) {

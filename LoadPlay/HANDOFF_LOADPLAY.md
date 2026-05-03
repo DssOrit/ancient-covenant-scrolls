@@ -28,7 +28,7 @@ can pick up without scrolling the whole repo plan.
 
 `ancient-covenant-scrolls` is the user's single-repo Load suite. Every
 sub-app (`load/`, `attain/`, `attain-jr/`, `study/`, `LoadPlay/`,
-`LoadStudio/`, `GreatE/`) is a subfolder, and GitHub Pages serves them
+`loadstudio/`, `GreatE/`) is a subfolder, and GitHub Pages serves them
 all from `main` under one URL prefix. The root `index.html` is the ACR
 Reader app, which is why the repo is named after ACR.
 
@@ -36,7 +36,7 @@ Pros of the current layout:
 - Single Pages deployment, one repo to push, one CI configuration.
 - Shared assets and shared documentation (`PLAN_LOAD_AI.md`,
   `HANDOFF.md`, session notes) sit beside every sub-app.
-- Cross-app links (`../load/`, `../LoadStudio/`) resolve cleanly.
+- Cross-app links (`../load/`, `../loadstudio/`) resolve cleanly.
 
 Cons (worth flagging if you want to split later):
 - The **root** `sw.js` (ACR Reader's service worker) used to intercept

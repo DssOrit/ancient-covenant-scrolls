@@ -9,4 +9,4 @@ When the bundle arrives:
 - `icon.png` (192×192 PWA icon)
 - Asset folders (fonts/, lib-*, etc.)
 
-Live URL once deployed: `https://dssorit.github.io/ancient-covenant-scrolls/LoadStudio/`
+Live URL: `https://dssorit.github.io/ancient-covenant-scrolls/loadstudio/`

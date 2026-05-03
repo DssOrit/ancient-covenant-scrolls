@@ -3,7 +3,7 @@
 // Network-first for code/HTML so users never get stuck on stale builds;
 // cache-first for assets. Same pattern as LoadPlay/sw.js.
 
-const CACHE = 'loadstudio-v2';
+const CACHE = 'loadstudio-v3';
 const SHELL = [
   './',
   './index.html',
@@ -41,7 +41,7 @@ self.addEventListener('fetch', (e) => {
   // Network-first for code so deploys take effect immediately.
   const path = url.pathname;
   const isCode = /\/(index\.html|sw\.js|app\.js|style\.css)(\?|$)/.test(path) ||
-                 path.endsWith('/LoadStudio/') || path.endsWith('/LoadStudio') ||
+                 path.endsWith('/loadstudio/') || path.endsWith('/loadstudio') ||
                  /\/pages\/[^/]+\.html(\?|$)/.test(path);
   if (isCode) {
     e.respondWith(
