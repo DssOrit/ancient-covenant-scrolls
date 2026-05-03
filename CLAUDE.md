@@ -162,3 +162,11 @@ Pages is current or stale.
 - **Pages serves from `main`.** Pushes to `claude/<branch>` are
   invisible to the deployed site until `main` is fast-forwarded
   (`git push origin <branch>:main`). Do both on every shipping push.
+- **Never reference other sites' product names** in user-facing
+  labels, descriptions, comments, or commit messages — no "VN",
+  "Glam AI", "CapCut", "Runway", or any other external product name
+  used as a description or comparison. Use neutral, internally-
+  meaningful names ("Visual Editor", "Scene Composer", etc.).
+  Internal identifiers (data-section ids, feature keys) may keep
+  short codes but the visible label must never reference an outside
+  product.
