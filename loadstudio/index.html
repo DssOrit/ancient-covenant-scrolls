@@ -291,7 +291,10 @@ html body.ls-wsp-on .ls-wsp{display:block !important}
 /* v19d — front scroll stops at footer; .content and .ls-wsp only show
    in their explicit modes regardless of any other state. */
 html main.app > .content{display:none !important}
-html body.ls-studio main.app > .content{display:block !important}
+html body.ls-studio:not(.ls-wsp-on) main.app > .content{display:block !important}
+html body.ls-wsp-on main.app > .content{display:none !important}
+html body.ls-front main.app > .content{display:none !important}
+html body.ls-studio .ls-actions-row{display:none !important}
 html .ls-wsp{display:none !important}
 html body.ls-wsp-on .ls-wsp{display:block !important}
 html body:not(.ls-studio){padding-bottom:0 !important}
@@ -643,19 +646,22 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 var sif=document.getElementById('lsSignInForm');if(sif)sif.addEventListener('submit',function(e){e.preventDefault();var u=(document.getElementById('lsSiUser').value||'').trim();if(!u)return;try{localStorage.setItem(KEY,JSON.stringify({user:u,signedInAt:Date.now()}));}catch(_){}close();});
 var suf=document.getElementById('lsSignUpForm');if(suf)suf.addEventListener('submit',function(e){e.preventDefault();var n=(document.getElementById('lsSuName').value||'').trim(),u=(document.getElementById('lsSuUser').value||'').trim(),em=(document.getElementById('lsSuEmail').value||'').trim();if(!n||!u)return;try{localStorage.setItem(KEY,JSON.stringify({user:u,name:n,email:em,createdAt:Date.now()}));}catch(_){}close();});
 })();</script><script id="ls-v10-gate">(function(){
-function gateFront(){document.body.classList.add('ls-front');document.body.classList.remove('ls-studio');}
-function gateStudio(){document.body.classList.add('ls-studio');document.body.classList.remove('ls-front');}
+function gateFront(){document.body.classList.add('ls-front');document.body.classList.remove('ls-studio');document.body.classList.remove('ls-wsp-on');document.body.removeAttribute('data-ls-dept');}
+function gateStudio(){document.body.classList.add('ls-studio');document.body.classList.remove('ls-front');document.body.classList.remove('ls-wsp-on');}
+function gateWsp(){document.body.classList.add('ls-wsp-on');document.body.classList.add('ls-front');document.body.classList.remove('ls-studio');}
 gateFront();
 document.addEventListener('click',function(e){
-  // Anything that targets a real section -> studio mode.
+  // Get Started -> workspace shortcuts (NOT studio mode).
+  if(e.target.closest('#lsBtnStart')){gateWsp();return;}
+  // Real section targets -> studio mode.
   if(e.target.closest('[data-section]')||e.target.closest('[data-ls-tile]')){gateStudio();return;}
-  // Splash CTAs
-  if(e.target.closest('#lsBtnStart')||e.target.closest('#lsBtnNew')||e.target.closest('#lsBtnTemplates')){gateStudio();return;}
-  // Sign In stays on splash. Hamburger drawer items already carry
-  // data-section so they trigger studio mode above.
+  // Old splash CTAs that still trigger studio mode.
+  if(e.target.closest('#lsBtnNew')||e.target.closest('#lsBtnTemplates')){gateStudio();return;}
 });
 // Home button in the toolrow -> back to front.
 var hb=document.getElementById('ls-tool-home');if(hb){hb.addEventListener('click',function(){setTimeout(gateFront,30);},true);}
+// wsp Back button -> back to front (clears wsp-on + dept).
+var wb=document.getElementById('lsWspBack');if(wb){wb.addEventListener('click',function(){setTimeout(gateFront,30);},true);}
 })();</script><script id="ls-v12-buttons">(function(){
 function passSplash(then){var h=document.querySelector('header.topbar');var sp=document.getElementById('ls-splash');var top=sp?sp.offsetHeight:0;function go(){if(typeof then==='function')setTimeout(then,400);}if(h&&h.scrollIntoView){try{h.scrollIntoView({behavior:'smooth',block:'start'});return go();}catch(e){}}window.scrollTo({top:top,behavior:'smooth'});go();}
 var b1=document.getElementById('lsBtnStart');if(b1)b1.addEventListener('click',function(){passSplash();},true);
