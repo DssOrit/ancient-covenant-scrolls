@@ -1,0 +1,21 @@
+{
+  "name": "Load Studio",
+  "short_name": "LoadStudio",
+  "description": "PWA cinema creation and distribution studio for the Load ecosystem.",
+  "icons": [
+    {
+      "src": "assets/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/images/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#7d2ae8",
+  "background_color": "#0e0424"
+}

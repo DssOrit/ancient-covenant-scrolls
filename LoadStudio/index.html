@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <!-- Using the Inter font gives the interface a modern, premium feel.  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#7d2ae8" />
+    <title>Load Studio</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Ionicons provide lightweight line icons used throughout the toolbar and shortcut grid. -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </head>
+  <body>
+    <!-- Top navigation bar -->
+    <header class="topbar">
+      <button class="menu-btn" aria-label="Open navigation menu">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+      <img
+        src="assets/images/icon.png"
+        alt="Load Studio Logo"
+        class="logo"
+      />
+      <h1 class="title">Load Studio</h1>
+      <!-- Scrollable toolbar icons -->
+      <nav class="toolbar" id="toolbar">
+        <a href="#workspace" title="Workspace">
+          <ion-icon name="grid-outline"></ion-icon>
+        </a>
+        <a href="#asset-doctor" title="Asset Doctor">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </a>
+        <a href="#ai-copilot" title="AI Copilot">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+        </a>
+        <a href="pages/character-studio.html" title="Character Studio">
+          <ion-icon name="person-outline"></ion-icon>
+        </a>
+        <a href="#casting" title="Casting">
+          <ion-icon name="people-outline"></ion-icon>
+        </a>
+        <a href="#voice-studio" title="Voice Studio">
+          <ion-icon name="mic-outline"></ion-icon>
+        </a>
+        <a href="#sound-studio" title="Sound Studio">
+          <ion-icon name="musical-notes-outline"></ion-icon>
+        </a>
+        <a href="#voice-manipulator" title="Voice Manipulator">
+          <ion-icon name="options-outline"></ion-icon>
+        </a>
+        <a href="#wardrobe" title="Wardrobe">
+          <ion-icon name="shirt-outline"></ion-icon>
+        </a>
+        <a href="#scene-builder" title="Scene Builder">
+          <ion-icon name="film-outline"></ion-icon>
+        </a>
+        <a href="#look-lab" title="Look Lab">
+          <ion-icon name="aperture-outline"></ion-icon>
+        </a>
+        <a href="#editing-bay" title="Editing Bay">
+          <ion-icon name="cut-outline"></ion-icon>
+        </a>
+        <a href="#export-studio" title="Export Studio">
+          <ion-icon name="download-outline"></ion-icon>
+        </a>
+        <a href="#marketplace" title="Marketplace">
+          <ion-icon name="storefront-outline"></ion-icon>
+        </a>
+        <a href="#developer-tools" title="Developer Tools">
+          <ion-icon name="construct-outline"></ion-icon>
+        </a>
+      </nav>
+      <!-- Utility icons -->
+      <button class="icon-btn" aria-label="Refresh">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Search">
+        <ion-icon name="search-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Help">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Toggle dark mode">
+        <ion-icon name="moon-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Volume">
+        <ion-icon name="volume-high-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Text size">
+        <ion-icon name="text-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Import / Upload">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Export">
+        <ion-icon name="cloud-download-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Diagnostics">
+        <ion-icon name="bug-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="API Keys">
+        <ion-icon name="key-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Main Load">
+        <ion-icon name="home-outline"></ion-icon>
+      </button>
+      <button class="icon-btn" aria-label="Load Play">
+        <ion-icon name="play-circle-outline"></ion-icon>
+      </button>
+    </header>
+
+    <!-- Splash screen hero section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h2>Welcome to Load Studio</h2>
+        <p>Your complete cinema production studio for PWA-native film and television.</p>
+        <div class="hero-buttons">
+          <a href="pages/project-dashboard.html" class="btn primary">Start Studio</a>
+          <a href="pages/project-dashboard.html" class="btn secondary">Create Project</a>
+          <a href="pages/project-dashboard.html" class="btn tertiary">Open Library</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shortcut cards / workspace section -->
+    <section class="shortcuts" id="workspace">
+      <h3>Workspace Shortcuts</h3>
+      <div class="cards">
+        <a href="pages/project-dashboard.html" class="card">
+          <ion-icon name="grid-outline"></ion-icon>
+          <span>Workspace</span>
+        </a>
+        <a href="#" class="card" id="asset-doctor">
+          <ion-icon name="medkit-outline"></ion-icon>
+          <span>Asset Doctor</span>
+        </a>
+        <a href="#" class="card" id="ai-copilot">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+          <span>AI Copilot</span>
+        </a>
+        <a href="pages/character-studio.html" class="card">
+          <ion-icon name="person-outline"></ion-icon>
+          <span>Character Studio</span>
+        </a>
+        <a href="#" class="card" id="casting">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Casting</span>
+        </a>
+        <a href="#" class="card" id="voice-studio">
+          <ion-icon name="mic-outline"></ion-icon>
+          <span>Voice Studio</span>
+        </a>
+        <a href="#" class="card" id="sound-studio">
+          <ion-icon name="musical-notes-outline"></ion-icon>
+          <span>Sound Studio</span>
+        </a>
+        <a href="#" class="card" id="voice-manipulator">
+          <ion-icon name="options-outline"></ion-icon>
+          <span>Voice Manipulator</span>
+        </a>
+        <a href="#" class="card" id="wardrobe">
+          <ion-icon name="shirt-outline"></ion-icon>
+          <span>Wardrobe</span>
+        </a>
+        <a href="#" class="card" id="scene-builder">
+          <ion-icon name="film-outline"></ion-icon>
+          <span>Scene Builder</span>
+        </a>
+        <a href="#" class="card" id="look-lab">
+          <ion-icon name="aperture-outline"></ion-icon>
+          <span>Look Lab</span>
+        </a>
+        <a href="#" class="card" id="editing-bay">
+          <ion-icon name="cut-outline"></ion-icon>
+          <span>Editing Bay</span>
+        </a>
+        <a href="#" class="card" id="export-studio">
+          <ion-icon name="download-outline"></ion-icon>
+          <span>Export Studio</span>
+        </a>
+        <a href="#" class="card" id="marketplace">
+          <ion-icon name="storefront-outline"></ion-icon>
+          <span>Marketplace</span>
+        </a>
+        <a href="pages/developer-lab.html" class="card" id="developer-tools">
+          <ion-icon name="construct-outline"></ion-icon>
+          <span>Developer Tools</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>
+        &copy; 2026 Load Studio. All rights reserved. Built as a PWA for cinema
+        creators.
+      </p>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
