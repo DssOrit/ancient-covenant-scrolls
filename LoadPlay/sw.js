@@ -1,4 +1,4 @@
-const CACHE = 'loadplay-v22';
+const CACHE = 'loadplay-v23';
 const SHELL = ['./', './index.html', './manifest.json', './icon.png', './load-play-splash-768w-compressed.jpg',
                './data/demo-users.json', './data/demo-activity.json'];
 self.addEventListener('install', e => {

@@ -879,6 +879,20 @@ body.lp-streaming #lp-page{display:none}
 /* "Mock" badge wherever demo content appears in the rest of the UI */
 .lp-mock-tag{display:inline-block;font-size:9.5px;font-weight:900;letter-spacing:.1em;padding:2px 6px;border-radius:4px;background:rgba(255,110,110,.18);color:#ff6e6e;border:1px solid rgba(255,110,110,.4);text-transform:uppercase;margin-left:6px;vertical-align:middle}
 
+/* v23 — Kids profile content filter. When the active session is a
+   kid/child profile, hide chips marked unsafe (Drama, Reality, News,
+   Thrillers). Family-safe rails stay visible. */
+body.lp-kids-profile .chip[data-kids-unsafe="1"]{display:none}
+body.lp-kids-profile .nav-item[data-lp-chip="reality"],
+body.lp-kids-profile .nav-item[data-lp-chip="news"],
+body.lp-kids-profile .nav-item[data-lp-chip="drama"]{display:none}
+
+/* Switch-profile chip in topnav (visible while impersonating) */
+.lp-impersonating{position:fixed;top:0;right:8px;z-index:201;display:none;align-items:center;gap:6px;padding:5px 10px;background:rgba(0,229,255,.14);border:1px solid rgba(0,229,255,.45);border-radius:0 0 8px 8px;font-size:11.5px;color:#fff;font-weight:600}
+body.lp-impersonating .lp-impersonating{display:flex}
+.lp-impersonating .lp-imp-name{color:var(--cyan);font-weight:800;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lp-impersonating .lp-imp-back{padding:2px 8px;border-radius:6px;background:#fff;color:#000;font-weight:800;font-size:10.5px;border:0}
+
 /* Generic placeholder page */
 #lp-page{display:none;padding:0 0 32px;min-height:50vh}
 body.lp-paging #lp-home,
@@ -954,6 +968,14 @@ body.lp-paging #lp-page{display:block}
 <!-- APP -->
 <div id="app">
 
+
+  <!-- v23 — Impersonation chip. Shows when the active session is a
+       mock-viewer; lets the admin restore the previous (real) session
+       in one tap without re-signing-in. -->
+  <div id="lpImpChip" class="lp-impersonating" role="status" aria-live="polite">
+    <span>Impersonating <span class="lp-imp-name" id="lpImpName"></span></span>
+    <button class="lp-imp-back" id="lpImpBack" type="button">Switch back</button>
+  </div>
 
   <!-- TOP NAV -->
   <header class="topnav">
@@ -1378,15 +1400,15 @@ body.lp-paging #lp-page{display:block}
           <button class="chip" data-cat="series">Series</button>
           <button class="chip" data-cat="shorts">Shorts</button>
           <button class="chip" data-cat="documentaries">Documentaries</button>
-          <button class="chip" data-cat="reality">Reality</button>
+          <button class="chip" data-cat="reality" data-kids-unsafe="1">Reality</button>
           <button class="chip" data-cat="biography">Biography</button>
-          <button class="chip" data-cat="news">News</button>
-          <button class="chip" data-cat="drama">Drama</button>
+          <button class="chip" data-cat="news" data-kids-unsafe="1">News</button>
+          <button class="chip" data-cat="drama" data-kids-unsafe="1">Drama</button>
           <button class="chip" data-cat="comedy">Comedy</button>
           <button class="chip" data-cat="animation">Animation</button>
           <button class="chip" data-cat="kids">Kids</button>
           <button class="chip" data-cat="book-cinema">Book Cinema</button>
-          <button class="chip" data-cat="thrillers">Thrillers</button>
+          <button class="chip" data-cat="thrillers" data-kids-unsafe="1">Thrillers</button>
           <button class="chip" data-cat="podcasts">Podcasts</button>
           <button class="chip" data-cat="creators-originals">Creators Originals</button>
         </div>
@@ -3267,10 +3289,109 @@ window.addEventListener('online',  () => toast('Back online'));
   function setActive(on) {
     try { localStorage.setItem(KEY_ACTIVE, on ? '1' : '0'); } catch (e) {}
     var badge = $$('lpTestActiveBadge'); if (badge) badge.hidden = !on;
-    log('Test Mode ' + (on ? 'ACTIVATED' : 'deactivated'));
+    // v23 — analytics blocking flag. Whenever Test Mode is active OR
+    // the live session is impersonating a mock member, every potential
+    // analytics integration must read this flag and short-circuit.
+    // Per the QA blueprint section 19: "No production analytics sent.
+    // No demo metrics added to real metrics. Console shows analytics
+    // blocked." Future analytics calls should gate on
+    // window.__LP_ANALYTICS_BLOCKED.
+    window.__LP_ANALYTICS_BLOCKED = !!on;
+    if (on) {
+      try { console.info('[LoadPlay] Analytics blocked: Test Mode is ACTIVE. window.__LP_ANALYTICS_BLOCKED=true'); } catch (e) {}
+    }
+    log('Test Mode ' + (on ? 'ACTIVATED (analytics blocked)' : 'deactivated'));
   }
   // Apply on load
   setActive(getActive());
+
+  // ── v23 — Impersonation chip + Switch-back + Kids profile filter ─
+  // Stores the previous (real / admin) user object before flipping
+  // the session to a mock member, so the admin can restore it in one
+  // tap without re-signing-in.
+  var KEY_PREVUSER = LS_PREFIX + 'prev_user';
+  function readUser() {
+    try { return JSON.parse(localStorage.getItem('lp_user') || 'null'); } catch (e) { return null; }
+  }
+  function writeUser(u) { try { localStorage.setItem('lp_user', JSON.stringify(u)); } catch (e) {} }
+  function clearUser() { try { localStorage.removeItem('lp_user'); } catch (e) {} }
+  function applySessionFlags() {
+    var u = readUser();
+    var imp = !!(u && u.role === 'mock-viewer' && u.isMock);
+    document.body.classList.toggle('lp-impersonating', imp);
+    var name = $$('lpImpName'); if (name) name.textContent = u && u.name ? u.name : '';
+    // Kids-profile filter: hide unsafe chips + sidebar items if the
+    // active mock member is profileType kid/child OR ageBand child.
+    var isKid = !!(u && (u.profileType === 'kid' || u.profileType === 'child' || u.ageBand === 'child'));
+    document.body.classList.toggle('lp-kids-profile', isKid);
+  }
+  applySessionFlags();
+  // Also re-apply after any v9 IIFE save (we don't have a hook so we
+  // listen on storage events + a lightweight interval).
+  window.addEventListener('storage', function (e) { if (e.key === 'lp_user') applySessionFlags(); });
+  setInterval(applySessionFlags, 1500);
+
+  // Switch back to admin/real user.
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('#lpImpBack');
+    if (!b) return;
+    e.preventDefault();
+    var prev = null;
+    try { prev = JSON.parse(localStorage.getItem(KEY_PREVUSER) || 'null'); } catch (err) {}
+    if (prev) {
+      writeUser(prev);
+      try { localStorage.removeItem(KEY_PREVUSER); } catch (err) {}
+      lpToast('Restored ' + (prev.name || prev.user) + ' session');
+    } else {
+      clearUser();
+      lpToast('Signed out of mock session');
+    }
+    applySessionFlags();
+  });
+
+  // v23 — Avatar 404 fallback. Any <img> whose src points into the
+  // mock-users avatar folder will fall back to a tiny inline SVG
+  // silhouette if the network/cache fetch fails. Uses event capture
+  // so it catches errors on dynamically-injected <img>s anywhere.
+  var FALLBACK_AVATAR = 'data:image/svg+xml;base64,' + btoa(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#1a1a2e"/><circle cx="50" cy="42" r="16" fill="#444"/><rect x="22" y="62" width="56" height="34" rx="14" fill="#444"/></svg>'
+  );
+  document.addEventListener('error', function (e) {
+    var t = e.target;
+    if (!t || t.tagName !== 'IMG') return;
+    var src = t.getAttribute('src') || '';
+    if (!src || src === FALLBACK_AVATAR) return;
+    // Only swap mock-user avatars, splash icons, etc. — never the
+    // splash hero JPG (a missing splash is more visible than wrong).
+    if (src.indexOf('mock-users/avatars/') === -1 && src.indexOf('icon') === -1) return;
+    t.setAttribute('src', FALLBACK_AVATAR);
+  }, true);
+
+  // v23 — Storage size estimate (best-effort; uses
+  // navigator.storage.estimate when available, else returns null).
+  function storageEstimate() {
+    if (navigator.storage && navigator.storage.estimate) {
+      return navigator.storage.estimate().then(function (e) {
+        return { used: e.usage || 0, quota: e.quota || 0 };
+      }).catch(function () { return null; });
+    }
+    return Promise.resolve(null);
+  }
+  function fmtBytes(n) {
+    if (n == null) return '—';
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    if (n < 1024 * 1024 * 1024) return (n / 1024 / 1024).toFixed(1) + ' MB';
+    return (n / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+  }
+  // v23 — Last-generated date (uses the most recent log entry).
+  function lastGenerated(rows) {
+    if (!rows || !rows.length) return null;
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (/Generated|Loaded|Imported|Scenario/.test(rows[i].msg)) return rows[i].ts;
+    }
+    return rows[rows.length - 1].ts;
+  }
 
   // ── Test Mode admin page renderer ─────────────────────────────
   // Rendered through the existing window.__lpRunAct dispatcher when
@@ -3565,10 +3686,13 @@ window.addEventListener('online',  () => toast('Back online'));
     var preset = (function () { try { return parseInt(localStorage.getItem(KEY_PRESET) || '25', 10); } catch (e) { return 25; } })();
     Promise.all([
       idbGet(KEY_MEMBERS), idbGet(KEY_ACTIVITY), idbGet(KEY_LOG), trendingTop5(),
-      idbGet(KEY_COMMENTS), idbGet(KEY_QA), idbGet(KEY_TRENDTS)
+      idbGet(KEY_COMMENTS), idbGet(KEY_QA), idbGet(KEY_TRENDTS), storageEstimate()
     ]).then(function (r) {
       var members = r[0] || [], activity = r[1] || [], rows = r[2] || [], top5 = r[3] || [];
-      var comments = r[4] || [], qas = r[5] || [], trendTs = r[6];
+      var comments = r[4] || [], qas = r[5] || [], trendTs = r[6], stor = r[7];
+      var lastGen = lastGenerated(rows);
+      var lastGenStr = lastGen ? new Date(lastGen).toLocaleString() : 'never';
+      var storStr = stor ? (fmtBytes(stor.used) + ' used / ' + fmtBytes(stor.quota) + ' quota') : 'unavailable on this browser';
       var memberOptions = members.length
         ? '<option value="">— Select mock member —</option>' + members.slice(0, 200).map(function (m) {
             return '<option value="' + m.id + '">' + m.displayName + ' (' + m.profileType + ')</option>';
@@ -3602,6 +3726,12 @@ window.addEventListener('online',  () => toast('Back online'));
           '<div class="lp-tm-stat"><div class="n">' + activity.filter(function (a) { return a.type === 'like'; }).length + '</div><div class="l">Mock Likes</div></div>' +
           '<div class="lp-tm-stat"><div class="n">' + activity.filter(function (a) { return a.type === 'follow'; }).length + '</div><div class="l">Mock Follows</div></div>' +
           '<div class="lp-tm-stat"><div class="n">' + top5.length + '</div><div class="l">Trending (top)</div></div>' +
+        '</div>' +
+
+        '<div class="lp-tm-stat-row" style="margin-top:-8px">' +
+          '<div class="lp-tm-stat"><div class="n" style="font-size:14px;line-height:1.2">' + lastGenStr + '</div><div class="l">Last generated</div></div>' +
+          '<div class="lp-tm-stat"><div class="n" style="font-size:14px;line-height:1.2">' + storStr + '</div><div class="l">Local storage</div></div>' +
+          '<div class="lp-tm-stat"><div class="n" style="font-size:14px;line-height:1.2">' + (window.__LP_ANALYTICS_BLOCKED ? 'BLOCKED (Test Mode)' : 'allowed') + '</div><div class="l">Production analytics</div></div>' +
         '</div>' +
 
         '<div class="lp-tm-section">' +
@@ -3785,9 +3915,17 @@ window.addEventListener('online',  () => toast('Back online'));
       idbGet(KEY_MEMBERS).then(function (members) {
         var m = (members || []).find(function (x) { return x.id === sel.value; });
         if (!m) return;
-        try { localStorage.setItem('lp_user', JSON.stringify({
-          user: m.username, name: m.displayName, role: 'mock-viewer', isMock: true, mockMemberId: m.id, signedInAt: Date.now()
-        })); } catch (err) {}
+        // v23 — stash previous (real / admin) user so Switch-back works.
+        var prev = readUser();
+        if (prev && prev.role !== 'mock-viewer') {
+          try { localStorage.setItem(KEY_PREVUSER, JSON.stringify(prev)); } catch (err) {}
+        }
+        writeUser({
+          user: m.username, name: m.displayName, role: 'mock-viewer', isMock: true,
+          mockMemberId: m.id, profileType: m.profileType, ageBand: m.ageBand,
+          signedInAt: Date.now()
+        });
+        applySessionFlags();
         lpToast('Signed in as ' + m.displayName + ' (mock)');
         log('Impersonating mock member ' + m.id + ' (' + m.displayName + ')');
       });

@@ -152,3 +152,13 @@ Pages is current or stale.
 - Load's tagline is "work offline" — every feature respects that;
   hosting is last-resort fallback, not a default
 - iPad is the primary device; design and test for iPad Safari first
+- **No emoji icons. Ever.** No emojis in code, comments, commit
+  messages, UI strings, or chat output. SVG icons or plain text only.
+- **No progress narration during builds.** When the user has asked
+  for a multi-step build, don't send "doing X next", "now working on
+  Y", "almost done". Build silently and share a single end-of-build
+  results message. Don't open the response with what was just done;
+  lead with the result.
+- **Pages serves from `main`.** Pushes to `claude/<branch>` are
+  invisible to the deployed site until `main` is fast-forwarded
+  (`git push origin <branch>:main`). Do both on every shipping push.
