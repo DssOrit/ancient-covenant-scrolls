@@ -1,0 +1,1174 @@
+{
+  "schemaVersion": 1,
+  "content": [
+    {
+      "id": "content_001",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Half-Lit Rooms",
+      "type": "movie",
+      "typeLabel": "Movie",
+      "genres": [
+        "movies",
+        "drama"
+      ],
+      "durationMinutes": 103,
+      "durationLabel": "1:43",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_008",
+      "viewCount": 16727,
+      "likeCount": 6104,
+      "uploadedAt": 1713384000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_002",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Westbridge",
+      "type": "series",
+      "typeLabel": "Series",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 42,
+      "durationLabel": "42 min",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_015",
+      "viewCount": 109982,
+      "likeCount": 4013,
+      "uploadedAt": 1712260800000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_003",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Heirs of the Tide \u2014 Ch. 2",
+      "type": "episode",
+      "typeLabel": "Episode",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 48,
+      "durationLabel": "48 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_022",
+      "viewCount": 45800,
+      "likeCount": 1397,
+      "uploadedAt": 1714420800000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_004",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Three-Minute Tour",
+      "type": "short",
+      "typeLabel": "Short Film",
+      "genres": [
+        "shorts"
+      ],
+      "durationMinutes": 19,
+      "durationLabel": "19 min",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_029",
+      "viewCount": 33597,
+      "likeCount": 6358,
+      "uploadedAt": 1713729600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_005",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Quiet Engineers",
+      "type": "documentary",
+      "typeLabel": "Documentary",
+      "genres": [
+        "documentaries"
+      ],
+      "durationMinutes": 65,
+      "durationLabel": "1:05",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_036",
+      "viewCount": 180628,
+      "likeCount": 528,
+      "uploadedAt": 1713729600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_006",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Public Path \u2014 Series",
+      "type": "docuseries",
+      "typeLabel": "Docuseries",
+      "genres": [
+        "documentaries",
+        "series"
+      ],
+      "durationMinutes": 43,
+      "durationLabel": "43 min",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_043",
+      "viewCount": 134544,
+      "likeCount": 625,
+      "uploadedAt": 1713038400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_007",
+      "isMock": true,
+      "isDemo": true,
+      "title": "A Working Life",
+      "type": "biography",
+      "typeLabel": "Biography",
+      "genres": [
+        "biography",
+        "documentaries"
+      ],
+      "durationMinutes": 85,
+      "durationLabel": "1:25",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_050",
+      "viewCount": 107968,
+      "likeCount": 1021,
+      "uploadedAt": 1711224000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_008",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Rebuilders",
+      "type": "reality",
+      "typeLabel": "Reality",
+      "genres": [
+        "reality"
+      ],
+      "durationMinutes": 33,
+      "durationLabel": "33 min",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_057",
+      "viewCount": 21328,
+      "likeCount": 5297,
+      "uploadedAt": 1709841600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_009",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Star Pencil",
+      "type": "animation",
+      "typeLabel": "Animation",
+      "genres": [
+        "animation"
+      ],
+      "durationMinutes": 12,
+      "durationLabel": "12 min",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_064",
+      "viewCount": 213652,
+      "likeCount": 5449,
+      "uploadedAt": 1712779200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_010",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Tide Pool Friends",
+      "type": "kids",
+      "typeLabel": "Kids",
+      "genres": [
+        "kids",
+        "animation"
+      ],
+      "durationMinutes": 5,
+      "durationLabel": "5 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_071",
+      "viewCount": 229700,
+      "likeCount": 4150,
+      "uploadedAt": 1712088000000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_011",
+      "isMock": true,
+      "isDemo": true,
+      "title": "On the Record",
+      "type": "news",
+      "typeLabel": "News",
+      "genres": [
+        "news"
+      ],
+      "durationMinutes": 9,
+      "durationLabel": "9 min",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_078",
+      "viewCount": 98749,
+      "likeCount": 4055,
+      "uploadedAt": 1713556800000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_012",
+      "isMock": true,
+      "isDemo": true,
+      "title": "First Pages",
+      "type": "book-cinema",
+      "typeLabel": "Book Cinema",
+      "genres": [
+        "book-cinema"
+      ],
+      "durationMinutes": 82,
+      "durationLabel": "1:22",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_085",
+      "viewCount": 123041,
+      "likeCount": 97,
+      "uploadedAt": 1710273600000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_013",
+      "isMock": true,
+      "isDemo": true,
+      "title": "LoadPlay First \u2014 Pilot",
+      "type": "pwa-original",
+      "typeLabel": "PWA Original",
+      "genres": [
+        "load-originals",
+        "creators-originals"
+      ],
+      "durationMinutes": 27,
+      "durationLabel": "27 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_092",
+      "viewCount": 111237,
+      "likeCount": 6192,
+      "uploadedAt": 1714075200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_014",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Indie Spotlight",
+      "type": "creator-upload",
+      "typeLabel": "Creator Upload",
+      "genres": [
+        "creators-originals"
+      ],
+      "durationMinutes": 27,
+      "durationLabel": "27 min",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_099",
+      "viewCount": 195952,
+      "likeCount": 4752,
+      "uploadedAt": 1712347200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_015",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Heirs of the Tide \u2014 Trailer",
+      "type": "trailer",
+      "typeLabel": "Trailer",
+      "genres": [
+        "featured"
+      ],
+      "durationMinutes": 3,
+      "durationLabel": "3 min",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_106",
+      "viewCount": 46265,
+      "likeCount": 5672,
+      "uploadedAt": 1713038400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_016",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Builder Notes \u2014 Ep. 22",
+      "type": "podcast-video",
+      "typeLabel": "Podcast Video",
+      "genres": [
+        "podcasts"
+      ],
+      "durationMinutes": 53,
+      "durationLabel": "53 min",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_113",
+      "viewCount": 181734,
+      "likeCount": 4725,
+      "uploadedAt": 1714248000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_017",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Stories from the Coast \u2014 Audio",
+      "type": "audio-story",
+      "typeLabel": "Audio Story",
+      "genres": [
+        "podcasts",
+        "book-cinema"
+      ],
+      "durationMinutes": 20,
+      "durationLabel": "20 min",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_120",
+      "viewCount": 234233,
+      "likeCount": 7497,
+      "uploadedAt": 1710187200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_018",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Half-Lit Rooms",
+      "type": "movie",
+      "typeLabel": "Movie",
+      "genres": [
+        "movies",
+        "drama"
+      ],
+      "durationMinutes": 96,
+      "durationLabel": "1:36",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_127",
+      "viewCount": 165176,
+      "likeCount": 830,
+      "uploadedAt": 1712347200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_019",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Westbridge",
+      "type": "series",
+      "typeLabel": "Series",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 46,
+      "durationLabel": "46 min",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_134",
+      "viewCount": 203615,
+      "likeCount": 6254,
+      "uploadedAt": 1711137600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_020",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Garden Street \u2014 Pilot",
+      "type": "episode",
+      "typeLabel": "Episode",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 44,
+      "durationLabel": "44 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_141",
+      "viewCount": 101665,
+      "likeCount": 2561,
+      "uploadedAt": 1712779200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_021",
+      "isMock": true,
+      "isDemo": true,
+      "title": "A Walk to Work",
+      "type": "short",
+      "typeLabel": "Short Film",
+      "genres": [
+        "shorts"
+      ],
+      "durationMinutes": 13,
+      "durationLabel": "13 min",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_148",
+      "viewCount": 18820,
+      "likeCount": 6138,
+      "uploadedAt": 1710878400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_022",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Stories from the Coast",
+      "type": "documentary",
+      "typeLabel": "Documentary",
+      "genres": [
+        "documentaries"
+      ],
+      "durationMinutes": 60,
+      "durationLabel": "1:00",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_155",
+      "viewCount": 173403,
+      "likeCount": 5744,
+      "uploadedAt": 1709841600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_023",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Public Path \u2014 Series",
+      "type": "docuseries",
+      "typeLabel": "Docuseries",
+      "genres": [
+        "documentaries",
+        "series"
+      ],
+      "durationMinutes": 59,
+      "durationLabel": "59 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_162",
+      "viewCount": 141297,
+      "likeCount": 5522,
+      "uploadedAt": 1709928000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_024",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Unlikely Founders",
+      "type": "biography",
+      "typeLabel": "Biography",
+      "genres": [
+        "biography",
+        "documentaries"
+      ],
+      "durationMinutes": 106,
+      "durationLabel": "1:46",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_169",
+      "viewCount": 83316,
+      "likeCount": 3425,
+      "uploadedAt": 1710446400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_025",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Open Kitchen",
+      "type": "reality",
+      "typeLabel": "Reality",
+      "genres": [
+        "reality"
+      ],
+      "durationMinutes": 48,
+      "durationLabel": "48 min",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_176",
+      "viewCount": 47893,
+      "likeCount": 2106,
+      "uploadedAt": 1712779200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_026",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Cloud Conductor",
+      "type": "animation",
+      "typeLabel": "Animation",
+      "genres": [
+        "animation"
+      ],
+      "durationMinutes": 10,
+      "durationLabel": "10 min",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_183",
+      "viewCount": 238579,
+      "likeCount": 5632,
+      "uploadedAt": 1713816000000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_027",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Garden Helpers",
+      "type": "kids",
+      "typeLabel": "Kids",
+      "genres": [
+        "kids",
+        "animation"
+      ],
+      "durationMinutes": 7,
+      "durationLabel": "7 min",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_190",
+      "viewCount": 11243,
+      "likeCount": 755,
+      "uploadedAt": 1709928000000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_028",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Morning Brief",
+      "type": "news",
+      "typeLabel": "News",
+      "genres": [
+        "news"
+      ],
+      "durationMinutes": 3,
+      "durationLabel": "3 min",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_197",
+      "viewCount": 82040,
+      "likeCount": 5001,
+      "uploadedAt": 1710360000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_029",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Chapter One Reads",
+      "type": "book-cinema",
+      "typeLabel": "Book Cinema",
+      "genres": [
+        "book-cinema"
+      ],
+      "durationMinutes": 82,
+      "durationLabel": "1:22",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_204",
+      "viewCount": 205344,
+      "likeCount": 3852,
+      "uploadedAt": 1709841600000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_030",
+      "isMock": true,
+      "isDemo": true,
+      "title": "LoadPlay First \u2014 Pilot",
+      "type": "pwa-original",
+      "typeLabel": "PWA Original",
+      "genres": [
+        "load-originals",
+        "creators-originals"
+      ],
+      "durationMinutes": 28,
+      "durationLabel": "28 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_211",
+      "viewCount": 167407,
+      "likeCount": 3864,
+      "uploadedAt": 1713729600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_031",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Indie Spotlight",
+      "type": "creator-upload",
+      "typeLabel": "Creator Upload",
+      "genres": [
+        "creators-originals"
+      ],
+      "durationMinutes": 16,
+      "durationLabel": "16 min",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_218",
+      "viewCount": 27591,
+      "likeCount": 3939,
+      "uploadedAt": 1711483200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_032",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Coastal Light \u2014 Trailer",
+      "type": "trailer",
+      "typeLabel": "Trailer",
+      "genres": [
+        "featured"
+      ],
+      "durationMinutes": 1,
+      "durationLabel": "1 min",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_225",
+      "viewCount": 64415,
+      "likeCount": 4582,
+      "uploadedAt": 1712433600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_033",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Builder Notes \u2014 Ep. 22",
+      "type": "podcast-video",
+      "typeLabel": "Podcast Video",
+      "genres": [
+        "podcasts"
+      ],
+      "durationMinutes": 48,
+      "durationLabel": "48 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_232",
+      "viewCount": 74085,
+      "likeCount": 6542,
+      "uploadedAt": 1710705600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_034",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Long Reads Read Aloud",
+      "type": "audio-story",
+      "typeLabel": "Audio Story",
+      "genres": [
+        "podcasts",
+        "book-cinema"
+      ],
+      "durationMinutes": 18,
+      "durationLabel": "18 min",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_239",
+      "viewCount": 37013,
+      "likeCount": 500,
+      "uploadedAt": 1710187200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_035",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Half-Lit Rooms",
+      "type": "movie",
+      "typeLabel": "Movie",
+      "genres": [
+        "movies",
+        "drama"
+      ],
+      "durationMinutes": 129,
+      "durationLabel": "2:09",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_246",
+      "viewCount": 66372,
+      "likeCount": 2343,
+      "uploadedAt": 1714680000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_036",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Westbridge",
+      "type": "series",
+      "typeLabel": "Series",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 35,
+      "durationLabel": "35 min",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_253",
+      "viewCount": 158365,
+      "likeCount": 759,
+      "uploadedAt": 1711742400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_037",
+      "isMock": true,
+      "isDemo": true,
+      "title": "After Curfew \u2014 Pilot",
+      "type": "episode",
+      "typeLabel": "Episode",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 25,
+      "durationLabel": "25 min",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_260",
+      "viewCount": 106722,
+      "likeCount": 7347,
+      "uploadedAt": 1711483200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_038",
+      "isMock": true,
+      "isDemo": true,
+      "title": "One Slow Sunrise",
+      "type": "short",
+      "typeLabel": "Short Film",
+      "genres": [
+        "shorts"
+      ],
+      "durationMinutes": 20,
+      "durationLabel": "20 min",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_267",
+      "viewCount": 202059,
+      "likeCount": 869,
+      "uploadedAt": 1710273600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_039",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Maker Hours",
+      "type": "documentary",
+      "typeLabel": "Documentary",
+      "genres": [
+        "documentaries"
+      ],
+      "durationMinutes": 85,
+      "durationLabel": "1:25",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_274",
+      "viewCount": 74090,
+      "likeCount": 2973,
+      "uploadedAt": 1714161600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_040",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Public Path \u2014 Series",
+      "type": "docuseries",
+      "typeLabel": "Docuseries",
+      "genres": [
+        "documentaries",
+        "series"
+      ],
+      "durationMinutes": 57,
+      "durationLabel": "57 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_281",
+      "viewCount": 192149,
+      "likeCount": 3698,
+      "uploadedAt": 1713902400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_041",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Architect",
+      "type": "biography",
+      "typeLabel": "Biography",
+      "genres": [
+        "biography",
+        "documentaries"
+      ],
+      "durationMinutes": 104,
+      "durationLabel": "1:44",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_288",
+      "viewCount": 134837,
+      "likeCount": 3380,
+      "uploadedAt": 1712347200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_042",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Big Move",
+      "type": "reality",
+      "typeLabel": "Reality",
+      "genres": [
+        "reality"
+      ],
+      "durationMinutes": 38,
+      "durationLabel": "38 min",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_295",
+      "viewCount": 235538,
+      "likeCount": 3830,
+      "uploadedAt": 1713124800000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_043",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Lighthouse Mouse",
+      "type": "animation",
+      "typeLabel": "Animation",
+      "genres": [
+        "animation"
+      ],
+      "durationMinutes": 13,
+      "durationLabel": "13 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_302",
+      "viewCount": 104485,
+      "likeCount": 3329,
+      "uploadedAt": 1711224000000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_044",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Story Time \u2014 Volume One",
+      "type": "kids",
+      "typeLabel": "Kids",
+      "genres": [
+        "kids",
+        "animation"
+      ],
+      "durationMinutes": 9,
+      "durationLabel": "9 min",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_309",
+      "viewCount": 33814,
+      "likeCount": 141,
+      "uploadedAt": 1713643200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_045",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Midday Edition",
+      "type": "news",
+      "typeLabel": "News",
+      "genres": [
+        "news"
+      ],
+      "durationMinutes": 10,
+      "durationLabel": "10 min",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_316",
+      "viewCount": 82726,
+      "likeCount": 268,
+      "uploadedAt": 1713038400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_046",
+      "isMock": true,
+      "isDemo": true,
+      "title": "A Quiet Library",
+      "type": "book-cinema",
+      "typeLabel": "Book Cinema",
+      "genres": [
+        "book-cinema"
+      ],
+      "durationMinutes": 59,
+      "durationLabel": "59 min",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_323",
+      "viewCount": 60730,
+      "likeCount": 5016,
+      "uploadedAt": 1709755200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_047",
+      "isMock": true,
+      "isDemo": true,
+      "title": "LoadPlay First \u2014 Pilot",
+      "type": "pwa-original",
+      "typeLabel": "PWA Original",
+      "genres": [
+        "load-originals",
+        "creators-originals"
+      ],
+      "durationMinutes": 50,
+      "durationLabel": "50 min",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_330",
+      "viewCount": 2192,
+      "likeCount": 6538,
+      "uploadedAt": 1712174400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_048",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Indie Spotlight",
+      "type": "creator-upload",
+      "typeLabel": "Creator Upload",
+      "genres": [
+        "creators-originals"
+      ],
+      "durationMinutes": 11,
+      "durationLabel": "11 min",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_337",
+      "viewCount": 74270,
+      "likeCount": 3145,
+      "uploadedAt": 1713124800000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_049",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Brave Little Sailor \u2014 Trailer",
+      "type": "trailer",
+      "typeLabel": "Trailer",
+      "genres": [
+        "featured"
+      ],
+      "durationMinutes": 1,
+      "durationLabel": "1 min",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_344",
+      "viewCount": 53623,
+      "likeCount": 4170,
+      "uploadedAt": 1709841600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_050",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Builder Notes \u2014 Ep. 22",
+      "type": "podcast-video",
+      "typeLabel": "Podcast Video",
+      "genres": [
+        "podcasts"
+      ],
+      "durationMinutes": 48,
+      "durationLabel": "48 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_351",
+      "viewCount": 7519,
+      "likeCount": 6798,
+      "uploadedAt": 1714593600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_051",
+      "isMock": true,
+      "isDemo": true,
+      "title": "A Quiet Library \u2014 Audio",
+      "type": "audio-story",
+      "typeLabel": "Audio Story",
+      "genres": [
+        "podcasts",
+        "book-cinema"
+      ],
+      "durationMinutes": 31,
+      "durationLabel": "31 min",
+      "posterGradient": "linear-gradient(135deg,#0a2540,#0d3358,#0a1535)",
+      "creatorId": "mock_user_358",
+      "viewCount": 166671,
+      "likeCount": 6108,
+      "uploadedAt": 1713211200000,
+      "kidsSafe": true
+    },
+    {
+      "id": "content_052",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Half-Lit Rooms",
+      "type": "movie",
+      "typeLabel": "Movie",
+      "genres": [
+        "movies",
+        "drama"
+      ],
+      "durationMinutes": 143,
+      "durationLabel": "2:23",
+      "posterGradient": "linear-gradient(135deg,#3a0e1f,#5a1a2e,#1a0a14)",
+      "creatorId": "mock_user_365",
+      "viewCount": 133175,
+      "likeCount": 5959,
+      "uploadedAt": 1709928000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_053",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Westbridge",
+      "type": "series",
+      "typeLabel": "Series",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 35,
+      "durationLabel": "35 min",
+      "posterGradient": "linear-gradient(135deg,#0a2030,#1f3a5e,#0a1020)",
+      "creatorId": "mock_user_372",
+      "viewCount": 190047,
+      "likeCount": 407,
+      "uploadedAt": 1712520000000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_054",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Foundation Days \u2014 Day 1",
+      "type": "episode",
+      "typeLabel": "Episode",
+      "genres": [
+        "series",
+        "drama"
+      ],
+      "durationMinutes": 39,
+      "durationLabel": "39 min",
+      "posterGradient": "linear-gradient(135deg,#1a0a2e,#3a1858,#0a0a1a)",
+      "creatorId": "mock_user_379",
+      "viewCount": 198455,
+      "likeCount": 5706,
+      "uploadedAt": 1710014400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_055",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Last Post",
+      "type": "short",
+      "typeLabel": "Short Film",
+      "genres": [
+        "shorts"
+      ],
+      "durationMinutes": 8,
+      "durationLabel": "8 min",
+      "posterGradient": "linear-gradient(135deg,#3a1a4e,#5a2a7e,#1a0a2a)",
+      "creatorId": "mock_user_386",
+      "viewCount": 44983,
+      "likeCount": 2948,
+      "uploadedAt": 1710705600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_056",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Quiet Engineers",
+      "type": "documentary",
+      "typeLabel": "Documentary",
+      "genres": [
+        "documentaries"
+      ],
+      "durationMinutes": 84,
+      "durationLabel": "1:24",
+      "posterGradient": "linear-gradient(135deg,#0a2e2a,#1a4e3a,#0a1a14)",
+      "creatorId": "mock_user_393",
+      "viewCount": 106633,
+      "likeCount": 5556,
+      "uploadedAt": 1714507200000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_057",
+      "isMock": true,
+      "isDemo": true,
+      "title": "The Public Path \u2014 Series",
+      "type": "docuseries",
+      "typeLabel": "Docuseries",
+      "genres": [
+        "documentaries",
+        "series"
+      ],
+      "durationMinutes": 48,
+      "durationLabel": "48 min",
+      "posterGradient": "linear-gradient(135deg,#3a2a0a,#5a4a1a,#1a1a0a)",
+      "creatorId": "mock_user_400",
+      "viewCount": 45699,
+      "likeCount": 3860,
+      "uploadedAt": 1713902400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_058",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Between Stages",
+      "type": "biography",
+      "typeLabel": "Biography",
+      "genres": [
+        "biography",
+        "documentaries"
+      ],
+      "durationMinutes": 77,
+      "durationLabel": "1:17",
+      "posterGradient": "linear-gradient(135deg,#2a1a0a,#4a2a1a,#1a0e0a)",
+      "creatorId": "mock_user_407",
+      "viewCount": 132725,
+      "likeCount": 5175,
+      "uploadedAt": 1713902400000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_059",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Workshop Diaries",
+      "type": "reality",
+      "typeLabel": "Reality",
+      "genres": [
+        "reality"
+      ],
+      "durationMinutes": 33,
+      "durationLabel": "33 min",
+      "posterGradient": "linear-gradient(135deg,#0a3a3a,#1a5e6a,#0a1a1a)",
+      "creatorId": "mock_user_414",
+      "viewCount": 23813,
+      "likeCount": 3882,
+      "uploadedAt": 1710705600000,
+      "kidsSafe": false
+    },
+    {
+      "id": "content_060",
+      "isMock": true,
+      "isDemo": true,
+      "title": "Tide Pool Friends",
+      "type": "animation",
+      "typeLabel": "Animation",
+      "genres": [
+        "animation"
+      ],
+      "durationMinutes": 17,
+      "durationLabel": "17 min",
+      "posterGradient": "linear-gradient(135deg,#1a0f2e,#2a1858,#0d1b2a)",
+      "creatorId": "mock_user_421",
+      "viewCount": 68829,
+      "likeCount": 5839,
+      "uploadedAt": 1711310400000,
+      "kidsSafe": true
+    }
+  ]
+}

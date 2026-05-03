@@ -1818,6 +1818,13 @@ function openPlayer(v) {
   $('chAvatar').style.background = `linear-gradient(135deg,${ch.c[0]},${ch.c[1]})`;
   $('chName').textContent = ch.n;
   $('chSubs').textContent = ch.s;
+  // v24 — overlay a real mock-user portrait on the creator avatar if
+  // the LITE pack (or any KEY_MEMBERS dataset) is loaded. Deterministic
+  // mapping from the loadplay2 channel id (v.ch) to a mock-user index
+  // so the same channel always shows the same creator.
+  if (window.__lpAttachMockCreator) {
+    try { window.__lpAttachMockCreator(v); } catch (e) {}
+  }
   $('descViews').textContent = v.v + ' views  ·  ' + v.a;
   $('descText').textContent = v.desc || '';
 
@@ -2607,25 +2614,123 @@ window.addEventListener('online',  () => toast('Back online'));
       { t: 'Tide Pool Friends',       by: 'Kids' }
     ]}
   ];
-  function feedThumb(cat) {
-    return '<div class="lp-feed-thumb"><span class="lp-feed-thumb-cat">' + cat + '</span></div>';
+  function feedThumb(catOrGradient) {
+    if (catOrGradient && catOrGradient.indexOf('gradient(') === 0) {
+      return '<div class="lp-feed-thumb" style="background:' + catOrGradient + '"></div>';
+    }
+    return '<div class="lp-feed-thumb"><span class="lp-feed-thumb-cat">' + catOrGradient + '</span></div>';
+  }
+  // v24 — Read mock members + activity + content directly from
+  // IndexedDB / network so the home feed is bound to whatever's
+  // currently loaded (LITE pack, generated synthetic, or empty).
+  function lpReadAll() {
+    return Promise.all([
+      fetch('data/demo-content.json').then(function (r) { return r.json(); }).then(function (j) { return (j && j.content) || []; }).catch(function () { return []; }),
+      (function () { try { return idbGetGlobal('lp_test_members'); } catch (e) { return null; } })()
+    ]).then(function (a) {
+      return { content: a[0] || [], members: a[1] || [] };
+    });
+  }
+  function idbGetGlobal(key) {
+    return new Promise(function (resolve) {
+      try {
+        var req = indexedDB.open('loadplay_test', 1);
+        req.onsuccess = function () {
+          var db = req.result;
+          if (!db.objectStoreNames.contains('kv')) { resolve(null); return; }
+          var tx = db.transaction('kv', 'readonly');
+          var get = tx.objectStore('kv').get(key);
+          get.onsuccess = function () { resolve(get.result); };
+          get.onerror = function () { resolve(null); };
+        };
+        req.onerror = function () { resolve(null); };
+      } catch (e) { resolve(null); }
+    });
+  }
+  function pickMembers(arr, n) {
+    if (!arr || !arr.length) return [];
+    return arr.slice(0, n);
+  }
+  function pickContent(arr, filterFn, n) {
+    if (!arr || !arr.length) return [];
+    var pool = filterFn ? arr.filter(filterFn) : arr.slice();
+    return pool.slice(0, n);
   }
   function renderHomeFeed() {
-    var u = loadUser() || {};
+    var u = (function () { try { return JSON.parse(localStorage.getItem('lp_user') || 'null') || {}; } catch (e) { return {}; } })();
     var name = u.name || u.user || 'friend';
-    var rails = FEED_RAILS.map(function (r) {
-      var cards = r.items.map(function (it) {
-        return '<button class="lp-feed-card" type="button">' + feedThumb(r.cat) +
-               '<div class="lp-feed-meta"><div class="lp-feed-title">' + it.t + '</div><div class="lp-feed-byline">' + it.by + '</div></div></button>';
+    lpReadAll().then(function (data) {
+      var content = data.content, members = data.members;
+      var greetingExtra = '';
+      if (u && u.isMock) {
+        greetingExtra = ' <span class="lp-mock-tag">MOCK</span>';
+      }
+
+      function railContent(title, items, cat) {
+        if (!items.length) return '';
+        var cards = items.map(function (it) {
+          return '<button class="lp-feed-card" type="button" data-lp-content="' + it.id + '">' +
+                 feedThumb(it.posterGradient || cat) +
+                 '<div class="lp-feed-meta"><div class="lp-feed-title">' + it.title + '</div><div class="lp-feed-byline">' + (it.typeLabel || '') + ' · ' + (it.viewCount || 0).toLocaleString() + ' views</div></div></button>';
+        }).join('');
+        return '<div class="lp-feed-rail"><h3>' + title + '</h3><div class="lp-feed-grid">' + cards + '</div></div>';
+      }
+      function railCreators(title, list) {
+        if (!list.length) return '';
+        var cards = list.map(function (m) {
+          var subStr = m.subscribers ? (m.subscribers >= 1000 ? (m.subscribers / 1000).toFixed(1) + 'K' : m.subscribers) + ' subscribers' : (m.handle || '@' + m.username);
+          return '<button class="lp-feed-card lp-creator-card" type="button" data-lp-creator="' + m.id + '">' +
+                 '<div class="lp-feed-thumb" style="background:#1a1a2e;display:flex;align-items:center;justify-content:center"><img src="' + m.avatar + '" alt="" style="width:60%;height:auto;border-radius:50%"></div>' +
+                 '<div class="lp-feed-meta"><div class="lp-feed-title">' + m.displayName + '</div><div class="lp-feed-byline">' + subStr + '</div></div></button>';
+        }).join('');
+        return '<div class="lp-feed-rail"><h3>' + title + '</h3><div class="lp-feed-grid">' + cards + '</div></div>';
+      }
+
+      var prefs = (u && u.genrePrefs) || (members[0] && members[0].genrePrefs) || ['featured', 'movies', 'documentaries'];
+      var pickedForYou = pickContent(content, function (c) {
+        return prefs.some(function (p) { return c.genres.indexOf(p) >= 0; });
+      }, 6);
+      if (pickedForYou.length < 6) pickedForYou = content.slice(0, 6);
+
+      var newlyAdded = content.slice().sort(function (a, b) { return b.uploadedAt - a.uploadedAt; }).slice(0, 6);
+      var docs = pickContent(content, function (c) { return c.genres.indexOf('documentaries') >= 0; }, 6);
+      var movies = pickContent(content, function (c) { return c.type === 'movie' || c.genres.indexOf('movies') >= 0; }, 6);
+      var kids = pickContent(content, function (c) { return c.kidsSafe; }, 6);
+
+      // Top Creators rail uses real mock-member headshots.
+      var topCreators = pickMembers(members, 8);
+
+      var html =
+        '<div class="lp-feed-greeting">Welcome, ' + name + greetingExtra + '</div>' +
+        '<p class="lp-feed-sub">Your personalized LoadPlay home — bound to ' + members.length + ' mock member' + (members.length === 1 ? '' : 's') + ' and ' + content.length + ' demo titles.</p>' +
+        railContent('Picked for you', pickedForYou, 'For you') +
+        railCreators('Top Creators', topCreators) +
+        railContent('Newly Added', newlyAdded, 'New') +
+        railContent('Trending in Documentaries', docs, 'Docs') +
+        railContent('Newly Added Movies', movies, 'Movies') +
+        railContent('Kids Picks', kids, 'Kids');
+
+      showPage({
+        title: '',
+        blurb: '',
+        extra: html
+      });
+    }).catch(function () {
+      // Fallback to the legacy static FEED_RAILS if data files are
+      // unavailable (offline + no SW cache yet).
+      var rails = FEED_RAILS.map(function (r) {
+        var cards = r.items.map(function (it) {
+          return '<button class="lp-feed-card" type="button">' + feedThumb(r.cat) +
+                 '<div class="lp-feed-meta"><div class="lp-feed-title">' + it.t + '</div><div class="lp-feed-byline">' + it.by + '</div></div></button>';
+        }).join('');
+        return '<div class="lp-feed-rail"><h3>' + r.title + '</h3><div class="lp-feed-grid">' + cards + '</div></div>';
       }).join('');
-      return '<div class="lp-feed-rail"><h3>' + r.title + '</h3><div class="lp-feed-grid">' + cards + '</div></div>';
-    }).join('');
-    showPage({
-      title: '',
-      blurb: '',
-      extra: '<div class="lp-feed-greeting">Welcome, ' + name + '</div>' +
-             '<p class="lp-feed-sub">Your personalized LoadPlay home — like YouTube, just cleaner.</p>' +
-             rails
+      showPage({
+        title: '', blurb: '',
+        extra: '<div class="lp-feed-greeting">Welcome, ' + name + '</div>' +
+               '<p class="lp-feed-sub">Your personalized LoadPlay home — like YouTube, just cleaner.</p>' +
+               rails
+      });
     });
   }
 
@@ -3836,6 +3941,114 @@ window.addEventListener('online',  () => toast('Back online'));
 
   // Expose page renderer for the existing IIFE's runAct dispatcher.
   window.__lpRenderTestMode = renderTestModePage;
+
+  // ── v24 — Mock creator integration into player + nav avatar ──
+  // Expose helpers loadplay2's openPlayer + the streaming view can
+  // call to overlay real mock-user portraits where avatars/names
+  // are rendered. All synchronous: pulls from the cached mock-member
+  // map populated when LITE / synthetic members are loaded.
+  var __lpMembersCache = null;
+  function refreshMembersCache() {
+    return idbGet(KEY_MEMBERS).then(function (m) { __lpMembersCache = m || []; return __lpMembersCache; });
+  }
+  refreshMembersCache();
+  window.addEventListener('storage', function (e) { if (String(e.key || '').indexOf('lp_test_') === 0) refreshMembersCache(); });
+  setInterval(refreshMembersCache, 4000);
+
+  function memberByIndex(i) {
+    if (!__lpMembersCache || !__lpMembersCache.length) return null;
+    return __lpMembersCache[i % __lpMembersCache.length];
+  }
+
+  // Map loadplay2 channel index (0-9, ten built-in channels) to a
+  // deterministic mock member so the creator avatar in the player
+  // always shows the same real headshot for each channel.
+  window.__lpAttachMockCreator = function (v) {
+    if (!__lpMembersCache || !__lpMembersCache.length) return;
+    var idx = (typeof v.ch === 'number' ? v.ch : 0);
+    var stride = Math.max(1, Math.floor(__lpMembersCache.length / 10));
+    var m = memberByIndex(idx * stride);
+    if (!m || !m.avatar) return;
+    var av = document.getElementById('chAvatar');
+    if (av) {
+      av.textContent = '';
+      av.style.cssText = 'background-image:url(\'' + m.avatar + '\');background-size:cover;background-position:center';
+    }
+    var nm = document.getElementById('chName');
+    if (nm) nm.textContent = m.displayName + (m.handle ? '  ' + m.handle : '');
+    var su = document.getElementById('chSubs');
+    if (su) {
+      var n = m.subscribers || 0;
+      var sub = (n >= 1000 ? (n / 1000).toFixed(1) + 'K' : n) + ' subscribers';
+      su.textContent = sub;
+    }
+  };
+
+  // Topnav avatar circle ("LP" letter) — show the active mock user's
+  // portrait when impersonating, fall back to "LP" otherwise.
+  function refreshTopnavAvatar() {
+    var btn = document.querySelector('.avatar-btn');
+    if (!btn) return;
+    var u = readUser();
+    if (u && u.isMock && u.mockMemberId) {
+      var m = (__lpMembersCache || []).find(function (x) { return x.id === u.mockMemberId; });
+      if (m && m.avatar) {
+        btn.textContent = '';
+        btn.style.cssText = 'background-image:url(\'' + m.avatar + '\');background-size:cover;background-position:center';
+        return;
+      }
+    }
+    btn.textContent = 'LP';
+    btn.style.cssText = '';
+  }
+  setInterval(refreshTopnavAvatar, 1500);
+  refreshTopnavAvatar();
+
+  // Streaming view: inject a "Featured Creators" strip above the
+  // hardcoded Shorts row whenever the streaming view is shown and a
+  // member dataset is loaded.
+  function injectFeaturedCreatorsStrip() {
+    if (!__lpMembersCache || !__lpMembersCache.length) return;
+    var section = document.getElementById('shortsSection');
+    if (!section) return;
+    var existing = document.getElementById('lpFeaturedCreators');
+    if (existing) existing.remove();
+    var strip = document.createElement('div');
+    strip.id = 'lpFeaturedCreators';
+    strip.style.cssText = 'margin:8px 0 18px';
+    var picks = __lpMembersCache.slice(0, 12);
+    strip.innerHTML =
+      '<h2 class="section-title">Featured Creators <span class="lp-mock-tag">MOCK</span></h2>' +
+      '<div class="shorts-row" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:6px">' +
+        picks.map(function (m) {
+          return '<button type="button" data-lp-creator="' + m.id + '" style="flex:0 0 auto;background:transparent;border:0;color:inherit;text-align:center;cursor:pointer">' +
+                 '<img src="' + m.avatar + '" alt="" style="width:64px;height:64px;border-radius:50%;display:block;margin:0 auto 6px;object-fit:cover;border:2px solid var(--border)">' +
+                 '<div style="font-size:11.5px;color:#fff;font-weight:600;max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + m.displayName + '</div>' +
+                 '</button>';
+        }).join('') +
+      '</div>';
+    section.parentNode.insertBefore(strip, section);
+  }
+  // Hook into showStream — patch wrapper that runs after the original.
+  var __origShowStream = window.__lpShowStream;
+  if (typeof showStream === 'function') {
+    var inner = showStream;
+    showStream = function () {
+      var r = inner.apply(this, arguments);
+      setTimeout(function () { refreshMembersCache().then(injectFeaturedCreatorsStrip); }, 50);
+      return r;
+    };
+    window.__lpShowStream = showStream;
+  }
+  // Also re-inject after LITE loads.
+  var _origLoadLite = loadLitePackage;
+  loadLitePackage = function () {
+    return _origLoadLite().then(function (r) {
+      refreshMembersCache().then(injectFeaturedCreatorsStrip);
+      refreshTopnavAvatar();
+      return r;
+    });
+  };
 
   // Patch the existing runAct: when 'test-mode' is invoked, render us.
   var prevAct = window.__lpRunAct;
