@@ -879,6 +879,55 @@ body.lp-streaming #lp-page{display:none}
 /* "Mock" badge wherever demo content appears in the rest of the UI */
 .lp-mock-tag{display:inline-block;font-size:9.5px;font-weight:900;letter-spacing:.1em;padding:2px 6px;border-radius:4px;background:rgba(255,110,110,.18);color:#ff6e6e;border:1px solid rgba(255,110,110,.4);text-transform:uppercase;margin-left:6px;vertical-align:middle}
 
+/* v28 — Mock-avatar realism layer.
+   The LITE pack ships studio headshots with white backgrounds and
+   identical centered framing. To keep them looking distinct without
+   re-generating, every avatar render site wraps the <img> in a
+   .lp-mock-avatar div that:
+     - replaces the white halo with a per-user gradient via
+       background-blend-mode (multiply) + a tinted background color
+     - shifts the framing per-user with object-position so faces
+       aren't all dead-center
+     - varies hue/saturation/contrast slightly per-user
+     - mirrors ~half the avatars horizontally so the eye-line
+       direction differs across the page
+   Variables are set inline per-user from lpAvatarVars(memberId). */
+.lp-mock-avatar{
+  position:relative;overflow:hidden;display:block;
+  background:var(--lp-av-bg,linear-gradient(135deg,#1a1a2e,#0a1535));
+  border-radius:inherit;
+}
+.lp-mock-avatar img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;
+  object-position:var(--lp-av-pos,50% 32%);
+  transform:var(--lp-av-flip,none);
+  filter:hue-rotate(var(--lp-av-hue,0deg)) saturate(var(--lp-av-sat,1)) contrast(var(--lp-av-con,1)) brightness(var(--lp-av-bri,1));
+  mix-blend-mode:var(--lp-av-blend,normal);
+}
+/* Banner variant — used on Top Creators / Creator Profile pages.
+   Same source image but cropped extremely wide so it reads as a
+   "cover photo" instead of a face. The face peeks in but the
+   background gradient dominates. */
+.lp-mock-banner{
+  position:relative;overflow:hidden;display:block;width:100%;
+  background:var(--lp-av-bg,linear-gradient(135deg,#1a1a2e,#0a1535));
+  border-radius:inherit;height:80px;
+}
+.lp-mock-banner img{
+  width:100%;height:200%;display:block;
+  object-fit:cover;
+  object-position:var(--lp-av-pos,50% 70%);
+  transform:var(--lp-av-flip,none);
+  filter:hue-rotate(var(--lp-av-hue,0deg)) saturate(.6) contrast(1.05) brightness(.6) blur(.4px);
+  opacity:.7;
+}
+/* When wrapping inside the existing .ch-avatar / .card-avatar /
+   .avatar-btn shapes, fill them edge-to-edge. */
+.ch-avatar > .lp-mock-avatar,
+.card-avatar > .lp-mock-avatar,
+.avatar-btn > .lp-mock-avatar{position:absolute;inset:0;border-radius:50%}
+
 /* v23 — Kids profile content filter. When the active session is a
    kid/child profile, hide chips marked unsafe (Drama, Reality, News,
    Thrillers). Family-safe rails stay visible. */
@@ -1733,7 +1782,7 @@ function makeVideoCard(v) {
     </div>
     <div class="card-info">
       <div class="card-avatar" style="background:linear-gradient(135deg,${ch.c[0]},${ch.c[1]});overflow:hidden;color:transparent;position:relative">
-        <img src="${mockAv}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;position:absolute;inset:0" onerror="this.remove();this.parentElement.style.color='#fff'">
+        <span class="lp-mock-avatar" style="${(window.lpAvatarVars ? window.lpAvatarVars('vc-' + v.ch + '-' + v.id) : '')}"><img src="${mockAv}" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.parentElement&&(this.parentElement.parentElement.style.color='#fff');this.parentElement&&this.parentElement.remove()"></span>
         ${ch.n[0]}
       </div>
       <div class="card-meta">
@@ -2691,9 +2740,14 @@ window.addEventListener('online',  () => toast('Back online'));
         if (!list.length) return '';
         var cards = list.map(function (m) {
           var subStr = m.subscribers ? (m.subscribers >= 1000 ? (m.subscribers / 1000).toFixed(1) + 'K' : m.subscribers) + ' subscribers' : (m.handle || '@' + m.username);
+          var bannerSeed = 'banner-' + m.id;
+          var avSeed = 'rail-' + m.id;
           return '<button class="lp-feed-card lp-creator-card" type="button" data-lp-creator="' + m.id + '">' +
-                 '<div class="lp-feed-thumb" style="background:#1a1a2e;display:flex;align-items:center;justify-content:center"><img src="' + m.avatar + '" alt="" style="width:60%;height:auto;border-radius:50%"></div>' +
-                 '<div class="lp-feed-meta"><div class="lp-feed-title">' + m.displayName + '</div><div class="lp-feed-byline">' + subStr + '</div></div></button>';
+                 '<div class="lp-feed-thumb" style="position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px">' +
+                 (window.lpBannerHTML ? window.lpBannerHTML(bannerSeed, m.avatar, '') : '') +
+                 '<span class="lp-mock-avatar" style="position:relative;width:46%;aspect-ratio:1;border-radius:50%;border:3px solid var(--bg2);box-shadow:0 4px 16px rgba(0,0,0,.35);margin-bottom:-12px;' + lpAvatarVars(avSeed) + '"><img src="' + m.avatar + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>' +
+                 '</div>' +
+                 '<div class="lp-feed-meta" style="margin-top:14px"><div class="lp-feed-title">' + m.displayName + '</div><div class="lp-feed-byline">' + subStr + '</div></div></button>';
         }).join('');
         return '<div class="lp-feed-rail"><h3>' + title + '</h3><div class="lp-feed-grid">' + cards + '</div></div>';
       }
@@ -3472,6 +3526,53 @@ window.addEventListener('online',  () => toast('Back online'));
   // mock-users avatar folder will fall back to a tiny inline SVG
   // silhouette if the network/cache fetch fails. Uses event capture
   // so it catches errors on dynamically-injected <img>s anywhere.
+  // v28 — Per-user avatar variation helper. Given any stable id (member
+  // id, channel index, video id), returns a style string with CSS
+  // variables that drive per-user background tint, crop, hue, and
+  // horizontal flip. The .lp-mock-avatar wrapper consumes these and
+  // produces a visibly distinct look from the same source JPG.
+  function lpStrHash(s) {
+    s = String(s || ''); var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 16777619) >>> 0; }
+    return h >>> 0;
+  }
+  function lpAvatarVars(seedKey) {
+    var h = lpStrHash(seedKey);
+    var hue = (h % 60) - 30;                                  // -30 to +30 deg
+    var sat = (0.85 + ((h >> 6) & 0x3F) / 250).toFixed(3);    // 0.85 .. 1.10
+    var con = (0.92 + ((h >> 12) & 0x1F) / 200).toFixed(3);   // 0.92 .. 1.07
+    var bri = (0.92 + ((h >> 17) & 0x1F) / 250).toFixed(3);   // 0.92 .. 1.04
+    var posX = 35 + ((h >> 9) % 30);                          // 35% .. 65%
+    var posY = 22 + ((h >> 19) % 28);                         // 22% .. 50%
+    var flip = ((h >> 23) & 1) ? 'scaleX(-1)' : 'none';        // ~50% mirrored
+    var bgHueA = (h >> 3) % 360;
+    var bgHueB = (bgHueA + 30 + ((h >> 11) % 80)) % 360;
+    var blend  = ((h >> 25) & 3) === 0 ? 'multiply' : 'normal'; // ~25% multiply blend with bg
+    var bg = 'linear-gradient(135deg,hsl(' + bgHueA + ',45%,18%) 0%,hsl(' + bgHueB + ',55%,12%) 100%)';
+    return '--lp-av-bg:' + bg + ';' +
+           '--lp-av-pos:' + posX + '% ' + posY + '%;' +
+           '--lp-av-hue:' + hue + 'deg;' +
+           '--lp-av-sat:' + sat + ';' +
+           '--lp-av-con:' + con + ';' +
+           '--lp-av-bri:' + bri + ';' +
+           '--lp-av-flip:' + flip + ';' +
+           '--lp-av-blend:' + blend;
+  }
+  function lpAvatarHTML(seedKey, src, alt) {
+    return '<span class="lp-mock-avatar" style="' + lpAvatarVars(seedKey) + '">' +
+           '<img src="' + src + '" alt="' + (alt || '') + '" loading="lazy" onerror="this.parentElement&&this.parentElement.removeChild(this)">' +
+           '</span>';
+  }
+  function lpBannerHTML(seedKey, src, alt) {
+    return '<span class="lp-mock-banner" style="' + lpAvatarVars(seedKey) + '">' +
+           '<img src="' + src + '" alt="' + (alt || '') + '" loading="lazy" onerror="this.parentElement&&this.parentElement.removeChild(this)">' +
+           '</span>';
+  }
+  // Expose so loadplay2 inline script + earlier IIFEs can use them.
+  window.lpAvatarVars = lpAvatarVars;
+  window.lpAvatarHTML = lpAvatarHTML;
+  window.lpBannerHTML = lpBannerHTML;
+
   var FALLBACK_AVATAR = 'data:image/svg+xml;base64,' + btoa(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#1a1a2e"/><circle cx="50" cy="42" r="16" fill="#444"/><rect x="22" y="62" width="56" height="34" rx="14" fill="#444"/></svg>'
   );
@@ -3989,10 +4090,12 @@ window.addEventListener('online',  () => toast('Back online'));
     if (av) {
       av.textContent = '';
       av.style.background = 'transparent';
-      av.style.backgroundImage = 'url("' + avatarPath + '")';
-      av.style.backgroundSize = 'cover';
-      av.style.backgroundPosition = 'center';
-      av.style.backgroundRepeat = 'no-repeat';
+      av.style.backgroundImage = '';
+      // v28 — wrap the player creator avatar in the .lp-mock-avatar
+      // realism layer (per-channel CSS-variable variance) instead of
+      // a plain background-image. Removes the white halo, varies the
+      // crop, mirrors ~half. Falls back gracefully if the JPG 404s.
+      av.innerHTML = '<span class="lp-mock-avatar" style="' + (window.lpAvatarVars ? window.lpAvatarVars('player-' + idx) : '') + '"><img src="' + avatarPath + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>';
     }
     // Member-record overrides only if cache present.
     if (__lpMembersCache && __lpMembersCache.length) {
@@ -4001,7 +4104,7 @@ window.addEventListener('online',  () => toast('Back online'));
       if (m) {
         // Prefer the member-bound avatar URL if it's available
         if (m.avatar && av) {
-          av.style.backgroundImage = 'url("' + m.avatar + '")';
+          av.innerHTML = '<span class="lp-mock-avatar" style="' + (window.lpAvatarVars ? window.lpAvatarVars('player-mem-' + m.id) : '') + '"><img src="' + m.avatar + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>';
         }
         var nm = document.getElementById('chName');
         if (nm) nm.textContent = m.displayName + (m.handle ? '  ' + m.handle : '');
@@ -4023,8 +4126,8 @@ window.addEventListener('online',  () => toast('Back online'));
     if (u && u.isMock && u.mockMemberId) {
       var m = (__lpMembersCache || []).find(function (x) { return x.id === u.mockMemberId; });
       if (m && m.avatar) {
-        btn.textContent = '';
-        btn.style.cssText = 'background-image:url(\'' + m.avatar + '\');background-size:cover;background-position:center';
+        btn.style.cssText = '';
+        btn.innerHTML = '<span class="lp-mock-avatar" style="' + (window.lpAvatarVars ? window.lpAvatarVars('topnav-' + m.id) : '') + '"><img src="' + m.avatar + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>';
         return;
       }
     }
@@ -4052,7 +4155,7 @@ window.addEventListener('online',  () => toast('Back online'));
       '<div class="shorts-row" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:6px">' +
         picks.map(function (m) {
           return '<button type="button" data-lp-creator="' + m.id + '" style="flex:0 0 auto;background:transparent;border:0;color:inherit;text-align:center;cursor:pointer">' +
-                 '<img src="' + m.avatar + '" alt="" style="width:64px;height:64px;border-radius:50%;display:block;margin:0 auto 6px;object-fit:cover;border:2px solid var(--border)">' +
+                 '<span class="lp-mock-avatar" style="display:block;width:64px;height:64px;border-radius:50%;margin:0 auto 6px;border:2px solid var(--border);' + lpAvatarVars('strip-' + m.id) + '"><img src="' + m.avatar + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>' +
                  '<div style="font-size:11.5px;color:#fff;font-weight:600;max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + m.displayName + '</div>' +
                  '</button>';
         }).join('') +
