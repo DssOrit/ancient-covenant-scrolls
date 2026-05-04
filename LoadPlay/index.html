@@ -2697,6 +2697,283 @@ window.addEventListener('online',  () => toast('Back online'));
   // Expose so other modules can deep-link.
   window.__lpRenderProfileEdit = renderProfileEdit;
 
+  // ── Upload Wizard (Tier 1.4) ─────────────────────────────────
+  // Multi-step creator upload flow. Saves to lp_drafts; publish moves
+  // to lp_published after a Clean Stream check.
+  function readDrafts()    { try { var a = JSON.parse(localStorage.getItem('lp_drafts')    || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeDrafts(a)  { try { localStorage.setItem('lp_drafts',    JSON.stringify(a)); } catch (e) {} }
+  function readPublished() { try { var a = JSON.parse(localStorage.getItem('lp_published') || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writePublished(a){try { localStorage.setItem('lp_published', JSON.stringify(a)); } catch (e) {} }
+  // Light-touch profanity / NSFW guard for the Clean Stream pitch.
+  // Tier 4.14 will tighten this with a real text + image classifier.
+  var __LP_BAD = /\b(porn|nude|nudes|nudity|xxx|fuck|shit|bitch|asshole|cunt|dick|pussy|whore|slut|nigg|fag)\b/i;
+  function lpCleanStreamCheck(p) {
+    var bag = [p.title, p.description, p.owner, p.source].filter(Boolean).join(' ');
+    if (__LP_BAD.test(bag)) return { ok: false, reason: 'A title/description field appears to contain disallowed language. LoadPlay is family-safe — please revise.' };
+    if (!p.title || !p.title.trim()) return { ok: false, reason: 'Title is required.' };
+    if (!p.category)                  return { ok: false, reason: 'Pick a category.' };
+    if (!p.license)                   return { ok: false, reason: 'Declare a rights license.' };
+    return { ok: true };
+  }
+  var __LP_WIZ_STEPS = ['Basics', 'Media', 'Rights', 'Review'];
+  var __LP_CATEGORIES = ['Featured', 'Originals', 'Documentaries', 'Animation', 'Family', 'Music', 'Learning', 'Travel', 'Games', 'Cinema', 'Shorts'];
+  var __LP_LICENSES = [
+    ['user-owned',    'I own this work'],
+    ['public-domain', 'Public domain'],
+    ['licensed',      'Licensed (paid or attribution)'],
+    ['original',      'Platform original — only my creator account can publish']
+  ];
+  function renderUploadWizard(opts) {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Upload Wizard';
+    $$('lp-page-blurb').textContent = 'Four steps: Basics, Media, Rights, Review. Your work saves as a draft as you go.';
+    var draftId = (opts && opts.draftId) || ('d_' + Date.now().toString(36) + '_' + Math.floor(Math.random() * 1e6).toString(36));
+    var step = (opts && opts.step) || 0;
+    var existing = readDrafts().filter(function (d) { return d.id === draftId; })[0] || null;
+    var data = existing ? Object.assign({}, existing) : {
+      id: draftId, title: '', description: '', category: '',
+      poster: '', trailer: '', primaryName: '',
+      owner: '', license: '', source: '', credits: '',
+      createdAt: Date.now(), updatedAt: Date.now()
+    };
+    function persistDraft() {
+      data.updatedAt = Date.now();
+      var all = readDrafts();
+      var idx = -1;
+      for (var i = 0; i < all.length; i++) { if (all[i].id === data.id) { idx = i; break; } }
+      if (idx >= 0) all[idx] = data; else all.unshift(data);
+      writeDrafts(all);
+    }
+    function paint() {
+      var pct = Math.round(((step + 1) / __LP_WIZ_STEPS.length) * 100);
+      var stepsBar = '<div style="display:flex;gap:8px;align-items:center;margin:0 0 18px"><div style="flex:1;height:6px;background:var(--bg3);border-radius:6px;overflow:hidden"><div style="width:' + pct + '%;height:100%;background:var(--cyan);transition:width .25s"></div></div><span style="font-size:12px;color:var(--text3);font-weight:700">Step ' + (step + 1) + ' of ' + __LP_WIZ_STEPS.length + ' — ' + __LP_WIZ_STEPS[step] + '</span></div>';
+      var body = '';
+      if (step === 0) {
+        body =
+          '<div class="lp-pe-form">' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwTitle">Title</label>' +
+              '<input class="lp-pe-input" id="lpUwTitle" maxlength="80" value="' + (data.title || '').replace(/"/g, '&quot;') + '" placeholder="Project title (max 80)"></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwDesc">Description</label>' +
+              '<textarea class="lp-pe-input lp-pe-textarea" id="lpUwDesc" maxlength="600" placeholder="What is this project about?">' + (data.description || '').replace(/</g, '&lt;') + '</textarea></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwCat">Category</label>' +
+              '<select class="lp-pe-input" id="lpUwCat">' +
+                '<option value="">Pick a category</option>' +
+                __LP_CATEGORIES.map(function (c) { return '<option value="' + c + '"' + (c === data.category ? ' selected' : '') + '>' + c + '</option>'; }).join('') +
+              '</select></div>' +
+          '</div>';
+      } else if (step === 1) {
+        body =
+          '<div class="lp-pe-form">' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Poster image</label>' +
+              '<div class="lp-pe-banner" style="aspect-ratio:2/3;max-width:220px">' +
+                (data.poster ? '<img src="' + data.poster + '">' : '<div class="lp-pe-banner-empty">No poster</div>') +
+              '</div>' +
+              '<div class="lp-pe-actions" style="margin-top:8px"><label class="lp-pe-btn"><input type="file" accept="image/*" id="lpUwPoster">Upload poster</label></div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Trailer image (optional)</label>' +
+              '<div class="lp-pe-banner">' +
+                (data.trailer ? '<img src="' + data.trailer + '">' : '<div class="lp-pe-banner-empty">No trailer</div>') +
+              '</div>' +
+              '<div class="lp-pe-actions" style="margin-top:8px"><label class="lp-pe-btn"><input type="file" accept="image/*" id="lpUwTrailer">Upload trailer</label></div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwFile">Primary media file</label>' +
+              '<input class="lp-pe-input" id="lpUwFileName" value="' + (data.primaryName || '').replace(/"/g, '&quot;') + '" placeholder="No file selected" readonly>' +
+              '<div class="lp-pe-actions" style="margin-top:8px"><label class="lp-pe-btn"><input type="file" accept="video/*,application/zip,.cinepwa,.html" id="lpUwFile">Pick file</label></div>' +
+              '<div class="lp-pe-help">MP4, MOV, WebM, .cinepwa.zip (PWA cinema), or HTML package. Stored locally on this device for now.</div></div>' +
+          '</div>';
+      } else if (step === 2) {
+        body =
+          '<div class="lp-pe-form">' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwOwner">Owner / creator name</label>' +
+              '<input class="lp-pe-input" id="lpUwOwner" maxlength="60" value="' + (data.owner || '').replace(/"/g, '&quot;') + '" placeholder="Your creator name or company"></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwLicense">License</label>' +
+              '<select class="lp-pe-input" id="lpUwLicense">' +
+                '<option value="">Pick a license</option>' +
+                __LP_LICENSES.map(function (l) { return '<option value="' + l[0] + '"' + (l[0] === data.license ? ' selected' : '') + '>' + l[1] + '</option>'; }).join('') +
+              '</select></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwSource">Source material</label>' +
+              '<input class="lp-pe-input" id="lpUwSource" maxlength="120" value="' + (data.source || '').replace(/"/g, '&quot;') + '" placeholder="Book, script, public-domain source, or original"></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label" for="lpUwCredits">Credits (one per line)</label>' +
+              '<textarea class="lp-pe-input lp-pe-textarea" id="lpUwCredits" placeholder="Director — Jane Doe&#10;Music — public domain Bach">' + (data.credits || '').replace(/</g, '&lt;') + '</textarea></div>' +
+          '</div>';
+      } else {
+        var rights = __LP_LICENSES.filter(function (l) { return l[0] === data.license; })[0];
+        body =
+          '<div class="lp-pe-form">' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Title</label><div style="color:#fff;font-weight:600">' + (data.title || '<span style="color:#ff6e6e">Missing</span>') + '</div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Category</label><div style="color:var(--text2)">' + (data.category || '<span style="color:#ff6e6e">Missing</span>') + '</div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Description</label><div style="color:var(--text2);line-height:1.55">' + (data.description ? data.description.replace(/</g, '&lt;') : '<span style="color:var(--text3)">No description</span>') + '</div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Media</label><div style="color:var(--text2)">' +
+              (data.poster ? 'Poster ✓ ' : 'No poster · ') +
+              (data.trailer ? 'Trailer ✓ ' : 'No trailer · ') +
+              (data.primaryName ? 'Primary file: ' + data.primaryName : '<span style="color:#ff6e6e">No primary file selected</span>') +
+            '</div></div>' +
+            '<div class="lp-pe-field"><label class="lp-pe-label">Rights</label><div style="color:var(--text2)">' +
+              'Owner: ' + (data.owner || '—') +
+              '<br>License: ' + (rights ? rights[1] : '<span style="color:#ff6e6e">Missing</span>') +
+              '<br>Source: ' + (data.source || '—') +
+            '</div></div>' +
+            '<div class="lp-pe-help" style="background:var(--bg3);border-radius:8px;padding:10px;color:var(--text2)">Publishing runs Clean Stream + Safety Scan. Anything that fails goes back to Drafts with notes.</div>' +
+          '</div>';
+      }
+      var nav = '<div class="lp-pe-save-row" style="margin-top:14px">' +
+        (step > 0 ? '<button class="lp-pe-cancel" type="button" id="lpUwBack">Back</button>' : '<button class="lp-pe-cancel" type="button" id="lpUwExit">Save &amp; exit</button>') +
+        '<button class="lp-pe-cancel" type="button" id="lpUwSaveDraft">Save draft</button>' +
+        (step < __LP_WIZ_STEPS.length - 1
+          ? '<button class="lp-pe-save" type="button" id="lpUwNext">Next</button>'
+          : '<button class="lp-pe-save" type="button" id="lpUwPublish">Publish</button>') +
+        '<span class="lp-pe-saved-flash" id="lpUwSaved">Saved</span>' +
+      '</div>';
+      $$('lp-page-extra').innerHTML = stepsBar + body + nav;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      wire();
+    }
+    function pull() {
+      if (step === 0) {
+        data.title       = ($$('lpUwTitle')   || {}).value || '';
+        data.description = ($$('lpUwDesc')    || {}).value || '';
+        data.category    = ($$('lpUwCat')     || {}).value || '';
+      } else if (step === 1) {
+        var fn = $$('lpUwFileName'); if (fn) data.primaryName = fn.value || data.primaryName;
+      } else if (step === 2) {
+        data.owner   = ($$('lpUwOwner')   || {}).value || '';
+        data.license = ($$('lpUwLicense') || {}).value || '';
+        data.source  = ($$('lpUwSource')  || {}).value || '';
+        data.credits = ($$('lpUwCredits') || {}).value || '';
+      }
+    }
+    function flash(msg) {
+      var f = $$('lpUwSaved'); if (!f) return;
+      f.textContent = msg || 'Saved';
+      f.classList.add('on'); setTimeout(function () { f.classList.remove('on'); }, 1400);
+    }
+    function wire() {
+      var posterInp  = $$('lpUwPoster');
+      if (posterInp)  posterInp.addEventListener('change',  function (e) {
+        var f = e.target.files && e.target.files[0]; if (!f) return;
+        readFileAsDataURL(f, function (d) { if (d) { data.poster = d; persistDraft(); paint(); }});
+      });
+      var trailerInp = $$('lpUwTrailer');
+      if (trailerInp) trailerInp.addEventListener('change', function (e) {
+        var f = e.target.files && e.target.files[0]; if (!f) return;
+        readFileAsDataURL(f, function (d) { if (d) { data.trailer = d; persistDraft(); paint(); }});
+      });
+      var primInp = $$('lpUwFile');
+      if (primInp) primInp.addEventListener('change', function (e) {
+        var f = e.target.files && e.target.files[0]; if (!f) return;
+        data.primaryName = f.name;
+        var fn = $$('lpUwFileName'); if (fn) fn.value = f.name;
+        persistDraft();
+      });
+      var back = $$('lpUwBack');
+      if (back) back.addEventListener('click', function () { pull(); persistDraft(); step--; paint(); });
+      var exitBtn = $$('lpUwExit');
+      if (exitBtn) exitBtn.addEventListener('click', function () { pull(); persistDraft(); renderDrafts(); });
+      var save = $$('lpUwSaveDraft');
+      if (save) save.addEventListener('click', function () { pull(); persistDraft(); flash('Draft saved'); });
+      var next = $$('lpUwNext');
+      if (next) next.addEventListener('click', function () {
+        pull();
+        if (step === 0) {
+          if (!data.title.trim() || !data.category) { try { window.toast('Title and category are required to continue.'); } catch (e) {} return; }
+        }
+        persistDraft();
+        step++;
+        paint();
+      });
+      var pub = $$('lpUwPublish');
+      if (pub) pub.addEventListener('click', function () {
+        pull(); persistDraft();
+        var c = lpCleanStreamCheck(data);
+        if (!c.ok) { try { window.toast('Cannot publish: ' + c.reason); } catch (e) {} return; }
+        // Move from drafts → published.
+        var drafts = readDrafts().filter(function (d) { return d.id !== data.id; });
+        writeDrafts(drafts);
+        var published = readPublished();
+        published.unshift(Object.assign({}, data, { publishedAt: Date.now(), safetyScan: 'passed' }));
+        writePublished(published);
+        try { window.toast('Published — your project is live in your creator profile.'); } catch (e) {}
+        renderPublished();
+      });
+    }
+    paint();
+  }
+  function renderDrafts() {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Drafts';
+    $$('lp-page-blurb').textContent = 'Unpublished projects. Pick one to keep editing, or start a new upload.';
+    var drafts = readDrafts();
+    var startBtn = '<div style="margin:0 0 14px"><button class="lp-pe-save" type="button" id="lpDrNew">+ New upload</button></div>';
+    if (!drafts.length) {
+      $$('lp-page-extra').innerHTML = startBtn + cards([{ t: 'No drafts', b: 'Tap "New upload" to start one. Drafts auto-save as you fill out the wizard.' }]);
+    } else {
+      var rows = drafts.map(function (d) {
+        var posterCell = d.poster
+          ? '<img src="' + d.poster + '" style="width:90px;aspect-ratio:2/3;object-fit:cover;border-radius:6px;flex-shrink:0">'
+          : '<div style="width:90px;aspect-ratio:2/3;background:var(--bg3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:24px;flex-shrink:0">▱</div>';
+        return '<div class="lp-page-card" style="display:flex;gap:14px;align-items:flex-start">' +
+          posterCell +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:14.5px;font-weight:700;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (d.title || '(untitled draft)') + '</div>' +
+            '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">' + (d.category || 'No category') + ' · saved ' + fmtRel(d.updatedAt || d.createdAt) + '</div>' +
+            '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+              '<button class="lp-pe-cancel" type="button" data-lp-draft-edit="' + d.id + '">Edit</button>' +
+              '<button class="lp-pe-btn danger" type="button" data-lp-draft-del="' + d.id + '">Delete</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      $$('lp-page-extra').innerHTML = startBtn + '<div style="display:flex;flex-direction:column;gap:10px">' + rows + '</div>';
+    }
+    var addBtn = $$('lpDrNew');
+    if (addBtn) addBtn.addEventListener('click', function () { renderUploadWizard(); });
+    $$('lp-page-extra').addEventListener('click', function (e) {
+      var ed = e.target.closest('[data-lp-draft-edit]');
+      if (ed) { renderUploadWizard({ draftId: ed.getAttribute('data-lp-draft-edit') }); return; }
+      var dl = e.target.closest('[data-lp-draft-del]');
+      if (dl) {
+        var id = dl.getAttribute('data-lp-draft-del');
+        var arr = readDrafts().filter(function (d) { return d.id !== id; });
+        writeDrafts(arr);
+        renderDrafts();
+      }
+    });
+  }
+  function renderPublished() {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Published projects';
+    $$('lp-page-blurb').textContent = 'Everything you have published shows up here, newest first. Tap one to edit a copy as a new draft.';
+    var pub = readPublished();
+    if (!pub.length) {
+      $$('lp-page-extra').innerHTML = cards([{ t: 'Nothing published yet', b: 'Use the Upload Wizard to publish your first project.' }]);
+      return;
+    }
+    var rows = pub.map(function (p) {
+      var posterCell = p.poster
+        ? '<img src="' + p.poster + '" style="width:90px;aspect-ratio:2/3;object-fit:cover;border-radius:6px;flex-shrink:0">'
+        : '<div style="width:90px;aspect-ratio:2/3;background:var(--bg3);border-radius:6px;flex-shrink:0"></div>';
+      return '<div class="lp-page-card" style="display:flex;gap:14px;align-items:flex-start">' +
+        posterCell +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-size:14.5px;font-weight:700;color:#fff;margin-bottom:3px">' + (p.title || '(untitled)') + '</div>' +
+          '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">' + (p.category || '') + ' · published ' + fmtRel(p.publishedAt || Date.now()) + '</div>' +
+          '<div style="font-size:11.5px;color:#4ade80;font-weight:700">' + (p.safetyScan === 'passed' ? 'Safety scan passed' : 'Pending review') + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    $$('lp-page-extra').innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + rows + '</div>';
+  }
+  window.__lpRenderUploadWizard = renderUploadWizard;
+  window.__lpRenderDrafts = renderDrafts;
+  window.__lpRenderPublished = renderPublished;
+
   // ── Watch History (Tier 1.2) ─────────────────────────────────
   // Local-only history. openPlayer pushes onto lp_watch_history with
   // most-recent first, deduped by id, capped at 200. This page lists
@@ -3257,8 +3534,10 @@ window.addEventListener('online',  () => toast('Back online'));
       case 'profiles':       openModal('lp-auth-modal', { tab: 'signin' }); return;
       case 'clips':          showStream(); clickChip('shorts'); return;
       case 'upload':
-      case 'upload-wizard':  { var b = $$('uploadBtn'); if (b) b.click(); return; }
-      case 'drafts':         showPage(PAGES.drafts); return;
+      case 'upload-wizard':  renderUploadWizard(); return;
+      case 'import-local':   { var b = $$('uploadBtn'); if (b) b.click(); return; }
+      case 'drafts':         renderDrafts(); return;
+      case 'published':      renderPublished(); return;
       case 'creator-profile': showPage(PAGES['creator-profile']); return;
       case 'profile-edit':    renderProfileEdit(); return;
       case 'watch-history':   renderWatchHistory(); return;
