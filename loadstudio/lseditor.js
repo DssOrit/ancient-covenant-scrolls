@@ -148,6 +148,12 @@ window.LoadAudioFix = {
  // that doesn't exist here, window.openVideoEditor is still callable.
  try { window.openVideoEditor = openVideoEditor; } catch (_) {}
  try { window.openMediaPicker = openMediaPicker; } catch (_) {}
+ // Library-persistence helpers used by LoadStudio's mountEditor
+ // wrapper: putApp saves to IDB so uploads + drafts survive reload,
+ // listAll reads them back, getApp pulls a single record by id.
+ try { window.addApp = function(a){ return putApp(a); }; } catch (_) {}
+ try { window.listAllApps = function(){ return listAll(); }; } catch (_) {}
+ try { window.deleteAppById = function(id){ return deleteApp(id); }; } catch (_) {}
 
  /* Password removed for personal-use offline build. All data stays on
  * the device; no auth layer needed. If you ever want to re-lock the
@@ -17649,12 +17655,12 @@ window.LoadAudioFix = {
  }
 
  /* ---------- Boot ---------- */
- // LoadStudio host: openVideoEditor is already exposed on window
- // above. Skip boot() (which wires up Load Main's home/library/import
- // screens that don't exist here) to keep the console clean.
- if(!(document.body && document.body.classList && document.body.classList.contains('ls-host'))){
-   boot();
- }
+ // Always run boot() so IndexedDB opens (apps, notes, settings stores)
+ // and the editor's autosave/library hooks wire up. The DOM-dependent
+ // wires inside boot() that look for Load Main's home/library/import
+ // elements no-op silently in LoadStudio context (every wireXxx call
+ // is wrapped in safe()).
+ boot();
 }());
 
 // === LoadStudio purple-theme injector ============================
