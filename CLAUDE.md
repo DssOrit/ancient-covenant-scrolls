@@ -26,6 +26,11 @@ These have been re-locked on 2026-05-04 after repeated violations.
 5. **CACHE STRINGS GO FORWARD ONLY** — never decrement.
 6. **PUSH TO BOTH** the feature branch AND `main` on every shipping
    commit. Pages serves from `main`.
+7. **DO NOT TOUCH ACR READER** (the root `/` app — files at repo
+   root: `index.html`, `acr.css`, `sw.js`, etc., and the
+   `content/` folder). Locked 2026-05-04 by user. Only edit if the
+   user explicitly says "edit ACR reader" / "fix the reader" /
+   names a root-app file. Otherwise leave the root untouched.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in

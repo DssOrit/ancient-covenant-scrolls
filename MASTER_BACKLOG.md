@@ -201,9 +201,12 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 **Cache:** `acr-vNN` (see `sw.js`). **Spec:** root `README.md` + `HANDOFF.md`.
 
-### Pending
-- **AR-EMOJI** — premium icon parity pass (same as Attain v67 / Study v78). Not started.
-- **AR-INTER** — Inter font in chrome.
+### LOCKED — DO NOT EDIT (per user 2026-05-04)
+
+The root ACR Reader is **off-limits** until the user explicitly
+unlocks it. Only edit if the user says "edit ACR reader" / "fix the
+reader" / names a root-app file directly. AR-EMOJI and AR-INTER
+parity passes are deferred indefinitely.
 
 ### Recently done
 - (no changes this session — root reader untouched since prior session)
