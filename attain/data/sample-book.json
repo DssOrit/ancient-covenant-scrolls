@@ -1,0 +1,68 @@
+{
+  "book": {
+    "title": "How To Flip, Abroad — Portugal Edition",
+    "author": "Attain Sample",
+    "color": "#07172d",
+    "cover": "data/sample-cover.jpg",
+    "dateAdded": "2026-05-04T00:00:00.000Z",
+    "chapterCount": 7,
+    "totalParagraphs": 7,
+    "hasTerms": true
+  },
+  "chapters": [
+    {
+      "title": "Opening Brief",
+      "paragraphs": [
+        "This sample book demonstrates how Attain can present a plug-in digital book package. The topic is practical: how an American, British, or other expat buyer can approach a Portugal property flip without mistaking romance for due diligence."
+      ]
+    },
+    {
+      "title": "1. Choose the Market Before the House",
+      "paragraphs": [
+        "A profitable flip begins with the local market, not the prettiest façade. Compare neighborhood liquidity, expat demand, walkability, transportation, seasonality, resale ceiling, building age, and renovation constraints before you inspect properties."
+      ]
+    },
+    {
+      "title": "2. Understand the Buying Process",
+      "paragraphs": [
+        "Portugal purchases usually involve a reservation or offer, due diligence, a promissory purchase and sale agreement, deposit, tax number requirements, banking arrangements, notary steps, and final deed execution. The buyer should not treat the process as identical to the United States or the United Kingdom."
+      ]
+    },
+    {
+      "title": "3. Renovation Reality",
+      "paragraphs": [
+        "Renovation timelines can be slower than expected. Contractor availability, municipal permissions, old plumbing, electrical upgrades, moisture control, tile preservation, structural surprises, language friction, and quote discipline can determine whether a flip becomes profitable or punitive."
+      ]
+    },
+    {
+      "title": "4. Legal Pitfalls",
+      "paragraphs": [
+        "The non-negotiables are clean title, licensed legal representation, permits, tax exposure, condominium rules, habitation licenses where applicable, and written contractor agreements. Verbal assurances are not a business plan."
+      ]
+    },
+    {
+      "title": "5. Exit Strategy",
+      "paragraphs": [
+        "Before closing, identify the likely end buyer: local family, retiree, digital nomad, luxury foreign buyer, long-term rental investor, or holiday-market purchaser. Each buyer type demands a different finish level, price ceiling, staging strategy, and resale timeline."
+      ]
+    },
+    {
+      "title": "Bonus: Expat Networks",
+      "paragraphs": [
+        "Useful communities may include Portugal expat groups, renovation forums, Black in Portugal networks, local municipality resources, chambers of commerce, property investor meetups, and neighborhood-specific Facebook groups. These should support research, not replace legal and financial due diligence."
+      ]
+    }
+  ],
+  "keyTerms": [
+    { "term": "flip",            "count": 6 },
+    { "term": "Portugal",        "count": 5 },
+    { "term": "due diligence",   "count": 3 },
+    { "term": "renovation",      "count": 3 },
+    { "term": "expat",           "count": 3 },
+    { "term": "market",          "count": 2 },
+    { "term": "resale",          "count": 2 },
+    { "term": "permits",         "count": 1 },
+    { "term": "notary",          "count": 1 },
+    { "term": "exit strategy",   "count": 1 }
+  ]
+}

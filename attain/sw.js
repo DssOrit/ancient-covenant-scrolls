@@ -7,7 +7,7 @@
 // Attain Universal — Service Worker
 // Network-first for everything so updates always take effect
 
-var CACHE = 'attain-v65';
+var CACHE = 'attain-v66';
 
 var SHELL = [
   './',
@@ -19,7 +19,9 @@ var SHELL = [
   'attain-study.js',
   'attain-ui.js',
   'manifest.json',
-  'icon.png'
+  'icon.png',
+  'data/sample-book.json',
+  'data/sample-cover.jpg'
 ];
 
 self.addEventListener('install', function (e) {
