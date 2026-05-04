@@ -1280,7 +1280,7 @@ html .lp-bottom-title{font-size:30px;text-shadow:none}
         </div>
         <div class="nav-item" data-lp-act="upload-wizard">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.5-4 4 1 5.5L12 14.5 7 17l1-5.5-4-4 5.5-.5z"/></svg>
-          <span class="label">Upload Wizard</span>
+          <span class="label">Upload</span>
         </div>
         <div class="nav-item" data-lp-act="rights">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-4 9-9 10-5-1-9-5-9-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -2728,7 +2728,7 @@ window.addEventListener('online',  () => toast('Back online'));
     clearViews();
     document.body.classList.add('lp-paging');
     var pg = $$('lp-page'); if (pg) pg.hidden = false;
-    $$('lp-page-title').textContent = 'Upload Wizard';
+    $$('lp-page-title').textContent = 'Upload';
     $$('lp-page-blurb').textContent = 'Four steps: Basics, Media, Rights, Review. Your work saves as a draft as you go.';
     var draftId = (opts && opts.draftId) || ('d_' + Date.now().toString(36) + '_' + Math.floor(Math.random() * 1e6).toString(36));
     var step = (opts && opts.step) || 0;
@@ -2970,7 +2970,7 @@ window.addEventListener('online',  () => toast('Back online'));
     $$('lp-page-blurb').textContent = 'Everything you have published shows up here, newest first. Tap one to open its project page.';
     var pub = readPublished();
     if (!pub.length) {
-      $$('lp-page-extra').innerHTML = cards([{ t: 'Nothing published yet', b: 'Use the Upload Wizard to publish your first project.' }]);
+      $$('lp-page-extra').innerHTML = cards([{ t: 'Nothing published yet', b: 'Use Upload to publish your first project.' }]);
       return;
     }
     var rows = pub.map(function (p) {
@@ -3127,7 +3127,7 @@ window.addEventListener('online',  () => toast('Back online'));
     document.getElementById('lpCinemaClose').addEventListener('click', function () { overlay.remove(); });
     var stage = document.getElementById('lpCinemaStage');
     if (!p.packageDataUrl) {
-      stage.textContent = 'No package data attached. Re-upload from the Upload Wizard with a .cinepwa.zip file selected.';
+      stage.textContent = 'No package data attached. Re-upload with a .cinepwa.zip file selected.';
       return;
     }
     ensureJSZip(function (Z) {
