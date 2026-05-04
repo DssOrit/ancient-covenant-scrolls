@@ -28,6 +28,7 @@
 <div id="topnav" role="navigation" aria-label="Main navigation">
   <button id="b-sb" title="Toggle sidebar" aria-label="Toggle sidebar" aria-expanded="false">&#9776;</button>
   <button id="b-home" title="Home" aria-label="Go to home screen">&#8962;</button>
+  <button id="b-refresh" title="Hard refresh — clear cache &amp; reload" aria-label="Hard refresh" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}catch(e){}location.reload(true);})()">&#8635;</button>
   <div id="tb" role="button" tabindex="0" title="Go to home screen" aria-label="Current section title">ACR Study</div>
   <div id="fc" role="group" aria-label="Font size controls">
     <button id="b-fs-" title="Smaller text" aria-label="Decrease font size">A&#8722;</button>
