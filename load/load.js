@@ -9115,7 +9115,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ee</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ef</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -17642,29 +17642,109 @@ window.LoadAudioFix = {
  boot();
 }());
 
-// === LoadStudio Editing Bay hook (rewritten 2026-05-04 v17ee) ===
-// When Load is opened with ?lsedit=1 (from the LoadStudio Editing Bay
+// === LoadStudio Editing Bay hook (rewritten 2026-05-04 v17ef) ===
+// When Load is opened with ?lsedit=NN (from the LoadStudio Editing Bay
 // iframe), navigate to Import and auto-trigger the Edit Video flow so
 // the user lands on the file picker, then on the actual editor when a
 // video is selected. Boot is async (await IDB open, then wireNavButtons,
 // then per-card listeners) so we keep retrying both clicks until either
-// (a) the file-picker.dataset.openVideoEditor flag is set or the editor
-// mounts, or (b) we hit a 30 s ceiling.
+// the file-picker.dataset.openVideoEditor flag is set or the editor
+// mounts, or we hit a 30 s ceiling.
+//
+// Special mode ?lsedit=create — synthesise a blank black video via
+// canvas.captureStream() + MediaRecorder, then call openVideoEditor
+// with that as the starter clip. Lets the user begin a project from
+// scratch instead of having to upload a file first.
 (function(){
   try{
     var p = new URLSearchParams(location.search);
-    var mode = p.get('lsedit'); // '1' | 'video' | 'image' | 'create'
+    var mode = p.get('lsedit');
     if(!mode) return;
+
+    // ----------------------------- create-from-scratch flow ---------
+    if(mode === 'create'){
+      function waitFor(predicate, timeout){
+        var deadline = Date.now() + (timeout || 30000);
+        return new Promise(function(resolve, reject){
+          (function tick(){
+            if(predicate()) return resolve();
+            if(Date.now() > deadline) return reject(new Error('timeout'));
+            setTimeout(tick, 150);
+          })();
+        });
+      }
+      async function makeBlankBlob(){
+        var canvas = document.createElement('canvas');
+        canvas.width = 1280; canvas.height = 720;
+        var ctx = canvas.getContext('2d');
+        function paint(){
+          ctx.fillStyle = '#0a0a14'; ctx.fillRect(0,0,1280,720);
+          ctx.fillStyle = '#1a1a26';
+          for(var i=0;i<13;i++){ctx.fillRect(i*100,0,1,720);}
+          for(var j=0;j<8;j++){ctx.fillRect(0,j*100,1280,1);}
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '600 36px -apple-system, Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('Untitled Project', 640, 340);
+          ctx.fillStyle = '#7a7a8a';
+          ctx.font = '400 22px -apple-system, Inter, sans-serif';
+          ctx.fillText('Use the toolbar below to add clips, text, music, and effects.', 640, 380);
+        }
+        paint();
+        if(typeof MediaRecorder === 'undefined' || typeof canvas.captureStream !== 'function'){
+          throw new Error('MediaRecorder not supported on this browser');
+        }
+        var stream = canvas.captureStream(30);
+        var mimeOptions = ['video/mp4;codecs=avc1','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+        var mimeType = '';
+        for(var k=0;k<mimeOptions.length;k++){
+          if(MediaRecorder.isTypeSupported(mimeOptions[k])){mimeType=mimeOptions[k];break;}
+        }
+        var chunks = [];
+        var mr = new MediaRecorder(stream, mimeType ? {mimeType: mimeType} : undefined);
+        mr.ondataavailable = function(e){if(e.data&&e.data.size)chunks.push(e.data);};
+        var stopped = new Promise(function(r){mr.onstop = r;});
+        mr.start(100);
+        // 3 seconds of "blank" so the editor has a workable timeline.
+        var t0 = Date.now();
+        while(Date.now() - t0 < 3000){
+          paint();
+          await new Promise(function(r){setTimeout(r,33);});
+        }
+        mr.stop();
+        await stopped;
+        return new Blob(chunks, {type: mimeType || 'video/webm'});
+      }
+      (async function(){
+        try{
+          await waitFor(function(){return typeof window.openVideoEditor === 'function';}, 30000);
+          var blob = await makeBlankBlob();
+          var app = {
+            id: 'untitled-' + Date.now(),
+            kind: 'media',
+            subKind: 'video',
+            name: 'Untitled Project',
+            binary: blob,
+            dateAdded: Date.now(),
+            mime: blob.type
+          };
+          window.openVideoEditor(app);
+        }catch(err){
+          console.warn('lsedit=create failed', err);
+          // Fallback — fire the upload flow so the user can pick a clip.
+          location.replace(location.pathname + '?lsedit=video');
+        }
+      })();
+      return;
+    }
+
+    // ----------------------------- upload flow (video / image) ------
     var TARGET = (mode === 'image') ? 'media' : 'video-edit';
     var DEADLINE = Date.now() + 30000;
     function done(){
-      // success heuristics: the editor has mounted, or the file picker
-      // has been configured for the openVideoEditor flow, or the
-      // import-screen + that type-card has clearly been engaged.
       if(document.getElementById('__loadVideoEdit')) return true;
       var fp = document.getElementById('file-picker');
       if(fp && fp.dataset && fp.dataset.openVideoEditor === '1') return true;
-      // Media picker (VN-style) opening counts too.
       var mp = document.getElementById('mp-modal') || document.querySelector('.mp-modal.on');
       if(mp && (mp.classList.contains('on') || !mp.hasAttribute('hidden'))) return true;
       return false;
@@ -17683,7 +17763,6 @@ window.LoadAudioFix = {
       tryStep();
       setTimeout(loop, 220);
     }
-    // Wait for DOM to settle once before we start clicking.
     if(document.readyState === 'loading'){
       document.addEventListener('DOMContentLoaded', function(){ setTimeout(loop, 200); });
     } else {
