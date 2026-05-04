@@ -985,20 +985,28 @@ document.addEventListener('click',function(e){
 },true);
 })();</script>
 <button id="lsEbFsBack" class="ls-eb-fs-back" type="button" aria-label="Back to studio menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg><span>Back</span></button>
-<script id="ls-v26-editor-fs">(function(){
+<script id="ls-v27-editor-fs">(function(){
 function isEditorSection(){
   var t=document.getElementById('section-timeline-editor');
   var v=document.getElementById('section-vn-tools');
   return (t&&t.classList.contains('active'))||(v&&v.classList.contains('active'));
 }
 function applyFs(){document.body.classList.toggle('ls-editor-fs', isEditorSection());}
-// Watch for section changes via the existing go() mechanism (which adds .active).
+// Pre-emptive: any click that targets the Editing Bay or Visual Editor
+// flips fs ON before the section even renders, so the iframe never has
+// to fight LoadStudio chrome for vertical space.
+document.addEventListener('click',function(e){
+  if(e.target.closest('[data-section="timeline-editor"],[data-section="vn-tools"],#lsBtnEditingBay')){
+    document.body.classList.add('ls-editor-fs');
+    setTimeout(applyFs, 200);
+  }
+},true);
+// Mutation observer as a safety net for programmatic class changes.
 var mo=new MutationObserver(applyFs);
 ['section-timeline-editor','section-vn-tools'].forEach(function(id){
   var el=document.getElementById(id);
   if(el)mo.observe(el,{attributes:true,attributeFilter:['class']});
 });
-// Initial pass.
 applyFs();
 // Back button: close fullscreen, return to dashboard.
 document.addEventListener('click',function(e){
