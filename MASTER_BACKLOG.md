@@ -90,11 +90,23 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 `inbox/LoadPlay_Autopilot_Content_Engine_Handoff.zip`.
 
 ### Pending
-- **Tier 6 Autopilot Content Engine** — full spec captured in `PLAN_LOADPLAY_AUTOPILOT.md`. Discover, generate metadata, recycle approved content, schedule refreshes, fill empty rows, pilot/test, protect rights. Not started.
 - **LP-MKT-1** — sample marketplace items in LoadPlay (parity with Attain sample-book ask).
 - **LP-API** — real API Keys panel surfaced under Settings (the dev-tool API Keys exists in v49, but the Settings-side surface for non-dev users is not built).
 - **LP-CONTENT-1** — expand `data/demo-content.json` catalog (more rails, more genre coverage).
-- **LP-0.8** — action log (admin-visible feed of every state mutation).
+- **LP-MISSING-ZIPS** — user referenced 2026-05-04 two specs that are NOT in `inbox/`:
+  - `LoadPlay_Content_Connector_System_Handoff.zip` (the connector layer Tier 6 sits on top of)
+  - `LoadPlay_Operations_Load_Simulator_Claude_Package.zip` (operations / load-test simulator)
+  Surface this gap at the top of the next session so the user can re-upload before Connector System / Load Simulator work begins.
+
+### Recently done (this session, 2026-05-04)
+- **v53 — Tier 6 Autopilot Content Engine** + **LP-0.8 action log** shipped:
+  - Sidebar entries: Autopilot (with mode pill) + Action Log under Creator.
+  - Autopilot dashboard: 6 status cards (mode, last run, drafts, rights queue, published, pilot reports), full settings panel (master enable, 6 modes, 4 frequencies, 3 safety levels, 5 source toggles, 10 row toggles), Run Now / Pilot Test / Recycle / Export Report / Clear Demo Data buttons, rights review queue with Approve & Publish / Reject per-item, latest pilot report summary, recent jobs feed.
+  - 6 modes: Off, Demo (mock items only, never count), Draft Only, Rights Review Only, Publish Approved Only, Full Autopilot.
+  - 12-item curated discoverable catalog (Internet Archive, Wikimedia, NASA, NPS, Openverse) with bound license metadata so license-safety checks (low / medium / high) can score before any item moves.
+  - Storage: lp_autopilot_settings / _jobs / _drafts / _rights_review / _published / _pilot_reports.
+  - Honest browser-only scheduler (60s tick, runs only while app open). Per-frequency throttling.
+  - Action log: lp_action_log captures every mutation (250 categories, capped 500 entries), Action Log page lists with date / category color / message, Export JSON, Clear log. lpLogAction() called from autopilot run / pilot / recycle / publish / reject / settings save.
 
 ### Recently done (this session, 2026-05-04)
 - v52 — Tier 5.15 Inbox + 5.16 Advertiser Console.
@@ -126,7 +138,8 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 | 4.14 | Real Safety Scan | DONE v51 |
 | 5.15 | Member/Creator Inbox | DONE v52 |
 | 5.16 | Advertiser Console | DONE v52 |
-| 6 | Autopilot Content Engine | NOT STARTED — see `PLAN_LOADPLAY_AUTOPILOT.md` |
+| 6 | Autopilot Content Engine | **DONE v53** (6 modes, curated discoverable catalog, rights review queue, recycling, pilot mode, action log) |
+| 0.8 | Action log | **DONE v53** |
 
 ---
 

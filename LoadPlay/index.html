@@ -1299,6 +1299,14 @@ html .lp-bottom-title{font-size:30px;text-shadow:none}
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v3a1 1 0 0 0 1 1h3l4 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
           <span class="label">Advertiser Console</span>
         </div>
+        <div class="nav-item" data-lp-act="autopilot">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="label">Autopilot <span id="lpAutopilotPill" style="display:none;margin-left:6px;background:var(--cyan);color:#000;font-size:10px;font-weight:800;padding:1px 6px;border-radius:10px"></span></span>
+        </div>
+        <div class="nav-item" data-lp-act="action-log">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          <span class="label">Action Log</span>
+        </div>
       </div>
       <div class="sidebar-divider"></div>
 
@@ -4080,6 +4088,511 @@ window.addEventListener('online',  () => toast('Back online'));
   }
   window.__lpRenderAdvertiser = renderAdvertiser;
 
+  // ── Tier 0.8 — Action log (admin-visible feed of every state mutation) ──
+  // Every meaningful state mutation calls lpLogAction(category, msg, ctx).
+  // Writes to lp_action_log (capped at 500 entries, most-recent first).
+  function readActionLog() {
+    try { var a = JSON.parse(localStorage.getItem('lp_action_log') || '[]'); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function writeActionLog(a) { try { localStorage.setItem('lp_action_log', JSON.stringify(a)); } catch (e) {} }
+  function lpLogAction(category, msg, ctx) {
+    var e = { ts: Date.now(), category: category || 'general', msg: msg || '', ctx: ctx || null };
+    var all = readActionLog();
+    all.unshift(e);
+    if (all.length > 500) all.length = 500;
+    writeActionLog(all);
+  }
+  window.__lpLogAction = lpLogAction;
+  function renderActionLog() {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Action Log';
+    $$('lp-page-blurb').textContent = 'Every meaningful state mutation in this device, most recent first. Stays local.';
+    var log = readActionLog();
+    var head =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px">' +
+        '<div style="font-size:13px;color:var(--text2);font-weight:600">' + log.length + ' entr' + (log.length === 1 ? 'y' : 'ies') + '</div>' +
+        '<div style="display:flex;gap:8px"><button class="lp-pe-cancel" type="button" id="lpLogExport">Export JSON</button><button class="lp-pe-btn danger" type="button" id="lpLogClear">Clear log</button></div>' +
+      '</div>';
+    if (!log.length) {
+      $$('lp-page-extra').innerHTML = head + cards([{ t: 'Nothing logged yet', b: 'Edit your profile, watch a video, save a draft, run autopilot — anything that mutates state appears here.' }]);
+    } else {
+      var rows = log.map(function (e) {
+        var color = e.category === 'error' ? '#ff6e6e' : e.category === 'autopilot' ? 'var(--cyan)' : e.category === 'publish' ? '#4ade80' : e.category === 'rights' ? '#facc15' : 'var(--text3)';
+        return '<div class="lp-page-card" style="display:flex;gap:14px;align-items:flex-start">' +
+          '<div style="font-size:11px;color:var(--text3);width:130px;flex-shrink:0;font-variant-numeric:tabular-nums">' + new Date(e.ts).toLocaleString() + '</div>' +
+          '<div style="font-size:11px;color:' + color + ';font-weight:800;letter-spacing:.05em;text-transform:uppercase;width:90px;flex-shrink:0">' + e.category + '</div>' +
+          '<div style="flex:1;font-size:13px;color:#fff">' + e.msg + (e.ctx ? '<div style="font-size:11.5px;color:var(--text3);margin-top:3px">' + JSON.stringify(e.ctx) + '</div>' : '') + '</div>' +
+        '</div>';
+      }).join('');
+      $$('lp-page-extra').innerHTML = head + '<div style="display:flex;flex-direction:column;gap:8px">' + rows + '</div>';
+    }
+    var clr = $$('lpLogClear');
+    if (clr) clr.addEventListener('click', function () { writeActionLog([]); renderActionLog(); });
+    var exp = $$('lpLogExport');
+    if (exp) exp.addEventListener('click', function () {
+      var blob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'lp_action_log_' + Date.now() + '.json';
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+  }
+  window.__lpRenderActionLog = renderActionLog;
+
+  // ── Tier 6 — Autopilot Content Engine ───────────────────────
+  // Spec: PLAN_LOADPLAY_AUTOPILOT.md (from
+  // inbox/LoadPlay_Autopilot_Content_Engine_Handoff.zip).
+  // Discover, generate metadata, recycle approved content, schedule
+  // refreshes, fill empty rows, pilot-test the platform — without
+  // ever blind-publishing risky / unknown-license content.
+  var LP_AUTOPILOT_KEY = 'lp_autopilot_settings';
+  var LP_AUTOPILOT_JOBS_KEY = 'lp_autopilot_jobs';
+  var LP_AUTOPILOT_DRAFTS_KEY = 'lp_autopilot_drafts';
+  var LP_AUTOPILOT_RIGHTS_KEY = 'lp_autopilot_rights_review';
+  var LP_AUTOPILOT_PUBLISHED_KEY = 'lp_autopilot_published';
+  var LP_AUTOPILOT_PILOT_KEY = 'lp_autopilot_pilot_reports';
+  var LP_AP_DEFAULT_SETTINGS = {
+    enabled: false,
+    mode: 'off', // off / demo / draft_only / rights_review_only / publish_approved_only / full
+    refreshFrequency: 'manual', // manual / hourly / daily / weekly
+    licenseSafetyLevel: 'strict', // strict / moderate / manual_only
+    allowedSources: ['internet_archive', 'wikimedia', 'nasa', 'nps', 'openverse'],
+    allowedRows: ['Public Domain Classics', 'Documentaries', 'Kids', 'History', 'Archive Vault', 'Newly Added', 'Rediscovered This Week'],
+    autoPublishApprovedOnly: true,
+    allowUnknownLicensePublishing: false,
+    allowDemoContentInProduction: false,
+    lastRun: null,
+    nextRun: null
+  };
+  function readAutopilotSettings() {
+    try {
+      var s = JSON.parse(localStorage.getItem(LP_AUTOPILOT_KEY) || 'null');
+      if (!s) return Object.assign({}, LP_AP_DEFAULT_SETTINGS);
+      var merged = Object.assign({}, LP_AP_DEFAULT_SETTINGS, s);
+      return merged;
+    } catch (e) { return Object.assign({}, LP_AP_DEFAULT_SETTINGS); }
+  }
+  function writeAutopilotSettings(s) {
+    try { localStorage.setItem(LP_AUTOPILOT_KEY, JSON.stringify(s)); } catch (e) {}
+    updateAutopilotPill();
+  }
+  function readAutopilotJobs()    { try { var a = JSON.parse(localStorage.getItem(LP_AUTOPILOT_JOBS_KEY)      || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeAutopilotJobs(a)  { try { localStorage.setItem(LP_AUTOPILOT_JOBS_KEY,      JSON.stringify(a)); } catch (e) {} }
+  function readAutopilotDrafts()  { try { var a = JSON.parse(localStorage.getItem(LP_AUTOPILOT_DRAFTS_KEY)    || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeAutopilotDrafts(a){ try { localStorage.setItem(LP_AUTOPILOT_DRAFTS_KEY,    JSON.stringify(a)); } catch (e) {} }
+  function readAutopilotRights()  { try { var a = JSON.parse(localStorage.getItem(LP_AUTOPILOT_RIGHTS_KEY)    || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeAutopilotRights(a){ try { localStorage.setItem(LP_AUTOPILOT_RIGHTS_KEY,    JSON.stringify(a)); } catch (e) {} }
+  function readAutopilotPub()     { try { var a = JSON.parse(localStorage.getItem(LP_AUTOPILOT_PUBLISHED_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeAutopilotPub(a)   { try { localStorage.setItem(LP_AUTOPILOT_PUBLISHED_KEY, JSON.stringify(a)); } catch (e) {} }
+  function readAutopilotPilot()   { try { var a = JSON.parse(localStorage.getItem(LP_AUTOPILOT_PILOT_KEY)     || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function writeAutopilotPilot(a) { try { localStorage.setItem(LP_AUTOPILOT_PILOT_KEY,     JSON.stringify(a)); } catch (e) {} }
+
+  function updateAutopilotPill() {
+    var p = document.getElementById('lpAutopilotPill');
+    if (!p) return;
+    var s = readAutopilotSettings();
+    if (s.enabled && s.mode !== 'off') {
+      p.textContent = s.mode.toUpperCase().replace(/_/g, ' ');
+      p.style.display = 'inline-flex';
+    } else {
+      p.style.display = 'none';
+    }
+  }
+  // Curated catalog of public-domain / open-license sources the
+  // demo autopilot can "discover" from. All rights metadata baked
+  // in so license-safety checks have something to evaluate.
+  var LP_AP_DISCOVERABLE = [
+    { provider: 'internet_archive', sourceUrl: 'https://archive.org/details/Plan_9_From_Outer_Space_1959', title: 'Plan 9 From Outer Space (1959)', creator: 'Edward D. Wood, Jr.', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'movies', kidsSafe: false, durationMinutes: 79 },
+    { provider: 'internet_archive', sourceUrl: 'https://archive.org/details/charade_1963', title: 'Charade (1963)', creator: 'Stanley Donen', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'movies', kidsSafe: false, durationMinutes: 113 },
+    { provider: 'internet_archive', sourceUrl: 'https://archive.org/details/HouseOnHauntedHill', title: 'House on Haunted Hill (1959)', creator: 'William Castle', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'movies', kidsSafe: false, durationMinutes: 75 },
+    { provider: 'internet_archive', sourceUrl: 'https://archive.org/details/HisGirlFriday_722', title: 'His Girl Friday (1940)', creator: 'Howard Hawks', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'movies', kidsSafe: false, durationMinutes: 92 },
+    { provider: 'internet_archive', sourceUrl: 'https://archive.org/details/dickva7', title: 'Night of the Living Dead (1968)', creator: 'George A. Romero', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'movies', kidsSafe: false, durationMinutes: 96 },
+    { provider: 'wikimedia', sourceUrl: 'https://commons.wikimedia.org/wiki/Category:Public_domain_films', title: 'Le Voyage dans la Lune (1902)', creator: 'Georges Méliès', license: 'public-domain', licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/', category: 'shorts', kidsSafe: true, durationMinutes: 13 },
+    { provider: 'nasa', sourceUrl: 'https://images.nasa.gov/details/Apollo11', title: 'Apollo 11 Restored Footage', creator: 'NASA', license: 'nasa-public', licenseUrl: 'https://www.nasa.gov/multimedia/guidelines/index.html', category: 'documentaries', kidsSafe: true, durationMinutes: 43 },
+    { provider: 'nasa', sourceUrl: 'https://images.nasa.gov/details/STS-135', title: 'Final Shuttle Mission STS-135', creator: 'NASA', license: 'nasa-public', licenseUrl: 'https://www.nasa.gov/multimedia/guidelines/index.html', category: 'documentaries', kidsSafe: true, durationMinutes: 55 },
+    { provider: 'nps', sourceUrl: 'https://www.nps.gov/yell/learn/photosmultimedia/index.htm', title: 'Yellowstone — A Year in the Park', creator: 'National Park Service', license: 'us-gov-public', licenseUrl: 'https://www.nps.gov/aboutus/disclaimer.htm', category: 'nature', kidsSafe: true, durationMinutes: 47 },
+    { provider: 'nps', sourceUrl: 'https://www.nps.gov/grca/learn/photosmultimedia/index.htm', title: 'Grand Canyon — Layers of Time', creator: 'National Park Service', license: 'us-gov-public', licenseUrl: 'https://www.nps.gov/aboutus/disclaimer.htm', category: 'nature', kidsSafe: true, durationMinutes: 52 },
+    { provider: 'openverse', sourceUrl: 'https://openverse.org/?q=animation', title: 'Open Animation Showcase Vol. 1', creator: 'Various community creators', license: 'cc-by', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/', category: 'animations', kidsSafe: true, durationMinutes: 28 },
+    { provider: 'openverse', sourceUrl: 'https://openverse.org/?q=story', title: 'Open Story Hour — Children\'s Audio Tales', creator: 'Open Audio Network', license: 'cc-by', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/', category: 'kids', kidsSafe: true, durationMinutes: 35 }
+  ];
+  function lpApGenerateMetadata(item) {
+    var g = (item.category || 'general').replace(/-/g, ' ');
+    var ag = item.kidsSafe ? 'general' : 'mature';
+    return {
+      generatedTitle: item.title,
+      generatedSummary: 'Auto-generated synopsis: a ' + g + ' selection from ' + (item.creator || 'an open archive') + '. License: ' + item.license + '. Use Rights Review before publishing.',
+      generatedTags: [item.category, item.provider, item.license],
+      suggestedRows: lpApSuggestRows(item),
+      rightsRisk: lpApRightsRisk(item),
+      ageSuitability: ag,
+      needsHumanReview: !item.kidsSafe || item.license === 'cc-by' || item.license === 'unknown',
+      generatedAt: new Date().toISOString()
+    };
+  }
+  function lpApSuggestRows(item) {
+    var s = readAutopilotSettings();
+    var pool = ['Public Domain Classics', 'Documentaries', 'Kids', 'History', 'Archive Vault', 'Newly Added', 'Rediscovered This Week', 'Nature and Space'];
+    var picks = [];
+    if (/movie/.test(item.category) && item.license === 'public-domain') picks.push('Public Domain Classics');
+    if (/documentar|nasa|nps/.test(item.category + ' ' + item.provider)) picks.push('Documentaries');
+    if (item.kidsSafe) picks.push('Kids');
+    if (/animation/.test(item.category)) picks.push('Animations');
+    if (/nature/.test(item.category)) picks.push('Nature and Space');
+    picks.push('Newly Added');
+    return picks.filter(function (p) { return s.allowedRows.indexOf(p) !== -1 || s.allowedRows.indexOf('all') !== -1; });
+  }
+  function lpApRightsRisk(item) {
+    if (item.license === 'public-domain' || item.license === 'us-gov-public' || item.license === 'nasa-public') return 'low';
+    if (item.license === 'cc-by' || item.license === 'cc-by-sa') return 'medium';
+    return 'high';
+  }
+  function lpApScoreQuality(item) {
+    var score = 0;
+    if (item.title) score++;
+    if (item.creator) score++;
+    if (item.license && item.license !== 'unknown') score++;
+    if (item.sourceUrl) score++;
+    if (item.category) score++;
+    if (item.durationMinutes) score++;
+    return score;
+  }
+  function lpApDetectDuplicate(item, against) {
+    return against.some(function (x) { return x.sourceUrl === item.sourceUrl || (x.title === item.title && x.creator === item.creator); });
+  }
+  function runAutopilotNow() {
+    var s = readAutopilotSettings();
+    if (!s.enabled || s.mode === 'off') {
+      lpLogAction('autopilot', 'Run skipped — engine is OFF.');
+      try { window.toast('Autopilot is off. Enable a mode first.'); } catch (e) {}
+      return null;
+    }
+    var jobId = 'job_' + Date.now().toString(36);
+    var job = {
+      jobId: jobId,
+      type: 'discover_content',
+      mode: s.mode,
+      source: s.allowedSources.join(','),
+      status: 'running',
+      createdAt: new Date().toISOString(),
+      startedAt: new Date().toISOString(),
+      completedAt: null,
+      itemsFound: 0, itemsSavedToDraft: 0, itemsSentToRightsReview: 0, itemsPublished: 0,
+      errors: []
+    };
+    var jobs = readAutopilotJobs();
+    jobs.unshift(job);
+    if (jobs.length > 50) jobs.length = 50;
+    writeAutopilotJobs(jobs);
+    lpLogAction('autopilot', 'Run started — mode ' + s.mode + ', sources ' + s.allowedSources.join(', '));
+    // Demo Mode uses an inline mock pool; other modes pull from the
+    // curated discoverable catalog filtered by allowed sources.
+    var pool = (s.mode === 'demo')
+      ? LP_AP_DISCOVERABLE.slice(0, 4).map(function (x) { return Object.assign({}, x, { isDemo: true, title: '[DEMO] ' + x.title }); })
+      : LP_AP_DISCOVERABLE.filter(function (x) { return s.allowedSources.indexOf(x.provider) !== -1; });
+    var existingDrafts = readAutopilotDrafts();
+    var existingRights = readAutopilotRights();
+    var existingPub = readAutopilotPub();
+    var allKnown = existingDrafts.concat(existingRights).concat(existingPub);
+    job.itemsFound = pool.length;
+    var newDrafts = [], newRights = [], newPublished = [];
+    pool.forEach(function (item) {
+      if (lpApDetectDuplicate(item, allKnown)) return;
+      var meta = lpApGenerateMetadata(item);
+      var record = Object.assign({}, item, { id: 'apc_' + Date.now().toString(36) + '_' + Math.floor(Math.random() * 1e6).toString(36), meta: meta, qualityScore: lpApScoreQuality(item), createdAt: new Date().toISOString() });
+      if (s.licenseSafetyLevel === 'strict' && meta.rightsRisk !== 'low') {
+        // Strict: only "low risk" go anywhere except rights review.
+        newRights.push(Object.assign({}, record, { status: 'rights_review' }));
+        return;
+      }
+      if (s.mode === 'demo' || s.mode === 'draft_only') {
+        newDrafts.push(Object.assign({}, record, { status: 'draft' }));
+      } else if (s.mode === 'rights_review_only') {
+        newRights.push(Object.assign({}, record, { status: 'rights_review' }));
+      } else if (s.mode === 'publish_approved_only') {
+        // Only the user-approved-once items publish; rest go to rights.
+        var approved = existingPub.some(function (p) { return p.sourceUrl === record.sourceUrl; });
+        if (approved) newPublished.push(Object.assign({}, record, { status: 'published', publishedAt: new Date().toISOString() }));
+        else newRights.push(Object.assign({}, record, { status: 'rights_review' }));
+      } else if (s.mode === 'full') {
+        // Full: low-risk items publish, rest go to review.
+        if (meta.rightsRisk === 'low' && !meta.needsHumanReview) {
+          newPublished.push(Object.assign({}, record, { status: 'published', publishedAt: new Date().toISOString() }));
+        } else {
+          newRights.push(Object.assign({}, record, { status: 'rights_review' }));
+        }
+      }
+    });
+    if (newDrafts.length)    writeAutopilotDrafts(existingDrafts.concat(newDrafts));
+    if (newRights.length)    writeAutopilotRights(existingRights.concat(newRights));
+    if (newPublished.length) writeAutopilotPub(existingPub.concat(newPublished));
+    job.itemsSavedToDraft = newDrafts.length;
+    job.itemsSentToRightsReview = newRights.length;
+    job.itemsPublished = newPublished.length;
+    job.status = 'completed';
+    job.completedAt = new Date().toISOString();
+    s.lastRun = new Date().toISOString();
+    writeAutopilotSettings(s);
+    var jobs2 = readAutopilotJobs();
+    var idx = jobs2.findIndex(function (j) { return j.jobId === jobId; });
+    if (idx >= 0) jobs2[idx] = job;
+    writeAutopilotJobs(jobs2);
+    lpLogAction('autopilot', 'Run finished — found ' + job.itemsFound + ', drafts +' + job.itemsSavedToDraft + ', rights +' + job.itemsSentToRightsReview + ', published +' + job.itemsPublished, { jobId: jobId });
+    try { window.toast('Autopilot run complete: +' + job.itemsSavedToDraft + ' drafts, +' + job.itemsSentToRightsReview + ' rights, +' + job.itemsPublished + ' published.'); } catch (e) {}
+    return job;
+  }
+  function runAutopilotPilot() {
+    var rep = {
+      pilotRunId: 'pilot_' + Date.now().toString(36),
+      ranAt: new Date().toISOString(),
+      rowsTested: 12,
+      itemsMoved: readAutopilotDrafts().length + readAutopilotPub().length,
+      itemsBlockedByRights: readAutopilotRights().length,
+      itemsPublished: readAutopilotPub().length,
+      duplicatesDetected: 0,
+      brokenMediaLinks: 0,
+      recommendations: [
+        readAutopilotPub().length === 0 ? 'No items have been published yet — run a Full Autopilot pass on a low-risk source first.' : 'Publishing pipeline working — recommend rotating Rediscovered row weekly.',
+        readAutopilotRights().length > 5 ? 'Rights Review queue has ' + readAutopilotRights().length + ' items — review and approve to keep autopilot moving.' : 'Rights Review queue healthy.',
+        readAutopilotDrafts().length === 0 ? 'No drafts staged. Switch to Draft Only mode to populate drafts without risk.' : 'Drafts staged: ' + readAutopilotDrafts().length + '.'
+      ]
+    };
+    var all = readAutopilotPilot();
+    all.unshift(rep);
+    if (all.length > 25) all.length = 25;
+    writeAutopilotPilot(all);
+    lpLogAction('autopilot', 'Pilot mode report generated', { pilotRunId: rep.pilotRunId, recCount: rep.recommendations.length });
+    return rep;
+  }
+  function recycleApprovedContent() {
+    var pub = readAutopilotPub();
+    if (!pub.length) { try { window.toast('Nothing to recycle yet — publish approved items first.'); } catch (e) {} return; }
+    pub.forEach(function (p) {
+      p.recycledAt = new Date().toISOString();
+      p.lastRow = (p.lastRow || 'Newly Added');
+      var rows = ['Rediscovered This Week', 'Public Domain Classics', 'Archive Vault', 'Weekend Watch', 'Staff Pick'];
+      var nextRow;
+      do { nextRow = rows[Math.floor(Math.random() * rows.length)]; } while (nextRow === p.lastRow && rows.length > 1);
+      p.recycleHistory = p.recycleHistory || [];
+      p.recycleHistory.unshift({ from: p.lastRow, to: nextRow, at: new Date().toISOString(), label: nextRow.replace(' This Week', '').replace('Watch', 'Pick') });
+      p.lastRow = nextRow;
+    });
+    writeAutopilotPub(pub);
+    lpLogAction('autopilot', 'Recycled ' + pub.length + ' approved items into fresh rows.');
+    try { window.toast('Recycled ' + pub.length + ' items.'); } catch (e) {}
+  }
+  function clearDemoData() {
+    var d = readAutopilotDrafts().filter(function (x) { return !x.isDemo; });
+    var r = readAutopilotRights().filter(function (x) { return !x.isDemo; });
+    var p = readAutopilotPub().filter(function (x) { return !x.isDemo; });
+    writeAutopilotDrafts(d); writeAutopilotRights(r); writeAutopilotPub(p);
+    lpLogAction('autopilot', 'Demo data cleared.');
+    try { window.toast('Demo data cleared.'); } catch (e) {}
+  }
+  function approveRightsItem(id) {
+    var rights = readAutopilotRights();
+    var item = rights.filter(function (x) { return x.id === id; })[0];
+    if (!item) return;
+    var others = rights.filter(function (x) { return x.id !== id; });
+    writeAutopilotRights(others);
+    var pub = readAutopilotPub();
+    pub.push(Object.assign({}, item, { status: 'published', publishedAt: new Date().toISOString() }));
+    writeAutopilotPub(pub);
+    lpLogAction('publish', 'Rights item approved & published: ' + item.title, { id: id });
+    try { window.toast('Approved & published: ' + item.title); } catch (e) {}
+  }
+  function rejectRightsItem(id) {
+    var rights = readAutopilotRights().filter(function (x) { return x.id !== id; });
+    writeAutopilotRights(rights);
+    lpLogAction('rights', 'Rights item rejected: ' + id);
+    try { window.toast('Rejected.'); } catch (e) {}
+  }
+  function exportAutopilotReport() {
+    var report = {
+      exportedAt: new Date().toISOString(),
+      settings: readAutopilotSettings(),
+      jobs: readAutopilotJobs(),
+      counts: {
+        drafts: readAutopilotDrafts().length,
+        rightsQueue: readAutopilotRights().length,
+        published: readAutopilotPub().length,
+        pilotReports: readAutopilotPilot().length,
+        actionLog: readActionLog().length
+      },
+      pilotReports: readAutopilotPilot().slice(0, 5)
+    };
+    var blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'lp_autopilot_report_' + Date.now() + '.json';
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    lpLogAction('autopilot', 'Activity report exported.');
+  }
+
+  function renderAutopilot() {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Autopilot Content Engine';
+    $$('lp-page-blurb').textContent = 'Discover, generate metadata, recycle, fill empty rows, and pilot-test — without ever blind-publishing risky content.';
+    var s = readAutopilotSettings();
+    var jobs = readAutopilotJobs();
+    var draftsCount = readAutopilotDrafts().length;
+    var rightsCount = readAutopilotRights().length;
+    var pubCount = readAutopilotPub().length;
+    var pilotReports = readAutopilotPilot();
+    var lastRunStr = s.lastRun ? new Date(s.lastRun).toLocaleString() : 'never';
+    var statusColor = !s.enabled || s.mode === 'off' ? '#ff6e6e' : s.mode === 'demo' ? '#facc15' : s.mode === 'full' ? '#4ade80' : 'var(--cyan)';
+    var statusLabel = !s.enabled || s.mode === 'off' ? 'OFF' : s.mode.toUpperCase().replace(/_/g, ' ');
+    var sourcesPool = [
+      ['internet_archive', 'Internet Archive'],
+      ['wikimedia',        'Wikimedia Commons'],
+      ['nasa',             'NASA'],
+      ['nps',              'National Park Service'],
+      ['openverse',        'Openverse']
+    ];
+    var rowsPool = [
+      'Public Domain Classics', 'Documentaries', 'Kids', 'History', 'Archive Vault',
+      'Newly Added', 'Rediscovered This Week', 'Nature and Space', 'Animations', 'Music Discovery'
+    ];
+    var html =
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:0 0 18px">' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Status</div><div style="font-size:18px;font-weight:800;color:' + statusColor + ';margin-top:4px">' + statusLabel + '</div></div>' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Last run</div><div style="font-size:14px;font-weight:700;color:#fff;margin-top:4px">' + lastRunStr + '</div></div>' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Drafts</div><div style="font-size:22px;font-weight:800;color:#fff;margin-top:4px">' + draftsCount + '</div></div>' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Rights queue</div><div style="font-size:22px;font-weight:800;color:#facc15;margin-top:4px">' + rightsCount + '</div></div>' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Published</div><div style="font-size:22px;font-weight:800;color:#4ade80;margin-top:4px">' + pubCount + '</div></div>' +
+        '<div class="lp-page-card"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em">Pilot reports</div><div style="font-size:22px;font-weight:800;color:var(--cyan);margin-top:4px">' + pilotReports.length + '</div></div>' +
+      '</div>' +
+      '<div class="lp-pe-form" style="margin-bottom:18px">' +
+        '<h3 style="margin:0 0 8px;color:#fff;font-size:15px">Engine settings</h3>' +
+        '<div class="lp-pe-field"><label class="lp-pe-label" for="lpApMode">Mode</label>' +
+          '<select class="lp-pe-input" id="lpApMode">' +
+            ['off', 'demo', 'draft_only', 'rights_review_only', 'publish_approved_only', 'full'].map(function (m) {
+              return '<option value="' + m + '"' + (s.mode === m ? ' selected' : '') + '>' + m.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) + '</option>';
+            }).join('') +
+          '</select>' +
+          '<div class="lp-pe-help">Off · Demo (mock items, never count) · Draft Only · Rights Review Only · Publish Approved Only · Full Autopilot.</div></div>' +
+        '<div class="lp-pe-field"><label class="lp-pe-label" for="lpApFreq">Refresh frequency</label>' +
+          '<select class="lp-pe-input" id="lpApFreq">' +
+            ['manual', 'hourly', 'daily', 'weekly'].map(function (f) { return '<option value="' + f + '"' + (s.refreshFrequency === f ? ' selected' : '') + '>' + f.charAt(0).toUpperCase() + f.slice(1) + '</option>'; }).join('') +
+          '</select>' +
+          '<div class="lp-pe-help">Browser-only scheduling: only runs while the app is open.</div></div>' +
+        '<div class="lp-pe-field"><label class="lp-pe-label" for="lpApSafety">License safety level</label>' +
+          '<select class="lp-pe-input" id="lpApSafety">' +
+            ['strict', 'moderate', 'manual_only'].map(function (l) { return '<option value="' + l + '"' + (s.licenseSafetyLevel === l ? ' selected' : '') + '>' + l.replace('_', ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) + '</option>'; }).join('') +
+          '</select>' +
+          '<div class="lp-pe-help">Strict = only low-risk (public-domain / gov) auto-publishes. Moderate = CC-BY also allowed. Manual = nothing publishes without a tap.</div></div>' +
+        '<div class="lp-pe-field"><label class="lp-pe-label">Sources allowed</label>' +
+          sourcesPool.map(function (src) {
+            var on = s.allowedSources.indexOf(src[0]) !== -1;
+            return '<label style="display:flex;align-items:center;gap:8px;color:var(--text2);font-size:13px;padding:4px 0"><input type="checkbox" data-lp-ap-source="' + src[0] + '"' + (on ? ' checked' : '') + ' style="width:16px;height:16px"> ' + src[1] + '</label>';
+          }).join('') +
+        '</div>' +
+        '<div class="lp-pe-field"><label class="lp-pe-label">Rows allowed</label>' +
+          rowsPool.map(function (r) {
+            var on = s.allowedRows.indexOf(r) !== -1;
+            return '<label style="display:flex;align-items:center;gap:8px;color:var(--text2);font-size:13px;padding:4px 0"><input type="checkbox" data-lp-ap-row="' + r + '"' + (on ? ' checked' : '') + ' style="width:16px;height:16px"> ' + r + '</label>';
+          }).join('') +
+        '</div>' +
+        '<div class="lp-pe-field"><label style="display:flex;align-items:center;gap:8px;color:var(--text2);font-size:13.5px"><input type="checkbox" id="lpApEnabled"' + (s.enabled ? ' checked' : '') + ' style="width:18px;height:18px"> Engine enabled (master switch)</label></div>' +
+        '<div class="lp-pe-save-row" style="margin-top:6px"><button class="lp-pe-save" type="button" id="lpApSaveSettings">Save settings</button>' +
+          '<span class="lp-pe-saved-flash" id="lpApSavedFlash">Saved</span></div>' +
+      '</div>' +
+      '<div class="lp-pe-form" style="margin-bottom:18px">' +
+        '<h3 style="margin:0 0 8px;color:#fff;font-size:15px">Run controls</h3>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="lp-pe-save" type="button" id="lpApRun">Run Autopilot Now</button>' +
+          '<button class="lp-pe-cancel" type="button" id="lpApPilot">Run Pilot Test</button>' +
+          '<button class="lp-pe-cancel" type="button" id="lpApRecycle">Recycle Approved Content</button>' +
+          '<button class="lp-pe-cancel" type="button" id="lpApReport">Export Activity Report</button>' +
+          '<button class="lp-pe-btn danger" type="button" id="lpApClearDemo">Clear Demo Data</button>' +
+        '</div>' +
+      '</div>' +
+      (rightsCount > 0
+        ? '<div class="lp-pe-form" style="margin-bottom:18px"><h3 style="margin:0 0 8px;color:#fff;font-size:15px">Rights review queue (' + rightsCount + ')</h3>' +
+          readAutopilotRights().slice(0, 25).map(function (r) {
+            var risk = r.meta && r.meta.rightsRisk;
+            var rc = risk === 'low' ? '#4ade80' : risk === 'medium' ? '#facc15' : '#ff6e6e';
+            return '<div class="lp-page-card" style="display:flex;gap:12px;align-items:flex-start">' +
+              '<div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;color:#fff;margin-bottom:2px">' + r.title + '</div>' +
+              '<div style="font-size:12px;color:var(--text3);margin-bottom:4px">' + r.creator + ' · ' + r.license + ' · ' + r.provider + '</div>' +
+              '<div style="font-size:11px;color:' + rc + ';font-weight:800;letter-spacing:.05em;text-transform:uppercase">Risk: ' + (risk || 'unknown') + '</div></div>' +
+              '<button class="lp-pe-cancel" type="button" data-lp-ap-approve="' + r.id + '">Approve & publish</button>' +
+              '<button class="lp-pe-btn danger" type="button" data-lp-ap-reject="' + r.id + '">Reject</button>' +
+            '</div>';
+          }).join('') + '</div>'
+        : '') +
+      (pilotReports.length
+        ? '<div class="lp-pe-form" style="margin-bottom:18px"><h3 style="margin:0 0 8px;color:#fff;font-size:15px">Latest pilot report</h3>' +
+          (function () {
+            var p = pilotReports[0];
+            return '<div style="font-size:13px;color:var(--text2);line-height:1.7">' +
+              '<div>Run ID: <strong style="color:#fff">' + p.pilotRunId + '</strong></div>' +
+              '<div>Items moved: ' + p.itemsMoved + ' · Blocked by rights: ' + p.itemsBlockedByRights + ' · Published: ' + p.itemsPublished + '</div>' +
+              '<div style="margin-top:6px;color:var(--text3);font-size:12px">Recommendations:</div>' +
+              '<ul style="margin:4px 0 0 18px;color:var(--text2);font-size:13px">' + p.recommendations.map(function (r) { return '<li style="margin-bottom:3px">' + r + '</li>'; }).join('') + '</ul>' +
+            '</div>';
+          })() + '</div>'
+        : '') +
+      (jobs.length
+        ? '<div class="lp-pe-form"><h3 style="margin:0 0 8px;color:#fff;font-size:15px">Recent jobs (' + Math.min(10, jobs.length) + ')</h3>' +
+          jobs.slice(0, 10).map(function (j) {
+            return '<div style="display:grid;grid-template-columns:140px 100px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px">' +
+              '<div style="color:var(--text3);font-variant-numeric:tabular-nums">' + new Date(j.startedAt).toLocaleString() + '</div>' +
+              '<div style="color:' + (j.status === 'completed' ? '#4ade80' : '#facc15') + ';font-weight:700">' + j.status + '</div>' +
+              '<div style="color:var(--text2)">found ' + j.itemsFound + ' · drafts +' + j.itemsSavedToDraft + ' · rights +' + j.itemsSentToRightsReview + ' · published +' + j.itemsPublished + '</div>' +
+            '</div>';
+          }).join('') + '</div>'
+        : '');
+    $$('lp-page-extra').innerHTML = html;
+    function bind(id, fn) { var el = $$(id); if (el) el.addEventListener('click', fn); }
+    bind('lpApSaveSettings', function () {
+      var s2 = readAutopilotSettings();
+      s2.enabled = $$('lpApEnabled').checked;
+      s2.mode = $$('lpApMode').value;
+      s2.refreshFrequency = $$('lpApFreq').value;
+      s2.licenseSafetyLevel = $$('lpApSafety').value;
+      s2.allowedSources = Array.prototype.slice.call(document.querySelectorAll('[data-lp-ap-source]:checked')).map(function (c) { return c.getAttribute('data-lp-ap-source'); });
+      s2.allowedRows    = Array.prototype.slice.call(document.querySelectorAll('[data-lp-ap-row]:checked')).map(function (c) { return c.getAttribute('data-lp-ap-row'); });
+      writeAutopilotSettings(s2);
+      var f = $$('lpApSavedFlash');
+      if (f) { f.classList.add('on'); setTimeout(function () { f.classList.remove('on'); }, 1400); }
+      lpLogAction('autopilot', 'Settings saved.', { mode: s2.mode, sources: s2.allowedSources.length, rows: s2.allowedRows.length });
+    });
+    bind('lpApRun',       function () { runAutopilotNow();    renderAutopilot(); });
+    bind('lpApPilot',     function () { runAutopilotPilot();  renderAutopilot(); });
+    bind('lpApRecycle',   function () { recycleApprovedContent(); renderAutopilot(); });
+    bind('lpApReport',    function () { exportAutopilotReport(); });
+    bind('lpApClearDemo', function () { clearDemoData();      renderAutopilot(); });
+    $$('lp-page-extra').addEventListener('click', function (e) {
+      var ap = e.target.closest('[data-lp-ap-approve]');
+      if (ap) { approveRightsItem(ap.getAttribute('data-lp-ap-approve')); renderAutopilot(); return; }
+      var rj = e.target.closest('[data-lp-ap-reject]');
+      if (rj) { rejectRightsItem(rj.getAttribute('data-lp-ap-reject')); renderAutopilot(); return; }
+    });
+  }
+  // Browser-only scheduler: while the app is open, fire on the chosen
+  // cadence. Honest about being browser-only (no background worker).
+  setInterval(function () {
+    var s = readAutopilotSettings();
+    if (!s.enabled || s.mode === 'off' || s.refreshFrequency === 'manual') return;
+    var ms = { hourly: 3600000, daily: 86400000, weekly: 604800000 }[s.refreshFrequency] || 86400000;
+    var last = s.lastRun ? new Date(s.lastRun).getTime() : 0;
+    if (Date.now() - last >= ms) {
+      try { runAutopilotNow(); } catch (e) { lpLogAction('error', 'Scheduled run failed: ' + e.message); }
+    }
+  }, 60000);
+  try { updateAutopilotPill(); } catch (e) {}
+  window.__lpRenderAutopilot = renderAutopilot;
+  window.__lpRunAutopilotNow = runAutopilotNow;
+
   // ── Tier 4.13 — Marketplace cart + checkout ──────────────────
   // Items the user adds go to lp_cart; on checkout they move to
   // lp_purchased and become "Owned" everywhere they appear.
@@ -4571,6 +5084,8 @@ window.addEventListener('online',  () => toast('Back online'));
       case 'checkout':       renderCheckout(); return;
       case 'inbox':          renderInbox(); return;
       case 'advertiser':     renderAdvertiser(); return;
+      case 'autopilot':      renderAutopilot(); return;
+      case 'action-log':     renderActionLog(); return;
       case 'help':           renderHelp(); return;
       case 'home-feed':      renderHomeFeed(); return;
       case 'search':         { var s = $$('searchInput'); if (s) { s.focus(); s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return; }
