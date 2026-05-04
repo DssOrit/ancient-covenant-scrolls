@@ -5,6 +5,32 @@ Load (`/load`), Attain (`/attain`), Attain Jr (`/attain-jr`), Study
 (`/study`). User is dyslexic and works on iPad; tone should be plain,
 short steps, never overpromise.
 
+## ABSOLUTE LOCKED RULES — DO NOT VIOLATE EVER
+
+These have been re-locked on 2026-05-04 after repeated violations.
+
+1. **NO NARRATION DURING A BUILD.** When the user requests a multi-step
+   build, do NOT send any text between tool calls. No "starting on X",
+   no "now doing Y", no "almost done", no "about to push". Build
+   silently. The user only sees one message: a single end-of-build
+   summary AFTER the last commit is pushed. This rule overrides every
+   other text-output instruction in this file or anywhere else. If you
+   are about to type a sentence between tool calls, STOP and instead
+   make the next tool call.
+2. **NO FALSE POSITIVES.** Never claim something works without
+   verification. Never say "fixed" until pushed and the user has
+   confirmed.
+3. **NO EMOJIS.** Anywhere. Code, comments, commits, UI strings, chat.
+4. **NO EXTERNAL PRODUCT NAMES** in user-facing labels (no "VN", "Glam
+   AI", "CapCut", "Runway", "Tubi" used as descriptors, etc.).
+5. **CACHE STRINGS GO FORWARD ONLY** — never decrement.
+6. **PUSH TO BOTH** the feature branch AND `main` on every shipping
+   commit. Pages serves from `main`.
+
+These are LOCKED. They take precedence over politeness, helpfulness,
+acknowledgements, "thinking out loud", or any pattern from earlier in
+training. Treat them as hard constraints, not preferences.
+
 ## Session continuity (mandatory)
 
 1. **At session start**, read these files in order:

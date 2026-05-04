@@ -3161,6 +3161,231 @@ window.addEventListener('online',  () => toast('Back online'));
   window.__lpRenderPublished = renderPublished;
   window.__lpRenderProjectPage = renderProjectPage;
 
+  // ── Developer Lab tools (Tier 3.8 – 3.12) ────────────────────
+  function lpDevHeader(key) {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = devToolLabel(key);
+    $$('lp-page-blurb').textContent = 'Developer tool. Output below is generated live from your current session.';
+    return $$('lp-page-extra');
+  }
+  function lpDevPre(text) {
+    return '<pre style="background:#0a0e18;color:#9be7ff;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;max-height:60vh;overflow:auto">' +
+      String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;') +
+    '</pre>';
+  }
+  function lpDevRow(label, value, ok) {
+    var color = ok === true ? '#4ade80' : ok === false ? '#ff6e6e' : 'var(--text2)';
+    return '<div style="display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">' +
+      '<span style="font-size:13px;color:var(--text2)">' + label + '</span>' +
+      '<span style="font-size:13px;font-weight:700;color:' + color + ';text-align:right;word-break:break-word">' + value + '</span>' +
+    '</div>';
+  }
+  function lpDevDiagnostics() {
+    var el = lpDevHeader('diagnostics');
+    var html = '<div class="lp-pe-form" style="padding:8px 16px"><h3 style="margin:6px 0 8px;color:#fff;font-size:14px">Environment</h3>' +
+      lpDevRow('User agent', navigator.userAgent || '—') +
+      lpDevRow('Online',     navigator.onLine ? 'yes' : 'no', !!navigator.onLine) +
+      lpDevRow('Language',   navigator.language || '—') +
+      lpDevRow('Display',    (window.innerWidth || 0) + ' × ' + (window.innerHeight || 0) + ' @ ' + (window.devicePixelRatio || 1) + 'x') +
+      '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">PWA</h3>' +
+      lpDevRow('Service workers',     'serviceWorker' in navigator ? 'supported' : 'not supported', 'serviceWorker' in navigator) +
+      lpDevRow('Cache Storage',       'caches' in window ? 'supported' : 'not supported', 'caches' in window) +
+      lpDevRow('IndexedDB',           'indexedDB' in window ? 'supported' : 'not supported', 'indexedDB' in window) +
+      lpDevRow('Notifications',       'Notification' in window ? 'supported' : 'not supported', 'Notification' in window) +
+      lpDevRow('localStorage keys',   String(Object.keys(localStorage).length)) +
+      '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">LoadPlay state</h3>' +
+      lpDevRow('Drafts',              String(readDrafts().length)) +
+      lpDevRow('Published',           String(readPublished().length)) +
+      lpDevRow('Watch history',       String(readWatchHistory().length)) +
+      lpDevRow('Profile saved',       (localStorage.getItem('lp_profile') ? 'yes' : 'no'), !!localStorage.getItem('lp_profile')) +
+      '</div>';
+    el.innerHTML = html;
+  }
+  function lpDevManifest() {
+    var el = lpDevHeader('manifest');
+    el.innerHTML = '<div class="lp-pe-form" style="padding:8px 16px;color:var(--text2);font-size:13px">Fetching manifest…</div>';
+    fetch('manifest.json', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (m) {
+      var checks = [];
+      checks.push(['name',           !!m.name,            m.name || '(missing)']);
+      checks.push(['short_name',     !!m.short_name,      m.short_name || '(missing)']);
+      checks.push(['start_url',      !!m.start_url,       m.start_url || '(missing)']);
+      checks.push(['display',        !!m.display,         m.display || '(missing)']);
+      checks.push(['background_color', !!m.background_color, m.background_color || '(missing)']);
+      checks.push(['theme_color',    !!m.theme_color,     m.theme_color || '(missing)']);
+      checks.push(['icons',          !!(m.icons && m.icons.length), (m.icons || []).length + ' icon(s)']);
+      var rows = checks.map(function (c) { return lpDevRow(c[0], c[2], c[1]); }).join('');
+      el.innerHTML =
+        '<div class="lp-pe-form" style="padding:8px 16px"><h3 style="margin:6px 0 8px;color:#fff;font-size:14px">Manifest checks</h3>' + rows + '</div>' +
+        '<h3 style="margin:18px 0 8px;color:#fff;font-size:14px">Raw JSON</h3>' + lpDevPre(JSON.stringify(m, null, 2));
+    }).catch(function (err) {
+      el.innerHTML = lpDevPre('Could not load manifest.json: ' + (err.message || err));
+    });
+  }
+  function lpDevSWCheck() {
+    var el = lpDevHeader('sw');
+    el.innerHTML = '<div class="lp-pe-form" style="padding:8px 16px;color:var(--text2);font-size:13px">Querying service worker…</div>';
+    if (!('serviceWorker' in navigator)) { el.innerHTML = lpDevPre('Service workers are not supported on this device.'); return; }
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      var rows = '';
+      if (!regs.length) {
+        rows = '<div style="font-size:13px;color:#ff6e6e;font-weight:700">No active registration on this scope.</div>';
+      } else {
+        regs.forEach(function (r, i) {
+          var w = r.active || r.installing || r.waiting;
+          rows += '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">Registration ' + (i + 1) + '</h3>';
+          rows += lpDevRow('Scope',         r.scope || '—');
+          rows += lpDevRow('State',         (w && w.state) || '—', !!(w && w.state === 'activated'));
+          rows += lpDevRow('Script URL',    (w && w.scriptURL) || '—');
+        });
+      }
+      caches.keys().then(function (ks) {
+        var lpKeys = ks.filter(function (k) { return /loadplay/i.test(k); }).join(', ') || '(none)';
+        el.innerHTML =
+          '<div class="lp-pe-form" style="padding:8px 16px">' + rows +
+            '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">Caches</h3>' +
+            lpDevRow('All caches',       String(ks.length) + ' (' + (ks.join(', ') || 'none') + ')') +
+            lpDevRow('LoadPlay caches',  lpKeys) +
+            '<div class="lp-pe-save-row" style="margin-top:14px"><button class="lp-pe-cancel" type="button" id="lpDevSwUnreg">Unregister + clear caches</button></div>' +
+          '</div>';
+        var btn = document.getElementById('lpDevSwUnreg');
+        if (btn) btn.addEventListener('click', function () {
+          Promise.all([
+            Promise.all(regs.map(function (r) { return r.unregister(); })),
+            Promise.all(ks.map(function (k) { return caches.delete(k); }))
+          ]).then(function () {
+            try { window.toast('Service worker + caches cleared. Reload to re-install.'); } catch (e) {}
+          });
+        });
+      });
+    });
+  }
+  function lpDevApiKeys() {
+    var el = lpDevHeader('api-keys');
+    var KEYS = [
+      ['lp_api_openrouter',   'OpenRouter API key',   'For text models routed through OpenRouter.'],
+      ['lp_api_huggingface',  'Hugging Face token',   'For HF Inference Endpoints.'],
+      ['lp_api_replicate',    'Replicate API token',  'For Replicate-hosted models.'],
+      ['lp_api_elevenlabs',   'ElevenLabs key',       'For voice synthesis.'],
+      ['lp_api_stability',    'Stability AI key',     'For Stable Diffusion image generation.'],
+      ['lp_api_loadbridge',   'Load Bridge key',      'For self-hosted Load AI gateway.']
+    ];
+    var rows = KEYS.map(function (k) {
+      var stored = '';
+      try { stored = localStorage.getItem(k[0]) || ''; } catch (e) {}
+      var masked = stored ? (stored.slice(0, 4) + '***' + stored.slice(-3)) : '';
+      return '<div class="lp-pe-field" data-lp-key="' + k[0] + '">' +
+        '<label class="lp-pe-label">' + k[1] + '</label>' +
+        '<div class="lp-pe-help">' + k[2] + '</div>' +
+        '<div style="display:flex;gap:8px;align-items:center;margin-top:6px">' +
+          '<input class="lp-pe-input" type="password" placeholder="' + (stored ? masked : 'Paste a key to save') + '" style="flex:1">' +
+          '<button class="lp-pe-cancel" type="button" data-lp-key-save="' + k[0] + '">Save</button>' +
+          (stored ? '<button class="lp-pe-btn danger" type="button" data-lp-key-clear="' + k[0] + '">Clear</button>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="lp-pe-form">' +
+        '<div class="lp-pe-help" style="background:var(--bg3);padding:10px;border-radius:8px;margin-bottom:6px">Keys are stored only in this browser\'s localStorage. Nothing leaves the device. Use the Clear button to remove a key.</div>' +
+        rows +
+      '</div>';
+    el.addEventListener('click', function (e) {
+      var saveBtn = e.target.closest('[data-lp-key-save]');
+      if (saveBtn) {
+        var k = saveBtn.getAttribute('data-lp-key-save');
+        var input = saveBtn.parentElement.querySelector('input');
+        var val = (input && input.value || '').trim();
+        if (!val) { try { window.toast('Paste a key first.'); } catch (e2) {} return; }
+        try { localStorage.setItem(k, val); } catch (e2) {}
+        try { window.toast('Saved ' + k); } catch (e2) {}
+        lpDevApiKeys();
+      }
+      var clrBtn = e.target.closest('[data-lp-key-clear]');
+      if (clrBtn) {
+        var k2 = clrBtn.getAttribute('data-lp-key-clear');
+        try { localStorage.removeItem(k2); } catch (e2) {}
+        try { window.toast('Cleared ' + k2); } catch (e2) {}
+        lpDevApiKeys();
+      }
+    });
+  }
+  function lpDevValidator() {
+    var el = lpDevHeader('validator');
+    el.innerHTML =
+      '<div class="lp-pe-form">' +
+        '<div class="lp-pe-help" style="background:var(--bg3);padding:10px;border-radius:8px;margin-bottom:6px">Drop a .cinepwa.zip / .zip / .html package here to run package-validator checks (manifest, index, asset list, no-network sandbox).</div>' +
+        '<label class="lp-pe-btn" style="width:max-content"><input type="file" accept=".zip,.cinepwa,.html" id="lpDevValFile">Pick package</label>' +
+        '<div id="lpDevValOut" style="margin-top:14px;color:var(--text2);font-size:13px">No package picked yet.</div>' +
+      '</div>';
+    var inp = document.getElementById('lpDevValFile');
+    var out = document.getElementById('lpDevValOut');
+    if (!inp) return;
+    inp.addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      out.innerHTML = 'Reading <strong>' + f.name + '</strong> (' + Math.round(f.size / 1024) + ' KB)…';
+      var nm = (f.name || '').toLowerCase();
+      if (/\.html?$/.test(nm)) {
+        var rd = new FileReader();
+        rd.onload = function () {
+          var src = rd.result || '';
+          var checks = [];
+          checks.push(['Has &lt;!doctype&gt;',     /<!doctype/i.test(src)]);
+          checks.push(['Has &lt;html&gt;',         /<html[\s>]/i.test(src)]);
+          checks.push(['Has &lt;head&gt; / &lt;body&gt;', /<head[\s>]/i.test(src) && /<body[\s>]/i.test(src)]);
+          checks.push(['No external script tag',   !/<script[^>]+src=["']?https?:/i.test(src)]);
+          checks.push(['No fetch(http…)',           !/fetch\s*\(\s*["']https?:/i.test(src)]);
+          out.innerHTML = checks.map(function (c) { return lpDevRow(c[0], c[1] ? 'pass' : 'fail', c[1]); }).join('');
+        };
+        rd.readAsText(f);
+        return;
+      }
+      ensureJSZip(function (Z) {
+        if (!Z) { out.textContent = 'Could not load JSZip.'; return; }
+        var rd = new FileReader();
+        rd.onload = function () {
+          new Z().loadAsync(rd.result).then(function (zip) {
+            var entries = Object.keys(zip.files);
+            var hasIndex = entries.some(function (n) { return /^index\.html?$/.test(n); });
+            var hasManifest = entries.some(function (n) { return /^manifest\.json$/.test(n); });
+            var checks = [];
+            checks.push(['Entries',           String(entries.length)]);
+            checks.push(['index.html',        hasIndex ? 'present' : 'missing', hasIndex]);
+            checks.push(['manifest.json',     hasManifest ? 'present' : 'missing', hasManifest]);
+            // Read index.html if present and run network-allergy checks.
+            var hostFile = zip.file('index.html') || zip.file('index.htm');
+            if (hostFile) {
+              hostFile.async('string').then(function (src) {
+                checks.push(['No external script tag',   !/<script[^>]+src=["']?https?:/i.test(src), !/<script[^>]+src=["']?https?:/i.test(src) ? 'pass' : 'external src found']);
+                checks.push(['No fetch(http…)',           !/fetch\s*\(\s*["']https?:/i.test(src), !/fetch\s*\(\s*["']https?:/i.test(src) ? 'pass' : 'live fetch found']);
+                checks.push(['No XHR(http…)',             !/XMLHttpRequest|new XMLHttp/i.test(src) || /file:|relative/i.test(src), 'see notes']);
+                out.innerHTML = checks.map(function (c) { return lpDevRow(c[0], c.length >= 3 ? c[2] : (c[1] ? 'pass' : 'fail'), c[1] === true ? true : c[1] === false ? false : null); }).join('') +
+                  '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">Files</h3>' + lpDevPre(entries.join('\n'));
+              });
+            } else {
+              out.innerHTML = checks.map(function (c) { return lpDevRow(c[0], c.length >= 3 ? c[2] : (c[1] ? 'pass' : 'fail'), c[1] === true ? true : c[1] === false ? false : null); }).join('') +
+                '<h3 style="margin:14px 0 8px;color:#fff;font-size:14px">Files</h3>' + lpDevPre(entries.join('\n'));
+            }
+          }).catch(function (err) {
+            out.textContent = 'Could not unzip: ' + (err.message || err);
+          });
+        };
+        rd.readAsArrayBuffer(f);
+      });
+    });
+  }
+  window.__lpRunDevTool = function (key) {
+    if (key === 'diagnostics') return lpDevDiagnostics();
+    if (key === 'manifest')    return lpDevManifest();
+    if (key === 'sw')          return lpDevSWCheck();
+    if (key === 'api-keys')    return lpDevApiKeys();
+    if (key === 'validator')   return lpDevValidator();
+  };
+
   // ── Watch History (Tier 1.2) ─────────────────────────────────
   // Local-only history. openPlayer pushes onto lp_watch_history with
   // most-recent first, deduped by id, capped at 200. This page lists
@@ -3806,7 +4031,7 @@ window.addEventListener('online',  () => toast('Back online'));
       var key = devTool.getAttribute('data-lp-dev-tool');
       var u = loadUser();
       if (!u || u.role !== 'developer') { openModal('lp-dev-modal'); return; }
-      if (window.toast) window.toast(devToolLabel(key) + ' — running…');
+      if (typeof window.__lpRunDevTool === 'function') window.__lpRunDevTool(key);
       return;
     }
   });
