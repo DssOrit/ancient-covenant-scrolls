@@ -97,6 +97,12 @@ function ensureAttainSampleInLibrary() {
       if (pkg.keyTerms) {
         try { localStorage.setItem('attain_terms_' + ATTAIN_SAMPLE_ID, JSON.stringify(pkg.keyTerms)); } catch (e) {}
       }
+      // PWA-supplied quizBank (multi-choice questions baked into the
+      // book package) — persisted parallel to keyTerms so the existing
+      // Attain quiz engine can pick it up. Schema: [{ q, choices, answer }].
+      if (pkg.quizBank && pkg.quizBank.length) {
+        try { localStorage.setItem('attain_quizbank_' + ATTAIN_SAMPLE_ID, JSON.stringify(pkg.quizBank)); } catch (e) {}
+      }
       // Refresh the library screen if it's already mounted.
       try { if (typeof showLibrary === 'function') showLibrary(); } catch (e) {}
     }).catch(function () {});
