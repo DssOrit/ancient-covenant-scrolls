@@ -391,10 +391,29 @@ html .ls-feat:focus-visible{outline:2px solid rgba(179,136,255,.7);outline-offse
 .ls-install-actions{display:flex;justify-content:flex-end;margin-top:8px}
 .ls-install-cta{padding:10px 22px;border-radius:10px;border:0;background:linear-gradient(135deg,#7d2ae8 0%,#b33af0 100%);color:#fff;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(125,42,232,.4)}
 
+/* v26 — Editing Bay full-screen overlay (no LoadStudio chrome around the editor) */
+body.ls-editor-fs{overflow:hidden !important}
+body.ls-editor-fs header.topbar,
+body.ls-editor-fs nav.bottom,
+body.ls-editor-fs .ls-footer,
+body.ls-editor-fs main.app > .content > .section:not(#section-timeline-editor):not(#section-vn-tools){display:none !important}
+body.ls-editor-fs main.app > .content,
+body.ls-editor-fs main.app{padding:0 !important;margin:0 !important;min-height:0 !important}
+body.ls-editor-fs #section-timeline-editor.active,
+body.ls-editor-fs #section-vn-tools.active{position:fixed !important;inset:0 !important;z-index:5000 !important;margin:0 !important;padding:0 !important;background:#0a0a14 !important;display:flex !important;flex-direction:column !important}
+body.ls-editor-fs #section-timeline-editor.active .section-head,
+body.ls-editor-fs #section-vn-tools.active .section-head{display:none !important}
+body.ls-editor-fs #section-timeline-editor.active .ls-eb-direct-frame,
+body.ls-editor-fs #section-vn-tools.active .ls-eb-direct-frame{flex:1 !important;width:100vw !important;height:100vh !important;min-height:0 !important;border-radius:0 !important;border:0 !important;box-shadow:none !important;margin:0 !important}
+.ls-eb-fs-back{position:fixed;top:10px;left:10px;z-index:5100;display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(20,8,38,.92);color:#d8d2ec;border:1px solid rgba(179,136,255,.4);border-radius:10px;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.ls-eb-fs-back:hover{background:rgba(125,42,232,.32);color:#fff;border-color:rgba(179,136,255,.7)}
+.ls-eb-fs-back svg{width:14px;height:14px}
+body:not(.ls-editor-fs) .ls-eb-fs-back{display:none}
+
 /* v24 — Editing Bay direct-iframe layout (no Feature tools panel) */
-.ls-eb-direct-frame{display:flex;flex-direction:column;width:100%;height:calc(100vh - 140px);min-height:560px;background:#000;border-radius:14px;overflow:hidden;border:1px solid rgba(125,42,232,.32);box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.ls-eb-tabs{display:flex;gap:6px;padding:8px 10px;background:#10071f;border-bottom:1px solid rgba(125,42,232,.32);flex-shrink:0}
-.ls-eb-tab{display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:8px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#d8d2ec;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer;text-decoration:none;letter-spacing:.005em}
+.ls-eb-direct-frame{display:flex;flex-direction:column;width:100%;height:calc(100vh - 80px);min-height:560px;background:#000;border-radius:14px;overflow:hidden;border:1px solid rgba(125,42,232,.32);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.ls-eb-tabs{display:flex;gap:6px;padding:6px 10px;background:#10071f;border-bottom:1px solid rgba(125,42,232,.32);flex-shrink:0}
+.ls-eb-tab{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:8px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#d8d2ec;font:600 12px Inter,system-ui,sans-serif;cursor:pointer;text-decoration:none;letter-spacing:.005em}
 .ls-eb-tab:hover{background:rgba(125,42,232,.14);border-color:rgba(179,136,255,.55);color:#fff}
 .ls-eb-tab.on{background:linear-gradient(135deg,#7d2ae8 0%,#b33af0 100%);border-color:transparent;color:#fff;box-shadow:0 3px 12px rgba(125,42,232,.4)}
 .ls-eb-direct-frame iframe{flex:1;width:100%;height:100%;border:0;display:block;background:#000}
@@ -957,7 +976,6 @@ document.addEventListener('click',function(e){
   var t=e.target.closest('.ls-eb-tab[data-eb-mode]');
   if(!t)return;
   e.preventDefault();
-  // Toggle tab visual state
   var parent=t.parentElement;
   if(parent){Array.prototype.forEach.call(parent.querySelectorAll('.ls-eb-tab'),function(x){x.classList.remove('on');});}
   t.classList.add('on');
@@ -965,4 +983,35 @@ document.addEventListener('click',function(e){
   var f=document.getElementById('lsEbIframe');
   if(f){f.src='../load/?lsedit='+encodeURIComponent(mode)+'&_t='+Date.now();}
 },true);
-})();</script></body></html>
+})();</script>
+<button id="lsEbFsBack" class="ls-eb-fs-back" type="button" aria-label="Back to studio menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg><span>Back</span></button>
+<script id="ls-v26-editor-fs">(function(){
+function isEditorSection(){
+  var t=document.getElementById('section-timeline-editor');
+  var v=document.getElementById('section-vn-tools');
+  return (t&&t.classList.contains('active'))||(v&&v.classList.contains('active'));
+}
+function applyFs(){document.body.classList.toggle('ls-editor-fs', isEditorSection());}
+// Watch for section changes via the existing go() mechanism (which adds .active).
+var mo=new MutationObserver(applyFs);
+['section-timeline-editor','section-vn-tools'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)mo.observe(el,{attributes:true,attributeFilter:['class']});
+});
+// Initial pass.
+applyFs();
+// Back button: close fullscreen, return to dashboard.
+document.addEventListener('click',function(e){
+  if(e.target.closest('#lsEbFsBack')){
+    e.preventDefault();
+    document.body.classList.remove('ls-editor-fs');
+    var t=document.getElementById('section-timeline-editor');
+    var v=document.getElementById('section-vn-tools');
+    if(t)t.classList.remove('active');
+    if(v)v.classList.remove('active');
+    var dash=document.querySelector('[data-section="dashboard"]');
+    if(dash)dash.click();
+  }
+},true);
+})();</script>
+</body></html>
