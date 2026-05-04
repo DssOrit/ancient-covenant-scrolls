@@ -62,55 +62,11 @@ function getLibrary() {
 // ---- Attain Sample Book (auto-installed on first launch — parity with Attain Jr) ----
 //
 // The library starts empty for new users, so they hit the upload screen
-// with no idea what a finished book looks like. Attain Jr ships with
-// "The Brave Little Fox" pre-loaded; this puts the same first-run
-// hand-hold into Attain by seeding two short Aesop fables (public
-// domain) the first time the app loads.
-var ATTAIN_SAMPLE_ID = 'book_sample_aesop';
-var ATTAIN_SAMPLE = {
-  id: ATTAIN_SAMPLE_ID,
-  title: "Aesop's Fables — Sample",
-  author: "Aesop (public domain)",
-  color: '#7c3aed',
-  dateAdded: '2026-05-04T00:00:00.000Z',
-  chapterCount: 2,
-  totalParagraphs: 12,
-  hasTerms: true,
-  __sample: true
-};
-var ATTAIN_SAMPLE_CHAPTERS = [
-  {
-    title: 'The Tortoise and the Hare',
-    paragraphs: [
-      "A Hare was making fun of the Tortoise one day for being so slow.",
-      '"Do you ever get anywhere?" he asked with a mocking laugh.',
-      '"Yes," replied the Tortoise, "and I get there sooner than you think. I will run you a race and prove it."',
-      "The Hare was much amused at the idea of running a race with the Tortoise, but for the fun of the thing he agreed.",
-      "So the Fox, who had consented to act as judge, marked the distance and started the runners off.",
-      "The Hare was soon far out of sight, and to make the Tortoise feel very deeply how ridiculous it was for him to try a race with a Hare, the Hare lay down beside the course to take a nap until the Tortoise should catch up.",
-      "The Tortoise meanwhile kept going slowly but steadily, and, after a time, passed the place where the Hare was sleeping.",
-      "But the Hare slept on very peacefully; and when at last he did wake up, the Tortoise was near the goal.",
-      "The Hare now ran his swiftest, but he could not overtake the Tortoise in time."
-    ]
-  },
-  {
-    title: 'The Lion and the Mouse',
-    paragraphs: [
-      "A Lion lay asleep in the forest, his great head resting on his paws.",
-      "A timid little Mouse came upon him unexpectedly, and in her fright and haste to get away, ran across the Lion's nose.",
-      "Roused from his nap, the Lion laid his huge paw angrily on the tiny creature to kill her.",
-      '"Spare me!" begged the poor Mouse. "Please let me go and some day I will surely repay you."'
-    ]
-  }
-];
-var ATTAIN_SAMPLE_TERMS = [
-  { term: 'Hare',     count: 6 },
-  { term: 'Tortoise', count: 5 },
-  { term: 'race',     count: 3 },
-  { term: 'Lion',     count: 3 },
-  { term: 'Mouse',    count: 3 },
-  { term: 'paws',     count: 2 }
-];
+// with no idea what a finished book looks like. The sample is for
+// adult readers / learners and is loaded from a packaged PWA book
+// (data/sample-book.json) so it can ship with a real cover image
+// instead of a default emoji tile.
+var ATTAIN_SAMPLE_ID = 'book_sample_v1';
 function ensureAttainSampleInLibrary() {
   // If the user actively deleted the sample, respect that — flag in LS.
   try { if (localStorage.getItem('attain_sample_dismissed') === '1') return; } catch (e) {}
@@ -118,13 +74,32 @@ function ensureAttainSampleInLibrary() {
   for (var i = 0; i < lib.length; i++) {
     if (lib[i].id === ATTAIN_SAMPLE_ID) return; // already present
   }
-  // Persist book metadata + chapters + key terms to all storage layers.
+  // Pull the packaged sample once; bail quietly if the file isn't there
+  // yet (so the app still boots cleanly between PWA-book uploads).
   try {
-    var metaCopy = {};
-    for (var k in ATTAIN_SAMPLE) metaCopy[k] = ATTAIN_SAMPLE[k];
-    saveBook(metaCopy);
-    saveChaptersDB(ATTAIN_SAMPLE_ID, ATTAIN_SAMPLE_CHAPTERS);
-    try { localStorage.setItem('attain_terms_' + ATTAIN_SAMPLE_ID, JSON.stringify(ATTAIN_SAMPLE_TERMS)); } catch (e) {}
+    if (typeof fetch !== 'function') return;
+    fetch('data/sample-book.json', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) return null;
+      return r.json();
+    }).then(function (pkg) {
+      if (!pkg || !pkg.book || !pkg.chapters) return;
+      try { if (localStorage.getItem('attain_sample_dismissed') === '1') return; } catch (e) {}
+      var lib2 = getLibrary();
+      for (var j = 0; j < lib2.length; j++) {
+        if (lib2[j].id === ATTAIN_SAMPLE_ID) return;
+      }
+      var meta = {};
+      for (var k in pkg.book) meta[k] = pkg.book[k];
+      meta.id = ATTAIN_SAMPLE_ID;
+      meta.__sample = true;
+      try { saveBook(meta); } catch (e) {}
+      try { saveChaptersDB(ATTAIN_SAMPLE_ID, pkg.chapters); } catch (e) {}
+      if (pkg.keyTerms) {
+        try { localStorage.setItem('attain_terms_' + ATTAIN_SAMPLE_ID, JSON.stringify(pkg.keyTerms)); } catch (e) {}
+      }
+      // Refresh the library screen if it's already mounted.
+      try { if (typeof showLibrary === 'function') showLibrary(); } catch (e) {}
+    }).catch(function () {});
   } catch (e) { /* non-fatal */ }
 }
 // When user hits delete on the sample, remember that so we don't

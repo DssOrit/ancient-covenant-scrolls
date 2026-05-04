@@ -135,7 +135,13 @@ function showLibrary() {
     else activeBooks.push({ book: lib[pi], days: days });
   }
 
-  // Active books
+  // Active books \u2014 sample books pinned to the front so the bundled
+  // sample is the first card a new user sees on the front page.
+  activeBooks.sort(function (x, y) {
+    var sx = x.book.__sample ? 1 : 0;
+    var sy = y.book.__sample ? 1 : 0;
+    return sy - sx;
+  });
   for (var i = 0; i < activeBooks.length; i++) {
     var b = activeBooks[i].book;
     var bookDue = getDueCards(b.id).length;
@@ -145,8 +151,14 @@ function showLibrary() {
       var dd = Math.ceil(activeBooks[i].days);
       expiryBadge = '<div class="lib-expiry-soon">\u23F0 Expires in ' + dd + ' day' + (dd === 1 ? '' : 's') + '</div>';
     }
-    html += '<div class="lib-card" data-book="' + b.id + '" style="background:' + (b.color || '#2563eb') + '" role="button" tabindex="0" aria-label="Open book: ' + b.title + '">';
-    html += '<div class="lib-icon">\u{1F4D6}</div>';
+    var sampleTag = b.__sample ? '<div class="lib-sample-tag">Sample</div>' : '';
+    var visual = b.cover
+      ? '<img class="lib-cover" src="' + b.cover.replace(/"/g, '&quot;') + '" alt="" onerror="this.style.display=\'none\';this.nextElementSibling&&(this.nextElementSibling.style.display=\'block\')"><div class="lib-icon" style="display:none">\u{1F4D6}</div>'
+      : '<div class="lib-icon">\u{1F4D6}</div>';
+    var bg = b.cover ? 'background:#1f2937' : 'background:' + (b.color || '#2563eb');
+    html += '<div class="lib-card' + (b.cover ? ' lib-card-cover' : '') + '" data-book="' + b.id + '" style="' + bg + '" role="button" tabindex="0" aria-label="Open book: ' + b.title + '">';
+    html += sampleTag;
+    html += visual;
     html += '<div class="lib-title">' + b.title + '</div>';
     html += '<div class="lib-meta">' + (b.chapterCount || 0) + ' chapters' + dueBadge + '</div>';
     html += expiryBadge;
