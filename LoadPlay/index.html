@@ -958,6 +958,34 @@ body.lp-paging #lp-page{display:block}
 .lp-page-card h3{font-size:15px;font-weight:700;color:#fff;margin:0 0 4px}
 .lp-page-card p{font-size:13px;color:var(--text2);line-height:1.55;margin:0}
 
+/* v44 — Profile editing page (Tier 1.1) */
+.lp-pe-banner{position:relative;width:100%;aspect-ratio:5/1;border-radius:12px;background:linear-gradient(135deg,#1a1a2e,#0a1535);overflow:hidden;border:1px solid var(--border);margin:0 0 14px}
+.lp-pe-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.lp-pe-banner .lp-pe-banner-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.lp-pe-avatar-row{display:flex;align-items:center;gap:14px;margin:-50px 0 18px;padding:0 14px;position:relative;z-index:2}
+.lp-pe-avatar{position:relative;width:96px;height:96px;border-radius:50%;background:#0a1020;border:3px solid var(--bg);overflow:hidden;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.lp-pe-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.lp-pe-avatar .lp-pe-avatar-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:30px;background:linear-gradient(135deg,var(--violet),var(--cyan))}
+.lp-pe-actions{display:flex;flex-wrap:wrap;gap:8px}
+.lp-pe-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:18px;background:var(--bg3);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;border:1px solid var(--border)}
+.lp-pe-btn:hover{background:var(--bg4)}
+.lp-pe-btn input[type=file]{display:none}
+.lp-pe-btn.danger{background:transparent;color:#ff6e6e;border-color:rgba(255,110,110,.4)}
+.lp-pe-form{display:flex;flex-direction:column;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.lp-pe-field{display:flex;flex-direction:column;gap:6px}
+.lp-pe-label{font-size:12.5px;font-weight:700;color:#fff;letter-spacing:.02em}
+.lp-pe-help{font-size:11.5px;color:var(--text3);line-height:1.5}
+.lp-pe-input{width:100%;padding:10px 12px;background:#0a0e18;border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
+.lp-pe-input:focus{outline:none;border-color:var(--cyan)}
+.lp-pe-textarea{min-height:96px;resize:vertical}
+.lp-pe-counter{font-size:11px;color:var(--text3);text-align:right}
+.lp-pe-save-row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.lp-pe-save{padding:10px 22px;border-radius:22px;background:var(--red);color:#fff;font-weight:800;font-size:13.5px;cursor:pointer;border:0}
+.lp-pe-save:hover{background:#cc0028}
+.lp-pe-cancel{padding:10px 18px;border-radius:22px;background:transparent;color:var(--text2);font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid var(--border)}
+.lp-pe-saved-flash{display:inline-block;margin-left:10px;color:#4ade80;font-size:12px;font-weight:700;opacity:0;transition:opacity .2s}
+.lp-pe-saved-flash.on{opacity:1}
+
 /* Marketplace tiles (Daz/Poser-style grid, our color scheme) */
 .lp-mp-cats{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
 .lp-mp-cat{padding:6px 12px;border-radius:18px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12.5px;font-weight:600;cursor:pointer}
@@ -2502,6 +2530,154 @@ window.addEventListener('online',  () => toast('Back online'));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // ── Profile (Tier 1.1) ───────────────────────────────────────
+  // Profile edits are stored in lp_profile (separate from lp_user so
+  // impersonation flow doesn't clobber the real user's saved profile).
+  // Avatar + banner are stashed as data: URLs so they survive offline.
+  var LP_PROFILE_KEY = 'lp_profile';
+  var LP_PROFILE_MAX_BYTES = 1500000; // ~1.5 MB total per image — keeps localStorage healthy
+  function readProfile() {
+    try { return JSON.parse(localStorage.getItem(LP_PROFILE_KEY) || 'null') || {}; }
+    catch (e) { return {}; }
+  }
+  function writeProfile(p) {
+    try { localStorage.setItem(LP_PROFILE_KEY, JSON.stringify(p)); }
+    catch (e) { try { window.toast('Profile too large — try a smaller image.'); } catch (_) {} }
+  }
+  function readFileAsDataURL(file, cb) {
+    if (!file) { cb(null); return; }
+    if (file.size > LP_PROFILE_MAX_BYTES) {
+      try { window.toast('Image is over 1.5 MB. Pick a smaller one.'); } catch (_) {}
+      cb(null); return;
+    }
+    var rd = new FileReader();
+    rd.onload = function () { cb(rd.result); };
+    rd.onerror = function () { cb(null); };
+    rd.readAsDataURL(file);
+  }
+  function renderProfileEdit() {
+    closeSidebarSafe();
+    clearViews();
+    document.body.classList.add('lp-paging');
+    var pg = $$('lp-page'); if (pg) pg.hidden = false;
+    $$('lp-page-title').textContent = 'Edit profile';
+    $$('lp-page-blurb').textContent = 'Display name, handle, bio, banner, and avatar. Saved locally on this device.';
+    var p = readProfile();
+    var u = (typeof readUser === 'function' ? readUser() : null) || {};
+    var name   = p.displayName || u.name     || '';
+    var handle = p.handle      || (u.user ? '@' + u.user.replace(/^@/, '') : '');
+    var bio    = p.bio         || '';
+    var avatar = p.avatar      || '';
+    var banner = p.banner      || '';
+    var initials = (name || 'LP').split(/\s+/).map(function (w) { return (w[0] || '').toUpperCase(); }).join('').slice(0, 2);
+    var html =
+      '<div class="lp-pe-banner" id="lpPeBanner">' +
+        (banner ? '<img id="lpPeBannerImg" src="' + banner + '" alt="">' : '<div class="lp-pe-banner-empty">No banner uploaded</div>') +
+      '</div>' +
+      '<div class="lp-pe-avatar-row">' +
+        '<div class="lp-pe-avatar" id="lpPeAvatar">' +
+          (avatar ? '<img id="lpPeAvatarImg" src="' + avatar + '" alt="">' : '<div class="lp-pe-avatar-empty">' + initials + '</div>') +
+        '</div>' +
+        '<div class="lp-pe-actions">' +
+          '<label class="lp-pe-btn"><input type="file" accept="image/*" id="lpPeAvatarInput">Upload avatar</label>' +
+          '<label class="lp-pe-btn"><input type="file" accept="image/*" id="lpPeBannerInput">Upload banner</label>' +
+          (avatar || banner ? '<button class="lp-pe-btn danger" type="button" id="lpPeClearImgs">Remove images</button>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="lp-pe-form">' +
+        '<div class="lp-pe-field">' +
+          '<label class="lp-pe-label" for="lpPeName">Display name</label>' +
+          '<input class="lp-pe-input" id="lpPeName" maxlength="40" value="' + name.replace(/"/g, '&quot;') + '" placeholder="Your public name">' +
+        '</div>' +
+        '<div class="lp-pe-field">' +
+          '<label class="lp-pe-label" for="lpPeHandle">Handle</label>' +
+          '<input class="lp-pe-input" id="lpPeHandle" maxlength="24" value="' + handle.replace(/"/g, '&quot;') + '" placeholder="@yourhandle">' +
+          '<div class="lp-pe-help">Used in your URL and tagged comments. Letters, numbers, underscore.</div>' +
+        '</div>' +
+        '<div class="lp-pe-field">' +
+          '<label class="lp-pe-label" for="lpPeBio">Bio</label>' +
+          '<textarea class="lp-pe-input lp-pe-textarea" id="lpPeBio" maxlength="280" placeholder="What you make in 280 characters or less.">' + bio.replace(/</g, '&lt;') + '</textarea>' +
+          '<div class="lp-pe-counter" id="lpPeBioCount">' + bio.length + ' / 280</div>' +
+        '</div>' +
+        '<div class="lp-pe-save-row">' +
+          '<button class="lp-pe-cancel" type="button" id="lpPeCancel">Cancel</button>' +
+          '<button class="lp-pe-save" type="button" id="lpPeSave">Save profile</button>' +
+          '<span class="lp-pe-saved-flash" id="lpPeSaved">Saved</span>' +
+        '</div>' +
+      '</div>';
+    $$('lp-page-extra').innerHTML = html;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Wire interactions.
+    var bioEl = $$('lpPeBio');
+    var counterEl = $$('lpPeBioCount');
+    if (bioEl && counterEl) {
+      bioEl.addEventListener('input', function () { counterEl.textContent = bioEl.value.length + ' / 280'; });
+    }
+    var avInput = $$('lpPeAvatarInput');
+    if (avInput) avInput.addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      readFileAsDataURL(f, function (data) {
+        if (!data) return;
+        var box = $$('lpPeAvatar'); if (!box) return;
+        box.innerHTML = '<img id="lpPeAvatarImg" src="' + data + '" alt="">';
+        box.setAttribute('data-pending', '1');
+        box.setAttribute('data-pending-src', data);
+      });
+    });
+    var bnInput = $$('lpPeBannerInput');
+    if (bnInput) bnInput.addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      readFileAsDataURL(f, function (data) {
+        if (!data) return;
+        var box = $$('lpPeBanner'); if (!box) return;
+        box.innerHTML = '<img id="lpPeBannerImg" src="' + data + '" alt="">';
+        box.setAttribute('data-pending', '1');
+        box.setAttribute('data-pending-src', data);
+      });
+    });
+    var clearBtn = $$('lpPeClearImgs');
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      var avBox = $$('lpPeAvatar'), bnBox = $$('lpPeBanner');
+      if (avBox) { avBox.innerHTML = '<div class="lp-pe-avatar-empty">' + initials + '</div>'; avBox.setAttribute('data-pending', '1'); avBox.setAttribute('data-pending-src', ''); }
+      if (bnBox) { bnBox.innerHTML = '<div class="lp-pe-banner-empty">No banner uploaded</div>'; bnBox.setAttribute('data-pending', '1'); bnBox.setAttribute('data-pending-src', ''); }
+    });
+    $$('lpPeCancel').addEventListener('click', function () { showPage(PAGES['creator-profile']); });
+    $$('lpPeSave').addEventListener('click', function () {
+      var newName  = ($$('lpPeName').value || '').trim();
+      var newHndl  = ($$('lpPeHandle').value || '').trim().replace(/^@*/, '@').replace(/@@+/, '@');
+      if (newHndl === '@') newHndl = '';
+      var newBio   = ($$('lpPeBio').value || '').slice(0, 280);
+      // Resolve images: if pending dataset present, use it; otherwise keep existing.
+      var avBox = $$('lpPeAvatar');
+      var bnBox = $$('lpPeBanner');
+      var newAvatar = avatar, newBanner = banner;
+      if (avBox && avBox.getAttribute('data-pending') === '1') newAvatar = avBox.getAttribute('data-pending-src') || '';
+      if (bnBox && bnBox.getAttribute('data-pending') === '1') newBanner = bnBox.getAttribute('data-pending-src') || '';
+      var saved = {
+        displayName: newName,
+        handle: newHndl,
+        bio: newBio,
+        avatar: newAvatar,
+        banner: newBanner,
+        updatedAt: new Date().toISOString()
+      };
+      writeProfile(saved);
+      // Mirror display name + avatar onto lp_user so the topnav circle
+      // and existing UI surfaces pick them up immediately.
+      try {
+        var cur = (typeof readUser === 'function' ? readUser() : null) || {};
+        cur.name   = newName || cur.name;
+        cur.avatar = newAvatar || cur.avatar;
+        if (typeof writeUser === 'function') writeUser(cur);
+      } catch (e) {}
+      var flash = $$('lpPeSaved');
+      if (flash) { flash.classList.add('on'); setTimeout(function () { flash.classList.remove('on'); }, 1400); }
+      try { if (typeof refreshTopnavAvatar === 'function') refreshTopnavAvatar(); } catch (e) {}
+    });
+  }
+  // Expose so other modules can deep-link.
+  window.__lpRenderProfileEdit = renderProfileEdit;
+
   // ── Page registry (generic cards) ────────────────────────────
   function cards(arr) {
     return arr.map(function (c) {
@@ -2532,11 +2708,12 @@ window.addEventListener('online',  () => toast('Back online'));
     },
     'creator-profile': {
       title: 'Creator Profile',
-      blurb: 'Your display name, banner, drafts, and published projects all live here. Sign up as a Creator to set one up.',
-      extra: cards([
-        { t: 'Display name & banner', b: 'A public name and a banner image people see on your creator page.' },
-        { t: 'Published projects',     b: 'Everything you have published shows up here, newest first.' },
-        { t: 'Drafts',                 b: 'Unpublished work you can keep iterating on before going live.' }
+      blurb: 'Your display name, banner, avatar, and bio. Edit them here — everything you save is shown publicly on your creator page.',
+      extra: '<div style="margin:0 0 14px"><button class="lp-pe-save" data-lp-act="profile-edit" type="button">Edit profile</button></div>' + cards([
+        { t: 'Display name & handle', b: 'A public name and an @handle people use to find you.' },
+        { t: 'Banner & avatar',       b: 'A wide banner across the top of your page plus a round avatar that follows you around the app.' },
+        { t: 'Bio',                   b: 'A short description (up to 280 characters) that introduces what you make.' },
+        { t: 'Published projects',    b: 'Everything you have published shows up below the bio, newest first.' }
       ])
     },
     'drafts': {
@@ -2909,6 +3086,7 @@ window.addEventListener('online',  () => toast('Back online'));
       case 'upload-wizard':  { var b = $$('uploadBtn'); if (b) b.click(); return; }
       case 'drafts':         showPage(PAGES.drafts); return;
       case 'creator-profile': showPage(PAGES['creator-profile']); return;
+      case 'profile-edit':    renderProfileEdit(); return;
       case 'rights':         showPage(PAGES.rights); return;
       case 'clean-stream':   showPage(PAGES['clean-stream']); return;
       case 'safety-scan':    showPage(PAGES['safety-scan']); return;
@@ -4169,6 +4347,15 @@ window.addEventListener('online',  () => toast('Back online'));
         btn.innerHTML = '<span class="lp-mock-avatar" style="' + (window.lpAvatarVars ? window.lpAvatarVars('topnav-' + m.id) : '') + '"><img src="' + m.avatar + '" alt="" loading="lazy" onerror="this.parentElement&&this.parentElement.remove()"></span>';
         return;
       }
+    }
+    // v44 — fall through to the user's saved profile avatar (Tier 1.1)
+    // when no impersonation override is active.
+    var p = null;
+    try { p = JSON.parse(localStorage.getItem('lp_profile') || 'null'); } catch (e) {}
+    if (p && p.avatar) {
+      btn.style.cssText = '';
+      btn.innerHTML = '<img src="' + p.avatar + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%">';
+      return;
     }
     btn.textContent = 'LP';
     btn.style.cssText = '';
