@@ -270,22 +270,22 @@ button,[role="button"]{min-height:48px}
 <div id="app">
 
   <div class="app-topbar">
-    <div class="topbar-title">✦ Prompt <span class="ac">Studio</span></div>
-    <button class="provider-pill" id="pill" onclick="openSettings()">⚡ Free</button>
-    <button class="nav-btn" id="clear-btn" title="Clear">🗑</button>
-    <button class="nav-btn" onclick="openSettings()" title="Settings">⚙️</button>
+    <div class="topbar-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;vertical-align:-3px"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/></svg> Prompt <span class="ac">Studio</span></div>
+    <button class="provider-pill" id="pill" onclick="openSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;vertical-align:-2px"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10"/></svg> Free</button>
+    <button class="nav-btn" id="clear-btn" title="Clear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+    <button class="nav-btn" onclick="openSettings()" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
   </div>
 
   <!-- Setup banner -->
   <div id="setup-banner" class="banner setup on">
-    <span>🔑</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:-3px"><circle cx="8" cy="14" r="4"/><path d="M11 11l9-9"/><path d="M18 4l3 3"/><path d="M15 7l3 3"/></svg></span>
     <span>Choose a free AI provider to begin</span>
     <button onclick="openSettings()">Set Up Free</button>
   </div>
 
   <!-- Fallback banner (shown when a fallback was used) -->
   <div id="fallback-banner" class="banner fallback">
-    <span>⚡</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:-3px"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10"/></svg></span>
     <span id="fallback-msg">Switched provider for this request</span>
   </div>
 
@@ -312,13 +312,13 @@ button,[role="button"]{min-height:48px}
       <div class="upload-prev">
         <img id="img-thumb" src="" alt="">
         <span class="upn" id="img-name"></span>
-        <button id="scene-lock-btn" class="scene-lock-btn" type="button" onclick="toggleSceneLock()" aria-label="Toggle Scene Lock"><span id="scene-lock-icon">🔒</span> <span id="scene-lock-lbl">Scene</span></button>
-        <button class="upr" onclick="clearImage()">✕</button>
+        <button id="scene-lock-btn" class="scene-lock-btn" type="button" onclick="toggleSceneLock()" aria-label="Toggle Scene Lock"><span id="scene-lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;vertical-align:-2px"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span> <span id="scene-lock-lbl">Scene</span></button>
+        <button class="upr" onclick="clearImage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
       </div>
     </div>
     <div class="input-row">
-      <button class="ia" onclick="document.getElementById('file-input').click()" title="Upload image">🖼</button>
-      <button class="ia" id="mask-btn" onclick="openMask()" title="Paint mask (define edit area)" disabled>🖌</button>
+      <button class="ia" onclick="document.getElementById('file-input').click()" title="Upload image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><polyline points="21 15 16 10 5 21"/></svg></button>
+      <button class="ia" id="mask-btn" onclick="openMask()" title="Paint mask (define edit area)" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
       <input type="file" id="file-input" accept="image/*">
       <textarea id="prompt-input" rows="1" placeholder="Describe what you want…"></textarea>
       <button id="send-btn" disabled>↑</button>
@@ -329,10 +329,10 @@ button,[role="button"]{min-height:48px}
 <!-- Mask Painter overlay (Editor Tool — NOT an AI provider) -->
 <div id="mask-overlay" class="mask-overlay hidden" role="dialog" aria-label="Mask painter">
   <div class="mask-toolbar">
-    <button class="nav-btn" onclick="closeMask()" aria-label="Cancel">✕</button>
+    <button class="nav-btn" onclick="closeMask()" aria-label="Cancel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
     <span class="mask-title">Paint area to edit</span>
-    <button class="seg-btn active" data-tool="brush" onclick="setMaskTool('brush', this)" aria-label="Brush">🖌</button>
-    <button class="seg-btn"        data-tool="eraser" onclick="setMaskTool('eraser', this)" aria-label="Eraser">⌫</button>
+    <button class="seg-btn active" data-tool="brush" onclick="setMaskTool('brush', this)" aria-label="Brush"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
+    <button class="seg-btn"        data-tool="eraser" onclick="setMaskTool('eraser', this)" aria-label="Eraser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M21 21H7l-4-4 9-9 8 8z"/><path d="M14 6l4 4"/></svg></button>
     <input type="range" id="mask-size" min="6" max="100" value="36" aria-label="Brush size">
     <button class="nav-btn" onclick="clearMask()" aria-label="Clear">Clear</button>
     <button class="nav-btn mask-done" onclick="doneMask()" aria-label="Done">Done</button>
@@ -346,8 +346,8 @@ button,[role="button"]{min-height:48px}
 <div id="settings-overlay" onclick="closeSettings()"></div>
 <div id="settings-panel">
   <div class="panel-head">
-    <h3>⚙️ Settings</h3>
-    <button class="panel-close" onclick="closeSettings()">✕</button>
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;vertical-align:-3px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg> Settings</h3>
+    <button class="panel-close" onclick="closeSettings()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
   </div>
 
   <!-- Key health diagnostic -->

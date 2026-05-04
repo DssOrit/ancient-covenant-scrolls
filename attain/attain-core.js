@@ -70,12 +70,10 @@ var ATTAIN_SAMPLE_ID = 'book_sample_v1';
 function ensureAttainSampleInLibrary() {
   // If the user actively deleted the sample, respect that — flag in LS.
   try { if (localStorage.getItem('attain_sample_dismissed') === '1') return; } catch (e) {}
-  var lib = getLibrary();
-  for (var i = 0; i < lib.length; i++) {
-    if (lib[i].id === ATTAIN_SAMPLE_ID) return; // already present
-  }
-  // Pull the packaged sample once; bail quietly if the file isn't there
-  // yet (so the app still boots cleanly between PWA-book uploads).
+  // Always fetch the sample-book.json to compare contentVersion. If
+  // the user has an OLDER version cached in their library (e.g. v66's
+  // 7-chapter sample is still saved), re-seed with the newer content.
+  // If versions match, skip. New users with no sample also seed.
   try {
     if (typeof fetch !== 'function') return;
     fetch('data/sample-book.json', { cache: 'no-store' }).then(function (r) {
@@ -84,10 +82,19 @@ function ensureAttainSampleInLibrary() {
     }).then(function (pkg) {
       if (!pkg || !pkg.book || !pkg.chapters) return;
       try { if (localStorage.getItem('attain_sample_dismissed') === '1') return; } catch (e) {}
+      var pkgVer = pkg.book.contentVersion || pkg.book.dateAdded || '1';
+      var savedVer = null;
+      try { savedVer = localStorage.getItem('attain_sample_content_version'); } catch (e) {}
       var lib2 = getLibrary();
+      var present = false;
       for (var j = 0; j < lib2.length; j++) {
-        if (lib2[j].id === ATTAIN_SAMPLE_ID) return;
+        if (lib2[j].id === ATTAIN_SAMPLE_ID) { present = true; break; }
       }
+      // Skip only when the sample is already present AND the saved
+      // version matches the package version. Otherwise re-seed.
+      if (present && savedVer === pkgVer) return;
+      // Re-seed: overwrite chapters + terms + quizbank with the new
+      // package data. saveBook will overwrite the meta in place.
       var meta = {};
       for (var k in pkg.book) meta[k] = pkg.book[k];
       meta.id = ATTAIN_SAMPLE_ID;
@@ -103,6 +110,9 @@ function ensureAttainSampleInLibrary() {
       if (pkg.quizBank && pkg.quizBank.length) {
         try { localStorage.setItem('attain_quizbank_' + ATTAIN_SAMPLE_ID, JSON.stringify(pkg.quizBank)); } catch (e) {}
       }
+      // Pin the package version we just seeded so the next launch
+      // skips the work unless content changes again.
+      try { localStorage.setItem('attain_sample_content_version', pkgVer); } catch (e) {}
       // Refresh the library screen if it's already mounted.
       try { if (typeof showLibrary === 'function') showLibrary(); } catch (e) {}
     }).catch(function () {});
