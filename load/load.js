@@ -9115,7 +9115,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17ek</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17el</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -17714,6 +17714,47 @@ window.LoadAudioFix = {
     var p = new URLSearchParams(location.search);
     var mode = p.get('lsedit');
     if(!mode) return;
+
+    // === Hide every Load Main UI element. The page becomes a pure
+    //     editor host: black background + spinner -> editor mount.
+    //     Without this the LoadStudio iframe briefly flashes Load
+    //     Main's home / import screens, which the user reads as
+    //     "I got pushed off LoadStudio".
+    function hideLoadMainShell(){
+      var skinId = '__lsHideLoadMain';
+      if(document.getElementById(skinId)) return;
+      var st = document.createElement('style');
+      st.id = skinId;
+      st.textContent =
+        'html,body{background:#0a0a14 !important;margin:0 !important;padding:0 !important;overflow:hidden !important;color:#fff !important;}' +
+        'body > .install-banner,body > #install-modal,#home-screen,#library-screen,#import-screen,#viewer-screen,#create-screen,#editor-screen,#notes-screen,#note-editor,#bookmarks-drawer,#notes-drawer,#aids-panel,#aids-scrim,#focus-line,#confirm-modal,#workspace-hub,#install-banner,.app-topbar,header.topbar,header.app-topbar,.bottom-nav,.toast,#toast{display:none !important;}' +
+        'body{display:block !important;}' +
+        '#__lsBoot{position:fixed;inset:0;z-index:4000;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cfcfdc;font:500 14px -apple-system,Inter,system-ui,sans-serif;gap:14px;background:#0a0a14;}' +
+        '#__lsBoot .lsbs{width:42px;height:42px;border:3px solid rgba(179,136,255,.18);border-top-color:#b388ff;border-radius:50%;animation:lsbspin 0.9s linear infinite;}' +
+        '@keyframes lsbspin{to{transform:rotate(360deg);}}' +
+        '#__loadVideoEdit{position:fixed !important;inset:0 !important;z-index:5000 !important;}';
+      (document.head || document.documentElement).appendChild(st);
+      // Spinner (removed when the editor mounts).
+      if(!document.getElementById('__lsBoot')){
+        var sp = document.createElement('div');
+        sp.id = '__lsBoot';
+        sp.innerHTML = '<div class="lsbs" aria-hidden="true"></div><div>Editing Bay loading...</div>';
+        document.body && document.body.appendChild(sp);
+        // When the editor wraps mounts, drop the spinner.
+        var poll = setInterval(function(){
+          if(document.getElementById('__loadVideoEdit')){
+            var s = document.getElementById('__lsBoot'); if(s) s.remove();
+            clearInterval(poll);
+          }
+        }, 200);
+        setTimeout(function(){clearInterval(poll); var s = document.getElementById('__lsBoot'); if(s) s.remove();}, 30000);
+      }
+    }
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', hideLoadMainShell);
+    } else {
+      hideLoadMainShell();
+    }
 
     // ----------------------------- create-from-scratch flow ---------
     if(mode === 'create'){
