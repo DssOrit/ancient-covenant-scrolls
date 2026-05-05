@@ -47,6 +47,8 @@
   ];
 
   let state = loadState();
+  let currentRepairPreview = null;
+
   let current = {
     uploadedFiles: [],
     zipEntries: [],
@@ -82,6 +84,7 @@
   function saveState() {
     state.activeProject = current.project;
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    installRepairPreviewSafetyLayer();
     renderAll();
   }
 
@@ -214,6 +217,8 @@
     bindIf('#downloadHelpGuideBtn', 'click', downloadHelpGuide);
     bindIf('#downloadValidatorDirectionsBtn', 'click', downloadValidatorDirections);
     bindIf('#copyNextStepsBtn', 'click', copyValidatorNextSteps);
+    bindIf('#downloadRepairPreviewBtn', 'click', downloadRepairPreview);
+    bindIf('#clearRepairPreviewBtn', 'click', clearRepairPreview);
   }
 
   function showView(view) {
@@ -1499,6 +1504,167 @@
   function downloadLaunchChecklistV4() {
     const text = `# Load Tasks Launch Checklist\n\n- index.html at published root\n- manifest.json loads\n- service-worker.js loads\n- assets folder uploaded\n- splash image visible\n- Home Screen icon visible\n- dashboard opens\n- validator runs\n- Repair Command Center opens\n- Project Vault opens\n- Focus Mode opens\n- export buttons download files\n- no build marked Complete unless verified\n`;
     downloadText('Load_Tasks_Launch_Checklist_v4.md', text);
+  }
+
+
+
+  function installRepairPreviewSafetyLayer() {
+    document.addEventListener('click', function(event) {
+      const button = event.target.closest('button');
+      if (!button) return;
+      const label = (button.textContent || '').trim().toLowerCase();
+      const card = button.closest('.repair-card, .issue-card, .panel, article');
+      const cardText = card ? (card.textContent || '') : '';
+
+      if (label === 'prepare fix') {
+        showRepairPreview(buildRepairPreviewFromCard(cardText));
+      }
+
+      if (label === 'apply safe patch' && isSensitiveRepairText(cardText) && !currentRepairPreview) {
+        event.preventDefault();
+        event.stopPropagation();
+        showRepairPreview(buildRepairPreviewFromCard(cardText));
+        toast('Preview required before applying this repair.');
+        return false;
+      }
+    }, true);
+  }
+
+  function isSensitiveRepairText(text) {
+    return /duplicate html ids|duplicate id|placeholder links|static pwa csp|content security policy|pwa structure/i.test(text || '');
+  }
+
+  function buildRepairPreviewFromCard(text) {
+    const raw = text || '';
+    let kind = 'General repair';
+    let risk = 'Safe with Review';
+    let changedFiles = ['index.html'];
+    let steps = ['Review the repair card.', 'Confirm changed files.', 'Apply only if the confidence label allows it.'];
+    let qa = ['Run the validator again after applying.'];
+
+    if (/flatten|github pages|nested folder/i.test(raw)) {
+      kind = 'Flatten for GitHub Pages';
+      changedFiles = ['index.html', 'manifest.json', 'service-worker.js', '.nojekyll', '404.html', 'assets/'];
+      steps = ['Find the app root containing index.html.', 'Move app files to the export root.', 'Add .nojekyll.', 'Add 404.html fallback.', 'Generate GitHub upload instructions.'];
+      qa = ['Open index.html from the exported root.', 'Confirm the GitHub Pages URL does not 404.', 'Confirm splash image appears.'];
+    } else if (/readme/i.test(raw)) {
+      kind = 'Add README_OPEN_FIRST.md';
+      risk = 'Safe';
+      changedFiles = ['README_OPEN_FIRST.md'];
+      steps = ['Add opening instructions.', 'Add GitHub upload instructions.', 'Add troubleshooting steps.'];
+      qa = ['Confirm README_OPEN_FIRST.md exists in the export.'];
+    } else if (/security/i.test(raw) && !/content security policy|csp/i.test(raw)) {
+      kind = 'Add SECURITY.md';
+      risk = 'Safe';
+      changedFiles = ['SECURITY.md'];
+      steps = ['Add security notes.', 'Add upload caution rules.', 'Add token storage warning.'];
+      qa = ['Confirm SECURITY.md exists in the export.'];
+    } else if (/ipad|home screen|apple-touch-icon|apple icon/i.test(raw)) {
+      kind = 'Fix iPad Home Screen icon';
+      changedFiles = ['index.html', 'apple-touch-icon.png', 'assets/icons/'];
+      steps = ['Copy a valid icon to root as apple-touch-icon.png.', 'Add Apple touch icon links to index.html.', 'Add mobile web app metadata.'];
+      qa = ['Open /apple-touch-icon.png directly.', 'Delete old Home Screen shortcut.', 'Add site to Home Screen again.'];
+    } else if (/duplicate html ids|duplicate id/i.test(raw)) {
+      kind = 'Fix duplicate HTML IDs';
+      changedFiles = ['index.html'];
+      steps = ['Scan HTML for repeated id values.', 'Keep the first instance unchanged.', 'Rename later duplicates with suffixes such as _2 and _3.', 'Update matching label for attributes where safe.', 'Flag JavaScript references for review.'];
+      qa = ['Confirm no duplicate IDs remain.', 'Confirm form labels still focus the correct fields.', 'Test booking and form fields manually.'];
+    } else if (/placeholder links|href="#"|empty links|javascript:void/i.test(raw)) {
+      kind = 'Convert placeholder links';
+      risk = 'Instruction Only';
+      changedFiles = ['index.html', 'app.js'];
+      steps = ['Detect href="#" and javascript:void(0) links.', 'Convert only obvious placeholders to buttons.', 'Add data-action attributes.', 'Add handler stubs only when real behavior is unknown.', 'Export developer tasks for true missing functions.'];
+      qa = ['Click every converted button.', 'Confirm no user-facing feature is falsely marked complete.', 'Confirm stubs are not treated as finished functions.'];
+    } else if (/static pwa csp|content security policy|csp/i.test(raw)) {
+      kind = 'Add Static PWA CSP';
+      changedFiles = ['index.html'];
+      steps = ['Insert a CSP meta tag into the head.', 'Allow self-hosted scripts, styles, images, media, data, and blob assets.', 'Allow api.github.com only if GitHub push is enabled.', 'Block object embeds and frame ancestors.'];
+      qa = ['Open the site after applying CSP.', 'Confirm buttons and downloads still work.', 'Confirm needed API calls are not blocked.'];
+    } else if (/pwa structure/i.test(raw)) {
+      kind = 'PWA structure review';
+      risk = 'Developer Required';
+      changedFiles = ['index.html', 'manifest.json', 'service-worker.js'];
+      steps = ['Review root file placement.', 'Confirm manifest and service worker paths.', 'Confirm assets folder is present.', 'Export a developer task if missing pieces remain.'];
+      qa = ['Open live hosted URL.', 'Confirm install behavior.', 'Confirm offline reload after first visit.'];
+    }
+
+    return {
+      kind,
+      risk,
+      changedFiles,
+      steps,
+      qa,
+      generatedAt: new Date().toISOString(),
+      status: (risk === 'Instruction Only' || risk === 'Developer Required') ? 'Do not auto-apply' : 'Ready to apply after review'
+    };
+  }
+
+  function showRepairPreview(preview) {
+    currentRepairPreview = preview;
+    const output = $('#repairPreviewOutput');
+    const status = $('#repairPreviewStatus');
+    if (status) {
+      status.textContent = preview.status;
+      status.className = 'badge ' + badgeClass(preview.status);
+    }
+    if (output) {
+      output.innerHTML = `
+        <div class="preview-block">
+          <h3>${escapeHtml(preview.kind)}</h3>
+          <div class="badge-row">
+            <span class="badge ${badgeClass(preview.risk)}">${escapeHtml(preview.risk)}</span>
+            <span class="badge info">Preview generated</span>
+          </div>
+          <h4>Files likely changed</h4>
+          <ul>${preview.changedFiles.map(file => `<li>${escapeHtml(file)}</li>`).join('')}</ul>
+          <h4>Planned steps</h4>
+          <ol>${preview.steps.map(step => `<li>${escapeHtml(step)}</li>`).join('')}</ol>
+          <h4>QA required after patch</h4>
+          <ol>${preview.qa.map(step => `<li>${escapeHtml(step)}</li>`).join('')}</ol>
+          <p class="warning-text">Status after applying must be Patched, Needs QA until live testing passes.</p>
+        </div>
+      `;
+    }
+    const panel = $('#repairPreviewPanel');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function downloadRepairPreview() {
+    if (!currentRepairPreview) {
+      toast('No repair preview to download yet.');
+      return;
+    }
+    const lines = [
+      '# Load Tasks Repair Preview',
+      '',
+      `Repair: ${currentRepairPreview.kind}`,
+      `Risk: ${currentRepairPreview.risk}`,
+      `Status: ${currentRepairPreview.status}`,
+      `Generated: ${currentRepairPreview.generatedAt}`,
+      '',
+      '## Files likely changed',
+      ...currentRepairPreview.changedFiles.map(file => `- ${file}`),
+      '',
+      '## Planned steps',
+      ...currentRepairPreview.steps.map((step, index) => `${index + 1}. ${step}`),
+      '',
+      '## QA required',
+      ...currentRepairPreview.qa.map((step, index) => `${index + 1}. ${step}`),
+      '',
+      'Locked rule: Patched items remain Patched, Needs QA until live testing passes.'
+    ];
+    downloadText('Load_Tasks_Repair_Preview.md', lines.join('\n'));
+  }
+
+  function clearRepairPreview() {
+    currentRepairPreview = null;
+    const output = $('#repairPreviewOutput');
+    const status = $('#repairPreviewStatus');
+    if (output) output.textContent = 'No repair preview yet. Tap Prepare Fix on a repair card.';
+    if (status) {
+      status.textContent = 'Preview Required';
+      status.className = 'badge warn';
+    }
   }
 
 

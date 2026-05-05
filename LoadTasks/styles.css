@@ -541,3 +541,40 @@ body.simple-mode .help-grid {
     grid-template-columns: 1fr;
   }
 }
+
+/* Repair Preview Safety v4.3 */
+.repair-preview-panel {
+  border-color: rgba(255,212,0,.46);
+  box-shadow: 0 0 32px rgba(255,212,0,.10);
+  margin: 18px 0;
+}
+.repair-preview-output {
+  min-height: 180px;
+  border: 1px solid var(--line-soft);
+  background: rgba(0,0,0,.20);
+  border-radius: 18px;
+  padding: 16px;
+  color: var(--muted);
+  white-space: normal;
+}
+.preview-block h3 {
+  color: var(--gold);
+  font-size: 1.35rem;
+  margin: 0 0 12px;
+}
+.preview-block h4 {
+  color: var(--text);
+  margin: 16px 0 8px;
+}
+.preview-block ul,
+.preview-block ol {
+  line-height: 1.65;
+  padding-left: 24px;
+}
+.preview-block li {
+  margin-bottom: 4px;
+}
+body.simple-mode .repair-preview-output {
+  font-size: 1.08rem;
+  line-height: 1.8;
+}

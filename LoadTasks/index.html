@@ -253,7 +253,21 @@
           </div>
           <div class="panel">
             <h2>Repair log</h2>
-            <div id="repairLog" class="report-box">No repair action has been prepared yet.</div>
+            
+          <article class="panel repair-preview-panel" id="repairPreviewPanel">
+            <div class="panel-title">
+              <h2>Repair Preview</h2>
+              <span class="badge warn" id="repairPreviewStatus">Preview Required</span>
+            </div>
+            <p class="muted">For duplicate IDs, CSP, placeholder links, and other sensitive repairs, review the plan here before applying anything.</p>
+            <div id="repairPreviewOutput" class="repair-preview-output">No repair preview yet. Tap Prepare Fix on a repair card.</div>
+            <div class="button-row">
+              <button class="secondary-action" id="downloadRepairPreviewBtn">Download Preview</button>
+              <button class="secondary-action" id="clearRepairPreviewBtn">Clear Preview</button>
+            </div>
+          </article>
+
+          <div id="repairLog" class="report-box">No repair action has been prepared yet.</div>
           </div>
         </section>
 
