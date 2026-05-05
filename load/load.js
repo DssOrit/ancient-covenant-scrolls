@@ -206,11 +206,15 @@ window.LoadAudioFix = {
  if (tk === 'size-down' || tk === 'size-up') continue;
  if (NAV_SVG[tk]) tools[j].innerHTML = NAV_SVG[tk];
  }
- // Special-ID library buttons
+ // Special-ID library buttons. We add explicit width / height to the
+ // <svg> so iPad Safari doesn't collapse the icon when the surrounding
+ // CSS rule races the render. innerHTML replacement, not appendChild,
+ // so a stale cache always paints the latest icon.
+ var SVG_HEAD_SIZED = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
  var sb = $('library-search-btn');
- if (sb) sb.innerHTML = SVG_HEAD + '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>';
+ if (sb) sb.innerHTML = SVG_HEAD_SIZED + '<circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg>';
  var cb = $('library-clear-btn');
- if (cb) cb.innerHTML = SVG_HEAD + '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14"/></svg>';
+ if (cb) cb.innerHTML = SVG_HEAD_SIZED + '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M5 6l1 14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-14"/></svg>';
  // Editor topbar themes
  var eds = document.querySelectorAll('button[data-editor-theme]');
  for (var k = 0; k < eds.length; k++) {
@@ -6043,18 +6047,7 @@ window.LoadAudioFix = {
  var clearBtn = $('library-search-clear');
  var input = $('library-search-input');
  if (!btn || !clearBtn || !input) return;
- // Belt-and-suspenders for iPad Safari: bind both pointerdown + click on
- // the toggle button. Some Safari builds drop synthesized clicks on
- // icon-only nav buttons inside sticky headers.
- var toggled = false;
- function tap(e) {
- if (toggled) { toggled = false; return; }
- toggled = true; setTimeout(function () { toggled = false; }, 250);
- e.preventDefault();
- toggleLibrarySearch();
- }
- btn.addEventListener('click', tap);
- btn.addEventListener('pointerdown', tap);
+ btn.addEventListener('click', toggleLibrarySearch);
  clearBtn.addEventListener('click', function () {
  input.value = '';
  searchQuery = '';
@@ -6067,6 +6060,10 @@ window.LoadAudioFix = {
  ['input', 'keyup', 'change', 'search'].forEach(function (ev) {
  input.addEventListener(ev, function (e) { applySearchFromInput(e.target); });
  });
+ // Always-on path: if the user can't see the toggle icon, the search
+ // bar still opens by default so search is reachable without it.
+ var bar = $('library-search');
+ if (bar && !bar.classList.contains('on')) bar.classList.add('on');
  }
  function folderNameFor(id) {
  try {
@@ -9126,7 +9123,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17et</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17eu</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
