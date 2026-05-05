@@ -100,6 +100,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#audiotrim">Audio Trim</a>
   <a href="#imgsize">Image Resize &amp; Crop</a>
   <a href="#ttsvoice">TTS Voiceover</a>
+  <a href="#reel">Reel Composer</a>
+  <a href="#contrast">Color Contrast Checker</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -513,6 +515,32 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Download recorded</strong> for the captured WebM / M4A, or <strong>Download as WAV</strong> for a universal PCM file.</li>
 </ol>
 <a class="open" href="./tts-voiceover.html">Open TTS Voiceover</a>
+</div>
+
+<div class="tool" id="reel">
+<h3>Reel Composer</h3>
+<ol>
+  <li>Build a passage in <strong>Verse to Video</strong> first and tap <strong>Export scene-cards JSON</strong>.</li>
+  <li>Tap <strong>Reel Composer</strong> in workspace Section 6.</li>
+  <li>Drop the scene-cards JSON. Per-scene cards appear with verse + duration + mood.</li>
+  <li>(Optional) Per scene, tap <strong>Image</strong> to attach a photo and <strong>Audio</strong> to attach a take from Voice Recorder. Scenes without an image use a mood-based gradient.</li>
+  <li>Pick aspect (9:16 / 16:9 / 1:1 / 4:5), resolution, frame rate, font, text position, Ken-Burns motion.</li>
+  <li>Tap <strong>Render reel</strong>. The canvas plays each scene with motion + text overlay + audio while <code>MediaRecorder</code> captures it.</li>
+  <li>Tap <strong>Download WebM</strong>. Most editors and social uploads accept WebM directly.</li>
+</ol>
+<a class="open" href="./reel-composer.html">Open Reel Composer</a>
+</div>
+
+<div class="tool" id="contrast">
+<h3>Color Contrast Checker</h3>
+<ol>
+  <li>Tap <strong>Color Contrast Checker</strong> in workspace Section 6.</li>
+  <li>Pick a foreground (text) and a background color. Or paste hex codes directly.</li>
+  <li>The ratio + WCAG pass/fail pills update live for AA normal, AA large, AAA normal, AAA large, UI / graphical.</li>
+  <li>Tap a swatch in the row to set the foreground (or shift+click to set background).</li>
+  <li>Tap <strong>Suggest a passing color</strong> to auto-tune the foreground until the ratio passes AA normal text.</li>
+</ol>
+<a class="open" href="./color-contrast.html">Open Color Contrast Checker</a>
 </div>
 
 <div class="tool" id="acceptance">
