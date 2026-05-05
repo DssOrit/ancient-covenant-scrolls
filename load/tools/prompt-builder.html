@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI Prompt Builder &mdash; Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../book-video/character-bible.js"></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 80px}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.intro h2{margin:0 0 6px;font-size:18px;font-weight:800}
+.intro p{margin:0;color:var(--mute);font-size:13.5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+@media (max-width:700px){.row{grid-template-columns:1fr}}
+.section{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:14px 0}
+.section h3{margin:0 0 10px;font-size:14px;font-weight:800}
+label{display:block;font-size:11.5px;color:var(--mute);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+input,select,textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--border);background:#0a0e18;color:var(--fg);font:inherit;font-size:13px}
+textarea{min-height:64px;resize:vertical;line-height:1.5}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent)}
+.btn.danger{border-color:rgba(255,110,110,.4);color:var(--err)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.preview{background:#0a0e18;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:#dcdce8;line-height:1.55;white-space:pre-wrap;min-height:180px;max-height:420px;overflow:auto}
+.tag{display:inline-block;padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:999px;font-size:11px;font-weight:700;color:var(--fg);cursor:pointer;margin:2px}
+.tag.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1a1a26;color:#fff;padding:10px 16px;border-radius:8px;border:1px solid var(--border);font-size:13px;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
+.toast.on{display:block}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Back to Load
+  </a>
+  <h1>AI Prompt Builder</h1>
+  <a class="back" href="./help.html#prompt" title="How it works">How it works</a>
+</header>
+<div class="wrap">
+<div class="intro">
+  <h2>One block, six layers</h2>
+  <p>Compose a clean, complete AI image prompt: subject + character lock + style + camera + lighting + composition + negatives. Pulls characters from the Character Bible and styles from the Style Library. Output is plain text ready to paste into any provider.</p>
+</div>
+
+<div class="section">
+  <h3>1. Subject</h3>
+  <textarea id="subject" placeholder="What is the image of? e.g. 'a young woman tending lavender at sunrise', 'wide shot of an empty train station at midnight'"></textarea>
+</div>
+
+<div class="section">
+  <h3>2. Character lock (optional)</h3>
+  <select id="char"><option value="">(no character lock)</option></select>
+</div>
+
+<div class="section">
+  <h3>3. Style</h3>
+  <div class="row">
+    <div><label>Pick from preset</label>
+      <select id="stylePreset">
+        <option value="">(custom only)</option>
+        <option>cinematic, anamorphic lens, shallow depth of field, dramatic lighting</option>
+        <option>oil painting, thick impasto brush strokes, classical composition</option>
+        <option>watercolor, wet-on-wet washes, soft pigment bleeds</option>
+        <option>studio Ghibli style, hand-painted, pastoral, soft skies, warm sunlight</option>
+        <option>storybook illustration, soft watercolor, friendly characters, warm color palette</option>
+        <option>renaissance painting, sfumato, chiaroscuro, religious iconography, gold leaf</option>
+        <option>concept art, painterly digital matte, environment design</option>
+        <option>black and white photography, high contrast, fine grain</option>
+        <option>flat vector illustration, minimal palette, geometric shapes, soft shadows</option>
+        <option>botanical illustration, scientific accuracy, ink and watercolor</option>
+        <option>cyberpunk, neon signs, rain-slick streets, ultra-detailed</option>
+        <option>art nouveau, sinuous floral lines, decorative borders</option>
+        <option>3D Pixar style, expressive characters, soft global illumination</option>
+        <option>16-bit pixel art, limited palette, dithering, sharp pixel edges</option>
+      </select>
+    </div>
+    <div><label>Custom additions</label><input id="styleCustom" placeholder="extra style words, comma-separated"></div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>4. Camera</h3>
+  <div class="tag-row" id="camTags"></div>
+</div>
+
+<div class="section">
+  <h3>5. Lighting</h3>
+  <div class="tag-row" id="lightTags"></div>
+</div>
+
+<div class="section">
+  <h3>6. Composition</h3>
+  <div class="tag-row" id="compTags"></div>
+</div>
+
+<div class="section">
+  <h3>7. Negative (what to avoid)</h3>
+  <input id="neg" value="text, watermark, logo, signature, lowres, blurry, extra limbs, distorted hands, deformed face, jpeg artifacts">
+</div>
+
+<div class="section">
+  <h3>Generated prompt</h3>
+  <div class="preview" id="preview"></div>
+  <div class="bar">
+    <button class="btn primary" id="copyBtn">Copy</button>
+    <button class="btn" id="downloadBtn">Download .txt</button>
+    <button class="btn danger" id="resetBtn">Reset all</button>
+  </div>
+</div>
+
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var toastEl = $('toast');
+  function toast(m){ toastEl.textContent = m; toastEl.classList.add('on'); setTimeout(function(){ toastEl.classList.remove('on'); }, 1800); }
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+  function downloadBlob(blob, name){ var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100); }
+
+  var CAM = ['extreme close-up','close-up','medium shot','wide shot','establishing shot','overhead top-down','low-angle hero shot','dutch tilt','tracking shot','dolly zoom','85mm portrait lens','24mm wide lens','35mm anamorphic'];
+  var LIGHT = ['golden hour','blue hour','overcast soft','high-key studio','low-key dramatic','moonlit','firelight','candlelight','rim light','backlit silhouette','volumetric god rays','neon practicals'];
+  var COMP = ['rule of thirds','centered symmetrical','leading lines','negative space','shallow depth of field','deep focus','bokeh background','foreground occlusion','triangular composition','frame within a frame'];
+
+  function paintTags(host, list, key){
+    host.innerHTML = list.map(function(t){
+      var on = (state[key]||[]).indexOf(t) >= 0;
+      return '<span class="tag'+(on?' on':'')+'" data-key="'+key+'" data-t="'+escapeHtml(t)+'">'+escapeHtml(t)+'</span>';
+    }).join('');
+  }
+
+  var state = { camera: ['medium shot'], lighting: ['golden hour'], composition: ['rule of thirds','shallow depth of field'] };
+  paintTags($('camTags'), CAM, 'camera');
+  paintTags($('lightTags'), LIGHT, 'lighting');
+  paintTags($('compTags'), COMP, 'composition');
+
+  document.querySelectorAll('.tag-row').forEach(function(row){
+    row.addEventListener('click', function(e){
+      var t = e.target.closest('.tag'); if (!t) return;
+      var key = t.getAttribute('data-key');
+      var val = t.getAttribute('data-t');
+      state[key] = state[key] || [];
+      var i = state[key].indexOf(val);
+      if (i >= 0) state[key].splice(i, 1);
+      else state[key].push(val);
+      var listMap = { camera: CAM, lighting: LIGHT, composition: COMP };
+      var hostMap = { camera: $('camTags'), lighting: $('lightTags'), composition: $('compTags') };
+      paintTags(hostMap[key], listMap[key], key);
+      render();
+    });
+  });
+
+  function loadCharacters(){ try { return JSON.parse(localStorage.getItem('load_character_bible_v1') || '[]'); } catch(e){ return []; } }
+  function paintCharacters(){
+    var sel = $('char');
+    var current = sel.value;
+    var chars = loadCharacters();
+    sel.innerHTML = '<option value="">(no character lock)</option>' +
+      chars.map(function(c){ return '<option value="'+escapeHtml(c.id)+'">'+escapeHtml(c.name||'(unnamed)')+'</option>'; }).join('');
+    sel.value = current || '';
+  }
+  paintCharacters();
+
+  function build(){
+    var subject = $('subject').value.trim();
+    var charId = $('char').value;
+    var charObj = null;
+    if (charId) { charObj = loadCharacters().find(function(c){ return c.id === charId; }) || null; }
+    var preset = $('stylePreset').value.trim();
+    var custom = $('styleCustom').value.trim();
+    var styleParts = [preset, custom].filter(Boolean).join(', ');
+    var camera = (state.camera||[]).join(', ');
+    var lighting = (state.lighting||[]).join(', ');
+    var composition = (state.composition||[]).join(', ');
+    var neg = $('neg').value.trim();
+
+    var lines = [];
+    if (subject) lines.push('Subject: ' + subject);
+    if (charObj && window.CharacterBibleEngine) {
+      try { lines.push(window.CharacterBibleEngine.characterPrompt(charObj)); } catch(e){}
+    }
+    if (styleParts) lines.push('Style: ' + styleParts);
+    if (camera) lines.push('Camera: ' + camera);
+    if (lighting) lines.push('Lighting: ' + lighting);
+    if (composition) lines.push('Composition: ' + composition);
+    if (neg) lines.push('Negative prompt: ' + neg);
+    return lines.join('\n');
+  }
+
+  function render(){
+    $('preview').textContent = build();
+  }
+
+  ['subject','char','stylePreset','styleCustom','neg'].forEach(function(id){
+    var el = $(id);
+    el.addEventListener('input', render);
+    el.addEventListener('change', render);
+  });
+
+  $('copyBtn').addEventListener('click', function(){
+    var t = build();
+    if (!t) { toast('Nothing to copy.'); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function(){ toast('Copied.'); });
+    else toast('Clipboard unavailable.');
+  });
+  $('downloadBtn').addEventListener('click', function(){
+    var t = build();
+    if (!t) { toast('Nothing to download.'); return; }
+    var blob = new Blob([t], { type:'text/plain' });
+    downloadBlob(blob, 'prompt-' + new Date().toISOString().slice(0,16).replace(/[:T]/g,'-') + '.txt');
+  });
+  $('resetBtn').addEventListener('click', function(){
+    $('subject').value = '';
+    $('char').value = '';
+    $('stylePreset').value = '';
+    $('styleCustom').value = '';
+    $('neg').value = 'text, watermark, logo, signature, lowres, blurry, extra limbs, distorted hands, deformed face, jpeg artifacts';
+    state = { camera: [], lighting: [], composition: [] };
+    paintTags($('camTags'), CAM, 'camera');
+    paintTags($('lightTags'), LIGHT, 'lighting');
+    paintTags($('compTags'), COMP, 'composition');
+    render();
+  });
+
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) paintCharacters(); });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -88,6 +88,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#styles">Style Library</a>
   <a href="#character">Character Bible</a>
   <a href="#upscale">Image Upscaler</a>
+  <a href="#verse">Verse to Video</a>
+  <a href="#prompt">AI Prompt Builder</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -345,6 +347,33 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>For real detail recovery (face restoration, AI-style 4x), the page includes a copy-paste handoff to Hugging Face Spaces (CodeFormer / GFPGAN / Real-ESRGAN).</li>
 </ol>
 <a class="open" href="./image-upscaler.html">Open Image Upscaler</a>
+</div>
+
+<div class="tool" id="verse">
+<h3>Verse to Video</h3>
+<ol>
+  <li>Tap <strong>Verse to Video</strong> in workspace Section 6.</li>
+  <li>Paste a verse, lyric, or short passage. One line per scene.</li>
+  <li>(Optional) Pick a Global style and a Character bible profile so every scene shares look and characters.</li>
+  <li>Pick aspect ratio and seconds per scene.</li>
+  <li>Tap <strong>Build scene cards</strong>. Each line becomes a card with verse text, camera, lighting, mood, duration, and a complete visual prompt.</li>
+  <li>Tap <strong>Copy prompt</strong> on any card to grab one scene; <strong>Copy all prompts</strong> for the full reel; <strong>Export scene-cards JSON</strong> to feed the Book-to-Video engine.</li>
+</ol>
+<a class="open" href="./verse-to-video.html">Open Verse to Video</a>
+</div>
+
+<div class="tool" id="prompt">
+<h3>AI Prompt Builder</h3>
+<ol>
+  <li>Tap <strong>AI Prompt Builder</strong> in workspace Section 6.</li>
+  <li>Type the Subject in plain English.</li>
+  <li>(Optional) Pick a Character bible profile to lock the consistency block in.</li>
+  <li>Pick a Style preset and / or add custom style words.</li>
+  <li>Tap chips to toggle Camera, Lighting, Composition tags. Multi-select allowed.</li>
+  <li>Tweak the Negative-prompt line.</li>
+  <li>The Generated prompt panel updates live. Tap <strong>Copy</strong> or <strong>Download .txt</strong>. Paste into any AI image provider.</li>
+</ol>
+<a class="open" href="./prompt-builder.html">Open AI Prompt Builder</a>
 </div>
 
 <div class="tool" id="acceptance">

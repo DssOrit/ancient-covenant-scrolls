@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17ex`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17ey`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,14 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-05 — verse-to-video + prompt builder)
+- **v17ey — Verse to Video (X-V2V) + AI Prompt Builder**:
+  - **Verse to Video (X-V2V):** new tool at `load/tools/verse-to-video.html`. Paste verse, lyric, scripture line, or short passage; one line per scene. Hooks into Character Bible (consistency lock) + Style Library (global look). Per-line scene card output: verse, camera (heuristic from keywords like "gaze", "wide", "walk"), lighting (dawn/dusk/night/storm/firelight/garden inferred from text), mood (serene/somber/joyful/intense/tender/hopeful from cues), duration, aspect ratio, complete visual prompt. Starter buttons load Psalm 23 / haiku / short-story beat / lyric. Per-card Copy prompt, Copy all prompts, Export scene-cards JSON ready for the Book-to-Video engine. Closes the X-V2V row that originated as a Claude suggestion.
+  - **AI Prompt Builder:** new tool at `load/tools/prompt-builder.html`. Six-layer composer: Subject + Character lock (from Bible) + Style (preset + custom) + Camera (13 toggleable chips) + Lighting (12 chips) + Composition (10 chips) + Negative prompt. Live-rendered preview block. Copy / Download .txt / Reset all.
+  - Help page updated with new TOC entries + per-tool cards for Verse to Video and AI Prompt Builder.
+  - Workspace hub Section 6 now has 19 tiles.
+  - Cache `load-v17ex` -> `load-v17ey`. Version badge bumped in `load/load.js`.
 
 ### Recently done (this session, 2026-05-05 — character bible + image upscaler)
 - **v17ex — Character Bible (X-CC) + Image Upscaler (X-AI-14c starter)**:
