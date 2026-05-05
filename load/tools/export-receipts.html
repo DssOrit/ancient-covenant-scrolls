@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Export Receipts &mdash; Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-export-receipt.js"></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:980px;margin:0 auto;padding:24px 18px 80px}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.intro h2{margin:0 0 6px;font-size:18px;font-weight:800}
+.intro p{margin:0;color:var(--mute);font-size:13.5px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent)}
+.btn.danger{border-color:rgba(255,110,110,.4);color:var(--err)}
+.empty{padding:40px 18px;text-align:center;color:var(--mute);background:var(--bg2);border:1px dashed var(--border);border-radius:12px}
+.list{display:grid;gap:12px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.card h3{margin:0 0 4px;font-size:15px;font-weight:800}
+.card .meta{color:var(--mute);font-size:12.5px;margin-bottom:10px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12.5px}
+.kv .k{color:var(--mute)}
+.kv .v{font-weight:700}
+.v.PASS,.v.OK,.v.PRESENT{color:var(--ok)}
+.v.FAIL,.v.MISSING{color:var(--err)}
+.v.WARN,.v.WARNING{color:var(--warn)}
+.v.NOTTESTED{color:var(--mute)}
+details{margin-top:8px}
+details>summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:12px}
+.files{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--mute);background:#0a0e18;padding:8px 10px;border-radius:6px;max-height:140px;overflow:auto;white-space:pre-wrap}
+.actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.builder{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;margin:18px 0}
+.builder h3{margin:0 0 10px;font-size:15px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+@media (max-width:640px){.row{grid-template-columns:1fr}.kv{grid-template-columns:1fr}}
+label{display:block;font-size:12px;color:var(--mute);margin-bottom:4px;font-weight:600}
+input,select,textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--border);background:#0a0e18;color:var(--fg);font:inherit;font-size:13px}
+textarea{min-height:64px;resize:vertical}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1a1a26;color:#fff;padding:10px 16px;border-radius:8px;border:1px solid var(--border);font-size:13px;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
+.toast.on{display:block}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Back to Load
+  </a>
+  <h1>Export Receipts</h1>
+</header>
+<div class="wrap">
+<div class="intro">
+  <h2>Receipt library</h2>
+  <p>Every export logged through <code>window.LoadReceipt.save()</code> appears here. Each receipt records the export type, file size, included files, manifest / service worker / rights / offline / safety status, and the recommended next action. Receipts live in <code>localStorage</code> on this device.</p>
+</div>
+
+<div class="bar">
+  <button class="btn primary" id="newReceipt">New receipt</button>
+  <button class="btn" id="refresh">Refresh</button>
+  <button class="btn" id="exportAll">Export all (JSON)</button>
+  <button class="btn danger" id="clearAll">Clear all</button>
+</div>
+
+<div id="builder" class="builder" style="display:none">
+  <h3>New manual receipt</h3>
+  <div class="row">
+    <div><label>Export type</label>
+      <select id="b-type">
+        <option>Standalone HTML</option>
+        <option>PWA ZIP</option>
+        <option>EPUB</option>
+        <option>PDF</option>
+        <option>App Package</option>
+        <option>LoadStudio Package</option>
+        <option>LoadPlay Publish-Prep</option>
+        <option>Backup</option>
+        <option>Diagnostic Report</option>
+        <option>Book PWA</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div><label>File name</label><input id="b-name" placeholder="project.zip"></div>
+  </div>
+  <div class="row">
+    <div><label>File size (bytes)</label><input id="b-size" type="number" value="0"></div>
+    <div><label>Next recommended action</label><input id="b-next" placeholder="Install on iPad via PWABuilder"></div>
+  </div>
+  <div class="row">
+    <div><label>Manifest status</label><select id="b-mf"><option>NOT TESTED</option><option>PASS</option><option>WARN</option><option>FAIL</option></select></div>
+    <div><label>Service worker status</label><select id="b-sw"><option>NOT TESTED</option><option>PASS</option><option>WARN</option><option>FAIL</option></select></div>
+  </div>
+  <div class="row">
+    <div><label>Rights status</label><select id="b-rt"><option>NOT TESTED</option><option>PASS</option><option>WARN</option><option>FAIL</option></select></div>
+    <div><label>Offline status</label><select id="b-of"><option>NOT TESTED</option><option>PASS</option><option>WARN</option><option>FAIL</option></select></div>
+  </div>
+  <div class="row">
+    <div><label>Safety status</label><select id="b-sf"><option>NOT TESTED</option><option>PASS</option><option>WARN</option><option>FAIL</option></select></div>
+    <div><label>Warnings (one per line)</label><textarea id="b-warn"></textarea></div>
+  </div>
+  <div class="row">
+    <div><label>Included files (one per line)</label><textarea id="b-incl"></textarea></div>
+    <div><label>Missing files (one per line)</label><textarea id="b-miss"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn primary" id="b-save">Save receipt</button>
+    <button class="btn" id="b-cancel">Cancel</button>
+  </div>
+</div>
+
+<div id="list" class="list"></div>
+<div id="empty" class="empty" style="display:none">No receipts yet. Run an export, or tap <strong>New receipt</strong> above.</div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+  var R = window.LoadReceipt;
+  if (!R) {
+    document.body.innerHTML = '<div style="padding:30px;color:#ff6e6e">lib-export-receipt.js failed to load.</div>';
+    return;
+  }
+  var $ = function(id){ return document.getElementById(id); };
+  var listEl = $('list');
+  var emptyEl = $('empty');
+  var builder = $('builder');
+  var toastEl = $('toast');
+
+  function toast(m){
+    toastEl.textContent = m;
+    toastEl.classList.add('on');
+    setTimeout(function(){ toastEl.classList.remove('on'); }, 1800);
+  }
+
+  function fmtBytes(n){
+    if (!n) return '0 B';
+    var u = ['B','KB','MB','GB'];
+    var i = 0;
+    while (n >= 1024 && i < u.length-1) { n /= 1024; i++; }
+    return n.toFixed(i?1:0) + ' ' + u[i];
+  }
+
+  function statusClass(s){
+    if (!s) return 'NOTTESTED';
+    return String(s).replace(/\s+/g,'').toUpperCase();
+  }
+
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function downloadBlob(blob, filename){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  }
+
+  function render(){
+    var items = R.list();
+    listEl.innerHTML = '';
+    emptyEl.style.display = items.length ? 'none' : '';
+    items.forEach(function(rcpt){
+      var d = document.createElement('div');
+      d.className = 'card';
+      var inc = (rcpt.includedFiles||[]).slice(0,200);
+      var miss = (rcpt.missingFiles||[]);
+      var warn = (rcpt.warnings||[]);
+      d.innerHTML =
+        '<h3>'+escapeHtml(rcpt.exportType||'unknown')+' &middot; '+escapeHtml(rcpt.fileName||'(no file)')+'</h3>'+
+        '<div class="meta">'+escapeHtml(new Date(rcpt.createdAt).toLocaleString())+
+          ' &middot; '+fmtBytes(rcpt.fileSize)+
+          ' &middot; id <code>'+escapeHtml(rcpt.id)+'</code></div>'+
+        '<div class="kv">'+
+          '<span class="k">Manifest</span><span class="v '+statusClass(rcpt.manifestStatus)+'">'+escapeHtml(rcpt.manifestStatus)+'</span>'+
+          '<span class="k">Service worker</span><span class="v '+statusClass(rcpt.serviceWorkerStatus)+'">'+escapeHtml(rcpt.serviceWorkerStatus)+'</span>'+
+          '<span class="k">Rights</span><span class="v '+statusClass(rcpt.rightsStatus)+'">'+escapeHtml(rcpt.rightsStatus)+'</span>'+
+          '<span class="k">Offline</span><span class="v '+statusClass(rcpt.offlineStatus)+'">'+escapeHtml(rcpt.offlineStatus)+'</span>'+
+          '<span class="k">Safety</span><span class="v '+statusClass(rcpt.safetyStatus)+'">'+escapeHtml(rcpt.safetyStatus)+'</span>'+
+          '<span class="k">Next</span><span class="v">'+escapeHtml(rcpt.nextAction||'-')+'</span>'+
+        '</div>'+
+        (warn.length ? '<details><summary>'+warn.length+' warning(s)</summary><div class="files">'+escapeHtml(warn.join('\n'))+'</div></details>' : '')+
+        (inc.length ? '<details><summary>'+(rcpt.includedFiles||[]).length+' included file(s)</summary><div class="files">'+escapeHtml(inc.join('\n'))+(((rcpt.includedFiles||[]).length>inc.length)?'\n... ('+((rcpt.includedFiles||[]).length-inc.length)+' more)':'')+'</div></details>' : '')+
+        (miss.length ? '<details><summary>'+miss.length+' missing file(s)</summary><div class="files">'+escapeHtml(miss.join('\n'))+'</div></details>' : '')+
+        '<div class="actions">'+
+          '<button class="btn" data-act="download" data-id="'+escapeHtml(rcpt.id)+'">Download JSON</button>'+
+          '<button class="btn" data-act="copy" data-id="'+escapeHtml(rcpt.id)+'">Copy</button>'+
+          '<button class="btn danger" data-act="remove" data-id="'+escapeHtml(rcpt.id)+'">Remove</button>'+
+        '</div>';
+      listEl.appendChild(d);
+    });
+  }
+
+  listEl.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-act]');
+    if (!b) return;
+    var id = b.getAttribute('data-id');
+    var act = b.getAttribute('data-act');
+    var r = R.get(id);
+    if (!r) return;
+    if (act === 'download') {
+      var safe = (r.fileName||'export').replace(/[^A-Za-z0-9_.-]/g,'_');
+      downloadBlob(R.toBlob(r), 'receipt-' + safe + '-' + r.id + '.json');
+    } else if (act === 'copy') {
+      var txt = R.toJson(r);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(function(){ toast('Copied to clipboard.'); });
+      } else {
+        toast('Clipboard not available.');
+      }
+    } else if (act === 'remove') {
+      if (confirm('Remove this receipt?')) {
+        R.remove(id);
+        render();
+      }
+    }
+  });
+
+  $('newReceipt').addEventListener('click', function(){
+    builder.style.display = builder.style.display === 'none' ? '' : 'none';
+  });
+  $('refresh').addEventListener('click', render);
+  $('clearAll').addEventListener('click', function(){
+    if (confirm('Delete every receipt on this device?')) {
+      R.clear();
+      render();
+    }
+  });
+  $('exportAll').addEventListener('click', function(){
+    var all = R.list();
+    var blob = new Blob([JSON.stringify({ schemaVersion: R.SCHEMA_VERSION, exportedAt: new Date().toISOString(), receipts: all }, null, 2)], { type: 'application/json' });
+    downloadBlob(blob, 'load-receipts-' + new Date().toISOString().slice(0,10) + '.json');
+  });
+
+  $('b-cancel').addEventListener('click', function(){ builder.style.display = 'none'; });
+  $('b-save').addEventListener('click', function(){
+    var lines = function(s){ return (s||'').split(/\r?\n/).map(function(x){return x.trim();}).filter(Boolean); };
+    var rcpt = R.create({
+      exportType: $('b-type').value,
+      fileName: $('b-name').value || '',
+      fileSize: parseInt($('b-size').value, 10) || 0,
+      manifestStatus: $('b-mf').value,
+      serviceWorkerStatus: $('b-sw').value,
+      rightsStatus: $('b-rt').value,
+      offlineStatus: $('b-of').value,
+      safetyStatus: $('b-sf').value,
+      nextAction: $('b-next').value || '',
+      warnings: lines($('b-warn').value),
+      includedFiles: lines($('b-incl').value),
+      missingFiles: lines($('b-miss').value)
+    });
+    R.save(rcpt);
+    builder.style.display = 'none';
+    render();
+    toast('Receipt saved.');
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

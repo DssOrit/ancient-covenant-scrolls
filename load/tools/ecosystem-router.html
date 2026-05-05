@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ecosystem Routing &mdash; Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-jszip.min.js"></script>
+<script src="../lib-export-receipt.js"></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:980px;margin:0 auto;padding:24px 18px 80px}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.intro h2{margin:0 0 6px;font-size:18px;font-weight:800}
+.intro p{margin:0;color:var(--mute);font-size:13.5px}
+.dz{position:relative;border:2px dashed var(--border);background:#0a0e18;border-radius:14px;padding:34px 18px;text-align:center;color:var(--mute)}
+.dz input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.dz strong{display:block;font-size:16px;color:#fff;margin-bottom:4px}
+.detect{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:14px 0}
+.detect .label{color:var(--mute);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.detect .name{font-weight:800;font-size:15px}
+.detect .meta{color:var(--mute);font-size:12.5px;margin-top:2px}
+.actions-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:14px 0}
+.actions-card h3{margin:0 0 10px;font-size:14px;font-weight:800}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent)}
+.btn:hover{filter:brightness(1.15)}
+.note{font-size:12px;color:var(--mute);margin-top:8px}
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
+.type-chip{padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;cursor:pointer;text-align:left;color:var(--fg);font:inherit}
+.type-chip strong{display:block;font-size:13px}
+.type-chip span{display:block;font-size:11px;color:var(--mute);margin-top:2px}
+.type-chip.active{border-color:var(--accent);background:rgba(124,58,237,.18)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1a1a26;color:#fff;padding:10px 16px;border-radius:8px;border:1px solid var(--border);font-size:13px;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
+.toast.on{display:block}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Back to Load
+  </a>
+  <h1>Ecosystem Routing</h1>
+</header>
+<div class="wrap">
+<div class="intro">
+  <h2>One file in &rarr; the right next steps out</h2>
+  <p>Drop any file. Load detects what it is and shows the next-step actions across the ecosystem (Load Main / LoadStudio / LoadPlay). Each button links to the correct tool. Nothing happens automatically &mdash; you pick the action.</p>
+</div>
+
+<div class="dz">
+  <input id="file" type="file">
+  <strong>Drop a file or tap to pick</strong>
+  <div>HTML, ZIP, PWA, EPUB, PDF, image, audio, video, .loadstudio.zip, .cinepwa.zip, book PWA</div>
+</div>
+
+<div id="detect" class="detect" style="display:none">
+  <div class="label">Detected</div>
+  <div class="name" id="d-name">-</div>
+  <div class="meta" id="d-meta">-</div>
+</div>
+
+<div id="actions"></div>
+
+<div class="actions-card">
+  <h3>Or pick by file type</h3>
+  <p class="note">Useful when you want to see the routing options without uploading anything.</p>
+  <div class="types" id="types"></div>
+</div>
+
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var detectEl = $('detect'), nameEl = $('d-name'), metaEl = $('d-meta');
+  var actionsEl = $('actions');
+  var typesEl = $('types');
+  var toastEl = $('toast');
+
+  function toast(m){
+    toastEl.textContent = m;
+    toastEl.classList.add('on');
+    setTimeout(function(){ toastEl.classList.remove('on'); }, 1800);
+  }
+
+  // Routing tables — Build Plan Part 6.
+  var ROUTES = {
+    'normal': {
+      label: 'Generic file',
+      desc: 'Anything Load can store.',
+      actions: [
+        { label: 'Open in Load', href: '../', tip: 'Open the workspace.' },
+        { label: 'Add to Library', href: '../#library', tip: 'Save into the local library.' },
+        { label: 'Repair', href: '../#doctor', tip: 'Run Asset Doctor.' },
+        { label: 'Export', href: './export-receipts.html', tip: 'Log an export receipt.' }
+      ]
+    },
+    'html': {
+      label: 'HTML / PWA project',
+      desc: 'Single page or full PWA bundle.',
+      actions: [
+        { label: 'Preview Sandboxed', href: './safety-rights.html', tip: 'Render in strict iframe.' },
+        { label: 'Repair Manifest', href: '../#manifest', tip: 'Rebuild manifest.json.' },
+        { label: 'Repair Service Worker', href: '../#sw', tip: 'Generate offline cache.' },
+        { label: 'Export Standalone PWA', href: './pwa-builder.html', tip: 'One-click PWA ZIP.' },
+        { label: 'Prepare for LoadStudio', href: './loadstudio-validator.html', tip: 'Validate LoadStudio shape.' },
+        { label: 'Prepare for LoadPlay', href: './safety-rights.html', tip: 'Rights + safety pre-publish.' }
+      ]
+    },
+    'book': {
+      label: 'Book / document',
+      desc: 'EPUB, PDF, DOCX, TXT, Markdown manuscripts.',
+      actions: [
+        { label: 'Open Reader', href: '../../', tip: 'Open in ACR Reader.' },
+        { label: 'Convert to Digital Book Project', href: '../#prose', tip: 'Open the Prose Editor.' },
+        { label: 'Export EPUB', href: './export-receipts.html', tip: 'Log EPUB export receipt.' },
+        { label: 'Export PDF', href: './export-receipts.html', tip: 'Log PDF export receipt.' },
+        { label: 'Export Standalone Book PWA', href: './pwa-builder.html', tip: 'Build book PWA ZIP.' },
+        { label: 'Validate Book PWA', href: './book-pwa-validator.html', tip: 'Check exported PWA structure.' },
+        { label: 'Send to LoadStudio as Source Material', href: './loadstudio-validator.html', tip: 'Use as scene source.' }
+      ]
+    },
+    'media': {
+      label: 'Media (image / audio / video)',
+      desc: 'Images, audio clips, video clips.',
+      actions: [
+        { label: 'Open Player', href: '../#preview', tip: 'Open in Live Preview.' },
+        { label: 'Add to Project', href: '../#library', tip: 'Add to current LoadStudio project.' },
+        { label: 'Send to LoadStudio', href: '../../loadstudio/', tip: 'Open LoadStudio.' }
+      ]
+    },
+    'loadstudio': {
+      label: 'LoadStudio package',
+      desc: '.loadstudio.zip / .cinepwa.zip cinema bundle.',
+      actions: [
+        { label: 'Open as Viewer', href: '../../LoadPlay/', tip: 'Watch in LoadPlay.' },
+        { label: 'Open as Editable Project', href: '../../loadstudio/', tip: 'Edit in LoadStudio.' },
+        { label: 'Validate Package', href: './loadstudio-validator.html', tip: 'Required files + folders.' },
+        { label: 'Repair Package', href: './loadstudio-validator.html', tip: 'Fix missing pieces.' },
+        { label: 'Export Fixed Package', href: './export-receipts.html', tip: 'Log repaired export.' },
+        { label: 'Prepare for LoadPlay', href: './safety-rights.html', tip: 'Final safety + rights gate.' }
+      ]
+    },
+    'loadplay-prep': {
+      label: 'LoadPlay publish-prep',
+      desc: 'Final pre-publish bundle.',
+      actions: [
+        { label: 'Validate Rights', href: './safety-rights.html', tip: 'Check rights.json.' },
+        { label: 'Validate Safety', href: './safety-rights.html', tip: 'Run safety scan.' },
+        { label: 'Generate Publish Package', href: './pwa-builder.html', tip: 'Build the publish bundle.' },
+        { label: 'Export Publish Report', href: './export-receipts.html', tip: 'Log publish-prep receipt.' }
+      ]
+    }
+  };
+
+  // Render type chips
+  Object.keys(ROUTES).forEach(function(key){
+    var b = document.createElement('button');
+    b.className = 'type-chip';
+    b.dataset.type = key;
+    b.innerHTML = '<strong>' + ROUTES[key].label + '</strong><span>' + ROUTES[key].desc + '</span>';
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.type-chip').forEach(function(c){ c.classList.remove('active'); });
+      b.classList.add('active');
+      renderActions(key, ROUTES[key].label, '');
+    });
+    typesEl.appendChild(b);
+  });
+
+  function renderActions(typeKey, name, meta){
+    var route = ROUTES[typeKey];
+    if (!route) {
+      actionsEl.innerHTML = '';
+      return;
+    }
+    detectEl.style.display = '';
+    nameEl.textContent = name || route.label;
+    metaEl.textContent = meta || route.desc;
+    var html = '<div class="actions-card"><h3>Next steps for: ' + escapeHtml(route.label) + '</h3><div class="btn-row">';
+    route.actions.forEach(function(a){
+      html += '<a class="btn" href="' + a.href + '" title="' + escapeHtml(a.tip) + '">' + escapeHtml(a.label) + '</a>';
+    });
+    html += '</div><p class="note">Each button opens the matching Load tool. Nothing here uploads or transmits the file.</p></div>';
+    actionsEl.innerHTML = html;
+  }
+
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g, function(c){
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function detectByFilename(name) {
+    var n = (name||'').toLowerCase();
+    if (/\.loadstudio\.zip$|\.cinepwa\.zip$/.test(n)) return 'loadstudio';
+    if (/-publish-prep\.zip$|loadplay-prep\.zip$/.test(n)) return 'loadplay-prep';
+    if (/\.epub$|\.pdf$|\.docx$|\.txt$|\.md$|\.markdown$/.test(n)) return 'book';
+    if (/\.html?$/.test(n)) return 'html';
+    if (/\.png$|\.jpe?g$|\.gif$|\.webp$|\.svg$|\.mp3$|\.wav$|\.m4a$|\.aac$|\.ogg$|\.mp4$|\.webm$|\.mov$/.test(n)) return 'media';
+    if (/\.zip$/.test(n)) return 'html'; // most ZIPs are PWA bundles; refine after inspection
+    return 'normal';
+  }
+
+  async function detectByContent(file) {
+    var quickType = detectByFilename(file.name);
+    if (quickType !== 'html' && !file.name.toLowerCase().endsWith('.zip')) return quickType;
+    if (!window.JSZip) return quickType;
+    try {
+      var zip = await window.JSZip.loadAsync(file);
+      var names = Object.keys(zip.files);
+      var hasLS = names.indexOf('rights.json') >= 0 && names.indexOf('scenes.json') >= 0;
+      if (hasLS) return 'loadstudio';
+      var hasBook = names.some(function(n){ return /book-data\.json$|chapters\.json$/.test(n); });
+      if (hasBook) return 'book';
+      var hasManifest = names.indexOf('manifest.json') >= 0 || names.indexOf('manifest.webmanifest') >= 0;
+      if (hasManifest) return 'html';
+      return 'html';
+    } catch (e) {
+      return quickType;
+    }
+  }
+
+  $('file').addEventListener('change', async function(e){
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    var typeKey = await detectByContent(f);
+    document.querySelectorAll('.type-chip').forEach(function(c){ c.classList.remove('active'); });
+    var chip = typesEl.querySelector('[data-type="'+typeKey+'"]');
+    if (chip) chip.classList.add('active');
+    var meta = (f.size/1024).toFixed(1) + ' KB &middot; ' + (f.type || 'unknown MIME');
+    metaEl.innerHTML = meta;
+    renderActions(typeKey, f.name, meta);
+    // Don't overwrite metaEl after renderActions
+    metaEl.innerHTML = meta;
+    toast('Detected as: ' + ROUTES[typeKey].label);
+  });
+})();
+</script>
+</body>
+</html>
