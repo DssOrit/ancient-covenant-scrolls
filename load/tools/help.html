@@ -94,6 +94,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#backup">Project Backup</a>
   <a href="#voicerec">Voice Recorder</a>
   <a href="#subtitles">Subtitle Generator</a>
+  <a href="#manuscript">Manuscript to Book PWA</a>
+  <a href="#quotecard">Quote Card Generator</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -428,6 +430,33 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Download .srt</strong> or <strong>Download .vtt</strong> to save the subtitle file.</li>
 </ol>
 <a class="open" href="./subtitle-generator.html">Open Subtitle Generator</a>
+</div>
+
+<div class="tool" id="manuscript">
+<h3>Manuscript to Book PWA</h3>
+<ol>
+  <li>Tap <strong>Manuscript to Book PWA</strong> in workspace Section 6.</li>
+  <li>Drop a TXT / Markdown / HTML manuscript, or paste the text.</li>
+  <li>Detected chapters appear as a numbered preview list with word counts.</li>
+  <li>(Optional) Pick a chapter detection mode: Auto (Markdown <code>##</code> + "Chapter N" + ALL-CAPS + gaps), Markdown only, "Chapter N" only, gaps only, or single-chapter.</li>
+  <li>Fill in Title, Author, Theme color, Short name, Cover image (optional).</li>
+  <li>Tap <strong>Build book PWA ZIP</strong>. Pipeline produces icons, manifest, service worker, styles, app.js, book-data.json, optional cover, README.md.</li>
+  <li>Tap <strong>Download ZIP</strong>. Validate with the Book PWA Validator if you want.</li>
+</ol>
+<a class="open" href="./manuscript-to-book.html">Open Manuscript to Book PWA</a>
+</div>
+
+<div class="tool" id="quotecard">
+<h3>Quote Card Generator</h3>
+<ol>
+  <li>Tap <strong>Quote Card Generator</strong> in workspace Section 6.</li>
+  <li>Type the quote and (optional) attribution.</li>
+  <li>Pick a format (Square 1080, Portrait 4:5, Story 9:16, Landscape 16:9, Header 3:1).</li>
+  <li>Pick a font (Playfair, Atkinson Hyperlegible, Inter, Georgia, Times, Courier), size, and italic.</li>
+  <li>Pick the background: solid color, two-stop gradient, or upload an image. Adjust Image dim and Vignette.</li>
+  <li>Tap <strong>Download card</strong> for PNG / JPEG / WEBP, or <strong>Copy image</strong> to put it on the clipboard.</li>
+</ol>
+<a class="open" href="./quote-card.html">Open Quote Card Generator</a>
 </div>
 
 <div class="tool" id="acceptance">

@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fa`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fb`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,14 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-05 — manuscript-to-book + quote cards)
+- **v17fb — Manuscript to Book PWA + Quote Card Generator**:
+  - **Manuscript to Book PWA:** new tool at `load/tools/manuscript-to-book.html`. Drop a TXT / Markdown / HTML manuscript (or paste text). Auto-detects chapters via Markdown `##`, "Chapter N" lines, ALL-CAPS title heuristic, or large blank-line gaps; mode selector overrides. Live preview of detected chapters with per-chapter word count. Builds a complete installable book PWA ZIP: `index.html` (sticky cover + sidebar nav + paragraph render), `manifest.json`, `service-worker.js` (precache + offline-first fetch), `styles.css` (Atkinson Hyperlegible body), `app.js`, `book-data.json` (chapters as paragraphs), `README.md`, generated 192/512 icons, optional rasterized cover at 800x1200 JPEG. Auto-saves a Part 5 export receipt.
+  - **Quote Card Generator:** new tool at `load/tools/quote-card.html`. Compose a verse + attribution card. Five formats (Square 1080, Portrait 4:5, Story 9:16, Landscape 16:9, Header 3:1). Six fonts including Atkinson Hyperlegible (dyslexia-friendly default) and Playfair Display (serif). Three background modes: solid, two-stop gradient, image with adjustable dim + vignette. Italic toggle, color pickers, size slider, padding slider, optional border. Live canvas render. Export PNG / JPEG / WEBP with quality slider, or Copy image straight to clipboard.
+  - Help page updated with new TOC entries + per-tool cards.
+  - Workspace hub Section 6 now has 25 tiles.
+  - Cache `load-v17fa` -> `load-v17fb`. Version badge bumped in `load/load.js`.
 
 ### Recently done (this session, 2026-05-05 — voice + subtitles)
 - **v17fa — Voice Recorder + Subtitle Generator**:
