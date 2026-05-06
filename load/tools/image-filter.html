@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Image Filter</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1200px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 16px; grid-template-columns: 1.4fr 1fr; }
+@media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 28px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+.canvas-wrap { display: flex; align-items: center; justify-content: center;
+  min-height: 300px; background: #0e0e1a; border: 1px solid #2a2a42;
+  border-radius: 8px; padding: 12px; overflow: auto; }
+canvas { max-width: 100%; max-height: 70vh; display: block;
+  background: repeating-conic-gradient(#1a1a2e 0% 25%, #15152a 0% 50%) 50% / 14px 14px; }
+.slider-row { display: grid; grid-template-columns: 130px 1fr 60px;
+  gap: 10px; align-items: center; padding: 6px 0; }
+.slider-row label { font-size: 13px; color: #e8e8f0; }
+.slider-row input[type=range] { width: 100%; }
+.slider-row .v { color: #9ca3af; font-size: 12px;
+  font-variant-numeric: tabular-nums; text-align: right; }
+.preset-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.preset { padding: 5px 10px; border: 1px solid #2a2a42; border-radius: 14px;
+  font-size: 12px; cursor: pointer; color: #9ca3af; background: #0e0e1a; }
+.preset:hover, .preset.on { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  align-items: center; }
+label.field { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; }
+select { background: #0e0e1a; border: 1px solid #2a2a42; color: #e8e8f0;
+  padding: 6px 10px; border-radius: 6px; font: inherit; font-size: 13px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.empty { color: #9ca3af; font-size: 13px; text-align: center; }
+.dim-info { color: #9ca3af; font-size: 11px; margin-top: 8px; text-align: center; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-media.html">&larr; Media</a>
+<h1>Image Filter</h1>
+<a href="./help.html#imgfilter">How it works</a>
+</header>
+<main>
+<p class="intro">Drop an image, slide the filter values, export PNG / JPEG / WEBP. Brightness, contrast, saturation, hue, blur, sepia, grayscale, invert. Useful before sending an image into a cover, quote card, or AI prompt.</p>
+<div class="row">
+<div class="card">
+<h2>Preview</h2>
+<div class="canvas-wrap" id="wrap">
+<canvas id="canvas"></canvas>
+</div>
+<div class="dim-info" id="info">Drop an image on the right to start.</div>
+</div>
+<div class="card">
+<h2>1. Image</h2>
+<div class="drop" id="drop">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><polyline points="6 10 12 4 18 10"/><path d="M4 20h16"/></svg>
+<span>Drop an image (PNG, JPG, WEBP)</span>
+<span style="font-size:11px;">or tap to browse</span>
+<input id="file" type="file" accept="image/*" style="display:none">
+</div>
+<h2 style="margin-top:18px;">2. Filters</h2>
+<div class="slider-row"><label for="brightness">Brightness</label><input id="brightness" type="range" min="0" max="200" value="100"><span class="v" data-for="brightness">100%</span></div>
+<div class="slider-row"><label for="contrast">Contrast</label><input id="contrast" type="range" min="0" max="200" value="100"><span class="v" data-for="contrast">100%</span></div>
+<div class="slider-row"><label for="saturate">Saturation</label><input id="saturate" type="range" min="0" max="300" value="100"><span class="v" data-for="saturate">100%</span></div>
+<div class="slider-row"><label for="hue">Hue rotate</label><input id="hue" type="range" min="0" max="360" value="0"><span class="v" data-for="hue">0&deg;</span></div>
+<div class="slider-row"><label for="blur">Blur</label><input id="blur" type="range" min="0" max="20" value="0" step="0.1"><span class="v" data-for="blur">0px</span></div>
+<div class="slider-row"><label for="sepia">Sepia</label><input id="sepia" type="range" min="0" max="100" value="0"><span class="v" data-for="sepia">0%</span></div>
+<div class="slider-row"><label for="grayscale">Grayscale</label><input id="grayscale" type="range" min="0" max="100" value="0"><span class="v" data-for="grayscale">0%</span></div>
+<div class="slider-row"><label for="invert">Invert</label><input id="invert" type="range" min="0" max="100" value="0"><span class="v" data-for="invert">0%</span></div>
+<div class="preset-row">
+<span class="preset" data-preset="reset">Reset</span>
+<span class="preset" data-preset="bw">Black &amp; white</span>
+<span class="preset" data-preset="sepia-classic">Sepia classic</span>
+<span class="preset" data-preset="warm">Warm</span>
+<span class="preset" data-preset="cool">Cool</span>
+<span class="preset" data-preset="vintage">Vintage</span>
+<span class="preset" data-preset="punch">Punchy</span>
+<span class="preset" data-preset="soft">Soft</span>
+<span class="preset" data-preset="invert">Invert</span>
+</div>
+<h2 style="margin-top:18px;">3. Export</h2>
+<div class="toolbar">
+<label class="field">Format <select id="fmt">
+<option value="image/png" selected>PNG</option>
+<option value="image/jpeg">JPEG</option>
+<option value="image/webp">WEBP</option>
+</select></label>
+<label class="field">Quality <input id="quality" type="range" min="50" max="100" value="92" style="width:120px"><span id="qval" style="color:#9ca3af;font-size:12px;width:32px;">92</span></label>
+<button class="primary" id="download" disabled>Download</button>
+<button id="copy" disabled>Copy</button>
+</div>
+</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var canvas = $('canvas'), ctx = canvas.getContext('2d');
+var srcImg = null;
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function getFilter(){
+  return [
+    'brightness(' + $('brightness').value + '%)',
+    'contrast(' + $('contrast').value + '%)',
+    'saturate(' + $('saturate').value + '%)',
+    'hue-rotate(' + $('hue').value + 'deg)',
+    'blur(' + $('blur').value + 'px)',
+    'sepia(' + $('sepia').value + '%)',
+    'grayscale(' + $('grayscale').value + '%)',
+    'invert(' + $('invert').value + '%)'
+  ].join(' ');
+}
+function updateLabels(){
+  ['brightness','contrast','saturate','hue','blur','sepia','grayscale','invert'].forEach(function(id){
+    var v = $(id).value;
+    var el = document.querySelector('[data-for="' + id + '"]');
+    var unit = (id === 'hue') ? '°' : (id === 'blur') ? 'px' : '%';
+    el.textContent = v + unit;
+  });
+}
+function render(){
+  if (!srcImg) return;
+  canvas.width = srcImg.naturalWidth;
+  canvas.height = srcImg.naturalHeight;
+  ctx.filter = getFilter();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(srcImg, 0, 0);
+  ctx.filter = 'none';
+  $('info').textContent = canvas.width + ' x ' + canvas.height + ' px';
+  $('download').disabled = false;
+  $('copy').disabled = false;
+}
+function loadFile(f){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var img = new Image();
+    img.onload = function(){ srcImg = img; render(); toast('Loaded ' + f.name); };
+    img.onerror = function(){ toast('Could not load image'); };
+    img.src = fr.result;
+  };
+  fr.readAsDataURL(f);
+}
+$('drop').addEventListener('click', function(){ $('file').click(); });
+['dragenter','dragover'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.remove('over'); });
+});
+$('drop').addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+['brightness','contrast','saturate','hue','blur','sepia','grayscale','invert'].forEach(function(id){
+  $(id).addEventListener('input', function(){ updateLabels(); render(); });
+});
+$('quality').addEventListener('input', function(){ $('qval').textContent = $('quality').value; });
+function applyPreset(p){
+  function set(id, v){ $(id).value = v; }
+  if (p === 'reset') {
+    set('brightness',100); set('contrast',100); set('saturate',100);
+    set('hue',0); set('blur',0); set('sepia',0); set('grayscale',0); set('invert',0);
+  } else if (p === 'bw') {
+    set('brightness',100); set('contrast',110); set('saturate',0);
+    set('hue',0); set('blur',0); set('sepia',0); set('grayscale',100); set('invert',0);
+  } else if (p === 'sepia-classic') {
+    set('brightness',100); set('contrast',105); set('saturate',90);
+    set('hue',0); set('blur',0); set('sepia',80); set('grayscale',0); set('invert',0);
+  } else if (p === 'warm') {
+    set('brightness',105); set('contrast',105); set('saturate',115);
+    set('hue',-10); set('blur',0); set('sepia',15); set('grayscale',0); set('invert',0);
+  } else if (p === 'cool') {
+    set('brightness',100); set('contrast',105); set('saturate',110);
+    set('hue',15); set('blur',0); set('sepia',0); set('grayscale',0); set('invert',0);
+  } else if (p === 'vintage') {
+    set('brightness',95); set('contrast',95); set('saturate',75);
+    set('hue',-5); set('blur',0); set('sepia',35); set('grayscale',0); set('invert',0);
+  } else if (p === 'punch') {
+    set('brightness',105); set('contrast',125); set('saturate',140);
+    set('hue',0); set('blur',0); set('sepia',0); set('grayscale',0); set('invert',0);
+  } else if (p === 'soft') {
+    set('brightness',105); set('contrast',95); set('saturate',95);
+    set('hue',0); set('blur',1); set('sepia',5); set('grayscale',0); set('invert',0);
+  } else if (p === 'invert') {
+    set('brightness',100); set('contrast',100); set('saturate',100);
+    set('hue',0); set('blur',0); set('sepia',0); set('grayscale',0); set('invert',100);
+  }
+  updateLabels(); render();
+}
+document.querySelectorAll('.preset').forEach(function(el){
+  el.addEventListener('click', function(){ applyPreset(el.dataset.preset); });
+});
+$('download').addEventListener('click', function(){
+  if (!srcImg) { toast('Drop an image first'); return; }
+  var fmt = $('fmt').value;
+  var q = parseInt($('quality').value, 10) / 100;
+  canvas.toBlob(function(blob){
+    if (!blob) { toast('Export failed'); return; }
+    var ext = fmt === 'image/jpeg' ? 'jpg' : fmt === 'image/webp' ? 'webp' : 'png';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'filtered.' + ext; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+    toast('Downloaded');
+  }, fmt, q);
+});
+$('copy').addEventListener('click', function(){
+  if (!srcImg) { toast('Drop an image first'); return; }
+  if (!navigator.clipboard || !window.ClipboardItem) {
+    toast('Copy not supported here'); return;
+  }
+  canvas.toBlob(function(blob){
+    if (!blob) { toast('Copy failed'); return; }
+    navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+      .then(function(){ toast('Copied'); })
+      .catch(function(){ toast('Copy blocked'); });
+  }, 'image/png');
+});
+updateLabels();
+})();
+</script>
+</body>
+</html>

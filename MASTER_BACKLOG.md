@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fl`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fm`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,15 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — JSON Formatter + Image Filter)
+- **v17fm &mdash; JSON Formatter + Image Filter**:
+  - **JSON Formatter:** new tool at `load/tools/json-formatter.html`. Paste / load file / paste-from-clipboard JSON, get **valid** / **invalid** status with line + column on errors. Pretty-print with 2 spaces, 4 spaces, or Tab; toggle alphabetical key sort; minify; validate. Stats: byte size, objects, arrays, keys, strings, numbers. Copy or download `.json`.
+  - **Image Filter:** new tool at `load/tools/image-filter.html`. Drop a PNG / JPG / WEBP. Eight live sliders: brightness, contrast, saturation, hue rotate, blur, sepia, grayscale, invert. Nine one-tap presets (Black &amp; white, Sepia classic, Warm, Cool, Vintage, Punchy, Soft, Invert, Reset). Export PNG / JPEG / WEBP with quality slider, or copy a PNG to the clipboard.
+  - cat-build.html and cat-media.html each gained one tile.
+  - Workspace tile description bumped to 43 tools.
+  - Help page updated with new TOC entries + per-tool cards.
+  - Cache `load-v17fl` -&gt; `load-v17fm`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Word Frequency + Diff Viewer)
 - **v17fl &mdash; Word Frequency + Diff Viewer**:

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; JSON Formatter</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1200px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 14px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+  display: flex; align-items: center; gap: 10px; }
+textarea { width: 100%; min-height: 320px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+  line-height: 1.55; resize: vertical; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;
+  align-items: center; }
+label.field { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; }
+select { background: #0e0e1a; border: 1px solid #2a2a42; color: #e8e8f0;
+  padding: 6px 10px; border-radius: 6px; font: inherit; font-size: 13px; }
+label.toggle { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; }
+.status { display: inline-block; padding: 4px 10px; border-radius: 6px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; }
+.status.ok { background: #14532d; color: #bbf7d0; }
+.status.err { background: #4c1212; color: #fca5a5; }
+.status.muted { background: #1f1f2f; color: #9ca3af; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px; margin-top: 12px; }
+.stat { background: #0e0e1a; border: 1px solid #2a2a42; border-radius: 8px;
+  padding: 10px 12px; }
+.stat .lbl { font-size: 11px; color: #9ca3af; text-transform: uppercase;
+  letter-spacing: 0.05em; }
+.stat .val { font-size: 18px; font-weight: 800; color: #fff;
+  font-variant-numeric: tabular-nums; }
+.errbox { background: #4c1212; color: #fca5a5; border: 1px solid #7f1d1d;
+  border-radius: 8px; padding: 10px 14px; margin-top: 10px;
+  font-family: ui-monospace, monospace; font-size: 12px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-build.html">&larr; Build &amp; validate</a>
+<h1>JSON Formatter</h1>
+<a href="./help.html#jsonfmt">How it works</a>
+</header>
+<main>
+<p class="intro">Paste JSON, validate it, pretty-print it with your chosen indent, or minify it for transport. Works with manifest.json, receipts, character profiles, scene-cards, anything else JSON.</p>
+<div class="row">
+<div class="card">
+<h2>Input <span id="instatus" class="status muted">empty</span></h2>
+<textarea id="in" placeholder='{ "key": "paste JSON here" }' autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+<div class="toolbar">
+<button id="paste">Paste from clipboard</button>
+<button id="loadFile">Load file&hellip;</button>
+<input id="file" type="file" accept=".json,application/json,text/plain" style="display:none">
+<button id="clear">Clear</button>
+</div>
+<div id="errbox"></div>
+</div>
+<div class="card">
+<h2>Output</h2>
+<textarea id="out" readonly placeholder="formatted JSON will appear here"></textarea>
+<div class="toolbar">
+<button id="copy">Copy</button>
+<button id="download">Download .json</button>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Format</h2>
+<div class="toolbar">
+<label class="field">Indent <select id="indent">
+<option value="2" selected>2 spaces</option>
+<option value="4">4 spaces</option>
+<option value="tab">Tab</option>
+</select></label>
+<label class="toggle"><input id="sortKeys" type="checkbox"> Sort keys alphabetically</label>
+<button class="primary" id="pretty">Pretty-print</button>
+<button id="minify">Minify</button>
+<button id="validate">Validate</button>
+</div>
+<div class="stats" id="stats"></div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function getIndent(){
+  var v = $('indent').value;
+  if (v === 'tab') return '\t';
+  return parseInt(v, 10) || 2;
+}
+function sortKeys(obj){
+  if (Array.isArray(obj)) return obj.map(sortKeys);
+  if (obj && typeof obj === 'object') {
+    var out = {};
+    Object.keys(obj).sort().forEach(function(k){ out[k] = sortKeys(obj[k]); });
+    return out;
+  }
+  return obj;
+}
+function findLineCol(text, pos){
+  var line = 1, col = 1;
+  for (var i = 0; i < pos && i < text.length; i++) {
+    if (text.charAt(i) === '\n') { line++; col = 1; }
+    else col++;
+  }
+  return { line: line, col: col };
+}
+function parseJson(text){
+  try {
+    return { ok: true, value: JSON.parse(text) };
+  } catch (e) {
+    var msg = e.message || String(e);
+    var pos = -1;
+    var m = /position\s+(\d+)/i.exec(msg);
+    if (m) pos = parseInt(m[1], 10);
+    var loc = (pos >= 0) ? findLineCol(text, pos) : null;
+    return { ok: false, error: msg, location: loc };
+  }
+}
+function setStatus(el, kind, txt){
+  el.className = 'status ' + kind; el.textContent = txt;
+}
+function update(){
+  var src = $('in').value;
+  $('errbox').innerHTML = '';
+  if (!src.trim()) {
+    setStatus($('instatus'), 'muted', 'empty');
+    $('stats').innerHTML = '';
+    return null;
+  }
+  var r = parseJson(src);
+  if (!r.ok) {
+    setStatus($('instatus'), 'err', 'invalid');
+    var loc = r.location ? (' (line ' + r.location.line + ', col ' + r.location.col + ')') : '';
+    $('errbox').innerHTML = '<div class="errbox">' +
+      r.error.replace(/&/g,'&amp;').replace(/</g,'&lt;') + loc + '</div>';
+    return null;
+  }
+  setStatus($('instatus'), 'ok', 'valid');
+  return r.value;
+}
+function showStats(value, formatted){
+  function walk(v, acc){
+    if (Array.isArray(v)) { acc.arrays++; v.forEach(function(x){ walk(x, acc); }); }
+    else if (v !== null && typeof v === 'object') {
+      acc.objects++;
+      Object.keys(v).forEach(function(k){ acc.keys++; walk(v[k], acc); });
+    } else if (typeof v === 'string') acc.strings++;
+    else if (typeof v === 'number') acc.numbers++;
+    else if (typeof v === 'boolean') acc.bools++;
+    else if (v === null) acc.nulls++;
+    return acc;
+  }
+  var a = walk(value, { arrays: 0, objects: 0, keys: 0, strings: 0, numbers: 0, bools: 0, nulls: 0 });
+  var bytes = new Blob([formatted]).size;
+  $('stats').innerHTML =
+    '<div class="stat"><div class="lbl">Bytes</div><div class="val">' + bytes.toLocaleString() + '</div></div>' +
+    '<div class="stat"><div class="lbl">Objects</div><div class="val">' + a.objects + '</div></div>' +
+    '<div class="stat"><div class="lbl">Arrays</div><div class="val">' + a.arrays + '</div></div>' +
+    '<div class="stat"><div class="lbl">Keys</div><div class="val">' + a.keys + '</div></div>' +
+    '<div class="stat"><div class="lbl">Strings</div><div class="val">' + a.strings + '</div></div>' +
+    '<div class="stat"><div class="lbl">Numbers</div><div class="val">' + a.numbers + '</div></div>';
+}
+function pretty(){
+  var v = update();
+  if (v === null) return;
+  if ($('sortKeys').checked) v = sortKeys(v);
+  var out = JSON.stringify(v, null, getIndent());
+  $('out').value = out;
+  showStats(v, out);
+  toast('Pretty-printed');
+}
+function minify(){
+  var v = update();
+  if (v === null) return;
+  if ($('sortKeys').checked) v = sortKeys(v);
+  var out = JSON.stringify(v);
+  $('out').value = out;
+  showStats(v, out);
+  toast('Minified');
+}
+function validate(){
+  var v = update();
+  if (v !== null) toast('JSON is valid');
+}
+$('pretty').addEventListener('click', pretty);
+$('minify').addEventListener('click', minify);
+$('validate').addEventListener('click', validate);
+$('in').addEventListener('input', function(){ update(); });
+$('clear').addEventListener('click', function(){
+  $('in').value = ''; $('out').value = ''; $('errbox').innerHTML = '';
+  $('stats').innerHTML = ''; setStatus($('instatus'), 'muted', 'empty');
+});
+$('paste').addEventListener('click', function(){
+  if (!navigator.clipboard || !navigator.clipboard.readText) {
+    toast('Clipboard read not supported'); return;
+  }
+  navigator.clipboard.readText().then(function(t){
+    $('in').value = t; update(); toast('Pasted');
+  }).catch(function(){ toast('Paste blocked'); });
+});
+$('loadFile').addEventListener('click', function(){ $('file').click(); });
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (!f) return;
+  var fr = new FileReader();
+  fr.onload = function(){ $('in').value = String(fr.result || ''); update(); toast('Loaded ' + f.name); };
+  fr.readAsText(f);
+});
+$('copy').addEventListener('click', function(){
+  if (!$('out').value) { toast('Nothing to copy'); return; }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText($('out').value).then(function(){ toast('Copied'); });
+  } else {
+    $('out').select(); document.execCommand('copy'); toast('Copied');
+  }
+});
+$('download').addEventListener('click', function(){
+  if (!$('out').value) { toast('Nothing to save'); return; }
+  var blob = new Blob([$('out').value], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'data.json'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('Downloaded');
+});
+})();
+</script>
+</body>
+</html>
