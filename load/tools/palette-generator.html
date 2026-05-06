@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Palette Generator</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.base-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.swatch-base { width: 80px; height: 80px; border-radius: 12px;
+  border: 1px solid #2a2a42; }
+input[type=color] { width: 60px; height: 40px; border: 1px solid #2a2a42;
+  border-radius: 6px; background: #0e0e1a; cursor: pointer; padding: 4px; }
+input[type=text] { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 8px 10px; border-radius: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px;
+  min-width: 110px; }
+input[type=text]:focus { outline: none; border-color: #7c5cff; }
+label.field { display: inline-flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: #9ca3af; }
+.scheme { margin-top: 14px; }
+.scheme-title { font-size: 13px; font-weight: 700; color: #e8e8f0;
+  margin: 0 0 8px; display: flex; align-items: center; gap: 10px; }
+.scheme-title small { color: #9ca3af; font-weight: 400; }
+.swatches { display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+.sw { border: 1px solid #2a2a42; border-radius: 8px; overflow: hidden;
+  cursor: pointer; transition: transform 0.1s; }
+.sw:hover { transform: translateY(-2px); border-color: #7c5cff; }
+.sw .pad { height: 60px; }
+.sw .meta { padding: 6px 10px; background: #0e0e1a; font-size: 11px;
+  font-family: ui-monospace, monospace; color: #9ca3af; line-height: 1.4;
+  word-break: break-all; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-media.html">&larr; Media</a>
+<h1>Palette Generator</h1>
+<a href="./help.html#palgen">How it works</a>
+</header>
+<main>
+<p class="intro">Pick a base color and get six harmony schemes &mdash; monochromatic, analogous, complementary, split-complementary, triadic, tetradic. Tap any swatch to copy its hex. Export the whole palette as CSS or JSON.</p>
+<div class="card">
+<h2>Base color</h2>
+<div class="base-row">
+<div class="swatch-base" id="base-sw"></div>
+<input type="color" id="picker" value="#7c5cff">
+<label class="field">Hex<input type="text" id="hex" value="#7c5cff" maxlength="7"></label>
+<label class="field">RGB<input type="text" id="rgb" value="124, 92, 255" readonly></label>
+<label class="field">HSL<input type="text" id="hsl" value="252, 100%, 68%" readonly></label>
+</div>
+<div class="toolbar">
+<button id="rand">Random color</button>
+<button id="copyHex">Copy hex</button>
+<button class="primary" id="exportJson">Export JSON</button>
+<button id="exportCss">Export CSS variables</button>
+</div>
+</div>
+<div id="schemes"></div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1600); }
+function clamp(v, lo, hi){ return v < lo ? lo : v > hi ? hi : v; }
+function hexToRgb(hex){
+  var h = hex.replace('#','');
+  if (h.length === 3) h = h.split('').map(function(c){ return c+c; }).join('');
+  var n = parseInt(h, 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+function rgbToHex(r, g, b){
+  return '#' + [r,g,b].map(function(v){
+    var s = clamp(Math.round(v), 0, 255).toString(16);
+    return s.length === 1 ? '0' + s : s;
+  }).join('');
+}
+function rgbToHsl(r, g, b){
+  r /= 255; g /= 255; b /= 255;
+  var max = Math.max(r,g,b), min = Math.min(r,g,b);
+  var h, s, l = (max + min) / 2;
+  if (max === min) { h = s = 0; }
+  else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return { h: h * 360, s: s * 100, l: l * 100 };
+}
+function hslToRgb(h, s, l){
+  h /= 360; s /= 100; l /= 100;
+  var r, g, b;
+  if (s === 0) { r = g = b = l; }
+  else {
+    function hue2rgb(p, q, t){
+      if (t < 0) t += 1; if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    }
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+  return { r: r * 255, g: g * 255, b: b * 255 };
+}
+function shift(hsl, dh, dl){
+  var h = ((hsl.h + (dh || 0)) % 360 + 360) % 360;
+  var l = clamp(hsl.l + (dl || 0), 0, 100);
+  return { h: h, s: hsl.s, l: l };
+}
+function hslToHex(hsl){
+  var rgb = hslToRgb(hsl.h, hsl.s, hsl.l);
+  return rgbToHex(rgb.r, rgb.g, rgb.b);
+}
+function schemes(baseHex){
+  var rgb = hexToRgb(baseHex);
+  var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  return [
+    { name: 'Monochromatic', sub: '5 lightness steps from the same hue.',
+      colors: [-30, -15, 0, 15, 30].map(function(d){ return hslToHex(shift(hsl, 0, d)); }) },
+    { name: 'Analogous', sub: '3 neighboring hues (-30°, base, +30°).',
+      colors: [hslToHex(shift(hsl, -30, 0)), hslToHex(hsl), hslToHex(shift(hsl, 30, 0))] },
+    { name: 'Complementary', sub: 'Base and its opposite (180°).',
+      colors: [hslToHex(hsl), hslToHex(shift(hsl, 180, 0))] },
+    { name: 'Split complementary', sub: 'Base + the two hues either side of its complement.',
+      colors: [hslToHex(hsl), hslToHex(shift(hsl, 150, 0)), hslToHex(shift(hsl, 210, 0))] },
+    { name: 'Triadic', sub: 'Three hues evenly spaced (120° apart).',
+      colors: [hslToHex(hsl), hslToHex(shift(hsl, 120, 0)), hslToHex(shift(hsl, 240, 0))] },
+    { name: 'Tetradic', sub: 'Four hues forming a rectangle on the wheel.',
+      colors: [hslToHex(hsl), hslToHex(shift(hsl, 60, 0)),
+               hslToHex(shift(hsl, 180, 0)), hslToHex(shift(hsl, 240, 0))] }
+  ];
+}
+function renderBase(hex){
+  $('base-sw').style.background = hex;
+  $('hex').value = hex;
+  $('picker').value = hex;
+  var rgb = hexToRgb(hex);
+  $('rgb').value = rgb.r + ', ' + rgb.g + ', ' + rgb.b;
+  var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  $('hsl').value = Math.round(hsl.h) + ', ' + Math.round(hsl.s) + '%, ' + Math.round(hsl.l) + '%';
+}
+function render(hex){
+  renderBase(hex);
+  var sc = schemes(hex);
+  var html = '';
+  sc.forEach(function(s){
+    html += '<div class="card scheme">';
+    html += '<div class="scheme-title">' + s.name + ' <small>' + s.sub + '</small></div>';
+    html += '<div class="swatches">';
+    s.colors.forEach(function(c){
+      var rgb = hexToRgb(c);
+      var luma = (0.299*rgb.r + 0.587*rgb.g + 0.114*rgb.b) / 255;
+      var fg = luma > 0.55 ? '#0a0a0f' : '#fff';
+      html += '<div class="sw" data-hex="' + c + '"><div class="pad" style="background:' + c + ';color:' + fg + ';display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;">' + c + '</div><div class="meta">' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + '</div></div>';
+    });
+    html += '</div></div>';
+  });
+  $('schemes').innerHTML = html;
+  document.querySelectorAll('.sw').forEach(function(el){
+    el.addEventListener('click', function(){
+      var c = el.dataset.hex;
+      copyText(c);
+      toast('Copied ' + c);
+    });
+  });
+}
+function copyText(t){
+  if (navigator.clipboard) navigator.clipboard.writeText(t).catch(function(){});
+  else { var ta = document.createElement('textarea'); ta.value = t;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); }
+}
+function isValidHex(h){
+  return /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.test(h);
+}
+function normalizeHex(h){
+  if (!h.startsWith('#')) h = '#' + h;
+  if (h.length === 4) h = '#' + h.slice(1).split('').map(function(c){ return c+c; }).join('');
+  return h.toLowerCase();
+}
+$('picker').addEventListener('input', function(){ render($('picker').value); });
+$('hex').addEventListener('input', function(){
+  var v = $('hex').value.trim();
+  if (isValidHex(v)) render(normalizeHex(v));
+});
+$('rand').addEventListener('click', function(){
+  var c = '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+  render(c);
+});
+$('copyHex').addEventListener('click', function(){
+  copyText($('hex').value); toast('Copied ' + $('hex').value);
+});
+$('exportJson').addEventListener('click', function(){
+  var sc = schemes($('hex').value);
+  var blob = new Blob([JSON.stringify({ base: $('hex').value, schemes: sc }, null, 2)],
+    { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'palette.json'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('JSON downloaded');
+});
+$('exportCss').addEventListener('click', function(){
+  var sc = schemes($('hex').value);
+  var lines = [':root {', '  --base: ' + $('hex').value + ';'];
+  sc.forEach(function(s){
+    var slug = s.name.toLowerCase().replace(/[^a-z]+/g, '-');
+    s.colors.forEach(function(c, i){
+      lines.push('  --' + slug + '-' + (i+1) + ': ' + c + ';');
+    });
+  });
+  lines.push('}');
+  var blob = new Blob([lines.join('\n') + '\n'], { type: 'text/css' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'palette.css'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('CSS downloaded');
+});
+render('#7c5cff');
+})();
+</script>
+</body>
+</html>

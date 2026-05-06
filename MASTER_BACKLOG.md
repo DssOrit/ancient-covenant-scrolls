@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fm`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fn`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,15 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Palette Generator + Checksum)
+- **v17fn &mdash; Palette Generator + Checksum**:
+  - **Palette Generator:** new tool at `load/tools/palette-generator.html`. Pick a base color (picker / hex / random). Generates six harmony schemes: monochromatic (5 lightness steps), analogous (3 hues), complementary (2), split complementary (3), triadic (3), tetradic (4). Tap any swatch to copy hex. Export the full palette as JSON or as a `:root` CSS-variables block. Pairs with the existing Palette Extractor (which extracts from an image; this one synthesizes from one base color).
+  - **Checksum:** new tool at `load/tools/checksum.html`. File-mode drop or text-mode paste. Computes SHA-1 / SHA-256 / SHA-384 / SHA-512 in parallel via `crypto.subtle.digest`. Per-row Copy buttons. **Verify** field accepts an expected hash and reports MATCH (with the algorithm) or NO MATCH against all four computed hashes. Useful for confirming a downloaded asset is intact.
+  - cat-media.html and cat-build.html each gained one tile.
+  - Workspace tile description bumped to 45 tools.
+  - Help page updated with new TOC entries + per-tool cards.
+  - Cache `load-v17fm` -&gt; `load-v17fn`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — JSON Formatter + Image Filter)
 - **v17fm &mdash; JSON Formatter + Image Filter**:

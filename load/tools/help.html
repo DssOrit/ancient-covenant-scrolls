@@ -114,6 +114,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#diff">Diff Viewer</a>
   <a href="#jsonfmt">JSON Formatter</a>
   <a href="#imgfilter">Image Filter</a>
+  <a href="#palgen">Palette Generator</a>
+  <a href="#checksum">Checksum</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -710,6 +712,30 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Pick export format (PNG / JPEG / WEBP) and quality. Tap <strong>Download</strong> for a file, or <strong>Copy</strong> to put a PNG on the clipboard.</li>
 </ol>
 <a class="open" href="./image-filter.html">Open Image Filter</a>
+</div>
+
+<div class="tool" id="palgen">
+<h3>Palette Generator</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Media &rarr; Palette Generator</strong>.</li>
+  <li>Pick a base color with the color picker, type a hex code, or tap <strong>Random color</strong>.</li>
+  <li>You get six harmony schemes: monochromatic (5 lightness steps), analogous (3 hues), complementary (2), split complementary (3), triadic (3), tetradic (4).</li>
+  <li>Tap any swatch to copy its hex code.</li>
+  <li>Tap <strong>Export JSON</strong> for a structured palette file, or <strong>Export CSS variables</strong> for a `:root` block ready to drop into a stylesheet.</li>
+</ol>
+<a class="open" href="./palette-generator.html">Open Palette Generator</a>
+</div>
+
+<div class="tool" id="checksum">
+<h3>Checksum</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Build &amp; validate &rarr; Checksum</strong>.</li>
+  <li>In <strong>File</strong> mode, drop any file. The tool computes SHA-1, SHA-256, SHA-384, and SHA-512 in parallel.</li>
+  <li>Switch to <strong>Text</strong> mode to hash a string instead of a file.</li>
+  <li>Tap <strong>Copy</strong> next to any hash row.</li>
+  <li>To verify a published hash, paste it into <strong>Verify a published hash</strong> and tap <strong>Verify</strong>. The tool checks against all four computed hashes and tells you which algorithm matched (or NO MATCH).</li>
+</ol>
+<a class="open" href="./checksum.html">Open Checksum</a>
 </div>
 
 <div class="tool" id="acceptance">
