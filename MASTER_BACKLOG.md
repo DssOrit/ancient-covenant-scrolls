@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fz`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g0`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,17 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Part F: Export Receipts)
+- **v17g0 &mdash; Part F export-receipt library + tool aligned to the spec**:
+  - `load/lib-export-receipt.js` already produced spec-shaped receipts (`exportType`, `fileName`, `fileSize`, `createdAt`, `includedFiles`, `missingFiles`, `warnings`, `manifestStatus`, `serviceWorkerStatus`, `rightsStatus`, `offlineStatus`, `safetyStatus`, `nextAction`). Added a `normalize()` adapter so legacy callers (chapter-splitter, epub-builder, audio-trim, &hellip;) that pass `{ tool, kind, files, sizeBytes, nextStep }` get mapped to the spec field names without breaking. Verified end-to-end via Node smoke test.
+  - Added the report&apos;s three required actions as one-line API helpers on `window.LoadReceipt`:
+    - `LoadReceipt.download(receipt)` &mdash; writes a per-receipt `.json` to disk
+    - `LoadReceipt.copy(receipt)` &mdash; writes JSON to clipboard
+    - `LoadReceipt.saveToLibrary(receipt)` &mdash; alias for `save()`, persists to `localStorage` under `load_receipts_v1`
+  - Added `LoadReceipt.EXPORT_TYPES` constant with the seven canonical export types from Section 11 (Standalone HTML, PWA ZIP, LoadStudio Package, Backup, Diagnostic Report, LoadPlay Publish-Prep, Standalone Book PWA).
+  - **`load/tools/export-receipts.html` updated** so each row shows the report&apos;s three required action buttons exactly: **Download Receipt**, **Copy Receipt**, **Save Receipt to Library** (plus a Remove admin button). Each button calls the matching `LoadReceipt.*` helper.
+  - Cache `load-v17fz` -&gt; `load-v17g0`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Handoff Report Part E: Security Scanner)
 - **v17fz &mdash; Part E security scanner shipped as a reusable library**:

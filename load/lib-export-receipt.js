@@ -48,8 +48,29 @@
     return v == null ? 'NOT TESTED' : v;
   }
 
+  // Legacy field-name mapping for callers that predate the
+  // Load_Main_Claude_Handoff_Report spec field names. Earlier
+  // tools (chapter-splitter, epub-builder, ...) pass
+  //   { tool, kind, files: <count>, sizeBytes, nextStep }.
+  // The report (Section 11 / Part F) requires spec-shaped fields:
+  //   { exportType, fileName, fileSize, includedFiles, ...,
+  //     nextAction }.
+  // We accept both and normalize so existing callers don't break.
+  function normalize(opts) {
+    var o = {};
+    for (var k in opts) if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k];
+    if (!o.exportType && o.kind) o.exportType = o.kind;
+    if (!o.exportType && o.tool) o.exportType = o.tool;
+    if (typeof o.fileSize !== 'number' && typeof o.sizeBytes === 'number') o.fileSize = o.sizeBytes;
+    if (!o.nextAction && o.nextStep) o.nextAction = o.nextStep;
+    if (!Array.isArray(o.includedFiles) && typeof o.files === 'number') {
+      o.notes = (o.notes ? o.notes + ' ' : '') + 'fileCount=' + o.files;
+    }
+    return o;
+  }
+
   function create(opts) {
-    opts = opts || {};
+    opts = normalize(opts || {});
     return {
       id: opts.id || makeId(),
       schemaVersion: SCHEMA_VERSION,
@@ -68,6 +89,44 @@
       nextAction: opts.nextAction || '',
       notes: opts.notes || ''
     };
+  }
+
+  // Canonical export types from Section 11 (Part F).
+  var EXPORT_TYPES = [
+    'Standalone HTML',
+    'PWA ZIP',
+    'LoadStudio Package',
+    'Backup',
+    'Diagnostic Report',
+    'LoadPlay Publish-Prep',
+    'Standalone Book PWA'
+  ];
+
+  // The three required actions from Section 11 / Part F:
+  // Download Receipt, Copy Receipt, Save Receipt to Library.
+  function download(receipt, opts) {
+    opts = opts || {};
+    var safe = (receipt.fileName || receipt.exportType || 'export').replace(/[^A-Za-z0-9_.-]/g, '_');
+    var name = opts.fileName || ('receipt-' + safe + '-' + receipt.id + '.json');
+    var blob = toBlob(receipt);
+    var url = root.URL.createObjectURL(blob);
+    var a = root.document.createElement('a');
+    a.href = url; a.download = name;
+    root.document.body.appendChild(a); a.click();
+    setTimeout(function () { root.URL.revokeObjectURL(url); a.parentNode && a.parentNode.removeChild(a); }, 200);
+    return name;
+  }
+
+  function copy(receipt) {
+    var t = toJson(receipt);
+    if (root.navigator && root.navigator.clipboard && root.navigator.clipboard.writeText) {
+      return root.navigator.clipboard.writeText(t);
+    }
+    return Promise.reject(new Error('Clipboard not available'));
+  }
+
+  function saveToLibrary(receipt) {
+    return save(receipt);
   }
 
   function save(receipt) {
@@ -110,12 +169,16 @@
   root.LoadReceipt = {
     create: create,
     save: save,
+    saveToLibrary: saveToLibrary,
     list: list,
     get: get,
     remove: remove,
     clear: clear,
     toJson: toJson,
     toBlob: toBlob,
+    download: download,
+    copy: copy,
+    EXPORT_TYPES: EXPORT_TYPES,
     STORAGE_KEY: STORAGE_KEY,
     SCHEMA_VERSION: SCHEMA_VERSION
   };

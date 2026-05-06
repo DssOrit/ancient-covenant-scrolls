@@ -201,8 +201,9 @@ textarea{min-height:64px;resize:vertical}
         (inc.length ? '<details><summary>'+(rcpt.includedFiles||[]).length+' included file(s)</summary><div class="files">'+escapeHtml(inc.join('\n'))+(((rcpt.includedFiles||[]).length>inc.length)?'\n... ('+((rcpt.includedFiles||[]).length-inc.length)+' more)':'')+'</div></details>' : '')+
         (miss.length ? '<details><summary>'+miss.length+' missing file(s)</summary><div class="files">'+escapeHtml(miss.join('\n'))+'</div></details>' : '')+
         '<div class="actions">'+
-          '<button class="btn" data-act="download" data-id="'+escapeHtml(rcpt.id)+'">Download JSON</button>'+
-          '<button class="btn" data-act="copy" data-id="'+escapeHtml(rcpt.id)+'">Copy</button>'+
+          '<button class="btn" data-act="download" data-id="'+escapeHtml(rcpt.id)+'">Download Receipt</button>'+
+          '<button class="btn" data-act="copy" data-id="'+escapeHtml(rcpt.id)+'">Copy Receipt</button>'+
+          '<button class="btn" data-act="resave" data-id="'+escapeHtml(rcpt.id)+'">Save Receipt to Library</button>'+
           '<button class="btn danger" data-act="remove" data-id="'+escapeHtml(rcpt.id)+'">Remove</button>'+
         '</div>';
       listEl.appendChild(d);
@@ -217,15 +218,15 @@ textarea{min-height:64px;resize:vertical}
     var r = R.get(id);
     if (!r) return;
     if (act === 'download') {
-      var safe = (r.fileName||'export').replace(/[^A-Za-z0-9_.-]/g,'_');
-      downloadBlob(R.toBlob(r), 'receipt-' + safe + '-' + r.id + '.json');
+      R.download(r);
+      toast('Receipt downloaded.');
     } else if (act === 'copy') {
-      var txt = R.toJson(r);
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(function(){ toast('Copied to clipboard.'); });
-      } else {
-        toast('Clipboard not available.');
-      }
+      R.copy(r).then(function(){ toast('Receipt copied to clipboard.'); })
+        .catch(function(){ toast('Clipboard not available.'); });
+    } else if (act === 'resave') {
+      R.saveToLibrary(r);
+      toast('Saved to receipt library.');
+      render();
     } else if (act === 'remove') {
       if (confirm('Remove this receipt?')) {
         R.remove(id);
