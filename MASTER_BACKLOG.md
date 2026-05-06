@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g1`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g2`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,21 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Part G: LoadStudio Package Validator)
+- **v17g2 &mdash; Part G LoadStudio package validator aligned to spec**:
+  - `load/tools/loadstudio-validator.html` upgraded to the spec-shaped envelope: `{ valid, status, missingFiles, missingFolders, warnings, errors }` per Section 12 / Part G. Required files (11) and required folders (6) lists already matched the report; the report envelope is now the canonical return shape on `lastReport`, alongside the existing detailed breakdown.
+  - Replaced the local regex safety scan with `window.LoadSafetyScanner.scanZip()` so every Load tool that scans uses the same patterns.
+  - **Seven required UI actions wired** per Section 12:
+    - **Open as Viewer** &mdash; renders `index.html` in a strict sandbox iframe (`sandbox=&quot;allow-scripts&quot;`, `referrerpolicy=&quot;no-referrer&quot;`).
+    - **Open as Editable Project** &mdash; emits the package as a Blob and instructs the user to import via Load main.
+    - **Validate Package** &mdash; re-runs the validator on the in-memory ZIP (useful after Repair).
+    - **Repair Package** &mdash; inserts spec-shaped stubs for any missing required file (`index.html`, `manifest.json`, `service-worker.js`, `project.json`, `scenes.json`, `characters.json`, `rights.json`, `credits.json`, `styles.css`, `player.js`, `editor.js`) and `.keep` markers for missing required folders.
+    - **Export Fixed Package** &mdash; downloads the (possibly repaired) ZIP.
+    - **Prepare for LoadStudio** &mdash; blocks if any of the 4 hard-required files (`index.html`, `project.json`, `scenes.json`, `rights.json`) are missing; otherwise downloads the prepared ZIP and points the user to `../loadstudio/`.
+    - **Prepare for LoadPlay** &mdash; blocks publish-prep if `rights.json` is missing or invalid (per Section 12 + Section 13); otherwise downloads the prepared ZIP and points to `../LoadPlay/`.
+  - New &quot;Sandboxed viewer&quot; section in the report panel hosts the iframe.
+  - Cache `load-v17g1` -&gt; `load-v17g2`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Handoff Report Parts C + D: One-Click PWA Builder + Live Build Steps)
 - **v17g1 &mdash; Part C/D wired into the existing One-Click PWA Builder**:

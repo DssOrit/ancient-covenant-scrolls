@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 <script src="../lib-jszip.min.js"></script>
+<script src="../lib-security-scanner.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--border:#2a2a40}
 *{box-sizing:border-box}
@@ -66,6 +67,16 @@ header h1{margin:0;font-size:16px;font-weight:800;flex:1}
     <div class="section"><h3>Required folders</h3><div id="folders"></div></div>
     <div class="section"><h3>Rights metadata (rights.json)</h3><div id="rights"></div></div>
     <div class="section"><h3>Safety scan</h3><div id="safety"></div></div>
+    <div class="section"><h3>Sandboxed viewer</h3><div id="viewer-host" style="font-size:12.5px;color:var(--mute)">Tap <strong>Open as Viewer</strong> below to render <code>index.html</code> in a strict sandbox.</div></div>
+    <div class="actions">
+      <button id="act-viewer" class="btn" type="button">Open as Viewer</button>
+      <button id="act-editable" class="btn" type="button">Open as Editable Project</button>
+      <button id="act-validate" class="btn" type="button">Validate Package</button>
+      <button id="act-repair" class="btn" type="button">Repair Package</button>
+      <button id="act-export" class="btn" type="button">Export Fixed Package</button>
+      <button id="act-loadstudio" class="btn" type="button">Prepare for LoadStudio</button>
+      <button id="act-loadplay" class="btn" type="button">Prepare for LoadPlay</button>
+    </div>
     <div class="actions">
       <button id="export-json" class="btn" type="button">Export validation JSON</button>
       <button id="copy-json" class="btn" type="button">Copy JSON</button>
@@ -102,15 +113,20 @@ function validateRights(rights) {
 }
 
 var lastReport = null;
+var lastZip = null;
+var lastFileName = '';
+var lastIndexHtml = null;
 
 $('file').addEventListener('change', function (e) {
   var f = e.target.files && e.target.files[0]; if (!f) return;
   inspectZip(f);
 });
 function inspectZip(file) {
+  lastFileName = file.name;
   var rd = new FileReader();
   rd.onload = function () {
     new JSZip().loadAsync(rd.result).then(function (zip) {
+      lastZip = zip;
       var entries = Object.keys(zip.files);
       var fileChecks = REQUIRED_FILES.map(function (p) {
         var hit = entries.indexOf(p) !== -1;
@@ -127,32 +143,55 @@ function inspectZip(file) {
         try { return validateRights(JSON.parse(txt)); }
         catch (e) { return { errors: ['rights.json is not valid JSON: ' + e.message], warnings: [], valid: false }; }
       }) : Promise.resolve(rightsResult);
-      // Safety: run regex scan over text-y entries (.html/.js/.json/.css)
-      var safetyP = Promise.all(entries.filter(function (p) { return /\.(html?|js|css|json|txt|md)$/.test(p); })
-        .map(function (p) { return zip.file(p).async('string').then(function (txt) { return { path: p, text: txt }; }); }))
-        .then(function (texts) {
-          var findings = [];
-          texts.forEach(function (t) {
-            if (/<script[^>]+src=["']?https?:\/\//i.test(t.text)) findings.push({ severity: 'HIGH', file: t.path, issue: 'External <script src>' });
-            if (/javascript:/i.test(t.text))                       findings.push({ severity: 'HIGH', file: t.path, issue: 'javascript: URL' });
-            if (/(api[_-]?key|secret|password|sk-[a-z0-9]{20,})/i.test(t.text)) findings.push({ severity: 'BLOCKER', file: t.path, issue: 'Possible credential / API key' });
-            if (/<form[^>]*action=/i.test(t.text))                 findings.push({ severity: 'MEDIUM', file: t.path, issue: 'Form with action — verify destination' });
+      // Safety scan delegated to the shared library (Section 10 spec).
+      var safetyP = (window.LoadSafetyScanner ? window.LoadSafetyScanner.scanZip(zip) : Promise.resolve({ issues: [] }))
+        .then(function (sc) {
+          return sc.issues.map(function (i) {
+            return { severity: i.severity, file: i.file, issue: i.issue, recommendation: i.recommendedFix, blocksExport: !!i.blocksExport };
           });
-          entries.forEach(function (p) {
-            if (/(?:\.exe|\.bat|\.cmd|\.sh|\.app|\.dmg)$/i.test(p)) findings.push({ severity: 'BLOCKER', file: p, issue: 'Executable file in package' });
-            if (/\.\.[\/\\]/.test(p))                              findings.push({ severity: 'HIGH',    file: p, issue: 'Path traversal in filename' });
-            if (/^\.env(\.|$)/.test(p))                            findings.push({ severity: 'BLOCKER', file: p, issue: 'Hidden .env file' });
-          });
-          return findings;
         });
-      Promise.all([rightsLoad, safetyP]).then(function (pair) {
-        var rights = pair[0], safety = pair[1];
-        // Summary
+      var indexLoad = zip.file('index.html')
+        ? zip.file('index.html').async('string')
+        : Promise.resolve(null);
+      Promise.all([rightsLoad, safetyP, indexLoad]).then(function (parts) {
+        var rights = parts[0], safety = parts[1];
+        lastIndexHtml = parts[2];
         var hardMisses = fileChecks.filter(function (f) { return f.hard && !f.ok; }).length;
         var anyMisses = fileChecks.filter(function (f) { return !f.ok; }).length + folderChecks.filter(function (f) { return !f.ok; }).length;
-        var blockerSafety = safety.filter(function (s) { return s.severity === 'BLOCKER'; }).length;
+        var blockerSafety = safety.filter(function (s) { return s.blocksExport; }).length;
         var status = (hardMisses || rights.errors.length || blockerSafety) ? 'FAIL' : (anyMisses || rights.warnings.length || safety.length) ? 'WARN' : 'PASS';
-        lastReport = { generatedAt: new Date().toISOString(), file: file.name, status: status, files: fileChecks, folders: folderChecks, rights: rights, safety: safety };
+        // Spec-shaped result envelope per Section 12 / Part G:
+        //   { valid, status, missingFiles, missingFolders, warnings, errors }
+        var missingFiles = fileChecks.filter(function (f) { return !f.ok; }).map(function (f) { return f.path; });
+        var missingFolders = folderChecks.filter(function (f) { return !f.ok; }).map(function (f) { return f.path; });
+        var errors = [].concat(
+          fileChecks.filter(function (f) { return f.hard && !f.ok; }).map(function (f) { return 'FAIL: required file missing — ' + f.path; }),
+          rights.errors,
+          safety.filter(function (s) { return s.blocksExport; }).map(function (s) { return 'BLOCKER: ' + s.file + ' — ' + s.issue; })
+        );
+        var warnings = [].concat(
+          fileChecks.filter(function (f) { return !f.hard && !f.ok; }).map(function (f) { return 'WARN: optional file missing — ' + f.path; }),
+          missingFolders.map(function (p) { return 'WARN: required folder missing — ' + p; }),
+          rights.warnings,
+          safety.filter(function (s) { return !s.blocksExport; }).map(function (s) { return s.severity + ': ' + s.file + ' — ' + s.issue; })
+        );
+        lastReport = {
+          generatedAt: new Date().toISOString(),
+          spec: 'Load_Main_Claude_Handoff_Report Section 12 (Part G)',
+          file: file.name,
+          status: status,
+          valid: status === 'PASS',
+          missingFiles: missingFiles,
+          missingFolders: missingFolders,
+          warnings: warnings,
+          errors: errors,
+          // Detailed breakdown for the UI (not part of the spec envelope but kept for inspection):
+          files: fileChecks,
+          folders: folderChecks,
+          rights: rights,
+          safety: safety,
+          rightsBlocksLoadPlay: rights.errors.length > 0
+        };
         paint(lastReport);
       });
     }).catch(function (err) {
@@ -195,6 +234,120 @@ $('copy-json').addEventListener('click', function () {
   var t = JSON.stringify(lastReport, null, 2);
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { alert('Validation JSON copied.'); });
   else alert(t);
+});
+
+// ── Section 12 / Part G — required UI actions ─────────────────
+function needPackage() {
+  if (!lastZip) { alert('Drop a .loadstudio.zip / .cinepwa.zip first.'); return false; }
+  return true;
+}
+$('act-validate').addEventListener('click', function () {
+  if (!needPackage()) return;
+  // Re-run the validator on the same ZIP to refresh after Repair.
+  lastZip.generateAsync({ type: 'blob' }).then(function (blob) {
+    inspectZip(new File([blob], lastFileName || 'package.zip'));
+  });
+});
+$('act-viewer').addEventListener('click', function () {
+  if (!needPackage()) return;
+  var host = $('viewer-host'); host.innerHTML = '';
+  if (!lastIndexHtml) {
+    host.textContent = 'No index.html in this package — viewer unavailable.';
+    return;
+  }
+  var ifr = document.createElement('iframe');
+  ifr.style.cssText = 'width:100%;height:420px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-top:8px';
+  // Strict default per Section 14 (Part I) — package is untrusted until marked trusted.
+  ifr.sandbox = 'allow-scripts';
+  ifr.referrerPolicy = 'no-referrer';
+  ifr.srcdoc = lastIndexHtml;
+  host.appendChild(ifr);
+});
+$('act-editable').addEventListener('click', function () {
+  if (!needPackage()) return;
+  // Hand off to Load main: emit the package as a Blob and offer download
+  // with instructions to drag it into Load's import flow. Direct route
+  // would require IndexedDB write into Load's library schema — kept as a
+  // user-initiated import for safety.
+  lastZip.generateAsync({ type: 'blob' }).then(function (blob) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = (lastFileName || 'package.zip'); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+    setTimeout(function () { alert('Package downloaded. Open Load main → Import → drop the file in to edit.'); }, 50);
+  });
+});
+$('act-repair').addEventListener('click', function () {
+  if (!needPackage()) return;
+  if (!lastReport) return;
+  var added = [];
+  // Stub generators for missing required files.
+  var STUBS = {
+    'index.html': '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LoadStudio Project</title></head><body><h1>LoadStudio Project</h1></body></html>',
+    'manifest.json': JSON.stringify({ name: 'LoadStudio Project', short_name: 'Project', start_url: './', display: 'standalone', background_color: '#0a0a14', theme_color: '#7c3aed', icons: [] }, null, 2),
+    'service-worker.js': "self.addEventListener('install',function(){self.skipWaiting();});\nself.addEventListener('activate',function(e){e.waitUntil(self.clients.claim());});\nself.addEventListener('fetch',function(){});\n",
+    'project.json': JSON.stringify({ schemaVersion: 1, name: 'LoadStudio Project', createdAt: new Date().toISOString() }, null, 2),
+    'scenes.json': JSON.stringify({ schemaVersion: 1, scenes: [] }, null, 2),
+    'characters.json': JSON.stringify({ schemaVersion: 1, characters: [] }, null, 2),
+    'rights.json': JSON.stringify({
+      owner: '', license: 'unknown', sourceMaterial: '',
+      assetDeclarations: [], notes: 'STUB — fill in before LoadPlay publish-prep.'
+    }, null, 2),
+    'credits.json': JSON.stringify({ schemaVersion: 1, credits: [] }, null, 2),
+    'styles.css': '/* LoadStudio Project styles */\nbody{margin:0;font-family:-apple-system,sans-serif}\n',
+    'player.js': '// LoadStudio player stub.\n',
+    'editor.js': '// LoadStudio editor stub.\n'
+  };
+  lastReport.missingFiles.forEach(function (p) {
+    if (STUBS[p] !== undefined) { lastZip.file(p, STUBS[p]); added.push(p); }
+  });
+  // Add .keep markers for missing folders.
+  lastReport.missingFolders.forEach(function (p) {
+    lastZip.file(p + '.keep', ''); added.push(p + '.keep');
+  });
+  if (!added.length) { alert('Nothing to repair — package already has every required file and folder.'); return; }
+  alert('Added ' + added.length + ' stub file(s)/folder(s):\n' + added.join('\n') + '\n\nTap "Validate Package" to re-check, or "Export Fixed Package" to download.');
+});
+$('act-export').addEventListener('click', function () {
+  if (!needPackage()) return;
+  lastZip.generateAsync({ type: 'blob', compression: 'DEFLATE' }).then(function (blob) {
+    var name = (lastFileName || 'package.zip').replace(/\.zip$/i, '') + '-fixed.zip';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+  });
+});
+$('act-loadstudio').addEventListener('click', function () {
+  if (!needPackage()) return;
+  if (!lastReport) return;
+  var hardMissing = lastReport.missingFiles.filter(function (p) { return FAIL_HARD.indexOf(p) !== -1; });
+  if (hardMissing.length) {
+    alert('Cannot prepare for LoadStudio — these required files are missing:\n' + hardMissing.join('\n') + '\n\nTap "Repair Package" first.');
+    return;
+  }
+  lastZip.generateAsync({ type: 'blob', compression: 'DEFLATE' }).then(function (blob) {
+    var name = (lastFileName || 'package.zip').replace(/\.zip$/i, '') + '-loadstudio.zip';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    setTimeout(function () { alert('Prepared for LoadStudio. Open ../loadstudio/ and import this file.'); }, 50);
+  });
+});
+$('act-loadplay').addEventListener('click', function () {
+  if (!needPackage()) return;
+  if (!lastReport) return;
+  // Section 12 + Section 13: block LoadPlay publish-prep without rights.json.
+  if (lastReport.rightsBlocksLoadPlay || (lastReport.rights && !lastReport.rights.valid)) {
+    alert('Blocked: rights.json is missing or incomplete.\n\nLoadPlay publish-prep requires owner, license, sourceMaterial, and assetDeclarations. Tap "Repair Package" to insert a stub, fill it in, then try again.');
+    return;
+  }
+  if (lastReport.errors.length) {
+    alert('Blocked: ' + lastReport.errors.length + ' error(s) prevent publish-prep:\n\n' + lastReport.errors.slice(0, 5).join('\n') + (lastReport.errors.length > 5 ? '\n...' : ''));
+    return;
+  }
+  lastZip.generateAsync({ type: 'blob', compression: 'DEFLATE' }).then(function (blob) {
+    var name = (lastFileName || 'package.zip').replace(/\.zip$/i, '') + '-loadplay-prep.zip';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    setTimeout(function () { alert('Prepared for LoadPlay. Rights validated. Open ../LoadPlay/ to upload.'); }, 50);
+  });
 });
 </script>
 </body>
