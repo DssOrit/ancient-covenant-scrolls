@@ -1331,6 +1331,12 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
   margin: 0 0 8px; color: var(--ink-hi);
   font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
 }
+.workspace-hub .ws-subhead {
+  margin: 14px 0 6px; color: var(--ink-mid);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.workspace-hub .ws-subhead:first-of-type { margin-top: 4px; }
 .workspace-hub .ws-tiles {
   display: grid; gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
