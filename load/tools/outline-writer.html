@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Outline Writer</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1300px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 14px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+textarea { width: 100%; min-height: 460px; padding: 14px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 15px;
+  line-height: 1.6; resize: vertical; }
+textarea:focus { outline: none; border-color: #7c5cff; }
+.preview { min-height: 460px; padding: 14px 18px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 14px;
+  line-height: 1.6; overflow: auto; }
+.preview ul { padding-left: 22px; margin: 4px 0; }
+.preview li { margin: 2px 0; }
+.preview h1, .preview h2, .preview h3 { margin: 12px 0 4px;
+  font-family: -apple-system, sans-serif; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+  align-items: center; }
+label.field { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; }
+select { background: #0e0e1a; border: 1px solid #2a2a42; color: #e8e8f0;
+  padding: 7px 10px; border-radius: 6px; font: inherit; font-size: 13px; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 10px; }
+.kbd { display: inline-block; padding: 2px 6px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 4px; font-family: ui-monospace, monospace;
+  font-size: 11px; color: #e8e8f0; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-books.html">&larr; Books &amp; writing</a>
+<h1>Outline Writer</h1>
+<a href="./help.html#outline">How it works</a>
+</header>
+<main>
+<p class="intro"><span class="kbd">Tab</span> indents the current line and adds a bullet. <span class="kbd">Shift+Tab</span> outdents. <span class="kbd">Enter</span> keeps the current bullet level. Live Markdown preview on the right. Pairs with Markdown TOC and Manuscript-to-Book.</p>
+<div class="row">
+<div class="card">
+<h2>Outline</h2>
+<textarea id="src" placeholder="- Top idea&#10;  - Sub idea&#10;  - Another&#10;- Next top&#10;&#10;Hint: tap inside, then press Tab to indent." spellcheck="false"></textarea>
+<div class="toolbar">
+<label class="field">Bullet style <select id="bullet">
+<option value="-" selected>dash (-)</option>
+<option value="*">star (*)</option>
+<option value="+">plus (+)</option>
+</select></label>
+<label class="field">Indent <select id="indent">
+<option value="2" selected>2 spaces</option>
+<option value="3">3 spaces</option>
+<option value="4">4 spaces</option>
+</select></label>
+<button id="normalize">Normalize bullets &amp; indent</button>
+<button id="numbered">Convert to numbered</button>
+</div>
+</div>
+<div class="card">
+<h2>Live preview</h2>
+<div class="preview" id="prev"></div>
+</div>
+</div>
+<div class="card">
+<div class="toolbar">
+<button class="primary" id="download">Download .md</button>
+<button id="copy">Copy as Markdown</button>
+<button id="clear">Clear</button>
+</div>
+<div class="summary" id="summary"></div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var src = $('src');
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function getIndent(){ return ' '.repeat(parseInt($('indent').value, 10)); }
+function getBullet(){ return $('bullet').value; }
+function curLineRange(ta){
+  var v = ta.value, p = ta.selectionStart;
+  var start = v.lastIndexOf('\n', p - 1) + 1;
+  var end = v.indexOf('\n', p);
+  if (end === -1) end = v.length;
+  return { start: start, end: end, line: v.slice(start, end) };
+}
+function selLineRange(ta){
+  var v = ta.value, s = ta.selectionStart, e = ta.selectionEnd;
+  var start = v.lastIndexOf('\n', s - 1) + 1;
+  var end = v.indexOf('\n', e);
+  if (end === -1) end = v.length;
+  return { start: start, end: end, text: v.slice(start, end) };
+}
+function setSelection(ta, s, e){
+  ta.setSelectionRange(s, e === undefined ? s : e);
+}
+function bulletPrefixOf(line, ind){
+  var rx = new RegExp('^(\\s*)([\\-*+])\\s');
+  var m = rx.exec(line);
+  if (m) return { indent: m[1], bullet: m[2], raw: m[0] };
+  return null;
+}
+src.addEventListener('keydown', function(e){
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    var ind = getIndent();
+    var bullet = getBullet();
+    var sel = selLineRange(src);
+    var lines = sel.text.split('\n');
+    var multi = lines.length > 1 || src.selectionStart !== src.selectionEnd;
+    var newLines = lines.map(function(ln){
+      if (e.shiftKey) {
+        if (ln.startsWith(ind)) return ln.slice(ind.length);
+        if (ln.startsWith('\t')) return ln.slice(1);
+        var leading = /^( +)/.exec(ln);
+        if (leading) return ln.slice(Math.min(leading[1].length, ind.length));
+        return ln;
+      } else {
+        if (multi) return ind + ln;
+        var existing = bulletPrefixOf(ln, ind);
+        if (existing) return ind + ln;
+        if (!ln.trim()) return ind + bullet + ' ';
+        return ind + ln;
+      }
+    });
+    var newText = newLines.join('\n');
+    var v = src.value;
+    src.value = v.slice(0, sel.start) + newText + v.slice(sel.end);
+    var newEnd = sel.start + newText.length;
+    setSelection(src, multi ? sel.start : newEnd, newEnd);
+    update();
+  } else if (e.key === 'Enter') {
+    var lr = curLineRange(src);
+    var bp = bulletPrefixOf(lr.line);
+    if (bp) {
+      e.preventDefault();
+      var rest = lr.line.slice(bp.raw.length).trim();
+      if (!rest) {
+        var newLine = bp.indent.length >= getIndent().length ?
+          bp.indent.slice(getIndent().length) :
+          '';
+        var v = src.value;
+        src.value = v.slice(0, lr.start) + newLine + v.slice(lr.end);
+        setSelection(src, lr.start + newLine.length);
+      } else {
+        var insertion = '\n' + bp.indent + bp.bullet + ' ';
+        var pos = src.selectionStart;
+        var v2 = src.value;
+        src.value = v2.slice(0, pos) + insertion + v2.slice(pos);
+        setSelection(src, pos + insertion.length);
+      }
+      update();
+    }
+  }
+});
+function renderMd(text){
+  var lines = text.split('\n');
+  var out = ''; var stack = [];
+  function close(toLevel){
+    while (stack.length > toLevel) { out += '</li></ul>'; stack.pop(); }
+  }
+  lines.forEach(function(line){
+    if (!line.trim()) { close(0); out += ''; return; }
+    var m = /^(\s*)([-*+])\s+(.*)$/.exec(line);
+    if (!m) {
+      close(0);
+      var hm = /^(#{1,6})\s+(.+)$/.exec(line.trim());
+      if (hm) {
+        var n = hm[1].length;
+        out += '<h' + n + '>' + esc(hm[2]) + '</h' + n + '>';
+      } else {
+        out += '<p>' + esc(line) + '</p>';
+      }
+      return;
+    }
+    var lvl = Math.floor(m[1].length / parseInt($('indent').value, 10));
+    if (lvl > stack.length) {
+      while (stack.length < lvl + 1) { out += '<ul>'; stack.push(0); }
+    } else if (lvl < stack.length - 1) {
+      close(lvl + 1);
+      out += '</li>';
+    } else {
+      if (stack.length) out += '</li>';
+      else { out += '<ul>'; stack.push(0); }
+    }
+    out += '<li>' + esc(m[3]);
+  });
+  close(0);
+  return out || '<p style="color:#9ca3af;">Type or paste an outline.</p>';
+}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+function update(){
+  $('prev').innerHTML = renderMd(src.value);
+  var lines = src.value.split('\n').filter(function(l){ return l.trim(); });
+  $('summary').textContent = lines.length + ' line' + (lines.length === 1 ? '' : 's') +
+    ' &middot; ' + new Blob([src.value]).size + ' bytes.';
+}
+$('normalize').addEventListener('click', function(){
+  var ind = getIndent();
+  var bullet = getBullet();
+  var lines = src.value.split('\n').map(function(line){
+    var m = /^(\s*)([-*+])\s+(.*)$/.exec(line);
+    if (!m) return line;
+    var depth = 0;
+    var ws = m[1];
+    if (ws.indexOf('\t') >= 0) {
+      depth = ws.replace(/[^\t]/g, '').length;
+    } else {
+      depth = Math.floor(ws.length / Math.max(1, ind.length));
+    }
+    return ind.repeat(depth) + bullet + ' ' + m[3];
+  });
+  src.value = lines.join('\n'); update();
+  toast('Normalized');
+});
+$('numbered').addEventListener('click', function(){
+  var lines = src.value.split('\n');
+  var counters = {};
+  var out = lines.map(function(line){
+    var m = /^(\s*)([-*+])\s+(.*)$/.exec(line);
+    if (!m) return line;
+    var depth = m[1].length;
+    counters[depth] = (counters[depth] || 0) + 1;
+    Object.keys(counters).forEach(function(k){
+      if (parseInt(k, 10) > depth) delete counters[k];
+    });
+    return m[1] + counters[depth] + '. ' + m[3];
+  });
+  src.value = out.join('\n'); update();
+  toast('Converted to numbered');
+});
+$('copy').addEventListener('click', function(){
+  if (!src.value) { toast('Nothing to copy'); return; }
+  if (navigator.clipboard) navigator.clipboard.writeText(src.value).then(function(){ toast('Copied'); });
+  else { src.select(); document.execCommand('copy'); toast('Copied'); }
+});
+$('download').addEventListener('click', function(){
+  if (!src.value) { toast('Nothing to save'); return; }
+  var blob = new Blob([src.value], { type: 'text/markdown' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'outline.md'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('Downloaded');
+});
+$('clear').addEventListener('click', function(){ src.value = ''; update(); });
+src.addEventListener('input', update);
+$('indent').addEventListener('change', update);
+update();
+})();
+</script>
+</body>
+</html>

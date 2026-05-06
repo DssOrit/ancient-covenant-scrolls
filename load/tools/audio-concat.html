@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Audio Concat</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 26px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+.track { display: grid; grid-template-columns: auto 1fr auto auto auto;
+  gap: 10px; align-items: center; padding: 10px 12px;
+  border: 1px solid #2a2a42; border-radius: 8px; margin-top: 8px;
+  background: #0e0e1a; }
+.track .num { color: #7c5cff; font-weight: 700; font-size: 12px; min-width: 22px; }
+.track .info { font-size: 13px; color: #e8e8f0; }
+.track .info .name { font-weight: 600; word-break: break-word; }
+.track .info .meta { font-size: 11px; color: #9ca3af; margin-top: 2px;
+  font-variant-numeric: tabular-nums; }
+.track button.iconbtn { background: transparent; border: 1px solid #2a2a42;
+  color: #9ca3af; padding: 5px 9px; font-size: 12px; cursor: pointer;
+  border-radius: 4px; }
+.track button.iconbtn:hover { color: #fff; border-color: #7c5cff; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  align-items: center; }
+label.field { display: inline-flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: #9ca3af; }
+input[type=number] { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 7px 10px; border-radius: 6px; font: inherit;
+  font-size: 13px; width: 90px; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 12px; }
+.errbox { background: #4c1212; color: #fca5a5; border: 1px solid #7f1d1d;
+  border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 12px; }
+audio { width: 100%; margin-top: 14px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-media.html">&larr; Media</a>
+<h1>Audio Concat</h1>
+<a href="./help.html#audconcat">How it works</a>
+</header>
+<main>
+<p class="intro">Drop multiple audio files and merge them into one continuous track. Reorder, add silence between, fade in/out the edges. Output is a universal 16-bit PCM WAV.</p>
+<div class="card">
+<h2>1. Tracks</h2>
+<div class="drop" id="drop">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+<span>Drop audio files (multiple OK)</span>
+<span style="font-size:11px;">WAV, MP3, M4A, OGG, WEBM &mdash; whatever your browser decodes</span>
+<input id="file" type="file" accept="audio/*" multiple style="display:none">
+</div>
+<div id="list"></div>
+<div id="errbox"></div>
+</div>
+<div class="card">
+<h2>2. Settings</h2>
+<div style="display:flex;flex-wrap:wrap;gap:14px;">
+<label class="field">Silence between tracks (sec)<input id="gap" type="number" min="0" max="10" step="0.1" value="0.3"></label>
+<label class="field">Fade in (sec)<input id="fadeIn" type="number" min="0" max="5" step="0.1" value="0"></label>
+<label class="field">Fade out (sec)<input id="fadeOut" type="number" min="0" max="5" step="0.1" value="0.3"></label>
+<label class="field">Sample rate<input id="rate" type="number" value="44100" readonly></label>
+</div>
+<div class="toolbar">
+<button class="primary" id="merge" disabled>Merge &amp; export WAV</button>
+<button id="clear" disabled>Clear all</button>
+</div>
+<div class="summary" id="summary">Drop tracks above to get started.</div>
+<audio id="player" controls style="display:none;"></audio>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var ctx = null;
+var tracks = [];
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2000); }
+function showError(m){ $('errbox').innerHTML = '<div class="errbox">' + m + '</div>'; }
+function clearError(){ $('errbox').innerHTML = ''; }
+function fmt(secs){ var m = Math.floor(secs/60); var s = Math.floor(secs % 60);
+  return m + ':' + (s < 10 ? '0' + s : s); }
+function ensureCtx(){
+  if (!ctx) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    $('rate').value = ctx.sampleRate;
+  }
+  return ctx;
+}
+function loadFiles(fs){
+  ensureCtx();
+  clearError();
+  var arr = Array.from(fs);
+  var promises = arr.map(function(f){
+    return f.arrayBuffer().then(function(buf){
+      return ctx.decodeAudioData(buf.slice(0)).then(function(audio){
+        return { name: f.name, size: f.size, audio: audio };
+      });
+    });
+  });
+  Promise.allSettled(promises).then(function(results){
+    var added = 0; var failed = 0;
+    results.forEach(function(r){
+      if (r.status === 'fulfilled') { tracks.push(r.value); added++; }
+      else failed++;
+    });
+    if (failed) showError(failed + ' file(s) could not be decoded by this browser.');
+    render();
+    if (added) toast('Added ' + added + ' track' + (added === 1 ? '' : 's'));
+  });
+}
+function render(){
+  var l = $('list'); l.innerHTML = '';
+  tracks.forEach(function(t, idx){
+    var div = document.createElement('div');
+    div.className = 'track';
+    div.innerHTML = '<span class="num">' + (idx+1) + '</span>' +
+      '<div class="info"><div class="name"></div><div class="meta">' +
+      fmt(t.audio.duration) + ' &middot; ' + t.audio.sampleRate + ' Hz &middot; ' +
+      t.audio.numberOfChannels + (t.audio.numberOfChannels === 1 ? ' ch (mono)' : ' ch (stereo)') +
+      ' &middot; ' + (t.size/1024).toFixed(1) + ' KB</div></div>' +
+      '<button class="iconbtn" data-act="up" data-i="' + idx + '" ' + (idx === 0 ? 'disabled' : '') + '>&uarr;</button>' +
+      '<button class="iconbtn" data-act="down" data-i="' + idx + '" ' + (idx === tracks.length-1 ? 'disabled' : '') + '>&darr;</button>' +
+      '<button class="iconbtn" data-act="rm" data-i="' + idx + '">&times;</button>';
+    div.querySelector('.name').textContent = t.name;
+    l.appendChild(div);
+  });
+  l.querySelectorAll('.iconbtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      var i = parseInt(b.dataset.i, 10), act = b.dataset.act;
+      if (act === 'up' && i > 0) { var x = tracks[i-1]; tracks[i-1] = tracks[i]; tracks[i] = x; }
+      else if (act === 'down' && i < tracks.length-1) { var x2 = tracks[i+1]; tracks[i+1] = tracks[i]; tracks[i] = x2; }
+      else if (act === 'rm') { tracks.splice(i, 1); }
+      render();
+    });
+  });
+  var total = tracks.reduce(function(s, t){ return s + t.audio.duration; }, 0);
+  var gap = parseFloat($('gap').value) || 0;
+  total += Math.max(0, tracks.length - 1) * gap;
+  $('summary').textContent = tracks.length + ' track' + (tracks.length === 1 ? '' : 's') +
+    ' &middot; merged length: ' + fmt(total);
+  $('merge').disabled = tracks.length === 0;
+  $('clear').disabled = tracks.length === 0;
+}
+function mergeAndExport(){
+  if (!tracks.length) return;
+  var c = ensureCtx();
+  var rate = c.sampleRate;
+  var channels = 2;
+  tracks.forEach(function(t){ if (t.audio.numberOfChannels > channels) channels = t.audio.numberOfChannels; });
+  var gap = Math.max(0, parseFloat($('gap').value) || 0);
+  var fadeIn = Math.max(0, parseFloat($('fadeIn').value) || 0);
+  var fadeOut = Math.max(0, parseFloat($('fadeOut').value) || 0);
+  var totalSamples = 0;
+  tracks.forEach(function(t){ totalSamples += t.audio.length; });
+  totalSamples += Math.max(0, tracks.length - 1) * Math.round(gap * rate);
+  var out = new Float32Array(totalSamples * channels);
+  function getCh(audio, ch){
+    if (ch < audio.numberOfChannels) return audio.getChannelData(ch);
+    return audio.getChannelData(0);
+  }
+  var pos = 0;
+  tracks.forEach(function(t, idx){
+    var audio = t.audio;
+    var len = audio.length;
+    for (var ch = 0; ch < channels; ch++) {
+      var data = getCh(audio, ch);
+      for (var i = 0; i < len; i++) {
+        out[(pos + i) * channels + ch] = data[i];
+      }
+    }
+    pos += len;
+    if (idx < tracks.length - 1 && gap > 0) {
+      pos += Math.round(gap * rate);
+    }
+  });
+  if (fadeIn > 0) {
+    var fSamples = Math.min(out.length / channels, Math.round(fadeIn * rate));
+    for (var i2 = 0; i2 < fSamples; i2++) {
+      var g = i2 / fSamples;
+      for (var ch2 = 0; ch2 < channels; ch2++) out[i2 * channels + ch2] *= g;
+    }
+  }
+  if (fadeOut > 0) {
+    var fSamples2 = Math.min(out.length / channels, Math.round(fadeOut * rate));
+    var startIdx = (out.length / channels) - fSamples2;
+    for (var i3 = 0; i3 < fSamples2; i3++) {
+      var g2 = 1 - (i3 / fSamples2);
+      for (var ch3 = 0; ch3 < channels; ch3++) out[(startIdx + i3) * channels + ch3] *= g2;
+    }
+  }
+  var wav = encodeWav(out, rate, channels);
+  var blob = new Blob([wav], { type: 'audio/wav' });
+  var url = URL.createObjectURL(blob);
+  $('player').src = url; $('player').style.display = 'block';
+  var a = document.createElement('a'); a.href = url;
+  a.download = 'merged.wav'; a.click();
+  toast('WAV downloaded');
+}
+function encodeWav(interleaved, rate, channels){
+  var bytesPerSample = 2;
+  var blockAlign = channels * bytesPerSample;
+  var byteRate = rate * blockAlign;
+  var dataSize = interleaved.length * bytesPerSample;
+  var buf = new ArrayBuffer(44 + dataSize);
+  var view = new DataView(buf);
+  function ws(off, s){ for (var i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); }
+  ws(0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); ws(8, 'WAVE');
+  ws(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+  view.setUint16(22, channels, true); view.setUint32(24, rate, true);
+  view.setUint32(28, byteRate, true); view.setUint16(32, blockAlign, true);
+  view.setUint16(34, bytesPerSample * 8, true);
+  ws(36, 'data'); view.setUint32(40, dataSize, true);
+  var off = 44;
+  for (var i = 0; i < interleaved.length; i++, off += 2) {
+    var s = Math.max(-1, Math.min(1, interleaved[i]));
+    view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+  }
+  return buf;
+}
+$('drop').addEventListener('click', function(){ $('file').click(); });
+['dragenter','dragover'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.remove('over'); });
+});
+$('drop').addEventListener('drop', function(e){
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) loadFiles(e.dataTransfer.files);
+});
+$('file').addEventListener('change', function(e){
+  if (e.target.files && e.target.files.length) loadFiles(e.target.files);
+});
+$('merge').addEventListener('click', mergeAndExport);
+$('clear').addEventListener('click', function(){ tracks = []; render(); $('player').style.display = 'none'; });
+$('gap').addEventListener('input', render);
+})();
+</script>
+</body>
+</html>

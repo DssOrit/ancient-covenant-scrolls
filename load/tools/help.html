@@ -122,6 +122,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#textenc">Text Encoder</a>
   <a href="#epub2txt">EPUB to Text</a>
   <a href="#csv">CSV Viewer</a>
+  <a href="#audconcat">Audio Concat</a>
+  <a href="#outline">Outline Writer</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -822,6 +824,32 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Export CSV</strong> or <strong>Export JSON</strong> to download just the filtered rows, or <strong>Copy as Markdown table</strong> to drop into a writing tool.</li>
 </ol>
 <a class="open" href="./csv-viewer.html">Open CSV Viewer</a>
+</div>
+
+<div class="tool" id="audconcat">
+<h3>Audio Concat</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Media &rarr; Audio Concat</strong>.</li>
+  <li>Drop multiple audio files. The browser&apos;s decoder handles WAV, MP3, M4A, OGG, WEBM, and any other format it natively supports.</li>
+  <li>Each track shows duration, sample rate, channel count, and size. Use the up / down arrows to reorder, or the X to remove.</li>
+  <li>Set the <strong>Silence between tracks</strong> in seconds (default 0.3). Set <strong>Fade in</strong> at the start of the merged track and <strong>Fade out</strong> at the end.</li>
+  <li>Tap <strong>Merge &amp; export WAV</strong>. You get a 16-bit PCM WAV at the device&apos;s native sample rate.</li>
+</ol>
+<a class="open" href="./audio-concat.html">Open Audio Concat</a>
+</div>
+
+<div class="tool" id="outline">
+<h3>Outline Writer</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Books &amp; writing &rarr; Outline Writer</strong>.</li>
+  <li>Type a top-level idea. Press <strong>Tab</strong> to indent and start a sub-bullet; <strong>Shift+Tab</strong> to outdent.</li>
+  <li><strong>Enter</strong> on a bulleted line keeps the current bullet level. Pressing <strong>Enter</strong> on an empty bullet outdents (lets you finish a sub-list).</li>
+  <li>Pick a bullet style (-, *, +) and indent width (2 / 3 / 4 spaces).</li>
+  <li><strong>Normalize bullets &amp; indent</strong> rewrites every bullet to your chosen style and tightens irregular indentation.</li>
+  <li><strong>Convert to numbered</strong> swaps each bullet for `1.`, `2.`, &hellip; with per-level numbering.</li>
+  <li>Live Markdown preview on the right. <strong>Download .md</strong> or <strong>Copy as Markdown</strong>.</li>
+</ol>
+<a class="open" href="./outline-writer.html">Open Outline Writer</a>
 </div>
 
 <div class="tool" id="acceptance">
