@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Audio Waveform</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1200px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 26px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+.options { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+label.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #9ca3af; }
+input[type=number], select { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 7px 10px; border-radius: 6px; font: inherit; font-size: 13px; }
+input[type=color] { background: #0e0e1a; border: 1px solid #2a2a42; height: 36px;
+  width: 100%; padding: 4px; border-radius: 6px; cursor: pointer; }
+input[type=range] { width: 100%; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.canvas-wrap { background: repeating-conic-gradient(#1a1a2e 0% 25%, #15152a 0% 50%) 50% / 14px 14px;
+  border: 1px solid #2a2a42; border-radius: 8px; overflow: auto; padding: 10px;
+  margin-top: 12px; }
+canvas { display: block; max-width: 100%; height: auto; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 10px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-media.html">&larr; Media</a>
+<h1>Audio Waveform</h1>
+<a href="./help.html#audwave">How it works</a>
+</header>
+<main>
+<p class="intro">Drop an audio file. Render its waveform as a static PNG with chosen size, colors, and style. Useful for podcast covers, video thumbnails, or visual placeholders for an audio asset.</p>
+<div class="card">
+<h2>1. Source</h2>
+<div class="drop" id="drop">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h2l3-7 4 14 4-12 4 8 5-3"/></svg>
+<span>Drop an audio file</span>
+<input id="file" type="file" accept="audio/*" style="display:none">
+</div>
+<div class="summary" id="info"></div>
+</div>
+<div class="card">
+<h2>2. Style</h2>
+<div class="options">
+<label class="field">Width (px) <input id="w" type="number" min="200" max="4096" value="1600"></label>
+<label class="field">Height (px) <input id="h" type="number" min="100" max="2048" value="320"></label>
+<label class="field">Style <select id="style">
+<option value="bars" selected>Bars</option>
+<option value="line">Line</option>
+<option value="filled">Filled</option>
+<option value="mirror">Mirror bars</option>
+</select></label>
+<label class="field">Bar count <input id="bars" type="number" min="20" max="2000" value="200"></label>
+<label class="field">Foreground <input id="fg" type="color" value="#7c5cff"></label>
+<label class="field">Background <input id="bg" type="color" value="#0a0a0f"></label>
+<label class="field">Background alpha <input id="bgAlpha" type="range" min="0" max="100" value="100"><span id="bgAlphaVal" style="font-size:11px;color:#9ca3af;">100%</span></label>
+<label class="field">Padding (px) <input id="pad" type="number" min="0" max="200" value="20"></label>
+</div>
+<div class="toolbar">
+<button class="primary" id="render" disabled>Render</button>
+<button id="download" disabled>Download PNG</button>
+</div>
+<div class="canvas-wrap" id="wrap" style="display:none;">
+<canvas id="canvas"></canvas>
+</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var ctx = null;
+var audio = null;
+var fileName = '';
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function ensureCtx(){
+  if (!ctx) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+  }
+  return ctx;
+}
+function fmt(secs){ var m = Math.floor(secs/60); var s = Math.floor(secs % 60);
+  return m + ':' + (s < 10 ? '0' + s : s); }
+function loadFile(f){
+  ensureCtx();
+  fileName = f.name;
+  toast('Reading ' + f.name + '&hellip;');
+  f.arrayBuffer().then(function(ab){ return ctx.decodeAudioData(ab.slice(0)); })
+    .then(function(buf){
+      audio = buf;
+      $('info').textContent = f.name + ' &middot; ' + fmt(buf.duration) + ' &middot; ' +
+        buf.sampleRate + ' Hz &middot; ' + buf.numberOfChannels + ' ch';
+      $('render').disabled = false;
+      render();
+    }).catch(function(e){ toast('Decode failed: ' + e.message); });
+}
+function hexToRgba(hex, a){
+  var n = parseInt(hex.slice(1), 16);
+  var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+}
+function render(){
+  if (!audio) return;
+  var w = parseInt($('w').value, 10);
+  var h = parseInt($('h').value, 10);
+  var style = $('style').value;
+  var barCount = parseInt($('bars').value, 10);
+  var fg = $('fg').value;
+  var bg = $('bg').value;
+  var bgA = (parseInt($('bgAlpha').value, 10) || 0) / 100;
+  $('bgAlphaVal').textContent = $('bgAlpha').value + '%';
+  var pad = parseInt($('pad').value, 10);
+  var c = $('canvas');
+  c.width = w; c.height = h;
+  var ctxc = c.getContext('2d');
+  if (bgA > 0) {
+    ctxc.fillStyle = hexToRgba(bg, bgA);
+    ctxc.fillRect(0, 0, w, h);
+  } else {
+    ctxc.clearRect(0, 0, w, h);
+  }
+  var data = audio.getChannelData(0);
+  var innerW = w - pad * 2;
+  var innerH = h - pad * 2;
+  var midY = pad + innerH / 2;
+  if (style === 'line') {
+    ctxc.strokeStyle = fg; ctxc.lineWidth = 2;
+    ctxc.beginPath();
+    var samplesPerPx = Math.max(1, Math.floor(data.length / innerW));
+    for (var x = 0; x < innerW; x++) {
+      var max = -1, min = 1;
+      for (var i = 0; i < samplesPerPx; i++) {
+        var v = data[x * samplesPerPx + i];
+        if (v === undefined) break;
+        if (v > max) max = v;
+        if (v < min) min = v;
+      }
+      if (x === 0) ctxc.moveTo(pad + x, midY - max * (innerH / 2));
+      ctxc.lineTo(pad + x, midY - max * (innerH / 2));
+      ctxc.lineTo(pad + x, midY - min * (innerH / 2));
+    }
+    ctxc.stroke();
+  } else if (style === 'filled') {
+    ctxc.fillStyle = fg;
+    var samplesPerPx2 = Math.max(1, Math.floor(data.length / innerW));
+    ctxc.beginPath();
+    ctxc.moveTo(pad, midY);
+    for (var x2 = 0; x2 < innerW; x2++) {
+      var max2 = -1;
+      for (var i2 = 0; i2 < samplesPerPx2; i2++) {
+        var v2 = Math.abs(data[x2 * samplesPerPx2 + i2] || 0);
+        if (v2 > max2) max2 = v2;
+      }
+      ctxc.lineTo(pad + x2, midY - max2 * (innerH / 2));
+    }
+    for (var x3 = innerW - 1; x3 >= 0; x3--) {
+      var max3 = -1;
+      for (var i3 = 0; i3 < samplesPerPx2; i3++) {
+        var v3 = Math.abs(data[x3 * samplesPerPx2 + i3] || 0);
+        if (v3 > max3) max3 = v3;
+      }
+      ctxc.lineTo(pad + x3, midY + max3 * (innerH / 2));
+    }
+    ctxc.closePath(); ctxc.fill();
+  } else {
+    var bw = innerW / barCount;
+    var samplesPerBar = Math.max(1, Math.floor(data.length / barCount));
+    var gap = Math.max(1, bw * 0.2);
+    var actualBw = Math.max(1, bw - gap);
+    ctxc.fillStyle = fg;
+    for (var b = 0; b < barCount; b++) {
+      var peak = 0;
+      var startSample = b * samplesPerBar;
+      for (var i4 = 0; i4 < samplesPerBar; i4++) {
+        var v4 = Math.abs(data[startSample + i4] || 0);
+        if (v4 > peak) peak = v4;
+      }
+      var bh = peak * (innerH / 2);
+      var x4 = pad + b * bw;
+      if (style === 'mirror') {
+        ctxc.fillRect(x4, midY - bh, actualBw, bh * 2);
+      } else {
+        ctxc.fillRect(x4, midY + (innerH / 2) - bh * 2, actualBw, bh * 2);
+      }
+    }
+  }
+  $('wrap').style.display = 'block';
+  $('download').disabled = false;
+}
+$('drop').addEventListener('click', function(){ $('file').click(); });
+['dragenter','dragover'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.remove('over'); });
+});
+$('drop').addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+$('render').addEventListener('click', render);
+['w','h','style','bars','fg','bg','bgAlpha','pad'].forEach(function(id){
+  $(id).addEventListener('input', function(){ if (audio) render(); });
+});
+$('download').addEventListener('click', function(){
+  $('canvas').toBlob(function(blob){
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = (fileName.replace(/\.[^.]+$/, '') || 'waveform') + '.png';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+    toast('PNG downloaded');
+  }, 'image/png');
+});
+})();
+</script>
+</body>
+</html>

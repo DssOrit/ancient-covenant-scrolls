@@ -130,6 +130,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#lorem">Lorem Ipsum</a>
   <a href="#cbsim">Color Blindness Simulator</a>
   <a href="#mstats">Manuscript Stats</a>
+  <a href="#audwave">Audio Waveform</a>
+  <a href="#datefmt">Date Formatter</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -934,6 +936,30 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Export JSON</strong> to keep the report.</li>
 </ol>
 <a class="open" href="./manuscript-stats.html">Open Manuscript Stats</a>
+</div>
+
+<div class="tool" id="audwave">
+<h3>Audio Waveform</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Media &rarr; Audio Waveform</strong>.</li>
+  <li>Drop an audio file. Tool decodes it, then auto-renders a default waveform.</li>
+  <li>Pick <strong>Width</strong>, <strong>Height</strong>, foreground and background colors, and background alpha (0% = transparent).</li>
+  <li>Pick a <strong>Style</strong>: Bars, Line, Filled, or Mirror bars. Bar count is adjustable.</li>
+  <li>Tap <strong>Download PNG</strong> to save the rendered image.</li>
+</ol>
+<a class="open" href="./audio-waveform.html">Open Audio Waveform</a>
+</div>
+
+<div class="tool" id="datefmt">
+<h3>Date Formatter</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Build &amp; validate &rarr; Date Formatter</strong>.</li>
+  <li>Type any date string, ISO timestamp, Unix seconds, or Unix milliseconds &mdash; or tap <strong>Now</strong>.</li>
+  <li>Renders 15 outputs: ISO 8601 UTC, ISO 8601 local with offset, Unix seconds, Unix ms, RFC 2822, locale long, locale short, date only, time only, day of week, day of year, week, quarter, custom pattern, and relative.</li>
+  <li>Custom pattern accepts tokens YYYY, YY, MMMM, MMM, MM, M, DDDD, DDD, DD, D, HH, H, mm, m, ss, s, SSS.</li>
+  <li>Tap <strong>Copy</strong> on any row to grab that format.</li>
+</ol>
+<a class="open" href="./date-formatter.html">Open Date Formatter</a>
 </div>
 
 <div class="tool" id="acceptance">

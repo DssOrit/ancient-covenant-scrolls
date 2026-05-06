@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Date Formatter</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.options { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+label.field { display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: #9ca3af; }
+input[type=text], select { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 8px 10px; border-radius: 6px; font: inherit;
+  font-size: 13px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.row { display: grid; grid-template-columns: 180px 1fr auto;
+  gap: 10px; align-items: center; padding: 10px 12px;
+  border-bottom: 1px solid #1f1f2f; font-size: 13px; }
+.row:last-child { border-bottom: 0; }
+.row .lbl { font-size: 12px; color: #9ca3af; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em; }
+.row .val { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #e8e8f0; word-break: break-all; }
+.row button { padding: 5px 10px; font-size: 12px; }
+.errbox { background: #4c1212; color: #fca5a5; border: 1px solid #7f1d1d;
+  border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 12px; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 12px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-build.html">&larr; Build &amp; validate</a>
+<h1>Date Formatter</h1>
+<a href="./help.html#datefmt">How it works</a>
+</header>
+<main>
+<p class="intro">Type a date, ISO string, Unix timestamp (seconds or milliseconds), or RFC 2822 string. Tool parses it and renders nine formats. Custom pattern with tokens YYYY / MM / DD / HH / mm / ss.</p>
+<div class="card">
+<h2>Input</h2>
+<div class="options">
+<label class="field">Date or timestamp <input id="in" type="text" placeholder="2026-05-06T14:30:00Z, 1762435800, or now"></label>
+<label class="field">Custom pattern <input id="pattern" type="text" value="YYYY-MM-DD HH:mm:ss"></label>
+</div>
+<div class="toolbar">
+<button class="primary" id="parse">Parse</button>
+<button id="now">Now</button>
+<button id="copy">Copy custom format</button>
+</div>
+<div class="summary" id="summary">Type a date or tap Now.</div>
+<div id="err"></div>
+</div>
+<div class="card" id="resultCard" style="display:none;">
+<h2>Formats</h2>
+<div id="rows"></div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var current = null;
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function pad(n, w){
+  var s = String(Math.abs(n));
+  while (s.length < (w || 2)) s = '0' + s;
+  return s;
+}
+function parseInput(s){
+  s = (s || '').trim();
+  if (!s || s.toLowerCase() === 'now') return new Date();
+  if (/^-?\d+$/.test(s)) {
+    var n = parseInt(s, 10);
+    if (Math.abs(n) >= 1e12) return new Date(n);
+    return new Date(n * 1000);
+  }
+  var d = new Date(s);
+  if (isNaN(d.getTime())) return null;
+  return d;
+}
+function relative(d){
+  var diff = Date.now() - d.getTime();
+  var abs = Math.abs(diff);
+  var ago = diff > 0;
+  function fmt(n, unit){
+    n = Math.round(n);
+    return n + ' ' + unit + (n === 1 ? '' : 's') + (ago ? ' ago' : ' from now');
+  }
+  if (abs < 60 * 1000) return fmt(abs / 1000, 'second');
+  if (abs < 3600 * 1000) return fmt(abs / 60000, 'minute');
+  if (abs < 86400 * 1000) return fmt(abs / 3600000, 'hour');
+  if (abs < 30 * 86400 * 1000) return fmt(abs / 86400000, 'day');
+  if (abs < 365 * 86400 * 1000) return fmt(abs / (30 * 86400000), 'month');
+  return fmt(abs / (365 * 86400000), 'year');
+}
+function applyPattern(d, p){
+  var Y = d.getFullYear(), M = d.getMonth() + 1, D = d.getDate();
+  var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+  var ms = d.getMilliseconds();
+  var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+  var DOWLong = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+  var MMM = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  var MMMM = ['January','February','March','April','May','June','July','August','September','October','November','December'][d.getMonth()];
+  return p
+    .replace(/YYYY/g, Y).replace(/YY/g, pad(Y % 100))
+    .replace(/MMMM/g, MMMM).replace(/MMM/g, MMM).replace(/MM/g, pad(M)).replace(/(?<!M)M(?!M)/g, M)
+    .replace(/DDDD/g, DOWLong).replace(/DDD/g, DOW).replace(/DD/g, pad(D)).replace(/(?<!D)D(?!D)/g, D)
+    .replace(/HH/g, pad(h)).replace(/(?<!H)H(?!H)/g, h)
+    .replace(/mm/g, pad(m)).replace(/(?<!m)m(?!m)/g, m)
+    .replace(/ss/g, pad(s)).replace(/(?<!s)s(?!s)/g, s)
+    .replace(/SSS/g, pad(ms, 3));
+}
+function render(d){
+  current = d;
+  $('resultCard').style.display = 'block';
+  var p = $('pattern').value || 'YYYY-MM-DD HH:mm:ss';
+  var tz = -d.getTimezoneOffset();
+  var tzSign = tz >= 0 ? '+' : '-';
+  var tzStr = tzSign + pad(Math.floor(Math.abs(tz)/60)) + ':' + pad(Math.abs(tz) % 60);
+  var rows = [
+    ['ISO 8601 (UTC)', d.toISOString()],
+    ['ISO 8601 (local)', applyPattern(d, 'YYYY-MM-DD') + 'T' + applyPattern(d, 'HH:mm:ss') + tzStr],
+    ['Unix seconds', Math.floor(d.getTime() / 1000)],
+    ['Unix milliseconds', d.getTime()],
+    ['RFC 2822', d.toUTCString()],
+    ['Locale (long)', d.toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'long' })],
+    ['Locale (short)', d.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' })],
+    ['Date only', applyPattern(d, 'YYYY-MM-DD')],
+    ['Time only', applyPattern(d, 'HH:mm:ss')],
+    ['Day of week', applyPattern(d, 'DDDD')],
+    ['Day of year', String(Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000))],
+    ['Week of year', String(getWeek(d))],
+    ['Quarter', 'Q' + (Math.floor(d.getMonth() / 3) + 1)],
+    ['Custom: ' + p, applyPattern(d, p)],
+    ['Relative', relative(d)]
+  ];
+  $('rows').innerHTML = rows.map(function(r){
+    return '<div class="row"><span class="lbl">' + esc(r[0]) +
+      '</span><span class="val">' + esc(String(r[1])) +
+      '</span><button data-v="' + esc(String(r[1])) + '">Copy</button></div>';
+  }).join('');
+  document.querySelectorAll('#rows button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var v = b.dataset.v;
+      if (navigator.clipboard) navigator.clipboard.writeText(v).then(function(){ toast('Copied'); });
+      else { var ta = document.createElement('textarea'); ta.value = v;
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta); toast('Copied'); }
+    });
+  });
+  $('summary').textContent = 'Parsed: ' + d.toString();
+}
+function getWeek(d){
+  var firstDay = new Date(d.getFullYear(), 0, 1);
+  var days = Math.floor((d - firstDay) / 86400000);
+  return Math.ceil((days + firstDay.getDay() + 1) / 7);
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g, '&quot;'); }
+function go(){
+  $('err').innerHTML = '';
+  var d = parseInput($('in').value);
+  if (!d) { $('err').innerHTML = '<div class="errbox">Could not parse that date.</div>'; return; }
+  render(d);
+}
+$('parse').addEventListener('click', go);
+$('now').addEventListener('click', function(){
+  $('in').value = ''; render(new Date());
+});
+$('in').addEventListener('input', function(){ if ($('in').value.trim()) go(); });
+$('pattern').addEventListener('input', function(){ if (current) render(current); });
+$('copy').addEventListener('click', function(){
+  if (!current) { toast('Parse a date first'); return; }
+  var v = applyPattern(current, $('pattern').value || 'YYYY-MM-DD HH:mm:ss');
+  if (navigator.clipboard) navigator.clipboard.writeText(v).then(function(){ toast('Copied: ' + v); });
+});
+render(new Date());
+})();
+</script>
+</body>
+</html>
