@@ -1175,3 +1175,71 @@ body.simple-mode .notes-row {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* v5.15 Visible Metadata Draft Plan */
+.metadata-draft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.metadata-draft-grid label {
+  display: grid;
+  gap: 8px;
+}
+.metadata-draft-grid .wide {
+  grid-column: 1 / -1;
+}
+.metadata-draft-grid input,
+.metadata-draft-grid textarea,
+.metadata-draft-grid select {
+  width: 100%;
+  border: 1px solid var(--line-soft);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border-radius: 16px;
+  padding: 14px;
+  font: inherit;
+}
+.metadata-draft-grid textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+@media (max-width: 900px) {
+  .metadata-draft-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* v5.16 PWA Builder Draft Comparison Summary */
+.comparison-box {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(255,255,255,.04);
+  margin: 14px 0;
+}
+.comparison-row {
+  display: grid;
+  gap: 8px;
+  border-left: 6px solid rgba(115,183,255,.75);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,.04);
+}
+.comparison-row strong {
+  color: var(--gold);
+}
+.comparison-row span,
+.comparison-warning,
+.comparison-empty {
+  color: var(--muted);
+}
+.comparison-warning {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 12px;
+}

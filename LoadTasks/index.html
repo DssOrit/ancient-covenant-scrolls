@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-loadtasks-version="5.14-metadata-draft">
+<html lang="en" data-loadtasks-version="5.16-draft-comparison">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -14,7 +14,7 @@
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=5.14">
+  <link rel="stylesheet" href="styles.css?v=5.16">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to dashboard</a>
@@ -854,7 +854,31 @@
               <button class="secondary-action" id="builderDownloadMetadataBtn" type="button" data-builder-inspector-action="download-metadata">Download Metadata Report</button>
             </div>
           </div>
-
+<div class="panel" id="builderReadinessPanel">
+            <div class="panel-title">
+              <h2>PWA readiness summary</h2>
+              <span class="badge gray" id="builderReadinessStatus">Not inspected</span>
+            </div>
+            <p class="muted">Read-only. This summarizes the safest next action before editing or repair.</p>
+            <div class="readiness-grid">
+              <article class="readiness-card" id="builderReadinessCard">
+                <strong>Readiness status</strong>
+                <span id="builderReadinessLabel">Inspect a ZIP first.</span>
+              </article>
+              <article class="readiness-card">
+                <strong>Next best action</strong>
+                <span id="builderNextBestAction">Upload and inspect one PWA ZIP.</span>
+              </article>
+            </div>
+            <div class="panel-subsection">
+              <h3>Top 3 issues</h3>
+              <div id="builderTopIssues" class="builder-check-list">No issues yet.</div>
+            </div>
+            <div class="panel-subsection">
+              <h3>Upload readiness notes</h3>
+              <div id="builderUploadReadiness" class="report-box">Inspect a package first.</div>
+            </div>
+          </div>
 
 
 
@@ -890,34 +914,23 @@
           </div>
 
 
-          <div class="panel" id="builderReadinessPanel">
+          
+          <div class="panel" id="builderDraftComparisonPanel">
             <div class="panel-title">
-              <h2>PWA readiness summary</h2>
-              <span class="badge gray" id="builderReadinessStatus">Not inspected</span>
+              <h2>Draft comparison summary</h2>
+              <span class="badge gray" id="builderDraftComparisonStatus">No comparison yet</span>
             </div>
-            <p class="muted">Read-only. This summarizes the safest next action before editing or repair.</p>
-            <div class="readiness-grid">
-              <article class="readiness-card" id="builderReadinessCard">
-                <strong>Readiness status</strong>
-                <span id="builderReadinessLabel">Inspect a ZIP first.</span>
-              </article>
-              <article class="readiness-card">
-                <strong>Next best action</strong>
-                <span id="builderNextBestAction">Upload and inspect one PWA ZIP.</span>
-              </article>
+            <p class="muted">Compare current metadata against the draft plan before any future edit function is added.</p>
+            <div id="builderDraftComparisonOutput" class="comparison-box">
+              Save a draft plan first, then tap Compare Draft.
             </div>
-            <div class="panel-subsection">
-              <h3>Top 3 issues</h3>
-              <div id="builderTopIssues" class="builder-check-list">No issues yet.</div>
-            </div>
-            <div class="panel-subsection">
-              <h3>Upload readiness notes</h3>
-              <div id="builderUploadReadiness" class="report-box">Inspect a package first.</div>
+            <div class="button-row">
+              <button class="primary-action" id="compareMetadataDraftBtn" type="button">Compare Draft</button>
+              <button class="secondary-action" id="downloadDraftComparisonBtn" type="button">Download Comparison Summary</button>
             </div>
           </div>
 
-
-          <div class="panel">
+<div class="panel">
             <div class="panel-title">
               <h2>File tree</h2>
               <button class="secondary-action" id="builderDownloadInventoryBtn" type="button" type="button" data-builder-inspector-action="download">Download Inventory Report</button>
@@ -1070,6 +1083,6 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>
   <script src="app.js?v=5.11"></script>
-  <script src="builder-inspector.js?v=5.14" defer></script>
+  <script src="builder-inspector.js?v=5.16" defer></script>
 </body>
 </html>

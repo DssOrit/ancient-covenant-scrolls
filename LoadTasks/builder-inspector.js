@@ -539,38 +539,24 @@
 })();
 
 
-/* v5.14 PWA Builder Metadata Draft Plan */
+
+
+/* v5.15 Visible Metadata Draft Plan */
 (function(){
-  const KEY = 'loadTasksMetadataDraftPlanV514';
+  const KEY = 'loadTasksMetadataDraftPlanV515';
 
   function $(selector) { return document.querySelector(selector); }
+  function val(selector) { const el = $(selector); return el ? String(el.value || '').trim() : ''; }
+  function setVal(selector, value) { const el = $(selector); if (el) el.value = value || ''; }
+  function setText(selector, value) { const el = $(selector); if (el) el.textContent = String(value || ''); }
+  function meta(selector) { const el = $(selector); return el ? String(el.textContent || '').trim() : ''; }
 
-  function val(selector) {
-    const el = $(selector);
-    return el ? String(el.value || '').trim() : '';
-  }
-
-  function setVal(selector, value) {
-    const el = $(selector);
-    if (el) el.value = value || '';
-  }
-
-  function text(selector, value) {
-    const el = $(selector);
-    if (el) el.textContent = String(value || '');
-  }
-
-  function badge(textValue, level) {
+  function setStatus(label, level) {
     const el = $('#builderMetadataDraftStatus');
     if (el) {
-      el.textContent = textValue;
+      el.textContent = label;
       el.className = 'badge ' + (level || 'gray');
     }
-  }
-
-  function currentMetadataText(selector) {
-    const el = $(selector);
-    return el ? String(el.textContent || '').trim() : '';
   }
 
   function buildDraft() {
@@ -584,22 +570,22 @@
       displayMode: val('#draftDisplayMode'),
       createdAt: new Date().toISOString(),
       source: {
-        appName: currentMetadataText('#metaAppName'),
-        shortName: currentMetadataText('#metaShortName'),
-        description: currentMetadataText('#metaDescription'),
-        themeColor: currentMetadataText('#metaThemeColor'),
-        backgroundColor: currentMetadataText('#metaBackgroundColor'),
-        startUrl: currentMetadataText('#metaStartUrl'),
-        displayMode: currentMetadataText('#metaDisplayMode')
+        appName: meta('#metaAppName'),
+        shortName: meta('#metaShortName'),
+        description: meta('#metaDescription'),
+        themeColor: meta('#metaThemeColor'),
+        backgroundColor: meta('#metaBackgroundColor'),
+        startUrl: meta('#metaStartUrl'),
+        displayMode: meta('#metaDisplayMode')
       }
     };
   }
 
-  function draftHasChanges(draft) {
+  function hasChanges(draft) {
     return ['appName','shortName','description','themeColor','backgroundColor','startUrl','displayMode'].some(key => draft[key]);
   }
 
-  function draftReport(draft) {
+  function report(draft) {
     const rows = [
       ['App name', draft.source.appName, draft.appName],
       ['Short name', draft.source.shortName, draft.shortName],
@@ -609,7 +595,6 @@
       ['Start URL', draft.source.startUrl, draft.startUrl],
       ['Display mode', draft.source.displayMode, draft.displayMode]
     ];
-
     const changed = rows.filter(row => row[2]);
     const lines = [
       'PWA Metadata Draft Change Plan',
@@ -634,16 +619,15 @@
     return lines.join('\n');
   }
 
-  function renderDraft(draft) {
-    const box = $('#metadataDraftPreview');
-    if (box) box.textContent = draftReport(draft);
-    badge(draftHasChanges(draft) ? 'Draft saved' : 'Draft only', draftHasChanges(draft) ? 'blue' : 'gray');
+  function render(draft) {
+    setText('#metadataDraftPreview', report(draft));
+    setStatus(hasChanges(draft) ? 'Draft saved' : 'Draft only', hasChanges(draft) ? 'blue' : 'gray');
   }
 
   function saveDraft() {
     const draft = buildDraft();
     localStorage.setItem(KEY, JSON.stringify(draft));
-    renderDraft(draft);
+    render(draft);
   }
 
   function loadDraft() {
@@ -658,7 +642,7 @@
       setVal('#draftBackgroundColor', draft.backgroundColor);
       setVal('#draftStartUrl', draft.startUrl);
       setVal('#draftDisplayMode', draft.displayMode);
-      renderDraft(draft);
+      render(draft);
     } catch (error) {
       localStorage.removeItem(KEY);
     }
@@ -667,14 +651,13 @@
   function clearDraft() {
     ['#draftAppName','#draftShortName','#draftDescription','#draftThemeColor','#draftBackgroundColor','#draftStartUrl','#draftDisplayMode'].forEach(selector => setVal(selector, ''));
     localStorage.removeItem(KEY);
-    text('#metadataDraftPreview', 'No draft plan saved yet.');
-    badge('Draft only', 'gray');
+    setText('#metadataDraftPreview', 'No draft plan saved yet.');
+    setStatus('Draft only', 'gray');
   }
 
   function downloadDraft() {
     const draft = buildDraft();
-    const content = draftReport(draft);
-    const blob = new Blob([content], { type: 'text/markdown' });
+    const blob = new Blob([report(draft)], { type: 'text/markdown' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'Load_Tasks_Metadata_Draft_Change_Plan.md';
@@ -687,25 +670,175 @@
     if (event.target.closest('#saveMetadataDraftBtn')) {
       event.preventDefault();
       saveDraft();
-      return;
+      return false;
     }
     if (event.target.closest('#clearMetadataDraftBtn')) {
       event.preventDefault();
       clearDraft();
-      return;
+      return false;
     }
     if (event.target.closest('#downloadMetadataDraftBtn')) {
       event.preventDefault();
       downloadDraft();
-      return;
+      return false;
     }
   }, true);
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadDraft);
-  } else {
-    loadDraft();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadDraft);
+  else loadDraft();
 
   window.LoadTasksMetadataDraft = { saveDraft, clearDraft, downloadDraft, buildDraft };
+})();
+
+
+/* v5.16 PWA Builder Draft Comparison Summary */
+(function(){
+  const KEY_514 = 'loadTasksMetadataDraftPlanV514';
+  const KEY_515 = 'loadTasksMetadataDraftPlanV515';
+  let lastComparisonText = '';
+
+  function $(selector) { return document.querySelector(selector); }
+  function setHtml(selector, value) { const el = $(selector); if (el) el.innerHTML = value; }
+  function val(selector) { const el = $(selector); return el ? String(el.value || '').trim() : ''; }
+  function meta(selector) { const el = $(selector); return el ? String(el.textContent || '').trim() : ''; }
+  function esc(value) { return String(value || '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch]); }
+
+  function setStatus(label, level) {
+    const el = $('#builderDraftComparisonStatus');
+    if (el) {
+      el.textContent = label;
+      el.className = 'badge ' + (level || 'gray');
+    }
+  }
+
+  function currentDraftFromFields() {
+    return {
+      appName: val('#draftAppName'),
+      shortName: val('#draftShortName'),
+      description: val('#draftDescription'),
+      themeColor: val('#draftThemeColor'),
+      backgroundColor: val('#draftBackgroundColor'),
+      startUrl: val('#draftStartUrl'),
+      displayMode: val('#draftDisplayMode'),
+      source: {
+        appName: meta('#metaAppName'),
+        shortName: meta('#metaShortName'),
+        description: meta('#metaDescription'),
+        themeColor: meta('#metaThemeColor'),
+        backgroundColor: meta('#metaBackgroundColor'),
+        startUrl: meta('#metaStartUrl'),
+        displayMode: meta('#metaDisplayMode')
+      }
+    };
+  }
+
+  function storedDraft() {
+    try {
+      return JSON.parse(localStorage.getItem(KEY_515) || localStorage.getItem(KEY_514) || 'null');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getDraft() {
+    const fieldDraft = currentDraftFromFields();
+    const hasField = ['appName','shortName','description','themeColor','backgroundColor','startUrl','displayMode'].some(k => fieldDraft[k]);
+    return hasField ? fieldDraft : (storedDraft() || fieldDraft);
+  }
+
+  function rowsFromDraft(draft) {
+    return [
+      ['App name', (draft.source && draft.source.appName) || meta('#metaAppName'), draft.appName],
+      ['Short name', (draft.source && draft.source.shortName) || meta('#metaShortName'), draft.shortName],
+      ['Description', (draft.source && draft.source.description) || meta('#metaDescription'), draft.description],
+      ['Theme color', (draft.source && draft.source.themeColor) || meta('#metaThemeColor'), draft.themeColor],
+      ['Background color', (draft.source && draft.source.backgroundColor) || meta('#metaBackgroundColor'), draft.backgroundColor],
+      ['Start URL', (draft.source && draft.source.startUrl) || meta('#metaStartUrl'), draft.startUrl],
+      ['Display mode', (draft.source && draft.source.displayMode) || meta('#metaDisplayMode'), draft.displayMode]
+    ];
+  }
+
+  function compareDraft() {
+    const draft = getDraft();
+    const rows = rowsFromDraft(draft);
+    const changed = rows.filter(row => row[2]);
+
+    if (!changed.length) {
+      lastComparisonText = [
+        'PWA Metadata Draft Comparison',
+        '',
+        'Status: No draft changes entered.',
+        'Next best action: enter draft metadata values before applying any future edit function.',
+        '',
+        'Safe rule: no files were changed.'
+      ].join('\\n');
+
+      setHtml('#builderDraftComparisonOutput', '<div class="comparison-empty">No draft changes entered yet.</div>');
+      setStatus('No changes', 'gray');
+      return;
+    }
+
+    const output = changed.map(row => `
+      <div class="comparison-row">
+        <strong>${esc(row[0])}</strong>
+        <span><b>Current:</b> ${esc(row[1] || 'Not read')}</span>
+        <span><b>Draft:</b> ${esc(row[2])}</span>
+      </div>
+    `).join('');
+
+    setHtml('#builderDraftComparisonOutput', output + '<p class="comparison-warning">Draft only. No ZIP files were changed.</p>');
+    setStatus('Compared', 'blue');
+
+    const lines = [
+      'PWA Metadata Draft Comparison',
+      '',
+      'Status: Draft only. No ZIP files changed.',
+      '',
+      'Changed fields:'
+    ];
+
+    changed.forEach(row => {
+      lines.push('- ' + row[0] + ':');
+      lines.push('  Current: ' + (row[1] || 'Not read'));
+      lines.push('  Draft: ' + row[2]);
+    });
+
+    lines.push('', 'Warnings before future apply:');
+    lines.push('- Confirm the app still opens after any metadata edit.');
+    lines.push('- Confirm manifest icon paths remain valid.');
+    lines.push('- Confirm start_url matches the final hosting location.');
+    lines.push('', 'Next best action: keep this as a draft until the safe metadata patch/export feature is built.');
+    lastComparisonText = lines.join('\\n');
+  }
+
+  function downloadComparison() {
+    if (!lastComparisonText) {
+      compareDraft();
+    }
+    const blob = new Blob([lastComparisonText || 'No comparison available.'], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Load_Tasks_Metadata_Draft_Comparison.md';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 300);
+  }
+
+  document.addEventListener('click', function(event) {
+    if (event.target.closest('#compareMetadataDraftBtn')) {
+      event.preventDefault();
+      compareDraft();
+      return false;
+    }
+    if (event.target.closest('#downloadDraftComparisonBtn')) {
+      event.preventDefault();
+      downloadComparison();
+      return false;
+    }
+    if (event.target.closest('#saveMetadataDraftBtn')) {
+      setTimeout(compareDraft, 200);
+    }
+  }, true);
+
+  window.LoadTasksDraftComparison = { compareDraft, downloadComparison };
 })();
