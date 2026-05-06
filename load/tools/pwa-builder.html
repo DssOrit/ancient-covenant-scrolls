@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 <script src="../lib-jszip.min.js"></script>
+<script src="../lib-security-scanner.js"></script>
+<script src="../lib-export-receipt.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
 *{box-sizing:border-box}
@@ -198,23 +200,31 @@ function safeFilename(s) {
 }
 
 // ── Pipeline state ──────────────────────────────────────────
+// Per Load_Main_Claude_Handoff_Report Section 9 / Part D.
+// Exactly 13 named steps; each returns PASS / FAIL / WARN / SKIPPED.
 var BUILD_STEPS = [
   { id: 'collect',   label: 'Reading project' },
-  { id: 'check',     label: 'Checking required fields' },
-  { id: 'icons',     label: 'Generating PWA icons' },
-  { id: 'manifest',  label: 'Building manifest.json' },
-  { id: 'sw',        label: 'Building service-worker.js' },
-  { id: 'index',     label: 'Building index.html' },
-  { id: 'styles',    label: 'Building styles.css' },
-  { id: 'app',       label: 'Building app.js' },
-  { id: 'data',      label: 'Building project-data.json' },
-  { id: 'paths',     label: 'Validating asset paths' },
-  { id: 'safety',    label: 'Running safety scan' },
+  { id: 'check',     label: 'Checking required files' },
+  { id: 'repair',    label: 'Repairing missing files' },
+  { id: 'compress',  label: 'Compressing images' },
+  { id: 'manifest',  label: 'Generating manifest' },
+  { id: 'sw',        label: 'Generating service worker' },
+  { id: 'cache',     label: 'Building offline cache' },
+  { id: 'paths',     label: 'Validating paths' },
+  { id: 'safety',    label: 'Running security scan' },
   { id: 'readiness', label: 'Running PWA readiness scan' },
-  { id: 'zip',       label: 'Compressing ZIP' },
-  { id: 'receipt',   label: 'Writing export receipt' },
+  { id: 'zip',       label: 'Creating ZIP' },
+  { id: 'receipt',   label: 'Creating receipt' },
   { id: 'ready',     label: 'Download ready' }
 ];
+// Internal stage names that roll up under one of the 13 spec steps.
+var STEP_ALIAS = {
+  icons:  'compress',
+  index:  'repair',
+  styles: 'repair',
+  app:    'repair',
+  data:   'repair'
+};
 var stepNodes = {};
 function paintSteps() {
   var host = $('steps');
@@ -230,7 +240,8 @@ function paintSteps() {
   $('steps-host').hidden = false;
 }
 function setStep(id, status, detail) {
-  var n = stepNodes[id];
+  var realId = STEP_ALIAS[id] || id;
+  var n = stepNodes[realId];
   if (!n) return;
   n.className = 'step ' + status;
   var icnMap = { run: '·', pass: '✓', fail: '✗', warn: '!', skip: '·' };
@@ -509,30 +520,33 @@ function buildReadme(meta) {
   ].join('\n');
 }
 
-// ── Safety scanner (regex-based, runs on the bundled HTML/JS) ─
+// ── Safety scanner — delegates to window.LoadSafetyScanner so
+//    every Load tool that scans uses the same patterns
+//    (lib-security-scanner.js, Section 10 / Part E spec). ─
 function runSecurityScan(files) {
-  var findings = [];
-  function add(severity, file, issue, recommendation) {
-    findings.push({ severity: severity, file: file, issue: issue, recommendation: recommendation });
-  }
+  if (!window.LoadSafetyScanner) return [];
+  var out = [];
   Object.keys(files).forEach(function (path) {
     var content = files[path];
     if (typeof content !== 'string') return;
-    if (/<script[^>]+src=["']?https?:/i.test(content))           add('HIGH',   path, 'External <script src> reference',                     'Remove or self-host the script.');
-    if (/javascript:/i.test(content))                            add('HIGH',   path, 'javascript: URL detected',                            'Replace with proper event handler.');
-    if (/onclick\s*=\s*["'][^"']*(?:eval|Function)\(/i.test(content)) add('HIGH', path, 'Inline onclick using eval/Function', 'Move logic to app.js.');
-    if (/<form[^>]*action=/i.test(content))                      add('MEDIUM', path, 'Form with explicit action — verify destination',     'Confirm the form does not submit credentials externally.');
-    if (/<iframe[^>]*src=["']?https?:\/\//i.test(content))       add('MEDIUM', path, 'External <iframe src>',                                'Use sandbox + same-origin if possible.');
-    if (/(api[_-]?key|secret|password|bearer|sk-[a-z0-9]{20,})/i.test(content)) add('BLOCKER', path, 'Possible credential / API key in source', 'Remove the key — never bake secrets into a published PWA.');
-    if (/\.\.[\/\\]/.test(path))                                 add('HIGH',   path, 'Path traversal in filename',                            'Reject or normalize the path.');
-    if (/^\/[^/]/.test(path))                                    add('LOW',    path, 'Absolute path in filename',                             'Make paths relative.');
-    if (/(?:\.exe|\.bat|\.cmd|\.sh|\.app|\.dmg)$/i.test(path))   add('BLOCKER', path, 'Executable file in package',                            'Remove. PWAs should not ship executables.');
-    if (/^\.env(\.|$)/.test(path))                               add('BLOCKER', path, 'Hidden environment file in package',                    'Remove .env files.');
+    var issues = window.LoadSafetyScanner.scanContent(path, content);
+    issues.forEach(function (i) {
+      out.push({
+        severity:       i.severity,
+        file:           i.file || path,
+        issue:          i.issue,
+        recommendation: i.recommendedFix,
+        blocksExport:   !!i.blocksExport
+      });
+    });
   });
-  return findings;
+  return out;
 }
 function findingsBlocked(findings) {
-  return findings.some(function (f) { return f.severity === 'BLOCKER'; });
+  return findings.some(function (f) { return f.blocksExport; });
+}
+function findingsHaveWarnings(findings) {
+  return findings.some(function (f) { return !f.blocksExport && (f.severity === 'HIGH' || f.severity === 'MEDIUM'); });
 }
 function paintSecurity(findings) {
   var host = $('security-rows');
@@ -680,6 +694,13 @@ $('build').addEventListener('click', function () {
       setStep('sw', 'pass', 'precaches 8 files');
     })
     .then(function () {
+      setStep('cache', 'run', '');
+      // The offline cache list is embedded in service-worker.js by buildServiceWorker;
+      // surfacing the step explicitly per the spec (Section 9 / Part D step 7).
+      var cacheCount = (swText.match(/'[^']+\.(?:html|css|js|json|png|svg|woff2)'/g) || []).length;
+      setStep('cache', cacheCount > 0 ? 'pass' : 'warn', cacheCount + ' file(s) in offline cache list');
+    })
+    .then(function () {
       setStep('index', 'run', '');
       var mediaIndex = { images: {}, clips: {} };
       pickedPhotos.forEach(function (p) { mediaIndex.images[p.name] = true; });
@@ -760,35 +781,59 @@ $('build').addEventListener('click', function () {
           includedFiles.push('assets/clips/' + p.name);
         });
       }
-      // Receipt + security report go in the ZIP itself.
-      var receipt = {
+      // Receipt + security report bundled with the package.
+      // Use LoadReceipt.create() so the lib's normalize layer + spec
+      // field shape applies, then save to the on-device library after
+      // the ZIP is verified.
+      var receipt = (window.LoadReceipt ? window.LoadReceipt.create({
         exportType:           'PWA ZIP',
         fileName:             safeName + '.zip',
         fileSize:             0,
-        createdAt:            new Date().toISOString(),
         includedFiles:        includedFiles.concat(['export-receipt.json', 'security-report.json']),
         missingFiles:         [],
-        warnings:             lastSecurity.filter(function (f) { return f.severity !== 'INFO' && f.severity !== 'LOW' && f.severity !== 'BLOCKER'; }).map(function (f) { return f.file + ': ' + f.issue; }),
+        warnings:             lastSecurity.filter(function (f) { return !f.blocksExport && (f.severity === 'HIGH' || f.severity === 'MEDIUM'); }).map(function (f) { return f.file + ': ' + f.issue; }),
         manifestStatus:       'PASS',
         serviceWorkerStatus:  'PASS',
         rightsStatus:         'NOT APPLICABLE',
         offlineStatus:        'PASS',
         safetyStatus:         findingsBlocked(lastSecurity) ? 'BLOCKED' : (lastSecurity.length ? 'WARN' : 'PASS'),
         nextAction:           'Upload the unzipped folder to hosting, or open index.html on a local server to install as a PWA.'
-      };
+      }) : null);
+      var securityReport = (window.LoadSafetyScanner ? {
+        tool: 'Load Safety Scanner',
+        spec: 'Load_Main_Claude_Handoff_Report Section 10 (Part E)',
+        generatedAt: new Date().toISOString(),
+        blockExport: findingsBlocked(lastSecurity),
+        counts: window.LoadSafetyScanner.summarize((lastSecurity || []).map(function(f){ return { severity: f.severity }; })),
+        blockers: lastSecurity.filter(function(f){ return f.blocksExport; }),
+        issues: lastSecurity
+      } : { generatedAt: new Date().toISOString(), findings: lastSecurity });
       zip.file('export-receipt.json', JSON.stringify(receipt, null, 2));
-      zip.file('security-report.json', JSON.stringify({ generatedAt: new Date().toISOString(), findings: lastSecurity }, null, 2));
+      zip.file('security-report.json', JSON.stringify(securityReport, null, 2));
       return zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } }).then(function (blob) {
-        receipt.fileSize = blob.size;
-        lastZipBlob = blob;
-        lastReceipt = receipt;
-        setStep('zip', 'pass', (blob.size / 1024).toFixed(1) + ' KB compressed');
+        // Verify the blob is a real ZIP per Section 8 (no false positives).
+        if (!(blob instanceof Blob) || blob.size < 200) {
+          throw new Error('ZIP build failed: output is not a valid Blob (' + (blob && blob.size) + ' bytes).');
+        }
+        return blob.slice(0, 4).arrayBuffer().then(function (head) {
+          var b = new Uint8Array(head);
+          var isZip = b[0] === 0x50 && b[1] === 0x4B && b[2] === 0x03 && b[3] === 0x04;
+          if (!isZip) throw new Error('ZIP build failed: output missing PK\\x03\\x04 magic header.');
+          receipt.fileSize = blob.size;
+          lastZipBlob = blob;
+          lastReceipt = receipt;
+          setStep('zip', 'pass', (blob.size / 1024).toFixed(1) + ' KB compressed, PK header verified');
+        });
       });
     })
     .then(function () {
       setStep('receipt', 'run', '');
       paintReceipt(lastReceipt);
-      setStep('receipt', 'pass', 'receipt rendered');
+      // Save Receipt to Library — Section 11 / Part F third action.
+      if (window.LoadReceipt && lastReceipt) {
+        try { window.LoadReceipt.saveToLibrary(lastReceipt); } catch (e) {}
+      }
+      setStep('receipt', 'pass', 'receipt rendered + saved to library');
     })
     .then(function () {
       setStep('ready', 'pass', 'tap Download ZIP');

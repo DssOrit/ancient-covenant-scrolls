@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g0`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g1`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,17 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Parts C + D: One-Click PWA Builder + Live Build Steps)
+- **v17g1 &mdash; Part C/D wired into the existing One-Click PWA Builder**:
+  - Reorganized `BUILD_STEPS` in `load/tools/pwa-builder.html` to the report&apos;s exact 13 named steps from Section 9 / Part D: Reading project, Checking required files, Repairing missing files, Compressing images, Generating manifest, Generating service worker, Building offline cache, Validating paths, Running security scan, Running PWA readiness scan, Creating ZIP, Creating receipt, Download ready. Each row reports PASS / FAIL / WARN / SKIPPED with a detail string.
+  - Internal sub-steps (icons, index, styles, app, data) now roll up under the spec-named parents via a `STEP_ALIAS` map &mdash; the build pipeline didn&apos;t need to be rewritten.
+  - Added a new explicit **Building offline cache** step (Section 8 step 14 / Section 9 step 7) that counts the precache entries embedded in the generated `service-worker.js`.
+  - Replaced the local regex security scanner with calls to `window.LoadSafetyScanner.scanContent()` so every Load tool that scans uses the same patterns from `lib-security-scanner.js`. The builder now uses the lib&apos;s `blocksExport` flag instead of a severity-name check, matching the Section 10 spec.
+  - **ZIP integrity verification** added per Section 8 (&quot;do not show success unless a real file exists&quot;): after `JSZip.generateAsync({type:&apos;blob&apos;})`, the builder reads the first 4 bytes of the blob, refuses to mark the build as `pass` unless the size is &gt;200 bytes and the bytes are `PK\\x03\\x04`. Any failure throws with an exact reason and the build stops.
+  - Receipt now built via `window.LoadReceipt.create()` (so the spec field shape applies) and persisted via `LoadReceipt.saveToLibrary()` after the verified ZIP exists. `security-report.json` bundled in the ZIP now uses the spec-shaped report from `LoadSafetyScanner` (with `tool`, `spec`, `generatedAt`, `blockExport`, `counts`, `blockers`, `issues`).
+  - The `.html` head now imports both libs: `lib-security-scanner.js` and `lib-export-receipt.js` alongside the existing `lib-jszip.min.js`.
+  - Cache `load-v17g0` -&gt; `load-v17g1`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Handoff Report Part F: Export Receipts)
 - **v17g0 &mdash; Part F export-receipt library + tool aligned to the spec**:
