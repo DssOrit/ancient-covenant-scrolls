@@ -1096,3 +1096,46 @@ body.simple-mode .notes-row {
     min-width: 0;
   }
 }
+
+
+/* v5.13 PWA Builder Readiness Summary */
+.readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.readiness-card {
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(255,255,255,.04);
+  display: grid;
+  gap: 8px;
+}
+.readiness-card strong {
+  color: var(--text);
+}
+.readiness-card span {
+  color: var(--gold);
+  font-weight: 800;
+}
+.builder-issue-row {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line-soft);
+  border-left-width: 6px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.builder-issue-row span,
+.builder-issue-row small {
+  color: var(--muted);
+}
+.builder-issue-row.issue-green { border-left-color: rgba(67,221,135,.75); }
+.builder-issue-row.issue-yellow { border-left-color: rgba(255,212,0,.75); }
+.builder-issue-row.issue-orange { border-left-color: rgba(255,145,0,.75); }
+.builder-issue-row.issue-red { border-left-color: rgba(255,92,92,.78); }
+.builder-issue-row.issue-blue { border-left-color: rgba(115,183,255,.75); }
+.builder-issue-row.issue-gray { border-left-color: rgba(183,187,204,.55); }

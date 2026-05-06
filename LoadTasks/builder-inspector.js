@@ -339,3 +339,201 @@
     });
   }
 })();
+
+
+/* v5.13 PWA Builder Readiness Summary */
+(function(){
+  function $(selector) { return document.querySelector(selector); }
+
+  function setText(selector, value) {
+    const el = $(selector);
+    if (el) el.textContent = String(value);
+  }
+
+  function setBadge(selector, text, level) {
+    const el = $(selector);
+    if (el) {
+      el.textContent = text;
+      el.className = 'badge ' + (level || 'gray');
+    }
+  }
+
+  function esc(value) {
+    return String(value || '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch]);
+  }
+
+  function parseInspectorReportText() {
+    const box = $('#builderInspectorReport');
+    const text = box ? box.textContent || '' : '';
+    return {
+      text,
+      hasReport: text.includes('PWA Builder Inspector Report'),
+      nested: /nested folder/i.test(text),
+      missingIndex: /index\.html not found/i.test(text) || /index\.html:\s*Needs Review/i.test(text),
+      missingManifest: /manifest file not found/i.test(text) || /manifest:\s*Needs Review/i.test(text),
+      missingServiceWorker: /service worker not found/i.test(text) || /service worker:\s*Needs Review/i.test(text),
+      missingIcons: /icons not found/i.test(text) || /icons:\s*Needs Review/i.test(text),
+      imageCount: numberAfter(text, 'Images:'),
+      videoCount: numberAfter(text, 'Videos:'),
+      audioCount: numberAfter(text, 'Audio:'),
+      iconCount: numberAfter(text, 'Icons:'),
+      totalFiles: numberAfter(text, 'Total files:'),
+      totalSizeText: lineAfter(text, 'Total size:')
+    };
+  }
+
+  function numberAfter(text, label) {
+    const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = text.match(new RegExp(escaped + '\\s*([0-9]+)', 'i'));
+    return match ? Number(match[1]) : 0;
+  }
+
+  function lineAfter(text, label) {
+    const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = text.match(new RegExp(escaped + '\\s*([^\\n]+)', 'i'));
+    return match ? match[1].trim() : 'Not found';
+  }
+
+  function buildIssues(data) {
+    const issues = [];
+
+    if (!data.hasReport) {
+      issues.push({
+        level: 'gray',
+        title: 'No package inspected',
+        detail: 'Upload one ZIP and tap Inspect Package.',
+        next: 'Inspect one package first.'
+      });
+      return issues;
+    }
+
+    if (data.missingIndex) {
+      issues.push({
+        level: 'red',
+        title: 'Missing index.html',
+        detail: 'The package may not open as a site or PWA.',
+        next: 'Add or restore index.html before deployment.'
+      });
+    }
+
+    if (data.missingManifest) {
+      issues.push({
+        level: 'orange',
+        title: 'Missing manifest',
+        detail: 'The app may not install properly as a PWA.',
+        next: 'Add manifest.json or manifest.webmanifest.'
+      });
+    }
+
+    if (data.missingServiceWorker) {
+      issues.push({
+        level: 'yellow',
+        title: 'Missing service worker',
+        detail: 'Offline behavior is not proven.',
+        next: 'Add service-worker.js when offline support is required.'
+      });
+    }
+
+    if (data.missingIcons) {
+      issues.push({
+        level: 'yellow',
+        title: 'Missing icons',
+        detail: 'Home Screen or app icons may not appear correctly.',
+        next: 'Add app icons and confirm manifest icon paths.'
+      });
+    }
+
+    if (data.nested) {
+      issues.push({
+        level: 'yellow',
+        title: 'Nested app root',
+        detail: 'index.html is inside a folder, so upload root may need review.',
+        next: 'Use flatten/root readiness check before Cloudflare or GitHub upload.'
+      });
+    }
+
+    if (data.videoCount > 0 || data.audioCount > 0) {
+      issues.push({
+        level: 'blue',
+        title: 'Media-rich package',
+        detail: 'This package contains video or audio assets.',
+        next: 'Use media path inspection before editing or deployment.'
+      });
+    }
+
+    if (!issues.length) {
+      issues.push({
+        level: 'green',
+        title: 'No critical structure blockers found',
+        detail: 'The inspector did not find missing required PWA files.',
+        next: 'Review metadata before editing.'
+      });
+    }
+
+    return issues.slice(0, 3);
+  }
+
+  function renderReadiness() {
+    const data = parseInspectorReportText();
+    const issues = buildIssues(data);
+
+    const severe = issues.find(i => i.level === 'red') || issues.find(i => i.level === 'orange') || issues.find(i => i.level === 'yellow') || issues[0];
+    const status = !data.hasReport ? { label: 'Not inspected', level: 'gray' } :
+      severe.level === 'red' ? { label: 'Not ready', level: 'red' } :
+      severe.level === 'orange' ? { label: 'Needs repair', level: 'orange' } :
+      severe.level === 'yellow' ? { label: 'Needs review', level: 'yellow' } :
+      { label: 'Ready for next review', level: 'green' };
+
+    setBadge('#builderReadinessStatus', status.label, status.level);
+    setText('#builderReadinessLabel', status.label);
+    setText('#builderNextBestAction', severe.next || 'Review metadata.');
+
+    const top = $('#builderTopIssues');
+    if (top) {
+      top.innerHTML = issues.map(issue => `
+        <div class="builder-issue-row issue-${esc(issue.level)}">
+          <strong>${esc(issue.title)}</strong>
+          <span>${esc(issue.detail)}</span>
+          <small>Next: ${esc(issue.next)}</small>
+        </div>
+      `).join('');
+    }
+
+    const upload = $('#builderUploadReadiness');
+    if (upload) {
+      const notes = [
+        'Readiness status: ' + status.label,
+        'Total files: ' + (data.totalFiles || 'Not found'),
+        'Package size: ' + (data.totalSizeText || 'Not found'),
+        'Images: ' + data.imageCount,
+        'Videos: ' + data.videoCount,
+        'Audio: ' + data.audioCount,
+        'Icons: ' + data.iconCount,
+        data.nested ? 'Upload root note: index.html appears inside a nested folder.' : 'Upload root note: no nested root warning from inspector.',
+        'Safe rule: No files were changed.'
+      ];
+      upload.textContent = notes.join('\n');
+    }
+  }
+
+  document.addEventListener('click', function(event) {
+    if (event.target.closest('#builderInspectBtn, [data-builder-inspector-action="inspect"]')) {
+      setTimeout(renderReadiness, 350);
+      setTimeout(renderReadiness, 900);
+    }
+  }, true);
+
+  const observerTarget = $('#builderInspectorReport');
+  if (observerTarget && typeof MutationObserver !== 'undefined') {
+    const observer = new MutationObserver(renderReadiness);
+    observer.observe(observerTarget, { childList: true, subtree: true, characterData: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderReadiness);
+  } else {
+    renderReadiness();
+  }
+
+  window.LoadTasksBuilderReadiness = { renderReadiness };
+})();
