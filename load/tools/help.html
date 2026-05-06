@@ -120,6 +120,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#imgcmp">Image Compare</a>
   <a href="#mdtoc">Markdown TOC</a>
   <a href="#textenc">Text Encoder</a>
+  <a href="#epub2txt">EPUB to Text</a>
+  <a href="#csv">CSV Viewer</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -794,6 +796,32 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Swap input &harr; output</strong> to round-trip, or <strong>Copy output</strong> to grab the result.</li>
 </ol>
 <a class="open" href="./text-encoder.html">Open Text Encoder</a>
+</div>
+
+<div class="tool" id="epub2txt">
+<h3>EPUB to Text</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Books &amp; writing &rarr; EPUB to Text</strong>.</li>
+  <li>Drop an `.epub` file (or tap to browse).</li>
+  <li>Tool reads `META-INF/container.xml`, finds the OPF package, then walks the spine in publication order. Each chapter is decoded with `&lt;script&gt;` and `&lt;style&gt;` stripped.</li>
+  <li>You see book metadata (title, author, language, chapter count, total words) plus a numbered chapter list with per-chapter word counts.</li>
+  <li>Tap <strong>Download combined .txt</strong> for one plain text file, <strong>Download combined .md</strong> to keep heading structure, or <strong>Download per-chapter ZIP</strong> for individual files plus an `index.txt` manifest.</li>
+  <li>An export receipt is saved automatically.</li>
+</ol>
+<a class="open" href="./epub-to-text.html">Open EPUB to Text</a>
+</div>
+
+<div class="tool" id="csv">
+<h3>CSV Viewer</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Build &amp; validate &rarr; CSV Viewer</strong>.</li>
+  <li>Drop a `.csv` / `.tsv` / `.txt` file or paste delimited text.</li>
+  <li>Pick the delimiter (auto-detect, comma, tab, semicolon, pipe). Toggle <strong>First row is header</strong>.</li>
+  <li>Tap <strong>Parse</strong>. The table renders with sortable column headers (tap once to sort ascending, twice for descending).</li>
+  <li>Type in <strong>Filter rows</strong> for a live full-text filter. Stats update to show how many rows match.</li>
+  <li>Tap <strong>Export CSV</strong> or <strong>Export JSON</strong> to download just the filtered rows, or <strong>Copy as Markdown table</strong> to drop into a writing tool.</li>
+</ol>
+<a class="open" href="./csv-viewer.html">Open CSV Viewer</a>
 </div>
 
 <div class="tool" id="acceptance">

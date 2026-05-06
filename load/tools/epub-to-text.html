@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; EPUB to Text</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 32px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+.book-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px; margin-top: 12px; }
+.stat { background: #0e0e1a; border: 1px solid #2a2a42; border-radius: 8px;
+  padding: 10px 12px; }
+.stat .lbl { font-size: 11px; color: #9ca3af; text-transform: uppercase;
+  letter-spacing: 0.05em; }
+.stat .val { font-size: 14px; font-weight: 700; color: #fff; word-break: break-word; }
+.chapter-row { display: grid; grid-template-columns: auto 1fr auto;
+  gap: 10px; align-items: baseline; padding: 8px 10px;
+  border: 1px solid #2a2a42; border-radius: 6px; margin-bottom: 6px;
+  background: #0e0e1a; }
+.chapter-row .num { color: #7c5cff; font-weight: 700; font-size: 12px; }
+.chapter-row .ttl { font-weight: 600; font-size: 13px; word-break: break-word; }
+.chapter-row .meta { color: #9ca3af; font-size: 11px;
+  font-variant-numeric: tabular-nums; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 10px; }
+.errbox { background: #4c1212; color: #fca5a5; border: 1px solid #7f1d1d;
+  border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 12px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-books.html">&larr; Books &amp; writing</a>
+<h1>EPUB to Text</h1>
+<a href="./help.html#epub2txt">How it works</a>
+</header>
+<main>
+<p class="intro">Drop an .epub file. Tool reads the spine in publication order, extracts plain text per chapter, and bundles everything as a single combined file or per-chapter ZIP.</p>
+<div class="card">
+<h2>1. EPUB</h2>
+<div class="drop" id="drop">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/></svg>
+<span>Drop a .epub file</span>
+<span style="font-size:11px;">or tap to browse</span>
+<input id="file" type="file" accept=".epub,application/epub+zip" style="display:none">
+</div>
+<div class="book-info" id="info" style="display:none;"></div>
+<div id="errbox"></div>
+</div>
+<div class="card" id="chCard" style="display:none;">
+<h2>2. Chapters</h2>
+<div id="chapters"></div>
+<div class="summary" id="chSummary"></div>
+<div class="toolbar">
+<button class="primary" id="dlSingle">Download combined .txt</button>
+<button id="dlMd">Download combined .md</button>
+<button id="dlZip">Download per-chapter ZIP</button>
+</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script src="../lib-jszip.min.js"></script>
+<script src="../lib-export-receipt.js"></script>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var book = null;
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2000); }
+function showError(m){ $('errbox').innerHTML = '<div class="errbox">' + m + '</div>'; }
+function clearError(){ $('errbox').innerHTML = ''; }
+function htmlToText(html){
+  var clean = html.replace(/<\?xml[^?]*\?>/g, '').replace(/<!DOCTYPE[^>]*>/g, '');
+  var doc;
+  try { doc = new DOMParser().parseFromString(clean, 'text/html'); } catch(e) { doc = null; }
+  if (!doc) {
+    var d = document.createElement('div'); d.innerHTML = clean;
+    return (d.textContent || '').replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+  doc.querySelectorAll('script, style').forEach(function(n){ n.remove(); });
+  var blocks = ['p','h1','h2','h3','h4','h5','h6','div','section','article','li','blockquote','br'];
+  var out = '';
+  function walk(node){
+    if (node.nodeType === 3) { out += node.nodeValue.replace(/\s+/g, ' '); return; }
+    if (node.nodeType !== 1) return;
+    var tag = node.tagName.toLowerCase();
+    if (blocks.indexOf(tag) >= 0) out = out.replace(/\s+$/, '') + '\n\n';
+    Array.from(node.childNodes).forEach(walk);
+    if (blocks.indexOf(tag) >= 0) out = out.replace(/\s+$/, '') + '\n\n';
+  }
+  walk(doc.body || doc.documentElement);
+  return out.replace(/\n{3,}/g, '\n\n').replace(/[ \t]+\n/g, '\n').trim();
+}
+function htmlToMd(html){
+  var d = document.createElement('div');
+  d.innerHTML = html.replace(/<\?xml[^?]*\?>/g, '').replace(/<!DOCTYPE[^>]*>/g, '');
+  d.querySelectorAll('script, style').forEach(function(n){ n.remove(); });
+  function pass(node){
+    var out = '';
+    Array.from(node.childNodes).forEach(function(c){
+      if (c.nodeType === 3) { out += c.nodeValue.replace(/\s+/g, ' '); return; }
+      if (c.nodeType !== 1) return;
+      var t = c.tagName.toLowerCase();
+      if (/^h([1-6])$/.test(t)) {
+        var n = parseInt(t[1], 10);
+        out += '\n\n' + '#'.repeat(n) + ' ' + pass(c).trim() + '\n\n';
+      } else if (t === 'p' || t === 'div' || t === 'section') {
+        out += '\n\n' + pass(c).trim() + '\n\n';
+      } else if (t === 'br') {
+        out += '  \n';
+      } else if (t === 'strong' || t === 'b') { out += '**' + pass(c) + '**'; }
+      else if (t === 'em' || t === 'i') { out += '*' + pass(c) + '*'; }
+      else if (t === 'blockquote') { out += '\n\n> ' + pass(c).trim().replace(/\n/g, '\n> ') + '\n\n'; }
+      else if (t === 'li') { out += '- ' + pass(c).trim() + '\n'; }
+      else if (t === 'ul' || t === 'ol') { out += '\n' + pass(c) + '\n'; }
+      else { out += pass(c); }
+    });
+    return out;
+  }
+  return pass(d).replace(/\n{3,}/g, '\n\n').trim();
+}
+function dirOf(p){ return p.replace(/[^/]+$/, ''); }
+function joinPath(base, rel){
+  if (rel.startsWith('/')) return rel.replace(/^\//, '');
+  var parts = (base + rel).split('/');
+  var out = [];
+  parts.forEach(function(p){
+    if (p === '..') out.pop();
+    else if (p && p !== '.') out.push(p);
+  });
+  return out.join('/');
+}
+function parseEpub(blob){
+  return JSZip.loadAsync(blob).then(function(zip){
+    var container = zip.file('META-INF/container.xml');
+    if (!container) throw new Error('Not a valid EPUB: META-INF/container.xml is missing.');
+    return container.async('string').then(function(xml){
+      var doc = new DOMParser().parseFromString(xml, 'application/xml');
+      var rootfile = doc.querySelector('rootfile');
+      if (!rootfile) throw new Error('Not a valid EPUB: no rootfile in container.xml.');
+      var opfPath = rootfile.getAttribute('full-path');
+      var opfFile = zip.file(opfPath);
+      if (!opfFile) throw new Error('Cannot read package file at ' + opfPath);
+      return opfFile.async('string').then(function(opfXml){
+        var opf = new DOMParser().parseFromString(opfXml, 'application/xml');
+        var meta = {};
+        var t = opf.querySelector('metadata > title, metadata > dc\\:title');
+        if (t) meta.title = t.textContent.trim();
+        var c = opf.querySelector('metadata > creator, metadata > dc\\:creator');
+        if (c) meta.creator = c.textContent.trim();
+        var l = opf.querySelector('metadata > language, metadata > dc\\:language');
+        if (l) meta.language = l.textContent.trim();
+        var manifest = {};
+        opf.querySelectorAll('manifest > item').forEach(function(it){
+          manifest[it.getAttribute('id')] = {
+            href: it.getAttribute('href'),
+            type: it.getAttribute('media-type') || ''
+          };
+        });
+        var spine = [];
+        opf.querySelectorAll('spine > itemref').forEach(function(ref){
+          var id = ref.getAttribute('idref');
+          if (manifest[id]) spine.push(manifest[id]);
+        });
+        var base = dirOf(opfPath);
+        var promises = spine.map(function(item){
+          var path = joinPath(base, item.href);
+          var f = zip.file(path);
+          if (!f) return Promise.resolve({ path: path, html: '' });
+          return f.async('string').then(function(html){ return { path: path, html: html }; });
+        });
+        return Promise.all(promises).then(function(items){
+          var chapters = items.map(function(it){
+            var text = htmlToText(it.html);
+            var md = htmlToMd(it.html);
+            var ttl = '';
+            var hm = /<h([1-3])[^>]*>([\s\S]*?)<\/h\1>/i.exec(it.html);
+            if (hm) {
+              var d = document.createElement('div'); d.innerHTML = hm[2];
+              ttl = (d.textContent || '').trim();
+            }
+            if (!ttl) ttl = it.path.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
+            return { title: ttl, text: text, md: md, path: it.path,
+              words: (text.match(/\S+/g) || []).length };
+          });
+          return { meta: meta, chapters: chapters };
+        });
+      });
+    });
+  });
+}
+function pad(n){ return n < 10 ? '0' + n : String(n); }
+function slug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) || 'chapter'; }
+function loadFile(f){
+  clearError();
+  toast('Reading EPUB&hellip;');
+  parseEpub(f).then(function(b){
+    book = b;
+    showInfo(f);
+    showChapters();
+    toast('Loaded ' + (b.meta.title || f.name));
+  }).catch(function(e){ showError('Failed: ' + e.message); });
+}
+function showInfo(f){
+  var i = $('info');
+  i.style.display = 'grid';
+  var totalWords = book.chapters.reduce(function(s, c){ return s + c.words; }, 0);
+  i.innerHTML =
+    '<div class="stat"><div class="lbl">Title</div><div class="val">' + (book.meta.title || '(no title)') + '</div></div>' +
+    '<div class="stat"><div class="lbl">Author</div><div class="val">' + (book.meta.creator || '(unknown)') + '</div></div>' +
+    '<div class="stat"><div class="lbl">Language</div><div class="val">' + (book.meta.language || '?') + '</div></div>' +
+    '<div class="stat"><div class="lbl">Chapters</div><div class="val">' + book.chapters.length + '</div></div>' +
+    '<div class="stat"><div class="lbl">Total words</div><div class="val">' + totalWords.toLocaleString() + '</div></div>' +
+    '<div class="stat"><div class="lbl">File</div><div class="val">' + f.name + '</div></div>';
+}
+function showChapters(){
+  $('chCard').style.display = 'block';
+  var p = $('chapters'); p.innerHTML = '';
+  book.chapters.forEach(function(c, idx){
+    var div = document.createElement('div');
+    div.className = 'chapter-row';
+    div.innerHTML = '<span class="num">' + pad(idx+1) +
+      '</span><span class="ttl"></span><span class="meta">' + c.words.toLocaleString() + ' words</span>';
+    div.querySelector('.ttl').textContent = c.title;
+    p.appendChild(div);
+  });
+  $('chSummary').textContent = book.chapters.length + ' chapters extracted from the EPUB spine.';
+}
+function downloadCombined(asMd){
+  if (!book) return;
+  var parts = [];
+  if (book.meta.title) parts.push((asMd ? '# ' : '') + book.meta.title);
+  if (book.meta.creator) parts.push((asMd ? '_' : '') + 'by ' + book.meta.creator + (asMd ? '_' : ''));
+  parts.push('');
+  book.chapters.forEach(function(c, idx){
+    var heading = asMd ? '## ' + c.title : ('Chapter ' + pad(idx+1) + ': ' + c.title);
+    parts.push(heading);
+    parts.push('');
+    parts.push(asMd ? c.md : c.text);
+    parts.push('');
+  });
+  var out = parts.join('\n');
+  var ext = asMd ? 'md' : 'txt';
+  var name = (book.meta.title ? slug(book.meta.title) : 'book') + '.' + ext;
+  var blob = new Blob([out], { type: asMd ? 'text/markdown' : 'text/plain' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  if (window.LoadReceipt) {
+    try { window.LoadReceipt.save(window.LoadReceipt.create({
+      tool: 'EPUB to Text', kind: 'epub-extract',
+      files: 1, sizeBytes: blob.size,
+      nextStep: 'Open in Reading Level Analyzer, Word Frequency, Chapter Splitter, or Find & Replace.'
+    })); } catch(_) {}
+  }
+  toast('Downloaded ' + name);
+}
+function downloadZip(){
+  if (!book) return;
+  var zip = new JSZip();
+  var manifestLines = [book.meta.title || 'Book', '', book.chapters.length + ' chapters', ''];
+  book.chapters.forEach(function(c, idx){
+    var fname = pad(idx+1) + '-' + slug(c.title) + '.txt';
+    zip.file(fname, (c.title || 'Chapter ' + (idx+1)) + '\n\n' + c.text + '\n');
+    manifestLines.push((idx+1) + '. ' + c.title + ' (' + fname + ')');
+  });
+  zip.file('index.txt', manifestLines.join('\n'));
+  zip.generateAsync({ type: 'blob' }).then(function(blob){
+    var name = (book.meta.title ? slug(book.meta.title) : 'book') + '-chapters.zip';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = name; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+    if (window.LoadReceipt) {
+      try { window.LoadReceipt.save(window.LoadReceipt.create({
+        tool: 'EPUB to Text', kind: 'epub-extract-zip',
+        files: book.chapters.length + 1, sizeBytes: blob.size,
+        nextStep: 'Open per-chapter files in any prose tool.'
+      })); } catch(_) {}
+    }
+    toast('Downloaded ' + name);
+  });
+}
+$('drop').addEventListener('click', function(){ $('file').click(); });
+['dragenter','dragover'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.remove('over'); });
+});
+$('drop').addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+$('dlSingle').addEventListener('click', function(){ downloadCombined(false); });
+$('dlMd').addEventListener('click', function(){ downloadCombined(true); });
+$('dlZip').addEventListener('click', downloadZip);
+})();
+</script>
+</body>
+</html>

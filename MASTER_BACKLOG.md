@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fp`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fq`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,15 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — EPUB to Text + CSV Viewer)
+- **v17fq &mdash; EPUB to Text + CSV Viewer**:
+  - **EPUB to Text:** new tool at `load/tools/epub-to-text.html`. Drop an `.epub` file (a ZIP). Parses `META-INF/container.xml`, finds the OPF package, walks the spine in publication order, decodes each XHTML chapter to plain text and to Markdown. Shows metadata (title, author, language, chapter count, total words) and per-chapter word counts. Three downloads: combined `.txt`, combined `.md` (with `## Chapter` headings), or per-chapter ZIP with manifest. Auto-saves an export receipt.
+  - **CSV Viewer:** new tool at `load/tools/csv-viewer.html`. Drop or paste CSV / TSV / pipe-delimited / semicolon-delimited. Auto-detect delimiter, header-row toggle, RFC-style quoted fields with embedded commas. Sortable columns (numeric vs text auto-detect), live filter input, stats card. Export filtered rows as CSV / JSON or copy as a Markdown table.
+  - cat-books.html and cat-build.html each gained one tile.
+  - Workspace tile description bumped to 51 tools.
+  - Help page updated with new TOC entries + per-tool cards.
+  - Cache `load-v17fp` -&gt; `load-v17fq`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Markdown TOC + Text Encoder)
 - **v17fp &mdash; Markdown TOC + Text Encoder**:
