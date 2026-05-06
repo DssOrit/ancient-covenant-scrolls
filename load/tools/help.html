@@ -110,6 +110,8 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <a href="#findreplace">Find &amp; Replace</a>
   <a href="#chapsplit">Chapter Splitter</a>
   <a href="#regex">Regex Tester</a>
+  <a href="#wordfreq">Word Frequency</a>
+  <a href="#diff">Diff Viewer</a>
   <a href="#acceptance">Acceptance Criteria</a>
 </nav>
 
@@ -653,6 +655,33 @@ code,kbd{background:#1a1a26;padding:2px 6px;border-radius:4px;font-family:ui-mon
   <li>Tap <strong>Apply to test text</strong> to commit the replacement, or <strong>Copy result</strong> to grab the output.</li>
 </ol>
 <a class="open" href="./regex-tester.html">Open Regex Tester</a>
+</div>
+
+<div class="tool" id="wordfreq">
+<h3>Word Frequency</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Books &amp; writing &rarr; Word Frequency</strong>.</li>
+  <li>Drop a TXT / Markdown / HTML manuscript or paste text.</li>
+  <li>Pick how many top words to show (10 / 25 / 50 / 100 / All) and the minimum word length.</li>
+  <li>Toggle &quot;Skip common stop words&quot; (the, a, of, &hellip;) and case sensitivity.</li>
+  <li>Tap <strong>Analyze</strong>. You get total tokens, kept tokens, unique words, and a sorted bar chart.</li>
+  <li>Tap any word in the list to highlight every occurrence in the source preview below.</li>
+  <li>Export <strong>CSV</strong> or <strong>JSON</strong> for further analysis.</li>
+</ol>
+<a class="open" href="./word-frequency.html">Open Word Frequency</a>
+</div>
+
+<div class="tool" id="diff">
+<h3>Diff Viewer</h3>
+<ol>
+  <li>Open <strong>Workspace Tools &rarr; Build &amp; validate &rarr; Diff Viewer</strong>.</li>
+  <li>Paste the old version into pane <strong>A</strong> and the new version into pane <strong>B</strong>.</li>
+  <li>Tap <strong>Compare</strong>. You get added (green +), removed (red -), and unchanged lines, plus a summary of how many lines changed each way.</li>
+  <li>Toggle <strong>Ignore leading / trailing whitespace</strong> or <strong>Ignore case</strong> to hide cosmetic differences.</li>
+  <li>Toggle <strong>Hide unchanged lines</strong> to focus only on what changed.</li>
+  <li>Tap <strong>Swap A &harr; B</strong> to flip the sides, or <strong>Clear both</strong> to reset.</li>
+</ol>
+<a class="open" href="./diff-viewer.html">Open Diff Viewer</a>
 </div>
 
 <div class="tool" id="acceptance">

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Diff Viewer</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1300px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 14px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+  display: flex; align-items: center; gap: 10px; }
+textarea { width: 100%; min-height: 240px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+  line-height: 1.55; resize: vertical; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.summary-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px; margin-top: 12px; }
+.stat { background: #0e0e1a; border: 1px solid #2a2a42; border-radius: 8px;
+  padding: 10px 12px; }
+.stat .lbl { font-size: 11px; color: #9ca3af; text-transform: uppercase;
+  letter-spacing: 0.05em; }
+.stat .val { font-size: 22px; font-weight: 800; color: #fff; }
+.stat.add .val { color: #4ade80; }
+.stat.del .val { color: #f87171; }
+.diff { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px; line-height: 1.55; border: 1px solid #2a2a42;
+  border-radius: 8px; background: #0e0e1a; overflow: hidden; }
+.line { display: grid; grid-template-columns: 50px 24px 1fr; gap: 0;
+  padding: 0 8px 0 0; align-items: stretch; min-height: 22px;
+  border-bottom: 1px solid #14142a; }
+.line:last-child { border-bottom: 0; }
+.line .num { color: #4b5563; font-size: 11px; text-align: right;
+  padding: 1px 6px; background: #0a0a0f; user-select: none;
+  border-right: 1px solid #1f1f2f; }
+.line .mark { font-weight: 700; padding: 1px 6px; user-select: none; }
+.line .body { padding: 1px 6px; white-space: pre-wrap; word-break: break-word; }
+.line.eq .mark { color: #4b5563; }
+.line.add { background: rgba(74, 222, 128, 0.08); }
+.line.add .mark { color: #4ade80; }
+.line.add .body { color: #bbf7d0; }
+.line.del { background: rgba(248, 113, 113, 0.08); }
+.line.del .mark { color: #f87171; }
+.line.del .body { color: #fca5a5; }
+.label-pair { display: flex; gap: 8px; align-items: center;
+  font-size: 12px; color: #9ca3af; }
+.label-pair span.tag { padding: 2px 8px; border-radius: 4px;
+  background: #1f1f2f; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em; }
+.label-pair span.tag.a { background: #4c1212; color: #fca5a5; }
+.label-pair span.tag.b { background: #14532d; color: #bbf7d0; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+label.toggle { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; }
+.empty { padding: 30px; text-align: center; color: #9ca3af; font-size: 13px; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-build.html">&larr; Build &amp; validate</a>
+<h1>Diff Viewer</h1>
+<a href="./help.html#diff">How it works</a>
+</header>
+<main>
+<p class="intro">Paste an old version on the left and a new version on the right. Tap Compare to see line-by-line additions and removals. Useful for double-checking what Find &amp; Replace or Regex Tester actually changed.</p>
+<div class="row">
+<div class="card">
+<h2><span class="label-pair"><span class="tag a">A</span> Old / before</span></h2>
+<textarea id="a" placeholder="paste original text&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+</div>
+<div class="card">
+<h2><span class="label-pair"><span class="tag b">B</span> New / after</span></h2>
+<textarea id="b" placeholder="paste changed text&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+</div>
+</div>
+<div class="card">
+<h2>Compare</h2>
+<div class="toolbar">
+<button class="primary" id="run">Compare</button>
+<button id="swap">Swap A &harr; B</button>
+<button id="clear">Clear both</button>
+<label class="toggle"><input id="ignoreWS" type="checkbox"> Ignore leading / trailing whitespace</label>
+<label class="toggle"><input id="ignoreCase" type="checkbox"> Ignore case</label>
+<label class="toggle"><input id="hideEq" type="checkbox"> Hide unchanged lines</label>
+</div>
+<div class="summary-bar" id="stats"></div>
+</div>
+<div class="card">
+<h2>Result</h2>
+<div class="diff" id="diff"><div class="empty">Paste text in both boxes and tap Compare.</div></div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function normalize(line){
+  if ($('ignoreWS').checked) line = line.replace(/^\s+|\s+$/g, '');
+  if ($('ignoreCase').checked) line = line.toLowerCase();
+  return line;
+}
+function diff(a, b){
+  var m = a.length, n = b.length;
+  var dp = [];
+  for (var i = 0; i <= m; i++) {
+    dp.push(new Int32Array(n + 1));
+  }
+  var aN = a.map(normalize), bN = b.map(normalize);
+  for (var i2 = 1; i2 <= m; i2++) {
+    for (var j = 1; j <= n; j++) {
+      if (aN[i2-1] === bN[j-1]) dp[i2][j] = dp[i2-1][j-1] + 1;
+      else dp[i2][j] = dp[i2-1][j] >= dp[i2][j-1] ? dp[i2-1][j] : dp[i2][j-1];
+    }
+  }
+  var out = [];
+  var i3 = m, j3 = n;
+  while (i3 > 0 || j3 > 0) {
+    if (i3 > 0 && j3 > 0 && aN[i3-1] === bN[j3-1]) {
+      out.push({ t: 'eq', text: a[i3-1], aIdx: i3, bIdx: j3 });
+      i3--; j3--;
+    } else if (j3 > 0 && (i3 === 0 || dp[i3][j3-1] >= dp[i3-1][j3])) {
+      out.push({ t: 'add', text: b[j3-1], bIdx: j3 });
+      j3--;
+    } else {
+      out.push({ t: 'del', text: a[i3-1], aIdx: i3 });
+      i3--;
+    }
+  }
+  return out.reverse();
+}
+function run(){
+  var aText = $('a').value.replace(/\r\n?/g, '\n');
+  var bText = $('b').value.replace(/\r\n?/g, '\n');
+  if (!aText && !bText) { toast('Both sides empty'); return; }
+  var aLines = aText.split('\n');
+  var bLines = bText.split('\n');
+  if (aLines.length > 5000 || bLines.length > 5000) {
+    toast('Too large &mdash; cap is 5000 lines per side');
+    return;
+  }
+  var d = diff(aLines, bLines);
+  var added = 0, removed = 0, equal = 0;
+  d.forEach(function(r){
+    if (r.t === 'add') added++;
+    else if (r.t === 'del') removed++;
+    else equal++;
+  });
+  $('stats').innerHTML =
+    '<div class="stat"><div class="lbl">A lines</div><div class="val">' + aLines.length + '</div></div>' +
+    '<div class="stat"><div class="lbl">B lines</div><div class="val">' + bLines.length + '</div></div>' +
+    '<div class="stat"><div class="lbl">Unchanged</div><div class="val">' + equal + '</div></div>' +
+    '<div class="stat add"><div class="lbl">Added</div><div class="val">+' + added + '</div></div>' +
+    '<div class="stat del"><div class="lbl">Removed</div><div class="val">-' + removed + '</div></div>';
+  var hide = $('hideEq').checked;
+  var html = '';
+  d.forEach(function(r){
+    if (r.t === 'eq' && hide) return;
+    var num = '';
+    var mark = '';
+    if (r.t === 'eq') { num = (r.aIdx || ''); mark = ' '; }
+    else if (r.t === 'add') { num = (r.bIdx || ''); mark = '+'; }
+    else if (r.t === 'del') { num = (r.aIdx || ''); mark = '-'; }
+    html += '<div class="line ' + r.t + '"><span class="num">' + num + '</span><span class="mark">' + mark + '</span><span class="body">' + escapeHtml(r.text) + '</span></div>';
+  });
+  if (!html) html = '<div class="empty">No differences (or all changes are hidden).</div>';
+  $('diff').innerHTML = html;
+}
+$('run').addEventListener('click', run);
+$('swap').addEventListener('click', function(){
+  var a = $('a').value; $('a').value = $('b').value; $('b').value = a;
+});
+$('clear').addEventListener('click', function(){
+  $('a').value = ''; $('b').value = '';
+  $('diff').innerHTML = '<div class="empty">Paste text in both boxes and tap Compare.</div>';
+  $('stats').innerHTML = '';
+});
+['ignoreWS','ignoreCase','hideEq'].forEach(function(id){
+  $(id).addEventListener('change', function(){
+    if ($('a').value || $('b').value) run();
+  });
+});
+})();
+</script>
+</body>
+</html>

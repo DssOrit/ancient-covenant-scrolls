@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Word Frequency</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 24px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+textarea { width: 100%; min-height: 280px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 14px;
+  line-height: 1.55; resize: vertical; }
+label.field { display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: #9ca3af; margin-top: 12px; }
+label.toggle { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #9ca3af; margin-top: 12px; }
+select, input[type=number] { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 8px 10px; border-radius: 6px; font: inherit; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px; margin-top: 12px; }
+.stat { background: #0e0e1a; border: 1px solid #2a2a42; border-radius: 8px;
+  padding: 10px 12px; }
+.stat .lbl { font-size: 11px; color: #9ca3af; text-transform: uppercase;
+  letter-spacing: 0.05em; }
+.stat .val { font-size: 22px; font-weight: 800; color: #fff; }
+.bar-row { display: grid; grid-template-columns: minmax(110px, 1.5fr) 1fr auto;
+  gap: 10px; align-items: center; padding: 6px 10px;
+  border-bottom: 1px solid #1f1f2f; font-size: 13px; }
+.bar-row:last-child { border-bottom: 0; }
+.bar-row .word { font-weight: 600; cursor: pointer; }
+.bar-row .word:hover { color: #7c5cff; }
+.bar-row .bar { background: #0e0e1a; border-radius: 4px; height: 12px;
+  overflow: hidden; border: 1px solid #2a2a42; }
+.bar-row .bar > span { display: block; height: 100%; background: #7c5cff;
+  border-radius: 3px; }
+.bar-row .ct { color: #9ca3af; font-variant-numeric: tabular-nums;
+  font-size: 12px; min-width: 60px; text-align: right; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 12px; }
+mark.find { background: #fbbf24; color: #0a0a0f; padding: 0 2px; border-radius: 2px; }
+.preview { white-space: pre-wrap; padding: 12px; border: 1px solid #2a2a42;
+  border-radius: 8px; background: #0e0e1a; max-height: 300px; overflow: auto;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 13px;
+  line-height: 1.55; word-break: break-word; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-books.html">&larr; Books &amp; writing</a>
+<h1>Word Frequency</h1>
+<a href="./help.html#wordfreq">How it works</a>
+</header>
+<main>
+<p class="intro">Drop a manuscript or paste text. Get the top words used, percentages, click any word to highlight it in the source. Useful for spotting overused words in a draft.</p>
+<div class="row">
+<div class="card">
+<h2>1. Source</h2>
+<div class="drop" id="drop">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><polyline points="6 10 12 4 18 10"/><path d="M4 20h16"/></svg>
+<span>Drop a TXT, MD, or HTML file</span>
+<span style="font-size:11px;">or tap to browse</span>
+<input id="file" type="file" accept=".txt,.md,.markdown,.html,.htm,text/plain,text/markdown,text/html" style="display:none">
+</div>
+<label class="field" style="margin-top:14px;">Or paste text<textarea id="src" placeholder="Paste a manuscript here&hellip;"></textarea></label>
+</div>
+<div class="card">
+<h2>2. Settings</h2>
+<label class="field">Top N words<select id="topn">
+<option value="10">10</option>
+<option value="25" selected>25</option>
+<option value="50">50</option>
+<option value="100">100</option>
+<option value="0">All</option>
+</select></label>
+<label class="field">Minimum word length<input id="minlen" type="number" min="1" max="20" value="3"></label>
+<label class="toggle"><input id="skipstop" type="checkbox" checked> Skip common stop words (the, a, of, &hellip;)</label>
+<label class="toggle"><input id="lowercase" type="checkbox" checked> Treat &quot;Word&quot; and &quot;word&quot; as the same</label>
+<div class="toolbar">
+<button class="primary" id="run">Analyze</button>
+<button id="exportcsv">Export CSV</button>
+<button id="exportjson">Export JSON</button>
+</div>
+<div class="stats" id="stats"></div>
+</div>
+</div>
+<div class="card">
+<h2>3. Top words</h2>
+<div id="bars"></div>
+<div class="summary" id="summary">Drop a file or paste text, then tap Analyze.</div>
+</div>
+<div class="card">
+<h2>4. Source preview <span style="font-size:11px;color:#9ca3af;text-transform:none;letter-spacing:0;font-weight:400;">&mdash; click a word in the list to highlight it here</span></h2>
+<div class="preview" id="prev">No source loaded.</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var STOP = ('a about above after again against all am an and any are as at be because been before being below between both but by could did do does doing down during each few for from further had has have having he her here hers herself him himself his how i if in into is it its itself just me more most my myself no nor not now of off on once only or other our ours ourselves out over own same she should so some such than that the their theirs them themselves then there these they this those through to too under until up very was we were what when where which while who whom why will with would you your yours yourself yourselves shall may might must can cannot us them upon thee thou thy thine ye unto').split(' ');
+var STOPSET = new Set(STOP);
+var $ = function(id){ return document.getElementById(id); };
+var srcEl = $('src'), dropEl = $('drop'), fileEl = $('file');
+var lastResult = null;
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function htmlToText(h){ var d = document.createElement('div'); d.innerHTML = h;
+  return (d.innerText || d.textContent || '').replace(/\r\n?/g, '\n'); }
+dropEl.addEventListener('click', function(){ fileEl.click(); });
+['dragenter','dragover'].forEach(function(ev){
+  dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.remove('over'); });
+});
+dropEl.addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+fileEl.addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+function loadFile(f){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var raw = String(fr.result || '');
+    if (/\.(html?|htm)$/i.test(f.name)) raw = htmlToText(raw);
+    srcEl.value = raw.replace(/\r\n?/g, '\n');
+    toast('Loaded ' + f.name);
+  };
+  fr.readAsText(f);
+}
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function analyze(){
+  var text = srcEl.value || '';
+  if (!text.trim()) { toast('Empty source'); return; }
+  var lower = $('lowercase').checked;
+  var skipStop = $('skipstop').checked;
+  var minLen = Math.max(1, parseInt($('minlen').value, 10) || 1);
+  var topN = parseInt($('topn').value, 10) || 0;
+  var tokens = text.match(/[A-Za-z][A-Za-z'’\-]*/g) || [];
+  var counts = new Map();
+  var totalKept = 0;
+  for (var i = 0; i < tokens.length; i++) {
+    var w = tokens[i];
+    if (lower) w = w.toLowerCase();
+    if (w.length < minLen) continue;
+    if (skipStop && STOPSET.has(w.toLowerCase())) continue;
+    counts.set(w, (counts.get(w) || 0) + 1);
+    totalKept++;
+  }
+  var sorted = Array.from(counts.entries()).sort(function(a,b){
+    return b[1] - a[1] || a[0].localeCompare(b[0]);
+  });
+  if (topN > 0) sorted = sorted.slice(0, topN);
+  lastResult = { totalTokens: tokens.length, kept: totalKept,
+    unique: counts.size, top: sorted };
+  renderStats(); renderBars(); renderPreview('');
+  $('summary').textContent = sorted.length + ' word' + (sorted.length === 1 ? '' : 's') + ' shown.';
+}
+function renderStats(){
+  if (!lastResult) return;
+  var s = $('stats');
+  s.innerHTML =
+    '<div class="stat"><div class="lbl">Total tokens</div><div class="val">' + lastResult.totalTokens.toLocaleString() + '</div></div>' +
+    '<div class="stat"><div class="lbl">After filters</div><div class="val">' + lastResult.kept.toLocaleString() + '</div></div>' +
+    '<div class="stat"><div class="lbl">Unique words</div><div class="val">' + lastResult.unique.toLocaleString() + '</div></div>';
+}
+function renderBars(){
+  var b = $('bars'); b.innerHTML = '';
+  if (!lastResult || !lastResult.top.length) return;
+  var max = lastResult.top[0][1] || 1;
+  lastResult.top.forEach(function(row){
+    var pct = (row[1] / max) * 100;
+    var pctOfKept = lastResult.kept > 0 ? ((row[1] / lastResult.kept) * 100).toFixed(2) : '0.00';
+    var div = document.createElement('div');
+    div.className = 'bar-row';
+    div.innerHTML = '<span class="word"></span><span class="bar"><span style="width:' + pct + '%"></span></span><span class="ct"></span>';
+    div.querySelector('.word').textContent = row[0];
+    div.querySelector('.ct').textContent = row[1] + ' (' + pctOfKept + '%)';
+    div.querySelector('.word').addEventListener('click', function(){ renderPreview(row[0]); });
+    b.appendChild(div);
+  });
+}
+function renderPreview(highlightWord){
+  var text = srcEl.value || '';
+  if (!text.trim()) { $('prev').textContent = 'No source loaded.'; return; }
+  var snippet = text.length > 8000 ? text.slice(0, 8000) + '\n\n[&hellip; truncated]' : text;
+  if (!highlightWord) { $('prev').textContent = snippet; return; }
+  var rxSrc = highlightWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  var rx = new RegExp('\\b' + rxSrc + '\\b', $('lowercase').checked ? 'gi' : 'g');
+  $('prev').innerHTML = escapeHtml(snippet).replace(rx, function(m){
+    return '<mark class="find">' + escapeHtml(m) + '</mark>';
+  });
+}
+function exportCsv(){
+  if (!lastResult || !lastResult.top.length) { toast('Run Analyze first'); return; }
+  var rows = [['word','count','percent_of_kept']];
+  lastResult.top.forEach(function(r){
+    var pct = lastResult.kept > 0 ? ((r[1] / lastResult.kept) * 100).toFixed(4) : '0';
+    rows.push([r[0], r[1], pct]);
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){
+    var s = String(c);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(','); }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'word-frequency.csv'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('CSV downloaded');
+}
+function exportJson(){
+  if (!lastResult || !lastResult.top.length) { toast('Run Analyze first'); return; }
+  var blob = new Blob([JSON.stringify(lastResult, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'word-frequency.json'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('JSON downloaded');
+}
+$('run').addEventListener('click', analyze);
+$('exportcsv').addEventListener('click', exportCsv);
+$('exportjson').addEventListener('click', exportJson);
+})();
+</script>
+</body>
+</html>
