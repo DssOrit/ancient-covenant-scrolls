@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g2`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g3`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,17 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Part H: Rights metadata validator)
+- **v17g3 &mdash; Part H rights validator shipped as a reusable library**:
+  - New file `load/lib-rights-validator.js` exposes `window.LoadRightsValidator.validate(rights)` returning the spec-shaped envelope `{ valid, errors, warnings, blocksPublish }` per Section 13 / Part H.
+  - **Eight-value enum** for both `license` and per-asset `status`: `user-owned`, `public-domain`, `licensed`, `platform-original`, `user-generated`, `user-recorded`, `third-party-licensed`, `unknown`. Values outside the enum produce errors.
+  - **Required fields** (errors): `owner`, `license`, `sourceMaterial`, `assetDeclarations` (must be array). Each declaration must have `asset` + valid `status`.
+  - **Warnings**: empty `notes` (recommended for legal clarity); `license === 'unknown'`; any asset with `status === 'unknown'`.
+  - **`blocksPublish` flag** is true when errors exist OR `license` is `unknown` OR any asset is `unknown`. Wired into the LoadStudio validator&apos;s **Prepare for LoadPlay** action so unresolved rights actually block publish-prep per the report.
+  - Wired callers: `load/tools/safety-rights.html` and `load/tools/loadstudio-validator.html` now delegate their inline `validateRights` to the library (with a tiny fallback if the lib fails to load).
+  - `load/sw.js` SHELL list now includes `lib-rights-validator.js` for offline.
+  - Cache `load-v17g2` -&gt; `load-v17g3`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Handoff Report Part G: LoadStudio Package Validator)
 - **v17g2 &mdash; Part G LoadStudio package validator aligned to spec**:

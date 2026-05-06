@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 <script src="../lib-jszip.min.js"></script>
 <script src="../lib-security-scanner.js"></script>
+<script src="../lib-rights-validator.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--border:#2a2a40}
 *{box-sizing:border-box}
@@ -98,18 +99,14 @@ var $ = function (id) { return document.getElementById(id); };
 function escHtml(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
 function validateRights(rights) {
+  // Delegated to the shared lib-rights-validator (Section 13 / Part H).
+  if (window.LoadRightsValidator && window.LoadRightsValidator.validate) {
+    return window.LoadRightsValidator.validate(rights);
+  }
+  // Fallback when the library failed to load.
   var errors = [], warnings = [];
   if (!rights) errors.push('rights.json is missing.');
-  else {
-    if (!rights.owner) errors.push('Rights owner is missing.');
-    if (!rights.license) errors.push('License is missing.');
-    if (!rights.sourceMaterial) errors.push('Source material is missing.');
-    if (!Array.isArray(rights.assetDeclarations)) errors.push('Asset declarations must be an array.');
-    if (Array.isArray(rights.assetDeclarations) && rights.assetDeclarations.some(function (a) { return a.status === 'unknown'; })) {
-      warnings.push('Some assets have unknown rights status — block publish until resolved.');
-    }
-  }
-  return { errors: errors, warnings: warnings, valid: errors.length === 0 && warnings.length === 0 };
+  return { errors: errors, warnings: warnings, valid: errors.length === 0, blocksPublish: errors.length > 0 };
 }
 
 var lastReport = null;
@@ -190,7 +187,7 @@ function inspectZip(file) {
           folders: folderChecks,
           rights: rights,
           safety: safety,
-          rightsBlocksLoadPlay: rights.errors.length > 0
+          rightsBlocksLoadPlay: !!rights.blocksPublish
         };
         paint(lastReport);
       });
