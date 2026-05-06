@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Chapter Splitter</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 28px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff;
+  background: #1a1a2e; }
+textarea { width: 100%; min-height: 220px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 14px;
+  line-height: 1.55; resize: vertical; }
+label.field { display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: #9ca3af; margin-top: 12px; }
+select, input[type=text] { background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 8px 10px; border-radius: 6px; font: inherit; }
+button.primary, button.secondary { font: inherit; padding: 10px 16px;
+  border-radius: 8px; cursor: pointer; border: 1px solid #2a2a42;
+  background: #1a1a2e; color: #e8e8f0; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+button.primary:hover { background: #8e72ff; }
+button.secondary:hover { border-color: #7c5cff; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.preview { margin-top: 18px; }
+.chapter-row { display: grid; grid-template-columns: auto 1fr auto;
+  gap: 10px; align-items: baseline; padding: 8px 10px;
+  border: 1px solid #2a2a42; border-radius: 6px; margin-bottom: 6px;
+  background: #0e0e1a; }
+.chapter-row .num { color: #7c5cff; font-weight: 700; font-size: 12px; }
+.chapter-row .ttl { font-weight: 600; font-size: 13px; }
+.chapter-row .meta { color: #9ca3af; font-size: 11px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-books.html">&larr; Books &amp; writing</a>
+<h1>Chapter Splitter</h1>
+<a href="./help.html#chapsplit">How it works</a>
+</header>
+<main>
+<p class="intro">Drop a manuscript or paste text. Tool detects chapters and bundles each one as its own file inside a ZIP &mdash; useful when feeding a tool that wants per-chapter input.</p>
+<div class="row">
+<div class="card">
+<h2>1. Source</h2>
+<div class="drop" id="drop">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><polyline points="6 10 12 4 18 10"/><path d="M4 20h16"/></svg>
+<span>Drop a TXT, MD, or HTML file</span>
+<span style="font-size:11px;">or tap to browse</span>
+<input id="file" type="file" accept=".txt,.md,.markdown,.html,.htm,text/plain,text/markdown,text/html" style="display:none">
+</div>
+<label class="field" style="margin-top:14px;">Or paste manuscript text<textarea id="src" placeholder="Paste a manuscript here&hellip;"></textarea></label>
+</div>
+<div class="card">
+<h2>2. Settings</h2>
+<label class="field">Chapter detection<select id="mode">
+<option value="md">Markdown headings (## or #)</option>
+<option value="numbered">&quot;Chapter N&quot; lines</option>
+<option value="caps">ALL-CAPS lines</option>
+<option value="blank">Blank-line gaps (3+ blank lines)</option>
+</select></label>
+<label class="field">Output format<select id="fmt">
+<option value="md">Markdown (.md) &mdash; title as heading</option>
+<option value="txt">Plain text (.txt) &mdash; title at top</option>
+</select></label>
+<label class="field">Filename prefix (optional)<input id="prefix" type="text" placeholder="manuscript"></label>
+<div class="toolbar">
+<button class="secondary" id="detect">Detect chapters</button>
+<button class="primary" id="build" disabled>Build ZIP</button>
+</div>
+<div class="summary" id="summary">No chapters detected yet.</div>
+<div class="preview" id="preview"></div>
+</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script src="../lib-jszip.min.js"></script>
+<script src="../lib-export-receipt.js"></script>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var srcEl = $('src'), modeEl = $('mode'), fmtEl = $('fmt'), prefixEl = $('prefix');
+var dropEl = $('drop'), fileEl = $('file');
+var detectedChapters = [];
+function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200); }
+function slug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-')
+  .replace(/^-+|-+$/g,'').slice(0,40) || 'chapter'; }
+function pad(n){ return n < 10 ? '0' + n : String(n); }
+function htmlToText(h){ var d = document.createElement('div'); d.innerHTML = h;
+  return (d.innerText || d.textContent || '').replace(/\r\n?/g, '\n'); }
+function readFile(f){ return new Promise(function(res, rej){
+  if (/\.(html?|htm)$/i.test(f.name)) {
+    var fr = new FileReader();
+    fr.onload = function(){ res(htmlToText(String(fr.result||''))); };
+    fr.onerror = rej;
+    fr.readAsText(f);
+  } else {
+    var fr = new FileReader();
+    fr.onload = function(){ res(String(fr.result||'').replace(/\r\n?/g, '\n')); };
+    fr.onerror = rej;
+    fr.readAsText(f);
+  }
+}); }
+dropEl.addEventListener('click', function(){ fileEl.click(); });
+['dragenter','dragover'].forEach(function(ev){
+  dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.remove('over'); });
+});
+dropEl.addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) loadFile(f);
+});
+fileEl.addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+function loadFile(f){
+  readFile(f).then(function(text){
+    srcEl.value = text;
+    if (!prefixEl.value) prefixEl.value = f.name.replace(/\.[^.]+$/, '').slice(0,40);
+    toast('Loaded ' + f.name);
+  });
+}
+function detect(){
+  var text = srcEl.value || '';
+  if (!text.trim()) { detectedChapters = []; render(); return; }
+  var mode = modeEl.value;
+  var lines = text.split('\n');
+  var chapters = [];
+  var i;
+  if (mode === 'md') {
+    var current = null;
+    for (i = 0; i < lines.length; i++) {
+      var ln = lines[i];
+      var hm = /^(#{1,3})\s+(.+?)\s*#*\s*$/.exec(ln);
+      if (hm) {
+        if (current) chapters.push(current);
+        current = { title: hm[2].trim(), body: '' };
+      } else if (current) {
+        current.body += (current.body ? '\n' : '') + ln;
+      }
+    }
+    if (current) chapters.push(current);
+  } else if (mode === 'numbered') {
+    var current2 = null;
+    var rx = /^\s*(chapter|ch\.|prologue|epilogue|part|book)\b.*$/i;
+    for (i = 0; i < lines.length; i++) {
+      if (rx.test(lines[i])) {
+        if (current2) chapters.push(current2);
+        current2 = { title: lines[i].trim(), body: '' };
+      } else if (current2) {
+        current2.body += (current2.body ? '\n' : '') + lines[i];
+      }
+    }
+    if (current2) chapters.push(current2);
+  } else if (mode === 'caps') {
+    var current3 = null;
+    for (i = 0; i < lines.length; i++) {
+      var L = lines[i];
+      if (L.trim().length >= 3 && L === L.toUpperCase() && /[A-Z]/.test(L)
+          && L.replace(/[^A-Z]/g,'').length >= 3) {
+        if (current3) chapters.push(current3);
+        current3 = { title: L.trim(), body: '' };
+      } else if (current3) {
+        current3.body += (current3.body ? '\n' : '') + L;
+      }
+    }
+    if (current3) chapters.push(current3);
+  } else if (mode === 'blank') {
+    var blocks = text.split(/\n{3,}/);
+    for (i = 0; i < blocks.length; i++) {
+      var blk = blocks[i].trim();
+      if (!blk) continue;
+      var firstLn = blk.split('\n')[0].trim().slice(0,80);
+      var rest = blk.split('\n').slice(1).join('\n');
+      chapters.push({ title: firstLn || ('Chapter ' + (i+1)), body: rest || blk });
+    }
+  }
+  if (chapters.length === 0 && text.trim()) {
+    chapters = [{ title: 'Chapter 1', body: text }];
+  }
+  detectedChapters = chapters;
+  render();
+}
+function render(){
+  var s = $('summary'), p = $('preview');
+  if (detectedChapters.length === 0) {
+    s.textContent = 'No chapters detected yet.';
+    p.innerHTML = '';
+    $('build').disabled = true;
+    return;
+  }
+  s.textContent = detectedChapters.length + ' chapter' +
+    (detectedChapters.length === 1 ? '' : 's') + ' ready to bundle.';
+  p.innerHTML = '';
+  detectedChapters.forEach(function(c, idx){
+    var words = (c.body.match(/\S+/g) || []).length;
+    var div = document.createElement('div');
+    div.className = 'chapter-row';
+    div.innerHTML = '<span class="num">' + pad(idx+1) +
+      '</span><span class="ttl"></span><span class="meta">' + words + ' words</span>';
+    div.querySelector('.ttl').textContent = c.title || ('Chapter ' + (idx+1));
+    p.appendChild(div);
+  });
+  $('build').disabled = false;
+}
+function build(){
+  if (!detectedChapters.length) return;
+  var fmt = fmtEl.value;
+  var prefix = (prefixEl.value || 'manuscript').trim();
+  var zip = new JSZip();
+  var manifest = ['# ' + prefix, '', detectedChapters.length + ' chapters', ''];
+  detectedChapters.forEach(function(c, idx){
+    var ext = fmt === 'md' ? '.md' : '.txt';
+    var fname = pad(idx+1) + '-' + slug(c.title) + ext;
+    var content;
+    if (fmt === 'md') {
+      content = '# ' + (c.title || ('Chapter ' + (idx+1))) + '\n\n' + (c.body || '').trim() + '\n';
+    } else {
+      content = (c.title || ('Chapter ' + (idx+1))) + '\n\n' + (c.body || '').trim() + '\n';
+    }
+    zip.file(fname, content);
+    manifest.push((idx+1) + '. ' + (c.title || ('Chapter ' + (idx+1))) + ' (' + fname + ')');
+  });
+  zip.file('index.txt', manifest.join('\n'));
+  zip.generateAsync({ type: 'blob' }).then(function(blob){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = (prefix || 'chapters') + '.zip';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+    if (window.LoadReceipt) {
+      try { window.LoadReceipt.save(window.LoadReceipt.create({
+        tool: 'Chapter Splitter', kind: 'manuscript-split',
+        files: detectedChapters.length + 1, sizeBytes: blob.size,
+        nextStep: 'Open in EPUB Builder, Manuscript-to-Book, or any tool that takes per-chapter input.'
+      })); } catch(_) {}
+    }
+    toast('ZIP downloaded');
+  });
+}
+$('detect').addEventListener('click', detect);
+$('build').addEventListener('click', build);
+srcEl.addEventListener('input', function(){
+  detectedChapters = []; render();
+});
+modeEl.addEventListener('change', function(){
+  if (srcEl.value.trim()) detect();
+});
+})();
+</script>
+</body>
+</html>

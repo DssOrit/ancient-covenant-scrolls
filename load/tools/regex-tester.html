@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Regex Tester</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1100px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.row { display: flex; gap: 8px; align-items: stretch; }
+input[type=text] { flex: 1; background: #0e0e1a; border: 1px solid #2a2a42;
+  color: #e8e8f0; padding: 10px 12px; border-radius: 6px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; }
+input[type=text]:focus { outline: none; border-color: #7c5cff; }
+.flags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.flag { display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border: 1px solid #2a2a42; border-radius: 6px;
+  cursor: pointer; font-size: 12px; color: #9ca3af; }
+.flag input { margin: 0; }
+.flag.on { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+textarea { width: 100%; min-height: 220px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+  line-height: 1.55; resize: vertical; }
+.status { display: inline-block; padding: 3px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; margin-left: 8px; }
+.status.ok { background: #14532d; color: #bbf7d0; }
+.status.err { background: #4c1212; color: #fca5a5; }
+.status.muted { background: #1f1f2f; color: #9ca3af; }
+.preview-pane { white-space: pre-wrap; padding: 12px; border: 1px solid #2a2a42;
+  border-radius: 8px; background: #0e0e1a;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+  line-height: 1.55; min-height: 60px; word-break: break-word; }
+mark.match { background: #7c5cff; color: #fff; padding: 0 2px;
+  border-radius: 2px; }
+mark.match:nth-child(2n) { background: #ec4899; }
+.match-list { display: grid; gap: 6px; margin-top: 10px; }
+.match-row { background: #0e0e1a; border: 1px solid #2a2a42;
+  border-radius: 6px; padding: 8px 10px; font-size: 12px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.match-row .ix { color: #7c5cff; font-weight: 700; }
+.match-row .grp { color: #9ca3af; margin-left: 8px; }
+button { font: inherit; padding: 8px 14px; border-radius: 6px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.summary { color: #9ca3af; font-size: 12px; margin-top: 8px; }
+.preset { display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 9px; background: #0e0e1a; border: 1px solid #2a2a42;
+  border-radius: 14px; font-size: 11px; color: #9ca3af; cursor: pointer;
+  margin-right: 6px; margin-bottom: 6px; }
+.preset:hover { color: #fff; border-color: #7c5cff; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-build.html">&larr; Build &amp; validate</a>
+<h1>Regex Tester</h1>
+<a href="./help.html#regex">How it works</a>
+</header>
+<main>
+<p class="intro">Test a regular expression against sample text. Live highlight, capture groups, replacement preview, common-pattern presets. Useful before pasting a pattern into Find &amp; Replace.</p>
+
+<div class="card">
+<h2>Pattern <span id="pstatus" class="status muted">empty</span></h2>
+<div class="row">
+<span style="color:#9ca3af;align-self:center;font-family:ui-monospace,monospace;">/</span>
+<input id="pat" type="text" placeholder="enter a regex" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+<span style="color:#9ca3af;align-self:center;font-family:ui-monospace,monospace;" id="flagstr">/</span>
+</div>
+<div class="flags" id="flags">
+<label class="flag"><input type="checkbox" data-f="g" checked> g <span style="color:#7a7a8a">global</span></label>
+<label class="flag"><input type="checkbox" data-f="i"> i <span style="color:#7a7a8a">ignore case</span></label>
+<label class="flag"><input type="checkbox" data-f="m"> m <span style="color:#7a7a8a">multiline</span></label>
+<label class="flag"><input type="checkbox" data-f="s"> s <span style="color:#7a7a8a">dot all</span></label>
+<label class="flag"><input type="checkbox" data-f="u"> u <span style="color:#7a7a8a">unicode</span></label>
+<label class="flag"><input type="checkbox" data-f="y"> y <span style="color:#7a7a8a">sticky</span></label>
+</div>
+<div class="summary" style="margin-top:12px;">
+<strong style="color:#e8e8f0;">Common patterns:</strong>
+<div style="margin-top:6px;">
+<span class="preset" data-pat="https?:\/\/[^\s]+">URL</span>
+<span class="preset" data-pat="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">Email</span>
+<span class="preset" data-pat="(?:\+?\d{1,3}[\s-]?)?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}">US phone</span>
+<span class="preset" data-pat="\d{4}-\d{2}-\d{2}">ISO date</span>
+<span class="preset" data-pat="#[0-9a-fA-F]{3,8}\b">Hex color</span>
+<span class="preset" data-pat="^\s*$" data-flag="m">Blank line</span>
+<span class="preset" data-pat="\s{2,}">2+ spaces</span>
+<span class="preset" data-pat="[A-Z][a-z]+\s+[A-Z][a-z]+">Proper name</span>
+<span class="preset" data-pat="^#{1,6}\s+.+$" data-flag="m">Markdown heading</span>
+<span class="preset" data-pat='"([^"\\]|\\.)*"'>Quoted string</span>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Test text</h2>
+<textarea id="txt" placeholder="paste sample text here&hellip;" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+</div>
+
+<div class="card">
+<h2>Highlights <span id="mstatus" class="status muted">no matches</span></h2>
+<div class="preview-pane" id="prev"></div>
+<div class="match-list" id="mlist"></div>
+</div>
+
+<div class="card">
+<h2>Replacement</h2>
+<div class="row">
+<span style="color:#9ca3af;align-self:center;font-family:ui-monospace,monospace;">&rarr;</span>
+<input id="rep" type="text" placeholder="replacement string ($1, $2 for groups)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+</div>
+<div class="toolbar">
+<button id="copyrep">Copy result</button>
+<button id="replaceTxt" class="primary">Apply to test text</button>
+</div>
+<div class="preview-pane" id="repprev" style="margin-top:12px;"></div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var patEl = $('pat'), txtEl = $('txt'), repEl = $('rep');
+var prevEl = $('prev'), repPrevEl = $('repprev'), mlistEl = $('mlist');
+var pStatus = $('pstatus'), mStatus = $('mstatus'), flagStr = $('flagstr');
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function getFlags(){
+  var s = '';
+  document.querySelectorAll('#flags input').forEach(function(b){ if (b.checked) s += b.dataset.f; });
+  return s;
+}
+function setFlag(f, on){
+  document.querySelectorAll('#flags input').forEach(function(b){
+    if (b.dataset.f === f) b.checked = !!on;
+  });
+  syncFlagStyles();
+}
+function syncFlagStyles(){
+  document.querySelectorAll('.flag').forEach(function(label){
+    var cb = label.querySelector('input');
+    if (cb && cb.checked) label.classList.add('on'); else label.classList.remove('on');
+  });
+  flagStr.textContent = '/' + getFlags();
+}
+function buildRegex(){
+  var src = patEl.value;
+  if (!src) return null;
+  try {
+    return new RegExp(src, getFlags());
+  } catch(e) {
+    pStatus.className = 'status err'; pStatus.textContent = 'invalid: ' + e.message.slice(0, 60);
+    return null;
+  }
+}
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function update(){
+  syncFlagStyles();
+  var src = patEl.value;
+  if (!src) {
+    pStatus.className = 'status muted'; pStatus.textContent = 'empty';
+    prevEl.innerHTML = ''; mlistEl.innerHTML = '';
+    mStatus.className = 'status muted'; mStatus.textContent = 'no matches';
+    repPrevEl.textContent = '';
+    return;
+  }
+  var rx = buildRegex();
+  if (!rx) { prevEl.innerHTML = ''; mlistEl.innerHTML = ''; repPrevEl.textContent = ''; return; }
+  pStatus.className = 'status ok'; pStatus.textContent = 'valid';
+  var text = txtEl.value || '';
+  var matches = [];
+  if (getFlags().indexOf('g') === -1) {
+    var m = text.match(rx);
+    if (m) matches.push({ index: m.index, match: m[0], groups: m.slice(1) });
+  } else {
+    var safety = 0;
+    var lastIdx = -1;
+    var m2;
+    while ((m2 = rx.exec(text)) !== null) {
+      if (m2.index === lastIdx && m2[0] === '') { rx.lastIndex++; continue; }
+      lastIdx = m2.index;
+      matches.push({ index: m2.index, match: m2[0], groups: m2.slice(1) });
+      if (++safety > 5000) break;
+    }
+  }
+  if (matches.length === 0) {
+    prevEl.innerHTML = escapeHtml(text);
+    mStatus.className = 'status muted'; mStatus.textContent = 'no matches';
+    mlistEl.innerHTML = '';
+  } else {
+    var out = ''; var cursor = 0;
+    matches.forEach(function(mm){
+      out += escapeHtml(text.slice(cursor, mm.index));
+      out += '<mark class="match">' + escapeHtml(mm.match) + '</mark>';
+      cursor = mm.index + mm.match.length;
+    });
+    out += escapeHtml(text.slice(cursor));
+    prevEl.innerHTML = out;
+    mStatus.className = 'status ok'; mStatus.textContent = matches.length + ' match' +
+      (matches.length === 1 ? '' : 'es');
+    var rows = matches.slice(0, 200).map(function(mm, idx){
+      var grpHtml = '';
+      mm.groups.forEach(function(g, gi){
+        if (g !== undefined) grpHtml += '<span class="grp">$' + (gi+1) + ': ' + escapeHtml(g) + '</span>';
+      });
+      return '<div class="match-row"><span class="ix">[' + (idx+1) + ' @ ' + mm.index + ']</span> ' +
+        escapeHtml(mm.match) + grpHtml + '</div>';
+    }).join('');
+    mlistEl.innerHTML = rows + (matches.length > 200 ? '<div class="match-row" style="color:#9ca3af;">&hellip; ' + (matches.length - 200) + ' more</div>' : '');
+  }
+  try {
+    var rx2 = buildRegex();
+    if (rx2) repPrevEl.textContent = text.replace(rx2, repEl.value || '');
+  } catch(_) { repPrevEl.textContent = ''; }
+}
+patEl.addEventListener('input', update);
+txtEl.addEventListener('input', update);
+repEl.addEventListener('input', update);
+document.querySelectorAll('#flags input').forEach(function(b){
+  b.addEventListener('change', update);
+});
+document.querySelectorAll('.preset').forEach(function(p){
+  p.addEventListener('click', function(){
+    patEl.value = p.dataset.pat;
+    if (p.dataset.flag) {
+      String(p.dataset.flag).split('').forEach(function(f){ setFlag(f, true); });
+    }
+    update();
+  });
+});
+$('copyrep').addEventListener('click', function(){
+  if (!repPrevEl.textContent) { toast('Nothing to copy'); return; }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(repPrevEl.textContent).then(function(){ toast('Copied'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = repPrevEl.textContent; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Copied');
+  }
+});
+$('replaceTxt').addEventListener('click', function(){
+  var rx = buildRegex(); if (!rx) return;
+  txtEl.value = txtEl.value.replace(rx, repEl.value || '');
+  update();
+  toast('Applied');
+});
+syncFlagStyles();
+})();
+</script>
+</body>
+</html>
