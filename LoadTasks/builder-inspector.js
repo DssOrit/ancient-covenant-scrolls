@@ -46,7 +46,296 @@
   async function inspect(){ const input=$('#builderZipInput'); if(!input){ setStatus('ZIP input missing.', 'error'); return; } if(!input.files||!input.files[0]){ setStatus('Choose one ZIP package first.', 'warn'); return; } const file=input.files[0]; if(!file.name.toLowerCase().endsWith('.zip')){ setStatus('Choose a .zip file.', 'error'); return; } try{ setStatus('Reading ZIP file...', 'info'); const buffer=await file.arrayBuffer(); const entries=parseZip(buffer); const s=summary(file.name, entries); state.fileName=file.name; state.entries=entries; state.summary=s; state.reportText=report(s); render(); setStatus('Package inspected.', s.required.index?'success':'warn'); }catch(error){ console.error(error); setStatus('Inspection failed: '+(error.message||error), 'error'); const rb=$('#builderInspectorReport'); if(rb) rb.textContent='Inspection failed:\n'+(error.stack||error.message||error); } }
   function clear(){ state.fileName=''; state.entries=[]; state.summary=null; state.reportText=''; const input=$('#builderZipInput'); if(input) input.value=''; setStatus('Choose a ZIP package, then tap Inspect Package.', 'info'); ['#builderTotalFiles','#builderImageFiles','#builderVideoFiles','#builderAudioFiles','#builderIconFiles','#builderOtherFiles'].forEach(sel=>{ const el=$(sel); if(el) el.textContent='0'; }); const rf=$('#builderRequiredFiles'); if(rf) rf.textContent='Upload and inspect a ZIP to check required files.'; const rt=$('#builderRootSummary'); if(rt) rt.textContent='No package inspected yet.'; const tree=$('#builderFileTree'); if(tree) tree.textContent='Upload a ZIP and tap Inspect Package.'; const rb=$('#builderInspectorReport'); if(rb) rb.textContent='No report yet.'; }
   function download(){ if(!state.reportText){ setStatus('Inspect a package before downloading a report.', 'warn'); return; } const fileList=state.entries.map(e=>`- ${e.path} (${e.type}, ${bytes(e.size||0)})`).join('\n'); const blob=new Blob([state.reportText+'\n\nFile inventory:\n'+fileList],{type:'text/markdown'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='Load_Tasks_PWA_Builder_Inventory_Report.md'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },300); }
-  function bind(){ document.addEventListener('click', function(event){ if(event.target.closest('#builderInspectBtn,[data-builder-inspector-action="inspect"]')){ event.preventDefault(); event.stopPropagation(); inspect(); return false; } if(event.target.closest('#builderClearBtn,[data-builder-inspector-action="clear"]')){ event.preventDefault(); event.stopPropagation(); clear(); return false; } if(event.target.closest('#builderDownloadInventoryBtn,[data-builder-inspector-action="download"]')){ event.preventDefault(); event.stopPropagation(); download(); return false; } }, true); const input=$('#builderZipInput'); if(input) input.addEventListener('change',()=>{ const f=input.files&&input.files[0]; setStatus(f?'Selected: '+f.name:'Choose a ZIP package, then tap Inspect Package.', f?'info':'gray'); }); setStatus('Builder Inspector ready. Choose a ZIP package.', 'info'); }
+  function bind(){ document.addEventListener('click', function(event){ if(event.target.closest('#builderInspectBtn,[data-builder-inspector-action="inspect"]')){ event.preventDefault(); event.stopPropagation(); inspect(); return false; } if(event.target.closest('#builderClearBtn,[data-builder-inspector-action="clear"]')){ event.preventDefault(); event.stopPropagation(); clear(); return false; } if(event.target.closest('#builderDownloadInventoryBtn,#builderDownloadInventoryBtnBottom,#builderDownloadInventoryBtnTop,[data-builder-inspector-action="download"]')){ event.preventDefault(); event.stopPropagation(); download(); return false; } }, true); const input=$('#builderZipInput'); if(input) input.addEventListener('change',()=>{ const f=input.files&&input.files[0]; setStatus(f?'Selected: '+f.name:'Choose a ZIP package, then tap Inspect Package.', f?'info':'gray'); }); setStatus('Builder Inspector ready. Choose a ZIP package.', 'info'); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bind); else bind();
   window.LoadTasksBuilderInspector={inspect, clear, download};
+})();
+
+
+/* v5.11 PWA Builder Metadata Viewer extension */
+(function(){
+  if (!window.LoadTasksBuilderInspector) {
+    window.LoadTasksBuilderInspector = {};
+  }
+
+  const state = window.__LoadTasksMetadataState = {
+    manifestPath: '',
+    manifest: null,
+    metadataReport: '',
+    lastError: ''
+  };
+
+  function $(selector) { return document.querySelector(selector); }
+  function safe(selector, value) {
+    const el = $(selector);
+    if (el) el.textContent = String(value ?? 'Not found');
+  }
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch]);
+  }
+  function setMetaStatus(message, level='blue') {
+    const el = $('#builderMetadataStatus');
+    if (el) {
+      el.textContent = message;
+      el.className = 'badge ' + level;
+    }
+  }
+  function bytes(n) {
+    n = Number(n || 0);
+    if (n < 1024) return n + ' B';
+    if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+    return (n / 1048576).toFixed(1) + ' MB';
+  }
+
+  function readUInt16(view, offset) { return view.getUint16(offset, true); }
+  function readUInt32(view, offset) { return view.getUint32(offset, true); }
+
+  function findEOCD(view) {
+    for (let i = view.byteLength - 22, min = Math.max(0, view.byteLength - 65557); i >= min; i--) {
+      if (readUInt32(view, i) === 0x06054b50) return i;
+    }
+    return -1;
+  }
+
+  function decode(bytes) {
+    try { return new TextDecoder('utf-8').decode(bytes); }
+    catch (e) { return Array.from(bytes).map(b => String.fromCharCode(b)).join(''); }
+  }
+
+  function norm(path) {
+    return String(path || '').replace(/\\/g, '/').replace(/^\/+/, '');
+  }
+
+  function parseCentralDirectory(buffer) {
+    const view = new DataView(buffer);
+    const eocd = findEOCD(view);
+    if (eocd < 0) throw new Error('ZIP directory not found.');
+    const total = readUInt16(view, eocd + 10);
+    const centralOffset = readUInt32(view, eocd + 16);
+    let ptr = centralOffset;
+    const entries = [];
+    for (let i = 0; i < total && ptr < view.byteLength; i++) {
+      if (readUInt32(view, ptr) !== 0x02014b50) break;
+      const compression = readUInt16(view, ptr + 10);
+      const compressedSize = readUInt32(view, ptr + 20);
+      const size = readUInt32(view, ptr + 24);
+      const nameLen = readUInt16(view, ptr + 28);
+      const extraLen = readUInt16(view, ptr + 30);
+      const commentLen = readUInt16(view, ptr + 32);
+      const localHeaderOffset = readUInt32(view, ptr + 42);
+      const nameStart = ptr + 46;
+      const path = norm(decode(new Uint8Array(buffer.slice(nameStart, nameStart + nameLen))));
+      if (path && !path.endsWith('/')) {
+        entries.push({ path, compression, compressedSize, size, localHeaderOffset });
+      }
+      ptr = nameStart + nameLen + extraLen + commentLen;
+    }
+    return entries;
+  }
+
+  async function extractTextFile(buffer, entry) {
+    const view = new DataView(buffer);
+    const local = entry.localHeaderOffset;
+    if (readUInt32(view, local) !== 0x04034b50) throw new Error('Local file header not found for ' + entry.path);
+    const nameLen = readUInt16(view, local + 26);
+    const extraLen = readUInt16(view, local + 28);
+    const dataStart = local + 30 + nameLen + extraLen;
+    const dataEnd = dataStart + entry.compressedSize;
+    const raw = buffer.slice(dataStart, dataEnd);
+
+    if (entry.compression === 0) {
+      return new TextDecoder('utf-8').decode(raw);
+    }
+
+    if (entry.compression === 8 && typeof DecompressionStream !== 'undefined') {
+      const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      const decompressed = await new Response(stream).arrayBuffer();
+      return new TextDecoder('utf-8').decode(decompressed);
+    }
+
+    throw new Error('Cannot read compressed manifest in this browser yet. Compression method: ' + entry.compression);
+  }
+
+  function findManifestEntry(entries) {
+    return entries.find(e => /(^|\/)manifest\.(json|webmanifest)$/i.test(e.path)) ||
+           entries.find(e => /(^|\/)manifest\.json$/i.test(e.path));
+  }
+
+  function findServiceWorker(entries) {
+    return entries.find(e => /(^|\/)(service-worker|sw)\.js$/i.test(e.path));
+  }
+
+  function findIndex(entries) {
+    return entries.find(e => /(^|\/)index\.html$/i.test(e.path));
+  }
+
+  function renderMetadata(manifest, manifestPath, entries) {
+    safe('#metaAppName', manifest.name || 'Missing');
+    safe('#metaShortName', manifest.short_name || 'Missing');
+    safe('#metaDescription', manifest.description || 'Missing');
+    safe('#metaThemeColor', manifest.theme_color || 'Missing');
+    safe('#metaBackgroundColor', manifest.background_color || 'Missing');
+    safe('#metaStartUrl', manifest.start_url || 'Missing');
+    safe('#metaDisplayMode', manifest.display || 'Missing');
+    safe('#metaIconCount', Array.isArray(manifest.icons) ? manifest.icons.length : 0);
+
+    const pathBox = $('#metaManifestPath');
+    if (pathBox) {
+      pathBox.textContent = [
+        'Manifest path: ' + manifestPath,
+        'Readable: yes',
+        'Status: metadata displayed. No files changed.'
+      ].join('\n');
+    }
+
+    const icons = $('#metaIconList');
+    if (icons) {
+      if (Array.isArray(manifest.icons) && manifest.icons.length) {
+        icons.innerHTML = manifest.icons.map(icon => `
+          <div class="builder-requirement pass">
+            <strong>${escapeHtml(icon.sizes || 'size missing')}</strong>
+            <span>${escapeHtml(icon.src || 'src missing')} · ${escapeHtml(icon.type || 'type missing')}</span>
+          </div>
+        `).join('');
+      } else {
+        icons.innerHTML = '<div class="builder-requirement warn"><strong>Needs Review</strong><span>No icons array found in manifest.</span></div>';
+      }
+    }
+
+    const sw = findServiceWorker(entries);
+    const index = findIndex(entries);
+    const notes = [];
+    notes.push(index ? 'index.html found: ' + index.path : 'index.html not found.');
+    notes.push(sw ? 'service worker found: ' + sw.path : 'service worker not found.');
+    notes.push(manifest.start_url ? 'start_url: ' + manifest.start_url : 'start_url missing.');
+    notes.push(manifest.display ? 'display mode: ' + manifest.display : 'display mode missing.');
+    notes.push('Cloudflare/GitHub readiness: root path still depends on where index.html is located.');
+
+    const ready = $('#metaReadinessNotes');
+    if (ready) ready.textContent = notes.join('\n');
+
+    state.manifestPath = manifestPath;
+    state.manifest = manifest;
+    state.metadataReport = [
+      'PWA Metadata Report',
+      '',
+      'Manifest path: ' + manifestPath,
+      'App name: ' + (manifest.name || 'Missing'),
+      'Short name: ' + (manifest.short_name || 'Missing'),
+      'Description: ' + (manifest.description || 'Missing'),
+      'Theme color: ' + (manifest.theme_color || 'Missing'),
+      'Background color: ' + (manifest.background_color || 'Missing'),
+      'Start URL: ' + (manifest.start_url || 'Missing'),
+      'Display: ' + (manifest.display || 'Missing'),
+      'Icons: ' + (Array.isArray(manifest.icons) ? manifest.icons.length : 0),
+      '',
+      'Readiness notes:',
+      ...notes.map(n => '- ' + n),
+      '',
+      'Status: Read-only metadata viewer. No files changed.'
+    ].join('\n');
+  }
+
+  function renderMetadataUnavailable(message, manifestPath = '') {
+    safe('#metaAppName', 'Not available');
+    safe('#metaShortName', 'Not available');
+    safe('#metaDescription', 'Not available');
+    safe('#metaThemeColor', 'Not available');
+    safe('#metaBackgroundColor', 'Not available');
+    safe('#metaStartUrl', 'Not available');
+    safe('#metaDisplayMode', 'Not available');
+    safe('#metaIconCount', 'Not available');
+
+    const pathBox = $('#metaManifestPath');
+    if (pathBox) {
+      pathBox.textContent = [
+        manifestPath ? 'Manifest path: ' + manifestPath : 'Manifest path: not found',
+        'Readable: no',
+        'Reason: ' + message
+      ].join('\n');
+    }
+
+    const ready = $('#metaReadinessNotes');
+    if (ready) ready.textContent = 'Metadata could not be read. The file inspector still works. No files were changed.';
+
+    setMetaStatus('Needs Review', 'orange');
+    state.metadataReport = 'PWA Metadata Report\n\nMetadata unavailable.\nReason: ' + message + '\n\nStatus: No files changed.';
+  }
+
+  async function inspectMetadataFromSelectedZip() {
+    const input = document.querySelector('#builderZipInput');
+    if (!input || !input.files || !input.files[0]) {
+      setMetaStatus('Choose ZIP first', 'orange');
+      renderMetadataUnavailable('Choose a ZIP package first.');
+      return;
+    }
+
+    try {
+      setMetaStatus('Reading', 'blue');
+      const buffer = await input.files[0].arrayBuffer();
+      const entries = parseCentralDirectory(buffer);
+      const manifestEntry = findManifestEntry(entries);
+
+      if (!manifestEntry) {
+        renderMetadataUnavailable('No manifest.json or manifest.webmanifest found.');
+        return;
+      }
+
+      let text;
+      try {
+        text = await extractTextFile(buffer, manifestEntry);
+      } catch (error) {
+        renderMetadataUnavailable(error.message || String(error), manifestEntry.path);
+        return;
+      }
+
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch (error) {
+        renderMetadataUnavailable('Manifest exists but JSON could not be parsed.', manifestEntry.path);
+        return;
+      }
+
+      renderMetadata(parsed, manifestEntry.path, entries);
+      setMetaStatus('Read', 'green');
+    } catch (error) {
+      renderMetadataUnavailable(error.message || String(error));
+    }
+  }
+
+  function downloadMetadataReport() {
+    if (!state.metadataReport) {
+      renderMetadataUnavailable('Inspect a ZIP package before downloading metadata.');
+    }
+    const blob = new Blob([state.metadataReport || 'No metadata report yet.'], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Load_Tasks_PWA_Metadata_Report.md';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 300);
+  }
+
+  document.addEventListener('click', function(event) {
+    const inspect = event.target.closest('#builderInspectBtn, [data-builder-inspector-action="inspect"]');
+    if (inspect) {
+      setTimeout(inspectMetadataFromSelectedZip, 150);
+    }
+
+    const download = event.target.closest('#builderDownloadMetadataBtn,#builderDownloadMetadataBtnBottom,#builderDownloadMetadataBtnTop,[data-builder-inspector-action="download-metadata"]');
+    if (download) {
+      event.preventDefault();
+      event.stopPropagation();
+      downloadMetadataReport();
+      return false;
+    }
+  }, true);
+
+  const input = document.querySelector('#builderZipInput');
+  if (input) {
+    input.addEventListener('change', () => {
+      setMetaStatus('Not read', 'gray');
+    });
+  }
 })();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-loadtasks-version="5.10-builder-inspector-external">
+<html lang="en" data-loadtasks-version="5.12-report-buttons-minimal">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -14,11 +14,11 @@
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=5.10">
+  <link rel="stylesheet" href="styles.css?v=5.12">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to dashboard</a>
-  <div id="app" class="app-shell">
+  <div id="app" class="app-setup area">
     <section id="splash" class="splash-screen" aria-label="Load Tasks front screen">
       <picture>
         <source srcset="assets/images/LOAD_TASKS_SPLASH_1080.webp" type="image/webp">
@@ -72,18 +72,18 @@
       </button>
     </header>
 
-    <main id="main" class="main-shell">
+    <main id="main" class="main-setup area">
       <aside class="side-rail" aria-label="Build command rail">
         <button data-view="dashboard" data-route><span class="rail-icon" data-icon="dashboard"></span><span>Dashboard</span></button>
         <button data-view="agentlab" data-route><span class="rail-icon" data-icon="agent"></span><span>Agent Lab</span></button>
-        <button data-view="notescenter" data-route><span class="rail-icon" data-icon="shell"></span><span>Notes</span></button>
-        <button data-view="registration" data-route><span class="rail-icon" data-icon="shell"></span><span>Registration</span></button>
-        <button data-view="screening" data-route><span class="rail-icon" data-icon="shell"></span><span>Screening</span></button>
-        <button data-view="adminops" data-route><span class="rail-icon" data-icon="shell"></span><span>Admin Ops</span></button>
-        <button data-view="providers" data-route><span class="rail-icon" data-icon="shell"></span><span>Provider Center</span></button>
-        <button data-view="creative" data-route><span class="rail-icon" data-icon="shell"></span><span>Creative Tools</span></button>
-        <button data-view="moviepwa" data-route><span class="rail-icon" data-icon="shell"></span><span>MoviePWA</span></button>
-        <button data-view="builder" data-route><span class="rail-icon" data-icon="shell"></span><span>PWA Builder</span></button>
+        <button data-view="notescenter" data-route><span class="rail-icon" data-icon="setup area"></span><span>Notes</span></button>
+        <button data-view="registration" data-route><span class="rail-icon" data-icon="setup area"></span><span>Registration</span></button>
+        <button data-view="screening" data-route><span class="rail-icon" data-icon="setup area"></span><span>Screening</span></button>
+        <button data-view="adminops" data-route><span class="rail-icon" data-icon="setup area"></span><span>Admin Ops</span></button>
+        <button data-view="providers" data-route><span class="rail-icon" data-icon="setup area"></span><span>Provider Center</span></button>
+        <button data-view="creative" data-route><span class="rail-icon" data-icon="setup area"></span><span>Creative Tools</span></button>
+        <button data-view="moviepwa" data-route><span class="rail-icon" data-icon="setup area"></span><span>MoviePWA</span></button>
+        <button data-view="builder" data-route><span class="rail-icon" data-icon="setup area"></span><span>PWA Builder</span></button>
         <button data-view="intake" data-route><span class="rail-icon" data-icon="upload"></span><span>Upload Build</span></button>
         <button data-view="notes" data-route><span class="rail-icon" data-icon="notes"></span><span>Paste Notes</span></button>
         <button data-view="validator" data-route><span class="rail-icon" data-icon="shield"></span><span>Run Validator</span></button>
@@ -147,7 +147,7 @@
             <button class="command-card" data-view="focus" data-route>
               <span class="card-icon" data-icon="focus"></span>
               <strong>Show Next Step</strong>
-              <span>Use the dyslexia-friendly guided workflow.</span>
+              <span>Use the readability-friendly guided workflow.</span>
             </button>
             <button class="command-card" data-view="help" data-route>
               <span class="card-icon" data-icon="help"></span>
@@ -201,32 +201,32 @@
               </div>
             
             <button class="command-card" data-view="builder" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>PWA Builder Studio</strong>
               <span>Upload, dismantle, edit, rebuild, and export PWA packages.</span>
             </button>
             <button class="command-card" data-view="moviepwa" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>MoviePWA Studio</strong>
               <span>Validate and structure movie-style PWAs with poster, Play, Resume, and Rate.</span>
             </button>
             <button class="command-card" data-view="creative" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>Creative Tools</strong>
-              <span>VN-style editing, AI image, animation, voice, audio, and video tool shells.</span>
+              <span>VN-style editing, AI image, animation, voice, audio, and video tool setup areas.</span>
             </button>
             <button class="command-card" data-view="providers" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>Provider Center</strong>
               <span>No-key, key-based, fallback, and proof-required provider management.</span>
             </button>
             <button class="command-card" data-view="adminops" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>Admin Operations</strong>
               <span>Daily site health, security, sign-up, upload, and provider checks.</span>
             </button>
             <button class="command-card" data-view="notescenter" data-route>
-              <span class="card-icon" data-icon="shell"></span>
+              <span class="card-icon" data-icon="setup area"></span>
               <strong>Notes Center</strong>
               <span>Inline notes, tags, color labels, images, and project note exports.</span>
             </button>
@@ -514,7 +514,7 @@
                   <option value="stable">Stable Build Vault</option>
                   <option value="certificate">Launch Readiness Certificate</option>
                   <option value="upload">Uploading a test ZIP</option>
-                  <option value="dyslexia">Use Focus Mode</option>
+                  <option value="readability">Use Focus Mode</option>
                 </select>
               </label>
               <label>Optional question
@@ -760,10 +760,15 @@
             <h2>Safe mode</h2>
             <p>Status: File Inspector only. Editing, repair, rebuild, and export come later after this section is verified live.</p>
             <div class="badge-row">
-              <span class="badge blue">Shell plus file inspector</span>
+              <span class="badge blue">File Inspector active</span>
               <span class="badge warn">No auto-repair yet</span>
               <span class="badge gray">No file changes</span>
             </div>
+            <div class="builder-report-actions compact" id="builderTopReportActions">
+              <button class="secondary-action" id="builderDownloadInventoryBtnTop" type="button" data-builder-inspector-action="download">Inventory Report</button>
+              <button class="secondary-action" id="builderDownloadMetadataBtnTop" type="button" data-builder-inspector-action="download-metadata">Metadata Report</button>
+            </div>
+
           </div>
 
           <div class="builder-grid">
@@ -816,6 +821,41 @@
             </article>
           </div>
 
+
+          <div class="panel" id="builderMetadataPanel">
+            <div class="panel-title">
+              <h2>PWA metadata viewer</h2>
+              <span class="badge gray" id="builderMetadataStatus">Not read</span>
+            </div>
+            <p class="muted">Read-only. This does not edit or repair manifest files yet.</p>
+            <div class="metadata-grid">
+              <div class="metadata-field"><strong>App name</strong><span id="metaAppName">Not read</span></div>
+              <div class="metadata-field"><strong>Short name</strong><span id="metaShortName">Not read</span></div>
+              <div class="metadata-field"><strong>Description</strong><span id="metaDescription">Not read</span></div>
+              <div class="metadata-field"><strong>Theme color</strong><span id="metaThemeColor">Not read</span></div>
+              <div class="metadata-field"><strong>Background color</strong><span id="metaBackgroundColor">Not read</span></div>
+              <div class="metadata-field"><strong>Start URL</strong><span id="metaStartUrl">Not read</span></div>
+              <div class="metadata-field"><strong>Display mode</strong><span id="metaDisplayMode">Not read</span></div>
+              <div class="metadata-field"><strong>Icon count</strong><span id="metaIconCount">Not read</span></div>
+            </div>
+            <div class="panel-subsection">
+              <h3>Manifest file</h3>
+              <div id="metaManifestPath" class="report-box">No manifest read yet.</div>
+            </div>
+            <div class="panel-subsection">
+              <h3>Icon entries</h3>
+              <div id="metaIconList" class="builder-check-list">No icon entries read yet.</div>
+            </div>
+            <div class="panel-subsection">
+              <h3>Service worker and readiness notes</h3>
+              <div id="metaReadinessNotes" class="report-box">Inspect a package first.</div>
+            </div>
+            <div class="button-row">
+              <button class="secondary-action" id="builderDownloadMetadataBtn" type="button" data-builder-inspector-action="download-metadata">Download Metadata Report</button>
+            </div>
+          </div>
+
+
           <div class="panel">
             <div class="panel-title">
               <h2>File tree</h2>
@@ -829,11 +869,16 @@
           <div class="panel">
             <div class="panel-title">
               <h2>Inspector report</h2>
-              <span class="badge blue">Dyslexia-friendly summary</span>
+              <span class="badge blue">Readability-friendly summary</span>
             </div>
             <div id="builderInspectorReport" class="report-box">
               No report yet.
             </div>
+            <div class="builder-report-actions" id="builderReportActions">
+              <button class="primary-action" id="builderDownloadInventoryBtnBottom" type="button" data-builder-inspector-action="download">Download Inventory Report</button>
+              <button class="secondary-action" id="builderDownloadMetadataBtnBottom" type="button" data-builder-inspector-action="download-metadata">Download Metadata Report</button>
+            </div>
+
           </div>
         </section>
 
@@ -842,25 +887,25 @@
           <div class="section-head">
             <p class="eyebrow">MoviePWA / CinePWA Studio</p>
             <h1>Poster first. Then Play, Resume, Rate.</h1>
-            <p>This shell supports standalone movie-style PWA packages with images, video, audio, subtitles, and scene data.</p>
+            <p>This setup area supports standalone movie-style PWA packages with images, video, audio, subtitles, and scene data.</p>
           </div>
-          <div class="shell-grid">
-            <article class="panel shell-card"><h2>Poster front screen</h2><ul><li>Movie poster as front screen</li><li>Premium bottom buttons</li><li>Play</li><li>Resume</li><li>Rate</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Movie package validation</h2><ul><li>movie.json or project.json</li><li>scenes.json</li><li>rights.json</li><li>assets/images, video, audio, subtitles</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Playback checks</h2><ul><li>poster loads</li><li>movie starts</li><li>scene order works</li><li>media paths load</li><li>offline cache includes intended media</li></ul><span class="badge gray">Shell</span></article>
+          <div class="setup area-grid">
+            <article class="panel setup area-card"><h2>Poster front screen</h2><ul><li>Movie poster as front screen</li><li>Premium bottom buttons</li><li>Play</li><li>Resume</li><li>Rate</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Movie package validation</h2><ul><li>movie.json or project.json</li><li>scenes.json</li><li>rights.json</li><li>assets/images, video, audio, subtitles</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Playback checks</h2><ul><li>poster loads</li><li>movie starts</li><li>scene order works</li><li>media paths load</li><li>offline cache includes intended media</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
         <section class="view" id="view-creative" data-view-panel="creative">
           <div class="section-head">
             <p class="eyebrow">Creative Tools</p>
-            <h1>Onsite creative repair and editing shells.</h1>
-            <p>Load Tasks must eventually include actual tool areas, not only reports. This phase places the shells.</p>
+            <h1>Onsite creative repair and editing setup areas.</h1>
+            <p>Load Tasks must eventually include actual tool areas, not only reports. This phase places the setup areas.</p>
           </div>
-          <div class="shell-grid">
-            <article class="panel shell-card"><h2>VN-style editing</h2><ul><li>Media import</li><li>Timeline references</li><li>Trim/edit checks</li><li>Preview test</li><li>Export and reopen checks</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>AI image and Glam-style workflow</h2><ul><li>Prompt box</li><li>Image provider test</li><li>Returned file/blob/URL proof</li><li>Save image into assets</li><li>Attach image to scene</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Animation, voice, audio, video</h2><ul><li>Image-to-video clip proof</li><li>Voice/audio playback proof</li><li>Video clip save</li><li>Attach media to MoviePWA scene</li></ul><span class="badge gray">Shell</span></article>
+          <div class="setup area-grid">
+            <article class="panel setup area-card"><h2>VN-style editing</h2><ul><li>Media import</li><li>Timeline references</li><li>Trim/edit checks</li><li>Preview test</li><li>Export and reopen checks</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>AI image and Glam-style workflow</h2><ul><li>Prompt box</li><li>Image provider test</li><li>Returned file/blob/URL proof</li><li>Save image into assets</li><li>Attach image to scene</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Animation, voice, audio, video</h2><ul><li>Image-to-video clip proof</li><li>Voice/audio playback proof</li><li>Video clip save</li><li>Attach media to MoviePWA scene</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
@@ -870,10 +915,10 @@
             <h1>No-key first. Keys where needed. Proof required.</h1>
             <p>Provider tools will not be marked working unless a real response, file, blob, playable clip, or URL is returned.</p>
           </div>
-          <div class="provider-shell-table">
-            <article class="panel shell-card"><h2>AI Help providers</h2><ul><li>Local helper fallback</li><li>OpenAI-compatible endpoint</li><li>OpenRouter-compatible endpoint</li><li>Custom endpoint</li><li>Test provider</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>AI image providers</h2><ul><li>No-key/free first where possible</li><li>ComfyUI/local option</li><li>Hugging Face option</li><li>Replicate fallback</li><li>Custom endpoint</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Animation and video providers</h2><ul><li>Provider status</li><li>API key field where needed</li><li>Fallback order</li><li>Playable clip proof</li><li>Last error</li></ul><span class="badge gray">Shell</span></article>
+          <div class="provider-setup area-table">
+            <article class="panel setup area-card"><h2>AI Help providers</h2><ul><li>Local helper fallback</li><li>OpenAI-compatible endpoint</li><li>OpenRouter-compatible endpoint</li><li>Custom endpoint</li><li>Test provider</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>AI image providers</h2><ul><li>No-key/free first where possible</li><li>ComfyUI/local option</li><li>Hugging Face option</li><li>Replicate fallback</li><li>Custom endpoint</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Animation and video providers</h2><ul><li>Provider status</li><li>API key field where needed</li><li>Fallback order</li><li>Playable clip proof</li><li>Last error</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
@@ -881,12 +926,12 @@
           <div class="section-head">
             <p class="eyebrow">Admin Operations</p>
             <h1>Automated site health and daily admin checks.</h1>
-            <p>This shell prepares automated checks with color-coded alerts and dyslexia-friendly reports.</p>
+            <p>This setup area prepares automated checks with color-coded alerts and readability-friendly reports.</p>
           </div>
-          <div class="shell-grid">
-            <article class="panel shell-card"><h2>Daily admin checks</h2><ul><li>Site opens</li><li>Admin dashboard opens</li><li>New sign-ups</li><li>Failed registrations</li><li>Broken uploads</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Security checks</h2><ul><li>CSP</li><li>Hidden redirects</li><li>Unsafe external scripts</li><li>Exposed API keys</li><li>Admin pages exposed</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Reports</h2><ul><li>Daily Admin Report</li><li>Weekly Site Health Report</li><li>Security Risk Report</li><li>Provider Health Report</li></ul><span class="badge gray">Shell</span></article>
+          <div class="setup area-grid">
+            <article class="panel setup area-card"><h2>Daily admin checks</h2><ul><li>Site opens</li><li>Admin dashboard opens</li><li>New sign-ups</li><li>Failed registrations</li><li>Broken uploads</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Security checks</h2><ul><li>CSP</li><li>Hidden redirects</li><li>Unsafe external scripts</li><li>Exposed API keys</li><li>Admin pages exposed</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Reports</h2><ul><li>Daily Admin Report</li><li>Weekly Site Health Report</li><li>Security Risk Report</li><li>Provider Health Report</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
@@ -894,12 +939,12 @@
           <div class="section-head">
             <p class="eyebrow">Content Screening</p>
             <h1>Profanity, nudity, and unsafe content review tasks.</h1>
-            <p>This shell flags items for review. It must not promise perfect moderation.</p>
+            <p>This setup area flags items for review. It must not promise perfect moderation.</p>
           </div>
-          <div class="shell-grid">
-            <article class="panel shell-card"><h2>Text screening</h2><ul><li>Profanity flags</li><li>Unsafe creator descriptions</li><li>Unsafe profile text</li><li>Unsafe comments</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Media screening</h2><ul><li>Nudity review flags</li><li>Unsafe thumbnails</li><li>Unsafe uploaded media labels</li><li>Needs Human Review status</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Child-safe notices</h2><ul><li>Missing labels</li><li>Missing warnings</li><li>Upload safety rules</li><li>Human review queue</li></ul><span class="badge gray">Shell</span></article>
+          <div class="setup area-grid">
+            <article class="panel setup area-card"><h2>Text screening</h2><ul><li>Profanity flags</li><li>Unsafe creator descriptions</li><li>Unsafe profile text</li><li>Unsafe comments</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Media screening</h2><ul><li>Nudity review flags</li><li>Unsafe thumbnails</li><li>Unsafe uploaded media labels</li><li>Needs Human Review status</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Child-safe notices</h2><ul><li>Missing labels</li><li>Missing warnings</li><li>Upload safety rules</li><li>Human review queue</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
@@ -907,12 +952,12 @@
           <div class="section-head">
             <p class="eyebrow">Registration and Email Validation</p>
             <h1>Sign-up, login, admin access, and email flow checks.</h1>
-            <p>This shell checks frontend flows and labels backend-dependent features as not proven until connected.</p>
+            <p>This setup area checks frontend flows and labels backend-dependent features as not proven until connected.</p>
           </div>
-          <div class="shell-grid">
-            <article class="panel shell-card"><h2>Sign-up and login</h2><ul><li>Sign-up form</li><li>Login form</li><li>Forgot password</li><li>Role labels</li><li>Terms and privacy checkbox</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Email validation</h2><ul><li>Valid email accepted</li><li>Invalid email rejected</li><li>Required email field</li><li>Confirmation message</li><li>Backend required label</li></ul><span class="badge gray">Shell</span></article>
-            <article class="panel shell-card"><h2>Admin access</h2><ul><li>Admin login link</li><li>Admin dashboard path</li><li>Upload permissions</li><li>Registration reports</li></ul><span class="badge gray">Shell</span></article>
+          <div class="setup area-grid">
+            <article class="panel setup area-card"><h2>Sign-up and login</h2><ul><li>Sign-up form</li><li>Login form</li><li>Forgot password</li><li>Role labels</li><li>Terms and privacy checkbox</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Email validation</h2><ul><li>Valid email accepted</li><li>Invalid email rejected</li><li>Required email field</li><li>Confirmation message</li><li>Backend required label</li></ul><span class="badge gray">Setup area</span></article>
+            <article class="panel setup area-card"><h2>Admin access</h2><ul><li>Admin login link</li><li>Admin dashboard path</li><li>Upload permissions</li><li>Registration reports</li></ul><span class="badge gray">Setup area</span></article>
           </div>
         </section>
 
@@ -920,17 +965,17 @@
           <div class="section-head">
             <p class="eyebrow">Notes Center</p>
             <h1>Inline notes, tags, colors, images, and exports.</h1>
-            <p>This replaces unsafe pop-up notes. It is an inline shell and will not block the app.</p>
+            <p>This replaces unsafe pop-up notes. It is an inline setup area and will not block the app.</p>
           </div>
           <div class="panel">
-            <h2>Notes shell</h2>
+            <h2>Notes setup area</h2>
             <div class="notes-inline-grid">
               <label>Title<input placeholder="Example: Provider repair idea"></label>
               <label>Tags<input placeholder="MoviePWA, provider, urgent"></label>
               <label>Color<select><option>Yellow: general note</option><option>Blue: developer task</option><option>Red: urgent issue</option><option>Green: fixed or verified</option><option>Purple: creative idea</option><option>Orange: needs review</option><option>Gray: archive</option></select></label>
               <label class="wide">Note<textarea placeholder="Type or paste note here."></textarea></label>
             </div>
-            <div class="button-row"><button class="secondary-action" type="button" disabled>Save Note shell</button><button class="secondary-action" type="button" disabled>Export Notes shell</button></div>
+            <div class="button-row"><button class="secondary-action" type="button" disabled>Save Note setup area</button><button class="secondary-action" type="button" disabled>Export Notes setup area</button></div>
           </div>
         </section>
 
@@ -938,13 +983,13 @@
         <section class="view" id="view-settings" data-view-panel="settings">
 <div class="section-head">
             <p class="eyebrow">Settings</p>
-            <h1>Dyslexia-friendly controls and data tools.</h1>
+            <h1>Readability-friendly controls and data tools.</h1>
             <p>Load Tasks is local-first. Your project data stays in this browser unless you export it.</p>
           </div>
           <div class="settings-grid">
             <article class="panel">
               <h2>Reading comfort</h2>
-              <label class="check-row"><input id="dyslexiaMode" type="checkbox"> Dyslexia-friendly mode</label>
+              <label class="check-row"><input id="readabilityMode" type="checkbox"> Readability-friendly mode</label>
               <label class="check-row"><input id="largeTextMode" type="checkbox"> Larger text and tap targets</label>
               <label class="check-row"><input id="reducedMotionMode" type="checkbox"> Reduced motion</label>
               <label class="check-row"><input id="simpleMode" type="checkbox"> Simple dashboard mode</label>
@@ -963,7 +1008,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>
-  <script src="app.js?v=5.10"></script>
-  <script src="builder-inspector.js?v=5.10" defer></script>
+  <script src="app.js?v=5.11"></script>
+  <script src="builder-inspector.js?v=5.12" defer></script>
 </body>
 </html>
