@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load &mdash; Manuscript Stats</title>
+<style>
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background: #0a0a0f; color: #e8e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; }
+header.top { display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid #1f1f2f; position: sticky; top: 0;
+  background: rgba(10,10,15,0.95); backdrop-filter: blur(8px); z-index: 5; }
+header.top a { color: #9ca3af; text-decoration: none; font-size: 13px;
+  padding: 6px 10px; border-radius: 6px; border: 1px solid #2a2a42; }
+header.top a:hover { color: #fff; border-color: #7c5cff; background: #1a1a2e; }
+header.top h1 { margin: 0; font-size: 18px; flex: 1; font-weight: 700; }
+main { max-width: 1200px; margin: 22px auto; padding: 0 20px 60px; }
+.intro { color: #9ca3af; font-size: 14px; line-height: 1.6; margin: 0 0 18px; }
+.row { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+.card { background: #15152a; border: 1px solid #2a2a42; border-radius: 12px;
+  padding: 16px; margin-bottom: 16px; }
+.card h2 { margin: 0 0 12px; font-size: 14px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.drop { display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 18px 16px; border: 2px dashed #2a2a42;
+  border-radius: 10px; cursor: pointer; gap: 6px; color: #9ca3af; margin-bottom: 12px; }
+.drop:hover, .drop.over { border-color: #7c5cff; color: #fff; background: #1a1a2e; }
+textarea { width: 100%; min-height: 240px; padding: 12px; background: #0e0e1a;
+  border: 1px solid #2a2a42; border-radius: 8px; color: #e8e8f0;
+  font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 14px;
+  line-height: 1.55; resize: vertical; }
+button { font: inherit; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2a2a42; background: #1a1a2e; color: #e8e8f0; font-size: 13px; }
+button:hover { border-color: #7c5cff; }
+button.primary { background: #7c5cff; border-color: #7c5cff; color: #fff;
+  font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px; margin-top: 12px; }
+.stat { background: #0e0e1a; border: 1px solid #2a2a42; border-radius: 8px;
+  padding: 10px 12px; }
+.stat .lbl { font-size: 11px; color: #9ca3af; text-transform: uppercase;
+  letter-spacing: 0.05em; }
+.stat .val { font-size: 22px; font-weight: 800; color: #fff;
+  font-variant-numeric: tabular-nums; }
+.stat .sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.section h3 { margin: 18px 0 10px; font-size: 13px; color: #e8e8f0;
+  font-weight: 700; }
+.bar-row { display: grid; grid-template-columns: minmax(140px, 1.2fr) 1fr auto;
+  gap: 10px; align-items: center; padding: 6px 10px;
+  border-bottom: 1px solid #1f1f2f; font-size: 13px; }
+.bar-row:last-child { border-bottom: 0; }
+.bar-row .label { word-break: break-word; }
+.bar-row .bar { background: #0e0e1a; border-radius: 4px; height: 10px;
+  overflow: hidden; border: 1px solid #2a2a42; }
+.bar-row .bar > span { display: block; height: 100%; background: #7c5cff;
+  border-radius: 3px; }
+.bar-row .ct { color: #9ca3af; font-variant-numeric: tabular-nums;
+  font-size: 12px; min-width: 70px; text-align: right; }
+.preview-sentence { background: #0e0e1a; border: 1px solid #2a2a42;
+  border-radius: 6px; padding: 8px 12px; font-size: 13px; line-height: 1.5;
+  color: #e8e8f0; margin-bottom: 6px; }
+.preview-sentence .meta { color: #9ca3af; font-size: 11px;
+  font-variant-numeric: tabular-nums; margin-right: 8px; }
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: #15152a; border: 1px solid #2a2a42; padding: 10px 16px;
+  border-radius: 8px; color: #e8e8f0; font-size: 13px; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<header class="top">
+<a href="./cat-books.html">&larr; Books &amp; writing</a>
+<h1>Manuscript Stats</h1>
+<a href="./help.html#mstats">How it works</a>
+</header>
+<main>
+<p class="intro">Drop a manuscript or paste text. Get total counts, per-chapter word distribution, estimated print pages, reading time, audiobook duration, and the longest / shortest sentences.</p>
+<div class="row">
+<div class="card">
+<h2>Source</h2>
+<div class="drop" id="drop">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M16 4v3h3"/></svg>
+<span>Drop a TXT, MD, or HTML file or paste below</span>
+<input id="file" type="file" accept=".txt,.md,.markdown,.html,.htm,text/plain,text/markdown,text/html" style="display:none">
+</div>
+<textarea id="src" placeholder="Paste a manuscript&hellip;"></textarea>
+<div class="toolbar">
+<button class="primary" id="run">Analyze</button>
+<button id="exportJson">Export JSON</button>
+</div>
+</div>
+<div class="card">
+<h2>Headlines</h2>
+<div class="stats" id="headlines"></div>
+</div>
+</div>
+<div class="card" id="detailCard" style="display:none;">
+<div class="section">
+<h3>Reading-time and print estimates</h3>
+<div class="stats" id="estimates"></div>
+</div>
+<div class="section">
+<h3>Sentence length</h3>
+<div class="stats" id="sentStats"></div>
+</div>
+<div class="section">
+<h3>Chapters</h3>
+<div id="chapters"></div>
+</div>
+<div class="section">
+<h3>Longest sentences</h3>
+<div id="longest"></div>
+</div>
+<div class="section">
+<h3>Shortest sentences</h3>
+<div id="shortest"></div>
+</div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var lastResult = null;
+function toast(m){ var t = $('toast'); t.textContent = m; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800); }
+function htmlToText(h){ var d = document.createElement('div'); d.innerHTML = h;
+  return (d.innerText || d.textContent || '').replace(/\r\n?/g, '\n'); }
+function fmt(n){ return n.toLocaleString(); }
+function fmtMin(min){
+  if (min < 1) return '< 1 min';
+  if (min < 60) return Math.round(min) + ' min';
+  var h = Math.floor(min / 60), m = Math.round(min % 60);
+  return h + ' hr ' + (m ? m + ' min' : '');
+}
+function detectChapters(text){
+  var lines = text.split('\n');
+  var chapters = []; var cur = null;
+  for (var i = 0; i < lines.length; i++) {
+    var ln = lines[i];
+    var hm = /^(#{1,3})\s+(.+?)\s*#*\s*$/.exec(ln);
+    var nm = /^\s*(chapter|prologue|epilogue|part|book)\b.*$/i.test(ln);
+    var caps = ln.trim().length >= 3 && ln === ln.toUpperCase() && /[A-Z]/.test(ln) &&
+      ln.replace(/[^A-Z]/g, '').length >= 4 && ln.length < 80;
+    if (hm || nm || caps) {
+      if (cur) chapters.push(cur);
+      var title = hm ? hm[2].trim() : ln.trim();
+      cur = { title: title, body: '' };
+    } else if (cur) {
+      cur.body += (cur.body ? '\n' : '') + ln;
+    } else {
+      if (ln.trim()) {
+        cur = { title: 'Opening', body: ln };
+      }
+    }
+  }
+  if (cur) chapters.push(cur);
+  if (!chapters.length) chapters = [{ title: 'Manuscript', body: text }];
+  chapters.forEach(function(c){
+    c.words = (c.body.match(/\S+/g) || []).length;
+  });
+  return chapters;
+}
+function analyze(text){
+  var chars = text.length;
+  var words = (text.match(/\S+/g) || []).length;
+  var paragraphs = text.split(/\n\s*\n+/).filter(function(p){ return p.trim().length; }).length;
+  var sentences = text.split(/(?<=[.!?])\s+(?=[A-Z"'])/g).filter(function(s){ return s.trim().length; });
+  if (sentences.length === 0 && text.trim()) sentences = [text.trim()];
+  var sentLengths = sentences.map(function(s){ return (s.match(/\S+/g) || []).length; });
+  var avgSent = sentLengths.length ? sentLengths.reduce(function(a, b){ return a + b; }, 0) / sentLengths.length : 0;
+  var sortedAsc = sentences.slice().sort(function(a, b){
+    return (a.match(/\S+/g) || []).length - (b.match(/\S+/g) || []).length;
+  });
+  var sortedDesc = sentences.slice().sort(function(a, b){
+    return (b.match(/\S+/g) || []).length - (a.match(/\S+/g) || []).length;
+  });
+  var chapters = detectChapters(text);
+  return {
+    chars: chars, words: words, paragraphs: paragraphs,
+    sentences: sentences.length, avgSentLen: avgSent,
+    longestSent: sortedDesc.slice(0, 5),
+    shortestSent: sortedAsc.slice(0, 5).filter(function(s){ return (s.match(/\S+/g) || []).length > 0; }),
+    chapters: chapters
+  };
+}
+function render(r){
+  $('detailCard').style.display = 'block';
+  var pages250 = Math.ceil(r.words / 250);
+  var pages275 = Math.ceil(r.words / 275);
+  $('headlines').innerHTML =
+    '<div class="stat"><div class="lbl">Words</div><div class="val">' + fmt(r.words) + '</div></div>' +
+    '<div class="stat"><div class="lbl">Characters</div><div class="val">' + fmt(r.chars) + '</div></div>' +
+    '<div class="stat"><div class="lbl">Sentences</div><div class="val">' + fmt(r.sentences) + '</div></div>' +
+    '<div class="stat"><div class="lbl">Paragraphs</div><div class="val">' + fmt(r.paragraphs) + '</div></div>' +
+    '<div class="stat"><div class="lbl">Chapters</div><div class="val">' + fmt(r.chapters.length) + '</div></div>';
+  $('estimates').innerHTML =
+    '<div class="stat"><div class="lbl">Read @ 220 wpm</div><div class="val">' + fmtMin(r.words / 220) + '</div><div class="sub">Average reader</div></div>' +
+    '<div class="stat"><div class="lbl">Read @ 300 wpm</div><div class="val">' + fmtMin(r.words / 300) + '</div><div class="sub">Fast reader</div></div>' +
+    '<div class="stat"><div class="lbl">Audiobook @ 150 wpm</div><div class="val">' + fmtMin(r.words / 150) + '</div><div class="sub">Narration pace</div></div>' +
+    '<div class="stat"><div class="lbl">Print pages</div><div class="val">' + fmt(pages250) + ' &mdash; ' + fmt(pages275) + '</div><div class="sub">@ 250-275 wpp</div></div>';
+  $('sentStats').innerHTML =
+    '<div class="stat"><div class="lbl">Avg sentence length</div><div class="val">' + r.avgSentLen.toFixed(1) + '</div><div class="sub">words</div></div>' +
+    '<div class="stat"><div class="lbl">Longest sentence</div><div class="val">' +
+      (r.longestSent[0] ? (r.longestSent[0].match(/\S+/g) || []).length : 0) + '</div><div class="sub">words</div></div>' +
+    '<div class="stat"><div class="lbl">Shortest sentence</div><div class="val">' +
+      (r.shortestSent[0] ? (r.shortestSent[0].match(/\S+/g) || []).length : 0) + '</div><div class="sub">words</div></div>';
+  var maxCh = Math.max.apply(null, r.chapters.map(function(c){ return c.words; }));
+  $('chapters').innerHTML = r.chapters.map(function(c, i){
+    var pct = maxCh > 0 ? (c.words / maxCh) * 100 : 0;
+    return '<div class="bar-row"><span class="label">' + (i+1) + '. ' + esc(c.title) +
+      '</span><span class="bar"><span style="width:' + pct + '%"></span></span><span class="ct">' +
+      fmt(c.words) + ' words</span></div>';
+  }).join('');
+  $('longest').innerHTML = r.longestSent.map(function(s){
+    var w = (s.match(/\S+/g) || []).length;
+    return '<div class="preview-sentence"><span class="meta">' + w + ' words</span>' + esc(s.trim()) + '</div>';
+  }).join('');
+  $('shortest').innerHTML = r.shortestSent.map(function(s){
+    var w = (s.match(/\S+/g) || []).length;
+    return '<div class="preview-sentence"><span class="meta">' + w + ' words</span>' + esc(s.trim()) + '</div>';
+  }).join('');
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+$('run').addEventListener('click', function(){
+  var text = $('src').value || '';
+  if (!text.trim()) { toast('Empty source'); return; }
+  lastResult = analyze(text);
+  render(lastResult);
+});
+$('exportJson').addEventListener('click', function(){
+  if (!lastResult) { toast('Run Analyze first'); return; }
+  var copy = Object.assign({}, lastResult);
+  copy.longestSent = lastResult.longestSent.map(function(s){ return s.trim(); });
+  copy.shortestSent = lastResult.shortestSent.map(function(s){ return s.trim(); });
+  copy.chapters = lastResult.chapters.map(function(c){ return { title: c.title, words: c.words }; });
+  var blob = new Blob([JSON.stringify(copy, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'manuscript-stats.json'; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 200);
+  toast('JSON downloaded');
+});
+$('drop').addEventListener('click', function(){ $('file').click(); });
+['dragenter','dragover'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.add('over'); });
+});
+['dragleave','drop'].forEach(function(ev){
+  $('drop').addEventListener(ev, function(e){ e.preventDefault(); $('drop').classList.remove('over'); });
+});
+$('drop').addEventListener('drop', function(e){
+  var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) loadFile(f);
+});
+$('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if (f) loadFile(f);
+});
+function loadFile(f){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var raw = String(fr.result || '');
+    if (/\.(html?|htm)$/i.test(f.name)) raw = htmlToText(raw);
+    $('src').value = raw.replace(/\r\n?/g, '\n');
+    toast('Loaded ' + f.name);
+  };
+  fr.readAsText(f);
+}
+})();
+</script>
+</body>
+</html>

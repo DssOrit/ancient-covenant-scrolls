@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17ft`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fu`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,15 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Color Blindness Sim + Manuscript Stats)
+- **v17fu &mdash; Color Blindness Simulator + Manuscript Stats**:
+  - **Color Blindness Simulator:** new tool at `load/tools/color-blindness.html`. Drop a PNG / JPG / WEBP. Renders five panels side-by-side: Original, Protanopia, Deuteranopia, Tritanopia, Achromatopsia (full-severity LMS approximations). Severity slider mixes between original and simulation. Per-panel PNG download.
+  - **Manuscript Stats:** new tool at `load/tools/manuscript-stats.html`. Drop or paste manuscript. Headlines: words / characters / sentences / paragraphs / chapters. Estimates: read at 220 + 300 wpm, audiobook at 150 wpm, print pages at 250-275 wpp. Sentence-length stats (avg, longest, shortest). Per-chapter word distribution as a bar chart. Top 5 longest and shortest sentences for line editing. JSON export.
+  - cat-media.html and cat-books.html each gained one tile.
+  - Workspace tile description bumped to 59 tools.
+  - Help page updated with new TOC entries + per-tool cards.
+  - Cache `load-v17ft` -&gt; `load-v17fu`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Audio Normalize + Lorem Ipsum)
 - **v17ft &mdash; Audio Normalize + Lorem Ipsum**:
