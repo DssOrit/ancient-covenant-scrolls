@@ -5,7 +5,7 @@
 // commercial use is strictly prohibited. See LICENSE at the
 // repository root for the full terms.
 //
-// Load is an offline, dyslexia-friendly launcher for imported HTML
+// Load is an offline, readability-friendly launcher for imported HTML
 // apps, PDFs, and EPUB books. All features run locally on the
 // device — no network calls, no analytics, no accounts.
 //
@@ -385,7 +385,7 @@ window.LoadAudioFix = {
  var currentTemplate = 'article';
  /* ---------- Templates ----------
  * Built-in: article, note, letter, recipe, checklist, acr (ACR Reader
- * Book layout with chapter sidebar, TTS, dyslexia font, etc.).
+ * Book layout with chapter sidebar, TTS, reading support font, etc.).
  * User-saved: any page created in Load can be saved as a template.
  * Templates live in localStorage; the Create screen lists them as
  * buttons. Selecting one pre-fills the editor. */
@@ -545,7 +545,7 @@ window.LoadAudioFix = {
  toast(' Template saved — it\'ll appear here next time you create.');
  }
  function collectAcrOptions() {
- var keys = ['toc','search','font-controls','dyslexic','tts','bookmarks','progress'];
+ var keys = ['toc','search','font-controls','reader-friendly','tts','bookmarks','progress'];
  var out = {};
  keys.forEach(function (k) {
  var el = $('acr-opt-' + k);
@@ -631,7 +631,7 @@ window.LoadAudioFix = {
  /* ---------- PWA Reader Book template ----------
  * Produces a fully self-contained HTML page modelled on the ACR study
  * reader layout: chapter sidebar, search, font/theme controls,
- * dyslexia font toggle, TTS, bookmarks, optional progress bar. User
+ * reading support font toggle, TTS, bookmarks, optional progress bar. User
  * opts in/out per feature; any unchecked feature is omitted from the
  * output so the saved page stays as small as possible.
  *
@@ -700,11 +700,11 @@ window.LoadAudioFix = {
  '</nav>'
  : '';
 
- var hasControls = !!(opts.search || opts['font-controls'] || opts.dyslexic || opts.tts);
+ var hasControls = !!(opts.search || opts['font-controls'] || opts.reader-friendly || opts.tts);
  var controlsHtml = hasControls ? '<div class="controls">' +
  (opts.search ? '<input type="search" id="acr-q" placeholder="Search in this book…" aria-label="Search">' : '') +
  (opts['font-controls'] ? '<button id="acr-font-down" aria-label="Smaller text">A−</button><button id="acr-font-up" aria-label="Larger text">A+</button><button id="acr-theme" aria-label="Theme">◐</button>' : '') +
- (opts.dyslexic ? '<button id="acr-dyslexic" aria-label="Dyslexia font"> Dyslexia</button>' : '') +
+ (opts.reader-friendly ? '<button id="acr-reader-friendly" aria-label="Reading support font"> Readability</button>' : '') +
  (opts.tts ? '<button id="acr-tts" aria-label="Read aloud"> Read</button>' : '') +
  '</div>' : '';
 
@@ -723,12 +723,12 @@ window.LoadAudioFix = {
  '(function(){',
  (opts['font-controls'] ? 'var step=parseFloat(localStorage.getItem("acr_font")||"0");document.body.style.fontSize=(17+step*1.5)+"px";' : ''),
  (opts['font-controls'] ? 'var themes=["","theme-cream","theme-sepia","theme-light"];var ti=parseInt(localStorage.getItem("acr_theme")||"0",10);document.body.classList.add(themes[ti]);' : ''),
- (opts.dyslexic ? 'if(localStorage.getItem("acr_dys")==="1")document.body.classList.add("dyslexic");' : ''),
+ (opts.reader-friendly ? 'if(localStorage.getItem("acr_dys")==="1")document.body.classList.add("reader-friendly");' : ''),
  hasControls ? 'document.body.classList.add("has-controls");' : '',
  (opts['font-controls'] ? 'var fu=document.getElementById("acr-font-up");if(fu)fu.onclick=function(){step=Math.min(6,step+1);localStorage.setItem("acr_font",step);document.body.style.fontSize=(17+step*1.5)+"px";};' : ''),
  (opts['font-controls'] ? 'var fd=document.getElementById("acr-font-down");if(fd)fd.onclick=function(){step=Math.max(-2,step-1);localStorage.setItem("acr_font",step);document.body.style.fontSize=(17+step*1.5)+"px";};' : ''),
  (opts['font-controls'] ? 'var th=document.getElementById("acr-theme");if(th)th.onclick=function(){document.body.classList.remove(themes[ti]);ti=(ti+1)%themes.length;document.body.classList.add(themes[ti]);localStorage.setItem("acr_theme",ti);};' : ''),
- (opts.dyslexic ? 'var dy=document.getElementById("acr-dyslexic");if(dy)dy.onclick=function(){document.body.classList.toggle("dyslexic");localStorage.setItem("acr_dys",document.body.classList.contains("dyslexic")?"1":"0");};' : ''),
+ (opts.reader-friendly ? 'var dy=document.getElementById("acr-reader-friendly");if(dy)dy.onclick=function(){document.body.classList.toggle("reader-friendly");localStorage.setItem("acr_dys",document.body.classList.contains("reader-friendly")?"1":"0");};' : ''),
  (opts.search ? 'var q=document.getElementById("acr-q");if(q)q.addEventListener("input",function(e){var needle=e.target.value.trim().toLowerCase();document.querySelectorAll("section.chapter").forEach(function(s){s.querySelectorAll("mark").forEach(function(m){m.replaceWith(document.createTextNode(m.textContent));});s.normalize();if(!needle){s.style.display="";return;}var text=s.textContent.toLowerCase();if(text.indexOf(needle)<0){s.style.display="none";return;}s.style.display="";s.querySelectorAll("p").forEach(function(p){var idx=p.textContent.toLowerCase().indexOf(needle);if(idx<0)return;var t=p.textContent;p.innerHTML="";var before=document.createTextNode(t.slice(0,idx));var hit=document.createElement("mark");hit.textContent=t.slice(idx,idx+needle.length);var after=document.createTextNode(t.slice(idx+needle.length));p.appendChild(before);p.appendChild(hit);p.appendChild(after);});});});' : ''),
  (opts.tts ? 'var tts=document.getElementById("acr-tts");var utter=null;if(tts)tts.onclick=function(){if(speechSynthesis.speaking){speechSynthesis.cancel();tts.textContent=" Read";return;}var vis=Array.from(document.querySelectorAll("section.chapter")).filter(function(s){return s.style.display!=="none";});var text=vis.map(function(s){return s.textContent;}).join("\\n\\n");utter=new SpeechSynthesisUtterance(text);utter.rate=1;speechSynthesis.speak(utter);tts.textContent=" Stop";utter.onend=function(){tts.textContent=" Read";};};' : ''),
  (opts.bookmarks ? 'var saved=JSON.parse(localStorage.getItem("acr_bm")||"[]");document.querySelectorAll(".bm-btn").forEach(function(b){var ch=b.getAttribute("data-ch");if(saved.indexOf(ch)>=0)b.classList.add("on");b.onclick=function(){b.classList.toggle("on");var list=JSON.parse(localStorage.getItem("acr_bm")||"[]");if(b.classList.contains("on")){if(list.indexOf(ch)<0)list.push(ch);}else{list=list.filter(function(x){return x!==ch;});}localStorage.setItem("acr_bm",JSON.stringify(list));};});' : ''),
@@ -798,7 +798,7 @@ window.LoadAudioFix = {
  function aiPrompt(kind) {
  switch (kind) {
  case 'summarize': return 'Please summarize the following in plain language, 3-5 bullet points.';
- case 'explain': return 'Please explain the following simply, like I have dyslexia and want it in short clear sentences.';
+ case 'explain': return 'Please explain the following simply, like I have readability and want it in short clear sentences.';
  case 'translate': return 'Please translate the following to plain English (or ask me which language if unclear).';
  case 'keypoints': return 'Please list the key points from the following, each as a short bullet.';
  case 'define': return 'Please define any hard or technical words in the following passage.';
@@ -839,7 +839,7 @@ window.LoadAudioFix = {
  * Captures console.log/info/warn/error and window.error from the
  * loaded iframe and mirrors them into a readable drawer. Also lets
  * the user evaluate one-line expressions in the iframe's context —
- * great for trying bits of JS while building. Built for dyslexic /
+ * great for trying bits of JS while building. Built for reader-friendly /
  * disabled developers: large mono font, generous spacing, colored
  * by severity, never scrolls off the top. */
  var consoleEntries = [];
@@ -1673,7 +1673,7 @@ window.LoadAudioFix = {
  { id:'resume', keywords:['resume','continue','where i left off','pick up','last place'],
  answer:'Load auto-saves your scroll position every 1.5 seconds. Just reopen the item &mdash; you land where you left off. On the Home screen, a green <strong>Continue: &lt;name&gt;</strong> button shows your most recent reading.',
  actionLabel:'Go Home', actionFn:function(){ show('home-screen'); } },
- { id:'reading-aids', keywords:['dyslexia','font','bigger','smaller','spacing','overlay','bionic','focus','color','theme'],
+ { id:'reading-aids', keywords:['readability','font','bigger','smaller','spacing','overlay','bionic','focus','color','theme'],
  answer:'In the viewer, tap <strong>Aa</strong>. You can change font size, line spacing, letter spacing, color overlay (cream / yellow / soft blue), switch to OpenDyslexic font, turn on <strong>Bionic reading</strong> (bolds the first part of each word), or show a <strong>focus line</strong> ruler.',
  actionLabel:null, actionFn:null },
  { id:'theme', keywords:['dark mode','light mode','sepia','cream','theme','high contrast'],
@@ -1722,7 +1722,7 @@ window.LoadAudioFix = {
  answer:'Tap the <strong>?</strong> icon in the top bar for the full Help window with 30+ plain-language answers. Or keep asking me here &mdash; I\'ll search the same info faster.',
  actionLabel:'Open Help', actionFn:function(){ openHelp(); } },
 
- /* Developer topics — for disabled / dyslexic developers who use Load
+ /* Developer topics — for disabled / reader-friendly developers who use Load
  * as a build environment. Everything is plain-language, focused on
  * what Load itself supports. */
  { id:'dev-console', keywords:['console','log','error','debug','inspect','devtools'],
@@ -1758,8 +1758,8 @@ window.LoadAudioFix = {
  { id:'dev-accessibility', keywords:['accessibility','a11y','screen reader','aria','tab order'],
  answer:'Accessibility basics: (1) Always use labels — <code>&lt;label&gt;</code> around inputs, <code>alt="..."</code> on images. (2) Use buttons for actions, links for navigation. (3) Check contrast (Load\'s dark theme with white text is AAA). (4) Don\'t disable zoom. (5) Keyboard-test: press Tab to cycle through controls and see that focus is visible.',
  actionLabel:null, actionFn:null },
- { id:'dev-dyslexia-friendly-css', keywords:['dyslexia friendly css','readable','opendyslexic','atkinson'],
- answer:'Dyslexia-friendly CSS defaults: <code>font-family: "Atkinson Hyperlegible", sans-serif;</code><br><code>font-size: 17px;</code><br><code>line-height: 1.75;</code><br><code>letter-spacing: 0.02em;</code><br><code>word-spacing: 0.1em;</code><br>Avoid italic; use bold for emphasis. Avoid justified text (use <code>text-align: left;</code>).',
+ { id:'dev-readability-friendly-css', keywords:['readability friendly css','readable','opendyslexic','atkinson'],
+ answer:'Readability-friendly CSS defaults: <code>font-family: "Atkinson Hyperlegible", sans-serif;</code><br><code>font-size: 17px;</code><br><code>line-height: 1.75;</code><br><code>letter-spacing: 0.02em;</code><br><code>word-spacing: 0.1em;</code><br>Avoid italic; use bold for emphasis. Avoid justified text (use <code>text-align: left;</code>).',
  actionLabel:null, actionFn:null },
  { id:'dev-test-workflow', keywords:['test my app','try my app','workflow','iterate','reload'],
  answer:'Load is a small iPad dev environment: <br>(1) Use <strong>Create New</strong> or edit an imported file via <strong>Edit HTML</strong>. <br>(2) Save. <br>(3) Open it in the viewer. <br>(4) Tap the <strong> console</strong> icon to watch logs/errors. <br>(5) Make a change, tap Reload. <br>Full rebuild cycle in 30 seconds, no computer needed.',
@@ -1805,7 +1805,7 @@ window.LoadAudioFix = {
  answer:'No tracking cookies, no analytics, no fingerprinting. Load uses IndexedDB and localStorage purely for your data, never to identify or track you.',
  actionLabel:null, actionFn:null },
 
- /* ============ Dyslexia-specific ============ */
+ /* ============ Readability-specific ============ */
  { id:'dys-letters-swap', keywords:['letters swap','letters flip','b and d','p and q','mixed up'],
  answer:'Try turning on <strong>OpenDyslexic font</strong> (top bar &rarr; rainbow icon, or Settings &rarr; Font). Its weighted bottoms make b/d and p/q easier to distinguish. Also bump <strong>letter spacing</strong> up one notch in Settings.',
  actionLabel:'Open Settings', actionFn:function(){ openSettingsPanel(); } },
@@ -1816,13 +1816,13 @@ window.LoadAudioFix = {
  answer:'In the viewer, tap <strong>Aa &rarr; Focus line</strong> toggle. A horizontal highlighted band stays on your screen. Move your eyes to keep text inside the band.',
  actionLabel:null, actionFn:null },
  { id:'dys-bionic', keywords:['bionic','bold start','first letters','skim'],
- answer:'Bionic Reading bolds the first ~40% of each word to help your eyes latch on. Turn it on in the viewer Aa panel. Many dyslexic readers read faster with it on.',
+ answer:'Bionic Reading bolds the first ~40% of each word to help your eyes latch on. Turn it on in the viewer Aa panel. Many readers read faster with it on.',
  actionLabel:null, actionFn:null },
  { id:'dys-tired', keywords:['reading tiring','eye strain','hard to focus','can\'t concentrate'],
- answer:'Try this combo: Cream theme + bigger font (A+) + more line spacing + Read Aloud on at 1x while you follow along visually. Multi-sensory input is proven to reduce dyslexia reading fatigue.',
+ answer:'Try this combo: Cream theme + bigger font (A+) + more line spacing + Read Aloud on at 1x while you follow along visually. Multi-sensory input is proven to reduce readability reading fatigue.',
  actionLabel:null, actionFn:null },
 
- /* ============ Accessibility beyond dyslexia ============ */
+ /* ============ Accessibility beyond readability ============ */
  { id:'a11y-low-vision', keywords:['low vision','blurry','vision','see better'],
  answer:'Combine several: (1) Settings &rarr; A+ repeatedly for base font, (2) Theme &rarr; High Contrast (yellow on black, maximum contrast), (3) pinch-zoom still works in any viewer. For videos and images, the iframe respects iPad\'s system zoom.',
  actionLabel:'Open Settings', actionFn:function(){ openSettingsPanel(); } },
@@ -1897,7 +1897,7 @@ window.LoadAudioFix = {
 
  /* ============ Editor-specific ============ */
  { id:'editor-bigger', keywords:['editor font','code too small','editor bigger','bigger code'],
- answer:'In the HTML editor, tap <strong>A+</strong> / <strong>A&minus;</strong> in the top bar. For a lighter background (easier on dyslexic readers), tap the <strong>&#9689; circle icon</strong> to switch to cream theme.',
+ answer:'In the HTML editor, tap <strong>A+</strong> / <strong>A&minus;</strong> in the top bar. For a lighter background (easier on readers), tap the <strong>&#9689; circle icon</strong> to switch to cream theme.',
  actionLabel:null, actionFn:null },
  { id:'editor-lost-changes', keywords:['lost changes','didn\'t save','undo','revert'],
  answer:'Load has no undo history once you tap Back. Always tap <strong>Save</strong> before leaving the editor. If you haven\'t saved: tap Back to library, tap the tile and Edit HTML again — your old content is still there.',
@@ -2093,7 +2093,7 @@ window.LoadAudioFix = {
  function buildHelperWelcomeHtml() {
  // One-bubble summary of what the helper can do, tuned to whether
  // the user has an AI key set up. Kept short and plain-language
- // so dyslexic users can scan it without losing the thread. The
+ // so readers using support fonts can scan it without losing the thread. The
  // data-welcome marker is detected by addHelperMessage so preamble
  // bubbles don't get a "Copy" button (user wants to copy answers,
  // not the help text).
@@ -3730,7 +3730,7 @@ window.LoadAudioFix = {
  if (s.scripts > 3) tips.push('<strong>' + s.scripts + ' script blocks.</strong> Consolidating into one block can speed up initial render on iPad.');
  if (!/color-scheme/i.test(html) && !/prefers-color-scheme/i.test(html)) tips.push('No dark-mode support detected. Adding <code>&lt;meta name="color-scheme" content="light dark"&gt;</code> makes the page respect iPad appearance settings.');
  if (!/viewport/i.test(html)) tips.push('No <code>&lt;meta name="viewport"&gt;</code>. On iPad the page will render too wide. Add <code>&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;</code>.');
- if (s.hardcodedColor > 8) tips.push('<strong>Many hard-coded colors.</strong> Using CSS variables (<code>--primary</code>, <code>--bg</code>) makes theme switches and dyslexia overlays work better.');
+ if (s.hardcodedColor > 8) tips.push('<strong>Many hard-coded colors.</strong> Using CSS variables (<code>--primary</code>, <code>--bg</code>) makes theme switches and readability overlays work better.');
  if (!tips.length) tips.push('The file is already compact and readable. If you want to go further, run <code>/analyze</code> for a full structure map.');
  return { answer: '<strong>Optimization suggestions:</strong><ul>' + tips.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' };
  }
@@ -4125,7 +4125,7 @@ window.LoadAudioFix = {
  else if (target === 'settings') openSettingsPanel();
  });
  });
- // Inline topbar tool buttons: font size, theme, dyslexia font, notes
+ // Inline topbar tool buttons: font size, theme, reading support font, notes
  document.querySelectorAll('.nav-btn[data-tool]').forEach(function (btn) {
  btn.addEventListener('click', function () {
  var tool = btn.getAttribute('data-tool');
@@ -9123,7 +9123,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17fw</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17fx</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -14665,7 +14665,7 @@ window.LoadAudioFix = {
 
  /* ---------- HTML source editor ---------- */
  var editingApp = null;
- /* Editor accessibility — font size + theme, dyslexia-friendly defaults */
+ /* Editor accessibility — font size + theme, readability-friendly defaults */
  var editorFontStep = 0; // 0 = base 16px; each step = +2px
  var editorTheme = 'dark'; // dark | cream | high
  function applyEditorPrefs() {

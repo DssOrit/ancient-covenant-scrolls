@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fw`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fx`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,13 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Part A: Copy cleanup + truth alignment)
+- **v17fx &mdash; Part A copy cleanup (Load_Main_Claude_Handoff_Report Section 6 / Part A)**:
+  - Removed user-facing instances of &quot;dyslexia&quot; / &quot;dyslexic&quot; across `load/index.html`, `load/load.js`, `load/load.css`, `load/install-local-ai.html`, `load/tools/help.html`, `load/tools/cat-books.html`, `load/tools/cat-media.html`, `load/tools/quote-card.html`, `load/tools/reading-level.html`, `load/tools/reel-composer.html`, `load/tools/sentence-reader.html`, `load/tools/speed-reader.html`. Replaced with the report&apos;s approved alternatives: &quot;Readability-friendly&quot;, &quot;Reading support font&quot;, &quot;readers&quot;, &quot;reader-friendly&quot;, &quot;readability needs&quot;.
+  - Preserved internal identifiers per CLAUDE.md (CSS class `.dyslexic-font`, JS variable `dyslexiaFont`, function `toggleDyslexiaFont`, font family `OpenDyslexic`, font filenames `opendyslexic-*.woff2`).
+  - Fixed AI / privacy / offline copy contradictions per Section 3.1: home-screen footer now reads &quot;The core workspace runs entirely on your iPad. No tracking, no accounts. Optional cloud AI providers run only when you enable them.&quot; Help-FAQ &quot;Is this really offline?&quot; rewritten to qualify offline claims with the optional-AI carve-out. AI Provider Status local-helper detail no longer claims &quot;No network&quot;.
+  - Cache `load-v17fw` -&gt; `load-v17fx`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Image Metadata + HTML Linter)
 - **v17fw &mdash; Image Metadata + HTML Linter**:
