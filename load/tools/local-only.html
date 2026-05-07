@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Local-only Mode — Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-load-db.js"></script>
+<script src="../lib-provider-registry.js"></script>
+<script src="../lib-load-local-only.js"></script>
+<script src="../../branding.js" data-brand-skip></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.build-marker{background:#facc15;color:#0a0a14;font-weight:900;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:10px;margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;text-align:center}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:12.5px;color:var(--mute);line-height:1.55}
+.intro strong{color:var(--fg)}
+.toggle-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;margin:0 0 14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.toggle-card .state{font-size:24px;font-weight:900}
+.toggle-card .state.on{color:var(--ok)}
+.toggle-card .state.off{color:var(--mute)}
+.toggle-card label{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;cursor:pointer;background:var(--bg3);padding:8px 12px;border-radius:8px;border:1px solid var(--border)}
+button{font:inherit;padding:9px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.col{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px}
+.col h3{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.row{display:grid;grid-template-columns:1fr 110px;gap:8px;padding:6px 8px;border-bottom:1px dashed #1f2030;font-size:12.5px}
+.row:last-child{border-bottom:none}
+.cell{font-size:11px;font-weight:800;text-align:center;padding:4px 8px;border-radius:6px}
+.cell.allow{background:rgba(74,222,128,.18);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
+.cell.block{background:rgba(255,110,110,.18);color:var(--err);border:1px solid rgba(255,110,110,.4)}
+.test-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px}
+.test-card h3{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.test-result{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--fg);background:#0a0e18;border:1px solid var(--border);padding:10px 12px;border-radius:8px;white-space:pre-wrap;word-break:break-word;min-height:60px}
+.report{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="./handoff-tools.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Handoff Tools
+  </a>
+  <h1>Local-only Mode</h1>
+</header>
+<div class="wrap">
+<div class="build-marker">BUILD MARKER: LOCAL-ONLY-v1-2026-05-07-v17g43</div>
+<div class="intro">
+  <strong>Reliability addendum #7.</strong> When Local-only mode is on, every cloud / free-api route is <strong>blocked</strong> at the fetch boundary via <code>LoadLocalOnly.guardedFetch()</code>. Only built-in, local, prompt-only, and user-imported provider types remain available. State persists in <code>LoadDB.kv['local-only']</code>. The Chat Studio toolbar reflects this toggle.
+</div>
+
+<div class="toggle-card">
+  <span class="state" id="state">OFF</span>
+  <label><input type="checkbox" id="toggle"> Block cloud calls (Local-only mode)</label>
+  <span id="status" style="font-size:12px;color:var(--mute)"></span>
+</div>
+
+<div class="cols">
+  <div class="col">
+    <h3>Allowed when on</h3>
+    <div id="allowed"></div>
+  </div>
+  <div class="col">
+    <h3>Blocked when on</h3>
+    <div id="blocked"></div>
+  </div>
+</div>
+
+<div class="test-card">
+  <h3>Live guard self-test</h3>
+  <p style="font-size:12.5px;color:var(--mute);margin:0 0 10px">Tap to run <code>LoadLocalOnly.guardedFetch('https://example.com')</code>. When OFF, the call should resolve (or fail with a network error). When ON, the call must be rejected with the spec message <em>"Local-only mode is on — cloud fetch blocked"</em> <strong>before</strong> any network traffic leaves the device.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <button class="primary" id="run-test">Run guard test</button>
+    <button id="copy-report">Copy report</button>
+    <button id="download-report">Download report</button>
+  </div>
+  <div class="test-result" id="test-result" style="margin-top:10px">tap Run guard test</div>
+</div>
+
+<pre class="report" id="report"></pre>
+</div>
+
+<script>
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+if (!window.LoadLocalOnly || !window.LoadProviderRegistry) {
+  $('allowed').innerHTML = '<p style="color:var(--err)">required libs missing</p>';
+} else {
+
+var L = window.LoadLocalOnly;
+var R = window.LoadProviderRegistry;
+var LAST_TEST = '';
+
+function paintToggle() {
+  var on = L.isOn();
+  $('state').textContent = on ? 'ON' : 'OFF';
+  $('state').className = 'state ' + (on ? 'on' : 'off');
+  $('toggle').checked = on;
+}
+
+function paintLists() {
+  var allowed = [], blocked = [];
+  R.list().forEach(function (p) {
+    var ok = L.ALLOWED_TYPES.indexOf(p.providerType) !== -1;
+    (ok ? allowed : blocked).push(p);
+  });
+  function row(p, mode) {
+    return '<div class="row"><div>' + esc(p.providerName) + ' <span style="color:var(--mute);font-family:ui-monospace,Menlo,monospace;font-size:11px">[' + esc(p.providerType) + ']</span></div>' +
+      '<div class="cell ' + mode + '">' + (mode === 'allow' ? 'ALLOWED' : 'BLOCKED') + '</div></div>';
+  }
+  $('allowed').innerHTML = allowed.map(function (p) { return row(p, 'allow'); }).join('');
+  $('blocked').innerHTML = blocked.map(function (p) { return row(p, 'block'); }).join('');
+}
+
+L.init().then(function () {
+  paintToggle();
+  paintLists();
+});
+
+$('toggle').addEventListener('change', function () {
+  L.setOn(this.checked).then(function (on) {
+    paintToggle();
+    $('status').textContent = 'saved at ' + new Date().toLocaleTimeString() + ' · state=' + (on ? 'ON' : 'OFF');
+  });
+});
+
+L.subscribe(paintToggle);
+
+function runTest() {
+  $('test-result').textContent = 'running...';
+  var t0 = Date.now();
+  L.guardedFetch('https://example.com/local-only-test').then(function (r) {
+    var ms = Date.now() - t0;
+    LAST_TEST = (L.isOn()
+      ? 'FAIL: guard did NOT block while ON (HTTP ' + r.status + ' in ' + ms + ' ms)'
+      : 'PASS-while-OFF: guard let the request through, HTTP ' + r.status + ' in ' + ms + ' ms');
+    $('test-result').textContent = LAST_TEST;
+  }).catch(function (e) {
+    var ms = Date.now() - t0;
+    var msg = (e && e.message) || String(e);
+    if (L.isOn()) {
+      if (/Local-only mode is on — cloud fetch blocked/.test(msg) && ms < 200) {
+        LAST_TEST = 'PASS-while-ON: rejected in ' + ms + ' ms with "' + msg + '"';
+      } else {
+        LAST_TEST = 'FAIL-while-ON: unexpected reject "' + msg + '" in ' + ms + ' ms';
+      }
+    } else {
+      LAST_TEST = 'INFO-while-OFF: network call failed (CORS/offline) — ' + msg + ' (' + ms + ' ms)';
+    }
+    $('test-result').textContent = LAST_TEST;
+  });
+}
+
+function buildReport() {
+  var lines = ['LOAD LOCAL-ONLY MODE REPORT', 'Build: LOCAL-ONLY-v1-2026-05-07-v17g43', 'Generated: ' + new Date().toString(), 'State: ' + (L.isOn() ? 'ON' : 'OFF'), 'Last self-test: ' + (LAST_TEST || '(not run)'), ''];
+  lines.push('Allowed provider types when on: ' + L.ALLOWED_TYPES.join(', '));
+  lines.push('');
+  lines.push('Allowed providers (' + R.list().filter(function (p) { return L.ALLOWED_TYPES.indexOf(p.providerType) !== -1; }).length + '):');
+  R.list().forEach(function (p) { if (L.ALLOWED_TYPES.indexOf(p.providerType) !== -1) lines.push('  ' + p.providerId + ' [' + p.providerType + ']'); });
+  lines.push('');
+  lines.push('Blocked providers (' + R.list().filter(function (p) { return L.ALLOWED_TYPES.indexOf(p.providerType) === -1; }).length + '):');
+  R.list().forEach(function (p) { if (L.ALLOWED_TYPES.indexOf(p.providerType) === -1) lines.push('  ' + p.providerId + ' [' + p.providerType + ']'); });
+  return lines.join('\n');
+}
+
+function copyText(t) {
+  if (navigator.clipboard) return navigator.clipboard.writeText(t).then(function () { return true; }).catch(function () { return false; });
+  try { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(true); } catch (_) { return Promise.resolve(false); }
+}
+
+$('run-test').addEventListener('click', runTest);
+$('copy-report').addEventListener('click', function () { var t = buildReport(); var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; copyText(t).then(function (ok) { alert(ok ? 'Report copied.' : 'Copy failed.'); }); });
+$('download-report').addEventListener('click', function () { var t = buildReport(); var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; var blob = new Blob([t], { type: 'text/plain' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'load-local-only-' + Date.now() + '.txt'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500); });
+
+}
+</script>
+</body>
+</html>
