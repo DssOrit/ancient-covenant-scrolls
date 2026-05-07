@@ -1,20 +1,23 @@
 {
   "_comment": "Centralized public-facing branding config. Values use the trademark Unicode character (U+2122) so text-only contexts (manifest names, page titles, plain-text help) render correctly without HTML entities. HTML pages may also use the .tm CSS class on a <sup> for premium styling. Do not use the registered (R) symbol unless explicitly authorised.",
-  "ecosystemName": "LOAD ECO™",
-  "ecosystemNameMixed": "Load Eco™",
-  "studioName": "LOAD STUDIO™",
-  "studioNameMixed": "Load Studio™",
-  "playName": "LOAD PLAY™",
-  "playNameMixed": "Load Play™",
-  "tasksName": "LOAD TASKS™",
-  "tasksNameMixed": "Load Tasks™",
+  "ecosystemName": "LOAD ECO\u2122",
+  "ecosystemNameMixed": "Load Eco\u2122",
+  "studioName": "LOAD STUDIO\u2122",
+  "studioNameMixed": "Load Studio\u2122",
+  "playName": "LOAD PLAY\u2122",
+  "playNameMixed": "Load Play\u2122",
+  "tasksName": "LOAD TASKS\u2122",
+  "tasksNameMixed": "Load Tasks\u2122",
   "appShortNames": {
     "load": "Load",
-    "loadstudio": "Load Studio™",
-    "loadplay": "Load Play™",
-    "loadtasks": "Load Tasks™"
+    "loadstudio": "Load Studio\u2122",
+    "loadplay": "Load Play\u2122",
+    "loadtasks": "Load Tasks\u2122",
+    "loadai": "Load AI\u2122"
   },
   "tagline": "The offline-first creation suite for iPad",
   "owner": "LBond",
-  "copyrightYear": 2026
+  "copyrightYear": 2026,
+  "aiName": "LOAD AI\u2122",
+  "aiNameMixed": "Load AI\u2122"
 }

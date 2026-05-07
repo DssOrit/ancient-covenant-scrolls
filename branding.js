@@ -27,7 +27,7 @@ var BRANDING = {
 // four primary brand names that does not already carry one. Skips
 // <script>, <style>, <code>, <pre>, <kbd>, <input>, <textarea>,
 // and any element with data-brand-skip. Idempotent.
-var BRANDS = ['LOAD ECO','LOAD STUDIO','LOAD PLAY','LOAD TASKS','Load Eco','Load Studio','Load Play','Load Tasks'];
+var BRANDS = ['LOAD ECO','LOAD STUDIO','LOAD PLAY','LOAD TASKS','LOAD AI','Load Eco','Load Studio','Load Play','Load Tasks','Load AI'];
 var SKIP_TAGS = { SCRIPT:1, STYLE:1, CODE:1, PRE:1, KBD:1, INPUT:1, TEXTAREA:1, NOSCRIPT:1 };
 
 function ensureCss() {
