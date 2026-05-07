@@ -12,6 +12,7 @@
 <script src="../lib-load-ai-core.js"></script>
 <script src="../lib-load-db.js"></script>
 <script src="../lib-load-queue.js"></script>
+<script src="../lib-load-resume.js"></script>
 <script src="../lib-jszip.min.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
@@ -74,7 +75,7 @@ button.small{font-size:11.5px;padding:5px 10px}
   <h1>AI Chat Studio</h1>
 </header>
 <div class="wrap">
-<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.4-2026-05-07-v17g40</div>
+<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.5-2026-05-07-v17g41</div>
 <div class="intro">
   <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free providers + on-device synthesis only. <em>Chat</em>: Pollinations text. <em>Text-to-image</em>: Pollinations image (real PNG/JPG). <em>Animate</em> (with a reference image): canvas Ken-Burns + MediaRecorder produces a <strong>real WebM video Blob</strong>. <em>Audio</em>: OfflineAudioContext synthesises a <strong>real WAV Blob</strong> matched to prompt keywords. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
 </div>
@@ -532,6 +533,7 @@ function send() {
   $('btn-send').disabled = true;
   $('status').textContent = '';
   STATE.lastPrompt = p;
+  if (window.LoadResume) window.LoadResume.saveChatState(STATE);
 
   appendCard({ cls: 'user', text: p });
   logChat('user', STATE.mode, p, { style: STATE.styleName, size: STATE.size, hasRef: !!STATE.ref, localOnly: !!STATE.localOnly });
@@ -918,7 +920,28 @@ $('btn-extend').addEventListener('click', function () {
 $('local-only').addEventListener('change', function () {
   STATE.localOnly = this.checked;
   renderRouteLine();
+  if (window.LoadResume) window.LoadResume.saveChatState(STATE);
 });
+
+// Resume on init: scan for interrupted jobs (silent, no popup) + restore last
+// chat state if present so a Safari reload preserves prompt + style + size.
+if (window.LoadResume) {
+  window.LoadResume.scanInterrupted().catch(function () {});
+  window.LoadResume.loadChatState().then(function (state) {
+    if (!state || typeof state !== 'object') return;
+    // Restore non-destructive fields only — never overwrite the active threadId
+    // mid-session, so we only restore when STATE looks fresh (no current msgs).
+    if (!STATE.lastPrompt && state.lastPrompt) {
+      STATE.lastPrompt = state.lastPrompt;
+      if (state.threadId) STATE.threadId = state.threadId;
+      if (state.style) { STATE.styleName = state.style; }
+      if (state.localOnly && $('local-only')) { $('local-only').checked = true; STATE.localOnly = true; }
+      appendCard({ cls: 'assistant', who: 'Resume', badge: { cls: 'ok', text: 'state restored' },
+        text: 'Restored last prompt + thread from a previous session: ' + state.savedAt + '. Tap Regenerate to re-run, or type a new prompt.' });
+      renderRouteLine();
+    }
+  }).catch(function () {});
+}
 
 // Export project: bundle every scene + attached blob in this thread into a
 // .loadstudio.zip via JSZip. Uses the LoadStudio validator's REQUIRED_FILES

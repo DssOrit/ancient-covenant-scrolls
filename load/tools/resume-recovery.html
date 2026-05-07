@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Retry &amp; Resume — Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-load-db.js"></script>
+<script src="../lib-load-queue.js"></script>
+<script src="../lib-load-resume.js"></script>
+<script src="../../branding.js" data-brand-skip></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.build-marker{background:#facc15;color:#0a0a14;font-weight:900;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:10px;margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;text-align:center}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:12.5px;color:var(--mute);line-height:1.55}
+.intro strong{color:var(--fg)}
+.section{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px}
+.section h3{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+button{font:inherit;padding:9px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.small{font-size:11.5px;padding:5px 10px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row{display:grid;grid-template-columns:1fr 110px 130px 120px;gap:8px;padding:9px 0;border-bottom:1px dashed #1f2030;align-items:center;font-size:12.5px}
+.row:last-child{border-bottom:none}
+.row.head{background:transparent;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--border)}
+.cell{font-size:11px;font-weight:800;text-align:center;padding:5px 8px;border-radius:6px;background:#0a0e18;color:var(--mute);border:1px solid var(--border)}
+.cell.failed{background:rgba(255,110,110,.18);color:var(--err);border-color:rgba(255,110,110,.4)}
+.cell.ok{background:rgba(74,222,128,.18);color:var(--ok);border-color:rgba(74,222,128,.4)}
+.empty{padding:20px;text-align:center;color:var(--mute);font-style:italic}
+.bundle{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px}
+@media(max-width:760px){.bundle{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+.bundle .item{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.bundle .item .lbl{font-size:10.5px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.bundle .item .val{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;word-break:break-word}
+.bundle img,.bundle video,.bundle audio{max-width:100%;border-radius:8px;margin-top:6px}
+.report{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="./handoff-tools.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Handoff Tools
+  </a>
+  <h1>Retry &amp; Resume</h1>
+</header>
+<div class="wrap">
+<div class="build-marker">BUILD MARKER: RESUME-RECOVERY-v1-2026-05-07-v17g41</div>
+<div class="intro">
+  <strong>Reliability addendum #5.</strong> Detects jobs that were running when Safari reloaded and offers one-tap retry. Recovers the last prompt, last reference image, and last attached scene/asset for the most recent thread so you can pick up where you left off. <strong>No false positives:</strong> only jobs whose <code>updatedAt</code> is older than 60 s and whose status is non-terminal (Queued / Preparing / Generating / Saving / Attaching / Retrying) get marked <em>Failed (interrupted by reload)</em>. Last-thread recovery reads real Blobs from <code>LoadDB.audio_assets</code> / <code>video_assets</code> / <code>image_assets</code>.
+</div>
+
+<div class="section">
+  <h3>Step 1 — Scan for interrupted jobs</h3>
+  <div class="controls">
+    <button class="primary" id="scan">Scan now</button>
+    <button id="copy-report">Copy report</button>
+    <button id="download-report">Download report</button>
+    <span id="status" style="font-size:12px;color:var(--mute)"></span>
+  </div>
+  <div class="row head"><div>Job</div><div class="cell">Was</div><div class="cell">Now</div><div class="cell">Action</div></div>
+  <div id="interrupted"></div>
+</div>
+
+<div class="section">
+  <h3>Step 2 — Recover last thread</h3>
+  <div class="controls">
+    <button id="recover">Recover most recent thread</button>
+    <input type="text" id="thread-id" placeholder="Or paste a specific threadId" style="flex:1;background:#0a0e18;border:1px solid var(--border);border-radius:8px;color:var(--fg);font:inherit;font-size:13px;padding:8px 10px">
+    <button id="recover-id">Recover by id</button>
+  </div>
+  <div id="bundle" style="margin-top:10px"></div>
+</div>
+
+<pre class="report" id="report"></pre>
+</div>
+
+<script>
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+if (!window.LoadResume || !window.LoadDB || !window.LoadQueue) {
+  $('interrupted').innerHTML = '<p style="color:var(--err);padding:20px">Required libraries failed to load.</p>';
+} else {
+
+var Resume = window.LoadResume;
+var Q = window.LoadQueue;
+
+function paintInterrupted(jobs) {
+  if (!jobs.length) {
+    $('interrupted').innerHTML = '<div class="empty">No interrupted jobs detected. Run a generation in Chat Studio and reload mid-job to test.</div>';
+    return;
+  }
+  var html = '';
+  jobs.forEach(function (j) {
+    html += '<div class="row">' +
+      '<div><div style="font-weight:700">' + esc(j.kind) + (j.intent ? ' &middot; ' + esc(j.intent) : '') + '</div>' +
+      '<div style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--mute)">' + esc(j.jobId) + (j.threadId ? ' · thread=' + esc(j.threadId) : '') + '</div>' +
+      (j.prompt ? '<div style="font-size:11.5px;color:var(--fg);margin-top:2px">' + esc(j.prompt.slice(0,140)) + '</div>' : '') +
+      (j.error ? '<div style="font-size:11px;color:var(--err);margin-top:2px">error: ' + esc(j.error) + '</div>' : '') + '</div>' +
+      '<div class="cell">interrupted</div>' +
+      '<div class="cell failed">Failed</div>' +
+      '<div><button class="small" data-retry="' + esc(j.jobId) + '">Retry</button></div>' +
+      '</div>';
+  });
+  $('interrupted').innerHTML = html;
+  Array.prototype.slice.call(document.querySelectorAll('[data-retry]')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      Q.retry(b.getAttribute('data-retry')).then(function () {
+        b.textContent = 'Retried'; b.disabled = true;
+      }).catch(function (e) { alert('Retry failed: ' + ((e && e.message) || e)); });
+    });
+  });
+}
+
+function scan() {
+  $('status').textContent = 'scanning...';
+  return Resume.scanInterrupted().then(function (jobs) {
+    paintInterrupted(jobs);
+    $('status').textContent = jobs.length + ' job(s) marked Failed (interrupted)';
+  }).catch(function (e) { $('status').textContent = 'error: ' + ((e && e.message) || e); });
+}
+
+function paintBundle(b) {
+  if (!b) {
+    $('bundle').innerHTML = '<div class="empty">No recoverable thread found.</div>';
+    return;
+  }
+  var imgUrl = b.lastImageBlob ? URL.createObjectURL(b.lastImageBlob) : (b.lastImage || '');
+  var audUrl = b.lastAudioBlob ? URL.createObjectURL(b.lastAudioBlob) : '';
+  var vidUrl = b.lastVideoBlob ? URL.createObjectURL(b.lastVideoBlob) : '';
+  var html = '<div class="bundle">' +
+    '<div class="item"><div class="lbl">Thread id</div><div class="val">' + esc(b.threadId) + '</div></div>' +
+    '<div class="item"><div class="lbl">Counts</div><div class="val">scenes=' + b.sceneCount + ' · jobs=' + b.jobCount + '</div></div>' +
+    '<div class="item"><div class="lbl">Last prompt</div><div class="val">' + esc(b.lastPrompt || '(none)') + '</div></div>' +
+    '<div class="item"><div class="lbl">Last reference image</div><div class="val">' + (b.lastRefDataUrl ? '<img src="' + esc(b.lastRefDataUrl) + '" alt="ref">' : '(none persisted)') + '</div></div>' +
+    '<div class="item"><div class="lbl">Last image (from scenes)</div><div class="val">' + (imgUrl ? '<img src="' + esc(imgUrl) + '" alt="img">' : '(none)') + '</div></div>' +
+    '<div class="item"><div class="lbl">Last video Blob</div><div class="val">' + (vidUrl ? '<video src="' + esc(vidUrl) + '" controls playsinline></video>' : '(none)') + '</div></div>' +
+    '<div class="item"><div class="lbl">Last audio Blob</div><div class="val">' + (audUrl ? '<audio src="' + esc(audUrl) + '" controls></audio>' : '(none)') + '</div></div>' +
+    '<div class="item"><div class="lbl">Open in Chat Studio</div><div class="val"><a href="./ai-chat-studio.html" style="color:var(--info)">ai-chat-studio.html</a> &mdash; chat-studio re-reads chat-studio-state on load.</div></div>' +
+    '</div>';
+  $('bundle').innerHTML = html;
+}
+
+function recoverMost() {
+  $('bundle').innerHTML = '<div class="empty">looking up most recent thread...</div>';
+  Resume.lastThread().then(function (tid) {
+    if (!tid) { $('bundle').innerHTML = '<div class="empty">No threads found in queue.</div>'; return; }
+    return Resume.recover(tid).then(paintBundle);
+  }).catch(function (e) { $('bundle').innerHTML = '<div class="empty">error: ' + esc((e && e.message) || e) + '</div>'; });
+}
+
+function recoverById() {
+  var tid = $('thread-id').value.trim();
+  if (!tid) return;
+  $('bundle').innerHTML = '<div class="empty">recovering ' + esc(tid) + '...</div>';
+  Resume.recover(tid).then(paintBundle).catch(function (e) { $('bundle').innerHTML = '<div class="empty">error: ' + esc((e && e.message) || e) + '</div>'; });
+}
+
+function buildReport() {
+  return Q.all().then(function (list) {
+    return Resume.lastThread().then(function (tid) {
+      var lines = ['LOAD RETRY & RESUME REPORT', 'Build: RESUME-RECOVERY-v1-2026-05-07-v17g41', 'Generated: ' + new Date().toString(), 'Stale threshold: ' + Resume.STALE_MS + ' ms', ''];
+      lines.push('Most recent thread: ' + (tid || '(none)'));
+      lines.push('Total queue jobs: ' + list.length);
+      var byStatus = {};
+      list.forEach(function (j) { byStatus[j.status] = (byStatus[j.status] || 0) + 1; });
+      Object.keys(byStatus).forEach(function (k) { lines.push('  ' + k + ': ' + byStatus[k]); });
+      lines.push('');
+      var failed = list.filter(function (j) { return j.error && j.error.indexOf('interrupted') !== -1; });
+      lines.push('Interrupted (auto-marked Failed): ' + failed.length);
+      failed.forEach(function (j) {
+        lines.push('  ' + j.jobId + ' kind=' + j.kind + ' intent=' + j.intent + ' updated=' + (j.updatedAt || ''));
+        if (j.prompt) lines.push('    prompt=' + j.prompt.slice(0, 200));
+      });
+      return lines.join('\n');
+    });
+  });
+}
+
+function copyText(t) {
+  if (navigator.clipboard) return navigator.clipboard.writeText(t).then(function () { return true; }).catch(function () { return false; });
+  try { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(true); } catch (_) { return Promise.resolve(false); }
+}
+
+$('scan').addEventListener('click', scan);
+$('recover').addEventListener('click', recoverMost);
+$('recover-id').addEventListener('click', recoverById);
+$('copy-report').addEventListener('click', function () { buildReport().then(function (t) { var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; copyText(t).then(function (ok) { alert(ok ? 'Report copied.' : 'Copy failed.'); }); }); });
+$('download-report').addEventListener('click', function () { buildReport().then(function (t) { var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; var blob = new Blob([t], { type: 'text/plain' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'load-resume-report-' + Date.now() + '.txt'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500); }); });
+
+// Auto-scan on load.
+scan();
+
+}
+</script>
+</body>
+</html>
