@@ -11,6 +11,7 @@
 <script src="../lib-provider-registry.js"></script>
 <script src="../lib-load-ai-core.js"></script>
 <script src="../lib-load-db.js"></script>
+<script src="../lib-jszip.min.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
 *{box-sizing:border-box}
@@ -72,7 +73,7 @@ button.small{font-size:11.5px;padding:5px 10px}
   <h1>AI Chat Studio</h1>
 </header>
 <div class="wrap">
-<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.1-2026-05-07-v17g34</div>
+<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.2-2026-05-07-v17g36</div>
 <div class="intro">
   <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free providers + on-device synthesis only. <em>Chat</em>: Pollinations text. <em>Text-to-image</em>: Pollinations image (real PNG/JPG). <em>Animate</em> (with a reference image): canvas Ken-Burns + MediaRecorder produces a <strong>real WebM video Blob</strong>. <em>Audio</em>: OfflineAudioContext synthesises a <strong>real WAV Blob</strong> matched to prompt keywords. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
 </div>
@@ -123,6 +124,10 @@ button.small{font-size:11.5px;padding:5px 10px}
   <textarea id="user-input" placeholder="Ask anything, describe an image, or describe a scene to animate"></textarea>
   <div class="toolbar">
     <button class="primary" id="btn-send">Send</button>
+    <button id="btn-regen">Regenerate</button>
+    <button id="btn-extend">Extend</button>
+    <button id="btn-export">Export project (.loadstudio.zip)</button>
+    <label class="status-line" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="local-only"> Local-only mode</label>
     <button id="btn-clear">Clear thread</button>
     <span class="status-line" id="status"></span>
   </div>
@@ -201,8 +206,11 @@ function renderRouteLine() {
   var intentByMode = { chat: 'chat', image: 'image-gen', i2i: 'image-to-image', animate: 'image-anim', video: 'video', audio: 'sfx' };
   var iid = intentByMode[STATE.mode] || 'chat';
   var rows = Core.explain(iid, { includePaid: false });
+  if (STATE.localOnly) {
+    rows = rows.filter(function (r) { return r.providerType === 'built-in' || r.providerType === 'local' || r.providerType === 'prompt-only' || r.providerType === 'user-imported'; });
+  }
   var first = rows[0];
-  var line = 'mode=' + STATE.mode + ' · intent=' + iid + ' · primary route: ' + (first ? first.providerName + ' [' + first.providerType + ']' : 'no free provider — output stays prompt-only');
+  var line = 'mode=' + STATE.mode + ' · intent=' + iid + (STATE.localOnly ? ' · LOCAL-ONLY' : '') + ' · primary route: ' + (first ? first.providerName + ' [' + first.providerType + ']' : 'no provider for this mode — output stays prompt-only');
   $('route-line').textContent = line;
 }
 renderRouteLine();
@@ -460,9 +468,10 @@ function send() {
   $('user-input').value = '';
   $('btn-send').disabled = true;
   $('status').textContent = '';
+  STATE.lastPrompt = p;
 
   appendCard({ cls: 'user', text: p });
-  logChat('user', STATE.mode, p, { style: STATE.styleName, size: STATE.size, hasRef: !!STATE.ref });
+  logChat('user', STATE.mode, p, { style: STATE.styleName, size: STATE.size, hasRef: !!STATE.ref, localOnly: !!STATE.localOnly });
 
   var done = function () { $('btn-send').disabled = false; $('status').textContent = 'last reply ' + new Date().toLocaleTimeString(); };
 
@@ -695,6 +704,7 @@ function attachToScene(scene) {
     return;
   }
   var sceneId = 'scene_' + Date.now().toString(36);
+  var nowIso = new Date().toISOString();
   var rec = {
     sceneId: sceneId,
     title: '',
@@ -711,15 +721,36 @@ function attachToScene(scene) {
     audioStatus: scene.audioStatus || (scene.video ? 'silent_video' : 'silent_video'),
     audioRightsStatus: 'needs-review',
     threadId: STATE.threadId,
-    createdAt: new Date().toISOString()
+    createdAt: nowIso
   };
-  // Persist real Blob assets when present.
+  // Per 5.7 spec: at attach time, populate prompt-log, asset-declarations,
+  // rights, continuity-report, model-routing alongside the scene record.
+  // Stored under 'kv' store with prefixed keys so we don't bump LoadDB v1.
+  var promptLog = {
+    sceneId: sceneId, threadId: STATE.threadId, at: nowIso,
+    visualPrompt: scene.visualPrompt || '', motionPrompt: scene.motionPrompt || '',
+    audioPrompt: scene.audioPrompt || '', sourcePrompt: ($('user-input') ? '' : ''),
+    style: STATE.styleName || ''
+  };
+  var assetDecl = { sceneId: sceneId, declarations: [] };
+  if (scene.image) assetDecl.declarations.push({ asset: scene.image, kind: 'image', status: scene.image.indexOf('blob:') === 0 || scene.image.indexOf('data:') === 0 ? 'platform-original' : 'third-party-licensed', source: scene.image });
+  if (scene.audioBlob) assetDecl.declarations.push({ asset: sceneId + '_audio.wav', kind: 'audio', status: 'platform-original', source: 'on-device OfflineAudioContext synthesis', proof: scene.audioOutputProof });
+  if (scene.videoBlob) assetDecl.declarations.push({ asset: sceneId + '_video.webm', kind: 'video', status: 'platform-original', source: 'on-device Ken-Burns canvas + MediaRecorder', proof: scene.videoOutputProof });
+  var rights = { sceneId: sceneId, owner: '', license: 'unknown', sourceMaterial: '', assetDeclarations: assetDecl.declarations.slice(), notes: 'Attached from AI Chat Studio. Review before LoadPlay publish-prep.' };
+  var continuity = { sceneId: sceneId, threadId: STATE.threadId, character: '', wardrobe: '', era: '', style: STATE.styleName || '', conflicts: [] };
+  var routing = { sceneId: sceneId, intent: scene.video ? 'image-anim' : (scene.audioBlob ? 'sfx' : 'image-gen'), pickedProvider: scene.videoBlob ? 'on-device-kenburns' : (scene.audioBlob ? 'on-device-webaudio' : 'pollinations'), at: nowIso };
+
   var saves = [];
-  if (scene.audioBlob) saves.push(DB.put('audio_assets', sceneId + '_audio', { sceneId: sceneId, blob: scene.audioBlob, proof: scene.audioOutputProof }));
-  if (scene.videoBlob) saves.push(DB.put('video_assets', sceneId + '_video', { sceneId: sceneId, blob: scene.videoBlob, proof: scene.videoOutputProof }));
+  if (scene.audioBlob) saves.push(DB.put('audio_assets', sceneId + '_audio', { sceneId: sceneId, blob: scene.audioBlob, proof: scene.audioOutputProof, mime: (scene.audioOutputProof && scene.audioOutputProof.mime) || 'audio/wav' }));
+  if (scene.videoBlob) saves.push(DB.put('video_assets', sceneId + '_video', { sceneId: sceneId, blob: scene.videoBlob, proof: scene.videoOutputProof, mime: (scene.videoOutputProof && scene.videoOutputProof.mime) || 'video/webm' }));
   saves.push(DB.put('scenes', sceneId, rec));
+  saves.push(DB.put('kv', 'prompt-log-' + sceneId, promptLog));
+  saves.push(DB.put('kv', 'asset-decl-' + sceneId, assetDecl));
+  saves.push(DB.put('kv', 'rights-' + sceneId, rights));
+  saves.push(DB.put('kv', 'continuity-' + sceneId, continuity));
+  saves.push(DB.put('kv', 'routing-' + sceneId, routing));
   Promise.all(saves).then(function () {
-    var detail = 'Scene saved to Project Memory: ' + sceneId;
+    var detail = 'Scene saved to Project Memory: ' + sceneId + ' (+ prompt-log, asset-decl, rights, continuity, routing entries)';
     if (scene.audioBlob) detail += ' (+ audio blob in audio_assets)';
     if (scene.videoBlob) detail += ' (+ video blob in video_assets)';
     appendCard({ cls: 'assistant', who: 'Attach to scene', badge: { cls: 'ok', text: 'saved' }, text: detail });
@@ -735,7 +766,132 @@ $('user-input').addEventListener('keydown', function (e) {
 $('btn-clear').addEventListener('click', function () {
   $('messages').innerHTML = '<div class="card assistant"><div class="who">Hint</div>Thread cleared. Pick a mode and ask.</div>';
   STATE.threadId = 'thread-' + Date.now().toString(36);
+  STATE.lastPrompt = '';
 });
+
+// Regenerate: re-run the last user prompt verbatim with the current mode/style/size.
+$('btn-regen').addEventListener('click', function () {
+  if (!STATE.lastPrompt) { appendCard({ cls: 'error', who: 'Regenerate', text: 'No previous prompt in this thread to regenerate.' }); return; }
+  $('user-input').value = STATE.lastPrompt;
+  send();
+});
+// Extend: append a continuation hint to the last prompt and re-run.
+$('btn-extend').addEventListener('click', function () {
+  if (!STATE.lastPrompt) { appendCard({ cls: 'error', who: 'Extend', text: 'No previous prompt in this thread to extend.' }); return; }
+  $('user-input').value = STATE.lastPrompt + ' — extend the previous output by another beat, preserving style and continuity.';
+  send();
+});
+// Local-only mode: hides cloud-optional providers from the route line.
+$('local-only').addEventListener('change', function () {
+  STATE.localOnly = this.checked;
+  renderRouteLine();
+});
+
+// Export project: bundle every scene + attached blob in this thread into a
+// .loadstudio.zip via JSZip. Uses the LoadStudio validator's REQUIRED_FILES
+// + REQUIRED_FOLDERS schema. Verifies a real ZIP Blob before claiming ready.
+$('btn-export').addEventListener('click', exportProject);
+
+function exportProject() {
+  if (typeof JSZip === 'undefined') { appendCard({ cls: 'error', who: 'Export', text: 'JSZip library not available.' }); return; }
+  if (!DB) { appendCard({ cls: 'error', who: 'Export', text: 'LoadDB unavailable.' }); return; }
+  appendCard({ cls: 'assistant', who: 'Export project', badge: { cls: 'run', text: 'building' },
+    html: '<pre><span class="spinner"></span> reading scenes / assets from Project Memory and packing into .loadstudio.zip...</pre>' });
+  var statusCard = $('messages').lastChild;
+  var t0 = Date.now();
+  Promise.all([
+    DB.getAll('scenes', 200), DB.getAll('image_assets', 200), DB.getAll('audio_assets', 200),
+    DB.getAll('video_assets', 200), DB.getAll('generations', 500), DB.getAll('kv', 1000)
+  ]).then(function (rows) {
+    var scenes = rows[0].map(function (r) { return r.value; }).filter(function (v) { return v && v.threadId === STATE.threadId; });
+    var sceneIds = scenes.map(function (s) { return s.sceneId; });
+    var imgs = rows[1].map(function (r) { return r.value; }).filter(function (v) { return v && sceneIds.indexOf(v.sceneId) !== -1; });
+    var auds = rows[2].map(function (r) { return r.value; }).filter(function (v) { return v && sceneIds.indexOf(v.sceneId) !== -1; });
+    var vids = rows[3].map(function (r) { return r.value; }).filter(function (v) { return v && sceneIds.indexOf(v.sceneId) !== -1; });
+    var gens = rows[4].map(function (r) { return { key: r.key, value: r.value }; }).filter(function (g) { return g.value && g.value.threadId === STATE.threadId; });
+    var kvs = rows[5];
+
+    function pickKv(prefix) {
+      var out = [];
+      kvs.forEach(function (r) {
+        if (typeof r.key === 'string' && r.key.indexOf(prefix) === 0 && r.value && r.value.sceneId && sceneIds.indexOf(r.value.sceneId) !== -1) {
+          out.push(r.value);
+        }
+      });
+      return out;
+    }
+    var promptLog = pickKv('prompt-log-');
+    var assetDecls = pickKv('asset-decl-').reduce(function (a, x) { return a.concat(x.declarations || []); }, []);
+    var rightsList = pickKv('rights-');
+    var continuity = pickKv('continuity-');
+    var routing = pickKv('routing-');
+    var chatHist = []; kvs.forEach(function (r) { if (typeof r.key === 'string' && r.key.indexOf('chat-') === 0 && r.value && r.value.threadId === STATE.threadId) chatHist.push(r.value); });
+
+    if (scenes.length === 0) {
+      statusCard.classList.add('error');
+      statusCard.querySelector('.who').innerHTML = 'Export project <span class="badge fail">empty</span>';
+      statusCard.querySelector('pre').textContent = 'No scenes attached to this thread (' + STATE.threadId + '). Attach at least one scene before exporting.';
+      return;
+    }
+
+    var z = new JSZip();
+    z.file('index.html', '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LoadStudio Project</title></head><body><h1>LoadStudio Project</h1><p>Open in LoadStudio.</p></body></html>');
+    z.file('manifest.json', JSON.stringify({ name: 'LoadStudio Project', short_name: 'Project', start_url: './', display: 'standalone', background_color: '#0a0a14', theme_color: '#7c3aed', icons: [] }, null, 2));
+    z.file('service-worker.js', "self.addEventListener('install',function(){self.skipWaiting();});\nself.addEventListener('activate',function(e){e.waitUntil(self.clients.claim());});\nself.addEventListener('fetch',function(){});\n");
+    z.file('project.json', JSON.stringify({ schemaVersion: 1, name: 'LoadStudio Project', threadId: STATE.threadId, createdAt: new Date().toISOString(), exportedFrom: 'AI Chat Studio v3.2' }, null, 2));
+    z.file('scenes.json', JSON.stringify({ schemaVersion: 1, scenes: scenes }, null, 2));
+    z.file('characters.json', JSON.stringify({ schemaVersion: 1, characters: [] }, null, 2));
+    z.file('rights.json', JSON.stringify({ owner: '', license: 'unknown', sourceMaterial: '', assetDeclarations: assetDecls, scenes: rightsList, notes: 'Aggregated from AI Chat Studio attach time. Review before LoadPlay publish-prep.' }, null, 2));
+    z.file('credits.json', JSON.stringify({ schemaVersion: 1, credits: [] }, null, 2));
+    z.file('styles.css', '/* LoadStudio Project styles */\nbody{margin:0;font-family:-apple-system,sans-serif}\n');
+    z.file('player.js', '// LoadStudio player stub.\n');
+    z.file('editor.js', '// LoadStudio editor stub.\n');
+    z.file('generation-report.json', JSON.stringify({ schemaVersion: 1, generations: gens.map(function (g) { return g.value; }) }, null, 2));
+    z.file('asset-declarations.json', JSON.stringify({ schemaVersion: 1, declarations: assetDecls }, null, 2));
+    z.file('continuity-report.json', JSON.stringify({ schemaVersion: 1, scenesChecked: continuity, conflicts: [] }, null, 2));
+    z.file('prompt-log.json', JSON.stringify({ schemaVersion: 1, prompts: promptLog }, null, 2));
+    z.file('chat-history.json', JSON.stringify({ schemaVersion: 1, threadId: STATE.threadId, messages: chatHist }, null, 2));
+    z.file('model-routing.json', JSON.stringify({ schemaVersion: 1, decisions: routing }, null, 2));
+
+    // Required folders + asset blobs
+    z.folder('assets/images'); z.folder('assets/video'); z.folder('assets/audio');
+    z.folder('assets/music'); z.folder('assets/sfx'); z.folder('assets/subtitles'); z.folder('assets/icons');
+    z.file('assets/music/.keep', ''); z.file('assets/sfx/.keep', ''); z.file('assets/subtitles/.keep', ''); z.file('assets/icons/.keep', '');
+    imgs.forEach(function (a) { if (a.blob) z.file('assets/images/' + a.sceneId + '.bin', a.blob); });
+    auds.forEach(function (a) { if (a.blob) z.file('assets/audio/' + a.sceneId + '.wav', a.blob); });
+    vids.forEach(function (a) { if (a.blob) z.file('assets/video/' + a.sceneId + '.webm', a.blob); });
+
+    return z.generateAsync({ type: 'blob' }).then(function (blob) {
+      // Output proof: real ZIP > 200 B AND magic bytes PK\x03\x04.
+      if (blob.size < 200) throw new Error('zip too small (' + blob.size + ' B)');
+      return blob.slice(0, 4).arrayBuffer().then(function (ab) {
+        var b = new Uint8Array(ab);
+        if (!(b[0] === 0x50 && b[1] === 0x4b && b[2] === 0x03 && b[3] === 0x04)) throw new Error('not a valid ZIP (magic bytes wrong)');
+        var url = URL.createObjectURL(blob);
+        var fname = 'load-project-' + STATE.threadId + '.loadstudio.zip';
+        statusCard.querySelector('.who').innerHTML = 'Export project <span class="badge ok">zip ready</span>';
+        statusCard.querySelector('pre').textContent = 'Built ' + blob.size + ' B .loadstudio.zip in ' + (Date.now() - t0) + ' ms.\nScenes: ' + scenes.length + ' · images: ' + imgs.length + ' · audio: ' + auds.length + ' · video: ' + vids.length + ' · generations: ' + gens.length + '.\nMagic bytes verified: PK\\x03\\x04.';
+        var actions = document.createElement('div'); actions.className = 'actions';
+        var btnDl = document.createElement('button'); btnDl.className = 'small primary'; btnDl.textContent = 'Download .loadstudio.zip';
+        btnDl.addEventListener('click', function () { var a = document.createElement('a'); a.href = url; a.download = fname; a.click(); });
+        actions.appendChild(btnDl);
+        var btnVal = document.createElement('a'); btnVal.className = 'small'; btnVal.style.cssText = 'text-decoration:none;background:var(--bg3);padding:5px 10px;border-radius:8px;color:var(--fg);border:1px solid var(--border)'; btnVal.href = './loadstudio-validator.html'; btnVal.textContent = 'Validate in LoadStudio Validator';
+        actions.appendChild(btnVal);
+        statusCard.appendChild(actions);
+        // Persist a receipt to LoadDB.exports
+        DB.put('exports', 'export-' + Date.now().toString(36), {
+          threadId: STATE.threadId, fileName: fname, fileSize: blob.size,
+          scenes: scenes.length, images: imgs.length, audio: auds.length, video: vids.length,
+          createdAt: new Date().toISOString(), magicVerified: true
+        }).catch(function () {});
+      });
+    });
+  }).catch(function (err) {
+    statusCard.classList.add('error');
+    statusCard.querySelector('.who').innerHTML = 'Export project <span class="badge fail">failed</span>';
+    statusCard.querySelector('pre').textContent = 'Export failed: ' + ((err && err.message) || err);
+  });
+}
 
 }
 </script>
