@@ -13,6 +13,7 @@
 <script src="../lib-load-db.js"></script>
 <script src="../lib-load-queue.js"></script>
 <script src="../lib-load-resume.js"></script>
+<script src="../lib-load-timeouts.js"></script>
 <script src="../lib-jszip.min.js"></script>
 <style>
 :root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
@@ -75,7 +76,7 @@ button.small{font-size:11.5px;padding:5px 10px}
   <h1>AI Chat Studio</h1>
 </header>
 <div class="wrap">
-<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.5-2026-05-07-v17g41</div>
+<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.6-2026-05-07-v17g42</div>
 <div class="intro">
   <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free providers + on-device synthesis only. <em>Chat</em>: Pollinations text. <em>Text-to-image</em>: Pollinations image (real PNG/JPG). <em>Animate</em> (with a reference image): canvas Ken-Burns + MediaRecorder produces a <strong>real WebM video Blob</strong>. <em>Audio</em>: OfflineAudioContext synthesises a <strong>real WAV Blob</strong> matched to prompt keywords. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
 </div>
@@ -275,15 +276,18 @@ function appendCard(opts) {
 function pollinationsText(prompt) {
   var url = 'https://text.pollinations.ai/' + encodeURIComponent(prompt);
   var t0 = Date.now();
-  return fetch(url, { method: 'GET', cache: 'no-store' }).then(function (r) {
+  var ms = (window.LoadTimeouts ? window.LoadTimeouts.byIntent('pollinations-text') : 30000);
+  var p = fetch(url, { method: 'GET', cache: 'no-store' }).then(function (r) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.text().then(function (t) { return { text: t, ms: Date.now() - t0 }; });
   });
+  return window.LoadTimeouts ? window.LoadTimeouts.withTimeout(p, ms, 'pollinations-text') : p;
 }
 // AI Horde anonymous text fallback (free, no key). Best-effort: 60s sync.
 function hordeText(prompt) {
   var t0 = Date.now();
-  return fetch('https://aihorde.net/api/v2/generate/text/sync', {
+  var ms = (window.LoadTimeouts ? window.LoadTimeouts.byIntent('horde-text') : 60000);
+  var p = fetch('https://aihorde.net/api/v2/generate/text/sync', {
     method: 'POST',
     headers: { 'apikey': '0000000000', 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify({ prompt: prompt, params: { max_length: 200, max_context_length: 1024 } })
@@ -296,6 +300,7 @@ function hordeText(prompt) {
     if (!text) throw new Error('horde returned empty');
     return { text: text, ms: Date.now() - t0, worker: gens[0].worker_name || '' };
   });
+  return window.LoadTimeouts ? window.LoadTimeouts.withTimeout(p, ms, 'horde-text') : p;
 }
 
 // Browser TTS playback for voice prompts. Real audible output.
@@ -350,10 +355,11 @@ function hordeImage(prompt, sizeStr, onProgress) {
   }).then(function (j) {
     var id = j && j.id;
     if (!id) throw new Error('horde-image returned no job id');
-    var deadline = Date.now() + 120000; // 120 s cap
+    var capMs = (window.LoadTimeouts ? window.LoadTimeouts.byIntent('horde-image') : 120000);
+    var deadline = Date.now() + capMs;
     return new Promise(function (resolve, reject) {
       function poll() {
-        if (Date.now() > deadline) { reject(new Error('horde-image timeout (>120 s)')); return; }
+        if (Date.now() > deadline) { reject(new Error('horde-image timed out (>' + capMs + ' ms)')); return; }
         fetch('https://aihorde.net/api/v2/generate/check/' + id).then(function (r) {
           if (!r.ok) throw new Error('check HTTP ' + r.status);
           return r.json();
