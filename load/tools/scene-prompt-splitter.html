@@ -76,8 +76,8 @@ button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
   </div>
 </div>
 
-<div class="section" id="result-section" hidden>
-  <h3>Structured prompts</h3>
+<div class="section" id="result-section">
+  <h3>Structured prompts <span id="status-line" style="font-weight:400;font-size:11px;color:var(--mute);margin-left:8px;text-transform:none;letter-spacing:0">waiting for input&hellip;</span></h3>
   <div class="prompts" id="prompts-grid"></div>
   <h3 style="margin-top:18px">Spec-shaped scene object</h3>
   <p style="font-size:12.5px;color:var(--mute);margin-bottom:6px">14 fields per the addendum. Audio status defaults to <code>sound_prompt_saved</code> and audio rights to <code>needs-review</code> until a real generator wires up.</p>
@@ -209,7 +209,7 @@ var CARD_TYPES = [
 ];
 
 function paint(r) {
-  $('result-section').hidden = false;
+  var sl = $('status-line'); if (sl) sl.textContent = 'rendered ' + new Date().toLocaleTimeString();
   var grid = $('prompts-grid');
   var fields = [
     ['Visual',       r.visualPrompt],
@@ -236,8 +236,22 @@ function paint(r) {
 }
 
 function refresh() {
-  var r = doSplit($('user-prompt').value, $('src-image').value, $('scene-id').value);
-  if (r) paint(r); else $('result-section').hidden = true;
+  var sl = $('status-line');
+  try {
+    var r = doSplit($('user-prompt').value, $('src-image').value, $('scene-id').value);
+    if (r) {
+      paint(r);
+    } else {
+      if (sl) sl.textContent = 'enter a request above to see prompts';
+      var grid = $('prompts-grid');
+      if (grid) grid.innerHTML = '<div class="prompt-box"><div class="lbl">Empty input</div><div class="val">Type a request in box 3 (User request) or tap a preset chip. Output renders here automatically.</div></div>';
+      var sj = $('scene-json'); if (sj) sj.textContent = '';
+      var al = $('audio-labels'); if (al) al.innerHTML = '';
+      var ct = $('card-types'); if (ct) ct.innerHTML = '';
+    }
+  } catch (e) {
+    if (sl) sl.textContent = 'error: ' + (e && e.message ? e.message : String(e));
+  }
 }
 $('split').addEventListener('click', refresh);
 ['user-prompt','src-image','scene-id'].forEach(function (id) {
@@ -245,7 +259,7 @@ $('split').addEventListener('click', refresh);
 });
 $('clear').addEventListener('click', function () {
   $('user-prompt').value = ''; $('src-image').value = ''; $('scene-id').value = '';
-  $('result-section').hidden = true;
+  refresh();
 });
 $('copy-json').addEventListener('click', function () {
   var t = $('scene-json').textContent;
