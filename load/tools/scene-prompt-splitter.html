@@ -132,7 +132,7 @@ function pick(text, group, fallback) {
   return hits.length ? hits.join(', ') : fallback;
 }
 
-function split(userPrompt, sourceImage, sceneId) {
+function doSplit(userPrompt, sourceImage, sceneId) {
   var t = (userPrompt || '').trim();
   if (!t) return null;
   var visual = t;
@@ -235,9 +235,13 @@ function paint(r) {
   }).join('');
 }
 
-$('split').addEventListener('click', function () {
-  var r = split($('user-prompt').value, $('src-image').value, $('scene-id').value);
-  if (r) paint(r);
+function refresh() {
+  var r = doSplit($('user-prompt').value, $('src-image').value, $('scene-id').value);
+  if (r) paint(r); else $('result-section').hidden = true;
+}
+$('split').addEventListener('click', refresh);
+['user-prompt','src-image','scene-id'].forEach(function (id) {
+  var el = $(id); if (el) el.addEventListener('input', refresh);
 });
 $('clear').addEventListener('click', function () {
   $('user-prompt').value = ''; $('src-image').value = ''; $('scene-id').value = '';
@@ -260,8 +264,11 @@ $('download-json').addEventListener('click', function () {
 document.querySelectorAll('.examples button').forEach(function (b) {
   b.addEventListener('click', function () {
     $('user-prompt').value = EXAMPLES[b.getAttribute('data-ex')] || '';
+    refresh();
   });
 });
+// Render immediately if URL or initial values are non-empty.
+refresh();
 </script>
 </body>
 </html>
