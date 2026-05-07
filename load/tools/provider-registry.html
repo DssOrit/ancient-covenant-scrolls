@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI Provider Registry — Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-provider-registry.js"></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.intro h2{margin:0 0 6px;font-size:18px;font-weight:800}
+.intro p{margin:0;color:var(--mute);font-size:13.5px;line-height:1.6}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0 22px}
+.s-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.s-card .v{font-size:24px;font-weight:900;line-height:1;color:#fff}
+.s-card .l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-top:4px}
+.cat{margin:0 0 24px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.cat-head{padding:14px 18px;border-bottom:1px solid var(--border);background:#1a1a2e}
+.cat-head h3{margin:0 0 4px;font-size:15px;font-weight:800}
+.cat-head .src{font-size:11.5px;color:var(--mute);font-family:ui-monospace,Menlo,monospace}
+.providers{display:grid;gap:1px;background:var(--border)}
+.prov{background:var(--bg2);padding:12px 18px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.prov .name{font-weight:700;font-size:14px}
+.prov .meta{font-size:11.5px;color:var(--mute);margin-top:2px;font-family:ui-monospace,Menlo,monospace}
+.prov .notes{font-size:12.5px;color:var(--mute);margin-top:6px;line-height:1.5}
+.prov .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.04em;padding:2px 8px;border-radius:8px;text-transform:uppercase}
+.badge.type-built-in{background:rgba(96,165,250,.18);color:var(--info);border:1px solid rgba(96,165,250,.4)}
+.badge.type-local{background:rgba(74,222,128,.18);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
+.badge.type-free-api{background:rgba(124,58,237,.22);color:#c4a8ff;border:1px solid rgba(124,58,237,.5)}
+.badge.type-cloud-optional{background:rgba(154,160,176,.18);color:var(--mute);border:1px solid rgba(154,160,176,.3)}
+.badge.type-prompt-only{background:rgba(250,204,21,.18);color:var(--warn);border:1px solid rgba(250,204,21,.4)}
+.badge.type-user-imported{background:rgba(255,110,110,.18);color:#ffaaaa;border:1px solid rgba(255,110,110,.4)}
+.badge.type-load-hosted-future{background:rgba(124,58,237,.4);color:#fff;border:1px solid var(--accent)}
+.status{font-size:11.5px;color:var(--mute);font-weight:600}
+.status-ready{color:var(--ok)}
+.status-Failed,.status-Rate-limited,.status-Returned-no-file,.status-Offline,.status-Local-server-unavailable{color:var(--err)}
+.status-Needs-user-setup,.status-Unsupported-request,.status-Not-configured{color:var(--warn)}
+.caps{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.cap{font-size:10px;background:#0a0e18;border:1px solid var(--border);padding:1.5px 6px;border-radius:5px;color:var(--mute);font-family:ui-monospace,Menlo,monospace}
+.cap.on{background:rgba(74,222,128,.12);color:var(--ok);border-color:rgba(74,222,128,.3)}
+.legend{margin-top:18px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;font-size:12.5px;color:var(--mute);line-height:1.7}
+.legend strong{color:var(--fg)}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Back to Load
+  </a>
+  <h1>AI Provider Registry</h1>
+</header>
+<div class="wrap">
+<div class="intro">
+  <h2>Load AI Provider Registry — read-only audit view</h2>
+  <p>The shared registry that powers Load AI Core, AI Chat Studio, LoadStudio AI tools, X-VIDEO-AI, and X-AI-AUDIO. <strong>Every provider Load knows about</strong> is listed here, grouped by category, with its type, capabilities, and current status. Phase 1: read-only. Routing logic in <code>load.js</code> and <code>image-prompt/index.html</code> is unchanged.</p>
+  <p style="margin-top:8px"><strong>Master rule:</strong> MVP uses free / open-source / local-first providers only. Paid providers are future-optional, off by default, never hard-coded, never exported.</p>
+</div>
+<div class="summary" id="summary"></div>
+<div id="categories"></div>
+<div class="legend">
+  <strong>Type legend:</strong>
+  <span class="badge type-built-in">built-in</span> ships with Load ·
+  <span class="badge type-local">local</span> needs local server / GPU ·
+  <span class="badge type-free-api">free-api</span> free public endpoint ·
+  <span class="badge type-cloud-optional">cloud-optional</span> user-supplied key, off by default ·
+  <span class="badge type-prompt-only">prompt-only</span> emits structured prompt only ·
+  <span class="badge type-user-imported">user-imported</span> user provides asset ·
+  <span class="badge type-load-hosted-future">load-hosted-future</span> Load-owned, not built yet.
+  <br><br>
+  <strong>Status enum:</strong> Not configured · Ready · Failed · Rate limited · Unsupported request · Returned no file · Offline · Local server unavailable · Needs user setup.
+</div>
+</div>
+<script>
+(function () {
+  if (!window.LoadProviderRegistry) {
+    document.getElementById('categories').innerHTML = '<p style="color:var(--err);padding:20px">lib-provider-registry.js failed to load.</p>';
+    return;
+  }
+  var R = window.LoadProviderRegistry;
+  var cats = R.byCategory();
+  var s = R.summary();
+  var sumHtml = '<div class="s-card"><div class="v">' + s.total + '</div><div class="l">Providers total</div></div>';
+  Object.keys(s.byType).sort().forEach(function (k) {
+    sumHtml += '<div class="s-card"><div class="v">' + s.byType[k] + '</div><div class="l">' + esc(k) + '</div></div>';
+  });
+  sumHtml += '<div class="s-card"><div class="v">' + s.capabilities + '</div><div class="l">Capability flags</div></div>';
+  sumHtml += '<div class="s-card"><div class="v">' + s.categories + '</div><div class="l">Categories</div></div>';
+  document.getElementById('summary').innerHTML = sumHtml;
+
+  var catEl = document.getElementById('categories');
+  var html = '';
+  R.CATEGORIES.forEach(function (c) {
+    var rows = cats[c.id] || [];
+    if (!rows.length) return;
+    html += '<section class="cat"><div class="cat-head"><h3>' + esc(c.label) + ' &middot; ' + rows.length + '</h3><div class="src">' + esc(c.source) + '</div></div><div class="providers">';
+    rows.forEach(function (p) {
+      var capHtml = R.CAPABILITIES.map(function (k) {
+        return '<span class="cap' + (p.capabilities[k] ? ' on' : '') + '">' + esc(k) + '</span>';
+      }).join('');
+      var stCls = 'status-' + (p.status || '').replace(/\s+/g, '-');
+      html += '<div class="prov"><div>' +
+        '<div class="name">' + esc(p.providerName) + '</div>' +
+        '<div class="meta">id: ' + esc(p.providerId) + '</div>' +
+        (p.notes ? '<div class="notes">' + esc(p.notes) + '</div>' : '') +
+        '<div class="caps">' + capHtml + '</div>' +
+        '</div><div class="right">' +
+        '<span class="badge type-' + esc(p.providerType) + '">' + esc(p.providerType) + '</span>' +
+        '<span class="status ' + stCls + '">' + esc(p.status) + '</span>' +
+        '</div></div>';
+    });
+    html += '</div></section>';
+  });
+  catEl.innerHTML = html;
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+})();
+</script>
+</body>
+</html>

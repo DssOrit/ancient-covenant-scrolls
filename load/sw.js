@@ -9,7 +9,7 @@
 // fetched or transmitted. Imported apps live in IndexedDB on the
 // user's device and are never sent anywhere.
 
-var CACHE = 'load-v17g11';
+var CACHE = 'load-v17g12';
 
 var SHELL = [
   './',
@@ -21,6 +21,7 @@ var SHELL = [
   'lib-jszip.min.js',
   'lib-security-scanner.js',
   'lib-rights-validator.js',
+  'lib-provider-registry.js',
   'lib-hebrew-pron.js',
   'lib-pdf.min.js',
   'lib-pdf-worker.min.js',
