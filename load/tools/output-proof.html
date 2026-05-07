@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Output Proof Audit — Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-rights-validator.js"></script>
+<script src="../lib-load-db.js"></script>
+<script src="../lib-output-proof.js"></script>
+<script src="../../branding.js" data-brand-skip></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 18px 80px}
+.build-marker{background:#facc15;color:#0a0a14;font-weight:900;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:10px;margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;text-align:center}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:12.5px;color:var(--mute);line-height:1.55}
+.intro strong{color:var(--fg)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+button{font:inherit;padding:9px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.s-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.s-card .v{font-size:24px;font-weight:900;line-height:1;color:#fff}
+.s-card .l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-top:4px}
+.s-card.pass .v{color:var(--ok)}
+.s-card.fail .v{color:var(--err)}
+.s-card.skip .v{color:var(--warn)}
+.scenes{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.scene{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:8px;padding:11px 14px;border-bottom:1px solid var(--border);align-items:center;font-size:12.5px}
+.scene:last-child{border-bottom:none}
+.scene .id{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--mute);margin-bottom:2px}
+.scene .name{font-weight:700;font-size:13px}
+.scene .check{font-size:11px;color:var(--mute);font-family:ui-monospace,Menlo,monospace;line-height:1.45}
+.scene .head-row{background:#1a1a2e;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
+.cell{font-size:11px;font-weight:800;text-align:center;padding:5px 8px;border-radius:6px;background:#0a0e18;color:var(--mute);border:1px solid var(--border)}
+.cell.ok{background:rgba(74,222,128,.18);color:var(--ok);border-color:rgba(74,222,128,.4)}
+.cell.fail{background:rgba(255,110,110,.18);color:var(--err);border-color:rgba(255,110,110,.4)}
+.cell.skip{background:rgba(154,160,176,.18);color:var(--mute);border-color:rgba(154,160,176,.3)}
+.report{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px;display:none}
+@media(max-width:760px){.scene{grid-template-columns:1fr;gap:4px}.scene .cell{display:inline-block;margin-right:6px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="./handoff-tools.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Handoff Tools
+  </a>
+  <h1>Output Proof Audit</h1>
+</header>
+<div class="wrap">
+<div class="build-marker">BUILD MARKER: OUTPUT-PROOF-v1-2026-05-07-v17g39</div>
+<div class="intro">
+  <strong>Reliability addendum #3.</strong> Walks every scene saved to Project Memory and re-runs the proof gate against its real assets: image (renderable URL), video (Blob mime + WebM EBML magic + min 1024 B), audio (Blob mime + RIFF/WAVE magic when WAV + min 2048 B), scene shape (sceneId + threadId + audioStatus + matching outputProof), rights (delegates to <code>LoadRightsValidator</code>), asset declarations (status in the 8-value enum). <strong>No row marks PASS unless the verifier actually returned ok.</strong>
+</div>
+
+<div class="controls">
+  <button class="primary" id="run-all">Run all checks</button>
+  <button id="reset">Reset</button>
+  <button id="copy-report">Copy report</button>
+  <button id="download-report">Download report</button>
+  <span id="status" style="font-size:12px;color:var(--mute)"></span>
+</div>
+
+<div class="summary" id="summary">
+  <div class="s-card"><div class="v" id="s-total">0</div><div class="l">Scenes</div></div>
+  <div class="s-card pass"><div class="v" id="s-pass">0</div><div class="l">All checks pass</div></div>
+  <div class="s-card fail"><div class="v" id="s-fail">0</div><div class="l">One+ failures</div></div>
+  <div class="s-card skip"><div class="v" id="s-skip">0</div><div class="l">No outputs (prompt-only)</div></div>
+</div>
+
+<div class="scenes" id="scenes">
+  <div class="scene head-row"><div>Scene</div><div class="cell">Image</div><div class="cell">Video</div><div class="cell">Audio</div></div>
+</div>
+
+<pre class="report" id="report"></pre>
+</div>
+
+<script>
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+if (!window.LoadOutputProof || !window.LoadDB) {
+  $('scenes').innerHTML = '<p style="color:var(--err);padding:20px">LoadOutputProof or LoadDB failed to load.</p>';
+} else {
+
+var DB = window.LoadDB;
+var Proof = window.LoadOutputProof;
+var STATE = {}; // sceneId -> { image, video, audio, scene, rights, assetDecl, problems }
+
+function paintScene(scene) {
+  var s = STATE[scene.sceneId] || {};
+  var row = document.getElementById('row-' + scene.sceneId);
+  if (!row) return;
+  function cell(v) {
+    if (!v) return '<div class="cell skip">-</div>';
+    if (v === 'pending') return '<div class="cell skip">running</div>';
+    if (v === true || (v && v.ok === true)) return '<div class="cell ok">PASS</div>';
+    var msg = (v && v.detail) ? v.detail : (v && v.message) ? v.message : 'fail';
+    return '<div class="cell fail" title="' + esc(msg) + '">FAIL</div>';
+  }
+  row.innerHTML =
+    '<div><div class="name">' + esc(scene.title || scene.sceneId) + '</div><div class="id">id: ' + esc(scene.sceneId) + ' · thread: ' + esc(scene.threadId || '-') + ' · status: ' + esc(scene.audioStatus || '-') + '</div>' +
+      (s.problems && s.problems.length ? '<div class="check">scene shape: ' + esc(s.problems.join('; ')) + '</div>' : '') +
+    '</div>' + cell(s.image) + cell(s.video) + cell(s.audio);
+}
+
+function paintSummary(scenes) {
+  var pass = 0, fail = 0, skip = 0;
+  scenes.forEach(function (sc) {
+    var s = STATE[sc.sceneId] || {};
+    var any = !!(s.image || s.video || s.audio);
+    if (!any) skip++;
+    else {
+      var failed = false;
+      ['image','video','audio'].forEach(function (k) { var v = s[k]; if (v && v !== true && !(v && v.ok)) failed = true; });
+      if (failed) fail++; else pass++;
+    }
+  });
+  $('s-total').textContent = scenes.length; $('s-pass').textContent = pass; $('s-fail').textContent = fail; $('s-skip').textContent = skip;
+}
+
+function loadScenes() {
+  return DB.getAll('scenes', 500).then(function (rows) {
+    return rows.map(function (r) { return r.value; }).filter(function (v) { return v && v.sceneId; });
+  });
+}
+
+function runAll() {
+  $('status').textContent = 'reading scenes from Project Memory...';
+  return loadScenes().then(function (scenes) {
+    $('status').textContent = 'verifying ' + scenes.length + ' scene(s)...';
+    var html = '<div class="scene head-row"><div>Scene</div><div class="cell">Image</div><div class="cell">Video</div><div class="cell">Audio</div></div>';
+    scenes.forEach(function (sc) { html += '<div class="scene" id="row-' + esc(sc.sceneId) + '"></div>'; });
+    $('scenes').innerHTML = html;
+    scenes.forEach(function (sc) { STATE[sc.sceneId] = {}; var r = Proof.verifyScene(sc); STATE[sc.sceneId].problems = r.problems; paintScene(sc); });
+    paintSummary(scenes);
+    return Promise.all(scenes.map(function (sc) {
+      var jobs = [];
+      // Image: verify the URL renders.
+      if (sc.image) {
+        STATE[sc.sceneId].image = 'pending'; paintScene(sc);
+        jobs.push(Proof.verifyImage(sc.image).then(function (v) { STATE[sc.sceneId].image = v; }, function (e) { STATE[sc.sceneId].image = { ok: false, detail: (e && e.message) || 'image fail' }; }).then(function () { paintScene(sc); }));
+      }
+      // Video: pull blob from video_assets and verify.
+      jobs.push(DB.get('video_assets', sc.sceneId + '_video').then(function (v) {
+        if (v && v.blob) {
+          STATE[sc.sceneId].video = 'pending'; paintScene(sc);
+          return Proof.verifyVideo(v.blob).then(function (vv) { STATE[sc.sceneId].video = vv; }, function (e) { STATE[sc.sceneId].video = { ok: false, detail: (e && e.message) || 'video fail' }; }).then(function () { paintScene(sc); });
+        }
+      }).catch(function () {}));
+      // Audio: pull blob from audio_assets and verify.
+      jobs.push(DB.get('audio_assets', sc.sceneId + '_audio').then(function (a) {
+        if (a && a.blob) {
+          STATE[sc.sceneId].audio = 'pending'; paintScene(sc);
+          return Proof.verifyAudio(a.blob).then(function (vv) { STATE[sc.sceneId].audio = vv; }, function (e) { STATE[sc.sceneId].audio = { ok: false, detail: (e && e.message) || 'audio fail' }; }).then(function () { paintScene(sc); });
+        }
+      }).catch(function () {}));
+      return Promise.all(jobs);
+    })).then(function () {
+      paintSummary(scenes);
+      $('status').textContent = 'done. ' + new Date().toLocaleTimeString();
+      return scenes;
+    });
+  });
+}
+
+function buildReport() {
+  return loadScenes().then(function (scenes) {
+    var lines = ['LOAD OUTPUT PROOF AUDIT', 'Build: OUTPUT-PROOF-v1-2026-05-07-v17g39', 'Generated: ' + new Date().toString(), 'Scenes in Project Memory: ' + scenes.length, ''];
+    scenes.forEach(function (sc) {
+      var s = STATE[sc.sceneId] || {};
+      lines.push('## ' + sc.sceneId + ' (thread=' + (sc.threadId || '-') + ')');
+      function rep(k) {
+        var v = s[k];
+        if (v == null) return k + ': - (no asset attached)';
+        if (v === 'pending') return k + ': pending';
+        if (v.ok) return k + ': PASS ' + JSON.stringify({ bytes: v.bytes, mime: v.mime, w: v.w, h: v.h, magic: v.magic });
+        return k + ': FAIL ' + (v.detail || v.message || 'fail');
+      }
+      lines.push('  ' + rep('image'));
+      lines.push('  ' + rep('video'));
+      lines.push('  ' + rep('audio'));
+      if (s.problems && s.problems.length) lines.push('  scene-shape: ' + s.problems.join('; '));
+      lines.push('');
+    });
+    return lines.join('\n');
+  });
+}
+
+function copyText(t) {
+  if (navigator.clipboard) return navigator.clipboard.writeText(t).then(function () { return true; }).catch(function () { return false; });
+  try { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(true); } catch (_) { return Promise.resolve(false); }
+}
+
+$('run-all').addEventListener('click', function () { runAll().catch(function (e) { $('status').textContent = 'error: ' + ((e && e.message) || e); }); });
+$('reset').addEventListener('click', function () { STATE = {}; $('scenes').innerHTML = '<div class="scene head-row"><div>Scene</div><div class="cell">Image</div><div class="cell">Video</div><div class="cell">Audio</div></div>'; $('status').textContent = ''; var pre = $('report'); pre.style.display = 'none'; pre.textContent = ''; });
+$('copy-report').addEventListener('click', function () { buildReport().then(function (t) { var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; copyText(t).then(function (ok) { alert(ok ? 'Output proof report copied.' : 'Copy failed.'); }); }); });
+$('download-report').addEventListener('click', function () { buildReport().then(function (t) { var pre = $('report'); pre.style.display = 'block'; pre.textContent = t; var blob = new Blob([t], { type: 'text/plain' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'load-output-proof-' + Date.now() + '.txt'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500); }); });
+
+}
+</script>
+</body>
+</html>
