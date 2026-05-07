@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Audio-Video Muxing (future) — Load</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<script src="../lib-load-mux.js"></script>
+<script src="../../branding.js" data-brand-skip></script>
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.build-marker{background:#facc15;color:#0a0a14;font-weight:900;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:10px;margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;text-align:center}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px;font-size:12.5px;color:var(--mute);line-height:1.55}
+.intro strong{color:var(--fg)}
+.banner{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.4);color:#9ec5ff;padding:10px 14px;border-radius:8px;font-size:12.5px;margin:0 0 14px}
+.section{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px;margin:0 0 14px}
+.section h3{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.row{display:grid;grid-template-columns:1fr 130px 110px 130px;gap:8px;padding:9px 12px;border-bottom:1px solid var(--border);align-items:center;font-size:12.5px}
+.row:last-child{border-bottom:none}
+.row.head{background:#1a1a2e;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
+.row .name{font-weight:700}
+.row .meta{font-size:11px;color:var(--mute);font-family:ui-monospace,Menlo,monospace}
+.cell{font-size:11px;font-weight:800;text-align:center;padding:5px 8px;border-radius:6px;background:#0a0e18;color:var(--mute);border:1px solid var(--border)}
+.cell.future{background:rgba(154,160,176,.18);color:var(--mute);border-color:rgba(154,160,176,.3)}
+.cell.ok{background:rgba(74,222,128,.18);color:var(--ok);border-color:rgba(74,222,128,.4)}
+.cell.fail{background:rgba(255,110,110,.18);color:var(--err);border-color:rgba(255,110,110,.4)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+button{font:inherit;padding:9px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.proof{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:10px;display:none}
+@media(max-width:760px){.row{grid-template-columns:1fr;gap:4px}.row.head{display:none}.cell{display:inline-block;margin-right:6px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="./handoff-tools.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Handoff Tools
+  </a>
+  <h1>Audio-Video Muxing (future)</h1>
+</header>
+<div class="wrap">
+<div class="build-marker">BUILD MARKER: MUX-FUTURE-v1-2026-05-07-v17g49</div>
+<div class="intro">
+  <strong>Reliability addendum #13.</strong> Architecture is reserved; the operation is <em>not</em> blocking MVP. <code>lib-load-mux.js</code> exposes the 3 future routes and 5 spec operations. Every operation entry point <strong>rejects</strong> with a clear "not implemented in MVP" error until a real backend calls <code>LoadMux.registerBackend({...})</code>, so no caller can ever claim a successful mux without a real playable file.
+</div>
+
+<div class="banner"><strong>MVP status:</strong> No backend wired. <em>isAvailable()</em> = false, every <em>canMux()</em> = false, every operation rejects.</div>
+
+<div class="section">
+  <h3>Routes (future)</h3>
+  <div id="routes"></div>
+</div>
+
+<div class="section">
+  <h3>Operations (spec)</h3>
+  <div id="ops"></div>
+</div>
+
+<div class="section">
+  <h3>Live capability self-test</h3>
+  <p style="font-size:12.5px;color:var(--mute);margin:0 0 10px">Tap a button below to call the operation. Each must REJECT with the spec wording (no backend yet) — that proves the architecture is honest and no caller can accidentally claim success.</p>
+  <div class="controls">
+    <button class="primary" id="run-mux">muxVideoAudio()</button>
+    <button id="run-extract">extractAudio()</button>
+    <button id="run-convert">convertAudio()</button>
+    <button id="run-compress">compressVideo()</button>
+    <button id="run-proxy">createPreviewProxy()</button>
+    <button id="copy-report">Copy report</button>
+  </div>
+  <pre class="proof" id="proof"></pre>
+</div>
+</div>
+
+<script>
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+if (!window.LoadMux) {
+  $('routes').innerHTML = '<p style="color:var(--err)">lib-load-mux.js missing.</p>';
+} else {
+
+var Mux = window.LoadMux;
+var TEST_LINES = [];
+
+function paintRoutes() {
+  Mux.detect().then(function (det) {
+    var html = '<div class="row head"><div>Route</div><div class="cell">Tier</div><div class="cell">Available</div><div class="cell">ID</div></div>';
+    det.routes.forEach(function (r) {
+      html += '<div class="row">' +
+        '<div><div class="name">' + esc(r.name) + '</div><div class="meta">' + esc(r.notes || '-') + '</div></div>' +
+        '<div class="cell future">' + esc(r.tier) + '</div>' +
+        '<div class="cell ' + (r.available ? 'ok' : 'future') + '">' + (r.available ? 'YES' : 'no') + '</div>' +
+        '<div class="cell">' + esc(r.id) + '</div>' +
+      '</div>';
+    });
+    $('routes').innerHTML = html;
+  });
+}
+paintRoutes();
+
+function paintOps() {
+  var html = '<div class="row head"><div>Operation</div><div class="cell">canMux</div><div class="cell">Status</div><div class="cell">ID</div></div>';
+  Mux.OPERATIONS.forEach(function (o) {
+    var ok = Mux.canMux(o.id);
+    html += '<div class="row">' +
+      '<div><div class="name">' + esc(o.name) + '</div></div>' +
+      '<div class="cell ' + (ok ? 'ok' : 'fail') + '">' + (ok ? 'true' : 'false') + '</div>' +
+      '<div class="cell future">' + (ok ? 'Available' : 'Not implemented in MVP') + '</div>' +
+      '<div class="cell">' + esc(o.id) + '</div>' +
+    '</div>';
+  });
+  $('ops').innerHTML = html;
+}
+paintOps();
+
+function record(label, ok, msg) {
+  TEST_LINES.push((ok ? 'PASS' : 'FAIL') + ' ' + label + ' — ' + msg);
+  $('proof').style.display = 'block';
+  $('proof').textContent = TEST_LINES.join('\n');
+}
+
+function testReject(label, fn) {
+  fn().then(function () { record(label, false, 'unexpectedly resolved'); }, function (e) {
+    var msg = (e && e.message) || String(e);
+    var pass = /not implemented in MVP/.test(msg);
+    record(label, pass, msg);
+  });
+}
+
+$('run-mux').addEventListener('click', function () { testReject('muxVideoAudio', function () { return Mux.muxVideoAudio({ video: null, audio: null }); }); });
+$('run-extract').addEventListener('click', function () { testReject('extractAudio', function () { return Mux.extractAudio({ video: null }); }); });
+$('run-convert').addEventListener('click', function () { testReject('convertAudio', function () { return Mux.convertAudio({ blob: null, targetMime: 'audio/mp4' }); }); });
+$('run-compress').addEventListener('click', function () { testReject('compressVideo', function () { return Mux.compressVideo({ video: null }); }); });
+$('run-proxy').addEventListener('click', function () { testReject('createPreviewProxy', function () { return Mux.createPreviewProxy({ video: null }); }); });
+$('copy-report').addEventListener('click', function () {
+  var t = ['LOAD MUX FUTURE-PATH REPORT', 'Build: MUX-FUTURE-v1-2026-05-07-v17g49', 'Generated: ' + new Date().toString(), 'isAvailable: ' + Mux.isAvailable(), '', 'Self-test results:'].concat(TEST_LINES.length ? TEST_LINES : ['(none yet — tap a button)']).join('\n');
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { alert('Mux report copied.'); }, function () { alert('Copy failed.'); });
+});
+
+}
+</script>
+</body>
+</html>
