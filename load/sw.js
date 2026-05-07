@@ -9,7 +9,7 @@
 // fetched or transmitted. Imported apps live in IndexedDB on the
 // user's device and are never sent anywhere.
 
-var CACHE = 'load-v17g14';
+var CACHE = 'load-v17g15';
 
 var SHELL = [
   './',
@@ -71,7 +71,12 @@ self.addEventListener('fetch', function (e) {
   // the network-first cached path because they rarely change.
   var url = new URL(req.url);
   var path = url.pathname;
-  var isCode = /\/(load\.js|load\.css|index\.html|sw\.js)(\?|$)/.test(path) || path.endsWith('/');
+  // Treat every HTML file (including everything under tools/) as code
+  // so users never get a stale tool page after a cache bump. Same
+  // cache-buster query trick as the original four root files.
+  var isCode = /\/(load\.js|load\.css|index\.html|sw\.js)(\?|$)/.test(path)
+            || /\.(html?|js|css)(\?|$)/.test(path)
+            || path.endsWith('/');
   if (isCode) {
     // Append a cache-buster query string. iOS Safari has a known bug
     // where { cache: 'no-store' } alone is silently ignored, so the
