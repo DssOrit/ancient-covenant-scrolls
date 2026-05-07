@@ -1,0 +1,20 @@
+{
+  "_comment": "Centralized public-facing branding config. Values use the trademark Unicode character (U+2122) so text-only contexts (manifest names, page titles, plain-text help) render correctly without HTML entities. HTML pages may also use the .tm CSS class on a <sup> for premium styling. Do not use the registered (R) symbol unless explicitly authorised.",
+  "ecosystemName": "LOAD ECO™",
+  "ecosystemNameMixed": "Load Eco™",
+  "studioName": "LOAD STUDIO™",
+  "studioNameMixed": "Load Studio™",
+  "playName": "LOAD PLAY™",
+  "playNameMixed": "Load Play™",
+  "tasksName": "LOAD TASKS™",
+  "tasksNameMixed": "Load Tasks™",
+  "appShortNames": {
+    "load": "Load",
+    "loadstudio": "Load Studio™",
+    "loadplay": "Load Play™",
+    "loadtasks": "Load Tasks™"
+  },
+  "tagline": "The offline-first creation suite for iPad",
+  "owner": "LBond",
+  "copyrightYear": 2026
+}
