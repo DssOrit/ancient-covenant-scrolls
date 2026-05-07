@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Load Main — pending row status</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<style>
+:root{--bg:#0a0a14;--bg2:#141422;--bg3:#1f1f30;--fg:#e9e9f0;--mute:#9aa0b0;--accent:#7c3aed;--ok:#4ade80;--warn:#facc15;--err:#ff6e6e;--info:#60a5fa;--border:#2a2a40}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;font-size:14px}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 18px;background:linear-gradient(180deg,#150a28 0,#0a0514 100%);border-bottom:1px solid var(--border)}
+header a.back{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+header h1{margin:0;font-size:16px;font-weight:800;flex:1}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.build-marker{background:#facc15;color:#0a0a14;font-weight:900;font-size:13px;letter-spacing:.04em;padding:10px 14px;border-radius:10px;margin:0 0 14px;font-family:ui-monospace,Menlo,monospace;text-align:center}
+.intro{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.intro h2{margin:0 0 6px;font-size:18px;font-weight:800}
+.intro p{margin:0;color:var(--mute);font-size:13.5px;line-height:1.6}
+.lock{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.4);color:#a7f3c5;font-size:12.5px;padding:10px 12px;border-radius:8px;margin:14px 0;line-height:1.6}
+.row-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:0 0 14px}
+.row-card h3{margin:0;font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.row-card .src{font-size:11px;color:var(--mute);font-family:ui-monospace,Menlo,monospace;margin-top:3px}
+.row-card .desc{font-size:12.5px;color:var(--mute);line-height:1.55;margin-top:8px}
+.row-card .sub{margin-top:10px;display:grid;grid-template-columns:1fr 100px;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:#0a0e18;font-size:12.5px}
+.row-card .sub .name{font-family:ui-monospace,Menlo,monospace}
+.row-card .sub .name a{color:var(--info);text-decoration:none}
+.row-card .links{margin-top:10px;font-size:12px;color:var(--mute)}
+.row-card .links a{color:var(--info);text-decoration:none;margin-right:8px}
+.badge{font-size:10.5px;font-weight:800;letter-spacing:.04em;padding:2px 8px;border-radius:6px;text-transform:uppercase}
+.badge.shipped{background:rgba(74,222,128,.18);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
+.badge.partial{background:rgba(96,165,250,.18);color:var(--info);border:1px solid rgba(96,165,250,.4)}
+.badge.pending{background:rgba(250,204,21,.18);color:var(--warn);border:1px solid rgba(250,204,21,.4)}
+.badge.notbuilt{background:rgba(154,160,176,.18);color:var(--mute);border:1px solid rgba(154,160,176,.3)}
+.badge.blocker{background:rgba(255,110,110,.18);color:var(--err);border:1px solid rgba(255,110,110,.4)}
+.cell{font-size:11px;font-weight:800;text-align:center;padding:4px 8px;border-radius:6px}
+.cell.shipped{background:rgba(74,222,128,.18);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
+.cell.notbuilt{background:rgba(154,160,176,.12);color:var(--mute);border:1px solid var(--border)}
+.cell.partial{background:rgba(96,165,250,.18);color:var(--info);border:1px solid rgba(96,165,250,.4)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.s-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.s-card .v{font-size:24px;font-weight:900;line-height:1;color:#fff}
+.s-card .l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-top:4px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+button{font:inherit;padding:9px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--fg);font-weight:700;font-size:13px}
+.report{background:#0a0e18;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--fg);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="./handoff-tools.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><line x1="20" y1="12" x2="4" y2="12"/><polyline points="10 18 4 12 10 6"/></svg>
+    Handoff Tools
+  </a>
+  <h1>Load Main — pending row status</h1>
+</header>
+<div class="wrap">
+<div class="build-marker">BUILD MARKER: LOAD-MAIN-STATUS-v1-2026-05-07-v17g23</div>
+<div class="intro">
+  <h2>Item #10 &mdash; remaining Load main pending rows</h2>
+  <p>Honest read-only audit of every row in <code>MASTER_BACKLOG.md &rsaquo; Load main &rsaquo; Pending</code>. Each row shows the current ship state, the Phase 1 deliverable on the live site (where shipped), and what is still not built. <strong>No false positives:</strong> Phase 1 deliverables are linked to real pages on this Load build; rows marked <em>not built</em> are genuinely not built.</p>
+</div>
+
+<div class="lock">
+  <strong>Master rule:</strong> MVP uses free / open-source / local-first providers only. Anything labelled <em>Phase 1 shipped</em> on this page emits prompts or audits only &mdash; it does not claim a real generated video / audio / image unless a real playable file/blob/URL is produced by a wired engine in a later phase.
+</div>
+
+<div class="summary" id="summary"></div>
+
+<div id="rows"></div>
+
+<div class="controls">
+  <button id="copy-report">Copy status report</button>
+  <button id="download-report">Download status report</button>
+  <span id="status" style="font-size:12px;color:var(--mute)"></span>
+</div>
+
+<pre class="report" id="report"></pre>
+</div>
+
+<script>
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+var ROWS = [
+  {
+    id: 'X-VIDEO-AI', label: 'Advanced AI video generation',
+    src: 'inbox 5.7 + Load Main AI Addendum',
+    state: 'partial',
+    phase1: [
+      { name: 'Scene Prompt Splitter (visual / motion / camera / character / environment / sound / music / SFX prompts + spec scene object)', href: './scene-prompt-splitter.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Real image-to-video generation wired (ComfyUI / AnimateDiff / LTX-Video / Wan / SVD)',
+      '18-fallback external video-prompt panel (Runway / Kling / Pika / Luma / Wan)',
+      'Video-specific export receipt schema',
+      'No-false-positive output verifier for returned video files'
+    ]
+  },
+  {
+    id: 'X-AI-AUDIO', label: 'Sound & Atmosphere Engine',
+    src: 'Load Main AI Addendum (5.7)',
+    state: 'partial',
+    phase1: [
+      { name: 'Scene Prompt Splitter emits soundPrompt / sfxPrompt / musicPrompt / ambiencePrompt; spec scene object carries 14 audio fields, 10 audio status labels, 5 chat-card types', href: './scene-prompt-splitter.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Separate audio generation provider wiring (HF audio / local audio server / load-engine-audio)',
+      'Layered playback (Web Audio Scene Mixer)',
+      'FFmpeg.wasm muxing into the video',
+      'Embedded audio output proof'
+    ]
+  },
+  {
+    id: 'X-AI-PROVIDERS', label: 'Free / open / local-first provider strategy + shared registry',
+    src: 'inbox 5.7 load_ai_complete_addendum_since_last_zip.zip',
+    state: 'shipped',
+    phase1: [
+      { name: 'lib-provider-registry.js — 50 providers across 7 categories, 24 capability flags, 9 status values', href: '../lib-provider-registry.js', cell: 'shipped' },
+      { name: 'Provider Registry audit dashboard', href: './provider-registry.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Phase 2 consolidation: image-prompt iframe should read keys from parent providerPrefs (no second key vault)',
+      'Live status probe per provider (Test button -> Ready / Failed / Rate limited / etc.)'
+    ]
+  },
+  {
+    id: 'X-AI-CHAT-STUDIO', label: 'Load AI Chat Studio',
+    src: 'inbox 5.7 load_ai_chat_animation.zip + Load Main AI Addendum',
+    state: 'partial',
+    phase1: [
+      { name: 'AI Chat Studio (routed chat via Load AI Core, Pollinations free)', href: './ai-chat-studio.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Five required chat cards rendered inline (animation request, animation progress, audio generation, video result, audio result)',
+      'Image / animation / audio actually generated inside the chat thread',
+      'Save / Export / Feedback / Attach to Project / Attach to Scene actions on each output card',
+      'Lives canonically in /loadstudio/ai-chat/ (Phase 1 page is in /load/tools/ for visibility)'
+    ]
+  },
+  {
+    id: 'X-STUDIO-AI', label: 'Load Creation Engine for AI Production',
+    src: 'inbox 5.7 + Combined ZIP Part 3',
+    state: 'partial',
+    phase1: [
+      { name: 'LoadStudio AI Tools directory (every AI surface + the route Core picks for each intent)', href: './loadstudio-ai-tools.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'AI Scene Builder UI',
+      'Book-to-Cinema / Script-to-Shot wizards',
+      'Character Bible / Style Bible / Voice Bible generators',
+      'Wardrobe Continuity, Prompt Studio, Generation Queue, Output Review',
+      'Export of .loadstudio.zip / .cinepwa.zip with the 13 structured project files'
+    ]
+  },
+  {
+    id: 'X-DB', label: 'Project Memory database',
+    src: 'inbox 5.6 + Combined ZIP Part 1 (layer 2)',
+    state: 'partial',
+    phase1: [
+      { name: 'lib-load-db.js — IndexedDB load-projects v1, 10 stores', href: '../lib-load-db.js', cell: 'shipped' },
+      { name: 'Project Memory audit dashboard with write-test + snapshot download', href: './load-db.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Cross-device sync (depends on auth / conflict resolution / GDPR delete design)',
+      'Migration of existing load-apps DB into the new shared store'
+    ]
+  },
+  {
+    id: 'X-SUBS', label: 'Subscription system',
+    src: 'inbox 5.6 + Combined ZIP Part 1',
+    state: 'partial',
+    phase1: [
+      { name: 'lib-load-subs.js — 3 tiers, locked to free in MVP', href: '../lib-load-subs.js', cell: 'shipped' },
+      { name: 'Subscription Tiers entitlement audit', href: './load-subs.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Billing provider integration (Stripe / RevenueCat / App Store) — open question',
+      'Per-app vs suite-wide bundle decision',
+      'Real entitlement gating (today everything is free, gating is schema only)',
+      'Trial flow, family sharing, receipt verification'
+    ]
+  },
+  {
+    id: 'X-AI-14', label: 'Load AI Tier 14 / 18-fallback add-ons',
+    src: 'PLAN_LOAD_AI.md L298-308 + Glam_Style_System ZIP',
+    state: 'partial',
+    phase1: [
+      { name: '14b face restore (gfpgan / codeformer) registered in registry', href: './provider-registry.html', cell: 'shipped' },
+      { name: '14c Real-ESRGAN upscale registered in registry', href: './provider-registry.html', cell: 'shipped' },
+      { name: '14d SiliconFlow connector (img2img + image-to-video) registered in registry', href: './provider-registry.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      '14a curated local style library (~50 styles vs current 8 chips)',
+      '15 HF Spaces connector',
+      '18-fallback external video-prompt panel (Runway / Kling / Pika / Luma / Wan)',
+      '18a-c image-to-video tiers (basic motion canvas, SVD, AnimateDiff)',
+      '7-layer AI Style Chat flow chrome (chat input -> classifier -> prompt builder -> mask editor -> router -> verifier -> image-to-video)'
+    ]
+  },
+  {
+    id: 'X-PIPER', label: 'Piper TTS Stage 1 unblock + Stage 2 rollout',
+    src: 'PLAN_PIPER.md',
+    state: 'blocked',
+    phase1: [
+      { name: 'Piper voice provider registered in registry as needs-user-setup', href: './provider-registry.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Stage 1 playback unblock (the play() error text from the user has not been captured here yet)',
+      'Stage 2 rollout to additional voices',
+      'Diagnostic page that probes runtime audio context, model availability, and surface play() errors'
+    ]
+  },
+  {
+    id: 'LOAD-ECO', label: 'LOAD-ECO acceptance test pass',
+    src: 'Build Plan Part 13 + LOAD_MAIN_HANDOFF_FINAL_REPORT.md',
+    state: 'shipped',
+    phase1: [
+      { name: 'LOAD_MAIN_HANDOFF_FINAL_REPORT.md (closing artifact for items v17fx-v17g6)', href: '../../LOAD_MAIN_HANDOFF_FINAL_REPORT.md', cell: 'shipped' },
+      { name: 'Run All Tests dashboard (45 verifications)', href: './feature-tests.html', cell: 'shipped' }
+    ],
+    notBuilt: [
+      'Section 18 acceptance rows still marked READY FOR USER VERIFICATION need user iPad sign-off (not a code task)'
+    ]
+  }
+];
+
+function badgeFor(s) {
+  if (s === 'shipped') return '<span class="badge shipped">phase 1 shipped</span>';
+  if (s === 'partial') return '<span class="badge partial">phase 1 partial</span>';
+  if (s === 'pending') return '<span class="badge pending">pending</span>';
+  if (s === 'blocked') return '<span class="badge blocker">blocked on user info</span>';
+  return '<span class="badge notbuilt">not built</span>';
+}
+
+function render() {
+  var counts = { shipped: 0, partial: 0, pending: 0, blocked: 0, total: ROWS.length };
+  ROWS.forEach(function (r) { counts[r.state] = (counts[r.state] || 0) + 1; });
+  $('summary').innerHTML =
+    '<div class="s-card"><div class="v">' + counts.total + '</div><div class="l">Pending rows</div></div>' +
+    '<div class="s-card"><div class="v" style="color:var(--ok)">' + (counts.shipped || 0) + '</div><div class="l">Phase 1 shipped</div></div>' +
+    '<div class="s-card"><div class="v" style="color:var(--info)">' + (counts.partial || 0) + '</div><div class="l">Phase 1 partial</div></div>' +
+    '<div class="s-card"><div class="v" style="color:var(--err)">' + (counts.blocked || 0) + '</div><div class="l">Blocked</div></div>';
+
+  var html = '';
+  ROWS.forEach(function (r) {
+    html += '<div class="row-card"><h3>' + esc(r.id) + ' &mdash; ' + esc(r.label) + ' ' + badgeFor(r.state) + '</h3>' +
+      '<div class="src">source: ' + esc(r.src) + '</div>';
+    if (r.phase1 && r.phase1.length) {
+      html += '<div style="margin-top:10px;font-size:11px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em">Phase 1 deliverables on this build</div>';
+      r.phase1.forEach(function (d) {
+        html += '<div class="sub"><div class="name"><a href="' + esc(d.href) + '">' + esc(d.name) + '</a></div><span class="cell ' + esc(d.cell) + '">' + esc(d.cell) + '</span></div>';
+      });
+    }
+    if (r.notBuilt && r.notBuilt.length) {
+      html += '<div style="margin-top:10px;font-size:11px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em">Still not built</div>';
+      r.notBuilt.forEach(function (n) {
+        html += '<div class="sub"><div class="name">' + esc(n) + '</div><span class="cell notbuilt">not built</span></div>';
+      });
+    }
+    html += '</div>';
+  });
+  $('rows').innerHTML = html;
+  $('status').textContent = 'rendered ' + new Date().toLocaleTimeString();
+}
+
+function buildReport() {
+  var lines = ['LOAD MAIN — PENDING ROW STATUS', 'Build: LOAD-MAIN-STATUS-v1-2026-05-07-v17g23', 'Generated: ' + new Date().toString(), ''];
+  ROWS.forEach(function (r) {
+    lines.push('## ' + r.id + ' — ' + r.label + ' [' + r.state + ']');
+    lines.push('  source: ' + r.src);
+    if (r.phase1 && r.phase1.length) {
+      lines.push('  Phase 1 deliverables on this build:');
+      r.phase1.forEach(function (d) { lines.push('    [' + d.cell + '] ' + d.name + '  -> ' + d.href); });
+    }
+    if (r.notBuilt && r.notBuilt.length) {
+      lines.push('  Still not built:');
+      r.notBuilt.forEach(function (n) { lines.push('    [not built] ' + n); });
+    }
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+
+function copyText(t) {
+  if (navigator.clipboard) return navigator.clipboard.writeText(t).then(function () { return true; }).catch(function () { return false; });
+  try { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(true); } catch (_) { return Promise.resolve(false); }
+}
+
+$('copy-report').addEventListener('click', function () {
+  var t = buildReport(); var pre = $('report'); pre.style.display = 'block'; pre.textContent = t;
+  copyText(t).then(function (ok) { alert(ok ? 'Status report copied.' : 'Copy failed; long-press the report to select.'); });
+});
+$('download-report').addEventListener('click', function () {
+  var t = buildReport(); var pre = $('report'); pre.style.display = 'block'; pre.textContent = t;
+  var blob = new Blob([t], { type: 'text/plain' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'load-main-status-' + Date.now() + '.txt'; a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+});
+render();
+</script>
+</body>
+</html>
