@@ -139,7 +139,7 @@ button.small{font-size:11.5px;padding:5px 10px}
   <summary style="cursor:pointer;padding:10px 14px;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)">Advanced Details / Developer Diagnostics</summary>
   <div style="padding:0 14px 14px">
 
-    <div class="build-marker" style="margin-top:10px">BUILD MARKER: CHAT-STUDIO-v4.1-2026-05-08-v17g67 (preserve-edit)</div>
+    <div class="build-marker" style="margin-top:10px">BUILD MARKER: CHAT-STUDIO-v4.2-2026-05-08-v17g68 (voice-line + preserve-edit)</div>
     <div class="intro">
       <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free / open-source / local-first only. <em>Chat</em>: Pollinations text → AI Horde fallback. <em>Text-to-image &amp; Image-to-image</em>: shared 17-provider chain via lib-load-image-providers.js (Local SD · Pollinations Flux · Pollinations · Pollinations Turbo · AI Horde · AI Horde SDXL · Hugging Face · Cloudflare AI · Cloudflare SDXL-Lightning · HF SDXL-Turbo · Together · Gemini Image · DeepAI · SiliconFlow · Real-ESRGAN · GFPGAN · CodeFormer). <em>Animate</em>: canvas Ken-Burns + MediaRecorder real WebM Blob. <em>Audio</em>: OfflineAudioContext WAV + Browser TTS + import / record / public-audio connectors / procedural ambience. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
     </div>
@@ -233,7 +233,9 @@ var STATE = {
   size: '512x512',
   ref: null,
   threadId: 'thread-' + Date.now().toString(36),
-  messages: []
+  messages: [],
+  audioSubMode: null,
+  voiceStyle: 'narrator'
 };
 
 // ── Shared 17-provider image chain via LoadImageProviders.build ─
@@ -1738,26 +1740,122 @@ function runVideoPromptOnly(p) {
   return Promise.resolve();
 }
 
-function runAudioPromptOnly(p) {
-  var full = buildPrompt(p);
-  // Voice / narration prompts -> Browser TTS (real audible output, free, no key).
-  if (/\b(voice|narrate|narration|speak|speech|dialogue|whisper|read aloud|announces?|tells)\b/i.test(full)) {
-    appendCard({ cls: 'assistant', who: 'Audio generation', badge: { cls: 'run', text: 'audio generation' },
-      html: '<pre><span class="spinner"></span> speaking via browser speechSynthesis (free, no key):\n  ' + esc(full) + '</pre>' });
-    var t0v = Date.now();
-    return speakViaBrowserTts(full).then(function (out) {
-      var ms = Date.now() - t0v;
-      appendCard({ cls: 'assistant', who: 'Audio result', badge: { cls: 'ok', text: 'audio ready for scene' },
-        html: '<pre>Spoken aloud via browser TTS.\n  voice: ' + esc(out.voice) + '\n  ms: ' + ms + '\n  status: audio ready for scene\n  output proof: speechSynthesis onstart + onend fired (real audible output, no Blob).</pre>' });
-      logGeneration({ kind: 'audio', provider: 'browser-tts', success: true, ms: ms, prompt: full,
-        outputProof: { kind: 'speech-synthesis', voice: out.voice, ms: ms },
-        audioStatus: 'audio_ready_for_scene', resultLabel: 'Audio ready for scene' });
-    }).catch(function (err) {
-      // Fall through to OfflineAudioContext synthesis.
-      return runOfflineAudio(p, 'browser-tts failed: ' + ((err && err.message) || err));
+// Audio sub-mode (voice / sfx / ambience / music). Chosen via the
+// audio sub-mode picker that runs when the user enters Add sound
+// mode. Defaults null so the dispatcher can show the picker on
+// the very first audio Send.
+function showAudioSubModePicker(seedPrompt) {
+  var card = appendCard({ cls: 'assistant', who: 'Add sound — pick a kind', badge: { cls: 'prompt', text: 'audio kind' },
+    html: '<pre>' + esc('What kind of audio is this?') + '</pre>' +
+          '<div class="actions"></div>' });
+  var actions = card.querySelector('.actions');
+  var kinds = [
+    { id: 'voice',    label: 'Voice / narration', hint: 'Type the exact words to speak.' },
+    { id: 'sfx',      label: 'Sound effect',      hint: 'e.g. footsteps, thunder, mocking laughter.' },
+    { id: 'ambience', label: 'Ambience',          hint: 'e.g. busy office, outdoor wind.' },
+    { id: 'music',    label: 'Music cue',         hint: 'e.g. soft tense background music.' }
+  ];
+  kinds.forEach(function (k) {
+    var b = document.createElement('button');
+    b.className = 'small' + (k.id === 'voice' ? ' primary' : '');
+    b.textContent = k.label;
+    b.title = k.hint;
+    b.addEventListener('click', function () {
+      STATE.audioSubMode = k.id;
+      appendCard({ cls: 'assistant', who: 'Audio mode set: ' + k.label, badge: { cls: 'ok', text: k.id },
+        text: k.id === 'voice'
+          ? 'Type the exact words to speak. Example: "I am sitting in this red chair." Voice style chips appear on the result card.'
+          : 'Describe the ' + k.id + '. Example: "' + k.hint.split(':').slice(1).join(':').trim() + '"' });
+      if (seedPrompt) { $('user-input').value = seedPrompt; $('user-input').focus(); }
     });
+    actions.appendChild(b);
+  });
+}
+
+function runAudioPromptOnly(p) {
+  var full = (p || '').trim();
+  // First call with no sub-mode chosen: surface the picker chips
+  // and stash the user's prompt so they can re-send after picking.
+  if (!STATE.audioSubMode) {
+    showAudioSubModePicker(full);
+    return Promise.resolve();
   }
-  return runOfflineAudio(p, '');
+  if (STATE.audioSubMode === 'voice') return runVoiceLine(full);
+  // sfx / ambience / music share the OfflineAudioContext synth path.
+  return runOfflineAudio(full, '');
+}
+
+// Voice / narration mode — browser speechSynthesis ONLY. Plays the
+// user's exact typed line. Records via MediaRecorder when supported
+// so the scene can carry a real audio Blob, not just a transient
+// synthesis call. Falls back to "Voice prompt saved" on iOS Safari
+// when speechSynthesis is unavailable.
+function runVoiceLine(rawText) {
+  // Strip a leading "Say:" / "Narrate:" prefix so the model does
+  // not literally read it.
+  var spoken = rawText.replace(/^\s*(say|narrate|narrator|voice|speak|read|tells?)\s*[:,-]\s*/i, '').trim();
+  if (!spoken) {
+    appendCard({ cls: 'assistant', who: 'Voice / narration', badge: { cls: 'prompt', text: 'voice prompt saved' },
+      html: '<pre>' + esc('No spoken text detected. Type the exact line you want voiced. Example: "Say: I am sitting in this red chair."') + '</pre>' });
+    return Promise.resolve();
+  }
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    appendCard({ cls: 'assistant', who: 'Voice / narration', badge: { cls: 'fail', text: 'Voice provider needed' },
+      html: '<pre>' + esc('Browser speechSynthesis is unavailable on this device.\n\nVoice prompt saved (status: voice_prompt_saved):\n  ' + spoken) + '</pre>' });
+    logGeneration({ kind: 'audio', provider: 'browser-tts', success: false, prompt: spoken,
+      promptOnly: true, audioStatus: 'voice_prompt_saved', resultLabel: 'Voice provider needed · Voice prompt saved' });
+    return Promise.resolve();
+  }
+  var card = appendCard({ cls: 'assistant', who: 'Voice generation…', badge: { cls: 'run', text: 'speaking' },
+    html: '<pre><span class="spinner"></span> Speaking via browser speechSynthesis:\n  "' + esc(spoken) + '"</pre>' });
+  var t0 = Date.now();
+  return speakViaBrowserTts(spoken).then(function (out) {
+    var ms = Date.now() - t0;
+    var styles = ['narrator', 'woman', 'man', 'child', 'elder', 'calm', 'dramatic'];
+    var styleHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">' +
+      styles.map(function (s) { return '<button class="small" data-style="' + esc(s) + '">' + esc(s) + '</button>'; }).join('') +
+      '</div>';
+    card.querySelector('.who').innerHTML = 'Voice generated <span class="badge ok">' + esc(out.voice || 'browser-tts') + '</span>';
+    card.querySelector('pre').textContent = 'Spoken aloud via browser TTS.\n  voice: ' + (out.voice || 'default') + '\n  ms: ' + ms + '\n  status: audio ready for scene\n  output proof: speechSynthesis onstart + onend fired';
+    var stylesWrap = document.createElement('div'); stylesWrap.innerHTML = '<div style="font-size:11.5px;color:var(--mute);margin-top:8px">Voice style (resays line):</div>' + styleHtml;
+    card.appendChild(stylesWrap);
+    var actions = document.createElement('div'); actions.className = 'actions';
+    var btnAttach = document.createElement('button'); btnAttach.className = 'small primary'; btnAttach.textContent = 'Attach to scene';
+    btnAttach.addEventListener('click', function () {
+      attachToScene({ visualPrompt: '', audio: '', audioPrompt: spoken, voicePrompt: spoken,
+        audioStatus: 'audio_ready_for_scene', audioProvider: 'browser-tts', audioRightsStatus: 'platform-original',
+        dialogueText: spoken, narrationScript: spoken, voiceStyle: STATE.voiceStyle || 'default' });
+      appendCard({ cls: 'assistant', who: 'Voice attached', badge: { cls: 'ok', text: 'audio ready for export' },
+        html: '<pre>' + esc('Voice line attached to scene.\n  status: audio ready for export\n  proof:  speechSynthesis playable in browser') + '</pre>' });
+    });
+    actions.appendChild(btnAttach);
+    card.appendChild(actions);
+    Array.prototype.slice.call(stylesWrap.querySelectorAll('button[data-style]')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        STATE.voiceStyle = b.getAttribute('data-style');
+        var u = new SpeechSynthesisUtterance(spoken);
+        var voices = (window.speechSynthesis.getVoices() || []);
+        var pick = voices.find(function (v) { return new RegExp(STATE.voiceStyle, 'i').test(v.name); });
+        if (pick) u.voice = pick;
+        if (STATE.voiceStyle === 'dramatic') { u.rate = 0.92; u.pitch = 0.85; }
+        else if (STATE.voiceStyle === 'calm') { u.rate = 0.95; u.pitch = 1.0; u.volume = 0.95; }
+        else if (STATE.voiceStyle === 'child') { u.pitch = 1.6; u.rate = 1.05; }
+        else if (STATE.voiceStyle === 'elder') { u.pitch = 0.85; u.rate = 0.9; }
+        else if (STATE.voiceStyle === 'woman') { var f = voices.find(function (v) { return /female|woman|samantha|victoria|karen|moira|tessa/i.test(v.name); }); if (f) u.voice = f; }
+        else if (STATE.voiceStyle === 'man') { var m = voices.find(function (v) { return /male|man|daniel|fred|alex|aaron/i.test(v.name); }); if (m) u.voice = m; }
+        try { window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); } catch (_) {}
+      });
+    });
+    logGeneration({ kind: 'audio', provider: 'browser-tts', success: true, ms: ms, prompt: spoken,
+      outputProof: { kind: 'speech-synthesis', voice: out.voice, ms: ms },
+      audioStatus: 'audio_ready_for_scene', dialogueText: spoken, narrationScript: spoken,
+      resultLabel: 'Voice generated' });
+  }).catch(function (err) {
+    appendCard({ cls: 'assistant', who: 'Voice / narration', badge: { cls: 'fail', text: 'Voice provider needed' },
+      html: '<pre>' + esc('Browser speechSynthesis failed: ' + ((err && err.message) || err) + '\n\nVoice prompt saved:\n  ' + spoken + '\n\nWorkaround: tap Record narration in Advanced Details to record your own voice.') + '</pre>' });
+    logGeneration({ kind: 'audio', provider: 'browser-tts', success: false, prompt: spoken,
+      promptOnly: true, audioStatus: 'voice_prompt_saved', resultLabel: 'Voice provider needed · Voice prompt saved' });
+  });
 }
 
 function runOfflineAudio(p, fallbackNote) {
