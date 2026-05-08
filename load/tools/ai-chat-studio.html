@@ -16,6 +16,7 @@
 <script src="../lib-load-timeouts.js"></script>
 <script src="../lib-load-local-only.js"></script>
 <script src="../lib-load-ai-pipeline.js"></script>
+<script src="../lib-load-image-providers.js"></script>
 <script src="../lib-public-audio-connectors.js"></script>
 <script src="../lib-jszip.min.js"></script>
 <style>
@@ -84,72 +85,117 @@ button.small{font-size:11.5px;padding:5px 10px}
   <span id="role-chip" style="display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(124,58,237,.22);color:#c4a8ff;padding:3px 8px;border-radius:6px">Production AI Chat</span>
 </header>
 <div class="wrap">
-<div class="build-marker">BUILD MARKER: CHAT-STUDIO-v3.8-2026-05-08-v17g56</div>
-<div class="intro">
-  <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free providers + on-device synthesis only. <em>Chat</em>: Pollinations text. <em>Text-to-image</em>: Pollinations image (real PNG/JPG). <em>Animate</em> (with a reference image): canvas Ken-Burns + MediaRecorder produces a <strong>real WebM video Blob</strong>. <em>Audio</em>: OfflineAudioContext synthesises a <strong>real WAV Blob</strong> matched to prompt keywords. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
-</div>
 
-<div class="section">
-  <h3>Mode</h3>
-  <div class="modes" id="modes">
-    <button class="mode-btn on" data-mode="chat">Chat</button>
-    <button class="mode-btn" data-mode="image">Text-to-image</button>
-    <button class="mode-btn" data-mode="i2i">Image-to-image</button>
-    <button class="mode-btn" data-mode="animate">Animate</button>
-    <button class="mode-btn" data-mode="video">Video (prompt only)</button>
-    <button class="mode-btn" data-mode="audio">Audio / SFX / music</button>
-  </div>
-  <div class="status-line" id="route-line">route: chat</div>
-</div>
+<!-- 5.8 AI Studio Fix · Simple Creator View ──────────────────────
+     Default page is plain-language. All technical knobs (mode
+     internals, route line, build marker, intro, public-audio
+     connectors, procedural ambience) are collapsed inside the
+     <details> below. The creator only sees: title role chip,
+     reference image preview, big plain-language action buttons,
+     prompt input, and Send. -->
 
-<div class="section" id="opts">
-  <h3>Options</h3>
-  <div class="row">
-    <div>
-      <span class="status-line" style="margin:0 0 4px;display:block">Style</span>
-      <div class="row-pills" id="style-pills"></div>
-    </div>
-    <div>
-      <span class="status-line" style="margin:0 0 4px;display:block">Size (image / animate)</span>
-      <div class="row-pills" id="size-pills">
-        <button class="size-pill on" data-size="512x512">512x512</button>
-        <button class="size-pill" data-size="768x768">768x768</button>
-        <button class="size-pill" data-size="1024x576">1024x576 (16:9)</button>
-        <button class="size-pill" data-size="576x1024">576x1024 (9:16)</button>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top:10px" class="refbox">
-    <span class="status-line" style="margin:0">Reference image (image-to-image / context):</span>
-    <input type="file" id="ref-input" accept="image/*" style="font-size:12px;color:var(--mute);background:transparent;padding:0;border:none">
-    <img id="ref-preview" style="display:none" alt="">
-    <button class="small" id="ref-clear" style="display:none">Clear</button>
+<div class="creator-pad" style="display:flex;flex-direction:column;gap:14px;margin:0 0 14px">
+  <div style="font-size:18px;font-weight:800;letter-spacing:.02em">What would you like to do next?</div>
+  <div class="big-actions" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
+    <button class="mode-btn big on"   data-mode="image"   data-simple="Create image"  style="padding:14px 16px;font-size:15px">Create image</button>
+    <button class="mode-btn big"      data-mode="i2i"     data-simple="Edit image"    style="padding:14px 16px;font-size:15px">Edit image</button>
+    <button class="mode-btn big"      data-mode="animate" data-simple="Animate"       style="padding:14px 16px;font-size:15px">Animate</button>
+    <button class="mode-btn big"      data-mode="audio"   data-simple="Add sound"     style="padding:14px 16px;font-size:15px">Add sound</button>
+    <button class="mode-btn big"      data-mode="chat"    data-simple="Write prompt"  style="padding:14px 16px;font-size:15px">Write prompt</button>
   </div>
 </div>
 
 <div class="messages" id="messages">
-  <div class="card assistant"><div class="who">Hint</div>Pick a mode above. Chat mode runs free Pollinations text. Text-to-image runs free Pollinations image. Other modes emit prompt-only output cards until you wire a real provider.</div>
+  <div class="card assistant"><div class="who">Welcome</div>Tap an action above, describe what you want, then tap Send. Result cards show the file, status, and follow-up actions like Save / Refine / Animate / Add sound / Attach to scene / Export.</div>
 </div>
 
 <div class="input-bar">
-  <textarea id="user-input" placeholder="Ask anything, describe an image, or describe a scene to animate"></textarea>
-  <div class="toolbar">
-    <button class="primary" id="btn-send">Send</button>
+  <textarea id="user-input" placeholder="Describe what you want..." style="font-size:15px"></textarea>
+  <div class="toolbar primary-actions" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+    <button class="primary" id="btn-send" style="font-size:15px;padding:11px 20px">Send</button>
     <button id="btn-regen">Regenerate</button>
-    <button id="btn-extend">Extend</button>
-    <button id="btn-export">Export project (.loadstudio.zip)</button>
-    <button id="btn-export-cinepwa">Export project (.cinepwa.zip)</button>
-    <input type="file" id="audio-import-input" accept="audio/*" multiple style="display:none">
-    <button id="btn-import-audio">Import audio / SFX / music</button>
-    <button id="btn-record-audio">Record narration</button>
-    <button id="btn-voice-fx">Voice manipulator</button>
-    <button id="btn-public-audio">Public audio sources</button>
-    <button id="btn-procedural-ambience">Procedural ambience</button>
-    <label class="status-line" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="local-only"> Local-only mode</label>
-    <button id="btn-clear">Clear thread</button>
+    <button id="btn-export">Attach / Export project</button>
     <span class="status-line" id="status"></span>
   </div>
 </div>
+
+<!-- ── Advanced Details (collapsed by default) ─────────────────── -->
+<details class="advanced-details" style="margin-top:18px;border:1px solid var(--border);border-radius:10px;background:var(--bg2)">
+  <summary style="cursor:pointer;padding:10px 14px;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)">Advanced Details / Developer Diagnostics</summary>
+  <div style="padding:0 14px 14px">
+
+    <div class="build-marker" style="margin-top:10px">BUILD MARKER: CHAT-STUDIO-v3.9-2026-05-08-v17g62</div>
+    <div class="intro">
+      <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free / open-source / local-first only. <em>Chat</em>: Pollinations text → AI Horde fallback. <em>Text-to-image &amp; Image-to-image</em>: shared 17-provider chain via lib-load-image-providers.js (Local SD · Pollinations Flux · Pollinations · Pollinations Turbo · AI Horde · AI Horde SDXL · Hugging Face · Cloudflare AI · Cloudflare SDXL-Lightning · HF SDXL-Turbo · Together · Gemini Image · DeepAI · SiliconFlow · Real-ESRGAN · GFPGAN · CodeFormer). <em>Animate</em>: canvas Ken-Burns + MediaRecorder real WebM Blob. <em>Audio</em>: OfflineAudioContext WAV + Browser TTS + import / record / public-audio connectors / procedural ambience. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
+    </div>
+
+    <div class="section">
+      <h3>Mode (technical)</h3>
+      <div class="modes" id="modes">
+        <button class="mode-btn" data-mode="chat">Chat</button>
+        <button class="mode-btn" data-mode="image">Text-to-image</button>
+        <button class="mode-btn" data-mode="i2i">Image-to-image</button>
+        <button class="mode-btn" data-mode="animate">Animate</button>
+        <button class="mode-btn" data-mode="video">Video (prompt only)</button>
+        <button class="mode-btn" data-mode="audio">Audio / SFX / music</button>
+      </div>
+      <div class="status-line" id="route-line">route: chat</div>
+    </div>
+
+    <div class="section" id="opts">
+      <h3>Options</h3>
+      <div class="row">
+        <div>
+          <span class="status-line" style="margin:0 0 4px;display:block">Style</span>
+          <div class="row-pills" id="style-pills"></div>
+        </div>
+        <div>
+          <span class="status-line" style="margin:0 0 4px;display:block">Size (image / animate)</span>
+          <div class="row-pills" id="size-pills">
+            <button class="size-pill on" data-size="512x512">512x512</button>
+            <button class="size-pill" data-size="768x768">768x768</button>
+            <button class="size-pill" data-size="1024x576">1024x576 (16:9)</button>
+            <button class="size-pill" data-size="576x1024">576x1024 (9:16)</button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:10px" class="refbox">
+        <span class="status-line" style="margin:0">Reference image (image-to-image / context):</span>
+        <input type="file" id="ref-input" accept="image/*" style="font-size:12px;color:var(--mute);background:transparent;padding:0;border:none">
+        <img id="ref-preview" style="display:none" alt="">
+        <button class="small" id="ref-clear" style="display:none">Clear</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Project &amp; export</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <button id="btn-extend">Extend</button>
+        <button id="btn-export-loadstudio">Export .loadstudio.zip</button>
+        <button id="btn-export-cinepwa">Export .cinepwa.zip</button>
+        <button id="btn-clear">Clear thread</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Audio tools</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <input type="file" id="audio-import-input" accept="audio/*" multiple style="display:none">
+        <button id="btn-import-audio">Import audio / SFX / music</button>
+        <button id="btn-record-audio">Record narration</button>
+        <button id="btn-voice-fx">Voice manipulator</button>
+        <button id="btn-public-audio">Public audio sources</button>
+        <button id="btn-procedural-ambience">Procedural ambience</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Mode toggles</h3>
+      <label class="status-line" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="local-only"> Local-only mode (block all cloud providers)</label>
+    </div>
+
+  </div>
+</details>
 
 </div>
 
@@ -174,6 +220,76 @@ var STATE = {
   threadId: 'thread-' + Date.now().toString(36),
   messages: []
 };
+
+// ── Shared 17-provider image chain via LoadImageProviders.build ─
+// Reads keys from the same localStorage namespace ("ps_*") that
+// Image Prompt (Quick Image Tool) writes, so we never create a
+// duplicate key panel. Free / open-source / local-first only.
+var SHARED_IMG = (function () {
+  if (!window.LoadImageProviders) return null;
+  function ls(k, d) { try { return localStorage.getItem(k) || (d || ''); } catch (_) { return d || ''; } }
+  function lsBool(k, def) { var v = null; try { v = localStorage.getItem(k); } catch (_) {} return v === null ? def : v !== '0'; }
+  function lsBoolExplicit(k) { var v = null; try { v = localStorage.getItem(k); } catch (_) {} return v === '1'; }
+  // Live-ref C: every provider gen() rereads these on call so a
+  // settings change in Image Prompt is immediately visible here.
+  var sharedC = {
+    keys: {
+      get gemini() { return ls('ps_k_gemini'); }
+    },
+    get hfImgKey() { return ls('ps_hfimg'); },
+    get hfModel() { return ls('ps_hfm') || 'stabilityai/stable-diffusion-xl-base-1.0'; },
+    get cfToken() { return ls('ps_cftk'); },
+    get cfAccount() { return ls('ps_cfac'); },
+    get togetherKey() { return ls('ps_tgk'); },
+    get daiKey() { return ls('ps_daik'); },
+    get siliconflowKey() { return ls('ps_sfk'); },
+    get localSdUrl() { return ls('ps_local_sd_url'); },
+    useProvider: {
+      get pollinations() { return lsBool('ps_use_poll', true); },
+      get pollflux()     { return lsBool('ps_use_pflux', true); },
+      get pollturbo()    { return lsBool('ps_use_pturbo', true); },
+      get huggingface()  { return lsBool('ps_use_hf', true); },
+      get cloudflare()   { return lsBool('ps_use_cf', true); },
+      get cfsdxllight()  { return lsBool('ps_use_cfsdxl', true); },
+      get hfsdxlturbo()  { return lsBool('ps_use_hfturbo', true); },
+      get together()     { return lsBool('ps_use_tg', true); },
+      get horde()        { return lsBool('ps_use_horde', true); },
+      get hordesdxl()    { return lsBool('ps_use_hsdxl', true); },
+      get imagen()       { return lsBoolExplicit('ps_use_img'); },
+      get deepai()       { return lsBool('ps_use_dai', true); },
+      get localsd()      { return lsBool('ps_use_localsd', true); },
+      get siliconflow()  { return lsBoolExplicit('ps_use_sf'); },
+      get realesrgan()   { return lsBool('ps_use_resr', true); },
+      get gfpgan()       { return lsBool('ps_use_gfp', true); },
+      get codeformer()   { return lsBool('ps_use_cf2', true); }
+    }
+  };
+  // Minimal hfImageCall for the shared lib's huggingface route. Mirrors
+  // image-prompt's implementation; rejects text-only models early.
+  var HF_TEXT_ONLY = /\b(mistral|llama|gpt|qwen|gemma|phi|falcon|mpt|flan|t5|bart|pythia|deepseek|yi|olmo)\b/i;
+  function hfImageCall(model, prompt, imgData, mask) {
+    if (HF_TEXT_ONLY.test(model)) return Promise.reject(new Error('Skipped ' + model + ': text-only model'));
+    var body = { inputs: prompt, parameters: { num_inference_steps: 30, guidance_scale: 7.5 } };
+    if (imgData) { body.parameters.image = imgData.base64; body.parameters.strength = 0.85; }
+    if (mask && mask.base64) { body.parameters.mask_image = mask.base64; if (imgData) body.parameters.image = imgData.base64; }
+    return fetch('https://api-inference.huggingface.co/models/' + model, {
+      method: 'POST', headers: { 'Authorization': 'Bearer ' + sharedC.hfImgKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      if (r.status === 503) throw new Error('Image model loading (~30s cold start). Please wait and retry.');
+      if (!r.ok) return r.text().then(function (t) { throw new Error('HF Image HTTP ' + r.status + ' ' + t); });
+      return r.blob();
+    }).then(function (blob) {
+      if (!blob.type.startsWith('image/')) return blob.text().then(function (t) { throw new Error('Skipped ' + model + ': non-image (' + (blob.type || 'unknown') + ')'); });
+      return blob;
+    });
+  }
+  function readError(r, label) { return r.text().then(function (t) { return label + ' HTTP ' + r.status + ' ' + (t || '').slice(0, 200); }, function () { return label + ' HTTP ' + r.status; }); }
+  return window.LoadImageProviders.build({
+    C: sharedC, CHAR: {}, HF_MODELS: ['stabilityai/stable-diffusion-xl-base-1.0', 'black-forest-labs/FLUX.1-dev', 'stabilityai/stable-diffusion-2-1'],
+    hfImageCall: hfImageCall, readError: readError
+  });
+})();
 
 // ── Curated style chips. Mirror of lib-style-library when present.
 var STYLES = (window.LoadStyleLibrary && window.LoadStyleLibrary.STYLES) || [
@@ -752,6 +868,91 @@ function runChat(p) {
   });
 }
 
+// 5.8 AI Studio Fix: shared 17-provider runner used by both
+// runImage (text-to-image) and runI2I (image-edit) when
+// LoadImageProviders is available. Honest result card with
+// provider, op, output proof, and Save / Refine / Animate /
+// Attach actions.
+function runImageViaSharedChain(p, full) {
+  var t0 = Date.now();
+  var refHtml = STATE.ref ? '<img class="ref" src="' + esc(STATE.ref.dataUrl) + '" alt="ref">' : '';
+  var op = STATE.ref ? 'image-to-image' : 'text-to-image';
+  var card = appendCard({ cls: 'assistant', who: 'Image (shared 17-provider chain)', badge: { cls: 'run', text: 'generating' },
+    html: '<div class="meta">' + esc('prompt: ' + full + ' (' + STATE.size + ') · op: ' + op) + '</div>' + refHtml + '<div><span class="spinner"></span> trying shared provider chain...</div>' });
+  var capMs = (window.LoadTimeouts ? window.LoadTimeouts.byIntent(STATE.ref ? 'image-to-image' : 'image') : 60000);
+  var stopChip = startDeadlineCountdown(card, capMs, 'timeout');
+  // Build imgData if a reference is set.
+  var imgData = null;
+  var prep = STATE.ref && STATE.ref.dataUrl
+    ? (function () {
+        var s = String(STATE.ref.dataUrl);
+        var c = s.indexOf(','); var b64 = c !== -1 ? s.slice(c + 1) : s;
+        var mime = (s.indexOf('data:') === 0 && c !== -1) ? s.slice(5, s.indexOf(';')) : 'image/png';
+        imgData = { base64: b64, mime: mime, dataUrl: s };
+        return Promise.resolve();
+      })()
+    : Promise.resolve();
+  return prep.then(function () {
+    return SHARED_IMG.imageGenWithFallback(full, imgData, { taskType: STATE.ref ? 'img2img' : 'generate' });
+  }).then(function (result) {
+    stopChip();
+    return loadImageWithTimeout(result.url, 30000, result.providerName + ' render').then(function (img2) {
+      var ms = Date.now() - t0;
+      card.querySelector('.who').innerHTML = 'Image <span class="badge ok">' + esc(result.providerName) + '</span>';
+      var imgEl = document.createElement('img'); imgEl.src = result.url; imgEl.alt = full;
+      card.querySelectorAll('div')[card.querySelectorAll('div').length - 1].remove();
+      card.appendChild(imgEl);
+      var meta = document.createElement('div'); meta.className = 'meta';
+      meta.textContent = 'provider: ' + result.providerName + ' · op: ' + op + ' · ' + ms + ' ms · ' + img2.w + 'x' + img2.h + ' · output proof: real image rendered';
+      card.appendChild(meta);
+      var actions = document.createElement('div'); actions.className = 'actions';
+      actions.innerHTML = '<button class="small" data-act="save">Save image</button>' +
+        '<button class="small" data-act="refine">Refine</button>' +
+        '<button class="small" data-act="animate">Animate this</button>' +
+        '<button class="small primary" data-act="attach">Attach to scene</button>';
+      card.appendChild(actions);
+      actions.querySelector('[data-act=save]').addEventListener('click', function () { var a = document.createElement('a'); a.href = result.url; a.download = 'load-image-' + Date.now() + '.png'; a.target = '_blank'; a.click(); });
+      actions.querySelector('[data-act=refine]').addEventListener('click', function () { $('user-input').value = full + ', '; $('user-input').focus(); });
+      actions.querySelector('[data-act=animate]').addEventListener('click', function () {
+        stashAsAnimateSource(result.url, full);
+        STATE.mode = 'animate';
+        Array.prototype.slice.call(document.querySelectorAll('[data-mode]')).forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-mode') === 'animate'); });
+        renderRouteLine(); $('user-input').value = full;
+      });
+      actions.querySelector('[data-act=attach]').addEventListener('click', function () {
+        attachToScene({ image: result.url, visualPrompt: full, sizes: STATE.size });
+      });
+      logGeneration({ kind: STATE.ref ? 'image-to-image' : 'image', provider: result.providerId, success: true, ms: ms, prompt: full, size: STATE.size,
+        outputProof: { kind: 'image-url', url: result.url, w: img2.w, h: img2.h, providerName: result.providerName },
+        opType: op, resultLabel: 'Image Created (' + result.providerName + ')' });
+      if (window.LoadQueue && STATE.currentJob) {
+        window.LoadQueue.update(STATE.currentJob.jobId, { status: 'Complete', provider: result.providerId, startedAt: t0, endedAt: Date.now() }).catch(function () {});
+      }
+    });
+  }).catch(function (err) {
+    stopChip();
+    var msg = String((err && err.message) || err);
+    var timedOut = /timed out/i.test(msg);
+    card.classList.add('error');
+    card.querySelector('.who').innerHTML = 'Image <span class="badge fail">' + (timedOut ? 'Provider Timed Out' : 'Returned No File') + '</span>';
+    var lastDiv = card.querySelectorAll('div')[card.querySelectorAll('div').length - 1];
+    if (lastDiv) lastDiv.textContent = 'All free providers in the shared chain failed: ' + msg + '\n\nReference image preserved. The Send button is re-enabled.';
+    var actions = buildFailureActions({
+      onRetry: function () { send(); },
+      onNext: function () { appendCard({ cls: 'assistant', who: 'Try next provider', badge: { cls: 'prompt', text: 'no more free routes' },
+        html: '<pre>' + esc('Free image routes wired (Image Editor + AI Chat Studio share the same chain via lib-load-image-providers.js):\n  Local SD · Pollinations Flux · Pollinations · Pollinations Turbo · AI Horde · AI Horde SDXL · Hugging Face (token) · Cloudflare AI · Cloudflare SDXL-Lightning · HF SDXL-Turbo · Together · Gemini Image · DeepAI · SiliconFlow · Real-ESRGAN · GFPGAN · CodeFormer.\n\nAdd a free Hugging Face / Cloudflare / Gemini key in Image Prompt > Settings to expand the chain.') + '</pre>' }); },
+      onSavePromptOnly: function () { appendCard({ cls: 'assistant', who: 'Prompt saved', badge: { cls: 'prompt', text: 'Prompt Saved' },
+        html: '<pre>' + esc('Saved prompt for later — paste into another tool when network is back:\n\n' + full) + '</pre>' });
+        logGeneration({ kind: 'image', provider: 'prompt-only', success: false, prompt: full, promptOnly: true, opType: op, resultLabel: 'Prompt Saved' }); }
+    });
+    card.appendChild(actions);
+    logGeneration({ kind: STATE.ref ? 'image-to-image' : 'image', provider: 'shared-chain', success: false, error: msg, prompt: full, opType: op, timedOut: timedOut, resultLabel: timedOut ? 'Provider Timed Out' : 'Returned No File' });
+    if (window.LoadQueue && STATE.currentJob) {
+      window.LoadQueue.update(STATE.currentJob.jobId, { status: 'Failed', provider: 'shared-chain', startedAt: t0, endedAt: Date.now(), error: msg }).catch(function () {});
+    }
+  });
+}
+
 function runImage(p) {
   var full = buildPrompt(p);
   // Local-only: skip cloud image gen entirely; emit prompt-only result.
@@ -760,6 +961,12 @@ function runImage(p) {
       html: '<pre>' + esc('Local-only mode is ON — cloud image providers are blocked.\n\nPrompt prepared:\n  ' + full + '\nSize: ' + STATE.size + (STATE.ref ? '\nReference: ' + STATE.ref.name : '')) + '</pre>' });
     logGeneration({ kind: 'image', provider: 'local-only-blocked', success: false, prompt: full, promptOnly: true });
     return Promise.resolve();
+  }
+  // 5.8 AI Studio Fix: route through the shared 17-provider chain
+  // when LoadImageProviders is loaded — Image Editor and AI Chat
+  // Studio both use the same fallback table.
+  if (SHARED_IMG && typeof SHARED_IMG.imageGenWithFallback === 'function') {
+    return runImageViaSharedChain(p, full);
   }
   var url = pollinationsImageUrl(full, STATE.size);
   var t0 = Date.now();
@@ -889,6 +1096,12 @@ function runImage(p) {
 
 function runI2I(p) {
   var full = buildPrompt(p);
+  // 5.8 AI Studio Fix: route image-to-image through the shared
+  // 17-provider chain. img2img-capable providers run first
+  // (Local SD / Gemini Image / Hugging Face / SiliconFlow / Horde).
+  if (SHARED_IMG && typeof SHARED_IMG.imageGenWithFallback === 'function' && STATE.ref && STATE.ref.dataUrl) {
+    return runImageViaSharedChain(p, full);
+  }
   // Real edit needs an image-input-capable provider. Free MVP path:
   // AI Horde anonymous async with the reference image fed in via
   // source_image. If no ref image, honest prompt-only message. If
@@ -1509,6 +1722,7 @@ if (window.LoadResume) {
 // .loadstudio.zip via JSZip. Uses the LoadStudio validator's REQUIRED_FILES
 // + REQUIRED_FOLDERS schema. Verifies a real ZIP Blob before claiming ready.
 $('btn-export').addEventListener('click', function () { exportProject('loadstudio'); });
+(function () { var e1 = $('btn-export-loadstudio'); if (e1) e1.addEventListener('click', function () { exportProject('loadstudio'); }); })();
 $('btn-export-cinepwa').addEventListener('click', function () { exportProject('cinepwa'); });
 
 // Audio MVP — wire toolbar buttons.
