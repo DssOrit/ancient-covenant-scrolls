@@ -139,7 +139,7 @@ button.small{font-size:11.5px;padding:5px 10px}
   <summary style="cursor:pointer;padding:10px 14px;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)">Advanced Details / Developer Diagnostics</summary>
   <div style="padding:0 14px 14px">
 
-    <div class="build-marker" style="margin-top:10px">BUILD MARKER: CHAT-STUDIO-v4.4-2026-05-08-v17g70 (edit-routing + voice-sfx-guard + quality-gate)</div>
+    <div class="build-marker" style="margin-top:10px">BUILD MARKER: CHAT-STUDIO-v4.5-2026-05-08-v17g71 (anatomy-safe-refusal)</div>
     <div class="intro">
       <strong>X-AI-CHAT-STUDIO Phase 3.</strong> Routed chat with inline real-output cards. Free / open-source / local-first only. <em>Chat</em>: Pollinations text → AI Horde fallback. <em>Text-to-image &amp; Image-to-image</em>: shared 17-provider chain via lib-load-image-providers.js (Local SD · Pollinations Flux · Pollinations · Pollinations Turbo · AI Horde · AI Horde SDXL · Hugging Face · Cloudflare AI · Cloudflare SDXL-Lightning · HF SDXL-Turbo · Together · Gemini Image · DeepAI · SiliconFlow · Real-ESRGAN · GFPGAN · CodeFormer). <em>Animate</em>: canvas Ken-Burns + MediaRecorder real WebM Blob. <em>Audio</em>: OfflineAudioContext WAV + Browser TTS + import / record / public-audio connectors / procedural ambience. Output proof: only marked ready when a real playable Blob exists; otherwise the card stays prompt-only honestly.
     </div>
@@ -1061,6 +1061,30 @@ function hasSemanticEditVerb(s) { return !!s && SEMANTIC_EDIT_VERBS_RX.test(s); 
 // keeps the previous image visible.
 function runEditWithPreservation(p) {
   var raw = (p || '').trim();
+  // Anatomy-sensitive intent — hands / fingers / face / eyes /
+  // mouth / arms / legs / body / portrait / headshot / sitting /
+  // standing / holding / touching / hugging / smile. These prompts
+  // need a strong inpainting-class provider; plain img2img is NOT
+  // sufficient (consistently produces fused / extra fingers /
+  // warped faces). Refuse before any provider call when no
+  // strong-edit route is wired, instead of generating a worse
+  // hand and surfacing it as a "result".
+  var anatomyRx = /\b(hand|hands|finger|fingers|thumb|palm|knuckle|fist|nail|nails|wrist|elbow|shoulder|arm|arms|leg|legs|knee|ankle|foot|feet|toe|toes|face|faces|eye|eyes|eyebrow|nose|mouth|lip|lips|teeth|tongue|cheek|chin|smile|jaw|ear|ears|hair|skin|body|torso|chest|hip|hips|portrait|headshot|person|people|woman|man|child|girl|boy|sitting|standing|holding|touching|hugging|kissing|gesturing|pointing|wave|waving)\b/i;
+  var anatomySensitive = anatomyRx.test(raw);
+  // "Strong" providers for anatomy-sensitive work: dedicated
+  // inpainting (HF SDXL inpaint via mask) OR a real multimodal
+  // image-edit model (Gemini Image preview) OR a Local SD server
+  // the user controls. Plain img2img (Pollinations / Horde / HF
+  // SDXL-Turbo / Together) is excluded — they regenerate hands.
+  function hasStrongEditProvider() {
+    if (!SHARED_IMG || !SHARED_IMG.providers) return false;
+    return !!SHARED_IMG.providers.find(function (pp) {
+      if (!pp.enabled || !pp.enabled()) return false;
+      if (!SHARED_IMG.isHealthy(pp.id)) return false;
+      // strong = inpainting OR Gemini Image OR Local SD
+      return pp.supportsInpainting === true || pp.id === 'imagen' || pp.id === 'localsd';
+    });
+  }
   // Strong scene-preservation prompt so the chosen img2img model
   // applies ONLY the user's delta on top of the existing image.
   var preservePrefix = 'Preserve the previous image\'s subject, background, composition, lighting, and framing exactly. Apply ONLY this change: ';
@@ -1071,6 +1095,39 @@ function runEditWithPreservation(p) {
       html: '<pre>' + esc('Image-edit needs a source image. Upload one with the + button or generate one first, then ask for the edit.\n\nPrompt prepared:\n  ' + raw) + '</pre>' });
     logGeneration({ kind: 'image-to-image', provider: 'prompt-only', success: false, prompt: raw, promptOnly: true,
       opType: 'image-edit', resultLabel: 'no source image' });
+    return Promise.resolve();
+  }
+  // Anatomy-safe refusal: refuse to attempt anatomy-sensitive
+  // edits with weak providers. Better to honestly say what is
+  // needed than to generate a worse hand.
+  if (anatomySensitive && !hasStrongEditProvider()) {
+    var card = appendCard({ cls: 'assistant', who: 'Anatomy-safe edit provider needed', badge: { cls: 'fail', text: 'Manual mask needed' },
+      html: '<pre>' + esc('This edit involves hands / fingers / face / body / anatomy. To avoid distorted limbs, fused or extra fingers, melted hands, and warped faces, Load refuses to run it through a plain text-to-image fallback.\n\nThis edit requires a stronger image-edit / inpaint provider:\n  - Hugging Face SDXL inpainting (free token, paint a mask + prompt)\n  - Gemini 2.5 Flash Image (free key, multimodal pixel-edit)\n  - Local SD / A1111 / ComfyUI / Fooocus (your own GPU)\n\nAdd one of those keys in Image Prompt > Settings (the same key store both surfaces share). The previous image is preserved above so you can re-run as soon as a strong provider is configured.\n\nUntil then, Load will not attempt the edit — no distorted hand will be presented as a result.\n\nStatus: anatomy_safe_edit_provider_needed') + '</pre>' +
+            '<img class="ref" src="' + esc(STATE.ref.dataUrl) + '" alt="source preserved" style="max-width:160px;border-radius:6px;border:1px solid var(--border);margin-top:6px">' +
+            '<div class="actions"></div>' });
+    var act = card.querySelector('.actions');
+    var bSave = document.createElement('button'); bSave.className = 'small primary'; bSave.textContent = 'Save prompt-only';
+    bSave.addEventListener('click', function () {
+      appendCard({ cls: 'assistant', who: 'Prompt saved', badge: { cls: 'prompt', text: 'Prompt Saved' },
+        html: '<pre>' + esc('Edit prompt saved (anatomy-sensitive · awaiting strong provider):\n\n' + raw + '\n\nSource image preserved in the thread above.') + '</pre>' });
+      logGeneration({ kind: 'image-to-image', provider: 'prompt-only', success: false, prompt: raw,
+        promptOnly: true, opType: 'image-edit', resultLabel: 'Anatomy-safe edit provider needed · Prompt saved' });
+    });
+    act.appendChild(bSave);
+    var bAdv = document.createElement('button'); bAdv.className = 'small'; bAdv.textContent = 'Open Advanced Details';
+    bAdv.addEventListener('click', function () { var d = document.querySelector('details.advanced-details'); if (d) { d.open = true; d.scrollIntoView({ block: 'center', behavior: 'smooth' }); } });
+    act.appendChild(bAdv);
+    var bSettings = document.createElement('a'); bSettings.className = 'small'; bSettings.href = '../image-prompt/index.html'; bSettings.style.cssText = 'text-decoration:none;background:var(--bg3);padding:5px 10px;border-radius:8px;color:var(--fg);border:1px solid var(--border)'; bSettings.textContent = 'Open Image Prompt > Settings';
+    act.appendChild(bSettings);
+    logGeneration({ kind: 'image-to-image', provider: 'shared-chain-refused', success: false, prompt: raw, fullPrompt: full,
+      opType: 'image-edit', sourcePreserved: true,
+      resultLabel: 'Anatomy-safe edit provider needed · Manual mask needed · Prompt saved',
+      anatomySensitive: true });
+    if (window.LoadQueue && STATE.currentJob) {
+      window.LoadQueue.update(STATE.currentJob.jobId, { status: 'Failed', provider: 'shared-chain-refused',
+        error: 'anatomy-sensitive edit refused; no strong inpaint provider configured',
+        nextRecommended: 'add HF inpaint / Gemini Image / Local SD key' }).catch(function () {});
+    }
     return Promise.resolve();
   }
   if (window.LoadLocalOnly && window.LoadLocalOnly.isOn()) {
