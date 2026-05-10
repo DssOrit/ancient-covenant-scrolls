@@ -33,7 +33,11 @@ These have been re-locked on 2026-05-04 after repeated violations.
       check for an open one, `mcp__github__create_pull_request` if
       none exists).
    c. Enable PR auto-merge via `mcp__github__enable_pr_auto_merge`
-      (squash) so it lands as soon as required checks pass.
+      (squash) so it lands as soon as required checks pass. If the
+      repo has no required checks, auto-merge will be rejected with
+      "PR is already in clean status." In that case, immediately
+      call `mcp__github__merge_pull_request` (squash) to land it.
+      Either way, the PR must not sit waiting for a manual click.
    d. Tell the user the PR number + URL in the end-of-build summary
       so they can one-click merge if auto-merge is unavailable.
    Never attempt `git push origin <branch>:main` — it will fail.
