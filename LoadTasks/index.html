@@ -205,6 +205,16 @@
         <button data-view="prdraftbuilder" data-route>PR Draft</button>
         <button data-view="exportrfj" data-route>Export Job</button>
         <button data-view="actionspec" data-route>Action Spec</button>
+        <button data-view="rfjtemplate" data-route>Job Templates</button>
+        <button data-view="fileimpact" data-route>File Impact</button>
+        <button data-view="highriskwarn" data-route>High-Risk Warn</button>
+        <button data-view="approvephrase" data-route>Approval Phrases</button>
+        <button data-view="rollbackbuilder" data-route>Rollback Builder</button>
+        <button data-view="prsafetychk" data-route>PR Safety Check</button>
+        <button data-view="patchscope" data-route>Patch Scope</button>
+        <button data-view="rfjhandoff" data-route>Job Handoff</button>
+        <button data-view="rfjpacket" data-route>Job Packet</button>
+        <button data-view="phase2readiness" data-route>Phase 2 Ready</button>
       </nav>
       <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
         <span class="icon-mini" data-icon="refresh"></span>
@@ -373,6 +383,16 @@
         <button data-view="prdraftbuilder" data-route><span class="rail-icon" data-icon="version"></span><span>PR Draft</span></button>
         <button data-view="exportrfj" data-route><span class="rail-icon" data-icon="vault"></span><span>Export Job</span></button>
         <button data-view="actionspec" data-route><span class="rail-icon" data-icon="shield"></span><span>Action Spec</span></button>
+        <button data-view="rfjtemplate" data-route><span class="rail-icon" data-icon="branch"></span><span>Job Templates</span></button>
+        <button data-view="fileimpact" data-route><span class="rail-icon" data-icon="risk"></span><span>File Impact</span></button>
+        <button data-view="highriskwarn" data-route><span class="rail-icon" data-icon="shield"></span><span>High-Risk Warn</span></button>
+        <button data-view="approvephrase" data-route><span class="rail-icon" data-icon="verified"></span><span>Approval Phrases</span></button>
+        <button data-view="rollbackbuilder" data-route><span class="rail-icon" data-icon="version"></span><span>Rollback Builder</span></button>
+        <button data-view="prsafetychk" data-route><span class="rail-icon" data-icon="shield"></span><span>PR Safety Check</span></button>
+        <button data-view="patchscope" data-route><span class="rail-icon" data-icon="scope"></span><span>Patch Scope</span></button>
+        <button data-view="rfjhandoff" data-route><span class="rail-icon" data-icon="branch"></span><span>Job Handoff</span></button>
+        <button data-view="rfjpacket" data-route><span class="rail-icon" data-icon="vault"></span><span>Job Packet</span></button>
+        <button data-view="phase2readiness" data-route><span class="rail-icon" data-icon="verified"></span><span>Phase 2 Ready</span></button>
       </aside>
 
       <section class="workspace">
@@ -1126,6 +1146,56 @@
               <span class="card-icon" data-icon="shield"></span>
               <strong>GitHub Action Spec</strong>
               <span>Placeholder spec for the future secure executor. Phase 2 reference.</span>
+            </button>
+            <button class="command-card" data-view="rfjtemplate" data-route>
+              <span class="card-icon" data-icon="branch"></span>
+              <strong>Job Templates</strong>
+              <span>Pre-filled repo file job templates for common change types.</span>
+            </button>
+            <button class="command-card" data-view="fileimpact" data-route>
+              <span class="card-icon" data-icon="risk"></span>
+              <strong>File Impact Analyzer</strong>
+              <span>Analyze which systems a file change will affect before submitting.</span>
+            </button>
+            <button class="command-card" data-view="highriskwarn" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>High-Risk File Warning</strong>
+              <span>Review all HIGH-risk files and required approval conditions.</span>
+            </button>
+            <button class="command-card" data-view="approvephrase" data-route>
+              <span class="card-icon" data-icon="verified"></span>
+              <strong>Approval Phrase Builder</strong>
+              <span>Generate standard approval phrases for PR descriptions and reviews.</span>
+            </button>
+            <button class="command-card" data-view="rollbackbuilder" data-route>
+              <span class="card-icon" data-icon="version"></span>
+              <strong>Rollback Builder</strong>
+              <span>Build rollback commands from saved jobs or manual SHA input.</span>
+            </button>
+            <button class="command-card" data-view="prsafetychk" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>PR Safety Checklist</strong>
+              <span>Run through a pre-merge safety checklist before approving a PR.</span>
+            </button>
+            <button class="command-card" data-view="patchscope" data-route>
+              <span class="card-icon" data-icon="scope"></span>
+              <strong>Patch Scope Limiter</strong>
+              <span>Define and enforce scope limits on a patch before building.</span>
+            </button>
+            <button class="command-card" data-view="rfjhandoff" data-route>
+              <span class="card-icon" data-icon="branch"></span>
+              <strong>Repo Job Handoff Export</strong>
+              <span>Export a job handoff note for session continuity or handover.</span>
+            </button>
+            <button class="command-card" data-view="rfjpacket" data-route>
+              <span class="card-icon" data-icon="vault"></span>
+              <strong>Repo Job Packet Export</strong>
+              <span>Bundle job JSON, patch plan, and PR draft into one exportable packet.</span>
+            </button>
+            <button class="command-card" data-view="phase2readiness" data-route>
+              <span class="card-icon" data-icon="verified"></span>
+              <strong>Phase 2 Executor Readiness</strong>
+              <span>Checklist to confirm all conditions are met before enabling Phase 2.</span>
             </button>
           </div>
 
@@ -9435,6 +9505,522 @@
           </article>
         </section>
 
+        <!-- VIEW: rfjtemplate -->
+        <section class="view" id="view-rfjtemplate" data-view-panel="rfjtemplate">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Job Templates</h1><p>Pick a template to pre-fill a new Repo File Job.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Common Templates</h2></div>
+            <div id="rfjt-list" style="display:grid;gap:10px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            var TEMPLATES=[
+              {label:'Add a new LoadTasks tool',targetSite:'LoadTasks',targetFiles:'LoadTasks/index.html',fileAction:'edit',riskLevel:'LOW',liveSiteImpact:'No',serviceWorkerImpact:'No',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'No',proposedChangeSummary:'Add a new tool view section, nav button, rail button, dashboard card, and counter entry.',acceptanceCriteria:'New view renders and nav routes correctly. No existing tools broken.',rollbackPlan:'git checkout <prev-sha> -- LoadTasks/index.html'},
+              {label:'Fix a Load JS bug',targetSite:'Load',targetFiles:'load/load.js',fileAction:'edit',riskLevel:'MEDIUM',liveSiteImpact:'Yes',serviceWorkerImpact:'No',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'No',proposedChangeSummary:'Correct a bug in load.js logic.',acceptanceCriteria:'Bug no longer reproduces on iPad Safari.',rollbackPlan:'git checkout <prev-sha> -- load/load.js'},
+              {label:'Update session notes or backlog',targetSite:'Repo docs',targetFiles:'SESSION_NOTES_YYYY-MM-DD.md or MASTER_BACKLOG.md',fileAction:'edit',riskLevel:'LOW',liveSiteImpact:'No',serviceWorkerImpact:'No',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'No',proposedChangeSummary:'Update session notes or backlog doc.',acceptanceCriteria:'File reflects current state accurately.',rollbackPlan:'git checkout <prev-sha> -- <filename>'},
+              {label:'Edit CLAUDE.md rules',targetSite:'Repo docs',targetFiles:'CLAUDE.md',fileAction:'edit',riskLevel:'HIGH',liveSiteImpact:'No',serviceWorkerImpact:'No',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'Yes',proposedChangeSummary:'Update CLAUDE.md project rules.',acceptanceCriteria:'Rules are accurate and do not conflict.',rollbackPlan:'git checkout <prev-sha> -- CLAUDE.md'},
+              {label:'Fix Load service worker cache version',targetSite:'Load',targetFiles:'load/sw.js',fileAction:'edit',riskLevel:'HIGH',liveSiteImpact:'Yes',serviceWorkerImpact:'Yes',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'No',proposedChangeSummary:'Bump CACHE version string in load/sw.js.',acceptanceCriteria:'New cache version served to clients. Old clients updated.',rollbackPlan:'git checkout <prev-sha> -- load/sw.js'},
+              {label:'Add or update a GitHub Actions workflow',targetSite:'Repo CI',targetFiles:'.github/workflows/<name>.yml',fileAction:'create',riskLevel:'HIGH',liveSiteImpact:'No',serviceWorkerImpact:'No',aiProviderImpact:'No',exportPackageImpact:'No',securityImpact:'Yes',proposedChangeSummary:'Create or update a GitHub Actions workflow file.',acceptanceCriteria:'Workflow runs correctly on trigger events.',rollbackPlan:'git checkout <prev-sha> -- .github/workflows/<name>.yml'}
+            ];
+            function rfjTLoad(){
+              var el=document.getElementById('rfjt-list');if(!el)return;
+              el.innerHTML=TEMPLATES.map(function(t,i){
+                return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;">'+
+                  '<div><strong style="font-size:14px;">'+t.label+'</strong><br><span style="font-size:12px;color:#9aa0b0;">'+t.targetFiles+' &mdash; Risk: <strong style="color:'+(t.riskLevel==='HIGH'?'#ef4444':t.riskLevel==='MEDIUM'?'#f59e0b':'#22c55e')+';">'+t.riskLevel+'</strong></span></div>'+
+                  '<button style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;cursor:pointer;" data-tpl="'+i+'">Use Template</button></div>';
+              }).join('');
+              el.querySelectorAll('[data-tpl]').forEach(function(btn){
+                btn.addEventListener('click',function(){
+                  var t=TEMPLATES[parseInt(btn.getAttribute('data-tpl'))];
+                  localStorage.setItem('lt_rfj_tpl_pending',JSON.stringify(t));
+                  var nav=document.querySelector('[data-view="repofilejob"][data-route]');
+                  if(nav)nav.click();
+                  var tv=document.getElementById('toast');if(tv){tv.textContent='Template loaded — fill in the job form';tv.classList.add('show');setTimeout(function(){tv.classList.remove('show');},2500);}
+                });
+              });
+            }
+            var sec=document.getElementById('view-rfjtemplate');
+            if(sec){sec.addEventListener('lt-view-enter',rfjTLoad);setTimeout(function(){if(sec.classList.contains('active'))rfjTLoad();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: fileimpact -->
+        <section class="view" id="view-fileimpact" data-view-panel="fileimpact">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>File Impact Analyzer</h1><p>Enter a file path to see which systems it affects and the risk level.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Analyze File</h2></div>
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+              <input id="fia-path" type="text" placeholder="e.g. load/sw.js" style="flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;" />
+              <button id="fia-run" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:14px;cursor:pointer;">Analyze</button>
+            </div>
+            <div id="fia-result" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:16px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            var HIGH_PATTERNS=['sw.js','service-worker','ai-chat-studio','image-prompt','lib-load-image-providers','provider','audio','animation','export-pack','deploy','security','token','secret','credential','cloudflare','.github/workflows','acr.css','content/','load/sw'];
+            var MED_PATTERNS=['load.js','load/load','loadstudio','loadplay','attain','study','acr','index.html','lib-'];
+            var LOW_PATTERNS=['loadtasks/index.html','session_notes','handoff','claude.md','master_backlog'];
+            var SYSTEM_MAP=[
+              {match:['sw.js','load/sw'],systems:['Service Worker','Cache','PWA install'],must:['HIGH-risk approval','SW bump','cache version increment']},
+              {match:['ai-chat-studio','lib-load-image-providers','image-prompt','provider'],systems:['AI Provider routing','Image Prompt','Load AI'],must:['HIGH-risk approval','provider audit']},
+              {match:['audio','animation'],systems:['Audio pipeline','Animation engine'],must:['HIGH-risk approval']},
+              {match:['.github/workflows'],systems:['GitHub Actions CI/CD','Deployment'],must:['HIGH-risk approval','security review']},
+              {match:['token','secret','credential'],systems:['Authentication','Security'],must:['HIGH-risk approval','security audit']},
+              {match:['load/load.js','load/load'],systems:['Load main app','PWA UI'],must:['MEDIUM-risk review','cache version bump']},
+              {match:['loadtasks/index.html'],systems:['LoadTasks Developer Bot'],must:['LOW-risk — fast-lane eligible']},
+              {match:['claude.md','CLAUDE.md'],systems:['Project rules','Claude behavior'],must:['HIGH-risk approval','user review']}
+            ];
+            function fiaRun(){
+              var path=document.getElementById('fia-path').value.trim().toLowerCase();
+              if(!path)return;
+              var risk='LOW';var color='#22c55e';
+              var pl=path.toLowerCase();
+              if(HIGH_PATTERNS.some(function(p){return pl.indexOf(p.toLowerCase())>=0;})){risk='HIGH';color='#ef4444';}
+              else if(MED_PATTERNS.some(function(p){return pl.indexOf(p.toLowerCase())>=0;})){risk='MEDIUM';color='#f59e0b';}
+              else if(LOW_PATTERNS.some(function(p){return pl.indexOf(p.toLowerCase())>=0;})){risk='LOW';color='#22c55e';}
+              var systems=[];var must=[];
+              SYSTEM_MAP.forEach(function(sm){
+                if(sm.match.some(function(m){return pl.indexOf(m.toLowerCase())>=0;})){
+                  systems=systems.concat(sm.systems);must=must.concat(sm.must);
+                }
+              });
+              if(!systems.length)systems=['General repo file'];
+              var res=document.getElementById('fia-result');
+              res.style.display='block';
+              res.innerHTML='<div style="margin-bottom:12px;"><strong>Risk Level:</strong> <span style="color:'+color+';font-weight:700;font-size:16px;">'+risk+'</span></div>'+
+                '<div style="margin-bottom:12px;"><strong>Systems affected:</strong><ul style="margin:6px 0 0 18px;color:#c0c4d0;">'+systems.map(function(s){return'<li>'+s+'</li>';}).join('')+'</ul></div>'+
+                '<div><strong>Requirements before change:</strong><ul style="margin:6px 0 0 18px;color:#c0c4d0;">'+must.map(function(m){return'<li>'+m+'</li>';}).join('')+'</ul></div>';
+            }
+            var sec=document.getElementById('view-fileimpact');
+            if(sec){
+              sec.addEventListener('lt-view-enter',function(){});
+              var btn=document.getElementById('fia-run');if(btn)btn.addEventListener('click',fiaRun);
+              var inp=document.getElementById('fia-path');if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter')fiaRun();});
+            }
+          }());</script>
+        </section>
+
+        <!-- VIEW: highriskwarn -->
+        <section class="view" id="view-highriskwarn" data-view-panel="highriskwarn">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>High-Risk File Warning Panel</h1><p>All HIGH-risk files and what is required before any change is allowed.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>HIGH-Risk Files</h2></div>
+            <div style="display:grid;gap:10px;" id="hrw-list"></div>
+          </article>
+          </div>
+          <script>(function(){
+            var HIGHRISK=[
+              {file:'load/sw.js',reason:'Service worker — controls caching for all Load users. Wrong change = broken PWA for everyone.',required:['HIGH-risk job approval','Cache version bump in sw.js AND load.js','Test on iPad Safari after deploy']},
+              {file:'load/lib-load-image-providers.js',reason:'Controls all AI image provider routing. Wrong change = all image generation broken.',required:['HIGH-risk job approval','Provider audit','Test all active providers']},
+              {file:'load/tools/ai-chat-studio.html',reason:'AI Chat Studio UI. Touches provider tokens and conversation state.',required:['HIGH-risk job approval','Security review']},
+              {file:'load/image-prompt/index.html',reason:'Image Prompt PWA. Direct access to AI provider credentials.',required:['HIGH-risk job approval','Security review']},
+              {file:'.github/workflows/*.yml',reason:'CI/CD pipelines. Can trigger deployments and access repo secrets.',required:['HIGH-risk job approval','Security review','No secrets in file']},
+              {file:'CLAUDE.md',reason:'Project rules. Controls Claude behavior across all sessions.',required:['HIGH-risk job approval','User direct review and approval']},
+              {file:'index.html (root)',reason:'ACR Reader root app. LOCKED by user 2026-05-04.',required:['Explicit user instruction to edit ACR Reader','Cannot be fast-laned']},
+              {file:'acr.css',reason:'ACR Reader styles. LOCKED by user 2026-05-04.',required:['Explicit user instruction to edit ACR Reader','Cannot be fast-laned']},
+              {file:'sw.js (root)',reason:'ACR Reader service worker. LOCKED by user 2026-05-04.',required:['Explicit user instruction to edit ACR Reader','Cannot be fast-laned']},
+              {file:'content/',reason:'ACR Reader content folder. LOCKED by user 2026-05-04.',required:['Explicit user instruction to edit ACR Reader','Cannot be fast-laned']}
+            ];
+            function hrwRender(){
+              var el=document.getElementById('hrw-list');if(!el)return;
+              el.innerHTML=HIGHRISK.map(function(h){
+                return '<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:14px 16px;">'+
+                  '<div style="font-weight:700;color:#ef4444;margin-bottom:4px;">'+h.file+'</div>'+
+                  '<div style="font-size:13px;color:#c0c4d0;margin-bottom:8px;">'+h.reason+'</div>'+
+                  '<div style="font-size:12px;color:#9aa0b0;"><strong>Required before change:</strong><ul style="margin:4px 0 0 16px;">'+h.required.map(function(r){return'<li>'+r+'</li>';}).join('')+'</ul></div></div>';
+              }).join('');
+            }
+            var sec=document.getElementById('view-highriskwarn');
+            if(sec){sec.addEventListener('lt-view-enter',hrwRender);setTimeout(function(){if(sec.classList.contains('active'))hrwRender();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: approvephrase -->
+        <section class="view" id="view-approvephrase" data-view-panel="approvephrase">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Approval Phrase Builder</h1><p>Generate standard approval phrases for PR descriptions and review sign-offs.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Build Phrase</h2></div>
+            <div style="display:grid;gap:12px;margin-bottom:16px;">
+              <select id="apb-type" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;">
+                <option value="">-- Select type --</option>
+                <option value="low">LOW-risk fast-lane approval</option>
+                <option value="med">MEDIUM-risk review approval</option>
+                <option value="high">HIGH-risk explicit approval</option>
+                <option value="rollback">Rollback authorization</option>
+                <option value="merge">Merge authorization</option>
+                <option value="boundary">Boundary confirmation</option>
+              </select>
+              <input id="apb-context" type="text" placeholder="Optional context (e.g. PR #29, fix load.js)" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;" />
+              <button id="apb-gen" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:14px;cursor:pointer;">Generate Phrase</button>
+            </div>
+            <div id="apb-result" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            var PHRASES={
+              low:function(ctx){return'This change is LOW-risk. Boundaries confirmed: LoadTasks/index.html only, no SW, no AI, no providers, no tokens, no deployment.'+(ctx?' Context: '+ctx:'');},
+              med:function(ctx){return'This change is MEDIUM-risk. File impact reviewed. No service worker change. No AI provider change. Rollback command documented.'+(ctx?' Context: '+ctx:'');},
+              high:function(ctx){return'HIGH-risk change. Explicit user approval required before merge. Impact reviewed: service worker / AI provider / security affected. Do not merge without direct user sign-off.'+(ctx?' Context: '+ctx:'');},
+              rollback:function(ctx){return'Rollback authorized. Command: git checkout <sha> -- <file>. Run on the main branch after confirming the target SHA.'+(ctx?' Context: '+ctx:'');},
+              merge:function(ctx){return'Merge authorized for this PR. All checks confirmed. No out-of-boundary changes detected. Safe to squash merge into main.'+(ctx?' Context: '+ctx:'');},
+              boundary:function(ctx){return'Boundary check confirmed: LoadTasks/index.html only. No SW/cache. No Load AI. No providers. No audio. No animation. No deployment. No tokens. No deletion. No branch cleanup.'+(ctx?' Context: '+ctx:'');}
+            };
+            document.getElementById('apb-gen').addEventListener('click',function(){
+              var type=document.getElementById('apb-type').value;
+              var ctx=document.getElementById('apb-context').value.trim();
+              if(!type)return;
+              var phrase=PHRASES[type](ctx);
+              var res=document.getElementById('apb-result');
+              res.style.display='block';
+              res.innerHTML='<div style="font-size:14px;line-height:1.6;color:#c0c4d0;margin-bottom:12px;">'+phrase+'</div>'+
+                '<button id="apb-copy" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Copy</button>';
+              document.getElementById('apb-copy').addEventListener('click',function(){
+                navigator.clipboard&&navigator.clipboard.writeText(phrase).then(function(){var t=document.getElementById('toast');if(t){t.textContent='Copied';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}});
+              });
+            });
+          }());</script>
+        </section>
+
+        <!-- VIEW: rollbackbuilder -->
+        <section class="view" id="view-rollbackbuilder" data-view-panel="rollbackbuilder">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Rollback Builder</h1><p>Build a git rollback command from a saved job or manual input.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>From Saved Job</h2></div>
+            <select id="rb-job-sel" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;margin-bottom:12px;">
+              <option value="">-- Select a saved job --</option>
+            </select>
+            <div id="rb-job-result" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;margin-bottom:20px;"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-title"><h2>Manual Input</h2></div>
+            <div style="display:grid;gap:10px;margin-bottom:12px;">
+              <input id="rb-sha" type="text" placeholder="Good SHA (e.g. fd10b4dd)" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;" />
+              <input id="rb-file" type="text" placeholder="File path (e.g. LoadTasks/index.html)" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;" />
+              <button id="rb-gen" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:14px;cursor:pointer;">Build Command</button>
+            </div>
+            <div id="rb-manual-result" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            function rbAll(){var a=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_rfj_')===0&&k!=='lt_rfj_draft'){try{a.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}a.sort(function(a,b){return b.ts-a.ts;});return a;}
+            function rbShowCmd(cmd,container){
+              container.style.display='block';
+              container.innerHTML='<code style="display:block;background:rgba(0,0,0,0.3);border-radius:6px;padding:10px 12px;font-size:13px;word-break:break-all;margin-bottom:10px;">'+cmd+'</code>'+
+                '<button class="rb-cp-btn" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Copy</button>';
+              container.querySelector('.rb-cp-btn').addEventListener('click',function(){
+                navigator.clipboard&&navigator.clipboard.writeText(cmd).then(function(){var t=document.getElementById('toast');if(t){t.textContent='Copied';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}});
+              });
+            }
+            function rbLoad(){
+              var sel=document.getElementById('rb-job-sel');if(!sel)return;
+              var jobs=rbAll();
+              sel.innerHTML='<option value="">-- Select a saved job --</option>'+jobs.map(function(j){return'<option value="'+j.id+'">'+j.jobId+' — '+j.targetFiles+'</option>';}).join('');
+            }
+            document.getElementById('rb-job-sel').addEventListener('change',function(){
+              var id=this.value;var res=document.getElementById('rb-job-result');
+              if(!id){res.style.display='none';return;}
+              var j=JSON.parse(localStorage.getItem('lt_rfj_'+id));
+              if(!j){res.style.display='none';return;}
+              var cmd='git checkout <good-sha> -- '+j.targetFiles;
+              if(j.rollbackPlan&&j.rollbackPlan.trim())cmd=j.rollbackPlan;
+              rbShowCmd(cmd,res);
+            });
+            document.getElementById('rb-gen').addEventListener('click',function(){
+              var sha=document.getElementById('rb-sha').value.trim();
+              var file=document.getElementById('rb-file').value.trim();
+              if(!sha||!file)return;
+              rbShowCmd('git checkout '+sha+' -- '+file,document.getElementById('rb-manual-result'));
+            });
+            var sec=document.getElementById('view-rollbackbuilder');
+            if(sec){sec.addEventListener('lt-view-enter',rbLoad);setTimeout(function(){if(sec.classList.contains('active'))rbLoad();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: prsafetychk -->
+        <section class="view" id="view-prsafetychk" data-view-panel="prsafetychk">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>PR Safety Checklist</h1><p>Run through this checklist before approving any PR.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Pre-Merge Checklist</h2><button id="psc-reset" class="small-btn">Reset</button></div>
+            <div id="psc-list" style="display:grid;gap:8px;"></div>
+            <div id="psc-status" style="margin-top:16px;font-weight:700;font-size:15px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            var CHECKS=[
+              {id:'c1',text:'Files changed are within the approved boundary (e.g. LoadTasks/index.html only for fast-lane)'},
+              {id:'c2',text:'No service worker or cache changes unless HIGH-risk approval granted'},
+              {id:'c3',text:'No AI provider, audio, animation, or deployment changes'},
+              {id:'c4',text:'No tokens, secrets, or credentials added to any file'},
+              {id:'c5',text:'Rollback command documented in the job or PR description'},
+              {id:'c6',text:'Risk level matches the actual files changed'},
+              {id:'c7',text:'Branch is synced from origin/main (not stale)'},
+              {id:'c8',text:'Cache version bumped if load/load.js or any Load SW was changed'},
+              {id:'c9',text:'ACR Reader root files untouched (index.html, acr.css, sw.js, content/)'},
+              {id:'c10',text:'No direct merge to main without PR — feature branch PR only'}
+            ];
+            function pscRender(){
+              var el=document.getElementById('psc-list');if(!el)return;
+              el.innerHTML=CHECKS.map(function(c){
+                var checked=localStorage.getItem('lt_psc_'+c.id)==='1';
+                return '<label style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.03);border-radius:6px;padding:10px 12px;cursor:pointer;">'+
+                  '<input type="checkbox" data-psc="'+c.id+'" '+(checked?'checked':'')+' style="margin-top:2px;flex-shrink:0;">'+
+                  '<span style="font-size:14px;color:#c0c4d0;">'+c.text+'</span></label>';
+              }).join('');
+              el.querySelectorAll('[data-psc]').forEach(function(cb){
+                cb.addEventListener('change',function(){
+                  localStorage.setItem('lt_psc_'+cb.getAttribute('data-psc'),cb.checked?'1':'0');
+                  pscStatus();
+                });
+              });
+              pscStatus();
+            }
+            function pscStatus(){
+              var total=CHECKS.length;
+              var done=CHECKS.filter(function(c){return localStorage.getItem('lt_psc_'+c.id)==='1';}).length;
+              var s=document.getElementById('psc-status');if(!s)return;
+              if(done===total){s.textContent='All '+total+' checks passed — safe to merge.';s.style.color='#22c55e';}
+              else{s.textContent=done+' / '+total+' checks complete.';s.style.color='#f59e0b';}
+            }
+            document.getElementById('psc-reset').addEventListener('click',function(){CHECKS.forEach(function(c){localStorage.removeItem('lt_psc_'+c.id);});pscRender();});
+            var sec=document.getElementById('view-prsafetychk');
+            if(sec){sec.addEventListener('lt-view-enter',pscRender);setTimeout(function(){if(sec.classList.contains('active'))pscRender();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: patchscope -->
+        <section class="view" id="view-patchscope" data-view-panel="patchscope">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Patch Scope Limiter</h1><p>Define allowed files and boundaries before building a patch. Save as a scope record.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Define Scope</h2></div>
+            <div style="display:grid;gap:10px;margin-bottom:16px;">
+              <input id="ps2-label" type="text" placeholder="Scope label (e.g. LoadTasks Batch 18)" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;" />
+              <textarea id="ps2-files" rows="3" placeholder="Allowed files, one per line" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;resize:vertical;"></textarea>
+              <textarea id="ps2-deny" rows="2" placeholder="Denied files / patterns, one per line" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;resize:vertical;"></textarea>
+              <textarea id="ps2-notes" rows="2" placeholder="Scope notes or reason" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;resize:vertical;"></textarea>
+              <button id="ps2-save" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:14px;cursor:pointer;">Save Scope</button>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-title"><h2>Saved Scopes</h2></div>
+            <div id="ps2-list" style="display:grid;gap:8px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            function ps2All(){var a=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_ps2_')===0){try{a.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}a.sort(function(a,b){return b.ts-a.ts;});return a;}
+            function ps2Render(){
+              var el=document.getElementById('ps2-list');if(!el)return;
+              var a=ps2All();
+              if(!a.length){el.innerHTML='<p style="color:#9aa0b0;">No scopes saved yet.</p>';return;}
+              el.innerHTML=a.map(function(s){
+                return '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 14px;">'+
+                  '<div style="font-weight:700;margin-bottom:4px;">'+s.label+'</div>'+
+                  '<div style="font-size:12px;color:#9aa0b0;margin-bottom:4px;">Allowed: '+s.files.replace(/\n/g,', ')+'</div>'+
+                  (s.deny?'<div style="font-size:12px;color:#ef4444;margin-bottom:4px;">Denied: '+s.deny.replace(/\n/g,', ')+'</div>':'')+
+                  (s.notes?'<div style="font-size:12px;color:#9aa0b0;">'+s.notes+'</div>':'')+
+                  '<button class="ps2-del" data-id="'+s.id+'" style="margin-top:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:5px;padding:4px 10px;color:#ef4444;font-size:12px;cursor:pointer;">Delete</button></div>';
+              }).join('');
+              el.querySelectorAll('.ps2-del').forEach(function(b){
+                b.addEventListener('click',function(){if(!confirm('Delete scope?'))return;localStorage.removeItem('lt_ps2_'+b.dataset.id);ps2Render();});
+              });
+            }
+            document.getElementById('ps2-save').addEventListener('click',function(){
+              var label=document.getElementById('ps2-label').value.trim();
+              var files=document.getElementById('ps2-files').value.trim();
+              if(!label||!files)return;
+              var id=Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+              localStorage.setItem('lt_ps2_'+id,JSON.stringify({id:id,label:label,files:files,deny:document.getElementById('ps2-deny').value.trim(),notes:document.getElementById('ps2-notes').value.trim(),ts:Date.now()}));
+              ['ps2-label','ps2-files','ps2-deny','ps2-notes'].forEach(function(f){document.getElementById(f).value='';});
+              ps2Render();
+            });
+            var sec=document.getElementById('view-patchscope');
+            if(sec){sec.addEventListener('lt-view-enter',ps2Render);setTimeout(function(){if(sec.classList.contains('active'))ps2Render();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: rfjhandoff -->
+        <section class="view" id="view-rfjhandoff" data-view-panel="rfjhandoff">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Repo Job Handoff Export</h1><p>Export a session handoff note for a saved job, ready to paste into SESSION_NOTES or share.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Select Job</h2></div>
+            <select id="rjh-sel" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;margin-bottom:12px;">
+              <option value="">-- Select a job --</option>
+            </select>
+            <div id="rjh-result" style="display:none;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            function rjhAll(){var a=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_rfj_')===0&&k!=='lt_rfj_draft'){try{a.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}a.sort(function(a,b){return b.ts-a.ts;});return a;}
+            function rjhText(j){
+              return '# Repo Job Handoff: '+j.jobId+'\n'+
+                'Created: '+j.createdAt+'\n'+
+                'Status: '+j.status+'\n'+
+                'Target Site: '+j.targetSite+'\n'+
+                'Target Files: '+j.targetFiles+'\n'+
+                'Action: '+j.fileAction+'\n'+
+                'Risk: '+j.riskLevel+'\n'+
+                'Live Site Impact: '+j.liveSiteImpact+'\n'+
+                'SW Impact: '+j.serviceWorkerImpact+'\n'+
+                '\n## Summary\n'+j.proposedChangeSummary+'\n'+
+                '\n## Reason\n'+j.reasonForChange+'\n'+
+                '\n## Acceptance Criteria\n'+j.acceptanceCriteria+'\n'+
+                '\n## Rollback\n'+j.rollbackPlan+'\n'+
+                '\n## Branch\n'+(j.branchNameSuggestion||'TBD')+'\n'+
+                '\n## PR Title\n'+(j.prTitleSuggestion||'TBD')+'\n';
+            }
+            function rjhLoad(){
+              var sel=document.getElementById('rjh-sel');if(!sel)return;
+              var jobs=rjhAll();
+              sel.innerHTML='<option value="">-- Select a job --</option>'+jobs.map(function(j){return'<option value="'+j.id+'">'+j.jobId+' — '+j.targetFiles+'</option>';}).join('');
+            }
+            document.getElementById('rjh-sel').addEventListener('change',function(){
+              var id=this.value;var res=document.getElementById('rjh-result');
+              if(!id){res.style.display='none';return;}
+              var j=JSON.parse(localStorage.getItem('lt_rfj_'+id));if(!j){res.style.display='none';return;}
+              var txt=rjhText(j);
+              res.style.display='block';
+              res.innerHTML='<textarea rows="14" style="width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:10px 12px;color:#c0c4d0;font-size:13px;font-family:monospace;resize:vertical;" readonly>'+txt+'</textarea>'+
+                '<div style="display:flex;gap:10px;margin-top:10px;">'+
+                '<button id="rjh-copy" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Copy</button>'+
+                '<button id="rjh-dl" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;cursor:pointer;">Download .md</button>'+
+                '</div>';
+              document.getElementById('rjh-copy').addEventListener('click',function(){
+                navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){var t=document.getElementById('toast');if(t){t.textContent='Copied';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}});
+              });
+              document.getElementById('rjh-dl').addEventListener('click',function(){
+                var bl=new Blob([txt],{type:'text/markdown'});var a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='handoff-'+j.jobId+'.md';a.click();
+              });
+            });
+            var sec=document.getElementById('view-rfjhandoff');
+            if(sec){sec.addEventListener('lt-view-enter',rjhLoad);setTimeout(function(){if(sec.classList.contains('active'))rjhLoad();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: rfjpacket -->
+        <section class="view" id="view-rfjpacket" data-view-panel="rfjpacket">
+          <div class="section-head"><p class="eyebrow">Repo File Worker</p><h1>Repo Job Packet Export</h1><p>Bundle job JSON, patch plan, and PR draft into one downloadable packet for any saved job.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Select Job</h2></div>
+            <select id="rjpkt-sel" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:8px 12px;color:#e8eaf0;font-size:14px;margin-bottom:12px;">
+              <option value="">-- Select a job --</option>
+            </select>
+            <div id="rjpkt-actions" style="display:none;display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;"></div>
+          </article>
+          </div>
+          <script>(function(){
+            function rjpktAll(){var a=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_rfj_')===0&&k!=='lt_rfj_draft'){try{a.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}a.sort(function(a,b){return b.ts-a.ts;});return a;}
+            function ppTxt(j){return'# Patch Plan: '+j.jobId+'\n\nFile: '+j.targetFiles+'\nAction: '+j.fileAction+'\nRisk: '+j.riskLevel+'\nBranch: '+(j.branchNameSuggestion||'TBD')+'\n\n## Summary\n'+j.proposedChangeSummary+'\n\n## Acceptance Criteria\n'+j.acceptanceCriteria+'\n\n## Rollback\n'+j.rollbackPlan+'\n';}
+            function prdTxt(j){return'PR Title: '+(j.prTitleSuggestion||j.jobId+': '+j.proposedChangeSummary.slice(0,60))+'\n\n## Summary\n'+j.proposedChangeSummary+'\n\n## Files Changed\n- '+j.targetFiles+'\n\n## Risk\n'+j.riskLevel+'\nLive site: '+j.liveSiteImpact+' | SW: '+j.serviceWorkerImpact+' | AI: '+j.aiProviderImpact+'\n\n## Rollback\n'+j.rollbackPlan+'\n\n'+(j.prBodyDraft||'');}
+            function rjpktLoad(){
+              var sel=document.getElementById('rjpkt-sel');if(!sel)return;
+              var jobs=rjpktAll();
+              sel.innerHTML='<option value="">-- Select a job --</option>'+jobs.map(function(j){return'<option value="'+j.id+'">'+j.jobId+' — '+j.targetFiles+'</option>';}).join('');
+            }
+            document.getElementById('rjpkt-sel').addEventListener('change',function(){
+              var id=this.value;var act=document.getElementById('rjpkt-actions');
+              if(!id){act.style.display='none';return;}
+              var j=JSON.parse(localStorage.getItem('lt_rfj_'+id));if(!j){act.style.display='none';return;}
+              act.style.display='flex';
+              act.innerHTML=
+                '<button id="rjpkt-json" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Download JSON</button>'+
+                '<button id="rjpkt-patch" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Download Patch Plan</button>'+
+                '<button id="rjpkt-pr" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:7px 14px;color:#e8eaf0;font-size:13px;cursor:pointer;">Download PR Draft</button>'+
+                '<button id="rjpkt-all" style="background:#2563eb;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;cursor:pointer;">Download All 3</button>';
+              function dl(content,name,type){var bl=new Blob([content],{type:type||'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=name;a.click();}
+              document.getElementById('rjpkt-json').addEventListener('click',function(){dl(JSON.stringify(j,null,2),'job-'+j.jobId+'.json','application/json');});
+              document.getElementById('rjpkt-patch').addEventListener('click',function(){dl(ppTxt(j),'patch-plan-'+j.jobId+'.txt');});
+              document.getElementById('rjpkt-pr').addEventListener('click',function(){dl(prdTxt(j),'pr-draft-'+j.jobId+'.txt');});
+              document.getElementById('rjpkt-all').addEventListener('click',function(){
+                var combined='=== JOB JSON ===\n'+JSON.stringify(j,null,2)+'\n\n=== PATCH PLAN ===\n'+ppTxt(j)+'\n\n=== PR DRAFT ===\n'+prdTxt(j);
+                dl(combined,'job-packet-'+j.jobId+'.txt');
+              });
+            });
+            var sec=document.getElementById('view-rfjpacket');
+            if(sec){sec.addEventListener('lt-view-enter',rjpktLoad);setTimeout(function(){if(sec.classList.contains('active'))rjpktLoad();},150);}
+          }());</script>
+        </section>
+
+        <!-- VIEW: phase2readiness -->
+        <section class="view" id="view-phase2readiness" data-view-panel="phase2readiness">
+          <div class="section-head"><p class="eyebrow">Repo File Worker — Phase 2 Preview</p><h1>Phase 2 Executor Readiness Checklist</h1><p>Confirm all conditions before enabling the GitHub Actions secure executor.</p></div>
+          <div class="panel-wrap">
+          <article class="panel">
+            <div class="panel-title"><h2>Phase 2 Readiness</h2><button id="p2r-reset" class="small-btn">Reset</button></div>
+            <div id="p2r-list" style="display:grid;gap:8px;"></div>
+            <div id="p2r-status" style="margin-top:16px;font-weight:700;font-size:15px;"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-title"><h2>Phase 2 Architecture</h2></div>
+            <div style="font-size:13px;color:#c0c4d0;line-height:1.7;">
+              <div style="margin-bottom:10px;"><strong>Flow:</strong> LoadTasks (browser) saves job JSON to localStorage &rarr; user exports JSON &rarr; commits as <code>repo-file-job.json</code> to a feature branch &rarr; GitHub Actions reads the job, opens a PR with the specified changes &rarr; user reviews + merges.</div>
+              <div style="margin-bottom:10px;"><strong>Hard rules for Phase 2 executor:</strong></div>
+              <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:10px 12px;font-family:monospace;font-size:12px;display:grid;gap:4px;">
+                <div>— No GitHub token in the browser, ever</div>
+                <div>— No push to main</div>
+                <div>— No merge without user approval</div>
+                <div>— No delete operations</div>
+                <div>— No branch cleanup</div>
+                <div>— No deployment trigger</div>
+                <div>— No SW/cache changes without HIGH-risk flag</div>
+                <div>— No AI provider routing changes without HIGH-risk flag</div>
+                <div>— Job JSON is read-only input; executor cannot modify jobs</div>
+                <div>— Executor creates a PR and stops; user is the release gatekeeper</div>
+              </div>
+            </div>
+          </article>
+          </div>
+          <script>(function(){
+            var P2CHECKS=[
+              {id:'p1',text:'Phase 1 tooling complete: Repo File Job, File Path Helper, Risk Classifier, Patch Plan, PR Draft, Export/Manage, Action Spec'},
+              {id:'p2',text:'At least 3 test jobs saved in LoadTasks with correct schema, risk, and rollback fields'},
+              {id:'p3',text:'Patch Plan Builder verified to export correct .txt for a test job'},
+              {id:'p4',text:'PR Draft Builder verified to export correct PR title and body for a test job'},
+              {id:'p5',text:'Job Packet Export verified — JSON + patch plan + PR draft all download correctly'},
+              {id:'p6',text:'Risk Classifier verified — HIGH/MEDIUM/LOW rules tested against real file paths'},
+              {id:'p7',text:'GitHub Actions workflow file drafted (no secrets in browser; uses repo secrets only)'},
+              {id:'p8',text:'Workflow reads repo-file-job.json from committed branch, not from browser'},
+              {id:'p9',text:'Workflow creates feature branch + PR, does NOT push to main'},
+              {id:'p10',text:'User has reviewed and approved the Phase 2 workflow file before enabling'},
+              {id:'p11',text:'Rollback procedure for Phase 2 executor failure is documented'},
+              {id:'p12',text:'No token, secret, or credential is stored in LoadTasks or any browser storage'}
+            ];
+            function p2rRender(){
+              var el=document.getElementById('p2r-list');if(!el)return;
+              el.innerHTML=P2CHECKS.map(function(c){
+                var checked=localStorage.getItem('lt_p2r_'+c.id)==='1';
+                return '<label style="display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,0.03);border-radius:6px;padding:10px 12px;cursor:pointer;">'+
+                  '<input type="checkbox" data-p2r="'+c.id+'" '+(checked?'checked':'')+' style="margin-top:2px;flex-shrink:0;">'+
+                  '<span style="font-size:14px;color:#c0c4d0;">'+c.text+'</span></label>';
+              }).join('');
+              el.querySelectorAll('[data-p2r]').forEach(function(cb){
+                cb.addEventListener('change',function(){
+                  localStorage.setItem('lt_p2r_'+cb.getAttribute('data-p2r'),cb.checked?'1':'0');
+                  p2rStatus();
+                });
+              });
+              p2rStatus();
+            }
+            function p2rStatus(){
+              var total=P2CHECKS.length;
+              var done=P2CHECKS.filter(function(c){return localStorage.getItem('lt_p2r_'+c.id)==='1';}).length;
+              var s=document.getElementById('p2r-status');if(!s)return;
+              if(done===total){s.textContent='All '+total+' conditions met — Phase 2 ready to enable.';s.style.color='#22c55e';}
+              else{s.textContent=done+' / '+total+' conditions met.';s.style.color='#f59e0b';}
+            }
+            document.getElementById('p2r-reset').addEventListener('click',function(){P2CHECKS.forEach(function(c){localStorage.removeItem('lt_p2r_'+c.id);});p2rRender();});
+            var sec=document.getElementById('view-phase2readiness');
+            if(sec){sec.addEventListener('lt-view-enter',p2rRender);setTimeout(function(){if(sec.classList.contains('active'))p2rRender();},150);}
+          }());</script>
+        </section>
+
         <!-- ═══ DASHBOARD COUNTERS SCRIPT ═══ -->
         <script>
         (function(){
@@ -9497,7 +10083,8 @@
               {label:'Site Protections',n:ltCountPrefix('lt_sps_',['lt_sps_draft'])},
               {label:'Vault Events',n:ltCountPrefix('lt_bvr_',['lt_bvr_draft'])},
               {label:'Pinned Commands',n:ltCountPrefix('lt_pcmd_',['lt_pcmd_draft'])},
-              {label:'Repo File Jobs',n:ltCountPrefix('lt_rfj_',['lt_rfj_draft'])}
+              {label:'Repo File Jobs',n:ltCountPrefix('lt_rfj_',['lt_rfj_draft'])},
+              {label:'Patch Scopes',n:ltCountPrefix('lt_ps2_',[])}
             ];
             el.innerHTML=items.map(function(it){return'<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;text-align:center;"><div style="font-size:28px;font-weight:700;line-height:1;">'+(it.n)+'</div><div style="font-size:12px;color:#9aa0b0;margin-top:4px;">'+it.label+'</div></div>';}).join('');
           }
