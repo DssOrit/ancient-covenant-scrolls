@@ -108,6 +108,18 @@
         <button data-view="mergedecision" data-route>Merge Check</button>
         <button data-view="rollbackdecision" data-route>Rollback Check</button>
         <button data-view="dailyexport" data-route>Daily Export</button>
+        <button data-view="releasenotes" data-route>Release Notes</button>
+        <button data-view="rollbackreceipt" data-route>Rollback Receipt</button>
+        <button data-view="approvalphrase" data-route>Approval Phrase</button>
+        <button data-view="branchsafety" data-route>Branch Safety</button>
+        <button data-view="prrisks" data-route>PR Risk Matrix</button>
+        <button data-view="deployreceipt" data-route>Deploy Receipt</button>
+        <button data-view="stagingplan" data-route>Staging Plan</button>
+        <button data-view="knownissues" data-route>Known Issues</button>
+        <button data-view="verifyscript" data-route>Verify Script</button>
+        <button data-view="featureaccept" data-route>Feature Accept</button>
+        <button data-view="depnotes" data-route>Dep Notes</button>
+        <button data-view="dailycommand" data-route>Daily Command</button>
         <button data-view="diffviewer" data-route>Diff Viewer</button>
         <button data-view="commitmsg" data-route>Commit Msg</button>
         <button data-view="errorlog" data-route>Error Log</button>
@@ -191,6 +203,18 @@
         <button data-view="mergedecision" data-route><span class="rail-icon" data-icon="certificate"></span><span>Merge Check</span></button>
         <button data-view="rollbackdecision" data-route><span class="rail-icon" data-icon="wrench"></span><span>Rollback</span></button>
         <button data-view="dailyexport" data-route><span class="rail-icon" data-icon="upload"></span><span>Daily Export</span></button>
+        <button data-view="releasenotes" data-route><span class="rail-icon" data-icon="version"></span><span>Release Notes</span></button>
+        <button data-view="rollbackreceipt" data-route><span class="rail-icon" data-icon="wrench"></span><span>Rollback Receipt</span></button>
+        <button data-view="approvalphrase" data-route><span class="rail-icon" data-icon="certificate"></span><span>Approval Phrase</span></button>
+        <button data-view="branchsafety" data-route><span class="rail-icon" data-icon="shield"></span><span>Branch Safety</span></button>
+        <button data-view="prrisks" data-route><span class="rail-icon" data-icon="focus"></span><span>PR Risk Matrix</span></button>
+        <button data-view="deployreceipt" data-route><span class="rail-icon" data-icon="upload"></span><span>Deploy Receipt</span></button>
+        <button data-view="stagingplan" data-route><span class="rail-icon" data-icon="notes"></span><span>Staging Plan</span></button>
+        <button data-view="knownissues" data-route><span class="rail-icon" data-icon="wrench"></span><span>Known Issues</span></button>
+        <button data-view="verifyscript" data-route><span class="rail-icon" data-icon="shield"></span><span>Verify Script</span></button>
+        <button data-view="featureaccept" data-route><span class="rail-icon" data-icon="shield"></span><span>Feature Accept</span></button>
+        <button data-view="depnotes" data-route><span class="rail-icon" data-icon="library"></span><span>Dep Notes</span></button>
+        <button data-view="dailycommand" data-route><span class="rail-icon" data-icon="dashboard"></span><span>Daily Command</span></button>
         <button data-view="diffviewer" data-route><span class="rail-icon" data-icon="focus"></span><span>Diff Viewer</span></button>
         <button data-view="commitmsg" data-route><span class="rail-icon" data-icon="notes"></span><span>Commit Msg</span></button>
         <button data-view="errorlog" data-route><span class="rail-icon" data-icon="wrench"></span><span>Error Log</span></button>
@@ -531,6 +555,66 @@
               <span class="card-icon" data-icon="certificate"></span>
               <strong>Label Maker</strong>
               <span>Generate consistent status labels and badge text for records and PRs.</span>
+            </button>
+            <button class="command-card" data-view="releasenotes" data-route>
+              <span class="card-icon" data-icon="version"></span>
+              <strong>Release Notes Builder</strong>
+              <span>Draft structured release notes from changelog entries and PR list.</span>
+            </button>
+            <button class="command-card" data-view="rollbackreceipt" data-route>
+              <span class="card-icon" data-icon="wrench"></span>
+              <strong>Rollback Receipt Builder</strong>
+              <span>Generate a formal rollback receipt to document a completed revert.</span>
+            </button>
+            <button class="command-card" data-view="approvalphrase" data-route>
+              <span class="card-icon" data-icon="certificate"></span>
+              <strong>Approval Phrase Generator</strong>
+              <span>Generate the exact approval phrases needed to trigger Claude actions.</span>
+            </button>
+            <button class="command-card" data-view="branchsafety" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>Branch Safety Checklist</strong>
+              <span>Confirm a branch is safe to push before any git push command.</span>
+            </button>
+            <button class="command-card" data-view="prrisks" data-route>
+              <span class="card-icon" data-icon="focus"></span>
+              <strong>PR Risk Matrix</strong>
+              <span>Score a PR across 8 risk dimensions. Get a composite risk rating.</span>
+            </button>
+            <button class="command-card" data-view="deployreceipt" data-route>
+              <span class="card-icon" data-icon="upload"></span>
+              <strong>Deployment Receipt Draft</strong>
+              <span>Document a completed deployment with SHA, files, and verification status.</span>
+            </button>
+            <button class="command-card" data-view="stagingplan" data-route>
+              <span class="card-icon" data-icon="notes"></span>
+              <strong>Staging Plan Builder</strong>
+              <span>Plan what to test before merging. Steps, expected results, pass/fail.</span>
+            </button>
+            <button class="command-card" data-view="knownissues" data-route>
+              <span class="card-icon" data-icon="wrench"></span>
+              <strong>Known Issues Register</strong>
+              <span>Permanent log of known issues per site. Separate from the Issue Tracker.</span>
+            </button>
+            <button class="command-card" data-view="verifyscript" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>Verification Script Builder</strong>
+              <span>Build a step-by-step manual verification script for any feature or fix.</span>
+            </button>
+            <button class="command-card" data-view="featureaccept" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>Feature Acceptance Checklist</strong>
+              <span>Define and check acceptance criteria before marking a feature done.</span>
+            </button>
+            <button class="command-card" data-view="depnotes" data-route>
+              <span class="card-icon" data-icon="library"></span>
+              <strong>Dependency Notes</strong>
+              <span>Log libraries, scripts, or external dependencies per site with version and status.</span>
+            </button>
+            <button class="command-card" data-view="dailycommand" data-route>
+              <span class="card-icon" data-icon="dashboard"></span>
+              <strong>Daily Command Center Summary</strong>
+              <span>One-tap view of today's key numbers: issues, blockers, queue, timer, notes.</span>
             </button>
           </div>
 
@@ -4990,6 +5074,609 @@
           }());</script>
         </section>
 
+        <!-- ═══ BATCH 11: OPERATIONAL TOOLS ═══ -->
+        <section class="view" id="view-releasenotes" data-view-panel="releasenotes">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Release Notes Builder</h1><p>Draft structured release notes from changelog entries and your own summary.</p></div>
+          <article class="panel form-panel">
+            <label>Release version<input id="rn-ver" placeholder="e.g. v5.27, v17g80"></label>
+            <label>Release date<input id="rn-date" type="date"></label>
+            <label>Sites affected<input id="rn-sites" placeholder="e.g. Load, LoadStudio, LoadTasks"></label>
+            <label>Highlights (one per line)<textarea id="rn-highlights" rows="4" placeholder="Key features or fixes in this release..."></textarea></label>
+            <label>Known issues remaining<textarea id="rn-known" rows="2" placeholder="Anything still open after this release..."></textarea></label>
+            <label>Rollback SHA or branch<input id="rn-sha" placeholder="e.g. backup/2026-05-11-v5.26"></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="rn-generate">Build Release Notes</button>
+              <button class="secondary-action" id="rn-load-cl">Pull from Changelog</button>
+            </div>
+          </article>
+          <div id="rn-output" style="margin-top:16px;display:none;">
+            <article class="panel">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <h2 style="margin:0;font-size:14px;color:#9aa0b0;">Release Notes</h2>
+                <div style="display:flex;gap:8px;"><button class="small-btn" id="rn-copy">Copy</button><button class="small-btn" id="rn-export">Export .txt</button></div>
+              </div>
+              <pre id="rn-text" style="white-space:pre-wrap;font-size:13px;color:#e0e4f0;margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;"></pre>
+            </article>
+          </div>
+          <script>(function(){
+            var rnTxt='';
+            function rnBuild(){
+              var ver=document.getElementById('rn-ver').value.trim();
+              var date=document.getElementById('rn-date').value||new Date().toLocaleDateString();
+              var sites=document.getElementById('rn-sites').value.trim();
+              var highlights=document.getElementById('rn-highlights').value.trim();
+              var known=document.getElementById('rn-known').value.trim();
+              var sha=document.getElementById('rn-sha').value.trim();
+              rnTxt='RELEASE NOTES\n'+(ver?'Version: '+ver+'\n':'')+'Date: '+date+'\n'+(sites?'Sites: '+sites+'\n':'')
+                +'\nHIGHLIGHTS\n'+'-'.repeat(20)+'\n'+(highlights?highlights.split('\n').map(function(l){return l.trim()?'- '+l.trim():'';}).filter(Boolean).join('\n'):'None recorded')
+                +(known?'\n\nKNOWN ISSUES REMAINING\n'+'-'.repeat(20)+'\n'+known:'')
+                +(sha?'\n\nROLLBACK\n'+sha:'');
+              document.getElementById('rn-text').textContent=rnTxt;
+              document.getElementById('rn-output').style.display='';
+            }
+            document.getElementById('rn-generate').addEventListener('click',rnBuild);
+            document.getElementById('rn-load-cl').addEventListener('click',function(){
+              var clArr=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_cl_')===0&&k!=='lt_cl_draft'){try{clArr.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}
+              clArr.sort(function(a,b){return b.ts-a.ts;});
+              var lines=clArr.slice(0,10).map(function(e){return(e.pr?e.pr+': ':'')+e.summary;}).filter(Boolean);
+              if(lines.length){var ta=document.getElementById('rn-highlights');ta.value=(ta.value?ta.value+'\n':'')+lines.join('\n');}
+              var toast=document.getElementById('toast');if(toast){toast.textContent='Pulled '+lines.length+' changelog entries';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}
+            });
+            document.getElementById('rn-copy').addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(rnTxt).then(function(){var t=document.getElementById('toast');if(t){t.textContent='Copied';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}});});
+            document.getElementById('rn-export').addEventListener('click',function(){var b=new Blob([rnTxt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='release-notes-'+(document.getElementById('rn-ver').value||'draft')+'.txt';a.click();});
+            var sec=document.getElementById('view-releasenotes');
+            if(sec){sec.addEventListener('lt-view-enter',function(){var d=document.getElementById('rn-date');if(d&&!d.value){var n=new Date();d.value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');}});}
+          }());</script>
+        </section>
+
+        <section class="view" id="view-rollbackreceipt" data-view-panel="rollbackreceipt">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Rollback Receipt Builder</h1><p>Formally document a completed rollback. Save for the record.</p></div>
+          <article class="panel form-panel">
+            <label>Site<input id="rr2-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>Rolled back from (SHA or branch)<input id="rr2-from" placeholder="The bad commit or branch"></label>
+            <label>Rolled back to (SHA or branch)<input id="rr2-to" placeholder="The good commit or branch"></label>
+            <label>Files reverted<textarea id="rr2-files" rows="2" placeholder="List the files that were reverted..."></textarea></label>
+            <label>Reason for rollback<textarea id="rr2-reason" rows="3" placeholder="What broke and why the rollback was necessary..."></textarea></label>
+            <label>Features preserved<textarea id="rr2-preserved" rows="2" placeholder="Verified-working features that survived the rollback..."></textarea></label>
+            <label>Features lost (if any)<textarea id="rr2-lost" rows="2" placeholder="Any features that were undone by the rollback..."></textarea></label>
+            <label>Completed by / date<input id="rr2-by" placeholder="e.g. Claude Code session, 2026-05-11"></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="rr2-save">Save Receipt</button>
+              <button class="secondary-action" id="rr2-export">Export .txt</button>
+              <button class="secondary-action" id="rr2-clear">Clear</button>
+            </div>
+          </article>
+          <div id="rr2-list" style="margin-top:16px;"></div>
+          <script>(function(){
+            var RR2_FIDS=['rr2-site','rr2-from','rr2-to','rr2-files','rr2-reason','rr2-preserved','rr2-lost','rr2-by'];
+            function rr2Text(){return'ROLLBACK RECEIPT\nGenerated: '+new Date().toLocaleString()+'\n\nSITE: '+(document.getElementById('rr2-site').value||'--')+'\nFROM: '+(document.getElementById('rr2-from').value||'--')+'\nTO: '+(document.getElementById('rr2-to').value||'--')+'\n\nFILES REVERTED:\n'+(document.getElementById('rr2-files').value||'--')+'\n\nREASON:\n'+(document.getElementById('rr2-reason').value||'--')+'\n\nFEATURES PRESERVED:\n'+(document.getElementById('rr2-preserved').value||'--')+'\n\nFEATURES LOST:\n'+(document.getElementById('rr2-lost').value||'None')+'\n\nCOMPLETED BY: '+(document.getElementById('rr2-by').value||'--');}
+            function rr2Render(){
+              var el=document.getElementById('rr2-list');if(!el)return;
+              var items=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_rr2_')===0&&k!=='lt_rr2_draft'){try{items.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}
+              items.sort(function(a,b){return b.ts-a.ts;});
+              if(!items.length){el.innerHTML='<p class="empty-state">No rollback receipts saved.</p>';return;}
+              el.innerHTML=items.map(function(it){return'<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;"><div style="flex:1;"><strong>'+(it.site||'--')+'</strong><div style="font-size:12px;color:#9aa0b0;margin-top:2px;">'+it.from+' → '+it.to+'</div></div><button class="small-btn rr2-load" data-id="'+it.id+'">Load</button><button class="small-btn rr2-del" data-id="'+it.id+'">X</button></div>';}).join('');
+              el.querySelectorAll('.rr2-load').forEach(function(b){b.addEventListener('click',function(){var raw=localStorage.getItem('lt_rr2_'+b.dataset.id);if(!raw)return;var d=JSON.parse(raw);document.getElementById('rr2-site').value=d.site||'';document.getElementById('rr2-from').value=d.from||'';document.getElementById('rr2-to').value=d.to||'';document.getElementById('rr2-files').value=d.files||'';document.getElementById('rr2-reason').value=d.reason||'';document.getElementById('rr2-preserved').value=d.preserved||'';document.getElementById('rr2-lost').value=d.lost||'';document.getElementById('rr2-by').value=d.by||'';});});
+              el.querySelectorAll('.rr2-del').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Delete this receipt?'))return;localStorage.removeItem('lt_rr2_'+b.dataset.id);rr2Render();});});
+            }
+            document.getElementById('rr2-save').addEventListener('click',function(){
+              var site=document.getElementById('rr2-site').value.trim();if(!site)return;
+              var id=Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+              var rec={id:id,site:site,from:document.getElementById('rr2-from').value.trim(),to:document.getElementById('rr2-to').value.trim(),files:document.getElementById('rr2-files').value.trim(),reason:document.getElementById('rr2-reason').value.trim(),preserved:document.getElementById('rr2-preserved').value.trim(),lost:document.getElementById('rr2-lost').value.trim(),by:document.getElementById('rr2-by').value.trim(),ts:Date.now()};
+              localStorage.setItem('lt_rr2_'+id,JSON.stringify(rec));rr2Render();
+              var toast=document.getElementById('toast');if(toast){toast.textContent='Receipt saved';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}
+            });
+            document.getElementById('rr2-export').addEventListener('click',function(){var b=new Blob([rr2Text()],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rollback-receipt.txt';a.click();});
+            document.getElementById('rr2-clear').addEventListener('click',function(){if(!confirm('Clear form?'))return;RR2_FIDS.forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});});
+            var sec=document.getElementById('view-rollbackreceipt');if(sec)sec.addEventListener('lt-view-enter',rr2Render);
+          }());</script>
+        </section>
+
+        <section class="view" id="view-approvalphrase" data-view-panel="approvalphrase">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Approval Phrase Generator</h1><p>The exact phrases needed to trigger Claude Code actions. Copy and paste to approve.</p></div>
+          <article class="panel">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;" id="ap-grid"></div>
+          </article>
+          <script>(function(){
+            var AP_PHRASES=[
+              {label:'Merge a specific PR',template:'Claude, merge PR #[NUMBER] now.',note:'Replace [NUMBER] with the PR number. Exact phrasing required.'},
+              {label:'Approve a build batch',template:'Approved to build all [N] Batch [N] tools.',note:'State the number and batch name clearly.'},
+              {label:'Confirm a feature is working',template:'[FEATURE] is working.',note:'Used to trigger a stable-state backup.'},
+              {label:'Start fast-lane mode',template:'Continue fast-lane Load Tasks Developer Bot batches.',note:'Resumes autonomous build + merge mode.'},
+              {label:'Edit ACR Reader',template:'Edit ACR reader — [specific change].',note:'The only phrase that unlocks root-level files.'},
+              {label:'Wrap up session',template:'Goodnight.' ,note:'Triggers session notes, backup branch creation, and summary.'},
+              {label:'Approve a revert',template:'Approved to revert [file/feature].',note:'Triggers surgical revert flow, not a blanket reset.'},
+              {label:'Request a PR review',template:'Review PR #[NUMBER].',note:'Triggers /review skill on the specified PR.'},
+              {label:'Confirm merge approval',template:'Claude, merge PR #[NUMBER] now.',note:'Exact phrase — no variation accepted.'},
+              {label:'Stop narrating',template:'STOP NARRATING.',note:'Immediately stops all between-tool text output.'},
+              {label:'Deploy receipt approved',template:'Approved to document deploy for [SITE] PR #[NUMBER].',note:'Triggers a Deployment Receipt entry.'},
+              {label:'Standing build approval',template:'You have standing approval to build and merge LOW-RISK batches.',note:'Grants autonomous batch mode within stated boundaries.'}
+            ];
+            function apRender(){
+              var el=document.getElementById('ap-grid');if(!el)return;
+              el.innerHTML=AP_PHRASES.map(function(p){
+                return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:14px;">'
+                  +'<div style="font-size:12px;color:#9aa0b0;margin-bottom:6px;">'+p.label+'</div>'
+                  +'<code style="display:block;background:#1e2130;border-radius:6px;padding:8px 12px;font-size:12px;color:#ffd400;margin-bottom:8px;word-break:break-word;">'+p.template+'</code>'
+                  +'<div style="font-size:11px;color:#9aa0b0;margin-bottom:8px;">'+p.note+'</div>'
+                  +'<button class="small-btn ap-copy" data-text="'+p.template.replace(/"/g,'&quot;')+'">Copy phrase</button>'
+                  +'</div>';
+              }).join('');
+              el.querySelectorAll('.ap-copy').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.text).then(function(){var toast=document.getElementById('toast');if(toast){toast.textContent='Phrase copied';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}});});});
+            }
+            var sec=document.getElementById('view-approvalphrase');if(sec)sec.addEventListener('lt-view-enter',apRender);
+            apRender();
+          }());</script>
+        </section>
+
+        <section class="view" id="view-branchsafety" data-view-panel="branchsafety">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Branch Safety Checklist</h1><p>Confirm a branch is safe to push. Check all items before any git push.</p></div>
+          <article class="panel">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+              <span id="bs-progress" style="font-size:14px;color:#9aa0b0;">0 / 10 checked</span>
+              <div style="display:flex;gap:10px;">
+                <button class="secondary-action" id="bs-reset">Reset</button>
+                <button class="primary-action" id="bs-copy">Copy Summary</button>
+              </div>
+            </div>
+            <div id="bs-items"></div>
+          </article>
+          <script>(function(){
+            var BS_ITEMS=[
+              'Branch name follows naming convention (claude/feature-date)',
+              'Branch was created from a synced origin/main (not stale)',
+              'git fetch origin main was run before this push',
+              'git merge origin/main --no-edit completed without conflicts',
+              'Only LoadTasks/index.html changed (or other approved files)',
+              'No service worker or cache version changes included',
+              'No credentials, tokens, or API keys in the diff',
+              'git diff --stat reviewed — no surprise files',
+              'Commit message follows conventional format',
+              'PR will target main (not another feature branch)'
+            ];
+            var bsState=BS_ITEMS.map(function(){return false;});
+            function bsRender(){
+              var el=document.getElementById('bs-items');if(!el)return;
+              el.innerHTML=BS_ITEMS.map(function(label,idx){
+                return '<label style="display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:6px;background:rgba(255,255,255,0.05);border-radius:8px;cursor:pointer;">'
+                  +'<input type="checkbox" data-idx="'+idx+'"'+(bsState[idx]?' checked':'')+' style="width:18px;height:18px;accent-color:#ffd400;flex-shrink:0;">'
+                  +'<span style="'+(bsState[idx]?'text-decoration:line-through;color:#9aa0b0;':'')+'">'+label+'</span>'
+                  +'</label>';
+              }).join('');
+              el.querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.addEventListener('change',function(){bsState[parseInt(cb.dataset.idx)]=cb.checked;bsRender();});});
+              var checked=bsState.filter(Boolean).length;
+              document.getElementById('bs-progress').textContent=checked+' / '+BS_ITEMS.length+' checked';
+              document.getElementById('bs-progress').style.color=checked===BS_ITEMS.length?'#2ecc71':'#9aa0b0';
+            }
+            document.getElementById('bs-reset').addEventListener('click',function(){bsState=BS_ITEMS.map(function(){return false;});bsRender();});
+            document.getElementById('bs-copy').addEventListener('click',function(){
+              var checked=bsState.filter(Boolean).length;
+              var txt='BRANCH SAFETY CHECKLIST ('+checked+'/'+BS_ITEMS.length+' passed)\n\n'+BS_ITEMS.map(function(label,idx){return(bsState[idx]?'[x] ':'[ ] ')+label;}).join('\n');
+              navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){var toast=document.getElementById('toast');if(toast){toast.textContent='Checklist copied';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}});
+            });
+            var sec=document.getElementById('view-branchsafety');if(sec)sec.addEventListener('lt-view-enter',bsRender);
+            bsRender();
+          }());</script>
+        </section>
+
+        <section class="view" id="view-prrisks" data-view-panel="prrisks">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>PR Risk Matrix</h1><p>Score a PR across 8 dimensions. Get a composite risk rating and recommendation.</p></div>
+          <article class="panel form-panel">
+            <label>PR Number<input id="pm-pr" placeholder="e.g. #22"></label>
+            <div id="pm-dimensions" style="margin:12px 0;"></div>
+            <button class="primary-action" id="pm-score">Calculate Risk Score</button>
+          </article>
+          <div id="pm-output" style="margin-top:16px;display:none;">
+            <article class="panel">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <h2 id="pm-verdict" style="margin:0;font-size:18px;"></h2>
+                <button class="small-btn" id="pm-copy">Copy</button>
+              </div>
+              <pre id="pm-text" style="white-space:pre-wrap;font-size:13px;color:#e0e4f0;margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;"></pre>
+            </article>
+          </div>
+          <script>(function(){
+            var PM_DIMS=[
+              {label:'Files changed',options:['1 file (1)','2-3 files (2)','4+ files (3)'],scores:[1,2,3]},
+              {label:'Service worker / cache touched',options:['No (0)','Yes (3)'],scores:[0,3]},
+              {label:'Load AI or providers touched',options:['No (0)','Yes (3)'],scores:[0,3]},
+              {label:'Device verified before push',options:['Yes (0)','No (2)'],scores:[0,2]},
+              {label:'Tests or smoke check done',options:['Yes (0)','Partial (1)','No (2)'],scores:[0,1,2]},
+              {label:'Rollback plan stated',options:['Yes, clear (0)','Vague (1)','None (2)'],scores:[0,1,2]},
+              {label:'Branch up to date with main',options:['Yes (0)','Not checked (1)','No (2)'],scores:[0,1,2]},
+              {label:'Unrelated changes bundled',options:['None (0)','Minor (1)','Significant (2)'],scores:[0,1,2]}
+            ];
+            var pmSels={};
+            function pmBuildForm(){
+              var el=document.getElementById('pm-dimensions');if(!el)return;
+              el.innerHTML=PM_DIMS.map(function(dim,idx){
+                return '<label style="display:block;margin-bottom:10px;">'+dim.label
+                  +'<select id="pm-dim-'+idx+'" style="display:block;width:100%;margin-top:4px;padding:8px;background:#1e2130;border:1px solid rgba(255,255,255,.15);color:#e0e4f0;border-radius:6px;">'
+                  +dim.options.map(function(opt,oi){return'<option value="'+dim.scores[oi]+'">'+opt+'</option>';}).join('')
+                  +'</select></label>';
+              }).join('');
+            }
+            document.getElementById('pm-score').addEventListener('click',function(){
+              var total=0;var breakdown=[];
+              PM_DIMS.forEach(function(dim,idx){
+                var sel=document.getElementById('pm-dim-'+idx);
+                var val=sel?parseInt(sel.value):0;
+                total+=val;
+                breakdown.push(dim.label+': '+val+' pts ('+sel.options[sel.selectedIndex].text+')');
+              });
+              var rating=total<=3?'LOW':total<=7?'MEDIUM':total<=12?'HIGH':'CRITICAL';
+              var color={LOW:'#2ecc71',MEDIUM:'#e67e22',HIGH:'#e74c3c',CRITICAL:'#e74c3c'}[rating];
+              var rec={LOW:'Safe to merge after final review.',MEDIUM:'Recommend extra review before merging.',HIGH:'Do not merge without device verification and explicit approval.',CRITICAL:'Stop — requires full review and may need to be split into smaller PRs.'}[rating];
+              var pr=document.getElementById('pm-pr').value.trim();
+              var txt='PR RISK MATRIX'+(pr?' — PR '+pr:'')+'\nComposite score: '+total+'/19\nRisk rating: '+rating+'\n\nBREAKDOWN\n'+breakdown.join('\n')+'\n\nRECOMMENDATION\n'+rec;
+              document.getElementById('pm-verdict').textContent='Risk: '+rating+' ('+total+'/19)';
+              document.getElementById('pm-verdict').style.color=color;
+              document.getElementById('pm-text').textContent=txt;
+              document.getElementById('pm-output').style.display='';
+              document.getElementById('pm-copy').dataset.text=txt;
+            });
+            document.getElementById('pm-copy').addEventListener('click',function(){var t=this.dataset.text;if(!t)return;navigator.clipboard&&navigator.clipboard.writeText(t).then(function(){var toast=document.getElementById('toast');if(toast){toast.textContent='Risk matrix copied';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}});});
+            var sec=document.getElementById('view-prrisks');if(sec)sec.addEventListener('lt-view-enter',pmBuildForm);
+            pmBuildForm();
+          }());</script>
+        </section>
+
+        <section class="view" id="view-deployreceipt" data-view-panel="deployreceipt">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Deployment Receipt Draft</h1><p>Document a completed deployment with SHA, files, and verification status.</p></div>
+          <article class="panel form-panel">
+            <label>Site<input id="dr-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>PR Number<input id="dr-pr" placeholder="e.g. #22"></label>
+            <label>Merge SHA (first 8 chars)<input id="dr-sha" placeholder="e.g. e4d27b3c"></label>
+            <label>Files changed<textarea id="dr-files" rows="2" placeholder="List files changed in this deploy..."></textarea></label>
+            <label>Cache version (if changed)<input id="dr-cache" placeholder="e.g. load-v17g80"></label>
+            <label>Device verified<select id="dr-verified"><option>Yes — smoke check passed</option><option>Partial — some features checked</option><option>Not yet</option></select></label>
+            <label>Known issues after deploy<textarea id="dr-issues" rows="2" placeholder="Any regressions or new issues noticed..."></textarea></label>
+            <label>Rollback command<input id="dr-rollback" placeholder="e.g. git revert e4d27b3c"></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="dr-save">Save Receipt</button>
+              <button class="secondary-action" id="dr-export">Export .txt</button>
+              <button class="secondary-action" id="dr-clear">Clear</button>
+            </div>
+          </article>
+          <div id="dr-list" style="margin-top:16px;"></div>
+          <script>(function(){
+            var DR_FIDS=['dr-site','dr-pr','dr-sha','dr-files','dr-cache','dr-issues','dr-rollback'];
+            function drText(){return'DEPLOYMENT RECEIPT\nDate: '+new Date().toLocaleString()+'\nSite: '+(document.getElementById('dr-site').value||'--')+'\nPR: '+(document.getElementById('dr-pr').value||'--')+'\nMerge SHA: '+(document.getElementById('dr-sha').value||'--')+'\n\nFILES CHANGED:\n'+(document.getElementById('dr-files').value||'--')+'\n\nCACHE VERSION: '+(document.getElementById('dr-cache').value||'not changed')+'\nDEVICE VERIFIED: '+document.getElementById('dr-verified').value+'\n\nKNOWN ISSUES AFTER DEPLOY:\n'+(document.getElementById('dr-issues').value||'None')+'\n\nROLLBACK COMMAND:\n'+(document.getElementById('dr-rollback').value||'--');}
+            function drRender(){
+              var el=document.getElementById('dr-list');if(!el)return;
+              var items=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_dr_')===0&&k!=='lt_dr_draft'){try{items.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}
+              items.sort(function(a,b){return b.ts-a.ts;});
+              if(!items.length){el.innerHTML='<p class="empty-state">No deployment receipts saved.</p>';return;}
+              el.innerHTML=items.map(function(it){return'<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;"><div style="flex:1;"><strong>'+(it.site||'--')+'</strong>'+(it.pr?' PR '+it.pr:'')+'<div style="font-size:12px;color:#9aa0b0;">SHA: '+(it.sha||'--')+'</div></div><button class="small-btn dr-del" data-id="'+it.id+'">X</button></div>';}).join('');
+              el.querySelectorAll('.dr-del').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Delete this receipt?'))return;localStorage.removeItem('lt_dr_'+b.dataset.id);drRender();});});
+            }
+            document.getElementById('dr-save').addEventListener('click',function(){
+              var site=document.getElementById('dr-site').value.trim();if(!site)return;
+              var id=Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+              var rec={id:id,site:site,pr:document.getElementById('dr-pr').value.trim(),sha:document.getElementById('dr-sha').value.trim(),files:document.getElementById('dr-files').value.trim(),cache:document.getElementById('dr-cache').value.trim(),verified:document.getElementById('dr-verified').value,issues:document.getElementById('dr-issues').value.trim(),rollback:document.getElementById('dr-rollback').value.trim(),ts:Date.now()};
+              localStorage.setItem('lt_dr_'+id,JSON.stringify(rec));drRender();
+              var toast=document.getElementById('toast');if(toast){toast.textContent='Receipt saved';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}
+            });
+            document.getElementById('dr-export').addEventListener('click',function(){var b=new Blob([drText()],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='deploy-receipt.txt';a.click();});
+            document.getElementById('dr-clear').addEventListener('click',function(){if(!confirm('Clear form?'))return;DR_FIDS.forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});});
+            var sec=document.getElementById('view-deployreceipt');if(sec)sec.addEventListener('lt-view-enter',drRender);
+          }());</script>
+        </section>
+
+        <section class="view" id="view-stagingplan" data-view-panel="stagingplan">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Staging Plan Builder</h1><p>Plan what to test before merging. Add steps, record expected results.</p></div>
+          <article class="panel form-panel">
+            <label>Plan title<input id="sp2-title" placeholder="e.g. Batch 11 pre-merge staging plan"></label>
+            <label>Site<input id="sp2-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>Test step<input id="sp2-step" placeholder="Describe one test step..."></label>
+            <label>Expected result<input id="sp2-expect" placeholder="What should happen?"></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="sp2-add">Add Step</button>
+            </div>
+          </article>
+          <div id="sp2-steps" style="margin-top:12px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;" id="sp2-actions" style="display:none;">
+            <button class="secondary-action" id="sp2-export">Export .txt</button>
+            <button class="secondary-action" id="sp2-clear-all">Clear All Steps</button>
+          </div>
+          <script>(function(){
+            var sp2Steps=[];
+            function sp2Render(){
+              var el=document.getElementById('sp2-steps');if(!el)return;
+              if(!sp2Steps.length){el.innerHTML='<p class="empty-state">No steps added yet.</p>';document.getElementById('sp2-actions').style.display='none';return;}
+              document.getElementById('sp2-actions').style.display='flex';
+              el.innerHTML=sp2Steps.map(function(s,idx){
+                return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;">'
+                  +'<span style="background:#1e2130;color:#9aa0b0;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">'+(idx+1)+'</span>'
+                  +'<div style="flex:1;"><div>'+s.step+'</div><div style="font-size:12px;color:#9aa0b0;margin-top:3px;">Expected: '+s.expect+'</div></div>'
+                  +'<select class="small-btn sp2-result" data-idx="'+idx+'" style="padding:4px 6px;font-size:12px;background:#1e2130;border:1px solid rgba(255,255,255,.15);color:#e0e4f0;border-radius:4px;">'
+                  +'<option'+(s.result===''?' selected':'')+' value="">Pending</option>'
+                  +'<option'+(s.result==='Pass'?' selected':'')+' value="Pass">Pass</option>'
+                  +'<option'+(s.result==='Fail'?' selected':'')+' value="Fail">Fail</option>'
+                  +'<option'+(s.result==='Skip'?' selected':'')+' value="Skip">Skip</option>'
+                  +'</select>'
+                  +'<button class="small-btn sp2-del" data-idx="'+idx+'">X</button>'
+                  +'</div>';
+              }).join('');
+              el.querySelectorAll('.sp2-result').forEach(function(sel){sel.addEventListener('change',function(){sp2Steps[parseInt(sel.dataset.idx)].result=sel.value;sp2Render();});});
+              el.querySelectorAll('.sp2-del').forEach(function(b){b.addEventListener('click',function(){sp2Steps.splice(parseInt(b.dataset.idx),1);sp2Render();});});
+            }
+            document.getElementById('sp2-add').addEventListener('click',function(){
+              var step=document.getElementById('sp2-step').value.trim();if(!step)return;
+              sp2Steps.push({step:step,expect:document.getElementById('sp2-expect').value.trim()||'No errors',result:''});
+              document.getElementById('sp2-step').value='';document.getElementById('sp2-expect').value='';sp2Render();
+            });
+            document.getElementById('sp2-export').addEventListener('click',function(){
+              var title=document.getElementById('sp2-title').value.trim()||'Staging Plan';
+              var site=document.getElementById('sp2-site').value.trim();
+              var passed=sp2Steps.filter(function(s){return s.result==='Pass';}).length;
+              var txt=title+(site?' — '+site:'')+'\n'+'='.repeat(40)+'\n\n'
+                +sp2Steps.map(function(s,idx){return(idx+1)+'. '+s.step+'\n   Expected: '+s.expect+'\n   Result: '+(s.result||'Pending');}).join('\n\n')
+                +'\n\nSUMMARY: '+passed+'/'+sp2Steps.length+' passed';
+              var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='staging-plan.txt';a.click();
+            });
+            document.getElementById('sp2-clear-all').addEventListener('click',function(){if(!confirm('Clear all steps?'))return;sp2Steps=[];sp2Render();});
+          }());</script>
+        </section>
+
+        <section class="view" id="view-knownissues" data-view-panel="knownissues">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Known Issues Register</h1><p>Permanent log of known issues per site. Different from the Issue Tracker — these are long-standing known states.</p></div>
+          <article class="panel form-panel">
+            <label>Issue<input id="ki-issue" placeholder="Describe the known issue clearly"></label>
+            <label>Site<input id="ki-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>Workaround<input id="ki-workaround" placeholder="Any known workaround (or 'None')"></label>
+            <label>First noticed<input id="ki-date" placeholder="e.g. 2026-05-11"></label>
+            <label>Severity<select id="ki-sev"><option>Critical</option><option>High</option><option selected>Normal</option><option>Low</option></select></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="ki-save">Add to Register</button>
+              <button class="secondary-action" id="ki-export">Export .txt</button>
+            </div>
+          </article>
+          <div id="ki-list" style="margin-top:16px;"></div>
+          <script>(function(){
+            var KI_SEV={Critical:'#e74c3c',High:'#e67e22',Normal:'#3498db',Low:'#9aa0b0'};
+            function kiGetAll(){var items=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_ki_')===0&&k!=='lt_ki_draft'){try{items.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}items.sort(function(a,b){return({Critical:0,High:1,Normal:2,Low:3}[a.sev]||2)-({Critical:0,High:1,Normal:2,Low:3}[b.sev]||2);});return items;}
+            function kiRender(){
+              var el=document.getElementById('ki-list');if(!el)return;
+              var items=kiGetAll();
+              if(!items.length){el.innerHTML='<p class="empty-state">No known issues registered.</p>';return;}
+              el.innerHTML=items.map(function(it){
+                return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;">'
+                  +'<span style="background:'+(KI_SEV[it.sev]||'#9aa0b0')+';color:#fff;border-radius:4px;padding:2px 8px;font-size:11px;white-space:nowrap;margin-top:2px;">'+it.sev+'</span>'
+                  +'<div style="flex:1;"><div><strong>'+it.issue+'</strong>'+(it.site?' <span style="color:#9aa0b0;font-size:12px;">('+it.site+')</span>':'')+'</div>'
+                  +'<div style="font-size:12px;color:#9aa0b0;margin-top:3px;">Workaround: '+(it.workaround||'None')+(it.date?' · Since: '+it.date:'')+'</div></div>'
+                  +'<button class="small-btn ki-del" data-id="'+it.id+'">X</button>'
+                  +'</div>';
+              }).join('');
+              el.querySelectorAll('.ki-del').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Remove this known issue?'))return;localStorage.removeItem('lt_ki_'+b.dataset.id);kiRender();});});
+            }
+            document.getElementById('ki-save').addEventListener('click',function(){
+              var issue=document.getElementById('ki-issue').value.trim();if(!issue)return;
+              var id=Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+              var rec={id:id,issue:issue,site:document.getElementById('ki-site').value.trim(),workaround:document.getElementById('ki-workaround').value.trim(),date:document.getElementById('ki-date').value.trim(),sev:document.getElementById('ki-sev').value,ts:Date.now()};
+              localStorage.setItem('lt_ki_'+id,JSON.stringify(rec));kiRender();
+            });
+            document.getElementById('ki-export').addEventListener('click',function(){
+              var items=kiGetAll();
+              var txt='KNOWN ISSUES REGISTER\n\n'+items.map(function(it){return'['+it.sev+'] '+(it.site?it.site+': ':'')+it.issue+'\nWorkaround: '+(it.workaround||'None')+(it.date?'\nSince: '+it.date:'');}).join('\n\n');
+              var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='known-issues.txt';a.click();
+            });
+            var sec=document.getElementById('view-knownissues');if(sec)sec.addEventListener('lt-view-enter',kiRender);
+          }());</script>
+        </section>
+
+        <section class="view" id="view-verifyscript" data-view-panel="verifyscript">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Verification Script Builder</h1><p>Build a step-by-step manual verification script for any feature or fix.</p></div>
+          <article class="panel form-panel">
+            <label>Script title<input id="vs-title" placeholder="e.g. Priority Queue feature verification"></label>
+            <label>Site / feature<input id="vs-feature" placeholder="Load Developer Bot — Priority Queue"></label>
+            <label>Step description<input id="vs-step" placeholder="What the tester should do..."></label>
+            <label>Expected outcome<input id="vs-expect" placeholder="What should happen when done correctly..."></label>
+            <button class="primary-action" id="vs-add" style="margin-bottom:12px;">Add Step</button>
+          </article>
+          <div id="vs-steps" style="margin-top:4px;"></div>
+          <div id="vs-actions" style="display:none;margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="secondary-action" id="vs-export">Export Script .txt</button>
+            <button class="secondary-action" id="vs-reset-results">Reset Results</button>
+            <button class="secondary-action" id="vs-clear-steps">Clear All</button>
+          </div>
+          <script>(function(){
+            var vsSteps=[];
+            function vsRender(){
+              var el=document.getElementById('vs-steps');if(!el)return;
+              var act=document.getElementById('vs-actions');
+              if(!vsSteps.length){el.innerHTML='<p class="empty-state">No steps added yet.</p>';if(act)act.style.display='none';return;}
+              if(act)act.style.display='flex';
+              var passed=vsSteps.filter(function(s){return s.result==='Pass';}).length;
+              el.innerHTML='<div style="font-size:13px;color:#9aa0b0;margin-bottom:10px;">'+passed+' / '+vsSteps.length+' steps passed</div>'
+                +vsSteps.map(function(s,idx){
+                  var rc={Pass:'#2ecc71',Fail:'#e74c3c','':'#9aa0b0'};
+                  return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px;">'
+                    +'<span style="background:#1e2130;color:#9aa0b0;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">'+(idx+1)+'</span>'
+                    +'<div style="flex:1;"><div>'+s.step+'</div><div style="font-size:12px;color:#9aa0b0;margin-top:3px;">Expected: '+s.expect+'</div></div>'
+                    +'<div style="display:flex;gap:6px;">'
+                    +'<button class="small-btn vs-pass" data-idx="'+idx+'" style="color:'+(s.result==='Pass'?'#2ecc71':'')+'">Pass</button>'
+                    +'<button class="small-btn vs-fail" data-idx="'+idx+'" style="color:'+(s.result==='Fail'?'#e74c3c':'')+'">Fail</button>'
+                    +'<button class="small-btn vs-del" data-idx="'+idx+'">X</button>'
+                    +'</div></div>';
+                }).join('');
+              el.querySelectorAll('.vs-pass').forEach(function(b){b.addEventListener('click',function(){vsSteps[parseInt(b.dataset.idx)].result='Pass';vsRender();});});
+              el.querySelectorAll('.vs-fail').forEach(function(b){b.addEventListener('click',function(){vsSteps[parseInt(b.dataset.idx)].result='Fail';vsRender();});});
+              el.querySelectorAll('.vs-del').forEach(function(b){b.addEventListener('click',function(){vsSteps.splice(parseInt(b.dataset.idx),1);vsRender();});});
+            }
+            document.getElementById('vs-add').addEventListener('click',function(){
+              var step=document.getElementById('vs-step').value.trim();if(!step)return;
+              vsSteps.push({step:step,expect:document.getElementById('vs-expect').value.trim()||'No errors',result:''});
+              document.getElementById('vs-step').value='';document.getElementById('vs-expect').value='';vsRender();
+            });
+            document.getElementById('vs-export').addEventListener('click',function(){
+              var title=document.getElementById('vs-title').value.trim()||'Verification Script';
+              var feature=document.getElementById('vs-feature').value.trim();
+              var passed=vsSteps.filter(function(s){return s.result==='Pass';}).length;
+              var txt=title+(feature?' — '+feature:'')+'\nGenerated: '+new Date().toLocaleString()+'\n'+'='.repeat(40)+'\n\n'
+                +vsSteps.map(function(s,idx){return'Step '+(idx+1)+': '+s.step+'\nExpected: '+s.expect+'\nResult: '+(s.result||'Not tested');}).join('\n\n')
+                +'\n\nSUMMARY: '+passed+'/'+vsSteps.length+' passed';
+              var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='verification-script.txt';a.click();
+            });
+            document.getElementById('vs-reset-results').addEventListener('click',function(){vsSteps.forEach(function(s){s.result='';});vsRender();});
+            document.getElementById('vs-clear-steps').addEventListener('click',function(){if(!confirm('Clear all steps?'))return;vsSteps=[];vsRender();});
+          }());</script>
+        </section>
+
+        <section class="view" id="view-featureaccept" data-view-panel="featureaccept">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Feature Acceptance Checklist</h1><p>Define acceptance criteria before building. Check off when the feature is verified.</p></div>
+          <article class="panel form-panel">
+            <label>Feature name<input id="fa-feature" placeholder="e.g. Priority Queue Developer Bot tool"></label>
+            <label>Site<input id="fa-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>Criterion<input id="fa-crit" placeholder="One acceptance criterion..."></label>
+            <button class="primary-action" id="fa-add" style="margin-bottom:12px;">Add Criterion</button>
+          </article>
+          <div id="fa-list" style="margin-top:4px;"></div>
+          <div id="fa-actions" style="display:none;margin-top:12px;gap:10px;flex-wrap:wrap;">
+            <button class="secondary-action" id="fa-export">Export .txt</button>
+            <button class="secondary-action" id="fa-reset">Uncheck All</button>
+            <button class="secondary-action" id="fa-clear">Clear All</button>
+          </div>
+          <script>(function(){
+            var faCriteria=[];
+            function faRender(){
+              var el=document.getElementById('fa-list');if(!el)return;
+              var act=document.getElementById('fa-actions');
+              if(!faCriteria.length){el.innerHTML='<p class="empty-state">No criteria added yet.</p>';if(act)act.style.display='none';return;}
+              if(act)act.style.display='flex';
+              var checked=faCriteria.filter(function(c){return c.done;}).length;
+              el.innerHTML='<div style="font-size:13px;color:#9aa0b0;margin-bottom:10px;">'+checked+' / '+faCriteria.length+' criteria met</div>'
+                +faCriteria.map(function(c,idx){
+                  return '<label style="display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:6px;background:rgba(255,255,255,0.05);border-radius:8px;cursor:pointer;">'
+                    +'<input type="checkbox" data-idx="'+idx+'"'+(c.done?' checked':'')+' style="width:18px;height:18px;accent-color:#ffd400;flex-shrink:0;">'
+                    +'<span style="flex:1;'+(c.done?'text-decoration:line-through;color:#9aa0b0;':'')+'">'+c.text+'</span>'
+                    +'<button class="small-btn fa-del" data-idx="'+idx+'">X</button>'
+                    +'</label>';
+                }).join('');
+              el.querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.addEventListener('change',function(){faCriteria[parseInt(cb.dataset.idx)].done=cb.checked;faRender();});});
+              el.querySelectorAll('.fa-del').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();faCriteria.splice(parseInt(b.dataset.idx),1);faRender();});});
+            }
+            document.getElementById('fa-add').addEventListener('click',function(){
+              var crit=document.getElementById('fa-crit').value.trim();if(!crit)return;
+              faCriteria.push({text:crit,done:false});document.getElementById('fa-crit').value='';faRender();
+            });
+            document.getElementById('fa-export').addEventListener('click',function(){
+              var feature=document.getElementById('fa-feature').value.trim()||'Feature';
+              var site=document.getElementById('fa-site').value.trim();
+              var checked=faCriteria.filter(function(c){return c.done;}).length;
+              var txt='FEATURE ACCEPTANCE CHECKLIST\n'+feature+(site?' — '+site:'')+'\n'+'='.repeat(40)+'\n\n'
+                +faCriteria.map(function(c){return(c.done?'[x] ':'[ ] ')+c.text;}).join('\n')
+                +'\n\nRESULT: '+checked+'/'+faCriteria.length+' criteria met'+(checked===faCriteria.length?'\nSTATUS: ACCEPTED':''\nSTATUS: NOT YET ACCEPTED');
+              var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='feature-acceptance.txt';a.click();
+            });
+            document.getElementById('fa-reset').addEventListener('click',function(){faCriteria.forEach(function(c){c.done=false;});faRender();});
+            document.getElementById('fa-clear').addEventListener('click',function(){if(!confirm('Clear all criteria?'))return;faCriteria=[];faRender();});
+          }());</script>
+        </section>
+
+        <section class="view" id="view-depnotes" data-view-panel="depnotes">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Dependency Notes</h1><p>Log libraries, scripts, or external dependencies per site with version and status.</p></div>
+          <article class="panel form-panel">
+            <label>Dependency name<input id="dn-name" placeholder="e.g. branding.js, Piper TTS, OpenRouter"></label>
+            <label>Site<input id="dn-site" placeholder="Load, LoadStudio, Attain..."></label>
+            <label>Version / tag<input id="dn-ver" placeholder="e.g. v2.1, latest, pinned"></label>
+            <label>Type<select id="dn-type"><option>Script</option><option>Library</option><option>API</option><option>Asset</option><option>Service</option><option>Other</option></select></label>
+            <label>Status<select id="dn-status"><option>Active</option><option>Pinned</option><option>Deprecated</option><option>Needs update</option><option>Removed</option></select></label>
+            <label>Notes<input id="dn-notes" placeholder="Any important notes about this dependency..."></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="primary-action" id="dn-save">Add Dependency</button>
+              <button class="secondary-action" id="dn-export">Export .txt</button>
+            </div>
+          </article>
+          <div id="dn-list" style="margin-top:16px;"></div>
+          <script>(function(){
+            var DN_COLOR={Active:'#2ecc71',Pinned:'#3498db',Deprecated:'#e67e22','Needs update':'#e74c3c',Removed:'#9aa0b0'};
+            function dnGetAll(){var items=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_dn_')===0&&k!=='lt_dn_draft'){try{items.push(JSON.parse(localStorage.getItem(k)));}catch(e){}}}items.sort(function(a,b){return(a.site+a.name).localeCompare(b.site+b.name);});return items;}
+            function dnRender(){
+              var el=document.getElementById('dn-list');if(!el)return;
+              var items=dnGetAll();
+              if(!items.length){el.innerHTML='<p class="empty-state">No dependencies logged.</p>';return;}
+              var bySite={};items.forEach(function(it){(bySite[it.site||'Unknown']=bySite[it.site||'Unknown']||[]).push(it);});
+              el.innerHTML=Object.keys(bySite).map(function(site){
+                return '<div style="margin-bottom:16px;"><h3 style="font-size:14px;color:#ffd400;margin:0 0 8px;">'+site+'</h3>'
+                  +bySite[site].map(function(it){
+                    return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:12px;">'
+                      +'<span style="background:'+(DN_COLOR[it.status]||'#9aa0b0')+';color:#fff;border-radius:4px;padding:2px 7px;font-size:11px;white-space:nowrap;">'+it.status+'</span>'
+                      +'<div style="flex:1;"><strong>'+it.name+'</strong>'+(it.ver?' <span style="color:#9aa0b0;font-size:12px;">'+it.ver+'</span>':'')+' <span style="background:#1e2130;color:#9aa0b0;border-radius:3px;padding:1px 6px;font-size:11px;">'+it.type+'</span>'+(it.notes?'<div style="font-size:12px;color:#9aa0b0;margin-top:2px;">'+it.notes+'</div>':'')+'</div>'
+                      +'<button class="small-btn dn-del" data-id="'+it.id+'">X</button>'
+                      +'</div>';
+                  }).join('')+'</div>';
+              }).join('');
+              el.querySelectorAll('.dn-del').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Remove this dependency?'))return;localStorage.removeItem('lt_dn_'+b.dataset.id);dnRender();});});
+            }
+            document.getElementById('dn-save').addEventListener('click',function(){
+              var name=document.getElementById('dn-name').value.trim();if(!name)return;
+              var id=Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+              var rec={id:id,name:name,site:document.getElementById('dn-site').value.trim(),ver:document.getElementById('dn-ver').value.trim(),type:document.getElementById('dn-type').value,status:document.getElementById('dn-status').value,notes:document.getElementById('dn-notes').value.trim(),ts:Date.now()};
+              localStorage.setItem('lt_dn_'+id,JSON.stringify(rec));dnRender();
+            });
+            document.getElementById('dn-export').addEventListener('click',function(){
+              var items=dnGetAll();
+              var txt='DEPENDENCY NOTES\n\n'+items.map(function(it){return'['+it.status+'] ['+it.type+'] '+(it.site?it.site+': ':'')+it.name+(it.ver?' '+it.ver:'')+(it.notes?'\n  '+it.notes:'');}).join('\n\n');
+              var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='dependency-notes.txt';a.click();
+            });
+            var sec=document.getElementById('view-depnotes');if(sec)sec.addEventListener('lt-view-enter',dnRender);
+          }());</script>
+        </section>
+
+        <section class="view" id="view-dailycommand" data-view-panel="dailycommand">
+          <div class="section-head"><p class="eyebrow">Developer Bot</p><h1>Daily Command Center Summary</h1><p>One tap to see today's key numbers across all record types.</p></div>
+          <article class="panel">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+              <button class="primary-action" id="dcc-refresh">Refresh</button>
+              <button class="secondary-action" id="dcc-copy" style="display:none;">Copy Summary</button>
+            </div>
+            <div id="dcc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;"></div>
+          </article>
+          <script>(function(){
+            var dccText='';
+            function dccCount(prefix,excl){var n=0;for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(prefix)===0){var skip=false;(excl||[]).forEach(function(e){if(k===e)skip=true;});if(!skip)n++;}}return n;}
+            function dccCountWhere(prefix,excl,test){var n=0;for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(prefix)===0){var skip=false;(excl||[]).forEach(function(e){if(k===e)skip=true;});if(!skip){try{var d=JSON.parse(localStorage.getItem(k));if(test(d))n++;}catch(e){}}}}return n;}
+            function dccTimer(){var total=0;for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('lt_wt_')===0&&k!=='lt_wt_draft'){try{var d=JSON.parse(localStorage.getItem(k));if(d.dur)total+=d.dur;}catch(e){}}}var h=Math.floor(total/3600000);var m=Math.floor((total%3600000)/60000);return(h?h+'h ':'')+m+'m logged today';}
+            function dccRefresh(){
+              var openIs=dccCountWhere('lt_is_',['lt_is_draft'],function(d){return d.status!=='Resolved';});
+              var critIs=dccCountWhere('lt_is_',['lt_is_draft'],function(d){return d.status!=='Resolved'&&d.severity==='Critical';});
+              var activeBk=dccCountWhere('lt_bk_',['lt_bk_draft'],function(d){return d.status==='Active';});
+              var pendPq=dccCountWhere('lt_pq_',['lt_pq_draft'],function(d){return!d.done;});
+              var failRj=dccCountWhere('lt_rjw_',['lt_rjw_draft','lt_repairjob_draft'],function(d){return d.status==='FAIL'||d.status==='PARTIAL';});
+              var openEl=dccCountWhere('lt_el_',['lt_el_draft'],function(d){return d.status!=='Resolved';});
+              var items=[
+                {label:'Open Issues',n:openIs,sub:critIs?critIs+' Critical':'',color:openIs>0?'#e74c3c':'#2ecc71'},
+                {label:'Active Blockers',n:activeBk,sub:'',color:activeBk>0?'#e67e22':'#2ecc71'},
+                {label:'Priority Queue',n:pendPq,sub:'pending',color:pendPq>0?'#3498db':'#9aa0b0'},
+                {label:'Failing Repair Jobs',n:failRj,sub:'FAIL or PARTIAL',color:failRj>0?'#e67e22':'#2ecc71'},
+                {label:'Open Error Log',n:openEl,sub:'',color:openEl>0?'#e74c3c':'#2ecc71'},
+                {label:'Session Notes',n:dccCount('lt_sn_',['lt_sn_draft']),sub:'saved',color:'#9aa0b0'},
+                {label:'Changelog Entries',n:dccCount('lt_cl_',['lt_cl_draft']),sub:'total',color:'#9aa0b0'},
+                {label:'Saved Prompts',n:dccCount('lt_sp_',['lt_sp_draft']),sub:'in library',color:'#9aa0b0'},
+                {label:'Work Time',n:dccTimer(),sub:'',color:'#ffd400',isText:true},
+                {label:"Today's Work Note",n:localStorage.getItem('lt_tw_draft')?'Saved':'Empty',sub:'',color:localStorage.getItem('lt_tw_draft')?'#2ecc71':'#9aa0b0',isText:true},
+                {label:'Note Pad',n:localStorage.getItem('lt_np_draft')?'Has content':'Empty',sub:'',color:localStorage.getItem('lt_np_draft')?'#ffd400':'#9aa0b0',isText:true},
+                {label:'Branch Inventory',n:dccCount('lt_bi_',['lt_bi_draft']),sub:'branches tracked',color:'#9aa0b0'}
+              ];
+              var el=document.getElementById('dcc-grid');if(!el)return;
+              el.innerHTML=items.map(function(it){
+                return '<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:14px;border-top:3px solid '+it.color+';">'
+                  +'<div style="font-size:'+(it.isText?'16':'26')+'px;font-weight:700;color:'+it.color+';line-height:1.2;">'+it.n+'</div>'
+                  +(it.sub?'<div style="font-size:11px;color:#9aa0b0;">'+it.sub+'</div>':'')
+                  +'<div style="font-size:12px;color:#9aa0b0;margin-top:4px;">'+it.label+'</div>'
+                  +'</div>';
+              }).join('');
+              dccText='DAILY COMMAND CENTER — '+new Date().toLocaleString()+'\n\n'
+                +items.map(function(it){return it.label+': '+it.n+(it.sub?' ('+it.sub+')':'');}).join('\n');
+              document.getElementById('dcc-copy').style.display='';
+            }
+            document.getElementById('dcc-refresh').addEventListener('click',dccRefresh);
+            document.getElementById('dcc-copy').addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(dccText).then(function(){var toast=document.getElementById('toast');if(toast){toast.textContent='Summary copied';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},2000);}});});
+            var sec=document.getElementById('view-dailycommand');if(sec)sec.addEventListener('lt-view-enter',dccRefresh);
+          }());</script>
+        </section>
+
         <!-- ═══ DASHBOARD COUNTERS SCRIPT ═══ -->
         <script>
         (function(){
@@ -5021,7 +5708,11 @@
               {label:'Snippets',n:ltCountPrefix('lt_snp_',['lt_snp_draft'])},
               {label:'Work Timer',n:ltCountPrefix('lt_wt_',['lt_wt_draft'])},
               {label:'Build Notes',n:ltCountPrefix('lt_bn_',['lt_bn_draft'])},
-              {label:'Site Map',n:ltCountPrefix('lt_sm_',['lt_sm_draft'])}
+              {label:'Site Map',n:ltCountPrefix('lt_sm_',['lt_sm_draft'])},
+              {label:'Rollback Receipts',n:ltCountPrefix('lt_rr2_',['lt_rr2_draft'])},
+              {label:'Deploy Receipts',n:ltCountPrefix('lt_dr_',['lt_dr_draft'])},
+              {label:'Known Issues',n:ltCountPrefix('lt_ki_',['lt_ki_draft'])},
+              {label:'Dependencies',n:ltCountPrefix('lt_dn_',['lt_dn_draft'])}
             ];
             el.innerHTML=items.map(function(it){return'<div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px 14px;text-align:center;"><div style="font-size:28px;font-weight:700;line-height:1;">'+(it.n)+'</div><div style="font-size:12px;color:#9aa0b0;margin-top:4px;">'+it.label+'</div></div>';}).join('');
           }
