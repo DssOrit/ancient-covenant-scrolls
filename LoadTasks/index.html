@@ -71,6 +71,10 @@
         <button data-view="sitehealth" data-route>Site Health</button>
         <button data-view="repairpack" data-route>Repair Pack</button>
         <button data-view="localrecords" data-route>Local Records</button>
+        <button data-view="templates" data-route>Templates</button>
+        <button data-view="criteria" data-route>Criteria</button>
+        <button data-view="statusboard" data-route>Status Board</button>
+        <button data-view="importrecords" data-route>Import</button>
       </nav>
       <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
         <span class="icon-mini" data-icon="refresh"></span>
@@ -105,6 +109,10 @@
         <button data-view="sitehealth" data-route><span class="rail-icon" data-icon="shield"></span><span>Site Health</span></button>
         <button data-view="repairpack" data-route><span class="rail-icon" data-icon="wrench"></span><span>Repair Pack</span></button>
         <button data-view="localrecords" data-route><span class="rail-icon" data-icon="library"></span><span>Local Records</span></button>
+        <button data-view="templates" data-route><span class="rail-icon" data-icon="library"></span><span>Templates</span></button>
+        <button data-view="criteria" data-route><span class="rail-icon" data-icon="shield"></span><span>Criteria</span></button>
+        <button data-view="statusboard" data-route><span class="rail-icon" data-icon="version"></span><span>Status Board</span></button>
+        <button data-view="importrecords" data-route><span class="rail-icon" data-icon="upload"></span><span>Import</span></button>
       </aside>
 
       <section class="workspace">
@@ -188,6 +196,26 @@
               <span class="card-icon" data-icon="library"></span>
               <strong>Local Records</strong>
               <span>View, reload, delete, and export all locally saved records.</span>
+            </button>
+            <button class="command-card" data-view="templates" data-route>
+              <span class="card-icon" data-icon="library"></span>
+              <strong>Job Templates</strong>
+              <span>Fill a repair job from a pre-built scenario template.</span>
+            </button>
+            <button class="command-card" data-view="criteria" data-route>
+              <span class="card-icon" data-icon="shield"></span>
+              <strong>Acceptance Criteria</strong>
+              <span>Build a checklist linked to a repair pack and check items off.</span>
+            </button>
+            <button class="command-card" data-view="statusboard" data-route>
+              <span class="card-icon" data-icon="version"></span>
+              <strong>Repair Status Board</strong>
+              <span>See all repair jobs by status. Update status in one tap.</span>
+            </button>
+            <button class="command-card" data-view="importrecords" data-route>
+              <span class="card-icon" data-icon="upload"></span>
+              <strong>Import Records</strong>
+              <span>Paste or upload an exported records bundle to restore local data.</span>
             </button>
           </div>
 
@@ -1728,9 +1756,13 @@
             <h2>Site Health Reports</h2>
             <div id="lr-sh-list" style="display:grid;gap:8px;"></div>
           </div>
-          <div class="panel">
+          <div class="panel" style="margin-bottom:16px;">
             <h2>Repair Pack Summaries</h2>
             <div id="lr-rp-list" style="display:grid;gap:8px;"></div>
+          </div>
+          <div class="panel">
+            <h2>Acceptance Criteria Checklists</h2>
+            <div id="lr-ac-list" style="display:grid;gap:8px;"></div>
           </div>
 
           <script>
@@ -1772,20 +1804,22 @@
               lrRenderGroup('lt_bv_',  'lr-bv-list',  function(d){ return (d.entryId||'?') + ' — ' + (d.site||'') + ' — ' + (d.buildMarker||''); });
               lrRenderGroup('lt_sh_',  'lr-sh-list',  function(d){ return (d.reportId||'?') + ' — ' + (d.site||'') + ' — ' + (d.pageLoads ? 'Loads:'+d.pageLoads : ''); });
               lrRenderGroup('lt_rp_',  'lr-rp-list',  function(d){ return (d.summaryId||'?') + ' — ' + (d.repairJobId||'') + ' — ' + (d.status||''); });
+              lrRenderGroup('lt_ac_',  'lr-ac-list',  function(d){ var done=(d.items||[]).filter(function(i){return i.checked;}).length; return (d.criteriaId||'?') + ' — ' + (d.title||'') + ' — ' + done+'/'+(d.items||[]).length+' passed'; });
             }
 
             document.getElementById('lr-refresh').addEventListener('click', function(){ lrRender(); lrToast('Records refreshed.'); });
 
             document.getElementById('lr-export-all').addEventListener('click', function(){
-              var bundle = { exportedAt: new Date().toISOString(), repairJobs: [], buildVaultEntries: [], siteHealthReports: [], repairPackSummaries: [] };
+              var bundle = { exportedAt: new Date().toISOString(), repairJobs: [], buildVaultEntries: [], siteHealthReports: [], repairPackSummaries: [], criteriaChecklists: [] };
               for (var i = 0; i < localStorage.length; i++) {
                 var k = localStorage.key(i);
                 try {
                   var d = JSON.parse(localStorage.getItem(k));
-                  if (k && k.indexOf('lt_rjw_') === 0 && k !== 'lt_rjw_draft') bundle.repairJobs.push(d);
+                  if (k && k.indexOf('lt_rjw_') === 0 && k !== 'lt_rjw_draft' && k !== 'lt_repairjob_draft') bundle.repairJobs.push(d);
                   else if (k && k.indexOf('lt_bv_') === 0 && k !== 'lt_bv_draft') bundle.buildVaultEntries.push(d);
                   else if (k && k.indexOf('lt_sh_') === 0 && k !== 'lt_sh_draft') bundle.siteHealthReports.push(d);
                   else if (k && k.indexOf('lt_rp_') === 0 && k !== 'lt_rp_draft') bundle.repairPackSummaries.push(d);
+                  else if (k && k.indexOf('lt_ac_') === 0 && k !== 'lt_ac_draft') bundle.criteriaChecklists.push(d);
                 } catch(e){}
               }
               var b = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
@@ -1802,6 +1836,262 @@
               panel.addEventListener('lt-view-enter', lrRender);
               setTimeout(function(){ if (panel.classList.contains('active')) lrRender(); }, 100);
             }
+          }());
+          </script>
+        </section>
+
+        <!-- ═══ REPAIR JOB TEMPLATE LIBRARY ═══ -->
+        <section class="view" id="view-templates" data-view-panel="templates">
+          <div class="section-head">
+            <p class="eyebrow">Job Templates</p>
+            <h1>Start a repair job from a template.</h1>
+            <p>Pick a scenario. The template loads as a draft. Open Repair Job Writer and click Reload Saved to fill the fields, then edit before saving.</p>
+          </div>
+          <div class="action-grid" id="tl-card-grid"></div>
+          <script>
+          (function(){
+            function tlToast(m){var t=document.getElementById('toast');if(t){t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2400);}}
+            var TEMPLATES=[
+              {name:'Image Prompt — FAIL',description:'Image Prompt PWA not responding on device. Free providers are active. Failure is in the UI layer.',data:{site:'Image Prompt PWA',affectedArea:'Image Prompt PWA — image generation UI',problemSummary:'Image Prompt does not generate an image on device. Tapping generate produces no visible result. No result card appears.',evidence:'User confirmed not working on iPad as of 2026-05-10. Free providers (Pollinations, AI Horde) require no key and should work. Failure is in the UI layer.',suspectedCause:'UI layer is not calling the provider chain or not rendering the result card. Root cause not yet confirmed.',affectedFiles:'load/image-prompt/index.html',riskLevel:'HIGH',liveSiteImpact:'YES',serviceWorkerImpact:'NO',providerImpact:'YES',exportPackageImpact:'NO',securityImpact:'NO',userTestingRequired:'YES',acceptanceCriteria:'User taps generate. A result card appears with the generated image. No blank screen. No silent failure.',rollbackPlan:'git revert the offending commit. Verify on device before merging.',status:'FAIL',nextRecommendedAction:'Read 5.8 AI Studio Fix.docx and 5.8 READ AI Studio Not working.docx. Diagnose the UI failure before building.'}},
+              {name:'AI Chat Studio — FAIL',description:'AI Chat Studio Send does nothing visible on device. Result card never appears.',data:{site:'Load AI / AI Chat Studio',affectedArea:'AI Chat Studio — image creation and result card',problemSummary:'Tapping Send in AI Chat Studio produces no visible response. No loading state, no result card, no error message.',evidence:'User confirmed not working on iPad as of 2026-05-10. The 17-provider chain is wired in code. Failure is in the UI layer not the provider layer.',suspectedCause:'Send handler is not triggering the provider chain, or the result card is not being injected into the DOM. Root cause not confirmed.',affectedFiles:'load/tools/ai-chat-studio.html\nload/lib-load-image-providers.js',riskLevel:'HIGH',liveSiteImpact:'YES',serviceWorkerImpact:'NO',providerImpact:'YES',exportPackageImpact:'NO',securityImpact:'NO',userTestingRequired:'YES',acceptanceCriteria:'User types a prompt and taps Send. A loading card appears. A result card with the generated image appears. Provider ID and operation type shown on card.',rollbackPlan:'git revert the offending commit. Verify on device before merging.',status:'FAIL',nextRecommendedAction:'Read 5.8 READ AI Studio Not working.docx. Fix result card injection and loading state before any other AI build.'}},
+              {name:'Audio Routing Fix',description:'SFX routing or badge labeling incorrect. Prompts routed to wrong synthesizer or labeled inaccurately.',data:{site:'Load Main',affectedArea:'Load AI — audio routing (SFX / voice / ambience)',problemSummary:'Audio prompt is routed to the wrong synthesizer or the result badge is labeling audio as something it is not.',evidence:'Fill in observed routing or badge behaviour.',suspectedCause:'sfxLikeRx or voiceLikeRx regex not matching the observed prompt. Or synthesizer branch not producing the expected WAV shape.',affectedFiles:'load/tools/ai-chat-studio.html',riskLevel:'MEDIUM',liveSiteImpact:'YES',serviceWorkerImpact:'NO',providerImpact:'NO',exportPackageImpact:'NO',securityImpact:'NO',userTestingRequired:'YES',acceptanceCriteria:'SFX prompt routes to SFX synthesizer. Voice prompt routes to TTS. Badge label matches actual output type. No false green OK badge.',rollbackPlan:'git revert the audio routing commit. Re-verify badges on device.',status:'FAIL',nextRecommendedAction:'Identify which prompt is mislabeled. Check regex match in sfxLikeRx / voiceLikeRx.'}},
+              {name:'Service Worker Stale Cache',description:'Site serving old cached version. User sees stale code after a push.',data:{site:'',affectedArea:'Service Worker — cache version',problemSummary:'After a new build was pushed to main, the live site is still serving the previous cached version.',evidence:'Open the live sw.js and check the CACHE value. If it matches a previous version, the cache string was not bumped.',suspectedCause:'Cache string in sw.js was not incremented before push, or the SW update cycle has not completed on device.',affectedFiles:'load/sw.js\nload/load.js',riskLevel:'MEDIUM',liveSiteImpact:'YES',serviceWorkerImpact:'YES',providerImpact:'NO',exportPackageImpact:'NO',securityImpact:'NO',userTestingRequired:'YES',acceptanceCriteria:'Open live sw.js. CACHE value matches the latest build version. Version badge on site matches. Hard reload on device shows new version.',rollbackPlan:'Bump cache string forward only. Never backward. Push new SW. Verify on device.',status:'FAIL',nextRecommendedAction:'Check CACHE string in sw.js. Bump to next version. Push. Verify on device.'}},
+              {name:'Build Rollback Required',description:'Recent push broke a verified-working feature. Need to revert to a known good build.',data:{site:'',affectedArea:'',problemSummary:'A recent commit introduced a regression. A previously verified-working feature is now broken on device.',evidence:'Fill in which feature broke and after which commit.',suspectedCause:'Fill in suspected cause. Check git log to identify the breaking commit.',affectedFiles:'',riskLevel:'HIGH',liveSiteImpact:'YES',serviceWorkerImpact:'NO',providerImpact:'NO',exportPackageImpact:'NO',securityImpact:'NO',userTestingRequired:'YES',acceptanceCriteria:'Previously verified feature is working again on device. No other verified features were dropped.',rollbackPlan:'Use git checkout <good-sha> -- <specific files>. Never blanket reset. Bump cache string. Push. Verify on device.',status:'FAIL',nextRecommendedAction:'Run git log. Identify the breaking commit. Use surgical revert per CLAUDE.md revert rules.'}}
+            ];
+            var grid=document.getElementById('tl-card-grid');
+            if(grid){
+              TEMPLATES.forEach(function(tpl){
+                var card=document.createElement('button');
+                card.className='command-card';
+                card.type='button';
+                card.innerHTML='<span class="card-icon" data-icon="wrench"></span><strong>'+tpl.name+'</strong><span>'+tpl.description+'</span>';
+                card.addEventListener('click',function(){
+                  var jobId='RJ-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+                  var draft=Object.assign({jobId:jobId,createdAt:new Date().toISOString()},tpl.data);
+                  try{
+                    localStorage.setItem('lt_repairjob_draft',JSON.stringify(draft));
+                    tlToast('Template loaded. Open Repair Job Writer and click Reload Saved.');
+                  }catch(e){tlToast('Could not save template to local storage.');}
+                });
+                grid.appendChild(card);
+              });
+            }
+          }());
+          </script>
+        </section>
+
+        <!-- ═══ ACCEPTANCE CRITERIA TRACKER ═══ -->
+        <section class="view" id="view-criteria" data-view-panel="criteria">
+          <div class="section-head">
+            <p class="eyebrow">Acceptance Criteria</p>
+            <h1>Track repair acceptance criteria.</h1>
+            <p>Build a checklist linked to a Repair Pack. Check items off as you verify each one. Local only.</p>
+          </div>
+          <div class="panel">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+              <button class="primary-action" type="button" id="ac-new">New Checklist</button>
+              <button class="secondary-action" type="button" id="ac-save">Save Locally</button>
+              <button class="secondary-action" type="button" id="ac-load">Reload Saved</button>
+              <button class="secondary-action" type="button" id="ac-export-json">Export JSON</button>
+              <button class="secondary-action" type="button" id="ac-export-txt">Export .txt</button>
+              <button class="secondary-action" type="button" id="ac-copy">Copy JSON</button>
+            </div>
+            <div style="display:grid;gap:12px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <label>Checklist ID (auto)<input id="ac-id" type="text" readonly style="background:rgba(255,255,255,0.04);"></label>
+                <label>Created At (auto)<input id="ac-createdAt" type="text" readonly style="background:rgba(255,255,255,0.04);"></label>
+              </div>
+              <label>Repair Pack ID<input id="ac-repairPackId" type="text" placeholder="Paste RP-xxx from Repair Pack Summary."></label>
+              <label>Checklist Title<input id="ac-title" type="text" placeholder="Example: AI Chat Studio fix acceptance criteria"></label>
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                  <strong style="flex:1;font-size:14px;">Criteria Items</strong>
+                  <button class="secondary-action" type="button" id="ac-add-item" style="padding:4px 12px;font-size:13px;">Add Item</button>
+                </div>
+                <div id="ac-items-list" style="display:grid;gap:8px;min-height:48px;"></div>
+              </div>
+              <div id="ac-progress" style="font-size:13px;color:#9aa0b0;"></div>
+            </div>
+          </div>
+          <script>
+          (function(){
+            function acGet(id){return document.getElementById(id);}
+            function acVal(id){var e=acGet(id);return e?e.value.trim():'';}
+            function acSet(id,v){var e=acGet(id);if(e)e.value=v;}
+            function acToast(m){var t=document.getElementById('toast');if(t){t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2400);}}
+            function acGenId(){return'AC-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,5).toUpperCase();}
+            function acGetItems(){
+              var rows=acGet('ac-items-list').querySelectorAll('.ac-item-row');
+              var items=[];
+              rows.forEach(function(row){var cb=row.querySelector('input[type="checkbox"]');var txt=row.querySelector('input[type="text"]');if(txt&&txt.value.trim())items.push({text:txt.value.trim(),checked:cb?cb.checked:false});});
+              return items;
+            }
+            function acUpdateProgress(){
+              var items=acGetItems();var done=items.filter(function(i){return i.checked;}).length;
+              var prog=acGet('ac-progress');if(prog)prog.textContent=items.length>0?done+' of '+items.length+' items passed':'No items yet.';
+            }
+            function acAddItemRow(text,checked){
+              var list=acGet('ac-items-list');
+              var row=document.createElement('div');row.className='ac-item-row';
+              row.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,0.04);border-radius:6px;';
+              var cb=document.createElement('input');cb.type='checkbox';cb.checked=!!checked;
+              cb.style.cssText='width:18px;height:18px;flex-shrink:0;cursor:pointer;';
+              cb.addEventListener('change',acUpdateProgress);
+              var inp=document.createElement('input');inp.type='text';inp.value=text||'';inp.placeholder='Describe acceptance criterion...';
+              inp.style.cssText='flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;padding:5px 8px;color:inherit;font-size:13px;';
+              inp.addEventListener('input',acUpdateProgress);
+              var del=document.createElement('button');del.type='button';del.textContent='Remove';del.className='secondary-action';
+              del.style.cssText='padding:3px 10px;font-size:12px;color:#f44336;border-color:#f44336;flex-shrink:0;';
+              del.addEventListener('click',function(){row.remove();acUpdateProgress();});
+              row.appendChild(cb);row.appendChild(inp);row.appendChild(del);
+              list.appendChild(row);acUpdateProgress();
+            }
+            function acBuild(){return{criteriaId:acVal('ac-id'),createdAt:acVal('ac-createdAt'),repairPackId:acVal('ac-repairPackId'),title:acVal('ac-title'),items:acGetItems()};}
+            function acFill(d){
+              acSet('ac-id',d.criteriaId||'');acSet('ac-createdAt',d.createdAt||'');acSet('ac-repairPackId',d.repairPackId||'');acSet('ac-title',d.title||'');
+              var list=acGet('ac-items-list');list.innerHTML='';
+              if(Array.isArray(d.items))d.items.forEach(function(it){acAddItemRow(it.text,it.checked);});
+              acUpdateProgress();
+            }
+            acGet('ac-new').addEventListener('click',function(){acFill({});acSet('ac-id',acGenId());acSet('ac-createdAt',new Date().toISOString());acToast('New checklist started.');});
+            acGet('ac-add-item').addEventListener('click',function(){acAddItemRow('',false);var last=acGet('ac-items-list').lastChild;if(last)last.querySelector('input[type="text"]').focus();});
+            acGet('ac-save').addEventListener('click',function(){try{var d=acBuild();if(!d.criteriaId){acToast('Start a new checklist first.');return;}localStorage.setItem('lt_ac_'+d.criteriaId,JSON.stringify(d));localStorage.setItem('lt_ac_draft',JSON.stringify(d));acToast('Checklist saved locally.');}catch(ex){acToast('Save failed.');}});
+            acGet('ac-load').addEventListener('click',function(){try{var r=localStorage.getItem('lt_ac_draft');if(!r){acToast('No saved checklist found.');return;}acFill(JSON.parse(r));acToast('Checklist loaded.');}catch(ex){acToast('Load failed.');}});
+            acGet('ac-export-json').addEventListener('click',function(){var d=acBuild();if(!d.criteriaId){acToast('Start a new checklist first.');return;}var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(d.criteriaId||'criteria')+'.json';a.click();URL.revokeObjectURL(a.href);acToast('JSON exported.');});
+            acGet('ac-export-txt').addEventListener('click',function(){
+              var d=acBuild();if(!d.criteriaId){acToast('Start a new checklist first.');return;}
+              var lines=['ACCEPTANCE CRITERIA — '+(d.title||'Untitled'),'Checklist ID: '+(d.criteriaId||''),'Repair Pack ID: '+(d.repairPackId||''),'Created: '+(d.createdAt||''),''];
+              var done=0;(d.items||[]).forEach(function(it,i){var mark=it.checked?'[PASS]':'[    ]';if(it.checked)done++;lines.push(mark+' '+(i+1)+'. '+it.text);});
+              lines.push('');lines.push(done+' of '+(d.items||[]).length+' items passed.');
+              var b=new Blob([lines.join('\n')],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(d.criteriaId||'criteria')+'.txt';a.click();URL.revokeObjectURL(a.href);acToast('.txt exported.');
+            });
+            acGet('ac-copy').addEventListener('click',function(){var d=acBuild();if(!d.criteriaId){acToast('Start a new checklist first.');return;}navigator.clipboard.writeText(JSON.stringify(d,null,2)).then(function(){acToast('Copied.');}).catch(function(){acToast('Copy failed.');});});
+          }());
+          </script>
+        </section>
+
+        <!-- ═══ REPAIR STATUS BOARD ═══ -->
+        <section class="view" id="view-statusboard" data-view-panel="statusboard">
+          <div class="section-head">
+            <p class="eyebrow">Status Board</p>
+            <h1>All repair jobs at a glance.</h1>
+            <p>See every saved repair job. Update status in one tap. Changes save back to local storage immediately.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+            <button class="primary-action" type="button" id="sb-refresh">Refresh</button>
+          </div>
+          <div class="panel">
+            <div id="sb-board" style="overflow-x:auto;"></div>
+          </div>
+          <script>
+          (function(){
+            function sbToast(m){var t=document.getElementById('toast');if(t){t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2400);}}
+            var STATUS_OPTS=['WORKING REAL OUTPUT','PARTIAL','PROVIDER NEEDED','PLACEHOLDER ONLY','NOT DONE','READY FOR USER VERIFICATION','FAIL'];
+            var STATUS_COLORS={'WORKING REAL OUTPUT':'#4caf50','PARTIAL':'#ff9800','PROVIDER NEEDED':'#9e9e9e','PLACEHOLDER ONLY':'#607d8b','NOT DONE':'#9e9e9e','READY FOR USER VERIFICATION':'#2196f3','FAIL':'#f44336'};
+            function sbRender(){
+              var board=document.getElementById('sb-board');if(!board)return;
+              var jobs=[];
+              for(var i=0;i<localStorage.length;i++){
+                var k=localStorage.key(i);
+                if(k&&k.indexOf('lt_rjw_')===0&&k!=='lt_rjw_draft'&&k!=='lt_repairjob_draft'){
+                  try{jobs.push({key:k,data:JSON.parse(localStorage.getItem(k))});}catch(e){}
+                }
+              }
+              if(jobs.length===0){board.innerHTML='<p style="font-size:13px;color:#9aa0b0;padding:12px 0;">No repair jobs saved. Create one in Repair Job Writer.</p>';return;}
+              jobs.sort(function(a,b){return a.key<b.key?1:-1;});
+              var html='<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+              html+='<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1);">';
+              html+='<th style="text-align:left;padding:8px 10px;color:#9aa0b0;font-weight:600;">Job ID</th>';
+              html+='<th style="text-align:left;padding:8px 10px;color:#9aa0b0;font-weight:600;">Site</th>';
+              html+='<th style="text-align:left;padding:8px 10px;color:#9aa0b0;font-weight:600;">Area</th>';
+              html+='<th style="text-align:left;padding:8px 10px;color:#9aa0b0;font-weight:600;">Risk</th>';
+              html+='<th style="text-align:left;padding:8px 10px;color:#9aa0b0;font-weight:600;">Status</th>';
+              html+='</tr></thead><tbody>';
+              jobs.forEach(function(item){
+                var d=item.data;var color=STATUS_COLORS[d.status]||'#9aa0b0';
+                html+='<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">';
+                html+='<td style="padding:8px 10px;font-family:monospace;">'+(d.jobId||'—')+'</td>';
+                html+='<td style="padding:8px 10px;">'+(d.site||'—')+'</td>';
+                html+='<td style="padding:8px 10px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+(d.affectedArea||'—')+'</td>';
+                html+='<td style="padding:8px 10px;">'+(d.riskLevel||'—')+'</td>';
+                html+='<td style="padding:8px 10px;"><select class="sb-status-select" data-key="'+item.key+'" style="background:rgba(255,255,255,0.06);border:1px solid '+color+';border-radius:4px;padding:3px 6px;color:'+color+';font-size:12px;font-weight:600;">';
+                STATUS_OPTS.forEach(function(s){html+='<option value="'+s+'"'+(d.status===s?' selected':'')+'>'+s+'</option>';});
+                html+='</select></td></tr>';
+              });
+              html+='</tbody></table>';
+              board.innerHTML=html;
+              board.querySelectorAll('.sb-status-select').forEach(function(sel){
+                sel.addEventListener('change',function(){
+                  var key=this.getAttribute('data-key');var newStatus=this.value;
+                  try{var raw=localStorage.getItem(key);if(!raw)return;var job=JSON.parse(raw);job.status=newStatus;localStorage.setItem(key,JSON.stringify(job));var color=STATUS_COLORS[newStatus]||'#9aa0b0';this.style.borderColor=color;this.style.color=color;sbToast('Status updated to: '+newStatus);}catch(e){sbToast('Update failed.');}
+                });
+              });
+            }
+            document.getElementById('sb-refresh').addEventListener('click',function(){sbRender();sbToast('Board refreshed.');});
+            var panel=document.getElementById('view-statusboard');
+            if(panel){panel.addEventListener('lt-view-enter',sbRender);setTimeout(function(){if(panel.classList.contains('active'))sbRender();},100);}
+          }());
+          </script>
+        </section>
+
+        <!-- ═══ IMPORT RECORDS ═══ -->
+        <section class="view" id="view-importrecords" data-view-panel="importrecords">
+          <div class="section-head">
+            <p class="eyebrow">Import Records</p>
+            <h1>Restore records from a bundle.</h1>
+            <p>Paste or upload an exported Load Tasks records bundle. Skips duplicates by ID. Nothing is sent anywhere.</p>
+          </div>
+          <div class="panel">
+            <div style="margin-bottom:16px;">
+              <label style="display:block;margin-bottom:8px;">Upload records bundle (.json)<input type="file" id="ir-file" accept=".json" style="display:block;margin-top:6px;"></label>
+            </div>
+            <label>Or paste JSON bundle<textarea id="ir-paste" rows="8" placeholder="Paste the contents of a load-tasks-records-*.json file here."></textarea></label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+              <button class="primary-action" type="button" id="ir-import">Parse and Import</button>
+              <button class="secondary-action" type="button" id="ir-clear">Clear</button>
+            </div>
+            <div id="ir-result" style="display:none;margin-top:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:8px;font-size:13px;white-space:pre-wrap;"></div>
+          </div>
+          <script>
+          (function(){
+            function irToast(m){var t=document.getElementById('toast');if(t){t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2400);}}
+            function irImportBundle(bundle){
+              var counts={repairJobs:0,buildVaultEntries:0,siteHealthReports:0,repairPackSummaries:0,criteriaChecklists:0};
+              var skipped={repairJobs:0,buildVaultEntries:0,siteHealthReports:0,repairPackSummaries:0,criteriaChecklists:0};
+              function doImport(arr,prefix,idField,countKey){
+                if(!Array.isArray(arr))return;
+                arr.forEach(function(item){var id=item&&item[idField];if(!id)return;var key=prefix+id;if(localStorage.getItem(key)){skipped[countKey]++;return;}try{localStorage.setItem(key,JSON.stringify(item));counts[countKey]++;}catch(e){}});
+              }
+              doImport(bundle.repairJobs,'lt_rjw_','jobId','repairJobs');
+              doImport(bundle.buildVaultEntries,'lt_bv_','entryId','buildVaultEntries');
+              doImport(bundle.siteHealthReports,'lt_sh_','reportId','siteHealthReports');
+              doImport(bundle.repairPackSummaries,'lt_rp_','summaryId','repairPackSummaries');
+              doImport(bundle.criteriaChecklists,'lt_ac_','criteriaId','criteriaChecklists');
+              var result=document.getElementById('ir-result');
+              if(result){
+                var lines=['Import complete. Exported at: '+(bundle.exportedAt||'unknown'),''];
+                lines.push('Repair Jobs: '+counts.repairJobs+' imported, '+skipped.repairJobs+' skipped (already exist)');
+                lines.push('Build Vault Entries: '+counts.buildVaultEntries+' imported, '+skipped.buildVaultEntries+' skipped');
+                lines.push('Site Health Reports: '+counts.siteHealthReports+' imported, '+skipped.siteHealthReports+' skipped');
+                lines.push('Repair Pack Summaries: '+counts.repairPackSummaries+' imported, '+skipped.repairPackSummaries+' skipped');
+                lines.push('Acceptance Criteria: '+counts.criteriaChecklists+' imported, '+skipped.criteriaChecklists+' skipped');
+                result.textContent=lines.join('\n');result.style.display='';
+              }
+              irToast('Import complete.');
+            }
+            function irParse(text){
+              try{var bundle=JSON.parse(text);if(typeof bundle!=='object'||bundle===null||Array.isArray(bundle)){irToast('Not a valid records bundle.');return;}irImportBundle(bundle);}catch(e){irToast('JSON parse error: '+e.message);}
+            }
+            document.getElementById('ir-file').addEventListener('change',function(ev){
+              var file=ev.target.files&&ev.target.files[0];if(!file)return;
+              var reader=new FileReader();reader.onload=function(e){document.getElementById('ir-paste').value=e.target.result||'';};reader.readAsText(file);
+            });
+            document.getElementById('ir-import').addEventListener('click',function(){
+              var text=document.getElementById('ir-paste').value.trim();if(!text){irToast('Paste or upload a JSON bundle first.');return;}irParse(text);
+            });
+            document.getElementById('ir-clear').addEventListener('click',function(){
+              document.getElementById('ir-paste').value='';var result=document.getElementById('ir-result');if(result){result.style.display='none';result.textContent='';}irToast('Cleared.');
+            });
           }());
           </script>
         </section>
