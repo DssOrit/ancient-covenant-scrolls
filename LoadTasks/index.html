@@ -31,6 +31,10 @@
 .lt-recent-added{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:20px;}
 .lt-recent-added button{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:10px 12px;color:#c0c4d0;font-size:12px;font-weight:600;cursor:pointer;text-align:center;}
 .lt-recent-added button:hover{background:rgba(34,197,94,0.15);color:#e8eaf0;}
+@media (max-width:1180px){
+  .side-rail{align-items:flex-start;}
+  .rail-grp{width:auto;min-width:130px;}
+}
 </style>
 <script src="../branding.js" data-brand-skip></script></head>
 <body>
@@ -10656,13 +10660,14 @@
     ];
     function groupRail(){
       var rail=document.querySelector('.side-rail');if(!rail)return;
+      var isRowMode=window.innerWidth<=1180;
       var btns={};
       rail.querySelectorAll('button[data-view][data-route]').forEach(function(b){btns[b.getAttribute('data-view')]=b;});
       while(rail.firstChild)rail.removeChild(rail.firstChild);
       PINNED.forEach(function(v){if(btns[v])rail.appendChild(btns[v]);});
       var allGrouped={};PINNED.forEach(function(v){allGrouped[v]=1;});
       GROUPS.forEach(function(g){
-        var det=document.createElement('details');det.className='rail-grp';if(g.open)det.setAttribute('open','');
+        var det=document.createElement('details');det.className='rail-grp';if(g.open&&!isRowMode)det.setAttribute('open','');
         var sum=document.createElement('summary');sum.textContent=g.label;det.appendChild(sum);
         g.views.forEach(function(v){allGrouped[v]=1;if(btns[v])det.appendChild(btns[v]);});
         rail.appendChild(det);
