@@ -167,7 +167,7 @@ jobs:
           JOB_FILE: ${{ inputs.job_file || 'loadtasks-inbox/repo-file-job.json' }}
 
       - name: Upload dry-run report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: dry-run-report-${{ env.JOB_ID || 'unknown' }}
