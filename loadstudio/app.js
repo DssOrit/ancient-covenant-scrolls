@@ -463,6 +463,12 @@ render();
     var tmp=scenes[i];scenes[i]=scenes[j];scenes[j]=tmp;
     localStorage.setItem('ls_scenes',JSON.stringify(scenes));renderBoard();
   };
+  window.lsPB=function(ev){
+    if(ev){ev.stopPropagation();ev.preventDefault();}
+    var p=document.getElementById('lsPBPanel');if(!p)return;
+    populateSceneSel();renderBoard();
+    p.style.display='block';
+  };
 })();
 
 // Provider Report
