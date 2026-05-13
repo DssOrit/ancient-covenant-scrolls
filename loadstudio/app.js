@@ -694,5 +694,89 @@ window.showToolSection=function(id){
   go(id);
 };
 window.lsNav=window.showToolSection;
+window.lsCTP=function(id){
+  var p=document.getElementById('continuityToolsPanel');
+  if(!p)return;
+  var cl='<button class="ls-ctp-close" type="button" onclick="document.getElementById(\'continuityToolsPanel\').style.display=\'none\'" aria-label="Close">&#x2715;</button>';
+  var panels={
+    'own-image-clone':cl+'<h2 class="ls-ctp-h">Owned Character Builder</h2><p class="ls-ctp-desc">Create a character you own or have permission to use. Fill in identity details, set what can and cannot change, then save.</p>'
+      +'<div class="ls-ctp-field"><label>Ownership / permission confirmation</label><label style="display:flex;align-items:center;gap:8px;margin-top:4px;font:400 14px Inter,system-ui,sans-serif;color:#f5f0ff"><input type="checkbox" style="width:auto;margin:0"> I confirm ownership or rights to use this character</label></div>'
+      +'<div class="ls-ctp-field"><label>Likeness type</label><select><option value="">Select...</option><option>Fully fictional</option><option>Creator-owned likeness</option><option>Licensed likeness</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Character name</label><input type="text" placeholder="Full character name"></div>'
+      +'<div class="ls-ctp-field"><label>Face notes</label><input type="text" placeholder="Describe key face features"></div>'
+      +'<div class="ls-ctp-field"><label>Skin tone notes</label><input type="text" placeholder="e.g. warm medium brown, no filter"></div>'
+      +'<div class="ls-ctp-field"><label>Body type notes</label><input type="text" placeholder="e.g. lean athletic build, tall"></div>'
+      +'<div class="ls-ctp-field"><label>Hair notes</label><input type="text" placeholder="Color, length, texture, style"></div>'
+      +'<div class="ls-ctp-field"><label>Wardrobe notes</label><textarea placeholder="Describe the character\'s usual wardrobe"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Allowed changes</label><textarea placeholder="What can vary between scenes (e.g. outfit color)"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Forbidden changes</label><textarea placeholder="What must never change (e.g. face shape, eye color)"></textarea></div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Save character metadata</button></div>',
+    'reference-pack':cl+'<h2 class="ls-ctp-h">Reference Pack Builder</h2><p class="ls-ctp-desc">Upload reference images for consistent character looks. Each slot holds one image used to anchor that aspect of the character.</p>'
+      +'<div class="ls-ctp-field"><label>Front portrait</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-field"><label>Side profile</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-field"><label>Full body</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-field"><label>Wardrobe reference</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-field"><label>Expression reference</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-field"><label>Style reference</label><input type="file" accept="image/*"></div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Save reference pack</button><button class="ls-ctp-btn secondary" type="button">Export reference pack metadata</button></div>',
+    'continuity-engine':cl+'<h2 class="ls-ctp-h">Continuity Engine</h2><p class="ls-ctp-desc">Log approved and rejected takes. Record what must not repeat. Score each attribute for consistency against the character reference.</p>'
+      +'<div class="ls-ctp-field"><label>Approved takes</label><textarea placeholder="Approved take IDs and filenames, one per line"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Rejected takes</label><textarea placeholder="Rejected take IDs and reason for rejection, one per line"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Do-not-repeat memory</label><textarea placeholder="Prompts or elements that produced bad results — never repeat these"></textarea></div>'
+      +'<p style="font:600 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em;margin:4px 0 10px">Consistency scores (0–100)</p>'
+      +'<div class="ls-ctp-score-grid">'
+      +'<div class="ls-ctp-field"><label>Face match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Skin tone match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Body type match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Hair match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Wardrobe match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Era match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Style match score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-field"><label>Average consistency score</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'</div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Save continuity report</button></div>',
+    'prompt-lock':cl+'<h2 class="ls-ctp-h">Prompt Lock Compiler</h2><p class="ls-ctp-desc">Lock and compile approved prompts. Set character DNA, wardrobe, camera, lighting, and scene mood, then export in the format your provider needs.</p>'
+      +'<div class="ls-ctp-field"><label>Character DNA</label><textarea placeholder="Paste your locked character description from the Owned Character Builder"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Approved reference notes</label><textarea placeholder="Notes on which reference images to anchor against"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Forbidden changes</label><textarea placeholder="Elements that must never appear or change in any generated image"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Wardrobe notes</label><input type="text" placeholder="Exact wardrobe for this scene"></div>'
+      +'<div class="ls-ctp-field"><label>Camera setup</label><input type="text" placeholder="e.g. medium close-up, eye level, shallow depth of field"></div>'
+      +'<div class="ls-ctp-field"><label>Lighting setup</label><input type="text" placeholder="e.g. golden hour, soft diffuse, three-point"></div>'
+      +'<div class="ls-ctp-field"><label>Scene mood</label><input type="text" placeholder="e.g. tense, quiet, celebratory"></div>'
+      +'<div class="ls-ctp-field"><label>Negative prompt additions</label><textarea placeholder="Additional things to exclude from the generated image"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Provider format</label><select><option value="">Select provider format...</option><option>Generic text prompt</option><option>Structured JSON</option><option>Negative-prompt split</option></select></div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Compile prompt</button><button class="ls-ctp-btn secondary" type="button">Save to prompt log</button></div>',
+    'scene-proof':cl+'<h2 class="ls-ctp-h">Scene Proof</h2><p class="ls-ctp-desc">Save a proof record for an image before approving a take. Record where the asset came from, its rights status, and your approval decision.</p>'
+      +'<div class="ls-ctp-field"><label>Asset ID</label><input type="text" placeholder="Unique ID for this asset"></div>'
+      +'<div class="ls-ctp-field"><label>Asset type</label><select><option value="">Select...</option><option>Generated image</option><option>Uploaded image</option><option>Reference crop</option><option>Edited image</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Provider</label><input type="text" placeholder="Which provider or tool created this"></div>'
+      +'<div class="ls-ctp-field"><label>Prompt used</label><textarea placeholder="The full prompt sent to the provider"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Source scene</label><input type="text" placeholder="Scene ID or scene name"></div>'
+      +'<div class="ls-ctp-field"><label>Source character</label><input type="text" placeholder="Character name this image is of"></div>'
+      +'<div class="ls-ctp-field"><label>File path</label><input type="text" placeholder="Local file path if saved"></div>'
+      +'<div class="ls-ctp-field"><label>Blob URL</label><input type="text" placeholder="blob:// URL if held in memory"></div>'
+      +'<div class="ls-ctp-field"><label>External URL</label><input type="text" placeholder="https:// URL if hosted externally"></div>'
+      +'<div class="ls-ctp-field"><label>Base64 preview</label><textarea placeholder="Paste base64 data URI for offline preview (optional)"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Rights status</label><select><option value="">Select...</option><option>Creator-owned</option><option>Licensed</option><option>Pending confirmation</option><option>Blocked</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Approved status</label><select><option value="">Select...</option><option>Approved</option><option>Not approved</option><option>Under review</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Consistency score (0–100)</label><input type="number" min="0" max="100" placeholder="0–100"></div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Save proof</button><button class="ls-ctp-btn secondary" type="button">Export proof report</button></div>',
+    'provider-report':'<span class="ls-ctp-tag-req">Integration Required</span>'+cl+'<h2 class="ls-ctp-h">Provider Reports</h2><p class="ls-ctp-desc">Log what happened when you tried an image or voice provider. Record the task, the prompt, what came back, and whether it worked.</p>'
+      +'<div class="ls-ctp-field"><label>Provider tried</label><input type="text" placeholder="Provider name or endpoint"></div>'
+      +'<div class="ls-ctp-field"><label>Task type</label><select><option value="">Select...</option><option>Image generation</option><option>Image editing</option><option>Voice generation</option><option>Text generation</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Prompt sent</label><textarea placeholder="The prompt or request sent to the provider"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Result status</label><select><option value="">Select...</option><option>Result received</option><option>Partial result returned</option><option>Error returned</option><option>No response</option></select></div>'
+      +'<div class="ls-ctp-field"><label>Error details</label><textarea placeholder="Paste error message or describe what went wrong"></textarea></div>'
+      +'<div class="ls-ctp-field"><label>Fallback used</label><input type="text" placeholder="Which fallback provider or method was used, if any"></div>'
+      +'<div class="ls-ctp-field"><label>Asset proof path</label><input type="text" placeholder="File path, blob URL, or external URL of the result asset"></div>'
+      +'<div class="ls-ctp-field"><label>Approved take status</label><select><option value="">Select...</option><option>Approved take</option><option>Rejected take</option><option>Under review</option></select></div>'
+      +'<div class="ls-ctp-actions"><button class="ls-ctp-btn primary" type="button">Save provider report</button></div>'
+  };
+  var html=panels[id];
+  if(!html)return;
+  p.innerHTML=html;
+  p.style.display='block';
+  setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+};
 
 })();
