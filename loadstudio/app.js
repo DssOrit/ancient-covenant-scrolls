@@ -42,7 +42,7 @@ function log(msg){state.logs=state.logs||[];state.logs.push(new Date().toLocaleT
 function modal(title,body){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=body;$('#modal').classList.add('show')}
 function closeModal(){$('#modal').classList.remove('show')}
 function download(name,text,type='application/json'){const b=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function go(id){lsApplyDeptClass(id);$$('.section').forEach(s=>s.classList.remove('active')); const el=$('#section-'+id); if(el){el.classList.add('active'); requestAnimationFrame(()=>el.scrollIntoView({behavior:'smooth',block:'start'}));} }
+function go(id){lsApplyDeptClass(id);$$('.section').forEach(s=>{s.classList.remove('active');s.style.display='';});var ct=document.querySelector('main.app > .content');if(ct)ct.style.setProperty('display','block','important');const el=$('#section-'+id);if(el){el.classList.add('active');el.style.display='block';requestAnimationFrame(function(){window.scrollTo(0,0);});}}
 function sectionById(id){return featureData.sections.find(s=>s.id===id)}
 function statusText(section){if(section.type==='integration')return 'Integration Required: this tool needs API keys, backend, microphone permission, FFmpeg, cloud storage, Load Play endpoint, or live provider access.'; if(section.type==='mixed')return 'Local workflow is implemented. Live provider or backend actions are marked Integration Required where needed.'; return 'Local workflow implemented in this PWA.'}
 // Wrapped in a function so `${id}` resolves to the section id at
@@ -136,6 +136,8 @@ function action(a,el){let secid=el.dataset.sectionId; if(a==='close-modal') retu
 document.addEventListener('click',e=>{let s=e.target.closest('[data-section]'); if(s) go(s.dataset.section); let f=e.target.closest('[data-feature]'); if(f) featureClick(f.dataset.feature); let a=e.target.closest('[data-action]'); if(a) action(a.dataset.action,a);});
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
 render();
+// Clear forced content display when leaving studio mode so front page is unaffected
+(function(){var ct=document.querySelector('main.app > .content');if(!ct)return;new MutationObserver(function(){if(!document.body.classList.contains('ls-studio'))ct.style.removeProperty('display');}).observe(document.body,{attributes:true,attributeFilter:['class']});})();
 
 // Display & Focus Controls - restore persisted toggles on load
 (function(){
@@ -685,11 +687,12 @@ Additional: '+details;
   function v(id){var el=document.getElementById(id);return el?(el.value||''):''}
 })();
 
-window.lsNav=function(id){
+window.showToolSection=function(id){
   document.body.classList.add('ls-studio');
   document.body.classList.remove('ls-front');
   document.body.classList.remove('ls-wsp-on');
   go(id);
 };
+window.lsNav=window.showToolSection;
 
 })();
