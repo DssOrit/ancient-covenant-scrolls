@@ -1302,21 +1302,28 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#b388ff,#9c9cff)"></div>
     <div class="ls-h"><h2>Production Board</h2><span class="ls-dept" style="color:#b388ff">Production Board</span></div>
-    <p class="ls-lead">Assign and order your scenes, characters, voices, props, and locations. Move items up or down. Drag-and-drop is not yet complete — use the Move buttons for now.</p>
+    <p class="ls-lead">Assign production items to scenes. Use the Move buttons to order items within each scene. Save the board locally, then export when ready.</p>
     <div class="ls-panel">
-      <h3>Scene Order</h3>
-      <div id="ls-pb-scene-list" style="margin-top:10px;min-height:40px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No scenes saved yet. Add scenes in Scene Builder.</div>
-      <button id="ls-pb-refresh-btn" class="btn secondary" type="button" style="margin-top:10px">Refresh Scenes</button>
+      <h3>Assign Item to Scene</h3>
+      <div class="form-grid">
+        <div class="field"><label>Scene</label><select id="ls-pb-scene-sel"><option value="">Select a scene...</option></select></div>
+        <div class="field"><label>Item type</label><select id="ls-pb-item-type"><option value="">Select type...</option><option value="scene">Scene (sub-scene)</option><option value="character">Character</option><option value="owned-character">Owned character</option><option value="reference-pack">Reference pack</option><option value="asset">Asset</option><option value="wardrobe">Wardrobe</option><option value="prop">Prop</option><option value="location">Location</option><option value="voice">Voice</option><option value="music">Music</option><option value="sfx">SFX</option><option value="poster">Poster / thumbnail</option><option value="template">Template</option></select></div>
+        <div class="field"><label>Item label</label><input id="ls-pb-item-label" type="text" placeholder="Name or description of item"></div>
+        <div class="field"><label>Notes (optional)</label><input id="ls-pb-item-notes" type="text" placeholder="Any notes about this assignment"></div>
+      </div>
+      <div class="actions"><button id="ls-pb-assign-btn" class="btn primary" type="button">Assign to scene</button></div>
     </div>
     <div class="ls-panel">
-      <h3>Character Assignments</h3>
-      <div id="ls-pb-char-list" style="margin-top:10px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">Character assignments will appear here once characters are saved.</div>
-      <button class="btn secondary" type="button" onclick="localStorage.setItem('ls_char_assignments',JSON.stringify({updated:new Date().toISOString()}))" style="margin-top:10px">Save Assignments</button>
+      <h3>Assignment Board</h3>
+      <div id="ls-pb-board" style="margin-top:10px"><p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No assignments yet. Click Load scenes, then assign items above.</p></div>
+      <div class="actions" style="margin-top:14px">
+        <button id="ls-pb-load-btn" class="btn secondary" type="button">Load scenes</button>
+        <button id="ls-pb-save-btn" class="btn primary" type="button">Save board</button>
+      </div>
+      <div id="ls-pb-confirm" style="display:none;margin-top:8px;font:500 13px Inter,system-ui,sans-serif"></div>
     </div>
     <div class="ls-panel">
-      <h3>Asset Assignments</h3>
-      <div id="ls-pb-asset-list" style="margin-top:10px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">Drag-and-drop asset assignment: Not yet complete. Use the export studio to attach assets to scenes manually.</div>
-      <button id="ls-pb-export-btn" class="btn secondary" type="button" style="margin-top:10px">Export Assignment Sheet</button>
+      <button id="ls-pb-export-btn" class="btn secondary" type="button">Export Production Board JSON</button>
     </div>
     <div class="ls-related"></div>
   </div>
