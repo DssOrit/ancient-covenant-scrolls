@@ -1,0 +1,46 @@
+{
+  "build": "LOAD_AI_BUILD_v2_0_0",
+  "files_created": [
+    "README.md",
+    "app.js",
+    "assets/icons/icon-128x128.png",
+    "assets/icons/icon-144x144.png",
+    "assets/icons/icon-152x152.png",
+    "assets/icons/icon-180x180.png",
+    "assets/icons/icon-192x192.png",
+    "assets/icons/icon-384x384.png",
+    "assets/icons/icon-512x512.png",
+    "assets/icons/icon-72x72.png",
+    "assets/icons/icon-96x96.png",
+    "assets/icons/icon-maskable-512x512.png",
+    "assets/images/load-ai-logo-orange.png",
+    "assets/images/load-ai-splash-1080x1920.jpg",
+    "assets/images/load-ai-splash-1536x2048.jpg",
+    "data/project.json",
+    "index.html",
+    "manifest.json",
+    "styles.css",
+    "sw.js"
+  ],
+  "checks": {
+    "standalone_pwa_files_present": true,
+    "data_project_json_present": true,
+    "icon_files_present": true,
+    "splash_file_present": true,
+    "large_image_display_present": true,
+    "large_movie_screen_present": true,
+    "chat_prompting_present": true,
+    "library_present": true,
+    "visual_guide_present": true,
+    "orange_theme_applied": true,
+    "no_banned_user_facing_terms": true,
+    "build_marker_present": true,
+    "service_worker_present": true
+  },
+  "known_limitations": [
+    "No live AI provider connected yet.",
+    "Prompt preview output is local UI logic.",
+    "No generated media is claimed without a verified file, blob, URL, or provider response."
+  ],
+  "acceptance_summary": "Static package checks passed. Browser interaction should be tested after GitHub Pages upload or local open."
+}
