@@ -1277,7 +1277,7 @@ window.lsSaveCTP_providerReport=function(){
   };
   window.lsAID_updateTake=function(idx,status){var takes=load_takes();if(!takes[idx])return;takes[idx].status=status;takes[idx].updatedAt=new Date().toISOString();aid_write(KEYS.takes,takes);render_takes_list(_currentFilter);};
   window.lsAID_exportTake=function(idx){var takes=load_takes();if(!takes[idx])return;aid_dl('take-'+idx+'-metadata.json',takes[idx]);};
-  window.lsAID=function(ev){if(ev){ev.stopPropagation();ev.preventDefault();}var p=document.getElementById('lsAIDirectorPanel');if(!p)return;var wr=aid_read(KEYS.world)||{};sv('aid-wr-project',wr.project);sv('aid-wr-period',wr.period);sv('aid-wr-clothing',wr.clothing);sv('aid-wr-diversity',wr.diversity);sv('aid-wr-forbidden',wr.forbidden);sv('aid-wr-style',wr.style);sv('aid-wr-family-count',wr.familyCount);sv('aid-wr-crowd',wr.crowd);sv('aid-wr-authenticity',wr.authenticity);sv('aid-wr-negative',wr.negative);render_char_select();render_char_list();render_scene_list();render_takes_list(_currentFilter);p.style.display='block';aid_switch_tab('characters');try{if(gv('aid-sc-title'))lsAID_updateCinematicPreview();}catch(_){}try{lsAID_v74_init();}catch(_){}};
+  window.lsAID=function(ev){if(ev){ev.stopPropagation();ev.preventDefault();}var p=document.getElementById('lsAIDirectorPanel');if(!p)return;p.style.cssText=p.style.cssText.replace('display:none','');p.style.display='flex';lsAID_switch_rail('create');try{lsAID_v74_init();}catch(_){}try{render_char_select();}catch(_){}try{render_char_list();}catch(_){}try{render_scene_list();}catch(_){}try{render_takes_list(_currentFilter);}catch(_){}try{if(gv('aid-sc-title'))lsAID_updateCinematicPreview();}catch(_){}};
   function lsAID_v74_status(msg, color) {
     var el=document.getElementById('aid-v74-status');
     if(!el)return;
@@ -1413,93 +1413,87 @@ window.lsSaveCTP_providerReport=function(){
   };
 
 
-  function lsAID_v74_show_flow(){
-    var mb=document.getElementById('aid-v74-main-body');
-    var sp=document.getElementById('aid-v74-shortcut-panel');
-    if(mb){mb.style.display='block';}
-    if(sp){sp.style.display='none';}
+  function lsAID_switch_rail(panelName){
+    var panels=document.querySelectorAll('.aid-panel');
+    for(var _i=0;_i<panels.length;_i++)panels[_i].style.display='none';
+    var target=document.getElementById('aid-panel-'+panelName);
+    if(target)target.style.display='block';
+    var btns=document.querySelectorAll('[data-rail]');
+    for(var _j=0;_j<btns.length;_j++){
+      var _b=btns[_j];var _active=_b.getAttribute('data-rail')===panelName;
+      _b.style.color=_active?'#b388ff':'#7a6fa0';
+      _b.style.background=_active?'rgba(125,42,232,.2)':'none';
+      _b.style.borderRadius='10px';
+    }
+    if(panelName==='characters')lsAID_render_chars_panel();
+    if(panelName==='world')lsAID_load_world_panel();
+    if(panelName==='review'){try{render_takes_list(_currentFilter);}catch(_){}}
   }
 
-  function lsAID_v74_show_panel(title, bodyHtml){
-    var mb=document.getElementById('aid-v74-main-body');
-    var sp=document.getElementById('aid-v74-shortcut-panel');
-    var pt=document.getElementById('aid-v74-panel-title');
-    var pb=document.getElementById('aid-v74-panel-body');
-    if(mb)mb.style.display='none';
-    if(sp)sp.style.display='block';
-    if(pt)pt.textContent=title;
-    if(pb)pb.innerHTML=bodyHtml;
+  function lsAID_render_chars_panel(){
+    var el=document.getElementById('aid-chars-v76-list');if(!el)return;
+    var chars=load_chars();
+    if(!chars.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif;">No characters saved yet. Add them in Advanced.</p>';return;}
+    el.innerHTML=chars.map(function(c,i){
+      return '<div style="border:1px solid rgba(125,42,232,.25);border-radius:10px;padding:12px;margin-bottom:8px;background:#0e0720;display:flex;align-items:center;justify-content:space-between;">'+
+        '<div><div style="color:#f5f0ff;font:700 13px Inter,system-ui,sans-serif;">'+c.name+'</div>'+
+        '<div style="color:#9c93b5;font:400 11px Inter,system-ui,sans-serif;">'+[c.role,c.ethnicity].filter(Boolean).join(' \xb7 ')+'</div></div>'+
+        '<button type="button" data-action="add-char" data-idx="'+i+'" style="padding:7px 13px;background:rgba(125,42,232,.25);border:1px solid rgba(125,42,232,.5);border-radius:7px;color:#e0d8f8;font:600 12px Inter,system-ui,sans-serif;cursor:pointer;">Add to Scene</button>'+
+      '</div>';
+    }).join('');
   }
 
-  window.lsAID_v74ClosePanel=function(){lsAID_v74_show_flow();};
+  function lsAID_load_world_panel(){
+    var wr=aid_read(KEYS.world)||{};
+    var map={'aid-v74w-period':wr.period||'','aid-v74w-style':wr.style||'','aid-v74w-clothing':wr.clothing||'','aid-v74w-forbidden':wr.forbidden||''};
+    Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)el.value=map[id];});
+    var c=document.getElementById('aid-world-v76-confirm');if(c)c.style.display='none';
+  }
+
+  function lsAID_scene_sub(sub){
+    var script=document.getElementById('aid-scene-sub-script');
+    var sugg=document.getElementById('aid-scene-sub-suggestions');
+    var btns=document.querySelectorAll('[data-action="scene-sub"]');
+    for(var i=0;i<btns.length;i++){
+      var isA=btns[i].getAttribute('data-sub')===sub;
+      btns[i].style.background=isA?'rgba(125,42,232,.25)':'rgba(125,42,232,.12)';
+      btns[i].style.borderColor=isA?'rgba(125,42,232,.5)':'rgba(125,42,232,.3)';
+      btns[i].style.color=isA?'#e0d8f8':'#c0b8d9';
+    }
+    if(script)script.style.display=sub==='script'?'block':'none';
+    if(sugg)sugg.style.display=sub==='suggestions'?'block':'none';
+    if(sub==='suggestions')lsAID_load_suggestions();
+  }
+
+  function lsAID_load_suggestions(){
+    var el=document.getElementById('aid-scene-suggestions-list');if(!el)return;
+    var suggestions=[];
+    try{suggestions=generate_project_suggestions?generate_project_suggestions():[];}catch(_){}
+    var chars=load_chars();
+    if(!suggestions.length&&!chars.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif;">Save characters or scenes first to see suggestions.</p>';return;}
+    if(!suggestions.length){suggestions=[{title:'New scene',action:'Characters gather in the setting.',location:'Primary setting',mood:'Neutral',camera:'Medium shot',lighting:'Natural light',continuityRisks:''}];}
+    window._v74Suggestions=suggestions;
+    el.innerHTML=suggestions.slice(0,6).map(function(s,i){
+      return '<div style="border:1px solid rgba(125,42,232,.25);border-radius:10px;padding:12px;margin-bottom:8px;background:#0e0720;">'+
+        '<div style="color:#f5f0ff;font:700 13px Inter,system-ui,sans-serif;margin-bottom:4px;">'+s.title+'</div>'+
+        '<div style="color:#c0b8d9;font:400 12px Inter,system-ui,sans-serif;margin-bottom:8px;">'+s.action+'</div>'+
+        '<button type="button" data-action="use-scene" data-idx="'+i+'" style="padding:8px 16px;background:linear-gradient(135deg,#7d2ae8,#b33af0);color:#fff;border:none;border-radius:8px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;">Use This Scene</button>'+
+      '</div>';
+    }).join('');
+  }
+
+  function lsAID_v74_show_flow(){lsAID_switch_rail('create');}
+
+  function lsAID_v74_show_panel(){lsAID_switch_rail('scene');}
+
+  window.lsAID_v74ClosePanel=function(){lsAID_switch_rail('create');};
 
   window.lsAID_v74Panel=function(type){
-    if(type==='script'){
-      lsAID_v74_show_panel('Pull From Script or Book',
-        '<div style="color:#b0a8d0;font:700 13px Inter,system-ui,sans-serif;margin:0 0 8px">Paste Script or Book Text</div>'+
-        '<textarea id="aid-v74p-paste" placeholder="Paste script or book text here..." style="width:100%;box-sizing:border-box;min-height:130px;background:#0e0720;border:2px solid rgba(125,42,232,.4);border-radius:10px;color:#f5f0ff;font:400 15px Inter,system-ui,sans-serif;padding:12px;resize:vertical;line-height:1.5"></textarea>'+
-        '<div style="color:#b0a8d0;font:700 13px Inter,system-ui,sans-serif;margin:16px 0 8px">Upload Script or Book File</div>'+
-        '<label style="display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;padding:12px 14px;background:rgba(125,42,232,.15);border:1px solid rgba(125,42,232,.4);border-radius:8px;color:#c0b8d9;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;margin-bottom:10px"><span>Choose .txt file</span><span style="color:#9c93b5;font:400 12px Inter,system-ui,sans-serif">Tap to browse</span><input type="file" id="aid-v74p-txt" accept=".txt,text/plain" style="display:none"></label>'+
-        '<label style="display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;padding:12px 14px;background:rgba(125,42,232,.15);border:1px solid rgba(125,42,232,.4);border-radius:8px;color:#c0b8d9;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;margin-bottom:10px"><span>Choose .json file</span><span style="color:#9c93b5;font:400 12px Inter,system-ui,sans-serif">Tap to browse</span><input type="file" id="aid-v74p-json" accept=".json,application/json" style="display:none"></label>'+
-        '<div style="color:#4a3a6a;font:400 12px Inter,system-ui,sans-serif;margin-bottom:14px">.docx, .pdf, .epub — Coming later</div>'+
-        '<div id="aid-v74p-load-status" style="display:none;margin-bottom:12px;padding:8px 12px;border-radius:8px;font:500 13px Inter,system-ui,sans-serif;background:rgba(94,224,165,.1);color:#5ee0a5"></div>'+
-        '<button type="button" data-action="extract-script" style="width:100%;padding:14px;background:linear-gradient(135deg,#7d2ae8,#b33af0);color:#fff;border:none;border-radius:10px;font:700 15px Inter,system-ui,sans-serif;cursor:pointer">Extract Scene Ideas</button>'+
-        '<div id="aid-v74p-script-results" style="margin-top:14px"></div>'
-      );
-    } else if(type==='suggestions'){
-      var chars=load_chars();
-      var scenes=load_scenes?load_scenes():[];
-      var suggestions=generate_project_suggestions?generate_project_suggestions():[];
-      var html='<p style="color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif;margin:0 0 12px">Scene ideas based on your saved characters and scenes.</p>';
-      if(!suggestions.length&&!chars.length){
-        html+='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">Save characters or scenes first to see suggestions.</p>';
-      } else {
-        if(!suggestions.length){
-          suggestions=[{title:'New scene',action:'Characters gather in the setting.',location:'Primary setting',mood:'Neutral',camera:'Medium shot',lighting:'Natural light',continuityRisks:''}];
-        }
-        html+=suggestions.slice(0,6).map(function(s,i){
-          return '<div style="border:1px solid rgba(125,42,232,.25);border-radius:10px;padding:12px;margin-bottom:8px;background:#0e0720">'+
-            '<div style="color:#f5f0ff;font:700 13px Inter,system-ui,sans-serif;margin-bottom:4px">'+s.title+'</div>'+
-            '<div style="color:#c0b8d9;font:400 12px Inter,system-ui,sans-serif;margin-bottom:8px">'+s.action+'</div>'+
-            '<button type="button" data-action="use-scene" data-idx="'+i+'" style="padding:8px 16px;background:linear-gradient(135deg,#7d2ae8,#b33af0);color:#fff;border:none;border-radius:8px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer">Use This Scene</button>'+
-          '</div>';
-        }).join('');
-        window._v74Suggestions=suggestions;
-      }
-      lsAID_v74_show_panel('Scene Suggestions', html);
-    } else if(type==='characters'){
-      var chars2=load_chars();
-      var html2='<p style="color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif;margin:0 0 12px">Saved characters appear in your prompts. Tap a character to add them to the scene.</p>';
-      if(!chars2.length){
-        html2+='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif;margin-bottom:12px">No characters saved yet. Add characters in Advanced.</p>';
-      } else {
-        html2+=chars2.map(function(c,i){
-          return '<div style="border:1px solid rgba(125,42,232,.25);border-radius:10px;padding:12px;margin-bottom:8px;background:#0e0720;display:flex;align-items:center;justify-content:space-between">'+
-            '<div><div style="color:#f5f0ff;font:700 13px Inter,system-ui,sans-serif">'+c.name+'</div>'+
-            '<div style="color:#9c93b5;font:400 11px Inter,system-ui,sans-serif">'+[c.role,c.ethnicity].filter(Boolean).join(' · ')+'</div></div>'+
-            '<button type="button" data-action="add-char" data-idx="'+i+'" style="padding:7px 13px;background:rgba(125,42,232,.25);border:1px solid rgba(125,42,232,.5);border-radius:7px;color:#e0d8f8;font:600 12px Inter,system-ui,sans-serif;cursor:pointer">Add to Scene</button>'+
-          '</div>';
-        }).join('');
-      }
-      html2+='<button type="button" data-action="back-main" style="width:100%;margin-top:4px;padding:11px;background:rgba(125,42,232,.15);border:1px solid rgba(125,42,232,.3);border-radius:9px;color:#c0b8d9;font:600 13px Inter,system-ui,sans-serif;cursor:pointer">Done</button>';
-      lsAID_v74_show_panel('Characters', html2);
-    } else if(type==='world'){
-      var wr=aid_read(KEYS.world)||{};
-      var fld=function(id,label,val,ph){return '<div style="margin-bottom:10px"><label style="display:block;color:#b0a8d0;font:600 12px Inter,system-ui,sans-serif;margin-bottom:4px">'+label+'</label><input id="'+id+'" type="text" value="'+(val||'')+'" placeholder="'+ph+'" style="width:100%;box-sizing:border-box;background:#0e0720;border:1px solid rgba(125,42,232,.35);border-radius:8px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:9px 11px"></div>';};
-      var worldHtml=fld('aid-v74w-period','Time period',wr.period,'e.g. Ancient, Biblical')+
-        fld('aid-v74w-style','Visual style',wr.style,'e.g. Cinematic, Documentary')+
-        fld('aid-v74w-clothing','Clothing era',wr.clothing,'e.g. First century, Ancient Near East')+
-        fld('aid-v74w-forbidden','Forbidden elements',wr.forbidden,'Things that must not appear')+
-        '<button type="button" data-action="world-save" style="width:100%;padding:12px;background:linear-gradient(135deg,#7d2ae8,#b33af0);color:#fff;border:none;border-radius:10px;font:700 14px Inter,system-ui,sans-serif;cursor:pointer;margin-top:4px">Save World Rules</button>'+
-        '<div id="aid-v74w-confirm" style="display:none;margin-top:8px;color:#5ee0a5;font:500 13px Inter,system-ui,sans-serif"></div>';
-      lsAID_v74_show_panel('World Rules', worldHtml);
-    } else if(type==='importexport'){
-      var ieHtml='<p style="color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif;margin:0 0 14px">Import an image result or export your project data.</p>'+
-        '<button type="button" data-action="import-trigger" style="width:100%;padding:14px;background:rgba(125,42,232,.2);border:2px solid rgba(125,42,232,.5);border-radius:10px;color:#e0d8f8;font:700 15px Inter,system-ui,sans-serif;cursor:pointer;margin-bottom:10px">Import Image Result</button>'+
-        '<button type="button" data-action="export-takes" style="width:100%;padding:13px;background:rgba(94,224,165,.1);border:1px solid rgba(94,224,165,.35);border-radius:10px;color:#5ee0a5;font:700 14px Inter,system-ui,sans-serif;cursor:pointer">Export Approved Takes</button>'+
-        '<div id="aid-v74ie-confirm" style="display:none;margin-top:8px;color:#5ee0a5;font:500 13px Inter,system-ui,sans-serif"></div>';
-      lsAID_v74_show_panel('Import / Export', ieHtml);
-    }
+    if(type==='script'){lsAID_switch_rail('scene');lsAID_scene_sub('script');}
+    else if(type==='suggestions'){lsAID_switch_rail('scene');lsAID_scene_sub('suggestions');}
+    else if(type==='characters'){lsAID_switch_rail('characters');}
+    else if(type==='world'){lsAID_switch_rail('world');}
+    else if(type==='importexport'){lsAID_switch_rail('export');}
   };
 
   window.lsAID_v74ExtractScript=function(){
@@ -1607,23 +1601,27 @@ window.lsSaveCTP_providerReport=function(){
     switch(action){
       case 'close-overlay':
         var p=document.getElementById('lsAIDirectorPanel');if(p)p.style.display='none';break;
-      case 'back-main':lsAID_v74_show_flow();break;
-      case 'pull-script':window.lsAID_v74Panel('script');break;
-      case 'scene-suggestions':window.lsAID_v74Panel('suggestions');break;
-      case 'characters':window.lsAID_v74Panel('characters');break;
-      case 'world-rules':window.lsAID_v74Panel('world');break;
-      case 'import-export':window.lsAID_v74Panel('importexport');break;
+      case 'rail-switch':lsAID_switch_rail(btn.getAttribute('data-rail')||'create');break;
+      case 'back-main':lsAID_switch_rail('create');break;
+      case 'scene-sub':lsAID_scene_sub(btn.getAttribute('data-sub')||'script');break;
+      case 'pull-script':lsAID_switch_rail('scene');lsAID_scene_sub('script');break;
+      case 'scene-suggestions':lsAID_switch_rail('scene');lsAID_scene_sub('suggestions');break;
+      case 'characters':lsAID_switch_rail('characters');break;
+      case 'world-rules':lsAID_switch_rail('world');break;
+      case 'import-export':lsAID_switch_rail('export');break;
       case 'create-image':window.lsAID_createImage();break;
       case 'copy-prompt':window.lsAID_v74CopyPrompt();break;
       case 'import-trigger':var fi=document.getElementById('aid-v74-import');if(fi)fi.click();break;
-      case 'approve':window.lsAID_v74Review('approve');break;
-      case 'needs-correction':window.lsAID_v74Review('correction');break;
-      case 'reject':window.lsAID_v74Review('reject');break;
+      case 'approve':window.lsAID_v74Review('approve');lsAID_switch_rail('review');break;
+      case 'needs-correction':window.lsAID_v74Review('correction');lsAID_switch_rail('review');break;
+      case 'reject':window.lsAID_v74Review('reject');lsAID_switch_rail('review');break;
       case 'extract-script':window.lsAID_v74ExtractScript();break;
       case 'use-scene':window.lsAID_v74UseScene(idx);break;
       case 'add-char':window.lsAID_v74AddChar(idx);break;
-      case 'world-save':window.lsAID_v74SaveWorld();break;
+      case 'world-save':case 'world-save-new':lsAID_world_save_new();break;
       case 'export-takes':window.lsAID_v74Export();break;
+      case 'extract-scenes-adv':window.lsAID_extractScenes&&window.lsAID_extractScenes();break;
+      case 'project-suggestions-adv':window.lsAID_projectSuggestions&&window.lsAID_projectSuggestions();break;
     }
   }
 
@@ -1673,16 +1671,34 @@ window.lsSaveCTP_providerReport=function(){
     _aidOverlayEl.addEventListener('change',lsAID_file_router);
   }
 
+  function lsAID_world_save_new(){
+    var wr={
+      period:document.getElementById('aid-v74w-period')?document.getElementById('aid-v74w-period').value:'',
+      style:document.getElementById('aid-v74w-style')?document.getElementById('aid-v74w-style').value:'',
+      clothing:document.getElementById('aid-v74w-clothing')?document.getElementById('aid-v74w-clothing').value:'',
+      forbidden:document.getElementById('aid-v74w-forbidden')?document.getElementById('aid-v74w-forbidden').value:''
+    };
+    var existing=aid_read(KEYS.world)||{};
+    aid_write(KEYS.world,Object.assign(existing,wr));
+    var c=document.getElementById('aid-world-v76-confirm');
+    if(c){c.style.display='block';c.textContent='World rules saved.';}
+    var c2=document.getElementById('aid-v74w-confirm');
+    if(c2){c2.style.display='block';c2.textContent='World rules saved.';}
+  }
+
   window.lsAID_selfTest=function(){
     var results=[];
-    var tile=document.querySelector('[data-action="close-overlay"],[onclick*="lsAID"]');
-    results.push('tile found: '+(tile?'yes':'NO'));
     var overlay=document.getElementById('lsAIDirectorPanel');
     results.push('overlay found: '+(overlay?'yes':'NO'));
     results.push('open function: '+(typeof window.lsAID==='function'?'yes':'NO'));
     results.push('router bound: '+(overlay&&overlay._routerBound?'yes':'NO'));
+    results.push('lsAID_switch_rail: '+(typeof lsAID_switch_rail==='function'?'yes':'NO'));
     var prevDisplay=overlay?overlay.style.display:null;
-    if(overlay&&typeof window.lsAID==='function'){try{window.lsAID();}catch(e){results.push('open() threw: '+e.message);}results.push('overlay visible after open: '+(overlay.style.display!=='none'?'yes':'NO'));overlay.style.display=prevDisplay||'none';}
+    if(overlay&&typeof window.lsAID==='function'){
+      try{window.lsAID();}catch(e){results.push('open() threw: '+e.message);}
+      results.push('overlay visible: '+(overlay.style.display!=='none'?'yes':'NO'));
+      overlay.style.display=prevDisplay||'none';
+    }
     console.log('[lsAID selfTest]\n'+results.join('\n'));
     return results;
   };
@@ -1690,16 +1706,27 @@ window.lsSaveCTP_providerReport=function(){
   window.lsAID_buttonSelfTest=function(){
     var p=document.getElementById('lsAIDirectorPanel');
     if(!p){console.error('[lsAID_buttonSelfTest] overlay not found');return [{action:'overlay',pass:false}];}
-    var wasHidden=p.style.display==='none';
-    p.style.display='block';
+    var wasHidden=p.style.display==='none'||!p.style.display;
+    p.style.display='flex';
     var results=[];
     results.push({action:'router-bound',text:'event delegation',pass:!!p._routerBound});
-    var keyActions=['close-overlay','back-main','pull-script','scene-suggestions','characters','world-rules','import-export','create-image','approve','needs-correction','reject'];
-    var found=Array.from(p.querySelectorAll('[data-action]')).map(function(b){return b.getAttribute('data-action');});
-    keyActions.forEach(function(a){
-      var inDom=found.indexOf(a)>-1;
-      results.push({action:a,text:inDom?'in DOM':'MISSING from DOM',pass:inDom});
+    results.push({action:'lsAID_switch_rail',text:'rail function',pass:typeof lsAID_switch_rail==='function'});
+    // Check all 7 rail panels exist
+    ['create','characters','world','scene','review','export','advanced'].forEach(function(panel){
+      var el=document.getElementById('aid-panel-'+panel);
+      results.push({action:'panel-'+panel,text:el?'found':'MISSING',pass:!!el});
     });
+    // Check key data-action buttons exist
+    var staticActions=['close-overlay','create-image','extract-script','approve','needs-correction','reject','export-takes','world-save-new','scene-sub','rail-switch'];
+    staticActions.forEach(function(a){
+      var el=p.querySelector('[data-action="'+a+'"]');
+      results.push({action:a,text:el?'found':'MISSING',pass:!!el});
+    });
+    // Check file inputs
+    results.push({action:'txt-upload',text:'label+input',pass:!!document.getElementById('aid-v74p-txt')});
+    results.push({action:'json-upload',text:'label+input',pass:!!document.getElementById('aid-v74p-json')});
+    results.push({action:'aid-v74-scene',text:'main textarea',pass:!!document.getElementById('aid-v74-scene')});
+    results.push({action:'aid-v74-frame',text:'image frame',pass:!!document.getElementById('aid-v74-frame')});
     var allPass=results.every(function(r){return r.pass;});
     console.log('[lsAID_buttonSelfTest] '+(allPass?'PASS':'FAIL'));
     results.forEach(function(r){console.log((r.pass?'PASS':'FAIL')+' ['+r.action+'] '+r.text);});
