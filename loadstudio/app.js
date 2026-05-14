@@ -1490,7 +1490,7 @@ window.lsSaveCTP_providerReport=function(){
       lsAID_v74_show_panel('World Rules', worldHtml);
     } else if(type==='importexport'){
       var ieHtml='<p style="color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif;margin:0 0 14px">Import an image result or export your project data.</p>'+
-        '<button type="button" onclick="document.getElementById('aid-v74-import').click()" style="width:100%;padding:14px;background:rgba(125,42,232,.2);border:2px solid rgba(125,42,232,.5);border-radius:10px;color:#e0d8f8;font:700 15px Inter,system-ui,sans-serif;cursor:pointer;margin-bottom:10px">Import Image Result</button>'+
+        '<button type="button" onclick="window.lsAID_v74TriggerImport&&window.lsAID_v74TriggerImport()" style="width:100%;padding:14px;background:rgba(125,42,232,.2);border:2px solid rgba(125,42,232,.5);border-radius:10px;color:#e0d8f8;font:700 15px Inter,system-ui,sans-serif;cursor:pointer;margin-bottom:10px">Import Image Result</button>'+
         '<button type="button" onclick="window.lsAID_v74Export&&window.lsAID_v74Export()" style="width:100%;padding:13px;background:rgba(94,224,165,.1);border:1px solid rgba(94,224,165,.35);border-radius:10px;color:#5ee0a5;font:700 14px Inter,system-ui,sans-serif;cursor:pointer">Export Approved Takes</button>'+
         '<div id="aid-v74ie-confirm" style="display:none;margin-top:8px;color:#5ee0a5;font:500 13px Inter,system-ui,sans-serif"></div>';
       lsAID_v74_show_panel('Import / Export', ieHtml);
@@ -1576,5 +1576,31 @@ window.lsSaveCTP_providerReport=function(){
     if(c2){c2.style.display='block';c2.textContent=takes.length+' take'+(takes.length===1?'':'s')+' exported.';}
   };
 
+  window.lsAID_v74TriggerImport=function(){
+    var el=document.getElementById('aid-v74-import');
+    if(el)el.click();
+  };
+
+  window.openOverlay=function(toolName){
+    if(toolName==='aid'){
+      if(typeof window.lsAID==='function'){window.lsAID();return;}
+      var fb=document.getElementById('ls-overlay-fallback');
+      if(!fb){fb=document.createElement('div');fb.id='ls-overlay-fallback';fb.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;';fb.innerHTML='<div style="background:#1a1028;border:1px solid rgba(125,42,232,.5);border-radius:14px;padding:32px;max-width:320px;text-align:center;font-family:Inter,system-ui,sans-serif;"><p style="color:#e0d8f8;font:600 16px Inter,system-ui,sans-serif;margin:0 0 16px">AI Image Director could not open. Reload and try again.</p><button type="button" onclick="var f=document.getElementById(\'ls-overlay-fallback\');if(f)f.remove();" style="padding:10px 20px;background:rgba(125,42,232,.3);border:1px solid rgba(125,42,232,.5);border-radius:8px;color:#e0d8f8;font:600 14px Inter,system-ui,sans-serif;cursor:pointer">Dismiss</button></div>';document.body.appendChild(fb);}else{fb.style.display='flex';}
+    }
+  };
+
+  window.lsAID_selfTest=function(){
+    var results=[];
+    var tile=document.querySelector('[onclick*="lsAID"]');
+    results.push('tile found: '+(tile?'yes':'NO'));
+    var overlay=document.getElementById('lsAIDirectorPanel');
+    results.push('overlay found: '+(overlay?'yes':'NO'));
+    results.push('open function: '+(typeof window.lsAID==='function'?'yes':'NO'));
+    results.push('onclick uses window.: '+(tile&&tile.getAttribute('onclick')&&tile.getAttribute('onclick').indexOf('window.lsAID(')>-1?'yes':'NO - CHECK TILE'));
+    var prevDisplay=overlay?overlay.style.display:null;
+    if(overlay&&typeof window.lsAID==='function'){try{window.lsAID();}catch(e){results.push('open() threw: '+e.message);}results.push('overlay visible after open: '+(overlay.style.display!=='none'?'yes':'NO'));overlay.style.display=prevDisplay||'none';}
+    console.log('[lsAID selfTest]\n'+results.join('\n'));
+    return results;
+  };
 
 })();
