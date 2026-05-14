@@ -1,0 +1,20 @@
+{
+  "projectType": "loadai.promptstudio",
+  "version": "2.0.0",
+  "brand": "Load AI",
+  "status": "local-first MVP",
+  "assetRules": {
+    "noFalsePositiveGeneration": true,
+    "verifiedOutputRequired": "A real provider response, file, blob, or URL must exist before any output is marked generated."
+  },
+  "sampleScenes": [
+    {
+      "sceneId": "scene_001",
+      "title": "Opening Establishing Shot",
+      "type": "scenePrompt",
+      "mood": "cinematic, luminous, tense",
+      "prompt": "Create a wide cinematic scene with a glowing orange AI interface, large format display, and polished studio lighting.",
+      "status": "draft"
+    }
+  ]
+}

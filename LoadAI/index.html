@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ff9f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Load AI">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Load AI</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180x180.png">
+  <link rel="apple-touch-startup-image" href="assets/images/load-ai-splash-1080x1920.jpg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- LOAD_AI_BUILD: v2.0.0 cinema prompt display PWA -->
+  <a class="skip-link" href="#promptInput">Skip to prompt box</a>
+
+  <section id="splashScreen" class="splash-screen" aria-label="Load AI opening screen">
+    <div class="splash-frame"><img class="splash-art" src="assets/images/load-ai-splash-1080x1920.jpg" alt="Load AI opening image"></div>
+    <button id="enterAppBtn" class="splash-enter" type="button">Enter</button>
+  </section>
+
+  <main id="appShell" class="app-shell" hidden>
+    <header class="topbar">
+      <button class="round-button" id="backBtn" type="button" aria-label="Back to splash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.8l5.6-5.6L12 4 4 12l8 8 1.4-1.4L7.8 13H20z"/></svg></button>
+      <div class="brand-lockup"><img src="assets/icons/icon-72x72.png" alt="" class="brand-icon"><div><p class="eyebrow">Load Ecosystem</p><h1>Load AI</h1></div></div>
+      <button id="hardRefreshBtn" class="round-button" type="button" aria-label="Refresh"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.7 6.3A8 8 0 1 0 20 12h-2.2A5.8 5.8 0 1 1 16.1 7.9L13 11h8V3z"/></svg></button>
+    </header>
+
+    <nav class="module-strip" aria-label="Load AI tools">
+      <button class="nav-chip active" data-panel="promptPanel" type="button">Prompt Studio</button>
+      <button class="nav-chip" data-panel="imagePanel" type="button">Image Display</button>
+      <button class="nav-chip" data-panel="scenePanel" type="button">Scene Review</button>
+      <button class="nav-chip" data-panel="guidePanel" type="button">Visual Guide</button>
+      <button class="nav-chip" data-panel="libraryPanel" type="button">Library</button>
+      <button class="nav-chip" data-panel="exportPanel" type="button">Export</button>
+    </nav>
+
+    <section class="hero-row">
+      <div class="hero-copy"><p class="eyebrow">Prompt-first visual workspace</p><h2>Create, review, and refine visual ideas in one large display space.</h2><p>Use Load AI for image prompts, scene prompt reviews, project notes, and developer-ready handoffs. This MVP is local-first and does not claim live generation until a real provider is connected.</p></div>
+      <div class="hero-card"><img src="assets/images/load-ai-logo-orange.png" alt="" class="hero-logo"><strong>Orange Glow Build</strong><span>Large display, chat composer, scene review, visual guide.</span></div>
+    </section>
+
+    <section id="promptPanel" class="panel active-panel">
+      <div class="panel-head"><div><p class="eyebrow">AI Chat Request</p><h3>Large prompt workspace</h3></div><button id="clearAllBtn" class="secondary-button" type="button">Clear</button></div>
+      <div class="prompt-layout">
+        <aside class="tool-rail" aria-label="Prompt tools"><button class="tool-pill active" data-mode="image" type="button">Image</button><button class="tool-pill" data-mode="scene" type="button">Scene</button><button class="tool-pill" data-mode="edit" type="button">Edit</button><button class="tool-pill" data-mode="handoff" type="button">Handoff</button></aside>
+        <div class="chat-board"><div id="chatStream" class="chat-stream" aria-live="polite"></div><form id="promptForm" class="composer"><div class="composer-toolbar"><button class="mini-button" id="attachBtn" type="button">Add Image</button><button class="mini-button" id="templateBtn" type="button">Use Template</button><button class="mini-button" id="copyPromptBtn" type="button">Copy</button></div><label for="promptInput">Describe your idea or ask</label><textarea id="promptInput" rows="7" placeholder="Example: Create a cinematic image prompt for an ancient harbor at night with orange torchlight, rain, reflective stone streets, and a wide film still composition."></textarea><div class="composer-actions"><button class="secondary-button" id="saveDraftBtn" type="button">Save Draft</button><button class="primary-button" type="submit">Create Preview</button></div></form></div>
+      </div>
+    </section>
+
+    <section id="imagePanel" class="panel">
+      <div class="panel-head"><div><p class="eyebrow">Image Prompt Display</p><h3>Large image review screen</h3></div><button id="downloadPromptBtn" class="secondary-button" type="button">Download Prompt</button></div>
+      <div class="image-workbench"><div class="image-screen"><div id="imagePlaceholder" class="image-placeholder"><img src="assets/images/load-ai-logo-orange.png" alt="" class="placeholder-logo"><p id="imagePromptDisplay">Prompt preview appears here.</p></div></div><aside class="review-stack"><div class="review-card"><span>Prompt Status</span><strong id="promptStatus">Draft</strong></div><div class="review-card"><span>Provider</span><strong>Not connected</strong></div><div class="review-card"><span>Output Rule</span><strong>Verified file required</strong></div><div class="review-card"><span>Best Use</span><strong>Prompt review before generation</strong></div></aside></div>
+    </section>
+
+    <section id="scenePanel" class="panel">
+      <div class="panel-head"><div><p class="eyebrow">Scene Prompt Review</p><h3>Large movie screen display</h3></div><button id="addSceneBtn" class="secondary-button" type="button">Add Scene</button></div>
+      <div class="movie-review"><div class="movie-screen"><div class="screen-glow"></div><div class="screen-content"><p class="scene-kicker">Scene 001</p><h4 id="sceneTitle">Opening Establishing Shot</h4><p id="scenePromptText">Create a wide cinematic scene with a glowing orange AI interface, large format display, and polished studio lighting.</p></div></div><div id="sceneCards" class="scene-cards"></div></div>
+    </section>
+
+    <section id="guidePanel" class="panel"><div class="panel-head"><div><p class="eyebrow">Guided Help</p><h3>Step-by-step visual cards</h3></div><button id="exportGuideBtn" class="secondary-button" type="button">Export Guide</button></div><div id="guideSteps" class="guide-steps"></div></section>
+    <section id="libraryPanel" class="panel"><div class="panel-head"><div><p class="eyebrow">Prompt Library</p><h3>Saved drafts and scene prompts</h3></div><button id="clearLibraryBtn" class="secondary-button" type="button">Clear Library</button></div><div id="libraryList" class="library-list"></div></section>
+    <section id="exportPanel" class="panel"><div class="panel-head"><div><p class="eyebrow">Export Center</p><h3>Download working files</h3></div></div><div class="export-grid"><button id="downloadSessionBtn" class="primary-button" type="button">Download Session JSON</button><button id="downloadHandoffBtn" class="secondary-button" type="button">Download Handoff TXT</button><button id="downloadSceneBtn" class="secondary-button" type="button">Download Scene JSON</button></div><p class="panel-note">Provider connections can be added later. This build keeps the interface honest: no generated media is marked complete without a real file, blob, or URL.</p></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
