@@ -30,7 +30,7 @@ function _newScene(title) {
     transition: 'cut', duration: 5,
     media: { image: null, video: null, narration: null, music: null, sfxAudio: null },
     clips: [],
-    tracks: { music: [], text: [], sticker: [], overlay: [] },
+    tracks: { music: [], text: [], sticker: [], overlay: [], sfx: [], voice: [], transition: [] },
     fx: { filter: 'none', mirror: false, flip: false, rotate: 0, opacity: 100 },
     status: 'empty',
     createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
@@ -46,6 +46,9 @@ function _initState() {
     _state.scenes = saved.scenes.map(function (s) {
       if (!s.tracks) s.tracks = { music: [], text: [], sticker: [], overlay: [] };
       if (!s.tracks.overlay) s.tracks.overlay = [];
+      if (!s.tracks.sfx) s.tracks.sfx = [];
+      if (!s.tracks.voice) s.tracks.voice = [];
+      if (!s.tracks.transition) s.tracks.transition = [];
       if (!s.fx) s.fx = { filter: 'none', mirror: false, flip: false, rotate: 0, opacity: 100 };
       if (!s.media) s.media = { image: null, video: null, narration: null, music: null, sfxAudio: null };
       if (s.media.video === undefined) s.media.video = null;
@@ -275,15 +278,32 @@ var _engine = {
     var sceneId = scene.id;
     var LANE_VOL = { narration: 0.9, music: 0.35, sfxAudio: 0.5 };
     _playHandles = [];
+    var _resumeT = this.t;
     ['narration', 'music', 'sfxAudio'].forEach(function (lane) {
       var pre = _audioPre[sceneId + '_' + lane];
       if (!pre) return;
-      try { pre.currentTime = 0; pre.volume = LANE_VOL[lane]; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
+      try { pre.currentTime = Math.max(0, _resumeT); pre.volume = LANE_VOL[lane]; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
     });
     (scene.tracks.music || []).forEach(function (it, i) {
       var pre = _audioPre[sceneId + '_music_track_' + i];
       if (!pre) return;
-      try { pre.currentTime = it.t0 || 0; pre.volume = it.vol || 0.35; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
+      var lt = _resumeT - (it.t0 || 0);
+      if (lt < 0 || lt >= (it.dur || 999)) return;
+      try { pre.currentTime = Math.max(0, lt); pre.volume = it.vol || 0.35; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
+    });
+    (scene.tracks.sfx || []).forEach(function (it, i) {
+      var pre = _audioPre[sceneId + '_sfx_track_' + i];
+      if (!pre) return;
+      var lt = _resumeT - (it.t0 || 0);
+      if (lt < 0 || lt >= (it.dur || 999)) return;
+      try { pre.currentTime = Math.max(0, lt); pre.volume = it.vol || 0.7; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
+    });
+    (scene.tracks.voice || []).forEach(function (it, i) {
+      var pre = _audioPre[sceneId + '_voice_track_' + i];
+      if (!pre) return;
+      var lt = _resumeT - (it.t0 || 0);
+      if (lt < 0 || lt >= (it.dur || 999)) return;
+      try { pre.currentTime = Math.max(0, lt); pre.volume = it.vol || 0.9; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
     });
     _initSubOverlay(scene);
     var self = this;
@@ -515,7 +535,22 @@ var _CSS =
   '#lseb-sub-overlay span{display:inline-block;background:rgba(0,0,0,.72);color:#fff;font:600 18px/1.4 Inter,system-ui,sans-serif;padding:6px 16px;border-radius:6px;max-width:92%;word-break:break-word}' +
   // Ratio select in topbar
   '#lseb-editor .lseb-ratio-wrap{display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px}' +
-  '#lseb-editor #lseb-ratio{background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none}';
+  '#lseb-editor #lseb-ratio{background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none}' +
+  '#lseb-editor .ve-track-row[data-track="sfx"] .ve-track-block{background:linear-gradient(180deg,#e87d2a,#a85b1f)}' +
+  '#lseb-editor .ve-track-row[data-track="voice"] .ve-track-block{background:linear-gradient(180deg,#2ae87d,#1fa85b)}' +
+  '#lseb-editor .ve-track-row[data-track="transition"] .ve-track-block{background:linear-gradient(180deg,#9c9cff,#6a6ab5)}' +
+  '#lseb-record-btn{background:#ff3b5c;border:none;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 10px;transition:transform .1s}' +
+  '#lseb-record-btn:active{transform:scale(.92)}' +
+  '#lseb-record-btn.recording{background:#ff6e6e;animation:lsebPulse 1s ease-in-out infinite}' +
+  '@keyframes lsebPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,59,92,.4)}50%{box-shadow:0 0 0 12px rgba(255,59,92,0)}}' +
+  '#lseb-record-indicator{text-align:center;font:600 12px Inter,system-ui,sans-serif;color:#ff3b5c;height:20px;margin-bottom:8px}' +
+  '.lseb-sfx-card{background:#160b26;border:1px solid rgba(125,42,232,.22);border-radius:10px;padding:10px 12px;margin-bottom:8px}' +
+  '.lseb-sfx-card-name{font:600 13px Inter,system-ui,sans-serif;color:#f5f0ff;margin-bottom:2px}' +
+  '.lseb-sfx-card-note{font:400 11px Inter,system-ui,sans-serif;color:#7a6fa0}' +
+  '.lseb-tr-option{display:flex;flex-direction:column;align-items:center;gap:4px;background:#1a1a26;border:1.5px solid rgba(125,42,232,.22);border-radius:8px;padding:10px 14px;cursor:pointer;min-width:64px;font-family:inherit}' +
+  '.lseb-tr-option.active{border-color:#b33af0;background:rgba(125,42,232,.18)}' +
+  '.lseb-tr-option-icon{font-size:18px;color:#fff}' +
+  '.lseb-tr-option-lbl{font:600 10px Inter,system-ui,sans-serif;color:#c0b8d9}';
 
 // ─── STORYBOARD VIEW ─────────────────────────────────────────────────────────
 function _showStoryboard() {
@@ -677,12 +712,27 @@ function _openSceneEditor(idx) {
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5-9 9"/></svg>' +
             '<span class="ta-plus">+</span>' +
           '</button>' +
+          '<button class="track-add" data-add="sfx" aria-label="Add sound FX" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>' +
+            '<span class="ta-plus">+</span>' +
+          '</button>' +
+          '<button class="track-add" data-add="voice" aria-label="Record narration" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>' +
+            '<span class="ta-plus">+</span>' +
+          '</button>' +
+          '<button class="track-add" data-add="transition" aria-label="Add transition" type="button">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="8" height="10" rx="1"/><rect x="14" y="7" width="8" height="10" rx="1"/><line x1="10" y1="12" x2="14" y2="12" stroke-dasharray="1.5 1.5"/></svg>' +
+            '<span class="ta-plus">+</span>' +
+          '</button>' +
         '</div>' +
         '<div class="timeline-scroll" id="lseb-tl-scroll">' +
           '<div class="ve-track-row" data-track="music"><span class="ve-track-empty" data-add="music">Tap to add music</span></div>' +
           '<div class="ve-track-row" data-track="text"><span class="ve-track-empty" data-add="text">Tap to add subtitle</span></div>' +
           '<div class="ve-track-row" data-track="sticker"><span class="ve-track-empty" data-add="sticker">Tap to add sticker / PiP</span></div>' +
           '<div class="ve-track-row" data-track="overlay"><span class="ve-track-empty" data-add="overlay-img">Tap to add overlay image</span></div>' +
+          '<div class="ve-track-row" data-track="sfx"><span class="ve-track-empty" data-add="sfx">Tap to add sound FX</span></div>' +
+          '<div class="ve-track-row" data-track="voice"><span class="ve-track-empty" data-add="voice">Tap to record narration</span></div>' +
+          '<div class="ve-track-row" data-track="transition"><span class="ve-track-empty" data-add="transition">Tap to add transition</span></div>' +
           '<div class="video-track" id="lseb-image-strip"></div>' +
           '<div class="waveform-track empty" id="lseb-waveform"></div>' +
           '<div class="time-ruler" id="lseb-ruler"></div>' +
@@ -732,6 +782,35 @@ function _openSceneEditor(idx) {
         '<div class="ve-panel-head"><span id="lseb-info-title">Tool</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
         '<p id="lseb-info-msg" style="color:#c0b8d9;font-size:13px;line-height:1.55;margin:0"></p>' +
       '</div>' +
+      '<div id="lseb-sfx-panel" class="ve-panel" hidden>' +
+        '<div class="ve-panel-head"><span>Sound FX</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
+        '<label class="ve-lbl" style="display:block;margin-bottom:6px">Upload audio file</label>' +
+        '<input id="lseb-sfx-pick" type="file" accept="audio/*,.mp3,.m4a,.wav,.aac,.ogg,.flac" style="font-size:13px;margin-bottom:14px">' +
+        '<div style="margin-bottom:8px;color:#a0a0b0;font:600 10px Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase">Free SFX Sources</div>' +
+        '<div class="lseb-sfx-card"><div class="lseb-sfx-card-name">Freesound.org</div><div class="lseb-sfx-card-note">Free, CC licensed — API key optional. Download and upload above.</div></div>' +
+        '<div class="lseb-sfx-card"><div class="lseb-sfx-card-name">ZapSplat</div><div class="lseb-sfx-card-note">Free account — download and upload above.</div></div>' +
+        '<div class="lseb-sfx-card"><div class="lseb-sfx-card-name">Mixkit SFX</div><div class="lseb-sfx-card-note">Free, no attribution required. Download and upload above.</div></div>' +
+      '</div>' +
+      '<div id="lseb-voice-panel" class="ve-panel" hidden>' +
+        '<div class="ve-panel-head"><span>Narration / Voice</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
+        '<div id="lseb-record-indicator"></div>' +
+        '<button id="lseb-record-btn" type="button" aria-label="Record narration">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" width="24" height="24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>' +
+        '</button>' +
+        '<div style="text-align:center;color:#7a6fa0;font:400 11px Inter,system-ui,sans-serif;margin-bottom:12px">Tap to record — tap again to stop and attach</div>' +
+        '<div style="text-align:center;margin-bottom:8px;color:#4a4a60;font:400 11px Inter,system-ui,sans-serif">or upload a file</div>' +
+        '<input id="lseb-voice-pick" type="file" accept="audio/*,.mp3,.m4a,.wav,.aac,.ogg" style="font-size:13px;">' +
+      '</div>' +
+      '<div id="lseb-transition-panel" class="ve-panel" hidden>' +
+        '<div class="ve-panel-head"><span>Transition</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
+        '<div style="color:#a0a0b0;font:400 12px Inter,system-ui,sans-serif;margin-bottom:12px">Applies to the end of the selected clip.</div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap" id="lseb-tr-options">' +
+          '<button class="lseb-tr-option" data-tr="cut" type="button"><span class="lseb-tr-option-icon">|</span><span class="lseb-tr-option-lbl">Cut</span></button>' +
+          '<button class="lseb-tr-option" data-tr="fade" type="button"><span class="lseb-tr-option-icon">&#9618;</span><span class="lseb-tr-option-lbl">Fade</span></button>' +
+          '<button class="lseb-tr-option" data-tr="dissolve" type="button"><span class="lseb-tr-option-icon">&#9617;</span><span class="lseb-tr-option-lbl">Dissolve</span></button>' +
+        '</div>' +
+        '<div style="margin-top:10px;color:#5a5a78;font:400 11px Inter,system-ui,sans-serif">Fade and Dissolve will render in the next build.</div>' +
+      '</div>' +
       // Hidden image/sticker pickers
       '<input type="file" id="lseb-sticker-pick" accept="image/*,video/*" style="display:none">' +
       '<input type="file" id="lseb-overlay-pick" accept="image/*" style="display:none">' +
@@ -762,6 +841,8 @@ function _openSceneEditor(idx) {
   if (scene.media.narration) _preloadAudio(scene.id, 'narration', scene.media.narration);
   if (scene.media.sfxAudio) _preloadAudio(scene.id, 'sfxAudio', scene.media.sfxAudio);
   (scene.tracks.music || []).forEach(function (it, i) { if (it.src) _preloadAudio(scene.id, 'music_track_' + i, it.src); });
+  (scene.tracks.sfx || []).forEach(function (it, i) { if (it.src) _preloadAudio(scene.id, 'sfx_track_' + i, it.src); });
+  (scene.tracks.voice || []).forEach(function (it, i) { if (it.src) _preloadAudio(scene.id, 'voice_track_' + i, it.src); });
   _renderImageStrip(idx);
   _renderTracks(idx);
   _renderOverlayLayer(scene, 0);
@@ -829,7 +910,7 @@ function _bindEditor(idx) {
   if (coverBtn && imgPick) coverBtn.addEventListener('click', function () { imgPick.click(); });
 
   // Track-add + empty-track tap → open panels
-  var _ALL_PANELS = ['lseb-music-panel','lseb-text-panel','lseb-filter-panel','lseb-opacity-panel','lseb-blur-panel','lseb-info-panel'];
+  var _ALL_PANELS = ['lseb-music-panel','lseb-text-panel','lseb-sfx-panel','lseb-voice-panel','lseb-transition-panel','lseb-filter-panel','lseb-opacity-panel','lseb-blur-panel','lseb-info-panel'];
   function _showPanel(id) {
     _ALL_PANELS.forEach(function (p) {
       var el = _el(p); if (el) el.hidden = (p !== id);
@@ -876,6 +957,9 @@ function _bindEditor(idx) {
         else if (add === 'text') { _showPanel('lseb-text-panel'); }
         else if (add === 'sticker') { _el('lseb-sticker-pick') && _el('lseb-sticker-pick').click(); }
         else if (add === 'image' || add === 'overlay-img') { _el('lseb-overlay-pick') && _el('lseb-overlay-pick').click(); }
+        else if (add === 'sfx') { _showPanel('lseb-sfx-panel'); }
+        else if (add === 'voice') { _showPanel('lseb-voice-panel'); }
+        else if (add === 'transition') { _showPanel('lseb-transition-panel'); }
       });
     });
     editor.querySelectorAll('.ve-track-empty[data-add]').forEach(function (span) {
@@ -885,6 +969,9 @@ function _bindEditor(idx) {
         else if (add === 'text') _showPanel('lseb-text-panel');
         else if (add === 'sticker') { _el('lseb-sticker-pick') && _el('lseb-sticker-pick').click(); }
         else if (add === 'overlay-img') { _el('lseb-overlay-pick') && _el('lseb-overlay-pick').click(); }
+        else if (add === 'sfx') { _showPanel('lseb-sfx-panel'); }
+        else if (add === 'voice') { _showPanel('lseb-voice-panel'); }
+        else if (add === 'transition') { _showPanel('lseb-transition-panel'); }
       });
     });
     editor.querySelectorAll('[data-close-panel]').forEach(function (btn) {
@@ -960,6 +1047,98 @@ function _bindEditor(idx) {
       _addOverlayImage(idx, dataURL);
     }).catch(function () {});
     e.target.value = '';
+  });
+
+  // SFX file pick
+  var sfxPick = _el('lseb-sfx-pick');
+  if (sfxPick) sfxPick.addEventListener('change', function (e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    _readDataURL(file).then(function (dataURL) {
+      _addTrackItem(idx, 'sfx', { name: file.name.replace(/\.[^.]+$/, ''), dur: scene.duration || 5, src: dataURL, vol: 0.7 });
+      var trackIdx = (scene.tracks.sfx || []).length - 1;
+      if (trackIdx >= 0) _preloadAudio(scene.id, 'sfx_track_' + trackIdx, dataURL);
+      _renderTracks(idx);
+      _showPanel(null);
+      _toast('SFX attached: ' + file.name);
+    }).catch(function () { _toast('Could not read audio file.'); });
+    e.target.value = '';
+  });
+
+  // Voice recording (MediaRecorder) and file upload
+  var _recorder = null, _recChunks = [];
+  var recordBtn = _el('lseb-record-btn');
+  var recordIndicator = _el('lseb-record-indicator');
+
+  function _attachVoiceBlob(blob) {
+    var reader = new FileReader();
+    reader.onload = function (e2) {
+      var dataURL = e2.target.result;
+      _addTrackItem(idx, 'voice', { name: 'Narration', dur: scene.duration || 5, src: dataURL, vol: 0.9 });
+      var trackIdx = (scene.tracks.voice || []).length - 1;
+      if (trackIdx >= 0) _preloadAudio(scene.id, 'voice_track_' + trackIdx, dataURL);
+      _renderTracks(idx);
+      _showPanel(null);
+      _toast('Narration attached.');
+    };
+    reader.readAsDataURL(blob);
+  }
+
+  if (recordBtn) recordBtn.addEventListener('click', function () {
+    if (_recorder && _recorder.state === 'recording') {
+      _recorder.stop();
+      recordBtn.classList.remove('recording');
+      if (recordIndicator) recordIndicator.textContent = '';
+    } else {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { _toast('Microphone not available.'); return; }
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        var mimeType = (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) ? 'audio/webm;codecs=opus' :
+                       (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('audio/mp4')) ? 'audio/mp4' : '';
+        var opts = mimeType ? { mimeType: mimeType } : {};
+        _recChunks = [];
+        _recorder = new MediaRecorder(stream, opts);
+        _recorder.ondataavailable = function (ev) { if (ev.data.size > 0) _recChunks.push(ev.data); };
+        _recorder.onstop = function () {
+          stream.getTracks().forEach(function (t) { t.stop(); });
+          var blob = new Blob(_recChunks, { type: _recorder.mimeType || 'audio/webm' });
+          _attachVoiceBlob(blob);
+        };
+        _recorder.start();
+        recordBtn.classList.add('recording');
+        if (recordIndicator) recordIndicator.textContent = 'Recording...';
+      }).catch(function () { _toast('Microphone access denied.'); });
+    }
+  });
+
+  var voicePick = _el('lseb-voice-pick');
+  if (voicePick) voicePick.addEventListener('change', function (e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    _readDataURL(file).then(function (dataURL) {
+      _addTrackItem(idx, 'voice', { name: file.name.replace(/\.[^.]+$/, ''), dur: scene.duration || 5, src: dataURL, vol: 0.9 });
+      var trackIdx = (scene.tracks.voice || []).length - 1;
+      if (trackIdx >= 0) _preloadAudio(scene.id, 'voice_track_' + trackIdx, dataURL);
+      _renderTracks(idx);
+      _showPanel(null);
+      _toast('Narration attached: ' + file.name);
+    }).catch(function () {});
+    e.target.value = '';
+  });
+
+  // Transition panel
+  var trOptions = _el('lseb-tr-options');
+  if (trOptions) trOptions.querySelectorAll('.lseb-tr-option').forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      var trType = opt.dataset.tr;
+      var clip = scene.clips && scene.clips[_selectedClipIdx];
+      if (!clip) { _toast('Select a clip first.'); return; }
+      clip.outTransition = { type: trType, dur: trType === 'cut' ? 0 : 0.4 };
+      _saveState();
+      trOptions.querySelectorAll('.lseb-tr-option').forEach(function (o) {
+        o.classList.toggle('active', o.dataset.tr === trType);
+      });
+      _toast('Transition: ' + trType);
+    });
   });
 
   // Timeline scrub — pointerdown + move on the scroll area seeks to that position
@@ -1223,15 +1402,20 @@ function _moveClip(idx, fromCi, toCi) {
   var moved = scene.clips.splice(fromCi, 1)[0];
   scene.clips.splice(toCi, 0, moved);
   _selectedClipIdx = toCi;
+  var first = scene.clips[0];
+  scene.media.image = first && first.type === 'image' ? first.src : null;
+  scene.media.video = first && first.type === 'video' ? first.src : null;
   _saveState();
   _renderImageStrip(idx);
+  var selClip = scene.clips[_selectedClipIdx];
+  if (selClip) _mountClipPreview(selClip, 0, false, idx);
 }
 
 // ─── TRACKS ──────────────────────────────────────────────────────────────────
 function _addTrackItem(idx, kind, item) {
   var scene = _state.scenes[idx];
   if (!scene) return null;
-  if (!scene.tracks) scene.tracks = { music: [], text: [], sticker: [] };
+  if (!scene.tracks) scene.tracks = { music: [], text: [], sticker: [], overlay: [], sfx: [], voice: [], transition: [] };
   var t0 = 0;
   (scene.tracks[kind] || []).forEach(function (it) {
     if (it.t0 + it.dur > t0) t0 = it.t0 + it.dur;
@@ -1255,9 +1439,9 @@ function _renderTracks(idx) {
   if (!editor) return;
   var scene = _state.scenes[idx];
   if (!scene) return;
-  if (!scene.tracks) scene.tracks = { music: [], text: [], sticker: [] };
+  if (!scene.tracks) scene.tracks = { music: [], text: [], sticker: [], overlay: [], sfx: [], voice: [], transition: [] };
 
-  ['music', 'text', 'sticker', 'overlay'].forEach(function (kind) {
+  ['music', 'text', 'sticker', 'overlay', 'sfx', 'voice', 'transition'].forEach(function (kind) {
     var row = editor.querySelector('.ve-track-row[data-track="' + kind + '"]');
     if (!row) return;
     Array.prototype.forEach.call(row.querySelectorAll('.ve-track-block'), function (b) { b.remove(); });
@@ -1271,7 +1455,7 @@ function _renderTracks(idx) {
       el.dataset.itemId = it.id;
       el.style.left = (it.t0 * PX_PER_SECOND) + 'px';
       el.style.width = Math.max(40, it.dur * PX_PER_SECOND) + 'px';
-      var label = kind === 'text' ? (it.text || 'Text') : kind === 'music' ? (it.name || 'Music') : kind === 'overlay' ? 'Overlay' : 'Sticker';
+      var label = kind === 'text' ? (it.text || 'Text') : kind === 'music' ? (it.name || 'Music') : kind === 'overlay' ? 'Overlay' : kind === 'sfx' ? (it.name || 'SFX') : kind === 'voice' ? (it.name || 'Voice') : kind === 'transition' ? (it.type || 'Transition') : 'Sticker';
       el.innerHTML =
         '<div class="ve-tb-trim l" data-edge="l"></div>' +
         '<span class="ve-tb-lbl" style="pointer-events:none">' + _esc(label.substring(0, 24)) + '</span>' +
