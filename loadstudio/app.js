@@ -591,12 +591,19 @@ render();
       if(!items.length){html+='<p style="color:#9c93b5;font:300 12px Inter,system-ui,sans-serif;margin:0">No items assigned.</p>';}
       items.forEach(function(entry,ii){
         var a=entry.a;
-        html+='<div style="display:flex;align-items:center;gap:6px;padding:7px 10px;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.16);border-radius:7px;margin-bottom:5px;">';
-        html+='<button onclick="lsPBMoveItem('+si+','+ii+',-1)" style="padding:3px 7px;border-radius:5px;border:1px solid rgba(179,136,255,.28);background:transparent;color:#c0b8d9;font-size:11px;cursor:pointer">Up</button>';
-        html+='<button onclick="lsPBMoveItem('+si+','+ii+',1)" style="padding:3px 7px;border-radius:5px;border:1px solid rgba(179,136,255,.28);background:transparent;color:#c0b8d9;font-size:11px;cursor:pointer">Down</button>';
+        html+='<div draggable="true" '
+          +'ondragstart="lsPBDragStart('+si+','+ii+',this)" '
+          +'ondragend="lsPBDragEnd(this)" '
+          +'ondragover="lsPBDragOver(event,this)" '
+          +'ondragleave="lsPBDragLeave(this)" '
+          +'ondrop="lsPBDrop(event,'+si+','+ii+')" '
+          +'style="display:flex;align-items:center;gap:6px;padding:7px 10px;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.16);border-radius:7px;margin-bottom:5px;cursor:grab;transition:border-color .12s">';
+        html+='<span style="color:#9c93b5;font-size:14px;line-height:1;flex-shrink:0;cursor:grab" title="Drag to reorder">&#9776;</span>';
         html+='<span style="flex:1;font:500 13px Inter,system-ui,sans-serif;color:#e0daf5">'+a.label+'</span>';
         html+='<span style="font:400 11px Inter,system-ui,sans-serif;color:#9c9cff;padding:2px 6px;border-radius:4px;border:1px solid rgba(156,156,255,.22);background:rgba(156,156,255,.07)">'+a.type+'</span>';
         if(a.notes){html+='<span style="font:300 11px Inter,system-ui,sans-serif;color:#9c93b5;margin-left:4px">'+a.notes+'</span>';}
+        html+='<button onclick="lsPBMoveItem('+si+','+ii+',-1)" style="padding:3px 7px;border-radius:5px;border:1px solid rgba(179,136,255,.28);background:transparent;color:#c0b8d9;font-size:11px;cursor:pointer" title="Move up">&#8593;</button>';
+        html+='<button onclick="lsPBMoveItem('+si+','+ii+',1)" style="padding:3px 7px;border-radius:5px;border:1px solid rgba(179,136,255,.28);background:transparent;color:#c0b8d9;font-size:11px;cursor:pointer" title="Move down">&#8595;</button>';
         html+='<button onclick="lsPBRemoveItem('+si+','+ii+')" style="padding:3px 7px;border-radius:5px;border:1px solid rgba(255,80,80,.28);background:transparent;color:#ff8080;font-size:11px;cursor:pointer">Remove</button>';
         html+='</div>';
       });
@@ -645,8 +652,33 @@ render();
       var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(out,null,2));a.download='production-board.json';a.click();
     });}
   });
+  // Drag-and-drop state
+  var _dragSrc=null;
+  window.lsPBDragStart=function(si,ii,el){_dragSrc={si:si,ii:ii};el.style.opacity='0.5';};
+  window.lsPBDragEnd=function(el){el.style.opacity='';_dragSrc=null;};
+  window.lsPBDragOver=function(e,el){e.preventDefault();el.style.borderColor='rgba(179,136,255,.7)';};
+  window.lsPBDragLeave=function(el){el.style.borderColor='rgba(179,136,255,.16)';};
+  window.lsPBDrop=function(e,tSi,tIi){
+    e.preventDefault();
+    var target=e.currentTarget;target.style.borderColor='rgba(179,136,255,.16)';
+    if(!_dragSrc)return;
+    if(_dragSrc.si===tSi&&_dragSrc.ii===tIi){_dragSrc=null;return;}
+    var board=loadBoard();
+    var srcIdx=[];var tgtIdx=[];
+    board.assignments.forEach(function(a,idx){if(a.sceneIdx===_dragSrc.si)srcIdx.push(idx);});
+    board.assignments.forEach(function(a,idx){if(a.sceneIdx===tSi)tgtIdx.push(idx);});
+    if(_dragSrc.ii>=srcIdx.length){_dragSrc=null;return;}
+    var moved=board.assignments.splice(srcIdx[_dragSrc.ii],1)[0];
+    board.assignments.forEach(function(a,idx){if(a.sceneIdx===tSi)tgtIdx.push(idx);});
+    board.assignments.forEach(function(a,idx){});
+    // Recalculate after splice
+    var newTgt=[];board.assignments.forEach(function(a,idx){if(a.sceneIdx===tSi)newTgt.push(idx);});
+    var insertAt=tIi<newTgt.length?newTgt[tIi]:board.assignments.length;
+    board.assignments.splice(insertAt,0,moved);
+    saveBoard(board);renderBoard();_dragSrc=null;
+  };
   window.lsPBMoveItem=function(si,ii,dir){
-    var board=loadBoard();var scenes=getScenes();
+    var board=loadBoard();
     var items=board.assignments.filter(function(a){return a.sceneIdx===si;});
     var jj=ii+dir;if(jj<0||jj>=items.length)return;
     var allIdx=[];board.assignments.forEach(function(a,idx){if(a.sceneIdx===si)allIdx.push(idx);});
@@ -2260,3 +2292,269 @@ window.lsSaveCTP_providerReport=function(){
   };
 
 })();
+
+// Orchestrator UI integration — wires Director AI, Text-to-Video, SFX, and Voice panels to the provider registry
+(function () {
+  'use strict';
+
+  var LLM_PROVIDERS   = ['ollama','lm-studio','localai','llama-cpp','openrouter','anthropic','openai','mistral','perplexity'];
+  var VIDEO_PROVIDERS = ['wan','hunyuanvideo','ltx-video','animatediff','cogvideox','kling','luma-dream','pika','pixverse','hailuo'];
+  var SFX_PROVIDERS   = ['freesound','audiogen','musicgen','elevenlabs-sfx'];
+  var TTS_PROVIDERS   = ['browser-tts','kokoro','piper','chatterbox','bark','openvoice','dia'];
+
+  function _reg()  { return window.LoadProviderRegistry; }
+  function _orch() { return window.LoadOrchestrator; }
+
+  function _setEl(id, html) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+
+  function _setText(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function _val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value : '';
+  }
+
+  function _resolveProvider(list) {
+    var orch = _orch();
+    if (orch && orch.selectProvider) return orch.selectProvider(list);
+    var reg = _reg();
+    if (!reg) return null;
+    for (var i = 0; i < list.length; i++) {
+      var p = reg.getProvider(list[i]);
+      if (p) return list[i];
+    }
+    return null;
+  }
+
+  function _providerLabel(id) {
+    var reg = _reg();
+    if (!id || !reg) return null;
+    var p = reg.getProvider(id);
+    return p ? (p.name || id) : id;
+  }
+
+  function _updateStatus(elId, providerList, readyMsg, noneMsg) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    var id = _resolveProvider(providerList);
+    if (id) {
+      el.textContent = readyMsg.replace('{p}', _providerLabel(id) || id);
+      el.style.color = '#5ee0a5';
+    } else {
+      el.textContent = noneMsg;
+      el.style.color = '#9c93b5';
+    }
+  }
+
+  function _initStatuses() {
+    _updateStatus('ls-dir-llm-status',    LLM_PROVIDERS,
+      'AI provider ready: {p}', 'No AI provider connected — add a key in Provider Settings');
+    _updateStatus('ls-t2v-provider-status', VIDEO_PROVIDERS,
+      'Video provider ready: {p}', 'No video provider connected — add a key in Provider Settings');
+  }
+
+  // Director AI — Generate with AI
+  function _initDirLLM() {
+    var btn = document.getElementById('ls-dir-llm-btn');
+    if (!btn || btn._lsOrchBound) return;
+    btn._lsOrchBound = true;
+    btn.addEventListener('click', function () {
+      var reg = _reg();
+      if (!reg) { _setText('ls-dir-llm-status', 'Provider registry not loaded.'); return; }
+      var providerId = _resolveProvider(LLM_PROVIDERS);
+      if (!providerId) {
+        _setText('ls-dir-llm-status', 'No AI provider connected. Add a key in Provider Settings.');
+        return;
+      }
+      var scene   = _val('ls-dir-scene-desc');
+      var shot    = _val('ls-dir-shot-type');
+      var camera  = _val('ls-dir-camera-move');
+      var prompt  = 'You are a professional film director. Generate a concise, numbered shot list for the following scene.\n'
+                  + 'Scene: ' + (scene || 'a dramatic scene') + '\n'
+                  + 'Shot type: ' + shot + '. Camera movement: ' + camera + '.\n'
+                  + 'Output: 5-8 shots, each with shot number, type, subject, camera notes, and purpose.';
+
+      _setText('ls-dir-llm-status', 'Generating shot list...');
+      btn.disabled = true;
+
+      reg.callLLM({ providerId: providerId, prompt: prompt, maxTokens: 600 })
+        .then(function (r) {
+          var text = (r && (r.text || (r.choices && r.choices[0] && r.choices[0].message && r.choices[0].message.content))) || '';
+          if (!text) { _setText('ls-dir-llm-status', 'No response from provider.'); return; }
+          var out = document.getElementById('ls-dir-shotlist-out');
+          if (out) out.value = text;
+          _setText('ls-dir-llm-status', 'Shot list generated via ' + (_providerLabel(providerId) || providerId));
+          document.getElementById('ls-dir-llm-status').style.color = '#5ee0a5';
+        })
+        .catch(function (err) {
+          _setText('ls-dir-llm-status', 'Error: ' + (err && err.message || 'generation failed'));
+          document.getElementById('ls-dir-llm-status').style.color = '#ff8080';
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+
+  // Text to Video — Attempt Generation
+  function _initT2V() {
+    var btn = document.getElementById('ls-t2v-attempt');
+    if (!btn || btn._lsOrchBound) return;
+    btn._lsOrchBound = true;
+    btn.addEventListener('click', function () {
+      var reg = _reg();
+      if (!reg) { _setEl('ls-t2v-result', '<span style="color:#ff8080">Provider registry not loaded.</span>'); return; }
+      var providerId = _resolveProvider(VIDEO_PROVIDERS);
+      if (!providerId) {
+        _setEl('ls-t2v-result', '<span style="color:#9c93b5">No video provider connected. Add a key in Provider Settings to attempt generation.</span>');
+        return;
+      }
+      var prompt  = _val('ls-t2v-output') || _val('ls-t2v-idea');
+      if (!prompt) {
+        _setEl('ls-t2v-result', '<span style="color:#ff8080">Build a video prompt first using the Build Video Prompt button.</span>');
+        return;
+      }
+      var durText = _val('ls-t2v-duration');
+      var dur     = parseInt(durText, 10) || 5;
+      var ratioRaw = _val('ls-t2v-ratio');
+      var ratio   = ratioRaw.indexOf('9:16') >= 0 ? '9:16' : (ratioRaw.indexOf('1:1') >= 0 ? '1:1' : '16:9');
+
+      _setEl('ls-t2v-result', '<span style="color:#9c93b5">Submitting to ' + (_providerLabel(providerId) || providerId) + '...</span>');
+      btn.disabled = true;
+
+      reg.generateVideo({ providerId: providerId, prompt: prompt, duration: dur, aspectRatio: ratio })
+        .then(function (r) {
+          if (!r) { _setEl('ls-t2v-result', '<span style="color:#ff8080">No response from provider.</span>'); return; }
+          if (r.type === 'video-job') {
+            _setEl('ls-t2v-result', '<span style="color:#9c93b5">Job submitted (ID: ' + r.jobId + '). Poll for result in Developer Lab.</span>');
+            return;
+          }
+          var url = r.url || r.dataURL || (r.blob && URL.createObjectURL(r.blob));
+          if (url) {
+            _setEl('ls-t2v-result',
+              '<video controls style="max-width:100%;border-radius:8px;margin-top:6px" src="' + url + '"></video>'
+              + '<div style="color:#5ee0a5;font:300 12px Inter,sans-serif;margin-top:4px">Generated via ' + (_providerLabel(providerId) || providerId) + '</div>');
+          } else {
+            _setEl('ls-t2v-result', '<span style="color:#ff8080">Provider returned no video URL.</span>');
+          }
+        })
+        .catch(function (err) {
+          _setEl('ls-t2v-result', '<span style="color:#ff8080">Error: ' + (err && err.message || 'generation failed') + '</span>');
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+
+  // SFX Generator — Search Live SFX
+  function _initSFX() {
+    var btn = document.getElementById('ls-sfx-search-btn');
+    if (!btn || btn._lsOrchBound) return;
+    btn._lsOrchBound = true;
+    btn.addEventListener('click', function () {
+      var reg = _reg();
+      if (!reg) { _setEl('ls-sfx-results', '<span style="color:#ff8080">Provider registry not loaded.</span>'); return; }
+      var query = _val('ls-sfx-tags') || _val('ls-sfx-scene');
+      if (!query) { _setEl('ls-sfx-results', '<span style="color:#9c93b5">Enter a scene description or select SFX types above, then search.</span>'); return; }
+
+      _setEl('ls-sfx-results', '<span style="color:#9c93b5">Searching...</span>');
+      btn.disabled = true;
+
+      reg.searchSFX({ providerId: 'freesound', query: query, limit: 8 })
+        .then(function (r) {
+          var items = (r && r.results) || [];
+          if (!items.length) {
+            _setEl('ls-sfx-results', '<span style="color:#9c93b5">No results found. Try different keywords.</span>');
+            return;
+          }
+          var html = '<div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">';
+          items.forEach(function (item) {
+            var name    = item.name || item.id || 'Untitled';
+            var preview = item.previews && (item.previews['preview-hq-mp3'] || item.previews['preview-lq-mp3']);
+            var license = item.license || '';
+            html += '<div style="background:rgba(156,136,255,.06);border:1px solid rgba(156,136,255,.18);border-radius:8px;padding:10px">';
+            html += '<div style="color:#c0b8d9;font:500 13px Inter,sans-serif;margin-bottom:6px">' + name + '</div>';
+            if (preview) {
+              html += '<audio controls style="width:100%;height:32px" src="' + preview + '"></audio>';
+            }
+            if (license) {
+              html += '<div style="color:#9c93b5;font:300 11px Inter,sans-serif;margin-top:4px">License: ' + license + '</div>';
+            }
+            html += '</div>';
+          });
+          html += '</div>';
+          _setEl('ls-sfx-results', html);
+        })
+        .catch(function (err) {
+          var msg = err && err.message || 'search failed';
+          if (msg.indexOf('no API key') >= 0 || msg.indexOf('key') >= 0) {
+            _setEl('ls-sfx-results', '<span style="color:#9c93b5">Add a Freesound API key in Provider Settings to search live SFX.</span>');
+          } else {
+            _setEl('ls-sfx-results', '<span style="color:#ff8080">Error: ' + msg + '</span>');
+          }
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  }
+
+  // Voice Character Engine — Preview in Browser
+  function _initVCE() {
+    var btn = document.getElementById('ls-vce-preview-btn');
+    if (!btn || btn._lsOrchBound) return;
+    btn._lsOrchBound = true;
+    btn.addEventListener('click', function () {
+      var reg = _reg();
+      if (!reg) { return; }
+      var line = _val('ls-vce-sample-line') || _val('ls-vce-notes') || 'This is a preview of the selected voice character.';
+      if (!line) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Speaking...';
+
+      reg.generateSpeech({ providerId: 'browser-tts', text: line })
+        .then(function (r) {
+          if (r && r.blob) {
+            var url = URL.createObjectURL(r.blob);
+            var a   = new Audio(url);
+            a.onended = function () { URL.revokeObjectURL(url); };
+            a.play();
+          } else if (r && r.ok) {
+            // browser-tts speaks directly; nothing to play from blob
+          } else {
+            if (window.speechSynthesis) {
+              var utt = new SpeechSynthesisUtterance(line);
+              window.speechSynthesis.speak(utt);
+            }
+          }
+        })
+        .catch(function () {
+          if (window.speechSynthesis) {
+            var utt = new SpeechSynthesisUtterance(line);
+            window.speechSynthesis.speak(utt);
+          }
+        })
+        .then(function () {
+          btn.disabled = false;
+          btn.textContent = 'Preview in Browser';
+        });
+    });
+  }
+
+  function _init() {
+    _initStatuses();
+    _initDirLLM();
+    _initT2V();
+    _initSFX();
+    _initVCE();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _init);
+  } else {
+    _init();
+  }
+
+}());
