@@ -730,9 +730,9 @@ function _openSceneEditor(idx) {
           '<div class="ve-track-row" data-track="text"><span class="ve-track-empty" data-add="text">Tap to add subtitle</span></div>' +
           '<div class="ve-track-row" data-track="sticker"><span class="ve-track-empty" data-add="sticker">Tap to add sticker / PiP</span></div>' +
           '<div class="ve-track-row" data-track="overlay"><span class="ve-track-empty" data-add="overlay-img">Tap to add overlay image</span></div>' +
-          '<div class="ve-track-row" data-track="sfx"><span class="ve-track-empty" data-add="sfx">Tap to add sound FX</span></div>' +
-          '<div class="ve-track-row" data-track="voice"><span class="ve-track-empty" data-add="voice">Tap to record narration</span></div>' +
-          '<div class="ve-track-row" data-track="transition"><span class="ve-track-empty" data-add="transition">Tap to add transition</span></div>' +
+          '<div class="ve-track-row" data-track="sfx" style="display:none"><span class="ve-track-empty" data-add="sfx">Tap to add sound FX</span></div>' +
+          '<div class="ve-track-row" data-track="voice" style="display:none"><span class="ve-track-empty" data-add="voice">Tap to record narration</span></div>' +
+          '<div class="ve-track-row" data-track="transition" style="display:none"><span class="ve-track-empty" data-add="transition">Tap to add transition</span></div>' +
           '<div class="video-track" id="lseb-image-strip"></div>' +
           '<div class="waveform-track empty" id="lseb-waveform"></div>' +
           '<div class="time-ruler" id="lseb-ruler"></div>' +
@@ -1446,6 +1446,9 @@ function _renderTracks(idx) {
     if (!row) return;
     Array.prototype.forEach.call(row.querySelectorAll('.ve-track-block'), function (b) { b.remove(); });
     var items = scene.tracks[kind] || [];
+    if (kind === 'sfx' || kind === 'voice' || kind === 'transition') {
+      row.style.display = items.length ? '' : 'none';
+    }
     var empty = row.querySelector('.ve-track-empty');
     if (empty) empty.style.display = items.length ? 'none' : '';
     items.forEach(function (it) {
