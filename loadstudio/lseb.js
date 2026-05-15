@@ -121,7 +121,10 @@ function _updateSubOverlay(scene, t) {
     if (t >= t0 && t < t0 + (it.dur || 3)) active = it;
   });
   sub.style.opacity = active ? '1' : '0';
-  if (active) sub.innerHTML = '<span>' + _esc(active.text || '') + '</span>';
+  if (active) {
+    sub.className = 'sub-' + (active.pos || 'bottom');
+    sub.innerHTML = '<span style="font-size:' + (active.size || 18) + 'px">' + _esc(active.text || '') + '</span>';
+  }
 }
 
 // ─── PLAYBACK ENGINE (RAF-based, ported from Load Eco engine) ────────────────
@@ -152,6 +155,83 @@ function _tlClipAt(gt, scene) {
   return { idx: idx, localTime: Math.max(0, gt - starts[idx]), startTime: starts[idx] };
 }
 
+// ─── CLIP PREVIEW ENGINE (Load Eco pattern) ───────────────────────────────────
+// Per-clip dedicated DOM elements. Switching = display toggle only.
+// display:none → display:'' restarts CSS animations per spec — no forced reflow.
+function _mountClipPreview(clip, localTime, isPlaying, sceneIdx) {
+  var stage = _el('lseb-stage');
+  if (!stage || !clip || !clip.src) return;
+  var scene = _state.scenes[sceneIdx];
+  var allPv = stage.querySelectorAll('[data-lseb-clip-preview]');
+  for (var pi = 0; pi < allPv.length; pi++) {
+    var pv = allPv[pi];
+    if (pv !== clip._previewEl) {
+      pv.style.display = 'none';
+      if (pv.tagName === 'VIDEO') { try { pv.pause(); } catch (_) {} }
+    }
+  }
+  if (!clip._previewEl || !clip._previewEl.parentNode) {
+    var newEl;
+    if (clip.type === 'image') {
+      newEl = document.createElement('img');
+      newEl.src = clip.src;
+      newEl.alt = '';
+      newEl.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;display:none';
+      if (scene && scene.fx) _applyFxToImg(newEl, scene.fx);
+    } else if (clip.type === 'video') {
+      newEl = document.createElement('video');
+      newEl.src = clip.src;
+      newEl.playsInline = true;
+      newEl.preload = 'auto';
+      newEl.style.cssText = 'max-width:100%;max-height:100%;background:#000;display:none';
+    } else {
+      return;
+    }
+    newEl.setAttribute('data-lseb-clip-preview', clip.id);
+    var stagePh = stage.querySelector('#lseb-stage-ph');
+    if (stagePh) stage.insertBefore(newEl, stagePh); else stage.appendChild(newEl);
+    clip._previewEl = newEl;
+  }
+  if (clip.type === 'image') {
+    if (isPlaying) {
+      if (clip._kbIdx == null) clip._kbIdx = Math.floor(Math.random() * 3);
+      var dur = clip.dur || (scene && scene.duration) || 5;
+      clip._previewEl.classList.add('kb-play');
+      clip._previewEl.style.animation = 'lsebKenBurns' + clip._kbIdx + ' ' + dur + 's ease-in-out forwards';
+    } else {
+      clip._previewEl.classList.remove('kb-play');
+      clip._previewEl.style.animation = '';
+    }
+  }
+  clip._previewEl.style.display = '';
+  var ph = _el('lseb-stage-ph');
+  if (ph) ph.style.display = 'none';
+  if (clip.type === 'video') {
+    var drift = Math.abs((clip._previewEl.currentTime || 0) - localTime);
+    if (!isPlaying || drift > 0.5) {
+      if (drift > 0.05) try { clip._previewEl.currentTime = Math.max(0, localTime); } catch (_) {}
+    }
+    if (isPlaying) try { clip._previewEl.play().catch(function () {}); } catch (_) {}
+    else try { clip._previewEl.pause(); } catch (_) {}
+  }
+}
+function _activePreviewEl(idx) {
+  var scene = _state.scenes[idx];
+  if (!scene || !scene.clips) return null;
+  var clip = scene.clips[_selectedClipIdx] || scene.clips[0];
+  return (clip && clip._previewEl && clip._previewEl.parentNode) ? clip._previewEl : null;
+}
+function _applyFxToAllPreviews(idx) {
+  var scene = _state.scenes[idx];
+  if (!scene || !scene.fx) return;
+  var stage = _el('lseb-stage');
+  if (!stage) return;
+  var pvs = stage.querySelectorAll('[data-lseb-clip-preview]');
+  for (var i = 0; i < pvs.length; i++) {
+    if (pvs[i].tagName === 'IMG') _applyFxToImg(pvs[i], scene.fx);
+  }
+}
+
 var _engine = {
   t: 0,           // local time within current clip
   globalTime: 0,  // absolute position across all clips
@@ -177,7 +257,7 @@ var _engine = {
     _playing = true;
     this.lastFrame = performance.now();
     _setPlayBtn(true);
-    this._startClipMedia(clip, clipDur);
+    _mountClipPreview(clip, this.t, true, idx);
     var sceneId = scene.id;
     var LANE_VOL = { narration: 0.9, music: 0.35, sfxAudio: 0.5 };
     _playHandles = [];
@@ -193,33 +273,6 @@ var _engine = {
     });
     _initSubOverlay(scene);
     this._runStep(idx);
-  },
-
-  _startClipMedia: function (clip, clipDur) {
-    if (!clip) return;
-    if (clip.type === 'video' && clip.src) {
-      var vid = _el('lseb-stage-vid');
-      var img = _el('lseb-stage-img');
-      if (img) { img.classList.remove('kb-play'); img.style.animation = ''; img.style.display = 'none'; }
-      if (vid) {
-        if (vid.src !== clip.src) { vid.src = clip.src; vid.load(); }
-        vid.style.display = 'block';
-        try { vid.currentTime = this.t; vid.play().catch(function () {}); } catch (e) {}
-      }
-    } else if (clip.type === 'image' && clip.src) {
-      var vid2 = _el('lseb-stage-vid');
-      var img2 = _el('lseb-stage-img');
-      if (vid2) { vid2.style.display = 'none'; try { vid2.pause(); } catch (e) {} }
-      if (img2) {
-        if (img2.src !== clip.src) img2.src = clip.src;
-        img2.style.display = 'block';
-        img2.classList.remove('kb-play'); img2.style.animation = '';
-        void img2.offsetWidth;
-        var kbIdx = Math.floor(Math.random() * 3);
-        img2.classList.add('kb-play');
-        img2.style.animation = 'lsebKenBurns' + kbIdx + ' ' + clipDur + 's ease-in-out forwards';
-      }
-    }
   },
 
   _runStep: function (idx) {
@@ -255,8 +308,6 @@ var _engine = {
         }
       }
       if (clipEnded) {
-        var stageImg = _el('lseb-stage-img');
-        if (stageImg) { stageImg.classList.remove('kb-play'); stageImg.style.animation = ''; }
         self.clipIdx++;
         if (self.clipIdx >= (scene.clips ? scene.clips.length : 0)) {
           self._pause(idx);
@@ -267,10 +318,9 @@ var _engine = {
         }
         _selectedClipIdx = self.clipIdx;
         var nextClip = scene.clips[self.clipIdx];
-        var nextClipDur = nextClip.dur || scene.duration || 5;
         self.t = 0;
         starts = null;
-        self._startClipMedia(nextClip, nextClipDur);
+        _mountClipPreview(nextClip, 0, true, idx);
         setTimeout(function () { _renderImageStrip(idx); }, 0);
         self.rafId = requestAnimationFrame(step);
         return;
@@ -288,10 +338,14 @@ var _engine = {
     _playing = false;
     if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
     _setPlayBtn(false);
-    var vid = _el('lseb-stage-vid');
-    if (vid) try { vid.pause(); } catch (e) {}
-    var img = _el('lseb-stage-img');
-    if (img) { img.classList.remove('kb-play'); img.style.animation = ''; }
+    var _pauseStage = _el('lseb-stage');
+    if (_pauseStage) {
+      var _pausePvs = _pauseStage.querySelectorAll('[data-lseb-clip-preview]');
+      for (var _pi = 0; _pi < _pausePvs.length; _pi++) {
+        if (_pausePvs[_pi].tagName === 'VIDEO') try { _pausePvs[_pi].pause(); } catch (_) {}
+        if (_pausePvs[_pi].tagName === 'IMG') { _pausePvs[_pi].classList.remove('kb-play'); _pausePvs[_pi].style.animation = ''; }
+      }
+    }
     var sub = document.getElementById('lseb-sub-overlay');
     if (sub) sub.remove();
     _stopAudio();
@@ -309,19 +363,7 @@ var _engine = {
     this.clipIdx = info.idx;
     _selectedClipIdx = info.idx;
     var clip = scene.clips && scene.clips[info.idx];
-    if (clip) {
-      var img = _el('lseb-stage-img');
-      var vid = _el('lseb-stage-vid');
-      var ph = _el('lseb-stage-ph');
-      if (clip.type === 'image') {
-        if (img) { if (img.src !== clip.src) img.src = clip.src; img.style.display = 'block'; }
-        if (vid) vid.style.display = 'none';
-      } else if (clip.type === 'video') {
-        if (vid) { if (vid.src !== clip.src) { vid.src = clip.src; vid.load(); } vid.style.display = 'block'; try { vid.currentTime = info.localTime; } catch (e) {} }
-        if (img) img.style.display = 'none';
-      }
-      if (ph) ph.style.display = 'none';
-    }
+    if (clip) _mountClipPreview(clip, info.localTime, false, idx);
     var _seekStrip = _el('lseb-image-strip');
     if (_seekStrip) {
       var _seekClips = _seekStrip.querySelectorAll('.timeline-clip');
@@ -569,6 +611,7 @@ function _openSceneEditor(idx) {
   _engine.globalTime = 0;
   _engine.clipIdx = 0;
   _engine.t = 0;
+  if (scene.clips) scene.clips.forEach(function (c) { c._previewEl = null; c._kbIdx = null; });
   if (scene.clips && scene.clips.length > 0) {
     var _fc = scene.clips[0];
     scene.media.image = _fc.type === 'image' ? _fc.src : null;
@@ -597,14 +640,9 @@ function _openSceneEditor(idx) {
       '</div>' +
       // Stage
       '<div id="lseb-stage">' +
-        (scene.media.video
-          ? '<video id="lseb-stage-vid" src="' + _esc(scene.media.video) + '" playsinline preload="auto" style="max-width:100%;max-height:100%;background:#000;display:block"></video>' +
-            '<img id="lseb-stage-img" alt="" style="display:none;max-width:100%;max-height:100%;object-fit:contain">'
-          : '<video id="lseb-stage-vid" playsinline preload="auto" style="display:none;max-width:100%;max-height:100%;background:#000"></video>' +
-            (scene.media.image
-              ? '<img id="lseb-stage-img" src="' + _esc(scene.media.image) + '" alt="" style="display:block;max-width:100%;max-height:100%;object-fit:contain">'
-              : '<img id="lseb-stage-img" alt="" style="display:none;max-width:100%;max-height:100%;object-fit:contain">')) +
-        '<div id="lseb-stage-ph"' + (scene.media.image || scene.media.video ? ' style="display:none"' : '') + '>' +
+        '<video id="lseb-stage-vid" playsinline preload="auto" style="display:none;max-width:100%;max-height:100%;background:#000"></video>' +
+        '<img id="lseb-stage-img" alt="" style="display:none;max-width:100%;max-height:100%;object-fit:contain">' +
+        '<div id="lseb-stage-ph"' + (scene.clips && scene.clips.length > 0 ? ' style="display:none"' : '') + '>' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="48" height="48"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5-9 9"/></svg>' +
           '<span>Tap to attach image</span>' +
         '</div>' +
@@ -678,10 +716,11 @@ function _openSceneEditor(idx) {
       '<div id="lseb-text-panel" class="ve-panel" hidden>' +
         '<div class="ve-panel-head"><span>Subtitle / overlay</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
         '<input id="lseb-text-inp" placeholder="Caption / title" class="ve-input" style="margin-bottom:10px;">' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">' +
           '<label class="ve-lbl">Position<select id="lseb-text-pos" class="ve-input"><option value="top">Top</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option></select></label>' +
-          '<label class="ve-lbl">Size<input id="lseb-text-size" type="number" value="48" min="12" max="200" class="ve-input"></label>' +
+          '<label class="ve-lbl">Size (px)<input id="lseb-text-size" type="number" value="18" min="10" max="120" class="ve-input"></label>' +
         '</div>' +
+        '<button id="lseb-text-add-btn" type="button" style="width:100%;padding:10px;background:#7d2ae8;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Add Text</button>' +
       '</div>' +
       '<div id="lseb-filter-panel" class="ve-panel" hidden>' +
         '<div class="ve-panel-head"><span>Filter</span><button class="ve-iconbtn" data-close-panel>&times;</button></div>' +
@@ -745,6 +784,7 @@ function _openSceneEditor(idx) {
     setTimeout(function () { _renderWaveformPlaceholder(0.35); }, 0);
   }
   _renderRuler(idx);
+  if (scene.clips && scene.clips.length > 0) _mountClipPreview(scene.clips[0], 0, false, idx);
 }
 
 function _actionBtn(action, label, svgPaths) {
@@ -832,8 +872,8 @@ function _bindEditor(idx) {
       btn.addEventListener('click', function () {
         if (!scene) return;
         scene.fx.filter = key;
-        var img = _el('lseb-stage-img');
-        if (img) img.style.filter = key === 'none' ? '' : _FILTERS[key];
+        var aEl = _activePreviewEl(idx);
+        if (aEl && aEl.tagName === 'IMG') aEl.style.filter = key === 'none' ? '' : _FILTERS[key];
         _saveState();
         _buildFilterGrid(idx);
       });
@@ -894,14 +934,22 @@ function _bindEditor(idx) {
 
   // Text panel — add subtitle block on confirm
   var textInp = _el('lseb-text-inp');
+  function _doAddText() {
+    if (!textInp || !textInp.value.trim()) return;
+    var pos = (_el('lseb-text-pos') && _el('lseb-text-pos').value) || 'bottom';
+    var size = parseInt((_el('lseb-text-size') && _el('lseb-text-size').value) || '18', 10) || 18;
+    var sc = _state.scenes[idx];
+    _addTrackItem(idx, 'text', { text: textInp.value.trim(), dur: 3, pos: pos, size: size });
+    _renderTracks(idx);
+    if (sc) _initSubOverlay(sc);
+    textInp.value = '';
+    _showPanel(null);
+  }
   if (textInp) textInp.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && textInp.value.trim()) {
-      _addTrackItem(idx, 'text', { text: textInp.value.trim(), dur: 3 });
-      _renderTracks(idx);
-      textInp.value = '';
-      _showPanel(null);
-    }
+    if (e.key === 'Enter') { e.preventDefault(); _doAddText(); }
   });
+  var textAddBtn = _el('lseb-text-add-btn');
+  if (textAddBtn) textAddBtn.addEventListener('click', _doAddText);
 
   // Sticker pick
   var stickerPick = _el('lseb-sticker-pick');
@@ -983,8 +1031,8 @@ function _bindEditor(idx) {
     opRange.addEventListener('input', function () {
       var v = parseInt(opRange.value, 10);
       if (opVal) opVal.textContent = v + '%';
-      var img = _el('lseb-stage-img');
-      if (img) img.style.opacity = v / 100;
+      var aEl = _activePreviewEl(idx);
+      if (aEl && aEl.tagName === 'IMG') aEl.style.opacity = v / 100;
       if (scene.fx) scene.fx.opacity = v;
       _saveState();
     });
@@ -996,8 +1044,8 @@ function _bindEditor(idx) {
     blurRange.addEventListener('input', function () {
       var v = parseFloat(blurRange.value);
       if (blurVal) blurVal.textContent = v + 'px';
-      var img = _el('lseb-stage-img');
-      if (img) img.style.filter = _buildFilterStr(scene.fx, v);
+      var aEl = _activePreviewEl(idx);
+      if (aEl && aEl.tagName === 'IMG') aEl.style.filter = _buildFilterStr(scene.fx, v);
     });
   }
   if (editor) editor.querySelectorAll('.ve-action[data-action]').forEach(function (btn) {
@@ -1312,14 +1360,7 @@ function _attachImage(idx, src, asNewClip) {
   scene.status = 'has-image';
   scene.updatedAt = new Date().toISOString();
   _saveState();
-  var stageImg = _el('lseb-stage-img');
-  var stageVid = _el('lseb-stage-vid');
-  var ph = _el('lseb-stage-ph');
-  if (sel && sel.type === 'image') {
-    if (stageImg) { stageImg.src = sel.src; stageImg.style.display = 'block'; _applyFxToImg(stageImg, scene.fx); }
-    if (stageVid) stageVid.style.display = 'none';
-  }
-  if (ph) ph.style.display = 'none';
+  if (sel) _mountClipPreview(sel, 0, false, idx);
   _renderImageStrip(idx);
   _toast(asNewClip ? 'Clip added.' : 'Image attached.');
 }
@@ -1342,14 +1383,7 @@ function _attachVideo(idx, src, asNewClip) {
   scene.status = 'has-video';
   scene.updatedAt = new Date().toISOString();
   _saveState();
-  var vid = _el('lseb-stage-vid');
-  var img = _el('lseb-stage-img');
-  var ph = _el('lseb-stage-ph');
-  if (sel && sel.type === 'video') {
-    if (vid) { vid.src = sel.src; vid.style.display = 'block'; vid.load(); }
-    if (img) img.style.display = 'none';
-  }
-  if (ph) ph.style.display = 'none';
+  if (sel) _mountClipPreview(sel, 0, false, idx);
   _renderImageStrip(idx);
   _toast(asNewClip ? 'Clip added.' : 'Video attached.');
 }
@@ -1372,17 +1406,7 @@ function _selectClip(idx, ci) {
   scene.media.image = clip.type === 'image' ? clip.src : null;
   scene.media.video = clip.type === 'video' ? clip.src : null;
   _saveState();
-  var img = _el('lseb-stage-img');
-  var vid = _el('lseb-stage-vid');
-  var ph = _el('lseb-stage-ph');
-  if (clip.type === 'image') {
-    if (img) { img.src = clip.src; img.style.display = 'block'; _applyFxToImg(img, scene.fx); }
-    if (vid) vid.style.display = 'none';
-  } else if (clip.type === 'video') {
-    if (vid) { vid.src = clip.src; vid.style.display = 'block'; vid.load(); }
-    if (img) img.style.display = 'none';
-  }
-  if (ph) ph.style.display = 'none';
+  _mountClipPreview(clip, 0, false, idx);
   _renderImageStrip(idx);
 }
 
@@ -1489,11 +1513,11 @@ function _setPlayBtn(isPlaying) {
 // ─── SCENE TRANSFORMS ────────────────────────────────────────────────────────
 function _rotateScene(idx) {
   var scene = _state.scenes[idx];
-  if (!scene || !scene.media.image) { _toast('Attach an image first.'); return; }
+  if (!scene || (!scene.media.image && !(scene.clips && scene.clips.length))) { _toast('Attach an image first.'); return; }
   scene.fx.rotate = ((scene.fx.rotate || 0) + 90) % 360;
   _saveState();
-  var img = _el('lseb-stage-img');
-  if (img) img.style.transform = _buildTransform(scene.fx);
+  var aEl = _activePreviewEl(idx);
+  if (aEl && aEl.tagName === 'IMG') aEl.style.transform = _buildTransform(scene.fx);
   _toast('Rotated ' + scene.fx.rotate + '°');
 }
 function _mirrorScene(idx) {
@@ -1501,16 +1525,16 @@ function _mirrorScene(idx) {
   if (!scene) return;
   scene.fx.mirror = !scene.fx.mirror;
   _saveState();
-  var img = _el('lseb-stage-img');
-  if (img) img.style.transform = _buildTransform(scene.fx);
+  var aEl = _activePreviewEl(idx);
+  if (aEl && aEl.tagName === 'IMG') aEl.style.transform = _buildTransform(scene.fx);
 }
 function _flipScene(idx) {
   var scene = _state.scenes[idx];
   if (!scene) return;
   scene.fx.flip = !scene.fx.flip;
   _saveState();
-  var img = _el('lseb-stage-img');
-  if (img) img.style.transform = _buildTransform(scene.fx);
+  var aEl = _activePreviewEl(idx);
+  if (aEl && aEl.tagName === 'IMG') aEl.style.transform = _buildTransform(scene.fx);
 }
 function _buildTransform(fx) {
   var parts = [];
