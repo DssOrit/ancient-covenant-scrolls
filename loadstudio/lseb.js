@@ -278,7 +278,7 @@ var _engine = {
     var sceneId = scene.id;
     var LANE_VOL = { narration: 0.9, music: 0.35, sfxAudio: 0.5 };
     _playHandles = [];
-    var _resumeT = self.t;
+    var _resumeT = this.t;
     ['narration', 'music', 'sfxAudio'].forEach(function (lane) {
       var pre = _audioPre[sceneId + '_' + lane];
       if (!pre) return;
