@@ -233,12 +233,31 @@ function _applyFxToAllPreviews(idx) {
 }
 
 var _engine = {
-  t: 0,           // local time within current clip
-  globalTime: 0,  // absolute position across all clips
+  t: 0,           // global time across all clips
+  globalTime: 0,  // alias kept for compatibility
   clipIdx: 0,
   isPlaying: false,
   rafId: null,
   lastFrame: 0,
+
+  // Single source of truth for clip visibility — called every RAF tick and on seek.
+  setTime: function (t, idx) {
+    var scene = _state.scenes[idx];
+    if (!scene) return;
+    var total = _tlDuration(scene);
+    t = Math.max(0, Math.min(total, t));
+    this.t = t;
+    this.globalTime = t;
+    var info = _tlClipAt(t, scene);
+    this.clipIdx = info.idx;
+    _selectedClipIdx = info.idx;
+    var clip = scene.clips && scene.clips[info.idx];
+    if (clip) _mountClipPreview(clip, info.localTime, this.isPlaying, idx);
+    // Preload next clip so handoff is instant
+    var nextClip = scene.clips && scene.clips[info.idx + 1];
+    if (nextClip && !nextClip._previewEl) _mountClipPreview(nextClip, 0, false, idx);
+    this._tick(idx, t);
+  },
 
   play: function (idx) {
     if (this.isPlaying) return;
@@ -246,18 +265,13 @@ var _engine = {
     if (!scene) return;
     if (!scene.clips) scene.clips = [];
     var total = _tlDuration(scene);
-    if (this.globalTime >= total - 0.01) { this.globalTime = 0; }
-    var info = _tlClipAt(this.globalTime, scene);
-    this.clipIdx = info.idx;
-    this.t = info.localTime;
-    _selectedClipIdx = this.clipIdx;
-    var clip = scene.clips[this.clipIdx] || null;
-    var clipDur = clip ? (clip.dur || scene.duration || 5) : (scene.duration || 5);
+    if (this.t >= total - 0.01) this.t = 0;
     this.isPlaying = true;
     _playing = true;
     this.lastFrame = performance.now();
     _setPlayBtn(true);
-    _mountClipPreview(clip, this.t, true, idx);
+    // Synchronous mount inside user-gesture for iOS Safari play() permission
+    this.setTime(this.t, idx);
     var sceneId = scene.id;
     var LANE_VOL = { narration: 0.9, music: 0.35, sfxAudio: 0.5 };
     _playHandles = [];
@@ -272,62 +286,36 @@ var _engine = {
       try { pre.currentTime = it.t0 || 0; pre.volume = it.vol || 0.35; pre.play().catch(function () {}); _playHandles.push(pre); } catch (e) {}
     });
     _initSubOverlay(scene);
-    this._runStep(idx);
-  },
-
-  _runStep: function (idx) {
     var self = this;
-    var starts = null;
     var step = function (now) {
       if (!self.isPlaying) return;
-      var scene = _state.scenes[idx];
-      if (!scene) { self._pause(idx); return; }
-      var dt = (now - self.lastFrame) / 1000;
+      var sc = _state.scenes[idx];
+      if (!sc) { self._pause(idx); return; }
+      var dt = Math.min((now - self.lastFrame) / 1000, 0.1);
       self.lastFrame = now;
-      if (!starts) starts = _tlStartTimes(scene);
-      var clip = (scene.clips && scene.clips[self.clipIdx]) || null;
-      var clipDur = clip ? (clip.dur || scene.duration || 5) : (scene.duration || 5);
-      var clipStart = starts[self.clipIdx] || 0;
-      var hasVid = clip && clip.type === 'video' && !!clip.src;
-      var vid = _el('lseb-stage-vid');
-      var clipEnded = false;
-      if (hasVid && vid && vid.readyState >= 2) {
-        if (vid.ended || (vid.paused && vid.currentTime >= (vid.duration || clipDur) - 0.05)) {
-          self.globalTime = clipStart + clipDur;
-          clipEnded = true;
-        } else {
-          self.t = vid.currentTime;
-          self.globalTime = clipStart + self.t;
+      var total2 = _tlDuration(sc);
+      // For active video clip: its element is master clock — no seeking during playback
+      var info = _tlClipAt(self.t, sc);
+      var ac = sc.clips && sc.clips[info.idx];
+      if (ac && ac.type === 'video' && ac._previewEl && ac._previewEl.tagName === 'VIDEO' && ac._previewEl.readyState >= 2) {
+        var pv = ac._previewEl;
+        var starts = _tlStartTimes(sc);
+        var base = starts[info.idx] || 0;
+        self.t = base + pv.currentTime;
+        if (pv.ended || pv.currentTime >= (pv.duration || ac.dur || 5) - 0.08) {
+          self.t = base + (ac.dur || sc.duration || 5);
         }
       } else {
         self.t += dt;
-        self.globalTime += dt;
-        if (self.t >= clipDur) {
-          self.globalTime = clipStart + clipDur;
-          clipEnded = true;
-        }
       }
-      if (clipEnded) {
-        self.clipIdx++;
-        if (self.clipIdx >= (scene.clips ? scene.clips.length : 0)) {
-          self._pause(idx);
-          self.globalTime = 0; self.t = 0;
-          _selectedClipIdx = 0;
-          setTimeout(function () { _renderImageStrip(idx); }, 0);
-          return;
-        }
-        _selectedClipIdx = self.clipIdx;
-        var nextClip = scene.clips[self.clipIdx];
-        self.t = 0;
-        starts = null;
-        _mountClipPreview(nextClip, 0, true, idx);
-        setTimeout(function () { _renderImageStrip(idx); }, 0);
-        self.rafId = requestAnimationFrame(step);
+      if (self.t >= total2) {
+        self._pause(idx);
+        self.t = 0; self.globalTime = 0;
+        _selectedClipIdx = 0;
+        self._tick(idx, 0);
         return;
       }
-      var total = _tlDuration(scene);
-      if (self.globalTime >= total) { self._pause(idx); self._tick(idx, total); return; }
-      self._tick(idx, self.globalTime);
+      self.setTime(self.t, idx);
       self.rafId = requestAnimationFrame(step);
     };
     this.rafId = requestAnimationFrame(step);
@@ -351,27 +339,20 @@ var _engine = {
     _stopAudio();
   },
 
-  // seekTo receives globalTime (x / PX_PER_SECOND from scrub handler)
   seekTo: function (globalTime, idx) {
     var scene = _state.scenes[idx];
     if (!scene) return;
     var total = _tlDuration(scene);
     globalTime = Math.max(0, Math.min(total, globalTime));
-    var info = _tlClipAt(globalTime, scene);
-    this.globalTime = globalTime;
-    this.t = info.localTime;
-    this.clipIdx = info.idx;
-    _selectedClipIdx = info.idx;
-    var clip = scene.clips && scene.clips[info.idx];
-    if (clip) _mountClipPreview(clip, info.localTime, false, idx);
+    this.setTime(globalTime, idx);
     var _seekStrip = _el('lseb-image-strip');
     if (_seekStrip) {
+      var info = _tlClipAt(this.t, scene);
       var _seekClips = _seekStrip.querySelectorAll('.timeline-clip');
       for (var _sci = 0; _sci < _seekClips.length; _sci++) {
         _seekClips[_sci].classList.toggle('selected', _sci === info.idx);
       }
     }
-    this._tick(idx, globalTime);
     _playHandles.forEach(function (h) { try { h.currentTime = globalTime; } catch (_) {} });
   },
 
@@ -480,6 +461,13 @@ var _CSS =
   '#lseb-editor .video-track{height:90px;display:flex;align-items:center;gap:0;position:relative}' +
   '#lseb-editor .timeline-clip{position:relative;height:84px;border-radius:6px;overflow:hidden;background:#08080d;display:flex;align-items:center;cursor:pointer;flex:0 0 auto;border:2px solid rgba(179,58,240,.4)}' +
   '#lseb-editor .timeline-clip.selected{border:3px solid #b33af0}' +
+  '#lseb-editor .timeline-clip .clip-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(255,59,92,.9);color:#fff;border:none;font-size:15px;font-weight:900;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:6;line-height:1;padding:0}' +
+  '#lseb-editor .timeline-clip.selected .clip-del{display:flex}' +
+  '#lseb-editor .clip-reorder{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);display:none;gap:2px;background:rgba(0,0,0,.65);border-radius:8px;padding:1px 4px;z-index:6;white-space:nowrap}' +
+  '#lseb-editor .timeline-clip.selected .clip-reorder{display:flex}' +
+  '#lseb-editor .clip-reorder button{background:transparent;border:none;color:#fff;font-size:15px;cursor:pointer;padding:1px 5px;line-height:1;font-family:inherit}' +
+  '#lseb-editor .clip-reorder button:active{color:#b33af0}' +
+  '#lseb-editor .clip-reorder button:disabled{color:#444;cursor:default}' +
   '#lseb-editor .thumbnail-strip{position:absolute;inset:0;display:flex;align-items:stretch;overflow:hidden}' +
   '#lseb-editor .thumbnail-strip img{flex:0 0 86px;width:86px;height:100%;object-fit:cover;object-position:center top;display:block;border-right:1px solid rgba(255,255,255,.1)}' +
   '#lseb-editor .clip-duration{position:absolute;left:6px;bottom:4px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;font-variant-numeric:tabular-nums;pointer-events:none}' +
@@ -608,9 +596,7 @@ function _openSceneEditor(idx) {
   var scene = _state.scenes[idx];
   if (!scene) return;
   _selectedClipIdx = 0;
-  _engine.globalTime = 0;
-  _engine.clipIdx = 0;
-  _engine.t = 0;
+  _engine.t = 0; _engine.globalTime = 0; _engine.clipIdx = 0;
   if (scene.clips) scene.clips.forEach(function (c) { c._previewEl = null; c._kbIdx = null; });
   if (scene.clips && scene.clips.length > 0) {
     var _fc = scene.clips[0];
@@ -650,7 +636,7 @@ function _openSceneEditor(idx) {
         '<button class="ve-iconbtn" id="lseb-fullscreen-btn" aria-label="Fullscreen" style="position:absolute;right:10px;bottom:10px;background:rgba(255,255,255,.1)">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>' +
         '</button>' +
-        '<input type="file" id="lseb-img-pick" accept="image/*,video/*,.jpg,.jpeg,.png,.gif,.webp,.mp4,.mov,.webm,.m4v" style="display:none">' +
+        '<input type="file" id="lseb-img-pick" accept="image/*,video/*,.jpg,.jpeg,.png,.gif,.webp,.mp4,.mov,.webm,.m4v,.heic,.heif" style="display:none">' +
       '</div>' +
       // Transport
       '<div class="lseb-transport">' +
@@ -1163,6 +1149,35 @@ function _renderImageStrip(idx) {
     durLabel.textContent = dur.toFixed(2) + 's';
     clipEl.appendChild(durLabel);
 
+    // Delete button
+    var delBtn = document.createElement('button');
+    delBtn.className = 'clip-del';
+    delBtn.type = 'button';
+    delBtn.setAttribute('aria-label', 'Delete clip');
+    delBtn.textContent = '×';
+    (function (ci_) {
+      delBtn.addEventListener('click', function (e) { e.stopPropagation(); _deleteClip(idx, ci_); });
+    })(ci);
+    clipEl.appendChild(delBtn);
+
+    // Move left / right buttons
+    var reorderEl = document.createElement('div');
+    reorderEl.className = 'clip-reorder';
+    var moveL = document.createElement('button');
+    moveL.type = 'button'; moveL.textContent = '←'; moveL.setAttribute('aria-label', 'Move left');
+    if (ci === 0) moveL.disabled = true;
+    var moveR = document.createElement('button');
+    moveR.type = 'button'; moveR.textContent = '→'; moveR.setAttribute('aria-label', 'Move right');
+    var scene2 = _state.scenes[idx];
+    if (scene2 && ci >= (scene2.clips ? scene2.clips.length - 1 : 0)) moveR.disabled = true;
+    (function (ci_) {
+      moveL.addEventListener('click', function (e) { e.stopPropagation(); _moveClip(idx, ci_, ci_ - 1); });
+      moveR.addEventListener('click', function (e) { e.stopPropagation(); _moveClip(idx, ci_, ci_ + 1); });
+    })(ci);
+    reorderEl.appendChild(moveL);
+    reorderEl.appendChild(moveR);
+    clipEl.appendChild(reorderEl);
+
     clipEl.addEventListener('click', function () { _selectClip(idx, ci); });
     strip.appendChild(clipEl);
   });
@@ -1178,6 +1193,38 @@ function _renderImageStrip(idx) {
     if (p) p.click();
   });
   strip.appendChild(bigAdd);
+}
+
+// ─── CLIP DELETE / REORDER ───────────────────────────────────────────────────
+function _deleteClip(idx, ci) {
+  var scene = _state.scenes[idx];
+  if (!scene || !scene.clips || scene.clips.length <= 1) { _toast('Cannot delete the only clip.'); return; }
+  var clip = scene.clips[ci];
+  if (clip && clip._previewEl) { try { clip._previewEl.remove(); } catch (_) {} clip._previewEl = null; }
+  scene.clips.splice(ci, 1);
+  _selectedClipIdx = Math.min(_selectedClipIdx, scene.clips.length - 1);
+  var first = scene.clips[0];
+  scene.media.image = first && first.type === 'image' ? first.src : null;
+  scene.media.video = first && first.type === 'video' ? first.src : null;
+  _saveState();
+  var newTotal = _tlDuration(scene);
+  _engine.t = Math.min(_engine.t, newTotal);
+  _engine.globalTime = _engine.t;
+  _engine.setTime(_engine.t, idx);
+  _renderImageStrip(idx);
+  _renderRuler(idx);
+  _toast('Clip deleted.');
+}
+function _moveClip(idx, fromCi, toCi) {
+  var scene = _state.scenes[idx];
+  if (!scene || !scene.clips) return;
+  if (fromCi === toCi || fromCi < 0 || toCi < 0) return;
+  if (fromCi >= scene.clips.length || toCi >= scene.clips.length) return;
+  var moved = scene.clips.splice(fromCi, 1)[0];
+  scene.clips.splice(toCi, 0, moved);
+  _selectedClipIdx = toCi;
+  _saveState();
+  _renderImageStrip(idx);
 }
 
 // ─── TRACKS ──────────────────────────────────────────────────────────────────
