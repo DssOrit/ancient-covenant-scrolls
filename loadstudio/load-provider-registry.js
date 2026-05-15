@@ -2351,6 +2351,82 @@ var LoadProviderRegistry = {
       });
     }
 
+    if (providerId === 'dezgo') {
+      if (!key) return Promise.reject(new Error('Dezgo: no API key'));
+      return fetch('https://api.dezgo.com/text2image', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','X-Dezgo-Key':key},
+        body:JSON.stringify({prompt:request.prompt||'',width:request.width||512,height:request.height||512,model:s.model||'dreamshaper_8',steps:25,guidance:7.5})
+      }).then(function(r){
+        if(!r.ok) throw new Error('Dezgo '+r.status);
+        return r.blob().then(function(b){
+          return LoadProviderRegistry.normalizeResult({type:'image',blob:b,url:URL.createObjectURL(b),provider:'dezgo'});
+        });
+      });
+    }
+    if (providerId === 'getimgai') {
+      if (!key) return Promise.reject(new Error('getimg.ai: no API key'));
+      var gimgModel = s.model || 'stable-diffusion-xl-v1-0';
+      return fetch('https://api.getimg.ai/v1/stable-diffusion-xl/text-to-image', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:gimgModel,prompt:request.prompt||'',width:request.width||1024,height:request.height||1024,steps:30,output_format:'jpeg'})
+      }).then(function(r){
+        if(!r.ok) throw new Error('getimg.ai '+r.status);
+        return r.json().then(function(d){
+          var b64=d.image||'';
+          if(!b64) throw new Error('getimg.ai: no image');
+          return LoadProviderRegistry.normalizeResult({type:'image',dataURL:'data:image/jpeg;base64,'+b64,provider:'getimgai'});
+        });
+      });
+    }
+    if (providerId === 'replicate') {
+      if (!key) return Promise.reject(new Error('Replicate: no API key'));
+      var repModel = s.model || 'black-forest-labs/flux-schnell';
+      return fetch('https://api.replicate.com/v1/models/'+repModel+'/predictions', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key,'Prefer':'wait'},
+        body:JSON.stringify({input:{prompt:request.prompt||'',width:request.width||1024,height:request.height||1024}})
+      }).then(function(r){
+        if(!r.ok) throw new Error('Replicate '+r.status);
+        return r.json().then(function(d){
+          var url=(Array.isArray(d.output)?d.output[0]:d.output)||null;
+          if(!url) throw new Error('Replicate: no output URL');
+          return LoadProviderRegistry.normalizeResult({type:'image',url:url,provider:'replicate'});
+        });
+      });
+    }
+    if (providerId === 'fal-ai') {
+      if (!key) return Promise.reject(new Error('Fal.ai: no API key'));
+      var falModel = s.model || 'fal-ai/flux/schnell';
+      return fetch('https://queue.fal.run/'+falModel, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Key '+key},
+        body:JSON.stringify({prompt:request.prompt||'',image_size:{width:request.width||1024,height:request.height||1024}})
+      }).then(function(r){
+        if(!r.ok) throw new Error('Fal.ai '+r.status);
+        return r.json().then(function(d){
+          var url=(d.images&&d.images[0]&&d.images[0].url)||d.url||null;
+          if(!url) throw new Error('Fal.ai: no image URL');
+          return LoadProviderRegistry.normalizeResult({type:'image',url:url,provider:'fal-ai'});
+        });
+      });
+    }
+    if (providerId === 'wavespeedai') {
+      if (!key) return Promise.reject(new Error('WaveSpeedAI: no API key'));
+      return fetch('https://api.wavespeed.ai/api/v2/wavespeed-ai/flux-schnell', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({prompt:request.prompt||'',num_images:1,size:'1024x1024',enable_safety_checker:true})
+      }).then(function(r){
+        if(!r.ok) throw new Error('WaveSpeedAI '+r.status);
+        return r.json().then(function(d){
+          var url=(d.data&&d.data.outputs&&d.data.outputs[0])||null;
+          if(!url) throw new Error('WaveSpeedAI: no output');
+          return LoadProviderRegistry.normalizeResult({type:'image',url:url,provider:'wavespeedai'});
+        });
+      });
+    }
     if (providerId === 'huggingface') {
       var model = s.model || 'black-forest-labs/FLUX.1-schnell';
       return fetch('https://api-inference.huggingface.co/models/' + model, {
@@ -2389,10 +2465,22 @@ var LoadProviderRegistry = {
 
     // Local TTS endpoints (Kokoro, XTTS, Piper via LocalAI, Bark, etc.)
     if (endpoint) {
-      var path = (providerId === 'xtts') ? '/tts_to_audio/' :
-                 (providerId === 'localai') ? '/v1/audio/speech' :
+      var path = (providerId === 'xtts')   ? '/tts_to_audio/' :
+                 (providerId === 'localai')? '/v1/audio/speech' :
+                 (providerId === 'kokoro') ? '/v1/audio/speech' :
+                 (providerId === 'piper')  ? '/api/tts' :
+                 (providerId === 'f5-tts') ? '/run/predict' :
                  '/synthesize';
-      var body = JSON.stringify({text: request.text, voice: request.voice || s.voice || 'default', language: s.language || 'en'});
+      var body;
+      if (providerId === 'kokoro' || providerId === 'localai') {
+        body = JSON.stringify({model:s.model||'kokoro', input:request.text||'', voice:request.voice||s.voice||'af_heart', response_format:'wav'});
+      } else if (providerId === 'f5-tts') {
+        body = JSON.stringify({data:[request.text||'', null, '', true, 0.3, 0.7, 0.7, 32000, 0]});
+      } else if (providerId === 'piper') {
+        body = JSON.stringify({text:request.text||''});
+      } else {
+        body = JSON.stringify({text:request.text, voice:request.voice||s.voice||'default', language:s.language||'en'});
+      }
       return fetch(endpoint + path, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -2414,6 +2502,37 @@ var LoadProviderRegistry = {
     var s = _settings[providerId] || {};
     var endpoint = s.endpoint || (this.getProvider(providerId) || {}).defaultEndpoint;
 
+    if (providerId === 'deepgram') {
+      if (!key) return Promise.reject(new Error('Deepgram: no API key'));
+      return fetch('https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true', {
+        method:'POST',
+        headers:{'Authorization':'Token '+key,'Content-Type':request.blob.type||'audio/wav'},
+        body:request.blob
+      }).then(function(r){
+        if(!r.ok) throw new Error('Deepgram '+r.status);
+        return r.json().then(function(d){
+          var text=((d.results&&d.results.channels&&d.results.channels[0]&&d.results.channels[0].alternatives&&d.results.channels[0].alternatives[0])||{}).transcript||'';
+          return LoadProviderRegistry.normalizeResult({type:'transcript',text:text,provider:'deepgram'});
+        });
+      });
+    }
+    if (providerId === 'assemblyai') {
+      if (!key) return Promise.reject(new Error('AssemblyAI: no API key'));
+      var aaiHeaders = {'Authorization':key,'Content-Type':'application/octet-stream'};
+      return fetch('https://api.assemblyai.com/v2/upload',{method:'POST',headers:aaiHeaders,body:request.blob})
+        .then(function(r){ if(!r.ok) throw new Error('AssemblyAI upload '+r.status); return r.json(); })
+        .then(function(up){
+          return fetch('https://api.assemblyai.com/v2/transcript',{
+            method:'POST',
+            headers:{'Authorization':key,'Content-Type':'application/json'},
+            body:JSON.stringify({audio_url:up.upload_url,language_detection:true})
+          });
+        })
+        .then(function(r){ if(!r.ok) throw new Error('AssemblyAI transcript request '+r.status); return r.json(); })
+        .then(function(tr){
+          return LoadProviderRegistry.normalizeResult({type:'transcript-job',jobId:tr.id,provider:'assemblyai',metadata:{status:tr.status}});
+        });
+    }
     if (!endpoint) return Promise.reject(new Error('transcribeAudio: no endpoint for provider: ' + providerId));
 
     var fd = new FormData();
@@ -2519,6 +2638,40 @@ var LoadProviderRegistry = {
       return _freesoundSearch(key, query, 'tag:music', limit, page)
         .then(function (r) { return {provider: 'freesound', results: r}; })
         .catch(function (e) { return {provider: 'freesound', results: [], error: e.message}; });
+    }
+    if (providerId === 'pixabay-music') {
+      if (!key) return Promise.resolve({provider:'pixabay-music', results:[], status:'needs-key', needsKey:true});
+      return fetch('https://pixabay.com/api/?key='+encodeURIComponent(key)+'&q='+encodeURIComponent(query)+'&media_type=music&per_page='+limit+'&page='+page)
+        .then(function(r){ if(!r.ok) throw new Error('Pixabay Music '+r.status); return r.json(); })
+        .then(function(d){
+          return {provider:'pixabay-music', results:(d.hits||[]).map(function(h){
+            return {id:String(h.id),title:h.tags,artist:'Pixabay',duration:null,previewUrl:h.previewURL||null,downloadUrl:h.previewURL||null,licenseType:'Pixabay License',attribution:'Pixabay',provider:'pixabay-music'};
+          })};
+        })
+        .catch(function(e){ return {provider:'pixabay-music',results:[],error:e.message}; });
+    }
+    if (providerId === 'ccmixter') {
+      return fetch('https://ccmixter.org/api/query?format=json&tags='+encodeURIComponent(query)+'&limit='+limit+'&offset='+((page-1)*limit)+'&sort=rank')
+        .then(function(r){ if(!r.ok) throw new Error('ccMixter '+r.status); return r.json(); })
+        .then(function(d){
+          return {provider:'ccmixter', results:(Array.isArray(d)?d:[]).map(function(t){
+            var artist=t.user_real_name||t.user_name||'Unknown';
+            var url=(t.files&&t.files[0]&&t.files[0].download_url)||null;
+            return {id:String(t.upload_id||''),title:t.upload_name||'',artist:artist,duration:null,previewUrl:url,downloadUrl:url,licenseType:t.license_name||'CC',attribution:(t.upload_name||'')+' by '+artist+' (ccMixter)',provider:'ccmixter'};
+          })};
+        })
+        .catch(function(e){ return {provider:'ccmixter',results:[],error:e.message}; });
+    }
+    if (providerId === 'free-music-archive') {
+      if (!key) return Promise.resolve({provider:'free-music-archive', results:[], status:'needs-key', needsKey:true});
+      return fetch('https://freemusicarchive.org/api/get/tracks.json?api_key='+encodeURIComponent(key)+'&search='+encodeURIComponent(query)+'&limit='+limit+'&page='+page)
+        .then(function(r){ if(!r.ok) throw new Error('FMA '+r.status); return r.json(); })
+        .then(function(d){
+          return {provider:'free-music-archive', results:(d.dataset||[]).map(function(t){
+            return {id:String(t.track_id||''),title:t.track_title||'',artist:t.artist_name||'',duration:t.track_duration||null,previewUrl:t.track_file||null,downloadUrl:t.track_file||null,licenseType:t.license_title||'CC',attribution:(t.track_title||'')+' by '+(t.artist_name||'')+' (Free Music Archive)',provider:'free-music-archive'};
+          })};
+        })
+        .catch(function(e){ return {provider:'free-music-archive',results:[],error:e.message}; });
     }
     return Promise.resolve({provider: providerId, results: [], status: 'no-connector'});
   },
@@ -2641,14 +2794,48 @@ var LoadProviderRegistry = {
       });
     }
 
-    // OpenAI-compatible (Ollama, LM Studio, LocalAI, OpenRouter, OpenAI, Mistral, vLLM, TGI, LiteLLM,
-    // Groq, Cerebras, SambaNova, Fireworks AI, NVIDIA NIM, AI/ML API, etc.)
+    // Cloud provider route table — base includes /v1, append /chat/completions only
+    var _cloudRoutes = {
+      'groq':        { base:'https://api.groq.com/openai/v1',              model:'llama-3.3-70b-versatile' },
+      'cerebras':    { base:'https://api.cerebras.ai/v1',                  model:'llama-3.3-70b' },
+      'sambanova':   { base:'https://fast-api.snova.ai/v1',                model:'Meta-Llama-3.3-70B-Instruct' },
+      'nvidia-nim':  { base:'https://integrate.api.nvidia.com/v1',         model:'meta/llama-3.3-70b-instruct' },
+      'fireworks-ai':{ base:'https://api.fireworks.ai/inference/v1',       model:'accounts/fireworks/models/llama-v3p3-70b-instruct' },
+      'aiml-api':    { base:'https://api.aimlapi.com/v1',                  model:'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo' },
+      'mistral':     { base:'https://api.mistral.ai/v1',                   model:'mistral-small-latest' },
+      'together-ai': { base:'https://api.together.xyz/v1',                 model:'meta-llama/Llama-3.3-70B-Instruct-Turbo' },
+      'deepinfra':   { base:'https://api.deepinfra.com/v1/openai',         model:'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo' },
+      'ai21':        { base:'https://api.ai21.com/studio/v1',              model:'jamba-mini-1.6' },
+      'cohere':      { base:'https://api.cohere.com/compatibility/v1',     model:'command-r' },
+      'openai':      { base:'https://api.openai.com/v1',                   model:'gpt-4o-mini' },
+      'openrouter':  { base:'https://openrouter.ai/api/v1',                model:'meta-llama/llama-3.3-70b-instruct:free' }
+    };
+    var _cr = _cloudRoutes[providerId];
+    if (_cr && key) {
+      var crBase = (s.endpoint && s.endpoint.length > 4) ? s.endpoint : _cr.base;
+      var crHeaders = {'Content-Type':'application/json','Authorization':'Bearer '+key};
+      if (providerId === 'openrouter') crHeaders['HTTP-Referer'] = 'https://dssorit.github.io/ancient-covenant-scrolls/';
+      var crMsgs = Array.isArray(request.messages) ? request.messages : [{role:'user',content:request.prompt||''}];
+      return fetch(crBase+'/chat/completions', {
+        method:'POST', headers:crHeaders,
+        body:JSON.stringify({model:s.model||request.model||_cr.model, messages:crMsgs, max_tokens:request.maxTokens||1024, temperature:request.temperature||0.7})
+      }).then(function(r){
+        if (!r.ok) throw new Error(providerId+' error '+r.status);
+        return r.json().then(function(d){
+          var text=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||'';
+          return LoadProviderRegistry.normalizeResult({type:'text',text:text,provider:providerId});
+        });
+      });
+    }
+
+    // OpenAI-compatible fallback (Ollama, LM Studio, LocalAI, LiteLLM, vLLM, TGI, etc.)
     if (endpoint || key) {
       var baseUrl = endpoint || 'https://api.openai.com';
       var headers = {'Content-Type': 'application/json'};
       if (key) headers['Authorization'] = 'Bearer ' + key;
       var messages = Array.isArray(request.messages) ? request.messages : [{role: 'user', content: request.prompt || ''}];
-      return fetch(baseUrl + '/v1/chat/completions', {
+      var chatUrl = baseUrl.replace(/\/v1\/?$/, '') + '/v1/chat/completions';
+      return fetch(chatUrl, {
         method: 'POST', headers: headers,
         body: JSON.stringify({
           model: s.model || request.model || 'gpt-4o-mini',
