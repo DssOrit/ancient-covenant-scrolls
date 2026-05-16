@@ -1,9 +1,10 @@
 # Session Handoff — 2026-05-16 (Sunday Read-First)
 
 ## READ THESE FIRST (in order)
-1. `loadstudio/PROVIDER_REGISTRY_REFERENCE.md` — master provider list
-2. This file
-3. `git log --oneline -20`
+1. The 8 inbox docx files — fallback chain order and connection details come from these files. Read them before building anything Sunday.
+2. `loadstudio/PROVIDER_REGISTRY_REFERENCE.md` — master provider list (compiled from the 8 files)
+3. This file
+4. `git log --oneline -20`
 
 ---
 
@@ -148,11 +149,19 @@ No provider has been live-tested against its API. Priority test order:
 
 ## What Sunday's Session Must Accomplish (in order)
 
-1. Verify `mage-space` and `gensfx` APIs — wire if accessible, mark blocked if not
-2. Update `PROVIDER_REGISTRY_REFERENCE.md` to show current real status for all providers wired this session
-3. Audit `load-pipeline-registry.js` — add newly wired providers to correct pipeline chains
-4. Test providers with real keys (HF key first — biggest unlock)
-5. If any providers from the 8 files are still missing, wire them
+1. **READ THE 8 INBOX FILES FIRST** — the fallback chain order and connection priority for every capability (image, audio, video, STT, music, SFX, stock, LLM) is specified in those files. Do not invent chains. Extract them from the files and use them exactly.
+
+2. **Build auto-fallback pipeline** — `routeToFallback()` exists but is never called automatically. Need:
+   - `_isQuotaError(status, body)` — detects 429, 402, "quota", "rate limit", "insufficient credits" vs hard failures
+   - `_FALLBACK_CHAINS` map — ordered priority lists per capability, sourced from the 8 files
+   - Auto-trigger inside each generate* method — on quota/auth error, call routeToFallback() instead of rejecting
+   - Policy confirmed by user: proprietary providers with free tiers are OK as long as auto-cutoff jumps to next provider when tier is used up
+
+3. Verify `mage-space` and `gensfx` APIs — wire if accessible, mark blocked if not
+4. Update `PROVIDER_REGISTRY_REFERENCE.md` to show current real status for all providers wired this session
+5. Audit `load-pipeline-registry.js` — add newly wired providers to correct pipeline chains
+6. Test providers with real keys (HF key first — biggest unlock)
+7. If any providers from the 8 files are still missing, wire them
 
 ---
 
