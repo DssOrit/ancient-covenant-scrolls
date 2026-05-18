@@ -25,20 +25,77 @@ var _MUSIC_DEMO = {
 };
 
 var _SFX_DEMO = {
-  'cartoon':     [{id:'sfx-demo-0',t:'Boing',a:'Demo',d:'0:01',c:'#ff9500',k:'sfx-spring'}],
-  'swish':       [{id:'sfx-demo-1',t:'Whoosh',a:'Demo',d:'0:01',c:'#4cd964',k:'sfx-swish'}],
-  'funny':       [],
-  'machine':     [],
-  'ringing':     [{id:'sfx-demo-2',t:'Ding',a:'Demo',d:'0:01',c:'#5ac8fa',k:'sfx-ding'}],
-  'vehicles':    [],
-  'weather':     [{id:'sfx-demo-4',t:'Rumble',a:'Demo',d:'0:01',c:'#34aadc',k:'sfx-rumble'}],
-  'variety':     [],
-  'vlogsf':      [],
-  'physical':    [{id:'sfx-demo-3',t:'Hit',a:'Demo',d:'0:01',c:'#ff6b35',k:'sfx-hit'}],
-  'transitions': [],
-  'cues':        [],
-  'game':        [],
-  'emotion':     []
+  'cartoon':     [
+    {id:'sfx-demo-0', t:'Boing',       a:'Demo', d:'0:01', c:'#ff9500', k:'sfx-spring'},
+    {id:'sfx-demo-c1',t:'Pop',         a:'Demo', d:'0:01', c:'#ff9500', k:'sfx-ding'},
+    {id:'sfx-demo-c2',t:'Bounce',      a:'Demo', d:'0:01', c:'#ff9500', k:'sfx-spring'}
+  ],
+  'swish':       [
+    {id:'sfx-demo-1', t:'Whoosh',      a:'Demo', d:'0:01', c:'#4cd964', k:'sfx-swish'},
+    {id:'sfx-demo-s1',t:'Sweep',       a:'Demo', d:'0:01', c:'#4cd964', k:'sfx-swish'},
+    {id:'sfx-demo-s2',t:'Air Rush',    a:'Demo', d:'0:01', c:'#4cd964', k:'sfx-swish'}
+  ],
+  'funny':       [
+    {id:'sfx-demo-f0',t:'Boing',       a:'Demo', d:'0:01', c:'#ffcc00', k:'sfx-spring'},
+    {id:'sfx-demo-f1',t:'Pop',         a:'Demo', d:'0:01', c:'#ffcc00', k:'sfx-ding'},
+    {id:'sfx-demo-f2',t:'Whoosh',      a:'Demo', d:'0:01', c:'#ffcc00', k:'sfx-swish'}
+  ],
+  'machine':     [
+    {id:'sfx-demo-m0',t:'Rumble',      a:'Demo', d:'0:01', c:'#8e8e93', k:'sfx-rumble'},
+    {id:'sfx-demo-m1',t:'Hit',         a:'Demo', d:'0:01', c:'#8e8e93', k:'sfx-hit'},
+    {id:'sfx-demo-m2',t:'Whoosh',      a:'Demo', d:'0:01', c:'#8e8e93', k:'sfx-swish'}
+  ],
+  'ringing':     [
+    {id:'sfx-demo-2', t:'Ding',        a:'Demo', d:'0:01', c:'#5ac8fa', k:'sfx-ding'},
+    {id:'sfx-demo-r1',t:'Bell',        a:'Demo', d:'0:01', c:'#5ac8fa', k:'sfx-ding'},
+    {id:'sfx-demo-r2',t:'Alert',       a:'Demo', d:'0:01', c:'#5ac8fa', k:'sfx-ding'}
+  ],
+  'vehicles':    [
+    {id:'sfx-demo-v0',t:'Rumble',      a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-rumble'},
+    {id:'sfx-demo-v1',t:'Whoosh',      a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-swish'},
+    {id:'sfx-demo-v2',t:'Hit',         a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-hit'}
+  ],
+  'weather':     [
+    {id:'sfx-demo-4', t:'Thunder',     a:'Demo', d:'0:01', c:'#34aadc', k:'sfx-rumble'},
+    {id:'sfx-demo-w1',t:'Wind',        a:'Demo', d:'0:01', c:'#34aadc', k:'sfx-swish'},
+    {id:'sfx-demo-w2',t:'Storm',       a:'Demo', d:'0:01', c:'#34aadc', k:'sfx-rumble'}
+  ],
+  'variety':     [
+    {id:'sfx-demo-va0',t:'Fanfare',    a:'Demo', d:'0:01', c:'#bf5af2', k:'sfx-ding'},
+    {id:'sfx-demo-va1',t:'Boing',      a:'Demo', d:'0:01', c:'#bf5af2', k:'sfx-spring'},
+    {id:'sfx-demo-va2',t:'Ding',       a:'Demo', d:'0:01', c:'#bf5af2', k:'sfx-ding'}
+  ],
+  'vlogsf':      [
+    {id:'sfx-demo-vl0',t:'Click',      a:'Demo', d:'0:01', c:'#30b0c7', k:'sfx-ding'},
+    {id:'sfx-demo-vl1',t:'Whoosh',     a:'Demo', d:'0:01', c:'#30b0c7', k:'sfx-swish'},
+    {id:'sfx-demo-vl2',t:'Pop',        a:'Demo', d:'0:01', c:'#30b0c7', k:'sfx-spring'}
+  ],
+  'physical':    [
+    {id:'sfx-demo-3', t:'Hit',         a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-hit'},
+    {id:'sfx-demo-p1',t:'Thud',        a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-hit'},
+    {id:'sfx-demo-p2',t:'Punch',       a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-hit'}
+  ],
+  'transitions': [
+    {id:'sfx-demo-tr0',t:'Swipe',      a:'Demo', d:'0:01', c:'#5e5ce6', k:'sfx-swish'},
+    {id:'sfx-demo-tr1',t:'Whoosh',     a:'Demo', d:'0:01', c:'#5e5ce6', k:'sfx-swish'},
+    {id:'sfx-demo-tr2',t:'Sweep',      a:'Demo', d:'0:01', c:'#5e5ce6', k:'sfx-swish'}
+  ],
+  'cues':        [
+    {id:'sfx-demo-cu0',t:'Alert',      a:'Demo', d:'0:01', c:'#ff3b30', k:'sfx-ding'},
+    {id:'sfx-demo-cu1',t:'Rumble',     a:'Demo', d:'0:01', c:'#ff3b30', k:'sfx-rumble'},
+    {id:'sfx-demo-cu2',t:'Sting',      a:'Demo', d:'0:01', c:'#ff3b30', k:'sfx-hit'}
+  ],
+  'game':        [
+    {id:'sfx-demo-g0',t:'Score',       a:'Demo', d:'0:01', c:'#30d158', k:'sfx-ding'},
+    {id:'sfx-demo-g1',t:'Hit',         a:'Demo', d:'0:01', c:'#30d158', k:'sfx-hit'},
+    {id:'sfx-demo-g2',t:'Level Up',    a:'Demo', d:'0:01', c:'#30d158', k:'sfx-spring'},
+    {id:'sfx-demo-g3',t:'Power Up',    a:'Demo', d:'0:01', c:'#30d158', k:'sfx-ding'}
+  ],
+  'emotion':     [
+    {id:'sfx-demo-e0',t:'Cheer',       a:'Demo', d:'0:01', c:'#ff9f0a', k:'sfx-ding'},
+    {id:'sfx-demo-e1',t:'Gasp',        a:'Demo', d:'0:01', c:'#ff9f0a', k:'sfx-spring'},
+    {id:'sfx-demo-e2',t:'Impact',      a:'Demo', d:'0:01', c:'#ff9f0a', k:'sfx-hit'}
+  ]
 };
 
 // ─── DEMO AUDIO — real WAV files served from assets/audio/demo/ ──────────────
@@ -223,7 +280,16 @@ function _buildSFXList(cat, q) {
   try { var fsS = JSON.parse(localStorage.getItem('lpr_settings_v1') || '{}'); fsKey = (fsS['freesound'] || {}).apiKey || null; } catch (_) {}
   var sfxProviders = ['openverse-sfx', 'openverse-audio'];
   if (fsKey) sfxProviders.push('freesound');
-  var searchQ = _currentSfxCat === 'all' ? (q || 'sound effect') : _currentSfxCat;
+  var _SFX_QUERY_MAP = {
+    'cartoon':'cartoon sound effect', 'swish':'whoosh swish air',
+    'funny':'funny comedy sound', 'machine':'machine mechanical',
+    'ringing':'ring bell notification', 'vehicles':'car engine vehicle',
+    'weather':'thunder rain wind', 'variety':'fanfare game show',
+    'vlogsf':'notification click vlog', 'physical':'impact hit punch',
+    'transitions':'transition whoosh sweep', 'cues':'dramatic suspense alert',
+    'game':'game coin level up', 'emotion':'applause crowd cheer'
+  };
+  var searchQ = q || (_currentSfxCat === 'all' ? 'sound effect' : (_SFX_QUERY_MAP[_currentSfxCat] || _currentSfxCat));
   var loader = document.createElement('p');
   loader.id = 'lseb-sfx-loader';
   loader.style.cssText = 'color:#7d2ae8;font:400 12px system-ui,sans-serif;text-align:center;margin:6px 0';
