@@ -165,7 +165,16 @@ function _buildMusicList(cat, q) {
   if (!list) return;
   var reg = window.LoadProviderRegistry;
   if (!reg) return;
-  var searchQ = _currentMusicCat === 'all' ? (q || 'music') : _currentMusicCat;
+  var _MUSIC_QUERY_MAP = {
+    'vlog':'vlog background music chill',
+    'pop':'pop music upbeat',
+    'dynamic':'dynamic energetic cinematic',
+    'fresh':'fresh upbeat positive',
+    'acoustic':'acoustic guitar folk',
+    'electronic':'electronic synth beat',
+    'hiphop':'hip hop rap beat'
+  };
+  var searchQ = q || (_currentMusicCat === 'all' ? 'music' : (_MUSIC_QUERY_MAP[_currentMusicCat] || _currentMusicCat));
   var fsKey = null;
   try { var fsS = JSON.parse(localStorage.getItem('lpr_settings_v1') || '{}'); fsKey = (fsS['freesound'] || {}).apiKey || null; } catch (_) {}
   var providers = ['ccmixter', 'openverse-audio'];
@@ -1016,7 +1025,11 @@ var _CSS =
   '#lseb-editor .ve-chip-bar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px;flex-shrink:0}' +
   '#lseb-editor .ve-chip-bar::-webkit-scrollbar{display:none}' +
   '#lseb-editor .ve-chip{flex:0 0 auto;background:#1e1e2a;border:1.5px solid rgba(125,42,232,.22);border-radius:20px;color:#8a8aaa;font:600 11px system-ui,sans-serif;padding:5px 12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}' +
-  '#lseb-editor .ve-chip.active{background:rgba(125,42,232,.25);border-color:#b33af0;color:#d4b0ff}';
+  '#lseb-editor .ve-chip.active{background:rgba(125,42,232,.25);border-color:#b33af0;color:#d4b0ff}' +
+  '#lseb-editor .ve-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0 10px}' +
+  '#lseb-editor .ve-cat-tile{border:none;border-radius:10px;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;aspect-ratio:1;display:flex;align-items:flex-end;overflow:hidden;position:relative}' +
+  '#lseb-editor .ve-cat-tile-label{display:block;width:100%;padding:5px 4px 5px;background:rgba(0,0,0,.45);color:#fff;font:600 10px system-ui,sans-serif;text-align:center;line-height:1.2}' +
+  '#lseb-editor .ve-back-btn{background:none;border:none;color:#b33af0;font:600 13px system-ui,sans-serif;padding:0 0 8px;cursor:pointer;touch-action:manipulation;display:flex;align-items:center;gap:4px}';
 
 // ─── STORYBOARD VIEW ─────────────────────────────────────────────────────────
 function _showStoryboard() {
@@ -1149,21 +1162,31 @@ function _openSceneEditor(idx) {
             '<button class="ve-tab" data-tab="music-my" type="button">My Music</button>' +
           '</div>' +
           '<div id="lseb-music-lib" class="ve-tab-pane">' +
-            '<div class="ve-search-bar">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color:#5a5a78;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-              '<input class="ve-search-inp" id="lseb-music-search" placeholder="Search music..." autocomplete="off">' +
+            '<div id="lseb-music-cat-grid-wrap">' +
+              '<div class="ve-search-bar" style="margin-bottom:10px">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color:#5a5a78;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+                '<input class="ve-search-inp" id="lseb-music-search" placeholder="Search music..." autocomplete="off">' +
+              '</div>' +
+              '<div class="ve-cat-grid">' +
+                '<button class="ve-cat-tile" data-music-cat="vlog"      type="button" style="background:linear-gradient(135deg,#1a78c2,#00acc1)"><span class="ve-cat-tile-label">Vlog</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="pop"       type="button" style="background:linear-gradient(135deg,#c2185b,#8e24aa)"><span class="ve-cat-tile-label">Pop</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="dynamic"   type="button" style="background:linear-gradient(135deg,#e64a19,#c62828)"><span class="ve-cat-tile-label">Dynamic</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="fresh"     type="button" style="background:linear-gradient(135deg,#2e7d32,#00796b)"><span class="ve-cat-tile-label">Fresh</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="acoustic"  type="button" style="background:linear-gradient(135deg,#5d4037,#f57f17)"><span class="ve-cat-tile-label">Acoustic</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="electronic" type="button" style="background:linear-gradient(135deg,#283593,#6a1b9a)"><span class="ve-cat-tile-label">Electronic</span></button>' +
+                '<button class="ve-cat-tile" data-music-cat="hiphop"    type="button" style="background:linear-gradient(135deg,#212121,#e65100)"><span class="ve-cat-tile-label">Hip-Hop</span></button>' +
+              '</div>' +
             '</div>' +
-            '<div class="ve-chip-bar" id="lseb-music-chips">' +
-              '<button class="ve-chip active" data-music-chip="all" type="button">All</button>' +
-              '<button class="ve-chip" data-music-chip="vlog" type="button">Vlog</button>' +
-              '<button class="ve-chip" data-music-chip="pop" type="button">Pop</button>' +
-              '<button class="ve-chip" data-music-chip="dynamic" type="button">Dynamic</button>' +
-              '<button class="ve-chip" data-music-chip="fresh" type="button">Fresh</button>' +
-              '<button class="ve-chip" data-music-chip="acoustic" type="button">Acoustic</button>' +
-              '<button class="ve-chip" data-music-chip="electronic" type="button">Electronic</button>' +
-              '<button class="ve-chip" data-music-chip="hiphop" type="button">Hip-Hop</button>' +
+            '<div id="lseb-music-list-pane" style="display:none">' +
+              '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+                '<button class="ve-back-btn" data-cat-back="music" type="button">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>' +
+                  'Back' +
+                '</button>' +
+                '<span id="lseb-music-cat-title" style="font:600 13px system-ui,sans-serif;color:#cfcfdc"></span>' +
+              '</div>' +
+              '<div class="ve-asset-list" id="lseb-music-list"></div>' +
             '</div>' +
-            '<div class="ve-asset-list" id="lseb-music-list"></div>' +
           '</div>' +
           '<div id="lseb-music-fav" class="ve-tab-pane" style="display:none">' +
             '<p style="color:#5a5a78;font:400 12px Inter,system-ui,sans-serif;margin:18px 0;text-align:center">No favorites yet.</p>' +
@@ -1225,28 +1248,38 @@ function _openSceneEditor(idx) {
             '<button class="ve-tab" data-tab="sfx-my" type="button">My Sound</button>' +
           '</div>' +
           '<div id="lseb-sfx-lib" class="ve-tab-pane">' +
-            '<div class="ve-search-bar">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color:#5a5a78;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-              '<input class="ve-search-inp" id="lseb-sfx-search" placeholder="Search sound FX..." autocomplete="off">' +
+            '<div id="lseb-sfx-cat-grid-wrap">' +
+              '<div class="ve-search-bar" style="margin-bottom:10px">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="color:#5a5a78;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+                '<input class="ve-search-inp" id="lseb-sfx-search" placeholder="Search sound FX..." autocomplete="off">' +
+              '</div>' +
+              '<div class="ve-cat-grid">' +
+                '<button class="ve-cat-tile" data-sfx-cat="cartoon"     type="button" style="background:linear-gradient(135deg,#ff9500,#e65100)"><span class="ve-cat-tile-label">Cartoon</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="swish"       type="button" style="background:linear-gradient(135deg,#0097a7,#01579b)"><span class="ve-cat-tile-label">Fast Swish</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="funny"       type="button" style="background:linear-gradient(135deg,#f9a825,#e65100)"><span class="ve-cat-tile-label">Funny</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="machine"     type="button" style="background:linear-gradient(135deg,#455a64,#263238)"><span class="ve-cat-tile-label">Machine</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="ringing"     type="button" style="background:linear-gradient(135deg,#0288d1,#0d47a1)"><span class="ve-cat-tile-label">Ringing</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="vehicles"    type="button" style="background:linear-gradient(135deg,#d84315,#b71c1c)"><span class="ve-cat-tile-label">Vehicles</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="weather"     type="button" style="background:linear-gradient(135deg,#1565c0,#1a237e)"><span class="ve-cat-tile-label">Weather</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="variety"     type="button" style="background:linear-gradient(135deg,#8e24aa,#4527a0)"><span class="ve-cat-tile-label">Variety Show</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="vlogsf"      type="button" style="background:linear-gradient(135deg,#00838f,#01579b)"><span class="ve-cat-tile-label">Vlog</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="physical"    type="button" style="background:linear-gradient(135deg,#c62828,#880e4f)"><span class="ve-cat-tile-label">Physical</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="transitions" type="button" style="background:linear-gradient(135deg,#4527a0,#1a237e)"><span class="ve-cat-tile-label">Transitions</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="cues"        type="button" style="background:linear-gradient(135deg,#b71c1c,#880e4f)"><span class="ve-cat-tile-label">Cues</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="game"        type="button" style="background:linear-gradient(135deg,#2e7d32,#004d40)"><span class="ve-cat-tile-label">Game</span></button>' +
+                '<button class="ve-cat-tile" data-sfx-cat="emotion"     type="button" style="background:linear-gradient(135deg,#f57f17,#e65100)"><span class="ve-cat-tile-label">Emotion</span></button>' +
+              '</div>' +
             '</div>' +
-            '<div class="ve-chip-bar" id="lseb-sfx-chips">' +
-              '<button class="ve-chip active" data-sfx-chip="all" type="button">All</button>' +
-              '<button class="ve-chip" data-sfx-chip="cartoon" type="button">Cartoon</button>' +
-              '<button class="ve-chip" data-sfx-chip="swish" type="button">Fast Swish</button>' +
-              '<button class="ve-chip" data-sfx-chip="funny" type="button">Funny</button>' +
-              '<button class="ve-chip" data-sfx-chip="machine" type="button">Machine</button>' +
-              '<button class="ve-chip" data-sfx-chip="ringing" type="button">Ringing</button>' +
-              '<button class="ve-chip" data-sfx-chip="vehicles" type="button">Vehicles</button>' +
-              '<button class="ve-chip" data-sfx-chip="weather" type="button">Weather</button>' +
-              '<button class="ve-chip" data-sfx-chip="variety" type="button">Variety Show</button>' +
-              '<button class="ve-chip" data-sfx-chip="vlogsf" type="button">Vlog</button>' +
-              '<button class="ve-chip" data-sfx-chip="physical" type="button">Physical</button>' +
-              '<button class="ve-chip" data-sfx-chip="transitions" type="button">Transitions</button>' +
-              '<button class="ve-chip" data-sfx-chip="cues" type="button">Cues</button>' +
-              '<button class="ve-chip" data-sfx-chip="game" type="button">Game</button>' +
-              '<button class="ve-chip" data-sfx-chip="emotion" type="button">Emotion</button>' +
+            '<div id="lseb-sfx-list-pane" style="display:none">' +
+              '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+                '<button class="ve-back-btn" data-cat-back="sfx" type="button">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>' +
+                  'Back' +
+                '</button>' +
+                '<span id="lseb-sfx-cat-title" style="font:600 13px system-ui,sans-serif;color:#cfcfdc"></span>' +
+              '</div>' +
+              '<div class="ve-asset-list" id="lseb-sfx-list"></div>' +
             '</div>' +
-            '<div class="ve-asset-list" id="lseb-sfx-list"></div>' +
           '</div>' +
           '<div id="lseb-sfx-fav" class="ve-tab-pane" style="display:none">' +
             '<p style="color:#5a5a78;font:400 12px Inter,system-ui,sans-serif;margin:18px 0;text-align:center">No favorites yet.</p>' +
@@ -1477,6 +1510,17 @@ function _bindEditor(idx) {
     });
     var ed = _el('lseb-editor');
     if (ed) ed.classList.toggle('ve-panel-open', !!id);
+    // Reset music/sfx panels to category grid view when opened
+    if (id === 'lseb-music-panel') {
+      var mg = _el('lseb-music-cat-grid-wrap'); var mp = _el('lseb-music-list-pane');
+      if (mg) mg.style.display = ''; if (mp) mp.style.display = 'none';
+      _currentMusicCat = 'all';
+    }
+    if (id === 'lseb-sfx-panel') {
+      var sg = _el('lseb-sfx-cat-grid-wrap'); var sp = _el('lseb-sfx-list-pane');
+      if (sg) sg.style.display = ''; if (sp) sp.style.display = 'none';
+      _currentSfxCat = 'all';
+    }
   }
   var scrim = _el('lseb-drawer-scrim');
   if (scrim) scrim.addEventListener('click', function () { _showPanel(null); });
@@ -1564,28 +1608,52 @@ function _bindEditor(idx) {
     });
     // Asset browser delegated handler
     editor.addEventListener('click', function (e) {
-      // Music chip filter
-      var mchip = e.target.closest('[data-music-chip]');
-      if (mchip) {
-        var mbar = _el('lseb-music-chips');
-        if (mbar) mbar.querySelectorAll('.ve-chip').forEach(function (c) { c.classList.remove('active'); });
-        mchip.classList.add('active');
-        var msearch = _el('lseb-music-search');
-        _currentMusicCat = mchip.dataset.musicChip;
-        console.log('[LS chip] music cat:', _currentMusicCat);
-        _buildMusicList(_currentMusicCat, msearch ? msearch.value : '');
+      // Music category tile
+      var mcat = e.target.closest('[data-music-cat]');
+      if (mcat) {
+        var mcatVal = mcat.dataset.musicCat;
+        var mcatLbl = mcat.querySelector('.ve-cat-tile-label');
+        var mcatGrid = _el('lseb-music-cat-grid-wrap');
+        var mcatPane = _el('lseb-music-list-pane');
+        var mcatTitle = _el('lseb-music-cat-title');
+        if (mcatGrid) mcatGrid.style.display = 'none';
+        if (mcatPane) mcatPane.style.display = '';
+        if (mcatTitle) mcatTitle.textContent = mcatLbl ? mcatLbl.textContent : mcatVal;
+        _buildMusicList(mcatVal, '');
         return;
       }
-      // SFX chip filter
-      var schip = e.target.closest('[data-sfx-chip]');
-      if (schip) {
-        var sbar = _el('lseb-sfx-chips');
-        if (sbar) sbar.querySelectorAll('.ve-chip').forEach(function (c) { c.classList.remove('active'); });
-        schip.classList.add('active');
-        var ssearch = _el('lseb-sfx-search');
-        _currentSfxCat = schip.dataset.sfxChip;
-        console.log('[LS chip] sfx cat:', _currentSfxCat);
-        _buildSFXList(_currentSfxCat, ssearch ? ssearch.value : '');
+      // Music back button
+      var mcatBack = e.target.closest('[data-cat-back="music"]');
+      if (mcatBack) {
+        var mcatGrid2 = _el('lseb-music-cat-grid-wrap');
+        var mcatPane2 = _el('lseb-music-list-pane');
+        if (mcatGrid2) mcatGrid2.style.display = '';
+        if (mcatPane2) mcatPane2.style.display = 'none';
+        _currentMusicCat = 'all';
+        return;
+      }
+      // SFX category tile
+      var scat = e.target.closest('[data-sfx-cat]');
+      if (scat) {
+        var scatVal = scat.dataset.sfxCat;
+        var scatLbl = scat.querySelector('.ve-cat-tile-label');
+        var scatGrid = _el('lseb-sfx-cat-grid-wrap');
+        var scatPane = _el('lseb-sfx-list-pane');
+        var scatTitle = _el('lseb-sfx-cat-title');
+        if (scatGrid) scatGrid.style.display = 'none';
+        if (scatPane) scatPane.style.display = '';
+        if (scatTitle) scatTitle.textContent = scatLbl ? scatLbl.textContent : scatVal;
+        _buildSFXList(scatVal, '');
+        return;
+      }
+      // SFX back button
+      var scatBack = e.target.closest('[data-cat-back="sfx"]');
+      if (scatBack) {
+        var scatGrid2 = _el('lseb-sfx-cat-grid-wrap');
+        var scatPane2 = _el('lseb-sfx-list-pane');
+        if (scatGrid2) scatGrid2.style.display = '';
+        if (scatPane2) scatPane2.style.display = 'none';
+        _currentSfxCat = 'all';
         return;
       }
       // Provider key entry
@@ -1715,22 +1783,29 @@ function _bindEditor(idx) {
         var pick = _el(pickId); if (pick) pick.click();
       }
     });
-    // Search input listeners
+    // Search input listeners — typing shows list pane with search results
     (function () {
       var ms = _el('lseb-music-search');
       if (ms) ms.addEventListener('input', function () {
-        var mbar = _el('lseb-music-chips');
-        var activeChip = mbar ? mbar.querySelector('.ve-chip.active') : null;
-        _buildMusicList(activeChip ? activeChip.dataset.musicChip : 'all', ms.value);
+        var q = ms.value.trim();
+        if (!q) return;
+        var mg = _el('lseb-music-cat-grid-wrap'); var mp = _el('lseb-music-list-pane');
+        var mt = _el('lseb-music-cat-title');
+        if (mg) mg.style.display = 'none'; if (mp) mp.style.display = '';
+        if (mt) mt.textContent = 'Search: ' + q;
+        _buildMusicList('all', q);
       });
       var ss = _el('lseb-sfx-search');
       if (ss) ss.addEventListener('input', function () {
-        var sbar = _el('lseb-sfx-chips');
-        var activeChip = sbar ? sbar.querySelector('.ve-chip.active') : null;
-        _buildSFXList(activeChip ? activeChip.dataset.sfxChip : 'all', ss.value);
+        var q = ss.value.trim();
+        if (!q) return;
+        var sg = _el('lseb-sfx-cat-grid-wrap'); var sp = _el('lseb-sfx-list-pane');
+        var st = _el('lseb-sfx-cat-title');
+        if (sg) sg.style.display = 'none'; if (sp) sp.style.display = '';
+        if (st) st.textContent = 'Search: ' + q;
+        _buildSFXList('all', q);
       });
-      _buildMusicList('all', '');
-      _buildSFXList('all', '');
+      // Panels open on grid view — lists load only when a tile is tapped
     }());
     // Populate record panel mini strip with current scene clips
     (function () {
