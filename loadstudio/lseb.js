@@ -401,6 +401,7 @@ function _preloadAudio(sceneId, lane, src) {
   var el = document.createElement('audio');
   el.preload = 'auto';
   el.src = src;
+  el.addEventListener('error', function () { console.warn('[LS audio] load error', key.slice(-30), el.error && el.error.message); });
   el.load();
   _audioPre[key] = el;
   console.log('[LS preload]', key.slice(-30), src.slice(0, 60));
@@ -601,7 +602,9 @@ var _engine = {
       try { pre.currentTime = Math.max(0, _resumeT); } catch (_) {}
       try { pre.volume = LANE_VOL[lane]; pre.play().catch(function (err) { console.warn('[LS play] legacy', lane, 'rejected:', err && err.message); }); _playHandles.push(pre); } catch (e) { console.warn('[LS play] legacy', lane, 'threw:', e && e.message); }
     });
-    (scene.tracks.music || []).forEach(function (it, i) {
+    var _musicTracks = scene.tracks.music || [];
+    if (_musicTracks.length) _toast('Music tracks: ' + _musicTracks.length);
+    _musicTracks.forEach(function (it, i) {
       // Normalise stored http:// URLs (saved before v146 HTTPS fix)
       if (it.src && it.src.indexOf('http://') === 0) { it.src = it.src.replace('http://', 'https://'); _saveState(); }
       var key = sceneId + '_music_track_' + i;
