@@ -2,6 +2,21 @@
   "owner": "Creator name or company",
   "license": "user-owned, public-domain, licensed, or platform-original",
   "sourceMaterial": "Original project, script, book, public domain source, or licensed source",
-  "assetDeclarations": [],
-  "notes": "Creator confirms rights before publishing."
+  "notes": "Creator confirms rights before publishing.",
+  "assetDeclarations": [
+    {"id":"sfx-local-cartoon",    "title":"Spring Boing",       "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-cartoon.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-swish",      "title":"Air Whoosh",         "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-swish.wav",      "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-funny",      "title":"Wobble Boing",       "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-funny.wav",      "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-machine",    "title":"Mechanical Tick",    "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-machine.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-ringing",    "title":"Bell Ding",          "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-ringing.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-vehicles",   "title":"Engine Rumble",      "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-vehicles.wav",   "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-weather",    "title":"Storm Rain",         "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-weather.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-variety",    "title":"Fanfare",            "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-variety.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-vlogsf",     "title":"Notification Pop",   "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-vlogsf.wav",     "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-physical",   "title":"Impact Hit",         "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-physical.wav",   "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-transitions","title":"Transition Sweep",   "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-transitions.wav","sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-cues",       "title":"Dramatic Hit",       "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-cues.wav",       "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-game",       "title":"Coin Collect",       "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-game.wav",       "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"},
+    {"id":"sfx-local-emotion",    "title":"Chord Swell",        "assetType":"sfx","providerId":"local","localPath":"assets/sfx/sfx-emotion.wav",    "sourceUrl":"","license":"CC0","attribution":"","commercialSafe":true,"attributionRequired":false,"personalOnly":false,"rightsStatus":"CC0"}
+  ]
 }
