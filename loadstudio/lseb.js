@@ -24,37 +24,57 @@ var _MUSIC_DEMO = {
   'hiphop':     []
 };
 
+// cs=commercialSafe  ar=attributionRequired  po=personalOnly
 var _SFX_DEMO = {
-  'cartoon':     [{id:'sfx-demo-0', t:'Boing',   a:'Demo', d:'0:01', c:'#ff9500', k:'sfx-spring'}],
-  'swish':       [{id:'sfx-demo-1', t:'Whoosh',  a:'Demo', d:'0:01', c:'#4cd964', k:'sfx-swish'}],
-  'funny':       [{id:'sfx-demo-f0',t:'Boing',   a:'Demo', d:'0:01', c:'#ffcc00', k:'sfx-spring'}],
-  'machine':     [{id:'sfx-demo-m0',t:'Rumble',  a:'Demo', d:'0:01', c:'#8e8e93', k:'sfx-rumble'}],
-  'ringing':     [{id:'sfx-demo-2', t:'Ding',    a:'Demo', d:'0:01', c:'#5ac8fa', k:'sfx-ding'}],
-  'vehicles':    [{id:'sfx-demo-v0',t:'Rumble',  a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-rumble'}],
-  'weather':     [{id:'sfx-demo-4', t:'Rumble',  a:'Demo', d:'0:01', c:'#34aadc', k:'sfx-rumble'}],
-  'variety':     [{id:'sfx-demo-va',t:'Ding',    a:'Demo', d:'0:01', c:'#bf5af2', k:'sfx-ding'}],
-  'vlogsf':      [{id:'sfx-demo-vl',t:'Ding',    a:'Demo', d:'0:01', c:'#30b0c7', k:'sfx-ding'}],
-  'physical':    [{id:'sfx-demo-3', t:'Hit',     a:'Demo', d:'0:01', c:'#ff6b35', k:'sfx-hit'}],
-  'transitions': [{id:'sfx-demo-tr',t:'Whoosh',  a:'Demo', d:'0:01', c:'#5e5ce6', k:'sfx-swish'}],
-  'cues':        [{id:'sfx-demo-cu',t:'Rumble',  a:'Demo', d:'0:01', c:'#ff3b30', k:'sfx-rumble'}],
-  'game':        [{id:'sfx-demo-g0',t:'Ding',    a:'Demo', d:'0:01', c:'#30d158', k:'sfx-ding'},
-                  {id:'sfx-demo-g1',t:'Hit',     a:'Demo', d:'0:01', c:'#30d158', k:'sfx-hit'}],
-  'emotion':     [{id:'sfx-demo-e0',t:'Ding',    a:'Demo', d:'0:01', c:'#ff9f0a', k:'sfx-ding'}]
+  'cartoon':     [{id:'sfx-l-cartoon',  t:'Spring Boing',     a:'CC0 / Local', d:'0:01', c:'#ff9500', k:'sfx-local-cartoon',     license:'CC0', cs:true,  ar:false, po:false}],
+  'swish':       [{id:'sfx-l-swish',    t:'Air Whoosh',       a:'CC0 / Local', d:'0:01', c:'#4cd964', k:'sfx-local-swish',       license:'CC0', cs:true,  ar:false, po:false}],
+  'funny':       [{id:'sfx-l-funny',    t:'Wobble Boing',     a:'CC0 / Local', d:'0:01', c:'#ffcc00', k:'sfx-local-funny',       license:'CC0', cs:true,  ar:false, po:false}],
+  'machine':     [{id:'sfx-l-machine',  t:'Mechanical Tick',  a:'CC0 / Local', d:'0:01', c:'#8e8e93', k:'sfx-local-machine',     license:'CC0', cs:true,  ar:false, po:false}],
+  'ringing':     [{id:'sfx-l-ringing',  t:'Bell Ding',        a:'CC0 / Local', d:'0:01', c:'#5ac8fa', k:'sfx-local-ringing',     license:'CC0', cs:true,  ar:false, po:false}],
+  'vehicles':    [{id:'sfx-l-vehicles', t:'Engine Rumble',    a:'CC0 / Local', d:'0:02', c:'#ff6b35', k:'sfx-local-vehicles',    license:'CC0', cs:true,  ar:false, po:false}],
+  'weather':     [{id:'sfx-l-weather',  t:'Storm Rain',       a:'CC0 / Local', d:'0:02', c:'#34aadc', k:'sfx-local-weather',     license:'CC0', cs:true,  ar:false, po:false}],
+  'variety':     [{id:'sfx-l-variety',  t:'Fanfare',          a:'CC0 / Local', d:'0:01', c:'#bf5af2', k:'sfx-local-variety',     license:'CC0', cs:true,  ar:false, po:false}],
+  'vlogsf':      [{id:'sfx-l-vlogsf',   t:'Notification Pop', a:'CC0 / Local', d:'0:01', c:'#30b0c7', k:'sfx-local-vlogsf',      license:'CC0', cs:true,  ar:false, po:false}],
+  'physical':    [{id:'sfx-l-physical', t:'Impact Hit',       a:'CC0 / Local', d:'0:01', c:'#ff6b35', k:'sfx-local-physical',    license:'CC0', cs:true,  ar:false, po:false}],
+  'transitions': [{id:'sfx-l-trans',    t:'Transition Sweep', a:'CC0 / Local', d:'0:01', c:'#5e5ce6', k:'sfx-local-transitions', license:'CC0', cs:true,  ar:false, po:false}],
+  'cues':        [{id:'sfx-l-cues',     t:'Dramatic Hit',     a:'CC0 / Local', d:'0:01', c:'#ff3b30', k:'sfx-local-cues',        license:'CC0', cs:true,  ar:false, po:false}],
+  'game':        [{id:'sfx-l-game',     t:'Coin Collect',     a:'CC0 / Local', d:'0:01', c:'#30d158', k:'sfx-local-game',        license:'CC0', cs:true,  ar:false, po:false}],
+  'emotion':     [{id:'sfx-l-emotion',  t:'Chord Swell',      a:'CC0 / Local', d:'0:02', c:'#ff9f0a', k:'sfx-local-emotion',     license:'CC0', cs:true,  ar:false, po:false}]
 };
 
-// ─── DEMO AUDIO — real WAV files served from assets/audio/demo/ ──────────────
-// Each file is an original mathematically-synthesised WAV (creator-owned).
-// Rights: see assets/audio/demo/RIGHTS.md. Commercial use: yes.
+// ─── LOCAL AUDIO MAP — all paths served by the SW cache ─────────────────────
+// Music + legacy SFX demo: assets/audio/demo/  (creator-owned, commercial OK)
+// Per-category SFX:        assets/sfx/         (CC0, creator-owned synth WAVs)
 var _DEMO_AUDIO = {
-  'music-mellow':    'assets/audio/demo/demo-music-mellow.wav',
-  'music-modern':    'assets/audio/demo/demo-music-upbeat.wav',
-  'music-energetic': 'assets/audio/demo/demo-music-energetic.wav',
-  'sfx-spring':      'assets/audio/demo/demo-sfx-boing.wav',
-  'sfx-swish':       'assets/audio/demo/demo-sfx-whoosh.wav',
-  'sfx-ding':        'assets/audio/demo/demo-sfx-ding.wav',
-  'sfx-hit':         'assets/audio/demo/demo-sfx-hit.wav',
-  'sfx-rumble':      'assets/audio/demo/demo-sfx-rumble.wav'
+  'music-mellow':          'assets/audio/demo/demo-music-mellow.wav',
+  'music-modern':          'assets/audio/demo/demo-music-upbeat.wav',
+  'music-energetic':       'assets/audio/demo/demo-music-energetic.wav',
+  // Legacy aliases kept so old saved scenes continue to resolve
+  'sfx-spring':            'assets/audio/demo/demo-sfx-boing.wav',
+  'sfx-swish':             'assets/audio/demo/demo-sfx-whoosh.wav',
+  'sfx-ding':              'assets/audio/demo/demo-sfx-ding.wav',
+  'sfx-hit':               'assets/audio/demo/demo-sfx-hit.wav',
+  'sfx-rumble':            'assets/audio/demo/demo-sfx-rumble.wav',
+  // Per-category local SFX (CC0, creator-owned synthesised WAVs in assets/sfx/)
+  'sfx-local-cartoon':     'assets/sfx/sfx-cartoon.wav',
+  'sfx-local-swish':       'assets/sfx/sfx-swish.wav',
+  'sfx-local-funny':       'assets/sfx/sfx-funny.wav',
+  'sfx-local-machine':     'assets/sfx/sfx-machine.wav',
+  'sfx-local-ringing':     'assets/sfx/sfx-ringing.wav',
+  'sfx-local-vehicles':    'assets/sfx/sfx-vehicles.wav',
+  'sfx-local-weather':     'assets/sfx/sfx-weather.wav',
+  'sfx-local-variety':     'assets/sfx/sfx-variety.wav',
+  'sfx-local-vlogsf':      'assets/sfx/sfx-vlogsf.wav',
+  'sfx-local-physical':    'assets/sfx/sfx-physical.wav',
+  'sfx-local-transitions': 'assets/sfx/sfx-transitions.wav',
+  'sfx-local-cues':        'assets/sfx/sfx-cues.wav',
+  'sfx-local-game':        'assets/sfx/sfx-game.wav',
+  'sfx-local-emotion':     'assets/sfx/sfx-emotion.wav'
 };
+// Deduplication map: normalized URL → cached data URL.
+// Prevents re-downloading the same provider sound when Add is tapped multiple times.
+var _sfxCache = {};
+function _sfxCacheKey(url) { return (url || '').split('?')[0].toLowerCase().slice(-120); }
 
 var _NOTE_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5" width="18" height="18"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
 var _SPK_ICO  = '<svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5" width="18" height="18"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
@@ -139,8 +159,14 @@ function _buildAssetList(listId, demo, cat, q, icon, trackKind, tone, audioKeyMa
       var idAttr     = tr.id ? ' data-item-id="'+tr.id+'"' : '';
       var sqAttr     = (trackKind === 'music') ? ' data-search-query="'+tr.t.replace(/"/g,'')+'"' : '';
       var playAttrs  = hasAudio ? 'data-tone="'+tone+'" data-audio-key="'+audioKey+'" data-src="'+audioSrc+'"'+idAttr+sqAttr : 'data-tone="'+tone+'" data-no-src="1"'+idAttr+sqAttr;
-      var addAttrs   = hasAudio ? 'data-audio-key="'+audioKey+'" data-src="'+audioSrc+'"'+idAttr : 'data-no-src="1"'+idAttr;
-      var subText    = tr.d + (hasAudio ? ' \xb7 Demo' : ' \xb7 Source missing');
+      var _lic  = tr.license || 'CC0';
+      var _cs   = tr.cs  !== false ? '1' : '0';
+      var _ar   = tr.ar  ? '1' : '0';
+      var _po   = tr.po  ? '1' : '0';
+      var _su   = (tr.sourceUrl || '').replace(/"/g, '');
+      var licAttrs = ' data-license="'+_lic+'" data-cs="'+_cs+'" data-ar="'+_ar+'" data-po="'+_po+'" data-source-url="'+_su+'" data-provider="local"';
+      var addAttrs   = (hasAudio ? 'data-audio-key="'+audioKey+'" data-src="'+audioSrc+'"'+idAttr : 'data-no-src="1"'+idAttr) + licAttrs;
+      var subText    = tr.d + (hasAudio ? (' \xb7 ' + _lic) : ' \xb7 Source missing');
       row.innerHTML =
         '<div class="ve-asset-art" style="background:linear-gradient(135deg,' + tr.c + ',' + tr.c + '88)">' + icon + '</div>' +
         '<div class="ve-asset-info">' +
@@ -248,7 +274,16 @@ function _buildSFXList(cat, q) {
   loader.style.cssText = 'color:#7d2ae8;font:400 12px system-ui,sans-serif;text-align:center;margin:6px 0';
   loader.textContent = 'Searching...';
   list.insertBefore(loader, list.firstChild);
-  var _appendSFXRows = function (results) {
+  // per-provider commercial-safe / attribution / personal-only metadata
+  var _SFX_PROVIDER_META = {
+    'mixkit-sfx':      {cs:true,  ar:false, po:false, license:'Royalty-Free'},
+    'openverse-sfx':   {cs:null,  ar:true,  po:false, license:'CC-BY'},
+    'bbc-sfx':         {cs:false, ar:true,  po:true,  license:'Personal/Educational'},
+    'openverse-audio': {cs:null,  ar:true,  po:false, license:'CC-BY'},
+    'freesound':       {cs:null,  ar:true,  po:false, license:'CC-BY'}
+  };
+  var _appendSFXRows = function (results, pid) {
+    var pmeta = _SFX_PROVIDER_META[pid] || {cs:null, ar:true, po:false, license:'Unknown'};
     var frag = document.createDocumentFragment();
     results.forEach(function (item) {
       if (!item.previewUrl) return;
@@ -258,16 +293,31 @@ function _buildSFXList(cat, q) {
       var row = document.createElement('div');
       row.className = 've-asset-row';
       var safeTitle = (item.title || '').replace(/"/g, '');
-      var safeAttr  = (item.attribution || '').replace(/"/g, '');
+      var safeAttr  = (item.attribution || item.provider || '').replace(/"/g, '');
+      var lic = item.licenseType || pmeta.license;
+      var cs  = (item.commercialSafe != null ? item.commercialSafe : pmeta.cs);
+      var ar  = pmeta.ar;
+      var po  = pmeta.po;
+      var csBadge = cs === true ? ' CC' : cs === false ? ' (personal)' : '';
       row.innerHTML =
         '<div class="ve-asset-art" style="background:linear-gradient(135deg,#1f6640,#1f664088)">' + _SPK_ICO + '</div>' +
         '<div class="ve-asset-info">' +
           '<span class="ve-asset-title">' + (safeTitle.length > 22 ? safeTitle.slice(0, 21) + '…' : safeTitle) + '</span>' +
-          '<span class="ve-asset-sub">' + durStr + ' \xb7 ' + (item.attribution || item.provider) + '</span>' +
+          '<span class="ve-asset-sub">' + durStr + ' \xb7 ' + lic + csBadge + '</span>' +
         '</div>' +
         '<div class="ve-asset-acts">' +
           '<button class="ve-asset-play" type="button" data-tone="sfx" data-src="' + item.previewUrl + '" aria-label="Preview">' + _PLAY_ICO + '</button>' +
-          '<button class="ve-asset-add" type="button" data-add-track="sfx" data-src="' + item.previewUrl + '" data-provider="' + item.provider + '" data-license="' + (item.licenseType || '') + '" data-tn="' + safeTitle + '" data-ta="' + safeAttr + '" data-td="' + durStr + '">Add</button>' +
+          '<button class="ve-asset-add" type="button" data-add-track="sfx"' +
+            ' data-src="' + item.previewUrl + '"' +
+            ' data-provider="' + (pid || item.provider || '') + '"' +
+            ' data-license="' + lic + '"' +
+            ' data-cs="' + (cs === true ? '1' : cs === false ? '0' : '') + '"' +
+            ' data-ar="' + (ar ? '1' : '0') + '"' +
+            ' data-po="' + (po ? '1' : '0') + '"' +
+            ' data-source-url="' + item.previewUrl + '"' +
+            ' data-tn="' + safeTitle + '" data-ta="' + safeAttr + '" data-td="' + durStr + '">' +
+            'Add' +
+          '</button>' +
         '</div>';
       frag.appendChild(row);
     });
@@ -285,10 +335,22 @@ function _buildSFXList(cat, q) {
     var pid = sfxProviders[idx];
     var sfxCat = (_currentSfxCat !== 'all') ? _currentSfxCat : null;
     reg.searchSFX({query: searchQ, category: sfxCat, providerId: pid}).then(function (result) {
-      if (!result.results || !result.results.length) { _trySFXProvider(idx + 1); return; }
+      if (!result.results || !result.results.length) {
+        var reason = result.errorCode || (result.error ? 'provider_error' : 'no_output');
+        console.log('[SFX provider]', pid, 'skip reason:', reason);
+        _trySFXProvider(idx + 1); return;
+      }
       var ldr = document.getElementById('lseb-sfx-loader'); if (ldr) ldr.remove();
-      _appendSFXRows(result.results);
-    }).catch(function () { _trySFXProvider(idx + 1); });
+      _appendSFXRows(result.results, pid);
+    }).catch(function (err) {
+      var msg = err && err.message || '';
+      var reason = /401|403/.test(msg) ? 'auth_missing' :
+                   /429/.test(msg)     ? 'rate_limited' :
+                   /503/.test(msg)     ? 'cold_start'   :
+                   /timeout/i.test(msg)? 'timeout'      : 'provider_error';
+      console.log('[SFX provider]', pid, 'fail reason:', reason, msg.slice(0, 60));
+      _trySFXProvider(idx + 1);
+    });
   };
   _trySFXProvider(0);
 }
@@ -1688,24 +1750,46 @@ function _bindEditor(idx) {
           var _sfxRemote   = addSrc;
           var _sfxLabel    = label;
           var _sfxDur      = dur;
-          var _sfxProvider = addTrackBtn.dataset.provider || 'provider';
-          var _sfxLicense  = addTrackBtn.dataset.license  || 'unknown';
-          _dbg('SFX DL start: ' + _sfxRemote.slice(0, 80));
+          var _sfxProvider = addTrackBtn.dataset.provider  || 'provider';
+          var _sfxLicense  = addTrackBtn.dataset.license   || 'Unknown';
+          var _sfxCs       = addTrackBtn.dataset.cs;
+          var _sfxAr       = addTrackBtn.dataset.ar === '1';
+          var _sfxPo       = addTrackBtn.dataset.po === '1';
+          var _sfxAttr     = (addTrackBtn.dataset.ta || '').replace(/"/g, '');
+          var _sfxSu       = addTrackBtn.dataset.sourceUrl || _sfxRemote;
+          _dbg('SFX DL start provider=' + _sfxProvider + ' license=' + _sfxLicense + ' src=' + _sfxRemote.slice(0, 80));
           var _sfxRestore = function () {
             addTrackBtn.dataset.downloading = '';
             addTrackBtn.textContent = _sfxOrigTxt;
             addTrackBtn.disabled = false;
           };
           var _sfxCommit = function (localSrc, blobType) {
-            var ti = { name: _sfxLabel, dur: _sfxDur, src: localSrc };
+            var cacheKey = _sfxCacheKey(_sfxRemote);
+            _sfxCache[cacheKey] = localSrc;   // store for deduplication
+            var ti = {
+              name: _sfxLabel, dur: _sfxDur, src: localSrc,
+              volume: 0.7, fadeIn: 0, fadeOut: 0,
+              license: _sfxLicense,
+              commercialSafe:      _sfxCs === '1' ? true : _sfxCs === '0' ? false : null,
+              attributionRequired: _sfxAr,
+              personalOnly:        _sfxPo,
+              attribution:         _sfxAttr,
+              sourceUrl:           _sfxSu,
+              providerId:          _sfxProvider
+            };
             if (window.LoadAssetRegistry) {
               try {
                 window.LoadAssetRegistry.addAsset({
-                  assetType: 'sfx', source: _sfxProvider, rightsStatus: _sfxLicense,
+                  assetType: 'sfx', source: _sfxProvider,
+                  license: _sfxLicense, rightsStatus: _sfxLicense,
+                  commercialSafe: ti.commercialSafe,
+                  attributionRequired: _sfxAr, personalOnly: _sfxPo,
+                  attribution: _sfxAttr, sourceUrl: _sfxSu,
+                  localPath: 'data:[' + (blobType || 'audio/mpeg') + ']',
                   mimeType: blobType || 'audio/mpeg', duration: _sfxDur, tags: ['sfx'],
-                  notes: _sfxLabel + ' [local; origin=' + _sfxRemote.slice(0, 80) + ']'
+                  notes: _sfxLabel + ' [cached; origin=' + _sfxRemote.slice(0, 80) + ']'
                 });
-                _dbg('SFX AssetRegistry: saved');
+                _dbg('SFX AssetRegistry: saved provider=' + _sfxProvider + ' license=' + _sfxLicense);
               } catch (_re) { _dbg('SFX AssetRegistry err: ' + (_re && _re.message)); }
             }
             _addTrackItem(idx, 'sfx', ti);
@@ -1713,20 +1797,31 @@ function _bindEditor(idx) {
             var _ulIdx3 = (_sc3 && _sc3.tracks.sfx) ? _sc3.tracks.sfx.length - 1 : -1;
             if (_sc3 && _ulIdx3 >= 0) {
               var _ulKey3 = _sc3.id + '_sfx_track_' + _ulIdx3;
-              // Data URL lives in memory — readyState=4 immediately, no streaming needed.
-              // play() from Play-button gesture works without prior gesture unlock.
               _audioPre[_ulKey3] = new Audio(localSrc);
               var _addedSfx = _sc3.tracks.sfx[_ulIdx3] || {};
-              _dbg('SFX cached key=' + _ulKey3.slice(-24) + ' src=data:[' + (blobType || 'audio/mpeg') + '] size=' + Math.round(localSrc.length / 1024) + 'KB');
-              _dbg('SFX scene.sfx: name=' + (_addedSfx.name || '?') + ' dur=' + (_addedSfx.dur || 0) + ' src=data:[' + Math.round(localSrc.length / 1024) + 'KB]');
+              _dbg('SFX cached key=' + _ulKey3.slice(-24) + ' localPath=data:[' + (blobType || 'audio/mpeg') + '] size=' + Math.round(localSrc.length / 1024) + 'KB');
+              _dbg('SFX scene.sfx: name=' + (_addedSfx.name || '?') + ' dur=' + (_addedSfx.dur || 0) + ' license=' + (_addedSfx.license || '?') + ' src=data:[' + Math.round(localSrc.length / 1024) + 'KB]');
+              _dbg('SFX playback: key=' + _ulKey3.slice(-24) + ' via _audioPre (data URL — no stream)');
             }
             _renderTracks(idx);
             _showPanel(null);
             _toast('Sound FX added');
             _sfxRestore();
           };
+          // Deduplication: reuse cached data URL if this URL was downloaded before
+          var _cKey = _sfxCacheKey(_sfxRemote);
+          if (_sfxCache[_cKey]) {
+            _dbg('SFX DL dedup: reusing cached data URL for ' + _sfxRemote.slice(-50));
+            _sfxCommit(_sfxCache[_cKey], 'audio/mpeg');
+            return;
+          }
           fetch(_sfxRemote, {mode: 'cors'}).then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
+            if (!r.ok) {
+              var reason = r.status === 401 || r.status === 403 ? 'auth_missing' :
+                           r.status === 429 ? 'rate_limited' :
+                           r.status === 503 ? 'cold_start'   : 'provider_error';
+              throw new Error(reason + ' HTTP' + r.status);
+            }
             return r.blob();
           }).then(function (blob) {
             var rd = new FileReader();
@@ -1740,23 +1835,44 @@ function _bindEditor(idx) {
             };
             rd.readAsDataURL(blob);
           }).catch(function (err) {
-            _dbg('SFX DL fetch fail: ' + (err && err.message) + ' — remote fallback');
+            var reason = err && err.message || 'provider_error';
+            _dbg('SFX DL fail: ' + reason + ' — remote fallback');
             _sfxCommit(_sfxRemote, 'audio/mpeg');
           });
           return;
         }
-        var trackItem = { name: label, dur: dur };
+        var _tLic = addTrackBtn.dataset.license  || (trackKind === 'sfx' ? 'CC0' : '');
+        var _tCs  = addTrackBtn.dataset.cs;   // '1','0', or ''
+        var _tAr  = addTrackBtn.dataset.ar === '1';
+        var _tPo  = addTrackBtn.dataset.po === '1';
+        var _tSu  = addTrackBtn.dataset.sourceUrl || '';
+        var _tPid = addTrackBtn.dataset.provider  || 'local';
+        var trackItem = { name: label, dur: dur, volume: 0.7, fadeIn: 0, fadeOut: 0 };
         if (addSrc) trackItem.src = addSrc;
+        if (trackKind === 'sfx') {
+          trackItem.license          = _tLic;
+          trackItem.commercialSafe   = _tCs === '1' ? true : _tCs === '0' ? false : null;
+          trackItem.attributionRequired = _tAr;
+          trackItem.personalOnly     = _tPo;
+          trackItem.attribution      = (addTrackBtn.dataset.ta || '').replace(/"/g, '');
+          trackItem.sourceUrl        = _tSu;
+          trackItem.providerId       = _tPid;
+        }
         // Record in asset registry if available
         var regResult = 'no registry';
         if (addSrc && window.LoadAssetRegistry) {
           try {
             window.LoadAssetRegistry.addAsset({
               assetType: trackKind === 'music' ? 'music' : 'sfx',
-              source: addTrackBtn.dataset.provider || 'demo',
-              rightsStatus: addTrackBtn.dataset.license || 'unknown',
-              commercialSafe: addTrackBtn.dataset.license ? null : true,
-              filePath: /^https?:\/\//.test(addSrc) ? null : addSrc,
+              source: _tPid,
+              license: _tLic || 'unknown',
+              rightsStatus: _tLic || 'unknown',
+              commercialSafe: _tCs === '1' ? true : _tCs === '0' ? false : null,
+              attributionRequired: _tAr,
+              personalOnly: _tPo,
+              attribution: (addTrackBtn.dataset.ta || '').replace(/"/g, ''),
+              sourceUrl: _tSu,
+              localPath: /^https?:\/\//.test(addSrc) ? null : addSrc,
               mimeType: 'audio/' + (addSrc.split('.').pop() || 'wav'),
               duration: dur,
               tags: [trackKind],
