@@ -3153,6 +3153,57 @@ var LoadProviderRegistry = {
         })
         .catch(function(e){ return {provider:'bbc-sfx',results:[],error:e.message}; });
     }
+    if (providerId === 'mixkit-sfx') {
+      // Curated static library — Mixkit free CDN, no API key, commercial safe
+      var _MX = 'https://assets.mixkit.co/sfx/preview/';
+      var _mixkitAll = [
+        {id:'mx-1', title:'Cartoon Jump',        cat:'cartoon',     url:_MX+'mixkit-cartoon-jump-in-game-11.mp3'},
+        {id:'mx-2', title:'Cartoon Boing',        cat:'cartoon',     url:_MX+'mixkit-cartoon-boing-short-jump-2808.mp3'},
+        {id:'mx-3', title:'Cartoon Slip',         cat:'cartoon',     url:_MX+'mixkit-cartoon-slide-whistle-down-2809.mp3'},
+        {id:'mx-4', title:'Fast Whoosh',          cat:'swish',       url:_MX+'mixkit-fast-small-sweep-transition-166.mp3'},
+        {id:'mx-5', title:'Air Swish',            cat:'swish',       url:_MX+'mixkit-cinematic-transition-sweep-swoosh-610.mp3'},
+        {id:'mx-6', title:'Quick Swipe',          cat:'swish',       url:_MX+'mixkit-quick-positive-notification-alert-323.mp3'},
+        {id:'mx-7', title:'Funny Fail',           cat:'funny',       url:_MX+'mixkit-player-losing-or-failing-2042.mp3'},
+        {id:'mx-8', title:'Comedy Boing',         cat:'funny',       url:_MX+'mixkit-cute-jump-tone-2854.mp3'},
+        {id:'mx-9', title:'Machine Hum',          cat:'machine',     url:_MX+'mixkit-old-mechanical-clock-countdown-1184.mp3'},
+        {id:'mx-10',title:'Engine Rumble',        cat:'machine',     url:_MX+'mixkit-race-car-horn-and-quick-acceleration-2028.mp3'},
+        {id:'mx-11',title:'Phone Ring',           cat:'ringing',     url:_MX+'mixkit-classic-telephone-ring-491.mp3'},
+        {id:'mx-12',title:'Notification Bell',    cat:'ringing',     url:_MX+'mixkit-correct-answer-tone-2870.mp3'},
+        {id:'mx-13',title:'Message Alert',        cat:'ringing',     url:_MX+'mixkit-message-pop-alert-2354.mp3'},
+        {id:'mx-14',title:'Car Horn',             cat:'vehicles',    url:_MX+'mixkit-car-horn-718.mp3'},
+        {id:'mx-15',title:'Tire Screech',         cat:'vehicles',    url:_MX+'mixkit-fast-car-drive-by-1538.mp3'},
+        {id:'mx-16',title:'Thunder',              cat:'weather',     url:_MX+'mixkit-thunder-crack-1184.mp3'},
+        {id:'mx-17',title:'Rain',                 cat:'weather',     url:_MX+'mixkit-light-rain-loop-2393.mp3'},
+        {id:'mx-18',title:'Game Show Bell',       cat:'variety',     url:_MX+'mixkit-game-show-suspense-waiting-667.mp3'},
+        {id:'mx-19',title:'Fanfare',              cat:'variety',     url:_MX+'mixkit-winning-a-coin-video-game-2069.mp3'},
+        {id:'mx-20',title:'Camera Click',         cat:'vlogsf',      url:_MX+'mixkit-camera-shutter-click-1133.mp3'},
+        {id:'mx-21',title:'UI Click',             cat:'vlogsf',      url:_MX+'mixkit-positive-interface-click-221.mp3'},
+        {id:'mx-22',title:'Pop Up',               cat:'vlogsf',      url:_MX+'mixkit-long-pop-2358.mp3'},
+        {id:'mx-23',title:'Punch Hit',            cat:'physical',    url:_MX+'mixkit-boxing-hit-2985.mp3'},
+        {id:'mx-24',title:'Body Impact',          cat:'physical',    url:_MX+'mixkit-quick-jump-hit-in-game-2841.mp3'},
+        {id:'mx-25',title:'Thud',                 cat:'physical',    url:_MX+'mixkit-falling-hit-on-gravel-756.mp3'},
+        {id:'mx-26',title:'Swipe Left',           cat:'transitions', url:_MX+'mixkit-fast-sweep-transition-166.mp3'},
+        {id:'mx-27',title:'Slide Transition',     cat:'transitions', url:_MX+'mixkit-slide-click-1130.mp3'},
+        {id:'mx-28',title:'Whoosh Out',           cat:'transitions', url:_MX+'mixkit-audience-light-clapping-492.mp3'},
+        {id:'mx-29',title:'Dramatic Sting',       cat:'cues',        url:_MX+'mixkit-suspense-drum-roll-487.mp3'},
+        {id:'mx-30',title:'Alert Tone',           cat:'cues',        url:_MX+'mixkit-alarm-tone-996.mp3'},
+        {id:'mx-31',title:'Coin Collect',         cat:'game',        url:_MX+'mixkit-coin-win-notification-1992.mp3'},
+        {id:'mx-32',title:'Level Up',             cat:'game',        url:_MX+'mixkit-bonus-earned-in-video-game-2058.mp3'},
+        {id:'mx-33',title:'Game Hit',             cat:'game',        url:_MX+'mixkit-small-hit-in-a-game-2072.mp3'},
+        {id:'mx-34',title:'Power Up',             cat:'game',        url:_MX+'mixkit-achievement-completed-2069.mp3'},
+        {id:'mx-35',title:'Applause',             cat:'emotion',     url:_MX+'mixkit-audience-light-clapping-492.mp3'},
+        {id:'mx-36',title:'Crowd Cheer',          cat:'emotion',     url:_MX+'mixkit-sport-crowd-cheering-507.mp3'}
+      ];
+      var lq2 = (query || '').toLowerCase();
+      var filtered = _mixkitAll.filter(function(s){
+        if (request.category && request.category !== 'all' && s.cat !== request.category) return false;
+        if (lq2 && s.title.toLowerCase().indexOf(lq2) < 0 && s.cat.indexOf(lq2) < 0) return false;
+        return true;
+      });
+      return Promise.resolve({provider:'mixkit-sfx', results:filtered.map(function(s){
+        return {id:s.id,title:s.title,artist:'Mixkit',duration:null,previewUrl:s.url,downloadUrl:s.url,licenseType:'Mixkit License',attribution:s.title+' (Mixkit)',provider:'mixkit-sfx'};
+      })});
+    }
     return Promise.resolve({provider: providerId, results: [], status: 'no-connector'});
   },
 
