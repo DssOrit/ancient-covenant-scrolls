@@ -357,6 +357,7 @@ function _initState() {
   if (saved && Array.isArray(saved.scenes) && saved.scenes.length) {
     _state.scenes = saved.scenes.map(function (s) {
       if (!s.tracks) s.tracks = { music: [], text: [], sticker: [], overlay: [] };
+      if (!s.tracks.music) s.tracks.music = [];
       if (!s.tracks.overlay) s.tracks.overlay = [];
       if (!s.tracks.sfx) s.tracks.sfx = [];
       if (!s.tracks.voice) s.tracks.voice = [];
@@ -603,43 +604,35 @@ var _engine = {
       try { pre.volume = LANE_VOL[lane]; pre.play().catch(function (err) { console.warn('[LS play] legacy', lane, 'rejected:', err && err.message); }); _playHandles.push(pre); } catch (e) { console.warn('[LS play] legacy', lane, 'threw:', e && e.message); }
     });
     var _musicTracks = scene.tracks.music || [];
-    if (_musicTracks.length) _toast('Music tracks: ' + _musicTracks.length);
+    console.log('[LS play:music]', _musicTracks.length, 'track(s) in scene', sceneId.slice(-8));
     _musicTracks.forEach(function (it, i) {
-      // Normalise stored http:// URLs (saved before v146 HTTPS fix)
-      if (it.src && it.src.indexOf('http://') === 0) { it.src = it.src.replace('http://', 'https://'); _saveState(); }
-      var key = sceneId + '_music_track_' + i;
-      var pre = _audioPre[key];
-      // Recreate within user gesture if missing, errored, or src changed
-      if ((!pre || pre.error || (pre.src && it.src && pre.src !== it.src)) && it.src) {
-        pre = document.createElement('audio');
-        pre.preload = 'auto';
-        pre.src = it.src;
-        pre.load();
-        _audioPre[key] = pre;
-      }
-      if (!pre) return;
+      if (!it.src) { console.warn('[LS play:music] track', i, 'no src — skipped'); return; }
+      if (it.src.indexOf('http://') === 0) { it.src = it.src.replace('http://', 'https://'); _saveState(); }
       var lt = _resumeT - (it.t0 || 0);
-      if (lt < 0 || lt >= (it.dur || 999)) return;
-      try { pre.currentTime = Math.max(0, lt); } catch (_) {}
-      try { pre.volume = it.vol || 0.35; pre.play().catch(function (err) { _toast('Music source unavailable'); console.warn('[LS play] music_track_' + i, err && err.message); }); _playHandles.push(pre); } catch (e) { _toast('Music source unavailable'); }
+      if (lt < 0 || lt >= (it.dur || 999)) { console.warn('[LS play:music] track', i, 'out of window lt=', lt.toFixed(2)); return; }
+      // new Audio(src) called synchronously within play gesture — iOS Safari
+      // blocks play() on elements created outside the current gesture event.
+      var a = new Audio(it.src);
+      a.volume = it.vol || 0.35;
+      try { a.currentTime = Math.max(0, lt); } catch (_) {}
+      a.play()
+        .then(function () { console.log('[LS play:music:started] track', i, it.name); })
+        .catch(function (err) { console.warn('[LS play:music:error] track', i, err && err.message); });
+      _playHandles.push(a);
+      _audioPre[sceneId + '_music_track_' + i] = a;
     });
     (scene.tracks.sfx || []).forEach(function (it, i) {
-      // Normalise stored http:// URLs
-      if (it.src && it.src.indexOf('http://') === 0) { it.src = it.src.replace('http://', 'https://'); _saveState(); }
-      var key = sceneId + '_sfx_track_' + i;
-      var pre = _audioPre[key];
-      if ((!pre || pre.error || (pre.src && it.src && pre.src !== it.src)) && it.src) {
-        pre = document.createElement('audio');
-        pre.preload = 'auto';
-        pre.src = it.src;
-        pre.load();
-        _audioPre[key] = pre;
-      }
-      if (!pre) return;
+      if (!it.src) return;
+      if (it.src.indexOf('http://') === 0) { it.src = it.src.replace('http://', 'https://'); _saveState(); }
       var lt = _resumeT - (it.t0 || 0);
       if (lt < 0 || lt >= (it.dur || 999)) return;
-      try { pre.currentTime = Math.max(0, lt); } catch (_) {}
-      try { pre.volume = it.vol || 0.7; pre.play().catch(function (err) { console.warn('[LS play] sfx_track_' + i, err && err.message); }); _playHandles.push(pre); } catch (e) {}
+      // same gesture-synchronous pattern as music
+      var a = new Audio(it.src);
+      a.volume = it.vol || 0.7;
+      try { a.currentTime = Math.max(0, lt); } catch (_) {}
+      a.play().catch(function (err) { console.warn('[LS play:sfx:error] track', i, err && err.message); });
+      _playHandles.push(a);
+      _audioPre[sceneId + '_sfx_track_' + i] = a;
     });
     (scene.tracks.voice || []).forEach(function (it, i) {
       var pre = _audioPre[sceneId + '_voice_track_' + i];
