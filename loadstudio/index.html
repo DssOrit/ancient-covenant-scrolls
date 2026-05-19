@@ -2455,4 +2455,167 @@ document.addEventListener('click',function(e){
   document.addEventListener('click',handleZoomClick,true);
   document.addEventListener('touchend',handleZoomClick,true);
 })();</script>
+<section id="section-lipsync" class="section" data-title="Lip Sync Studio">
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#9c9cff,#ff6e9c)"></div>
+    <div class="ls-h"><h2>Lip Sync Studio</h2><span class="ls-dept" style="color:#9c9cff">AI Tools</span></div>
+    <p class="ls-lead">Animate a still photo with synced audio. Upload a portrait and an audio file — generates a talking-photo or lip-synced video when a local provider is connected.</p>
+    <div class="ls-panel">
+      <h3>Source Image</h3>
+      <label style="display:block;margin-top:10px">Portrait Image<input type="file" id="ls-ls-img" accept="image/*" style="margin-top:6px;display:block"></label>
+      <div id="ls-ls-img-preview" style="min-height:30px;margin-top:8px"></div>
+    </div>
+    <div class="ls-panel">
+      <h3>Audio Source</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Upload Audio File<input type="file" id="ls-ls-audio" accept="audio/*" style="margin-top:6px;display:block"></label>
+        <label>Or TTS Dialogue Text<textarea id="ls-ls-tts-text" rows="3" placeholder="Type dialogue to convert to speech, then use as lip sync source."></textarea></label>
+        <label>Character Voice ID<input id="ls-ls-voice" type="text" placeholder="e.g. af_heart (Kokoro), custom voice ID"></label>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3>Provider and Output</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Provider<select id="ls-ls-provider"><option value="musetalk">MuseTalk (local)</option><option value="wav2lip">Wav2Lip (local)</option><option value="sadtalker">SadTalker (local)</option><option value="liveportrait">LivePortrait (local)</option><option value="latentsync">LatentSync (local)</option></select></label>
+        <label>Quality Mode<select id="ls-ls-quality"><option>Standard</option><option>High Fidelity</option><option>Real-Time Preview</option></select></label>
+        <label>Attach to Scene ID<input id="ls-ls-scene" type="text" placeholder="e.g. scene-001"></label>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn secondary" type="button" onclick="var log=JSON.parse(localStorage.getItem('ls_lipsync_log')||'[]');log.push({provider:document.getElementById('ls-ls-provider').value,quality:document.getElementById('ls-ls-quality').value,scene:document.getElementById('ls-ls-scene').value,savedAt:new Date().toISOString(),status:'queued'});localStorage.setItem('ls_lipsync_log',JSON.stringify(log));this.textContent='Saved';setTimeout(function(b){b.textContent='Save to Queue'}.bind(this),2000)">Save to Queue</button>
+        <button class="btn primary" type="button" id="ls-ls-attempt-btn">Attempt Generation</button>
+      </div>
+      <div id="ls-ls-result" style="margin-top:12px"></div>
+    </div>
+    <div class="ls-panel">
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Actual lip sync requires a local provider server running at localhost (MuseTalk, Wav2Lip, SadTalker, or LivePortrait). Queue and prompt data save locally without a provider.</div>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(156,156,255,.08);border:1px solid rgba(156,156,255,.2);border-radius:8px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Provider status: <strong style="color:#ff8b3d">Untested</strong> — MuseTalk / Wav2Lip / SadTalker / LivePortrait / LatentSync</div>
+    </div>
+    <div class="ls-related"></div>
+  </div>
+</section>
+
+<section id="section-world-builder" class="section" data-title="World Builder">
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#5fc8ff,#5ee0a5)"></div>
+    <div class="ls-h"><h2>World Builder</h2><span class="ls-dept" style="color:#5fc8ff">Story Dept</span></div>
+    <p class="ls-lead">Lock the rules of your production world — geography, history, physics, culture, forbidden elements. Saves locally and feeds into Director AI scene prompts.</p>
+    <div class="ls-panel">
+      <h3>World Identity</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>World Name<input id="ls-wb-name" type="text" placeholder="e.g. The Northern Reaches, Neo-Chicago 2147"></label>
+        <label>Genre<select id="ls-wb-genre"><option>Realistic Fiction</option><option>Science Fiction</option><option>Fantasy</option><option>Historical Drama</option><option>Contemporary</option><option>Horror</option><option>Children</option><option>Documentary</option><option>Animated</option><option>Hybrid</option></select></label>
+        <label>Era / Time Period<input id="ls-wb-era" type="text" placeholder="e.g. 1940s Paris, 2147, Medieval, Contemporary"></label>
+        <label>Tone<select id="ls-wb-tone"><option>Serious</option><option>Comedic</option><option>Dark</option><option>Warm and Uplifting</option><option>Neutral Documentary</option><option>Educational</option><option>Action</option><option>Romantic</option></select></label>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3>World Rules</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Geography and Setting<textarea id="ls-wb-geo" rows="3" placeholder="Describe key locations, regions, and environments in this world."></textarea></label>
+        <label>Physics and Technology<textarea id="ls-wb-physics" rows="3" placeholder="Special rules: magic, future tech, sci-fi constraints, historical limits."></textarea></label>
+        <label>Cultural Rules<textarea id="ls-wb-culture" rows="3" placeholder="Social norms, language, dress codes, power structures."></textarea></label>
+        <label>Forbidden Elements<textarea id="ls-wb-forbidden" rows="3" placeholder="What must never appear: modern tech in historical settings, specific symbols."></textarea></label>
+        <label>Additional World Notes<textarea id="ls-wb-notes" rows="3" placeholder="Any other world-building rules or continuity anchors."></textarea></label>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-wb-save-btn" class="btn primary" type="button" onclick="var data={worldName:document.getElementById('ls-wb-name').value,genre:document.getElementById('ls-wb-genre').value,era:document.getElementById('ls-wb-era').value,tone:document.getElementById('ls-wb-tone').value,geography:document.getElementById('ls-wb-geo').value,physics:document.getElementById('ls-wb-physics').value,culture:document.getElementById('ls-wb-culture').value,forbidden:document.getElementById('ls-wb-forbidden').value,notes:document.getElementById('ls-wb-notes').value,savedAt:new Date().toISOString()};localStorage.setItem('ls_world_data',JSON.stringify(data));this.textContent='Saved';setTimeout(function(b){b.textContent='Save World Rules';}.bind(this),2000)">Save World Rules</button>
+        <button class="btn secondary" type="button" onclick="var d=localStorage.getItem('ls_world_data');if(d){var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(d);a.download='world-rules.json';a.click();}">Export world-rules.json</button>
+      </div>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(94,224,165,.08);border:1px solid rgba(94,224,165,.2);border-radius:8px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Status: <strong style="color:#5ee0a5">Local Ready</strong> — World rules save and export locally. AI prompt enrichment requires a connected LLM in Director AI.</div>
+    </div>
+    <div class="ls-related"></div>
+  </div>
+</section>
+
+<section id="section-rights-credits" class="section" data-title="Rights and Credits">
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#ff6e9c,#fbd24a)"></div>
+    <div class="ls-h"><h2>Rights and Credits</h2><span class="ls-dept" style="color:#ff6e9c">Production</span></div>
+    <p class="ls-lead">Manage ownership, license, source material, and credits for this production. Exports rights.json and credits.json. No rights information is shared with AI providers.</p>
+    <div class="ls-panel">
+      <h3>Project Rights</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Owner / Creator<input id="ls-rc-owner" type="text" placeholder="Creator name or studio name"></label>
+        <label>License Type<select id="ls-rc-license"><option>User-Owned Original</option><option>Public Domain Adaptation</option><option>Licensed Source Material</option><option>Platform-Original</option><option>User-Generated</option><option>User-Recorded</option><option>Third-Party Licensed</option></select></label>
+        <label>Source Material<input id="ls-rc-source" type="text" placeholder="e.g. Original screenplay, public domain novel, licensed IP"></label>
+        <label>Rights Notes<textarea id="ls-rc-rights-notes" rows="3" placeholder="Any additional rights, permissions, or licensing notes."></textarea></label>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3>Production Credits</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Written By<input id="ls-rc-written" type="text" placeholder="Writer name(s)"></label>
+        <label>Directed By<input id="ls-rc-directed" type="text" placeholder="Director name(s)"></label>
+        <label>Produced By<input id="ls-rc-produced" type="text" placeholder="Producer name(s)"></label>
+        <label>Music By<input id="ls-rc-music" type="text" placeholder="Composer or music source credits"></label>
+        <label>Voice Cast<textarea id="ls-rc-cast" rows="3" placeholder="Character : Voice Actor or TTS provider used"></textarea></label>
+        <label>AI Disclosure<textarea id="ls-rc-ai-disclosure" rows="2" placeholder="e.g. Images generated using open-source models. Voice generated with Kokoro TTS."></textarea></label>
+        <label>Additional Credits<textarea id="ls-rc-additional" rows="3" placeholder="Any other credits, attributions, or thanks."></textarea></label>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3>Asset Declarations</h3>
+      <div id="ls-rc-assets-list" style="margin-bottom:10px;min-height:30px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No asset declarations added yet.</div>
+      <div class="form-grid" style="margin-top:8px">
+        <label>Asset Name<input id="ls-rc-asset-name" type="text" placeholder="e.g. Background Music Track 1"></label>
+        <label>Source<input id="ls-rc-asset-src" type="text" placeholder="e.g. Pixabay Music, User-Recorded, AI Generated"></label>
+        <label>License<input id="ls-rc-asset-license" type="text" placeholder="e.g. CC0, Royalty-Free, User-Owned"></label>
+      </div>
+      <button class="btn secondary" type="button" style="margin-top:8px" onclick="var n=document.getElementById('ls-rc-asset-name').value;if(n){var s=document.getElementById('ls-rc-asset-src').value;var l=document.getElementById('ls-rc-asset-license').value;var list=document.getElementById('ls-rc-assets-list');if(list.textContent.includes('No asset')){list.textContent='';}var d=document.createElement('div');d.style.cssText='padding:6px 10px;background:rgba(255,110,156,.07);border:1px solid rgba(255,110,156,.2);border-radius:6px;margin-bottom:5px;font:400 12.5px Inter,system-ui,sans-serif;color:#c0b8d9';d.textContent=n+' | '+s+' | '+l;list.appendChild(d);}">Add Declaration</button>
+    </div>
+    <div class="ls-panel">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-rc-save-btn" class="btn primary" type="button" onclick="var data={owner:document.getElementById('ls-rc-owner').value,license:document.getElementById('ls-rc-license').value,sourceMaterial:document.getElementById('ls-rc-source').value,rightsNotes:document.getElementById('ls-rc-rights-notes').value,writtenBy:document.getElementById('ls-rc-written').value,directedBy:document.getElementById('ls-rc-directed').value,producedBy:document.getElementById('ls-rc-produced').value,musicBy:document.getElementById('ls-rc-music').value,voiceCast:document.getElementById('ls-rc-cast').value,aiDisclosure:document.getElementById('ls-rc-ai-disclosure').value,additionalCredits:document.getElementById('ls-rc-additional').value,savedAt:new Date().toISOString()};localStorage.setItem('ls_rights_credits',JSON.stringify(data));this.textContent='Saved';setTimeout(function(b){b.textContent='Save Rights + Credits';}.bind(this),2000)">Save Rights + Credits</button>
+        <button class="btn secondary" type="button" onclick="var d=localStorage.getItem('ls_rights_credits');if(d){var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(d);a.download='rights.json';a.click();}">Export rights.json</button>
+        <button class="btn secondary" type="button" onclick="var d=localStorage.getItem('ls_rights_credits');if(d){var p=JSON.parse(d);var cr={writtenBy:p.writtenBy,directedBy:p.directedBy,producedBy:p.producedBy,musicBy:p.musicBy,voiceCast:p.voiceCast,aiDisclosure:p.aiDisclosure,additionalCredits:p.additionalCredits,exportedAt:new Date().toISOString()};var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(cr,null,2));a.download='credits.json';a.click();}">Export credits.json</button>
+      </div>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(94,224,165,.08);border:1px solid rgba(94,224,165,.2);border-radius:8px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Status: <strong style="color:#5ee0a5">Local Ready</strong> — Rights and credits save and export locally. API keys are never included.</div>
+    </div>
+    <div class="ls-related"></div>
+  </div>
+</section>
+
+<section id="section-media-vault" class="section" data-title="Media Vault">
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#b388ff,#5fc8ff)"></div>
+    <div class="ls-h"><h2>Media Vault</h2><span class="ls-dept" style="color:#b388ff">Studio Lobby</span></div>
+    <p class="ls-lead">All production media organized by type. Every asset carries license, source, and rights metadata. Feeds the Asset Registry and CinePWA package builder.</p>
+    <div class="ls-panel">
+      <h3>Browse by Category</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Images — use Asset Library to view stored images.'">Images</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Video Clips — use Asset Library to view stored clips.'">Video Clips</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Audio — use Asset Library to view stored audio.'">Audio</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Music — see Sound Stage and Soundtrack Tools.'">Music</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Sound FX — see SFX Generator and Scene Audio Engine.'">Sound FX</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: Subtitles — attach .srt or .vtt to scenes.'">Subtitles</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="var r=JSON.parse(localStorage.getItem('ls_media_vault')||'[]');document.getElementById('ls-mv-list').textContent=r.length?r.map(function(a){return a.name+' ('+a.type+') | '+a.license;}).join('\n'):'No AI generated assets logged yet.'">AI Generated</button>
+        <button class="btn secondary" style="padding:8px 14px" onclick="document.getElementById('ls-mv-list').textContent='Browse: References — see Character Stability Engine for reference images.'">References</button>
+      </div>
+      <div id="ls-mv-list" style="margin-top:14px;min-height:40px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif;white-space:pre-line">Select a category above to browse assets.</div>
+    </div>
+    <div class="ls-panel">
+      <h3>Log Asset</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Asset Name<input id="ls-mv-name" type="text" placeholder="Descriptive name"></label>
+        <label>Type<select id="ls-mv-type"><option>image</option><option>video</option><option>audio</option><option>music</option><option>sfx</option><option>subtitle</option><option>generated-image</option><option>generated-video</option><option>generated-audio</option><option>reference</option></select></label>
+        <label>Source<input id="ls-mv-src" type="text" placeholder="e.g. user-upload, Pixabay, AI Generated, Freesound"></label>
+        <label>License<select id="ls-mv-license"><option>User-Owned</option><option>CC0</option><option>CC-BY</option><option>Royalty-Free</option><option>AI Generated</option><option>Public Domain</option><option>Licensed</option><option>Needs Review</option></select></label>
+        <label>Scene ID<input id="ls-mv-scene" type="text" placeholder="scene-001 or leave blank"></label>
+        <label>Asset Path / URL<input id="ls-mv-path" type="text" placeholder="blob:..., assets/images/..., or https://..."></label>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn primary" type="button" onclick="var a={id:'asset-'+Date.now(),name:document.getElementById('ls-mv-name').value,type:document.getElementById('ls-mv-type').value,source:document.getElementById('ls-mv-src').value,license:document.getElementById('ls-mv-license').value,scene:document.getElementById('ls-mv-scene').value,path:document.getElementById('ls-mv-path').value,addedAt:new Date().toISOString()};var reg=JSON.parse(localStorage.getItem('ls_media_vault')||'[]');reg.push(a);localStorage.setItem('ls_media_vault',JSON.stringify(reg));this.textContent='Added';setTimeout(function(b){b.textContent='Add to Vault';}.bind(this),2000)">Add to Vault</button>
+        <button class="btn secondary" type="button" onclick="var r=JSON.parse(localStorage.getItem('ls_media_vault')||'[]');var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(r,null,2));a.download='asset-registry.json';a.click()">Export asset-registry.json</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <div style="padding:8px 12px;background:rgba(94,224,165,.08);border:1px solid rgba(94,224,165,.2);border-radius:8px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Status: <strong style="color:#5ee0a5">Local Ready</strong> — Asset metadata saves to localStorage. Exports to asset-registry.json. File storage uses browser storage and IndexedDB.</div>
+    </div>
+    <div class="ls-related"></div>
+  </div>
+</section>
+
 <footer data-loadeco-nav style="padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.25);text-align:center;font-size:12.5px;color:#9aa0b0;font-family:-apple-system,BlinkMacSystemFont,sans-serif">Part of Load Eco™: <a href="../load/" style="color:inherit;text-decoration:none;margin:0 6px">Load</a> &middot; <a href="../loadstudio/" style="color:inherit;text-decoration:none;margin:0 6px">Load Studio™</a> &middot; <a href="../LoadPlay/" style="color:inherit;text-decoration:none;margin:0 6px">Load Play™</a> &middot; <a href="../LoadTasks/" style="color:inherit;text-decoration:none;margin:0 6px">Load Tasks™</a> &middot; <a href="../LoadAI/" style="color:inherit;text-decoration:none;margin:0 6px">Load AI™</a></footer></body></html>
