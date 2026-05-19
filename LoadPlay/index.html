@@ -4637,7 +4637,21 @@ window.addEventListener('online',  () => toast('Back online'));
     { id: 'zapsplat',           name: 'ZapSplat',                   requiresKey: true,  keyName: 'lp_api_zapsplat',  type: 'sound_effects',            rows: ['SFX', 'Audio Stories'] },
     { id: 'mixkit',             name: 'Mixkit SFX',                 requiresKey: false, type: 'sound_effects',            rows: ['SFX'] },
     { id: 'soundbible',         name: 'SoundBible',                 requiresKey: false, type: 'sound_effects',            rows: ['SFX'] },
-    { id: 'kenney',             name: 'Kenney.nl',                  requiresKey: false, type: 'game_assets_audio',        rows: ['SFX', 'Open Media'] }
+    { id: 'kenney',             name: 'Kenney.nl',                  requiresKey: false, type: 'game_assets_audio',        rows: ['SFX', 'Open Media'] },
+    { id: 'google_fonts',        name: 'Google Fonts',               requiresKey: true,  keyName: 'lp_api_google_fonts',  type: 'typography',              rows: ['Fonts'] },
+    { id: 'bunny_fonts',         name: 'Bunny Fonts',                requiresKey: false, type: 'typography',              rows: ['Fonts'] },
+    { id: 'font_squirrel',       name: 'Font Squirrel',              requiresKey: false, type: 'typography',              rows: ['Fonts'] },
+    { id: 'lottiefiles',         name: 'LottieFiles',                requiresKey: true,  keyName: 'lp_api_lottiefiles',   type: 'animated_elements',      rows: ['Animated Elements'] },
+    { id: 'mixkit_motion',       name: 'Mixkit Motion Templates',    requiresKey: false, type: 'motion_templates',         rows: ['Motion Templates'] },
+    { id: 'videezy',             name: 'Videezy',                    requiresKey: false, type: 'motion_templates',         rows: ['Motion Templates', 'Background Loops'] },
+    { id: 'motion_array',        name: 'Motion Array',               requiresKey: false, type: 'motion_templates',         rows: ['Motion Templates'] },
+    { id: 'canva_free',          name: 'Canva Free',                 requiresKey: false, type: 'design_templates',         rows: ['Templates'] },
+    { id: 'adobe_express',       name: 'Adobe Express',              requiresKey: false, type: 'design_templates',         rows: ['Templates'] },
+    { id: 'pexels_templates',    name: 'Pexels Templates',           requiresKey: true,  keyName: 'lp_api_pexels',        type: 'video_templates',          rows: ['Motion Templates', 'Background Loops'] },
+    { id: 'placeit',             name: 'Placeit',                    requiresKey: false, type: 'design_templates',         rows: ['Templates'] },
+    { id: 'incompetech',         name: 'Incompetech',                requiresKey: false, type: 'royalty_free_music',       rows: ['Music', 'Soundtrack Discovery'] },
+    { id: 'bensound',            name: 'Bensound',                   requiresKey: false, type: 'royalty_free_music',       rows: ['Music', 'Soundtrack Discovery'] },
+    { id: 'yt_audio_lib',        name: 'YouTube Audio Library',      requiresKey: false, type: 'royalty_free_music',       rows: ['Music', 'Soundtrack Discovery'] }
   ];
   function readConnectorState() { try { return JSON.parse(localStorage.getItem('lp_connector_state') || 'null') || {}; } catch (e) { return {}; } }
   function writeConnectorState(s) { try { localStorage.setItem('lp_connector_state', JSON.stringify(s)); } catch (e) {} }
@@ -4942,6 +4956,50 @@ window.addEventListener('online',  () => toast('Back online'));
         });
       });
   }
+
+  function lpFetchGoogleFonts(key) {
+    var url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + encodeURIComponent(key) + '&sort=popularity';
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        return ((data || {}).items || []).slice(0, 15).map(function (item) {
+          return lpNormalizeImportedItem({
+            id: 'gf_' + (item.family || '').toLowerCase().replace(/\s+/g, '_'),
+            title: item.family || 'Google Font',
+            creator: 'Google Fonts',
+            sourceUrl: 'https://fonts.google.com/specimen/' + encodeURIComponent(item.family || ''),
+            mediaUrl: '',
+            mediaType: 'font',
+            license: 'Open Font License',
+            licenseUrl: 'https://scripts.sil.org/OFL',
+            category: 'Fonts',
+            description: 'Category: ' + (item.category || '') + '. Variants: ' + ((item.variants || []).length),
+            tags: item.subsets || []
+          }, 'google_fonts');
+        });
+      });
+  }
+  function lpFetchFontSquirrel() {
+    var url = 'https://www.fontsquirrel.com/api/fontlist/hot';
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        return (Array.isArray(data) ? data : []).slice(0, 15).map(function (item) {
+          return lpNormalizeImportedItem({
+            id: 'fs_' + (item.family_urlname || item.id || ('fs_' + Math.random().toString(36).slice(2))),
+            title: item.family_name || 'Font Squirrel font',
+            creator: item.designer || 'Font Squirrel',
+            sourceUrl: 'https://www.fontsquirrel.com/fonts/' + (item.family_urlname || ''),
+            mediaUrl: '',
+            mediaType: 'font',
+            license: item.license_short || 'Free for commercial use',
+            licenseUrl: 'https://www.fontsquirrel.com/license/' + (item.family_urlname || ''),
+            category: 'Fonts',
+            description: (item.classification || []).join(', ')
+          }, 'font_squirrel');
+        });
+      });
+  }
   function lpConnectorFetch(connector) {
     var key = connector.requiresKey ? (function () { try { return localStorage.getItem(connector.keyName); } catch (e) { return null; } })() : null;
     if (connector.requiresKey && !key) return Promise.resolve(lpDemoPreview(connector.name));
@@ -4962,6 +5020,20 @@ window.addEventListener('online',  () => toast('Back online'));
     if (connector.id === 'mixkit')           return Promise.resolve(lpDemoPreview(connector.name));
     if (connector.id === 'soundbible')       return Promise.resolve(lpDemoPreview(connector.name));
     if (connector.id === 'kenney')           return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'google_fonts')     return lpFetchGoogleFonts(key).catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'font_squirrel')    return lpFetchFontSquirrel().catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'bunny_fonts')      return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'lottiefiles')      return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'mixkit_motion')    return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'videezy')          return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'motion_array')     return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'canva_free')       return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'adobe_express')    return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'pexels_templates') return lpFetchPexels(key).catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'placeit')          return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'incompetech')      return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'bensound')         return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'yt_audio_lib')     return Promise.resolve(lpDemoPreview(connector.name));
     return Promise.resolve(lpDemoPreview(connector.name));
   }
   function renderContentSources() {
@@ -4970,7 +5042,7 @@ window.addEventListener('online',  () => toast('Back online'));
     document.body.classList.add('lp-paging');
     var pg = $$('lp-page'); if (pg) pg.hidden = false;
     $$('lp-page-title').textContent = 'Content Sources';
-    $$('lp-page-blurb').textContent = '18 free / public-domain / open-license / open-data sources. Discovery only — every item passes through Draft Catalog or Rights Review before publication.';
+    $$('lp-page-blurb').textContent = '32 free / public-domain / open-license / open-data sources. Discovery only — every item passes through Draft Catalog or Rights Review before publication.';
     var st = readConnectorState();
     var rows = LP_CONNECTORS.map(function (c) {
       var s = st[c.id] || { enabled: true, lastChecked: null, status: c.requiresKey ? 'needs_key' : 'no_key_required' };
