@@ -4632,7 +4632,12 @@ window.addEventListener('online',  () => toast('Back online'));
     { id: 'nps',              name: 'National Park Service API',  requiresKey: true,  keyName: 'lp_api_nps',        type: 'nature_history_places',   rows: ['Nature', 'History', 'Educational'] },
     { id: 'rss',              name: 'RSS Feed Importer',          requiresKey: false, type: 'feed_metadata',           rows: ['News', 'Newly Added'] },
     { id: 'ccmixter',          name: 'ccMixter',                   requiresKey: false, type: 'creative_commons_music',   rows: ['Music', 'Soundtrack Discovery'] },
-    { id: 'fma',               name: 'Free Music Archive',         requiresKey: false, type: 'open_license_music',       rows: ['Music', 'Soundtrack Discovery'] }
+    { id: 'fma',               name: 'Free Music Archive',         requiresKey: false, type: 'open_license_music',       rows: ['Music', 'Soundtrack Discovery'] },
+    { id: 'bbc_sfx',            name: 'BBC Sound Effects',          requiresKey: false, type: 'sound_effects',            rows: ['SFX', 'Educational'] },
+    { id: 'zapsplat',           name: 'ZapSplat',                   requiresKey: true,  keyName: 'lp_api_zapsplat',  type: 'sound_effects',            rows: ['SFX', 'Audio Stories'] },
+    { id: 'mixkit',             name: 'Mixkit SFX',                 requiresKey: false, type: 'sound_effects',            rows: ['SFX'] },
+    { id: 'soundbible',         name: 'SoundBible',                 requiresKey: false, type: 'sound_effects',            rows: ['SFX'] },
+    { id: 'kenney',             name: 'Kenney.nl',                  requiresKey: false, type: 'game_assets_audio',        rows: ['SFX', 'Open Media'] }
   ];
   function readConnectorState() { try { return JSON.parse(localStorage.getItem('lp_connector_state') || 'null') || {}; } catch (e) { return {}; } }
   function writeConnectorState(s) { try { localStorage.setItem('lp_connector_state', JSON.stringify(s)); } catch (e) {} }
@@ -4892,6 +4897,51 @@ window.addEventListener('online',  () => toast('Back online'));
         });
       });
   }
+
+  function lpFetchBbcSfx() {
+    var url = 'https://sound-effects.bbcrewind.co.uk/api/sfx/search?limit=10&q=nature';
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        return ((data || {}).results || []).map(function (item) {
+          return lpNormalizeImportedItem({
+            id: String(item.id),
+            title: item.description || ('BBC SFX ' + item.id),
+            creator: 'BBC',
+            sourceUrl: 'https://sound-effects.bbcrewind.co.uk/#' + item.id,
+            mediaUrl: 'https://sound-effects-media.bbcrewind.co.uk/mp3/' + item.id + '.mp3',
+            mediaType: 'audio',
+            license: 'RemArc Licence',
+            licenseUrl: 'https://sound-effects.bbcrewind.co.uk/licence',
+            category: 'SFX',
+            description: (item.description || '').slice(0, 300),
+            duration: item.duration ? Math.round(parseFloat(item.duration)) : null
+          }, 'bbc_sfx');
+        });
+      });
+  }
+  function lpFetchZapSplat(key) {
+    var url = 'https://www.zapsplat.com/api/v1/search/?type=sound-effect&q=ambient&api_key=' + encodeURIComponent(key) + '&limit=10';
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        return ((data || {}).results || (Array.isArray(data) ? data : [])).map(function (item) {
+          return lpNormalizeImportedItem({
+            id: String(item.id || item.zs_id || item.sound_id || ('zs_' + Math.random().toString(36).slice(2))),
+            title: item.title || item.name || 'ZapSplat SFX',
+            creator: 'ZapSplat',
+            sourceUrl: item.url || item.link || 'https://www.zapsplat.com',
+            mediaUrl: item.download_url || item.preview_url || item.mp3_url || '',
+            mediaType: 'audio',
+            license: 'ZapSplat Standard License',
+            licenseUrl: 'https://www.zapsplat.com/license-type/standard-license/',
+            category: 'SFX',
+            description: (item.description || '').slice(0, 300),
+            duration: item.duration || null
+          }, 'zapsplat');
+        });
+      });
+  }
   function lpConnectorFetch(connector) {
     var key = connector.requiresKey ? (function () { try { return localStorage.getItem(connector.keyName); } catch (e) { return null; } })() : null;
     if (connector.requiresKey && !key) return Promise.resolve(lpDemoPreview(connector.name));
@@ -4907,6 +4957,11 @@ window.addEventListener('online',  () => toast('Back online'));
     if (connector.id === 'nps')              return lpFetchNps(key).catch(function () { return lpDemoPreview(connector.name); });
     if (connector.id === 'ccmixter')         return lpFetchCcMixter().catch(function () { return lpDemoPreview(connector.name); });
     if (connector.id === 'fma')              return lpFetchFma().catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'bbc_sfx')          return lpFetchBbcSfx().catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'zapsplat')         return lpFetchZapSplat(key).catch(function () { return lpDemoPreview(connector.name); });
+    if (connector.id === 'mixkit')           return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'soundbible')       return Promise.resolve(lpDemoPreview(connector.name));
+    if (connector.id === 'kenney')           return Promise.resolve(lpDemoPreview(connector.name));
     return Promise.resolve(lpDemoPreview(connector.name));
   }
   function renderContentSources() {
@@ -4915,7 +4970,7 @@ window.addEventListener('online',  () => toast('Back online'));
     document.body.classList.add('lp-paging');
     var pg = $$('lp-page'); if (pg) pg.hidden = false;
     $$('lp-page-title').textContent = 'Content Sources';
-    $$('lp-page-blurb').textContent = '13 free / public-domain / open-license / open-data sources. Discovery only — every item passes through Draft Catalog or Rights Review before publication.';
+    $$('lp-page-blurb').textContent = '18 free / public-domain / open-license / open-data sources. Discovery only — every item passes through Draft Catalog or Rights Review before publication.';
     var st = readConnectorState();
     var rows = LP_CONNECTORS.map(function (c) {
       var s = st[c.id] || { enabled: true, lastChecked: null, status: c.requiresKey ? 'needs_key' : 'no_key_required' };
