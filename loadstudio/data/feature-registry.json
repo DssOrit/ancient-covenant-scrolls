@@ -5495,6 +5495,174 @@
       ],
       "type": "integration",
       "status": "Integration Required"
+    },
+    {
+      "id": "advertiser",
+      "title": "Advertiser",
+      "desc": "Manage ad slots and sponsor placements for distributed content.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "continuity-engine",
+      "title": "Continuity Engine",
+      "desc": "Track visual and narrative continuity across scenes.",
+      "tools": [
+        "continuity-report.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "display-focus-controls",
+      "title": "Display & Focus Controls",
+      "desc": "Stage size, zoom, and focus settings for the editing view.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "generation-queue",
+      "title": "Generation Queue",
+      "desc": "Track pending and in-progress AI generation jobs across all providers.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "inbox",
+      "title": "Inbox",
+      "desc": "Incoming deliveries, review requests, and shared project notifications.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "multilingual",
+      "title": "Multilingual",
+      "desc": "Multi-language subtitles, dubbing, and localisation settings.",
+      "tools": [],
+      "type": "provider",
+      "status": "Provider Needed"
+    },
+    {
+      "id": "output-review",
+      "title": "Output Review",
+      "desc": "Preview and approve renders before final export.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "own-image-clone",
+      "title": "Own Image Clone",
+      "desc": "Clone and adapt reference imagery into the project style.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "production-board",
+      "title": "Production Board",
+      "desc": "Kanban-style view of project tasks, milestones, and status.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "prompt-lock",
+      "title": "Prompt Lock",
+      "desc": "Lock approved prompts to prevent accidental regeneration.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "provider-report",
+      "title": "Provider Report",
+      "desc": "Summary report of provider availability and test results.",
+      "tools": [
+        "provider-registry-report.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "reference-pack",
+      "title": "Reference Pack",
+      "desc": "Reference images and documents pinned to a project for consistency.",
+      "tools": [
+        "reference-packs.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "scene-audio",
+      "title": "Scene Audio",
+      "desc": "Per-scene audio assignments \u2014 music, SFX, ambient, and dialogue tracks.",
+      "tools": [
+        "scene-audio.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "scene-proof",
+      "title": "Scene Proof",
+      "desc": "Frame-accurate proofing tool for each scene before export.",
+      "tools": [
+        "scene-proof.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "sfx-generator",
+      "title": "SFX Generator",
+      "desc": "Generate and layer sound effects for scenes.",
+      "tools": [],
+      "type": "provider",
+      "status": "Provider Needed"
+    },
+    {
+      "id": "style-bible",
+      "title": "Style Bible",
+      "desc": "Visual direction document \u2014 palette, typography, tone, reference board.",
+      "tools": [
+        "style-bible.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "video-pipeline",
+      "title": "Video Pipeline",
+      "desc": "End-to-end video production pipeline \u2014 ingest, process, render, export.",
+      "tools": [
+        "video-pipeline.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "voice-bible",
+      "title": "Voice Bible",
+      "desc": "Per-character voice direction \u2014 style, tone, accent, delivery notes.",
+      "tools": [
+        "voice-bible.json"
+      ],
+      "type": "local",
+      "status": "Local Ready"
+    },
+    {
+      "id": "voice-character-engine",
+      "title": "Voice Character Engine",
+      "desc": "Character-aware voice assignment and preview engine.",
+      "tools": [],
+      "type": "local",
+      "status": "Local Ready"
     }
   ],
   "features": [
