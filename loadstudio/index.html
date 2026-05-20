@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v203 intro-overlay-fix — 4 feature cards (LoadPlay pattern, purple) === */
+/* === LoadStudio v204 character-stability-interior — 4 feature cards (LoadPlay pattern, purple) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -990,63 +990,218 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#5eb4d6,#9c9cff)"></div>
     <div class="ls-h"><h2>Character Stability Engine</h2><span class="ls-dept" style="color:#5eb4d6">Character Dept</span></div>
-    <p class="ls-lead">Lock character identity across every scene. Reference images, approved takes, and prompt locks preserve consistency.</p>
+    <p class="ls-lead">Manual continuity control. Lock identity, log approved and rejected takes, track reference paths, and record consistency scores per character. No AI runs here — this room is the human-controlled source of truth.</p>
+
     <div class="ls-panel">
-      <h3>Character Profile</h3>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3);color:#5ee0a5;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Local Ready</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,160,0,.1);border:1px solid rgba(255,160,0,.3);color:#ffb300;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Manual Review</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(100,130,255,.1);border:1px solid rgba(100,130,255,.3);color:#8ab4ff;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Integration Required</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(160,160,160,.1);border:1px solid rgba(160,160,160,.3);color:#aaa;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Untested</span>
+      </div>
+      <p style="margin:8px 0 0;font:300 12px Inter,system-ui,sans-serif;color:#9c93b5">All features in this room are Local Ready unless marked otherwise. Face matching, AI identity locking, and automated scoring require provider connection (Integration Required).</p>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Character Stability Profile</h3>
       <div class="form-grid" style="margin-top:10px">
-        <label>Character Name<input id="ls-cs-name" type="text" placeholder="Character name"></label>
-        <label>Consistency Mode<select id="ls-cs-mode"><option>Strict</option><option>Moderate</option><option>Loose</option></select></label>
-        <label>Face Notes<textarea id="ls-cs-face" rows="2" placeholder="Facial feature details"></textarea></label>
-        <label>Body Type Notes<textarea id="ls-cs-body" rows="2" placeholder="Body type details"></textarea></label>
-        <label>Skin Tone Notes<input id="ls-cs-skin" type="text" placeholder="Skin tone description"></label>
-        <label>Hair Notes<input id="ls-cs-hair" type="text" placeholder="Hair description"></label>
-        <label>Wardrobe Notes<textarea id="ls-cs-wardrobe" rows="2" placeholder="Wardrobe details"></textarea></label>
-        <label>Era / Period<input id="ls-cs-era" type="text" placeholder="e.g. 1940s, contemporary, futuristic"></label>
-        <label>Expression Range<textarea id="ls-cs-expression" rows="2" placeholder="Emotions this character shows"></textarea></label>
-        <label>Allowed Variations<textarea id="ls-cs-allowed" rows="2" placeholder="What can change between scenes"></textarea></label>
-        <label>Forbidden Changes<textarea id="ls-cs-forbidden" rows="2" placeholder="What must never change"></textarea></label>
-        <label>Prompt Lock Phrases<textarea id="ls-cs-prompt-lock" rows="2" placeholder="Phrases to always include in prompts"></textarea></label>
-        <label>Negative Prompt Lock Phrases<textarea id="ls-cs-neg-lock" rows="2" placeholder="Phrases to always include in negative prompts"></textarea></label>
-        <label>Face Match Score (1-5)<input id="ls-cs-face-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Skin Tone Match Score (1-5)<input id="ls-cs-skin-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Body Type Match Score (1-5)<input id="ls-cs-body-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Hair Match Score (1-5)<input id="ls-cs-hair-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Wardrobe Match Score (1-5)<input id="ls-cs-wardrobe-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Era Match Score (1-5)<input id="ls-cs-era-score" type="number" min="1" max="5" placeholder="-"></label>
-        <label>Style Match Score (1-5)<input id="ls-cs-style-score" type="number" min="1" max="5" placeholder="-"></label>
+        <div class="field"><label>Character Name *</label><input id="ls-cs-name" type="text" placeholder="e.g. Amara Chen" /></div>
+        <div class="field"><label>Linked Character ID</label><input id="ls-cs-char-id" type="text" placeholder="e.g. char-001 (from Character Studio)" /></div>
+        <div class="field"><label>Consistency Mode</label>
+          <select id="ls-cs-mode">
+            <option value="Strict">Strict — no variation allowed</option>
+            <option value="Moderate">Moderate — minor variation OK</option>
+            <option value="Loose">Loose — broad range allowed</option>
+          </select>
+        </div>
+        <div class="field"><label>Identity Lock Notes</label><textarea id="ls-cs-identity-lock" rows="2" placeholder="Core identity rules that must never drift. e.g. Always the same actor reference, never aged up."></textarea></div>
+        <div class="field"><label>Face Notes</label><textarea id="ls-cs-face" rows="2" placeholder="Facial feature details. e.g. High cheekbones, dark eyes, sharp jaw."></textarea></div>
+        <div class="field"><label>Body Notes</label><textarea id="ls-cs-body" rows="2" placeholder="Body type, height, build. e.g. Tall, athletic, broad shoulders."></textarea></div>
+        <div class="field"><label>Skin Tone Notes</label><input id="ls-cs-skin" type="text" placeholder="e.g. Deep brown, warm undertone, no filters" /></div>
+        <div class="field"><label>Hair Notes</label><input id="ls-cs-hair" type="text" placeholder="e.g. Natural coils, dark brown, cropped" /></div>
+        <div class="field"><label>Wardrobe Continuity Notes</label><textarea id="ls-cs-wardrobe" rows="2" placeholder="What the character always wears or must not wear across scenes."></textarea></div>
+        <div class="field"><label>Era / Style Rules</label><input id="ls-cs-era" type="text" placeholder="e.g. Contemporary, 1940s Harlem, near-future dystopian" /></div>
+        <div class="field"><label>Forbidden Changes</label><textarea id="ls-cs-forbidden" rows="2" placeholder="What must never change. e.g. Hair must never be straightened, no glasses."></textarea></div>
+        <div class="field"><label>Prompt Lock Phrases</label><textarea id="ls-cs-prompt-lock" rows="2" placeholder="Always include these in generation prompts."></textarea></div>
+        <div class="field"><label>Negative Prompt Lock Phrases</label><textarea id="ls-cs-neg-lock" rows="2" placeholder="Always include in negative prompts to prevent drift."></textarea></div>
       </div>
     </div>
+
     <div class="ls-panel">
-      <h3>Reference Image Set</h3>
-      <div id="ls-cs-ref-list" style="margin-bottom:10px;min-height:40px;color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No reference images uploaded yet.</div>
-      <label>Upload Reference Image<input type="file" id="ls-cs-ref-upload" accept="image/*" style="margin-top:6px;display:block"></label>
+      <h3>Reference Set</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Log reference image paths or URLs. No upload or AI processing happens here.</p>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="field"><label>Path or URL</label><input id="ls-cs-ref-path" type="text" placeholder="e.g. assets/refs/amara-face-01.jpg or https://..." /></div>
+        <div class="field"><label>Reference Type</label>
+          <select id="ls-cs-ref-type">
+            <option value="">Select type...</option>
+            <option value="face">Face</option>
+            <option value="wardrobe">Wardrobe</option>
+            <option value="full-body">Full Body</option>
+            <option value="expression">Expression</option>
+            <option value="pose">Pose</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Notes</label><textarea id="ls-cs-ref-notes" rows="2" placeholder="e.g. Primary face reference, scene 1 lighting"></textarea></div>
+      </div>
+      <button class="mini" id="ls-cs-ref-add">Add Reference</button>
+      <div id="ls-cs-ref-list" style="margin-top:10px"></div>
     </div>
+
     <div class="ls-panel">
-      <h3>Approved Takes</h3>
-      <div id="ls-cs-approved-list" style="margin-bottom:10px;min-height:30px"></div>
-      <textarea id="ls-cs-approved-input" rows="2" placeholder="Add Approved Take Note" style="width:100%;box-sizing:border-box"></textarea>
-      <button class="btn secondary" type="button" onclick="var t=document.getElementById('ls-cs-approved-input');var l=document.getElementById('ls-cs-approved-list');if(t&&t.value&&l){var d=document.createElement('div');d.style.cssText='padding:8px 10px;background:rgba(94,224,165,.08);border:1px solid rgba(94,224,165,.28);border-radius:8px;margin-bottom:6px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5';d.textContent=t.value;l.appendChild(d);t.value='';}" style="margin-top:8px">Add Approved Take</button>
+      <h3>Approved / Rejected Takes</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Log each take with its result and any do-not-repeat notes for the next generation.</p>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="field"><label>Take Name *</label><input id="ls-cs-take-name" type="text" placeholder="e.g. Amara-Scene02-Take3" /></div>
+        <div class="field"><label>Scene ID</label><input id="ls-cs-take-scene" type="text" placeholder="e.g. scene-02" /></div>
+        <div class="field"><label>Asset Path or URL</label><input id="ls-cs-take-path" type="text" placeholder="e.g. assets/generated/amara-s02-t3.jpg" /></div>
+        <div class="field"><label>Status</label>
+          <select id="ls-cs-take-status">
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Needs Review">Needs Review</option>
+          </select>
+        </div>
+        <div class="field"><label>Reason / Notes</label><textarea id="ls-cs-take-notes" rows="2" placeholder="Why approved or rejected. e.g. Face matches reference, lighting correct."></textarea></div>
+        <div class="field"><label>Do-Not-Repeat Mistake</label><textarea id="ls-cs-take-dnr" rows="2" placeholder="What went wrong if rejected. e.g. Skin tone was desaturated, hair color wrong."></textarea></div>
+      </div>
+      <button class="mini" id="ls-cs-take-add">Add Take</button>
+      <div id="ls-cs-takes-list" style="margin-top:10px"></div>
     </div>
+
     <div class="ls-panel">
-      <h3>Rejected Takes — Do Not Repeat</h3>
-      <div id="ls-cs-rejected-list" style="margin-bottom:10px;min-height:30px"></div>
-      <textarea id="ls-cs-rejected-input" rows="2" placeholder="Describe rejected take" style="width:100%;box-sizing:border-box"></textarea>
-      <button class="btn secondary" type="button" onclick="var t=document.getElementById('ls-cs-rejected-input');var l=document.getElementById('ls-cs-rejected-list');if(t&&t.value&&l){var d=document.createElement('div');d.style.cssText='padding:8px 10px;background:rgba(255,110,156,.08);border:1px solid rgba(255,110,156,.28);border-radius:8px;margin-bottom:6px;font:400 13px Inter,system-ui,sans-serif;color:#ff6e9c';d.textContent=t.value;l.appendChild(d);t.value='';}" style="margin-top:8px">Add Rejected Take</button>
+      <h3>Consistency Scores <span style="font:300 11px Inter,system-ui,sans-serif;color:#9c93b5">(1–5 scale, manual)</span></h3>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field"><label>Face Consistency Score</label><input id="ls-cs-face-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Wardrobe Consistency Score</label><input id="ls-cs-wardrobe-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Voice Consistency Score</label><input id="ls-cs-voice-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Scene Continuity Score</label><input id="ls-cs-scene-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Skin Tone Match Score</label><input id="ls-cs-skin-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Body Type Match Score</label><input id="ls-cs-body-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Hair Match Score</label><input id="ls-cs-hair-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Era / Style Match Score</label><input id="ls-cs-era-score" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field" style="grid-column:1/-1"><label>Score Notes</label><textarea id="ls-cs-score-notes" rows="2" placeholder="Any notes on scoring. e.g. Face score reduced due to lighting mismatch in scene 3."></textarea></div>
+      </div>
+      <div id="ls-cs-avg-display" style="margin:12px 0 4px;font:600 18px Inter,system-ui,sans-serif;color:#5fc8ff">Average: --</div>
+      <p style="margin:0;font:300 12px Inter,system-ui,sans-serif;color:#9c93b5">Average of all entered scores (1–5). Calculated on Save. Manual entry only — automated face matching requires provider connection.</p>
     </div>
+
     <div class="ls-panel">
-      <h3>Average Consistency Score</h3>
-      <div id="ls-cs-avg-display" style="margin:8px 0 4px;font:600 18px Inter,system-ui,sans-serif;color:#5fc8ff">Score: --</div>
-      <p style="margin:0;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Average of all 7 fields (1-5 scale). Calculated on Save.</p>
-    </div>
-    <div class="ls-panel">
-      <div class="ls-warn-badge">Perfect character consistency depends on the provider or local engine. LoadStudio improves consistency with reference images, approved takes, prompt locks, and continuity checks.</div>
+      <div class="ls-warn-badge">Character consistency is manual and local until a provider or Local Engine is connected. This room records your decisions — it does not verify them automatically.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <button id="ls-cs-save-btn" class="btn primary" type="button">Save Character Profile</button>
-        <button id="ls-cs-export-btn" class="btn secondary" type="button">Export Stability Pack</button>
+        <button id="ls-cs-save-btn" class="ls-btn" type="button">Save Character Profile</button>
+        <button id="ls-cs-export-btn" class="ls-btn ls-btn-ghost" type="button">Export Stability Pack</button>
+      </div>
+      <div id="ls-cs-msg" style="display:none;padding:8px 12px;border-radius:4px;font-size:12px;margin-top:8px"></div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Quick Links</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Navigation only — no forms are duplicated here.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('character-studio')">Open Character Studio</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('asset-registry')">Open Asset Registry</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('prompt-writer')">Open Prompt Writer</button>
       </div>
     </div>
+
     <div class="ls-related"></div>
   </div>
+
+  <script id="ls-cs-v204">(function(){
+    var TAKES_KEY='ls_cs_takes';
+    var REFS_KEY='ls_cs_refs';
+
+    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    function gv(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';}
+
+    function loadTakes(){try{return JSON.parse(localStorage.getItem(TAKES_KEY)||'[]');}catch(e){return [];}}
+    function saveTakes(arr){try{localStorage.setItem(TAKES_KEY,JSON.stringify(arr));}catch(e){}}
+    function loadRefs(){try{return JSON.parse(localStorage.getItem(REFS_KEY)||'[]');}catch(e){return [];}}
+    function saveRefs(arr){try{localStorage.setItem(REFS_KEY,JSON.stringify(arr));}catch(e){}}
+
+    function statusColor(s){
+      if(s==='Approved')return{bg:'rgba(94,224,165,.1)',border:'rgba(94,224,165,.3)',col:'#5ee0a5'};
+      if(s==='Rejected')return{bg:'rgba(255,110,156,.1)',border:'rgba(255,110,156,.3)',col:'#ff6e9c'};
+      return{bg:'rgba(255,180,0,.08)',border:'rgba(255,180,0,.3)',col:'#ffb300'};
+    }
+
+    function renderTakes(){
+      var list=document.getElementById('ls-cs-takes-list');if(!list)return;
+      var takes=loadTakes();
+      if(!takes.length){list.innerHTML='<p style="color:#9c93b5;font:300 12px Inter,system-ui,sans-serif;padding:8px 0">No takes logged yet.</p>';return;}
+      list.innerHTML=takes.map(function(t,i){
+        var c=statusColor(t.status);
+        return '<div style="padding:8px 10px;background:'+c.bg+';border:1px solid '+c.border+';border-radius:8px;margin-bottom:6px;font:400 12px Inter,system-ui,sans-serif">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">'
+          +'<span style="color:'+c.col+';font-weight:600">'+esc(t.status)+'</span>'
+          +'<span style="color:#ddd;font-weight:600">'+esc(t.name)+'</span>'
+          +(t.scene?'<span style="color:#9c93b5">'+esc(t.scene)+'</span>':'')
+          +'<button onclick="window.lsCSDeleteTake('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:14px;padding:0 4px" title="Remove">x</button>'
+          +'</div>'
+          +(t.path?'<div style="color:#9c9cff;font-size:11px;margin-top:3px">'+esc(t.path)+'</div>':'')
+          +(t.notes?'<div style="color:#c0b8d9;margin-top:4px">'+esc(t.notes)+'</div>':'')
+          +(t.dnr?'<div style="color:#ff9c6e;margin-top:2px;font-size:11px">Do not repeat: '+esc(t.dnr)+'</div>':'')
+          +'</div>';
+      }).join('');
+    }
+
+    function renderRefs(){
+      var list=document.getElementById('ls-cs-ref-list');if(!list)return;
+      var refs=loadRefs();
+      if(!refs.length){list.innerHTML='<p style="color:#9c93b5;font:300 12px Inter,system-ui,sans-serif;padding:8px 0">No references logged yet.</p>';return;}
+      list.innerHTML=refs.map(function(r,i){
+        return '<div style="padding:8px 10px;background:rgba(94,180,214,.08);border:1px solid rgba(94,180,214,.25);border-radius:8px;margin-bottom:6px;font:400 12px Inter,system-ui,sans-serif">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">'
+          +'<span style="color:#5eb4d6;font-weight:600">'+esc(r.type||'reference')+'</span>'
+          +'<span style="color:#9c9cff;font-size:11px;word-break:break-all">'+esc(r.path)+'</span>'
+          +'<button onclick="window.lsCSDeleteRef('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:14px;padding:0 4px" title="Remove">x</button>'
+          +'</div>'
+          +(r.notes?'<div style="color:#c0b8d9;margin-top:4px">'+esc(r.notes)+'</div>':'')
+          +'</div>';
+      }).join('');
+    }
+
+    window.lsCSDeleteTake=function(i){var t=loadTakes();t.splice(i,1);saveTakes(t);renderTakes();};
+    window.lsCSDeleteRef=function(i){var r=loadRefs();r.splice(i,1);saveRefs(r);renderRefs();};
+
+    var addTakeBtn=document.getElementById('ls-cs-take-add');
+    if(addTakeBtn)addTakeBtn.addEventListener('click',function(){
+      var name=gv('ls-cs-take-name');
+      if(!name)return;
+      var takes=loadTakes();
+      takes.push({id:'take-'+Date.now(),name:name,scene:gv('ls-cs-take-scene'),path:gv('ls-cs-take-path'),status:gv('ls-cs-take-status')||'Approved',notes:gv('ls-cs-take-notes'),dnr:gv('ls-cs-take-dnr'),addedAt:new Date().toISOString()});
+      saveTakes(takes);
+      ['ls-cs-take-name','ls-cs-take-scene','ls-cs-take-path','ls-cs-take-notes','ls-cs-take-dnr'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      var st=document.getElementById('ls-cs-take-status');if(st)st.value='Approved';
+      renderTakes();
+    });
+
+    var addRefBtn=document.getElementById('ls-cs-ref-add');
+    if(addRefBtn)addRefBtn.addEventListener('click',function(){
+      var path=gv('ls-cs-ref-path');
+      if(!path)return;
+      var refs=loadRefs();
+      refs.push({id:'ref-'+Date.now(),path:path,type:gv('ls-cs-ref-type'),notes:gv('ls-cs-ref-notes'),addedAt:new Date().toISOString()});
+      saveRefs(refs);
+      ['ls-cs-ref-path','ls-cs-ref-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      var rt=document.getElementById('ls-cs-ref-type');if(rt)rt.value='';
+      renderRefs();
+    });
+
+    function init(){renderTakes();renderRefs();}
+
+    var sec=document.getElementById('section-character-stability');
+    if(sec){
+      var obs=new MutationObserver(function(){if(sec.classList.contains('active'))init();});
+      obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    }
+
+    init();
+    window.lsCS={renderTakes:renderTakes,renderRefs:renderRefs};
+  }());</script>
+
 </section>
 
 <section id="section-text-to-video" class="section" data-title="Text to Video Studio">

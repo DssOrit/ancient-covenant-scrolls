@@ -895,23 +895,30 @@ render();
   document.addEventListener('DOMContentLoaded',function(){
     var saveBtn=document.getElementById('ls-cs-save-btn');
     if(saveBtn){saveBtn.addEventListener('click',function(){
-      var scoreIds=['ls-cs-face-score','ls-cs-skin-score','ls-cs-body-score','ls-cs-hair-score','ls-cs-wardrobe-score','ls-cs-era-score','ls-cs-style-score'];
-      var scoreKeys=['face','skinTone','bodyType','hair','wardrobe','era','style'];
+      var scoreIds=['ls-cs-face-score','ls-cs-wardrobe-score','ls-cs-voice-score','ls-cs-scene-score','ls-cs-skin-score','ls-cs-body-score','ls-cs-hair-score','ls-cs-era-score'];
+      var scoreKeys=['face','wardrobe','voice','scene','skinTone','bodyType','hair','era'];
       var scores={};var vals=[];
       scoreIds.forEach(function(id,i){var el=document.getElementById(id);var n=el?parseFloat(el.value)||0:0;scores[scoreKeys[i]]=n;if(n>0)vals.push(n);});
       var avg=vals.length?Math.round((vals.reduce(function(a,b){return a+b;},0)/vals.length)*10)/10:0;
-      var avgEl=document.getElementById('ls-cs-avg-display');if(avgEl)avgEl.textContent='Score: '+avg+'/5';
-      var profile={id:'stability-'+Date.now(),characterId:v('ls-cs-name'),characterName:v('ls-cs-name'),consistencyMode:v('ls-cs-mode'),faceNotes:v('ls-cs-face'),bodyNotes:v('ls-cs-body'),skinToneNotes:v('ls-cs-skin'),hairNotes:v('ls-cs-hair'),wardrobeNotes:v('ls-cs-wardrobe'),era:v('ls-cs-era'),expressionRange:v('ls-cs-expression'),allowedVariations:v('ls-cs-allowed'),forbiddenChanges:v('ls-cs-forbidden'),promptLockPhrases:v('ls-cs-prompt-lock'),negativePromptLockPhrases:v('ls-cs-neg-lock'),scores:scores,consistencyScore:avg,savedAt:new Date().toISOString()};
+      var avgEl=document.getElementById('ls-cs-avg-display');if(avgEl)avgEl.textContent='Average: '+avg+'/5';
+      var profile={id:'stability-'+Date.now(),characterName:v('ls-cs-name'),linkedCharacterId:v('ls-cs-char-id'),consistencyMode:v('ls-cs-mode'),identityLockNotes:v('ls-cs-identity-lock'),faceNotes:v('ls-cs-face'),bodyNotes:v('ls-cs-body'),skinToneNotes:v('ls-cs-skin'),hairNotes:v('ls-cs-hair'),wardrobeContinuityNotes:v('ls-cs-wardrobe'),eraStyleRules:v('ls-cs-era'),forbiddenChanges:v('ls-cs-forbidden'),promptLockPhrases:v('ls-cs-prompt-lock'),negativePromptLockPhrases:v('ls-cs-neg-lock'),scoreNotes:v('ls-cs-score-notes'),scores:scores,consistencyScore:avg,savedAt:new Date().toISOString()};
       var list=JSON.parse(localStorage.getItem('ls_stability')||'[]');
       list.push(profile);localStorage.setItem('ls_stability',JSON.stringify(list));
+      var takes=[];try{takes=JSON.parse(localStorage.getItem('ls_cs_takes')||'[]');}catch(e){}
+      var refs=[];try{refs=JSON.parse(localStorage.getItem('ls_cs_refs')||'[]');}catch(e){}
       var contList=JSON.parse(localStorage.getItem('ls_continuity_log')||'[]');
-      contList.push({type:'stability-save',characterId:profile.characterId,scores:scores,consistencyScore:avg,savedAt:profile.savedAt});
+      contList.push({type:'stability-save',characterName:profile.characterName,linkedCharacterId:profile.linkedCharacterId,scores:scores,consistencyScore:avg,takesCount:takes.length,refsCount:refs.length,savedAt:profile.savedAt});
       localStorage.setItem('ls_continuity_log',JSON.stringify(contList));
+      var msg=document.getElementById('ls-cs-msg');
+      if(msg){msg.textContent='Profile saved.';msg.style.background='#1a3a1a';msg.style.color='#5dbb63';msg.style.display='block';setTimeout(function(){msg.style.display='none';},3000);}
     });}
     var expBtn=document.getElementById('ls-cs-export-btn');
     if(expBtn){expBtn.addEventListener('click',function(){
-      var list=JSON.parse(localStorage.getItem('ls_stability')||'[]');
-      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify({characterStabilityProfiles:list},null,2));a.download='character-stability.json';a.click();
+      var profiles=JSON.parse(localStorage.getItem('ls_stability')||'[]');
+      var takes=[];try{takes=JSON.parse(localStorage.getItem('ls_cs_takes')||'[]');}catch(e){}
+      var refs=[];try{refs=JSON.parse(localStorage.getItem('ls_cs_refs')||'[]');}catch(e){}
+      var pack={characterStabilityProfiles:profiles,takes:takes,referenceSet:refs,exportedAt:new Date().toISOString()};
+      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(pack,null,2));a.download='character-stability.json';a.click();
     });}
   });
   function v(id){var el=document.getElementById(id);return el?(el.value||''):''}
