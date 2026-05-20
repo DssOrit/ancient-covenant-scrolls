@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v8 — 4 feature cards (LoadPlay pattern, purple) === */
+/* === LoadStudio v202 media-vault-frame-fix — 4 feature cards (LoadPlay pattern, purple) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3174,113 +3174,110 @@ document.addEventListener('click',function(e){
 </section>
 
 <section id="section-media-vault" class="section" data-title="Media Vault">
-  <div class="panel">
-    <h2>Media Vault</h2>
-    <p style="font-size:13px;color:#aaa;margin:4px 0 12px">Browse all registered assets and manual vault entries. To register new assets use <button class="ls-link-btn" onclick="go('asset-registry')">Asset Registry</button>.</p>
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#4a9eff,#7b5ea7)"></div>
+    <div class="ls-h"><h2>Media Vault</h2><span class="ls-dept" style="color:#4a9eff">Production</span></div>
+    <p class="ls-lead">Browse all registered assets and manual vault entries. To register new assets use <button class="ls-link-btn" onclick="go('asset-registry')">Asset Registry</button>.</p>
 
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0">
-      <input type="text" id="ls-mv-search" placeholder="Search by name..." autocomplete="off" style="flex:1 1 140px;padding:6px 8px;background:#1a1a2e;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" />
-      <select id="ls-mv-filter-type" style="flex:1 1 120px;padding:6px 8px;background:#1a1a2e;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px">
-        <option value="">All Types</option>
-        <option value="image">Image</option>
-        <option value="video">Video</option>
-        <option value="audio">Audio</option>
-        <option value="music">Music</option>
-        <option value="sfx">SFX</option>
-        <option value="subtitle">Subtitle</option>
-        <option value="character-reference">Character Reference</option>
-        <option value="wardrobe">Wardrobe</option>
-        <option value="prop">Prop</option>
-        <option value="location">Location</option>
-        <option value="other">Other</option>
-      </select>
-      <button class="ls-btn-sm" id="ls-mv-refresh" style="padding:6px 12px;background:#333;border:1px solid #555;color:#ddd;border-radius:4px;cursor:pointer;font-size:12px">Refresh</button>
-    </div>
-
-    <div id="ls-mv-tabs" style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0">
-      <button class="ls-mv-tab ls-mv-tab-active" data-mvtab="" style="padding:5px 12px;background:#4a9eff;border:1px solid #4a9eff;color:#fff;border-radius:3px;cursor:pointer;font-size:12px">All</button>
-      <button class="ls-mv-tab" data-mvtab="image" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Images</button>
-      <button class="ls-mv-tab" data-mvtab="video" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Video</button>
-      <button class="ls-mv-tab" data-mvtab="audio" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Audio</button>
-      <button class="ls-mv-tab" data-mvtab="music" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Music</button>
-      <button class="ls-mv-tab" data-mvtab="sfx" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">SFX</button>
-      <button class="ls-mv-tab" data-mvtab="wardrobe" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Wardrobe</button>
-      <button class="ls-mv-tab" data-mvtab="prop" style="padding:5px 12px;background:#1a1a2e;border:1px solid #444;color:#aaa;border-radius:3px;cursor:pointer;font-size:12px">Props</button>
-    </div>
-
-    <div id="ls-mv-count" style="font-size:12px;color:#888;margin:4px 0 6px"></div>
-
-    <div id="ls-mv-list" style="width:100%;font-size:12px;overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse">
-        <thead>
-          <tr>
-            <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Name</th>
-            <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Type</th>
-            <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Status</th>
-            <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Source</th>
-            <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Scene</th>
-          </tr>
-        </thead>
-        <tbody id="ls-mv-tbody"></tbody>
-      </table>
-      <div id="ls-mv-empty" style="padding:20px;text-align:center;color:#888;font-size:13px;display:none">No assets found. Register assets in the <button class="ls-link-btn" onclick="go('asset-registry')">Asset Registry</button> or add a vault entry below.</div>
-    </div>
-
-    <div style="margin-top:16px;border:1px solid #333;border-radius:6px;overflow:hidden">
-      <button id="ls-mv-form-toggle" style="width:100%;padding:10px 14px;background:#1a1a2e;border:none;color:#aaa;text-align:left;font-size:13px;cursor:pointer;-webkit-appearance:none">Add Manual Vault Entry</button>
-      <div id="ls-mv-form-body" style="display:none;padding:14px">
-        <div style="display:grid;gap:10px">
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Media Title *<input type="text" id="ls-mv-title" placeholder="e.g. Hero walk cycle" style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" /></label>
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Type *
-            <select id="ls-mv-type" style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px">
-              <option value="">Select type...</option>
-              <option value="image">Image</option>
-              <option value="video">Video</option>
-              <option value="audio">Audio</option>
-              <option value="music">Music</option>
-              <option value="sfx">SFX</option>
-              <option value="subtitle">Subtitle</option>
-              <option value="character-reference">Character Reference</option>
-              <option value="wardrobe">Wardrobe</option>
-              <option value="prop">Prop</option>
-              <option value="location">Location</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Path or URL<input type="text" id="ls-mv-path" placeholder="e.g. assets/video/hero-walk.mp4" style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" /></label>
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Source<input type="text" id="ls-mv-source" placeholder="e.g. Own creation, Pexels" style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" /></label>
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Linked Scene<input type="text" id="ls-mv-scene" placeholder="e.g. scene-01" style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" /></label>
-          <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#aaa">Notes<textarea id="ls-mv-notes" rows="2" placeholder="Any notes about this file..." style="padding:7px 9px;background:#111;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px;resize:vertical"></textarea></label>
-          <div style="display:flex;gap:8px">
-            <button class="ls-btn" id="ls-mv-save">Save Vault Entry</button>
-            <button class="ls-btn ls-btn-ghost" id="ls-mv-cancel">Clear</button>
-          </div>
-          <div id="ls-mv-msg" style="display:none;padding:8px 12px;border-radius:4px;font-size:12px"></div>
-        </div>
+    <div class="ls-panel">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px">
+        <input type="text" id="ls-mv-search" placeholder="Search by name..." autocomplete="off" style="flex:1 1 140px;padding:6px 8px;background:#1a1a2e;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px" />
+        <select id="ls-mv-filter-type" style="flex:1 1 120px;padding:6px 8px;background:#1a1a2e;border:1px solid #444;color:#e8e8e8;border-radius:4px;font-size:13px">
+          <option value="">All Types</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+          <option value="audio">Audio</option>
+          <option value="music">Music</option>
+          <option value="sfx">SFX</option>
+          <option value="subtitle">Subtitle</option>
+          <option value="character-reference">Character Reference</option>
+          <option value="wardrobe">Wardrobe</option>
+          <option value="prop">Prop</option>
+          <option value="location">Location</option>
+          <option value="other">Other</option>
+        </select>
+        <button class="mini" id="ls-mv-refresh">Refresh</button>
       </div>
+
+      <div id="ls-mv-tabs" style="display:flex;flex-wrap:wrap;gap:4px;margin:0 0 10px">
+        <button class="ls-mv-tab chip" data-mvtab="" style="background:#4a9eff;border-color:#4a9eff;color:#fff">All</button>
+        <button class="ls-mv-tab chip" data-mvtab="image">Images</button>
+        <button class="ls-mv-tab chip" data-mvtab="video">Video</button>
+        <button class="ls-mv-tab chip" data-mvtab="audio">Audio</button>
+        <button class="ls-mv-tab chip" data-mvtab="music">Music</button>
+        <button class="ls-mv-tab chip" data-mvtab="sfx">SFX</button>
+        <button class="ls-mv-tab chip" data-mvtab="wardrobe">Wardrobe</button>
+        <button class="ls-mv-tab chip" data-mvtab="prop">Props</button>
+      </div>
+
+      <div id="ls-mv-count" style="font-size:12px;color:#888;margin:0 0 6px"></div>
+
+      <div id="ls-mv-list" style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Name</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Type</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Status</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Source</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Scene</th>
+            </tr>
+          </thead>
+          <tbody id="ls-mv-tbody"></tbody>
+        </table>
+        <div id="ls-mv-empty" style="padding:20px;text-align:center;color:#888;font-size:13px;display:none">No assets found. Register assets in the <button class="ls-link-btn" onclick="go('asset-registry')">Asset Registry</button> or add a vault entry below.</div>
+      </div>
+
+      <h3 style="margin:16px 0 8px;font-size:14px">Add Manual Vault Entry</h3>
+      <div class="form-grid">
+        <div class="field"><label>Media Title *</label><input type="text" id="ls-mv-title" placeholder="e.g. Hero walk cycle" /></div>
+        <div class="field"><label>Type *</label>
+          <select id="ls-mv-type">
+            <option value="">Select type...</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+            <option value="music">Music</option>
+            <option value="sfx">SFX</option>
+            <option value="subtitle">Subtitle</option>
+            <option value="character-reference">Character Reference</option>
+            <option value="wardrobe">Wardrobe</option>
+            <option value="prop">Prop</option>
+            <option value="location">Location</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Path or URL</label><input type="text" id="ls-mv-path" placeholder="e.g. assets/video/hero-walk.mp4" /></div>
+        <div class="field"><label>Source</label><input type="text" id="ls-mv-source" placeholder="e.g. Own creation, Pexels" /></div>
+        <div class="field"><label>Linked Scene</label><input type="text" id="ls-mv-scene" placeholder="e.g. scene-01" /></div>
+        <div class="field"><label>Notes</label><textarea id="ls-mv-notes" rows="2" placeholder="Any notes..."></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="ls-btn" id="ls-mv-save">Save Vault Entry</button>
+        <button class="ls-btn ls-btn-ghost" id="ls-mv-cancel">Clear</button>
+      </div>
+      <div id="ls-mv-msg" style="display:none;padding:8px 12px;border-radius:4px;font-size:12px;margin-top:8px"></div>
     </div>
   </div>
 
-  <script id="ls-mv-v201">(function(){
+  <script id="ls-mv-v202">(function(){
     var MV_KEY='ls_media_vault';
     var AR_KEY='ls_asset_registry';
     var _tab='';
 
-    function loadVault(){try{return JSON.parse(localStorage.getItem(MV_KEY)||'[]');}catch(_){return [];}}
-    function saveVault(arr){try{localStorage.setItem(MV_KEY,JSON.stringify(arr));}catch(_){}}
+    function loadVault(){try{return JSON.parse(localStorage.getItem(MV_KEY)||'[]');}catch(e){return [];}}
+    function saveVault(arr){try{localStorage.setItem(MV_KEY,JSON.stringify(arr));}catch(e){}}
     function loadRegistry(){
       try{var d=JSON.parse(localStorage.getItem(AR_KEY)||'{}');return Array.isArray(d.assets)?d.assets:[];}
-      catch(_){return [];}
+      catch(e){return [];}
     }
 
     function mergeItems(){
       var reg=loadRegistry().map(function(a){
-        return {id:a.id,name:a.name||'',type:a.type||'',source:a.source||'',scene:a.scene||'',
-          rights:a.license||a.rightsStatus||'',path:a.path||'',_src:'registry'};
+        return {id:a.id,name:a.name||'',type:a.type||'',source:a.source||'',scene:a.scene||'',_src:'registry'};
       });
       var vault=loadVault().map(function(v){
-        return {id:v.id,name:v.name||'',type:v.type||'',source:v.source||'',scene:v.scene||'',
-          rights:v.rights||v.license||'',path:v.path||'',_src:'vault'};
+        return {id:v.id,name:v.name||'',type:v.type||'',source:v.source||'',scene:v.scene||'',_src:'vault'};
       });
       var keys={};
       reg.forEach(function(r){keys[(r.name+'|'+r.type).toLowerCase()]=1;});
@@ -3290,10 +3287,8 @@ document.addEventListener('click',function(e){
     function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
     function badge(src){
-      var m={'registry':'#1a3a1a:#5dbb63:From Registry','vault':'#1a2a3a:#5ab4ff:Vault Entry'};
-      var d=m[src]||'#2a2a1a:#d4b86a:Local';
-      var p=d.split(':');
-      return '<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:'+p[0]+';color:'+p[1]+'">'+p[2]+'<\/span>';
+      if(src==='registry')return '<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:#1a3a1a;color:#5dbb63">From Registry<\/span>';
+      return '<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;background:#1a2a3a;color:#5ab4ff">Vault Entry<\/span>';
     }
 
     function render(){
@@ -3309,52 +3304,34 @@ document.addEventListener('click',function(e){
       var empty=document.getElementById('ls-mv-empty');
       var count=document.getElementById('ls-mv-count');
       if(!tbody)return;
-      if(!items.length){
-        tbody.innerHTML='';
-        if(empty)empty.style.display='block';
-        if(count)count.textContent='';
-        return;
-      }
+      if(!items.length){tbody.innerHTML='';if(empty)empty.style.display='block';if(count)count.textContent='';return;}
       if(empty)empty.style.display='none';
       if(count)count.textContent=items.length+' item'+(items.length===1?'':'s');
       tbody.innerHTML=items.map(function(i){
-        return '<tr><td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd;vertical-align:top">'+esc(i.name)+'<\/td>'
-          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd;vertical-align:top">'+esc(i.type)+'<\/td>'
-          +'<td style="padding:5px 8px;border-bottom:1px solid #222;vertical-align:top">'+badge(i._src)+'<\/td>'
-          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd;vertical-align:top">'+esc(i.source)+'<\/td>'
-          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd;vertical-align:top">'+esc(i.scene)+'<\/td>'
+        return '<tr>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(i.name)+'<\/td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(i.type)+'<\/td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222">'+badge(i._src)+'<\/td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(i.source)+'<\/td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(i.scene)+'<\/td>'
           +'<\/tr>';
       }).join('');
     }
 
-    // Toggle form
-    var tog=document.getElementById('ls-mv-form-toggle');
-    var formBody=document.getElementById('ls-mv-form-body');
-    if(tog&&formBody){tog.addEventListener('click',function(){
-      formBody.style.display=formBody.style.display==='none'?'block':'none';
-    });}
-
-    // Tabs
     var tabs=document.getElementById('ls-mv-tabs');
     if(tabs){tabs.addEventListener('click',function(e){
       var btn=e.target.closest('.ls-mv-tab');if(!btn)return;
-      tabs.querySelectorAll('.ls-mv-tab').forEach(function(t){
-        t.style.background='#1a1a2e';t.style.borderColor='#444';t.style.color='#aaa';
-        t.classList.remove('ls-mv-tab-active');
-      });
+      tabs.querySelectorAll('.ls-mv-tab').forEach(function(t){t.style.background='';t.style.borderColor='';t.style.color='';});
       btn.style.background='#4a9eff';btn.style.borderColor='#4a9eff';btn.style.color='#fff';
-      btn.classList.add('ls-mv-tab-active');
       _tab=btn.getAttribute('data-mvtab')||'';
       var ft=document.getElementById('ls-mv-filter-type');if(ft)ft.value=_tab;
       render();
     });}
 
-    // Filters
     var srch=document.getElementById('ls-mv-search');if(srch)srch.addEventListener('input',render);
     var ftype=document.getElementById('ls-mv-filter-type');if(ftype)ftype.addEventListener('change',render);
     var ref=document.getElementById('ls-mv-refresh');if(ref)ref.addEventListener('click',render);
 
-    // Save
     var saveBtn=document.getElementById('ls-mv-save');
     if(saveBtn)saveBtn.addEventListener('click',function(){
       var title=((document.getElementById('ls-mv-title')||{}).value||'').trim();
@@ -3362,8 +3339,7 @@ document.addEventListener('click',function(e){
       var msg=document.getElementById('ls-mv-msg');
       function showMsg(txt,bg,col){if(!msg)return;msg.textContent=txt;msg.style.background=bg;msg.style.color=col;msg.style.display='block';setTimeout(function(){msg.style.display='none';},3000);}
       if(!title||!type){showMsg('Title and type are required.','#3a1a1a','#ff6b6b');return;}
-      var reg=loadRegistry();
-      if(reg.find(function(r){return r.name.toLowerCase()===title.toLowerCase()&&r.type===type;})){showMsg('Already in Asset Registry.','#3a1a1a','#ff6b6b');return;}
+      if(loadRegistry().find(function(r){return r.name.toLowerCase()===title.toLowerCase()&&r.type===type;})){showMsg('Already in Asset Registry.','#3a1a1a','#ff6b6b');return;}
       var vault=loadVault();
       if(vault.find(function(v){return v.name.toLowerCase()===title.toLowerCase()&&v.type===type;})){showMsg('Already in vault.','#3a1a1a','#ff6b6b');return;}
       vault.push({id:'mv-'+Date.now(),name:title,type:type,
@@ -3375,8 +3351,7 @@ document.addEventListener('click',function(e){
       saveVault(vault);
       ['ls-mv-title','ls-mv-path','ls-mv-source','ls-mv-scene','ls-mv-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
       var t=document.getElementById('ls-mv-type');if(t)t.value='';
-      showMsg('Vault entry saved.','#1a3a1a','#5dbb63');
-      render();
+      showMsg('Vault entry saved.','#1a3a1a','#5dbb63');render();
     });
 
     var cancelBtn=document.getElementById('ls-mv-cancel');
