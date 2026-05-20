@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v204 character-stability-interior — 4 feature cards (LoadPlay pattern, purple) === */
+/* === LoadStudio v205 voice-studio-interior — 4 feature cards (LoadPlay pattern, purple) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -724,11 +724,245 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   </div>
 </section>
 <section id="section-voice-studio" class="section" data-title="Voice Studio">
-  <div class="section-head"><div><h2>Voice Studio</h2><p>Record, import, save and assign fictional voices.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="voice-studio">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="voice-studio-record-voice" data-section-id="voice-studio"><b>record voice</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-import-audio" data-section-id="voice-studio"><b>import audio</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-export-audio" data-section-id="voice-studio"><b>export audio</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-assign-voice-to-character" data-section-id="voice-studio"><b>assign voice to character</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-create-narrator-voice" data-section-id="voice-studio"><b>create narrator voice</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-save-voice-preset" data-section-id="voice-studio"><b>save voice preset</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-manage-voice-library" data-section-id="voice-studio"><b>manage voice library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-add-audio-to-timeline" data-section-id="voice-studio"><b>add audio to timeline</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-sync-voice-to-scene" data-section-id="voice-studio"><b>sync voice to scene</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-preview-character-voice" data-section-id="voice-studio"><b>preview character voice</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-wav" data-section-id="voice-studio"><b>WAV</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-mp3" data-section-id="voice-studio"><b>MP3</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-m4a" data-section-id="voice-studio"><b>M4A</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-aac" data-section-id="voice-studio"><b>AAC</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-ogg" data-section-id="voice-studio"><b>OGG</b><small>local plus integration</small></button><button class="feature-btn" data-feature="voice-studio-webm" data-section-id="voice-studio"><b>WebM</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="voice-studio"></div><div class="local-list" id="list-voice-studio"></div></div>
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#a29bfe,#fd79a8)"></div>
+    <div class="ls-h"><h2>Voice Studio</h2><span class="ls-dept" style="color:#a29bfe">Character Dept</span></div>
+    <p class="ls-lead">Plan voice profiles, assign dialogue, and structure narration. Local manual planning only — no synthesis, no recording, no playback. Connect a provider later to activate generation.</p>
+
+    <div class="ls-panel">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3);color:#5ee0a5;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Local Ready</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,160,0,.1);border:1px solid rgba(255,160,0,.3);color:#ffb300;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Manual Review</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(100,130,255,.1);border:1px solid rgba(100,130,255,.3);color:#8ab4ff;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Integration Required</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(160,160,160,.1);border:1px solid rgba(160,160,160,.3);color:#aaa;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Untested</span>
+      </div>
+      <p style="margin:8px 0 0;font:300 12px Inter,system-ui,sans-serif;color:#9c93b5">Profile saving and dialogue assignment are Local Ready. Voice synthesis and playback are Integration Required.</p>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Voice Profile</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field"><label>Profile Name *</label><input id="ls-vstudio-name" type="text" placeholder="e.g. Amara — Narrator" /></div>
+        <div class="field"><label>Linked Character</label><input id="ls-vstudio-char" type="text" placeholder="e.g. Amara Chen" /></div>
+        <div class="field"><label>Voice Category</label>
+          <select id="ls-vstudio-cat">
+            <option value="Narrator">Narrator</option>
+            <option value="Child">Child</option>
+            <option value="Elder">Elder</option>
+            <option value="Hero">Hero</option>
+            <option value="Villain">Villain</option>
+            <option value="Royal">Royal</option>
+            <option value="Documentary">Documentary</option>
+            <option value="News Reporter">News Reporter</option>
+            <option value="Storyteller">Storyteller</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Creature">Creature</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+        <div class="field"><label>Tone</label><input id="ls-vstudio-tone" type="text" placeholder="e.g. warm, gravelly, crisp" /></div>
+        <div class="field"><label>Pitch</label>
+          <select id="ls-vstudio-pitch">
+            <option value="">Select...</option>
+            <option value="Low">Low</option>
+            <option value="Mid-low">Mid-low</option>
+            <option value="Mid">Mid</option>
+            <option value="Mid-high">Mid-high</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div class="field"><label>Speed</label>
+          <select id="ls-vstudio-speed">
+            <option value="">Select...</option>
+            <option value="Slow">Slow</option>
+            <option value="Measured">Measured</option>
+            <option value="Normal">Normal</option>
+            <option value="Brisk">Brisk</option>
+            <option value="Fast">Fast</option>
+          </select>
+        </div>
+        <div class="field"><label>Warmth (1–5)</label><input id="ls-vstudio-warmth" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Breathiness (1–5)</label><input id="ls-vstudio-breathiness" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Rasp (1–5)</label><input id="ls-vstudio-rasp" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Clarity (1–5)</label><input id="ls-vstudio-clarity" type="number" min="1" max="5" placeholder="1–5" /></div>
+        <div class="field"><label>Language</label><input id="ls-vstudio-lang" type="text" placeholder="e.g. English, Spanish, French" /></div>
+        <div class="field"><label>Accent Notes</label><input id="ls-vstudio-accent" type="text" placeholder="e.g. British RP, Southern US, neutral" /></div>
+        <div class="field"><label>Emotional Range</label><textarea id="ls-vstudio-emotion" rows="2" placeholder="e.g. Warm to fierce. Rarely monotone. Laughs easily."></textarea></div>
+        <div class="field"><label>Dialogue Notes</label><textarea id="ls-vstudio-dialogue-notes" rows="2" placeholder="How this character delivers lines. Pauses, emphasis, rhythm."></textarea></div>
+        <div class="field"><label>Narration Style</label><textarea id="ls-vstudio-narration" rows="2" placeholder="e.g. Third-person, intimate, dry and factual, poetic."></textarea></div>
+        <div class="field"><label>Provider Preference Notes</label><textarea id="ls-vstudio-provider-notes" rows="2" placeholder="e.g. Prefer Kokoro deep voice preset. Avoid Bark for this character."></textarea></div>
+        <div class="field"><label>Notes</label><textarea id="ls-vstudio-notes" rows="2" placeholder="Any other voice direction notes."></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="mini" id="ls-vstudio-save">Save Profile</button>
+        <button class="mini" id="ls-vstudio-clear">Clear</button>
+      </div>
+      <div id="ls-vstudio-msg" style="display:none;padding:8px 12px;border-radius:4px;font-size:12px;margin-top:8px"></div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Voice Profile Table</h3>
+      <div id="ls-vstudio-count" style="font:300 12px Inter,system-ui,sans-serif;color:#9c93b5;margin:0 0 8px"></div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Profile Name</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Character</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Category</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Tone</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Language</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333"></th>
+            </tr>
+          </thead>
+          <tbody id="ls-vstudio-tbody"></tbody>
+        </table>
+        <div id="ls-vstudio-empty" style="padding:20px;text-align:center;color:#888;font-size:13px;display:none">No profiles saved yet. Fill in the form above and tap Save Profile.</div>
+      </div>
+      <div style="margin-top:10px">
+        <button class="mini" id="ls-vstudio-export">Export Profiles JSON</button>
+      </div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Dialogue Assignment</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Assign voice profiles to scenes and characters locally. No playback or synthesis happens here.</p>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="field"><label>Scene ID</label><input id="ls-vstudio-da-scene" type="text" placeholder="e.g. scene-03" /></div>
+        <div class="field"><label>Character</label><input id="ls-vstudio-da-char" type="text" placeholder="e.g. Amara Chen" /></div>
+        <div class="field"><label>Voice Profile</label><input id="ls-vstudio-da-profile" type="text" placeholder="e.g. Amara — Narrator" /></div>
+        <div class="field"><label>Dialogue Notes</label><textarea id="ls-vstudio-da-dialogue" rows="2" placeholder="Line notes or cues. e.g. Whispered, building intensity."></textarea></div>
+        <div class="field"><label>Narration Notes</label><textarea id="ls-vstudio-da-narration" rows="2" placeholder="Narration context for this scene. e.g. Third-person, past tense."></textarea></div>
+      </div>
+      <button class="mini" id="ls-vstudio-da-add">Add Assignment</button>
+      <div id="ls-vstudio-da-list" style="margin-top:10px"></div>
+    </div>
+
+    <div class="ls-panel">
+      <div class="ls-warn-badge">Voice synthesis, cloning, and playback are not active in this room. Save profiles and assignments locally now — connect a provider in Load Eco to activate generation.</div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Quick Links</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Navigation only — no forms duplicated here.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('character-studio')">Open Character Studio</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('character-stability')">Open Character Stability</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('prompt-writer')">Open Prompt Writer</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('sound-studio')">Open Sound Stage</button>
+      </div>
+    </div>
+
+    <div class="ls-related"></div>
   </div>
+
+  <script id="ls-vstudio-v205">(function(){
+    var PROF_KEY='ls_vs_profiles';
+    var DA_KEY='ls_voice_dialogue';
+
+    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    function gv(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';}
+    function showMsg(txt,ok){var m=document.getElementById('ls-vstudio-msg');if(!m)return;m.textContent=txt;m.style.background=ok?'#1a3a1a':'#3a1a1a';m.style.color=ok?'#5dbb63':'#ff6b6b';m.style.display='block';setTimeout(function(){m.style.display='none';},3000);}
+
+    function loadProfiles(){try{return JSON.parse(localStorage.getItem(PROF_KEY)||'[]');}catch(e){return [];}}
+    function saveProfiles(arr){try{localStorage.setItem(PROF_KEY,JSON.stringify(arr));}catch(e){}}
+    function loadDA(){try{return JSON.parse(localStorage.getItem(DA_KEY)||'[]');}catch(e){return [];}}
+    function saveDA(arr){try{localStorage.setItem(DA_KEY,JSON.stringify(arr));}catch(e){}}
+
+    function renderTable(){
+      var tbody=document.getElementById('ls-vstudio-tbody');
+      var empty=document.getElementById('ls-vstudio-empty');
+      var count=document.getElementById('ls-vstudio-count');
+      if(!tbody)return;
+      var profiles=loadProfiles();
+      if(count)count.textContent=profiles.length+' profile'+(profiles.length===1?'':'s');
+      if(!profiles.length){tbody.innerHTML='';if(empty)empty.style.display='block';return;}
+      if(empty)empty.style.display='none';
+      tbody.innerHTML=profiles.map(function(p,i){
+        return '<tr>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.name)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.character)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#a29bfe">'+esc(p.category)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.tone)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.language)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222"><button onclick="window.lsVSDeleteProfile('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:13px;padding:0 4px" title="Remove">x</button></td>'
+          +'</tr>';
+      }).join('');
+    }
+
+    function renderDA(){
+      var list=document.getElementById('ls-vstudio-da-list');if(!list)return;
+      var items=loadDA();
+      if(!items.length){list.innerHTML='<p style="color:#9c93b5;font:300 12px Inter,system-ui,sans-serif;padding:8px 0">No assignments logged yet.</p>';return;}
+      list.innerHTML=items.map(function(d,i){
+        return '<div style="padding:8px 10px;background:rgba(162,155,254,.08);border:1px solid rgba(162,155,254,.25);border-radius:8px;margin-bottom:6px;font:400 12px Inter,system-ui,sans-serif">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">'
+          +'<span style="color:#a29bfe;font-weight:600">'+esc(d.scene||'—')+'</span>'
+          +'<span style="color:#ddd">'+esc(d.character)+'</span>'
+          +'<span style="color:#9c9cff;font-size:11px">'+esc(d.profile)+'</span>'
+          +'<button onclick="window.lsVSDeleteDA('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:13px;padding:0 4px" title="Remove">x</button>'
+          +'</div>'
+          +(d.dialogueNotes?'<div style="color:#c0b8d9;margin-top:3px">'+esc(d.dialogueNotes)+'</div>':'')
+          +(d.narrationNotes?'<div style="color:#c0b8d9;margin-top:2px;font-size:11px">Narration: '+esc(d.narrationNotes)+'</div>':'')
+          +'</div>';
+      }).join('');
+    }
+
+    window.lsVSDeleteProfile=function(i){var p=loadProfiles();p.splice(i,1);saveProfiles(p);renderTable();};
+    window.lsVSDeleteDA=function(i){var d=loadDA();d.splice(i,1);saveDA(d);renderDA();};
+
+    var saveBtn=document.getElementById('ls-vstudio-save');
+    if(saveBtn)saveBtn.addEventListener('click',function(){
+      var name=gv('ls-vstudio-name');
+      if(!name){showMsg('Profile name is required.',false);return;}
+      var profiles=loadProfiles();
+      if(profiles.find(function(p){return p.name.toLowerCase()===name.toLowerCase();})){showMsg('A profile with this name already exists.',false);return;}
+      profiles.push({id:'vsp-'+Date.now(),name:name,character:gv('ls-vstudio-char'),category:gv('ls-vstudio-cat'),tone:gv('ls-vstudio-tone'),pitch:gv('ls-vstudio-pitch'),speed:gv('ls-vstudio-speed'),warmth:gv('ls-vstudio-warmth'),breathiness:gv('ls-vstudio-breathiness'),rasp:gv('ls-vstudio-rasp'),clarity:gv('ls-vstudio-clarity'),language:gv('ls-vstudio-lang'),accentNotes:gv('ls-vstudio-accent'),emotionalRange:gv('ls-vstudio-emotion'),dialogueNotes:gv('ls-vstudio-dialogue-notes'),narrationStyle:gv('ls-vstudio-narration'),providerNotes:gv('ls-vstudio-provider-notes'),notes:gv('ls-vstudio-notes'),savedAt:new Date().toISOString()});
+      saveProfiles(profiles);
+      ['ls-vstudio-name','ls-vstudio-char','ls-vstudio-tone','ls-vstudio-lang','ls-vstudio-accent','ls-vstudio-warmth','ls-vstudio-breathiness','ls-vstudio-rasp','ls-vstudio-clarity','ls-vstudio-emotion','ls-vstudio-dialogue-notes','ls-vstudio-narration','ls-vstudio-provider-notes','ls-vstudio-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      ['ls-vstudio-cat','ls-vstudio-pitch','ls-vstudio-speed'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      showMsg('Profile saved.',true);
+      renderTable();
+    });
+
+    var clearBtn=document.getElementById('ls-vstudio-clear');
+    if(clearBtn)clearBtn.addEventListener('click',function(){
+      ['ls-vstudio-name','ls-vstudio-char','ls-vstudio-tone','ls-vstudio-lang','ls-vstudio-accent','ls-vstudio-warmth','ls-vstudio-breathiness','ls-vstudio-rasp','ls-vstudio-clarity','ls-vstudio-emotion','ls-vstudio-dialogue-notes','ls-vstudio-narration','ls-vstudio-provider-notes','ls-vstudio-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      ['ls-vstudio-cat','ls-vstudio-pitch','ls-vstudio-speed'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      var m=document.getElementById('ls-vstudio-msg');if(m)m.style.display='none';
+    });
+
+    var exportBtn=document.getElementById('ls-vstudio-export');
+    if(exportBtn)exportBtn.addEventListener('click',function(){
+      var pack={voiceProfiles:loadProfiles(),dialogueAssignments:loadDA(),exportedAt:new Date().toISOString()};
+      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(pack,null,2));a.download='voice-studio-profiles.json';a.click();
+    });
+
+    var daAddBtn=document.getElementById('ls-vstudio-da-add');
+    if(daAddBtn)daAddBtn.addEventListener('click',function(){
+      var scene=gv('ls-vstudio-da-scene');
+      var char=gv('ls-vstudio-da-char');
+      var profile=gv('ls-vstudio-da-profile');
+      if(!scene&&!char&&!profile)return;
+      var items=loadDA();
+      items.push({id:'vda-'+Date.now(),scene:scene,character:char,profile:profile,dialogueNotes:gv('ls-vstudio-da-dialogue'),narrationNotes:gv('ls-vstudio-da-narration'),addedAt:new Date().toISOString()});
+      saveDA(items);
+      ['ls-vstudio-da-scene','ls-vstudio-da-char','ls-vstudio-da-profile','ls-vstudio-da-dialogue','ls-vstudio-da-narration'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      renderDA();
+    });
+
+    function init(){renderTable();renderDA();}
+
+    var sec=document.getElementById('section-voice-studio');
+    if(sec){
+      var obs=new MutationObserver(function(){if(sec.classList.contains('active'))init();});
+      obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    }
+
+    init();
+    window.lsVoiceStudio={renderTable:renderTable,renderDA:renderDA};
+  }());</script>
+
 </section>
 <section id="section-voice-manipulator" class="section" data-title="Voice Manipulator">
   <div class="section-head"><div><h2>Voice Manipulator</h2><p>Manipulate voice recordings into safe fictional character voices.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="voice-manipulator">Audit Section</button></div>
