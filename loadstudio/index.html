@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v206 wardrobe-interior — 4 feature cards (LoadPlay pattern, purple) === */
+/* === LoadStudio v207 props-interior — 4 feature cards (LoadPlay pattern, purple) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -1222,11 +1222,233 @@ body.ls-contrast-safe{filter:contrast(1.15)}
 
 </section>
 <section id="section-props" class="section" data-title="Props Department">
-  <div class="section-head"><div><h2>Props Department</h2><p>Reusable prop management and continuity.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="props">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="props-save-props" data-section-id="props"><b>save props</b><small>local plus integration</small></button><button class="feature-btn" data-feature="props-assign-props-to-scene" data-section-id="props"><b>assign props to scene</b><small>local plus integration</small></button><button class="feature-btn" data-feature="props-prop-continuity" data-section-id="props"><b>prop continuity</b><small>local plus integration</small></button><button class="feature-btn" data-feature="props-reusable-prop-library" data-section-id="props"><b>reusable prop library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="props-upload-prop-references" data-section-id="props"><b>upload prop references</b><small>local plus integration</small></button><button class="feature-btn" data-feature="props-generate-prop-concepts" data-section-id="props"><b>generate prop concepts</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="props"></div><div class="local-list" id="list-props"></div></div>
+  <div class="ls-frame">
+    <div class="ls-bar" style="background:linear-gradient(90deg,#00b894,#55efc4)"></div>
+    <div class="ls-h"><h2>Props Department</h2><span class="ls-dept" style="color:#00b894">Look and Sets</span></div>
+    <p class="ls-lead">Local prop continuity planning. Log physical objects, assign them to scenes and characters, and track continuity rules. No generation, no image upload, no provider connection.</p>
+
+    <div class="ls-panel">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3);color:#5ee0a5;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Local Ready</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,160,0,.1);border:1px solid rgba(255,160,0,.3);color:#ffb300;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Manual Review</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(100,130,255,.1);border:1px solid rgba(100,130,255,.3);color:#8ab4ff;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Integration Required</span>
+        <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(160,160,160,.1);border:1px solid rgba(160,160,160,.3);color:#aaa;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.04em">Untested</span>
+      </div>
+      <p style="margin:8px 0 0;font:300 12px Inter,system-ui,sans-serif;color:#9c93b5">Item saving and scene assignment are Local Ready. Prop image generation and automated object tracking are Integration Required.</p>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Prop Profile</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field"><label>Prop Name *</label><input id="ls-pr-name" type="text" placeholder="e.g. Amara's field journal" /></div>
+        <div class="field"><label>Linked Character</label><input id="ls-pr-char" type="text" placeholder="e.g. Amara Chen" /></div>
+        <div class="field"><label>Category</label>
+          <select id="ls-pr-cat">
+            <option value="Weapon">Weapon</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Book">Book</option>
+            <option value="Tool">Tool</option>
+            <option value="Vehicle">Vehicle</option>
+            <option value="Jewelry">Jewelry</option>
+            <option value="Food">Food</option>
+            <option value="Device">Device</option>
+            <option value="Historical Artifact">Historical Artifact</option>
+            <option value="Decoration">Decoration</option>
+            <option value="Survival Gear">Survival Gear</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+        <div class="field"><label>Era / Style</label><input id="ls-pr-era" type="text" placeholder="e.g. Contemporary, 1940s, fantasy" /></div>
+        <div class="field"><label>Material Notes</label><input id="ls-pr-material" type="text" placeholder="e.g. Worn leather cover, yellowed pages" /></div>
+        <div class="field"><label>Color / Details</label><input id="ls-pr-color" type="text" placeholder="e.g. Dark brown, brass clasp, hand-stitched spine" /></div>
+        <div class="field"><label>Linked Scene(s)</label><input id="ls-pr-scenes" type="text" placeholder="e.g. scene-01, scene-04, scene-09" /></div>
+        <div class="field"><label>Reference Image Path or URL</label><input id="ls-pr-ref" type="text" placeholder="e.g. assets/refs/journal.jpg or https://..." /></div>
+        <div class="field"><label>Storage / Location Notes</label><input id="ls-pr-storage" type="text" placeholder="e.g. Always in Amara's left hand or jacket pocket" /></div>
+        <div class="field"><label>Continuity Rules</label><textarea id="ls-pr-continuity" rows="2" placeholder="e.g. Cover must always show the same wear marks. Never clean or new-looking."></textarea></div>
+        <div class="field"><label>Forbidden Changes</label><textarea id="ls-pr-forbidden" rows="2" placeholder="e.g. Must never be replaced with a digital tablet. Always physical."></textarea></div>
+        <div class="field"><label>Notes</label><textarea id="ls-pr-notes" rows="2" placeholder="Any additional prop direction."></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="mini" id="ls-pr-save">Save Prop</button>
+        <button class="mini" id="ls-pr-clear">Clear</button>
+      </div>
+      <div id="ls-pr-msg" style="display:none;padding:8px 12px;border-radius:4px;font-size:12px;margin-top:8px"></div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Prop Table</h3>
+      <div id="ls-pr-count" style="font:300 12px Inter,system-ui,sans-serif;color:#9c93b5;margin:0 0 8px"></div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Prop Name</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Category</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Character</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Era / Style</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333">Scenes</th>
+              <th style="background:#1a1a2e;color:#aaa;padding:6px 8px;text-align:left;border-bottom:1px solid #333"></th>
+            </tr>
+          </thead>
+          <tbody id="ls-pr-tbody"></tbody>
+        </table>
+        <div id="ls-pr-empty" style="padding:20px;text-align:center;color:#888;font-size:13px;display:none">No props saved yet. Fill in the form above and tap Save Prop.</div>
+      </div>
+      <div style="margin-top:10px">
+        <button class="mini" id="ls-pr-export">Export Props JSON</button>
+      </div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Scene Prop Assignment</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Assign props to scenes and characters locally. No generation or playback here.</p>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="field"><label>Scene ID</label><input id="ls-pr-da-scene" type="text" placeholder="e.g. scene-04" /></div>
+        <div class="field"><label>Prop Item</label><input id="ls-pr-da-item" type="text" placeholder="e.g. Amara's field journal" /></div>
+        <div class="field"><label>Linked Character</label><input id="ls-pr-da-char" type="text" placeholder="e.g. Amara Chen" /></div>
+        <div class="field"><label>Status</label>
+          <select id="ls-pr-da-status">
+            <option value="Approved">Approved</option>
+            <option value="Needs Review">Needs Review</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="field" style="grid-column:1/-1"><label>Continuity Notes</label><textarea id="ls-pr-da-notes" rows="2" placeholder="e.g. Journal is open in this scene — continuity: same page visible as scene-03."></textarea></div>
+      </div>
+      <button class="mini" id="ls-pr-da-add">Add Assignment</button>
+      <div id="ls-pr-da-list" style="margin-top:10px"></div>
+    </div>
+
+    <div class="ls-panel">
+      <div class="ls-warn-badge">Prop image generation, automated object tracking, and continuity verification are not active in this room. Save props and assignments locally — connect a provider to activate generation.</div>
+    </div>
+
+    <div class="ls-panel">
+      <h3>Quick Links</h3>
+      <p style="margin:0 0 10px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Navigation only — no forms duplicated here.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('asset-registry')">Open Asset Registry</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('media-vault')">Open Media Vault</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('character-studio')">Open Character Studio</button>
+        <button class="ls-btn ls-btn-ghost" type="button" onclick="go('prompt-writer')">Open Prompt Writer</button>
+      </div>
+    </div>
+
+    <div class="ls-related"></div>
   </div>
+
+  <script id="ls-pr-v207">(function(){
+    var ITEMS_KEY='ls_pr_items';
+    var DA_KEY='ls_pr_assignments';
+
+    function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    function gv(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';}
+    function showMsg(txt,ok){var m=document.getElementById('ls-pr-msg');if(!m)return;m.textContent=txt;m.style.background=ok?'#1a3a1a':'#3a1a1a';m.style.color=ok?'#5dbb63':'#ff6b6b';m.style.display='block';setTimeout(function(){m.style.display='none';},3000);}
+
+    function loadItems(){try{return JSON.parse(localStorage.getItem(ITEMS_KEY)||'[]');}catch(e){return [];}}
+    function saveItems(arr){try{localStorage.setItem(ITEMS_KEY,JSON.stringify(arr));}catch(e){}}
+    function loadDA(){try{return JSON.parse(localStorage.getItem(DA_KEY)||'[]');}catch(e){return [];}}
+    function saveDA(arr){try{localStorage.setItem(DA_KEY,JSON.stringify(arr));}catch(e){}}
+
+    function statusColor(s){
+      if(s==='Approved')return{bg:'rgba(94,224,165,.1)',border:'rgba(94,224,165,.3)',col:'#5ee0a5'};
+      if(s==='Rejected')return{bg:'rgba(255,110,156,.1)',border:'rgba(255,110,156,.3)',col:'#ff6e9c'};
+      return{bg:'rgba(255,180,0,.08)',border:'rgba(255,180,0,.3)',col:'#ffb300'};
+    }
+
+    function renderTable(){
+      var tbody=document.getElementById('ls-pr-tbody');
+      var empty=document.getElementById('ls-pr-empty');
+      var count=document.getElementById('ls-pr-count');
+      if(!tbody)return;
+      var items=loadItems();
+      if(count)count.textContent=items.length+' prop'+(items.length===1?'':'s');
+      if(!items.length){tbody.innerHTML='';if(empty)empty.style.display='block';return;}
+      if(empty)empty.style.display='none';
+      tbody.innerHTML=items.map(function(p,i){
+        return '<tr>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.name)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#00b894">'+esc(p.category)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.character)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#ddd">'+esc(p.era)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222;color:#9c9cff;font-size:11px">'+esc(p.scenes)+'</td>'
+          +'<td style="padding:5px 8px;border-bottom:1px solid #222"><button onclick="window.lsPRDelete('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:13px;padding:0 4px" title="Remove">x</button></td>'
+          +'</tr>';
+      }).join('');
+    }
+
+    function renderDA(){
+      var list=document.getElementById('ls-pr-da-list');if(!list)return;
+      var items=loadDA();
+      if(!items.length){list.innerHTML='<p style="color:#9c93b5;font:300 12px Inter,system-ui,sans-serif;padding:8px 0">No assignments yet.</p>';return;}
+      list.innerHTML=items.map(function(d,i){
+        var c=statusColor(d.status);
+        return '<div style="padding:8px 10px;background:'+c.bg+';border:1px solid '+c.border+';border-radius:8px;margin-bottom:6px;font:400 12px Inter,system-ui,sans-serif">'
+          +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">'
+          +'<span style="color:'+c.col+';font-weight:600">'+esc(d.status)+'</span>'
+          +'<span style="color:#ddd">'+esc(d.scene||'—')+'</span>'
+          +'<span style="color:#00b894;font-size:11px">'+esc(d.item)+'</span>'
+          +'<span style="color:#ddd;font-size:11px">'+esc(d.character)+'</span>'
+          +'<button onclick="window.lsPRDeleteDA('+i+')" style="background:none;border:none;color:#9c93b5;cursor:pointer;font-size:13px;padding:0 4px" title="Remove">x</button>'
+          +'</div>'
+          +(d.notes?'<div style="color:#c0b8d9;margin-top:3px">'+esc(d.notes)+'</div>':'')
+          +'</div>';
+      }).join('');
+    }
+
+    window.lsPRDelete=function(i){var p=loadItems();p.splice(i,1);saveItems(p);renderTable();};
+    window.lsPRDeleteDA=function(i){var d=loadDA();d.splice(i,1);saveDA(d);renderDA();};
+
+    var saveBtn=document.getElementById('ls-pr-save');
+    if(saveBtn)saveBtn.addEventListener('click',function(){
+      var name=gv('ls-pr-name');
+      if(!name){showMsg('Prop name is required.',false);return;}
+      var items=loadItems();
+      items.push({id:'pr-'+Date.now(),name:name,character:gv('ls-pr-char'),category:gv('ls-pr-cat'),era:gv('ls-pr-era'),material:gv('ls-pr-material'),color:gv('ls-pr-color'),scenes:gv('ls-pr-scenes'),ref:gv('ls-pr-ref'),storage:gv('ls-pr-storage'),continuity:gv('ls-pr-continuity'),forbidden:gv('ls-pr-forbidden'),notes:gv('ls-pr-notes'),savedAt:new Date().toISOString()});
+      saveItems(items);
+      ['ls-pr-name','ls-pr-char','ls-pr-era','ls-pr-material','ls-pr-color','ls-pr-scenes','ls-pr-ref','ls-pr-storage','ls-pr-continuity','ls-pr-forbidden','ls-pr-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      var cat=document.getElementById('ls-pr-cat');if(cat)cat.selectedIndex=0;
+      showMsg('Prop saved.',true);
+      renderTable();
+    });
+
+    var clearBtn=document.getElementById('ls-pr-clear');
+    if(clearBtn)clearBtn.addEventListener('click',function(){
+      ['ls-pr-name','ls-pr-char','ls-pr-era','ls-pr-material','ls-pr-color','ls-pr-scenes','ls-pr-ref','ls-pr-storage','ls-pr-continuity','ls-pr-forbidden','ls-pr-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      var cat=document.getElementById('ls-pr-cat');if(cat)cat.selectedIndex=0;
+      var m=document.getElementById('ls-pr-msg');if(m)m.style.display='none';
+    });
+
+    var exportBtn=document.getElementById('ls-pr-export');
+    if(exportBtn)exportBtn.addEventListener('click',function(){
+      var pack={props:loadItems(),sceneAssignments:loadDA(),exportedAt:new Date().toISOString()};
+      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(pack,null,2));a.download='props-department.json';a.click();
+    });
+
+    var daAddBtn=document.getElementById('ls-pr-da-add');
+    if(daAddBtn)daAddBtn.addEventListener('click',function(){
+      var scene=gv('ls-pr-da-scene'),item=gv('ls-pr-da-item'),char=gv('ls-pr-da-char');
+      if(!scene&&!item&&!char)return;
+      var items=loadDA();
+      items.push({id:'pra-'+Date.now(),scene:scene,item:item,character:char,status:gv('ls-pr-da-status')||'Approved',notes:gv('ls-pr-da-notes'),addedAt:new Date().toISOString()});
+      saveDA(items);
+      ['ls-pr-da-scene','ls-pr-da-item','ls-pr-da-char','ls-pr-da-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      var st=document.getElementById('ls-pr-da-status');if(st)st.value='Approved';
+      renderDA();
+    });
+
+    function init(){renderTable();renderDA();}
+
+    var sec=document.getElementById('section-props');
+    if(sec){
+      var obs=new MutationObserver(function(){if(sec.classList.contains('active'))init();});
+      obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    }
+
+    init();
+    window.lsProps={renderTable:renderTable,renderDA:renderDA};
+  }());</script>
+
 </section>
 <section id="section-locations" class="section" data-title="Location Department">
   <div class="section-head"><div><h2>Location Department</h2><p>Digital backlot and scene location management.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="locations">Audit Section</button></div>
