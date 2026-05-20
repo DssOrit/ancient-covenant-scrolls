@@ -14883,12 +14883,14 @@ window.LoadAudioFix = {
  }
  return 'html';
  }
- $('editor-back').addEventListener('click', function () {
+ var _edBack = $('editor-back');
+ if (_edBack) _edBack.addEventListener('click', function () {
  editingApp = null;
  show('library-screen');
  renderLibrary();
  });
- $('editor-save').addEventListener('click', async function () {
+ var _edSave = $('editor-save');
+ if (_edSave) _edSave.addEventListener('click', async function () {
  if (!editingApp) return;
  var newHtml = $('editor-textarea').value;
  editingApp.html = newHtml;
@@ -15625,14 +15627,17 @@ window.LoadAudioFix = {
  $('home-modal-app').textContent = app.name;
  $('home-modal').classList.add('on');
  }
- $('home-modal-close').addEventListener('click', function () {
+ var _hmc = $('home-modal-close');
+ if (_hmc) _hmc.addEventListener('click', function () {
  $('home-modal').classList.remove('on');
  });
 
  /* ---------- Add / import ---------- */
 
- $('add-btn').addEventListener('click', function () { $('file-picker').click(); });
- $('file-picker').addEventListener('change', async function (e) {
+ var _addBtn = $('add-btn');
+ if (_addBtn) _addBtn.addEventListener('click', function () { $('file-picker').click(); });
+ var _fp = $('file-picker');
+ if (_fp) _fp.addEventListener('change', async function (e) {
  var files = e.target.files;
  if (!files || !files.length) return;
  var imported = 0;
@@ -17461,25 +17466,16 @@ window.LoadAudioFix = {
  });
  }
 
- $('back-btn').addEventListener('click', closeViewer);
- $('reload-btn').addEventListener('click', function () {
- if (!currentApp) return;
- openApp(currentApp);
- });
- $('hide-ui-btn').addEventListener('click', function () {
- $('viewer-topbar').classList.add('hidden');
- $('show-ui-btn').classList.add('on');
- });
- $('show-ui-btn').addEventListener('click', function () {
- $('viewer-topbar').classList.remove('hidden');
- $('show-ui-btn').classList.remove('on');
- });
+ var _bBtn=$('back-btn'); if(_bBtn) _bBtn.addEventListener('click',closeViewer);
+ var _rlBtn=$('reload-btn'); if(_rlBtn) _rlBtn.addEventListener('click',function(){if(!currentApp)return;openApp(currentApp);});
+ var _huBtn=$('hide-ui-btn'); if(_huBtn) _huBtn.addEventListener('click',function(){$('viewer-topbar').classList.add('hidden');$('show-ui-btn').classList.add('on');});
+ var _suBtn=$('show-ui-btn'); if(_suBtn) _suBtn.addEventListener('click',function(){$('viewer-topbar').classList.remove('hidden');$('show-ui-btn').classList.remove('on');});
 
  /* ---------- Reading aids ---------- */
 
- $('aids-btn').addEventListener('click', openAids);
- $('aids-close').addEventListener('click', closeAids);
- $('aids-scrim').addEventListener('click', closeAids);
+ var _aBtn=$('aids-btn'); if(_aBtn) _aBtn.addEventListener('click',openAids);
+ var _aClose=$('aids-close'); if(_aClose) _aClose.addEventListener('click',closeAids);
+ var _aScrim=$('aids-scrim'); if(_aScrim) _aScrim.addEventListener('click',closeAids);
  function openAids() {
  $('aids-panel').classList.add('on');
  $('aids-scrim').classList.add('on');
