@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v219 real-cinepwa-export-foundation — pure-JS ZIP builder, file report === */
+/* === LoadStudio v221 package-reopen-validator-pass — ZIP reader, restore, manifest, ZIP inspection === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -6529,6 +6529,29 @@ document.addEventListener('click',function(e){
         <button id="ls-cpb-reset" class="ls-btn ls-btn-ghost">Reset All to Untested</button>
       </div>
     </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Open CinePWA Package</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Select a .loadstudio.zip or .loadstudio.json file. JSON data files will be extracted and room data restored to this browser.</p>
+      <div class="ls-btn-row">
+        <label class="ls-btn" style="background:#0d47a1;cursor:pointer">Open ZIP / JSON<input id="ls-cz2-file" type="file" accept=".zip,.json,application/zip,application/json" style="display:none"></label>
+      </div>
+      <div id="ls-cz2-msg" style="font-size:0.8rem;padding-top:8px;min-height:18px"></div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Package Manifest</h3>
+      <div id="ls-cz2-manifest" style="font-size:0.82rem;color:#aaa">No package imported yet.</div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Restore Confirmation</h3>
+      <div class="ls-table-wrap">
+        <table class="ls-table">
+          <thead><tr><th>File</th><th>Target Key</th><th>Status</th></tr></thead>
+          <tbody id="ls-cz2-restore-tbody"><tr><td colspan="3" class="ls-empty">No import yet.</td></tr></tbody>
+        </table>
+      </div>
+      <div id="ls-cz2-restore-summary" style="font-size:0.82rem;color:#aaa;padding-top:8px;min-height:18px"></div>
+    </div>
+
     <div class="ls-related">
       <span class="ls-related-h">Related:</span>
       <button class="ls-rel-btn" onclick="go('export-studio')">Export Office</button>
@@ -6802,6 +6825,169 @@ document.addEventListener('click',function(e){
     var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderReport();}});
     obs.observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')){wire();renderReport();}
+  })();</script>
+
+  <script id="ls-cz2-v221">(function(){
+    var sec=document.getElementById('section-cinepwa');
+
+    /* ── STORE ZIP reader ── */
+    function readStoredZip(buf){
+      var bytes=new Uint8Array(buf);
+      var view=new DataView(buf);
+      var dec=new TextDecoder('utf-8');
+      var eocd=-1;
+      for(var i=bytes.length-22;i>=Math.max(0,bytes.length-65556);i--){
+        if(bytes[i]===0x50&&bytes[i+1]===0x4b&&bytes[i+2]===0x05&&bytes[i+3]===0x06){eocd=i;break;}
+      }
+      if(eocd<0)return null;
+      var n=view.getUint16(eocd+8,true);
+      var cdOff=view.getUint32(eocd+16,true);
+      var files={};var pos=cdOff;
+      for(var i=0;i<n;i++){
+        if(bytes[pos]!==0x50||bytes[pos+1]!==0x4b||bytes[pos+2]!==0x01||bytes[pos+3]!==0x02)break;
+        var method=view.getUint16(pos+10,true);
+        var uncSz=view.getUint32(pos+24,true);
+        var nl=view.getUint16(pos+28,true);
+        var el=view.getUint16(pos+30,true);
+        var cl=view.getUint16(pos+32,true);
+        var lOff=view.getUint32(pos+42,true);
+        var name=dec.decode(bytes.slice(pos+46,pos+46+nl));
+        pos+=46+nl+el+cl;
+        if(method===0){
+          var lnl=view.getUint16(lOff+26,true);var lel=view.getUint16(lOff+28,true);
+          var dStart=lOff+30+lnl+lel;
+          files[name]=dec.decode(bytes.slice(dStart,dStart+uncSz));
+        }
+      }
+      return files;
+    }
+
+    /* ── Restore key map (file → localStorage key) ── */
+    var RESTORE_MAP={
+      'scenes.json':           'ls_sw_scenes',
+      'credits.json':          'ls_credits',
+      'asset-registry.json':   'ls_asset_declarations',
+      'prompt-log.json':       'ls_prompt_log',
+      'continuity-report.json':'ls_generation_report',
+      'locations.json':        'ls_loc_items',
+      'looks.json':            'ls_ll_items',
+      'provider-registry.json':'ls_pv_catalog',
+      'pipeline-registry.json':'ls_plr_catalog',
+      'rights.json':           'ls_rights_data',
+      'wardrobe.json':         'ls_wardrobe_data',
+      'props.json':            'ls_props_data',
+      'voices.json':           'ls_voices_data',
+      'characters.json':       'ls_characters_data'
+    };
+
+    /* ── Required files for completeness check ── */
+    var REQUIRED=['project.json','scenes.json','rights.json','credits.json','asset-registry.json'];
+
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    function statusLabel(file,files,restored){
+      var present=files&&files[file]!==undefined;
+      var content=present?files[file]:'';
+      var isEmpty=!content||content==='[]'||content==='{}';
+      var wasRestored=restored&&restored.indexOf(file)>-1;
+      if(wasRestored)return'<span style="color:#66bb6a">Restored</span>';
+      if(present&&!isEmpty)return'<span style="color:#90caf9">Included</span>';
+      if(present&&isEmpty)return'<span style="color:#888">Placeholder Only</span>';
+      if(REQUIRED.indexOf(file)>-1)return'<span style="color:#ef5350">Missing</span>';
+      return'<span style="color:#888">Not Yet Built</span>';
+    }
+
+    function renderManifest(proj,fileCount,restoredCount,warnCount){
+      var el=document.getElementById('ls-cz2-manifest');
+      if(!el)return;
+      if(!proj){el.textContent='No package imported yet.';return;}
+      var rows=[
+        ['Format',proj.format||'—'],
+        ['Version',proj.version||'—'],
+        ['Generator',proj.generator||'—'],
+        ['Saved',proj.saved||'—'],
+        ['Files in package',fileCount],
+        ['Rooms restored',restoredCount],
+        ['Warnings',warnCount]
+      ];
+      el.innerHTML='<table class="ls-table"><tbody>'
+        +rows.map(function(r){return'<tr><td><strong>'+esc(r[0])+'</strong></td><td>'+esc(String(r[1]))+'</td></tr>';}).join('')
+        +'</tbody></table>';
+    }
+
+    function renderRestoreTable(files,restored,missing){
+      var tb=document.getElementById('ls-cz2-restore-tbody');
+      var sum=document.getElementById('ls-cz2-restore-summary');
+      if(!tb)return;
+      var rows=Object.keys(RESTORE_MAP).map(function(file){
+        var key=RESTORE_MAP[file];
+        return'<tr><td><code>'+esc(file)+'</code></td><td><code>'+esc(key)+'</code></td><td>'
+          +statusLabel(file,files,restored)+'</td></tr>';
+      });
+      tb.innerHTML=rows.join('');
+      if(sum)sum.textContent=(restored?restored.length:0)+' restored, '+(missing||0)+' missing required.';
+    }
+
+    function processFiles(files){
+      window.lsLastImportedZip=files;
+      var proj=null;
+      try{if(files['project.json'])proj=JSON.parse(files['project.json']);}catch(e){}
+      var restored=[];var warnCount=0;
+      Object.keys(RESTORE_MAP).forEach(function(file){
+        var key=RESTORE_MAP[file];
+        var val=files[file];
+        if(val!==undefined&&val!=='[]'&&val!=='{}'){
+          try{localStorage.setItem(key,val);restored.push(file);}catch(e){}
+        }
+      });
+      var missingRequired=REQUIRED.filter(function(f){return!(files[f]&&files[f]!=='[]');});
+      warnCount=missingRequired.length;
+      renderManifest(proj,Object.keys(files).length,restored.length,warnCount);
+      renderRestoreTable(files,restored,warnCount);
+      var msg=document.getElementById('ls-cz2-msg');
+      if(msg){
+        msg.style.color=warnCount?'#ffa726':'#66bb6a';
+        msg.textContent=restored.length+' rooms restored.'+(warnCount?' Missing required: '+missingRequired.join(', '):'');
+      }
+    }
+
+    function handleFile(file){
+      var msg=document.getElementById('ls-cz2-msg');
+      if(!file)return;
+      var reader=new FileReader();
+      if(file.name.endsWith('.zip')||file.type==='application/zip'||file.type==='application/x-zip-compressed'){
+        reader.onload=function(ev){
+          try{
+            var files=readStoredZip(ev.target.result);
+            if(!files){if(msg){msg.style.color='#ef5350';msg.textContent='Could not parse ZIP — not a valid .loadstudio.zip.';}return;}
+            processFiles(files);
+          }catch(err){if(msg){msg.style.color='#ef5350';msg.textContent='ZIP error: '+err.message;}}
+        };
+        reader.readAsArrayBuffer(file);
+      } else {
+        reader.onload=function(ev){
+          try{
+            var proj=JSON.parse(ev.target.result);
+            if(!proj||proj.format!=='loadstudio-project'){if(msg){msg.style.color='#ef5350';msg.textContent='Not a valid LoadStudio project file.';}return;}
+            /* Convert project JSON rooms back to individual file format */
+            var files={};
+            if(proj.rooms){Object.keys(proj.rooms).forEach(function(key){files[key]=JSON.stringify(proj.rooms[key]);});}
+            if(proj.format)files['project.json']=JSON.stringify({format:proj.format,version:proj.version,saved:proj.saved,generator:proj.generator});
+            processFiles(files);
+          }catch(err){if(msg){msg.style.color='#ef5350';msg.textContent='JSON error: '+err.message;}}
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    function wire(){
+      var fi=document.getElementById('ls-cz2-file');
+      if(fi&&!fi._lsCz2){fi._lsCz2=true;fi.addEventListener('change',function(){handleFile(fi.files&&fi.files[0]);fi.value='';});}
+    }
+
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();}
   })();</script>
 
 </section>
@@ -7838,6 +8024,21 @@ document.addEventListener('click',function(e){
         <li>No exposed tokens in package</li>
       </ul>
     </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">ZIP Inspection</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Reads the last imported package from CinePWA Package Builder. Import a ZIP or JSON there first.</p>
+      <div class="ls-btn-row">
+        <button id="ls-pkv2-inspect" class="ls-btn ls-btn-ghost">Inspect Imported Package</button>
+      </div>
+      <div class="ls-table-wrap" style="margin-top:10px">
+        <table class="ls-table">
+          <thead><tr><th>Required File</th><th>Present</th><th>Status</th></tr></thead>
+          <tbody id="ls-pkv2-tbody"><tr><td colspan="3" class="ls-empty">No package imported yet.</td></tr></tbody>
+        </table>
+      </div>
+      <div id="ls-pkv2-warnings" style="font-size:0.82rem;color:#ffa726;padding-top:8px;min-height:18px"></div>
+    </div>
+
     <div class="ls-related">
       <span class="ls-related-h">Related:</span>
       <button class="ls-rel-btn" onclick="go('cinepwa')">CinePWA Package Builder</button>
@@ -7886,6 +8087,51 @@ document.addEventListener('click',function(e){
     obs.observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')){wire();render();}
   })();</script>
+  <script id="ls-pkv2-v221">(function(){
+    var sec=document.getElementById('section-package-validator');
+    var REQUIRED_FILES=[
+      'project.json','scenes.json','characters.json','rights.json','credits.json',
+      'asset-registry.json','prompt-log.json','continuity-report.json',
+      'wardrobe.json','props.json','locations.json','looks.json',
+      'voices.json','provider-registry.json','pipeline-registry.json'
+    ];
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function inspect(){
+      var tb=document.getElementById('ls-pkv2-tbody');
+      var warnEl=document.getElementById('ls-pkv2-warnings');
+      var files=window.lsLastImportedZip;
+      if(!tb)return;
+      if(!files){tb.innerHTML='<tr><td colspan="3" class="ls-empty">No package imported yet. Use CinePWA Package Builder to import first.</td></tr>';return;}
+      var warnings=[];
+      tb.innerHTML=REQUIRED_FILES.map(function(f){
+        var val=files[f];
+        var present=val!==undefined;
+        var hasData=present&&val!==''&&val!=='[]'&&val!=='{}';
+        var status;
+        if(hasData)status='<span style="color:#66bb6a">Included</span>';
+        else if(present)status='<span style="color:#888">Placeholder Only</span>';
+        else{status='<span style="color:#ef5350">Missing</span>';warnings.push(f);}
+        return'<tr><td><code>'+esc(f)+'</code></td><td>'+(present?'Yes':'No')+'</td><td>'+status+'</td></tr>';
+      }).join('');
+      var allFiles=Object.keys(files);
+      var extraFiles=allFiles.filter(function(f){return f!=='.keep'&&REQUIRED_FILES.indexOf(f)<0&&!f.endsWith('/.keep')&&!f.endsWith('/.keep');});
+      if(warnEl){
+        var msgs=[];
+        if(warnings.length)msgs.push('Missing: '+warnings.join(', '));
+        if(files['rights.json']&&(files['rights.json']==='[]'||files['rights.json']==='{}'))msgs.push('Rights file is empty — review before export.');
+        warnEl.textContent=msgs.length?msgs.join(' | '):'No warnings.';
+        warnEl.style.color=warnings.length?'#ef5350':'#66bb6a';
+      }
+    }
+    function wire(){
+      var btn=document.getElementById('ls-pkv2-inspect');
+      if(btn&&!btn._lsPkv2){btn._lsPkv2=true;btn.addEventListener('click',inspect);}
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();}
+  })();</script>
+
 </section>
 
 
