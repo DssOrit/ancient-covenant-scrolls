@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v207 props-interior — 4 feature cards (LoadPlay pattern, purple) === */
+/* === LoadStudio v208 digital-backlot-interior — location continuity room (green) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -1450,12 +1450,276 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   }());</script>
 
 </section>
-<section id="section-locations" class="section" data-title="Location Department">
-  <div class="section-head"><div><h2>Location Department</h2><p>Digital backlot and scene location management.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="locations">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="locations-save-locations" data-section-id="locations"><b>save locations</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-assign-location-to-scene" data-section-id="locations"><b>assign location to scene</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-location-continuity" data-section-id="locations"><b>location continuity</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-background-library" data-section-id="locations"><b>background library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-generate-locations" data-section-id="locations"><b>generate locations</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-upload-location-references" data-section-id="locations"><b>upload location references</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-indoor-outdoor-tags" data-section-id="locations"><b>indoor outdoor tags</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-time-of-day" data-section-id="locations"><b>time of day</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-weather" data-section-id="locations"><b>weather</b><small>local plus integration</small></button><button class="feature-btn" data-feature="locations-era-style" data-section-id="locations"><b>era style</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="locations"></div><div class="local-list" id="list-locations"></div></div>
+<section id="section-locations" class="section" data-title="Digital Backlot / Locations">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#2e7d32,#66bb6a)"></div>
+  <div class="ls-h"><h2>Digital Backlot / Locations</h2></div>
+  <p class="ls-lead">Local location-continuity room. Plan, describe, and assign production locations. No AI generation or 3D backlot — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(102,187,106,.12);border:1px solid rgba(102,187,106,.3);color:#66bb6a;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Location Profile</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Location Name</label>
+        <input id="ls-loc-name" type="text" placeholder="e.g. Ravenwood Manor" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Location Type</label>
+        <select id="ls-loc-type" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select type</option>
+          <option>Interior</option>
+          <option>Exterior</option>
+          <option>Interior and Exterior</option>
+          <option>Stage Set</option>
+          <option>Real Location</option>
+          <option>Fantasy</option>
+          <option>Historical</option>
+          <option>Futuristic</option>
+          <option>Underwater</option>
+          <option>Aerial</option>
+          <option>Urban</option>
+          <option>Rural</option>
+          <option>Wilderness</option>
+          <option>Wasteland</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Era / Time Period</label>
+        <input id="ls-loc-era" type="text" placeholder="e.g. Victorian, 2087, medieval" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Interior / Exterior</label>
+        <select id="ls-loc-intext" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select</option>
+          <option>Interior</option>
+          <option>Exterior</option>
+          <option>Both</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Weather / Season</label>
+        <input id="ls-loc-weather" type="text" placeholder="e.g. overcast autumn, blizzard" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Scenes</label>
+        <input id="ls-loc-scenes" type="text" placeholder="e.g. SC01, SC04, SC09" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Region / Culture / World Notes</label>
+      <textarea id="ls-loc-region" placeholder="e.g. Northern English countryside, fictional realm of Valdris" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Lighting Notes</label>
+      <textarea id="ls-loc-lighting" placeholder="e.g. low ambient candle glow, harsh noon sun casting sharp shadows" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Color Palette</label>
+      <input id="ls-loc-palette" type="text" placeholder="e.g. desaturated greens, deep reds, muted browns" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Set Dressing Notes</label>
+      <textarea id="ls-loc-dressing" placeholder="e.g. scattered books, oil lamps on every surface, faded tapestries" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Rules</label>
+      <textarea id="ls-loc-continuity" placeholder="e.g. clock always shows 11:47, window always curtained, fire always lit" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Forbidden Changes</label>
+      <textarea id="ls-loc-forbidden" placeholder="e.g. do not add snow, do not change architecture style" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Reference Image / Path / URL</label>
+      <input id="ls-loc-ref" type="text" placeholder="e.g. /references/manor-south-wing.jpg or https://..." style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-loc-notes" placeholder="Any additional notes about this location" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-loc-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(102,187,106,.5);background:rgba(102,187,106,.15);color:#66bb6a;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Location</button>
+      <button id="ls-loc-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-loc-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-loc-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Location Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(102,187,106,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a">Name</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a">Type</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a">Linked Scenes</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a">Era</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a">Int/Ext</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#66bb6a"></th>
+        </tr></thead>
+        <tbody id="ls-loc-tbody"><tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No locations saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Location Assignment</h3>
+    <p style="color:#9e97c0;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Assign a location to a scene with time-of-day and weather continuity notes.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-sla-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Location</label>
+        <input id="ls-sla-location" type="text" placeholder="Location name" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Time of Day</label>
+        <input id="ls-sla-timeofday" type="text" placeholder="e.g. dawn, noon, dusk, midnight" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Weather</label>
+        <input id="ls-sla-weather" type="text" placeholder="e.g. clear, stormy, foggy" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-sla-status" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Approved</option>
+          <option>Needs Review</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Notes</label>
+      <textarea id="ls-sla-notes" placeholder="e.g. lighting must match SC03, same overcast sky" style="background:#0e0720;border:1px solid rgba(102,187,106,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <button id="ls-sla-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(102,187,106,.5);background:rgba(102,187,106,.15);color:#66bb6a;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Add Assignment</button>
+    <div id="ls-sla-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div id="ls-sla-list" style="margin-top:14px"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('world-builder')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(102,187,106,.3);background:rgba(102,187,106,.08);color:#a5d6a7;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">World Builder</button>
+      <button type="button" onclick="go('props')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(102,187,106,.3);background:rgba(102,187,106,.08);color:#a5d6a7;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Props Department</button>
+      <button type="button" onclick="go('wardrobe')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(102,187,106,.3);background:rgba(102,187,106,.08);color:#a5d6a7;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Wardrobe Department</button>
+      <button type="button" onclick="go('prompt-writer')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(102,187,106,.3);background:rgba(102,187,106,.08);color:#a5d6a7;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Prompt Writer</button>
+      <button type="button" onclick="go('asset-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(102,187,106,.3);background:rgba(102,187,106,.08);color:#a5d6a7;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Asset Registry</button>
+    </div>
+  </div>
+</div>
+<script id="ls-bl-v208">(function(){
+  var ITEMS_KEY='ls_loc_items';
+  var ASSIGN_KEY='ls_loc_assignments';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function renderTable(){
+    var items=load(ITEMS_KEY);
+    var tb=document.getElementById('ls-loc-tbody');
+    if(!tb)return;
+    if(!items.length){tb.innerHTML='<tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No locations saved yet</td></tr>';return;}
+    tb.innerHTML=items.map(function(it,i){
+      return '<tr style="border-bottom:1px solid rgba(102,187,106,.1)">'+
+        '<td style="padding:8px 10px">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.type||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.linkedScenes||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.era||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.intExt||'')+'</td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsLocDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function renderAssignments(){
+    var items=load(ASSIGN_KEY);
+    var el=document.getElementById('ls-sla-list');
+    if(!el)return;
+    if(!items.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">No assignments yet</p>';return;}
+    el.innerHTML=items.map(function(it,i){
+      var statusColor={'Approved':'#66bb6a','Needs Review':'#ffa726','Rejected':'#ef5350'}[it.status]||'#9e97c0';
+      return '<div style="background:rgba(102,187,106,.06);border:1px solid rgba(102,187,106,.18);border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><strong style="color:#f5f0ff;font:600 13px Inter,system-ui,sans-serif">'+esc(it.scene||'')+'</strong>'+
+        '<span style="margin-left:8px;color:#9e97c0;font:400 13px Inter,system-ui,sans-serif">'+esc(it.location||'')+'</span></div>'+
+        '<span style="color:'+statusColor+';font:500 11px Inter,system-ui,sans-serif;white-space:nowrap">'+esc(it.status||'')+'</span></div>'+
+        '<div style="color:#b0a8d0;font:400 12px Inter,system-ui,sans-serif;margin-top:4px">'+
+          (it.timeOfDay?'Time: '+esc(it.timeOfDay)+' ':'')+(it.weather?'Weather: '+esc(it.weather):'')+'</div>'+
+        (it.notes?'<div style="color:#9e97c0;font:300 12px Inter,system-ui,sans-serif;margin-top:4px">'+esc(it.notes)+'</div>':'')+
+        '<button onclick="window.lsLocDeleteSLA('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer;margin-top:6px">Remove</button>'+
+        '</div>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-loc-save-btn');
+    if(saveBtn&&!saveBtn._lsbl){saveBtn._lsbl=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-loc-name');
+        if(!name){flash('ls-loc-msg','Location name is required.');return;}
+        var items=load(ITEMS_KEY);
+        items.push({name:name,type:g('ls-loc-type'),era:g('ls-loc-era'),intExt:g('ls-loc-intext'),weather:g('ls-loc-weather'),linkedScenes:g('ls-loc-scenes'),region:g('ls-loc-region'),lighting:g('ls-loc-lighting'),palette:g('ls-loc-palette'),dressing:g('ls-loc-dressing'),continuityRules:g('ls-loc-continuity'),forbidden:g('ls-loc-forbidden'),ref:g('ls-loc-ref'),notes:g('ls-loc-notes'),savedAt:new Date().toISOString()});
+        save(ITEMS_KEY,items);
+        renderTable();
+        flash('ls-loc-msg','Location saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-loc-clear-btn');
+    if(clearBtn&&!clearBtn._lsbl){clearBtn._lsbl=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-loc-name','ls-loc-era','ls-loc-weather','ls-loc-scenes','ls-loc-region','ls-loc-lighting','ls-loc-palette','ls-loc-dressing','ls-loc-continuity','ls-loc-forbidden','ls-loc-ref','ls-loc-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        ['ls-loc-type','ls-loc-intext'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      });
+    }
+    var expBtn=document.getElementById('ls-loc-export-btn');
+    if(expBtn&&!expBtn._lsbl){expBtn._lsbl=1;
+      expBtn.addEventListener('click',function(){
+        var data={locations:load(ITEMS_KEY),assignments:load(ASSIGN_KEY),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='locations-department.json';a.click();
+      });
+    }
+    var slaBtn=document.getElementById('ls-sla-save-btn');
+    if(slaBtn&&!slaBtn._lsbl){slaBtn._lsbl=1;
+      slaBtn.addEventListener('click',function(){
+        var scene=g('ls-sla-scene'),loc=g('ls-sla-location');
+        if(!scene||!loc){flash('ls-sla-msg','Scene ID and Location are required.');return;}
+        var items=load(ASSIGN_KEY);
+        items.push({scene:scene,location:loc,timeOfDay:g('ls-sla-timeofday'),weather:g('ls-sla-weather'),notes:g('ls-sla-notes'),status:g('ls-sla-status'),savedAt:new Date().toISOString()});
+        save(ASSIGN_KEY,items);
+        renderAssignments();
+        ['ls-sla-scene','ls-sla-location','ls-sla-timeofday','ls-sla-weather','ls-sla-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var ss=document.getElementById('ls-sla-status');if(ss)ss.selectedIndex=0;
+        flash('ls-sla-msg','Assignment added.');
+      });
+    }
+  }
+
+  window.lsLocDelete=function(i){var items=load(ITEMS_KEY);items.splice(i,1);save(ITEMS_KEY,items);renderTable();};
+  window.lsLocDeleteSLA=function(i){var items=load(ASSIGN_KEY);items.splice(i,1);save(ASSIGN_KEY,items);renderAssignments();};
+
+  var sec=document.getElementById('section-locations');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+  }
+  window.lsLocRoom={renderTable:renderTable,renderAssignments:renderAssignments};
+})();</script>
 </section>
 <section id="section-look-lab" class="section" data-title="Look Lab">
   <div class="section-head"><div><h2>Look Lab</h2><p>Lighting, filters, camera feel, color grade and genre looks.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="look-lab">Audit Section</button></div>
