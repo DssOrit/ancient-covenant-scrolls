@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v214 provider-registry-interior — provider catalog room (teal) === */
+/* === LoadStudio v215 pipeline-registry-interior — pipeline catalog room (indigo-blue) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -6414,20 +6414,260 @@ document.addEventListener('click',function(e){
   })();</script>
 </section>
 <section id="section-pipeline-registry" class="section" data-title="Pipeline Registry">
-  <div class="section-head"><div><h2>Pipeline Registry</h2><p>Manage all registered production pipelines. Each pipeline is a sequence of steps that transforms source assets into output media.</p></div></div>
-  <div class="ls-frame" style="--cat:#9c27b0">
-    <div class="ls-bar" style="background:#9c27b0"></div>
-    <div class="ls-h">Pipeline Registry</div>
-    <div class="ls-lead">Review, register, and monitor production pipelines. Connect providers to pipeline steps before running.</div>
-    <div class="ls-panel">
-      <span class="ls-status-badge" style="background:rgba(156,39,176,.15);color:#9c27b0;border:1px solid rgba(156,39,176,.4);padding:3px 10px;border-radius:6px;font:500 11px Inter,system-ui,sans-serif">Integration Required</span>
-      <div id="pipeline-registry-list" style="margin-top:12px;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">No pipelines registered yet.</div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn secondary" type="button" onclick="var d=JSON.parse(localStorage.getItem('ls_pipeline_registry')||'{"pipelines":[]}');alert('Registered pipelines: '+d.pipelines.length)">View Pipelines</button>
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#1a237e,#5c6bc0)"></div>
+  <div class="ls-h"><h2>Pipeline Registry</h2></div>
+  <p class="ls-lead">Local pipeline-planning catalog. Document workflows, required providers, stage sequences, fallback routes, and readiness status. No pipeline execution, no generation, no export — catalog only.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(92,107,192,.12);border:1px solid rgba(92,107,192,.3);color:#5c6bc0;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Provider Needed</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(102,187,106,.12);border:1px solid rgba(102,187,106,.3);color:#66bb6a;font:500 11.5px Inter,system-ui,sans-serif">Experimental</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Parked</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.08);border:1px solid rgba(158,158,158,.2);color:#9e9e9e;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(183,28,28,.12);border:1px solid rgba(183,28,28,.3);color:#e53935;font:500 11.5px Inter,system-ui,sans-serif">Failed</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Pipeline Entry</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Pipeline Name</label>
+        <input id="ls-plr-name" type="text" placeholder="e.g. Text-to-Image via Pollinations" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Pipeline Category</label>
+        <select id="ls-plr-category" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select category</option>
+          <option>Image Generation</option>
+          <option>Image Editing</option>
+          <option>Text to Video</option>
+          <option>Image to Video</option>
+          <option>Lip Sync</option>
+          <option>Voice / TTS</option>
+          <option>STT / Subtitles</option>
+          <option>Music / SFX</option>
+          <option>Editing / FFmpeg</option>
+          <option>CinePWA Package</option>
+          <option>Export</option>
+          <option>Validation</option>
+          <option>Local Engine</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Input Type</label>
+        <input id="ls-plr-input" type="text" placeholder="e.g. text prompt, image file, audio WAV" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Output Type</label>
+        <input id="ls-plr-output" type="text" placeholder="e.g. PNG image, MP4 video, SRT file" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Required Provider Type</label>
+        <input id="ls-plr-provider" type="text" placeholder="e.g. Image — Pollinations or AI Horde" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Required Local Tool</label>
+        <input id="ls-plr-tool" type="text" placeholder="e.g. FFmpeg.wasm, Whisper.cpp, Ollama" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Readiness Status</label>
+        <select id="ls-plr-status" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Local Ready</option>
+          <option>Provider Needed</option>
+          <option>Integration Required</option>
+          <option>Experimental</option>
+          <option>Parked</option>
+          <option>Untested</option>
+          <option>Failed</option>
+        </select>
       </div>
     </div>
-    <div class="ls-related"></div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Purpose</label>
+      <textarea id="ls-plr-purpose" placeholder="What this pipeline does and when to use it" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Stage List</label>
+      <textarea id="ls-plr-stages" placeholder="e.g. 1. Build prompt — 2. POST to Pollinations API — 3. Receive PNG — 4. Cache to asset registry" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:65px;resize:vertical"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Fallback Route</label>
+        <textarea id="ls-plr-fallback" placeholder="e.g. if AI Horde queue exceeds 60s, fall back to Pollinations free endpoint" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Rights / Safety Notes</label>
+        <textarea id="ls-plr-rights" placeholder="e.g. outputs may carry CC BY attribution requirement, no commercial use without upgrade" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-plr-notes" placeholder="Any additional pipeline notes" style="background:#0e0720;border:1px solid rgba(92,107,192,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-plr-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(92,107,192,.5);background:rgba(92,107,192,.15);color:#5c6bc0;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Pipeline</button>
+      <button id="ls-plr-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-plr-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-plr-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 10px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Pipeline Table</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Filter:</label>
+      <select id="ls-plr-filter-cat" style="background:#0e0720;border:1px solid rgba(92,107,192,.3);border-radius:7px;color:#f5f0ff;font:400 13px Inter,system-ui,sans-serif;padding:6px 10px">
+        <option value="">All Categories</option>
+        <option>Image Generation</option><option>Image Editing</option>
+        <option>Text to Video</option><option>Image to Video</option>
+        <option>Lip Sync</option><option>Voice / TTS</option>
+        <option>STT / Subtitles</option><option>Music / SFX</option>
+        <option>Editing / FFmpeg</option><option>CinePWA Package</option>
+        <option>Export</option><option>Validation</option>
+        <option>Local Engine</option><option>Custom</option>
+      </select>
+      <select id="ls-plr-filter-status" style="background:#0e0720;border:1px solid rgba(92,107,192,.3);border-radius:7px;color:#f5f0ff;font:400 13px Inter,system-ui,sans-serif;padding:6px 10px">
+        <option value="">All Status</option>
+        <option>Local Ready</option><option>Provider Needed</option>
+        <option>Integration Required</option><option>Experimental</option>
+        <option>Parked</option><option>Untested</option><option>Failed</option>
+      </select>
+      <input id="ls-plr-filter-input" type="text" placeholder="Input type..." style="background:#0e0720;border:1px solid rgba(92,107,192,.3);border-radius:7px;color:#f5f0ff;font:400 13px Inter,system-ui,sans-serif;padding:6px 10px;width:120px">
+      <button id="ls-plr-filter-btn" type="button" style="padding:6px 12px;border-radius:7px;border:1px solid rgba(92,107,192,.4);background:rgba(92,107,192,.12);color:#5c6bc0;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Apply</button>
+      <button id="ls-plr-filter-reset" type="button" style="padding:6px 12px;border-radius:7px;border:1px solid rgba(125,42,232,.3);background:transparent;color:#c0b8d9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Reset</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(92,107,192,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0">Pipeline</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0">Category</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0">Input</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0">Output</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0">Status</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#5c6bc0"></th>
+        </tr></thead>
+        <tbody id="ls-plr-tbody"><tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No pipelines saved yet</td></tr></tbody>
+      </table>
+    </div>
+    <div id="ls-plr-count" style="margin-top:8px;font:400 12px Inter,system-ui,sans-serif;color:#7a6fa0"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('provider-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(92,107,192,.3);background:rgba(92,107,192,.08);color:#9fa8da;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Provider Registry</button>
+      <button type="button" onclick="go('load-eco')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(92,107,192,.3);background:rgba(92,107,192,.08);color:#9fa8da;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Load Eco Infrastructure</button>
+      <button type="button" onclick="go('developer-lab')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(92,107,192,.3);background:rgba(92,107,192,.08);color:#9fa8da;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Developer Lab</button>
+      <button type="button" onclick="go('pwa-diagnostics')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(92,107,192,.3);background:rgba(92,107,192,.08);color:#9fa8da;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Diagnostics</button>
+      <button type="button" onclick="go('export-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(92,107,192,.3);background:rgba(92,107,192,.08);color:#9fa8da;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Export Office</button>
+    </div>
+  </div>
+</div>
+<script id="ls-plr-v215">(function(){
+  var KEY='ls_plr_catalog';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){return[];}}
+  function save(v){try{localStorage.setItem(KEY,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var STATUS_COLOR={
+    'Local Ready':'#5c6bc0','Provider Needed':'#ffa726','Integration Required':'#ef5350',
+    'Experimental':'#66bb6a','Parked':'#bdbdbd','Untested':'#9e9e9e','Failed':'#e53935'
+  };
+
+  function renderTable(items){
+    if(!items)items=load();
+    var tb=document.getElementById('ls-plr-tbody');
+    var ct=document.getElementById('ls-plr-count');
+    if(!tb)return;
+    if(!items.length){
+      tb.innerHTML='<tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No pipelines saved yet</td></tr>';
+      if(ct)ct.textContent='';return;
+    }
+    var all=load();
+    tb.innerHTML=items.map(function(it){
+      var idx=all.findIndex(function(x){return x.name===it.name&&x.savedAt===it.savedAt;});
+      var sc=STATUS_COLOR[it.status]||'#9e97c0';
+      return '<tr style="border-bottom:1px solid rgba(92,107,192,.08)">'+
+        '<td style="padding:8px 10px;font:600 13px Inter,system-ui,sans-serif;color:#c5cae9">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.category||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc((it.input||'').substring(0,30))+'</td>'+
+        '<td style="padding:8px 10px">'+esc((it.output||'').substring(0,30))+'</td>'+
+        '<td style="padding:8px 10px"><span style="color:'+sc+';font:500 12px Inter,system-ui,sans-serif">'+esc(it.status||'')+'</span></td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsPLRDelete('+idx+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+    if(ct)ct.textContent=items.length+' pipeline'+(items.length===1?'':'s')+' shown';
+  }
+
+  function applyFilters(){
+    var all=load();
+    var fc=(document.getElementById('ls-plr-filter-cat')||{}).value||'';
+    var fs=(document.getElementById('ls-plr-filter-status')||{}).value||'';
+    var fi=((document.getElementById('ls-plr-filter-input')||{}).value||'').toLowerCase();
+    var filtered=all.filter(function(it){
+      if(fc&&it.category!==fc)return false;
+      if(fs&&it.status!==fs)return false;
+      if(fi&&(it.input||'').toLowerCase().indexOf(fi)===-1)return false;
+      return true;
+    });
+    renderTable(filtered);
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-plr-save-btn');
+    if(saveBtn&&!saveBtn._lsplr){saveBtn._lsplr=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-plr-name');
+        if(!name){flash('ls-plr-msg','Pipeline name is required.');return;}
+        var items=load();
+        items.push({name:name,category:g('ls-plr-category'),purpose:g('ls-plr-purpose'),input:g('ls-plr-input'),output:g('ls-plr-output'),provider:g('ls-plr-provider'),tool:g('ls-plr-tool'),stages:g('ls-plr-stages'),fallback:g('ls-plr-fallback'),rights:g('ls-plr-rights'),status:g('ls-plr-status'),notes:g('ls-plr-notes'),savedAt:new Date().toISOString()});
+        save(items);
+        renderTable();
+        flash('ls-plr-msg','Pipeline saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-plr-clear-btn');
+    if(clearBtn&&!clearBtn._lsplr){clearBtn._lsplr=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-plr-name','ls-plr-input','ls-plr-output','ls-plr-provider','ls-plr-tool','ls-plr-purpose','ls-plr-stages','ls-plr-fallback','ls-plr-rights','ls-plr-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        ['ls-plr-category','ls-plr-status'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      });
+    }
+    var expBtn=document.getElementById('ls-plr-export-btn');
+    if(expBtn&&!expBtn._lsplr){expBtn._lsplr=1;
+      expBtn.addEventListener('click',function(){
+        var data={pipelines:load(),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pipeline-registry.json';a.click();
+      });
+    }
+    var fb=document.getElementById('ls-plr-filter-btn');
+    if(fb&&!fb._lsplr){fb._lsplr=1;fb.addEventListener('click',applyFilters);}
+    var rb=document.getElementById('ls-plr-filter-reset');
+    if(rb&&!rb._lsplr){rb._lsplr=1;
+      rb.addEventListener('click',function(){
+        ['ls-plr-filter-cat','ls-plr-filter-status'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+        var fi=document.getElementById('ls-plr-filter-input');if(fi)fi.value='';
+        renderTable();
+      });
+    }
+  }
+
+  window.lsPLRDelete=function(i){var items=load();if(i<0||i>=items.length)return;items.splice(i,1);save(items);renderTable();};
+
+  var sec=document.getElementById('section-pipeline-registry');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();attachEvents();}
+  }
+  window.lsPLRRoom={renderTable:renderTable,applyFilters:applyFilters};
+})();</script>
 </section>
 
 <section id="section-generation-reports" class="section" data-title="Generation Reports">
