@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v218 project-save-export-reopen — save/download/restore foundation === */
+/* === LoadStudio v219 real-cinepwa-export-foundation — pure-JS ZIP builder, file report === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -6537,6 +6537,25 @@ document.addEventListener('click',function(e){
       <button class="ls-rel-btn" onclick="go('asset-registry')">Asset Registry</button>
     </div>
   </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Build CinePWA Package</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Assembles a real .loadstudio.zip from all saved room data. Includes JSON data files and placeholder asset folder markers. No media files bundled — JSON structure only.</p>
+      <div id="ls-cz-status" style="font-size:0.8rem;color:#90caf9;padding-bottom:10px;min-height:18px"></div>
+      <div class="ls-btn-row">
+        <button id="ls-cz-build" class="ls-btn" style="background:#0d47a1">Build and Download ZIP</button>
+        <button id="ls-cz-report-btn" class="ls-btn ls-btn-ghost">Refresh File Report</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Package File Report</h3>
+      <div class="ls-table-wrap">
+        <table class="ls-table">
+          <thead><tr><th>File</th><th>Source Key</th><th>Status</th></tr></thead>
+          <tbody id="ls-cz-report-tbody"><tr><td colspan="3" class="ls-empty">Press Refresh to check.</td></tr></tbody>
+        </table>
+      </div>
+      <div id="ls-cz-report-summary" style="font-size:0.82rem;color:#aaa;padding-top:8px;min-height:18px"></div>
+    </div>
   <script id="ls-cpb-v217">(function(){
     var KEY='ls_cpb_state';
     var sec=document.getElementById('section-cinepwa');
@@ -6617,6 +6636,174 @@ document.addEventListener('click',function(e){
     obs.observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')){wire();renderTables();}
   })();</script>
+  <script id="ls-cz-v219">(function(){
+    var sec=document.getElementById('section-cinepwa');
+
+    /* ── CRC32 ── */
+    var CRC_TABLE=(function(){var t=[];for(var i=0;i<256;i++){var c=i;for(var j=0;j<8;j++)c=c&1?(0xEDB88320^(c>>>1)):(c>>>1);t[i]=c;}return t;})();
+    function crc32(bytes){var c=0xFFFFFFFF;for(var i=0;i<bytes.length;i++)c=(c>>>8)^CRC_TABLE[(c^bytes[i])&0xFF];return(c^0xFFFFFFFF)>>>0;}
+
+    /* ── Minimal STORE-mode ZIP builder ── */
+    function buildZip(files){
+      var enc=new TextEncoder();
+      var parts=[];var locals=[];var off=0;
+      files.forEach(function(f){
+        var nb=enc.encode(f.name);var db=enc.encode(f.content);
+        var crc=crc32(db);var sz=db.length;
+        var lh=new Uint8Array(30+nb.length);
+        lh[0]=0x50;lh[1]=0x4b;lh[2]=0x03;lh[3]=0x04;
+        lh[4]=20;lh[6]=0;lh[8]=0;lh[9]=0;
+        lh[14]=crc&0xff;lh[15]=(crc>>8)&0xff;lh[16]=(crc>>16)&0xff;lh[17]=(crc>>24)&0xff;
+        lh[18]=sz&0xff;lh[19]=(sz>>8)&0xff;lh[20]=(sz>>16)&0xff;lh[21]=(sz>>24)&0xff;
+        lh[22]=sz&0xff;lh[23]=(sz>>8)&0xff;lh[24]=(sz>>16)&0xff;lh[25]=(sz>>24)&0xff;
+        lh[26]=nb.length&0xff;lh[27]=(nb.length>>8)&0xff;
+        for(var i=0;i<nb.length;i++)lh[30+i]=nb[i];
+        locals.push({nb:nb,crc:crc,sz:sz,off:off});
+        parts.push(lh);parts.push(db);
+        off+=lh.length+db.length;
+      });
+      var cdOff=off;
+      locals.forEach(function(lk,idx){
+        var nb=lk.nb;var cd=new Uint8Array(46+nb.length);
+        cd[0]=0x50;cd[1]=0x4b;cd[2]=0x01;cd[3]=0x02;
+        cd[4]=20;cd[6]=20;
+        cd[16]=lk.crc&0xff;cd[17]=(lk.crc>>8)&0xff;cd[18]=(lk.crc>>16)&0xff;cd[19]=(lk.crc>>24)&0xff;
+        cd[20]=lk.sz&0xff;cd[21]=(lk.sz>>8)&0xff;cd[22]=(lk.sz>>16)&0xff;cd[23]=(lk.sz>>24)&0xff;
+        cd[24]=lk.sz&0xff;cd[25]=(lk.sz>>8)&0xff;cd[26]=(lk.sz>>16)&0xff;cd[27]=(lk.sz>>24)&0xff;
+        cd[28]=nb.length&0xff;cd[29]=(nb.length>>8)&0xff;
+        cd[42]=lk.off&0xff;cd[43]=(lk.off>>8)&0xff;cd[44]=(lk.off>>16)&0xff;cd[45]=(lk.off>>24)&0xff;
+        for(var i=0;i<nb.length;i++)cd[46+i]=nb[i];
+        parts.push(cd);off+=cd.length;
+      });
+      var cdSz=off-cdOff;var n=locals.length;
+      var eocd=new Uint8Array(22);
+      eocd[0]=0x50;eocd[1]=0x4b;eocd[2]=0x05;eocd[3]=0x06;
+      eocd[8]=n&0xff;eocd[9]=(n>>8)&0xff;eocd[10]=n&0xff;eocd[11]=(n>>8)&0xff;
+      eocd[12]=cdSz&0xff;eocd[13]=(cdSz>>8)&0xff;eocd[14]=(cdSz>>16)&0xff;eocd[15]=(cdSz>>24)&0xff;
+      eocd[16]=cdOff&0xff;eocd[17]=(cdOff>>8)&0xff;eocd[18]=(cdOff>>16)&0xff;eocd[19]=(cdOff>>24)&0xff;
+      parts.push(eocd);
+      var total=parts.reduce(function(s,p){return s+p.length;},0);
+      var out=new Uint8Array(total);var pos=0;
+      parts.forEach(function(p){out.set(p,pos);pos+=p.length;});
+      return out;
+    }
+
+    /* ── Key map for ZIP files ── */
+    var ZIP_FILES=[
+      {file:'project.json',    key:null,           label:'Project Metadata'},
+      {file:'scenes.json',     key:'ls_sw_scenes', label:'Scene Workshop'},
+      {file:'characters.json', key:null,           label:'Characters (not yet rebuilt)'},
+      {file:'rights.json',     key:null,           label:'Rights (not yet rebuilt)'},
+      {file:'credits.json',    key:'ls_credits',   label:'Credits'},
+      {file:'asset-registry.json',key:'ls_asset_declarations',label:'Asset Declarations'},
+      {file:'prompt-log.json', key:'ls_prompt_log',label:'Prompt Log'},
+      {file:'continuity-report.json',key:'ls_generation_report',label:'Generation Report'},
+      {file:'wardrobe.json',   key:null,           label:'Wardrobe (not yet rebuilt)'},
+      {file:'props.json',      key:null,           label:'Props (not yet rebuilt)'},
+      {file:'locations.json',  key:'ls_loc_items', label:'Locations'},
+      {file:'looks.json',      key:'ls_ll_items',  label:'Look Lab'},
+      {file:'voices.json',     key:null,           label:'Voices (not yet rebuilt)'},
+      {file:'provider-registry.json',key:'ls_pv_catalog',  label:'Provider Registry'},
+      {file:'pipeline-registry.json',key:'ls_plr_catalog', label:'Pipeline Registry'}
+    ];
+
+    /* ── Placeholder asset folders (empty marker files) ── */
+    var ASSET_FOLDERS=[
+      'assets/images/.keep',
+      'assets/audio/.keep',
+      'assets/music/.keep',
+      'assets/sfx/.keep',
+      'assets/subtitles/.keep',
+      'assets/icons/.keep'
+    ];
+
+    function readKey(key){
+      if(!key)return null;
+      var v=localStorage.getItem(key);
+      if(!v||v==='[]'||v==='{}')return null;
+      return v;
+    }
+
+    function buildProjectJson(){
+      return JSON.stringify({
+        format:'loadstudio-project',
+        version:'1.0',
+        saved:new Date().toISOString(),
+        generator:'LoadStudio v219'
+      },null,2);
+    }
+
+    function renderReport(){
+      var tb=document.getElementById('ls-cz-report-tbody');
+      var sum=document.getElementById('ls-cz-report-summary');
+      if(!tb)return;
+      var included=0,missing=0;
+      tb.innerHTML=ZIP_FILES.map(function(f){
+        var val=readKey(f.key);
+        var has=f.key?val!==null:false;
+        var status=f.key
+          ?(has?'<span style="color:#66bb6a">Included</span>':'<span style="color:#888">Empty</span>')
+          :'<span style="color:#ffa726">Room not yet rebuilt</span>';
+        if(has)included++;else missing++;
+        return '<tr><td><code>'+esc(f.file)+'</code></td><td><code>'+(f.key||'—')+'</code></td><td>'+status+'</td></tr>';
+      }).join('');
+      if(sum)sum.textContent=included+' files with data, '+missing+' empty or not yet built.';
+    }
+
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    function buildAndDownload(){
+      var statusEl=document.getElementById('ls-cz-status');
+      if(statusEl)statusEl.textContent='Building package...';
+      var files=[];
+
+      /* project.json always included */
+      files.push({name:'project.json',content:buildProjectJson()});
+
+      /* ZIP_FILES */
+      ZIP_FILES.forEach(function(f){
+        if(f.file==='project.json')return;
+        var val=f.key?readKey(f.key):null;
+        if(val){
+          files.push({name:f.file,content:val});
+        } else {
+          files.push({name:f.file,content:'[]'});
+        }
+      });
+
+      /* Asset folder markers */
+      ASSET_FOLDERS.forEach(function(p){
+        files.push({name:p,content:''});
+      });
+
+      try{
+        var zipBytes=buildZip(files);
+        var blob=new Blob([zipBytes],{type:'application/zip'});
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement('a');
+        var dt=new Date().toISOString().slice(0,10);
+        a.href=url;a.download='loadstudio-project-'+dt+'.zip';
+        document.body.appendChild(a);a.click();
+        setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);
+        if(statusEl)statusEl.textContent='ZIP downloaded — '+files.length+' files included.';
+        renderReport();
+      }catch(err){
+        if(statusEl)statusEl.style.color='#ef5350',statusEl.textContent='ZIP build error: '+err.message;
+      }
+    }
+
+    function wire(){
+      var btn=document.getElementById('ls-cz-build');
+      if(btn&&!btn._lsCz){btn._lsCz=true;btn.addEventListener('click',buildAndDownload);}
+      var rbtn=document.getElementById('ls-cz-report-btn');
+      if(rbtn&&!rbtn._lsCz){rbtn._lsCz=true;rbtn.addEventListener('click',renderReport);}
+    }
+
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderReport();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();renderReport();}
+  })();</script>
+
 </section>
 
 <section id="section-load-eco" class="section" data-title="Load Eco Infrastructure">
