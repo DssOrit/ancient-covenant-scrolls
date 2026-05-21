@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v221 package-reopen-validator-pass — ZIP reader, restore, manifest, ZIP inspection === */
+/* === LoadStudio v222 zip-download-confirmation — filename/size/time/count, Download Again, JSON fallback === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -6562,11 +6562,19 @@ document.addEventListener('click',function(e){
   </div>
     <div class="ls-panel">
       <h3 class="ls-panel-h">Build CinePWA Package</h3>
-      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Assembles a real .loadstudio.zip from all saved room data. Includes JSON data files and placeholder asset folder markers. No media files bundled — JSON structure only.</p>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Assembles a real .loadstudio.zip from all saved room data. JSON data files and asset folder markers only — no media files.</p>
       <div id="ls-cz-status" style="font-size:0.8rem;color:#90caf9;padding-bottom:10px;min-height:18px"></div>
       <div class="ls-btn-row">
         <button id="ls-cz-build" class="ls-btn" style="background:#0d47a1">Build and Download ZIP</button>
         <button id="ls-cz-report-btn" class="ls-btn ls-btn-ghost">Refresh File Report</button>
+      </div>
+      <div id="ls-cz-confirm" style="display:none;border-top:1px solid #222;margin-top:14px;padding-top:12px">
+        <div id="ls-cz-confirm-info" style="font-size:0.82rem;color:#ccc;padding-bottom:10px;line-height:1.7"></div>
+        <p style="font-size:0.78rem;color:#888;padding-bottom:10px">iPad Safari: the download arrow appears in the toolbar. Tap it, then tap the file to save to the Files app.</p>
+        <div class="ls-btn-row">
+          <button id="ls-cz-again" class="ls-btn ls-btn-ghost">Download Again</button>
+          <button id="ls-cz-json-dl" class="ls-btn ls-btn-ghost">Save as JSON instead</button>
+        </div>
       </div>
     </div>
     <div class="ls-panel">
@@ -6666,7 +6674,7 @@ document.addEventListener('click',function(e){
     var CRC_TABLE=(function(){var t=[];for(var i=0;i<256;i++){var c=i;for(var j=0;j<8;j++)c=c&1?(0xEDB88320^(c>>>1)):(c>>>1);t[i]=c;}return t;})();
     function crc32(bytes){var c=0xFFFFFFFF;for(var i=0;i<bytes.length;i++)c=(c>>>8)^CRC_TABLE[(c^bytes[i])&0xFF];return(c^0xFFFFFFFF)>>>0;}
 
-    /* ── Minimal STORE-mode ZIP builder ── */
+    /* ── Minimal STORE ZIP builder ── */
     function buildZip(files){
       var enc=new TextEncoder();
       var parts=[];var locals=[];var off=0;
@@ -6675,10 +6683,9 @@ document.addEventListener('click',function(e){
         var crc=crc32(db);var sz=db.length;
         var lh=new Uint8Array(30+nb.length);
         lh[0]=0x50;lh[1]=0x4b;lh[2]=0x03;lh[3]=0x04;
-        lh[4]=20;lh[6]=0;lh[8]=0;lh[9]=0;
-        lh[14]=crc&0xff;lh[15]=(crc>>8)&0xff;lh[16]=(crc>>16)&0xff;lh[17]=(crc>>24)&0xff;
-        lh[18]=sz&0xff;lh[19]=(sz>>8)&0xff;lh[20]=(sz>>16)&0xff;lh[21]=(sz>>24)&0xff;
+        lh[4]=20;lh[18]=sz&0xff;lh[19]=(sz>>8)&0xff;lh[20]=(sz>>16)&0xff;lh[21]=(sz>>24)&0xff;
         lh[22]=sz&0xff;lh[23]=(sz>>8)&0xff;lh[24]=(sz>>16)&0xff;lh[25]=(sz>>24)&0xff;
+        lh[14]=crc&0xff;lh[15]=(crc>>8)&0xff;lh[16]=(crc>>16)&0xff;lh[17]=(crc>>24)&0xff;
         lh[26]=nb.length&0xff;lh[27]=(nb.length>>8)&0xff;
         for(var i=0;i<nb.length;i++)lh[30+i]=nb[i];
         locals.push({nb:nb,crc:crc,sz:sz,off:off});
@@ -6686,7 +6693,7 @@ document.addEventListener('click',function(e){
         off+=lh.length+db.length;
       });
       var cdOff=off;
-      locals.forEach(function(lk,idx){
+      locals.forEach(function(lk){
         var nb=lk.nb;var cd=new Uint8Array(46+nb.length);
         cd[0]=0x50;cd[1]=0x4b;cd[2]=0x01;cd[3]=0x02;
         cd[4]=20;cd[6]=20;
@@ -6715,30 +6722,25 @@ document.addEventListener('click',function(e){
     var ZIP_FILES=[
       {file:'project.json',    key:null,           label:'Project Metadata'},
       {file:'scenes.json',     key:'ls_sw_scenes', label:'Scene Workshop'},
-      {file:'characters.json', key:null,           label:'Characters (not yet rebuilt)'},
-      {file:'rights.json',     key:null,           label:'Rights (not yet rebuilt)'},
+      {file:'characters.json', key:'ls_characters_data',label:'Characters'},
+      {file:'rights.json',     key:'ls_rights_data',label:'Rights'},
       {file:'credits.json',    key:'ls_credits',   label:'Credits'},
       {file:'asset-registry.json',key:'ls_asset_declarations',label:'Asset Declarations'},
       {file:'prompt-log.json', key:'ls_prompt_log',label:'Prompt Log'},
       {file:'continuity-report.json',key:'ls_generation_report',label:'Generation Report'},
-      {file:'wardrobe.json',   key:null,           label:'Wardrobe (not yet rebuilt)'},
-      {file:'props.json',      key:null,           label:'Props (not yet rebuilt)'},
+      {file:'wardrobe.json',   key:'ls_wardrobe_data',label:'Wardrobe'},
+      {file:'props.json',      key:'ls_props_data',label:'Props'},
       {file:'locations.json',  key:'ls_loc_items', label:'Locations'},
       {file:'looks.json',      key:'ls_ll_items',  label:'Look Lab'},
-      {file:'voices.json',     key:null,           label:'Voices (not yet rebuilt)'},
+      {file:'voices.json',     key:'ls_voices_data',label:'Voices'},
       {file:'provider-registry.json',key:'ls_pv_catalog',  label:'Provider Registry'},
       {file:'pipeline-registry.json',key:'ls_plr_catalog', label:'Pipeline Registry'}
     ];
 
-    /* ── Placeholder asset folders (empty marker files) ── */
-    var ASSET_FOLDERS=[
-      'assets/images/.keep',
-      'assets/audio/.keep',
-      'assets/music/.keep',
-      'assets/sfx/.keep',
-      'assets/subtitles/.keep',
-      'assets/icons/.keep'
-    ];
+    var ASSET_FOLDERS=['assets/images/.keep','assets/audio/.keep','assets/music/.keep','assets/sfx/.keep','assets/subtitles/.keep','assets/icons/.keep'];
+
+    /* ── Stored last build (for Download Again) ── */
+    var _lastBlob=null;var _lastFilename='';var _lastFiles=null;
 
     function readKey(key){
       if(!key)return null;
@@ -6748,12 +6750,32 @@ document.addEventListener('click',function(e){
     }
 
     function buildProjectJson(){
-      return JSON.stringify({
-        format:'loadstudio-project',
-        version:'1.0',
-        saved:new Date().toISOString(),
-        generator:'LoadStudio v219'
-      },null,2);
+      return JSON.stringify({format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v222'},null,2);
+    }
+
+    function formatBytes(n){
+      if(n<1024)return n+' B';
+      if(n<1048576)return(n/1024).toFixed(1)+' KB';
+      return(n/1048576).toFixed(2)+' MB';
+    }
+
+    function triggerDownload(blob,filename){
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');a.href=url;a.download=filename;
+      document.body.appendChild(a);a.click();
+      setTimeout(function(){URL.revokeObjectURL(url);a.remove();},2000);
+    }
+
+    function showConfirm(filename,sizeBytes,fileCount,dt){
+      var info=document.getElementById('ls-cz-confirm-info');
+      var box=document.getElementById('ls-cz-confirm');
+      if(info)info.innerHTML=
+        '<strong>Filename:</strong> '+filename+'<br>'
+        +'<strong>Size:</strong> '+formatBytes(sizeBytes)+'<br>'
+        +'<strong>Files in package:</strong> '+fileCount+'<br>'
+        +'<strong>Created:</strong> '+dt+'<br>'
+        +'<span style="color:#90caf9">ZIP prepared. Browser download started.</span>';
+      if(box)box.style.display='block';
     }
 
     function renderReport(){
@@ -6764,10 +6786,10 @@ document.addEventListener('click',function(e){
       tb.innerHTML=ZIP_FILES.map(function(f){
         var val=readKey(f.key);
         var has=f.key?val!==null:false;
+        if(has)included++;else missing++;
         var status=f.key
           ?(has?'<span style="color:#66bb6a">Included</span>':'<span style="color:#888">Empty</span>')
           :'<span style="color:#ffa726">Room not yet rebuilt</span>';
-        if(has)included++;else missing++;
         return '<tr><td><code>'+esc(f.file)+'</code></td><td><code>'+(f.key||'—')+'</code></td><td>'+status+'</td></tr>';
       }).join('');
       if(sum)sum.textContent=included+' files with data, '+missing+' empty or not yet built.';
@@ -6777,42 +6799,51 @@ document.addEventListener('click',function(e){
 
     function buildAndDownload(){
       var statusEl=document.getElementById('ls-cz-status');
-      if(statusEl)statusEl.textContent='Building package...';
+      if(statusEl){statusEl.style.color='#90caf9';statusEl.textContent='Building package...';}
       var files=[];
-
-      /* project.json always included */
       files.push({name:'project.json',content:buildProjectJson()});
-
-      /* ZIP_FILES */
       ZIP_FILES.forEach(function(f){
         if(f.file==='project.json')return;
         var val=f.key?readKey(f.key):null;
-        if(val){
-          files.push({name:f.file,content:val});
-        } else {
-          files.push({name:f.file,content:'[]'});
-        }
+        files.push({name:f.file,content:val||'[]'});
       });
-
-      /* Asset folder markers */
-      ASSET_FOLDERS.forEach(function(p){
-        files.push({name:p,content:''});
-      });
-
+      ASSET_FOLDERS.forEach(function(p){files.push({name:p,content:'});});
       try{
         var zipBytes=buildZip(files);
         var blob=new Blob([zipBytes],{type:'application/zip'});
-        var url=URL.createObjectURL(blob);
-        var a=document.createElement('a');
-        var dt=new Date().toISOString().slice(0,10);
-        a.href=url;a.download='loadstudio-project-'+dt+'.zip';
-        document.body.appendChild(a);a.click();
-        setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);
-        if(statusEl)statusEl.textContent='ZIP downloaded — '+files.length+' files included.';
+        var dt=new Date();
+        var dateStr=dt.toISOString().slice(0,10);
+        var timeStr=dt.toLocaleTimeString();
+        var filename='loadstudio-project-'+dateStr+'.zip';
+        _lastBlob=blob;_lastFilename=filename;_lastFiles=files;
+        triggerDownload(blob,filename);
+        if(statusEl){statusEl.style.color='#66bb6a';statusEl.textContent='';}
+        showConfirm(filename,zipBytes.length,files.length,dateStr+' '+timeStr);
         renderReport();
       }catch(err){
-        if(statusEl)statusEl.style.color='#ef5350',statusEl.textContent='ZIP build error: '+err.message;
+        if(statusEl){statusEl.style.color='#ef5350';statusEl.textContent='Build error: '+err.message;}
       }
+    }
+
+    function downloadAgain(){
+      if(!_lastBlob||!_lastFilename){
+        var s=document.getElementById('ls-cz-status');
+        if(s){s.style.color='#ffa726';s.textContent='No ZIP built yet — press Build first.';}
+        return;
+      }
+      triggerDownload(_lastBlob,_lastFilename);
+    }
+
+    function downloadJSON(){
+      var proj={format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v222',rooms:{}};
+      ZIP_FILES.forEach(function(f){
+        if(!f.key)return;
+        var v=localStorage.getItem(f.key);
+        if(v){try{proj.rooms[f.key]=JSON.parse(v);}catch(e){proj.rooms[f.key]=v;}}
+      });
+      var blob=new Blob([JSON.stringify(proj,null,2)],{type:'application/json'});
+      var dt=new Date().toISOString().slice(0,10);
+      triggerDownload(blob,'loadstudio-project-'+dt+'.json');
     }
 
     function wire(){
@@ -6820,6 +6851,10 @@ document.addEventListener('click',function(e){
       if(btn&&!btn._lsCz){btn._lsCz=true;btn.addEventListener('click',buildAndDownload);}
       var rbtn=document.getElementById('ls-cz-report-btn');
       if(rbtn&&!rbtn._lsCz){rbtn._lsCz=true;rbtn.addEventListener('click',renderReport);}
+      var again=document.getElementById('ls-cz-again');
+      if(again&&!again._lsCz){again._lsCz=true;again.addEventListener('click',downloadAgain);}
+      var jdl=document.getElementById('ls-cz-json-dl');
+      if(jdl&&!jdl._lsCz){jdl._lsCz=true;jdl.addEventListener('click',downloadJSON);}
     }
 
     var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderReport();}});
