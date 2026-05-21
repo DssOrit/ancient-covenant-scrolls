@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v223 zip-button-click-fix — syntax error fixed, touchend, immediate feedback === */
+/* === LoadStudio v224 ipad-zip-save-fallback — navigator.share, Share/Save ZIP, open-in-tab fallback === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -6570,11 +6570,14 @@ document.addEventListener('click',function(e){
       </div>
       <div id="ls-cz-confirm" style="display:none;border-top:1px solid #222;margin-top:14px;padding-top:12px">
         <div id="ls-cz-confirm-info" style="font-size:0.82rem;color:#ccc;padding-bottom:10px;line-height:1.7"></div>
-        <p style="font-size:0.78rem;color:#888;padding-bottom:10px">iPad Safari: the download arrow appears in the toolbar. Tap it, then tap the file to save to the Files app.</p>
+        <p style="font-size:0.78rem;color:#ffa726;padding-bottom:6px;font-weight:600">If Download does not appear in Files, tap Share / Save ZIP and choose Save to Files.</p>
+        <p style="font-size:0.78rem;color:#888;padding-bottom:10px">iPad Safari: tap the download arrow in the toolbar, or use Share / Save ZIP below.</p>
         <div class="ls-btn-row">
-          <button id="ls-cz-again" class="ls-btn ls-btn-ghost">Download Again</button>
-          <button id="ls-cz-json-dl" class="ls-btn ls-btn-ghost">Save as JSON instead</button>
+          <button id="ls-cz-again" class="ls-btn" style="background:#0d47a1">Download ZIP</button>
+          <button id="ls-cz-share" class="ls-btn ls-btn-ghost">Share / Save ZIP</button>
+          <button id="ls-cz-json-dl" class="ls-btn ls-btn-ghost">Save JSON Backup</button>
         </div>
+        <div id="ls-cz-share-status" style="font-size:0.8rem;padding-top:6px;min-height:16px"></div>
       </div>
     </div>
     <div class="ls-panel">
@@ -6695,8 +6698,7 @@ document.addEventListener('click',function(e){
       var cdOff=off;
       locals.forEach(function(lk){
         var nb=lk.nb;var cd=new Uint8Array(46+nb.length);
-        cd[0]=0x50;cd[1]=0x4b;cd[2]=0x01;cd[3]=0x02;
-        cd[4]=20;cd[6]=20;
+        cd[0]=0x50;cd[1]=0x4b;cd[2]=0x01;cd[3]=0x02;cd[4]=20;cd[6]=20;
         cd[16]=lk.crc&0xff;cd[17]=(lk.crc>>8)&0xff;cd[18]=(lk.crc>>16)&0xff;cd[19]=(lk.crc>>24)&0xff;
         cd[20]=lk.sz&0xff;cd[21]=(lk.sz>>8)&0xff;cd[22]=(lk.sz>>16)&0xff;cd[23]=(lk.sz>>24)&0xff;
         cd[24]=lk.sz&0xff;cd[25]=(lk.sz>>8)&0xff;cd[26]=(lk.sz>>16)&0xff;cd[27]=(lk.sz>>24)&0xff;
@@ -6718,34 +6720,34 @@ document.addEventListener('click',function(e){
       return out;
     }
 
-    /* ── Key map ── */
     var ZIP_FILES=[
-      {file:'project.json',            key:null,                  label:'Project Metadata'},
-      {file:'scenes.json',             key:'ls_sw_scenes',        label:'Scene Workshop'},
-      {file:'characters.json',         key:'ls_characters_data',  label:'Characters'},
-      {file:'rights.json',             key:'ls_rights_data',      label:'Rights'},
-      {file:'credits.json',            key:'ls_credits',          label:'Credits'},
-      {file:'asset-registry.json',     key:'ls_asset_declarations',label:'Asset Declarations'},
-      {file:'prompt-log.json',         key:'ls_prompt_log',       label:'Prompt Log'},
-      {file:'continuity-report.json',  key:'ls_generation_report',label:'Generation Report'},
-      {file:'wardrobe.json',           key:'ls_wardrobe_data',    label:'Wardrobe'},
-      {file:'props.json',              key:'ls_props_data',       label:'Props'},
-      {file:'locations.json',          key:'ls_loc_items',        label:'Locations'},
-      {file:'looks.json',              key:'ls_ll_items',         label:'Look Lab'},
-      {file:'voices.json',             key:'ls_voices_data',      label:'Voices'},
-      {file:'provider-registry.json',  key:'ls_pv_catalog',       label:'Provider Registry'},
-      {file:'pipeline-registry.json',  key:'ls_plr_catalog',      label:'Pipeline Registry'}
+      {file:'project.json',           key:null,                  label:'Project Metadata'},
+      {file:'scenes.json',            key:'ls_sw_scenes',        label:'Scene Workshop'},
+      {file:'characters.json',        key:'ls_characters_data',  label:'Characters'},
+      {file:'rights.json',            key:'ls_rights_data',      label:'Rights'},
+      {file:'credits.json',           key:'ls_credits',          label:'Credits'},
+      {file:'asset-registry.json',    key:'ls_asset_declarations',label:'Asset Declarations'},
+      {file:'prompt-log.json',        key:'ls_prompt_log',       label:'Prompt Log'},
+      {file:'continuity-report.json', key:'ls_generation_report',label:'Generation Report'},
+      {file:'wardrobe.json',          key:'ls_wardrobe_data',    label:'Wardrobe'},
+      {file:'props.json',             key:'ls_props_data',       label:'Props'},
+      {file:'locations.json',         key:'ls_loc_items',        label:'Locations'},
+      {file:'looks.json',             key:'ls_ll_items',         label:'Look Lab'},
+      {file:'voices.json',            key:'ls_voices_data',      label:'Voices'},
+      {file:'provider-registry.json', key:'ls_pv_catalog',       label:'Provider Registry'},
+      {file:'pipeline-registry.json', key:'ls_plr_catalog',      label:'Pipeline Registry'}
     ];
     var ASSET_FOLDERS=['assets/images/.keep','assets/audio/.keep','assets/music/.keep','assets/sfx/.keep','assets/subtitles/.keep','assets/icons/.keep'];
 
     var _lastBlob=null;var _lastFilename='';
 
     function readKey(k){if(!k)return null;var v=localStorage.getItem(k);return(v&&v!=='[]'&&v!=='{}')?v:null;}
-    function buildProjectJson(){return JSON.stringify({format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v223'},null,2);}
+    function buildProjectJson(){return JSON.stringify({format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v224'},null,2);}
     function formatBytes(n){if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(2)+' MB';}
     function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
     function setStatus(msg,color){var el=document.getElementById('ls-cz-status');if(el){el.style.color=color||'#90caf9';el.textContent=msg;}}
+    function setShareStatus(msg,color){var el=document.getElementById('ls-cz-share-status');if(el){el.style.color=color||'#90caf9';el.textContent=msg;}}
 
     function triggerDownload(blob,filename){
       var url=URL.createObjectURL(blob);
@@ -6754,20 +6756,19 @@ document.addEventListener('click',function(e){
       setTimeout(function(){URL.revokeObjectURL(url);a.remove();},2000);
     }
 
-    function showConfirm(filename,sizeBytes,fileCount,dt){
+    function showConfirm(filename,sizeBytes,fileCount,timeStr){
       var info=document.getElementById('ls-cz-confirm-info');
       var box=document.getElementById('ls-cz-confirm');
       if(info)info.innerHTML=
         '<strong>Filename:</strong> '+esc(filename)+'<br>'
         +'<strong>Size:</strong> '+formatBytes(sizeBytes)+'<br>'
-        +'<strong>Files in package:</strong> '+fileCount+'<br>'
-        +'<strong>Created:</strong> '+esc(dt)+'<br>'
-        +'<span style="color:#90caf9">ZIP prepared. Browser download started.</span>';
+        +'<strong>Files:</strong> '+fileCount+'<br>'
+        +'<strong>Created:</strong> '+esc(timeStr)+'<br>'
+        +'<span style="color:#90caf9">ZIP prepared. Choose Download or Share / Save.</span>';
       if(box)box.style.display='block';
     }
 
     function buildAndDownload(){
-      /* Immediate visible feedback before any work */
       setStatus('Preparing ZIP…','#90caf9');
       var files=[];
       files.push({name:'project.json',content:buildProjectJson()});
@@ -6782,7 +6783,7 @@ document.addEventListener('click',function(e){
         var dt=new Date();
         var filename='loadstudio-project-'+dt.toISOString().slice(0,10)+'.zip';
         _lastBlob=blob;_lastFilename=filename;
-        triggerDownload(blob,filename);
+        /* Prepare complete — user chooses their save method */
         setStatus('','');
         showConfirm(filename,zipBytes.length,files.length,dt.toISOString().slice(0,10)+' '+dt.toLocaleTimeString());
         renderReport();
@@ -6791,13 +6792,38 @@ document.addEventListener('click',function(e){
       }
     }
 
-    function downloadAgain(){
-      if(!_lastBlob){setStatus('No ZIP built yet — press Build first.','#ffa726');return;}
+    function downloadZip(){
+      if(!_lastBlob){setStatus('Build the ZIP first.','#ffa726');return;}
+      setShareStatus('Download attempted.','#90caf9');
       triggerDownload(_lastBlob,_lastFilename);
     }
 
+    function shareZip(){
+      if(!_lastBlob||!_lastFilename){setShareStatus('Build the ZIP first.','#ffa726');return;}
+      if(!navigator.share){
+        setShareStatus('Share not available in this browser. Use Download ZIP.','#ffa726');
+        return;
+      }
+      var file=new File([_lastBlob],_lastFilename,{type:'application/zip'});
+      var canShare=navigator.canShare&&navigator.canShare({files:[file]});
+      if(!canShare){
+        /* Fallback: open blob URL in new tab so user can long-press Save */
+        var url=URL.createObjectURL(_lastBlob);
+        window.open(url,'_blank');
+        setTimeout(function(){URL.revokeObjectURL(url);},30000);
+        setShareStatus('Opened in new tab — long-press the file to save.','#ffa726');
+        return;
+      }
+      navigator.share({files:[file],title:_lastFilename})
+        .then(function(){setShareStatus('Share sheet opened. Choose Save to Files.','#66bb6a');})
+        .catch(function(err){
+          if(err.name==='AbortError')setShareStatus('Share cancelled.','#888');
+          else setShareStatus('Share error: '+err.message,'#ef5350');
+        });
+    }
+
     function downloadJSON(){
-      var proj={format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v223',rooms:{}};
+      var proj={format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v224',rooms:{}};
       ZIP_FILES.forEach(function(f){
         if(!f.key)return;
         var v=localStorage.getItem(f.key);
@@ -6805,6 +6831,7 @@ document.addEventListener('click',function(e){
       });
       var blob=new Blob([JSON.stringify(proj,null,2)],{type:'application/json'});
       triggerDownload(blob,'loadstudio-project-'+new Date().toISOString().slice(0,10)+'.json');
+      setShareStatus('JSON backup download started.','#66bb6a');
     }
 
     function renderReport(){
@@ -6824,22 +6851,20 @@ document.addEventListener('click',function(e){
     function addHandler(el,fn){
       if(!el||el._lsCz)return;el._lsCz=true;
       el.addEventListener('click',fn);
-      /* touchend fallback for iPad Safari */
       el.addEventListener('touchend',function(e){e.preventDefault();fn();});
     }
 
     function wire(){
       addHandler(document.getElementById('ls-cz-build'),buildAndDownload);
       addHandler(document.getElementById('ls-cz-report-btn'),renderReport);
-      addHandler(document.getElementById('ls-cz-again'),downloadAgain);
+      addHandler(document.getElementById('ls-cz-again'),downloadZip);
+      addHandler(document.getElementById('ls-cz-share'),shareZip);
       addHandler(document.getElementById('ls-cz-json-dl'),downloadJSON);
     }
 
-    /* Wire on section activate AND on script execution (covers both cases) */
     var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderReport();}});
     obs.observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')){wire();renderReport();}
-    /* Belt-and-suspenders: re-attempt after short delay in case DOM not settled */
     setTimeout(function(){if(sec.classList.contains('active'))wire();},200);
   })();</script>
 
