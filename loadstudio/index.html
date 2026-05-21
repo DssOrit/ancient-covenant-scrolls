@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v211 casting-department-interior — casting management room (red) === */
+/* === LoadStudio v212 sound-stage-interior — production sound planning room (orange) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -1456,12 +1456,255 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="character-voice"></div><div class="local-list" id="list-character-voice"></div></div>
   </div>
 </section>
-<section id="section-sound-studio" class="section" data-title="Sound Studio">
-  <div class="section-head"><div><h2>Sound Studio</h2><p>Manage sound, music, ambience and audio export.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="sound-studio">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="sound-studio-record-sound" data-section-id="sound-studio"><b>record sound</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-import-sound" data-section-id="sound-studio"><b>import sound</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-sound-effects-library" data-section-id="sound-studio"><b>sound effects library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-music-library" data-section-id="sound-studio"><b>music library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-trim-audio" data-section-id="sound-studio"><b>trim audio</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-fade-in-out" data-section-id="sound-studio"><b>fade in out</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-normalize-volume" data-section-id="sound-studio"><b>normalize volume</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-denoise" data-section-id="sound-studio"><b>denoise</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-extract-audio-from-video" data-section-id="sound-studio"><b>extract audio from video</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-audio-only-export" data-section-id="sound-studio"><b>audio-only export</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-attach-sound-to-scene" data-section-id="sound-studio"><b>attach sound to scene</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-loop-background-music" data-section-id="sound-studio"><b>loop background music</b><small>local plus integration</small></button><button class="feature-btn" data-feature="sound-studio-sync-sound-cues-to-scene" data-section-id="sound-studio"><b>sync sound cues to scene</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="sound-studio"></div><div class="local-list" id="list-sound-studio"></div></div>
+<section id="section-sound-studio" class="section" data-title="Sound Stage">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#e65100,#ff7043)"></div>
+  <div class="ls-h"><h2>Sound Stage</h2></div>
+  <p class="ls-lead">Local production sound-planning room. Plan recording sessions, log room tone and ambience notes, and assign sound to scenes. No audio recording, no playback, no AI sound generation — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,112,67,.12);border:1px solid rgba(255,112,67,.3);color:#ff7043;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Sound Session</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Session Name</label>
+        <input id="ls-sg-name" type="text" placeholder="e.g. SC01 — Elena narration take 2" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-sg-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Sound Type</label>
+        <select id="ls-sg-type" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select sound type</option>
+          <option>Narration</option>
+          <option>Dialogue</option>
+          <option>Room Tone</option>
+          <option>Ambience</option>
+          <option>Foley</option>
+          <option>Voice Test</option>
+          <option>Crowd</option>
+          <option>Environmental</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Recording Location</label>
+        <input id="ls-sg-rec-location" type="text" placeholder="e.g. home studio, location shoot, remote booth" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Voice Profile</label>
+        <input id="ls-sg-voice" type="text" placeholder="Voice profile name or ID" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Asset Path / URL</label>
+        <input id="ls-sg-asset" type="text" placeholder="e.g. /assets/audio/SC01-narration-v2.wav" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Microphone / Setup Notes</label>
+        <textarea id="ls-sg-mic" placeholder="e.g. cardioid condenser, 6 inches, pop filter, low shelf cut" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Room Tone Notes</label>
+        <textarea id="ls-sg-room-tone" placeholder="e.g. faint HVAC hum, hardwood reflections, treated corner only" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Ambience Notes</label>
+        <textarea id="ls-sg-ambience" placeholder="e.g. outdoor birds, city traffic at low level, forest insects at dusk" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Dialogue / Narration Notes</label>
+        <textarea id="ls-sg-dialogue" placeholder="e.g. slow pace, pause after line 3, breathe before last sentence" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Noise Concerns</label>
+        <textarea id="ls-sg-noise" placeholder="e.g. street traffic at peak hours, neighbour movement upstairs, AC kicks in every 8 min" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cleanup Notes</label>
+        <textarea id="ls-sg-cleanup" placeholder="e.g. needs noise reduction pass, remove breath at 0:12, denoise entire take" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-sg-notes" placeholder="Any additional production sound notes" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-sg-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,112,67,.5);background:rgba(255,112,67,.15);color:#ff7043;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Session</button>
+      <button id="ls-sg-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-sg-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-sg-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Sound Session Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(255,112,67,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ff7043">Session</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ff7043">Scene</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ff7043">Sound Type</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ff7043">Voice Profile</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ff7043"></th>
+        </tr></thead>
+        <tbody id="ls-sg-tbody"><tr><td colspan="5" style="padding:14px 10px;color:#7a6fa0;text-align:center">No sound sessions saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Sound Assignment</h3>
+    <p style="color:#9e97c0;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Assign a sound session to a scene with cue and continuity notes.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-ssa-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Sound Session</label>
+        <input id="ls-ssa-session" type="text" placeholder="Session name" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Point / Time Note</label>
+        <input id="ls-ssa-cue" type="text" placeholder="e.g. starts at 0:04, fades from 0:38" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-ssa-status" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Approved</option>
+          <option>Needs Review</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Notes</label>
+      <textarea id="ls-ssa-notes" placeholder="e.g. must match room tone from SC03, ambience level consistent with SC05" style="background:#0e0720;border:1px solid rgba(255,112,67,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <button id="ls-ssa-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,112,67,.5);background:rgba(255,112,67,.15);color:#ff7043;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Add Assignment</button>
+    <div id="ls-ssa-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div id="ls-ssa-list" style="margin-top:14px"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('voice-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(255,112,67,.3);background:rgba(255,112,67,.08);color:#ffab91;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Voice Studio</button>
+      <button type="button" onclick="go('soundtrack')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(255,112,67,.3);background:rgba(255,112,67,.08);color:#ffab91;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Music + SFX Studio</button>
+      <button type="button" onclick="go('media-vault')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(255,112,67,.3);background:rgba(255,112,67,.08);color:#ffab91;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Media Vault</button>
+      <button type="button" onclick="go('asset-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(255,112,67,.3);background:rgba(255,112,67,.08);color:#ffab91;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Asset Registry</button>
+      <button type="button" onclick="go('scene-builder')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(255,112,67,.3);background:rgba(255,112,67,.08);color:#ffab91;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Scene Workshop</button>
+    </div>
+  </div>
+</div>
+<script id="ls-sg-v212">(function(){
+  var SESSIONS_KEY='ls_sg_sessions';
+  var ASSIGN_KEY='ls_sg_assignments';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function renderTable(){
+    var items=load(SESSIONS_KEY);
+    var tb=document.getElementById('ls-sg-tbody');
+    if(!tb)return;
+    if(!items.length){tb.innerHTML='<tr><td colspan="5" style="padding:14px 10px;color:#7a6fa0;text-align:center">No sound sessions saved yet</td></tr>';return;}
+    tb.innerHTML=items.map(function(it,i){
+      return '<tr style="border-bottom:1px solid rgba(255,112,67,.1)">'+
+        '<td style="padding:8px 10px">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px;font:600 13px Inter,system-ui,sans-serif;color:#ffab91">'+esc(it.scene||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.type||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.voice||'')+'</td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsSGDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function renderAssignments(){
+    var items=load(ASSIGN_KEY);
+    var el=document.getElementById('ls-ssa-list');
+    if(!el)return;
+    if(!items.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">No assignments yet</p>';return;}
+    el.innerHTML=items.map(function(it,i){
+      var sc={'Approved':'#66bb6a','Needs Review':'#ffa726','Rejected':'#ef5350'}[it.status]||'#9e97c0';
+      return '<div style="background:rgba(255,112,67,.06);border:1px solid rgba(255,112,67,.18);border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><strong style="color:#f5f0ff;font:600 13px Inter,system-ui,sans-serif">'+esc(it.scene||'')+'</strong>'+
+        '<span style="margin-left:8px;color:#9e97c0;font:400 13px Inter,system-ui,sans-serif">'+esc(it.session||'')+'</span></div>'+
+        '<span style="color:'+sc+';font:500 11px Inter,system-ui,sans-serif;white-space:nowrap">'+esc(it.status||'')+'</span></div>'+
+        (it.cue?'<div style="color:#b0a8d0;font:400 12px Inter,system-ui,sans-serif;margin-top:4px">Cue: '+esc(it.cue)+'</div>':'')+
+        (it.notes?'<div style="color:#9e97c0;font:300 12px Inter,system-ui,sans-serif;margin-top:4px">'+esc(it.notes)+'</div>':'')+
+        '<button onclick="window.lsSGDeleteAssign('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer;margin-top:6px">Remove</button>'+
+        '</div>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-sg-save-btn');
+    if(saveBtn&&!saveBtn._lssg){saveBtn._lssg=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-sg-name');
+        if(!name){flash('ls-sg-msg','Session name is required.');return;}
+        var items=load(SESSIONS_KEY);
+        items.push({name:name,scene:g('ls-sg-scene'),type:g('ls-sg-type'),recLocation:g('ls-sg-rec-location'),voice:g('ls-sg-voice'),asset:g('ls-sg-asset'),mic:g('ls-sg-mic'),roomTone:g('ls-sg-room-tone'),ambience:g('ls-sg-ambience'),dialogue:g('ls-sg-dialogue'),noise:g('ls-sg-noise'),cleanup:g('ls-sg-cleanup'),notes:g('ls-sg-notes'),savedAt:new Date().toISOString()});
+        save(SESSIONS_KEY,items);
+        renderTable();
+        flash('ls-sg-msg','Sound session saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-sg-clear-btn');
+    if(clearBtn&&!clearBtn._lssg){clearBtn._lssg=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-sg-name','ls-sg-scene','ls-sg-rec-location','ls-sg-voice','ls-sg-asset','ls-sg-mic','ls-sg-room-tone','ls-sg-ambience','ls-sg-dialogue','ls-sg-noise','ls-sg-cleanup','ls-sg-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var st=document.getElementById('ls-sg-type');if(st)st.selectedIndex=0;
+      });
+    }
+    var expBtn=document.getElementById('ls-sg-export-btn');
+    if(expBtn&&!expBtn._lssg){expBtn._lssg=1;
+      expBtn.addEventListener('click',function(){
+        var data={sessions:load(SESSIONS_KEY),assignments:load(ASSIGN_KEY),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sound-stage.json';a.click();
+      });
+    }
+    var ssaBtn=document.getElementById('ls-ssa-save-btn');
+    if(ssaBtn&&!ssaBtn._lssg){ssaBtn._lssg=1;
+      ssaBtn.addEventListener('click',function(){
+        var scene=g('ls-ssa-scene'),session=g('ls-ssa-session');
+        if(!scene||!session){flash('ls-ssa-msg','Scene ID and Sound Session are required.');return;}
+        var items=load(ASSIGN_KEY);
+        items.push({scene:scene,session:session,cue:g('ls-ssa-cue'),notes:g('ls-ssa-notes'),status:g('ls-ssa-status'),savedAt:new Date().toISOString()});
+        save(ASSIGN_KEY,items);
+        renderAssignments();
+        ['ls-ssa-scene','ls-ssa-session','ls-ssa-cue','ls-ssa-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var ss=document.getElementById('ls-ssa-status');if(ss)ss.selectedIndex=0;
+        flash('ls-ssa-msg','Assignment added.');
+      });
+    }
+  }
+
+  window.lsSGDelete=function(i){var items=load(SESSIONS_KEY);items.splice(i,1);save(SESSIONS_KEY,items);renderTable();};
+  window.lsSGDeleteAssign=function(i){var items=load(ASSIGN_KEY);items.splice(i,1);save(ASSIGN_KEY,items);renderAssignments();};
+
+  var sec=document.getElementById('section-sound-studio');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+  }
+  window.lsSGRoom={renderTable:renderTable,renderAssignments:renderAssignments};
+})();</script>
 </section>
 <section id="section-soundtrack" class="section" data-title="Soundtrack Tools">
   <div class="section-head"><div><h2>Soundtrack Tools</h2><p>Cinematic soundtrack and open-source sound provider planning.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="soundtrack">Audit Section</button></div>
