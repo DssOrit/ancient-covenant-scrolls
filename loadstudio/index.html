@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v212 sound-stage-interior — production sound planning room (orange) === */
+/* === LoadStudio v213 music-sfx-interior — cue planning room (indigo) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -1706,12 +1706,284 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   window.lsSGRoom={renderTable:renderTable,renderAssignments:renderAssignments};
 })();</script>
 </section>
-<section id="section-soundtrack" class="section" data-title="Soundtrack Tools">
-  <div class="section-head"><div><h2>Soundtrack Tools</h2><p>Cinematic soundtrack and open-source sound provider planning.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="soundtrack">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="soundtrack-cinematic-soundtrack-library" data-section-id="soundtrack"><b>cinematic soundtrack library</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-royalty-free-music-integration" data-section-id="soundtrack"><b>royalty-free music integration</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-public-domain-music" data-section-id="soundtrack"><b>public domain music</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-open-source-sound-packs" data-section-id="soundtrack"><b>open-source sound packs</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-upload-custom-soundtrack" data-section-id="soundtrack"><b>upload custom soundtrack</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-assign-music-by-scene" data-section-id="soundtrack"><b>assign music by scene</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-mood-based-music-tags" data-section-id="soundtrack"><b>mood-based music tags</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-export-soundtrack" data-section-id="soundtrack"><b>export soundtrack</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-meta-audiocraft-musicgen" data-section-id="soundtrack"><b>Meta AudioCraft MusicGen</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-hugging-face-musicgen" data-section-id="soundtrack"><b>Hugging Face MusicGen</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-riffusion" data-section-id="soundtrack"><b>Riffusion</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-pixabay-music-and-sfx" data-section-id="soundtrack"><b>Pixabay Music and SFX</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-freesound" data-section-id="soundtrack"><b>Freesound</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-free-music-archive" data-section-id="soundtrack"><b>Free Music Archive</b><small>local plus integration</small></button><button class="feature-btn" data-feature="soundtrack-jamendo" data-section-id="soundtrack"><b>Jamendo</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="soundtrack"></div><div class="local-list" id="list-soundtrack"></div></div>
+<section id="section-soundtrack" class="section" data-title="Music + SFX Studio">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#4527a0,#7e57c2)"></div>
+  <div class="ls-h"><h2>Music + SFX Studio</h2></div>
+  <p class="ls-lead">Local music and SFX cue-planning room. Plan music cues, SFX cues, Foley, ambience, and stingers for each scene. No playback, no AI generation, no timeline editor — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(126,87,194,.12);border:1px solid rgba(126,87,194,.3);color:#7e57c2;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Music / SFX Cue</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Name</label>
+        <input id="ls-ms-name" type="text" placeholder="e.g. SC01 — rainstorm ambience" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-ms-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Type</label>
+        <select id="ls-ms-type" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select cue type</option>
+          <option>Music</option>
+          <option>SFX</option>
+          <option>Foley</option>
+          <option>Ambience</option>
+          <option>Transition</option>
+          <option>Emotional Stinger</option>
+          <option>Crowd</option>
+          <option>Weather</option>
+          <option>Animal</option>
+          <option>Room Tone</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Category</label>
+        <input id="ls-ms-category" type="text" placeholder="e.g. underscore, one-shot, loop, sting" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Point / Time Note</label>
+        <input id="ls-ms-cue-point" type="text" placeholder="e.g. starts at 0:02, peaks at 0:18, out at 0:45" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Mood / Emotion</label>
+        <input id="ls-ms-mood" type="text" placeholder="e.g. dread, melancholy, hopeful, tense" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Intensity</label>
+        <input id="ls-ms-intensity" type="text" placeholder="e.g. low — background, builds to full, one-shot hit" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Loop Needed</label>
+        <select id="ls-ms-loop" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select</option>
+          <option>Yes</option>
+          <option>No</option>
+          <option>Optional</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Rights Status</label>
+        <select id="ls-ms-rights" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select</option>
+          <option>Public Domain</option>
+          <option>CC0</option>
+          <option>CC BY</option>
+          <option>CC BY-SA</option>
+          <option>Licensed</option>
+          <option>AI Generated</option>
+          <option>Original</option>
+          <option>Needs Clearance</option>
+          <option>Unknown</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Asset Path / URL</label>
+        <input id="ls-ms-asset" type="text" placeholder="e.g. /assets/audio/SC01-rain.wav or https://..." style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Fade In / Out Notes</label>
+        <textarea id="ls-ms-fade" placeholder="e.g. 2s fade in, hard cut out at scene end" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Source / Provider Notes</label>
+        <textarea id="ls-ms-source" placeholder="e.g. Pixabay Music, Freesound ID 12345, AI generated via MusicGen" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Attribution Notes</label>
+        <textarea id="ls-ms-attribution" placeholder="e.g. Artist Name — Track Title — CC BY 4.0" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Notes</label>
+        <textarea id="ls-ms-continuity" placeholder="e.g. same rain ambience must carry through SC01-SC04, no break" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-ms-notes" placeholder="Any additional cue notes" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-ms-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(126,87,194,.5);background:rgba(126,87,194,.15);color:#7e57c2;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Cue</button>
+      <button id="ls-ms-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-ms-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-ms-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Cue Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(126,87,194,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2">Cue Name</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2">Type</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2">Scene</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2">Cue Point</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2">Rights</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#7e57c2"></th>
+        </tr></thead>
+        <tbody id="ls-ms-tbody"><tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No cues saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Cue Assignment</h3>
+    <p style="color:#9e97c0;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Assign a cue to a scene with duration and status notes.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-msa-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Name</label>
+        <input id="ls-msa-cue" type="text" placeholder="Cue name" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cue Point / Time Note</label>
+        <input id="ls-msa-cue-point" type="text" placeholder="e.g. 0:04 — 0:38" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Duration Note</label>
+        <input id="ls-msa-duration" type="text" placeholder="e.g. 34s, full scene, looped to fill" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-msa-status" style="background:#0e0720;border:1px solid rgba(126,87,194,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Approved</option>
+          <option>Needs Review</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <button id="ls-msa-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(126,87,194,.5);background:rgba(126,87,194,.15);color:#7e57c2;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Add Assignment</button>
+    <div id="ls-msa-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div id="ls-msa-list" style="margin-top:14px"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('sound-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(126,87,194,.3);background:rgba(126,87,194,.08);color:#b39ddb;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Sound Stage</button>
+      <button type="button" onclick="go('voice-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(126,87,194,.3);background:rgba(126,87,194,.08);color:#b39ddb;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Voice Studio</button>
+      <button type="button" onclick="go('media-vault')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(126,87,194,.3);background:rgba(126,87,194,.08);color:#b39ddb;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Media Vault</button>
+      <button type="button" onclick="go('asset-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(126,87,194,.3);background:rgba(126,87,194,.08);color:#b39ddb;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Asset Registry</button>
+      <button type="button" onclick="go('scene-builder')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(126,87,194,.3);background:rgba(126,87,194,.08);color:#b39ddb;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Scene Workshop</button>
+    </div>
+  </div>
+</div>
+<script id="ls-ms-v213">(function(){
+  var CUES_KEY='ls_ms_cues';
+  var ASSIGN_KEY='ls_ms_assignments';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function renderTable(){
+    var items=load(CUES_KEY);
+    var tb=document.getElementById('ls-ms-tbody');
+    if(!tb)return;
+    if(!items.length){tb.innerHTML='<tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No cues saved yet</td></tr>';return;}
+    tb.innerHTML=items.map(function(it,i){
+      return '<tr style="border-bottom:1px solid rgba(126,87,194,.1)">'+
+        '<td style="padding:8px 10px">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.type||'')+'</td>'+
+        '<td style="padding:8px 10px;font:600 13px Inter,system-ui,sans-serif;color:#b39ddb">'+esc(it.scene||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.cuePoint||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.rights||'')+'</td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsMSDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function renderAssignments(){
+    var items=load(ASSIGN_KEY);
+    var el=document.getElementById('ls-msa-list');
+    if(!el)return;
+    if(!items.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">No assignments yet</p>';return;}
+    el.innerHTML=items.map(function(it,i){
+      var sc={'Approved':'#66bb6a','Needs Review':'#ffa726','Rejected':'#ef5350'}[it.status]||'#9e97c0';
+      return '<div style="background:rgba(126,87,194,.06);border:1px solid rgba(126,87,194,.18);border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><strong style="color:#f5f0ff;font:600 13px Inter,system-ui,sans-serif">'+esc(it.scene||'')+'</strong>'+
+        '<span style="margin-left:8px;color:#9e97c0;font:400 13px Inter,system-ui,sans-serif">'+esc(it.cue||'')+'</span></div>'+
+        '<span style="color:'+sc+';font:500 11px Inter,system-ui,sans-serif;white-space:nowrap">'+esc(it.status||'')+'</span></div>'+
+        '<div style="color:#b0a8d0;font:400 12px Inter,system-ui,sans-serif;margin-top:4px">'+
+          (it.cuePoint?'Cue: '+esc(it.cuePoint)+' ':'')+
+          (it.duration?'Duration: '+esc(it.duration):'')+'</div>'+
+        '<button onclick="window.lsMSDeleteAssign('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer;margin-top:6px">Remove</button>'+
+        '</div>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-ms-save-btn');
+    if(saveBtn&&!saveBtn._lsms){saveBtn._lsms=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-ms-name');
+        if(!name){flash('ls-ms-msg','Cue name is required.');return;}
+        var items=load(CUES_KEY);
+        items.push({name:name,scene:g('ls-ms-scene'),type:g('ls-ms-type'),category:g('ls-ms-category'),cuePoint:g('ls-ms-cue-point'),mood:g('ls-ms-mood'),intensity:g('ls-ms-intensity'),loop:g('ls-ms-loop'),rights:g('ls-ms-rights'),asset:g('ls-ms-asset'),fade:g('ls-ms-fade'),source:g('ls-ms-source'),attribution:g('ls-ms-attribution'),continuity:g('ls-ms-continuity'),notes:g('ls-ms-notes'),savedAt:new Date().toISOString()});
+        save(CUES_KEY,items);
+        renderTable();
+        flash('ls-ms-msg','Cue saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-ms-clear-btn');
+    if(clearBtn&&!clearBtn._lsms){clearBtn._lsms=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-ms-name','ls-ms-scene','ls-ms-category','ls-ms-cue-point','ls-ms-mood','ls-ms-intensity','ls-ms-asset','ls-ms-fade','ls-ms-source','ls-ms-attribution','ls-ms-continuity','ls-ms-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        ['ls-ms-type','ls-ms-loop','ls-ms-rights'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      });
+    }
+    var expBtn=document.getElementById('ls-ms-export-btn');
+    if(expBtn&&!expBtn._lsms){expBtn._lsms=1;
+      expBtn.addEventListener('click',function(){
+        var data={cues:load(CUES_KEY),assignments:load(ASSIGN_KEY),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='music-sfx-studio.json';a.click();
+      });
+    }
+    var msaBtn=document.getElementById('ls-msa-save-btn');
+    if(msaBtn&&!msaBtn._lsms){msaBtn._lsms=1;
+      msaBtn.addEventListener('click',function(){
+        var scene=g('ls-msa-scene'),cue=g('ls-msa-cue');
+        if(!scene||!cue){flash('ls-msa-msg','Scene ID and Cue Name are required.');return;}
+        var items=load(ASSIGN_KEY);
+        items.push({scene:scene,cue:cue,cuePoint:g('ls-msa-cue-point'),duration:g('ls-msa-duration'),status:g('ls-msa-status'),savedAt:new Date().toISOString()});
+        save(ASSIGN_KEY,items);
+        renderAssignments();
+        ['ls-msa-scene','ls-msa-cue','ls-msa-cue-point','ls-msa-duration'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var ss=document.getElementById('ls-msa-status');if(ss)ss.selectedIndex=0;
+        flash('ls-msa-msg','Assignment added.');
+      });
+    }
+  }
+
+  window.lsMSDelete=function(i){var items=load(CUES_KEY);items.splice(i,1);save(CUES_KEY,items);renderTable();};
+  window.lsMSDeleteAssign=function(i){var items=load(ASSIGN_KEY);items.splice(i,1);save(ASSIGN_KEY,items);renderAssignments();};
+
+  var sec=document.getElementById('section-soundtrack');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+  }
+  window.lsMSRoom={renderTable:renderTable,renderAssignments:renderAssignments};
+})();</script>
 </section>
 <section id="section-wardrobe" class="section" data-title="Wardrobe Department">
   <div class="ls-frame">
