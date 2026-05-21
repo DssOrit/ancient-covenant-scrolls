@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v217 export-package-interior — export office / cinepwa / package validator === */
+/* === LoadStudio v218 project-save-export-reopen — save/download/restore foundation === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3389,6 +3389,36 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       <button class="ls-rel-btn" onclick="go('pwa-diagnostics')">Diagnostics</button>
     </div>
   </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Save Project</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Collects all LoadStudio room data from this browser and downloads a single project JSON. No data leaves your device.</p>
+      <div id="ls-ps-last" style="font-size:0.8rem;color:#66bb6a;padding-bottom:10px;min-height:18px"></div>
+      <div class="ls-btn-row">
+        <button id="ls-ps-download" class="ls-btn" style="background:#1b5e20">Download Project JSON</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Open / Restore Project</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Select a .loadstudio.json file to restore all room data. Existing data for matched keys will be overwritten.</p>
+      <div class="ls-btn-row">
+        <label class="ls-btn ls-btn-ghost" style="cursor:pointer">Open Project JSON<input id="ls-ps-file" type="file" accept=".json,application/json" style="display:none"></label>
+      </div>
+      <div id="ls-ps-restore-msg" style="font-size:0.8rem;padding-top:8px;min-height:18px"></div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Export Report</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:10px">Shows which rooms have saved data in this browser.</p>
+      <div class="ls-btn-row">
+        <button id="ls-ps-report" class="ls-btn ls-btn-ghost">Refresh Report</button>
+      </div>
+      <div class="ls-table-wrap" style="margin-top:10px">
+        <table class="ls-table">
+          <thead><tr><th>Room / Section</th><th>Key</th><th>Status</th></tr></thead>
+          <tbody id="ls-ps-report-tbody"><tr><td colspan="3" class="ls-empty">Press Refresh Report to check.</td></tr></tbody>
+        </table>
+      </div>
+      <div id="ls-ps-summary" style="font-size:0.82rem;color:#aaa;padding-top:8px;min-height:18px"></div>
+    </div>
   <script id="ls-eo-v217">(function(){
     var KEY='ls_eo_records';
     var sec=document.getElementById('section-export-studio');
@@ -3429,6 +3459,123 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     obs.observe(sec,{attributes:true,attributeFilter:['class']});
     if(sec.classList.contains('active')){wire();render();}
   })();</script>
+  <script id="ls-ps-v218">(function(){
+    var sec=document.getElementById('section-export-studio');
+    var KEY_MAP=[
+      {key:'ls_sw_scenes',label:'Scene Workshop'},
+      {key:'ls_cd_profiles',label:'Casting Profiles'},
+      {key:'ls_cd_assignments',label:'Casting Assignments'},
+      {key:'ls_sg_sessions',label:'Sound Stage Sessions'},
+      {key:'ls_sg_assignments',label:'Sound Stage Assignments'},
+      {key:'ls_ms_cues',label:'Music + SFX Cues'},
+      {key:'ls_ms_assignments',label:'Music + SFX Assignments'},
+      {key:'ls_pv_catalog',label:'Provider Registry'},
+      {key:'ls_plr_catalog',label:'Pipeline Registry'},
+      {key:'ls_loc_items',label:'Locations'},
+      {key:'ls_loc_assignments',label:'Location Assignments'},
+      {key:'ls_ll_items',label:'Look Lab'},
+      {key:'ls_ll_assignments',label:'Look Lab Assignments'},
+      {key:'ls_eco_modules',label:'Load Eco Modules'},
+      {key:'ls_diag_reports',label:'Diagnostics Reports'},
+      {key:'ls_devlab_tools',label:'Developer Lab Tools'},
+      {key:'ls_le_tools',label:'Local Engine Tools'},
+      {key:'ls_eo_records',label:'Export Records'},
+      {key:'ls_cpb_state',label:'CinePWA Package State'},
+      {key:'ls_pkv_results',label:'Package Validator Results'},
+      {key:'ls_asset_declarations',label:'Asset Declarations'},
+      {key:'ls_credits',label:'Credits'},
+      {key:'ls_generation_report',label:'Generation Report'},
+      {key:'ls_prompt_log',label:'Prompt Log'},
+      {key:'ls_provider_test_results',label:'Provider Test Results'},
+      {key:'ls_scene_prompts',label:'Scene Prompts'},
+      {key:'ls_world_data',label:'World Builder Data'},
+      {key:'ls_local_engine',label:'Local Engine Config'},
+      {key:'ls_cinepwa_config',label:'CinePWA Config'},
+      {key:'ls_eco_report',label:'Load Eco Report'},
+      {key:'ls_talking_photo',label:'Talking Photo'},
+      {key:'ls_i2v_log',label:'Image to Video Log'},
+      {key:'ls_t2v_log',label:'Text to Video Log'},
+      {key:'ls_lipsync_log',label:'Lip Sync Log'}
+    ];
+    function hasData(val){
+      if(val===null||val===undefined)return false;
+      if(val==='[]'||val==='{}')return false;
+      if(val==='')return false;
+      return true;
+    }
+    function collectProject(){
+      var proj={format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),rooms:{}};
+      KEY_MAP.forEach(function(r){
+        var val=localStorage.getItem(r.key);
+        if(val!==null){try{proj.rooms[r.key]=JSON.parse(val);}catch(e){proj.rooms[r.key]=val;}}
+      });
+      return proj;
+    }
+    function downloadJSON(obj,filename){
+      var blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1000);
+    }
+    function renderReport(){
+      var tb=document.getElementById('ls-ps-report-tbody');
+      var sum=document.getElementById('ls-ps-summary');
+      if(!tb)return;
+      var included=0,missing=0;
+      tb.innerHTML=KEY_MAP.map(function(r){
+        var val=localStorage.getItem(r.key);
+        var has=hasData(val);
+        if(has)included++;else missing++;
+        var status=has?'<span style="color:#66bb6a">Included</span>':'<span style="color:#888">Empty</span>';
+        return '<tr><td>'+esc(r.label)+'</td><td><code>'+esc(r.key)+'</code></td><td>'+status+'</td></tr>';
+      }).join('');
+      if(sum)sum.textContent=included+' included, '+missing+' empty.';
+    }
+    function restoreProject(proj){
+      var msg=document.getElementById('ls-ps-restore-msg');
+      if(!proj||proj.format!=='loadstudio-project'){if(msg)msg.style.color='#ef5350',msg.textContent='Not a valid LoadStudio project file.';return;}
+      var count=0;
+      KEY_MAP.forEach(function(r){
+        if(proj.rooms&&proj.rooms[r.key]!==undefined){
+          try{localStorage.setItem(r.key,JSON.stringify(proj.rooms[r.key]));count++;}catch(e){}
+        }
+      });
+      if(msg){msg.style.color='#66bb6a';msg.textContent=count+' sections restored from project file.';}
+      renderReport();
+    }
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function wire(){
+      var dlBtn=document.getElementById('ls-ps-download');
+      if(dlBtn&&!dlBtn._lsPs){dlBtn._lsPs=true;
+        dlBtn.addEventListener('click',function(){
+          var proj=collectProject();
+          var dt=new Date().toISOString().slice(0,10);
+          downloadJSON(proj,'loadstudio-project-'+dt+'.json');
+          var el=document.getElementById('ls-ps-last');
+          if(el)el.textContent='Saved '+new Date().toLocaleTimeString()+' — '+Object.keys(proj.rooms).length+' sections included.';
+        });
+      }
+      var fileIn=document.getElementById('ls-ps-file');
+      if(fileIn&&!fileIn._lsPs){fileIn._lsPs=true;
+        fileIn.addEventListener('change',function(){
+          var f=fileIn.files&&fileIn.files[0];
+          if(!f)return;
+          var reader=new FileReader();
+          reader.onload=function(ev){
+            try{restoreProject(JSON.parse(ev.target.result));}
+            catch(e){var msg=document.getElementById('ls-ps-restore-msg');if(msg){msg.style.color='#ef5350';msg.textContent='Could not parse file: '+e.message;}}
+            fileIn.value='';
+          };
+          reader.readAsText(f);
+        });
+      }
+      var rpBtn=document.getElementById('ls-ps-report');
+      if(rpBtn&&!rpBtn._lsPs){rpBtn._lsPs=true;rpBtn.addEventListener('click',renderReport);}
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderReport();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();renderReport();}
+  })();</script>
+
 </section>
 <section id="section-load-play-prep" class="section" data-title="Publish to Load Play™ Preparation">
   <div class="section-head"><div><h2>Publish to Load Play™ Preparation</h2><p>Prepare content for Load Play™ without mixing viewer features into Studio.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="load-play-prep">Audit Section</button></div>
