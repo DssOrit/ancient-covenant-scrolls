@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v208 digital-backlot-interior — location continuity room (green) === */
+/* === LoadStudio v209 look-lab-interior — cinematic style continuity room (purple) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -1722,11 +1722,282 @@ body.ls-contrast-safe{filter:contrast(1.15)}
 })();</script>
 </section>
 <section id="section-look-lab" class="section" data-title="Look Lab">
-  <div class="section-head"><div><h2>Look Lab</h2><p>Lighting, filters, camera feel, color grade and genre looks.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="look-lab">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="look-lab-cinematic-look-presets" data-section-id="look-lab"><b>cinematic look presets</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-lighting-presets" data-section-id="look-lab"><b>lighting presets</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-color-grading" data-section-id="look-lab"><b>color grading</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-lut-style-filters" data-section-id="look-lab"><b>LUT-style filters</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-day-night-look" data-section-id="look-lab"><b>day night look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-film-grain" data-section-id="look-lab"><b>film grain</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-exposure" data-section-id="look-lab"><b>exposure</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-contrast" data-section-id="look-lab"><b>contrast</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-warmth" data-section-id="look-lab"><b>warmth</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-saturation" data-section-id="look-lab"><b>saturation</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-shadows" data-section-id="look-lab"><b>shadows</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-highlights" data-section-id="look-lab"><b>highlights</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-mood-filters" data-section-id="look-lab"><b>mood filters</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-genre-looks" data-section-id="look-lab"><b>genre looks</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-photorealistic-look" data-section-id="look-lab"><b>photorealistic look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-2d-animation-look" data-section-id="look-lab"><b>2D animation look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-documentary-look" data-section-id="look-lab"><b>documentary look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-news-look" data-section-id="look-lab"><b>news look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-children-s-animation-look" data-section-id="look-lab"><b>children’s animation look</b><small>local implemented</small></button><button class="feature-btn" data-feature="look-lab-motion-comic-look" data-section-id="look-lab"><b>motion comic look</b><small>local implemented</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="look-lab"></div><div class="local-list" id="list-look-lab"></div></div>
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#4a148c,#ab47bc)"></div>
+  <div class="ls-h"><h2>Look Lab</h2></div>
+  <p class="ls-lead">Local cinematic style-continuity room. Plan and lock visual looks, grading references, and production aesthetics. No LUT generation, no AI style transfer, no automatic grading — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(171,71,188,.12);border:1px solid rgba(171,71,188,.3);color:#ab47bc;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Look Profile</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Look Profile Name</label>
+        <input id="ls-ll-name" type="text" placeholder="e.g. Ravenwood Night Look" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Project / Style Name</label>
+        <input id="ls-ll-project" type="text" placeholder="e.g. The Reckoning — Act II" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cinematic Style</label>
+        <select id="ls-ll-style" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select style</option>
+          <option>Prestige TV</option>
+          <option>Noir</option>
+          <option>Documentary</option>
+          <option>Historical</option>
+          <option>Fantasy</option>
+          <option>Sci-Fi</option>
+          <option>Music Video</option>
+          <option>Animation</option>
+          <option>Vintage Film</option>
+          <option>Motion Comic</option>
+          <option>Horror</option>
+          <option>Naturalistic</option>
+          <option>Hyperreal</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Genre</label>
+        <input id="ls-ll-genre" type="text" placeholder="e.g. Thriller, Romance, Action" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Scenes</label>
+        <input id="ls-ll-scenes" type="text" placeholder="e.g. SC01, SC03, SC07" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Reference Image / Path / URL</label>
+        <input id="ls-ll-ref" type="text" placeholder="e.g. /references/look-noir-01.jpg" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Color Palette</label>
+      <input id="ls-ll-palette" type="text" placeholder="e.g. desaturated blues, deep amber highlights, near-black shadows" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Lighting Style</label>
+      <textarea id="ls-ll-lighting" placeholder="e.g. single motivated source, hard shadows, candle-warmth fill from below" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Contrast Level</label>
+        <input id="ls-ll-contrast" type="text" placeholder="e.g. high contrast, crushed blacks" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Saturation Notes</label>
+        <input id="ls-ll-saturation" type="text" placeholder="e.g. muted except reds, fully desaturated midtones" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Film Grain Notes</label>
+        <input id="ls-ll-grain" type="text" placeholder="e.g. heavy 35mm grain, no grain, subtle digital noise" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Lens / Camera Notes</label>
+        <input id="ls-ll-lens" type="text" placeholder="e.g. 35mm anamorphic, shallow DOF, lens flare permitted" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Framing / Composition Notes</label>
+      <textarea id="ls-ll-framing" placeholder="e.g. rule of thirds always applied, subjects never centered, negative space on left" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Atmosphere / Mood Notes</label>
+      <textarea id="ls-ll-mood" placeholder="e.g. oppressive dread, quiet melancholy, electric tension" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Rules</label>
+      <textarea id="ls-ll-continuity" placeholder="e.g. all night scenes must share the same blue-teal cast, skin tones never warm" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Forbidden Style Drift</label>
+      <textarea id="ls-ll-forbidden" placeholder="e.g. no warm tones, no oversaturated colours, no lens blur on close-ups" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-ll-notes" placeholder="Any additional notes for this look profile" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-ll-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(171,71,188,.5);background:rgba(171,71,188,.15);color:#ab47bc;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Look</button>
+      <button id="ls-ll-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-ll-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-ll-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Look Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(171,71,188,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc">Profile</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc">Style</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc">Linked Scenes</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc">Mood</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc">Genre</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ab47bc"></th>
+        </tr></thead>
+        <tbody id="ls-ll-tbody"><tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No look profiles saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Look Assignment</h3>
+    <p style="color:#9e97c0;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Assign a look profile to a scene with overrides and continuity notes.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-sla2-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Look Profile</label>
+        <input id="ls-sla2-profile" type="text" placeholder="Profile name" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Lighting Override</label>
+        <input id="ls-sla2-lighting" type="text" placeholder="e.g. reduce shadows for insert shot" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Mood Override</label>
+        <input id="ls-sla2-mood" type="text" placeholder="e.g. shift to hopeful for flashback" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-sla2-status" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Approved</option>
+          <option>Needs Review</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Notes</label>
+      <textarea id="ls-sla2-notes" placeholder="e.g. must match grading from SC04 flashback sequence" style="background:#0e0720;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <button id="ls-sla2-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(171,71,188,.5);background:rgba(171,71,188,.15);color:#ab47bc;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Add Assignment</button>
+    <div id="ls-sla2-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div id="ls-sla2-list" style="margin-top:14px"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('prompt-writer')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Prompt Writer</button>
+      <button type="button" onclick="go('ai-image-director')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">AI Image Director</button>
+      <button type="button" onclick="go('locations')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Digital Backlot</button>
+      <button type="button" onclick="go('character-stability')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Character Stability</button>
+      <button type="button" onclick="go('asset-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Asset Registry</button>
+    </div>
+  </div>
+</div>
+<script id="ls-ll-v209">(function(){
+  var ITEMS_KEY='ls_ll_items';
+  var ASSIGN_KEY='ls_ll_assignments';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function renderTable(){
+    var items=load(ITEMS_KEY);
+    var tb=document.getElementById('ls-ll-tbody');
+    if(!tb)return;
+    if(!items.length){tb.innerHTML='<tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No look profiles saved yet</td></tr>';return;}
+    tb.innerHTML=items.map(function(it,i){
+      return '<tr style="border-bottom:1px solid rgba(171,71,188,.1)">'+
+        '<td style="padding:8px 10px">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.style||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.linkedScenes||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc((it.mood||'').substring(0,40))+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.genre||'')+'</td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsLLDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function renderAssignments(){
+    var items=load(ASSIGN_KEY);
+    var el=document.getElementById('ls-sla2-list');
+    if(!el)return;
+    if(!items.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">No assignments yet</p>';return;}
+    el.innerHTML=items.map(function(it,i){
+      var statusColor={'Approved':'#66bb6a','Needs Review':'#ffa726','Rejected':'#ef5350'}[it.status]||'#9e97c0';
+      return '<div style="background:rgba(171,71,188,.06);border:1px solid rgba(171,71,188,.18);border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><strong style="color:#f5f0ff;font:600 13px Inter,system-ui,sans-serif">'+esc(it.scene||'')+'</strong>'+
+        '<span style="margin-left:8px;color:#9e97c0;font:400 13px Inter,system-ui,sans-serif">'+esc(it.profile||'')+'</span></div>'+
+        '<span style="color:'+statusColor+';font:500 11px Inter,system-ui,sans-serif;white-space:nowrap">'+esc(it.status||'')+'</span></div>'+
+        '<div style="color:#b0a8d0;font:400 12px Inter,system-ui,sans-serif;margin-top:4px">'+
+          (it.lightingOverride?'Lighting: '+esc(it.lightingOverride)+' ':'')+(it.moodOverride?'Mood: '+esc(it.moodOverride):'')+'</div>'+
+        (it.notes?'<div style="color:#9e97c0;font:300 12px Inter,system-ui,sans-serif;margin-top:4px">'+esc(it.notes)+'</div>':'')+
+        '<button onclick="window.lsLLDeleteSLA('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer;margin-top:6px">Remove</button>'+
+        '</div>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-ll-save-btn');
+    if(saveBtn&&!saveBtn._lsll){saveBtn._lsll=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-ll-name');
+        if(!name){flash('ls-ll-msg','Look profile name is required.');return;}
+        var items=load(ITEMS_KEY);
+        items.push({name:name,project:g('ls-ll-project'),style:g('ls-ll-style'),genre:g('ls-ll-genre'),palette:g('ls-ll-palette'),lighting:g('ls-ll-lighting'),contrast:g('ls-ll-contrast'),saturation:g('ls-ll-saturation'),grain:g('ls-ll-grain'),lens:g('ls-ll-lens'),framing:g('ls-ll-framing'),mood:g('ls-ll-mood'),continuityRules:g('ls-ll-continuity'),forbidden:g('ls-ll-forbidden'),ref:g('ls-ll-ref'),linkedScenes:g('ls-ll-scenes'),notes:g('ls-ll-notes'),savedAt:new Date().toISOString()});
+        save(ITEMS_KEY,items);
+        renderTable();
+        flash('ls-ll-msg','Look profile saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-ll-clear-btn');
+    if(clearBtn&&!clearBtn._lsll){clearBtn._lsll=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-ll-name','ls-ll-project','ls-ll-genre','ls-ll-scenes','ls-ll-ref','ls-ll-palette','ls-ll-lighting','ls-ll-contrast','ls-ll-saturation','ls-ll-grain','ls-ll-lens','ls-ll-framing','ls-ll-mood','ls-ll-continuity','ls-ll-forbidden','ls-ll-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var st=document.getElementById('ls-ll-style');if(st)st.selectedIndex=0;
+      });
+    }
+    var expBtn=document.getElementById('ls-ll-export-btn');
+    if(expBtn&&!expBtn._lsll){expBtn._lsll=1;
+      expBtn.addEventListener('click',function(){
+        var data={looks:load(ITEMS_KEY),assignments:load(ASSIGN_KEY),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='look-lab.json';a.click();
+      });
+    }
+    var slaBtn=document.getElementById('ls-sla2-save-btn');
+    if(slaBtn&&!slaBtn._lsll){slaBtn._lsll=1;
+      slaBtn.addEventListener('click',function(){
+        var scene=g('ls-sla2-scene'),profile=g('ls-sla2-profile');
+        if(!scene||!profile){flash('ls-sla2-msg','Scene ID and Look Profile are required.');return;}
+        var items=load(ASSIGN_KEY);
+        items.push({scene:scene,profile:profile,lightingOverride:g('ls-sla2-lighting'),moodOverride:g('ls-sla2-mood'),notes:g('ls-sla2-notes'),status:g('ls-sla2-status'),savedAt:new Date().toISOString()});
+        save(ASSIGN_KEY,items);
+        renderAssignments();
+        ['ls-sla2-scene','ls-sla2-profile','ls-sla2-lighting','ls-sla2-mood','ls-sla2-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var ss=document.getElementById('ls-sla2-status');if(ss)ss.selectedIndex=0;
+        flash('ls-sla2-msg','Assignment added.');
+      });
+    }
+  }
+
+  window.lsLLDelete=function(i){var items=load(ITEMS_KEY);items.splice(i,1);save(ITEMS_KEY,items);renderTable();};
+  window.lsLLDeleteSLA=function(i){var items=load(ASSIGN_KEY);items.splice(i,1);save(ASSIGN_KEY,items);renderAssignments();};
+
+  var sec=document.getElementById('section-look-lab');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+  }
+  window.lsLLRoom={renderTable:renderTable,renderAssignments:renderAssignments};
+})();</script>
 </section>
 <section id="section-camera-tools" class="section" data-title="Camera and Shot Tools">
   <div class="section-head"><div><h2>Camera and Shot Tools</h2><p>Shot and movement controls.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="camera-tools">Audit Section</button></div>
