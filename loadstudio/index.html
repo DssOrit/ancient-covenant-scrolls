@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v215 pipeline-registry-interior — pipeline catalog room (indigo-blue) === */
+/* === LoadStudio v216 infrastructure-batch-pass — eco/diagnostics/devlab/local-engine rooms === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3335,12 +3335,129 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="asset-doctor"></div><div class="local-list" id="list-asset-doctor"></div></div>
   </div>
 </section>
-<section id="section-pwa-diagnostics" class="section" data-title="PWA Diagnostics">
-  <div class="section-head"><div><h2>PWA Diagnostics</h2><p>PWA health and package tests.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="pwa-diagnostics">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="pwa-diagnostics-manifest-validator" data-section-id="pwa-diagnostics"><b>manifest validator</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-service-worker-checker" data-section-id="pwa-diagnostics"><b>service worker checker</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-cache-test" data-section-id="pwa-diagnostics"><b>cache test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-offline-test" data-section-id="pwa-diagnostics"><b>offline test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-install-test" data-section-id="pwa-diagnostics"><b>install test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-asset-load-test" data-section-id="pwa-diagnostics"><b>asset load test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-icon-test" data-section-id="pwa-diagnostics"><b>icon test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-splash-image-test" data-section-id="pwa-diagnostics"><b>splash image test</b><small>local implemented</small></button><button class="feature-btn" data-feature="pwa-diagnostics-package-structure-test" data-section-id="pwa-diagnostics"><b>package structure test</b><small>local implemented</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="pwa-diagnostics"></div><div class="local-list" id="list-pwa-diagnostics"></div></div>
+<section id="section-pwa-diagnostics" class="section" data-title="Diagnostics">
+  <div class="ls-frame" style="--cat:#e65100">
+    <div class="ls-bar" style="background:#e65100"></div>
+    <h2 class="ls-h">Diagnostics</h2>
+    <p class="ls-lead">Report status tracking for all LoadStudio systems. Records placeholder statuses only — no live diagnostics execution.</p>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Add Report Record</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Report Name<input id="ls-dr-name" class="ls-inp" type="text" placeholder="e.g. Rights Audit 01"></label>
+        <label class="ls-lbl">Category
+          <select id="ls-dr-cat" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Rights</option>
+            <option>Continuity</option>
+            <option>Prompt</option>
+            <option>Provider</option>
+            <option>Pipeline</option>
+            <option>Export</option>
+            <option>Validation</option>
+            <option>Playback</option>
+            <option>Local Engine</option>
+            <option>Media Cache</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Status
+          <select id="ls-dr-status" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Pass</option>
+            <option>Fail</option>
+            <option>Pending</option>
+            <option>Skipped</option>
+            <option>Not Run</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Last Run<input id="ls-dr-date" class="ls-inp" type="text" placeholder="e.g. 2026-05-21"></label>
+        <label class="ls-lbl ls-lbl-full">Notes<textarea id="ls-dr-notes" class="ls-inp ls-ta" rows="2" placeholder="Report findings or placeholders"></textarea></label>
+      </div>
+      <div class="ls-btn-row">
+        <button id="ls-dr-save" class="ls-btn" style="background:#e65100">Save Report</button>
+        <button id="ls-dr-clear" class="ls-btn ls-btn-ghost">Clear</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Report Table</h3>
+      <div class="ls-filter-row">
+        <select id="ls-dr-f-cat" class="ls-inp ls-inp-sm">
+          <option value="">All Categories</option>
+          <option>Rights</option>
+          <option>Continuity</option>
+          <option>Prompt</option>
+          <option>Provider</option>
+          <option>Pipeline</option>
+          <option>Export</option>
+          <option>Validation</option>
+          <option>Playback</option>
+          <option>Local Engine</option>
+          <option>Media Cache</option>
+        </select>
+        <select id="ls-dr-f-status" class="ls-inp ls-inp-sm">
+          <option value="">All Statuses</option>
+          <option>Pass</option>
+          <option>Fail</option>
+          <option>Pending</option>
+          <option>Skipped</option>
+          <option>Not Run</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-dr-table">
+          <thead><tr><th>Report</th><th>Category</th><th>Status</th><th>Last Run</th><th>Notes</th><th>Action</th></tr></thead>
+          <tbody id="ls-dr-tbody"><tr><td colspan="6" class="ls-empty">No reports recorded.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('developer-lab')">Developer Lab</button>
+      <button class="ls-rel-btn" onclick="go('export-studio')">Export Office</button>
+      <button class="ls-rel-btn" onclick="go('provider-registry')">Provider Registry</button>
+      <button class="ls-rel-btn" onclick="go('pipeline-registry')">Pipeline Registry</button>
+    </div>
   </div>
+  <script id="ls-dr-v216">(function(){
+    var KEY='ls_diag_reports';
+    var sec=document.getElementById('section-pwa-diagnostics');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function render(){
+      var items=load();
+      var fc=document.getElementById('ls-dr-f-cat').value;
+      var fs=document.getElementById('ls-dr-f-status').value;
+      if(fc)items=items.filter(function(i){return i.cat===fc;});
+      if(fs)items=items.filter(function(i){return i.status===fs;});
+      var tb=document.getElementById('ls-dr-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="6" class="ls-empty">No reports recorded.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+esc(i.name)+'</td><td>'+esc(i.cat)+'</td><td>'+esc(i.status)+'</td><td>'+esc(i.date)+'</td><td>'+esc(i.notes)+'</td><td><button class="ls-act-btn" onclick="lsDrDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    window.lsDrDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wireForm(){
+      var btn=document.getElementById('ls-dr-save');
+      if(!btn||btn._lsDr)return;
+      btn._lsDr=true;
+      btn.addEventListener('click',function(){
+        var n=document.getElementById('ls-dr-name').value.trim();
+        if(!n)return;
+        var d=load();
+        d.push({name:n,cat:document.getElementById('ls-dr-cat').value,status:document.getElementById('ls-dr-status').value,date:document.getElementById('ls-dr-date').value.trim(),notes:document.getElementById('ls-dr-notes').value.trim()});
+        save(d);render();
+        ['ls-dr-name','ls-dr-cat','ls-dr-status','ls-dr-date','ls-dr-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-dr-clear').addEventListener('click',function(){
+        ['ls-dr-name','ls-dr-cat','ls-dr-status','ls-dr-date','ls-dr-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-dr-f-cat','ls-dr-f-status'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wireForm();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wireForm();render();}
+  })();</script>
 </section>
 <section id="section-content-safety" class="section" data-title="Content Safety and Validation">
   <div class="section-head"><div><h2>Content Safety and Validation</h2><p>Clean stream rules, rights and package safety.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="content-safety">Audit Section</button></div>
@@ -3350,11 +3467,118 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   </div>
 </section>
 <section id="section-developer-lab" class="section" data-title="Developer Lab">
-  <div class="section-head"><div><h2>Developer Lab</h2><p>Technical inspector and provider configuration.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="developer-lab">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="developer-lab-api-key-manager" data-section-id="developer-lab"><b>API key manager</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-provider-settings" data-section-id="developer-lab"><b>provider settings</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-pwa-diagnostics" data-section-id="developer-lab"><b>PWA diagnostics</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-console-log-viewer" data-section-id="developer-lab"><b>console log viewer</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-package-validator" data-section-id="developer-lab"><b>package validator</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-manifest-editor" data-section-id="developer-lab"><b>manifest editor</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-service-worker-tester" data-section-id="developer-lab"><b>service worker tester</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-file-structure-viewer" data-section-id="developer-lab"><b>file structure viewer</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-json-editor" data-section-id="developer-lab"><b>JSON editor</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-storage-inspector" data-section-id="developer-lab"><b>storage inspector</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-error-logs" data-section-id="developer-lab"><b>error logs</b><small>local plus integration</small></button><button class="feature-btn" data-feature="developer-lab-export-debug-report" data-section-id="developer-lab"><b>export debug report</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="developer-lab"></div><div class="local-list" id="list-developer-lab"></div></div>
+  <div class="ls-frame" style="--cat:#37474f">
+    <div class="ls-bar" style="background:#37474f"></div>
+    <h2 class="ls-h">Developer Lab</h2>
+    <p class="ls-lead">Tool registry and notes for debug utilities, experimental features, and local engine configuration. No live execution — records and notes only.</p>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Add Tool Record</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Tool Name<input id="ls-dl-name" class="ls-inp" type="text" placeholder="e.g. Provider Test Runner"></label>
+        <label class="ls-lbl">Category
+          <select id="ls-dl-cat" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Debug</option>
+            <option>Experimental</option>
+            <option>Feature Flag</option>
+            <option>Local Engine</option>
+            <option>Provider Testing</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Status
+          <select id="ls-dl-status" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Active</option>
+            <option>Disabled</option>
+            <option>Experimental</option>
+            <option>Parked</option>
+          </select>
+        </label>
+        <label class="ls-lbl ls-lbl-full">Debug Notes<textarea id="ls-dl-debug" class="ls-inp ls-ta" rows="2" placeholder="Debug observations or known issues"></textarea></label>
+        <label class="ls-lbl ls-lbl-full">Notes<textarea id="ls-dl-notes" class="ls-inp ls-ta" rows="2" placeholder="General tool notes"></textarea></label>
+      </div>
+      <div class="ls-btn-row">
+        <button id="ls-dl-save" class="ls-btn" style="background:#37474f">Save Tool</button>
+        <button id="ls-dl-clear" class="ls-btn ls-btn-ghost">Clear</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Tool Registry</h3>
+      <div class="ls-filter-row">
+        <select id="ls-dl-f-cat" class="ls-inp ls-inp-sm">
+          <option value="">All Categories</option>
+          <option>Debug</option>
+          <option>Experimental</option>
+          <option>Feature Flag</option>
+          <option>Local Engine</option>
+          <option>Provider Testing</option>
+          <option>Other</option>
+        </select>
+        <select id="ls-dl-f-status" class="ls-inp ls-inp-sm">
+          <option value="">All Statuses</option>
+          <option>Active</option>
+          <option>Disabled</option>
+          <option>Experimental</option>
+          <option>Parked</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-dl-table">
+          <thead><tr><th>Tool</th><th>Category</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead>
+          <tbody id="ls-dl-tbody"><tr><td colspan="5" class="ls-empty">No tools recorded.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('local-engine')">Local Engine</button>
+      <button class="ls-rel-btn" onclick="go('provider-registry')">Provider Registry</button>
+      <button class="ls-rel-btn" onclick="go('pipeline-registry')">Pipeline Registry</button>
+      <button class="ls-rel-btn" onclick="go('pwa-diagnostics')">Diagnostics</button>
+    </div>
   </div>
+  <script id="ls-dl-v216">(function(){
+    var KEY='ls_devlab_tools';
+    var sec=document.getElementById('section-developer-lab');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function render(){
+      var items=load();
+      var fc=document.getElementById('ls-dl-f-cat').value;
+      var fs=document.getElementById('ls-dl-f-status').value;
+      if(fc)items=items.filter(function(i){return i.cat===fc;});
+      if(fs)items=items.filter(function(i){return i.status===fs;});
+      var tb=document.getElementById('ls-dl-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="5" class="ls-empty">No tools recorded.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+esc(i.name)+'</td><td>'+esc(i.cat)+'</td><td>'+esc(i.status)+'</td><td>'+esc(i.notes)+'</td><td><button class="ls-act-btn" onclick="lsDlDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    window.lsDlDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wireForm(){
+      var btn=document.getElementById('ls-dl-save');
+      if(!btn||btn._lsDl)return;
+      btn._lsDl=true;
+      btn.addEventListener('click',function(){
+        var n=document.getElementById('ls-dl-name').value.trim();
+        if(!n)return;
+        var d=load();
+        d.push({name:n,cat:document.getElementById('ls-dl-cat').value,status:document.getElementById('ls-dl-status').value,debug:document.getElementById('ls-dl-debug').value.trim(),notes:document.getElementById('ls-dl-notes').value.trim()});
+        save(d);render();
+        ['ls-dl-name','ls-dl-cat','ls-dl-status','ls-dl-debug','ls-dl-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-dl-clear').addEventListener('click',function(){
+        ['ls-dl-name','ls-dl-cat','ls-dl-status','ls-dl-debug','ls-dl-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-dl-f-cat','ls-dl-f-status'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wireForm();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wireForm();render();}
+  })();</script>
 </section>
 <section id="section-advertiser" class="section" data-title="Advertiser">
   <div class="section-head"><div><h2>Advertiser (admin)</h2><p>Manage advertisers, ad slots and campaign status. Ads attach to videos at export so finished projects can be monetised on Load Play™.</p></div></div>
@@ -6046,27 +6270,123 @@ document.addEventListener('click',function(e){
 </section>
 
 <section id="section-load-eco" class="section" data-title="Load Eco Infrastructure">
-  <div class="section-head"><div><h2>Load Eco Infrastructure</h2><p>Shared provider registry, pipeline routing, and asset registry for Load Studio, Load Play, and future Load AI modules.</p></div></div>
-  <div class="ls-frame" style="--cat:#ff8ad6">
-    <div class="ls-bar" style="background:#ff8ad6"></div>
-    <div class="ls-h">Load Eco Infrastructure</div>
-    <div class="ls-lead">Configure shared infrastructure hooks. Provider registry and pipeline registry are loaded from local JSON files. No external service required for registry management.</div>
+  <div class="ls-frame" style="--cat:#00695c">
+    <div class="ls-bar" style="background:#00695c"></div>
+    <h2 class="ls-h">Load Eco Infrastructure</h2>
+    <p class="ls-lead">Shared infrastructure modules overview. LoadStudio runs fully standalone without Load Eco. Eco integration is optional.</p>
     <div class="ls-panel">
-      <span class="ls-status-badge" style="background:rgba(255,138,214,.15);color:#ff8ad6;border:1px solid rgba(255,138,214,.4);padding:3px 10px;border-radius:6px;font:500 11px Inter,system-ui,sans-serif">Integration Required</span>
-      <h3 style="margin:16px 0 8px;font:600 14px Inter,system-ui,sans-serif;color:#fff">Registry Status</h3>
-      <div class="form-grid">
-        <div class="field"><label>Provider registry</label><input value="load-provider-registry.js" readonly style="opacity:.6"></div>
-        <div class="field"><label>Pipeline registry</label><input value="load-pipeline-registry.js" readonly style="opacity:.6"></div>
-        <div class="field"><label>Asset registry</label><input value="asset-registry.json" readonly style="opacity:.6"></div>
-        <div class="field"><label>Orchestrator</label><input value="load-orchestrator.js" readonly style="opacity:.6"></div>
-      </div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn secondary" type="button" onclick="var report={checkedAt:new Date().toISOString(),providerRegistry:typeof window.LoadProviderRegistry!=='undefined'?'loaded':'not loaded',pipelineRegistry:typeof window.LoadPipelineRegistry!=='undefined'?'loaded':'not loaded',status:'check complete'};localStorage.setItem('ls_eco_report',JSON.stringify(report));this.textContent='Done';setTimeout(function(b){b.textContent='Run Health Check'}.bind(this),2000)">Run Health Check</button>
-      </div>
-      <p style="margin:12px 0 0;font:300 12px Inter,system-ui,sans-serif;color:#c0b8d9">Provider status: Untested. Connect a local provider endpoint to activate routing.</p>
+      <h3 class="ls-panel-h">Standalone Notice</h3>
+      <p style="padding:0 0 12px;font-size:0.85rem;color:#4db6ac">LoadStudio works offline and standalone. Load Eco is optional infrastructure. No Eco dependency is required for any core function.</p>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Add Module Record</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Module Name<input id="ls-eco-name" class="ls-inp" type="text" placeholder="e.g. Provider Registry"></label>
+        <label class="ls-lbl">Purpose<input id="ls-eco-purpose" class="ls-inp" type="text" placeholder="What this module does"></label>
+        <label class="ls-lbl">Standalone Capable
+          <select id="ls-eco-standalone" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Optional Eco Sync
+          <select id="ls-eco-sync" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Status
+          <select id="ls-eco-status" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Local Ready</option>
+            <option>Optional Eco Sync</option>
+            <option>Integration Required</option>
+            <option>Parked</option>
+            <option>Untested</option>
+          </select>
+        </label>
+        <label class="ls-lbl ls-lbl-full">Notes<textarea id="ls-eco-notes" class="ls-inp ls-ta" rows="2" placeholder="Implementation notes"></textarea></label>
+      </div>
+      <div class="ls-btn-row">
+        <button id="ls-eco-save" class="ls-btn" style="background:#00695c">Save Module</button>
+        <button id="ls-eco-clear" class="ls-btn ls-btn-ghost">Clear</button>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Module Catalog</h3>
+      <div class="ls-filter-row">
+        <select id="ls-eco-f-status" class="ls-inp ls-inp-sm">
+          <option value="">All Statuses</option>
+          <option>Local Ready</option>
+          <option>Optional Eco Sync</option>
+          <option>Integration Required</option>
+          <option>Parked</option>
+          <option>Untested</option>
+        </select>
+        <select id="ls-eco-f-standalone" class="ls-inp ls-inp-sm">
+          <option value="">All Standalone</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-eco-table">
+          <thead><tr><th>Module</th><th>Purpose</th><th>Standalone</th><th>Eco Sync</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="ls-eco-tbody"><tr><td colspan="6" class="ls-empty">No modules recorded.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('provider-registry')">Provider Registry</button>
+      <button class="ls-rel-btn" onclick="go('pipeline-registry')">Pipeline Registry</button>
+      <button class="ls-rel-btn" onclick="go('developer-lab')">Developer Lab</button>
+      <button class="ls-rel-btn" onclick="go('pwa-diagnostics')">Diagnostics</button>
+    </div>
   </div>
+  <script id="ls-eco-v216">(function(){
+    var KEY='ls_eco_modules';
+    var sec=document.getElementById('section-load-eco');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function render(){
+      var items=load();
+      var fs=document.getElementById('ls-eco-f-status').value;
+      var fl=document.getElementById('ls-eco-f-standalone').value;
+      if(fs)items=items.filter(function(i){return i.status===fs;});
+      if(fl)items=items.filter(function(i){return i.standalone===fl;});
+      var tb=document.getElementById('ls-eco-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="6" class="ls-empty">No modules recorded.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+esc(i.name)+'</td><td>'+esc(i.purpose)+'</td><td>'+esc(i.standalone)+'</td><td>'+esc(i.sync)+'</td><td>'+esc(i.status)+'</td><td><button class="ls-act-btn" onclick="lsEcoDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    window.lsEcoDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wireForm(){
+      var btn=document.getElementById('ls-eco-save');
+      if(!btn||btn._lsEco)return;
+      btn._lsEco=true;
+      btn.addEventListener('click',function(){
+        var n=document.getElementById('ls-eco-name').value.trim();
+        if(!n)return;
+        var d=load();
+        d.push({name:n,purpose:document.getElementById('ls-eco-purpose').value.trim(),standalone:document.getElementById('ls-eco-standalone').value,sync:document.getElementById('ls-eco-sync').value,status:document.getElementById('ls-eco-status').value,notes:document.getElementById('ls-eco-notes').value.trim()});
+        save(d);render();
+        ['ls-eco-name','ls-eco-purpose','ls-eco-standalone','ls-eco-sync','ls-eco-status','ls-eco-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-eco-clear').addEventListener('click',function(){
+        ['ls-eco-name','ls-eco-purpose','ls-eco-standalone','ls-eco-sync','ls-eco-status','ls-eco-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-eco-f-status','ls-eco-f-standalone'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wireForm();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wireForm();render();}
+  })();</script>
 </section>
 
 <section id="section-talking-photo" class="section" data-title="Talking Photo Studio">
@@ -6748,24 +7068,129 @@ document.addEventListener('click',function(e){
 </section>
 
 <section id="section-local-engine" class="section" data-title="Local Engine">
-  <div class="section-head"><div><h2>Local Engine</h2><p>Connect to a locally running AI engine for image, video, audio, and text generation. Works fully offline once models are loaded.</p></div></div>
-  <div class="ls-frame" style="--cat:#607d8b">
-    <div class="ls-bar" style="background:#607d8b"></div>
-    <div class="ls-h">Local Engine</div>
-    <div class="ls-lead">Point to a locally running endpoint (Ollama, LM Studio, ComfyUI, LocalAI). All traffic stays on-device.</div>
+  <div class="ls-frame" style="--cat:#4e342e">
+    <div class="ls-bar" style="background:#4e342e"></div>
+    <h2 class="ls-h">Local Engine</h2>
+    <p class="ls-lead">Local tool registry and endpoint notes. Records installed local tools, endpoints, and hardware notes. No live execution — catalog and notes only.</p>
     <div class="ls-panel">
-      <span class="ls-status-badge" style="background:rgba(96,125,139,.15);color:#607d8b;border:1px solid rgba(96,125,139,.4);padding:3px 10px;border-radius:6px;font:500 11px Inter,system-ui,sans-serif">Provider Needed</span>
-      <div class="form-grid" style="margin-top:14px">
-        <div class="field"><label>Engine type</label><select id="le-type"><option value="">Select engine</option><option>Ollama</option><option>LM Studio</option><option>ComfyUI</option><option>LocalAI</option><option>llama.cpp</option></select></div>
-        <div class="field"><label>Endpoint URL</label><input id="le-url" placeholder="http://localhost:11434"></div>
+      <h3 class="ls-panel-h">Add Tool Record</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Tool Name<input id="ls-le-name" class="ls-inp" type="text" placeholder="e.g. Whisper Large v3"></label>
+        <label class="ls-lbl">Category
+          <select id="ls-le-cat" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>FFmpeg</option>
+            <option>ComfyUI</option>
+            <option>Ollama</option>
+            <option>Kokoro</option>
+            <option>Piper</option>
+            <option>Whisper</option>
+            <option>Real-ESRGAN</option>
+            <option>ControlNet</option>
+            <option>IP-Adapter</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Local Endpoint<input id="ls-le-endpoint" class="ls-inp" type="text" placeholder="e.g. http://localhost:8188"></label>
+        <label class="ls-lbl">Status
+          <select id="ls-le-status" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Installed</option>
+            <option>Running</option>
+            <option>Stopped</option>
+            <option>Not Installed</option>
+            <option>Untested</option>
+          </select>
+        </label>
+        <label class="ls-lbl ls-lbl-full">Hardware Notes<textarea id="ls-le-hw" class="ls-inp ls-ta" rows="2" placeholder="GPU, RAM, model size, quantization notes"></textarea></label>
+        <label class="ls-lbl ls-lbl-full">Notes<textarea id="ls-le-notes" class="ls-inp ls-ta" rows="2" placeholder="Configuration or integration notes"></textarea></label>
       </div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn primary" type="button" onclick="var d={type:document.getElementById('le-type').value,url:document.getElementById('le-url').value,savedAt:new Date().toISOString()};localStorage.setItem('ls_local_engine',JSON.stringify(d));this.textContent='Saved';setTimeout(function(b){b.textContent='Save Config'}.bind(this),2000)">Save Config</button>
-        <button class="btn secondary" type="button" onclick="alert('Engine test not yet active. Save your config first.')">Test Connection</button>
+      <div class="ls-btn-row">
+        <button id="ls-le-save" class="ls-btn" style="background:#4e342e">Save Tool</button>
+        <button id="ls-le-clear" class="ls-btn ls-btn-ghost">Clear</button>
       </div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Local Tool Registry</h3>
+      <div class="ls-filter-row">
+        <select id="ls-le-f-cat" class="ls-inp ls-inp-sm">
+          <option value="">All Categories</option>
+          <option>FFmpeg</option>
+          <option>ComfyUI</option>
+          <option>Ollama</option>
+          <option>Kokoro</option>
+          <option>Piper</option>
+          <option>Whisper</option>
+          <option>Real-ESRGAN</option>
+          <option>ControlNet</option>
+          <option>IP-Adapter</option>
+          <option>Other</option>
+        </select>
+        <select id="ls-le-f-status" class="ls-inp ls-inp-sm">
+          <option value="">All Statuses</option>
+          <option>Installed</option>
+          <option>Running</option>
+          <option>Stopped</option>
+          <option>Not Installed</option>
+          <option>Untested</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-le-table">
+          <thead><tr><th>Tool</th><th>Category</th><th>Endpoint</th><th>Status</th><th>Notes</th><th>Action</th></tr></thead>
+          <tbody id="ls-le-tbody"><tr><td colspan="6" class="ls-empty">No tools recorded.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('developer-lab')">Developer Lab</button>
+      <button class="ls-rel-btn" onclick="go('provider-registry')">Provider Registry</button>
+      <button class="ls-rel-btn" onclick="go('pwa-diagnostics')">Diagnostics</button>
+      <button class="ls-rel-btn" onclick="go('load-eco')">Load Eco</button>
+    </div>
   </div>
+  <script id="ls-le-v216">(function(){
+    var KEY='ls_le_tools';
+    var sec=document.getElementById('section-local-engine');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function render(){
+      var items=load();
+      var fc=document.getElementById('ls-le-f-cat').value;
+      var fs=document.getElementById('ls-le-f-status').value;
+      if(fc)items=items.filter(function(i){return i.cat===fc;});
+      if(fs)items=items.filter(function(i){return i.status===fs;});
+      var tb=document.getElementById('ls-le-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="6" class="ls-empty">No tools recorded.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+esc(i.name)+'</td><td>'+esc(i.cat)+'</td><td>'+esc(i.endpoint)+'</td><td>'+esc(i.status)+'</td><td>'+esc(i.notes)+'</td><td><button class="ls-act-btn" onclick="lsLeDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    window.lsLeDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wireForm(){
+      var btn=document.getElementById('ls-le-save');
+      if(!btn||btn._lsLe)return;
+      btn._lsLe=true;
+      btn.addEventListener('click',function(){
+        var n=document.getElementById('ls-le-name').value.trim();
+        if(!n)return;
+        var d=load();
+        d.push({name:n,cat:document.getElementById('ls-le-cat').value,endpoint:document.getElementById('ls-le-endpoint').value.trim(),status:document.getElementById('ls-le-status').value,hw:document.getElementById('ls-le-hw').value.trim(),notes:document.getElementById('ls-le-notes').value.trim()});
+        save(d);render();
+        ['ls-le-name','ls-le-cat','ls-le-endpoint','ls-le-status','ls-le-hw','ls-le-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-le-clear').addEventListener('click',function(){
+        ['ls-le-name','ls-le-cat','ls-le-endpoint','ls-le-status','ls-le-hw','ls-le-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-le-f-cat','ls-le-f-status'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wireForm();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wireForm();render();}
+  })();</script>
 </section>
 
 <section id="section-provider-testing" class="section" data-title="Provider Testing">
