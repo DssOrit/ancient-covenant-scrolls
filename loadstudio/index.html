@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v216 infrastructure-batch-pass — eco/diagnostics/devlab/local-engine rooms === */
+/* === LoadStudio v217 export-package-interior — export office / cinepwa / package validator === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3296,30 +3296,139 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="add-creations"></div><div class="local-list" id="list-add-creations"></div></div>
   </div>
 </section>
-<section id="section-export-studio" class="section" data-title="Export Studio">
-  <div class="section-head"><div><h2>Export Studio</h2><p>Export production packages and metadata.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="export-studio">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="export-studio-load-studio-project" data-section-id="export-studio"><b>Load Studio™ project</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-cinepwa-package" data-section-id="export-studio"><b>CinePWA package</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-standalone-html" data-section-id="export-studio"><b>standalone HTML</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-pwa-zip" data-section-id="export-studio"><b>PWA zip</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-mp4-later" data-section-id="export-studio"><b>MP4 later</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-webm-later" data-section-id="export-studio"><b>WebM later</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-audio-only" data-section-id="export-studio"><b>audio-only</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-subtitles" data-section-id="export-studio"><b>subtitles</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-poster" data-section-id="export-studio"><b>poster</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-thumbnails" data-section-id="export-studio"><b>thumbnails</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-project-json" data-section-id="export-studio"><b>project JSON</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-character-bible" data-section-id="export-studio"><b>character bible</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-rights-metadata" data-section-id="export-studio"><b>rights metadata</b><small>local plus integration</small></button><button class="feature-btn" data-feature="export-studio-credits-file" data-section-id="export-studio"><b>credits file</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="export-studio"></div><div class="local-list" id="list-export-studio"></div></div>
-  </div>
-  <div class="ls-frame" style="margin-top:18px">
-    <div class="ls-bar" style="background:linear-gradient(90deg,#f39c12,#e74c3c)"></div>
-    <div class="ls-h"><h2>Package Builder</h2></div>
-    <p class="ls-lead">Download your production as a portable package. Local JSON packages work now. Actual .zip export requires a backend integration.</p>
+<section id="section-export-studio" class="section" data-title="Export Office">
+  <div class="ls-frame" style="--cat:#1b5e20">
+    <div class="ls-bar" style="background:#1b5e20"></div>
+    <h2 class="ls-h">Export Office</h2>
+    <p class="ls-lead">Export readiness tracking and package preparation. Records export status per project. No rendering is performed here — structure and readiness only.</p>
     <div class="ls-panel">
-      <h3 style="margin:0 0 10px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Load Studio Package</h3>
-      <p style="color:#c0b8d9;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Collects all project data: scenes, characters, style bible, voice bible, generation report, and prompt log into one file.</p>
-      <button data-action="export-loadstudio-pkg" style="padding:10px 18px;border-radius:10px;font:500 13.5px Inter,system-ui,sans-serif;border:1px solid rgba(243,156,18,.5);background:rgba(243,156,18,.15);color:#f39c12;cursor:pointer">Download .loadstudio Package</button>
-      <div id="ls-exp-ls-status" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+      <h3 class="ls-panel-h">Add Export Record</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Project Title<input id="ls-eo-title" class="ls-inp" type="text" placeholder="e.g. My Film Draft 1"></label>
+        <label class="ls-lbl">Export Type
+          <select id="ls-eo-type" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>.loadstudio.zip</option>
+            <option>.cinepwa.zip</option>
+            <option>HTML Cinema Package</option>
+            <option>Audio Story Package</option>
+            <option>Draft Package</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Package Version<input id="ls-eo-version" class="ls-inp" type="text" placeholder="e.g. v1.0"></label>
+        <label class="ls-lbl">Export Readiness
+          <select id="ls-eo-readiness" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Ready</option>
+            <option>Needs Review</option>
+            <option>Missing Assets</option>
+            <option>Validation Required</option>
+            <option>Rights Review Required</option>
+            <option>Untested</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Rights Review Status
+          <select id="ls-eo-rights" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Approved</option>
+            <option>Pending</option>
+            <option>Failed</option>
+            <option>Not Started</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Validation Status
+          <select id="ls-eo-valid" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Pass</option>
+            <option>Fail</option>
+            <option>Not Run</option>
+          </select>
+        </label>
+        <label class="ls-lbl ls-lbl-full">Missing Assets Notes<textarea id="ls-eo-missing" class="ls-inp ls-ta" rows="2" placeholder="List any missing files or assets"></textarea></label>
+        <label class="ls-lbl ls-lbl-full">Export Destination Notes<textarea id="ls-eo-dest" class="ls-inp ls-ta" rows="2" placeholder="Target platform or output location notes"></textarea></label>
+        <label class="ls-lbl ls-lbl-full">Export Notes<textarea id="ls-eo-notes" class="ls-inp ls-ta" rows="2" placeholder="Additional export notes"></textarea></label>
+      </div>
+      <div class="ls-btn-row">
+        <button id="ls-eo-save" class="ls-btn" style="background:#1b5e20">Save Record</button>
+        <button id="ls-eo-clear" class="ls-btn ls-btn-ghost">Clear</button>
+      </div>
     </div>
-    <div class="ls-panel" style="margin-top:12px">
-      <h3 style="margin:0 0 10px;font:600 15px Inter,system-ui,sans-serif;color:#fff">CinePWA Package</h3>
-      <p style="color:#c0b8d9;font:300 13px Inter,system-ui,sans-serif;margin:0 0 8px">Exports scenes, characters, voices, rights, and credits in CinePWA format for Load Play.</p>
-      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,160,0,.12);border:1px solid rgba(255,160,0,.3);color:#ffb300;font:500 11.5px Inter,system-ui,sans-serif;margin-bottom:10px">Integration Required for .zip</span>
-      <br><button data-action="export-cinepwa-pkg" style="padding:10px 18px;border-radius:10px;font:500 13.5px Inter,system-ui,sans-serif;border:1px solid rgba(90,200,250,.5);background:rgba(90,200,250,.15);color:#5ac8fa;cursor:pointer">Download CinePWA Package JSON</button>
-      <div id="ls-exp-cp-status" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Export Records</h3>
+      <div class="ls-filter-row">
+        <select id="ls-eo-f-type" class="ls-inp ls-inp-sm">
+          <option value="">All Types</option>
+          <option>.loadstudio.zip</option>
+          <option>.cinepwa.zip</option>
+          <option>HTML Cinema Package</option>
+          <option>Audio Story Package</option>
+          <option>Draft Package</option>
+        </select>
+        <select id="ls-eo-f-readiness" class="ls-inp ls-inp-sm">
+          <option value="">All Statuses</option>
+          <option>Ready</option>
+          <option>Needs Review</option>
+          <option>Missing Assets</option>
+          <option>Validation Required</option>
+          <option>Rights Review Required</option>
+          <option>Untested</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table">
+          <thead><tr><th>Project</th><th>Type</th><th>Version</th><th>Readiness</th><th>Rights</th><th>Validation</th><th>Action</th></tr></thead>
+          <tbody id="ls-eo-tbody"><tr><td colspan="7" class="ls-empty">No export records.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('cinepwa')">CinePWA Package Builder</button>
+      <button class="ls-rel-btn" onclick="go('package-validator')">Package Validator</button>
+      <button class="ls-rel-btn" onclick="go('rights-credits')">Rights and Credits</button>
+      <button class="ls-rel-btn" onclick="go('pwa-diagnostics')">Diagnostics</button>
     </div>
   </div>
+  <script id="ls-eo-v217">(function(){
+    var KEY='ls_eo_records';
+    var sec=document.getElementById('section-export-studio');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function render(){
+      var items=load();
+      var ft=document.getElementById('ls-eo-f-type').value;
+      var fr=document.getElementById('ls-eo-f-readiness').value;
+      if(ft)items=items.filter(function(i){return i.type===ft;});
+      if(fr)items=items.filter(function(i){return i.readiness===fr;});
+      var tb=document.getElementById('ls-eo-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="7" class="ls-empty">No export records.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+e(i.title)+'</td><td>'+e(i.type)+'</td><td>'+e(i.version)+'</td><td>'+e(i.readiness)+'</td><td>'+e(i.rights)+'</td><td>'+e(i.valid)+'</td><td><button class="ls-act-btn" onclick="lsEoDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    function e(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    window.lsEoDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wire(){
+      var btn=document.getElementById('ls-eo-save');
+      if(!btn||btn._lsEo)return;btn._lsEo=true;
+      btn.addEventListener('click',function(){
+        var t=document.getElementById('ls-eo-title').value.trim();
+        if(!t)return;
+        var d=load();
+        d.push({title:t,type:document.getElementById('ls-eo-type').value,version:document.getElementById('ls-eo-version').value.trim(),readiness:document.getElementById('ls-eo-readiness').value,rights:document.getElementById('ls-eo-rights').value,valid:document.getElementById('ls-eo-valid').value,missing:document.getElementById('ls-eo-missing').value.trim(),dest:document.getElementById('ls-eo-dest').value.trim(),notes:document.getElementById('ls-eo-notes').value.trim()});
+        save(d);render();
+        ['ls-eo-title','ls-eo-type','ls-eo-version','ls-eo-readiness','ls-eo-rights','ls-eo-valid','ls-eo-missing','ls-eo-dest','ls-eo-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-eo-clear').addEventListener('click',function(){
+        ['ls-eo-title','ls-eo-type','ls-eo-version','ls-eo-readiness','ls-eo-rights','ls-eo-valid','ls-eo-missing','ls-eo-dest','ls-eo-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-eo-f-type','ls-eo-f-readiness'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();render();}
+  })();</script>
 </section>
 <section id="section-load-play-prep" class="section" data-title="Publish to Load Play™ Preparation">
   <div class="section-head"><div><h2>Publish to Load Play™ Preparation</h2><p>Prepare content for Load Play™ without mixing viewer features into Studio.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="load-play-prep">Audit Section</button></div>
@@ -6244,29 +6353,123 @@ document.addEventListener('click',function(e){
 </section>
 
 <section id="section-cinepwa" class="section" data-title="CinePWA Package Builder">
-  <div class="section-head"><div><h2>CinePWA Package Builder</h2><p>Package your production into a self-contained CinePWA — scenes, characters, rights, voices, and assets bundled as a portable offline web app.</p></div></div>
-  <div class="ls-frame" style="--cat:#ffa852">
-    <div class="ls-bar" style="background:#ffa852"></div>
-    <div class="ls-h">CinePWA Package Builder</div>
-    <div class="ls-lead">Build and export a complete CinePWA package. Requires all scenes, rights, and assets to be saved locally before export.</div>
+  <div class="ls-frame" style="--cat:#0d47a1">
+    <div class="ls-bar" style="background:#0d47a1"></div>
+    <h2 class="ls-h">CinePWA Package Builder</h2>
+    <p class="ls-lead">Package structure assembly and checklist. Records which components are ready for inclusion. No ZIP generation here — preparation and metadata only.</p>
     <div class="ls-panel">
-      <span class="ls-status-badge" style="background:rgba(255,168,82,.15);color:#ffa852;border:1px solid rgba(255,168,82,.4);padding:3px 10px;border-radius:6px;font:500 11px Inter,system-ui,sans-serif">Local Ready</span>
-      <h3 style="margin:16px 0 8px;font:600 14px Inter,system-ui,sans-serif;color:#fff">Package Settings</h3>
-      <div class="form-grid">
-        <div class="field"><label>Package title</label><input id="cinepwa-title" placeholder="My Production"></div>
-        <div class="field"><label>Version</label><input id="cinepwa-version" placeholder="1.0"></div>
-        <div class="field"><label>Author</label><input id="cinepwa-author" placeholder=""></div>
-        <div class="field"><label>License</label><input id="cinepwa-license" placeholder="All Rights Reserved"></div>
+      <h3 class="ls-panel-h">Required JSON Files</h3>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-cpb-json-table">
+          <thead><tr><th>File</th><th>Purpose</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="ls-cpb-json-tbody"></tbody>
+        </table>
       </div>
-      <div class="field" style="margin-top:10px"><label>Package notes</label><textarea id="cinepwa-notes" rows="3" placeholder="Describe this package"></textarea></div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn primary" type="button" onclick="var d={title:document.getElementById('cinepwa-title').value,version:document.getElementById('cinepwa-version').value,author:document.getElementById('cinepwa-author').value,license:document.getElementById('cinepwa-license').value,notes:document.getElementById('cinepwa-notes').value,savedAt:new Date().toISOString()};localStorage.setItem('ls_cinepwa_config',JSON.stringify(d));this.textContent='Saved';setTimeout(function(b){b.textContent='Save Config'}.bind(this),2000)">Save Config</button>
-        <button class="btn secondary" type="button" onclick="alert('CinePWA export requires all scenes and assets to be locally saved. Provider connection not yet active.')">Export CinePWA</button>
-      </div>
-      <p style="margin:12px 0 0;font:300 12px Inter,system-ui,sans-serif;color:#c0b8d9">Export produces: scenes.json, characters.json, rights.json, voices.json, wardrobe.json, assets/</p>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Required Asset Folders</h3>
+      <div class="ls-table-wrap">
+        <table class="ls-table" id="ls-cpb-asset-table">
+          <thead><tr><th>Folder</th><th>Contents</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="ls-cpb-asset-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Package Summary</h3>
+      <div id="ls-cpb-summary" class="ls-summary-block">Loading package summary...</div>
+      <div class="ls-btn-row">
+        <button id="ls-cpb-reset" class="ls-btn ls-btn-ghost">Reset All to Untested</button>
+      </div>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('export-studio')">Export Office</button>
+      <button class="ls-rel-btn" onclick="go('package-validator')">Package Validator</button>
+      <button class="ls-rel-btn" onclick="go('rights-credits')">Rights and Credits</button>
+      <button class="ls-rel-btn" onclick="go('asset-registry')">Asset Registry</button>
+    </div>
   </div>
+  <script id="ls-cpb-v217">(function(){
+    var KEY='ls_cpb_state';
+    var sec=document.getElementById('section-cinepwa');
+    var JSON_FILES=[
+      {file:'project.json',purpose:'Project metadata and settings'},
+      {file:'scenes.json',purpose:'Scene list and scene data'},
+      {file:'characters.json',purpose:'Character profiles'},
+      {file:'rights.json',purpose:'Rights and licensing declarations'},
+      {file:'credits.json',purpose:'Production credits'},
+      {file:'asset-registry.json',purpose:'Asset catalog and declarations'},
+      {file:'prompt-log.json',purpose:'AI prompt history'},
+      {file:'continuity-report.json',purpose:'Continuity and consistency report'}
+    ];
+    var ASSET_FOLDERS=[
+      {folder:'assets/images',contents:'Generated and imported images'},
+      {folder:'assets/audio',contents:'Voice, music, and SFX files'},
+      {folder:'assets/music',contents:'Background music tracks'},
+      {folder:'assets/sfx',contents:'Sound effects'},
+      {folder:'assets/subtitles',contents:'SRT and subtitle files'},
+      {folder:'assets/icons',contents:'PWA icons and branding'}
+    ];
+    var STATUSES=['Untested','Included','Missing','Partial','Excluded'];
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){return{};}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function e(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function statusSel(k,val){
+      return '<select class="ls-inp ls-inp-sm ls-cpb-sel" data-key="'+e(k)+'">'
+        +STATUSES.map(function(s){return'<option'+(s===val?' selected':'')+'>'+s+'</option>';}).join('')
+        +'</select>';
+    }
+    function renderTables(){
+      var state=load();
+      var jtb=document.getElementById('ls-cpb-json-tbody');
+      var atb=document.getElementById('ls-cpb-asset-tbody');
+      if(jtb){
+        jtb.innerHTML=JSON_FILES.map(function(r){
+          var k='json:'+r.file;var v=state[k]||'Untested';
+          return '<tr><td><code>'+e(r.file)+'</code></td><td>'+e(r.purpose)+'</td><td>'+statusSel(k,v)+'</td><td><span class="ls-status-dot ls-dot-'+v.replace(/\s/g,'-').toLowerCase()+'"></span></td></tr>';
+        }).join('');
+      }
+      if(atb){
+        atb.innerHTML=ASSET_FOLDERS.map(function(r){
+          var k='folder:'+r.folder;var v=state[k]||'Untested';
+          return '<tr><td><code>'+e(r.folder)+'</code></td><td>'+e(r.contents)+'</td><td>'+statusSel(k,v)+'</td><td><span class="ls-status-dot ls-dot-'+v.replace(/\s/g,'-').toLowerCase()+'"></span></td></tr>';
+        }).join('');
+      }
+      renderSummary(state);
+      bindSelects();
+    }
+    function renderSummary(state){
+      var el=document.getElementById('ls-cpb-summary');
+      if(!el)return;
+      var all=[].concat(JSON_FILES.map(function(r){return state['json:'+r.file]||'Untested';}),ASSET_FOLDERS.map(function(r){return state['folder:'+r.folder]||'Untested';}));
+      var counts={};
+      all.forEach(function(s){counts[s]=(counts[s]||0)+1;});
+      var total=all.length;
+      var included=counts['Included']||0;
+      el.innerHTML='<strong>'+included+' / '+total+' components marked Included.</strong> '
+        +Object.keys(counts).map(function(k){return k+': '+counts[k];}).join(' &nbsp;|&nbsp; ');
+    }
+    function bindSelects(){
+      var sels=sec.querySelectorAll('.ls-cpb-sel');
+      sels.forEach(function(sel){
+        if(sel._cpb)return;sel._cpb=true;
+        sel.addEventListener('change',function(){
+          var state=load();
+          state[sel.dataset.key]=sel.value;
+          save(state);renderSummary(state);
+        });
+      });
+    }
+    function wire(){
+      var btn=document.getElementById('ls-cpb-reset');
+      if(!btn||btn._lsCpb)return;btn._lsCpb=true;
+      btn.addEventListener('click',function(){save({});renderTables();});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();renderTables();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();renderTables();}
+  })();</script>
 </section>
 
 <section id="section-load-eco" class="section" data-title="Load Eco Infrastructure">
@@ -7211,20 +7414,144 @@ document.addEventListener('click',function(e){
 </section>
 
 <section id="section-package-validator" class="section" data-title="Package Validator">
-  <div class="section-head"><div><h2>Package Validator</h2><p>Validate a production package before export. Checks all required scenes, assets, rights, and metadata are present and correctly formatted.</p></div></div>
-  <div class="ls-frame" style="--cat:#2196f3">
-    <div class="ls-bar" style="background:#2196f3"></div>
-    <div class="ls-h">Package Validator</div>
-    <div class="ls-lead">Run validation before any CinePWA or export. Catches missing fields, undeclared assets, and broken references before they reach the output.</div>
+  <div class="ls-frame" style="--cat:#880e4f">
+    <div class="ls-bar" style="background:#880e4f"></div>
+    <h2 class="ls-h">Package Validator</h2>
+    <p class="ls-lead">Validation checklist and result tracking. Records pass/fail/warning status per check category. No automated validation engine — structure and manual tracking only.</p>
     <div class="ls-panel">
-      <span class="ls-status-badge" style="background:rgba(33,150,243,.15);color:#2196f3;border:1px solid rgba(33,150,243,.4);padding:3px 10px;border-radius:6px;font:500 11px Inter,system-ui,sans-serif">Local Ready</span>
-      <div id="package-validator-results" style="margin-top:12px;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">No validation run yet.</div>
-      <div class="actions" style="margin-top:14px">
-        <button class="btn primary" type="button" onclick="var d={validatedAt:new Date().toISOString(),status:'stub',notes:'Validation logic not yet active'};localStorage.setItem('ls_package_validator',JSON.stringify(d));document.getElementById('package-validator-results').textContent='Validation saved (stub). Full logic requires provider connection.';this.textContent='Done';setTimeout(function(b){b.textContent='Run Validation'}.bind(this),2000)">Run Validation</button>
+      <h3 class="ls-panel-h">Add Validation Result</h3>
+      <div class="ls-form-grid">
+        <label class="ls-lbl">Check Name<input id="ls-pkv-name" class="ls-inp" type="text" placeholder="e.g. scenes.json present"></label>
+        <label class="ls-lbl">Category
+          <select id="ls-pkv-cat" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Required Files</option>
+            <option>Required Metadata</option>
+            <option>Rights Check</option>
+            <option>Scene Check</option>
+            <option>Asset Check</option>
+            <option>CSP / Security</option>
+            <option>Manifest</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="ls-lbl">Result
+          <select id="ls-pkv-result" class="ls-inp">
+            <option value="">-- select --</option>
+            <option>Pass</option>
+            <option>Fail</option>
+            <option>Warning</option>
+            <option>Missing</option>
+            <option>Untested</option>
+          </select>
+        </label>
+        <label class="ls-lbl ls-lbl-full">Notes<textarea id="ls-pkv-notes" class="ls-inp ls-ta" rows="2" placeholder="Validation detail or failure reason"></textarea></label>
+      </div>
+      <div class="ls-btn-row">
+        <button id="ls-pkv-save" class="ls-btn" style="background:#880e4f">Save Result</button>
+        <button id="ls-pkv-clear" class="ls-btn ls-btn-ghost">Clear</button>
       </div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Validation Results</h3>
+      <div class="ls-filter-row">
+        <select id="ls-pkv-f-cat" class="ls-inp ls-inp-sm">
+          <option value="">All Categories</option>
+          <option>Required Files</option>
+          <option>Required Metadata</option>
+          <option>Rights Check</option>
+          <option>Scene Check</option>
+          <option>Asset Check</option>
+          <option>CSP / Security</option>
+          <option>Manifest</option>
+          <option>Other</option>
+        </select>
+        <select id="ls-pkv-f-result" class="ls-inp ls-inp-sm">
+          <option value="">All Results</option>
+          <option>Pass</option>
+          <option>Fail</option>
+          <option>Warning</option>
+          <option>Missing</option>
+          <option>Untested</option>
+        </select>
+      </div>
+      <div class="ls-table-wrap">
+        <table class="ls-table">
+          <thead><tr><th>Check</th><th>Category</th><th>Result</th><th>Notes</th><th>Action</th></tr></thead>
+          <tbody id="ls-pkv-tbody"><tr><td colspan="5" class="ls-empty">No validation results.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ls-panel">
+      <h3 class="ls-panel-h">Standard Checklist</h3>
+      <p style="font-size:0.82rem;color:#aaa;padding-bottom:8px">Reference list of checks. Add results above to track status.</p>
+      <ul class="ls-checklist">
+        <li>project.json present and valid</li>
+        <li>scenes.json present and valid</li>
+        <li>characters.json present and valid</li>
+        <li>rights.json present and valid</li>
+        <li>credits.json present and valid</li>
+        <li>asset-registry.json present and valid</li>
+        <li>All referenced image assets present</li>
+        <li>All referenced audio assets present</li>
+        <li>All referenced subtitle files present</li>
+        <li>Rights status approved for all assets</li>
+        <li>All scenes have at least one image or scene type</li>
+        <li>Manifest file valid</li>
+        <li>Service worker registered</li>
+        <li>CSP headers reviewed</li>
+        <li>No exposed API keys in package</li>
+        <li>No exposed tokens in package</li>
+      </ul>
+    </div>
+    <div class="ls-related">
+      <span class="ls-related-h">Related:</span>
+      <button class="ls-rel-btn" onclick="go('cinepwa')">CinePWA Package Builder</button>
+      <button class="ls-rel-btn" onclick="go('export-studio')">Export Office</button>
+      <button class="ls-rel-btn" onclick="go('rights-credits')">Rights and Credits</button>
+      <button class="ls-rel-btn" onclick="go('asset-registry')">Asset Registry</button>
+    </div>
   </div>
+  <script id="ls-pkv-v217">(function(){
+    var KEY='ls_pkv_results';
+    var sec=document.getElementById('section-package-validator');
+    function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+    function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+    function e(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    function render(){
+      var items=load();
+      var fc=document.getElementById('ls-pkv-f-cat').value;
+      var fr=document.getElementById('ls-pkv-f-result').value;
+      if(fc)items=items.filter(function(i){return i.cat===fc;});
+      if(fr)items=items.filter(function(i){return i.result===fr;});
+      var tb=document.getElementById('ls-pkv-tbody');
+      if(!tb)return;
+      if(!items.length){tb.innerHTML='<tr><td colspan="5" class="ls-empty">No validation results.</td></tr>';return;}
+      tb.innerHTML=items.map(function(i,idx){
+        return '<tr><td>'+e(i.name)+'</td><td>'+e(i.cat)+'</td><td>'+e(i.result)+'</td><td>'+e(i.notes)+'</td><td><button class="ls-act-btn" onclick="lsPkvDel('+idx+')">Del</button></td></tr>';
+      }).join('');
+    }
+    window.lsPkvDel=function(idx){var d=load();d.splice(idx,1);save(d);render();};
+    function wire(){
+      var btn=document.getElementById('ls-pkv-save');
+      if(!btn||btn._lsPkv)return;btn._lsPkv=true;
+      btn.addEventListener('click',function(){
+        var n=document.getElementById('ls-pkv-name').value.trim();
+        if(!n)return;
+        var d=load();
+        d.push({name:n,cat:document.getElementById('ls-pkv-cat').value,result:document.getElementById('ls-pkv-result').value,notes:document.getElementById('ls-pkv-notes').value.trim()});
+        save(d);render();
+        ['ls-pkv-name','ls-pkv-cat','ls-pkv-result','ls-pkv-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      document.getElementById('ls-pkv-clear').addEventListener('click',function(){
+        ['ls-pkv-name','ls-pkv-cat','ls-pkv-result','ls-pkv-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+      });
+      ['ls-pkv-f-cat','ls-pkv-f-result'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('change',render);});
+    }
+    var obs=new MutationObserver(function(){if(sec.classList.contains('active')){wire();render();}});
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){wire();render();}
+  })();</script>
 </section>
 
 
