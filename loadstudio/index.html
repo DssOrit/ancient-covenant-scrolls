@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v210 scene-workshop-interior — scene planning room (blue) === */
+/* === LoadStudio v211 casting-department-interior — casting management room (red) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -884,12 +884,280 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="character-consistency"></div><div class="local-list" id="list-character-consistency"></div></div>
   </div>
 </section>
-<section id="section-casting" class="section" data-title="Talent and Casting List">
-  <div class="section-head"><div><h2>Talent and Casting List</h2><p>Assign saved fictional talent to projects, scenes, roles, wardrobe and voices.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="casting">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="casting-talent-roster" data-section-id="casting"><b>talent roster</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-saved-characters" data-section-id="casting"><b>saved characters</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-assign-character-to-project" data-section-id="casting"><b>assign character to project</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-cast-character-in-scene" data-section-id="casting"><b>cast character in scene</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-replace-character" data-section-id="casting"><b>replace character</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-cast-multiple-roles" data-section-id="casting"><b>cast multiple roles</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-filter-by-age" data-section-id="casting"><b>filter by age</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-filter-by-look" data-section-id="casting"><b>filter by look</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-filter-by-voice" data-section-id="casting"><b>filter by voice</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-filter-by-project" data-section-id="casting"><b>filter by project</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-filter-by-genre" data-section-id="casting"><b>filter by genre</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-favorite-characters" data-section-id="casting"><b>favorite characters</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-reuse-characters-across-projects" data-section-id="casting"><b>reuse characters across projects</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-export-cast-list" data-section-id="casting"><b>export cast list</b><small>local implemented</small></button><button class="feature-btn" data-feature="casting-import-cast-pack" data-section-id="casting"><b>import cast pack</b><small>local implemented</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="casting"></div><div class="local-list" id="list-casting"></div></div>
+<section id="section-casting" class="section" data-title="Casting Department">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#b71c1c,#ef5350)"></div>
+  <div class="ls-h"><h2>Casting Department</h2></div>
+  <p class="ls-lead">Local casting-management room. Organise roles, assign performers to characters, and track casting notes. No AI casting, no face matching, no automatic actor generation — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#e53935;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Cast Profile</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Cast Profile Name</label>
+        <input id="ls-cd-name" type="text" placeholder="e.g. Elena Vasquez — Lead" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Character</label>
+        <input id="ls-cd-character" type="text" placeholder="Character name or ID" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Role Type</label>
+        <select id="ls-cd-role" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select role type</option>
+          <option>Lead</option>
+          <option>Supporting</option>
+          <option>Narrator</option>
+          <option>Background</option>
+          <option>Villain</option>
+          <option>Hero</option>
+          <option>Comic Relief</option>
+          <option>Historical Figure</option>
+          <option>Documentary Subject</option>
+          <option>Creature</option>
+          <option>Voice Only</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Performer Type</label>
+        <select id="ls-cd-performer" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select performer type</option>
+          <option>Human Performer</option>
+          <option>AI Character</option>
+          <option>Voice Actor</option>
+          <option>Hybrid</option>
+          <option>Placeholder</option>
+          <option>Reference Only</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Age Range</label>
+        <input id="ls-cd-age" type="text" placeholder="e.g. 30s, mid-40s, teen" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Scenes</label>
+        <input id="ls-cd-scenes" type="text" placeholder="e.g. SC01, SC03, SC08" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Reference Image / Path / URL</label>
+        <input id="ls-cd-ref" type="text" placeholder="e.g. /references/elena-ref.jpg" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Appearance Notes</label>
+        <textarea id="ls-cd-appearance" placeholder="e.g. sharp features, dark hair, mid-height, always tired-looking" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Voice Notes</label>
+        <textarea id="ls-cd-voice" placeholder="e.g. low, measured, slight accent, never shouts" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Wardrobe Notes</label>
+        <textarea id="ls-cd-wardrobe" placeholder="Costume continuity notes specific to this cast profile" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Strengths</label>
+        <textarea id="ls-cd-strengths" placeholder="e.g. strong dramatic range, believable in action sequences" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Limitations</label>
+        <textarea id="ls-cd-limitations" placeholder="e.g. AI generation struggles with side profile, no comedy timing" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Availability Notes</label>
+        <textarea id="ls-cd-availability" placeholder="e.g. available for Acts I and III only, not for crowd scenes" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Continuity Concerns</label>
+        <textarea id="ls-cd-continuity" placeholder="e.g. hairstyle must match SC01 in all subsequent scenes" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Casting Notes</label>
+        <textarea id="ls-cd-casting-notes" placeholder="Director or producer casting decisions and rationale" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-cd-notes" placeholder="Any additional casting notes" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-cd-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(239,83,80,.5);background:rgba(239,83,80,.15);color:#ef5350;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Profile</button>
+      <button id="ls-cd-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-cd-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export JSON</button>
+    </div>
+    <div id="ls-cd-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Cast Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(239,83,80,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350">Profile</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350">Character</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350">Role Type</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350">Performer</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350">Linked Scenes</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#ef5350"></th>
+        </tr></thead>
+        <tbody id="ls-cd-tbody"><tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No cast profiles saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Casting Assignment</h3>
+    <p style="color:#9e97c0;font:300 13px Inter,system-ui,sans-serif;margin:0 0 12px">Assign a cast profile to a scene with notes and approval status.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-ca-scene" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Linked Character</label>
+        <input id="ls-ca-character" type="text" placeholder="Character name" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Assigned Cast Profile</label>
+        <input id="ls-ca-profile" type="text" placeholder="Cast profile name" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-ca-status" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Approved</option>
+          <option>Needs Review</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:12px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-ca-notes" placeholder="Director notes on this assignment" style="background:#0e0720;border:1px solid rgba(239,83,80,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <button id="ls-ca-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(239,83,80,.5);background:rgba(239,83,80,.15);color:#ef5350;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Add Assignment</button>
+    <div id="ls-ca-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
+    <div id="ls-ca-list" style="margin-top:14px"></div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('character-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(239,83,80,.3);background:rgba(239,83,80,.08);color:#ef9a9a;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Character Studio</button>
+      <button type="button" onclick="go('character-stability')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(239,83,80,.3);background:rgba(239,83,80,.08);color:#ef9a9a;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Character Stability</button>
+      <button type="button" onclick="go('voice-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(239,83,80,.3);background:rgba(239,83,80,.08);color:#ef9a9a;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Voice Studio</button>
+      <button type="button" onclick="go('scene-builder')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(239,83,80,.3);background:rgba(239,83,80,.08);color:#ef9a9a;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Scene Workshop</button>
+      <button type="button" onclick="go('prompt-writer')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(239,83,80,.3);background:rgba(239,83,80,.08);color:#ef9a9a;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Prompt Writer</button>
+    </div>
+  </div>
+</div>
+<script id="ls-cd-v211">(function(){
+  var PROFILES_KEY='ls_cd_profiles';
+  var ASSIGN_KEY='ls_cd_assignments';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function renderTable(){
+    var items=load(PROFILES_KEY);
+    var tb=document.getElementById('ls-cd-tbody');
+    if(!tb)return;
+    if(!items.length){tb.innerHTML='<tr><td colspan="6" style="padding:14px 10px;color:#7a6fa0;text-align:center">No cast profiles saved yet</td></tr>';return;}
+    tb.innerHTML=items.map(function(it,i){
+      return '<tr style="border-bottom:1px solid rgba(239,83,80,.1)">'+
+        '<td style="padding:8px 10px">'+esc(it.name||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.character||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.role||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.performer||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(it.linkedScenes||'')+'</td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsCDDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function renderAssignments(){
+    var items=load(ASSIGN_KEY);
+    var el=document.getElementById('ls-ca-list');
+    if(!el)return;
+    if(!items.length){el.innerHTML='<p style="color:#7a6fa0;font:400 13px Inter,system-ui,sans-serif">No assignments yet</p>';return;}
+    el.innerHTML=items.map(function(it,i){
+      var sc={'Approved':'#66bb6a','Needs Review':'#ffa726','Rejected':'#ef5350'}[it.status]||'#9e97c0';
+      return '<div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.18);border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><strong style="color:#f5f0ff;font:600 13px Inter,system-ui,sans-serif">'+esc(it.scene||'')+'</strong>'+
+        '<span style="margin-left:8px;color:#9e97c0;font:400 13px Inter,system-ui,sans-serif">'+esc(it.character||'')+'</span>'+
+        '<span style="margin-left:8px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif">&#8594; '+esc(it.profile||'')+'</span></div>'+
+        '<span style="color:'+sc+';font:500 11px Inter,system-ui,sans-serif;white-space:nowrap">'+esc(it.status||'')+'</span></div>'+
+        (it.notes?'<div style="color:#9e97c0;font:300 12px Inter,system-ui,sans-serif;margin-top:4px">'+esc(it.notes)+'</div>':'')+
+        '<button onclick="window.lsCDDeleteAssign('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer;margin-top:6px">Remove</button>'+
+        '</div>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-cd-save-btn');
+    if(saveBtn&&!saveBtn._lscd){saveBtn._lscd=1;
+      saveBtn.addEventListener('click',function(){
+        var name=g('ls-cd-name');
+        if(!name){flash('ls-cd-msg','Cast profile name is required.');return;}
+        var items=load(PROFILES_KEY);
+        items.push({name:name,character:g('ls-cd-character'),role:g('ls-cd-role'),performer:g('ls-cd-performer'),ageRange:g('ls-cd-age'),linkedScenes:g('ls-cd-scenes'),ref:g('ls-cd-ref'),appearance:g('ls-cd-appearance'),voice:g('ls-cd-voice'),wardrobe:g('ls-cd-wardrobe'),strengths:g('ls-cd-strengths'),limitations:g('ls-cd-limitations'),availability:g('ls-cd-availability'),continuity:g('ls-cd-continuity'),castingNotes:g('ls-cd-casting-notes'),notes:g('ls-cd-notes'),savedAt:new Date().toISOString()});
+        save(PROFILES_KEY,items);
+        renderTable();
+        flash('ls-cd-msg','Cast profile saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-cd-clear-btn');
+    if(clearBtn&&!clearBtn._lscd){clearBtn._lscd=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-cd-name','ls-cd-character','ls-cd-age','ls-cd-scenes','ls-cd-ref','ls-cd-appearance','ls-cd-voice','ls-cd-wardrobe','ls-cd-strengths','ls-cd-limitations','ls-cd-availability','ls-cd-continuity','ls-cd-casting-notes','ls-cd-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        ['ls-cd-role','ls-cd-performer'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+      });
+    }
+    var expBtn=document.getElementById('ls-cd-export-btn');
+    if(expBtn&&!expBtn._lscd){expBtn._lscd=1;
+      expBtn.addEventListener('click',function(){
+        var data={castProfiles:load(PROFILES_KEY),assignments:load(ASSIGN_KEY),exportedAt:new Date().toISOString()};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='casting-department.json';a.click();
+      });
+    }
+    var caBtn=document.getElementById('ls-ca-save-btn');
+    if(caBtn&&!caBtn._lscd){caBtn._lscd=1;
+      caBtn.addEventListener('click',function(){
+        var scene=g('ls-ca-scene'),profile=g('ls-ca-profile');
+        if(!scene||!profile){flash('ls-ca-msg','Scene ID and Cast Profile are required.');return;}
+        var items=load(ASSIGN_KEY);
+        items.push({scene:scene,character:g('ls-ca-character'),profile:profile,notes:g('ls-ca-notes'),status:g('ls-ca-status'),savedAt:new Date().toISOString()});
+        save(ASSIGN_KEY,items);
+        renderAssignments();
+        ['ls-ca-scene','ls-ca-character','ls-ca-profile','ls-ca-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var ss=document.getElementById('ls-ca-status');if(ss)ss.selectedIndex=0;
+        flash('ls-ca-msg','Assignment added.');
+      });
+    }
+  }
+
+  window.lsCDDelete=function(i){var items=load(PROFILES_KEY);items.splice(i,1);save(PROFILES_KEY,items);renderTable();};
+  window.lsCDDeleteAssign=function(i){var items=load(ASSIGN_KEY);items.splice(i,1);save(ASSIGN_KEY,items);renderAssignments();};
+
+  var sec=document.getElementById('section-casting');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();renderAssignments();attachEvents();}
+  }
+  window.lsCDRoom={renderTable:renderTable,renderAssignments:renderAssignments};
+})();</script>
 </section>
 <section id="section-performance" class="section" data-title="Performance Controls">
   <div class="section-head"><div><h2>Performance Controls</h2><p>Control fictional character performances per scene.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="performance">Audit Section</button></div>
