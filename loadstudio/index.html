@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v209 look-lab-interior — cinematic style continuity room (purple) === */
+/* === LoadStudio v210 scene-workshop-interior — scene planning room (blue) === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -644,12 +644,222 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="book-cinema"></div><div class="local-list" id="list-book-cinema"></div></div>
   </div>
 </section>
-<section id="section-scene-builder" class="section" data-title="Scene Cards">
-  <div class="section-head"><div><h2>Scene Cards</h2><p>Create structured scene cards for CinePWA playback and editing.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="scene-builder">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="scene-builder-scene-title" data-section-id="scene-builder"><b>scene title</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-chapter-source-section" data-section-id="scene-builder"><b>chapter source section</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-summary" data-section-id="scene-builder"><b>summary</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-characters" data-section-id="scene-builder"><b>characters</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-location" data-section-id="scene-builder"><b>location</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-mood" data-section-id="scene-builder"><b>mood</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-duration" data-section-id="scene-builder"><b>duration</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-dialogue" data-section-id="scene-builder"><b>dialogue</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-narration" data-section-id="scene-builder"><b>narration</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-image-prompt" data-section-id="scene-builder"><b>image prompt</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-negative-prompt" data-section-id="scene-builder"><b>negative prompt</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-generated-image" data-section-id="scene-builder"><b>generated image</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-audio" data-section-id="scene-builder"><b>audio</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-music" data-section-id="scene-builder"><b>music</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-sound-effects" data-section-id="scene-builder"><b>sound effects</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-subtitles" data-section-id="scene-builder"><b>subtitles</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-camera-movement" data-section-id="scene-builder"><b>camera movement</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-transition" data-section-id="scene-builder"><b>transition</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-status" data-section-id="scene-builder"><b>status</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-draft" data-section-id="scene-builder"><b>draft</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-needs-image" data-section-id="scene-builder"><b>needs image</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-needs-voice" data-section-id="scene-builder"><b>needs voice</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-needs-music" data-section-id="scene-builder"><b>needs music</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-needs-review" data-section-id="scene-builder"><b>needs review</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-locked" data-section-id="scene-builder"><b>locked</b><small>local implemented</small></button><button class="feature-btn" data-feature="scene-builder-exported" data-section-id="scene-builder"><b>exported</b><small>local implemented</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="scene-builder"></div><div class="local-list" id="list-scene-builder"></div></div>
+<section id="section-scene-builder" class="section" data-title="Scene Workshop">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#1565c0,#42a5f5)"></div>
+  <div class="ls-h"><h2>Scene Workshop</h2></div>
+  <p class="ls-lead">Local scene-planning room. Create scene profiles, track assignments, and organise story-to-production metadata. No timeline editor, no playback, no AI scene generation — all fields save locally.</p>
+  <div class="ls-panel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(66,165,245,.12);border:1px solid rgba(66,165,245,.3);color:#42a5f5;font:500 11.5px Inter,system-ui,sans-serif">Local Ready</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.3);color:#ffa726;font:500 11.5px Inter,system-ui,sans-serif">Manual Review</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef5350;font:500 11.5px Inter,system-ui,sans-serif">Integration Required</span>
+      <span style="display:inline-block;padding:3px 10px;border-radius:6px;background:rgba(158,158,158,.12);border:1px solid rgba(158,158,158,.3);color:#bdbdbd;font:500 11.5px Inter,system-ui,sans-serif">Untested</span>
+    </div>
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Profile</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene ID</label>
+        <input id="ls-sw-id" type="text" placeholder="e.g. SC01" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Scene Title</label>
+        <input id="ls-sw-title" type="text" placeholder="e.g. The Letter" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Chapter / Sequence</label>
+        <input id="ls-sw-chapter" type="text" placeholder="e.g. Act I — Chapter 3" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Mood</label>
+        <input id="ls-sw-mood" type="text" placeholder="e.g. tense, melancholy, hopeful" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Duration Estimate</label>
+        <input id="ls-sw-duration" type="text" placeholder="e.g. 45s, 2 min" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Status</label>
+        <select id="ls-sw-status" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select status</option>
+          <option>Draft</option>
+          <option>Ready for Review</option>
+          <option>Approved</option>
+          <option>Needs Revision</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Location</label>
+        <input id="ls-sw-location" type="text" placeholder="e.g. Ravenwood Manor — south wing" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Characters</label>
+        <input id="ls-sw-characters" type="text" placeholder="e.g. Elena, Marcus (off-screen)" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Transition In</label>
+        <input id="ls-sw-trans-in" type="text" placeholder="e.g. fade in, cut from SC03" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Transition Out</label>
+        <input id="ls-sw-trans-out" type="text" placeholder="e.g. dissolve to black, hard cut" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Summary</label>
+      <textarea id="ls-sw-summary" placeholder="Brief description of what happens in this scene" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:65px;resize:vertical"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Wardrobe Notes</label>
+        <textarea id="ls-sw-wardrobe" placeholder="Costume or wardrobe continuity notes for this scene" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Props Notes</label>
+        <textarea id="ls-sw-props" placeholder="Key props required or continuity notes" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Voice / Narration Notes</label>
+        <textarea id="ls-sw-voice" placeholder="e.g. Elena whispers, narrator VO over action" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Music Prompt</label>
+        <textarea id="ls-sw-music" placeholder="e.g. slow piano, minor key, sparse strings" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">SFX Prompt</label>
+        <textarea id="ls-sw-sfx" placeholder="e.g. rain on glass, distant thunder, door creak" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Image Prompt</label>
+        <textarea id="ls-sw-image-prompt" placeholder="Prompt text for scene image generation (reference only)" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Video Prompt</label>
+        <textarea id="ls-sw-video-prompt" placeholder="Prompt text for scene video generation (reference only)" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Negative Prompt</label>
+        <textarea id="ls-sw-neg-prompt" placeholder="What to avoid in AI generation for this scene" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0;letter-spacing:.04em">Notes</label>
+      <textarea id="ls-sw-notes" placeholder="Additional production notes for this scene" style="background:#0e0720;border:1px solid rgba(66,165,245,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:55px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="ls-sw-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(66,165,245,.5);background:rgba(66,165,245,.15);color:#42a5f5;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Scene</button>
+      <button id="ls-sw-clear-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(125,42,232,.4);background:transparent;color:#c0b8d9;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Clear Form</button>
+      <button id="ls-sw-export-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,152,0,.4);background:rgba(255,152,0,.1);color:#ffa726;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Export scenes.json</button>
+    </div>
+    <div id="ls-sw-msg" style="display:none;margin-top:8px;font:400 13px Inter,system-ui,sans-serif;color:#5ee0a5"></div>
   </div>
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Scene Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 13px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(66,165,245,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Scene ID</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Title</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Location</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Characters</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Mood</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5">Status</th>
+          <th style="text-align:left;padding:8px 10px;font:600 12px Inter,system-ui,sans-serif;color:#42a5f5"></th>
+        </tr></thead>
+        <tbody id="ls-sw-tbody"><tr><td colspan="7" style="padding:14px 10px;color:#7a6fa0;text-align:center">No scenes saved yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('character-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Character Studio</button>
+      <button type="button" onclick="go('wardrobe')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Wardrobe Department</button>
+      <button type="button" onclick="go('props')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Props Department</button>
+      <button type="button" onclick="go('locations')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Digital Backlot</button>
+      <button type="button" onclick="go('look-lab')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Look Lab</button>
+      <button type="button" onclick="go('voice-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Voice Studio</button>
+      <button type="button" onclick="go('prompt-writer')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Prompt Writer</button>
+      <button type="button" onclick="go('asset-registry')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(66,165,245,.3);background:rgba(66,165,245,.08);color:#90caf9;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Asset Registry</button>
+    </div>
+  </div>
+</div>
+<script id="ls-sw-v210">(function(){
+  var SCENES_KEY='ls_sw_scenes';
+  function load(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function statusColor(st){
+    return {'Approved':'#66bb6a','Ready for Review':'#42a5f5','Needs Revision':'#ef5350','Draft':'#bdbdbd'}[st]||'#9e97c0';
+  }
+
+  function renderTable(){
+    var scenes=load(SCENES_KEY);
+    var tb=document.getElementById('ls-sw-tbody');
+    if(!tb)return;
+    if(!scenes.length){tb.innerHTML='<tr><td colspan="7" style="padding:14px 10px;color:#7a6fa0;text-align:center">No scenes saved yet</td></tr>';return;}
+    tb.innerHTML=scenes.map(function(sc,i){
+      var sc_color=statusColor(sc.status);
+      return '<tr style="border-bottom:1px solid rgba(66,165,245,.1)">'+
+        '<td style="padding:8px 10px;font:600 13px Inter,system-ui,sans-serif;color:#90caf9">'+esc(sc.sceneId||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc(sc.title||'')+'</td>'+
+        '<td style="padding:8px 10px">'+esc((sc.location||'').substring(0,30))+'</td>'+
+        '<td style="padding:8px 10px">'+esc((sc.characters||'').substring(0,30))+'</td>'+
+        '<td style="padding:8px 10px">'+esc(sc.mood||'')+'</td>'+
+        '<td style="padding:8px 10px"><span style="color:'+sc_color+';font:500 12px Inter,system-ui,sans-serif">'+esc(sc.status||'Draft')+'</span></td>'+
+        '<td style="padding:8px 10px"><button onclick="window.lsSWDelete('+i+')" style="background:none;border:none;color:#ef5350;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Remove</button></td>'+
+        '</tr>';
+    }).join('');
+  }
+
+  function flash(id,msg){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},2200);}
+  function g(id){return(document.getElementById(id)||{}).value||'';}
+
+  function attachEvents(){
+    var saveBtn=document.getElementById('ls-sw-save-btn');
+    if(saveBtn&&!saveBtn._lssw){saveBtn._lssw=1;
+      saveBtn.addEventListener('click',function(){
+        var sceneId=g('ls-sw-id');
+        if(!sceneId){flash('ls-sw-msg','Scene ID is required.');return;}
+        var scenes=load(SCENES_KEY);
+        scenes.push({sceneId:sceneId,title:g('ls-sw-title'),chapter:g('ls-sw-chapter'),summary:g('ls-sw-summary'),mood:g('ls-sw-mood'),duration:g('ls-sw-duration'),location:g('ls-sw-location'),characters:g('ls-sw-characters'),wardrobeNotes:g('ls-sw-wardrobe'),propsNotes:g('ls-sw-props'),voiceNotes:g('ls-sw-voice'),musicPrompt:g('ls-sw-music'),sfxPrompt:g('ls-sw-sfx'),imagePrompt:g('ls-sw-image-prompt'),videoPrompt:g('ls-sw-video-prompt'),negativePrompt:g('ls-sw-neg-prompt'),transitionIn:g('ls-sw-trans-in'),transitionOut:g('ls-sw-trans-out'),status:g('ls-sw-status')||'Draft',notes:g('ls-sw-notes'),savedAt:new Date().toISOString()});
+        save(SCENES_KEY,scenes);
+        renderTable();
+        flash('ls-sw-msg','Scene saved.');
+      });
+    }
+    var clearBtn=document.getElementById('ls-sw-clear-btn');
+    if(clearBtn&&!clearBtn._lssw){clearBtn._lssw=1;
+      clearBtn.addEventListener('click',function(){
+        ['ls-sw-id','ls-sw-title','ls-sw-chapter','ls-sw-summary','ls-sw-mood','ls-sw-duration','ls-sw-location','ls-sw-characters','ls-sw-wardrobe','ls-sw-props','ls-sw-voice','ls-sw-music','ls-sw-sfx','ls-sw-image-prompt','ls-sw-video-prompt','ls-sw-neg-prompt','ls-sw-trans-in','ls-sw-trans-out','ls-sw-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+        var st=document.getElementById('ls-sw-status');if(st)st.selectedIndex=0;
+      });
+    }
+    var expBtn=document.getElementById('ls-sw-export-btn');
+    if(expBtn&&!expBtn._lssw){expBtn._lssw=1;
+      expBtn.addEventListener('click',function(){
+        var scenes=load(SCENES_KEY);
+        var data={scenes:scenes,exportedAt:new Date().toISOString(),count:scenes.length};
+        var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='scenes.json';a.click();
+      });
+    }
+  }
+
+  window.lsSWDelete=function(i){var scenes=load(SCENES_KEY);scenes.splice(i,1);save(SCENES_KEY,scenes);renderTable();};
+
+  var sec=document.getElementById('section-scene-builder');
+  if(sec){
+    var obs=new MutationObserver(function(){
+      if(sec.classList.contains('active')){renderTable();attachEvents();}
+    });
+    obs.observe(sec,{attributes:true,attributeFilter:['class']});
+    if(sec.classList.contains('active')){renderTable();attachEvents();}
+  }
+  window.lsSWRoom={renderTable:renderTable};
+})();</script>
 </section>
 <section id="section-timeline-editor" class="section" data-title="Editing Bay"><div id="lseb-root"></div></section>
 <section id="section-vn-tools" class="section" data-title="Visual Editor"><div class="section-head"><div><h2>Visual Editor</h2><p>Scene-style visual editor. Mounts inline.</p></div></div><div class="ls-eb-direct-frame"><div class="ls-eb-tabs"><span class="ls-eb-brand"><span class="ls-eb-brand-dot"></span>LoadStudio<span class="ls-eb-brand-sep">/</span>Editing Bay</span><button class="ls-eb-tab on" data-eb-native="video" type="button">Upload Video</button><button class="ls-eb-tab" data-eb-native="image" type="button">Upload Image</button><button class="ls-eb-tab ls-eb-tab-create" data-eb-native="create" type="button">Create from Scratch</button></div><div class="ls-eb-launch-card" id="lsEbLaunchCardVN"><div class="ls-eb-launch-inner"><h2>Editing Bay</h2><p class="lead">Pick how to start. The editor mounts right here in LoadStudio - no jump, no iframe. Same VN-style timeline you saw in Load Main.</p><div class="ls-eb-launch-row"><button class="ls-eb-launch-btn primary" data-eb-native="video" type="button"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><span class="lbl">Upload Video</span><span class="sub">Pick a clip from your iPad</span></button><button class="ls-eb-launch-btn" data-eb-native="image" type="button"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5-9 9"/></svg></span><span class="lbl">Upload Image</span><span class="sub">Make a 5s clip from a photo</span></button><button class="ls-eb-launch-btn create" data-eb-native="create" type="button"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20" fill="currentColor" stroke="none"/></svg></span><span class="lbl">Create from Scratch</span><span class="sub">Blank 16:9 canvas, build from zero</span></button></div><p class="ls-eb-launch-foot">Inside the editor: trim, split, FX, filter, fade, rotate, mirror, flip, crop, BG, border, blur, opacity, denoise, zoom, extract audio, auto captions, TTS, cover, multi-track timeline, music + subtitle + sticker tracks, MP4 / GIF / HTML / .owa export. Same code from Load Main, no jump.</p></div></div></div></section>
