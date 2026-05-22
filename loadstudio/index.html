@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v224 ipad-zip-save-fallback — navigator.share, Share/Save ZIP, open-in-tab fallback === */
+/* === LoadStudio v225 ai-video-planning-batch — AI Image Director, Text-to-Video, Image-to-Video, Video Stylizer, Outpainting, Lip Sync === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3918,42 +3918,94 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   </div>
 </section>
 
-<section id="section-director-ai" class="section" data-title="Director AI System">
+<section id="section-director-ai" class="section" data-title="AI Image Director">
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#9c9cff,#b388ff)"></div>
-    <div class="ls-h"><h2>Director AI System</h2><span class="ls-dept" style="color:#9c9cff">AI Director</span></div>
-    <p class="ls-lead">Director-level cinematic production guidance. Generates scene direction, pacing notes, shot lists, and story beats locally. Saves to director-ai.json.</p>
+    <div class="ls-h"><h2>AI Image Director</h2><span class="ls-dept" style="color:#9c9cff">AI Director</span></div>
+    <p class="ls-lead">Plan image generation per scene. Save prompts, character locks, and look notes locally. Attach approved asset proof when a provider is connected.</p>
     <div class="ls-panel">
-      <h3>Project Direction</h3>
+      <h3>New Entry</h3>
       <div class="form-grid" style="margin-top:10px">
-        <label>Project Vision<textarea id="ls-dir-vision" rows="3" placeholder="Describe the overall tone, genre, and audience."></textarea></label>
-        <label>Cinematic Style<textarea id="ls-dir-style" rows="2" placeholder="e.g. prestige TV drama, noir, animated feature"></textarea></label>
-        <label>Story Beats<textarea id="ls-dir-beats" rows="3" placeholder="Key turning points in the story."></textarea></label>
-        <label>Pacing<select id="ls-dir-pacing"><option>Slow Burn</option><option selected>Standard</option><option>Fast Paced</option><option>Episodic</option></select></label>
+        <label>Scene ID<input id="ls-aid-scene" type="text" placeholder="e.g. scene-001"></label>
+        <label>Entry Status<select id="ls-aid-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Image Prompt<textarea id="ls-aid-prompt" rows="3" placeholder="Describe the image to generate."></textarea></label>
+        <label>Negative Prompt<textarea id="ls-aid-neg" rows="2" placeholder="What to exclude from the image."></textarea></label>
+        <label>Character Lock Notes<textarea id="ls-aid-char" rows="2" placeholder="Identity features to preserve."></textarea></label>
+        <label>Look / Style Notes<textarea id="ls-aid-look" rows="2" placeholder="Visual style, era, lighting, palette."></textarea></label>
+        <label>Reference Image Path / URL<input id="ls-aid-ref" type="text" placeholder="/assets/... or https://..."></label>
+        <label>Provider Status<select id="ls-aid-prov"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Generated Asset Proof (path or URL)<input id="ls-aid-proof" type="text" placeholder="Path or URL to approved output"></label>
       </div>
-      <button id="ls-dir-save" class="btn primary" type="button" style="margin-top:12px">Save Direction</button>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-aid-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-aid-export" class="btn secondary" type="button">Export JSON</button>
+      </div>
+      <div id="ls-aid-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <h3>Shot List Generator</h3>
-      <div class="form-grid" style="margin-top:10px">
-        <label>Scene Description<textarea id="ls-dir-scene-desc" rows="3" placeholder="Describe the scene you want to shoot."></textarea></label>
-        <label>Shot Type<select id="ls-dir-shot-type"><option>Wide Establishing</option><option>Medium Two-Shot</option><option>Close Up</option><option>Extreme Close Up</option><option>Over the Shoulder</option><option>POV</option><option>Aerial</option><option>Tracking</option></select></label>
-        <label>Camera Movement<select id="ls-dir-camera-move"><option>Static</option><option>Pan Left</option><option>Pan Right</option><option>Tilt Up</option><option>Tilt Down</option><option>Push In</option><option>Pull Out</option><option>Tracking Shot</option></select></label>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button id="ls-dir-genshot" class="btn secondary" type="button">Generate Shot List</button>
-        <button id="ls-dir-llm-btn" class="btn primary" type="button">Generate with AI</button>
-      </div>
-      <div id="ls-dir-llm-status" style="color:#9c93b5;font:300 12.5px Inter,system-ui,sans-serif;margin-top:6px">Checking AI provider...</div>
-      <textarea id="ls-dir-shotlist-out" rows="6" readonly placeholder="Shot list will appear here..." style="margin-top:10px;width:100%;box-sizing:border-box"></textarea>
-      <button class="btn secondary" type="button" onclick="var el=document.getElementById('ls-dir-shotlist-out');if(el&&el.value){navigator.clipboard.writeText(el.value).catch(function(){})}" style="margin-top:8px">Copy Shot List</button>
+      <h3>Saved Entries</h3>
+      <div id="ls-aid-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
     <div class="ls-panel">
-      <div class="ls-integration-badge"><strong>Integration Required</strong> — AI director responses require a connected language model provider (OpenRouter, local LLM, or Anthropic API). Local fields save and export without a provider.</div>
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Image generation requires a configured provider. Prompts, locks, and notes save and export locally without a provider.</div>
     </div>
-    <div class="ls-related"><button class="ls-ws-tile" type="button" data-section="prompt-writer" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span><span class="ls-ws-label">Prompt Writer</span><span class="ls-ws-sub">Build and save production prompts for every pipeline stage.</span></button></div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="prompt-writer" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span><span class="ls-ws-label">Prompt Writer</span><span class="ls-ws-sub">Build and save production prompts.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="character-stability" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="ls-ws-label">Character Stability</span><span class="ls-ws-sub">Character consistency locks.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="look-lab" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="ls-ws-label">Look Lab</span><span class="ls-ws-sub">Style and visual bible.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="asset-registry" data-ls-tile="1"><span class="ls-ws-icon cat-prod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span><span class="ls-ws-label">Asset Registry</span><span class="ls-ws-sub">Register and track generated assets.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="scene-builder" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span><span class="ls-ws-label">Scene Workshop</span><span class="ls-ws-sub">Assign images to scene cards.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-aid-v225">(function(){
+  var KEY="ls_aid_entries";
+  var sec=document.getElementById("section-director-ai");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-aid-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-aid-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
+        +'<td style="padding:5px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.imagePrompt+'">'+e.imagePrompt+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.providerStatus)+'">'+e.providerStatus+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsAidDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Prompt</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Provider</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsAidDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsAid)return;el._lsAid=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsAidW)return;sec._lsAidW=true;
+    addH(document.getElementById("ls-aid-save"),function(){
+      var e={sceneId:document.getElementById("ls-aid-scene").value.trim(),imagePrompt:document.getElementById("ls-aid-prompt").value.trim(),negativePrompt:document.getElementById("ls-aid-neg").value.trim(),charLock:document.getElementById("ls-aid-char").value.trim(),lookNotes:document.getElementById("ls-aid-look").value.trim(),refPath:document.getElementById("ls-aid-ref").value.trim(),status:document.getElementById("ls-aid-status").value,providerStatus:document.getElementById("ls-aid-prov").value,assetProof:document.getElementById("ls-aid-proof").value.trim(),savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-aid-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="ai-image-director.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-character-stability" class="section" data-title="Character Stability Engine">
   <div class="ls-frame">
@@ -4177,109 +4229,262 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#ff6e9c,#b388ff)"></div>
     <div class="ls-h"><h2>Text to Video Studio</h2><span class="ls-dept" style="color:#ff6e9c">Production</span></div>
-    <p class="ls-lead">Turn ideas, script excerpts, and scene cards into cinematic video prompts. Save prompts locally. Attach generated video to your scene when a provider is connected.</p>
+    <p class="ls-lead">Plan video generation per scene. Save video prompts, motion direction, and provider notes locally. Attach output proof when a provider delivers results.</p>
     <div class="ls-panel">
-      <h3>Prompt Builder</h3>
+      <h3>New Entry</h3>
       <div class="form-grid" style="margin-top:10px">
-        <label>Idea or Scene Excerpt<textarea id="ls-t2v-idea" rows="4" placeholder="Paste your idea, script excerpt, or scene card text here."></textarea></label>
-        <label>Visual Style<select id="ls-t2v-style"><option>Cinematic Realism</option><option>Animated Feature</option><option>Anime</option><option>Documentary</option><option>Music Video</option><option>Prestige TV</option><option>Noir</option><option>Trailer</option></select></label>
-        <label>Clip Duration<select id="ls-t2v-duration"><option>3 seconds</option><option>5 seconds</option><option>8 seconds</option><option>10 seconds</option></select></label>
-        <label>Aspect Ratio<select id="ls-t2v-ratio"><option>16:9 Widescreen</option><option>9:16 Vertical</option><option>1:1 Square</option><option>2.39:1 Cinematic</option></select></label>
-        <label>Camera Direction<textarea id="ls-t2v-camera" rows="2" placeholder="e.g. slow push-in, aerial, handheld"></textarea></label>
-        <label>Lighting Notes<textarea id="ls-t2v-lighting" rows="2" placeholder="e.g. golden hour, neon city, overcast"></textarea></label>
+        <label>Scene ID<input id="ls-t2v-scene" type="text" placeholder="e.g. scene-001"></label>
+        <label>Status<select id="ls-t2v-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Video Prompt<textarea id="ls-t2v-prompt" rows="4" placeholder="Describe the video clip to generate."></textarea></label>
+        <label>Motion Notes<textarea id="ls-t2v-motion" rows="2" placeholder="Motion style, energy, pacing."></textarea></label>
+        <label>Camera Movement<select id="ls-t2v-camera"><option>Static Hold</option><option>Push In</option><option>Pull Out</option><option>Pan Left</option><option>Pan Right</option><option>Tilt Up</option><option>Tilt Down</option><option>Tracking Shot</option><option>Orbit / Arc</option><option>Crane / Jib</option></select></label>
+        <label>Duration Target<select id="ls-t2v-duration"><option>3 seconds</option><option>5 seconds</option><option>8 seconds</option><option>10 seconds</option></select></label>
+        <label>Provider Notes<textarea id="ls-t2v-prov-notes" rows="2" placeholder="Which provider, model, or API endpoint to use."></textarea></label>
+        <label>Output Proof (path or URL)<input id="ls-t2v-proof" type="text" placeholder="Path or URL to generated video clip"></label>
       </div>
-      <button id="ls-t2v-build" class="btn primary" type="button" style="margin-top:12px">Build Video Prompt</button>
-      <textarea id="ls-t2v-output" rows="6" readonly placeholder="Generated video prompt will appear here..." style="margin-top:10px;width:100%;box-sizing:border-box"></textarea>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-t2v-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-t2v-export" class="btn secondary" type="button">Export JSON</button>
+      </div>
+      <div id="ls-t2v-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <h3>Result Management</h3>
-      <div class="form-grid" style="margin-top:10px">
-        <label>Prompt Status<select id="ls-t2v-status"><option>Approved</option><option>Maybe</option><option>Rejected</option></select></label>
-        <label>Attach to Scene (Scene ID)<input id="ls-t2v-attach-scene" type="text" placeholder="e.g. scene-001"></label>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-        <button class="btn secondary" type="button" onclick="var out=document.getElementById('ls-t2v-output');if(out){var log=JSON.parse(localStorage.getItem('ls_t2v_log')||'[]');log.push({prompt:out.value,status:document.getElementById('ls-t2v-status').value,scene:document.getElementById('ls-t2v-attach-scene').value,savedAt:new Date().toISOString()});localStorage.setItem('ls_t2v_log',JSON.stringify(log));}">Save Prompt</button>
-        <button class="btn secondary" type="button" onclick="var log=JSON.parse(localStorage.getItem('ls_t2v_log')||'[]');var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(log,null,2));a.download='t2v-prompt-log.json';a.click()">Export Video Prompt Pack</button>
-      </div>
+      <h3>Saved Entries</h3>
+      <div id="ls-t2v-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
     <div class="ls-panel">
-      <div id="ls-t2v-provider-status" style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif;margin-top:8px">Checking provider...</div>
-      <button id="ls-t2v-attempt" class="btn primary" type="button" style="margin-top:10px">Attempt Generation</button>
-      <div id="ls-t2v-result" style="margin-top:10px"></div>
-      <div class="ls-integration-badge" style="margin-top:10px"><strong>Integration Required</strong> — Actual video generation requires a configured provider key or local engine. Prompts save and export locally when no provider is connected.</div>
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Video generation requires a configured provider. Prompts and notes save and export locally without a provider.</div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="prompt-writer" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span><span class="ls-ws-label">Prompt Writer</span><span class="ls-ws-sub">Build and save production prompts.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="scene-builder" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span><span class="ls-ws-label">Scene Workshop</span><span class="ls-ws-sub">Scene cards and shot assignment.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="asset-registry" data-ls-tile="1"><span class="ls-ws-icon cat-prod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span><span class="ls-ws-label">Asset Registry</span><span class="ls-ws-sub">Log generated video clips.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-t2v-v225">(function(){
+  var KEY="ls_t2v_entries";
+  var sec=document.getElementById("section-text-to-video");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-t2v-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-t2v-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
+        +'<td style="padding:5px 8px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.videoPrompt+'">'+e.videoPrompt+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.cameraMovement+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.duration+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsT2vDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Prompt</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Camera</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Duration</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsT2vDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsT2v)return;el._lsT2v=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsT2vW)return;sec._lsT2vW=true;
+    addH(document.getElementById("ls-t2v-save"),function(){
+      var e={sceneId:document.getElementById("ls-t2v-scene").value.trim(),videoPrompt:document.getElementById("ls-t2v-prompt").value.trim(),motionNotes:document.getElementById("ls-t2v-motion").value.trim(),cameraMovement:document.getElementById("ls-t2v-camera").value,duration:document.getElementById("ls-t2v-duration").value,providerNotes:document.getElementById("ls-t2v-prov-notes").value.trim(),outputProof:document.getElementById("ls-t2v-proof").value.trim(),status:document.getElementById("ls-t2v-status").value,savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-t2v-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="text-to-video-log.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-image-to-video" class="section" data-title="Image to Video Studio">
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#ff6e9c,#b388ff)"></div>
     <div class="ls-h"><h2>Image to Video Studio</h2><span class="ls-dept" style="color:#ff6e9c">Production</span></div>
-    <p class="ls-lead">Apply motion to a still image. Choose motion type and camera direction, then generate a prompt or connect a provider for actual output.</p>
+    <p class="ls-lead">Plan motion-from-image generation. Record source image, motion type, preservation notes, and status locally. Attach output proof when a provider delivers results.</p>
     <div class="ls-panel">
-      <h3>Image Upload</h3>
-      <input type="file" id="ls-i2v-upload" accept="image/*" style="display:block;margin-bottom:10px">
-      <div id="ls-i2v-preview" style="min-height:40px"></div>
-    </div>
-    <div class="ls-panel">
-      <h3>Motion Settings</h3>
+      <h3>New Entry</h3>
       <div class="form-grid" style="margin-top:10px">
+        <label>Source Image Path / URL<input id="ls-i2v-src" type="text" placeholder="/assets/... or https://..."></label>
+        <label>Scene ID<input id="ls-i2v-scene" type="text" placeholder="e.g. scene-001"></label>
         <label>Motion Type<select id="ls-i2v-motion"><option>Camera Push-In</option><option>Camera Pan</option><option>Breathing Motion</option><option>Hair and Clothing Motion</option><option>Environmental Motion</option><option>Cinematic Parallax</option><option>Depth Motion</option></select></label>
-        <label>Clip Duration<select id="ls-i2v-duration"><option>3 seconds</option><option>5 seconds</option><option>8 seconds</option></select></label>
-        <label>Motion Notes<textarea id="ls-i2v-notes" rows="2" placeholder="Additional motion instructions"></textarea></label>
+        <label>Camera Movement<select id="ls-i2v-camera"><option>Static Hold</option><option>Push In</option><option>Pull Out</option><option>Pan Left</option><option>Pan Right</option><option>Tilt Up</option><option>Tilt Down</option><option>Tracking Shot</option><option>Orbit / Arc</option></select></label>
+        <label>Preserve Face / Wardrobe / Composition Notes<textarea id="ls-i2v-preserve" rows="2" placeholder="Identity features and composition to keep stable."></textarea></label>
+        <label>Duration Target<select id="ls-i2v-duration"><option>3 seconds</option><option>5 seconds</option><option>8 seconds</option><option>10 seconds</option></select></label>
+        <label>Status<select id="ls-i2v-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Output Proof (path or URL)<input id="ls-i2v-proof" type="text" placeholder="Path or URL to generated video clip"></label>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px">
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-i2v-preserve-face"> Preserve Face</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-i2v-preserve-wardrobe"> Preserve Wardrobe</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-i2v-preserve-comp"> Preserve Composition</label>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-i2v-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-i2v-export" class="btn secondary" type="button">Export JSON</button>
       </div>
-      <button id="ls-i2v-build-btn" class="btn primary" type="button" style="margin-top:12px">Build Motion Prompt</button>
-      <textarea id="ls-i2v-output" rows="5" readonly placeholder="Motion prompt will appear here..." style="margin-top:10px;width:100%;box-sizing:border-box"></textarea>
+      <div id="ls-i2v-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <h3>Result</h3>
-      <div class="form-grid" style="margin-top:10px">
-        <label>Attach to Scene (Scene ID)<input id="ls-i2v-scene" type="text" placeholder="e.g. scene-001"></label>
-      </div>
-      <button class="btn secondary" type="button" onclick="var out=document.getElementById('ls-i2v-output');if(out){var log=JSON.parse(localStorage.getItem('ls_i2v_log')||'[]');log.push({prompt:out.value,scene:document.getElementById('ls-i2v-scene').value,savedAt:new Date().toISOString()});localStorage.setItem('ls_i2v_log',JSON.stringify(log));}" style="margin-top:10px">Save Prompt</button>
-      <div class="ls-integration-badge" style="margin-top:12px"><strong>Integration Required</strong> — Actual image-to-video generation requires a connected provider.</div>
+      <h3>Saved Entries</h3>
+      <div id="ls-i2v-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Image-to-video generation requires a connected provider. Source paths, notes, and status save locally without a provider.</div>
+    </div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="asset-registry" data-ls-tile="1"><span class="ls-ws-icon cat-prod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span><span class="ls-ws-label">Asset Registry</span><span class="ls-ws-sub">Register source and output assets.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="media-vault" data-ls-tile="1"><span class="ls-ws-icon cat-prod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="ls-ws-label">Media Vault</span><span class="ls-ws-sub">Browse and manage source images.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="look-lab" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="ls-ws-label">Look Lab</span><span class="ls-ws-sub">Visual style reference.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-i2v-v225">(function(){
+  var KEY="ls_i2v_entries";
+  var sec=document.getElementById("section-image-to-video");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-i2v-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-i2v-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
+        +'<td style="padding:5px 8px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.sourcePath+'">'+e.sourcePath+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.motionType+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.duration+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsI2vDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Source</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Motion</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Duration</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsI2vDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsI2v)return;el._lsI2v=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsI2vW)return;sec._lsI2vW=true;
+    addH(document.getElementById("ls-i2v-save"),function(){
+      var e={sourcePath:document.getElementById("ls-i2v-src").value.trim(),sceneId:document.getElementById("ls-i2v-scene").value.trim(),motionType:document.getElementById("ls-i2v-motion").value,cameraMovement:document.getElementById("ls-i2v-camera").value,preserveNotes:document.getElementById("ls-i2v-preserve").value.trim(),duration:document.getElementById("ls-i2v-duration").value,status:document.getElementById("ls-i2v-status").value,outputProof:document.getElementById("ls-i2v-proof").value.trim(),savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-i2v-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="image-to-video-log.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-video-stylizer" class="section" data-title="AI Video Stylizer">
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#5ee0a5,#9c9cff)"></div>
     <div class="ls-h"><h2>AI Video Stylizer</h2><span class="ls-dept" style="color:#5ee0a5">Look Lab</span></div>
-    <p class="ls-lead">Apply a cinematic visual style to your footage or image output. Identity preservation controls prevent style transfer from breaking your character.</p>
+    <p class="ls-lead">Plan style transfer for footage or images. Record source, style target, identity preservation notes, and warnings locally. No actual rendering happens here.</p>
     <div class="ls-panel">
-      <h3>Style Selection</h3>
-      <label style="margin-top:10px;display:block">Visual Style<select id="ls-vs-style" style="margin-top:6px;width:100%"><option>Cinematic Realism</option><option>Anime-Inspired</option><option>Comic Book</option><option>Watercolor</option><option>Motion Comic</option><option>2D Animation</option><option>Children Illustration</option><option>Documentary</option><option>Vintage Film</option><option>Noir</option><option>Music Video</option><option>Prestige TV</option><option>Trailer Look</option></select></label>
-    </div>
-    <div class="ls-panel">
-      <h3>Identity Preservation</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px">
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-face"> Preserve Face</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-skin"> Preserve Skin Tone</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-body"> Preserve Body Type</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-hair"> Preserve Hair</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-wardrobe"> Preserve Wardrobe</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-era"> Preserve Era</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-vs-comp"> Preserve Composition</label>
+      <h3>New Entry</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Source Video / Image Path or URL<input id="ls-vs-src" type="text" placeholder="/assets/... or https://..."></label>
+        <label>Scene ID<input id="ls-vs-scene" type="text" placeholder="e.g. scene-001"></label>
+        <label>Style Target<select id="ls-vs-style"><option>Cinematic Realism</option><option>Anime</option><option>Comic Book</option><option>Watercolor</option><option>Motion Comic</option><option>2D Animation</option><option>Documentary</option><option>Vintage Film</option><option>Noir</option><option>Music Video</option><option>Prestige TV</option><option>Trailer Look</option></select></label>
+        <label>Status<select id="ls-vs-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Identity Preservation Notes<textarea id="ls-vs-id-notes" rows="2" placeholder="Face, skin tone, body type, hair, wardrobe features to lock."></textarea></label>
+        <label>Warning Notes<textarea id="ls-vs-warn" rows="2" placeholder="Known risks, edge cases, or style clash warnings."></textarea></label>
+        <label>Output Proof (path or URL)<input id="ls-vs-proof" type="text" placeholder="Path or URL to stylized output"></label>
       </div>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-vs-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-vs-export" class="btn secondary" type="button">Export JSON</button>
+      </div>
+      <div id="ls-vs-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <div class="ls-warn-badge">Warning: Stylization can break character identity. Enable preservation toggles for all identity features before applying a style.</div>
-      <label style="margin-top:10px;display:block">Style Notes<textarea id="ls-vs-notes" rows="3" placeholder="Additional style instructions..." style="margin-top:6px;width:100%;box-sizing:border-box"></textarea></label>
-      <button id="ls-vs-build-btn" class="btn primary" type="button" style="margin-top:12px">Build Style Prompt</button>
-      <textarea id="ls-vs-output" rows="5" readonly placeholder="Style prompt will appear here..." style="margin-top:10px;width:100%;box-sizing:border-box"></textarea>
-      <div class="ls-integration-badge" style="margin-top:12px"><strong>Integration Required</strong> — Actual stylization requires a connected provider or local ComfyUI.</div>
+      <h3>Saved Entries</h3>
+      <div id="ls-vs-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <div class="ls-warn-badge">Stylization can break character identity. Record preservation requirements before any provider run.</div>
+      <div class="ls-integration-badge" style="margin-top:10px"><strong>Integration Required</strong> — Actual stylization requires a connected provider or local ComfyUI. Notes and plans save locally without a provider.</div>
+    </div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="look-lab" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="ls-ws-label">Look Lab</span><span class="ls-ws-sub">Style and visual bible reference.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="character-stability" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="ls-ws-label">Character Stability</span><span class="ls-ws-sub">Identity locks before stylizing.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-vs-v225">(function(){
+  var KEY="ls_vs_entries";
+  var sec=document.getElementById("section-video-stylizer");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-vs-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-vs-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
+        +'<td style="padding:5px 8px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.sourcePath+'">'+e.sourcePath+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.styleTarget+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsVsDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Source</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Style</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsVsDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsVs)return;el._lsVs=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsVsW)return;sec._lsVsW=true;
+    addH(document.getElementById("ls-vs-save"),function(){
+      var e={sourcePath:document.getElementById("ls-vs-src").value.trim(),sceneId:document.getElementById("ls-vs-scene").value.trim(),styleTarget:document.getElementById("ls-vs-style").value,identityNotes:document.getElementById("ls-vs-id-notes").value.trim(),warningNotes:document.getElementById("ls-vs-warn").value.trim(),outputProof:document.getElementById("ls-vs-proof").value.trim(),status:document.getElementById("ls-vs-status").value,savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-vs-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="video-stylizer-log.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-sfx-generator" class="section" data-title="AI Sound Effects Generator">
   <div class="ls-frame">
@@ -4384,29 +4589,85 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#ff6e9c,#b388ff)"></div>
     <div class="ls-h"><h2>Video Outpainting and Frame Expansion</h2><span class="ls-dept" style="color:#ff6e9c">Production</span></div>
-    <p class="ls-lead">Expand the frame of a video or image. Convert vertical footage to widescreen, extend backgrounds, and create cinematic framing.</p>
+    <p class="ls-lead">Plan frame expansion and background extension. Record source, original and target ratios, and preservation notes locally. No actual rendering happens here.</p>
     <div class="ls-panel">
-      <h3>Frame Conversion</h3>
-      <label style="display:block;margin-top:10px">Conversion Type<select id="ls-out-type" style="margin-top:6px;width:100%"><option>Vertical to Widescreen (9:16 to 16:9)</option><option>Square to Widescreen (1:1 to 16:9)</option><option>Extend Background</option><option>Fill Missing Side Areas</option><option>Create Cinematic Framing</option></select></label>
-    </div>
-    <div class="ls-panel">
-      <h3>Preservation Settings</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px">
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-out-subject"> Preserve Subject Position</label>
-        <label style="display:flex;align-items:center;gap:6px;color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif"><input type="checkbox" id="ls-out-face"> Preserve Face and Body</label>
+      <h3>New Entry</h3>
+      <div class="form-grid" style="margin-top:10px">
+        <label>Source Image / Video Path or URL<input id="ls-vop-src" type="text" placeholder="/assets/... or https://..."></label>
+        <label>Status<select id="ls-vop-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Original Ratio<select id="ls-vop-orig"><option>9:16 Vertical</option><option>1:1 Square</option><option>4:3 Standard</option><option>16:9 Widescreen</option><option>2.39:1 Cinematic</option><option>21:9 Ultra-wide</option></select></label>
+        <label>Target Ratio<select id="ls-vop-target"><option>16:9 Widescreen</option><option>2.39:1 Cinematic</option><option>21:9 Ultra-wide</option><option>4:3 Standard</option><option>1:1 Square</option><option>9:16 Vertical</option></select></label>
+        <label>Subject Preservation Notes<textarea id="ls-vop-subj" rows="2" placeholder="Subject position and features to keep stable."></textarea></label>
+        <label>Background Extension Notes<textarea id="ls-vop-bg" rows="2" placeholder="What to extend or generate in the new frame area."></textarea></label>
+        <label>Output Proof (path or URL)<input id="ls-vop-proof" type="text" placeholder="Path or URL to expanded output"></label>
       </div>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-vop-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-vop-export" class="btn secondary" type="button">Export JSON</button>
+      </div>
+      <div id="ls-vop-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <h3>Prompt</h3>
-      <label style="display:block;margin-top:10px">Outpainting Notes<textarea id="ls-out-notes" rows="3" placeholder="Additional outpainting instructions..." style="margin-top:6px;width:100%;box-sizing:border-box"></textarea></label>
-      <button id="ls-out-build-btn" class="btn primary" type="button" style="margin-top:12px">Generate Outpaint Prompt</button>
-      <textarea id="ls-out-output" rows="5" readonly placeholder="Outpaint prompt will appear here..." style="margin-top:10px;width:100%;box-sizing:border-box"></textarea>
-      <button id="ls-out-export-btn" class="btn secondary" type="button" style="margin-top:8px">Export Framing Prompt</button>
-      <div class="ls-integration-badge" style="margin-top:12px"><strong>Integration Required</strong> — Actual outpainting requires a connected provider (Runway, local ComfyUI, or similar).</div>
+      <h3>Saved Entries</h3>
+      <div id="ls-vop-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
-    <div class="ls-related"></div>
+    <div class="ls-panel">
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Actual frame expansion requires a connected provider. Source paths, ratios, and notes save locally without a provider.</div>
+    </div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="scene-builder" data-ls-tile="1"><span class="ls-ws-icon cat-story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span><span class="ls-ws-label">Scene Workshop</span><span class="ls-ws-sub">Scene cards and framing reference.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="media-vault" data-ls-tile="1"><span class="ls-ws-icon cat-prod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="ls-ws-label">Media Vault</span><span class="ls-ws-sub">Browse source images and footage.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-vop-v225">(function(){
+  var KEY="ls_vop_entries";
+  var sec=document.getElementById("section-video-outpainting");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-vop-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-vop-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.sourcePath+'">'+e.sourcePath+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.origRatio+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.targetRatio+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsVopDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Source</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Orig Ratio</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Target Ratio</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsVopDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsVop)return;el._lsVop=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsVopW)return;sec._lsVopW=true;
+    addH(document.getElementById("ls-vop-save"),function(){
+      var e={sourcePath:document.getElementById("ls-vop-src").value.trim(),origRatio:document.getElementById("ls-vop-orig").value,targetRatio:document.getElementById("ls-vop-target").value,subjectNotes:document.getElementById("ls-vop-subj").value.trim(),backgroundNotes:document.getElementById("ls-vop-bg").value.trim(),outputProof:document.getElementById("ls-vop-proof").value.trim(),status:document.getElementById("ls-vop-status").value,savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-vop-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="video-outpainting-log.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-prompt-writer" class="section" data-title="Professional Prompt Writer">
   <div class="ls-frame">
@@ -5918,40 +6179,90 @@ document.addEventListener('click',function(e){
   <div class="ls-frame">
     <div class="ls-bar" style="background:linear-gradient(90deg,#9c9cff,#ff6e9c)"></div>
     <div class="ls-h"><h2>Lip Sync Studio</h2><span class="ls-dept" style="color:#9c9cff">AI Tools</span></div>
-    <p class="ls-lead">Animate a still photo with synced audio. Upload a portrait and an audio file — generates a talking-photo or lip-synced video when a local provider is connected.</p>
+    <p class="ls-lead">Plan lip sync and talking photo generation. Record character, source image, audio path, mouth movement notes, and sync direction locally. Attach output proof when a provider delivers results.</p>
     <div class="ls-panel">
-      <h3>Source Image</h3>
-      <label style="display:block;margin-top:10px">Portrait Image<input type="file" id="ls-ls-img" accept="image/*" style="margin-top:6px;display:block"></label>
-      <div id="ls-ls-img-preview" style="min-height:30px;margin-top:8px"></div>
-    </div>
-    <div class="ls-panel">
-      <h3>Audio Source</h3>
+      <h3>New Entry</h3>
       <div class="form-grid" style="margin-top:10px">
-        <label>Upload Audio File<input type="file" id="ls-ls-audio" accept="audio/*" style="margin-top:6px;display:block"></label>
-        <label>Or TTS Dialogue Text<textarea id="ls-ls-tts-text" rows="3" placeholder="Type dialogue to convert to speech, then use as lip sync source."></textarea></label>
-        <label>Character Voice ID<input id="ls-ls-voice" type="text" placeholder="e.g. af_heart (Kokoro), custom voice ID"></label>
+        <label>Scene ID<input id="ls-lsp-scene" type="text" placeholder="e.g. scene-001"></label>
+        <label>Character<input id="ls-lsp-char" type="text" placeholder="Character name or ID"></label>
+        <label>Source Image Path / URL<input id="ls-lsp-img" type="text" placeholder="/assets/... or https://..."></label>
+        <label>Dialogue / Audio Path<input id="ls-lsp-audio" type="text" placeholder="/assets/audio/... or TTS placeholder"></label>
+        <label>Mouth Movement Notes<textarea id="ls-lsp-mouth" rows="2" placeholder="Mouth timing, sync style, emotion."></textarea></label>
+        <label>Sync Notes<textarea id="ls-lsp-sync" rows="2" placeholder="Sync accuracy requirements, head movement."></textarea></label>
+        <label>Talking Photo Mode<select id="ls-lsp-tpmode"><option>No</option><option>Yes</option></select></label>
+        <label>Status<select id="ls-lsp-status"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
+        <label>Output Proof (path or URL)<input id="ls-lsp-proof" type="text" placeholder="Path or URL to lip-synced output"></label>
       </div>
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="ls-lsp-save" class="btn primary" type="button">Save Entry</button>
+        <button id="ls-lsp-export" class="btn secondary" type="button">Export JSON</button>
+      </div>
+      <div id="ls-lsp-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
-      <h3>Provider and Output</h3>
-      <div class="form-grid" style="margin-top:10px">
-        <label>Provider<select id="ls-ls-provider"><option value="musetalk">MuseTalk (local)</option><option value="wav2lip">Wav2Lip (local)</option><option value="sadtalker">SadTalker (local)</option><option value="liveportrait">LivePortrait (local)</option><option value="latentsync">LatentSync (local)</option></select></label>
-        <label>Quality Mode<select id="ls-ls-quality"><option>Standard</option><option>High Fidelity</option><option>Real-Time Preview</option></select></label>
-        <label>Attach to Scene ID<input id="ls-ls-scene" type="text" placeholder="e.g. scene-001"></label>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn secondary" type="button" onclick="var log=JSON.parse(localStorage.getItem('ls_lipsync_log')||'[]');log.push({provider:document.getElementById('ls-ls-provider').value,quality:document.getElementById('ls-ls-quality').value,scene:document.getElementById('ls-ls-scene').value,savedAt:new Date().toISOString(),status:'queued'});localStorage.setItem('ls_lipsync_log',JSON.stringify(log));this.textContent='Saved';setTimeout(function(b){b.textContent='Save to Queue'}.bind(this),2000)">Save to Queue</button>
-        <button class="btn primary" type="button" id="ls-ls-attempt-btn">Attempt Generation</button>
-      </div>
-      <div id="ls-ls-result" style="margin-top:12px"></div>
+      <h3>Saved Entries</h3>
+      <div id="ls-lsp-tbl" style="margin-top:10px;overflow-x:auto"><p style="font-size:0.82rem;color:#888">No entries saved yet.</p></div>
     </div>
     <div class="ls-panel">
-      <div class="ls-integration-badge"><strong>Integration Required</strong> — Actual lip sync requires a local provider server running at localhost (MuseTalk, Wav2Lip, SadTalker, or LivePortrait). Queue and prompt data save locally without a provider.</div>
-      <div style="margin-top:10px;padding:8px 12px;background:rgba(156,156,255,.08);border:1px solid rgba(156,156,255,.2);border-radius:8px;font:300 12.5px Inter,system-ui,sans-serif;color:#9c93b5">Provider status: <strong style="color:#ff8b3d">Untested</strong> — MuseTalk / Wav2Lip / SadTalker / LivePortrait / LatentSync</div>
+      <div class="ls-integration-badge"><strong>Integration Required</strong> — Lip sync generation requires a local provider running at localhost (MuseTalk, Wav2Lip, SadTalker, LivePortrait, or LatentSync). Plans and notes save locally without a provider.</div>
     </div>
-    <div class="ls-related"><button class="ls-ws-tile" type="button" data-section="talking-photo" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M8 14s1 2 4 2 4-2 4-2"/></svg></span><span class="ls-ws-label">Talking Photo</span><span class="ls-ws-sub">Animate a portrait with voice sync.</span></button></div>
+    <div class="ls-related">
+      <button class="ls-ws-tile" type="button" data-section="voice-studio" data-ls-tile="1"><span class="ls-ws-icon cat-audio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></span><span class="ls-ws-label">Voice Studio</span><span class="ls-ws-sub">Generate dialogue audio for sync.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="character-studio" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="ls-ws-label">Character Studio</span><span class="ls-ws-sub">Source portrait and character data.</span></button>
+      <button class="ls-ws-tile" type="button" data-section="talking-photo" data-ls-tile="1"><span class="ls-ws-icon cat-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M8 14s1 2 4 2 4-2 4-2"/></svg></span><span class="ls-ws-label">Talking Photo</span><span class="ls-ws-sub">Animate a portrait with voice sync.</span></button>
+    </div>
   </div>
 </section>
+<script id="ls-lsp-v225">(function(){
+  var KEY="ls_lsp_entries";
+  var sec=document.getElementById("section-lipsync");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function msg(t,c){var e=document.getElementById("ls-lsp-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function renderTbl(){
+    var w=document.getElementById("ls-lsp-tbl");if(!w)return;
+    var es=get();
+    if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
+    var rows=es.map(function(e,i){
+      return '<tr style="border-bottom:1px solid #1e1e2e">'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.character+'</td>'
+        +'<td style="padding:5px 8px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.sourcePath+'">'+e.sourcePath+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+e.talkingPhotoMode+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsLspDel('+i+')">Del</button></td>'
+        +'</tr>';
+    }).join("");
+    w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
+      +'<thead><tr style="background:rgba(0,0,0,.3)">'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Character</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Source</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Talking Photo</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
+      +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+  window.lsLspDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
+  function addH(el,fn){if(!el||el._lsLsp)return;el._lsLsp=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsLspW)return;sec._lsLspW=true;
+    addH(document.getElementById("ls-lsp-save"),function(){
+      var e={sceneId:document.getElementById("ls-lsp-scene").value.trim(),character:document.getElementById("ls-lsp-char").value.trim(),sourcePath:document.getElementById("ls-lsp-img").value.trim(),audioPath:document.getElementById("ls-lsp-audio").value.trim(),mouthNotes:document.getElementById("ls-lsp-mouth").value.trim(),syncNotes:document.getElementById("ls-lsp-sync").value.trim(),talkingPhotoMode:document.getElementById("ls-lsp-tpmode").value,status:document.getElementById("ls-lsp-status").value,outputProof:document.getElementById("ls-lsp-proof").value.trim(),savedAt:new Date().toISOString()};
+      var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
+      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+    });
+    addH(document.getElementById("ls-lsp-export"),function(){
+      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="lipsync-log.json";a.click();
+    });
+    renderTbl();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 
 <section id="section-world-builder" class="section" data-title="World Builder">
   <div class="ls-frame">
