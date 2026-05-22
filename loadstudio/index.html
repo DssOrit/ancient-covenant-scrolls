@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v229 asset-prompt-continuity-package-pass — asset-registry, continuity-log wired, CE script added === */
+/* === LoadStudio v230 asset-registry-save-fix — debug bar added, key ls_asset_registry confirmed in ZIP/RESTORE/KEY_MAP === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -7699,6 +7699,7 @@ document.addEventListener('click',function(e){
     <div class="ls-bar" style="background:linear-gradient(90deg,#4caf50,#81c784)"></div>
     <div class="ls-h"><h2>Asset Registry</h2><span class="ls-dept" style="color:#4caf50;background:rgba(76,175,80,.10);border:1px solid rgba(76,175,80,.3);padding:3px 9px;border-radius:6px;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase">Asset Tracking</span></div>
     <p class="ls-lead">Declare and track every production asset — images, audio, video, characters, props, and locations — with rights and licensing data.</p>
+    <div id="ar-status-bar" style="margin:0 0 10px;padding:7px 12px;background:rgba(76,175,80,.06);border:1px solid rgba(76,175,80,.2);border-radius:8px;font:400 12px Inter,system-ui,sans-serif;color:#81c784;display:none"></div>
 
     <!-- Add Asset Form -->
     <div class="ls-panel" id="ar-form-panel">
@@ -7900,6 +7901,7 @@ document.addEventListener('click',function(e){
     if(!tbody)return;
     var countEl=document.getElementById('ar-count');
     if(countEl)countEl.textContent=list.length+' of '+data.assets.length+' asset'+(data.assets.length===1?'':'s');
+    var arBar=document.getElementById('ar-status-bar');if(arBar){arBar.style.display='';arBar.textContent='Key: ls_asset_registry — '+data.assets.length+' asset'+(data.assets.length===1?'':'s')+' — Last saved: '+(data.updatedAt?data.updatedAt.slice(0,19).replace('T',' '):'never');}
     if(!list.length){
       tbody.innerHTML='<tr id="ar-empty-row"><td colspan="7" style="padding:24px 12px;text-align:center;color:#5a5a78;font:400 13px Inter,system-ui,sans-serif">'+(data.assets.length?'No assets match filters.':'No assets registered yet. Add an asset above.')+'</td></tr>';
       return;
