@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v232 asset-registry-hard-diagnostic — full save/read instrumentation, testExport button, CE report detail === */
+/* === LoadStudio v233 asset-registry-save-fix — full script rewrite ls-ar-v233, addEventListener wiring, plain-array storage, immediate diagnostic === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -7350,7 +7350,7 @@ document.addEventListener('click',function(e){
           var _arRaw=localStorage.getItem(f.key||'');
           var _arLen=_arRaw?_arRaw.length:0;
           var _arCnt=0;var _arErr='';
-          try{var _arP=JSON.parse(_arRaw||'{}');_arCnt=Array.isArray(_arP.assets)?_arP.assets.length:0;}catch(e){_arErr=e.message||'parse error';}
+          try{var _arP=JSON.parse(_arRaw||'{}');_arCnt=Array.isArray(_arP)?_arP.length:(Array.isArray(_arP&&_arP.assets)?_arP.assets.length:0);}catch(e){_arErr=e.message||'parse error';}
           var _arPass=_arRaw&&_arRaw!=='[]'&&_arRaw!=='{}';
           st='<span style="color:'+(_arPass?'#66bb6a':'#888')+'">'+(_arPass?'Included':'Empty')+'</span>'
             +'<br><small style="font:400 10px monospace;color:#777">key:ls_asset_registry raw:'+_arLen+'B cnt:'+_arCnt+(_arErr?' err:'+_arErr:'')+'</small>';
@@ -7789,7 +7789,7 @@ document.addEventListener('click',function(e){
           <textarea id="ar-notes" rows="2" placeholder="Any additional notes about this asset..." style="padding:9px 11px;background:#0c0518;border:1px solid rgba(76,175,80,.3);border-radius:8px;color:#fff;font:400 13px Inter,system-ui,sans-serif;width:100%;box-sizing:border-box;resize:vertical"></textarea>
         </div>
         <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
-          <button id="ar-save-btn" type="button" class="btn primary" onclick="window.lsAR&&window.lsAR.save()">Save Asset</button>
+          <button id="ar-save-btn" type="button" class="btn primary">Save Asset</button>
           <button type="button" class="btn secondary" onclick="window.lsAR&&window.lsAR.clearForm()">Clear</button>
           <span id="ar-save-msg" style="font:400 12px Inter,system-ui,sans-serif;color:#4caf50;display:none"></span>
         </div>
@@ -7874,7 +7874,7 @@ document.addEventListener('click',function(e){
     <div class="ls-related"></div>
   </div>
 
-  <script id="ls-ar-v198">(function(){
+  <script id="ls-ar-v233">(function(){
   var KEY='ls_asset_registry';
   var EDIT_ID=null;
 
@@ -7884,13 +7884,17 @@ document.addEventListener('click',function(e){
   function load(){
     try{
       var raw=localStorage.getItem(KEY);
-      if(raw){var d=JSON.parse(raw);if(Array.isArray(d.assets))return d;}
+      if(!raw)return [];
+      var d=JSON.parse(raw);
+      if(Array.isArray(d))return d;
+      if(d&&Array.isArray(d.assets))return d.assets;
     }catch(_){}
-    return{assets:[],updatedAt:new Date().toISOString()};
+    return [];
   }
-  function save(data){
-    data.updatedAt=new Date().toISOString();
-    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(_){}
+
+  function saveArr(arr){
+    try{localStorage.setItem(KEY,JSON.stringify(arr));return '';}
+    catch(e){return e.message||String(e);}
   }
 
   function rightsColor(r){
@@ -7898,12 +7902,17 @@ document.addEventListener('click',function(e){
     return map[r]||'#7a6fa0';
   }
 
+  function updateDiag(msg,color){
+    var d=document.getElementById('ar-diag');
+    if(d){d.textContent=msg;d.style.color=color||'#81c784';}
+  }
+
   function render(){
-    var data=load();
+    var arr=load();
     var filterType=(document.getElementById('ar-filter-type')||{}).value||'';
     var filterRights=(document.getElementById('ar-filter-rights')||{}).value||'';
     var filterComm=(document.getElementById('ar-filter-commercial')||{}).value||'';
-    var list=data.assets.filter(function(a){
+    var list=arr.filter(function(a){
       if(filterType&&a.type!==filterType)return false;
       if(filterRights&&a.rightsStatus!==filterRights)return false;
       if(filterComm==='yes'&&!a.commercialSafe)return false;
@@ -7913,10 +7922,15 @@ document.addEventListener('click',function(e){
     var tbody=document.getElementById('ar-tbody');
     if(!tbody)return;
     var countEl=document.getElementById('ar-count');
-    if(countEl)countEl.textContent=list.length+' of '+data.assets.length+' asset'+(data.assets.length===1?'':'s');
-    var arBar=document.getElementById('ar-status-bar');if(arBar){var arRaw=localStorage.getItem('ls_asset_registry');var arSaved=arRaw?data.updatedAt.slice(0,19).replace('T',' '):'not saved yet';arBar.textContent='Key: ls_asset_registry — '+data.assets.length+' asset'+(data.assets.length===1?'':'s')+' — Last saved: '+arSaved;}
+    if(countEl)countEl.textContent=list.length+' of '+arr.length+' asset'+(arr.length===1?'':'s');
+    var arBar=document.getElementById('ar-status-bar');
+    if(arBar){
+      var arRaw=localStorage.getItem(KEY);
+      var saved=arRaw&&arRaw!=='[]';
+      arBar.textContent='Key: ls_asset_registry — '+arr.length+' asset'+(arr.length===1?'':'s')+(saved?' — saved':' — not saved yet');
+    }
     if(!list.length){
-      tbody.innerHTML='<tr id="ar-empty-row"><td colspan="7" style="padding:24px 12px;text-align:center;color:#5a5a78;font:400 13px Inter,system-ui,sans-serif">'+(data.assets.length?'No assets match filters.':'No assets registered yet. Add an asset above.')+'</td></tr>';
+      tbody.innerHTML='<tr id="ar-empty-row"><td colspan="7" style="padding:24px 12px;text-align:center;color:#5a5a78;font:400 13px Inter,system-ui,sans-serif">'+(arr.length?'No assets match filters.':'No assets registered yet. Add an asset above.')+'</td></tr>';
       return;
     }
     tbody.innerHTML=list.map(function(a){
@@ -7924,12 +7938,12 @@ document.addEventListener('click',function(e){
       var commBadge=a.commercialSafe===true?'<span style="color:#4caf50;font-size:11px">Yes</span>':a.commercialSafe===false?'<span style="color:#ff6b6b;font-size:11px">No</span>':'<span style="color:#7a6fa0;font-size:11px">-</span>';
       return'<tr style="border-bottom:1px solid rgba(255,255,255,.06)">'
         +'<td style="padding:9px 12px;max-width:160px"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff" title="'+esc(a.name)+'">'+esc(a.name)+'</span>'+(a.path?'<span style="display:block;font-size:10px;color:#5a5a78;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(a.path)+'">'+esc(a.path)+'</span>':'')+'<span style="display:inline-block;margin-top:2px;font-size:9px;background:rgba(76,175,80,.12);color:#4caf50;border-radius:4px;padding:1px 5px">Manual Entry</span></td>'
-        +'<td style="padding:9px 12px;white-space:nowrap"><span style="background:rgba(100,181,246,.1);color:#64b5f6;border:1px solid rgba(100,181,246,.25);border-radius:5px;padding:2px 7px;font-size:11px">'+esc(a.type)+'</span></td>'
+        +'<td style="padding:9px 12px;white-space:nowrap"><span style="background:rgba(100,181,246,.1);color:#64b5f6;border:1px solid rgba(100,181,246,.25);border-radius:5px;padding:2px 7px;font-size:11px">'+esc(a.type||'—')+'</span></td>'
         +'<td style="padding:9px 12px;white-space:nowrap"><span style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:2px 7px;font-size:11px;color:'+rc+'">'+esc(a.rightsStatus)+'</span></td>'
         +'<td style="padding:9px 12px;text-align:center">'+commBadge+'</td>'
         +'<td style="padding:9px 12px;color:#c0b8d9;font-size:11px">'+esc(a.scene||'-')+'</td>'
         +'<td style="padding:9px 12px;max-width:120px"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#9e9bba" title="'+esc(a.source||'')+'">'+esc(a.source||'-')+'</span></td>'
-        +'<td style="padding:9px 12px;white-space:nowrap"><button type="button" onclick="window.lsAR.editAsset(''+esc(a.id)+'')" style="background:none;border:1px solid rgba(155,155,186,.3);color:#9e9bba;border-radius:6px;padding:3px 9px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer;margin-right:4px">Edit</button><button type="button" onclick="window.lsAR.deleteAsset(''+esc(a.id)+'')" style="background:none;border:1px solid rgba(255,107,107,.3);color:#ff6b6b;border-radius:6px;padding:3px 9px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer">Del</button></td>'
+        +'<td style="padding:9px 12px;white-space:nowrap"><button type="button" onclick="window.lsAR.editAsset(\''+esc(a.id)+'\')" style="background:none;border:1px solid rgba(155,155,186,.3);color:#9e9bba;border-radius:6px;padding:3px 9px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer;margin-right:4px">Edit</button><button type="button" onclick="window.lsAR.deleteAsset(\''+esc(a.id)+'\')" style="background:none;border:1px solid rgba(255,107,107,.3);color:#ff6b6b;border-radius:6px;padding:3px 9px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer">Del</button></td>'
         +'</tr>';
     }).join('');
   }
@@ -7954,7 +7968,7 @@ document.addEventListener('click',function(e){
     sc('ar-commercial',a.commercialSafe);sc('ar-attribution',a.attributionRequired);
     var p=document.getElementById('ar-form-fields');if(p)p.style.display='';
     var t=document.getElementById('ar-form-toggle');if(t)t.textContent='Hide Form';
-    var b=document.getElementById('ar-save-btn');if(b)b.textContent='Update Asset';
+    var btn=document.getElementById('ar-save-btn');if(btn)btn.textContent='Update Asset';
   }
 
   function clearForm(){
@@ -7963,7 +7977,7 @@ document.addEventListener('click',function(e){
     var r=document.getElementById('ar-rights');if(r)r.value='Unknown';
     var c=document.getElementById('ar-commercial');if(c)c.checked=false;
     var a=document.getElementById('ar-attribution');if(a)a.checked=false;
-    var b=document.getElementById('ar-save-btn');if(b)b.textContent='Save Asset';
+    var btn=document.getElementById('ar-save-btn');if(btn)btn.textContent='Save Asset';
     var m=document.getElementById('ar-save-msg');if(m)m.style.display='none';
     EDIT_ID=null;
   }
@@ -7975,91 +7989,109 @@ document.addEventListener('click',function(e){
     setTimeout(function(){m.style.display='none';},2500);
   }
 
+  function doSave(e){
+    if(e&&e.type==='touchend'){e.preventDefault();e.stopPropagation();}
+    updateDiag('Save Asset tapped — reading form...','#ffa726');
+    var f=getForm();
+    if(!f.name){
+      updateDiag('Error: Asset Name is required.','#ff6b6b');
+      showMsg('Asset Name is required.','#ff6b6b');
+      return;
+    }
+    var arr=load();
+    if(EDIT_ID){
+      var idx=-1;for(var i=0;i<arr.length;i++){if(arr[i].id===EDIT_ID){idx=i;break;}}
+      if(idx>=0)Object.assign(arr[idx],f,{entryType:'Manual Entry'});
+      EDIT_ID=null;
+    }else{
+      arr.push(Object.assign({id:uid(),addedAt:new Date().toISOString(),entryType:'Manual Entry'},f));
+    }
+    var errMsg=saveArr(arr);
+    var raw=localStorage.getItem(KEY);
+    var len=raw?raw.length:0;
+    var cnt=0;try{var parsed=JSON.parse(raw||'[]');cnt=Array.isArray(parsed)?parsed.length:0;}catch(_){}
+    updateDiag('SAVE\n'
+      +'  button clicked: yes\n'
+      +'  key written: '+KEY+'\n'
+      +'  localStorage error: '+(errMsg||'none')+'\n'
+      +'  raw length after write: '+len+' bytes\n'
+      +'  parsed asset count: '+cnt+'\n'
+      +'  timestamp: '+new Date().toISOString(),
+      errMsg?'#ff6b6b':'#4caf50');
+    clearForm();
+    render();
+    showMsg(errMsg?'Save error: '+errMsg:'Asset saved.',errMsg?'#ff6b6b':'#4caf50');
+  }
+
   window.lsAR={
     render:render,
     clearForm:clearForm,
-    save:function(){
-      var f=getForm();
-      if(!f.name){showMsg('Asset name is required.','#ff6b6b');return;}
-      var data=load();
-      if(EDIT_ID){
-        var idx=data.assets.findIndex(function(a){return a.id===EDIT_ID;});
-        if(idx>=0){Object.assign(data.assets[idx],f,{entryType:'Manual Entry'});}
-        EDIT_ID=null;
-      }else{
-        var asset=Object.assign({id:uid(),addedAt:new Date().toISOString(),entryType:'Manual Entry'},f);
-        data.assets.push(asset);
-      }
-      var _saveErr='';
-      try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){_saveErr=e.message||String(e);}
-      data.updatedAt=new Date().toISOString();
-      var _raw=localStorage.getItem(KEY);
-      var _len=_raw?_raw.length:0;
-      var _cnt=0;try{var _p=JSON.parse(_raw||'{}');_cnt=Array.isArray(_p.assets)?_p.assets.length:0;}catch(pe){}
-      var _diag=document.getElementById('ar-diag');
-      if(_diag){_diag.textContent='SAVE\n'
-        +'  button clicked: yes\n'
-        +'  key written: '+KEY+'\n'
-        +'  localStorage error: '+(_saveErr||'none')+'\n'
-        +'  raw length after write: '+_len+' bytes\n'
-        +'  parsed asset count: '+_cnt+'\n'
-        +'  timestamp: '+new Date().toISOString();}
-      clearForm();
-      render();
-      showMsg(_saveErr?'Save error: '+_saveErr:'Asset saved.',_saveErr?'#ff6b6b':'#4caf50');
-    },
+    save:function(e){doSave(e||{type:'click'});},
     editAsset:function(id){
       EDIT_ID=id;
-      var data=load();
-      var a=data.assets.find(function(x){return x.id===id;});
+      var arr=load();
+      var a=null;for(var i=0;i<arr.length;i++){if(arr[i].id===id){a=arr[i];break;}}
       if(a)fillForm(a);
     },
     deleteAsset:function(id){
-      var data=load();
-      data.assets=data.assets.filter(function(a){return a.id!==id;});
-      save(data);
+      var arr=load();
+      arr=arr.filter(function(a){return a.id!==id;});
+      saveArr(arr);
       render();
     },
     clearAll:function(){
       if(!confirm('Remove all assets from the registry?'))return;
-      save({assets:[]});
+      saveArr([]);
       render();
     },
     testExport:function(){
       var raw=localStorage.getItem(KEY);
       var len=raw?raw.length:0;
       var cnt=0;var err='';
-      try{var p=JSON.parse(raw||'{}');cnt=Array.isArray(p.assets)?p.assets.length:0;}catch(e){err=e.message||String(e);}
+      try{var p=JSON.parse(raw||'[]');cnt=Array.isArray(p)?p.length:(Array.isArray(p&&p.assets)?p.assets.length:0);}catch(e){err=e.message||String(e);}
       var pass=raw&&raw!=='[]'&&raw!=='{}';
       var status=err?'ERROR':pass?'Included':'Empty';
-      var diag=document.getElementById('ar-diag');
-      if(diag){diag.textContent='TEST EXPORT DETECTION\n'
+      updateDiag('TEST EXPORT DETECTION\n'
         +'  key: '+KEY+'\n'
         +'  raw value exists: '+(raw?'yes':'no')+'\n'
         +'  raw length: '+len+' bytes\n'
         +'  parsed asset count: '+cnt+'\n'
         +'  passes readKey check: '+(pass?'yes':'no')+'\n'
         +'  parse error: '+(err||'none')+'\n'
-        +'  STATUS -> '+status;
-        diag.style.color=status==='Included'?'#4caf50':status==='ERROR'?'#ff6b6b':'#ffa726';}
+        +'  STATUS -> '+status,
+        status==='Included'?'#4caf50':status==='ERROR'?'#ff6b6b':'#ffa726');
     },
     showExport:function(){
-      var data=load();
-      var declarations={assets:data.assets.map(function(a){return{id:a.id,name:a.name,type:a.type,path:a.path||null,source:a.source||null,creator:a.creator||null,license:a.license||null,commercialSafe:a.commercialSafe,attributionRequired:a.attributionRequired,rightsStatus:a.rightsStatus,scene:a.scene||null,notes:a.notes||null,entryType:a.entryType,addedAt:a.addedAt};})};
+      var arr=load();
       var pre=document.getElementById('ar-export-pre');
-      if(pre)pre.textContent=JSON.stringify(declarations,null,2);
+      if(pre)pre.textContent=JSON.stringify(arr,null,2);
       var panel=document.getElementById('ar-export-panel');
       if(panel)panel.style.display='';
     }
   };
 
-  // Init on section becoming active
+  function wire(){
+    var btn=document.getElementById('ar-save-btn');
+    if(btn&&!btn._v233){
+      btn._v233=true;
+      btn.removeAttribute('onclick');
+      btn.addEventListener('click',doSave);
+      btn.addEventListener('touchend',doSave);
+    }
+    ['ar-filter-type','ar-filter-rights','ar-filter-commercial'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&!el._v233){el._v233=true;el.addEventListener('change',render);}
+    });
+    render();
+  }
+
   var _sec=document.getElementById('section-asset-registry');
   if(_sec){
-    render();
-    var _obs=new MutationObserver(function(){if(_sec.classList.contains('active'))render();});
+    var _obs=new MutationObserver(function(){if(_sec.classList.contains('active'))wire();});
     _obs.observe(_sec,{attributes:true,attributeFilter:['class']});
+    wire();
   }
+  updateDiag('Diagnostic ready — save an asset or tap Test Export Detection.');
   })();</script>
 </section>
 <section id="section-pipeline-registry" class="section" data-title="Pipeline Registry">
