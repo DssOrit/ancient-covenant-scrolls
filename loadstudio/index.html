@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v225 ai-video-planning-batch — AI Image Director, Text-to-Video, Image-to-Video, Video Stylizer, Outpainting, Lip Sync === */
+/* === LoadStudio v226 ai-video-package-wiring — 6 planning keys wired to export, ZIP, restore, validator === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3493,9 +3493,12 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       {key:'ls_cinepwa_config',label:'CinePWA Config'},
       {key:'ls_eco_report',label:'Load Eco Report'},
       {key:'ls_talking_photo',label:'Talking Photo'},
-      {key:'ls_i2v_log',label:'Image to Video Log'},
-      {key:'ls_t2v_log',label:'Text to Video Log'},
-      {key:'ls_lipsync_log',label:'Lip Sync Log'}
+      {key:'ls_aid_entries',label:'AI Image Director'},
+      {key:'ls_t2v_entries',label:'Text-to-Video Plans'},
+      {key:'ls_i2v_entries',label:'Image-to-Video Plans'},
+      {key:'ls_vs_entries',label:'Video Stylizer Plans'},
+      {key:'ls_vop_entries',label:'Video Outpainting Plans'},
+      {key:'ls_lsp_entries',label:'Lip Sync Plans'}
     ];
     function hasData(val){
       if(val===null||val===undefined)return false;
@@ -7046,14 +7049,20 @@ document.addEventListener('click',function(e){
       {file:'looks.json',             key:'ls_ll_items',         label:'Look Lab'},
       {file:'voices.json',            key:'ls_voices_data',      label:'Voices'},
       {file:'provider-registry.json', key:'ls_pv_catalog',       label:'Provider Registry'},
-      {file:'pipeline-registry.json', key:'ls_plr_catalog',      label:'Pipeline Registry'}
+      {file:'pipeline-registry.json',      key:'ls_plr_catalog',   label:'Pipeline Registry'},
+      {file:'ai-image-director.json',     key:'ls_aid_entries',  label:'AI Image Director'},
+      {file:'text-to-video-log.json',     key:'ls_t2v_entries',  label:'Text-to-Video Plans'},
+      {file:'image-to-video-log.json',    key:'ls_i2v_entries',  label:'Image-to-Video Plans'},
+      {file:'video-stylizer-log.json',    key:'ls_vs_entries',   label:'Video Stylizer Plans'},
+      {file:'video-outpainting-log.json', key:'ls_vop_entries',  label:'Video Outpainting Plans'},
+      {file:'lipsync-log.json',           key:'ls_lsp_entries',  label:'Lip Sync Plans'}
     ];
     var ASSET_FOLDERS=['assets/images/.keep','assets/audio/.keep','assets/music/.keep','assets/sfx/.keep','assets/subtitles/.keep','assets/icons/.keep'];
 
     var _lastBlob=null;var _lastFilename='';
 
     function readKey(k){if(!k)return null;var v=localStorage.getItem(k);return(v&&v!=='[]'&&v!=='{}')?v:null;}
-    function buildProjectJson(){return JSON.stringify({format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v224'},null,2);}
+    function buildProjectJson(){return JSON.stringify({format:'loadstudio-project',version:'1.0',saved:new Date().toISOString(),generator:'LoadStudio v226'},null,2);}
     function formatBytes(n){if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(2)+' MB';}
     function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
@@ -7229,7 +7238,13 @@ document.addEventListener('click',function(e){
       'wardrobe.json':         'ls_wardrobe_data',
       'props.json':            'ls_props_data',
       'voices.json':           'ls_voices_data',
-      'characters.json':       'ls_characters_data'
+      'characters.json':          'ls_characters_data',
+      'ai-image-director.json':     'ls_aid_entries',
+      'text-to-video-log.json':     'ls_t2v_entries',
+      'image-to-video-log.json':    'ls_i2v_entries',
+      'video-stylizer-log.json':    'ls_vs_entries',
+      'video-outpainting-log.json': 'ls_vop_entries',
+      'lipsync-log.json':           'ls_lsp_entries'
     };
 
     /* ── Required files for completeness check ── */
@@ -8447,6 +8462,14 @@ document.addEventListener('click',function(e){
       'wardrobe.json','props.json','locations.json','looks.json',
       'voices.json','provider-registry.json','pipeline-registry.json'
     ];
+    var PLANNING_FILES=[
+      {file:'ai-image-director.json',     label:'AI Image Director',       key:'ls_aid_entries'},
+      {file:'text-to-video-log.json',     label:'Text-to-Video Plans',     key:'ls_t2v_entries'},
+      {file:'image-to-video-log.json',    label:'Image-to-Video Plans',    key:'ls_i2v_entries'},
+      {file:'video-stylizer-log.json',    label:'Video Stylizer Plans',    key:'ls_vs_entries'},
+      {file:'video-outpainting-log.json', label:'Video Outpainting Plans', key:'ls_vop_entries'},
+      {file:'lipsync-log.json',           label:'Lip Sync Plans',          key:'ls_lsp_entries'}
+    ];
     function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
     function inspect(){
       var tb=document.getElementById('ls-pkv2-tbody');
@@ -8455,16 +8478,31 @@ document.addEventListener('click',function(e){
       if(!tb)return;
       if(!files){tb.innerHTML='<tr><td colspan="3" class="ls-empty">No package imported yet. Use CinePWA Package Builder to import first.</td></tr>';return;}
       var warnings=[];
-      tb.innerHTML=REQUIRED_FILES.map(function(f){
+      var reqRows=REQUIRED_FILES.map(function(f){
         var val=files[f];
         var present=val!==undefined;
         var hasData=present&&val!==''&&val!=='[]'&&val!=='{}';
         var status;
         if(hasData)status='<span style="color:#66bb6a">Included</span>';
-        else if(present)status='<span style="color:#888">Placeholder Only</span>';
+        else if(present)status='<span style="color:#888">Empty</span>';
         else{status='<span style="color:#ef5350">Missing</span>';warnings.push(f);}
         return'<tr><td><code>'+esc(f)+'</code></td><td>'+(present?'Yes':'No')+'</td><td>'+status+'</td></tr>';
       }).join('');
+      var planSep='<tr><td colspan="3" style="padding:8px;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#9c9cff;border-top:1px solid #2a2a3e">Planning Data</td></tr>';
+      var planRows=PLANNING_FILES.map(function(p){
+        var val=files?files[p.file]:undefined;
+        var present=val!==undefined;
+        var hasData=present&&val!==''&&val!=='[]'&&val!=='{}';
+        var lsVal=localStorage.getItem(p.key);
+        var localHasData=lsVal&&lsVal!=='[]'&&lsVal!=='{}';
+        var status;
+        if(hasData)status='<span style="color:#66bb6a">Included</span>';
+        else if(present)status='<span style="color:#888">Empty</span>';
+        else if(localHasData)status='<span style="color:#ffa726">Not in Package</span>';
+        else status='<span style="color:#9c9cff">Not Yet Built</span>';
+        return'<tr><td><code>'+esc(p.file)+'</code></td><td>'+(present?'Yes':'No')+'</td><td>'+status+'</td></tr>';
+      }).join('');
+      tb.innerHTML=reqRows+planSep+planRows;
       var allFiles=Object.keys(files);
       var extraFiles=allFiles.filter(function(f){return f!=='.keep'&&REQUIRED_FILES.indexOf(f)<0&&!f.endsWith('/.keep')&&!f.endsWith('/.keep');});
       if(warnEl){
