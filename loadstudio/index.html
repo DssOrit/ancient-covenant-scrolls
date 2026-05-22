@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v228 character-rights-completion — Character Studio built, rights.json wired, characters.json wired === */
+/* === LoadStudio v229 asset-prompt-continuity-package-pass — asset-registry, continuity-log wired, CE script added === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3594,7 +3594,9 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       {key:'ls_lsp_entries',label:'Lip Sync Plans'},
       {key:'ls_characters_data',label:'Character Profiles'},
       {key:'ls_rights',label:'Rights Profile'},
-      {key:'ls_rc_assets',label:'Rights Asset Declarations'}
+      {key:'ls_rc_assets',label:'Rights Asset Declarations'},
+      {key:'ls_asset_registry',label:'Asset Registry'},
+      {key:'ls_continuity_log',label:'Continuity Log'}
     ];
     function hasData(val){
       if(val===null||val===undefined)return false;
@@ -5335,6 +5337,80 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     </div></div>
   </div>
 </section>
+
+<script id="ls-ce-v229">(function(){
+  var KEY="ls_continuity_log";
+  var sec=document.getElementById("section-continuity-engine");
+  if(!sec)return;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
+  function save(arr){localStorage.setItem(KEY,JSON.stringify(arr));}
+  function avgScore(t){var s=[t.face,t.skin,t.body,t.hair,t.wardrobe,t.era,t.style].filter(function(v){return v>0;});return s.length?Math.round(s.reduce(function(a,b){return a+b;},0)/s.length*10)/10:null;}
+  function renderLog(){
+    var arr=get();
+    var log=document.getElementById("ls-ce-log");
+    var appr=document.getElementById("ls-ce-approved-log");
+    var rej=document.getElementById("ls-ce-rejected-log");
+    var neg=document.getElementById("ls-ce-neg-additions");
+    var avg=document.getElementById("ls-ce-avg-score");
+    if(!arr.length){
+      if(log)log.innerHTML='<p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No takes logged yet.</p>';
+      if(appr)appr.innerHTML='<p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No approved takes yet.</p>';
+      if(rej)rej.innerHTML='<p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No rejected takes yet.</p>';
+      if(neg)neg.value="";
+      if(avg)avg.textContent="--";
+      return;
+    }
+    var scores=[];
+    var makeRow=function(t){
+      var a=avgScore(t);
+      if(a!==null)scores.push(a);
+      var rc=t.result==="Approved"?"#5ee0a5":t.result==="Rejected"?"#ff6e9c":"#ffa726";
+      return'<div style="padding:8px 10px;margin-bottom:6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;font:400 12.5px Inter,system-ui,sans-serif">'
+        +'<span style="color:'+rc+'">'+t.result+'</span> &mdash; '+t.charId+' / '+t.sceneId
+        +(a!==null?' &mdash; avg <strong>'+a+'</strong>':"")+(t.reason?' &mdash; '+t.reason.slice(0,60):"")+"</div>";
+    };
+    if(log)log.innerHTML=arr.map(makeRow).join("");
+    if(appr)appr.innerHTML=arr.filter(function(t){return t.result==="Approved";}).map(makeRow).join("")||'<p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No approved takes yet.</p>';
+    if(rej)rej.innerHTML=arr.filter(function(t){return t.result==="Rejected";}).map(makeRow).join("")||'<p style="color:#9c93b5;font:300 13px Inter,system-ui,sans-serif">No rejected takes yet.</p>';
+    if(neg)neg.value=arr.filter(function(t){return t.result==="Rejected"&&t.dnr;}).map(function(t){return t.dnr;}).join(", ");
+    if(avg&&scores.length){var a=Math.round(scores.reduce(function(a,b){return a+b;},0)/scores.length*10)/10;avg.textContent=a;avg.style.color=a>=4?"#5ee0a5":a>=3?"#ffa726":"#ff6e9c";}
+  }
+  function g(id){return document.getElementById(id);}
+  function getNum(id){var v=parseInt(g(id)&&g(id).value||"0",10);return(v>=1&&v<=5)?v:0;}
+  function addH(el,fn){if(!el||el._lsCe)return;el._lsCe=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+  function wire(){
+    if(sec._lsCeW)return;sec._lsCeW=true;
+    addH(g("ls-ce-save-btn"),function(){
+      var charId=(g("ls-ce-char-id")&&g("ls-ce-char-id").value.trim())||"";
+      if(!charId){alert("Character ID is required.");return;}
+      var t={charId:charId,sceneId:(g("ls-ce-scene-id")&&g("ls-ce-scene-id").value.trim())||"",result:g("ls-ce-result")?g("ls-ce-result").value:"Approved",provider:(g("ls-ce-provider")&&g("ls-ce-provider").value.trim())||"",asset:(g("ls-ce-asset")&&g("ls-ce-asset").value.trim())||"",face:getNum("ls-ce-s-face"),skin:getNum("ls-ce-s-skin"),body:getNum("ls-ce-s-body"),hair:getNum("ls-ce-s-hair"),wardrobe:getNum("ls-ce-s-ward"),era:getNum("ls-ce-s-era"),style:getNum("ls-ce-s-style"),reason:(g("ls-ce-reason")&&g("ls-ce-reason").value.trim())||"",dnr:(g("ls-ce-dnr")&&g("ls-ce-dnr").value.trim())||"",savedAt:new Date().toISOString()};
+      var arr=get();arr.push(t);save(arr);
+      renderLog();
+    });
+    addH(g("ls-ce-save-report-btn"),function(){
+      var arr=get();var report={takes:arr,savedAt:new Date().toISOString(),totalTakes:arr.length,approved:arr.filter(function(t){return t.result==="Approved";}).length,rejected:arr.filter(function(t){return t.result==="Rejected";}).length};
+      save(arr);
+      var btn=g("ls-ce-save-report-btn");if(btn){var prev=btn.textContent;btn.textContent="Saved";setTimeout(function(){btn.textContent=prev;},2000);}
+    });
+    addH(g("ls-ce-export-btn"),function(){
+      var arr=get();var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify({takes:arr,exportedAt:new Date().toISOString()},null,2));a.download="continuity-report.json";a.click();
+    });
+    addH(g("ls-ce-export-approved-btn"),function(){
+      var arr=get().filter(function(t){return t.result==="Approved";});var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(arr,null,2));a.download="approved-takes.json";a.click();
+    });
+    addH(g("ls-ce-export-rejected-btn"),function(){
+      var arr=get().filter(function(t){return t.result==="Rejected";});var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(arr,null,2));a.download="rejected-takes.json";a.click();
+    });
+    addH(g("ls-ce-clear-btn"),function(){
+      if(!confirm("Clear all continuity log entries?"))return;
+      save([]);renderLog();
+    });
+    renderLog();
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
+  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
+  if(sec.classList.contains("active"))wire();
+}());</script>
 <section id="section-reference-pack" class="section" data-title="Reference Pack Builder">
   <div class="ls-frame">
     <div class="ls-bar"></div>
@@ -7136,9 +7212,9 @@ document.addEventListener('click',function(e){
       {file:'characters.json',        key:'ls_characters_data',   label:'Characters'},
       {file:'rights.json',            key:'ls_rights',            label:'Rights'},
       {file:'credits.json',           key:'ls_credits',          label:'Credits'},
-      {file:'asset-registry.json',    key:'ls_asset_declarations',label:'Asset Declarations'},
+      {file:'asset-registry.json',    key:'ls_asset_registry',    label:'Asset Registry'},
       {file:'prompt-log.json',        key:'ls_prompt_log',       label:'Prompt Log'},
-      {file:'continuity-report.json', key:'ls_generation_report',label:'Generation Report'},
+      {file:'continuity-report.json', key:'ls_continuity_log',    label:'Continuity Log'},
       {file:'wardrobe.json',          key:'ls_wd_items',         label:'Wardrobe'},
       {file:'wardrobe-assignments.json',key:'ls_wd_assignments', label:'Wardrobe Assignments'},
       {file:'props.json',             key:'ls_pr_items',         label:'Props'},
@@ -7334,9 +7410,9 @@ document.addEventListener('click',function(e){
     var RESTORE_MAP={
       'scenes.json':           'ls_sw_scenes',
       'credits.json':          'ls_credits',
-      'asset-registry.json':   'ls_asset_declarations',
+      'asset-registry.json':   'ls_asset_registry',
       'prompt-log.json':       'ls_prompt_log',
-      'continuity-report.json':'ls_generation_report',
+      'continuity-report.json':'ls_continuity_log',
       'locations.json':        'ls_loc_items',
       'looks.json':            'ls_ll_items',
       'provider-registry.json':'ls_pv_catalog',
