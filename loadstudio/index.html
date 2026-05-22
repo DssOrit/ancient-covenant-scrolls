@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v231 asset-registry-type-fix — type no longer required to save, debug bar always visible === */
+/* === LoadStudio v232 asset-registry-hard-diagnostic — full save/read instrumentation, testExport button, CE report detail === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -7345,7 +7345,18 @@ document.addEventListener('click',function(e){
       tb.innerHTML=ZIP_FILES.map(function(f){
         var has=f.key?readKey(f.key)!==null:false;
         if(has)inc++;else miss++;
-        var st=f.key?(has?'<span style="color:#66bb6a">Included</span>':'<span style="color:#888">Empty</span>'):'<span style="color:#ffa726">Not yet built</span>';
+        var st;
+        if(f.file==='asset-registry.json'){
+          var _arRaw=localStorage.getItem(f.key||'');
+          var _arLen=_arRaw?_arRaw.length:0;
+          var _arCnt=0;var _arErr='';
+          try{var _arP=JSON.parse(_arRaw||'{}');_arCnt=Array.isArray(_arP.assets)?_arP.assets.length:0;}catch(e){_arErr=e.message||'parse error';}
+          var _arPass=_arRaw&&_arRaw!=='[]'&&_arRaw!=='{}';
+          st='<span style="color:'+(_arPass?'#66bb6a':'#888')+'">'+(_arPass?'Included':'Empty')+'</span>'
+            +'<br><small style="font:400 10px monospace;color:#777">key:ls_asset_registry raw:'+_arLen+'B cnt:'+_arCnt+(_arErr?' err:'+_arErr:'')+'</small>';
+        }else{
+          st=f.key?(has?'<span style="color:#66bb6a">Included</span>':'<span style="color:#888">Empty</span>'):'<span style="color:#ffa726">Not yet built</span>';
+        }
         return'<tr><td><code>'+esc(f.file)+'</code></td><td><code>'+(f.key||'—')+'</code></td><td>'+st+'</td></tr>';
       }).join('');
       if(sum)sum.textContent=inc+' files with data, '+miss+' empty or not yet built.';
@@ -7853,8 +7864,10 @@ document.addEventListener('click',function(e){
       <pre id="ar-export-pre" style="background:#0c0518;border:1px solid rgba(76,175,80,.2);border-radius:8px;padding:12px;color:#81c784;font:400 11px monospace;overflow-x:auto;max-height:300px;white-space:pre-wrap;word-break:break-all"></pre>
     </div>
 
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+    <div id="ar-diag" style="margin:10px 0;padding:9px 12px;background:#0c0518;border:1px solid rgba(76,175,80,.4);border-radius:8px;font:400 11px monospace;color:#81c784;white-space:pre-wrap;line-height:1.6">Diagnostic ready — save an asset or tap Test Export Detection.</div>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
       <button type="button" class="btn secondary" style="font-size:12px" onclick="window.lsAR&&window.lsAR.showExport()">Preview Export JSON</button>
+      <button type="button" class="btn secondary" style="font-size:12px;color:#4caf50;border-color:rgba(76,175,80,.4)" onclick="window.lsAR&&window.lsAR.testExport()">Test Export Detection</button>
       <button type="button" class="btn secondary" style="font-size:12px;color:#ff6b6b;border-color:rgba(255,107,107,.4)" onclick="window.lsAR&&window.lsAR.clearAll()">Clear All Assets</button>
     </div>
 
@@ -7977,10 +7990,23 @@ document.addEventListener('click',function(e){
         var asset=Object.assign({id:uid(),addedAt:new Date().toISOString(),entryType:'Manual Entry'},f);
         data.assets.push(asset);
       }
-      save(data);
+      var _saveErr='';
+      try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){_saveErr=e.message||String(e);}
+      data.updatedAt=new Date().toISOString();
+      var _raw=localStorage.getItem(KEY);
+      var _len=_raw?_raw.length:0;
+      var _cnt=0;try{var _p=JSON.parse(_raw||'{}');_cnt=Array.isArray(_p.assets)?_p.assets.length:0;}catch(pe){}
+      var _diag=document.getElementById('ar-diag');
+      if(_diag){_diag.textContent='SAVE\n'
+        +'  button clicked: yes\n'
+        +'  key written: '+KEY+'\n'
+        +'  localStorage error: '+(_saveErr||'none')+'\n'
+        +'  raw length after write: '+_len+' bytes\n'
+        +'  parsed asset count: '+_cnt+'\n'
+        +'  timestamp: '+new Date().toISOString();}
       clearForm();
       render();
-      showMsg('Asset saved.','#4caf50');
+      showMsg(_saveErr?'Save error: '+_saveErr:'Asset saved.',_saveErr?'#ff6b6b':'#4caf50');
     },
     editAsset:function(id){
       EDIT_ID=id;
@@ -7998,6 +8024,24 @@ document.addEventListener('click',function(e){
       if(!confirm('Remove all assets from the registry?'))return;
       save({assets:[]});
       render();
+    },
+    testExport:function(){
+      var raw=localStorage.getItem(KEY);
+      var len=raw?raw.length:0;
+      var cnt=0;var err='';
+      try{var p=JSON.parse(raw||'{}');cnt=Array.isArray(p.assets)?p.assets.length:0;}catch(e){err=e.message||String(e);}
+      var pass=raw&&raw!=='[]'&&raw!=='{}';
+      var status=err?'ERROR':pass?'Included':'Empty';
+      var diag=document.getElementById('ar-diag');
+      if(diag){diag.textContent='TEST EXPORT DETECTION\n'
+        +'  key: '+KEY+'\n'
+        +'  raw value exists: '+(raw?'yes':'no')+'\n'
+        +'  raw length: '+len+' bytes\n'
+        +'  parsed asset count: '+cnt+'\n'
+        +'  passes readKey check: '+(pass?'yes':'no')+'\n'
+        +'  parse error: '+(err||'none')+'\n'
+        +'  STATUS -> '+status;
+        diag.style.color=status==='Included'?'#4caf50':status==='ERROR'?'#ff6b6b':'#ffa726';}
     },
     showExport:function(){
       var data=load();
