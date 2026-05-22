@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v226 ai-video-package-wiring — 6 planning keys wired to export, ZIP, restore, validator === */
+/* === LoadStudio v227 package-key-alignment — real room keys wired, phantom keys removed, ZIP/restore corrected === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -3489,10 +3489,15 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       {key:'ls_provider_test_results',label:'Provider Test Results'},
       {key:'ls_scene_prompts',label:'Scene Prompts'},
       {key:'ls_world_data',label:'World Builder Data'},
-      {key:'ls_local_engine',label:'Local Engine Config'},
-      {key:'ls_cinepwa_config',label:'CinePWA Config'},
-      {key:'ls_eco_report',label:'Load Eco Report'},
       {key:'ls_talking_photo',label:'Talking Photo'},
+      {key:'ls_wd_items',label:'Wardrobe Items'},
+      {key:'ls_wd_assignments',label:'Wardrobe Assignments'},
+      {key:'ls_pr_items',label:'Props Items'},
+      {key:'ls_pr_assignments',label:'Props Assignments'},
+      {key:'ls_vs_profiles',label:'Voice Profiles'},
+      {key:'ls_voice_dialogue',label:'Voice Dialogue'},
+      {key:'ls_cs_takes',label:'Character Stability Takes'},
+      {key:'ls_cs_refs',label:'Character Stability Refs'},
       {key:'ls_aid_entries',label:'AI Image Director'},
       {key:'ls_t2v_entries',label:'Text-to-Video Plans'},
       {key:'ls_i2v_entries',label:'Image-to-Video Plans'},
@@ -7037,19 +7042,30 @@ document.addEventListener('click',function(e){
     var ZIP_FILES=[
       {file:'project.json',           key:null,                  label:'Project Metadata'},
       {file:'scenes.json',            key:'ls_sw_scenes',        label:'Scene Workshop'},
-      {file:'characters.json',        key:'ls_characters_data',  label:'Characters'},
-      {file:'rights.json',            key:'ls_rights_data',      label:'Rights'},
+      {file:'characters.json',        key:null,                   label:'Characters (not yet built)'},
+      {file:'rights.json',            key:null,                   label:'Rights (not yet built)'},
       {file:'credits.json',           key:'ls_credits',          label:'Credits'},
       {file:'asset-registry.json',    key:'ls_asset_declarations',label:'Asset Declarations'},
       {file:'prompt-log.json',        key:'ls_prompt_log',       label:'Prompt Log'},
       {file:'continuity-report.json', key:'ls_generation_report',label:'Generation Report'},
-      {file:'wardrobe.json',          key:'ls_wardrobe_data',    label:'Wardrobe'},
-      {file:'props.json',             key:'ls_props_data',       label:'Props'},
+      {file:'wardrobe.json',          key:'ls_wd_items',         label:'Wardrobe'},
+      {file:'wardrobe-assignments.json',key:'ls_wd_assignments', label:'Wardrobe Assignments'},
+      {file:'props.json',             key:'ls_pr_items',         label:'Props'},
+      {file:'props-assignments.json',  key:'ls_pr_assignments',  label:'Props Assignments'},
       {file:'locations.json',         key:'ls_loc_items',        label:'Locations'},
       {file:'looks.json',             key:'ls_ll_items',         label:'Look Lab'},
-      {file:'voices.json',            key:'ls_voices_data',      label:'Voices'},
+      {file:'voices.json',            key:'ls_vs_profiles',      label:'Voice Profiles'},
+      {file:'voice-dialogue.json',     key:'ls_voice_dialogue',  label:'Voice Dialogue'},
       {file:'provider-registry.json', key:'ls_pv_catalog',       label:'Provider Registry'},
       {file:'pipeline-registry.json',      key:'ls_plr_catalog',   label:'Pipeline Registry'},
+      {file:'casting-profiles.json',      key:'ls_cd_profiles',    label:'Casting Profiles'},
+      {file:'casting-assignments.json',   key:'ls_cd_assignments', label:'Casting Assignments'},
+      {file:'sound-stage-sessions.json',  key:'ls_sg_sessions',    label:'Sound Stage Sessions'},
+      {file:'sound-stage-assignments.json',key:'ls_sg_assignments',label:'Sound Stage Assignments'},
+      {file:'music-cues.json',            key:'ls_ms_cues',        label:'Music + SFX Cues'},
+      {file:'music-assignments.json',     key:'ls_ms_assignments', label:'Music + SFX Assignments'},
+      {file:'character-stability-takes.json',key:'ls_cs_takes',   label:'Character Stability Takes'},
+      {file:'character-stability-refs.json', key:'ls_cs_refs',    label:'Character Stability Refs'},
       {file:'ai-image-director.json',     key:'ls_aid_entries',  label:'AI Image Director'},
       {file:'text-to-video-log.json',     key:'ls_t2v_entries',  label:'Text-to-Video Plans'},
       {file:'image-to-video-log.json',    key:'ls_i2v_entries',  label:'Image-to-Video Plans'},
@@ -7234,17 +7250,26 @@ document.addEventListener('click',function(e){
       'looks.json':            'ls_ll_items',
       'provider-registry.json':'ls_pv_catalog',
       'pipeline-registry.json':'ls_plr_catalog',
-      'rights.json':           'ls_rights_data',
-      'wardrobe.json':         'ls_wardrobe_data',
-      'props.json':            'ls_props_data',
-      'voices.json':           'ls_voices_data',
-      'characters.json':          'ls_characters_data',
+      'wardrobe.json':         'ls_wd_items',
+      'props.json':            'ls_pr_items',
+      'voices.json':           'ls_vs_profiles',
       'ai-image-director.json':     'ls_aid_entries',
       'text-to-video-log.json':     'ls_t2v_entries',
       'image-to-video-log.json':    'ls_i2v_entries',
       'video-stylizer-log.json':    'ls_vs_entries',
       'video-outpainting-log.json': 'ls_vop_entries',
-      'lipsync-log.json':           'ls_lsp_entries'
+      'lipsync-log.json':           'ls_lsp_entries',
+      'wardrobe-assignments.json':   'ls_wd_assignments',
+      'props-assignments.json':      'ls_pr_assignments',
+      'voice-dialogue.json':         'ls_voice_dialogue',
+      'casting-profiles.json':       'ls_cd_profiles',
+      'casting-assignments.json':    'ls_cd_assignments',
+      'sound-stage-sessions.json':   'ls_sg_sessions',
+      'sound-stage-assignments.json':'ls_sg_assignments',
+      'music-cues.json':             'ls_ms_cues',
+      'music-assignments.json':      'ls_ms_assignments',
+      'character-stability-takes.json':'ls_cs_takes',
+      'character-stability-refs.json': 'ls_cs_refs'
     };
 
     /* ── Required files for completeness check ── */
@@ -8468,7 +8493,18 @@ document.addEventListener('click',function(e){
       {file:'image-to-video-log.json',    label:'Image-to-Video Plans',    key:'ls_i2v_entries'},
       {file:'video-stylizer-log.json',    label:'Video Stylizer Plans',    key:'ls_vs_entries'},
       {file:'video-outpainting-log.json', label:'Video Outpainting Plans', key:'ls_vop_entries'},
-      {file:'lipsync-log.json',           label:'Lip Sync Plans',          key:'ls_lsp_entries'}
+      {file:'lipsync-log.json',           label:'Lip Sync Plans',          key:'ls_lsp_entries'},
+      {file:'wardrobe-assignments.json',   label:'Wardrobe Assignments',    key:'ls_wd_assignments'},
+      {file:'props-assignments.json',      label:'Props Assignments',       key:'ls_pr_assignments'},
+      {file:'voice-dialogue.json',         label:'Voice Dialogue',          key:'ls_voice_dialogue'},
+      {file:'casting-profiles.json',       label:'Casting Profiles',        key:'ls_cd_profiles'},
+      {file:'casting-assignments.json',    label:'Casting Assignments',     key:'ls_cd_assignments'},
+      {file:'sound-stage-sessions.json',   label:'Sound Stage Sessions',   key:'ls_sg_sessions'},
+      {file:'sound-stage-assignments.json',label:'Sound Stage Assignments',key:'ls_sg_assignments'},
+      {file:'music-cues.json',             label:'Music + SFX Cues',       key:'ls_ms_cues'},
+      {file:'music-assignments.json',      label:'Music + SFX Assignments',key:'ls_ms_assignments'},
+      {file:'character-stability-takes.json',label:'Character Stability Takes',key:'ls_cs_takes'},
+      {file:'character-stability-refs.json', label:'Character Stability Refs', key:'ls_cs_refs'}
     ];
     function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
     function inspect(){
