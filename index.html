@@ -55,7 +55,7 @@ body.dark #sb{background:#161616}
 /* MAIN */
 #main{margin-left:265px;margin-top:49px;margin-bottom:80px;padding:24px 40px 70px;max-width:860px;transition:margin .25s}
 #main.wide{margin-left:0}
-@media(max-width:680px){#main{margin-left:0;padding:14px 14px 70px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}}
+@media(max-width:1023px){#main{margin-left:0;padding:14px 14px 70px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}#bnav,#voice-bar{left:0}}
 #content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
 
 /* HIGHLIGHTS */
@@ -276,7 +276,7 @@ var FS=parseFloat(localStorage.getItem('acr_fs')||'10.5');
 var LH=parseFloat(localStorage.getItem('acr_lh')||'1.65');
 var DARK=localStorage.getItem('acr_dark')==='1';
 var SEPIA=localStorage.getItem('acr_sepia')==='1';
-var SB_OPEN=window.innerWidth>680;
+var SB_OPEN=window.innerWidth>=1024;
 var READING=false;
 var VOICES=[];
 var VIDX=parseInt(localStorage.getItem('acr_vi')||'0');
@@ -303,13 +303,15 @@ function start(){
   document.addEventListener('touchend',function(){setTimeout(onSel,120);});
   window.onscroll=onScroll;
   document.getElementById('notes-ta').addEventListener('input',saveNotes);
+  var ov=document.getElementById('sb-ov');
+  if(ov) ov.addEventListener('touchend',function(e){e.stopPropagation();toggleSB();},{passive:true});
 }
 
 
 // SECTION LOADING
 function loadSection(idx,restore){
   if(idx<0||idx>=NAVIDS.length) return;
-  if(window.innerWidth<1024 && window.innerWidth>680 && SB_OPEN) toggleSB();
+  if(window.innerWidth<1024 && document.getElementById('sb').classList.contains('mob')) toggleSB();
   CUR=idx;
   localStorage.setItem('acr_last',CUR);
   addRecent(CUR);
@@ -365,16 +367,18 @@ function buildSB(){
 }
 
 function toggleSB(){
-  if(window.innerWidth<=680){
-    document.getElementById('sb').classList.toggle('mob');
+  if(window.innerWidth<1024){
+    var sb=document.getElementById('sb');
+    sb.classList.toggle('mob');
+    var isOpen=sb.classList.contains('mob');
+    var ov=document.getElementById('sb-ov');
+    if(ov) ov.classList.toggle('on',isOpen);
   } else {
     SB_OPEN=!SB_OPEN;
     document.getElementById('sb').classList.toggle('hide',!SB_OPEN);
     document.getElementById('main').classList.toggle('wide',!SB_OPEN);
     document.getElementById('bnav').classList.toggle('wide',!SB_OPEN);
     document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN);
-    var ov=document.getElementById('sb-ov');
-    if(ov) ov.classList.toggle('on', SB_OPEN && window.innerWidth<1024);
   }
 }
 
