@@ -476,7 +476,7 @@ function renderBM(){
   p.innerHTML=bms.map(function(fid){
     var idx=NAVIDS.indexOf(fid);
     var lbl=idx>=0?LABELS[idx].split(' — ').slice(0,2).join(' — '):fid;
-    return '<span class="bp" onclick="loadSection('+idx+',true);document.getElementById('bm-panel').classList.remove('show')">'+lbl+'</span>';
+    return '<span class="bp" onclick="loadSection('+idx+',true);document.getElementById(\'bm-panel\').classList.remove(\'show\')">'+lbl+'</span>';
   }).join('');
 }
 
@@ -493,7 +493,7 @@ function toggleRecent(){
     var r=JSON.parse(localStorage.getItem('acr_rec')||'[]');
     p.innerHTML=r.length?r.map(function(idx){
       var lbl=LABELS[idx]?LABELS[idx].split(' — ').slice(0,2).join(' — '):'?';
-      return '<span class="rp" onclick="loadSection('+idx+',true);document.getElementById('recent-panel').classList.remove('show')">'+lbl+'</span>';
+      return '<span class="rp" onclick="loadSection('+idx+',true);document.getElementById(\'recent-panel\').classList.remove(\'show\')">'+lbl+'</span>';
     }).join(''):'<span style="color:#666;font-size:11px">No history yet</span>';
   }
 }
@@ -521,7 +521,7 @@ function toggleNotesViewer(){
     document.getElementById('nv-list').innerHTML=keys.length?keys.map(function(fid){
       var idx=NAVIDS.indexOf(fid);
       var lbl=idx>=0?LABELS[idx]:'Unknown';
-      return '<div class="nve" onclick="loadSection('+idx+',true);document.getElementById('notes-viewer').classList.remove('show')"><div class="nvt">'+lbl+'</div><div class="nvx">'+n[fid].substring(0,200)+(n[fid].length>200?'…':'')+'</div></div>';
+      return '<div class="nve" onclick="loadSection('+idx+',true);document.getElementById(\'notes-viewer\').classList.remove(\'show\')"><div class="nvt">'+lbl+'</div><div class="nvx">'+n[fid].substring(0,200)+(n[fid].length>200?'…':'')+'</div></div>';
     }).join(''):'<p style="color:#666;font-size:12px">No notes yet.</p>';
   }
 }
@@ -615,7 +615,7 @@ function buildVP(){
 }
 function pronounce(t){
   return t
-    .replace(/𐤉𐤄𐤅𐤄/g,'').replace(/[𐤀-𐤟]+/g,'')
+    .replace(/𐤉𐤄𐤅𐤄/gu,'').replace(/[𐤀-𐤟]+/gu,'')
     .replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah')
     .replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua')
     .replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn')
@@ -678,7 +678,7 @@ function updateVS(){
 
 // SERVICE WORKER
 if('serviceWorker' in navigator){
-    });
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
 </body>
