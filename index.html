@@ -616,7 +616,7 @@ function toggleVoice(){
   bar.classList.toggle('show');
   document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));
   bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);
-  document.getElementById('main').style.marginBottom=bar.classList.contains('show')?'95px':'49px';
+  document.getElementById('main').style.marginBottom=bar.classList.contains('show')?'95px':'';
 }
 function buildVP(){
   var mode=VMODE||'verses';
