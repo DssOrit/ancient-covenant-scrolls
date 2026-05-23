@@ -44,6 +44,8 @@ body.dark #nav{background:#111}
 #sb{position:fixed;top:49px;left:0;bottom:49px;width:265px;background:#1e1e1e;overflow-y:auto;z-index:900;transition:transform .25s}
 #sb.hide{transform:translateX(-265px)}
 body.dark #sb{background:#161616}
+#sb-ov{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:899;background:rgba(0,0,0,.35)}
+#sb-ov.on{display:block}
 .ts{padding:8px 12px 4px;color:#666;font-size:8px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #2a2a2a;margin-top:4px}
 .tv{padding:5px 12px 2px;color:#888;font-size:10.5px;font-weight:bold}
 .tf{padding:3px 12px 3px 22px;color:#666;font-size:10.5px;cursor:pointer;border-radius:2px}
@@ -51,9 +53,9 @@ body.dark #sb{background:#161616}
 .tf.cur{border-left:2px solid #666;padding-left:20px}
 
 /* MAIN */
-#main{margin-left:265px;margin-top:49px;margin-bottom:49px;padding:24px 40px 50px;max-width:860px;transition:margin .25s}
+#main{margin-left:265px;margin-top:49px;margin-bottom:80px;padding:24px 40px 70px;max-width:860px;transition:margin .25s}
 #main.wide{margin-left:0}
-@media(max-width:680px){#main{margin-left:0;padding:14px 14px 50px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}}
+@media(max-width:680px){#main{margin-left:0;padding:14px 14px 70px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}}
 #content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
 
 /* HIGHLIGHTS */
@@ -154,6 +156,7 @@ body.dark #bnav{background:#111}
 
 <!-- SIDEBAR -->
 <div id="sb"></div>
+<div id="sb-ov" onclick="toggleSB()"></div>
 
 <!-- MAIN -->
 <div id="main"><div id="content"><p style="padding:40px;color:#888;text-align:center">Loading…</p></div></div>
@@ -306,6 +309,7 @@ function start(){
 // SECTION LOADING
 function loadSection(idx,restore){
   if(idx<0||idx>=NAVIDS.length) return;
+  if(window.innerWidth<1024 && window.innerWidth>680 && SB_OPEN) toggleSB();
   CUR=idx;
   localStorage.setItem('acr_last',CUR);
   addRecent(CUR);
@@ -369,6 +373,8 @@ function toggleSB(){
     document.getElementById('main').classList.toggle('wide',!SB_OPEN);
     document.getElementById('bnav').classList.toggle('wide',!SB_OPEN);
     document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN);
+    var ov=document.getElementById('sb-ov');
+    if(ov) ov.classList.toggle('on', SB_OPEN && window.innerWidth<1024);
   }
 }
 
