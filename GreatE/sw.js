@@ -1,11 +1,8 @@
-const CACHE = 'great-eraser-v6';
+const CACHE = 'great-eraser-v7';
 const PRECACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon-180.png',
-  '/icon-192.png',
-  '/icon-512.png',
 ];
 
 self.addEventListener('install', e => {
