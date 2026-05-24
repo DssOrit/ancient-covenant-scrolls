@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12213a">
+<title>When Sharks Attack — L.A. Bond</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1208;--page:#faf6ee;--page-warm:#f5efe2;
+  --gold:#c8971f;--gold-deep:#9e6f0a;--gold-pale:#f0d98a;
+  --crimson:#8b1a1a;--navy:#12213a;--storm:#2c3e55;--mist:#8a9db5;
+  --rule:#d4b87a;--text-main:#22180a;--text-sub:#5a4a2e;--text-mute:#9a8868;
+  --sb-w:280px;--tb-h:52px;--bn-h:48px;--fs:17px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--navy);font-family:'Libre Baskerville',Georgia,serif;color:var(--text-main)}
+
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;z-index:9999;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
+#splash.gone{opacity:0;pointer-events:none}
+#splash img{width:min(340px,85vw);border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+#splash-sub{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.25em;color:var(--gold);margin-top:20px;text-transform:uppercase;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── TOOLBAR ── */
+#tb{position:fixed;top:0;left:0;right:0;height:var(--tb-h);z-index:200;
+  background:var(--navy);border-bottom:1px solid rgba(200,151,31,.28);
+  display:flex;align-items:center;gap:6px;padding:0 10px;
+  backdrop-filter:blur(8px)}
+#tb-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.16em;
+  color:var(--gold);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 6px}
+.tb-btn{background:none;border:none;color:rgba(200,151,31,.7);cursor:pointer;
+  padding:5px 7px;border-radius:4px;font-size:13px;transition:all .15s;white-space:nowrap}
+.tb-btn:hover{background:rgba(200,151,31,.12);color:var(--gold)}
+.tb-btn.on{color:var(--gold);background:rgba(200,151,31,.15)}
+#sq{background:rgba(255,255,255,.06);border:1px solid rgba(200,151,31,.25);
+  border-radius:4px;color:var(--gold-pale);padding:4px 8px;font-size:11px;
+  width:100px;font-family:'Source Sans 3',sans-serif;outline:none}
+#sq::placeholder{color:rgba(200,151,31,.35)}
+#sq:focus{border-color:var(--gold)}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:var(--tb-h);left:0;right:0;height:2px;
+  background:rgba(200,151,31,.12);z-index:199}
+#prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold-deep),var(--gold));transition:width .2s}
+
+/* ── SIDEBAR ── */
+#sb{position:fixed;top:var(--tb-h);left:0;bottom:var(--bn-h);width:var(--sb-w);
+  background:#0d1622;border-right:1px solid rgba(200,151,31,.15);
+  overflow-y:auto;z-index:180;transform:translateX(-100%);transition:transform .28s ease}
+#sb.open{transform:translateX(0)}
+.sb-section{padding:10px 14px 4px;font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:.2em;color:var(--gold);text-transform:uppercase;border-bottom:1px solid rgba(200,151,31,.1);margin-top:6px}
+.sb-item{padding:7px 14px 7px 20px;font-family:'Source Sans 3',sans-serif;font-size:12px;
+  color:rgba(200,151,31,.6);cursor:pointer;border-left:3px solid transparent;
+  transition:all .12s;line-height:1.4}
+.sb-item:hover{background:rgba(200,151,31,.06);color:var(--gold)}
+.sb-item.active{color:var(--gold);border-left-color:var(--gold);background:rgba(200,151,31,.08)}
+.sb-item .sb-num{font-size:9px;letter-spacing:.1em;margin-right:6px;opacity:.6}
+
+/* ── MAIN ── */
+#main{position:fixed;top:var(--tb-h);left:0;right:0;bottom:var(--bn-h);
+  overflow-y:auto;transition:left .28s ease}
+#main.sb-open{left:var(--sb-w)}
+@media(max-width:700px){#main.sb-open{left:0}}
+
+/* ── CONTENT WRAPPER ── */
+#content{max-width:780px;margin:0 auto;padding:0 16px 60px}
+
+/* ── CHAPTER OPENER ── */
+.ch-opener{background:var(--navy);min-height:280px;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:48px 40px 40px;position:relative;overflow:hidden}
+.ch-opener::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 20%,rgba(200,151,31,.08) 0%,transparent 60%),
+             radial-gradient(ellipse at 20% 80%,rgba(139,26,26,.12) 0%,transparent 50%)}
+.ch-opener::after{content:'';position:absolute;bottom:0;left:40px;right:40px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.ch-opener.author::before{background:radial-gradient(ellipse at 70% 30%,rgba(139,26,26,.15) 0%,transparent 60%),
+  radial-gradient(ellipse at 30% 70%,rgba(200,151,31,.06) 0%,transparent 50%)}
+.ch-opener.historical::before{background:radial-gradient(ellipse at 60% 40%,rgba(44,62,85,.4) 0%,transparent 60%),
+  radial-gradient(ellipse at 40% 60%,rgba(200,151,31,.05) 0%,transparent 50%)}
+.ch-opener.special::before{background:radial-gradient(ellipse at 50% 30%,rgba(139,26,26,.18) 0%,transparent 60%),
+  radial-gradient(ellipse at 60% 70%,rgba(200,151,31,.08) 0%,transparent 50%)}
+.ch-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:14px;position:relative}
+.ch-num::before{content:'';display:inline-block;width:24px;height:1px;
+  background:var(--gold);vertical-align:middle;margin-right:10px}
+.ch-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;
+  color:var(--mist);margin-bottom:8px;text-transform:uppercase}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,38px);font-weight:700;
+  line-height:1.1;color:#fff;margin-bottom:10px;position:relative}
+.ch-title em{color:var(--gold);font-style:normal}
+.ch-subtitle{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;
+  color:var(--mist);position:relative;line-height:1.5}
+
+/* ── PAGE BODY ── */
+.page-body{background:var(--page);padding:44px 40px;position:relative}
+.page-body::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")}
+
+/* ── TYPOGRAPHY ── */
+.body-text{font-family:'Libre Baskerville',Georgia,serif;font-size:var(--fs);
+  line-height:1.85;color:var(--text-main);margin-bottom:1.3em;position:relative}
+.body-text.author-voice{font-style:italic;color:var(--text-sub);
+  border-left:2px solid var(--gold);padding-left:18px}
+.body-text.drop-cap::first-letter{font-family:'Cinzel',serif;font-size:5em;font-weight:700;
+  float:left;line-height:.78;margin:.08em .1em 0 0;color:var(--crimson)}
+h3.section-heading{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.12em;
+  color:var(--gold-deep);text-transform:uppercase;margin:2em 0 .8em;
+  padding-bottom:8px;border-bottom:1px solid var(--rule)}
+
+/* ── EVIDENCE BLOCKS ── */
+.evidence-block{margin:28px 0;border:1px solid var(--rule);background:var(--page-warm);position:relative}
+.evidence-block::before{content:attr(data-source);position:absolute;top:-10px;left:18px;
+  background:var(--page-warm);padding:0 8px;font-family:'Cinzel',serif;font-size:9px;
+  letter-spacing:.2em;color:var(--gold-deep);text-transform:uppercase}
+.evidence-inner{padding:22px 26px 18px}
+.evidence-ref{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.14em;
+  color:var(--gold-deep);margin-bottom:8px}
+.evidence-text{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.7;
+  color:var(--text-main);font-style:italic}
+.evidence-note{margin-top:10px;font-family:'Source Sans 3',sans-serif;font-size:12px;
+  line-height:1.6;color:var(--text-sub);border-top:1px solid var(--rule);padding-top:10px}
+
+/* ── ATTORNEY BLOCK ── */
+.attorney-block{margin:28px 0;background:var(--navy);padding:24px 28px;position:relative}
+.attorney-block::before{content:'EVIDENTIARY ARGUMENT';font-family:'Cinzel',serif;
+  font-size:8px;letter-spacing:.28em;color:var(--gold);display:block;margin-bottom:12px}
+.attorney-text{font-family:'Source Sans 3',sans-serif;font-size:14px;line-height:1.75;color:#e8dfc8}
+.attorney-text strong{color:var(--gold-pale);font-weight:600}
+.atty-cite{display:inline-block;background:rgba(200,151,31,.14);
+  border:1px solid rgba(200,151,31,.32);color:var(--gold-pale);font-size:11px;
+  padding:1px 6px;border-radius:2px;font-family:'Cinzel',serif;letter-spacing:.07em;
+  vertical-align:middle;margin:0 2px}
+
+/* ── VERDICT BAR ── */
+.verdict-bar{background:var(--gold);padding:14px 24px;margin:24px 0}
+.verdict-bar p{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.07em;
+  color:var(--navy);line-height:1.5;font-weight:600}
+
+/* ── SECTION RULE ── */
+.section-rule{display:flex;align-items:center;gap:10px;margin:30px 0 24px}
+.section-rule-line{flex:1;height:1px;background:linear-gradient(90deg,var(--rule),transparent)}
+.section-rule-line.rev{background:linear-gradient(90deg,transparent,var(--rule))}
+.section-rule-glyph{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-deep);letter-spacing:.12em}
+
+/* ── BLOOD LEDGER ── */
+.ledger-entry{margin:20px 0;padding:16px 20px;border-left:3px solid var(--crimson);
+  background:rgba(139,26,26,.04)}
+.ledger-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;
+  color:var(--crimson);text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.ledger-body{font-family:'Source Sans 3',sans-serif;font-size:13px;line-height:1.65;color:var(--text-sub)}
+
+/* ── FOOTNOTE STRIP ── */
+.fn-strip{border-top:1px solid var(--rule);padding-top:14px;margin-top:30px}
+.fn-item{font-family:'Source Sans 3',sans-serif;font-size:11px;line-height:1.6;
+  color:var(--text-mute);margin-bottom:5px}
+.fn-item sup{color:var(--gold-deep);font-size:9px}
+
+/* ── GE CONTENT TYPES ── */
+.ge-source{font-style:italic;font-size:.85em;color:#5dade2;margin:.4em 0 .5em 1.2em;
+  line-height:1.5;padding:5px 10px;border-left:3px solid rgba(93,173,226,.3);background:rgba(10,15,24,.4)}
+.ge-section{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gold);
+  margin:1.2em 0 .3em;padding:5px 10px;border-left:3px solid var(--gold-deep);
+  background:rgba(200,151,31,.05);letter-spacing:.05em;text-transform:uppercase}
+.ge-fact{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.3);
+  padding:10px 14px;margin:.8em 0;font-family:'Cinzel',serif;font-size:12px;
+  color:var(--gold-pale);letter-spacing:.04em}
+.ge-part{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gold);
+  text-align:center;margin:2em 0 .5em;padding:.6em 0;
+  border-top:2px solid var(--gold);border-bottom:1px solid var(--gold);
+  letter-spacing:.07em;text-transform:uppercase}
+.ge-bullet{font-family:'Source Sans 3',sans-serif;font-size:var(--fs);line-height:1.75;
+  color:var(--text-main);padding-left:1.2em;position:relative;margin-bottom:.5em}
+.ge-bullet::before{content:'—';position:absolute;left:0;color:var(--gold-deep)}
+.ge-note-dss{background:rgba(26,82,118,.15);border-left:3px solid #1a5276;
+  padding:10px 14px;margin:.7em 0;font-size:.9em;line-height:1.55}
+.ge-note-dss .note-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
+  color:#5dade2;display:block;margin-bottom:5px;text-transform:uppercase}
+.ge-note-orit{background:rgba(30,132,73,.12);border-left:3px solid #1e8449;
+  padding:10px 14px;margin:.7em 0;font-size:.9em;line-height:1.55}
+.ge-note-orit .note-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
+  color:#52be80;display:block;margin-bottom:5px;text-transform:uppercase}
+.ge-note-critical{background:rgba(139,26,26,.12);border-left:3px solid var(--crimson);
+  padding:10px 14px;margin:.7em 0;font-size:.9em;line-height:1.55}
+.ge-note-critical .note-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
+  color:#e74c3c;display:block;margin-bottom:5px;text-transform:uppercase}
+.ge-note-default{background:rgba(200,151,31,.07);border-left:3px solid var(--gold-deep);
+  padding:10px 14px;margin:.7em 0;font-size:.9em;line-height:1.55}
+.ge-note-default .note-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.15em;
+  color:var(--gold);display:block;margin-bottom:5px;text-transform:uppercase}
+.ge-vol-header{background:var(--navy);padding:32px 40px;margin-bottom:0}
+.ge-vol-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.25em;color:var(--gold);margin-bottom:10px}
+.ge-vol-title{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
+.ge-vol-desc{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--mist)}
+
+/* ── BOTTOM NAV ── */
+#bn{position:fixed;bottom:0;left:0;right:0;height:var(--bn-h);
+  background:var(--navy);border-top:1px solid rgba(200,151,31,.2);
+  display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:200}
+.bn-btn{background:none;border:none;color:rgba(200,151,31,.6);cursor:pointer;
+  padding:5px 8px;border-radius:4px;font-size:13px;transition:all .15s;white-space:nowrap;
+  font-family:'Source Sans 3',sans-serif;font-size:11px}
+.bn-btn:hover{color:var(--gold);background:rgba(200,151,31,.1)}
+.bn-btn.on{color:var(--gold)}
+#bn-pos{color:rgba(200,151,31,.4);font-size:10px;font-family:'Cinzel',serif;letter-spacing:.1em}
+
+/* ── VOICE PANEL ── */
+#vp{position:fixed;bottom:var(--bn-h);left:0;right:0;
+  background:#080c14;border-top:1px solid rgba(200,151,31,.2);
+  padding:8px 14px;display:none;align-items:center;gap:8px;z-index:199;flex-wrap:wrap}
+#vp.on{display:flex}
+.vp-btn{background:#1a2038;border:none;color:#d4c89a;padding:5px 8px;
+  border-radius:4px;cursor:pointer;font-size:12px;font-family:'Source Sans 3',sans-serif}
+.vp-btn:hover{background:#252d48;color:var(--gold)}
+#vp-voice{background:#111220;border:1px solid rgba(200,151,31,.2);border-radius:4px;
+  color:#d4c89a;padding:4px 6px;font-size:11px;font-family:'Source Sans 3',sans-serif;max-width:160px}
+#vp-speed{background:#111220;border:1px solid rgba(200,151,31,.2);border-radius:4px;
+  color:#d4c89a;padding:4px 4px;font-size:11px;width:58px;font-family:'Source Sans 3',sans-serif}
+#vp-status{color:rgba(200,151,31,.5);font-size:10px;font-family:'Source Sans 3',sans-serif;margin-left:auto}
+
+/* ── SEARCH HIGHLIGHT ── */
+mark{background:rgba(200,151,31,.3);border-radius:2px;color:inherit}
+mark.first-hit{background:rgba(200,151,31,.55)}
+
+/* ── CHAPTER JUMP MODAL ── */
+#cj-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:#0d1622;border:1px solid rgba(200,151,31,.3);padding:24px;
+  border-radius:4px;z-index:500;min-width:280px;display:none}
+#cj-modal.on{display:block}
+#cj-modal h3{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);margin-bottom:14px;letter-spacing:.1em}
+#cj-input{background:#111220;border:1px solid rgba(200,151,31,.25);border-radius:4px;
+  color:#d4c89a;padding:8px 12px;font-size:13px;width:100%;margin-bottom:10px;outline:none;
+  font-family:'Source Sans 3',sans-serif}
+#cj-input:focus{border-color:var(--gold)}
+.cj-btn{background:#1a2038;border:1px solid rgba(200,151,31,.25);color:var(--gold);
+  padding:6px 14px;border-radius:4px;cursor:pointer;font-size:11px;
+  font-family:'Cinzel',serif;letter-spacing:.08em;margin-right:6px}
+
+/* ── OVERLAY ── */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;display:none}
+#overlay.on{display:block}
+
+/* ── SCROLL TO TOP ── */
+#stt{position:fixed;bottom:60px;right:14px;background:#1a2038;
+  border:1px solid rgba(200,151,31,.3);color:var(--gold);width:36px;height:36px;
+  border-radius:50%;cursor:pointer;font-size:16px;display:none;z-index:201;
+  font-family:Arial;border:none;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#stt.vis{display:flex;align-items:center;justify-content:center}
+
+/* ── NIGHT MODE ── */
+body.night{
+  --page:#13100c;--page-warm:#1a1510;--text-main:#e8dfc8;
+  --text-sub:#b0a080;--text-mute:#6a5f48;--rule:#4a3a1e}
+body.night .ch-opener{background:#080c14}
+body.night .ge-source{background:rgba(5,10,20,.6)}
+
+/* ── DYSLEXIC MODE ── */
+body.dyslexic .body-text,body.dyslexic .evidence-text,
+body.dyslexic .attorney-text,body.dyslexic .ge-bullet,
+body.dyslexic .ge-note-dss,body.dyslexic .ge-note-orit,
+body.dyslexic .ge-note-critical,body.dyslexic .ge-note-default,
+body.dyslexic .ledger-body{
+  font-family:'OpenDyslexic',sans-serif!important;
+  letter-spacing:.05em;word-spacing:.15em;line-height:2.1!important}
+
+@media(max-width:600px){
+  .ch-opener{padding:36px 22px 30px}
+  .page-body{padding:32px 22px}
+  .evidence-inner{padding:18px 16px}
+  .attorney-block{padding:20px 18px}
+  #sb{width:100vw}
+  #main.sb-open{left:0}
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <img src="splash.jpg" alt="When Sharks Attack">
+  <div id="splash-sub">Loading · L.A. Bond</div>
+</div>
+
+<!-- TOOLBAR -->
+<div id="tb">
+  <button class="tb-btn" id="b-sb" title="Contents">&#9776;</button>
+  <span id="tb-title">When Sharks Attack &middot; L.A. Bond</span>
+  <input id="sq" type="text" placeholder="&#128269; Search&hellip;" autocomplete="off">
+  <button class="tb-btn" id="b-sr" title="Clear search">&#10005;</button>
+  <button class="tb-btn" id="b-vt" title="Read aloud">&#128266;</button>
+  <button class="tb-btn" id="b-fa" title="Font smaller">A&#8315;</button>
+  <button class="tb-btn" id="b-fg" title="Font larger">A&#8314;</button>
+  <button class="tb-btn" id="b-dy" title="Dyslexia font">&#9770;</button>
+  <button class="tb-btn" id="b-dk" title="Night mode">&#9685;</button>
+  <button class="tb-btn" id="b-cj" title="Jump to chapter">&#8677;</button>
+</div>
+
+<!-- PROGRESS -->
+<div id="prog"><div id="prog-fill"></div></div>
+
+<!-- SIDEBAR -->
+<div id="sb">
+  <div class="sb-section">When Sharks Attack</div>
+  <div id="sb-wsa"></div>
+  <div class="sb-section">The Great Eraser</div>
+  <div id="sb-ge"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <div id="content">
+    <!-- rendered here -->
+  </div>
+</div>
+
+<!-- VOICE PANEL -->
+<div id="vp">
+  <button class="vp-btn" id="vp-pl">&#9654; Play</button>
+  <button class="vp-btn" id="vp-pa" style="display:none">&#9646;&#9646; Pause</button>
+  <button class="vp-btn" id="vp-st">&#9632; Stop</button>
+  <button class="vp-btn" id="vp-pv">&#9654;&#9654; Preview</button>
+  <select id="vp-voice" title="Voice"></select>
+  <select id="vp-speed" title="Speed">
+    <option value=".75">0.75x</option>
+    <option value="1" selected>1x</option>
+    <option value="1.25">1.25x</option>
+    <option value="1.5">1.5x</option>
+    <option value="2">2x</option>
+  </select>
+  <span id="vp-status">Ready</span>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bn">
+  <button class="bn-btn" id="b-prev">&#8592; Prev</button>
+  <span id="bn-pos"></span>
+  <button class="bn-btn" id="b-next">Next &#8594;</button>
+</div>
+
+<!-- SCROLL TO TOP -->
+<button id="stt" title="Back to top">&#8593;</button>
+
+<!-- CHAPTER JUMP MODAL -->
+<div id="cj-modal">
+  <h3>Jump to Chapter</h3>
+  <input id="cj-input" type="text" placeholder="Type chapter number or title...">
+  <button class="cj-btn" id="cj-go">Go</button>
+  <button class="cj-btn" id="cj-cancel">Cancel</button>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" id="overlay"></div>
+
+<script>const WSA_CHAPTERS=[{"id":"conventions","chNum":"0","title":"Conventions on Names","subtitle":"Why the Name matters \u2014 and what its removal cost","tag":"","html":"<p class=\"body-text drop-cap\">Names matter. This manuscript uses YHWH and the Creator/Creator where covenant specificity is required. &amp;ldquo;God&amp;rdquo; and &amp;ldquo;Lord&amp;rdquo; are titles \u2014 titles can be handed to anything. The Name is covenant-specific.</p><p class=\"body-text\">When translations replace the Name with a title, clarity about exclusive worship is systematically eroded. This is not a minor editorial choice. It is documented displacement \u2014 over 7,000 substitutions in the standard translation tradition, each one severing the reader from the personal covenant name preserved in Paleo-Hebrew across 900+ Dead Sea Scrolls manuscripts.</p><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QIsa-a \u00b7 Great Isaiah Scroll \u00b7 Cave 1, Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;[YHWH written in Paleo-Hebrew \ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04 throughout, while surrounding text is in Aramaic square script]&rdquo;</p>\n<p class=\"evidence-note\">The DSS scribes used a different alphabet for the Name than for every other word in the text. This is the single most important scribal convention in the entire Qumran corpus \u2014 a visual watermark stating that this word is categorically apart from all other language. Every instance of LORD in your modern Bible translation is a substitution for this Name.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The chain of substitution is documented and linear. <span class=\"atty-cite\">YHWH (Paleo-Hebrew)</span> \u2192 <span class=\"atty-cite\">Adonai (Hebrew: My Lord)</span> \u2192 <span class=\"atty-cite\">Kyrios (Greek: Lord)</span> \u2192 <span class=\"atty-cite\">Dominus (Latin: Lord)</span> \u2192 <span class=\"atty-cite\">LORD (English small caps)</span>. The word Baal in ancient Semitic means Lord or Master \u2014 the same semantic range as every substitute in this chain. The Hebrew prophets condemned Baal worship explicitly. The Name replacement mechanism linguistically re-introduces what the prophets condemned. This is not interpretation. This is documented etymology.</p></div><div class=\"verdict-bar\"><p>New Testament labels such as Jesus, Christ, and Christian appear in this manuscript only as referential markers for institutional claims \u2014 not as divine proof. The primary authority is YHWH, the Creator, the covenant, the commands as documented in the Dead Sea Scrolls, the Qumran corpus, and the Ge&#x27;ez Orit.</p></div>","sectionClass":"special"},{"id":"ch1","chNum":"1","title":"What Is Truth?","subtitle":"The question that opens everything","tag":"L.A. Bond","html":"<p class=\"body-text author-voice\">Copyediting can be performed later for punctuation and consistency without altering meaning or cadence.</p><p class=\"body-text author-voice\">The following chapters preserve the author\u2019s voice. Grammar standardization can be applied later without changing meaning.</p><p class=\"body-text author-voice\">What is truth?</p><p class=\"body-text author-voice\">It is almost inconceivable for us to believe that truth could have been lost so long ago and no one has even noticed it.</p><p class=\"body-text author-voice\">It can be clearly ascertained through a simple research of historical facts, which can be verified by historical evidences, that the answer to this question is evident. Add to this the leading of the Most High, prayer, and even fasting, and your eyes will certainly be opened by our Creator as we listen to his voice. It is undoubtedly true that there are far too many who, sadly and blindly, follow idolatrous traditions.</p><p class=\"body-text author-voice\">These are the traditions that have been passed down from generation to generation by people who love and trust them as righteous. Despite the love and trust they have received, these traditions are against Adonai. It really doesn&#x27;t matter what some preachers told you or what the preacher on television said. It doesn&#x27;t matter what the President does or does not do, he&#x27;s NOT your Creator. I don&#x27;t care what your Mama and your Daddy did, they didn&#x27;t know any better BUT YOU don&#x27;t have that same grace because you are given the ability to know better and thus, do better. This is an opportunity for you to obtain the truth which will truly set you free. Unfortunately, a lot of people do not seek freedom but only to maintain ungodly traditions.</p><p class=\"body-text author-voice\">Listen, the leadership of the church began moving from Jerusalem to Antioch and finally to Rome. Constantine, the emperor of Rome in the year 311 CE who came from a pagan background mixed paganism with the Torah for the purpose of purely political gain. He issued the Edict of Toleration.</p><p class=\"body-text author-voice\">Roman Catholic Church was birthed in the middle of the 7th century. Wait but how does this affect you? Well, let&#x27;s see in part 2.</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">CD (Damascus Document) \u00b7 Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;They shall depart from the path of the people...and keep away from the unclean wealth of wickedness...and love each man his brother as himself.&rdquo;</p>\n<p class=\"evidence-note\">The Damascus Document \u2014 preserved in two medieval manuscripts found in the Cairo Geniza in 1896 and subsequently confirmed by Cave 4 fragments at Qumran \u2014 describes a community that broke from mainstream practice because it had become corrupted. The pattern described here \u2014 a remnant separating from compromised institutional religion to return to covenant practice \u2014 is the same pattern the author identifies operating in contemporary Christianity.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The author presents a foundational evidentiary challenge: if <span class=\"atty-cite\">YHWH does not change (Malachi 3:6)</span> and if <span class=\"atty-cite\">His Word endures forever (Isaiah 40:8)</span> then any deviation from that Word requires a documented authorization. No such documentation exists for: Sunday as the covenant Sabbath. December 25 as a sacred birth date. The Trinity as a Hebrew covenant concept. These practices have Roman imperial origins \u2014 documented in <span class=\"atty-cite\">Codex Justinianus III.12.3</span>, <span class=\"atty-cite\">RIC VII (SOLI INVICTO COMITI coinage)</span>, and <span class=\"atty-cite\">Council of Constantinople 381 CE</span> respectively. Produce the Torah verse authorizing each. You cannot. The record is silent because the authorization was never there.</p></div>","sectionClass":"author"},{"id":"ch2","chNum":"2","title":"The Emperor's New Groove","subtitle":"Constantine, Sol Invictus, and the Sunday Decree","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QS (Community Rule) \u00b7 Community Rule \u00b7 Cave 1 \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;They shall keep the Sabbath day according to its exact interpretation and the feasts and the Day of Fasting according to the finding of the members of the New Covenant in the land of Damascus.&rdquo;</p>\n<p class=\"evidence-note\">The Community Rule \u2014 written within the same century as Constantine&#x27;s Sunday Edict \u2014 designates the seventh-day Sabbath as an active covenant obligation. Sunday worship is not referenced. The Lord&#x27;s Day as a Sunday designation does not appear in any of the 900+ Qumran manuscripts. Constantine issued his Sunday Edict in 321 CE \u2014 over 200 years after the latest DSS manuscript was copied.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">Three unimpeachable physical exhibits establish the Constantine record. <span class=\"atty-cite\">Exhibit A: RIC VII</span> \u2014 Roman Imperial Coinage documents SOLI INVICTO COMITI production from 312 CE through 325 CE \u2014 simultaneous with the Council of Nicaea. <span class=\"atty-cite\">Exhibit B: Arch of Constantine, 315 CE</span> \u2014 dedicated 3 years after the alleged conversion; contains zero Christian iconography; features Sol Invictus sacrificial imagery and the solar disk medallion throughout. <span class=\"atty-cite\">Exhibit C: Codex Justinianus III.12.3</span> \u2014 Constantine&apos;s own Sunday Edict names the day <em>dies venerabilis Solis</em> \u2014 the Venerable Day of the <strong>Sun</strong>. Not the Son. The Sun. Cross-referenced against <span class=\"atty-cite\">1QS</span> and <span class=\"atty-cite\">11QT (Temple Scroll)</span> \u2014 both designating seventh-day Shabbat as covenant rest \u2014 the verdict is not ambiguous.</p></div><div class=\"evidence-block\" data-source=\"Orit Ge&apos;ez \u2014 Beta Israel Canon\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">Book of Jubilees (Yovelim) \u00b7 2:17\u201321 \u00b7 Ge&#x27;ez Preservation \u00b7 Beta Israel Canon</div>\n<p class=\"evidence-text\">&ldquo;He gave us a great sign, the Sabbath day, that we should work six days, but keep Sabbath on the seventh day from all work. And all the angels of the presence, and all the angels of sanctification \u2014 He has bidden us to keep the Sabbath with Him in heaven and on earth.&rdquo;</p>\n<p class=\"evidence-note\">The Book of Jubilees (Yovelim) \u2014 preserved complete only in the Ge&#x27;ez Orit of the Beta Israel \u2014 was found in 15+ copies at Qumran, confirming its canonical authority in the DSS community. The Orit transmission predates the Babylonian Talmud and was never subjected to post-Constantine revision. Both the DSS and the Orit are unambiguous: seventh day. Not first day.</p>\n</div></div><div class=\"verdict-bar\"><p>BOTTOM LINE: The Saturday-to-Sunday Sabbath transfer is a documented Roman imperial act of March 7, 321 CE \u2014 executed by a man who minted Sol Invictus coins through 325 CE, held the title Pontifex Maximus of Roman paganism throughout his reign, and did not receive Christian baptism until his deathbed in 337 CE. This is not theological debate. This is the physical record.</p></div>","sectionClass":"author"},{"id":"ch3","chNum":"3","title":"Blood In The Water","subtitle":"Pagan temples converted. Same deity. Different name.","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The mechanism is documented. <span class=\"atty-cite\">Eusebius, Vita Constantini III.47-48</span> records Constantine&apos;s directive to convert existing pagan structures. <span class=\"atty-cite\">Liber Pontificalis</span> documents the construction of Roman basilicas on pagan sacred sites. The theological argument that &ldquo;God can be worshipped anywhere&rdquo; does not address the specific question: who authorized incorporating pagan infrastructure into covenant worship, and what DSS or Orit passage sanctions it? The burden of proof belongs to those who made the change \u2014 not to those who question it.</p></div>","sectionClass":"author"},{"id":"ch4","chNum":"4","title":"The Emperor's New Groove Part II","subtitle":"Galatians, Romans, Colossians \u2014 misunderstood","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">11QT (Temple Scroll) \u00b7 Cave 11, Qumran \u00b7 c. 150 BCE</div>\n<p class=\"evidence-text\">&ldquo;On the seventh day you shall not do any work... it is a holy Sabbath to Me.&rdquo;</p>\n<p class=\"evidence-note\">The Temple Scroll \u2014 the longest of the Dead Sea Scrolls at 8.15 meters \u2014 treats the Sabbath as a non-negotiable covenant boundary. The ceremonial law distinction the author identifies \u2014 between the eternal seventh-day Sabbath written in stone and the temporary ceremonial sabbaths written in a book \u2014 is consistent with the DSS community&#x27;s own layered legal understanding as documented across 1QS, CD, and 11QT.</p>\n</div></div>","sectionClass":"author"},{"id":"ch5","chNum":"5","title":"The Emperor's New Groove Part III","subtitle":"Staying true to the Word \u2014 not the tradition","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Orit Ge&apos;ez \u2014 Beta Israel Canon\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">Book of Enoch (Chanokh) \u00b7 1 Enoch 82:4\u20137 \u00b7 Ge&#x27;ez Orit \u00b7 Complete Preservation</div>\n<p class=\"evidence-text\">&ldquo;In those days the sun rises in the east and sets in the west...And the leaders of the chiefs of thousands are those who are placed over the whole creation and over all the stars, with the four intercalary days which are not reckoned in the computation of the year.&rdquo;</p>\n<p class=\"evidence-note\">The Astronomical Book of Enoch \u2014 preserved complete only in the Ge&#x27;ez Orit, attested in Aramaic fragments at Qumran (4QEna-g) \u2014 documents the 364-day solar calendar used by the Qumran community. This calendar framework designates specific days as covenant-binding rest days. The Sunday substitution has no foundation in this calendar tradition or any calendar tradition in the primary Hebrew record.</p>\n</div></div>","sectionClass":"author"},{"id":"ch6","chNum":"6","title":"Blood In The Water \u2014 The False Messiah","subtitle":"Who are you reaching for?","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The author issues a direct challenge grounded in Torah: What did Avraham do? What did Mosheh do? What did Yitzchak, Ya'akov, Eliyahu, and Daniyel do? Examine <span class=\"atty-cite\">Genesis 26:5</span> \u2014 Avraham kept YHWH's charge, commandments, statutes, and Torah. None of the patriarchal figures observed December 25. None worshipped on Sunday. None participated in the practices the author catalogs. <span class=\"atty-cite\">Jeremiah 8:8</span> answers directly: The lying pen of the scribes has handled the Word falsely. This is the documentary record of the distortion \u2014 not theological suspicion.</p></div>","sectionClass":"author"},{"id":"ch7","chNum":"7","title":"Blood In The Water \u2014 False Messiah Continued","subtitle":"Early saints. Home gatherings. No platforms.","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QM (War Scroll) \u00b7 Cave 1, Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;For it is a time of distress for Israel, as declared by the judgment of all the nations. Among those who cast their lot with YHWH is an eternal deliverance...&rdquo;</p>\n<p class=\"evidence-note\">The War Scroll describes the authentic covenant community as those who maintain strict allegiance to YHWH \u2014 not through institutional membership but through active covenant fidelity. The author&#x27;s critique of institutional religion \u2014 preachers performing, people following men instead of YHWH, access to the Creator sold through platform and building \u2014 maps directly onto the Qumran community&#x27;s separation from the Jerusalem priestly establishment for exactly these reasons.</p>\n</div></div><div class=\"verdict-bar\"><p>The DSS community left the Temple. The author is issuing the same call \u2014 not to a new institution, but back to YHWH, the commands, and the Name. The pattern is 2,100 years old and documented in manuscript.</p></div>","sectionClass":"author"},{"id":"ch8","chNum":"8","title":"Additional Reflections & Remnant Warning","subtitle":"The great falling away \u2014 already here","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Orit Ge&apos;ez \u2014 Beta Israel Canon\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">Kebra Nagast (Ge&#x27;ez: The Glory of Kings) \u00b7 c. 14th Century CE from older sources</div>\n<p class=\"evidence-text\">&ldquo;And the King of Ethiopia shall rule over all the kings of the earth. For the laws of YHWH shall be in Ethiopia and in the heart of its people forever.&rdquo;</p>\n<p class=\"evidence-note\">The Kebra Nagast \u2014 preserved in Ge&#x27;ez alongside the Orit \u2014 documents the continuous Hebraic line through the Solomonic-Ethiopian corridor. It was not written by European converts. It is an African text claiming African Hebraic continuity in the African language of Ge&#x27;ez \u2014 outside every Roman, Rabbinic, and Protestant institutional framework.</p>\n</div></div>","sectionClass":"author"},{"id":"ch12","chNum":"12","title":"Blood In The Water No More","subtitle":"The sharks. The blood. The vision.","tag":"L.A. Bond","html":"<div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QpHab (Pesher Habakkuk) \u00b7 Cave 1 \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;Woe to him who causes his neighbors to drink, pouring out his wrath, and also making them drunk in order to look at their nakedness! You will be filled with shame rather than glory.&rdquo;</p>\n<p class=\"evidence-note\">The Pesher Habakkuk \u2014 a running commentary on the Book of Habakkuk applied to the Qumran community&#x27;s historical situation \u2014 identifies the &#x27;Wicked Priest&#x27; who corrupted the community and the &#x27;Kittim&#x27; (Rome) who would be judged. The author&#x27;s vision of a false messiah drawing mass worship on blood-colored carpet echoes the Pesher&#x27;s analysis of false leadership drawing the community away from YHWH through spectacle and authority.</p>\n</div></div>","sectionClass":"author"},{"id":"hc1","chNum":"H1","title":"From Sect to State Instrument","subtitle":"How empire converts \u2014 and what it does to faith","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">Understand this. Empire does not convert for love. Empire converts for control.</p><p class=\"body-text\">A persecuted movement can survive in homes. But once the state grabs it, the state reshapes it.</p><p class=\"body-text\">Uniformity becomes profit. Dissent becomes danger. Ritual becomes a schedule. Identity becomes a badge.</p><p class=\"body-text\">So watch the pattern. First, privilege. Then, standardization. Then, enforcement. [FN-01]</p><p class=\"body-text\">Constantine is not the only factor, but he is a major accelerant. The issue is not whether customs existed earlier. The issue is what happens when law and funding make one stream dominate the rest. [FN-02]</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The historical record on the church-state merger is unambiguous. <span class=\"atty-cite\">Eusebius, Ecclesiastical History</span> documents the systematic privileging of Christian institutions under Constantine. <span class=\"atty-cite\">Codex Theodosianus XVI</span> \u2014 the Roman legal code \u2014 documents the escalating enforcement: first, privilege; then standardization; then the criminalization of non-orthodox practice. The sociological outcome is predictable and documented: conformity enforced by law, dissent criminalized, identity weaponized for political cohesion. This is not a theological argument. It is institutional mechanics.</p></div>","sectionClass":"historical"},{"id":"hc2","chNum":"H2","title":"Calendar Politics and Sun-Day Logic","subtitle":"Whoever controls the calendar controls everything","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">Calendar is not neutral. Calendar is a master switch.</p><p class=\"body-text\">Whoever controls the calendar controls rest, gathering, labor, and the public rhythm of worship.</p><p class=\"body-text\">When Sunday becomes a civic norm by law, it is no longer only custom. It becomes training. [FN-03]</p><p class=\"body-text\">Torah and Tanakh treat the Sabbath as covenant marker. If a covenant marker is replaced, then the question is simple. Who authorized it, and by what authority did men enforce it. [FN-04]</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">4Q321 (Mishmarot) \u00b7 Calendrical Document \u00b7 Cave 4, Qumran</div>\n<p class=\"evidence-text\">&ldquo;[Priestly course rotations synchronized to the 364-day solar calendar \u2014 establishing specific seventh-day Shabbat observances across the liturgical year]&rdquo;</p>\n<p class=\"evidence-note\">The Qumran calendrical documents \u2014 Mishmarot (Priestly Courses), 4Q319, 4Q320, 4Q321 \u2014 document the 364-day solar calendar used by the DSS community. Every Shabbat in this calendar falls on the seventh day of the week. The calendar is solar, fixed, and covenant-binding. It does not contain Sunday. The calendrical switch from seventh-day Shabbat to Sunday \u2014 imposed by Constantine&#x27;s 321 CE edict and formalized at Nicaea in 325 CE \u2014 has no authorization anywhere in the primary Hebrew textual record.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">Constantine's Sunday Edict (<span class=\"atty-cite\">Codex Justinianus III.12.3, 321 CE</span>) explicitly names the day <em>dies venerabilis Solis</em> \u2014 the Venerable Day of the Sun. The shift from seventh-day Shabbat to first-day Sunday has three documented causes: <span class=\"atty-cite\">Roman solar religious practice (Sol Invictus)</span>; <span class=\"atty-cite\">Imperial political consolidation under Constantine</span>; <span class=\"atty-cite\">Nicaea Council deliberate divorce from Hebrew calendar, 325 CE</span>. None of these are Torah. None are DSS. None are Orit. The authority chain for Sunday worship traces back to a Roman emperor, not to covenant command. The calendar is the mechanism of control. Who owns the calendar owns the worship schedule.</p></div>","sectionClass":"historical"},{"id":"hc3","chNum":"H3","title":"Creed, Canon, and the Mechanics of Closure","subtitle":"How a library became a locked canon","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">A library becomes a canon when men shut the door and say: This is the boundary.</p><p class=\"body-text\">That closure is never only spiritual. It is institutional.</p><p class=\"body-text\">The writings called the New Testament emerge across communities and decades. Then lists form. Debates harden. Councils and leaders draw lines. [FN-05]</p><p class=\"body-text\">The same thing happens with doctrine. Dispute rises, then definitions are issued, and philosophical terms are used to lock the fence. [FN-06]</p><p class=\"body-text\">But Torah does not give you creed-making as the covenant engine. The covenant engine is loyalty to YHWH, obedience to commands, and refusal of rivals.</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The canon closure is documented in specific milestones. <span class=\"atty-cite\">Muratorian Fragment, c. 170 CE</span> \u2014 the earliest canonical list, in Latin, excluding multiple texts later included. <span class=\"atty-cite\">Athanasius, Festal Letter 39, 367 CE</span> \u2014 the first list matching the current 27-book NT canon. <span class=\"atty-cite\">Council of Hippo, 393 CE</span> and <span class=\"atty-cite\">Council of Carthage, 397 CE</span> \u2014 ecclesiastical ratification. Every step in this chain is institutional, political, and post-Nicaean. The canon was not delivered from Sinai. It was voted. The criteria for inclusion served Roman institutional stability \u2014 not Hebrew covenant continuity.</p></div>","sectionClass":"historical"},{"id":"hc4","chNum":"H4","title":"Internal Tensions and Text-Level Discrepancies","subtitle":"The text speaking against itself","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">One way to test a text is to let it speak against itself.</p><p class=\"body-text\">Composite libraries preserve seams. They preserve edits. They preserve competing angles.</p><p class=\"body-text\">That is why you see divergences in genealogies, infancy narratives, and resurrection sequences. These are not small details when they are used to build authority. [FN-07]</p><p class=\"body-text\">And here is the main point. If later texts are used to override Torah-level covenant markers, the burden of proof rises. Continuity must be shown, not assumed. [FN-08]</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">4QDeut-j (Deuteronomy Fragment) \u00b7 Cave 4, Qumran</div>\n<p class=\"evidence-text\">&ldquo;When the Most High divided the nations, He set the borders of the peoples according to the number of the sons of El [divine beings].&rdquo;</p>\n<p class=\"evidence-note\">The Masoretic Text reads &#x27;sons of Israel&#x27; at Deuteronomy 32:8. The DSS fragment 4QDeut-j reads &#x27;sons of El&#x27; \u2014 a reading corroborated by the pre-Christian Septuagint. The Masoretic scribes altered the text to eliminate the original divine council framework. This is a documented scribal alteration \u2014 not a textual variant or copyist error. The DSS preserves the older reading. The Masoretic tradition, standardized in the 10th century CE, preserves the edited reading. When the most recently standardized text conflicts with the oldest manuscripts, the oldest manuscripts win.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The pattern of scribal alteration is not a theory \u2014 it is documented. <span class=\"atty-cite\">4QDeut-j (DSS)</span> reads 'sons of El' \u2014 corroborated by the Septuagint. <span class=\"atty-cite\">MT Deuteronomy 32:8</span> reads 'sons of Israel'\u2014 a demonstrably later change. <span class=\"atty-cite\">Jeremiah 8:8</span> \u2014 the lying pen of the scribes has handled it falsely \u2014 is a Hebrew prophetic indictment of exactly this practice. The burden of proof does not rest on those citing the older manuscript. It rests on those defending the edited one. The DSS is the older witness. The DSS stands.</p></div>","sectionClass":"historical"},{"id":"hc5","chNum":"H5","title":"Comparative Motifs and the Limits of Parallels","subtitle":"The Baal Cycle. 1,200 years before the NT.","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">The ancient world was full of religious grammar. Miraculous conceptions. Divine sons. Sacred meals. Death and return imagery.</p><p class=\"body-text\">Some traditions carry explicit miraculous conception motifs. Other claims are exaggerated by modern storytellers.</p><p class=\"body-text\">So the rule here is plain. We map motifs. We do not force one-to-one copying claims without records. [FN-09]</p><p class=\"body-text\">What is beyond debate is this. Institutions reuse symbols. Empires rebrand what people already recognize. [FN-10]</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The Baal Cycle \u2014 excavated at Ras Shamra in 1928, dated c. 1400\u20131200 BCE \u2014 documents the death, descent, and resurrection of Baal Hadad over 1,200 years before the NT narrative. The structural parallel includes: <span class=\"atty-cite\">Divine son of El the Father</span> \u2192 <span class=\"atty-cite\">Death by the deity Mot</span> \u2192 <span class=\"atty-cite\">Three time-units in the underworld</span> \u2192 <span class=\"atty-cite\">Resurrection and restoration to El&amp;apos;s right hand</span> \u2192 <span class=\"atty-cite\">Seasonal renewal cycle</span>. This does not prove fabrication. It proves that the narrative architecture was available in the ancient Near Eastern religious environment. Institutions reuse symbols. Empires rebrand what populations already recognize. The evidence record \u2014 not theological preference \u2014 determines what conclusions are warranted.</p></div>","sectionClass":"historical"},{"id":"hc6","chNum":"H6","title":"Sacred Space, Altars, and the Control Economy","subtitle":"Access to YHWH \u2014 sold at scale","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">Once people are trained to believe access to YHWH depends on a building, a platform, and a mediator class, control becomes scalable.</p><p class=\"body-text\">Then money flows toward the altar, and the altar is controlled by hierarchy.</p><p class=\"body-text\">That produces predictable incentives. Conformity. Silence. Fear. Belonging sold as salvation. [FN-11]</p><p class=\"body-text\">The question is never whether a gesture exists elsewhere. The question is who profits, who commands, and who is trained to obey.</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The economy of sacred access is documented. <span class=\"atty-cite\">Nehemiah 13:17</span> \u2014 YHWH sent Israel into captivity for breaking the Sabbath. The economic incentive for the mediator class runs in the opposite direction: if access to YHWH is unconditional and personal, there is no product to sell. The institutional church controls access through platform, building, ordination, and tithing. The author names the economic consequence directly: old ladies on buses funding private jets. This is not hyperbole. It is a documented economic pattern of religious institutional capture.</p></div>","sectionClass":"historical"},{"id":"hc7","chNum":"H7","title":"Enslavement, Terror, and the Weaponization of Scripture","subtitle":"The curated text. The excluded text.","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">Slavery-era history shows religion used as governance.</p><p class=\"body-text\">Selective teaching. Curated texts. Submission preached as righteousness. Liberation muted as rebellion.</p><p class=\"body-text\">This is not theory. It is documented. [FN-12]</p><p class=\"body-text\">And terror has worn church clothes. In the era of the revived second Klan, the movement framed itself as Protestant, recruited through church networks, and in some places the line between churchman and Klansman blurred into the same body. [FN-13]</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The record of scripture weaponization is documented and specific. <span class=\"atty-cite\">Josiah Priest, Bible Defence of Slavery, 1851</span> \u2014 a pro-slavery theological text using cherry-picked scripture. <span class=\"atty-cite\">The Pro-Slavery Argument (Harper, Hammond, Simms, Dew), 1852</span> \u2014 systematic theological defense of chattel slavery. The curated texts: Ephesians 6:5 (slaves obey masters), Colossians 3:22 (same), Genesis 9:25 (the fraudulent Hamitic Curse). The excluded texts: Exodus 21:16 (kidnapping punishable by death), Deuteronomy 23:15\u201316 (escaped slaves shall not be returned). Selective omission is not interpretation. It is documented textual fraud in service of an economic system.</p></div><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QpHab (Pesher Habakkuk) \u00b7 Cave 1, Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;Woe to him who builds a city with blood and establishes a town by iniquity. Behold, is it not from YHWH of Hosts that peoples toil only for fire, and nations weary themselves for nothing?&rdquo;</p>\n<p class=\"evidence-note\">The Pesher Habakkuk applies the prophet&#x27;s words to the Qumran community&#x27;s contemporary situation \u2014 identifying institutions that build their power through exploitation of people. The DSS community separated from the Jerusalem priestly establishment for exactly these reasons: institutional corruption, exploitation of the covenant people, and the misuse of sacred authority for material gain. Slavery, colonial conquest, and the boarding school system represent the same pattern at civilizational scale.</p>\n</div></div><div class=\"verdict-bar\"><p>The same institutional Christianity that weaponized scripture for slavery also organized the Klan, built apartheid&#x27;s theological justification, funded genocidal boarding school systems, and blessed colonial conquest. This is the Blood Ledger. Every entry has a receipt.</p></div>","sectionClass":"historical"},{"id":"hc8","chNum":"H8","title":"The State Uses Religious Branding","subtitle":"Sacred language as political tool","tag":"Historical Chapter \u2014 Record-Based","html":"<p class=\"body-text drop-cap\">States use sacred language the way marketers use slogans.</p><p class=\"body-text\">The 20th century shows a regime pressing churches into state aims while using familiar religious framing for legitimacy.</p><p class=\"body-text\">The lesson is simple. Religious identity can become a wrapper for violence and social engineering. [FN-14]</p><p class=\"body-text\">This is about mechanisms, not about flattering anyone\u2019s conscience.</p><p class=\"body-text\">Appendix A: Verse Anchors Used in This Manuscript</p><p class=\"body-text\">These anchors are treated as Torah and Tanakh primary references, with DSS consulted as manuscript witness where applicable.</p><p class=\"body-text\">Deuteronomy 6:4\u20136</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The German case is the most documented. <span class=\"atty-cite\">Reichskonkordat, July 20, 1933</span> \u2014 treaty between the Vatican and Nazi Germany, signed four months after Hitler&apos;s appointment as Chancellor, legitimizing the regime through Catholic institutional endorsement. <span class=\"atty-cite\">Deutsche Christen (German Christians) Movement</span> \u2014 Protestant movement that declared Hitler&apos;s rise an act of YHWH&apos;s will, removed the Old Testament from church use, and declared Christianity a religion of the Aryan race. <span class=\"atty-cite\">Bishop Ludwig M\u00fcller, Reich Church</span> \u2014 Nazi-appointed leader of unified Protestant churches. The institutional Christian churches of Germany did not resist fascism. Many actively enabled it. This is documented. The lesson: sacred identity is not a safeguard against atrocity. It is a potential accelerant.</p></div>","sectionClass":"historical"},{"id":"coc","chNum":"COC","title":"The Creation of Christ","subtitle":"The documented assembly of a theological figure","tag":"New Chapter \u2014 DSS & Orit Defense","html":"<p class=\"body-text drop-cap\">The figure known as Jesus Christ \u2014 co-equal with YHWH, born of a virgin on December 25, resurrected on the third day, source of universal atonement \u2014 does not appear in this form in any document predating the 4th century CE. The assembly of this theological figure was a political process conducted in specific, dateable institutional events. Here is the documented record.</p><h3 class=\"section-heading\">Stage One: The Flavian Problem (70 CE)</h3><p class=\"body-text\">The Flavian dynasty \u2014 Vespasian (69\u201379 CE) and Titus (79\u201381 CE) \u2014 came to power by destroying the Second Temple and suppressing the Hebrew revolt. Their primary ideological problem: the DSS messianic tradition anticipated a military liberator who would expel Rome. The War Scroll (1QM) describes this figure in operational detail: a mortal Davidic king leading a 40-year military campaign against the Kittim (Rome). A population holding this expectation is an existential threat to imperial stability.</p><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QM (War Scroll) \u00b7 Cave 1, Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;The Prince of the Congregation...shall advance and the battle shall be joined by all the men of war. Then the Levitical priests shall blow the trumpets...and they shall advance into battle.&rdquo;</p>\n<p class=\"evidence-note\">The War Scroll&#x27;s military messiah is a mortal Davidic king commanding a 40-year liberation campaign against Rome. He is not divine. He does not die for humanity&#x27;s sins. He is not resurrected. He leads an army. The contrast between this figure and the NT&#x27;s pacifist, tax-paying, Rome-accommodating messiah is not accidental \u2014 it is politically specific. A messiah who tells his followers to render unto Caesar is not a revolutionary threat. The War Scroll&#x27;s messiah is.</p>\n</div></div><h3 class=\"section-heading\">Stage Two: Flavius Josephus (75\u201394 CE)</h3><p class=\"body-text\">Yosef ben Matityahu \u2014 renamed Flavius Josephus, taking the Flavian family name \u2014 was a Hebrew military commander who surrendered to Vespasian, was adopted as an imperial client, and produced official histories under Flavian patronage. In The Jewish War (75 CE), Josephus explicitly identifies Vespasian as the fulfillment of the Hebrew messianic prophecy of a ruler arising from Judea. This is the documented template: appropriate the Hebrew messianic tradition; redirect it toward Roman imperial ends.</p><h3 class=\"section-heading\">Stage Three: Council of Nicaea (325 CE)</h3><p class=\"body-text\">The Council of Nicaea was convened by Constantine \u2014 unbaptized, minting Sol Invictus coins, holding the title Pontifex Maximus of Roman paganism. The Council&#x27;s central decision: the term homoousios \u2014 a Greek Platonic philosophical term meaning &#x27;of the same substance&#x27; \u2014 was used to declare the Christ figure co-equal with YHWH.</p><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">1QS (Community Rule) \u00b7 Qumran \u00b7 c. 100 BCE</div>\n<p class=\"evidence-text\">&ldquo;Until the coming of the Prophet and the Messiahs of Aaron and Israel.&rdquo;</p>\n<p class=\"evidence-note\">The Community Rule describes two messiahs \u2014 both human, both subordinate to YHWH. Neither is co-equal with the Creator. Neither is pre-existent. Neither dies for humanity&#x27;s sins. The homoousios decree of Nicaea \u2014 declaring Christ co-equal with YHWH \u2014 is a direct categorical violation of the Qumran community&#x27;s messianic framework. This term does not appear in the Torah, the DSS, the Orit, or any pre-Nicaean Hebrew source. It was imported from Greek Platonic philosophy to settle a Roman political dispute.</p>\n</div></div><h3 class=\"section-heading\">Stage Four: Arian Suppression \u2014 The Book Burning (325 CE)</h3><p class=\"body-text\">Arius of Alexandria argued the Son was a created being \u2014 superior, but not co-equal with the Father. The Arian position is structurally closer to the Qumran framework than the Nicene formula. Following Nicaea, Constantine issued an edict ordering the destruction of Arian writings and threatening death for anyone found concealing them. This is the first documented instance of a Christian authority using state capital punishment to enforce theological compliance \u2014 and it was directed at the position closest to the actual Hebrew messianic record.</p><div class=\"attorney-block\"><p class=\"attorney-text\">The assembly of the Christ figure required four documented suppressions. <span class=\"atty-cite\">Arian writings \u2014 burned, 325 CE</span> \u2014 the position closest to DSS messianic expectation, destroyed by imperial edict. <span class=\"atty-cite\">Ebionite texts \u2014 excluded and destroyed</span> \u2014 the 1st-century Hebrew messianic community that maintained Torah, rejected the virgin birth, and called Paul an apostate; their Gospel of the Hebrews survives only in hostile quotations. <span class=\"atty-cite\">DSS \u2014 suppressed 44 years (1947\u20131991)</span> \u2014 controlled by Catholic-trained academics before public access was granted. <span class=\"atty-cite\">Ge&#x27;ez Orit \u2014 gated by both rabbinic and Roman frameworks</span> \u2014 the only complete canon preserving 1 Enoch and Jubilees, dismissed by both competing institutional systems. Every primary document contradicting the Nicene formula was targeted for destruction or marginalization. This is not coincidence. This is institutional information control.</p></div><div class=\"verdict-bar\"><p>900+ Dead Sea Scrolls manuscripts. 250 BCE to 70 CE. Zero mention of Jesus, Yeshua, or Christ as a divine co-equal being in any messianic capacity. The most literate, most messianically focused Hebrew community closest in time and geography to the claimed events produces no corroboration of the central claim of Roman Christianity. The absence is the evidence.</p></div>","sectionClass":"special"},{"id":"mono","chNum":"M","title":"Monotheist Archetypes","subtitle":"Covenant loyalty without institutional label","tag":"Tanakh-Grounded Framework","html":"<p class=\"body-text drop-cap\">This framework is Tanakh-grounded. The through-line is not modern religion membership but allegiance to one Sovereign: YHWH, the Creator \u2014 often against surrounding courts, temples, and tribal gods.</p><p class=\"body-text\">This framework is Tanakh-grounded. The through-line is not modern \u201creligion membership,\u201d but allegiance to one Sovereign: YHWH, the Creator, often against surrounding courts, temples, and tribal gods. These figures live inside ancient Israelite covenant-faith, yet the text frames their identity as exclusive loyalty, expressed through obedience, calling on the Name, and refusal of syncretism.</p><p class=\"body-text\">Core idea the Tanakh keeps repeating</p><p class=\"body-text\">These figures are marked by covenant over label, exclusive worship, and public fidelity under pressure. They do not present themselves as \u201cdenomination joiners.\u201d They are shown calling on the Name, refusing idols, obeying commands, and bearing consequences.</p><p class=\"body-text\">Avraham: Monotheism by covenant, not institution</p><p class=\"body-text\">Life map: call and rupture; altars and calling on the Name; public justice; covenant sign; the Akedah test as the question of ultimate allegiance.</p><p class=\"body-text\">Yosef: Fidelity to YHWH inside a foreign empire</p><p class=\"body-text\">Life map: betrayal and exile; moral refusal grounded in sin against YHWH; prison integrity; interpretation belongs to YHWH; power without adopting Egypt\u2019s gods; trauma re-read under divine sovereignty.</p><p class=\"body-text\">Noach: Singular obedience in a corrupt world</p><p class=\"body-text\">Life map: moral outlier; obedience without applause; judgment and mercy; altar after deliverance; covenant with creation as universal, not a later institutional label.</p><p class=\"body-text\">Eliyahu: Anti-idolatry as confrontation, not religious politics</p><p class=\"body-text\">Life map: crisis of allegiance; provision outside state systems; Carmel as the question of exclusive worship; collapse and recommissioning.</p><p class=\"body-text\">Daniyel: Covenant loyalty under imperial pressure</p><p class=\"body-text\">Life map: identity pressure; quiet resistance; wisdom credited to the God of Heaven; disciplined prayer despite law; costly fidelity; empires rise and fall but sovereignty endures.</p><p class=\"body-text\">Manuscript-ready structure</p><p class=\"body-text\">1) The pressure. 2) The line they would not cross. 3) The practice. 4) The cost. 5) The verdict.</p><p class=\"body-text\">This work is written from a Karaite posture: Scripture first, inherited tradition second, institutions last.</p><p class=\"body-text\">It does not recruit the reader into a new label. It calls the reader back to YHWH, the Creator, the covenant, and the commands as Abraham, Isaac, and Jacob walked.</p><p class=\"body-text\">Method: documented history is separated from interpretive inference. Where a point is debated, the debate is noted. Where a point is weak, it is not treated as foundational.</p><p class=\"body-text\">When the manuscript speaks in broader terms, it may also use \u201cthe Creator\u201d or \u201cCreator\u201d as a descriptive phrase, while reserving YHWH for covenant-specific claims.</p>","sectionClass":"special"},{"id":"blood","chNum":"BL","title":"The Blood Ledger","subtitle":"A non-exhaustive catalog \u2014 with receipts","tag":"Historical Record","html":"<p class=\"body-text drop-cap\">Below is a non-exhaustive catalog of atrocities associated with actors who claimed Christian identity or explicitly invoked Christian authority to justify violence. This is not a claim about core doctrine. It is a historical record of how religious identity, institutional power, and sacred rhetoric have been used to authorize coercion, conquest, and terror.</p><h3 class=\"section-heading\">THE BLOOD LEDGER \u2014 COMPLETE CATALOG</h3><div class=\"ledger-entry\"><div class=\"ledger-title\">The Crusades (1096\u20131291)</div><p class=\"ledger-body\">Large-scale wars launched under papal sanction. The capture of Jerusalem in 1099 involved the massacre of the city&#x27;s Muslim and Jewish populations. Pope Urban II&#x27;s call at Clermont in 1095 promised remission of sins to crusaders. Christian devotion and papal authority functioned as the central mobilizing frames. Estimated death toll: 1\u20133 million.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">The Albigensian Crusade (1209\u20131229)</div><p class=\"ledger-body\">A papal-sanctioned crusade within Europe against Cathar communities in southern France. The Cistercian abbot Arnaud Amalric, when asked how to distinguish Cathars from Catholics at B\u00e9ziers, is recorded as saying: &#x27;Kill them all; God will know his own.&#x27; The entire town of B\u00e9ziers was massacred \u2014 estimated 7,000\u201320,000 killed.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">The Northern Crusades (12th\u201314th centuries)</div><p class=\"ledger-body\">Conquest and forced conversion campaigns in the Baltic region conducted by the Teutonic Knights and Livonian Brothers of the Sword. Indigenous populations of Latvia, Lithuania, Estonia, and Prussia were subjugated by Christian military orders operating under papal mandate.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">The Inquisitions (Medieval; Spanish; Portuguese; Roman)</div><p class=\"ledger-body\">Church and state tribunals enforcing religious conformity through imprisonment, torture, property seizure, and public executions (auto-da-f\u00e9). The Spanish Inquisition, established 1478 under Ferdinand and Isabella, operated for 356 years. Estimated 3,000\u20135,000 executions, with tens of thousands tortured and imprisoned.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Witch Hunts and Witch Trials (c. 1450\u20131750)</div><p class=\"ledger-body\">Approximately 40,000\u201360,000 executions across Europe and colonial America under theological and legal frameworks. The Malleus Maleficarum (1487) \u2014 authored by Dominican inquisitor Heinrich Kramer \u2014 provided the theological justification. Eighty percent of victims were women.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">The Reconquista and Forced Conversions</div><p class=\"ledger-body\">As Christian kingdoms consolidated Iberia, the 1492 Alhambra Decree expelled all Jews from Spain \u2014 200,000 people \u2014 under Ferdinand and Isabella, the same monarchs who sponsored Columbus. Muslims faced the same choice: conversion or exile. The subsequent persecution of conversos (Jewish converts) under Inquisition tribunals demonstrates that the agenda was ethnic as well as religious.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">French Wars of Religion (1562\u20131598)</div><p class=\"ledger-body\">Mass violence between Catholics and Protestants. The St. Bartholomew&#x27;s Day Massacre (August 23\u201324, 1572): 3,000 Huguenots killed in Paris in a single night, with 5,000\u201330,000 killed in the subsequent provincial massacres. Pope Gregory XIII ordered the Te Deum sung in celebration.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Thirty Years&#x27; War (1618\u20131648)</div><p class=\"ledger-body\">A European religious-political war with an estimated 8 million casualties \u2014 the deadliest European conflict before the 20th century. Framed as a Catholic-Protestant conflict, the war depopulated large regions of central Europe. The Peace of Westphalia (1648) established the principle that rulers determine the religion of their territories \u2014 an admission that forced confessionalization had been the operating model.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Transatlantic Slave Trade \u2014 Papal Sanction (1452\u20131888)</div><p class=\"ledger-body\">Pope Nicholas V&#x27;s Dum Diversas (1452) authorized Alfonso V of Portugal to &#x27;attack, conquer, and reduce to perpetual slavery&#x27; Saracens, pagans, and enemies of Christ. Romanus Pontifex (1455) extended this to sub-Saharan Africa specifically. These papal bulls \u2014 never rescinded \u2014 provided the theological legal framework for the Atlantic slave trade. Estimated 12\u201315 million Africans transported; 1.5\u20132 million died in the Middle Passage.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Native American Genocide and Boarding Schools (1492\u20131978)</div><p class=\"ledger-body\">Columbus&#x27;s journal documents immediate enslavement of indigenous populations \u2014 in the name of Christ and the Spanish Crown. The boarding school system, operating in the United States from the 1870s through 1978 under the doctrine &#x27;Kill the Indian, Save the Man&#x27; (attributed to Capt. Richard Pratt), was largely church-administered. The 2022 U.S. Federal Indian Boarding School Initiative identified 408 schools across 37 states; thousands of children died. In Canada, the Truth and Reconciliation Commission (2015) documented over 4,100 named children who died in church-run residential schools.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Belgian Congo \u2014 Leopold II (1885\u20131908)</div><p class=\"ledger-body\">King Leopold II of Belgium, using Catholic missionary infrastructure for administrative legitimacy, established the Congo Free State as a personal fiefdom. Systematic terror \u2014 hostage-taking, severing of hands as proof of rubber quota compliance, forced labor \u2014 resulted in a population reduction estimated at 10\u201315 million people. The Catholic Church provided the colonial administration with institutional cover and logistical support.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Holocaust \u2014 Reichskonkordat and German Church Complicity (1933\u20131945)</div><p class=\"ledger-body\">The Reichskonkordat (July 20, 1933) \u2014 a treaty between the Vatican under Pope Pius XI and Nazi Germany under Hitler \u2014 was signed four months after Hitler became Chancellor. It legitimized the Nazi regime through Catholic institutional endorsement. Pope Pius XII&#x27;s silence during the Holocaust while receiving documented reports of mass extermination is a matter of historical record. The Deutsche Christen (German Christians) movement declared Hitler&#x27;s rise divinely ordained and removed the Old Testament from church use. An estimated 6 million Jews and 5 million others were murdered.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Apartheid \u2014 Dutch Reformed Church Theological Justification (1948\u20131991)</div><p class=\"ledger-body\">The Afrikaner Dutch Reformed Church (Nederduits Gereformeerde Kerk) provided the explicit theological justification for apartheid in South Africa, citing Genesis 9:25 (the fraudulent &#x27;Curse of Ham&#x27;), Genesis 11 (the Tower of Babel as divine mandate for racial separation), and Acts 17:26. The church declared apartheid divinely ordained. The system produced state-sanctioned torture, forced removals, and massacres, including the Sharpeville Massacre (1960) and the Soweto Uprising (1976).</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Lord&#x27;s Resistance Army \u2014 Uganda (1987\u2013present)</div><p class=\"ledger-body\">Joseph Kony&#x27;s Lord&#x27;s Resistance Army \u2014 operating primarily in Uganda, South Sudan, and the Central African Republic \u2014 has abducted an estimated 30,000 children for use as child soldiers and sex slaves, displaced 2 million people, and committed mass atrocities explicitly in the name of establishing a Christian theocracy based on the Ten Commandments. This is active, ongoing, and documented.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">Christian Identity Movement (20th\u201321st century)</div><p class=\"ledger-body\">The Christian Identity movement \u2014 operating in the United States and Canada \u2014 declares Anglo-Saxon and Germanic peoples to be the true Israelites of the Bible and characterizes Jewish people and people of color as subhuman enemies of the Creator. It has inspired documented terrorist attacks, bombings, and murders, including the 1984 assassination attempt on talk show host Alan Berg, the 1999 Buford Furrow synagogue and school shooting, and multiple documented plots against federal officials.</p></div><div class=\"ledger-entry\"><div class=\"ledger-title\">The Creation of Christ \u2014 The Nicaean Political Manufacture (325 CE)</div><p class=\"ledger-body\">The Christ figure as a co-equal divine being is not documented in any pre-Nicaean Hebrew source, in any DSS manuscript, or in the Ge&#x27;ez Orit. The homoousios decree \u2014 declaring the Son of the same substance as the Father \u2014 was voted at a council convened by an unbaptized Roman emperor who simultaneously minted Sol Invictus coinage and held the title Pontifex Maximus of Roman paganism. The figure in the NT is not the military liberator described in the War Scroll. He is a pacifist tax-payer who commands his followers to love their enemies \u2014 a portrait politically functional for Roman imperial stability and documented as structurally antithetical to the Qumran messianic expectation at every relevant point.</p></div><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The question before the record is not whether Christianity contains sincere believers or genuine acts of compassion. It does. The question is institutional. Every entry in this catalog was authorized, enabled, or not resisted by the institutional apparatus of Christianity at the time of its occurrence. <span class=\"atty-cite\">Dum Diversas (1452)</span> blessed the enslavement of Africans before Columbus sailed. <span class=\"atty-cite\">Reichskonkordat (1933)</span> legitimized Hitler within months of his appointment. <span class=\"atty-cite\">Dutch Reformed Church Synod declarations</span> made apartheid theology. <span class=\"atty-cite\">1QM (War Scroll)</span> describes YHWH&apos;s community as those who separate from the sons of darkness \u2014 not those who bless them with institutional endorsement. The covenant record and the institutional Christian record are in direct, documented opposition.</p></div>","sectionClass":"special"},{"id":"klan","chNum":"KL","title":"American Christians Didn't Just Support the Klan","subtitle":"They WERE the Klan","tag":"L.A. Bond","html":"<p class=\"body-text author-voice\">American Christians didn&#x27;t just support the Klan. They WERE the Klan.</p><p class=\"body-text author-voice\">Several well\u2011known Southern preachers were involved in leading or promoting the Ku Klux Klan, especially during the \u201csecond\u201d Klan of the early 20th century.</p><p class=\"body-text author-voice\">William Joseph Simmons, an American preacher and fraternal organizer who founded and led the revived \u201csecond\u201d Ku Klux Klan in 1915. He previously served as a Methodist minister before turning to fraternal organizing and Klan-building, and he headquartered the new Klan in Georgia while drawing heavily on Southern Lost Cause and Protestant rhetoric.</p><p class=\"body-text author-voice\">Roy Elonza Davis, an American preacher and white supremacist who co\u2011founded the second iteration of the Ku Klux Klan in 1915, served as second in command under Simmons and later as Imperial Wizard; he traveled as an evangelist and pastor, founding churches in Texas, Arkansas, Tennessee, Indiana, and Kentucky, and used revivals and religious meetings as tools for Klan recruitment.</p><p class=\"body-text author-voice\">The clergy also used churches as Klan platforms.</p><p class=\"body-text author-voice\">Roy Elonza Davis at First Baptist Church, Wichita Falls, Texas served as pastor there in the early 1920s, published a church paper called \u201cThe Progress\u201d pushing anti\u2011Catholic and Klan themes, and secretly acted as an official Klan spokesperson and organizer, holding Klan meetings at the church until congregants uncovered his record and removed him as pastor.</p><p class=\"body-text author-voice\">Davis\u2019s later churches in Texas, Arkansas, and Tennessee were all used for revival meetings in the 1930s that doubled as Klan recruiting events, while he held high national Klan office.</p><p class=\"body-text author-voice\">American Christians didn\u2019t just cheer the Klan from the pews\u2014they WERE the Klan!</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"verdict-bar\"><p>William Joseph Simmons \u2014 founder of the revived 1915 Klan \u2014 was a Methodist minister. Roy Elonza Davis \u2014 co-founder \u2014 was a Baptist pastor who used revival meetings as Klan recruitment events. The Klan&#x27;s cross-burning ritual is a Christian ritual. The Klan&#x27;s explicit framing was Protestant Christian nationalist. This is documented. There is no version of American Christian history that honestly excludes it.</p></div>","sectionClass":"author"},{"id":"id_fraud","chNum":"ID","title":"Mistaken Identity & I.D. Fraud","subtitle":"Somebody painted a face and called it Messiah","tag":"L.A. Bond","html":"<p class=\"body-text author-voice\">Are you studying? People perish for lack of what, beloved? It doesn\u2019t say that if they don\u2019t know it\u2019s cool, they\u2019ll be less accountable. No, that\u2019s not what the Word said. Sadly today many of you are deeply involved with a case of either mistaken identity or I.D. Fraud. Somebody painted a face and called it Messiah and many believed it. You didn\u2019t even check the credentials, you just looked at the fake ID &amp; went with its description. Why not do a background check, investigate that which could cost you your soul? People spend more time checking the background of a person than they do one shown to us as the Messiah. You can\u2019t find ONE VERSE in the Hebrew Bible to back such claims, not a single one. Stop giving me New Testament verses to back NewTestament verses, it\u2019s like trying to prove a fake ID with another fake ID. If God is the God of Abraham then why didn\u2019t Abraham do what folks are doing now? What about Jeremiah or Elijah, Daniel or David? The evidence is all before you yet you continue to follow the snake. Yah told Adam &amp; Eve what not to do, are you making the same mistake? So we know the names of Angels. We even know the names of anointed men, like Noah but you mean to tell me that a righteous GOD would forget to tell us about someone else that was equal to Him, in which we\u2019d have to bow to &amp; serve in order to be saved. Even though He warns us never to bow to images or that He doesn\u2019t share His glory with any other? Read the requirements of a sacrifice, now tell me, does this line up with what folks are claiming to be the sacrifice for mankind now? Did the God that does not change, CHANGE? Or have folks decided to worship something other than our Creator &amp; try to attach His name to it as something acceptable?</p><div class=\"section-rule\"><div class=\"section-rule-line\"></div><span class=\"section-rule-glyph\">\ud802\udd09\ud802\udd04\ud802\udd05\ud802\udd04</span><div class=\"section-rule-line rev\"></div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The author issues a forensic challenge: <span class=\"atty-cite\">Genesis 12:3</span> \u2014 YHWH blessed those who bless Avraham. <span class=\"atty-cite\">Deuteronomy 6:4</span> \u2014 Shema Yisrael, YHWH our Creator, YHWH is One. <span class=\"atty-cite\">Isaiah 43:11</span> \u2014 I, I am YHWH, and besides Me there is no Savior. <span class=\"atty-cite\">Isaiah 44:6</span> \u2014 I am the first and I am the last; besides Me there is no god. Now produce a single verse from the Hebrew Bible \u2014 Torah, Nevi&apos;im, Ketuvim \u2014 that instructs the covenant community to worship a co-equal divine son, pray in that son&apos;s name, or credit that son with salvation. The verse does not exist. The burden of proof belongs to those making the claim. Produce the primary source documentation \u2014 not NT verses used to prove NT verses. The record speaks for itself.</p></div>","sectionClass":"author"},{"id":"woe","chNum":"WOE","title":"WOE! WOE! WOE!","subtitle":"A warning. Fast, study, rebuke, pray.","tag":"L.A. Bond","html":"<p class=\"body-text author-voice\">We were given the Commandments yet not one of them warns us to worship a sacrifice. The Hebrew people knew better because they know how long they suffered for disobeying our Creator so this is why most don\u2019t mess around with calling upon other names or Sun-day worship. They follow Moses yet all of these other nations have come along &amp; think that they have the answers even though Yah never gave them the tablets. They\u2019ve transcribed lies to fit their agenda just as warned in Jeremiah 8:8. The contradictions between the Hebrew Bible/Tanakh &amp; what we\u2019ve been taught in the Bible, are numerous.</p><p class=\"body-text author-voice\">What lies have our fathers inherited?</p><p class=\"body-text author-voice\">Folks have added to the text. They\u2019ve told you the word Trinity is in the Word, it is NOT. Folks have assumed a whole lot for something so incredibly important. Then they get mad when you tell them to go to our Creator for truth. What doesn\u2019t Satan want you to know? Why are people painting Easter eggs &amp; teaching that to their children as a form of something holy? Can you go into a church that does not have either an image of a man or an image of a cross in it or upon it? Oh but what were we told concerning these things? Do we ignore what Adonai said simply because most of the world is saying something different? If Christianity truly honors The God of Israel then why is it riddled with paganism? Even Satan has a cross, the klan have a cross, Hitler had a cross, in fact he killed Jews because he said he was a Christian. I\u2019m just asking you to get on your face before your Creator &amp; seek Him. Is this the faith of Abraham or have we learned detestable ways?</p><p class=\"body-text author-voice\">WOE! WOE! WOE! Pray ATTENTION! Fast, study, rebuke, pray &amp; then do ALL OVER AGAIN if you have to, but please dear brethren do not ignore. Something is about to SHAKE!</p><p class=\"body-text author-voice\">If you think it\u2019s evil to serve God then baby tell me just who have you been serving? Why would it be deemed evil to praise your God? IF HE\u2019S really your God! You better check your religion if your religion is turning you away from God to anything else?</p><p class=\"body-text author-voice\">Redeemer, GOD the redeemer in the end will stand upon the earth but whose name will you be calling on as your rock and your redeemer? You sure haven\u2019t been calling on El Shaddai, YHWH, Elohim, The God of Israel, you haven\u2019t called on THE MOST HIGH\u2019s name. You\u2019ve been calling somebody else your Rock &amp; your redeemer trying to pass it off as God\u2019s praise, when He already told you that He ALONE is God &amp; He doesn\u2019t share His glory with nobody else!</p><p class=\"body-text author-voice\">This \ud83d\udc47is what God\u2019s servants do, yet are you doing it in His name or in the name of another? Somebody better listen because the days ahead are about to shake this world! YOU need to know what GOD literally said in His Word, so you know what you\u2019re doing &amp; why you are doing it! Are you going to church because mama did, on Sunday? Are you celebrating Christmas because mama did in December as Christ\u2019s birthday? Read how God feels about the traditions of men! How do you not know that God has chosen you for such a time as this to break generational curses &amp; uncover the lies</p><p class=\"body-text author-voice\">You\u2019re doing what your father did, &amp; not following God\u2019s WORD! Daddy may not have known any better but you DO! You have the luxury of technology. Woe unto you when you won\u2019t even look &amp; seek how to serve YOUR CREATOR! What would make a man fear learning how to please the one he calls LORD? SATAN covers the ears &amp; closes the eyes! The God of Israel OPENS the ears &amp; OPENS the eyes! Tell me, who have you been serving, what name have you called on other than EL Shaddai, Elohim, YHWH, THE MOST HIGH, The God of Israel? To praise another name is not the same as praising HIS name! Read the Word, His Word &amp; understand that GOD does not change, people do.</p><p class=\"body-text author-voice\">Why would a merciful God, a just God decide to send a son that He speaks nothing of. No mention of him in even the Ten Commandments, which we are to follow throughout the generations. Not one word of a Yeshua, a Jesus, a Christ, as His son. I heard of an Immanuel, but history tells that that brother wasn\u2019t born of a Virgin &amp; he was born during the time of Isaiah, but you don\u2019t know because you don\u2019t study, you\u2019re too busy following men.</p><p class=\"body-text author-voice\">Wouldn\u2019t it be important to mention a son in which we must bow to &amp; worship, if our souls are suppose to rely on such a one? In fact we are told that we can\u2019t even get to the Father accept we go by the son, which means we\u2019d have to go to Christ first, yet we are told not to have any other gods before THE Most High. If we say well Jesus is not a god, then why call him Lord &amp; Savior? Especially when The God of Israel already told us that He alone is Lord and that besides Him there is no other Savior.</p><p class=\"body-text author-voice\">Oh folks will tell you of New Testament scriptures to justify New Testament scriptures without clarity of the Old, or even the Hebrew texts. When referring to the Old Testament they lean onto their own understanding by applying taught lies, contradictions &amp; speculation. They speculate that when God said let us, that He was referring to Christ. Now nowhere is that said, yet it\u2019s firmly believed in spite of the fact that God Himself states in several scriptures that He alone created the earth, that He alone, understand what alone means, He alone forgives sins, is our Savior. Who do most call Lord &amp; Savior? Is it Adonai, El Shaddai, Elohim or any of the names of God? No! They call Jesus their Lord &amp; Savior, their rock &amp; redeemer. Ignoring all scriptures that said otherwise.</p><p class=\"body-text author-voice\">Wait, WHO is this \u201cI\u201d, the scripture is talking about? Is it not The God of Israel &amp; what time period was this because if it\u2019s the Old Testament then God was forgiving sins before anyone had to die for sins to be forgiven. Who forgave Nineveh? Who forgave David? Who is this talked about in Psalms 62:6-7, Deut 6:4-6 &amp; Job 19:25? Adonai, that\u2019s WHO, EL Shaddai, ELOHIM, YHWH, The Almighty God of Israel!</p><p class=\"body-text author-voice\">Then ask yourself, if we needed Christ to talk to God, Who did Abraham go through to talk to God? What name did Moses call on to get to God?</p><p class=\"body-text author-voice\">This page is not for the faint of heart nor the fake of heart, I answer to the Almighty God of Israel, HIM ONLY WILL I SERVE! I don\u2019t need your likes, I\u2019m just asking, pleading for you to go to God &amp; ask for TRUTH! I\u2019m not going to itch your ears, your soul means too much for nonsense &amp; lies! Every preacher that opens their doors on Sun-day, WOE! Every church that puts up a Christmas tree, WOE! If they\u2019ve been lying to you about that, what other lies are hiding the spirit of idolatry? Idolatry is NO small thing to God. If you worship &amp; bow to anything other than The God of Israel, you are in DANGER OF IDOLATRY! GO Do your research, GO STUDY, GO FAST, GO PRAY!</p><div class=\"evidence-block\" data-source=\"Dead Sea Scrolls \u2014 Primary Authority\">\n<div class=\"evidence-inner\">\n<div class=\"evidence-ref\">Ezekiel 20:12\u201320 (4QEzek, DSS witness) \u00b7 Qumran Fragment</div>\n<p class=\"evidence-text\">&ldquo;I gave them My Sabbaths to be a sign between Me and them, that they might know that I am YHWH who sets them apart... but they greatly profaned My Sabbaths.&rdquo;</p>\n<p class=\"evidence-note\">The prophetic warning preserved in DSS fragments of Ezekiel mirrors the author&#x27;s WOE declarations precisely: the covenant community that breaks the Sabbath faces the same judgment as those who worshipped other gods. YHWH&#x27;s Sabbath is a sign of covenant identity. Its replacement with Roman Sunday worship is \u2014 by the plain text of this passage \u2014 the same category of violation that brought Israel into captivity.</p>\n</div></div><div class=\"attorney-block\"><p class=\"attorney-text\">The author's WOE declarations align with documented prophetic precedent. <span class=\"atty-cite\">Nehemiah 13:17\u201318</span> \u2014 Yehemiah rebuked the rulers for Sabbath violation and said: 'Did not your fathers do thus, and did not our God bring all this disaster on us and on this city?' <span class=\"atty-cite\">Ezekiel 20:12\u201320 (4QEzek)</span> \u2014 Sabbath as covenant sign; profanation as the mechanism of judgment. The WOE is not hyperbole. It is covenant language with documented historical consequence. The author is issuing the same warning the prophets issued. The record of those warnings being ignored \u2014 and the consequences that followed \u2014 is the entire Old Testament.</p></div>","sectionClass":"author"}];
+
+// ── GE chapter index (built after ge_data.js loads) ───────────────
+var GE_CHAPTERS = [];
+function buildGeIndex(){
+  if(!window.GE_DATA) return;
+  GE_DATA.forEach(function(vol){
+    vol.chapters.forEach(function(ch){
+      GE_CHAPTERS.push({id:'ge_'+vol.vol+'_'+ch.id,vol:vol.vol,volName:vol.name,
+        volDesc:vol.desc,chNum:ch.num,title:ch.title,content:ch.content,isGE:true});
+    });
+  });
+}
+
+// ── State ─────────────────────────────────────────────────────────
+var cur = 0;
+var ALL_CHAPTERS = [];
+var sbOpen = false;
+var vpOpen = false;
+var fs = parseInt(localStorage.getItem('wsa_fs'))||17;
+
+function buildChapterList(){
+  ALL_CHAPTERS = WSA_CHAPTERS.slice();
+  GE_CHAPTERS.forEach(function(c){ ALL_CHAPTERS.push(c); });
+}
+
+// ── Render WSA chapter ────────────────────────────────────────────
+function renderWSA(ch){
+  var secClass = ch.sectionClass||'author';
+  return '<div class="ch-opener '+secClass+'">'
+    +'<div class="ch-num">'+escH(ch.chNum)+'</div>'
+    +(ch.tag?'<div class="ch-tag">'+escH(ch.tag)+'</div>':'')
+    +'<h1 class="ch-title">'+escH(ch.title)+'</h1>'
+    +'<p class="ch-subtitle">'+escH(ch.subtitle)+'</p>'
+    +'</div>'
+    +'<div class="page-body">'+ch.html+'</div>';
+}
+
+// ── Render GE chapter ─────────────────────────────────────────────
+function renderGEItem(item){
+  if(!item||!item.type) return '';
+  var t = item.type;
+  if(t==='body') return '<p class="body-text">'+escH(item.text||'')+'</p>';
+  if(t==='bullet') return '<div class="ge-bullet">'+escH(item.text||'')+'</div>';
+  if(t==='fact') return '<div class="ge-fact">'+escH(item.text||'')+'</div>';
+  if(t==='part_banner') return '<div class="ge-part">'+escH(item.text||'')+'</div>';
+  if(t==='source') return '<div class="ge-source">'+escH(item.text||'')+'</div>';
+  if(t==='section'){
+    var ps = (item.paragraphs||[]).map(function(p){return '<p class="body-text">'+escH(p)+'</p>';}).join('');
+    return '<div class="ge-section">'+escH(item.heading||'')+'</div>'+ps;
+  }
+  if(t==='note'){
+    var nt = item.note_type||'default';
+    var cls = nt==='dss'?'ge-note-dss':nt==='orit'?'ge-note-orit':nt==='critical'?'ge-note-critical':'ge-note-default';
+    return '<div class="'+cls+'"><span class="note-label">'+escH(item.label||'')+'</span>'
+      +'<p class="body-text" style="margin:0;font-size:.9em">'+escH(item.text||'')+'</p></div>';
+  }
+  return '';
+}
+
+function renderGE(ch){
+  // Find vol data for header
+  var volData = null;
+  if(window.GE_DATA) GE_DATA.forEach(function(v){ if(v.vol===ch.vol) volData=v; });
+  var hdr = '';
+  if(volData && ch.chNum===0){
+    hdr = '<div class="ge-vol-header">'
+      +'<div class="ge-vol-num">Volume '+volData.vol+'</div>'
+      +'<div class="ge-vol-title">THE GREAT ERASER</div>'
+      +'<div class="ge-vol-desc">'+escH(volData.desc)+'</div>'
+      +'</div>';
+  }
+  var opener = '<div class="ch-opener special">'
+    +'<div class="ch-num">GE &middot; Vol '+ch.vol+' &middot; Ch '+ch.chNum+'</div>'
+    +'<div class="ch-tag">The Great Eraser &mdash; '+escH((volData&&volData.name)||'')+'</div>'
+    +'<h1 class="ch-title">'+escH(ch.title)+'</h1>'
+    +'<p class="ch-subtitle">'+escH((volData&&volData.desc)||'')+'</p>'
+    +'</div>';
+  var body = '<div class="page-body">'
+    +(ch.content||[]).map(renderGEItem).join('')
+    +'</div>';
+  return hdr+opener+body;
+}
+
+// ── Go to chapter ─────────────────────────────────────────────────
+function go(idx){
+  if(idx<0||idx>=ALL_CHAPTERS.length) return;
+  cur = idx;
+  var ch = ALL_CHAPTERS[cur];
+  var html = ch.isGE ? renderGE(ch) : renderWSA(ch);
+  document.getElementById('content').innerHTML = html;
+  document.getElementById('main').scrollTop = 0;
+  updateSidebar();
+  updateNav();
+  updateTitle();
+  stopVoice();
+  clearSearch();
+  savePos();
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────
+function buildSidebar(){
+  var wsaEl = document.getElementById('sb-wsa');
+  var geEl = document.getElementById('sb-ge');
+  wsaEl.innerHTML = '';
+  geEl.innerHTML = '';
+  
+  // WSA section labels
+  var sections = {author:'Author Voice',historical:'Historical Record',special:'Key Chapters'};
+  var lastSec = null;
+  
+  WSA_CHAPTERS.forEach(function(ch,i){
+    var sec = ch.sectionClass;
+    if(sec!==lastSec){
+      var lbl = document.createElement('div');
+      lbl.className = 'sb-section';
+      lbl.style.cssText = 'font-size:8px;padding:8px 14px 4px;border-bottom:none;margin-top:4px;opacity:.7';
+      lbl.textContent = sections[sec]||sec;
+      wsaEl.appendChild(lbl);
+      lastSec = sec;
+    }
+    var el = document.createElement('div');
+    el.className = 'sb-item';
+    el.setAttribute('data-idx', i);
+    el.innerHTML = '<span class="sb-num">'+ch.chNum+'</span>'+ch.title;
+    el.addEventListener('click',function(){
+      go(parseInt(this.getAttribute('data-idx')));
+      if(window.innerWidth<=700){toggleSidebar();}
+    });
+    wsaEl.appendChild(el);
+  });
+  
+  // GE chapters
+  var geOffset = WSA_CHAPTERS.length;
+  var lastVol = null;
+  GE_CHAPTERS.forEach(function(ch,i){
+    if(ch.vol!==lastVol){
+      var lbl = document.createElement('div');
+      lbl.className = 'sb-section';
+      lbl.style.cssText = 'font-size:8px;padding:8px 14px 4px;border-bottom:none;margin-top:4px;opacity:.7';
+      lbl.textContent = 'Vol '+ch.vol+' — '+ch.volName;
+      geEl.appendChild(lbl);
+      lastVol = ch.vol;
+    }
+    var el = document.createElement('div');
+    el.className = 'sb-item';
+    el.setAttribute('data-idx', geOffset+i);
+    el.innerHTML = '<span class="sb-num">'+ch.chNum+'</span>'+ch.title.substring(0,48)+(ch.title.length>48?'&hellip;':'');
+    el.addEventListener('click',function(){
+      go(parseInt(this.getAttribute('data-idx')));
+      if(window.innerWidth<=700){toggleSidebar();}
+    });
+    geEl.appendChild(el);
+  });
+}
+
+function updateSidebar(){
+  document.querySelectorAll('.sb-item').forEach(function(el){
+    el.classList.toggle('active', parseInt(el.getAttribute('data-idx'))===cur);
+  });
+  // Scroll active into view
+  var active = document.querySelector('.sb-item.active');
+  if(active) active.scrollIntoView({block:'nearest'});
+}
+
+function toggleSidebar(){
+  sbOpen = !sbOpen;
+  document.getElementById('sb').classList.toggle('open',sbOpen);
+  document.getElementById('main').classList.toggle('sb-open',sbOpen&&window.innerWidth>700);
+  document.getElementById('b-sb').classList.toggle('on',sbOpen);
+}
+
+// ── Navigation ────────────────────────────────────────────────────
+function updateNav(){
+  document.getElementById('b-prev').disabled = cur<=0;
+  document.getElementById('b-next').disabled = cur>=ALL_CHAPTERS.length-1;
+  document.getElementById('bn-pos').textContent = (cur+1)+' / '+ALL_CHAPTERS.length;
+}
+
+function updateTitle(){
+  var ch = ALL_CHAPTERS[cur];
+  document.getElementById('tb-title').textContent = ch.title;
+}
+
+// ── Font size ─────────────────────────────────────────────────────
+function setFs(v){
+  fs = Math.min(24,Math.max(12,v));
+  document.documentElement.style.setProperty('--fs',fs+'px');
+  localStorage.setItem('wsa_fs',fs);
+}
+
+// ── Night / Dyslexic ──────────────────────────────────────────────
+document.getElementById('b-dk').addEventListener('click',function(){
+  document.body.classList.toggle('night');
+  this.classList.toggle('on');
+  localStorage.setItem('wsa_night',document.body.classList.contains('night')?'1':'0');
+});
+document.getElementById('b-dy').addEventListener('click',function(){
+  document.body.classList.toggle('dyslexic');
+  this.classList.toggle('on');
+  localStorage.setItem('wsa_dy',document.body.classList.contains('dyslexic')?'1':'0');
+});
+
+// ── Progress bar ──────────────────────────────────────────────────
+document.getElementById('main').addEventListener('scroll',function(){
+  var el = this, pct = el.scrollTop/(el.scrollHeight-el.clientHeight)*100||0;
+  document.getElementById('prog-fill').style.width = Math.min(100,pct)+'%';
+  document.getElementById('stt').classList.toggle('vis',el.scrollTop>300);
+  // Auto-save position every 500px scroll
+  savePos();
+});
+
+// ── Save / Restore position ───────────────────────────────────────
+function savePos(){
+  localStorage.setItem('wsa_pos',JSON.stringify({idx:cur,y:document.getElementById('main').scrollTop}));
+}
+function restorePos(){
+  try{
+    var p = JSON.parse(localStorage.getItem('wsa_pos')||'null');
+    if(p&&p.idx>=0&&p.idx<ALL_CHAPTERS.length){
+      go(p.idx);
+      setTimeout(function(){document.getElementById('main').scrollTop=p.y||0;},100);
+      return;
+    }
+  }catch(e){}
+  go(0);
+}
+
+// ── Search ────────────────────────────────────────────────────────
+function clearSearch(){
+  document.querySelectorAll('mark').forEach(function(m){m.outerHTML=m.innerHTML;});
+}
+function doSearch(q){
+  clearSearch();
+  if(!q||q.length<2) return;
+  var c = document.getElementById('content'), ql = q.toLowerCase();
+  var walker = document.createTreeWalker(c,NodeFilter.SHOW_TEXT,null,false);
+  var nodes=[],n,first=null;
+  while(n=walker.nextNode()) nodes.push(n);
+  nodes.forEach(function(node){
+    var t=node.textContent, i=t.toLowerCase().indexOf(ql);
+    if(i>=0){
+      var r=document.createRange();
+      r.setStart(node,i);r.setEnd(node,i+q.length);
+      try{
+        var m=document.createElement('mark');
+        r.surroundContents(m);
+        if(!first){first=m;m.classList.add('first-hit');}
+      }catch(e){}
+    }
+  });
+  if(first) document.getElementById('main').scrollTop = 
+    first.getBoundingClientRect().top + document.getElementById('main').scrollTop - 80;
+}
+
+document.getElementById('sq').addEventListener('input',function(){ doSearch(this.value); });
+document.getElementById('b-sr').addEventListener('click',function(){
+  document.getElementById('sq').value=''; clearSearch();
+});
+
+// ── Voice / TTS ───────────────────────────────────────────────────
+function initVoice(){
+  if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged=loadVoices;
+  loadVoices();
+}
+function loadVoices(){
+  var voices=window.speechSynthesis&&window.speechSynthesis.getVoices()||[];
+  var sel=document.getElementById('vp-voice');
+  if(!voices.length) return;
+  var saved=localStorage.getItem('wsa_voice');
+  sel.innerHTML='';
+  var enh=[],other=[];
+  voices.forEach(function(v,i){
+    if(v.name.indexOf('Enhanced')>=0) enh.push({v,i});
+    else other.push({v,i});
+  });
+  enh.concat(other).forEach(function(item){
+    var opt=document.createElement('option');
+    opt.value=item.i;opt.textContent=item.v.name+(item.v.lang?' ('+item.v.lang+')':'');
+    if(saved&&item.v.name===saved) opt.selected=true;
+    sel.appendChild(opt);
+  });
+}
+function getVoice(){
+  var voices=window.speechSynthesis.getVoices();
+  var saved=localStorage.getItem('wsa_voice');
+  if(saved) for(var i=0;i<voices.length;i++) if(voices[i].name===saved) return voices[i];
+  var idx=parseInt(document.getElementById('vp-voice').value);
+  return(!isNaN(idx)&&voices[idx])||null;
+}
+function getVoiceText(){
+  var c=document.getElementById('content');
+  return Array.from(c.querySelectorAll('.body-text,.attorney-text,.evidence-text,.ge-bullet,.ge-fact')).map(function(e){return e.textContent;}).join('. ');
+}
+function stopVoice(){
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  document.getElementById('vp-pl').style.display='';
+  document.getElementById('vp-pa').style.display='none';
+  document.getElementById('vp-status').textContent='Ready';
+}
+
+document.getElementById('b-vt').addEventListener('click',function(){
+  vpOpen=!vpOpen;
+  document.getElementById('vp').classList.toggle('on',vpOpen);
+  this.classList.toggle('on',vpOpen);
+  if(!vpOpen) stopVoice();
+});
+document.getElementById('vp-pl').addEventListener('click',function(){
+  if(!window.speechSynthesis) return;
+  var txt=getVoiceText(); if(!txt) return;
+  var u=new SpeechSynthesisUtterance(txt);
+  u.voice=getVoice();
+  u.rate=parseFloat(document.getElementById('vp-speed').value)||1;
+  u.onend=stopVoice; u.onerror=stopVoice;
+  u.onstart=function(){
+    document.getElementById('vp-pl').style.display='none';
+    document.getElementById('vp-pa').style.display='';
+    document.getElementById('vp-status').textContent='Reading…';
+  };
+  window.speechSynthesis.speak(u);
+});
+document.getElementById('vp-pa').addEventListener('click',function(){
+  if(window.speechSynthesis.paused){
+    window.speechSynthesis.resume();
+    this.style.display='none';
+    document.getElementById('vp-pl').style.display='';
+  } else {
+    window.speechSynthesis.pause();
+    this.style.display='none';
+    document.getElementById('vp-pl').style.display='';
+  }
+});
+document.getElementById('vp-st').addEventListener('click',stopVoice);
+document.getElementById('vp-pv').addEventListener('click',function(){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance('The primary source documentation is the authority. The record speaks for itself.');
+  u.voice=getVoice();
+  u.rate=parseFloat(document.getElementById('vp-speed').value)||1;
+  window.speechSynthesis.speak(u);
+});
+document.getElementById('vp-voice').addEventListener('change',function(){
+  var voices=window.speechSynthesis.getVoices();
+  var v=voices[parseInt(this.value)]; if(v) localStorage.setItem('wsa_voice',v.name);
+});
+
+// ── Controls ──────────────────────────────────────────────────────
+document.getElementById('b-sb').addEventListener('click',toggleSidebar);
+document.getElementById('b-prev').addEventListener('click',function(){ if(cur>0) go(cur-1); });
+document.getElementById('b-next').addEventListener('click',function(){ if(cur<ALL_CHAPTERS.length-1) go(cur+1); });
+document.getElementById('b-fa').addEventListener('click',function(){ setFs(fs-1); });
+document.getElementById('b-fg').addEventListener('click',function(){ setFs(fs+1); });
+document.getElementById('stt').addEventListener('click',function(){ document.getElementById('main').scrollTop=0; });
+document.getElementById('overlay').addEventListener('click',function(){
+  document.getElementById('cj-modal').classList.remove('on');
+  this.classList.remove('on');
+});
+
+// ── Chapter Jump ──────────────────────────────────────────────────
+document.getElementById('b-cj').addEventListener('click',function(){
+  document.getElementById('cj-modal').classList.add('on');
+  document.getElementById('overlay').classList.add('on');
+  document.getElementById('cj-input').value='';
+  setTimeout(function(){document.getElementById('cj-input').focus();},80);
+});
+document.getElementById('cj-go').addEventListener('click',function(){
+  var q=document.getElementById('cj-input').value.trim().toLowerCase();
+  if(!q) return;
+  var idx = ALL_CHAPTERS.findIndex(function(c){
+    return String(c.chNum).toLowerCase()===q || c.title.toLowerCase().indexOf(q)>=0;
+  });
+  if(idx>=0){ go(idx); document.getElementById('cj-modal').classList.remove('on'); document.getElementById('overlay').classList.remove('on'); }
+  else { document.getElementById('cj-input').style.borderColor='#e74c3c'; }
+});
+document.getElementById('cj-cancel').addEventListener('click',function(){
+  document.getElementById('cj-modal').classList.remove('on');
+  document.getElementById('overlay').classList.remove('on');
+});
+document.getElementById('cj-input').addEventListener('keydown',function(e){ if(e.key==='Enter') document.getElementById('cj-go').click(); });
+
+// Keyboard navigation
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') { if(cur<ALL_CHAPTERS.length-1) go(cur+1); }
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') { if(cur>0) go(cur-1); }
+});
+
+// ── Escape key ───────────────────────────────────────────────────
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.getElementById('cj-modal').classList.remove('on');
+    document.getElementById('overlay').classList.remove('on');
+    if(sbOpen) toggleSidebar();
+  }
+});
+
+// ── Helper ────────────────────────────────────────────────────────
+function escH(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Load GE data and init ─────────────────────────────────────────
+function initApp(){
+  // Restore prefs
+  if(localStorage.getItem('wsa_night')==='1') { document.body.classList.add('night'); document.getElementById('b-dk').classList.add('on'); }
+  if(localStorage.getItem('wsa_dy')==='1') { document.body.classList.add('dyslexic'); document.getElementById('b-dy').classList.add('on'); }
+  setFs(fs);
+  
+  buildGeIndex();
+  buildChapterList();
+  buildSidebar();
+  initVoice();
+  restorePos();
+  
+  // Hide splash
+  setTimeout(function(){
+    document.getElementById('splash').classList.add('gone');
+  },1400);
+}
+
+// Load ge_data.js then init
+var geScript = document.createElement('script');
+geScript.src = 'ge_data.js';
+geScript.onload = initApp;
+geScript.onerror = function(){
+  // Init without GE data
+  buildChapterList();
+  buildSidebar();
+  initVoice();
+  restorePos();
+  document.getElementById('splash').classList.add('gone');
+};
+document.head.appendChild(geScript);
+
+// PWA service worker
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
