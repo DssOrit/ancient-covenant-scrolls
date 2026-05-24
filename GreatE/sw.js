@@ -1,9 +1,9 @@
-const CACHE = 'great-eraser-v4';
+const CACHE = 'great-eraser-v5';
 const PRECACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon-180.png',
+  '/apple-touch-icon.png',
   '/icon-192.png',
   '/icon-512.png',
 ];
