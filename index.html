@@ -53,10 +53,10 @@ body.dark #sb{background:#161616}
 .tf.cur{border-left:2px solid #666;padding-left:20px}
 
 /* MAIN */
-:root{--dock-h:88px}
-#main{margin-left:265px;margin-top:calc(49px + env(safe-area-inset-top,0px));margin-bottom:0;padding:24px 40px calc(var(--dock-h) + env(safe-area-inset-bottom,0px) + 16px);max-width:860px;transition:margin .25s}
+:root{--reader-footer-height:170px}
+#main{margin-left:265px;margin-top:calc(49px + env(safe-area-inset-top,0px));margin-bottom:0;padding:24px 40px calc(var(--reader-footer-height) + env(safe-area-inset-bottom,0px) + 32px);max-width:860px;transition:margin .25s}
 #main.wide{margin-left:0}
-@media(max-width:1023px){#main{margin-left:0;padding:14px 14px calc(var(--dock-h) + env(safe-area-inset-bottom,0px) + 16px)}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}#bnav,#voice-bar{left:0}}
+@media(max-width:1023px){#main{margin-left:0;padding:14px 14px calc(var(--reader-footer-height) + env(safe-area-inset-bottom,0px) + 32px)}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}#reader-footer{left:0}}
 #content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
 
 /* HIGHLIGHTS */
@@ -73,26 +73,24 @@ body.dark mark{background:#5a4a00;color:#fff}
 .hc{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer}
 .hx{background:#333;color:#aaa;font-size:11px;border:none;border-radius:3px;padding:2px 6px;cursor:pointer}
 
-/* BOTTOM NAV */
-#bnav{position:fixed;bottom:0;left:265px;right:0;height:calc(44px + env(safe-area-inset-bottom,0px));background:#1a1a1a;display:none;align-items:center;justify-content:space-between;padding:0 10px env(safe-area-inset-bottom,0px);z-index:1000;border-top:1px solid #2a2a2a;box-sizing:border-box;transition:left .25s}
-#bnav.wide{left:0}
-body.dark #bnav{background:#0f0f0f}
-.bb{background:#333;color:#ccc;padding:5px 12px;border-radius:4px;font-size:12px;border:none;cursor:pointer}
+/* SINGLE FIXED FOOTER */
+#reader-footer{position:fixed;left:265px;right:0;bottom:0;z-index:1000;background:#111;border-top:1px solid #333;display:none;flex-direction:column;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px);transition:left .25s}
+#reader-footer.wide{left:0}
+body.dark #reader-footer{background:#0a0a0a}
+#voice-bar{display:none;align-items:center;gap:4px;padding:0 10px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;border-bottom:1px solid #222}
+#voice-bar.show{display:flex}
+#bnav{display:flex;align-items:center;justify-content:space-between;padding:0 10px;height:44px;flex-shrink:0}
+.bb{background:#333;color:#ccc;padding:5px 12px;border-radius:4px;font-size:12px;border:none;cursor:pointer;flex-shrink:0}
 .bb:hover{background:#555;color:#fff}
 .bb:disabled{opacity:.3;cursor:default}
 #pos{color:#777;font-size:11px}
-
-/* TOP BUTTON */
-#top{position:fixed;bottom:58px;right:12px;background:#333;color:#bbb;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:none;z-index:1001;box-shadow:0 2px 8px rgba(0,0,0,.4)}
-
-/* PANELS */
-#voice-bar{position:fixed;bottom:calc(44px + env(safe-area-inset-bottom,0px));left:265px;right:0;height:44px;background:#111;border-top:1px solid #333;padding:0 10px;z-index:999;display:none;align-items:center;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;transition:left .25s}
-#voice-bar.wide{left:0}
-#voice-bar.show{display:flex}
 .vb{background:#222;color:#bbb;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:Arial;white-space:nowrap;flex-shrink:0}
 .vb:hover,.vb.on{background:#444;color:#fff}
 #vstatus{color:#555;font-size:10px;flex-shrink:0}
 #vvol{width:55px;accent-color:#777;cursor:pointer;flex-shrink:0;vertical-align:middle}
+
+/* TOP BUTTON */
+#top{position:fixed;bottom:calc(var(--reader-footer-height) + 10px);right:12px;background:#333;color:#bbb;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:none;z-index:1001;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 
 #notes-panel{position:fixed;top:49px;right:0;width:280px;bottom:49px;background:#1a1a1a;border-left:1px solid #333;z-index:800;display:none;flex-direction:column}
 #notes-panel.show{display:flex}
@@ -171,41 +169,41 @@ body.dark #bnav{background:#0f0f0f}
   <button class="nb" onclick="closeChJump()" style="color:#666">✕</button>
 </div>
 
-<!-- BOTTOM NAV -->
-<div id="bnav">
-  <button class="bb" id="btn-prev" onclick="navTo(CUR-1)" disabled>◀ Prev</button>
-  <span id="pos">— of 112</span>
-  <button class="bb" id="btn-next" onclick="navTo(CUR+1)">Next ▶</button>
+<!-- READER FOOTER: single fixed dock, row1=audio row2=nav -->
+<div id="reader-footer">
+  <div id="voice-bar">
+    <button class="vb" id="vbtn-play" onclick="vPlay()">▶ Play</button>
+    <button class="vb" onclick="vPause()">⏸</button>
+    <button class="vb" onclick="vStop()">⏹</button>
+    <select id="vspd" class="vb" onchange="vSetSpeed(this.value)" style="padding:2px">
+      <option value="0.7">0.7×</option><option value="0.85">0.85×</option>
+      <option value="1" selected>1×</option><option value="1.2">1.2×</option>
+      <option value="1.5">1.5×</option>
+    </select>
+    <select id="vvoice" class="vb" onchange="vSetVoice(this.value)" style="max-width:120px;padding:2px"></select>
+    <button class="vb" onclick="vPreview()">Preview</button>
+    <select id="vmode" class="vb" onchange="VMODE=this.value" style="padding:2px">
+      <option value="verses">Verses</option>
+      <option value="notes">Notes</option>
+      <option value="all">All</option>
+    </select>
+    <label style="color:#666;font-size:10px;display:flex;align-items:center;gap:3px;flex-shrink:0">
+      <input type="checkbox" id="vauto" style="width:12px"> Auto-next
+    </label>
+    <input type="range" id="vvol" min="0" max="1" step="0.05" value="1" title="Volume" onchange="vSetVol(this.value)">
+    <div id="vstatus">—</div>
+  </div>
+  <div id="bnav">
+    <button class="bb" id="btn-prev" onclick="navTo(CUR-1)" disabled>◀ Prev</button>
+    <span id="pos">— of 112</span>
+    <button class="bb" id="btn-next" onclick="navTo(CUR+1)">Next ▶</button>
+  </div>
 </div>
 
 <!-- RECENT -->
 <div id="recent-panel"></div>
 <!-- BOOKMARKS -->
 <div id="bm-panel"></div>
-
-<!-- VOICE BAR -->
-<div id="voice-bar">
-  <button class="vb" id="vbtn-play" onclick="vPlay()">▶ Play</button>
-  <button class="vb" onclick="vPause()">⏸</button>
-  <button class="vb" onclick="vStop()">⏹</button>
-  <select id="vspd" class="vb" onchange="vSetSpeed(this.value)" style="padding:2px">
-    <option value="0.7">0.7×</option><option value="0.85">0.85×</option>
-    <option value="1" selected>1×</option><option value="1.2">1.2×</option>
-    <option value="1.5">1.5×</option>
-  </select>
-  <select id="vvoice" class="vb" onchange="vSetVoice(this.value)" style="max-width:120px;padding:2px"></select>
-  <button class="vb" onclick="vPreview()">Preview</button>
-  <select id="vmode" class="vb" onchange="VMODE=this.value" style="padding:2px">
-    <option value="verses">Verses</option>
-    <option value="notes">Notes</option>
-    <option value="all">All</option>
-  </select>
-  <label style="color:#666;font-size:10px;display:flex;align-items:center;gap:3px;flex-shrink:0">
-    <input type="checkbox" id="vauto" style="width:12px"> Auto-next
-  </label>
-  <input type="range" id="vvol" min="0" max="1" step="0.05" value="1" title="Volume" onchange="vSetVol(this.value)">
-  <div id="vstatus">—</div>
-</div>
 
 <!-- NOTES PANEL -->
 <div id="notes-panel">
@@ -247,7 +245,7 @@ function doAuth(){
     localStorage.setItem('acr_ok','1');
     document.getElementById('auth').style.display='none';
     document.getElementById('nav').style.display='flex';
-    document.getElementById('bnav').style.display='flex';
+    document.getElementById('reader-footer').style.display='flex';
     document.body.style.background='';
     if(typeof start==='function') start();
   } else {
@@ -260,7 +258,7 @@ window.addEventListener('load',function(){
   if(localStorage.getItem('acr_ok')==='1'){
     document.getElementById('auth').style.display='none';
     document.getElementById('nav').style.display='flex';
-    document.getElementById('bnav').style.display='flex';
+    document.getElementById('reader-footer').style.display='flex';
     document.body.style.background='';
     if(typeof start==='function') start();
   }
@@ -381,8 +379,7 @@ function toggleSB(){
     SB_OPEN=!SB_OPEN;
     document.getElementById('sb').classList.toggle('hide',!SB_OPEN);
     document.getElementById('main').classList.toggle('wide',!SB_OPEN);
-    document.getElementById('bnav').classList.toggle('wide',!SB_OPEN);
-    document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN);
+    document.getElementById('reader-footer').classList.toggle('wide',!SB_OPEN);
   }
 }
 
@@ -410,13 +407,11 @@ function doRead(){
   if(READING){
     document.getElementById('sb').classList.add('hide');
     document.getElementById('main').classList.add('wide');
-    document.getElementById('bnav').classList.add('wide');
-    document.getElementById('voice-bar').classList.add('wide');
+    document.getElementById('reader-footer').classList.add('wide');
   } else {
     if(SB_OPEN&&window.innerWidth>680) document.getElementById('sb').classList.remove('hide');
     document.getElementById('main').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);
-    document.getElementById('bnav').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);
-    document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);
+    document.getElementById('reader-footer').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);
   }
 }
 
@@ -619,7 +614,6 @@ function toggleVoice(){
   var bar=document.getElementById('voice-bar');
   bar.classList.toggle('show');
   document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));
-  bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);
 }
 function buildVP(){
   var mode=VMODE||'verses';
