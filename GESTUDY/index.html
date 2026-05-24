@@ -53,6 +53,11 @@ body{font-family:'Inter',sans-serif;font-size:var(--font-size);background:var(--
 .screen.active{display:flex}
 .screen-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 100px}
 
+/* ── SPLASH ── */
+#splash{background:#000;align-items:center;justify-content:center;cursor:pointer;transition:opacity .6s ease}
+#splash.fade-out{opacity:0;pointer-events:none}
+#splash img{width:100%;height:100%;object-fit:cover;object-position:center}
+
 /* ── LOADING ── */
 #loading{background:var(--navy);align-items:center;justify-content:center}
 .load-logo{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold);text-align:center;line-height:1.2}
@@ -316,8 +321,13 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 </head>
 <body>
 
+<!-- SPLASH -->
+<div class="screen active" id="splash" onclick="dismissSplash()">
+  <img src="splash.png" alt="Great Eraser Study"/>
+</div>
+
 <!-- LOADING -->
-<div class="screen active" id="loading">
+<div class="screen" id="loading">
   <div style="text-align:center;padding:40px 20px">
     <div class="load-logo">Great Eraser<br>Study</div>
     <div class="load-sub">GUIDED LEARNING · MEMORY SUPPORT · FOCUS-FRIENDLY</div>
@@ -584,7 +594,7 @@ const App = {
       const fetched = await r.json();
       if(fetched) DATA = fetched;
     }catch(e){
-      // Offline or HtmlQ — use inline data
+      // Offline — use inline data
     }
     // Update streak
     this.updateStreak();
@@ -597,8 +607,8 @@ const App = {
     // Load voice
     if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>this.loadVoice();
     this.loadVoice();
-    // Show home after load
-    setTimeout(()=>this.showScreen('home'), 1200);
+    // Auto-dismiss splash after 3s, then show loading briefly, then home
+    setTimeout(()=>dismissSplash(), 3000);
   },
 
   loadVoice(){
@@ -1350,6 +1360,21 @@ const App = {
     else this.showScreen('study');
   },
 };
+
+// ── SPLASH DISMISS ───────────────────────────────────────────────────────────
+var _splashDismissed = false;
+function dismissSplash(){
+  if(_splashDismissed) return;
+  _splashDismissed = true;
+  var sp = document.getElementById('splash');
+  sp.classList.add('fade-out');
+  setTimeout(function(){
+    sp.classList.remove('active');
+    var loading = document.getElementById('loading');
+    loading.classList.add('active');
+    setTimeout(function(){ App.showScreen('home'); }, 1200);
+  }, 600);
+}
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 window.addEventListener('load', ()=>{
