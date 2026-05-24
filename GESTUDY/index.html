@@ -53,6 +53,7 @@ body{font-family:'Inter',sans-serif;font-size:var(--font-size);background:var(--
 .screen.active{display:flex}
 .screen-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 100px}
 
+/* ── LOADING ── */
 /* ── SPLASH ── */
 #splash{background:#000;align-items:center;justify-content:center;cursor:pointer;transition:opacity .6s ease}
 #splash.fade-out{opacity:0;pointer-events:none}
@@ -317,6 +318,78 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 .sc-num{font-size:1.5rem;font-weight:700;color:var(--gold)}
 .sc-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .sc-btn{width:100%;padding:16px;border:none;border-radius:var(--radius-sm);background:var(--gold);color:#0A0E1A;font-size:1rem;font-weight:700;cursor:pointer}
+/* ── TEACHING LAYER ─────────────────────────────────────────────────────── */
+/* Concept mastery row */
+.concept-row{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;margin-bottom:4px}
+.concept-row::-webkit-scrollbar{display:none}
+.concept-pill{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 12px;border-radius:12px;cursor:pointer;min-width:72px;border:1px solid transparent;transition:all .2s}
+.concept-pill:active{transform:scale(0.95)}
+.cp-icon{font-size:1.3rem}
+.cp-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;line-height:1.2}
+.cp-score{font-size:.7rem;font-weight:600;opacity:0.8}
+/* Today path */
+.today-path{background:var(--navy2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;border:1px solid rgba(200,151,31,0.2)}
+.tp-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);font-weight:700;margin-bottom:8px}
+.tp-steps{display:flex;gap:8px;overflow-x:auto}
+.tp-steps::-webkit-scrollbar{display:none}
+.tp-step{flex-shrink:0;background:var(--navy3);border-radius:8px;padding:8px 12px;font-size:.75rem;color:var(--text2);cursor:pointer;white-space:nowrap;border:1px solid rgba(255,255,255,0.06)}
+.tp-step.done{background:rgba(46,204,113,0.15);color:var(--emerald);border-color:rgba(46,204,113,0.3)}
+.tp-step.current{background:rgba(200,151,31,0.15);color:var(--gold);border-color:rgba(200,151,31,0.4)}
+/* Lesson screen */
+#lesson{background:var(--navy)}
+.lesson-header{display:flex;align-items:center;gap:10px;padding:12px 16px;flex-shrink:0}
+.lesson-step-pills{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;flex-shrink:0}
+.lesson-step-pills::-webkit-scrollbar{display:none}
+.ls-pill{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;border:none;cursor:pointer;opacity:0.5;background:var(--navy3);color:var(--text2);transition:all .2s}
+.ls-pill.active{opacity:1}
+/* Teach Me card */
+.teach-me-card{background:linear-gradient(135deg,rgba(26,155,155,0.12),rgba(26,155,155,0.04));border:1px solid rgba(26,155,155,0.3);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.tmc-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(26,155,155,0.2);border-radius:20px;padding:4px 12px;font-size:.7rem;font-weight:700;color:#2EC4C4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.tmc-main{font-size:1rem;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:8px}
+.tmc-plain{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.tmc-why{font-size:.82rem;color:var(--gold);line-height:1.6;padding:8px 12px;background:rgba(200,151,31,0.08);border-radius:8px;border-left:3px solid var(--gold);margin-bottom:10px}
+.tmc-why::before{content:'Why it matters: ';font-weight:700}
+.memory-anchor{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--navy3);border-radius:var(--radius-sm);margin-bottom:12px}
+.ma-icon{font-size:1.5rem;flex-shrink:0}
+.ma-phrase{font-size:.9rem;font-weight:700;color:var(--text);font-style:italic}
+.ma-source{font-size:.72rem;color:var(--text3);margin-top:2px}
+/* Active recall */
+.recall-card{background:var(--navy2);border:2px dashed rgba(200,151,31,0.3);border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:center}
+.rc-prompt{font-size:.8rem;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:12px}
+.rc-question{font-size:1rem;color:var(--text);line-height:1.6;margin-bottom:16px;font-weight:500}
+.rc-options{display:flex;flex-direction:column;gap:8px}
+.rc-opt{padding:13px 16px;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);background:var(--navy3);color:var(--text);font-size:.9rem;cursor:pointer;text-align:left;transition:all .2s}
+.rc-opt:active{transform:scale(0.98)}
+.rc-opt.correct{background:rgba(46,204,113,0.15);border-color:var(--emerald);color:var(--emerald)}
+.rc-opt.wrong{background:rgba(232,115,90,0.1);border-color:var(--coral);color:var(--coral)}
+/* Lesson step content */
+.lesson-chunk{background:var(--navy2);border-radius:var(--radius);padding:18px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.05)}
+.lc-step-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.lc-text{font-size:.95rem;line-height:1.8;color:var(--text)}
+.lc-text.plain{color:var(--text2);font-size:.9rem}
+/* Reteach card */
+.reteach-card{background:linear-gradient(135deg,rgba(232,115,90,0.1),rgba(232,115,90,0.04));border:1px solid rgba(232,115,90,0.3);border-radius:var(--radius-sm);padding:14px;margin-top:10px}
+.reteach-card .rt-label{font-size:.7rem;color:var(--coral);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.reteach-card .rt-text{font-size:.85rem;color:var(--text2);line-height:1.65}
+/* Mastery badge */
+.mastery-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;font-size:.68rem;font-weight:700}
+.mb-0{background:rgba(232,115,90,0.2);color:var(--coral)}
+.mb-1,.mb-2{background:rgba(200,151,31,0.2);color:var(--gold)}
+.mb-3,.mb-4{background:rgba(46,204,113,0.2);color:var(--emerald)}
+.mb-5{background:rgba(46,204,113,0.3);color:#fff}
+/* Lesson nav buttons */
+.lesson-nav{display:flex;gap:10px;padding:12px 16px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.06)}
+.ln-btn{flex:1;padding:14px;border:none;border-radius:var(--radius-sm);font-size:.9rem;font-weight:700;cursor:pointer}
+.ln-next{background:var(--gold);color:#0A0E1A}
+.ln-back{background:var(--navy3);color:var(--text2)}
+.ln-done{background:var(--emerald);color:#0A0E1A}
+/* Teach Me button in study */
+.teach-me-btn{display:flex;align-items:center;gap:8px;width:100%;background:linear-gradient(135deg,rgba(26,155,155,0.12),rgba(26,155,155,0.04));border:1px solid rgba(26,155,155,0.35);border-radius:var(--radius-sm);padding:11px 14px;cursor:pointer;color:#2EC4C4;font-size:.83rem;font-weight:600;margin-bottom:8px;transition:all .2s}
+.teach-me-btn:active{transform:scale(0.98)}
+/* Lesson panel */
+#lesson-panel{position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;background:var(--navy)}
+#lesson-panel.open{display:flex}
+
 </style>
 </head>
 <body>
@@ -327,7 +400,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 </div>
 
 <!-- LOADING -->
-<div class="screen" id="loading">
+<div class="screen active" id="loading">
   <div style="text-align:center;padding:40px 20px">
     <div class="load-logo">Great Eraser<br>Study</div>
     <div class="load-sub">GUIDED LEARNING · MEMORY SUPPORT · FOCUS-FRIENDLY</div>
@@ -352,6 +425,13 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
           <text class="pr-text" x="22" y="22" id="daily-pct">0%</text>
         </svg>
         <div class="streak-label">Today</div>
+      </div>
+    </div>
+    <div id="concept-row" class="concept-row"></div>
+    <div class="today-path" id="today-path">
+      <div class="tp-label">📚 Today's 10-Minute Path</div>
+      <div class="tp-steps" id="tp-steps">
+        <div class="tp-step current">Loading...</div>
       </div>
     </div>
     <button class="continue-btn" onclick="App.continueSession()">
@@ -387,6 +467,16 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
         <span class="mc-icon">📅</span>
         <span class="mc-title">Timeline</span>
         <span class="mc-sub">Erased · Restored evidence</span>
+      </button>
+      <button class="mode-card" style="background:linear-gradient(135deg,#1E5580,#0D2A40);color:#fff" onclick="App.showScreen('lesson')">
+        <span class="mc-icon">🎓</span>
+        <span class="mc-title">Lesson Mode</span>
+        <span class="mc-sub">Learn · Explain · Practice</span>
+      </button>
+      <button class="mode-card" style="background:linear-gradient(135deg,#1a1a1a,#0D0B07);color:#C8971F;border:1px solid #C8971F44" onclick="App.openGEApp()">
+        <span class="mc-icon">📚</span>
+        <span class="mc-title">Read The Great Eraser</span>
+        <span class="mc-sub">Open full book reader</span>
       </button>
       <button class="mode-card mc-hard" onclick="App.showScreen('hard-list')">
         <span class="mc-icon">🔥</span>
@@ -543,6 +633,40 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
   </div>
 </div>
 
+
+<!-- LESSON PANEL -->
+<div id="lesson-panel">
+  <div class="lesson-header" style="border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
+    <button class="back-btn" onclick="Lesson.close()">←</button>
+    <div style="flex:1">
+      <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold)" id="lp-title">Lesson</div>
+      <div style="font-size:.72rem;color:var(--text3)" id="lp-subtitle"></div>
+    </div>
+    <div id="lp-mastery" class="mastery-badge mb-0">0 / 5</div>
+  </div>
+  <div class="lesson-step-pills" id="lp-steps">
+    <button class="ls-pill active" data-step="0" onclick="Lesson.goStep(0)" style="background:rgba(26,155,155,0.3);color:#2EC4C4">📖 Learn</button>
+    <button class="ls-pill" data-step="1" onclick="Lesson.goStep(1)">💬 Explain</button>
+    <button class="ls-pill" data-step="2" onclick="Lesson.goStep(2)">🧠 Remember</button>
+    <button class="ls-pill" data-step="3" onclick="Lesson.goStep(3)">✏️ Practice</button>
+    <button class="ls-pill" data-step="4" onclick="Lesson.goStep(4)">🔁 Review</button>
+  </div>
+  <div class="screen-body" id="lp-body" style="padding:16px 16px 20px"></div>
+  <div class="lesson-nav">
+    <button class="ln-btn ln-back" id="lp-back" onclick="Lesson.prevStep()" style="display:none">← Back</button>
+    <button class="ln-btn ln-next" id="lp-next" onclick="Lesson.nextStep()">Continue →</button>
+  </div>
+</div>
+
+<!-- LESSON SCREEN (menu) -->
+<div class="screen" id="lesson">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Lesson Mode</div>
+  </div>
+  <div class="screen-body" id="lesson-body"></div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -594,7 +718,7 @@ const App = {
       const fetched = await r.json();
       if(fetched) DATA = fetched;
     }catch(e){
-      // Offline — use inline data
+      // Offline or HtmlQ — use inline data
     }
     // Update streak
     this.updateStreak();
@@ -607,6 +731,7 @@ const App = {
     // Load voice
     if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>this.loadVoice();
     this.loadVoice();
+    // Show home after load
     // Auto-dismiss splash after 3s, then show loading briefly, then home
     setTimeout(()=>dismissSplash(), 3000);
   },
@@ -1359,6 +1484,453 @@ const App = {
     if(due.length>0) this.showScreen('cards');
     else this.showScreen('study');
   },
+};
+
+// ── TEACHING LAYER ──────────────────────────────────────────────────────────
+
+const CONCEPTS = [
+  {id:'covenant',   label:'Covenant',      icon:'📜', color:'#C8971F',
+   mem:'Legal contract. 400 years. Defined terms.',
+   chapters:['ch40','ch41','ch52','chI','chII'],
+   teach:'YHWH made a binding legal covenant with Abraham — not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
+   why:'Without the covenant framework, the historical evidence has no legal context. With it, every piece of evidence becomes a clause in a contract.',
+   question:'What three elements does the 400-year covenant declare?',
+   answer:'400 years of bondage → Judgment of the enslaving nation → Liberation with possessions',
+   options:['400 years bondage → Judgment → Liberation','Ships → Slavery → No buyer','Calendar → Language → Territory']},
+
+  {id:'dss',        label:'DSS',           icon:'📜', color:'#5DADE2',
+   mem:'972 scrolls. 11 caves. 50 BCE – 68 CE.',
+   chapters:['ch17','ch18','ch20','ch28'],
+   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947–1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT — all contradicting later institutional religious claims.',
+   why:'The DSS are the oldest surviving Hebrew manuscript tradition. Any claim about ancient Hebrew religion must answer to these texts first.',
+   question:'How many years older are the DSS than the Masoretic Text?',
+   answer:'Approximately 1,200 years older — DSS c. 100 BCE vs Masoretic Text c. 950 CE',
+   options:['1,200 years older','100 years older','500 years older','They are the same age']},
+
+  {id:'orit',       label:'Ge\'ez Orit',   icon:'🌿', color:'#58D68D',
+   mem:'Ethiopia. Beta Israel. 1 Enoch + Jubilees complete.',
+   chapters:['ch19','ch29','ch31'],
+   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters) — texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
+   why:'The Orit preserved the most complete surviving covenant textual tradition. The double exclusion of 1 Enoch and Jubilees by two competing institutions is itself evidence of coordinated suppression.',
+   question:'Which two institutions simultaneously excluded 1 Enoch and Jubilees?',
+   answer:'Council of Yavneh (90 CE) and Council of Nicaea (325 CE)',
+   options:['Council of Yavneh (90 CE) and Council of Nicaea (325 CE)','British Museum and Vatican','Athens and Rome','Babylon and Egypt']},
+
+  {id:'ships',      label:'Ships',         icon:'⛵', color:'#E8735A',
+   mem:'Devarim 28:68. Ships. Sold. No buyer.',
+   chapters:['ch14','ch32','ch45'],
+   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific — not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
+   why:'The ships element is the most specific and historically verifiable element of the covenant curse. It rules out every other mass displacement event in history and points to one.',
+   question:'What three specific elements does Devarim 28:68 declare?',
+   answer:'Ships + Sold as slaves + No man shall buy you (no mass redemption)',
+   options:['Ships + Sold as slaves + No mass redemption','Chains + Prison + No freedom','Exile + Wandering + Homeless','Famine + Plague + Drought']},
+
+  {id:'400_years',  label:'400 Years',     icon:'⏳', color:'#C8971F',
+   mem:'1619 + 400 = 2019. Legal expiration.',
+   chapters:['ch40','ch41','chII','chVIII'],
+   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619 — the documented arrival of Africans at Point Comfort, Virginia — is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
+   why:'The 400-year calculation is not speculation — it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
+   question:'When does the 400-year covenant bondage term expire according to the 1619 start date?',
+   answer:'2019 CE — 1619 + 400 = 2019',
+   options:['2019 CE','1865 CE','2000 CE','1965 CE']},
+
+  {id:'kingdom_juda', label:'Kingdom of JUDA', icon:'🗺️', color:'#1A9B9B',
+   mem:'Bowen 1747. Library of Congress. West Africa.',
+   chapters:['ch36','ch37'],
+   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map — produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
+   why:'The cartographic evidence is physical proof in a named archive. It predates the Berlin Conference (1884-1885) which erased all Hebrew territorial identifications from Africa.',
+   question:'Where is Bowen\'s 1747 map permanently archived?',
+   answer:'Library of Congress — Geography and Map Division',
+   options:['Library of Congress — Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
+
+  {id:'erased',     label:'What Was Erased', icon:'🚫', color:'#E84040',
+   mem:'Calendar. Name. Territory. Identity.',
+   chapters:['ch22','ch16','chXVII'],
+   teach:'The erasure operated on four levels simultaneously: (1) The divine name YHWH replaced by "Lord" 7,000+ times in the textual tradition, (2) The 364-day solar calendar replaced by lunar systems disconnecting covenant timing, (3) African territorial identity erased by the Berlin Conference 1884-1885, (4) The identity of the covenant people replaced by Eurocentric framing.',
+   why:'The erasure was systematic and multi-institutional — Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
+   question:'How many times was the divine name YHWH replaced by "Lord" in the standard textual tradition?',
+   answer:'Over 7,000 times — confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
+   options:['Over 7,000 times','Fewer than 100 times','Once in translation','It was never replaced']},
+
+  {id:'restored',   label:'Restored Evidence', icon:'✅', color:'#2ECC71',
+   mem:'DSS 1947. Genetics 2000-2012. Maps. Archives.',
+   chapters:['ch21','ch33','ch34'],
+   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts — Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics — Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography — Bowen 1747 map in Library of Congress, (4) Epigraphy — Soleb Temple inscription 1400 BCE in Sudan National Museum.',
+   why:'The convergence of four independent fields — manuscript, genetic, cartographic, and epigraphic — all pointing to the same conclusion is the Three-Witness method applied at scale.',
+   question:'In what year were the Dead Sea Scrolls discovered?',
+   answer:'1947 — Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
+   options:['1947','1920','1967','2000']},
+];
+
+// ── CONCEPT MASTERY ──────────────────────────────────────────────────────────
+const Mastery = {
+  get(id){ try{return parseInt(localStorage.getItem('ges_m_'+id))||0;}catch(e){return 0;}},
+  set(id,v){ v=Math.max(0,Math.min(5,v)); localStorage.setItem('ges_m_'+id,v); },
+  increment(id){ this.set(id, this.get(id)+1); },
+  decrement(id){ this.set(id, this.get(id)-1); },
+  levelText(n){ return ['Not started','Just beginning','Developing','Getting it','Strong','Mastered'][n]||''; },
+  relatedConcepts(chapterId){
+    return CONCEPTS.filter(c=>c.chapters && c.chapters.includes(chapterId));
+  }
+};
+
+// ── LESSON ENGINE ────────────────────────────────────────────────────────────
+const Lesson = {
+  current: null, // current concept
+  step: 0,
+  steps: ['learn','explain','remember','practice','review'],
+  stepColors: ['#1A9B9B','#C8971F','#8B7EC8','#E8735A','#2ECC71'],
+
+  open(conceptId){
+    const c = CONCEPTS.find(x=>x.id===conceptId) || CONCEPTS[0];
+    this.current = c;
+    this.step = 0;
+    document.getElementById('lesson-panel').classList.add('open');
+    this.render();
+  },
+
+  close(){
+    document.getElementById('lesson-panel').classList.remove('open');
+    // Refresh home mastery display
+    if(typeof App !== 'undefined') App.renderConceptRow();
+  },
+
+  goStep(n){
+    this.step = n;
+    this.render();
+  },
+
+  nextStep(){
+    if(this.step < 4) { this.step++; this.render(); }
+    else { this.markDone(); this.close(); }
+  },
+
+  prevStep(){
+    if(this.step > 0) { this.step--; this.render(); }
+  },
+
+  markDone(){
+    if(this.current) Mastery.increment(this.current.id);
+    App.toast('✓ Lesson complete — mastery updated');
+  },
+
+  render(){
+    const c = this.current;
+    if(!c) return;
+    const score = Mastery.get(c.id);
+    // Header
+    document.getElementById('lp-title').textContent = c.icon + ' ' + c.label;
+    document.getElementById('lp-subtitle').textContent = this.steps[this.step].charAt(0).toUpperCase()+this.steps[this.step].slice(1)+' · Step '+(this.step+1)+' of 5';
+    const mb = document.getElementById('lp-mastery');
+    mb.className = 'mastery-badge mb-'+score;
+    mb.textContent = score+'/5 '+Mastery.levelText(score);
+    // Step pills
+    document.querySelectorAll('.ls-pill').forEach((p,i)=>{
+      p.classList.toggle('active', i===this.step);
+      if(i===this.step) p.style.cssText=`background:${this.stepColors[i]}33;color:${this.stepColors[i]};opacity:1`;
+      else p.style.cssText='opacity:0.45';
+    });
+    // Nav
+    document.getElementById('lp-back').style.display = this.step>0?'':'none';
+    const nextBtn = document.getElementById('lp-next');
+    if(this.step===4){ nextBtn.className='ln-btn ln-done'; nextBtn.textContent='✓ Mark Complete'; }
+    else { nextBtn.className='ln-btn ln-next'; nextBtn.textContent='Continue →'; }
+    // Content
+    this.renderStep(c, this.step);
+  },
+
+  renderStep(c, step){
+    const body = document.getElementById('lp-body');
+    const col = this.stepColors[step];
+    let html = '';
+
+    if(step===0){ // LEARN
+      html = `
+        <div class="teach-me-card">
+          <div class="tmc-badge">📖 Learn</div>
+          <div class="tmc-main">${c.icon} ${c.label}</div>
+          <div class="tmc-plain">${c.teach}</div>
+          <div class="tmc-why">${c.why}</div>
+        </div>
+        <div class="memory-anchor">
+          <div class="ma-icon">${c.icon}</div>
+          <div>
+            <div class="ma-phrase">"${c.mem}"</div>
+            <div class="ma-source">Memory phrase — repeat this to lock it in</div>
+          </div>
+        </div>`;
+    }
+    else if(step===1){ // EXPLAIN
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">💬 Plain Language Explanation</div>
+        <div class="lc-text">${c.teach}</div>
+      </div>
+      <div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🔗 Why It Matters</div>
+        <div class="lc-text plain">${c.why}</div>
+      </div>`;
+    }
+    else if(step===2){ // REMEMBER
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🧠 Memory Anchor</div>
+        <div class="memory-anchor" style="background:${col}11;border:1px solid ${col}33;margin:0 0 12px">
+          <div class="ma-icon" style="font-size:2rem">${c.icon}</div>
+          <div>
+            <div class="ma-phrase" style="font-size:1rem">"${c.mem}"</div>
+            <div class="ma-source">Say it aloud. Repeat it three times.</div>
+          </div>
+        </div>
+      </div>
+      <div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🎨 Visual Anchor</div>
+        <div style="text-align:center;padding:20px;background:${col}11;border-radius:var(--radius-sm)">
+          <div style="font-size:3.5rem;margin-bottom:8px">${c.icon}</div>
+          <div style="font-size:1rem;font-weight:700;color:${col}">${c.label}</div>
+          <div style="font-size:.82rem;color:var(--text2);margin-top:6px;line-height:1.6;font-style:italic">"${c.mem}"</div>
+        </div>
+      </div>`;
+    }
+    else if(step===3){ // PRACTICE — active recall
+      const opts = (c.options||[c.answer,'Wrong answer A','Wrong answer B']).sort(()=>Math.random()-0.5);
+      html = `<div class="recall-card">
+        <div class="rc-prompt">✏️ Active Recall — Before we show you — what do you remember?</div>
+        <div class="rc-question">${c.question}</div>
+        <div class="rc-options" id="rc-opts">
+          ${opts.map(o=>`<button class="rc-opt" onclick="Lesson.checkAnswer(this,'${this.esc(o)}','${this.esc(c.answer)}')">${o}</button>`).join('')}
+        </div>
+      </div>
+      <div id="rc-explanation" style="display:none" class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">✓ Full Answer</div>
+        <div class="lc-text plain">${c.answer}</div>
+      </div>`;
+    }
+    else if(step===4){ // REVIEW
+      const score = Mastery.get(c.id);
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🔁 Review Summary</div>
+        <div class="lc-text">${c.teach}</div>
+      </div>
+      <div class="memory-anchor">
+        <div class="ma-icon">${c.icon}</div>
+        <div>
+          <div class="ma-phrase">"${c.mem}"</div>
+          <div class="ma-source">Lock this phrase. It carries the entire concept.</div>
+        </div>
+      </div>
+      <div style="background:${col}11;border:1px solid ${col}33;border-radius:var(--radius-sm);padding:14px;margin-top:4px;text-align:center">
+        <div style="font-size:.75rem;color:${col};font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Current Mastery</div>
+        <div style="font-size:1.8rem;font-weight:700;color:${col}">${score}/5</div>
+        <div style="font-size:.8rem;color:var(--text2);margin-top:4px">${Mastery.levelText(score)}</div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button onclick="Mastery.decrement('${c.id}');Lesson.render()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(232,115,90,0.15);color:var(--coral);font-size:.85rem;cursor:pointer;font-weight:600">Still Hard</button>
+        <button onclick="Mastery.increment('${c.id}');Lesson.render()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(46,204,113,0.15);color:var(--emerald);font-size:.85rem;cursor:pointer;font-weight:600">Got It!</button>
+      </div>`;
+    }
+    body.innerHTML = html;
+  },
+
+  checkAnswer(el, selected, correct){
+    document.querySelectorAll('.rc-opt').forEach(b=>{
+      b.onclick=null;
+      if(b.textContent.trim()===correct) b.classList.add('correct');
+      else if(b===el && selected!==correct) b.classList.add('wrong');
+    });
+    const isCorrect = selected===correct;
+    if(isCorrect){ Mastery.increment(this.current.id); App.toast('✓ Correct!'); }
+    else { Mastery.decrement(this.current.id); App.toast('Not quite — review the answer'); }
+    document.getElementById('rc-explanation').style.display='block';
+  },
+
+  esc(t){ if(!t)return''; return t.replace(/'/g,"\\'").replace(/"/g,'&quot;'); },
+};
+
+// ── LESSON SCREEN MENU ───────────────────────────────────────────────────────
+App.renderLesson = function(){
+  const body = document.getElementById('lesson-body');
+  let html = '<div style="padding-bottom:8px">';
+  html += '<div style="background:var(--navy3);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:16px;font-size:.85rem;color:var(--text2);line-height:1.65">Each lesson walks you through 5 steps: <strong style="color:var(--text)">Learn → Explain → Remember → Practice → Review.</strong> Tap a concept below to begin.</div>';
+  
+  CONCEPTS.forEach(c=>{
+    const score = Mastery.get(c.id);
+    const pct = Math.round(score/5*100);
+    html += `<div style="background:var(--navy2);border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.05);cursor:pointer" onclick="Lesson.open('${c.id}')">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="font-size:1.6rem">${c.icon}</div>
+        <div style="flex:1">
+          <div style="font-size:.95rem;font-weight:700;color:var(--text)">${c.label}</div>
+          <div style="font-size:.75rem;color:var(--text3);margin-top:2px">${c.mem}</div>
+        </div>
+        <div class="mastery-badge mb-${score}">${score}/5</div>
+      </div>
+      <div style="height:4px;background:var(--navy3);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${c.color};border-radius:2px;transition:width .4s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px">
+        <div style="font-size:.72rem;color:var(--text3)">${Mastery.levelText(score)}</div>
+        <div style="font-size:.72rem;color:${c.color};font-weight:600">Tap to study →</div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  body.innerHTML = html;
+};
+
+// ── CONCEPT ROW on home ──────────────────────────────────────────────────────
+App.renderConceptRow = function(){
+  const row = document.getElementById('concept-row');
+  if(!row) return;
+  row.innerHTML = CONCEPTS.map(c=>{
+    const score = Mastery.get(c.id);
+    return `<div class="concept-pill" style="background:${c.color}11;border-color:${c.color}33" onclick="Lesson.open('${c.id}')">
+      <span class="cp-icon">${c.icon}</span>
+      <span class="cp-label" style="color:${c.color}">${c.label}</span>
+      <span class="cp-score" style="color:${c.color}">${score}/5</span>
+    </div>`;
+  }).join('');
+};
+
+// ── TODAY PATH ───────────────────────────────────────────────────────────────
+App.renderTodayPath = function(){
+  const steps = document.getElementById('tp-steps');
+  if(!steps) return;
+  const allConcepts = [...CONCEPTS];
+  const notDone = allConcepts.filter(c=>Mastery.get(c.id)<3);
+  const done = allConcepts.filter(c=>Mastery.get(c.id)>=3);
+  const path = [...notDone.slice(0,3), ...done.slice(0,1)];
+  if(path.length===0){ steps.innerHTML='<div class="tp-step done">🏆 All concepts developing!</div>'; return; }
+  steps.innerHTML = path.map((c,i)=>`
+    <div class="tp-step ${Mastery.get(c.id)>=3?'done':i===0?'current':''}" onclick="Lesson.open('${c.id}')">
+      ${c.icon} ${c.label}
+    </div>`).join('');
+};
+
+// ── TEACH ME in study mode ───────────────────────────────────────────────────
+App.getTeachMeButton = function(chId){
+  const related = Mastery.relatedConcepts(chId);
+  if(!related.length) return '';
+  return related.map(c=>`
+    <button class="teach-me-btn" onclick="Lesson.open('${c.id}')">
+      <span style="font-size:1.1rem">${c.icon}</span>
+      <span>Teach Me: ${c.label}</span>
+      <span style="margin-left:auto;font-size:.7rem;opacity:0.7">${Mastery.get(c.id)}/5 mastered</span>
+    </button>`).join('');
+};
+
+// ── RETEACH in hard list ─────────────────────────────────────────────────────
+App.getReteachCard = function(item){
+  const related = CONCEPTS.filter(c=>c.chapters && item.id && c.chapters.includes(item.id));
+  if(!related.length) return '';
+  const c = related[0];
+  return `<div class="reteach-card">
+    <div class="rt-label">${c.icon} Quick Re-teach: ${c.label}</div>
+    <div class="rt-text">${c.teach.substring(0,200)}...</div>
+    <button onclick="Lesson.open('${c.id}')" style="margin-top:8px;padding:8px 14px;border:none;border-radius:20px;background:${c.color}22;color:${c.color};font-size:.78rem;font-weight:600;cursor:pointer">Full Lesson →</button>
+  </div>`;
+};
+
+// ── PATCH renderScreen for lesson ────────────────────────────────────────────
+const _origRenderScreen = App.renderScreen.bind(App);
+App.renderScreen = function(id){
+  _origRenderScreen(id);
+  if(id==='home'){ App.renderConceptRow(); App.renderTodayPath(); }
+  if(id==='lesson') App.renderLesson();
+};
+
+// ── PATCH renderHardList to add reteach cards ─────────────────────────────────
+const _origHardList = App.renderHardList.bind(App);
+App.renderHardList = function(){
+  _origHardList();
+  // Inject reteach cards into each hard item
+  document.querySelectorAll('.hard-item').forEach((el,i)=>{
+    const hard = Store.hard();
+    if(hard[i]){
+      const rt = App.getReteachCard(hard[i]);
+      if(rt) el.insertAdjacentHTML('beforeend', rt);
+    }
+  });
+};
+
+// ── PATCH renderStudyContent to add Teach Me buttons ────────────────────────
+const _origStudyContent = App.renderStudyContent.bind(App);
+App.renderStudyContent = function(idx){
+  _origStudyContent(idx);
+  // Inject Teach Me buttons into section cards
+  const body = document.getElementById('study-body');
+  if(!body) return;
+  const vol = (DATA&&DATA.volumes)?DATA.volumes[idx]:null;
+  if(!vol) return;
+  vol.chapters.forEach((ch,ci)=>{
+    const card = body.querySelector(`#ch-${ch.id}`);
+    if(card){
+      const btn = App.getTeachMeButton(ch.id);
+      if(btn){
+        const existingVCB = card.querySelector('.verse-connect-btn');
+        if(existingVCB) existingVCB.insertAdjacentHTML('afterend', btn);
+      }
+    }
+  });
+};
+
+// ── PATCH quiz to add active recall framing ──────────────────────────────────
+const _origQuizQ = App.renderQuizQuestion.bind(App);
+App.renderQuizQuestion = function(){
+  _origQuizQ();
+  // Add recall framing label above quiz
+  const body = document.getElementById('quiz-body');
+  if(!body) return;
+  const qqCard = body.querySelector('.quiz-question-card');
+  if(qqCard && !qqCard.querySelector('.recall-framing')){
+    qqCard.insertAdjacentHTML('afterbegin','<div class="recall-framing" style="font-size:.7rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">✏️ What do you remember?</div>');
+  }
+};
+
+// ── PATCH rateCard to update concept mastery ─────────────────────────────────
+const _origRateCard = App.rateCard.bind(App);
+App.rateCard = function(rating){
+  const card = State.cardQueue && State.cardQueue[State.currentCard];
+  if(card){
+    const related = CONCEPTS.filter(c=>card.category && c.id===card.category);
+    if(related.length){
+      if(rating==='easy') Mastery.increment(related[0].id);
+      else if(rating==='hard'||rating==='again') Mastery.decrement(related[0].id);
+    }
+  }
+  _origRateCard(rating);
+};
+
+
+// ── GE APP LINK ──────────────────────────────────────────────────────────────
+App.openGEApp = function(){
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  overlay.innerHTML = `
+    <div style="background:#111109;border:1px solid #C8971F;border-radius:16px;padding:28px 24px;max-width:340px;width:100%">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:1.8rem;margin-bottom:8px">📚</div>
+        <div style="font-family:'Cinzel',serif;font-size:1rem;color:#C8971F;letter-spacing:.05em">Open a companion app</div>
+      </div>
+      <a href="https://dssorit.github.io/ancient-covenant-scrolls/" target="_blank"
+         style="display:flex;align-items:center;gap:14px;background:rgba(26,155,155,0.12);border:1px solid rgba(26,155,155,0.35);border-radius:12px;padding:16px;margin-bottom:10px;text-decoration:none;cursor:pointer">
+        <div style="font-size:1.8rem">📜</div>
+        <div>
+          <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">Ancient Covenant Scrolls</div>
+          <div style="font-size:.72rem;color:#5DADE2;line-height:1.4">DSS · Orit · 46 volumes · Primary source reader</div>
+          <div style="font-size:.68rem;color:#5C4510;margin-top:4px;word-break:break-all">dssorit.github.io/ancient-covenant-scrolls</div>
+        </div>
+      </a>
+      <a href="https://dssorit.github.io/ancient-covenant-scrolls/GreatE/" target="_blank"
+         style="display:flex;align-items:center;gap:14px;background:rgba(200,151,31,0.1);border:1px solid rgba(200,151,31,0.35);border-radius:12px;padding:16px;margin-bottom:20px;text-decoration:none;cursor:pointer">
+        <div style="font-size:1.8rem">🔥</div>
+        <div>
+          <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">The Great Eraser</div>
+          <div style="font-size:.72rem;color:#C8971F;line-height:1.4">Full 8-volume research record · Primary source evidence</div>
+          <div style="font-size:.68rem;color:#5C4510;margin-top:4px;word-break:break-all">dssorit.github.io/ancient-covenant-scrolls/GreatE</div>
+        </div>
+      </a>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#1C1708;color:#9A8E72;font-size:.85rem;cursor:pointer;font-weight:600">Close</button>
+    </div>`;
+  document.body.appendChild(overlay);
 };
 
 // ── SPLASH DISMISS ───────────────────────────────────────────────────────────
