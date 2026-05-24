@@ -53,10 +53,10 @@ body.dark #sb{background:#161616}
 .tf.cur{border-left:2px solid #666;padding-left:20px}
 
 /* MAIN */
-#main{margin-left:265px;margin-top:calc(49px + env(safe-area-inset-top,0px));margin-bottom:calc(80px + env(safe-area-inset-bottom,0px));padding:24px 40px 70px;max-width:860px;transition:margin .25s}
-#main.voice-on{margin-bottom:calc(105px + env(safe-area-inset-bottom,0px))}
+:root{--dock-h:88px}
+#main{margin-left:265px;margin-top:calc(49px + env(safe-area-inset-top,0px));margin-bottom:0;padding:24px 40px calc(var(--dock-h) + env(safe-area-inset-bottom,0px) + 16px);max-width:860px;transition:margin .25s}
 #main.wide{margin-left:0}
-@media(max-width:1023px){#main{margin-left:0;padding:14px 14px 70px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}#bnav,#voice-bar{left:0}}
+@media(max-width:1023px){#main{margin-left:0;padding:14px 14px calc(var(--dock-h) + env(safe-area-inset-bottom,0px) + 16px)}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}#bnav,#voice-bar{left:0}}
 #content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
 
 /* HIGHLIGHTS */
@@ -74,9 +74,9 @@ body.dark mark{background:#5a4a00;color:#fff}
 .hx{background:#333;color:#aaa;font-size:11px;border:none;border-radius:3px;padding:2px 6px;cursor:pointer}
 
 /* BOTTOM NAV */
-#bnav{position:fixed;bottom:0;left:265px;right:0;height:calc(49px + env(safe-area-inset-bottom,0px));background:#222;display:none;align-items:center;justify-content:space-between;padding:0 10px env(safe-area-inset-bottom,0px);z-index:1000;transition:left .25s}
+#bnav{position:fixed;bottom:0;left:265px;right:0;height:calc(44px + env(safe-area-inset-bottom,0px));background:#1a1a1a;display:none;align-items:center;justify-content:space-between;padding:0 10px env(safe-area-inset-bottom,0px);z-index:1000;border-top:1px solid #2a2a2a;box-sizing:border-box;transition:left .25s}
 #bnav.wide{left:0}
-body.dark #bnav{background:#111}
+body.dark #bnav{background:#0f0f0f}
 .bb{background:#333;color:#ccc;padding:5px 12px;border-radius:4px;font-size:12px;border:none;cursor:pointer}
 .bb:hover{background:#555;color:#fff}
 .bb:disabled{opacity:.3;cursor:default}
@@ -86,12 +86,13 @@ body.dark #bnav{background:#111}
 #top{position:fixed;bottom:58px;right:12px;background:#333;color:#bbb;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:none;z-index:1001;box-shadow:0 2px 8px rgba(0,0,0,.4)}
 
 /* PANELS */
-#voice-bar{position:fixed;bottom:calc(49px + env(safe-area-inset-bottom,0px));left:265px;right:0;background:#0f0f1e;border-top:1px solid #333;padding:6px 10px;z-index:999;display:none;flex-wrap:wrap;gap:5px;align-items:center;transition:left .25s}
+#voice-bar{position:fixed;bottom:calc(44px + env(safe-area-inset-bottom,0px));left:265px;right:0;height:44px;background:#111;border-top:1px solid #333;padding:0 10px;z-index:999;display:none;align-items:center;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;transition:left .25s}
 #voice-bar.wide{left:0}
 #voice-bar.show{display:flex}
-.vb{background:#222;color:#bbb;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:Arial}
+.vb{background:#222;color:#bbb;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:Arial;white-space:nowrap;flex-shrink:0}
 .vb:hover,.vb.on{background:#444;color:#fff}
-#vstatus{color:#666;font-size:10px;flex:1;text-align:right}
+#vstatus{color:#555;font-size:10px;flex-shrink:0}
+#vvol{width:55px;accent-color:#777;cursor:pointer;flex-shrink:0;vertical-align:middle}
 
 #notes-panel{position:fixed;top:49px;right:0;width:280px;bottom:49px;background:#1a1a1a;border-left:1px solid #333;z-index:800;display:none;flex-direction:column}
 #notes-panel.show{display:flex}
@@ -199,9 +200,10 @@ body.dark #bnav{background:#111}
     <option value="notes">Notes</option>
     <option value="all">All</option>
   </select>
-  <label style="color:#666;font-size:10px;display:flex;align-items:center;gap:3px">
+  <label style="color:#666;font-size:10px;display:flex;align-items:center;gap:3px;flex-shrink:0">
     <input type="checkbox" id="vauto" style="width:12px"> Auto-next
   </label>
+  <input type="range" id="vvol" min="0" max="1" step="0.05" value="1" title="Volume" onchange="vSetVol(this.value)">
   <div id="vstatus">—</div>
 </div>
 
@@ -282,6 +284,7 @@ var READING=false;
 var VOICES=[];
 var VIDX=parseInt(localStorage.getItem('acr_vi')||'0');
 var VRATE=parseFloat(localStorage.getItem('acr_vr')||'1');
+var VOL=1;
 var VMODE='verses';
 var VPARAS=[];
 var VPOS=0;
@@ -617,7 +620,6 @@ function toggleVoice(){
   bar.classList.toggle('show');
   document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));
   bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);
-  document.getElementById('main').classList.toggle('voice-on',bar.classList.contains('show'));
 }
 function buildVP(){
   var mode=VMODE||'verses';
@@ -660,7 +662,7 @@ function vNext(){
   updateVS();
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
-  u.rate=VRATE;
+  u.rate=VRATE;u.volume=VOL;
   u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};
   u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};
   window.speechSynthesis.speak(u);
@@ -673,10 +675,11 @@ function vStop(){
 }
 function vSetSpeed(v){VRATE=parseFloat(v);localStorage.setItem('acr_vr',VRATE);}
 function vSetVoice(i){VIDX=parseInt(i);localStorage.setItem('acr_vi',VIDX);}
+function vSetVol(v){VOL=parseFloat(v);}
 function vPreview(){
   window.speechSynthesis.cancel();
   var u=new SpeechSynthesisUtterance('In the beginning, The Creator created the heavens and the earth.');
-  if(VOICES[VIDX]) u.voice=VOICES[VIDX];u.rate=VRATE;
+  if(VOICES[VIDX]) u.voice=VOICES[VIDX];u.rate=VRATE;u.volume=VOL;
   window.speechSynthesis.speak(u);
 }
 function updateVS(){
