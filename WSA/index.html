@@ -674,9 +674,16 @@ function stopVoice(){
 
 document.getElementById('b-vt').addEventListener('click',function(){
   vpOpen=!vpOpen;
-  document.getElementById('vp').classList.toggle('on',vpOpen);
+  var vp=document.getElementById('vp');
+  var sb=document.getElementById('sb');
+  vp.classList.toggle('on',vpOpen);
   this.classList.toggle('on',vpOpen);
-  if(!vpOpen) stopVoice();
+  if(!vpOpen){
+    stopVoice();
+    sb.style.bottom='';
+  } else {
+    setTimeout(function(){ sb.style.bottom='calc(var(--bn-h) + '+vp.offsetHeight+'px)'; },0);
+  }
 });
 document.getElementById('vp-pl').addEventListener('click',function(){
   if(!window.speechSynthesis) return;
