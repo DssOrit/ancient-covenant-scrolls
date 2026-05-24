@@ -1,0 +1,377 @@
+{
+  "modules": [
+    {
+      "id": "covenant_land",
+      "title": "The Covenant Land & People",
+      "color": "#1A9B9B",
+      "icon": "📜",
+      "vol": 1,
+      "sections": [
+        {
+          "id": "cl_400",
+          "claim": "YHWH made a legally binding covenant declaring His people would serve in a foreign land for exactly 400 years — this is a juridical contract, not a prediction.",
+          "category": "covenant",
+          "ge_source": "Vol.1 — The Nine Conditions",
+          "difficulty": 2,
+          "verses": [
+            {
+              "ref": "Bereshit 15:13",
+              "scroll": "4QGen-Exoda",
+              "cave": "Cave 4, Qumran",
+              "date": "c. 100 BCE",
+              "archive": "Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.",
+              "plain": "YHWH is signing a legal contract with Abram. He declares — as a sovereign ruler issuing a binding decree — that the covenant people will be held in a foreign land under forced servitude for a specific period of 400 years.",
+              "bridge": "The Trans-Atlantic Slave Trade Database documents 1619-2019 as the 400-year bondage period. The Bowen 1747 map identifies the Kingdom of JUDA as the embarkation territory. The DSS text is the legal instrument. The historical record is the fulfillment.",
+              "keywords": ["400 years", "covenant", "strangers", "bondage", "seed"]
+            },
+            {
+              "ref": "Jubilees 14:18",
+              "scroll": "4QJub — Ge'ez Orit",
+              "cave": "Cave 4 + Ethiopia",
+              "date": "c. 150 BCE + preserved in Ge'ez",
+              "archive": "Bodleian Library / Beta Israel",
+              "tradition": "orit",
+              "text": "And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.",
+              "plain": "Jubilees confirms the covenant countdown — four generations equals the 400-year term. The return is guaranteed after the full term is served.",
+              "bridge": "The Orit confirms the same 400-year covenant term as the DSS text, establishing this as the primary authority over any Masoretic interpretation.",
+              "keywords": ["four generations", "return", "iniquity", "400 years"]
+            }
+          ],
+          "quiz": [
+            {"type": "fill_blank", "text": "YHWH declared the covenant people would serve in a foreign land for ___ years.", "answer": "400", "options": ["400", "70", "120", "430"]},
+            {"type": "multiple_choice", "text": "Where is the Bereshit 15:13 covenant text physically preserved?", "answer": "4QGen-Exoda, Cave 4 Qumran", "options": ["4QGen-Exoda, Cave 4 Qumran", "Masoretic Text, 10th century CE", "Vatican Archives", "British Museum"]}
+          ]
+        },
+        {
+          "id": "cl_juda",
+          "claim": "The territory from which the covenant people were taken is documented as the Kingdom of JUDA on royal European cartographic records — multiple independent sources, spanning 150 years.",
+          "category": "cartographic",
+          "ge_source": "Vol.1 — Geographic Truth",
+          "difficulty": 1,
+          "verses": [
+            {
+              "ref": "Devarim 28:68",
+              "scroll": "4QDeut-j",
+              "cave": "Cave 4, Qumran",
+              "date": "c. 50 BCE",
+              "archive": "Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "And YHWH will return you to Egypt in ships, by the way of which I said to you: You shall not see it again. And you shall sell yourselves there to your enemies as male and female slaves, and there is no buyer.",
+              "plain": "The covenant people will be taken in ships. They will be sold as slaves. No one will buy their freedom. This is the covenant curse for covenant violation — specific, juridical, and irreversible without divine intervention.",
+              "bridge": "The Trans-Atlantic Slave Trade used ships. The people were sold as slaves. Emancipation did not restore their identity or their land. The Bowen 1747 map names the embarkation territory Kingdom of JUDA. The DSS text matches every element.",
+              "keywords": ["ships", "Egypt", "slaves", "return", "curse"]
+            },
+            {
+              "ref": "Bowen Map Documentation — 1747 CE",
+              "scroll": "Emanuel Bowen — A New and Accurate Map of Negroland",
+              "cave": "Library of Congress — Geography and Map Division",
+              "date": "1747 CE",
+              "archive": "Library of Congress",
+              "tradition": "historical",
+              "text": "Kingdom of JUDA — documented at approximately 6°21'N, 2°05'E on the West African coast by Emanuel Bowen, Geographer to King George II of England.",
+              "plain": "The British royal cartographer labeled this specific West African territory as the Kingdom of JUDA 145 years before the Berlin Conference redrew every African border. This is a primary cartographic document in a named archive.",
+              "bridge": "The DSS curse describes ships and slavery. The Bowen map names the territory. The slave trade records document the people taken from that territory. Three independent primary sources triangulate to the same people.",
+              "keywords": ["Kingdom of Juda", "West Africa", "cartographic", "1747", "Bowen"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "Who was Emanuel Bowen and why does his 1747 map matter?", "answer": "Geographer to King George II — his map labels the West African Slave Coast as Kingdom of JUDA", "options": ["Geographer to King George II — his map labels the West African Slave Coast as Kingdom of JUDA", "A French explorer who renamed African territories", "A slave trader who documented his routes", "An American historian who invented the name"]},
+            {"type": "fill_blank", "text": "Devarim 28:68 says the covenant people would be taken in ___ back to Egypt.", "answer": "ships", "options": ["ships", "chains", "wagons", "exile"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "name_suppression",
+      "title": "The Suppression of the Name",
+      "color": "#C8971F",
+      "icon": "🔤",
+      "vol": 1,
+      "sections": [
+        {
+          "id": "ns_yhwh",
+          "claim": "The divine name YHWH was replaced by the generic title 'Lord' approximately 7,000 times in the Masoretic Text. The DSS and Ge'ez Orit preserve the original Name intact.",
+          "category": "name",
+          "ge_source": "Vol.1 — Ch.13 — The Ancient Name",
+          "difficulty": 2,
+          "verses": [
+            {
+              "ref": "Soleb Temple Inscription",
+              "scroll": "Amenhotep III — Temple of Soleb",
+              "cave": "Soleb, Nubia — Sudan National Museum",
+              "date": "c. 1400 BCE",
+              "archive": "Sudan National Museum",
+              "tradition": "dss",
+              "text": "YHWH-of-the-Shasu-land — the name YHWH appears in an Egyptian royal inscription at Soleb in Nubian territory, 400 years before the Masoretic timeline places the Mosaic covenant.",
+              "plain": "The oldest physical evidence for the name YHWH is in Africa — carved in stone at Soleb, Nubia, by the Egyptian Pharaoh Amenhotep III. This predates the earliest complete Masoretic manuscript by over 2,000 years.",
+              "bridge": "YHWH worship is documented in Africa before it appears in any European-influenced text tradition. The name originates in the Afro-Asiatic corridor. The Masoretic suppression of it came 2,500 years later.",
+              "keywords": ["YHWH", "Soleb", "Nubia", "1400 BCE", "Africa", "inscription"]
+            },
+            {
+              "ref": "Nahal Hever Greek Scroll",
+              "scroll": "8HevXIIgr — The Greek Minor Prophets Scroll",
+              "cave": "Nahal Hever — Judean Desert",
+              "date": "c. 50 BCE – 50 CE",
+              "archive": "Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "In the Greek translation of the Minor Prophets, the divine name YHWH appears in Paleo-Hebrew script within the Greek text — the translators deliberately preserved the Name in its original form rather than substituting Kyrios.",
+              "plain": "The original Septuagint translators did NOT replace YHWH with Lord. That substitution happened in later copies. The Nahal Hever scroll proves it — YHWH appears in Paleo-Hebrew script inside a Greek-language document.",
+              "bridge": "The name suppression — replacing YHWH with Lord — was a deliberate later editorial decision, not an original translation practice. The physical manuscript evidence at the Israel Antiquities Authority proves this.",
+              "keywords": ["YHWH", "Paleo-Hebrew", "Greek", "Nahal Hever", "Kyrios", "Lord", "suppression"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "Where is the oldest physical evidence for the name YHWH found?", "answer": "Soleb Temple, Nubia — c. 1400 BCE", "options": ["Soleb Temple, Nubia — c. 1400 BCE", "Jerusalem Temple Mount", "Mount Sinai, Egypt", "Babylon, Iraq"]},
+            {"type": "fill_blank", "text": "The Nahal Hever scroll proves the name ___ was preserved in Paleo-Hebrew script inside a Greek document.", "answer": "YHWH", "options": ["YHWH", "Elohim", "Adonai", "Lord"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calendar_truth",
+      "title": "The Calendar Deception",
+      "color": "#8B7EC8",
+      "icon": "☀️",
+      "vol": 9,
+      "sections": [
+        {
+          "id": "cal_364",
+          "claim": "The 364-day solar calendar is the covenant calendar of YHWH. The shift to a lunar calendar was a deliberate act of spiritual disconnection — documented in Jubilees and confirmed in the DSS.",
+          "category": "calendar",
+          "ge_source": "Vol.9 — The Calendar Deception",
+          "difficulty": 3,
+          "verses": [
+            {
+              "ref": "Jubilees 6:36-38",
+              "scroll": "4QJub — Ge'ez Orit",
+              "cave": "Cave 4, Qumran + Ethiopian Orit",
+              "date": "c. 150 BCE",
+              "archive": "Israel Antiquities Authority / Beta Israel",
+              "tradition": "orit",
+              "text": "For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.",
+              "plain": "Jubilees explicitly identifies lunar observation as a corruption of the true calendar. The 364-day solar calendar divides into four seasons of exactly 13 weeks each. Every festival falls on the same day of the week every year — this is by design.",
+              "bridge": "Modern Judaism, Christianity, and Islam all use lunar or lunar-solar calendars. The DSS community at Qumran rejected this. They maintained the 364-day solar calendar documented in Jubilees. The Great Eraser documents how this shift disconnected the true seed from their covenant timing.",
+              "keywords": ["364 days", "solar calendar", "lunar", "appointed times", "Jubilees", "festivals"]
+            },
+            {
+              "ref": "4Q317 — Mishmarot Calendrical Fragments",
+              "scroll": "4Q317",
+              "cave": "Cave 4, Qumran",
+              "date": "c. 100-50 BCE",
+              "archive": "Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "The Mishmarot fragments document the 364-day solar calendar in detail — 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.",
+              "plain": "The DSS community kept detailed records of the true solar calendar. The festivals are mathematically fixed — Pesach always falls on a Wednesday, Shavuot always on Sunday. This is the opposite of the modern Jewish calendar where dates shift every year.",
+              "bridge": "The DSS calendar was not a minor variation — it was a completely different system. The community that preserved the scrolls considered the lunar calendar heresy. The Great Eraser documents how the shift to the lunar calendar disconnected the covenant people from their appointed times with YHWH.",
+              "keywords": ["Mishmarot", "364", "52 weeks", "four seasons", "festivals", "fixed"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "How many days is the true covenant solar calendar according to Jubilees and the DSS?", "answer": "364 days", "options": ["364 days", "354 days", "365 days", "360 days"]},
+            {"type": "fill_blank", "text": "Jubilees 6:36-38 warns that those who observe the ___ will go astray from the appointed times.", "answer": "moon", "options": ["moon", "sun", "stars", "seasons"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "watchers_uap",
+      "title": "Watchers, Nephilim & Modern UAP",
+      "color": "#E8735A",
+      "icon": "⚡",
+      "vol": 9,
+      "sections": [
+        {
+          "id": "w_identity",
+          "claim": "The entities modern governments call 'aliens' or UAP are the Fallen Watchers and their disembodied Nephilim offspring — documented in 1 Enoch and Jubilees, operating under Prince Mastema.",
+          "category": "watchers",
+          "ge_source": "Vol.9 — True Identity of Watchers",
+          "difficulty": 3,
+          "verses": [
+            {
+              "ref": "1 Enoch 6:1-6",
+              "scroll": "4QEn — Ge'ez Orit (canonical)",
+              "cave": "Cave 4, Qumran + Ethiopian Orit",
+              "date": "c. 300 BCE preserved to present",
+              "archive": "Israel Antiquities Authority / Beta Israel",
+              "tradition": "orit",
+              "text": "And it came to pass when the children of men had multiplied that in those days were born unto them beautiful and comely daughters. And the angels, the children of the heaven, saw and lusted after them, and said to one another: 'Come, let us choose us wives from among the children of men and beget us children.' And Semjaza, who was their leader, said unto them...",
+              "plain": "1 Enoch documents the Watchers as beings who left their heavenly stations to physically intervene in human affairs. They were not from distant planets — they descended from the dimensional realm above. They brought forbidden knowledge: metallurgy, weaponization, astrology, sorcery, genetic manipulation.",
+              "bridge": "Modern UAP disclosure presents returning entities as 'extraterrestrials.' The Orit names them precisely: the Fallen Watchers and their offspring returning to the physical stage as their dimensional lease expires. The Great Eraser documents how this rebranding is the final deception.",
+              "keywords": ["Watchers", "Irin", "Semjaza", "fallen angels", "forbidden knowledge", "Nephilim"]
+            },
+            {
+              "ref": "Jubilees 10:7-9",
+              "scroll": "4QJub — Ge'ez Orit",
+              "cave": "Cave 4 + Ethiopian Orit",
+              "date": "c. 150 BCE",
+              "archive": "Beta Israel / IAA",
+              "tradition": "orit",
+              "text": "And the chief of the spirits, Mastema, came and said: Lord, Creator, let some of them remain before me, and let them hearken to my voice, and do all that I shall say unto them; for if some of them are not left to me, I shall not be able to execute the power of my will on the sons of men.",
+              "plain": "After the Flood, Prince Mastema negotiated to keep 10% of the Nephilim spirits free under his command. These are the entities interacting with human governments today under the guise of aliens. Mastema's domain is deception, corruption, and the misdirection of nations.",
+              "bridge": "The 10% of Nephilim spirits retained by Mastema are the intelligence behind the UAP phenomenon. Their role is documented: to torment, deceive, and maintain dominion over the corrupt nations until the cosmic lease expires.",
+              "keywords": ["Mastema", "Nephilim spirits", "10%", "deception", "nations", "UAP"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "According to Jubilees 10, what percentage of Nephilim spirits did Mastema retain after the Flood?", "answer": "10%", "options": ["10%", "50%", "25%", "All of them"]},
+            {"type": "fill_blank", "text": "In 1 Enoch, the Fallen Watchers are called ___ in the original Aramaic.", "answer": "Irin", "options": ["Irin", "Seraphim", "Cherubim", "Elohim"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "khazar_identity",
+      "title": "The Khazar Identity",
+      "color": "#2ECC71",
+      "icon": "🧬",
+      "vol": 7,
+      "sections": [
+        {
+          "id": "kh_genetics",
+          "claim": "The Ashkenazi population carries European haplogroups R1a and R1b — not the E haplogroup of the ancient Israelite populations. The Khazar conversion in 8th century CE is self-documented by the Khazars themselves.",
+          "category": "genetics",
+          "ge_source": "Vol.7 — Khazar Identity",
+          "difficulty": 2,
+          "verses": [
+            {
+              "ref": "Khazar Correspondence — King Joseph's Letter",
+              "scroll": "Schechter Fragment",
+              "cave": "Cambridge University Library",
+              "date": "c. 960 CE",
+              "archive": "Cambridge University Library — Schechter Fragment / Firkovich Collection, National Library of Russia",
+              "tradition": "historical",
+              "text": "We are descended from Japheth, through his son Togarmah. I have found in the genealogical books of my ancestors that Togarmah had ten sons... The name of the first was Ujur, the second Tauris... We are the sons of one of those sons whose name was Khazar.",
+              "plain": "King Joseph of Khazaria traces his ancestry to Togarmah, son of Gomer, son of Japheth — the European-Anatolian genealogical line in Genesis 10. This is not the Shemitic covenant line from which the ancient Israelites descend. This is the Khazar king himself, writing in his own letter, identifying his own origin.",
+              "bridge": "The Great Eraser documents how Ashkenazi identity was constructed on this Khazarian conversion rather than ancient Israelite lineage. King Joseph's own letter is the primary source. The genetics confirm it — R1a and R1b, not E haplogroup.",
+              "keywords": ["Khazar", "Japheth", "Togarmah", "King Joseph", "conversion", "European"]
+            },
+            {
+              "ref": "Lemba Buba Priestly Clan — Cohen Modal Haplotype",
+              "scroll": "Thomas et al. — American Journal of Human Genetics",
+              "cave": "Peer-reviewed genetics — 2000 CE",
+              "date": "2000 CE",
+              "archive": "American Journal of Human Genetics — Thomas et al.",
+              "tradition": "historical",
+              "text": "The Lemba Buba priestly clan of Zimbabwe carries the Cohen Modal Haplotype at approximately 53% frequency — equaling or exceeding rates in Ashkenazi Levitical populations. The Lemba carry the ancient Israelite priestly genetic marker.",
+              "plain": "The ancient Israelite priestly genetic marker — the Cohen Modal Haplotype — is found at high frequency in an African population (the Lemba) who maintained their covenant identity in southern Africa. The marker appears at lower rates in Ashkenazi populations.",
+              "bridge": "The genetic evidence points to Africa for the ancient Israelite priestly lineage. The Lemba, the Beta Israel, and the E haplogroup populations of West Africa carry the biological markers. The Ashkenazi genetic profile reflects the Khazarian conversion history documented in King Joseph's own letter.",
+              "keywords": ["Lemba", "Cohen Modal Haplotype", "E haplogroup", "Buba", "Zimbabwe", "priestly lineage"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "Which document did King Joseph of Khazaria write tracing his ancestry to Japheth?", "answer": "The Schechter Fragment — Cambridge University Library", "options": ["The Schechter Fragment — Cambridge University Library", "The Talmud Bavli", "The Dead Sea Scrolls", "The Masoretic Text"]},
+            {"type": "fill_blank", "text": "The Lemba Buba priestly clan carries the Cohen Modal Haplotype at approximately ___% frequency.", "answer": "53", "options": ["53", "12", "87", "33"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "war_scroll",
+      "title": "The War Scroll — 40-Day Sequence",
+      "color": "#E8735A",
+      "icon": "⚔️",
+      "vol": 9,
+      "sections": [
+        {
+          "id": "ws_sequence",
+          "claim": "The War Scroll (1QM) documents a precise 40-day sequence for the final cosmic reset — a military, acoustic, and dimensional operation that neutralizes modern technology and exposes every deception simultaneously.",
+          "category": "war_scroll",
+          "ge_source": "Vol.9 — The 40-Day Countdown",
+          "difficulty": 3,
+          "verses": [
+            {
+              "ref": "1QM — War Scroll, Column I",
+              "scroll": "1QM",
+              "cave": "Cave 1, Qumran",
+              "date": "c. 100-50 BCE",
+              "archive": "Israel Antiquities Authority / Shrine of the Book",
+              "tradition": "dss",
+              "text": "This is the rule for the order of the battle. When the army advances to meet the enemy to smite the flock of Belial... the chief priest shall stand, and his brothers the priests and the Levites, and all the men of the rule with him.",
+              "plain": "The War Scroll describes a literal military campaign against the forces of darkness. It is not allegorical. It documents troop formations, trumpet codes, banner inscriptions, and a seven-stage battle of lots — three won by the Sons of Light, three by the armies of Belial, with the seventh decided by YHWH directly.",
+              "bridge": "The Great Eraser Study and the Cosmic Matrix document how this war is already running. The 40-day sequence maps to specific modern events. The trumpet codes are acoustic frequencies. The battle is dimensional.",
+              "keywords": ["War Scroll", "1QM", "Sons of Light", "Belial", "battle", "seven lots"]
+            },
+            {
+              "ref": "1QM Column VII — Trumpet Codes",
+              "scroll": "1QM",
+              "cave": "Cave 1, Qumran",
+              "date": "c. 100-50 BCE",
+              "archive": "Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "And on the trumpets of the battle formations they shall write: Formations of the Divisions of YHWH for the Vengeance of YHWH, the Slain of YHWH. On the trumpets of assembly they shall write: The assembled of YHWH.",
+              "plain": "The War Scroll specifies exact inscriptions for each trumpet type. Each inscription is a frequency code — a phonetic and visual declaration that activates specific dimensional responses. These are not symbolic — they are operational acoustic instruments.",
+              "bridge": "The Cosmic Matrix section of the Great Eraser Study documents the three trumpet codes and their functions: the Summoning Assembly, the Alarm and Battle, and the Ambush and Slaughter — each with a specific acoustic signature designed to disable modern electronic infrastructure.",
+              "keywords": ["trumpets", "inscriptions", "YHWH", "formations", "vengeance", "acoustic"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "Where is the War Scroll physically held today?", "answer": "Shrine of the Book, Israel — original from Cave 1, Qumran", "options": ["Shrine of the Book, Israel — original from Cave 1, Qumran", "British Museum, London", "Vatican Archives", "Library of Congress"]},
+            {"type": "sequence", "text": "Put the 40-day sequence in order:", "items": ["Days 1-20: Silent Activation", "Days 21-30: Seven Lots / Frequency Collision", "Days 31-39: Cosmic Blackout", "Day 40: Sky Splits Open"], "answer": [0,1,2,3]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "three_nets",
+      "title": "The Three Nets of Belial",
+      "color": "#8B7EC8",
+      "icon": "🕸️",
+      "vol": 9,
+      "sections": [
+        {
+          "id": "tn_document",
+          "claim": "The Damascus Document classifies the institutional religions used to trap the true seed as the Three Nets of Belial — documented in the DSS, not invented analysis.",
+          "category": "institutions",
+          "ge_source": "Vol.9 — Three Nets of Belial",
+          "difficulty": 2,
+          "verses": [
+            {
+              "ref": "Damascus Document Column IV",
+              "scroll": "CD — Cairo Damascus Document + 4QD",
+              "cave": "Cairo Geniza + Cave 4, Qumran",
+              "date": "c. 100 BCE",
+              "archive": "British Library / Israel Antiquities Authority",
+              "tradition": "dss",
+              "text": "Belial shall be unleashed against Israel... The explanation of this is that these are the three nets of Belial about which Levi son of Jacob said that he catches Israel by setting them up as three kinds of righteousness.",
+              "plain": "The DSS Damascus Document explicitly names three institutional traps used by Belial to keep the true seed blind. These are presented as false forms of righteousness — systems that appear righteous but are designed to maintain spiritual captivity.",
+              "bridge": "The Great Eraser documents how these three nets map to the Universalist Trap (institutional religion), the Lunar Alteration (Rabbinical Judaism), and the Materialist Mask (secularism). This is not interpretation — the Damascus Document names them directly.",
+              "keywords": ["Damascus Document", "three nets", "Belial", "Israel", "traps", "righteousness"]
+            }
+          ],
+          "quiz": [
+            {"type": "multiple_choice", "text": "Where is the Three Nets of Belial passage physically documented?", "answer": "Damascus Document — Cairo Geniza + Cave 4, Qumran", "options": ["Damascus Document — Cairo Geniza + Cave 4, Qumran", "Book of Revelation", "Talmud Bavli", "Geneva Bible"]},
+            {"type": "fill_blank", "text": "The DSS Damascus Document says Belial catches Israel using three nets set up as three kinds of ___.", "answer": "righteousness", "options": ["righteousness", "wickedness", "law", "sacrifice"]}
+          ]
+        }
+      ]
+    }
+  ],
+  "timelines": [
+    {"year": "c. 1400 BCE", "event": "Soleb Temple Inscription — YHWH documented in Nubia, Africa", "color": "#C8971F", "erased_by": "Western academia classifying ancient Nubia as 'Middle Eastern'", "restored_by": "Sudan National Museum — physical artifact"},
+    {"year": "c. 300 BCE", "event": "1 Enoch composed — Watchers, Nephilim, cosmic judgment documented", "color": "#1A9B9B", "erased_by": "Excluded from both Rabbinical canon (90 CE) and Roman Christian canon (325 CE)", "restored_by": "Ethiopian Beta Israel preserved complete in Ge'ez Orit"},
+    {"year": "c. 150 BCE", "event": "Book of Jubilees composed — 364-day solar calendar confirmed", "color": "#8B7EC8", "erased_by": "Excluded by Council of Yavneh (90 CE) and Council of Nicaea (325 CE)", "restored_by": "15+ Qumran fragments + complete Ge'ez Orit preservation"},
+    {"year": "c. 100-50 BCE", "event": "Dead Sea Scrolls deposited at Qumran — 972 manuscripts", "color": "#E8735A", "erased_by": "Sealed for 1,900 years — community destroyed by Romans 68 CE", "restored_by": "Discovery 1947 — Bedouin shepherd Muhammad edh-Dhib, Cave 1"},
+    {"year": "90 CE", "event": "Council of Yavneh — Rabbinical canon fixed, 1 Enoch and Jubilees excluded", "color": "#E8735A", "erased_by": "Rabbinical authority declared these texts non-canonical", "restored_by": "DSS prove both texts were authoritative at Qumran — multiple cave copies"},
+    {"year": "325 CE", "event": "Council of Nicaea — Roman Christian canon determined", "color": "#8B7EC8", "erased_by": "Roman Emperor Constantine convened — Roman political authority over scripture", "restored_by": "Ethiopian and Coptic churches maintained independent canons including 1 Enoch"},
+    {"year": "c. 850-950 CE", "event": "Masoretic Text assembled — Ben Asher family, Tiberias", "color": "#C8971F", "erased_by": "Established as the primary textual authority by Western Biblical scholarship", "restored_by": "DSS predate it by 1,200 years and differ in thousands of documented readings — Tov 2012"},
+    {"year": "960 CE", "event": "Khazar Correspondence — King Joseph's letter documenting Japhethic ancestry", "color": "#2ECC71", "erased_by": "Classified as antisemitism when cited — suppression campaign against Koestler 1976", "restored_by": "Cambridge University Library — Schechter Fragment, permanently archived"},
+    {"year": "1452 CE", "event": "Dum Diversas — Vatican papal bull authorizing African enslavement", "color": "#E8735A", "erased_by": "Not taught in schools — described as isolated historical event", "restored_by": "Vatican Apostolic Archive — primary document, permanent record"},
+    {"year": "1619-2019 CE", "event": "400-year Trans-Atlantic bondage period — Bereshit 15:13 fulfilled", "color": "#C8971F", "erased_by": "Taught as economic event without covenant framework", "restored_by": "Trans-Atlantic Slave Trade Database + Bowen 1747 map + DSS covenant text"},
+    {"year": "1747 CE", "event": "Bowen Map — Kingdom of JUDA labeled on West African coast by royal cartographer", "color": "#1A9B9B", "erased_by": "Post-Berlin Conference maps removed all Hebrew territorial identifications", "restored_by": "Library of Congress — Geography and Map Division, permanent archive"},
+    {"year": "1947 CE", "event": "Dead Sea Scrolls discovered — Cave 1, Qumran", "color": "#2ECC71", "erased_by": "Publication delayed decades — some scrolls suppressed until 1990s", "restored_by": "Digital Dead Sea Scrolls Library — Israel Antiquities Authority, publicly accessible"}
+  ],
+  "memory_cards": [
+    {"id": "mc1", "front": "What does Bereshit 15:13 declare about the covenant people?", "back": "That they will be strangers in a foreign land, afflicted, and serve for 400 years. This is a binding covenant decree from YHWH — not a prediction.", "category": "covenant", "source": "4QGen-Exoda, Cave 4, Qumran", "difficulty": 1},
+    {"id": "mc2", "front": "Where is the oldest physical evidence for the name YHWH?", "back": "Soleb Temple, Nubia (Sudan) — carved by Pharaoh Amenhotep III c. 1400 BCE. Now in the Sudan National Museum. Africa, not Europe.", "category": "name", "source": "Soleb Temple Inscription", "difficulty": 1},
+    {"id": "mc3", "front": "What is the 364-day solar calendar and why does it matter?", "back": "The covenant calendar of YHWH — documented in Jubilees and confirmed in DSS (4Q317). Divides into 52 weeks, 4 seasons of 91 days. Festivals fall on the same weekday every year. The lunar calendar is a documented deviation that disconnects the true seed from covenant timing.", "category": "calendar", "source": "Jubilees 6:36-38 + 4Q317", "difficulty": 2},
+    {"id": "mc4", "front": "Who are the Watchers and what does 1 Enoch say they did?", "back": "The Irin — dimensional beings who left their heavenly stations, descended on Mount Hermon, intervened in human genetics, and brought forbidden knowledge. Their offspring are the Nephilim. 10% of their disembodied spirits were retained by Prince Mastema to deceive nations. Documented in 1 Enoch 6 and Jubilees 10.", "category": "watchers", "source": "1 Enoch 6 + Jubilees 10", "difficulty": 2},
+    {"id": "mc5", "front": "What does King Joseph of Khazaria say about his own ancestry?", "back": "In his own letter (Schechter Fragment, Cambridge University Library) King Joseph traces his lineage to Togarmah, son of Gomer, son of Japheth — the European-Anatolian line of Genesis 10. Not the Shemitic covenant line.", "category": "khazar", "source": "Schechter Fragment — Cambridge University Library", "difficulty": 2},
+    {"id": "mc6", "front": "What are the Three Nets of Belial?", "back": "Documented in the Damascus Document (Cave 4, Qumran): three institutional traps set up as false forms of righteousness to keep the true seed blind. Maps to: the Universalist Trap (institutional religion), the Lunar Alteration (Rabbinical system), and the Materialist Mask (secularism).", "category": "institutions", "source": "Damascus Document Column IV", "difficulty": 2},
+    {"id": "mc7", "front": "What does the Nahal Hever Greek scroll prove about the name YHWH?", "back": "The 8HevXIIgr scroll — a Greek translation of the Minor Prophets — preserves YHWH in Paleo-Hebrew script within the Greek text. This proves the original Septuagint translators did NOT substitute Lord for YHWH. The substitution was a later editorial decision.", "category": "name", "source": "8HevXIIgr — Nahal Hever, IAA", "difficulty": 3},
+    {"id": "mc8", "front": "What percentage of the Lemba Buba priestly clan carries the Cohen Modal Haplotype?", "back": "Approximately 53% — confirmed in Thomas et al., American Journal of Human Genetics (2000). This equals or exceeds rates in Ashkenazi Levitical populations. The Lemba of Zimbabwe and South Africa carry the ancient Israelite priestly genetic marker.", "category": "genetics", "source": "Thomas et al., AJHG 2000", "difficulty": 2},
+    {"id": "mc9", "front": "What is the Desert of Dudael according to 1 Enoch 10?", "back": "The prison of Azazel — YHWH commanded Raphael to bind Azazel and cast him into the darkness of Dudael under rough and jagged rocks. Ethiopian fragments place Dudael extending toward the Great Rift Valley and the Danakil Depression of East Africa.", "category": "watchers", "source": "1 Enoch 10:4-7", "difficulty": 3},
+    {"id": "mc10", "front": "What did the Berlin Conference of 1884-1885 actually divide?", "back": "14 European nations divided the entire African continent — not one African representative present. The territory labeled Kingdom of JUDA on Bowen's 1747 royal map was divided between French and British colonial jurisdictions. The General Act of Berlin Conference — February 26, 1885 — is the primary document.", "category": "erasure", "source": "General Act of Berlin Conference — February 26, 1885", "difficulty": 1}
+  ]
+}
