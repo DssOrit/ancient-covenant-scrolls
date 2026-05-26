@@ -604,10 +604,15 @@ document.getElementById('content').addEventListener('click',function(e){
   if(idx<0) return;
   VPARAS=list;
   VGEN++;
-  if(VPLAYING){window.speechSynthesis.cancel();document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';}); }
+  var tapGen=VGEN;
   VPOS=idx;VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
-  console.log('TAP_AUDIO_DEBUG',{tappedIndex:idx,vposAfterSet:VPOS,tappedText:(list[idx].innerText||'').slice(0,120),queueText:(VPARAS[idx]?VPARAS[idx].innerText||'':'').slice(0,120),spokenText:pronounce(list[idx].textContent||'').slice(0,120),vmode:mode,listLength:list.length});
-  vNext();
+  document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
+  if(window.speechSynthesis.speaking||window.speechSynthesis.pending){
+    window.speechSynthesis.cancel();
+    setTimeout(function(){if(VGEN===tapGen&&VPLAYING)vNext();},80);
+  } else {
+    vNext();
+  }
 });
 
 // VOICE
@@ -681,11 +686,12 @@ function vNext(){
   vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
   updateVS();
   var myGen=VGEN;
+  var fired=false;
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){if(VGEN!==myGen)return;if(para)para.style.background='';VPOS++;vNext();};
-  u.onerror=function(){if(VGEN!==myGen)return;if(para)para.style.background='';VPOS++;vNext();};
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
   window.speechSynthesis.speak(u);
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
