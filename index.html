@@ -287,6 +287,7 @@ var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
 var VGEN=0;
+var VTAP_TIME=0;
 var HL_DATA={};
 var SEL_RANGE=null;
 var SCROLL_T=null;
@@ -596,23 +597,14 @@ document.addEventListener('click',function(e){
 });
 document.getElementById('content').addEventListener('click',function(e){
   if(!document.getElementById('voice-bar').classList.contains('show')) return;
+  var now=Date.now();
+  if(now-VTAP_TIME<150){VTAP_TIME=now;return;}
+  VTAP_TIME=now;
   var mode=VMODE||'verses';
   var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';
-  var list=Array.from(document.querySelectorAll('#content '+sel));
-  var idx=-1;
-  for(var i=0;i<list.length;i++){if(list[i]===e.target||list[i].contains(e.target)){idx=i;break;}}
-  if(idx<0) return;
-  VPARAS=list;
-  VGEN++;
-  var tapGen=VGEN;
-  VPOS=idx;VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
-  document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
-  if(window.speechSynthesis.speaking||window.speechSynthesis.pending){
-    window.speechSynthesis.cancel();
-    setTimeout(function(){if(VGEN===tapGen&&VPLAYING)vNext();},80);
-  } else {
-    vNext();
-  }
+  var el=e.target.closest(sel);
+  if(!el||!document.getElementById('content').contains(el)) return;
+  speakExactElement(el);
 });
 
 // VOICE
@@ -650,6 +642,32 @@ function pronounce(t){
     .replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:')
     .replace(/\[CRITICAL NOTE\]/gi,'Critical note:')
     .replace(/[^\x00-\xFF\u0100-\u024F]/g,'');
+}
+function speakExactElement(el){
+  VGEN++;
+  var myGen=VGEN;
+  window.speechSynthesis.cancel();
+  buildVP();
+  var idx=VPARAS.indexOf(el);
+  if(idx<0) return;
+  VPOS=idx;
+  VPLAYING=true;
+  document.getElementById('vbtn-play').textContent='▶ Playing';
+  document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
+  el.style.background='rgba(255,235,59,.15)';
+  window.scrollTo(0,el.getBoundingClientRect().top+(window.pageYOffset||0)-80);
+  var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
+  vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
+  updateVS();
+  var txt=pronounce(el.textContent||'');
+  console.log('TAP_AUDIO_DEBUG',{VPOS:VPOS,highlightedText:(el.innerText||'').slice(0,80),spokenText:txt.slice(0,80),counter:(VPOS+1)+'/'+VPARAS.length,VGEN:VGEN});
+  var fired=false;
+  var u=new SpeechSynthesisUtterance(txt);
+  if(VOICES[VIDX]) u.voice=VOICES[VIDX];
+  u.rate=VRATE;u.volume=VOL;
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  Promise.resolve().then(function(){if(VGEN!==myGen)return;window.speechSynthesis.speak(u);});
 }
 function vPlay(){
   if(VPLAYING) return;
