@@ -632,15 +632,25 @@ function pronounce(t){
 }
 function vPlay(){
   if(VPLAYING) return;
+  if(window.speechSynthesis.paused){
+    window.speechSynthesis.resume();
+    VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
+    return;
+  }
   buildVP();if(!VPARAS.length) return;
   VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
-  vNext();
+  window.speechSynthesis.cancel();
+  setTimeout(function(){if(VPLAYING)vNext();},50);
 }
 function vNext(){
   if(!VPLAYING||VPOS>=VPARAS.length){
     if(VPLAYING&&document.getElementById('vauto').checked){
       vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);
-    } else vStop();
+    } else if(VPLAYING){
+      vStop();setTimeout(function(){VPOS=0;vPlay();},600);
+    } else {
+      vStop();
+    }
     return;
   }
   var para=VPARAS[VPOS];
@@ -660,7 +670,7 @@ function vNext(){
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
 function vStop(){
-  window.speechSynthesis.cancel();VPLAYING=false;
+  window.speechSynthesis.cancel();VPLAYING=false;VPOS=0;
   document.getElementById('vbtn-play').textContent='▶ Play';
   document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
 }
