@@ -595,11 +595,13 @@ document.addEventListener('click',function(e){
 });
 document.getElementById('content').addEventListener('click',function(e){
   if(!document.getElementById('voice-bar').classList.contains('show')) return;
-  var para=e.target.closest('[data-ptype]');
-  if(!para) return;
-  buildVP();
-  var idx=VPARAS.indexOf(para);
+  var mode=VMODE||'verses';
+  var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';
+  var list=Array.from(document.querySelectorAll('#content '+sel));
+  var idx=-1;
+  for(var i=0;i<list.length;i++){if(list[i]===e.target||list[i].contains(e.target)){idx=i;break;}}
   if(idx<0) return;
+  VPARAS=list;
   if(VPLAYING){window.speechSynthesis.cancel();document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';}); }
   VPOS=idx;VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
   vNext();
