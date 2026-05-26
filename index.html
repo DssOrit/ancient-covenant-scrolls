@@ -286,6 +286,7 @@ var VMODE='verses';
 var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
+var VGEN=0;
 var HL_DATA={};
 var SEL_RANGE=null;
 var SCROLL_T=null;
@@ -602,8 +603,10 @@ document.getElementById('content').addEventListener('click',function(e){
   for(var i=0;i<list.length;i++){if(list[i]===e.target||list[i].contains(e.target)){idx=i;break;}}
   if(idx<0) return;
   VPARAS=list;
+  VGEN++;
   if(VPLAYING){window.speechSynthesis.cancel();document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';}); }
   VPOS=idx;VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
+  console.log('TAP_AUDIO_DEBUG',{tappedIndex:idx,vposAfterSet:VPOS,tappedText:(list[idx].innerText||'').slice(0,120),queueText:(VPARAS[idx]?VPARAS[idx].innerText||'':'').slice(0,120),spokenText:pronounce(list[idx].textContent||'').slice(0,120),vmode:mode,listLength:list.length});
   vNext();
 });
 
@@ -651,6 +654,7 @@ function vPlay(){
     return;
   }
   buildVP();if(!VPARAS.length) return;
+  VGEN++;
   VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
   window.speechSynthesis.cancel();
   vNext();
@@ -676,15 +680,17 @@ function vNext(){
   var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
   vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
   updateVS();
+  var myGen=VGEN;
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};
-  u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};
+  u.onend=function(){if(VGEN!==myGen)return;if(para)para.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen)return;if(para)para.style.background='';VPOS++;vNext();};
   window.speechSynthesis.speak(u);
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
 function vStop(){
+  VGEN++;
   window.speechSynthesis.cancel();VPLAYING=false;VPOS=0;
   document.getElementById('vbtn-play').textContent='▶ Play';
   document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
