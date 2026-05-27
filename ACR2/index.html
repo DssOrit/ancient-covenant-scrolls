@@ -17,15 +17,6 @@ body.sepia{background:#f4ecd8;color:#3b2a1a}
 body.loaded{background:#f5f5f0}
 body.loaded.dark{background:#1a1a1a}
 body.loaded.sepia{background:#f4ecd8}
-#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-#auth-logo{font-size:52px;letter-spacing:4px;color:#fff}
-#auth-title{color:#fff;font-size:14px;font-weight:bold;letter-spacing:.08em;text-align:center;line-height:1.6}
-#auth-sub{color:#888;font-size:11px}
-#auth-pw{background:#222;border:1px solid #444;border-radius:6px;color:#fff;padding:10px 16px;font-size:14px;width:220px;text-align:center;outline:none}
-#auth-pw:focus{border-color:#666}
-#auth-btn{background:#333;color:#ddd;border:none;border-radius:6px;padding:10px 0;font-size:13px;cursor:pointer;width:220px}
-#auth-btn:active{background:#555}
-#auth-msg{color:#c44;font-size:12px;min-height:18px}
 #prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:9000;background:transparent}
 #prog-fill{height:3px;background:#666;width:0%;transition:width .1s}
 body.dark #prog-fill{background:#999}
@@ -95,14 +86,6 @@ body.dark #bnav{background:#111}
 </style>
 </head>
 <body>
-<div id="auth">
-  <div id="auth-logo">𐤉𐤄𐤅𐤄</div>
-  <div id="auth-title">THE ANCIENT COVENANT RECORD<br><span style="font-size:11px;font-weight:normal;color:#888">Supplementary Volumes</span></div>
-  <div id="auth-sub">Enter access code to continue</div>
-  <input id="auth-pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')doAuth()">
-  <button id="auth-btn" onclick="doAuth()">Enter</button>
-  <div id="auth-msg"></div>
-</div>
 <div id="prog"><div id="prog-fill"></div></div>
 <div id="nav">
   <button class="nb" onclick="toggleSB()">&#9776;</button>
@@ -184,29 +167,11 @@ body.dark #bnav{background:#111}
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
 <script>
-function doAuth(){
-  var pw=document.getElementById('auth-pw').value;
-  if(pw==='Pr@y3r*'){
-    sessionStorage.setItem('acr_ok','1');
-    document.getElementById('auth').style.display='none';
-    document.getElementById('nav').style.display='flex';
-    document.getElementById('bnav').style.display='flex';
-    document.body.style.background='';
-    if(typeof start==='function') start();
-  } else {
-    var m=document.getElementById('auth-msg');
-    if(m){ m.textContent='Incorrect password'; setTimeout(function(){m.textContent='';},2000); }
-    document.getElementById('auth-pw').value='';
-  }
-}
 window.addEventListener('load',function(){
-  if(sessionStorage.getItem('acr_ok')==='1'){
-    document.getElementById('auth').style.display='none';
-    document.getElementById('nav').style.display='flex';
-    document.getElementById('bnav').style.display='flex';
-    document.body.style.background='';
-    if(typeof start==='function') start();
-  }
+  document.getElementById('nav').style.display='flex';
+  document.getElementById('bnav').style.display='flex';
+  document.body.style.background='';
+  if(typeof start==='function') start();
 });
 </script>
 <script>
