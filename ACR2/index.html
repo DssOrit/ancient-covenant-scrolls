@@ -288,7 +288,7 @@ function vSetSpeed(v){VRATE=parseFloat(v);localStorage.setItem('acr2_vr',VRATE);
 function vSetVoice(i){VIDX=parseInt(i);localStorage.setItem('acr2_vi',VIDX);}
 function vPreview(){window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance('In the beginning, The Creator created the heavens and the earth.');if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;window.speechSynthesis.speak(u);}
 function updateVS(){var fid=NAVIDS[CUR];var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');var saved=vp[fid];var s=VPLAYING?(VPOS+1)+'/'+VPARAS.length:saved?'Resume v'+saved:'\u2014';document.getElementById('vstatus').textContent=s;}
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});});}
 </script>
 </body>
 </html>
