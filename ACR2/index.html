@@ -27,7 +27,7 @@ body.dark #nav{background:#111}
 #nav-title{flex:1;color:#777;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px;min-width:0}
 #srch{background:#333;border:1px solid #555;border-radius:3px;color:#ddd;padding:3px 6px;font-size:11px;width:110px;font-family:Arial}
 #srch::placeholder{color:#666}
-#sb{position:fixed;top:49px;left:0;bottom:49px;width:265px;background:#1e1e1e;overflow-y:auto;z-index:900;transition:transform .25s}
+#sb{position:fixed;top:49px;left:0;bottom:calc(49px + env(safe-area-inset-bottom,0px));width:265px;background:#1e1e1e;overflow-y:auto;z-index:900;transition:transform .25s}
 #sb.hide{transform:translateX(-265px)}
 body.dark #sb{background:#161616}
 .ts{padding:8px 12px 4px;color:#666;font-size:8px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #2a2a2a;margin-top:4px}
@@ -35,7 +35,7 @@ body.dark #sb{background:#161616}
 .tf{padding:3px 12px 3px 22px;color:#666;font-size:10.5px;cursor:pointer;border-radius:2px}
 .tf:hover,.tf.cur{background:#2a2a2a;color:#ddd}
 .tf.cur{border-left:2px solid #666;padding-left:20px}
-#main{margin-left:265px;margin-top:49px;margin-bottom:49px;padding:24px 40px 50px;max-width:860px;transition:margin .25s}
+#main{margin-left:265px;margin-top:49px;margin-bottom:calc(49px + env(safe-area-inset-bottom,0px));padding:24px 40px 50px;max-width:860px;transition:margin .25s}
 #main.wide{margin-left:0}
 @media(max-width:680px){#main{margin-left:0;padding:14px 14px 50px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}}
 #content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
@@ -48,7 +48,7 @@ mark{background:#ffeb3b;border-radius:2px}body.dark mark{background:#5a4a00;colo
 #hlp.show{display:flex}
 .hc{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer}
 .hx{background:#333;color:#aaa;font-size:11px;border:none;border-radius:3px;padding:2px 6px;cursor:pointer}
-#bnav{position:fixed;bottom:0;left:265px;right:0;height:49px;background:#222;display:none;align-items:center;justify-content:space-between;padding:0 10px;z-index:1000;transition:left .25s}
+#bnav{position:fixed;bottom:0;left:0;right:0;width:100%;height:calc(49px + env(safe-area-inset-bottom,0px));padding:0 10px env(safe-area-inset-bottom,0px);background:#222;display:none;align-items:center;justify-content:space-between;z-index:1000;box-sizing:border-box}
 #bnav.wide{left:0}
 body.dark #bnav{background:#111}
 .bb{background:#333;color:#ccc;padding:5px 12px;border-radius:4px;font-size:12px;border:none;cursor:pointer}
@@ -56,17 +56,17 @@ body.dark #bnav{background:#111}
 .bb:disabled{opacity:.3;cursor:default}
 #pos{color:#777;font-size:11px}
 #top{position:fixed;bottom:58px;right:12px;background:#333;color:#bbb;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:none;z-index:1001;box-shadow:0 2px 8px rgba(0,0,0,.4)}
-#voice-bar{position:fixed;bottom:49px;left:265px;right:0;height:44px;background:#0f0f1e;border-top:1px solid #333;padding:0 10px;z-index:999;display:none;flex-wrap:nowrap;gap:5px;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;transition:left .25s}
+#voice-bar{position:fixed;bottom:calc(49px + env(safe-area-inset-bottom,0px));left:0;right:0;height:44px;background:#0f0f1e;border-top:1px solid #333;padding:0 10px;z-index:999;display:none;flex-wrap:nowrap;gap:5px;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch}
 #voice-bar.wide{left:0}
 #voice-bar.show{display:flex}
 .vb{background:#222;color:#bbb;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:Arial}
 .vb:hover,.vb.on{background:#444;color:#fff}
 #vstatus{color:#666;font-size:10px;flex:1;text-align:right}
-#notes-panel{position:fixed;top:49px;right:0;width:280px;bottom:49px;background:#1a1a1a;border-left:1px solid #333;z-index:800;display:none;flex-direction:column}
+#notes-panel{position:fixed;top:49px;right:0;width:280px;bottom:calc(49px + env(safe-area-inset-bottom,0px));background:#1a1a1a;border-left:1px solid #333;z-index:800;display:none;flex-direction:column}
 #notes-panel.show{display:flex}
 #notes-hdr{padding:8px 12px;border-bottom:1px solid #333;color:#888;font-size:11px;display:flex;justify-content:space-between}
 #notes-ta{flex:1;background:transparent;border:none;color:#ccc;font-size:11px;padding:10px;resize:none;outline:none;line-height:1.6}
-#notes-viewer{position:fixed;inset:49px 0 49px;background:#1a1a1a;z-index:850;overflow-y:auto;display:none;padding:16px}
+#notes-viewer{position:fixed;inset:49px 0 calc(49px + env(safe-area-inset-bottom,0px));background:#1a1a1a;z-index:850;overflow-y:auto;display:none;padding:16px}
 #notes-viewer.show{display:block}
 .nve{background:rgba(255,255,255,.03);border-radius:5px;padding:10px;margin-bottom:8px;cursor:pointer;border-left:2px solid #444}
 .nve:hover{background:rgba(255,255,255,.06)}
@@ -166,6 +166,7 @@ body.dark #bnav{background:#111}
   <button class="hx" onclick="hideHL()" style="color:#555">—</button>
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v-safefooter</div>
 <script>
 window.addEventListener('load',function(){
   document.getElementById('nav').style.display='flex';
@@ -277,7 +278,7 @@ function saveHL(){var fid=NAVIDS[CUR];var spans=document.getElementById('content
 function restoreHL(fid){var saved=HL_DATA[fid];if(!saved||!saved.length)return;var content=document.getElementById('content');saved.forEach(function(h){if(!h.t||!h.c)return;var w=document.createTreeWalker(content,NodeFilter.SHOW_TEXT,null,false);var nd;while(nd=w.nextNode()){var j=nd.textContent.indexOf(h.t);if(j>=0){try{var r=document.createRange();r.setStart(nd,j);r.setEnd(nd,j+h.t.length);var sp=document.createElement('span');sp.className=h.c;r.surroundContents(sp);}catch(e){}break;}}});}
 document.addEventListener('click',function(e){if(!e.target.closest('#hlp')&&!e.target.closest('#content'))hideHL();});
 function loadVoices(){function doit(){VOICES=window.speechSynthesis.getVoices();var sel=document.getElementById('vvoice');sel.innerHTML=VOICES.map(function(v,i){var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'\u2605 ':'';return '<option value="'+i+'"'+(i===VIDX?' selected':'')+'>'+star+v.name.substring(0,26)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)doit();else window.speechSynthesis.onvoiceschanged=doit;}
-function toggleVoice(){var bar=document.getElementById('voice-bar');bar.classList.toggle('show');document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);document.getElementById('main').style.marginBottom=bar.classList.contains('show')?'93px':'49px';}
+function toggleVoice(){var bar=document.getElementById('voice-bar');var nav=document.getElementById('bnav');bar.classList.toggle('show');document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);var barH=bar.classList.contains('show')?bar.offsetHeight:0;document.getElementById('main').style.marginBottom=(nav.offsetHeight+barH)+'px';}
 function buildVP(){var mode=VMODE||'verses';var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';VPARAS=Array.from(document.querySelectorAll('#content '+sel));}
 function pronounce(t){return t.replace(/\u{10909}\u{10904}\u{10905}\u{10904}/gu,'').replace(/[\u{10900}-\u{1091F}]+/gu,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bOrit\b/gi,'Oh-reet').replace(/Ge.ez/gi,'Geh-ez').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/\[DSS\]/g,'Dead Sea Scrolls note:').replace(/ORIT GE.EZ/gi,'Orit Gezz note:').replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:').replace(/\[CRITICAL NOTE\]/gi,'Critical note:').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
 function vPlay(){if(VPLAYING)return;buildVP();if(!VPARAS.length)return;VPLAYING=true;document.getElementById('vbtn-play').textContent='\u25BA Playing';vNext();}
