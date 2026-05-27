@@ -365,6 +365,7 @@ function buildSB(){
     else if(e.type==='vol') h+='<div class="tv">'+e.label+'</div>';
     else h+='<div class="tf" data-idx="'+e.idx+'" onclick="loadSection('+e.idx+',true)">'+e.label+'</div>';
   }
+  h+='<div style="border-top:1px solid #333;margin-top:8px;padding:8px 12px 4px"><a href="../ACR2/" style="display:block;color:#aaa;font-size:11px;text-decoration:none;letter-spacing:.04em;padding:6px 0">ACR2 &#8599;</a></div>';
   document.getElementById('sb').innerHTML=h;
   if(!SB_OPEN) document.getElementById('sb').classList.add('hide');
 }
