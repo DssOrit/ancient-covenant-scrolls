@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v234 script-to-prompt-pipeline — Script to Prompt-Script Studio ls-sps-v234, scene analysis, prompt generation, EB queue, 8-room integration === */
+/* === LoadStudio v235 image-proof-eb-sequence — ls-sps-v235, image proof URL per scene, Mark Ready for Editing Bay, Load to EB in Script Order, Look Lab + Voice Studio push === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -994,17 +994,18 @@ body.ls-contrast-safe{filter:contrast(1.15)}
           <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Location / Title</th>
           <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Characters</th>
           <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Mood</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Image</th>
           <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Status</th>
           <th style="padding:8px 10px"></th>
         </tr></thead>
-        <tbody id="ls-sps-tbody"><tr><td colspan="6" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr></tbody>
+        <tbody id="ls-sps-tbody"><tr><td colspan="7" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr></tbody>
       </table>
     </div>
   </div>
 
   <div class="ls-panel">
     <h3 style="margin:0 0 10px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Route to Production Rooms</h3>
-    <p style="font:400 12px Inter,system-ui,sans-serif;color:#9e97c0;margin:0 0 14px">Push generated data into existing LoadStudio rooms. Only Approved or Ready for Editing Bay scenes route to the Editing Bay queue.</p>
+    <p style="font:400 12px Inter,system-ui,sans-serif;color:#9e97c0;margin:0 0 14px">Push generated data into existing LoadStudio rooms. Scenes marked Ready for Editing Bay load into the Editing Bay in script order.</p>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button id="ls-sps-push-scenes-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(66,165,245,.35);background:rgba(66,165,245,.08);color:#90caf9;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Scene Workshop</button>
       <button id="ls-sps-push-prompts-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,152,0,.35);background:rgba(255,152,0,.08);color:#ffa726;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Prompt Writer</button>
@@ -1012,7 +1013,10 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       <button id="ls-sps-push-locs-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(102,187,106,.35);background:rgba(102,187,106,.08);color:#81c784;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Locations</button>
       <button id="ls-sps-push-wd-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,183,77,.35);background:rgba(255,183,77,.08);color:#ffb74d;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Wardrobe Notes</button>
       <button id="ls-sps-push-pr-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,138,101,.35);background:rgba(255,138,101,.08);color:#ff8a65;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Props Notes</button>
+      <button id="ls-sps-push-ll-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(129,199,132,.35);background:rgba(129,199,132,.08);color:#a5d6a7;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Look Lab</button>
+      <button id="ls-sps-push-vs-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(159,168,218,.35);background:rgba(159,168,218,.08);color:#9fa8da;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Voice Studio</button>
       <button id="ls-sps-push-eb-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(171,71,188,.5);background:rgba(171,71,188,.15);color:#ce93d8;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer">Send Approved to Editing Bay Queue</button>
+      <button id="ls-sps-load-eb-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(66,165,245,.6);background:rgba(66,165,245,.2);color:#42a5f5;font:700 12.5px Inter,system-ui,sans-serif;cursor:pointer">Load to Editing Bay in Script Order</button>
     </div>
     <div id="ls-sps-push-status" style="margin-top:10px;font:400 12px Inter,system-ui,sans-serif;color:#9e97c0;min-height:18px"></div>
   </div>
@@ -1036,15 +1040,18 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     </div>
   </div>
 </div>
-<script id="ls-sps-v234">(function(){
+<script id="ls-sps-v235">(function(){
   var SCRIPT_KEY='ls_script_data';
   var EB_KEY='ls_eb_queue';
+  var EB_STORE='ls_editbay_v1';
   var SCENES_KEY='ls_sw_scenes';
   var PROMPTS_KEY='ls_scene_prompts';
   var CHARS_KEY='ls_characters_data';
   var LOCS_KEY='ls_loc_items';
   var WD_KEY='ls_wd_items';
   var PR_KEY='ls_pr_items';
+  var LL_KEY='ls_ll_items';
+  var VS_KEY='ls_vs_profiles';
 
   function load(){try{return JSON.parse(localStorage.getItem(SCRIPT_KEY)||'null')||null;}catch(_){return null;}}
   function saveData(d){try{localStorage.setItem(SCRIPT_KEY,JSON.stringify(d));return '';}catch(e){return e.message||String(e);}}
@@ -1062,19 +1069,19 @@ body.ls-contrast-safe{filter:contrast(1.15)}
   var CAP_RE=/^[A-Z][A-Z\s\(\)\'\.]{2,39}$/;
 
   function detectMood(text){var t=text.toLowerCase();return MOOD_WORDS.filter(function(w){return t.indexOf(w)>=0;});}
-  function detectWardrobe(text){var t=text.toLowerCase();var h=WARDROBE_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):'';}
-  function detectProps(text){var t=text.toLowerCase();var h=PROP_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):'';}
-  function extractCamera(text){var m=text.match(/\b(WIDE\s+SHOT|CLOSE[\-\s]?UP|ECU|MCU|POV|ESTABLISHING|AERIAL|CRANE|DOLLY|HANDHELD|TRACKING\s+SHOT|TWO\s+SHOT|OVER\s+THE\s+SHOULDER)\b/gi);return m?m.join(', '):''; }
+  function detectWardrobe(text){var t=text.toLowerCase();var h=WARDROBE_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):''; }
+  function detectProps(text){var t=text.toLowerCase();var h=PROP_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):''; }
+  function extractCamera(text){var m=text.match(/\b(WIDE\s+SHOT|CLOSE[\-\s]?UP|ECU|MCU|POV|ESTABLISHING|AERIAL|CRANE|DOLLY|HANDHELD|TRACKING\s+SHOT|TWO\s+SHOT|OVER\s+THE\s+SHOULDER)\b/gi);return m?m.join(', '):'';}
 
   function buildScene(idx,intExt,loc,tod){
-    return {id:uid(),sceneId:'SC'+String(idx).padStart(2,'0'),sceneIndex:idx,
+    return{id:uid(),sceneId:'SC'+String(idx).padStart(2,'0'),sceneIndex:idx,
       title:loc.substring(0,50),intExt:intExt,location:loc,timeOfDay:tod,
       characters:[],dialogue:[],narration:[],action:[],transitions:[],rawLines:[],
       imagePrompt:'',negativePrompt:'blurry, low quality, watermark, text overlay',
       animationPrompt:'',motionNotes:'',narrationPrompt:'',dialogueNotes:'',
       musicPrompt:'',sfxPrompt:'',lookNotes:'',wardrobeNotes:'',propNotes:'',
-      continuityNotes:'',cameraNotes:'',moodWords:[],status:'Draft',
-      createdAt:new Date().toISOString()};
+      continuityNotes:'',cameraNotes:'',moodWords:[],imageProofUrl:'',
+      status:'Draft',createdAt:new Date().toISOString()};
   }
 
   function finishScene(sc,meta){
@@ -1105,13 +1112,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     var lines=raw.split(/\r?\n/);
     var scenes=[]; var cur=null; var idx=0;
     var charCounts={}; var locs=[];
-
-    function flush(){
-      if(!cur)return;
-      finishScene(cur,meta);
-      scenes.push(cur);cur=null;
-    }
-
+    function flush(){if(!cur)return; finishScene(cur,meta); scenes.push(cur); cur=null;}
     for(var i=0;i<lines.length;i++){
       var line=lines[i].trim(); if(!line)continue;
       var hm=HEADER_RE.exec(line);
@@ -1148,7 +1149,6 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       if(line.length>10)cur.action.push(line);
     }
     flush();
-
     var extractedChars=Object.keys(charCounts).sort(function(a,b){return charCounts[b]-charCounts[a];}).slice(0,30);
     return{project:meta||{},rawScript:raw.substring(0,50000),scenes:scenes,
       extractedCharacters:extractedChars,extractedLocations:locs,
@@ -1165,20 +1165,42 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     if(!tb)return;
     var scenes=d&&d.scenes?d.scenes:[];
     if(ct)ct.textContent=scenes.length+' scene'+(scenes.length===1?'':'s');
-    if(!scenes.length){tb.innerHTML='<tr><td colspan="6" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr>';return;}
+    if(!scenes.length){tb.innerHTML='<tr><td colspan="7" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr>';return;}
     tb.innerHTML=scenes.map(function(sc,i){
       var col=statusColor(sc.status);
+      var imgThumb=sc.imageProofUrl
+        ?'<img src="'+esc(sc.imageProofUrl)+'" style="width:32px;height:22px;object-fit:cover;border-radius:3px;border:1px solid rgba(66,165,245,.4)" onerror="this.style.display=\'none\'">'
+        :'<span style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78">None</span>';
+      var readyBtn=sc.status==='Approved'||sc.status==='Ready for Editing Bay'
+        ?'<button type="button" onclick="window.lsSPS.markReady('+i+')" style="background:none;border:1px solid rgba(66,165,245,.4);color:#42a5f5;border-radius:6px;padding:2px 7px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer;display:block;margin-top:3px">'+(sc.status==='Ready for Editing Bay'?'Ready':'Mark Ready')+'</button>'
+        :'';
       return '<tr style="border-bottom:1px solid rgba(171,71,188,.1)">'
         +'<td style="padding:7px 10px;font:600 12px monospace;color:#ce93d8">'+esc(sc.sceneId)+'</td>'
         +'<td style="padding:7px 10px"><span style="display:block;font:500 13px Inter,system-ui,sans-serif;color:#f5f0ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">'+esc(sc.title||sc.location||'Untitled')+'</span>'
-          +(sc.intExt?'<span style="font:400 10px Inter,system-ui,sans-serif;color:#7a6fa0">'+esc(sc.intExt+(sc.timeOfDay?' • '+sc.timeOfDay:''))+'</span>':'')+'</td>'
+          +(sc.intExt?'<span style="font:400 10px Inter,system-ui,sans-serif;color:#7a6fa0">'+esc(sc.intExt+(sc.timeOfDay?' - '+sc.timeOfDay:''))+'</span>':'')+'</td>'
         +'<td style="padding:7px 10px;font:400 11px Inter,system-ui,sans-serif;color:#c0b8d9;max-width:110px"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc((sc.characters||[]).slice(0,3).join(', ')||'—')+'</span></td>'
         +'<td style="padding:7px 10px;font:400 11px Inter,system-ui,sans-serif;color:#ab7fd0">'+esc((sc.moodWords||[]).slice(0,2).join(', ')||'—')+'</td>'
+        +'<td style="padding:7px 10px">'
+          +imgThumb
+          +'<button type="button" onclick="window.lsSPS.toggleDetail('+i+')" style="background:none;border:1px solid rgba(171,71,188,.3);color:#9e97c0;border-radius:5px;padding:1px 6px;font:500 10px Inter,system-ui,sans-serif;cursor:pointer;display:block;margin-top:3px">Set URL</button>'
+          +readyBtn
+        +'</td>'
         +'<td style="padding:7px 10px"><span style="color:'+col+';font:500 12px Inter,system-ui,sans-serif">'+esc(sc.status||'Draft')+'</span></td>'
         +'<td style="padding:7px 8px;white-space:nowrap">'
           +'<button type="button" onclick="window.lsSPS.approve('+i+')" style="background:none;border:1px solid rgba(102,187,106,.35);color:#66bb6a;border-radius:6px;padding:2px 8px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer;margin-right:3px">Approve</button>'
           +'<button type="button" onclick="window.lsSPS.revise('+i+')" style="background:none;border:1px solid rgba(239,83,80,.35);color:#ef5350;border-radius:6px;padding:2px 8px;font:500 11px Inter,system-ui,sans-serif;cursor:pointer">Revise</button>'
         +'</td>'
+        +'</tr>'
+        +'<tr id="ls-sps-detail-'+i+'" style="display:none;background:rgba(66,165,245,.04)">'
+          +'<td colspan="7" style="padding:8px 14px 10px">'
+            +'<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'
+              +'<label style="font:500 11px Inter,system-ui,sans-serif;color:#90caf9;white-space:nowrap">Image URL / Data URL:</label>'
+              +'<input id="ls-sps-imgurl-'+i+'" type="text" value="'+esc(sc.imageProofUrl||'')+'" placeholder="Paste image URL or data:image/..." style="flex:1;min-width:200px;background:#0c0518;border:1px solid rgba(66,165,245,.4);border-radius:7px;color:#f5f0ff;font:400 12px Inter,system-ui,sans-serif;padding:7px 10px;box-sizing:border-box">'
+              +'<button type="button" onclick="window.lsSPS.saveImageUrl('+i+')" style="padding:7px 12px;border-radius:7px;border:1px solid rgba(66,165,245,.5);background:rgba(66,165,245,.15);color:#42a5f5;font:600 11.5px Inter,system-ui,sans-serif;cursor:pointer">Save URL</button>'
+              +'<button type="button" onclick="window.lsSPS.markReady('+i+')" style="padding:7px 12px;border-radius:7px;border:1px solid rgba(66,187,106,.5);background:rgba(66,187,106,.15);color:#66bb6a;font:600 11.5px Inter,system-ui,sans-serif;cursor:pointer">Mark Ready for Editing Bay</button>'
+            +'</div>'
+            +'<p style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78;margin:6px 0 0">Scene must be Approved before it can be marked Ready. URL is saved separately — it does not auto-save.</p>'
+          +'</td>'
         +'</tr>';
     }).join('');
   }
@@ -1188,10 +1210,14 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     var q=loadArr(EB_KEY);
     if(!q.length){el.innerHTML='<span style="color:#5a5a78">No scenes in queue. Approve scenes and tap Send Approved to Editing Bay Queue.</span>';return;}
     el.innerHTML=q.map(function(sc,i){
+      var thumb=sc.imageProofUrl
+        ?'<img src="'+esc(sc.imageProofUrl)+'" style="width:44px;height:30px;object-fit:cover;border-radius:4px;border:1px solid rgba(66,165,245,.3);flex-shrink:0" onerror="this.style.display=\'none\'">'
+        :'<div style="width:44px;height:30px;background:rgba(255,255,255,.04);border-radius:4px;border:1px solid rgba(255,255,255,.08);flex-shrink:0"></div>';
       return '<div style="display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:7px;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.15);margin-bottom:5px">'
+        +thumb
         +'<span style="font:600 11px monospace;color:#90caf9;min-width:36px">'+esc(sc.sceneId)+'</span>'
         +'<span style="flex:1;font:400 12px Inter,system-ui,sans-serif;color:#c0b8d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(sc.title||sc.location||'Scene '+(i+1))+'</span>'
-        +'<span style="font:500 11px Inter,system-ui,sans-serif;color:#66bb6a">'+esc(sc.status||'Approved')+'</span>'
+        +'<span style="font:500 11px Inter,system-ui,sans-serif;color:'+(sc.status==='Ready for Editing Bay'?'#42a5f5':'#66bb6a')+'">'+esc(sc.status||'Approved')+'</span>'
         +'</div>';
     }).join('');
   }
@@ -1221,10 +1247,46 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       return{sceneId:sc.sceneId,title:sc.title||sc.location||'',sceneIndex:sc.sceneIndex,
         imagePrompt:sc.imagePrompt,animationPrompt:sc.animationPrompt,musicPrompt:sc.musicPrompt,
         sfxPrompt:sc.sfxPrompt,narrationPrompt:sc.narrationPrompt,status:sc.status,
+        imageProofUrl:sc.imageProofUrl||'',
         approvedAt:sc.approvedAt||sc.createdAt,location:sc.location,characters:sc.characters,
         scriptTitle:(d.project&&d.project.screenplayTitle)||''};
     });
     try{localStorage.setItem(EB_KEY,JSON.stringify(queue));}catch(_){}
+  }
+
+  function loadToEditingBay(){
+    var d=load();
+    if(!d||!d.scenes){setPushStatus('No scenes. Analyze a script first.','#ffa726');return;}
+    var ready=d.scenes
+      .filter(function(sc){return sc.status==='Ready for Editing Bay'||sc.status==='Approved';})
+      .sort(function(a,b){return (a.sceneIndex||0)-(b.sceneIndex||0);});
+    if(!ready.length){setPushStatus('No approved or ready scenes to load.','#ffa726');return;}
+    var ts=Date.now();
+    var ebScenes=ready.map(function(sc,i){
+      var hasImg=!!(sc.imageProofUrl);
+      return{
+        id:'lseb_sps_'+ts+'_'+i,
+        title:sc.sceneId+(sc.title?' - '+sc.title:''),
+        narration:sc.narrationPrompt||'',captions:'',
+        musicMood:sc.musicPrompt||'',sfx:sc.sfxPrompt||'',
+        transition:'cut',duration:5,
+        media:{image:hasImg?sc.imageProofUrl:null,video:null,narration:null,music:null,sfxAudio:null},
+        clips:hasImg?[{id:'clip_sps_'+i,type:'image',src:sc.imageProofUrl,dur:5}]:[],
+        tracks:{music:[],text:[],sticker:[],overlay:[],sfx:[],voice:[],transition:[]},
+        fx:{filter:'none',mirror:false,flip:false,rotate:0,opacity:100},
+        status:hasImg?'has-image':'empty',
+        createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()
+      };
+    });
+    var existing;
+    try{existing=JSON.parse(localStorage.getItem(EB_STORE)||'null');}catch(_){existing=null;}
+    var existScenes=(existing&&Array.isArray(existing.scenes))?existing.scenes:[];
+    var merged=existScenes.concat(ebScenes);
+    try{
+      localStorage.setItem(EB_STORE,JSON.stringify({scenes:merged,selectedIdx:existScenes.length}));
+      setPushStatus('Loaded '+ebScenes.length+' scenes into Editing Bay in script order.','#42a5f5');
+      setTimeout(function(){if(typeof go==='function')go('timeline-editor');},400);
+    }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
   }
 
   window.lsSPS={
@@ -1236,12 +1298,37 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     revise:function(i){
       var d=load();if(!d||!d.scenes||!d.scenes[i])return;
       d.scenes[i].status='Needs Revision';saveData(d);renderTable();
+    },
+    toggleDetail:function(i){
+      var row=document.getElementById('ls-sps-detail-'+i);
+      if(row)row.style.display=row.style.display==='none'?'':'none';
+    },
+    saveImageUrl:function(i){
+      var inp=document.getElementById('ls-sps-imgurl-'+i);
+      if(!inp)return;
+      var url=(inp.value||'').trim();
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].imageProofUrl=url;
+      saveData(d);renderTable();renderEBQueue();
+      setPushStatus('Image URL saved for scene '+(i+1)+'.','#4caf50');
+    },
+    markReady:function(i){
+      var inp=document.getElementById('ls-sps-imgurl-'+i);
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      if(inp&&inp.value.trim())sc.imageProofUrl=inp.value.trim();
+      if(sc.status!=='Approved'&&sc.status!=='Ready for Editing Bay'){
+        setPushStatus('Scene must be Approved before marking Ready.','#ffa726');return;
+      }
+      sc.status='Ready for Editing Bay';
+      syncEBQueue(d);saveData(d);renderTable();renderEBQueue();
+      setPushStatus('Scene '+(i+1)+' marked Ready for Editing Bay.','#42a5f5');
     }
   };
 
   function btn(id,fn){
     var el=document.getElementById(id);
-    if(el&&!el._v234){el._v234=true;
+    if(el&&!el._v235){el._v235=true;
       el.addEventListener('click',fn);
       el.addEventListener('touchend',function(e){e.preventDefault();fn.call(this,e);});
     }
@@ -1268,7 +1355,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     });
 
     var fi=document.getElementById('ls-sps-file');
-    if(fi&&!fi._v234){fi._v234=true;
+    if(fi&&!fi._v235){fi._v235=true;
       fi.addEventListener('change',function(){
         var file=this.files&&this.files[0];if(!file)return;
         var reader=new FileReader();
@@ -1310,7 +1397,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
             sfxPrompt:sc.sfxPrompt||'',imagePrompt:sc.imagePrompt||'',
             videoPrompt:sc.animationPrompt||'',negativePrompt:sc.negativePrompt||'',
             transitionIn:(sc.transitions&&sc.transitions[0])||'',transitionOut:'',
-            status:sc.status==='Approved'?'Approved':sc.status==='Ready for Editing Bay'?'Approved':'Draft',
+            status:sc.status==='Approved'||sc.status==='Ready for Editing Bay'?'Approved':'Draft',
             notes:sc.continuityNotes||'',savedAt:new Date().toISOString()});
           added++;
         });
@@ -1409,6 +1496,45 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
     });
 
+    btn('ls-sps-push-ll-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(LL_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.lookNotes)return;
+          existing.push({id:'ll'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:'Scene '+sc.sceneId+' Look',sceneId:sc.sceneId,
+            lookNotes:sc.lookNotes,imagePrompt:sc.imagePrompt||'',
+            moodWords:(sc.moodWords||[]).join(', '),
+            source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+        });
+        localStorage.setItem(LL_KEY,JSON.stringify(existing));
+        setPushStatus('Look Lab: '+added+' look entries added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-vs-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(VS_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.narrationPrompt&&!(sc.characters&&sc.characters.length))return;
+          (sc.characters||[]).slice(0,3).forEach(function(name){
+            var exists=existing.some(function(p){return p.name===name&&p.sceneId===sc.sceneId;});
+            if(exists)return;
+            existing.push({id:'vs'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+              name:name,sceneId:sc.sceneId,
+              narrationPrompt:sc.narrationPrompt||'',dialogueNotes:sc.dialogueNotes||'',
+              source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+          });
+        });
+        localStorage.setItem(VS_KEY,JSON.stringify(existing));
+        setPushStatus('Voice Studio: '+added+' voice profiles added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
     btn('ls-sps-push-eb-btn',function(){
       var d=load();
       if(!d||!d.scenes){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
@@ -1417,6 +1543,8 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       setPushStatus('Editing Bay queue: '+approved.length+' approved scenes queued.');
       renderEBQueue();
     });
+
+    btn('ls-sps-load-eb-btn',function(){loadToEditingBay();});
 
     renderTable();
     renderEBQueue();
