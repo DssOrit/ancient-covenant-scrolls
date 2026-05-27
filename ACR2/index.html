@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Covenant Record 2">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>The Ancient Covenant Record — Vol 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:10.5pt;background:#111111;color:#111;transition:background .2s,color .2s}
+body.dark{background:#1a1a1a;color:#e8e8e0}
+body.sepia{background:#f4ecd8;color:#3b2a1a}
+body.loaded{background:#f5f5f0}
+body.loaded.dark{background:#1a1a1a}
+body.loaded.sepia{background:#f4ecd8}
+#prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:9000;background:transparent}
+#prog-fill{height:3px;background:#666;width:0%;transition:width .1s}
+body.dark #prog-fill{background:#999}
+#nav{position:fixed;top:3px;left:0;right:0;height:46px;background:#222;display:none;align-items:center;gap:3px;padding:0 6px;z-index:1000;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+body.dark #nav{background:#111}
+.nb{background:none;border:none;color:#bbb;cursor:pointer;padding:3px 6px;border-radius:3px;font-size:12px;font-family:Arial;white-space:nowrap;flex-shrink:0}
+.nb:hover,.nb.on{background:#444;color:#fff}
+#nav-title{flex:1;color:#777;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px;min-width:0}
+#srch{background:#333;border:1px solid #555;border-radius:3px;color:#ddd;padding:3px 6px;font-size:11px;width:110px;font-family:Arial}
+#srch::placeholder{color:#666}
+#sb{position:fixed;top:49px;left:0;bottom:calc(49px + env(safe-area-inset-bottom,0px));width:265px;background:#1e1e1e;overflow-y:auto;z-index:900;transition:transform .25s}
+#sb.hide{transform:translateX(-265px)}
+body.dark #sb{background:#161616}
+.ts{padding:8px 12px 4px;color:#666;font-size:8px;font-weight:bold;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #2a2a2a;margin-top:4px}
+.tv{padding:5px 12px 2px;color:#888;font-size:10.5px;font-weight:bold}
+.tf{padding:3px 12px 3px 22px;color:#666;font-size:10.5px;cursor:pointer;border-radius:2px}
+.tf:hover,.tf.cur{background:#2a2a2a;color:#ddd}
+.tf.cur{border-left:2px solid #666;padding-left:20px}
+#main{margin-left:265px;margin-top:49px;margin-bottom:calc(49px + env(safe-area-inset-bottom,0px));padding:24px 40px 50px;max-width:860px;transition:margin .25s}
+#main.wide{margin-left:0}
+@media(max-width:680px){#main{margin-left:0;padding:14px 14px 50px}#sb{transform:translateX(-265px)}#sb.mob{transform:translateX(0)}}
+#content p{font-family:Arial;line-height:var(--lh,1.65);font-size:var(--fs,10.5pt);margin:.1em 0}
+.hy{background:#ffeb3b}.hg{background:#90EE90}.hb{background:#87CEEB}.hp{background:#DDA0DD}.ho{background:#FFB347}
+body.dark .hy{background:#6a5000;color:#fff}body.dark .hg{background:#1a4a1a;color:#fff}
+body.dark .hb{background:#103a5a;color:#fff}body.dark .hp{background:#4a1a5a;color:#fff}
+body.dark .ho{background:#5a2a00;color:#fff}
+mark{background:#ffeb3b;border-radius:2px}body.dark mark{background:#5a4a00;color:#fff}
+#hlp{position:fixed;background:#1a1a1a;border:1px solid #444;border-radius:8px;padding:6px 8px;display:none;gap:6px;align-items:center;z-index:8000;box-shadow:0 4px 12px rgba(0,0,0,.5)}
+#hlp.show{display:flex}
+.hc{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.2);cursor:pointer}
+.hx{background:#333;color:#aaa;font-size:11px;border:none;border-radius:3px;padding:2px 6px;cursor:pointer}
+#bnav{position:fixed;bottom:0;left:0;right:0;width:100%;height:calc(49px + env(safe-area-inset-bottom,0px));padding:0 10px env(safe-area-inset-bottom,0px);background:#222;display:none;align-items:center;justify-content:space-between;z-index:1000;box-sizing:border-box}
+#bnav.wide{left:0}
+body.dark #bnav{background:#111}
+.bb{background:#333;color:#ccc;padding:5px 12px;border-radius:4px;font-size:12px;border:none;cursor:pointer}
+.bb:hover{background:#555;color:#fff}
+.bb:disabled{opacity:.3;cursor:default}
+#pos{color:#777;font-size:11px}
+#top{position:fixed;bottom:58px;right:12px;background:#333;color:#bbb;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;display:none;z-index:1001;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#voice-bar{position:fixed;bottom:calc(49px + env(safe-area-inset-bottom,0px));left:0;right:0;height:44px;background:#0f0f1e;border-top:1px solid #333;padding:0 10px;z-index:999;display:none;flex-wrap:nowrap;gap:5px;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#voice-bar.wide{left:0}
+#voice-bar.show{display:flex}
+.vb{background:#222;color:#bbb;border:none;border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:Arial}
+.vb:hover,.vb.on{background:#444;color:#fff}
+#vstatus{color:#666;font-size:10px;flex:1;text-align:right}
+#notes-panel{position:fixed;top:49px;right:0;width:280px;bottom:calc(49px + env(safe-area-inset-bottom,0px));background:#1a1a1a;border-left:1px solid #333;z-index:800;display:none;flex-direction:column}
+#notes-panel.show{display:flex}
+#notes-hdr{padding:8px 12px;border-bottom:1px solid #333;color:#888;font-size:11px;display:flex;justify-content:space-between}
+#notes-ta{flex:1;background:transparent;border:none;color:#ccc;font-size:11px;padding:10px;resize:none;outline:none;line-height:1.6}
+#notes-viewer{position:fixed;inset:49px 0 calc(49px + env(safe-area-inset-bottom,0px));background:#1a1a1a;z-index:850;overflow-y:auto;display:none;padding:16px}
+#notes-viewer.show{display:block}
+.nve{background:rgba(255,255,255,.03);border-radius:5px;padding:10px;margin-bottom:8px;cursor:pointer;border-left:2px solid #444}
+.nve:hover{background:rgba(255,255,255,.06)}
+.nvt{color:#666;font-size:9px;margin-bottom:4px}
+.nvx{color:#aaa;font-size:11px;line-height:1.5;white-space:pre-wrap}
+#ch-jump{position:fixed;top:58px;left:50%;transform:translateX(-50%);background:#1a1a1a;border:1px solid #444;border-radius:8px;padding:10px 14px;z-index:2000;display:none;gap:8px;align-items:center}
+#ch-jump.show{display:flex}
+#ch-in{background:#222;border:1px solid #555;border-radius:4px;color:#ddd;padding:5px 8px;font-size:13px;width:80px;text-align:center}
+#ch-go{background:#444;color:#ddd;border:none;border-radius:4px;padding:5px 10px;cursor:pointer}
+#recent-panel,#bm-panel{position:fixed;top:49px;left:265px;right:0;background:#1a1a1a;border-bottom:1px solid #333;padding:10px;z-index:700;display:none;flex-wrap:wrap;gap:6px}
+#recent-panel.show,#bm-panel.show{display:flex}
+.rp,.bp{background:#222;color:#aaa;padding:3px 10px;border-radius:3px;font-size:11px;cursor:pointer}
+.rp:hover,.bp:hover{background:#444;color:#fff}
+#sb::-webkit-scrollbar,#notes-viewer::-webkit-scrollbar{width:3px}
+#sb::-webkit-scrollbar-thumb,#notes-viewer::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+#acr2-link{position:fixed;top:58px;right:12px;background:#333;color:#bbb;border:none;padding:5px 10px;border-radius:4px;font-size:10px;cursor:pointer;z-index:999;text-decoration:none;display:none}
+</style>
+</head>
+<body>
+<div id="prog"><div id="prog-fill"></div></div>
+<div id="nav">
+  <button class="nb" onclick="toggleSB()">&#9776;</button>
+  <span id="nav-title">THE ANCIENT COVENANT RECORD — SUPPLEMENTARY VOLUMES</span>
+  <button class="nb" onclick="toggleRecent()" title="Recently read"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg></button>
+  <button class="nb" onclick="toggleBM()" id="bm-btn" title="Bookmarks">&#9734;</button>
+  <button class="nb" onclick="toggleChJump()" title="Jump to chapter">&#8853;</button>
+  <button class="nb" onclick="toggleNotes()" title="Notes" id="notes-btn"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="8" height="10" rx="1"/><path d="M4 4h4M4 6.5h4M4 9h2"/><path d="M8 1v2H4V1"/></svg></button>
+  <button class="nb" onclick="toggleNotesViewer()" title="All notes"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h8M2 6h8M2 9h5"/></svg></button>
+  <input id="srch" type="text" placeholder="Search…" oninput="doSearch(this.value)">
+  <button class="nb" onclick="adjFS(-1)">A-</button>
+  <button class="nb" onclick="adjFS(1)">A+</button>
+  <button class="nb" onclick="adjLH(-1)" title="Less spacing">&#8597;-</button>
+  <button class="nb" onclick="adjLH(1)" title="More spacing">&#8597;+</button>
+  <button class="nb" onclick="doSepia()" title="Sepia" id="sepia-btn">&#9728;</button>
+  <button class="nb" onclick="doDark()" title="Dark/Light" id="dark-btn">&#9680;</button>
+  <button class="nb" onclick="doRead()" title="Reading mode" id="read-btn">&#8865;</button>
+  <button class="nb" onclick="toggleVoice()" title="Voice" id="voice-btn"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5h2l3-3v9l-3-3H1z"/><path d="M9 3.5c.8.8 1.2 1.8 1.2 3s-.4 2.2-1.2 3"/></svg></button>
+</div>
+<div id="sb"></div>
+<div id="main"><div id="content"><p style="padding:40px;color:#888;text-align:center">Loading…</p></div></div>
+<div id="ch-jump">
+  <span style="color:#888;font-size:12px">Ch</span>
+  <input id="ch-in" type="number" min="1" placeholder="№" onkeydown="if(event.key==='Enter')goChJump()">
+  <button id="ch-go" onclick="goChJump()">Go</button>
+  <button class="nb" onclick="closeChJump()" style="color:#666">&#10005;</button>
+</div>
+<div id="bnav">
+  <button class="bb" id="btn-prev" onclick="navTo(CUR-1)" disabled>&#9664; Prev</button>
+  <span id="pos">— of 17</span>
+  <button class="bb" id="btn-next" onclick="navTo(CUR+1)">Next &#9654;</button>
+</div>
+<div id="recent-panel"></div>
+<div id="bm-panel"></div>
+<div id="voice-bar">
+  <button class="vb" id="vbtn-play" onclick="vPlay()">&#9654; Play</button>
+  <button class="vb" onclick="vPause()">&#9208;</button>
+  <button class="vb" onclick="vStop()">&#9209;</button>
+  <select id="vspd" class="vb" onchange="vSetSpeed(this.value)" style="padding:2px">
+    <option value="0.7">0.7&#215;</option><option value="0.85">0.85&#215;</option>
+    <option value="1" selected>1&#215;</option><option value="1.2">1.2&#215;</option>
+    <option value="1.5">1.5&#215;</option>
+  </select>
+  <select id="vvoice" class="vb" onchange="vSetVoice(this.value)" style="max-width:120px;padding:2px"></select>
+  <button class="vb" onclick="vPreview()">Preview</button>
+  <select id="vmode" class="vb" onchange="VMODE=this.value" style="padding:2px">
+    <option value="verses">Verses</option>
+    <option value="notes">Notes</option>
+    <option value="all">All</option>
+  </select>
+  <label style="color:#666;font-size:10px;display:flex;align-items:center;gap:3px">
+    <input type="checkbox" id="vauto" style="width:12px"> Auto-next
+  </label>
+  <div id="vstatus">—</div>
+</div>
+<div id="notes-panel">
+  <div id="notes-hdr">
+    <span>Notes — <span id="notes-lbl">current section</span></span>
+    <button class="nb" onclick="toggleNotes()" style="font-size:10px">&#10005;</button>
+  </div>
+  <textarea id="notes-ta" placeholder="Notes auto-save per section…"></textarea>
+</div>
+<div id="notes-viewer">
+  <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+    <span style="color:#888;font-size:12px;font-weight:bold">ALL NOTES</span>
+    <button class="nb" onclick="toggleNotesViewer()" style="font-size:10px">&#10005; Close</button>
+  </div>
+  <div id="nv-list"></div>
+</div>
+<div id="hlp">
+  <button class="hc" style="background:#ffeb3b" onclick="applyHL('hy')" title="Yellow"></button>
+  <button class="hc" style="background:#90EE90" onclick="applyHL('hg')" title="Green"></button>
+  <button class="hc" style="background:#87CEEB" onclick="applyHL('hb')" title="Blue"></button>
+  <button class="hc" style="background:#DDA0DD" onclick="applyHL('hp')" title="Purple"></button>
+  <button class="hc" style="background:#FFB347" onclick="applyHL('ho')" title="Orange"></button>
+  <button class="hx" onclick="removeHL()">&#10005;</button>
+  <button class="hx" onclick="copyHL()">Copy</button>
+  <button class="hx" onclick="hideHL()" style="color:#555">—</button>
+</div>
+<button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v-safefooter</div>
+<script>
+window.addEventListener('load',function(){
+  document.getElementById('nav').style.display='flex';
+  document.getElementById('bnav').style.display='flex';
+  document.body.style.background='';
+  if(typeof start==='function') start();
+});
+</script>
+<script>
+var NAVIDS=["file_1", "file_2", "file_3", "file_4", "file_5", "file_6", "file_7", "file_8", "file_9", "file_10", "file_11", "file_12", "file_13", "file_14", "file_15", "file_16", "file_17"];
+var LABELS=["Vol 1 — 4QInstruction (Musar leMevin) — Part 1 — Columns 1–12", "Vol 1 — 4QInstruction (Musar leMevin) — Part 2 — Columns 13–26", "Vol 2 — Aramaic Levi Document — 4Q213-214 — Complete", "Vol 3 — New Jerusalem — 4Q554-555, 11Q18 — Complete", "Vol 4 — Prayer of Nabonidus — 4Q242 — Complete", "Vol 5 — 4QBeatitudes — 4Q525 — Complete", "Vol 6 — Apocryphon of Joshua — 4Q378-379 — Complete", "Vol 7 — Words of Michael — 4Q529 — Complete", "Vol 8 — Birth of Noah — 4Q534-536 — Complete", "Vol 9 — Pseudo-Jubilees — 4Q225-227 — Complete", "Vol 10 — Angels of Mastemah — 4Q390 — Complete", "Vol 11 — Wicked and the Holy — 4Q181 — Complete", "Vol 12 — Book of War — 4Q285, 11Q14 — Complete", "Vol 13 — Messianic Apocalypse — 4Q521 — Complete", "Vol 14 — Meqabyan — Book One — Orit Ge'ez — Complete", "Vol 15 — Meqabyan — Book Two — Orit Ge'ez — Complete", "Vol 16 — Meqabyan — Book Three — Orit Ge'ez — Complete"];
+var TOC=[{"type": "sec", "label": "DSS WISDOM TEXTS"}, {"type": "vol", "label": "Vol 1 — 4QInstruction (Musar leMevin)"}, {"type": "file", "idx": 0, "label": "Part 1 — Columns 1–12"}, {"type": "vol", "label": "Vol 1 — 4QInstruction (Musar leMevin)"}, {"type": "file", "idx": 1, "label": "Part 2 — Columns 13–26"}, {"type": "vol", "label": "Vol 2 — Aramaic Levi Document"}, {"type": "file", "idx": 2, "label": "4Q213-214 — Complete"}, {"type": "vol", "label": "Vol 3 — New Jerusalem"}, {"type": "file", "idx": 3, "label": "4Q554-555, 11Q18 — Complete"}, {"type": "vol", "label": "Vol 4 — Prayer of Nabonidus"}, {"type": "file", "idx": 4, "label": "4Q242 — Complete"}, {"type": "vol", "label": "Vol 5 — 4QBeatitudes"}, {"type": "file", "idx": 5, "label": "4Q525 — Complete"}, {"type": "vol", "label": "Vol 6 — Apocryphon of Joshua"}, {"type": "file", "idx": 6, "label": "4Q378-379 — Complete"}, {"type": "vol", "label": "Vol 7 — Words of Michael"}, {"type": "file", "idx": 7, "label": "4Q529 — Complete"}, {"type": "vol", "label": "Vol 8 — Birth of Noah"}, {"type": "file", "idx": 8, "label": "4Q534-536 — Complete"}, {"type": "vol", "label": "Vol 9 — Pseudo-Jubilees"}, {"type": "file", "idx": 9, "label": "4Q225-227 — Complete"}, {"type": "vol", "label": "Vol 10 — Angels of Mastemah"}, {"type": "file", "idx": 10, "label": "4Q390 — Complete"}, {"type": "vol", "label": "Vol 11 — Wicked and the Holy"}, {"type": "file", "idx": 11, "label": "4Q181 — Complete"}, {"type": "vol", "label": "Vol 12 — Book of War"}, {"type": "file", "idx": 12, "label": "4Q285, 11Q14 — Complete"}, {"type": "sec", "label": "ORIT GE'EZ — MEQABYAN"}, {"type": "vol", "label": "Vol 13 — Messianic Apocalypse"}, {"type": "file", "idx": 13, "label": "4Q521 — Complete"}, {"type": "vol", "label": "Vol 14 — Meqabyan"}, {"type": "file", "idx": 14, "label": "Book One — Orit Ge'ez — Complete"}, {"type": "vol", "label": "Vol 15 — Meqabyan"}, {"type": "file", "idx": 15, "label": "Book Two — Orit Ge'ez — Complete"}, {"type": "vol", "label": "Vol 16 — Meqabyan"}, {"type": "file", "idx": 16, "label": "Book Three — Orit Ge'ez — Complete"}];
+var CUR=parseInt(localStorage.getItem('acr2_last')||'0');
+var FS=parseFloat(localStorage.getItem('acr2_fs')||'10.5');
+var LH=parseFloat(localStorage.getItem('acr2_lh')||'1.65');
+var DARK=localStorage.getItem('acr2_dark')==='1';
+var SEPIA=localStorage.getItem('acr2_sepia')==='1';
+var SB_OPEN=window.innerWidth>680;
+var READING=false;
+var VOICES=[];
+var VIDX=parseInt(localStorage.getItem('acr2_vi')||'0');
+var VRATE=parseFloat(localStorage.getItem('acr2_vr')||'1');
+var VMODE='verses';
+var VPARAS=[];
+var VPOS=0;
+var VPLAYING=false;
+var HL_DATA={};
+var SEL_RANGE=null;
+var SCROLL_T=null;
+function start(){
+  document.body.classList.add('loaded');
+  applyFS();applyLH();
+  if(DARK)document.body.classList.add('dark');
+  if(SEPIA&&!DARK)document.body.classList.add('sepia');
+  try{HL_DATA=JSON.parse(localStorage.getItem('acr2_hl')||'{}');}catch(e){}
+  buildSB();loadVoices();loadSection(CUR,true);
+  document.addEventListener('mouseup',onSel);
+  document.addEventListener('touchend',function(){setTimeout(onSel,120);});
+  window.onscroll=onScroll;
+  document.getElementById('notes-ta').addEventListener('input',saveNotes);
+}
+function loadSection(idx,restore){
+  if(idx<0||idx>=NAVIDS.length)return;
+  if(window.innerWidth<1024){if(window.innerWidth<=680){if(document.getElementById('sb').classList.contains('mob'))toggleSB();}else if(SB_OPEN)toggleSB();}
+  CUR=idx;localStorage.setItem('acr2_last',CUR);addRecent(CUR);saveNotes();
+  var fid=NAVIDS[CUR],lbl=LABELS[CUR];
+  document.getElementById('nav-title').textContent=lbl;
+  document.getElementById('pos').textContent=(CUR+1)+' of '+NAVIDS.length;
+  document.getElementById('btn-prev').disabled=(CUR===0);
+  document.getElementById('btn-next').disabled=(CUR===NAVIDS.length-1);
+  document.querySelectorAll('.tf').forEach(function(el){el.classList.toggle('cur',el.dataset.idx===String(CUR));});
+  var bms=JSON.parse(localStorage.getItem('acr2_bms')||'[]');
+  document.getElementById('bm-btn').textContent=bms.indexOf(fid)>=0?'\u2605':'\u2606';
+  var notes=JSON.parse(localStorage.getItem('acr2_notes')||'{}');
+  document.getElementById('notes-ta').value=notes[fid]||'';
+  document.getElementById('notes-lbl').textContent=lbl.split(' \u2014 ').slice(0,2).join(' \u2014 ');
+  document.getElementById('content').innerHTML='<p style="padding:40px;color:#888;text-align:center">Loading\u2026</p>';
+  fetch('data/'+fid+'.json').then(function(r){return r.json();}).then(function(d){
+    document.getElementById('content').innerHTML=d.html||d.content||'';
+    applyFS();applyLH();restoreHL(fid);
+    vStop();buildVP();
+    var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');
+    VPOS=vp[fid]||0;updateVS();
+    if(restore){
+      var sp=JSON.parse(localStorage.getItem('acr2_sp')||'{}');
+      if(sp[fid])setTimeout(function(){window.scrollTo(0,sp[fid]);},80);
+      else window.scrollTo(0,0);
+    }else window.scrollTo(0,0);
+  }).catch(function(){document.getElementById('content').innerHTML='<p style="padding:20px;color:#888">Error loading section.</p>';});
+}
+function navTo(idx){if(idx>=0&&idx<NAVIDS.length)loadSection(idx,false);}
+function buildSB(){
+  var h='<div style="padding:6px 12px 4px;color:#444;font-size:8px;letter-spacing:.06em;border-bottom:1px solid #2a2a2a">\u{1F4D6} THE ANCIENT COVENANT RECORD \u2014 SUPPLEMENTARY VOLUMES</div>';
+  for(var i=0;i<TOC.length;i++){
+    var e=TOC[i];
+    if(e.type==='sec')h+='<div class="ts">'+e.label+'</div>';
+    else if(e.type==='vol')h+='<div class="tv">'+e.label+'</div>';
+    else h+='<div class="tf" data-idx="'+e.idx+'" onclick="loadSection('+e.idx+',true)">'+e.label+'</div>';
+  }
+  document.getElementById('sb').innerHTML=h;
+  if(!SB_OPEN)document.getElementById('sb').classList.add('hide');
+}
+function applyFS(){document.getElementById('content').style.setProperty('--fs',FS+'pt');}
+function applyLH(){document.getElementById('content').style.setProperty('--lh',LH);}
+function adjFS(d){FS=Math.max(8,Math.min(22,FS+d));applyFS();localStorage.setItem('acr2_fs',FS);}
+function adjLH(d){LH=Math.max(1.2,Math.min(2.5,Math.round((LH+d*.1)*10)/10));applyLH();localStorage.setItem('acr2_lh',LH);}
+function doDark(){document.body.classList.remove('sepia');SEPIA=false;DARK=document.body.classList.toggle('dark');localStorage.setItem('acr2_dark',DARK?'1':'0');localStorage.setItem('acr2_sepia','0');document.getElementById('dark-btn').classList.toggle('on',DARK);}
+function doSepia(){if(DARK){document.body.classList.remove('dark');DARK=false;localStorage.setItem('acr2_dark','0');}SEPIA=document.body.classList.toggle('sepia');localStorage.setItem('acr2_sepia',SEPIA?'1':'0');document.getElementById('sepia-btn').classList.toggle('on',SEPIA);}
+function doRead(){READING=!READING;document.getElementById('read-btn').classList.toggle('on',READING);if(READING){document.getElementById('sb').classList.add('hide');document.getElementById('main').classList.add('wide');document.getElementById('bnav').classList.add('wide');document.getElementById('voice-bar').classList.add('wide');}else{if(SB_OPEN&&window.innerWidth>680)document.getElementById('sb').classList.remove('hide');document.getElementById('main').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);document.getElementById('bnav').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN||window.innerWidth<=680);}}
+function toggleSB(){if(window.innerWidth<=680){document.getElementById('sb').classList.toggle('mob');}else{SB_OPEN=!SB_OPEN;document.getElementById('sb').classList.toggle('hide',!SB_OPEN);document.getElementById('main').classList.toggle('wide',!SB_OPEN);document.getElementById('bnav').classList.toggle('wide',!SB_OPEN);document.getElementById('voice-bar').classList.toggle('wide',!SB_OPEN);}}
+function onScroll(){var s=window.pageYOffset||0;var h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('prog-fill').style.width=(h>0?Math.round(s/h*100):0)+'%';document.getElementById('top').style.display=s>300?'block':'none';clearTimeout(SCROLL_T);SCROLL_T=setTimeout(function(){var sp=JSON.parse(localStorage.getItem('acr2_sp')||'{}');sp[NAVIDS[CUR]]=s;localStorage.setItem('acr2_sp',JSON.stringify(sp));},3000);}
+function toggleChJump(){document.getElementById('ch-jump').classList.toggle('show');document.getElementById('ch-in').focus();}
+function closeChJump(){document.getElementById('ch-jump').classList.remove('show');}
+function goChJump(){var n=parseInt(document.getElementById('ch-in').value);if(!n){closeChJump();return;}var paras=document.querySelectorAll('[data-acr]');for(var i=0;i<paras.length;i++){var t=paras[i].textContent;if(t.match(new RegExp('CHAPTER\\s+'+n+'\\b','i'))||t.match(new RegExp('\u2014 CHAPTER '+n+'\\b'))){window.scrollTo(0,paras[i].getBoundingClientRect().top+(window.pageYOffset||0)-60);break;}}document.getElementById('ch-in').value='';closeChJump();}
+function doSearch(q){document.querySelectorAll('mark').forEach(function(m){m.outerHTML=m.innerHTML;});if(!q||q.length<2)return;var c=document.getElementById('content'),ql=q.toLowerCase();var w=document.createTreeWalker(c,NodeFilter.SHOW_TEXT,null,false);var nodes=[],nd;while(nd=w.nextNode())nodes.push(nd);var first=null;for(var i=0;i<nodes.length;i++){var t=nodes[i].textContent,j=t.toLowerCase().indexOf(ql);if(j>=0){var r=document.createRange();r.setStart(nodes[i],j);r.setEnd(nodes[i],j+q.length);try{var m=document.createElement('mark');r.surroundContents(m);if(!first)first=m;}catch(e){}}}if(first)window.scrollTo(0,first.getBoundingClientRect().top+(window.pageYOffset||0)-80);}
+function toggleBM(){var fid=NAVIDS[CUR];var bms=JSON.parse(localStorage.getItem('acr2_bms')||'[]');var i=bms.indexOf(fid);if(i>=0){bms.splice(i,1);document.getElementById('bm-btn').textContent='\u2606';}else{bms.push(fid);document.getElementById('bm-btn').textContent='\u2605';}localStorage.setItem('acr2_bms',JSON.stringify(bms));renderBM();document.getElementById('bm-panel').classList.toggle('show');}
+function renderBM(){var bms=JSON.parse(localStorage.getItem('acr2_bms')||'[]');var p=document.getElementById('bm-panel');if(!bms.length){p.innerHTML='<span style="color:#666;font-size:11px">No bookmarks yet</span>';return;}p.innerHTML=bms.map(function(fid){var idx=NAVIDS.indexOf(fid);var lbl=idx>=0?LABELS[idx].split(' \u2014 ').slice(0,2).join(' \u2014 '):fid;return '<span class="bp" onclick="loadSection('+idx+',true);document.getElementById(\'bm-panel\').classList.remove(\'show\')">'+lbl+'</span>';}).join('');}
+function addRecent(idx){var r=JSON.parse(localStorage.getItem('acr2_rec')||'[]');r=r.filter(function(i){return i!==idx;});r.unshift(idx);if(r.length>10)r=r.slice(0,10);localStorage.setItem('acr2_rec',JSON.stringify(r));}
+function toggleRecent(){var p=document.getElementById('recent-panel');if(p.classList.toggle('show')){var r=JSON.parse(localStorage.getItem('acr2_rec')||'[]');p.innerHTML=r.length?r.map(function(idx){var lbl=LABELS[idx]?LABELS[idx].split(' \u2014 ').slice(0,2).join(' \u2014 '):'?';return '<span class="rp" onclick="loadSection('+idx+',true);document.getElementById(\'recent-panel\').classList.remove(\'show\')">'+lbl+'</span>';}).join(''):'<span style="color:#666;font-size:11px">No history yet</span>';}}
+function saveNotes(){var fid=NAVIDS[CUR];var v=document.getElementById('notes-ta').value;var n=JSON.parse(localStorage.getItem('acr2_notes')||'{}');if(v)n[fid]=v;else delete n[fid];localStorage.setItem('acr2_notes',JSON.stringify(n));}
+function toggleNotes(){var p=document.getElementById('notes-panel');p.classList.toggle('show');document.getElementById('notes-btn').classList.toggle('on',p.classList.contains('show'));if(p.classList.contains('show'))document.getElementById('notes-ta').focus();}
+function toggleNotesViewer(){var p=document.getElementById('notes-viewer');p.classList.toggle('show');if(p.classList.contains('show')){var n=JSON.parse(localStorage.getItem('acr2_notes')||'{}');var keys=Object.keys(n);document.getElementById('nv-list').innerHTML=keys.length?keys.map(function(fid){var idx=NAVIDS.indexOf(fid);var lbl=idx>=0?LABELS[idx]:'Unknown';return '<div class="nve" onclick="loadSection('+idx+',true);document.getElementById(\'notes-viewer\').classList.remove(\'show\')"><div class="nvt">'+lbl+'</div><div class="nvx">'+n[fid].substring(0,200)+(n[fid].length>200?'\u2026':'')+'</div></div>';}).join(''):'<p style="color:#666;font-size:12px">No notes yet.</p>';}}
+function onSel(){var sel=window.getSelection();if(!sel||sel.isCollapsed||!sel.toString().trim()){hideHL();return;}SEL_RANGE=sel.getRangeAt(0).cloneRange();var rect=sel.getRangeAt(0).getBoundingClientRect();var p=document.getElementById('hlp');p.style.top=(rect.bottom+(window.pageYOffset||0)+6)+'px';p.style.left=Math.max(4,Math.min(window.innerWidth-200,rect.left+(window.pageXOffset||0)))+'px';p.classList.add('show');}
+function hideHL(){document.getElementById('hlp').classList.remove('show');SEL_RANGE=null;}
+function applyHL(cls){if(!SEL_RANGE)return;try{var sp=document.createElement('span');sp.className=cls;SEL_RANGE.surroundContents(sp);}catch(e){var f=SEL_RANGE.extractContents();var sp=document.createElement('span');sp.className=cls;sp.appendChild(f);SEL_RANGE.insertNode(sp);}saveHL();hideHL();window.getSelection().removeAllRanges();}
+function removeHL(){if(!SEL_RANGE)return;var n=SEL_RANGE.startContainer;while(n&&n!==document.getElementById('content')){if(n.nodeType===1&&n.className&&'hy hg hb hp ho'.indexOf(n.className)>=0){var par=n.parentNode;while(n.firstChild)par.insertBefore(n.firstChild,n);par.removeChild(n);saveHL();break;}n=n.parentNode;}hideHL();}
+function copyHL(){var sel=window.getSelection();if(sel&&!sel.isCollapsed){try{navigator.clipboard.writeText(sel.toString());}catch(e){document.execCommand('copy');}}hideHL();}
+function saveHL(){var fid=NAVIDS[CUR];var spans=document.getElementById('content').querySelectorAll('.hy,.hg,.hb,.hp,.ho');var saved=[];spans.forEach(function(s){saved.push({t:s.textContent,c:s.className});});HL_DATA[fid]=saved;localStorage.setItem('acr2_hl',JSON.stringify(HL_DATA));}
+function restoreHL(fid){var saved=HL_DATA[fid];if(!saved||!saved.length)return;var content=document.getElementById('content');saved.forEach(function(h){if(!h.t||!h.c)return;var w=document.createTreeWalker(content,NodeFilter.SHOW_TEXT,null,false);var nd;while(nd=w.nextNode()){var j=nd.textContent.indexOf(h.t);if(j>=0){try{var r=document.createRange();r.setStart(nd,j);r.setEnd(nd,j+h.t.length);var sp=document.createElement('span');sp.className=h.c;r.surroundContents(sp);}catch(e){}break;}}});}
+document.addEventListener('click',function(e){if(!e.target.closest('#hlp')&&!e.target.closest('#content'))hideHL();});
+function loadVoices(){function doit(){VOICES=window.speechSynthesis.getVoices();var sel=document.getElementById('vvoice');sel.innerHTML=VOICES.map(function(v,i){var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'\u2605 ':'';return '<option value="'+i+'"'+(i===VIDX?' selected':'')+'>'+star+v.name.substring(0,26)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)doit();else window.speechSynthesis.onvoiceschanged=doit;}
+function toggleVoice(){var bar=document.getElementById('voice-bar');var nav=document.getElementById('bnav');bar.classList.toggle('show');document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);var barH=bar.classList.contains('show')?bar.offsetHeight:0;document.getElementById('main').style.marginBottom=(nav.offsetHeight+barH)+'px';}
+function buildVP(){var mode=VMODE||'verses';var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';VPARAS=Array.from(document.querySelectorAll('#content '+sel));}
+function pronounce(t){return t.replace(/\u{10909}\u{10904}\u{10905}\u{10904}/gu,'').replace(/[\u{10900}-\u{1091F}]+/gu,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bOrit\b/gi,'Oh-reet').replace(/Ge.ez/gi,'Geh-ez').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/\[DSS\]/g,'Dead Sea Scrolls note:').replace(/ORIT GE.EZ/gi,'Orit Gezz note:').replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:').replace(/\[CRITICAL NOTE\]/gi,'Critical note:').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
+function vPlay(){if(VPLAYING)return;buildVP();if(!VPARAS.length)return;VPLAYING=true;document.getElementById('vbtn-play').textContent='\u25BA Playing';vNext();}
+function vNext(){if(!VPLAYING||VPOS>=VPARAS.length){if(VPLAYING&&document.getElementById('vauto').checked){vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);}else vStop();return;}var para=VPARAS[VPOS];var txt=pronounce(para.textContent||'');if(!txt.trim()){VPOS++;vNext();return;}window.scrollTo(0,para.getBoundingClientRect().top+(window.pageYOffset||0)-80);para.style.background='rgba(255,235,59,.15)';var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));updateVS();var u=new SpeechSynthesisUtterance(txt);if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};window.speechSynthesis.speak(u);}
+function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';}
+function vStop(){window.speechSynthesis.cancel();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});}
+function vSetSpeed(v){VRATE=parseFloat(v);localStorage.setItem('acr2_vr',VRATE);}
+function vSetVoice(i){VIDX=parseInt(i);localStorage.setItem('acr2_vi',VIDX);}
+function vPreview(){window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance('In the beginning, The Creator created the heavens and the earth.');if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;window.speechSynthesis.speak(u);}
+function updateVS(){var fid=NAVIDS[CUR];var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');var saved=vp[fid];var s=VPLAYING?(VPOS+1)+'/'+VPARAS.length:saved?'Resume v'+saved:'\u2014';document.getElementById('vstatus').textContent=s;}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});});}
+</script>
+</body>
+</html>
