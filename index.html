@@ -37,6 +37,7 @@ body.dark #nav{background:#111}
 .nb{background:none;border:none;color:#bbb;cursor:pointer;padding:3px 6px;border-radius:3px;font-size:12px;font-family:Arial;white-space:nowrap;flex-shrink:0}
 .nb:hover,.nb.on{background:#444;color:#fff}
 #nav-title{flex:1;color:#777;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px;min-width:0}
+#solar-back{display:none;background:#1a3a5a;color:#7abfff;border:none;border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;flex-shrink:0;font-family:Arial;white-space:nowrap;margin-right:2px}
 #srch{background:#333;border:1px solid #555;border-radius:3px;color:#ddd;padding:3px 6px;font-size:11px;width:110px;font-family:Arial;flex-shrink:0}
 #srch::placeholder{color:#666}
 
@@ -135,6 +136,7 @@ body.dark #reader-footer{background:#0a0a0a}
 
 <!-- TOP NAV -->
 <div id="nav">
+  <button id="solar-back" onclick="goBackToSolar()">&#x2190; Solar</button>
   <button class="nb" onclick="toggleSB()" title="Contents">☰</button>
   <span id="nav-title">THE ANCIENT COVENANT RECORD</span>
   <button class="nb" onclick="toggleRecent()" title="Recently read">🕐</button>
@@ -253,6 +255,10 @@ function doAuth(){
     document.getElementById('auth-pw').value='';
   }
 }
+function goBackToSolar(){
+  document.getElementById('solar-back').style.display='none';
+  window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/Solar/';
+}
 window.addEventListener('load',function(){
   if(localStorage.getItem('acr_ok')==='1'){
     document.getElementById('auth').style.display='none';
@@ -260,6 +266,10 @@ window.addEventListener('load',function(){
     document.getElementById('reader-footer').style.display='flex';
     document.body.style.background='';
     if(typeof start==='function') start();
+  }
+  if(localStorage.getItem('acr_from_solar')==='1'){
+    document.getElementById('solar-back').style.display='block';
+    localStorage.removeItem('acr_from_solar');
   }
 });
 </script>
