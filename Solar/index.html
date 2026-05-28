@@ -2182,7 +2182,7 @@ function updateShabbatDisplay(){
 function openVolOfDay(){
   var sd=gregorianToSolar(new Date());
   var labels=['Bereshit Part 1','Bereshit Part 2','Shemot Part 1','Shemot Part 2','Vayikra Part 1','Vayikra Part 2','Bamidbar Part 1','Bamidbar Part 2','Devarim Part 1','Devarim Part 2','Chanokh Part 1','Chanokh Part 2','Chanokh Part 3','Yovelim Part 1','Yovelim Part 2','War Scroll 1QM','Yehoshua','Shofetim','Shemu’el Aleph','Shemu’el Bet','Melakhim Aleph','Melakhim Bet','Yeshayahu Part 1','Yeshayahu Part 2','Yirmeyahu','Yehezkel Part 1','Yehezkel Part 2','Twelve Minor Prophets','Tehillim Part 1','Tehillim Part 2','Iyov','Mishlei','Shir HaShirim','Ruth','Eikha','Kohelet','Daniyel','Ezra-Nekhemyah','Divrei HaYamim','Community Rule 1QS','Damascus Document','Temple Scroll Part 1','Temple Scroll Part 2','Book of Mysteries','Hodayot','Pesher Habakkuk','Genesis Apocryphon','New Jerusalem','4QInstruction Part 1','4QInstruction Part 2','Aramaic Levi Document','4QBeatitudes','Book of War','Songs of Sabbath Sacrifice','Meqabyan Book 1','Meqabyan Book 2','Words of Michael','Birth of Noah','Prayer of Nabonidus','Pseudo-Jubilees','Angels of Mastemah','Wicked and the Holy'];
-  var idx=sd.dayOfYear%labels.length;
+  var idx=(sd.dayOfYear*17)%labels.length;
   var readerIdx=[0,1,4,5,6,7,8,9,10,11,12,13,14,15,16,93,19,22,25,29,33,37,41,43,46,53,56,59,64,68,76,73,79,80,81,82,84,86,88,97,95,108,109,111,102,104,106,107,94,94,106,102,93,105,15,16,12,17,84,15,12,93];
   localStorage.setItem('acr_ok','1');
   localStorage.setItem('acr_last',String(readerIdx[idx]));
@@ -2193,7 +2193,7 @@ function renderVolOfDay(){
   var card=document.getElementById('vol-title');if(!card)return;
   var sd=gregorianToSolar(new Date());
   var labels=['Bereshit Part 1','Bereshit Part 2','Shemot Part 1','Shemot Part 2','Vayikra Part 1','Vayikra Part 2','Bamidbar Part 1','Bamidbar Part 2','Devarim Part 1','Devarim Part 2','Chanokh Part 1','Chanokh Part 2','Chanokh Part 3','Yovelim Part 1','Yovelim Part 2','War Scroll 1QM','Yehoshua','Shofetim','Shemu\u2019el Aleph','Shemu\u2019el Bet','Melakhim Aleph','Melakhim Bet','Yeshayahu Part 1','Yeshayahu Part 2','Yirmeyahu','Yehezkel Part 1','Yehezkel Part 2','Twelve Minor Prophets','Tehillim Part 1','Tehillim Part 2','Iyov','Mishlei','Shir HaShirim','Ruth','Eikha','Kohelet','Daniyel','Ezra-Nekhemyah','Divrei HaYamim','Community Rule 1QS','Damascus Document','Temple Scroll Part 1','Temple Scroll Part 2','Book of Mysteries','Hodayot','Pesher Habakkuk','Genesis Apocryphon','New Jerusalem','4QInstruction Part 1','4QInstruction Part 2','Aramaic Levi Document','4QBeatitudes','Book of War','Songs of Sabbath Sacrifice','Meqabyan Book 1','Meqabyan Book 2','Words of Michael','Birth of Noah','Prayer of Nabonidus','Pseudo-Jubilees','Angels of Mastemah','Wicked and the Holy'];
-  var idx=sd.dayOfYear%labels.length;
+  var idx=(sd.dayOfYear*17)%labels.length;
   card.textContent='Vol '+(idx+1)+' \u2014 '+labels[idx];
 }
 function renderTopBar(){
