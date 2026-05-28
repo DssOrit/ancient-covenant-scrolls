@@ -1532,7 +1532,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         characters:sc.characters||[],location:sc.location||'',
         wardrobeNotes:sc.wardrobeNotes||'',sceneId:sc.sceneId,sourceScene:i
       }));}catch(_){}
-      if(typeof go==='function')go('image-prompt');
+      if(typeof go==='function')go('director-ai');
       setPushStatus('Opened AI Image Director with scene '+sc.sceneId+' data.','#b388ff');
     },
     saveEnhancement:function(i){
@@ -4977,10 +4977,14 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         <label>Provider Status<select id="ls-aid-prov"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
         <label>Generated Asset Proof (path or URL)<input id="ls-aid-proof" type="text" placeholder="Path or URL to approved output"></label>
       </div>
-      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <button id="ls-aid-save" class="btn primary" type="button">Save Entry</button>
         <button id="ls-aid-export" class="btn secondary" type="button">Export JSON</button>
+        <select id="ls-aid-gen-provider" style="background:#0c0518;border:1px solid rgba(156,156,255,.4);border-radius:8px;color:#c0b8d9;font:400 12px Inter,system-ui,sans-serif;padding:6px 10px;cursor:pointer"><option value="pollinations-image">Pollinations (free, no key)</option><option value="aihorde">AI Horde (free, no key)</option><option value="huggingface">HuggingFace (requires key)</option><option value="a1111">Local A1111</option></select>
+        <button id="ls-aid-gen-btn" type="button" style="padding:8px 16px;border-radius:9px;border:1px solid rgba(156,156,255,.5);background:rgba(156,156,255,.14);color:#9c9cff;font:700 13px Inter,system-ui,sans-serif;cursor:pointer">Generate Image</button>
       </div>
+      <div id="ls-aid-gen-status" style="font:400 12px Inter,system-ui,sans-serif;min-height:18px;padding-top:8px;color:#9e97c0"></div>
+      <div id="ls-aid-gen-preview" style="margin-top:10px;display:none"><img id="ls-aid-gen-img" src="" alt="Generated image" style="max-width:100%;max-height:360px;border-radius:10px;border:1px solid rgba(156,156,255,.3);display:block"><div id="ls-aid-gen-proof-row" style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap"><span id="ls-aid-gen-result-label" style="font:400 11px Inter,system-ui,sans-serif;color:#c0b8d9;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span><button id="ls-aid-gen-approve-btn" type="button" style="padding:5px 12px;border-radius:7px;border:1px solid rgba(102,187,106,.5);background:rgba(102,187,106,.1);color:#66bb6a;font:600 11px Inter,system-ui,sans-serif;cursor:pointer">Approve Image</button></div></div>
       <div id="ls-aid-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
@@ -4999,53 +5003,187 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     </div>
   </div>
 </section>
-<script id="ls-aid-v225">(function(){
-  var KEY="ls_aid_entries";
-  var sec=document.getElementById("section-director-ai");
+<script id="ls-aid-v237">(function(){
+  var KEY='ls_aid_entries';
+  var SCRIPT_KEY='ls_script_data';
+  var PREFILL_KEY='ls_aid_prefill';
+  var sec=document.getElementById('section-director-ai');
   if(!sec)return;
-  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
-  function msg(t,c){var e=document.getElementById("ls-aid-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  var _genUrl=null;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){return [];}}
+  function sdata(){try{return JSON.parse(localStorage.getItem(SCRIPT_KEY)||'null')||null;}catch(_){return null;}}
+  function genStatus(t,c){var e=document.getElementById('ls-aid-gen-status');if(e){e.textContent=t;e.style.color=c||'#9e97c0';}}
+  function msg(t,c){var e=document.getElementById('ls-aid-msg');if(e){e.textContent=t;e.style.color=c||'#5ee0a5';}}
   function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function renderTbl(){
-    var w=document.getElementById("ls-aid-tbl");if(!w)return;
+    var w=document.getElementById('ls-aid-tbl');if(!w)return;
     var es=get();
     if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
     var rows=es.map(function(e,i){
       return '<tr style="border-bottom:1px solid #1e1e2e">'
-        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
-        +'<td style="padding:5px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.imagePrompt+'">'+e.imagePrompt+'</td>'
-        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
-        +'<td style="padding:5px 8px"><span style="'+ss(e.providerStatus)+'">'+e.providerStatus+'</span></td>'
-        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+esc(e.sceneId)+'</td>'
+        +'<td style="padding:5px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(e.imagePrompt||'')+'">'+esc(e.imagePrompt||'')+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+esc(e.status)+'</span></td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.providerStatus)+'">'+esc(e.providerStatus)+'</span></td>'
+        +(e.assetProof?'<td style="padding:5px 8px"><img src="'+esc(e.assetProof)+'" style="width:44px;height:30px;object-fit:cover;border-radius:4px" onerror="this.style.display=\'none\'"></td>':'<td></td>')
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+(e.savedAt||'').slice(0,10)+'</td>'
         +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsAidDel('+i+')">Del</button></td>'
         +'</tr>';
-    }).join("");
+    }).join('');
     w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
       +'<thead><tr style="background:rgba(0,0,0,.3)">'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Prompt</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Provider</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Image</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
       +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
   }
   window.lsAidDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
-  function addH(el,fn){if(!el||el._lsAid)return;el._lsAid=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+
+  function applyPrefill(){
+    var pf;
+    try{pf=JSON.parse(localStorage.getItem(PREFILL_KEY)||'null');}catch(_){pf=null;}
+    if(!pf)return;
+    function sv(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
+    sv('ls-aid-prompt',pf.imagePrompt);
+    sv('ls-aid-neg',pf.negativePrompt);
+    sv('ls-aid-char',pf.continuityNotes||(pf.characters&&pf.characters.join(', '))||'');
+    sv('ls-aid-look',pf.wardrobeNotes||'');
+    sv('ls-aid-scene',pf.sceneId||'');
+    var lookEl=document.getElementById('ls-aid-look');
+    if(lookEl&&!lookEl.value&&pf.location)lookEl.value=pf.location;
+    try{localStorage.removeItem(PREFILL_KEY);}catch(_){}
+    genStatus('Scene '+esc(pf.sceneId||'')+' loaded. Review prompts, then tap Generate Image.','#9c9cff');
+  }
+
+  function writeBackToScene(sceneId,imageUrl,providerUsed){
+    var d=sdata();
+    if(!d||!d.scenes||!sceneId)return;
+    var idx=-1;
+    for(var k=0;k<d.scenes.length;k++){
+      if(d.scenes[k].sceneId===sceneId||d.scenes[k].id===sceneId){idx=k;break;}
+    }
+    if(idx<0)return;
+    d.scenes[idx].imageProofUrl=imageUrl;
+    d.scenes[idx].imageStatus='approved';
+    d.scenes[idx].generatedAt=new Date().toISOString();
+    d.scenes[idx].generatedByProvider=providerUsed||'';
+    try{localStorage.setItem(SCRIPT_KEY,JSON.stringify(d));}catch(_){}
+  }
+
+  function validateResult(r){
+    if(!r)return null;
+    if(r.url&&typeof r.url==='string'&&r.url.length>4)return r.url;
+    if(r.dataURL&&typeof r.dataURL==='string'&&r.dataURL.indexOf('data:image')===0)return r.dataURL;
+    if(r.blob&&r.blob instanceof Blob)return URL.createObjectURL(r.blob);
+    return null;
+  }
+
+  function wireGenerate(){
+    var genBtn=document.getElementById('ls-aid-gen-btn');
+    if(!genBtn||genBtn._v237g)return;
+    genBtn._v237g=true;
+    function doGen(e){
+      if(e&&e.preventDefault)e.preventDefault();
+      var prompt=(document.getElementById('ls-aid-prompt')||{}).value||'';
+      if(!prompt.trim()){genStatus('Enter an image prompt first.','#ffa726');return;}
+      var neg=(document.getElementById('ls-aid-neg')||{}).value||'';
+      var provSel=document.getElementById('ls-aid-gen-provider');
+      var providerId=provSel?provSel.value:'pollinations-image';
+      var sceneId=(document.getElementById('ls-aid-scene')||{}).value||'';
+      if(!window.LoadProviderRegistry){genStatus('Provider registry not loaded.','#ef5350');return;}
+      genStatus('Generating... ('+providerId+')','#ffa726');
+      var previewWrap=document.getElementById('ls-aid-gen-preview');
+      if(previewWrap)previewWrap.style.display='none';
+      _genUrl=null;
+      window.LoadProviderRegistry.generateImage({
+        prompt:prompt,negativePrompt:neg,width:1024,height:576,
+        seed:Math.floor(Math.random()*999999),providerId:providerId
+      }).then(function(r){
+        var url=validateResult(r);
+        if(r&&r.type==='image-job'){
+          genStatus('Job submitted to '+providerId+' ('+r.jobId+') — check provider for result. Prompt Saved.','#ffa726');
+          document.getElementById('ls-aid-status').value='Provider Needed';
+          document.getElementById('ls-aid-prov').value='Provider Needed';
+          return;
+        }
+        if(!url){
+          genStatus('Failed: provider returned no image.','#ef5350');
+          document.getElementById('ls-aid-status').value='Failed';
+          document.getElementById('ls-aid-prov').value='Failed';
+          return;
+        }
+        _genUrl=url;
+        var imgEl=document.getElementById('ls-aid-gen-img');
+        var labelEl=document.getElementById('ls-aid-gen-result-label');
+        if(imgEl)imgEl.src=url;
+        if(labelEl)labelEl.textContent='Generated via '+esc(r.provider||providerId)+' — approve to attach to scene.';
+        if(previewWrap)previewWrap.style.display='';
+        var proofEl=document.getElementById('ls-aid-proof');
+        if(proofEl)proofEl.value=url;
+        genStatus('Ready — image returned. Tap Approve Image to attach to scene.','#66bb6a');
+        document.getElementById('ls-aid-status').value='Local Ready';
+        document.getElementById('ls-aid-prov').value='Local Ready';
+        writeBackToScene(sceneId,url,r.provider||providerId);
+      }).catch(function(err){
+        genStatus('Failed: '+(err.message||String(err)),'#ef5350');
+        document.getElementById('ls-aid-status').value='Failed';
+        document.getElementById('ls-aid-prov').value='Failed';
+      });
+    }
+    genBtn.addEventListener('click',doGen);
+    genBtn.addEventListener('touchend',function(e){e.preventDefault();doGen(e);});
+
+    var approveBtn=document.getElementById('ls-aid-gen-approve-btn');
+    if(approveBtn&&!approveBtn._v237a){approveBtn._v237a=true;
+      function doApprove(e){
+        if(e&&e.preventDefault)e.preventDefault();
+        if(!_genUrl){genStatus('No generated image to approve.','#ffa726');return;}
+        var sceneId=(document.getElementById('ls-aid-scene')||{}).value||'';
+        var proofEl=document.getElementById('ls-aid-proof');
+        if(proofEl)proofEl.value=_genUrl;
+        document.getElementById('ls-aid-status').value='Local Ready';
+        document.getElementById('ls-aid-prov').value='Local Ready';
+        writeBackToScene(sceneId,_genUrl,'approved');
+        genStatus('Image approved and written to scene '+esc(sceneId)+'.','#66bb6a');
+        msg('Approved — save entry to log.','#66bb6a');
+      }
+      approveBtn.addEventListener('click',doApprove);
+      approveBtn.addEventListener('touchend',function(e){e.preventDefault();doApprove(e);});
+    }
+  }
+
+  function addH(el,fn){if(!el||el._lsAid)return;el._lsAid=true;el.addEventListener('click',fn);el.addEventListener('touchend',function(e){e.preventDefault();fn(e);});}
   function wire(){
     if(sec._lsAidW)return;sec._lsAidW=true;
-    addH(document.getElementById("ls-aid-save"),function(){
-      var e={sceneId:document.getElementById("ls-aid-scene").value.trim(),imagePrompt:document.getElementById("ls-aid-prompt").value.trim(),negativePrompt:document.getElementById("ls-aid-neg").value.trim(),charLock:document.getElementById("ls-aid-char").value.trim(),lookNotes:document.getElementById("ls-aid-look").value.trim(),refPath:document.getElementById("ls-aid-ref").value.trim(),status:document.getElementById("ls-aid-status").value,providerStatus:document.getElementById("ls-aid-prov").value,assetProof:document.getElementById("ls-aid-proof").value.trim(),savedAt:new Date().toISOString()};
+    addH(document.getElementById('ls-aid-save'),function(){
+      var e={sceneId:(document.getElementById('ls-aid-scene')||{}).value||'',
+        imagePrompt:(document.getElementById('ls-aid-prompt')||{}).value||'',
+        negativePrompt:(document.getElementById('ls-aid-neg')||{}).value||'',
+        charLock:(document.getElementById('ls-aid-char')||{}).value||'',
+        lookNotes:(document.getElementById('ls-aid-look')||{}).value||'',
+        refPath:(document.getElementById('ls-aid-ref')||{}).value||'',
+        status:(document.getElementById('ls-aid-status')||{}).value||'Untested',
+        providerStatus:(document.getElementById('ls-aid-prov')||{}).value||'Untested',
+        assetProof:_genUrl||((document.getElementById('ls-aid-proof')||{}).value||''),
+        savedAt:new Date().toISOString()};
       var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
-      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+      msg('Entry saved.','#5ee0a5');renderTbl();setTimeout(function(){msg('');},3000);
     });
-    addH(document.getElementById("ls-aid-export"),function(){
-      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="ai-image-director.json";a.click();
+    addH(document.getElementById('ls-aid-export'),function(){
+      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(get(),null,2));a.download='ai-image-director.json';a.click();
     });
+    wireGenerate();
     renderTbl();
   }
-  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
-  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
-  if(sec.classList.contains("active"))wire();
+  var obs=new MutationObserver(function(){
+    if(sec.classList.contains('active')){wire();applyPrefill();}
+  });
+  obs.observe(sec,{attributes:true,attributeFilter:['class']});
+  if(sec.classList.contains('active')){wire();applyPrefill();}
 }());</script>
 
 <section id="section-character-stability" class="section" data-title="Character Stability Engine">
