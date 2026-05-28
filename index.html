@@ -155,7 +155,7 @@ body.dark #reader-footer{background:#0a0a0a}
 
 <!-- SIDEBAR -->
 <div id="sb"></div>
-<div id="sb-ov" onclick="toggleSB()"></div>
+<div id="sb-ov"></div>
 
 <!-- MAIN -->
 <div id="main"><div id="content"><p style="padding:40px;color:#888;text-align:center">Loading…</p></div></div>
@@ -307,7 +307,9 @@ function start(){
   window.onscroll=onScroll;
   document.getElementById('notes-ta').addEventListener('input',saveNotes);
   var ov=document.getElementById('sb-ov');
-  if(ov) ov.addEventListener('touchend',function(e){e.stopPropagation();toggleSB();},{passive:true});
+  if(ov&&!ov._sbWired){ov._sbWired=true;ov.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleSB();},{passive:false});ov.addEventListener('click',function(){toggleSB();});}
+  var _hbtn=document.querySelector('#nav button.nb[title="Contents"]');
+  if(_hbtn&&!_hbtn._iphSB){_hbtn._iphSB=true;_hbtn.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();toggleSB();});}
 }
 
 
@@ -367,13 +369,15 @@ function buildSB(){
   }
   h+='<div style="border-top:1px solid #333;margin-top:8px;padding:8px 12px 4px"><a href="ACR2/" style="display:block;color:#aaa;font-size:11px;text-decoration:none;letter-spacing:.04em;padding:6px 0">ACR2 <svg style="width:10px;height:10px;vertical-align:middle;margin-left:2px" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9L9 3M9 3H5M9 3V7"/></svg></a></div>';
   document.getElementById('sb').innerHTML=h;
-  if(!SB_OPEN) document.getElementById('sb').classList.add('hide');
+  if(!SB_OPEN&&window.innerWidth>=1024) document.getElementById('sb').classList.add('hide');
 }
 
 function toggleSB(){
   if(window.innerWidth<1024){
     var sb=document.getElementById('sb');
-    sb.classList.toggle('mob');
+    var opening=!sb.classList.contains('mob');
+    if(opening){sb.classList.remove('hide');sb.classList.add('mob');}
+    else{sb.classList.remove('mob');}
     var isOpen=sb.classList.contains('mob');
     var ov=document.getElementById('sb-ov');
     if(ov) ov.classList.toggle('on',isOpen);
@@ -381,7 +385,6 @@ function toggleSB(){
     SB_OPEN=!SB_OPEN;
     document.getElementById('sb').classList.toggle('hide',!SB_OPEN);
     document.getElementById('main').classList.toggle('wide',!SB_OPEN);
-
   }
 }
 
@@ -742,5 +745,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-iphoneSB</div>
 </body>
 </html>
