@@ -726,15 +726,7 @@ select.form-input option { background: var(--surface2); }
         </div>
       </div>
 
-      <div id="vol-day-card">
-        <i class="ri-book-open-line vdc-icon"></i>
-        <div class="vdc-info">
-          <div class="vdc-label">Volume of the Day</div>
-          <div class="vdc-title">Loading...</div>
-          <div class="vdc-btn">Tap to open in ACR &#x2192;</div>
-        </div>
-      </div>
-      <div id="vol-day-card" onclick="window.open('https://dssorit.github.io/ancient-covenant-scrolls/','_blank')">
+      <div id="vol-day-card" onclick="localStorage.setItem('acr_ok','1');window.open('https://dssorit.github.io/ancient-covenant-scrolls/','_blank')">
         <i class="ri-book-open-line vdc-icon"></i>
         <div class="vdc-info">
           <div class="vdc-label">Volume of the Day</div>
