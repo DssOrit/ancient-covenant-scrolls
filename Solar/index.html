@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ACR Solar">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>ACR Solar</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #080C18;
+  --surface: #0F1629;
+  --surface2: #161E35;
+  --surface3: #1C2640;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #F0F4FF;
+  --text2: #8B96B4;
+  --text3: #4A5470;
+  --gold: #F5C842;
+  --gold2: #FFDB6B;
+  --blue: #4B8EFF;
+  --blue2: #6BA3FF;
+  --teal: #00D4AA;
+  --purple: #9B6DFF;
+  --rose: #FF6B8A;
+  --orange: #FF8C42;
+  --green: #36D399;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font: 'Outfit', sans-serif;
+  --mono: 'Space Mono', monospace;
+  --spring: #10B981;
+  --summer: #F59E0B;
+  --autumn: #EF4444;
+  --winter: #3B82F6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* DYSLEXIA: generous spacing, clear fonts, no all-caps heavy usage */
+h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+
+/* LAYOUT */
+#app { display: flex; flex-direction: column; height: 100vh; height: -webkit-fill-available; overflow: hidden; }
+
+/* TOP BAR */
+#topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; padding-top: calc(14px + env(safe-area-inset-top));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+}
+#topbar-left { display: flex; align-items: center; gap: 12px; }
+#app-logo { 
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--bg); font-weight: 800;
+  font-family: var(--mono);
+  flex-shrink: 0;
+}
+#topbar-title { font-size: 18px; font-weight: 700; color: var(--text); }
+#topbar-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); font-size: 18px;
+  transition: all 0.2s;
+}
+.icon-btn:hover, .icon-btn.active { background: var(--surface3); color: var(--gold); border-color: var(--border2); }
+
+/* MAIN CONTENT */
+#main { flex: 1; overflow: hidden; position: relative; }
+.view { position: absolute; inset: 0; overflow-y: auto; display: none; padding: 20px; }
+.view.active { display: block; }
+
+/* BOTTOM NAV */
+#bottomnav {
+  display: flex; background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  flex-shrink: 0;
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 10px 4px;
+  cursor: pointer; color: var(--text3); font-size: 11px; font-weight: 500;
+  gap: 4px; transition: all 0.2s; position: relative;
+}
+.nav-item i { font-size: 22px; }
+.nav-item.active { color: var(--gold); }
+.nav-item.active::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%;
+  height: 2px; background: linear-gradient(90deg, var(--gold), var(--orange));
+  border-radius: 0 0 4px 4px;
+}
+
+/* MONTH CALENDAR VIEW */
+#month-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+#month-title { font-size: 24px; font-weight: 800; }
+#month-title span { color: var(--gold); }
+.month-nav { display: flex; gap: 8px; }
+.month-nav-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); font-size: 18px; transition: all 0.2s;
+}
+.month-nav-btn:hover { color: var(--gold); border-color: var(--border2); }
+
+/* Solar month info strip */
+#solar-info {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 14px;
+}
+.solar-season-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.solar-info-text { flex: 1; }
+.solar-info-text .sol-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.solar-info-text .sol-name { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* DAY GRID */
+#day-labels {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+.day-label { text-align: center; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 0; }
+.day-label.shabbat { color: var(--gold); }
+
+#cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-day {
+  aspect-ratio: 1; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; position: relative; transition: all 0.15s;
+  background: var(--surface2); border: 1px solid transparent;
+  font-size: 15px; font-weight: 500; min-height: 44px;
+}
+.cal-day:hover { background: var(--surface3); border-color: var(--border2); }
+.cal-day.other-month { opacity: 0.3; }
+.cal-day.today {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(255,140,66,0.1));
+  border-color: var(--gold);
+  color: var(--gold); font-weight: 700;
+}
+.cal-day.selected {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; border-color: transparent;
+}
+.cal-day.shabbat-day { color: var(--gold2); }
+.cal-day .holiday-dot {
+  position: absolute; bottom: 4px;
+  display: flex; gap: 2px;
+}
+.h-dot { width: 5px; height: 5px; border-radius: 50%; }
+.cal-day .sol-day { font-size: 9px; color: var(--text3); font-weight: 600; }
+
+/* HOLIDAYS STRIP */
+#today-events {
+  margin-top: 20px;
+}
+.section-title {
+  font-size: 12px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+/* EVENT CARD */
+.event-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 10px; display: flex; gap: 14px; align-items: flex-start;
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.event-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+}
+.event-card:hover { background: var(--surface3); border-color: var(--border2); }
+.event-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.event-content { flex: 1; }
+.event-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.event-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.event-source { font-size: 10px; font-weight: 700; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+.event-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.event-time { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+
+/* AGENDA VIEW */
+#agenda-view .month-section { margin-bottom: 28px; }
+#agenda-view .month-section-title {
+  font-size: 18px; font-weight: 700; margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.agenda-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.agenda-date {
+  flex-shrink: 0; width: 48px; text-align: center;
+}
+.agenda-date .ad-day { font-size: 22px; font-weight: 800; line-height: 1; }
+.agenda-date .ad-dow { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.agenda-dot { width: 3px; flex-shrink: 0; border-radius: 4px; min-height: 40px; margin-top: 4px; }
+.agenda-info { flex: 1; }
+.agenda-info .ai-name { font-size: 15px; font-weight: 600; }
+.agenda-info .ai-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-top: 2px; }
+.agenda-info .ai-source { font-size: 10px; color: var(--text3); font-weight: 700; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.06em; }
+
+/* SUN TIMES WIDGET */
+#sun-widget {
+  background: linear-gradient(135deg, #0A1628, #1A2845);
+  border: 1px solid rgba(75,142,255,0.3);
+  border-radius: var(--radius); padding: 20px;
+  margin-bottom: 20px; position: relative; overflow: hidden;
+}
+#sun-widget::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,200,66,0.15), transparent 70%);
+}
+.sun-widget-title { font-size: 12px; font-weight: 700; color: var(--blue2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+.sun-times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sun-time-item {
+  background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sun-time-icon { font-size: 22px; color: var(--gold); }
+.sun-time-icon.set { color: var(--orange); }
+.sun-time-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.sun-time-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); }
+.sun-progress-bar {
+  margin-top: 16px; height: 6px; background: rgba(255,255,255,0.06);
+  border-radius: 6px; overflow: hidden; position: relative;
+}
+.sun-progress-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--orange));
+  transition: width 1s ease;
+}
+.sun-progress-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--gold2); position: absolute; top: 50%; transform: translateY(-50%);
+  margin-left: -6px; box-shadow: 0 0 8px var(--gold);
+  transition: left 1s ease;
+}
+.sun-shabbat-alert {
+  margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+  background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3);
+  font-size: 13px; color: var(--gold); font-weight: 500; display: none;
+}
+
+/* SOLAR CALENDAR INFO PANEL */
+#solar-panel {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+}
+.solar-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.solar-month-chip {
+  background: var(--surface3); border-radius: 10px; padding: 10px;
+  text-align: center; border: 1px solid var(--border); cursor: pointer;
+  transition: all 0.2s;
+}
+.solar-month-chip:hover { border-color: var(--border2); }
+.solar-month-chip.current { border-color: var(--gold); background: rgba(245,200,66,0.08); }
+.smc-num { font-size: 11px; color: var(--text3); font-weight: 700; text-transform: uppercase; }
+.smc-name { font-size: 13px; font-weight: 600; }
+.smc-days { font-size: 10px; color: var(--text3); }
+
+/* SETTINGS VIEW */
+#settings-view .setting-group { margin-bottom: 24px; }
+.setting-group-title {
+  font-size: 12px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+}
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.setting-info { flex: 1; }
+.setting-name { font-size: 15px; font-weight: 500; color: var(--text); }
+.setting-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
+/* TOGGLE */
+.toggle {
+  width: 48px; height: 26px; border-radius: 13px;
+  background: var(--surface3); border: 1px solid var(--border2);
+  position: relative; cursor: pointer; transition: all 0.3s; flex-shrink: 0;
+}
+.toggle.on { background: var(--gold); border-color: var(--gold); }
+.toggle::after {
+  content: ''; position: absolute; width: 20px; height: 20px;
+  border-radius: 50%; background: white; top: 2px; left: 2px;
+  transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.toggle.on::after { transform: translateX(22px); }
+
+/* REMINDER FORM */
+.add-reminder-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: var(--bg); font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px; font-family: var(--font);
+  margin-bottom: 16px; transition: opacity 0.2s;
+}
+.add-reminder-btn:hover { opacity: 0.9; }
+
+/* MODAL */
+#modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 1000; display: none; align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+#modal-overlay.open { display: flex; }
+#modal-sheet {
+  background: var(--surface); border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 600px; padding: 24px 24px 40px;
+  max-height: 85vh; overflow-y: auto;
+  border: 1px solid var(--border2); border-bottom: none;
+}
+.modal-handle {
+  width: 40px; height: 4px; border-radius: 2px;
+  background: var(--border2); margin: 0 auto 20px;
+}
+.modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+.form-input {
+  width: 100%; padding: 13px 16px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-size: 15px; font-family: var(--font);
+  outline: none; transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--blue); }
+.form-input select { appearance: none; }
+select.form-input option { background: var(--surface2); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-primary {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer; font-family: var(--font);
+  margin-top: 8px; transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-cancel {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text2); font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); margin-top: 8px;
+}
+
+/* REMINDERS */
+.reminder-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
+}
+.reminder-color { width: 4px; border-radius: 4px; align-self: stretch; flex-shrink: 0; }
+.reminder-info { flex: 1; }
+.reminder-title { font-size: 14px; font-weight: 600; }
+.reminder-time { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.reminder-delete { color: var(--text3); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.2s; }
+.reminder-delete:hover { color: var(--rose); }
+
+/* SUNSET ALERT */
+#sunset-alert {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+  background: linear-gradient(135deg, #1A0800, #2A1200);
+  border-bottom: 2px solid var(--orange);
+  padding: 16px 20px; padding-top: calc(16px + env(safe-area-inset-top));
+  display: none; transform: translateY(-100%); transition: transform 0.4s ease;
+}
+#sunset-alert.show { display: block; transform: translateY(0); }
+.alert-content { display: flex; align-items: center; gap: 14px; }
+.alert-icon { font-size: 28px; color: var(--orange); flex-shrink: 0; }
+.alert-text .alert-title { font-size: 16px; font-weight: 700; color: var(--gold); }
+.alert-text .alert-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.alert-close { margin-left: auto; color: var(--text3); cursor: pointer; font-size: 20px; padding: 4px; }
+
+/* TODAY HIGHLIGHT */
+.today-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(255,140,66,0.1));
+  border: 1px solid rgba(245,200,66,0.4);
+  border-radius: 100px; padding: 6px 14px;
+  font-size: 13px; font-weight: 600; color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* YEAR VIEW */
+#year-view .year-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.mini-month { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: all 0.2s; }
+.mini-month:hover { border-color: var(--border2); background: var(--surface3); }
+.mini-month.current-month { border-color: var(--gold); }
+.mini-month-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.mini-cell { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--text3); }
+.mini-cell.has-event { background: var(--surface3); color: var(--text); }
+.mini-cell.today-mini { background: var(--gold); color: var(--bg); font-weight: 700; }
+
+/* EVENT DETAIL MODAL */
+.event-detail-header {
+  display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px;
+}
+.event-detail-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+}
+.event-detail-title { font-size: 22px; font-weight: 800; }
+.event-detail-date { font-size: 14px; color: var(--text3); margin-top: 4px; }
+.detail-section { margin-bottom: 16px; }
+.detail-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.detail-text { font-size: 15px; color: var(--text2); line-height: 1.7; }
+.source-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* LOCATION PROMPT */
+#location-prompt {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid rgba(75,142,255,0.3); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px; text-align: center;
+}
+.loc-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.loc-desc { font-size: 13px; color: var(--text3); margin-bottom: 16px; line-height: 1.6; }
+.loc-btn {
+  padding: 11px 24px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer; font-family: var(--font);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.view.active > * { animation: fadeUp 0.3s ease forwards; }
+
+/* RESPONSIVE */
+@media (max-width: 380px) {
+  .cal-day { font-size: 13px; }
+  #topbar-title { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SUNSET ALERT BANNER -->
+<div id="sunset-alert">
+  <div class="alert-content">
+    <i class="ri-sun-foggy-line alert-icon"></i>
+    <div class="alert-text">
+      <div class="alert-title" id="alert-title">Sunset Approaching</div>
+      <div class="alert-sub" id="alert-sub">Shabbat begins in 30 minutes</div>
+    </div>
+    <i class="ri-close-line alert-close" onclick="dismissAlert()"></i>
+  </div>
+</div>
+
+<div id="app">
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div id="topbar-left">
+      <div id="app-logo">S</div>
+      <div id="topbar-title">ACR Solar</div>
+    </div>
+    <div id="topbar-actions">
+      <div class="icon-btn" onclick="goToday()" title="Go to today">
+        <i class="ri-focus-3-line"></i>
+      </div>
+      <div class="icon-btn" id="add-event-btn" onclick="openAddEvent()" title="Add reminder">
+        <i class="ri-add-line"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- MONTH VIEW -->
+    <div class="view active" id="month-view">
+      <div id="month-header">
+        <div>
+          <div id="month-title">Loading...</div>
+          <div id="solar-month-sub" style="font-size:13px;color:var(--text3);margin-top:2px;"></div>
+        </div>
+        <div class="month-nav">
+          <div class="month-nav-btn" onclick="prevMonth()"><i class="ri-arrow-left-s-line"></i></div>
+          <div class="month-nav-btn" onclick="nextMonth()"><i class="ri-arrow-right-s-line"></i></div>
+        </div>
+      </div>
+
+      <div id="solar-info">
+        <div class="solar-season-dot" id="season-dot"></div>
+        <div class="solar-info-text">
+          <div class="sol-label">Solar Calendar Position</div>
+          <div class="sol-name" id="sol-name-text">Loading...</div>
+        </div>
+        <div id="sol-day-count" style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gold);"></div>
+      </div>
+
+      <div id="day-labels">
+        <div class="day-label">Sun</div>
+        <div class="day-label">Mon</div>
+        <div class="day-label">Tue</div>
+        <div class="day-label">Wed</div>
+        <div class="day-label">Thu</div>
+        <div class="day-label">Fri</div>
+        <div class="day-label shabbat">Shab</div>
+      </div>
+
+      <div id="cal-grid"></div>
+
+      <div id="today-events">
+        <div id="selected-date-label" class="today-pill">
+          <i class="ri-calendar-line"></i>
+          <span id="selected-label-text">Today</span>
+        </div>
+        <div id="events-list"></div>
+        <div id="no-events" style="text-align:center;color:var(--text3);font-size:14px;padding:24px 0;display:none;">
+          <i class="ri-moon-line" style="font-size:28px;display:block;margin-bottom:8px;"></i>
+          No sacred events on this day
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENDA VIEW -->
+    <div class="view" id="agenda-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Sacred Calendar</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">All DSS and Orit Ge'ez observances</p>
+      </div>
+      <div id="agenda-content"></div>
+    </div>
+
+    <!-- SUN TIMES VIEW -->
+    <div class="view" id="sun-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Sun Times</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">Sunrise, sunset and Shabbat alerts</p>
+      </div>
+
+      <div id="location-prompt">
+        <div class="loc-title">Enable Location</div>
+        <div class="loc-desc">ACR Solar uses your location to calculate precise sunrise and sunset times for Shabbat and holy day alerts.</div>
+        <button class="loc-btn" onclick="requestLocation()">
+          <i class="ri-map-pin-2-line"></i> Enable Location
+        </button>
+      </div>
+
+      <div id="sun-widget">
+        <div class="sun-widget-title">
+          <i class="ri-sun-line"></i> Today — <span id="sun-date-label"></span>
+        </div>
+        <div class="sun-times">
+          <div class="sun-time-item">
+            <i class="ri-sun-line sun-time-icon"></i>
+            <div>
+              <div class="sun-time-label">Sunrise</div>
+              <div class="sun-time-val" id="sunrise-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-sunset-line sun-time-icon set"></i>
+            <div>
+              <div class="sun-time-label">Sunset</div>
+              <div class="sun-time-val" id="sunset-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-moon-line sun-time-icon" style="color:var(--purple)"></i>
+            <div>
+              <div class="sun-time-label">Nightfall</div>
+              <div class="sun-time-val" id="nightfall-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-sun-foggy-line sun-time-icon" style="color:var(--teal)"></i>
+            <div>
+              <div class="sun-time-label">Day Length</div>
+              <div class="sun-time-val" id="day-length">--h --m</div>
+            </div>
+          </div>
+        </div>
+        <div class="sun-progress-bar">
+          <div class="sun-progress-fill" id="sun-progress" style="width:0%"></div>
+          <div class="sun-progress-dot" id="sun-dot" style="left:0%"></div>
+        </div>
+        <div class="sun-shabbat-alert" id="shabbat-notice"></div>
+      </div>
+
+      <!-- ALERT SETTINGS -->
+      <div class="setting-group">
+        <div class="setting-group-title">Sunset Alerts</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Shabbat Alert</div>
+            <div class="setting-desc">Alert when Shabbat is approaching at sunset Friday</div>
+          </div>
+          <div class="toggle on" id="shabbat-toggle" onclick="toggleSetting('shabbat-toggle','shabbat_alert')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Holy Day Alert</div>
+            <div class="setting-desc">Alert before sunset on eve of sacred festivals</div>
+          </div>
+          <div class="toggle on" id="holyday-toggle" onclick="toggleSetting('holyday-toggle','holyday_alert')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Alert Before Sunset</div>
+            <div class="setting-desc" id="alert-mins-desc">Alert 30 minutes before sunset</div>
+          </div>
+          <select class="form-input" style="width:90px;" onchange="setAlertMins(this.value)">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Daily Sunrise Alert</div>
+            <div class="setting-desc">Notification at each sunrise</div>
+          </div>
+          <div class="toggle" id="sunrise-toggle" onclick="toggleSetting('sunrise-toggle','sunrise_alert')"></div>
+        </div>
+      </div>
+
+      <!-- UPCOMING SUN EVENTS -->
+      <div>
+        <div class="section-title">Upcoming Holy Day Eves</div>
+        <div id="upcoming-eves"></div>
+      </div>
+    </div>
+
+    <!-- YEAR VIEW -->
+    <div class="view" id="year-view">
+      <div id="year-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;" id="year-title"></h2>
+        <div style="display:flex;gap:8px;">
+          <div class="month-nav-btn" onclick="prevYear()"><i class="ri-arrow-left-s-line"></i></div>
+          <div class="month-nav-btn" onclick="nextYear()"><i class="ri-arrow-right-s-line"></i></div>
+        </div>
+      </div>
+      <div class="year-grid" id="year-grid"></div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div class="view" id="settings-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Settings</h2>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">Calendar Display</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Show Solar Month Numbers</div>
+            <div class="setting-desc">Display DSS solar month number alongside Gregorian date</div>
+          </div>
+          <div class="toggle on" id="solar-nums-toggle" onclick="toggleSetting('solar-nums-toggle','show_solar_nums')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Highlight Shabbat</div>
+            <div class="setting-desc">Mark every 7th day in gold</div>
+          </div>
+          <div class="toggle on" id="shabbat-hl-toggle" onclick="toggleSetting('shabbat-hl-toggle','highlight_shabbat')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Show Source Labels</div>
+            <div class="setting-desc">Display DSS / Orit Ge'ez source on each event</div>
+          </div>
+          <div class="toggle on" id="source-toggle" onclick="toggleSetting('source-toggle','show_source')"></div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">Reminders</div>
+        <button class="add-reminder-btn" onclick="openAddEvent()">
+          <i class="ri-add-circle-line"></i> Add New Reminder
+        </button>
+        <div id="reminders-list"></div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">About</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Calendar System</div>
+            <div class="setting-desc">364-day Qumran Solar Calendar — 4 seasons of 91 days — DSS primary authority</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Holiday Sources</div>
+            <div class="setting-desc">Dead Sea Scrolls calendrical texts (4Q320-330, 11Q19) and Orit Ge'ez Ethiopian canon</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Version</div>
+            <div class="setting-desc">ACR Solar 1.0 — Ancient Covenant Record</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomnav">
+    <div class="nav-item active" id="nav-month" onclick="switchView('month')">
+      <i class="ri-calendar-2-line"></i>
+      <span>Month</span>
+    </div>
+    <div class="nav-item" id="nav-agenda" onclick="switchView('agenda')">
+      <i class="ri-list-check-3"></i>
+      <span>Agenda</span>
+    </div>
+    <div class="nav-item" id="nav-sun" onclick="switchView('sun')">
+      <i class="ri-sun-line"></i>
+      <span>Sun Times</span>
+    </div>
+    <div class="nav-item" id="nav-year" onclick="switchView('year')">
+      <i class="ri-calendar-line"></i>
+      <span>Year</span>
+    </div>
+    <div class="nav-item" id="nav-settings" onclick="switchView('settings')">
+      <i class="ri-settings-3-line"></i>
+      <span>Settings</span>
+    </div>
+  </div>
+</div>
+
+<!-- ADD REMINDER MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title">Add Reminder</div>
+
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-input" id="rem-title" placeholder="Reminder title...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-input" id="rem-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Time</label>
+        <input type="time" class="form-input" id="rem-time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-input" id="rem-notes" rows="3" placeholder="Optional notes..." style="resize:none;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="color-picker">
+        <div class="color-opt" data-color="#F5C842" style="width:32px;height:32px;border-radius:50%;background:#F5C842;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#F5C842',this)"></div>
+        <div class="color-opt" data-color="#4B8EFF" style="width:32px;height:32px;border-radius:50%;background:#4B8EFF;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#4B8EFF',this)"></div>
+        <div class="color-opt" data-color="#36D399" style="width:32px;height:32px;border-radius:50%;background:#36D399;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#36D399',this)"></div>
+        <div class="color-opt" data-color="#FF6B8A" style="width:32px;height:32px;border-radius:50%;background:#FF6B8A;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#FF6B8A',this)"></div>
+        <div class="color-opt" data-color="#9B6DFF" style="width:32px;height:32px;border-radius:50%;background:#9B6DFF;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#9B6DFF',this)"></div>
+        <div class="color-opt" data-color="#FF8C42" style="width:32px;height:32px;border-radius:50%;background:#FF8C42;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#FF8C42',this)"></div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="saveReminder()">Save Reminder</button>
+    <button class="btn-cancel" onclick="document.getElementById('modal-overlay').classList.remove('open')">Cancel</button>
+  </div>
+</div>
+
+<!-- EVENT DETAIL MODAL -->
+<div id="event-modal-overlay" onclick="closeEventModal(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);">
+  <div id="event-modal-sheet" onclick="event.stopPropagation()" style="background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:24px 24px 48px;max-height:80vh;overflow-y:auto;border:1px solid var(--border2);border-bottom:none;">
+    <div class="modal-handle"></div>
+    <div id="event-detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ─── SOLAR CALENDAR ENGINE ────────────────────────────────────────────────────
+
+// The 364-day Qumran solar calendar
+// Year begins at Spring Equinox
+// 4 seasons x 91 days = 364 days
+// Each season: Month1=30d, Month2=30d, Month3=31d
+// The year 2025: Solar Year starts approx March 20 (spring equinox)
+
+var SOLAR_MONTHS = [
+  {num:1, name:'Aviv', season:'Spring', days:30},
+  {num:2, name:'Ziv', season:'Spring', days:30},
+  {num:3, name:'Sivan', season:'Spring', days:31},
+  {num:4, name:'Tammuz', season:'Summer', days:30},
+  {num:5, name:'Av', season:'Summer', days:30},
+  {num:6, name:'Elul', season:'Summer', days:31},
+  {num:7, name:'Ethanim', season:'Autumn', days:30},
+  {num:8, name:'Bul', season:'Autumn', days:30},
+  {num:9, name:'Kislev', season:'Autumn', days:31},
+  {num:10, name:'Tevet', season:'Winter', days:30},
+  {num:11, name:'Shevat', season:'Winter', days:30},
+  {num:12, name:'Adar', season:'Winter', days:31}
+];
+
+var SEASON_COLORS = {
+  Spring: '#10B981', Summer: '#F59E0B',
+  Autumn: '#EF4444', Winter: '#3B82F6'
+};
+
+// Get solar year start (spring equinox) for a given Gregorian year
+function getSolarYearStart(year) {
+  // Spring equinox is approx March 20-21
+  // For precision, use March 20 as the anchor
+  return new Date(year, 2, 20); // March 20
+}
+
+// Convert Gregorian date to solar calendar date
+function gregorianToSolar(date) {
+  var year = date.getFullYear();
+  var yearStart = getSolarYearStart(year);
+  var dayOfYear = Math.floor((date - yearStart) / 86400000);
+
+  // If before this year's equinox, use previous year
+  if (dayOfYear < 0) {
+    year -= 1;
+    yearStart = getSolarYearStart(year);
+    dayOfYear = Math.floor((date - yearStart) / 86400000);
+  }
+
+  // Solar year is 364 days; day 364+ is next year
+  if (dayOfYear >= 364) {
+    year += 1;
+    yearStart = getSolarYearStart(year);
+    dayOfYear = Math.floor((date - yearStart) / 86400000);
+  }
+
+  var remaining = dayOfYear;
+  var solarMonth = 0, solarDay = 0;
+  for (var i = 0; i < SOLAR_MONTHS.length; i++) {
+    if (remaining < SOLAR_MONTHS[i].days) {
+      solarMonth = i + 1;
+      solarDay = remaining + 1;
+      break;
+    }
+    remaining -= SOLAR_MONTHS[i].days;
+  }
+  if (solarMonth === 0) { solarMonth = 12; solarDay = SOLAR_MONTHS[11].days; }
+
+  // Day of solar week (starts Sunday = 1, Shabbat = 7)
+  var dayOfSolarYear = dayOfYear;
+  var shabbat = ((dayOfSolarYear % 7) === 6); // every 7th day from equinox
+  var weekDay = (dayOfSolarYear % 7) + 1; // 1=Sun... 7=Shab
+
+  return {
+    year: year,
+    month: solarMonth,
+    day: solarDay,
+    monthInfo: SOLAR_MONTHS[solarMonth - 1],
+    dayOfYear: dayOfYear + 1,
+    weekDay: weekDay,
+    isShabbat: shabbat
+  };
+}
+
+// Convert solar date back to Gregorian
+function solarToGregorian(solarYear, solarMonth, solarDay) {
+  var yearStart = getSolarYearStart(solarYear);
+  var daysOffset = 0;
+  for (var i = 0; i < solarMonth - 1; i++) {
+    daysOffset += SOLAR_MONTHS[i].days;
+  }
+  daysOffset += solarDay - 1;
+  return new Date(yearStart.getTime() + daysOffset * 86400000);
+}
+
+// ─── HOLIDAYS ─────────────────────────────────────────────────────────────────
+
+var HOLIDAYS = [
+  {month:1,day:1,name:'New Year — Rosh HaShanah',desc:'First day of the first month — Creation of Light — Beginning of the sacred year in the 364-day solar calendar. Attested in 4QCalendrical Text A.',source:'DSS',color:'#F5C842',icon:'ri-sun-rise-line'},
+  {month:1,day:14,name:'Pesach Eve',desc:'Preparation day — The 14th of the first month at evening. Slaughter of the Passover lamb. Confirmed in the Temple Scroll (11Q19) and 4QMMT.',source:'DSS/Orit',color:'#EF4444',icon:'ri-fire-line'},
+  {month:1,day:15,name:'Pesach — First Day',desc:'Passover — First day of the Festival of Unleavened Bread. The night of the Exodus from Egypt. Seven-day festival begins.',source:'DSS/Orit',color:'#EF4444',icon:'ri-leaf-line'},
+  {month:1,day:21,name:'Pesach — Seventh Day',desc:'Final day of Passover — Crossing of the Sea of Reeds. End of the Festival of Unleavened Bread. Confirmed in 4QCalendrical Text.',source:'DSS/Orit',color:'#EF4444',icon:'ri-water-flash-line'},
+  {month:1,day:26,name:'First Fruits of Barley',desc:'Wave sheaf offering — The Sunday after the full Pesach week. The 26th of the first month. Beginning of the count toward Shavuot. Confirmed in 11Q19 Temple Scroll.',source:'DSS',color:'#10B981',icon:'ri-seedling-line'},
+  {month:2,day:15,name:'Pesach Sheni',desc:'Second Passover — For those who were ritually impure or on a distant journey during the first Pesach. Attested in DSS calendrical texts.',source:'DSS/Orit',color:'#F97316',icon:'ri-repeat-line'},
+  {month:3,day:15,name:'Shavuot — Feast of Weeks',desc:'Feast of Weeks — 50 days from the First Fruits offering. Revelation at Sinai. First Fruits of the Wheat harvest. One of the three pilgrimage festivals. Confirmed in 4Q319-330.',source:'DSS/Orit',color:'#8B5CF6',icon:'ri-book-2-line'},
+  {month:3,day:31,name:'Summer Tekufah',desc:'Seasonal marker — 91st day of the solar year. The turning point into summer. Not counted in the weekly cycle. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:4,day:1,name:'New Season — Summer',desc:'First day of the summer season. Beginning of the second quarter of the solar year.',source:'DSS',color:'#F59E0B',icon:'ri-sun-line'},
+  {month:5,day:15,name:'Festival of New Wine',desc:'New Wine offering — Festival of the first wine of the summer harvest. Confirmed in 4QCalendrical Texts (4Q327) as falling on the 15th of the 5th month.',source:'DSS',color:'#EC4899',icon:'ri-goblet-line'},
+  {month:6,day:22,name:'Festival of New Oil',desc:'New Oil offering — Festival of the first olive oil pressed from the summer harvest. Confirmed in 4Q327 Calendrical Text. Falls on the 22nd of the 6th month.',source:'DSS',color:'#F59E0B',icon:'ri-drop-line'},
+  {month:6,day:23,name:'Wood Offering — Day 1',desc:'Six-day Wood Offering festival begins. The community brings wood for the altar. Temple Scroll (11Q19) devotes extensive detail to this festival. Runs through the 28th of the 6th month.',source:'DSS',color:'#92400E',icon:'ri-home-3-line'},
+  {month:6,day:31,name:'Autumn Tekufah',desc:'Seasonal marker — 182nd day of the solar year. The turning point into autumn. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:7,day:1,name:'Yom Teruah',desc:'Day of Trumpet Blasts — First day of the seventh month. Autumn New Year. Beginning of the third quarter of the solar year. Major festival of alarm and gathering.',source:'DSS/Orit',color:'#3B82F6',icon:'ri-alarm-warning-line'},
+  {month:7,day:10,name:'Yom Kippur',desc:'Day of Atonement — The tenth of the seventh month. The High Priest enters the Holy of Holies. Complete fast from sunset to sunset. The most solemn day of the sacred year. Confirmed across all DSS legal texts.',source:'DSS/Orit',color:'#1E3A8A',icon:'ri-shield-star-line'},
+  {month:7,day:15,name:'Sukkot — First Day',desc:'Feast of Tabernacles — First day of the seven-day harvest festival. Pilgrimage to the sanctuary. Construction of booths. Celebrated with great joy and abundant sacrifice.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:21,name:'Sukkot — Seventh Day',desc:'Final day of Sukkot — The seventh day of the Feast of Tabernacles. Day of great ceremony and water libation.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:22,name:'Shemini Atzeret',desc:'Eighth Day Assembly — The day after Sukkot. A closing solemn gathering distinct from the seven days of Tabernacles. Confirmed in DSS legal texts.',source:'DSS/Orit',color:'#6366F1',icon:'ri-group-line'},
+  {month:9,day:31,name:'Winter Tekufah',desc:'Seasonal marker — 273rd day of the solar year. The turning point into winter. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:10,day:1,name:'New Season — Winter',desc:'First day of the winter season. Beginning of the fourth and final quarter of the solar year.',source:'DSS',color:'#3B82F6',icon:'ri-snowy-line'},
+  {month:12,day:14,name:'Purim — Orit Ge\'ez',desc:'Festival of Lots — The 14th of the 12th month. Based on the Book of Esther as preserved in the Orit Ge\'ez Ethiopian canon. Celebration of deliverance.',source:'Orit',color:'#A855F7',icon:'ri-star-smile-line'},
+  {month:12,day:31,name:'Year End Tekufah',desc:'Seasonal marker — 364th and final day of the solar year. The turning point back to spring. Completes the full cycle. The new year begins with the spring equinox.',source:'DSS',color:'#64748B',icon:'ri-clockwise-line'},
+];
+
+// Shabbat check — in the solar calendar every 7th day from the equinox is Shabbat
+function isShabbat(date) {
+  var s = gregorianToSolar(date);
+  return s.isShabbat;
+}
+
+// Get holidays for a given solar month and day
+function getHolidays(solarMonth, solarDay) {
+  return HOLIDAYS.filter(function(h) { return h.month === solarMonth && h.day === solarDay; });
+}
+
+// Get ALL holidays for a Gregorian date
+function getHolidaysForGregorian(date) {
+  var s = gregorianToSolar(date);
+  return getHolidays(s.month, s.day);
+}
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+
+var today = new Date();
+today.setHours(0,0,0,0);
+var viewDate = new Date(today);
+var selectedDate = new Date(today);
+var currentView = 'month';
+var userLocation = null;
+var reminders = [];
+var settings = {
+  shabbat_alert: true, holyday_alert: true, sunrise_alert: false,
+  show_solar_nums: true, highlight_shabbat: true, show_source: true,
+  alert_mins: 30
+};
+var selectedColor = '#F5C842';
+var alertTimer = null;
+
+try {
+  var saved = localStorage.getItem('acr_solar_settings');
+  if (saved) settings = Object.assign(settings, JSON.parse(saved));
+  var savedRem = localStorage.getItem('acr_solar_reminders');
+  if (savedRem) reminders = JSON.parse(savedRem);
+  var savedLoc = localStorage.getItem('acr_solar_location');
+  if (savedLoc) {
+    userLocation = JSON.parse(savedLoc);
+    document.getElementById('location-prompt').style.display = 'none';
+  }
+} catch(e) {}
+
+function saveSettings() {
+  localStorage.setItem('acr_solar_settings', JSON.stringify(settings));
+}
+function saveReminders() {
+  localStorage.setItem('acr_solar_reminders', JSON.stringify(reminders));
+}
+
+// ─── VIEWS ────────────────────────────────────────────────────────────────────
+
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.getElementById(name + '-view').classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  currentView = name;
+  if (name === 'month') renderMonth();
+  if (name === 'agenda') renderAgenda();
+  if (name === 'sun') renderSunView();
+  if (name === 'year') renderYear();
+  if (name === 'settings') renderSettings();
+}
+
+// ─── MONTH VIEW ───────────────────────────────────────────────────────────────
+
+function renderMonth() {
+  var sd = gregorianToSolar(viewDate);
+  var season = sd.monthInfo ? sd.monthInfo.season : 'Spring';
+  var seasonColor = SEASON_COLORS[season] || '#F5C842';
+
+  // Month title
+  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-title').innerHTML =
+    monthNames[viewDate.getMonth()] + ' <span>' + viewDate.getFullYear() + '</span>';
+
+  // Solar month sub
+  var solarM = gregorianToSolar(new Date(viewDate.getFullYear(), viewDate.getMonth(), 15));
+  document.getElementById('solar-month-sub').textContent =
+    'Solar Month ' + solarM.month + ' — ' + SOLAR_MONTHS[solarM.month-1].name + ' (' + season + ')';
+
+  // Season dot
+  document.getElementById('season-dot').style.background = seasonColor;
+
+  // Solar info
+  var solToday = gregorianToSolar(today);
+  document.getElementById('sol-name-text').textContent =
+    season + ' — Solar Year ' + solToday.year + ' — Day ' + solToday.dayOfYear + ' of 364';
+  document.getElementById('sol-day-count').textContent = solToday.dayOfYear;
+
+  // Build grid
+  var grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  var firstDay = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
+  var lastDay = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0);
+  var startDow = firstDay.getDay(); // 0=Sun
+
+  // Previous month days
+  for (var i = 0; i < startDow; i++) {
+    var prevDate = new Date(firstDay);
+    prevDate.setDate(prevDate.getDate() - (startDow - i));
+    grid.appendChild(buildCalDay(prevDate, true));
+  }
+
+  // Current month days
+  for (var d = 1; d <= lastDay.getDate(); d++) {
+    var curDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
+    grid.appendChild(buildCalDay(curDate, false));
+  }
+
+  // Next month days to fill
+  var total = startDow + lastDay.getDate();
+  var remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (var j = 1; j <= remaining; j++) {
+    var nextDate = new Date(lastDay);
+    nextDate.setDate(nextDate.getDate() + j);
+    grid.appendChild(buildCalDay(nextDate, true));
+  }
+
+  renderSelectedDayEvents();
+}
+
+function buildCalDay(date, otherMonth) {
+  var cell = document.createElement('div');
+  cell.className = 'cal-day';
+  if (otherMonth) cell.classList.add('other-month');
+
+  var isToday = date.getTime() === today.getTime();
+  var isSel = date.getTime() === selectedDate.getTime();
+  var shab = settings.highlight_shabbat && isShabbat(date);
+
+  if (isToday) cell.classList.add('today');
+  if (isSel && !isToday) cell.classList.add('selected');
+  if (shab && !isSel && !isToday) cell.classList.add('shabbat-day');
+
+  var sd = gregorianToSolar(date);
+  var holidays = getHolidays(sd.month, sd.day);
+
+  var numDiv = document.createElement('div');
+  numDiv.textContent = date.getDate();
+  cell.appendChild(numDiv);
+
+  if (settings.show_solar_nums && !otherMonth) {
+    var solDiv = document.createElement('div');
+    solDiv.className = 'sol-day';
+    solDiv.textContent = sd.month + '/' + sd.day;
+    cell.appendChild(solDiv);
+  }
+
+  if (holidays.length > 0) {
+    var dotContainer = document.createElement('div');
+    dotContainer.className = 'holiday-dot';
+    holidays.slice(0,3).forEach(function(h) {
+      var dot = document.createElement('div');
+      dot.className = 'h-dot';
+      dot.style.background = h.color;
+      dotContainer.appendChild(dot);
+    });
+    cell.appendChild(dotContainer);
+  }
+
+  // Reminder dots
+  var dayStr = date.toISOString().split('T')[0];
+  var dayRems = reminders.filter(function(r) { return r.date === dayStr; });
+  if (dayRems.length > 0 && holidays.length < 3) {
+    var rdot = document.createElement('div');
+    rdot.className = 'h-dot';
+    rdot.style.background = dayRems[0].color || '#4B8EFF';
+    if (!cell.querySelector('.holiday-dot')) {
+      var dc = document.createElement('div'); dc.className = 'holiday-dot';
+      dc.appendChild(rdot); cell.appendChild(dc);
+    } else {
+      cell.querySelector('.holiday-dot').appendChild(rdot);
+    }
+  }
+
+  cell.addEventListener('click', function() {
+    selectedDate = new Date(date);
+    renderMonth();
+  });
+
+  return cell;
+}
+
+function renderSelectedDayEvents() {
+  var sd = gregorianToSolar(selectedDate);
+  var holidays = getHolidays(sd.month, sd.day);
+  var dayStr = selectedDate.toISOString().split('T')[0];
+  var dayRems = reminders.filter(function(r) { return r.date === dayStr; });
+
+  // Label
+  var isToday = selectedDate.getTime() === today.getTime();
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Shabbat'];
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var label = isToday ? 'Today' :
+    days[selectedDate.getDay()] + ', ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getDate();
+  document.getElementById('selected-label-text').textContent = label;
+
+  var list = document.getElementById('events-list');
+  var noEvt = document.getElementById('no-events');
+  list.innerHTML = '';
+
+  var allEvents = holidays.concat(dayRems.map(function(r) {
+    return { name: r.title, desc: r.notes || '', source: 'Reminder', color: r.color || '#4B8EFF', icon: 'ri-alarm-line', isReminder: true, time: r.time };
+  }));
+
+  if (allEvents.length === 0) {
+    noEvt.style.display = 'block';
+  } else {
+    noEvt.style.display = 'none';
+    allEvents.forEach(function(evt) {
+      var card = document.createElement('div');
+      card.className = 'event-card';
+      card.style.setProperty('--evt-color', evt.color);
+      card.style.cssText += '; border-left: 4px solid ' + evt.color + ';';
+
+      var iconBg = hexToRgba(evt.color, 0.15);
+      card.innerHTML =
+        '<div class="event-icon" style="background:' + iconBg + ';color:' + evt.color + '">' +
+          '<i class="' + (evt.icon || 'ri-calendar-event-line') + '"></i>' +
+        '</div>' +
+        '<div class="event-content">' +
+          '<div class="event-name">' + evt.name + '</div>' +
+          '<div class="event-desc">' + (evt.desc || '') + '</div>' +
+          (settings.show_source && evt.source && evt.source !== 'Reminder' ?
+            '<div class="event-source">' + evt.source + '</div>' : '') +
+          (evt.time ? '<div class="event-source">' + evt.time + '</div>' : '') +
+        '</div>';
+
+      if (!evt.isReminder) {
+        card.addEventListener('click', function() { showEventDetail(evt, sd); });
+      }
+      list.appendChild(card);
+    });
+  }
+}
+
+function showEventDetail(evt, sd) {
+  var greg = solarToGregorian(sd.year, evt.month, evt.day);
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Shabbat'];
+
+  var iconBg = hexToRgba(evt.color, 0.15);
+  var sourceBg = hexToRgba(evt.color, 0.1);
+
+  document.getElementById('event-detail-content').innerHTML =
+    '<div class="event-detail-header">' +
+      '<div class="event-detail-icon" style="background:' + iconBg + ';color:' + evt.color + '">' +
+        '<i class="' + (evt.icon || 'ri-calendar-event-line') + '"></i>' +
+      '</div>' +
+      '<div>' +
+        '<div class="event-detail-title">' + evt.name + '</div>' +
+        '<div class="event-detail-date">Solar Month ' + evt.month + ', Day ' + evt.day + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Description</div>' +
+      '<div class="detail-text">' + evt.desc + '</div>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Primary Source</div>' +
+      '<span class="source-badge" style="background:' + sourceBg + ';color:' + evt.color + '">' +
+        evt.source +
+      '</span>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Solar Calendar Position</div>' +
+      '<div class="detail-text">Month ' + evt.month + ' (' + SOLAR_MONTHS[evt.month-1].name + ') — Day ' + evt.day + '<br>' +
+      SOLAR_MONTHS[evt.month-1].season + ' Season</div>' +
+    '</div>';
+
+  document.getElementById('event-modal-overlay').style.display = 'flex';
+}
+
+function closeEventModal(e) {
+  if (e.target === document.getElementById('event-modal-overlay')) {
+    document.getElementById('event-modal-overlay').style.display = 'none';
+  }
+}
+
+// ─── AGENDA VIEW ──────────────────────────────────────────────────────────────
+
+function renderAgenda() {
+  var container = document.getElementById('agenda-content');
+  container.innerHTML = '';
+
+  // Group all holidays by solar month
+  var byMonth = {};
+  HOLIDAYS.forEach(function(h) {
+    if (!byMonth[h.month]) byMonth[h.month] = [];
+    byMonth[h.month].push(h);
+  });
+
+  // Add reminders
+  reminders.forEach(function(r) {
+    var d = new Date(r.date + 'T12:00:00');
+    var sd = gregorianToSolar(d);
+    if (!byMonth[sd.month]) byMonth[sd.month] = [];
+    byMonth[sd.month].push({
+      month: sd.month, day: sd.day, name: r.title,
+      desc: r.notes || '', source: 'Reminder', color: r.color || '#4B8EFF',
+      icon: 'ri-alarm-line', isReminder: true
+    });
+  });
+
+  var solToday = gregorianToSolar(today);
+
+  for (var m = 1; m <= 12; m++) {
+    var events = byMonth[m];
+    if (!events || events.length === 0) continue;
+
+    events.sort(function(a,b){ return a.day - b.day; });
+
+    var sec = document.createElement('div');
+    sec.className = 'month-section';
+
+    var mInfo = SOLAR_MONTHS[m-1];
+    var seasonColor = SEASON_COLORS[mInfo.season];
+    var isCurrent = (m === solToday.month);
+
+    sec.innerHTML =
+      '<div class="month-section-title" style="' + (isCurrent ? 'color:' + seasonColor : '') + '">' +
+        'Month ' + m + ' — ' + mInfo.name +
+        ' <span style="font-size:12px;color:var(--text3);font-weight:500;">(' + mInfo.season + ')</span>' +
+      '</div>';
+
+    events.forEach(function(evt) {
+      var item = document.createElement('div');
+      item.className = 'agenda-item';
+
+      // Check if today
+      var greg = solarToGregorian(solToday.year, evt.month, evt.day);
+      var isToday = (greg.getTime() === today.getTime());
+
+      item.innerHTML =
+        '<div class="agenda-date" style="' + (isToday ? 'color:' + evt.color : '') + '">' +
+          '<div class="ad-day">' + evt.day + '</div>' +
+          '<div class="ad-dow">' + mInfo.name.substring(0,3) + '</div>' +
+        '</div>' +
+        '<div class="agenda-dot" style="background:' + evt.color + ';min-height:48px;"></div>' +
+        '<div class="agenda-info">' +
+          '<div class="ai-name">' + evt.name + '</div>' +
+          '<div class="ai-desc">' + evt.desc.substring(0,120) + (evt.desc.length > 120 ? '...' : '') + '</div>' +
+          (settings.show_source && evt.source !== 'Reminder' ?
+            '<div class="ai-source">' + evt.source + '</div>' : '') +
+        '</div>';
+
+      sec.appendChild(item);
+    });
+
+    container.appendChild(sec);
+  }
+}
+
+// ─── SUN VIEW ─────────────────────────────────────────────────────────────────
+
+function requestLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      localStorage.setItem('acr_solar_location', JSON.stringify(userLocation));
+      document.getElementById('location-prompt').style.display = 'none';
+      renderSunView();
+      scheduleAlerts();
+    }, function() {
+      // Use a default location (Jerusalem) as fallback
+      userLocation = { lat: 31.7683, lon: 35.2137 };
+      document.getElementById('location-prompt').style.display = 'none';
+      renderSunView();
+    });
+  }
+}
+
+// Sun position calculations (simplified but accurate to ~minutes)
+function getSunTimes(date, lat, lon) {
+  var J2000 = 2451545.0;
+  var JD = date.getTime()/86400000 + 2440587.5;
+  var n = JD - J2000;
+
+  var L = (280.46 + 0.9856474 * n) % 360;
+  var g = ((357.528 + 0.9856003 * n) % 360) * Math.PI / 180;
+  var lam = (L + 1.915 * Math.sin(g) + 0.02 * Math.sin(2*g)) * Math.PI / 180;
+  var eps = 23.439 * Math.PI / 180;
+  var dec = Math.asin(Math.sin(eps) * Math.sin(lam));
+  var RA = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam));
+
+  var latR = lat * Math.PI / 180;
+  var cosHA = (Math.cos(90.833 * Math.PI / 180) - Math.sin(latR) * Math.sin(dec)) / (Math.cos(latR) * Math.cos(dec));
+
+  if (cosHA > 1) return null; // no sunrise
+  if (cosHA < -1) return null; // no sunset
+
+  var HA = Math.acos(cosHA) * 180 / Math.PI;
+
+  // Equation of time correction
+  var EqT = 4 * (L - 0.0057183 - RA * 180/Math.PI + 360 * Math.round((L - RA * 180/Math.PI)/360));
+  var lonCorr = lon / 15;
+  var tzOffset = -date.getTimezoneOffset() / 60;
+
+  var noon = 12 - lonCorr + EqT/60 + (tzOffset - lon/15);
+  var sunriseH = noon - HA/15;
+  var sunsetH = noon + HA/15;
+
+  function hToTime(h) {
+    h = ((h % 24) + 24) % 24;
+    var hh = Math.floor(h);
+    var mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh++; mm = 0; }
+    return { h: hh, m: mm, total: h };
+  }
+
+  var sr = hToTime(sunriseH);
+  var ss = hToTime(sunsetH);
+  var nf = hToTime(sunsetH + 0.3); // nightfall ~18 min after sunset
+
+  return {
+    sunrise: sr, sunset: ss, nightfall: nf,
+    dayLength: sunsetH - sunriseH,
+    sunriseStr: pad(sr.h) + ':' + pad(sr.m),
+    sunsetStr: pad(ss.h) + ':' + pad(ss.m),
+    nightfallStr: pad(nf.h) + ':' + pad(nf.m)
+  };
+}
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+function renderSunView() {
+  if (!userLocation) return;
+
+  var loc = userLocation;
+  var st = getSunTimes(today, loc.lat, loc.lon);
+  if (!st) return;
+
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('sun-date-label').textContent =
+    months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+
+  document.getElementById('sunrise-time').textContent = st.sunriseStr;
+  document.getElementById('sunset-time').textContent = st.sunsetStr;
+  document.getElementById('nightfall-time').textContent = st.nightfallStr;
+
+  var dl = st.dayLength;
+  var dlH = Math.floor(dl), dlM = Math.round((dl - dlH) * 60);
+  document.getElementById('day-length').textContent = dlH + 'h ' + pad(dlM) + 'm';
+
+  // Progress bar
+  var now = new Date();
+  var currentH = now.getHours() + now.getMinutes()/60;
+  var prog = Math.max(0, Math.min(100, (currentH - st.sunrise.total) / (st.sunset.total - st.sunrise.total) * 100));
+  document.getElementById('sun-progress').style.width = prog + '%';
+  document.getElementById('sun-dot').style.left = prog + '%';
+
+  // Shabbat notice
+  var shabbatNotice = document.getElementById('shabbat-notice');
+  var nowDay = today.getDay(); // 5=Friday
+  if (nowDay === 5) {
+    var minsToSunset = (st.sunset.total - currentH) * 60;
+    if (minsToSunset > 0 && minsToSunset < 120) {
+      shabbatNotice.style.display = 'block';
+      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at ' + st.sunsetStr + ' — ' + Math.round(minsToSunset) + ' minutes';
+    }
+  }
+
+  // Upcoming eves
+  renderUpcomingEves();
+
+  // Sync toggles
+  ['shabbat-toggle','holyday-toggle','sunrise-toggle'].forEach(function(id) {
+    var key = id.replace('-toggle','_alert').replace('-','_');
+    var el = document.getElementById(id);
+    if (el) el.className = 'toggle' + (settings[key] ? ' on' : '');
+  });
+}
+
+function renderUpcomingEves() {
+  var container = document.getElementById('upcoming-eves');
+  if (!container) return;
+  container.innerHTML = '';
+
+  var solToday = gregorianToSolar(today);
+  var upcoming = [];
+
+  // Find next 5 holy days that have sunset significance
+  var majorHolidays = HOLIDAYS.filter(function(h) {
+    return ['DSS/Orit','DSS','Orit'].indexOf(h.source) >= 0 &&
+           h.color !== '#64748B'; // exclude tekufah markers
+  });
+
+  majorHolidays.forEach(function(h) {
+    var greg = solarToGregorian(solToday.year, h.month, h.day);
+    if (greg >= today) {
+      var eveDate = new Date(greg);
+      eveDate.setDate(eveDate.getDate() - 1);
+      upcoming.push({ evt: h, date: greg, eve: eveDate });
+    }
+  });
+
+  upcoming.sort(function(a,b){ return a.date - b.date; });
+  upcoming.slice(0,5).forEach(function(u) {
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var iconBg = hexToRgba(u.evt.color, 0.12);
+    var card = document.createElement('div');
+    card.className = 'event-card';
+    card.style.borderLeft = '4px solid ' + u.evt.color;
+    card.innerHTML =
+      '<div class="event-icon" style="background:' + iconBg + ';color:' + u.evt.color + '">' +
+        '<i class="' + u.evt.icon + '"></i>' +
+      '</div>' +
+      '<div class="event-content">' +
+        '<div class="event-name">' + u.evt.name + '</div>' +
+        '<div class="event-desc">Begins at sunset</div>' +
+      '</div>' +
+      '<div class="event-meta">' +
+        '<div class="event-time">' + months[u.date.getMonth()] + ' ' + u.date.getDate() + '</div>' +
+      '</div>';
+    container.appendChild(card);
+  });
+}
+
+// ─── YEAR VIEW ────────────────────────────────────────────────────────────────
+
+function renderYear() {
+  var year = viewDate.getFullYear();
+  document.getElementById('year-title').textContent = year;
+
+  var grid = document.getElementById('year-grid');
+  grid.innerHTML = '';
+
+  var solToday = gregorianToSolar(today);
+
+  for (var m = 0; m < 12; m++) {
+    var mini = document.createElement('div');
+    mini.className = 'mini-month';
+    if (m === today.getMonth() && year === today.getFullYear()) {
+      mini.classList.add('current-month');
+    }
+
+    var firstDay = new Date(year, m, 1);
+    var lastDay = new Date(year, m+1, 0);
+    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // Count holidays this month
+    var holiCount = 0;
+    for (var d = 1; d <= lastDay.getDate(); d++) {
+      var td = new Date(year, m, d);
+      var sd = gregorianToSolar(td);
+      if (getHolidays(sd.month, sd.day).length > 0) holiCount++;
+    }
+
+    mini.innerHTML =
+      '<div class="mini-month-name">' + monthNames[m] +
+        '<span style="font-size:10px;color:var(--text3);">' + holiCount + ' events</span>' +
+      '</div>' +
+      '<div class="mini-grid" id="mini-' + m + '"></div>';
+
+    var mg = mini.querySelector('.mini-grid');
+    var startDow = firstDay.getDay();
+    for (var i = 0; i < startDow; i++) {
+      var blank = document.createElement('div'); blank.className = 'mini-cell';
+      mg.appendChild(blank);
+    }
+    for (var dd = 1; dd <= lastDay.getDate(); dd++) {
+      var cell = document.createElement('div');
+      cell.className = 'mini-cell';
+      var cDate = new Date(year, m, dd);
+      var csd = gregorianToSolar(cDate);
+      var hasHol = getHolidays(csd.month, csd.day).length > 0;
+      var isToday = cDate.getTime() === today.getTime();
+      if (isToday) cell.classList.add('today-mini');
+      else if (hasHol) cell.classList.add('has-event');
+      cell.textContent = dd;
+      mg.appendChild(cell);
+    }
+
+    var m2 = m; // closure
+    mini.addEventListener('click', function() {
+      viewDate = new Date(year, m2, 1);
+      switchView('month');
+    });
+
+    grid.appendChild(mini);
+  }
+}
+
+function prevYear() { viewDate.setFullYear(viewDate.getFullYear()-1); renderYear(); }
+function nextYear() { viewDate.setFullYear(viewDate.getFullYear()+1); renderYear(); }
+
+// ─── SETTINGS VIEW ────────────────────────────────────────────────────────────
+
+function renderSettings() {
+  // Sync all toggles
+  var toggleMap = {
+    'solar-nums-toggle': 'show_solar_nums',
+    'shabbat-hl-toggle': 'highlight_shabbat',
+    'source-toggle': 'show_source'
+  };
+  Object.keys(toggleMap).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.className = 'toggle' + (settings[toggleMap[id]] ? ' on' : '');
+  });
+
+  // Render reminders
+  renderRemindersList();
+}
+
+function renderRemindersList() {
+  var list = document.getElementById('reminders-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (reminders.length === 0) {
+    list.innerHTML = '<p style="color:var(--text3);font-size:14px;text-align:center;padding:16px 0;">No reminders yet</p>';
+    return;
+  }
+  reminders.forEach(function(r, i) {
+    var card = document.createElement('div');
+    card.className = 'reminder-card';
+    card.innerHTML =
+      '<div class="reminder-color" style="background:' + (r.color||'#4B8EFF') + '"></div>' +
+      '<div class="reminder-info">' +
+        '<div class="reminder-title">' + r.title + '</div>' +
+        '<div class="reminder-time">' + r.date + (r.time ? ' at ' + r.time : '') + '</div>' +
+      '</div>' +
+      '<i class="ri-delete-bin-line reminder-delete" onclick="deleteReminder(' + i + ')"></i>';
+    list.appendChild(card);
+  });
+}
+
+function deleteReminder(i) {
+  reminders.splice(i, 1);
+  saveReminders();
+  renderRemindersList();
+  renderMonth();
+}
+
+// ─── REMINDERS / MODAL ────────────────────────────────────────────────────────
+
+function openAddEvent() {
+  document.getElementById('rem-title').value = '';
+  document.getElementById('rem-date').value = today.toISOString().split('T')[0];
+  document.getElementById('rem-time').value = '';
+  document.getElementById('rem-notes').value = '';
+  selectColor('#F5C842', document.querySelector('.color-opt'));
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+function selectColor(color, el) {
+  selectedColor = color;
+  document.querySelectorAll('.color-opt').forEach(function(c) {
+    c.style.borderColor = 'transparent';
+  });
+  if (el) el.style.borderColor = 'white';
+}
+
+function saveReminder() {
+  var title = document.getElementById('rem-title').value.trim();
+  var date = document.getElementById('rem-date').value;
+  var time = document.getElementById('rem-time').value;
+  var notes = document.getElementById('rem-notes').value.trim();
+
+  if (!title || !date) {
+    document.getElementById('rem-title').style.borderColor = '#EF4444';
+    setTimeout(function(){ document.getElementById('rem-title').style.borderColor = ''; }, 2000);
+    return;
+  }
+
+  reminders.push({ title: title, date: date, time: time, notes: notes, color: selectedColor });
+  saveReminders();
+  document.getElementById('modal-overlay').classList.remove('open');
+  renderMonth();
+  if (currentView === 'settings') renderRemindersList();
+  scheduleAlerts();
+}
+
+// ─── ALERTS ───────────────────────────────────────────────────────────────────
+
+function scheduleAlerts() {
+  if (alertTimer) clearInterval(alertTimer);
+
+  function checkAlerts() {
+    if (!userLocation) return;
+    var now = new Date();
+    var st = getSunTimes(now, userLocation.lat, userLocation.lon);
+    if (!st) return;
+
+    var nowMins = now.getHours() * 60 + now.getMinutes();
+    var sunsetMins = Math.round(st.sunset.total * 60);
+    var alertMins = settings.alert_mins || 30;
+    var alertAt = sunsetMins - alertMins;
+
+    // Check reminders
+    var todayStr = now.toISOString().split('T')[0];
+    reminders.forEach(function(r) {
+      if (r.date === todayStr && r.time) {
+        var parts = r.time.split(':');
+        var remMins = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        if (Math.abs(nowMins - remMins) < 1) {
+          showAlert('Reminder', r.title, '#4B8EFF');
+        }
+      }
+    });
+
+    // Shabbat alert
+    if (settings.shabbat_alert && now.getDay() === 5) {
+      if (Math.abs(nowMins - alertAt) < 1) {
+        showAlert('Shabbat Approaching', 'Shabbat begins in ' + alertMins + ' minutes at ' + st.sunsetStr, '#F5C842');
+      }
+    }
+
+    // Holy day alert
+    if (settings.holyday_alert) {
+      var sd = gregorianToSolar(now);
+      var tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate()+1);
+      var sdTomorrow = gregorianToSolar(tomorrow);
+      var tomorrowHols = getHolidays(sdTomorrow.month, sdTomorrow.day);
+      if (tomorrowHols.length > 0 && Math.abs(nowMins - alertAt) < 1) {
+        showAlert('Sacred Day Eve', tomorrowHols[0].name + ' begins at sunset', tomorrowHols[0].color);
+      }
+    }
+
+    // Sunrise alert
+    if (settings.sunrise_alert) {
+      var sunriseMins = Math.round(st.sunrise.total * 60);
+      if (Math.abs(nowMins - sunriseMins) < 1) {
+        showAlert('Sunrise', 'The sun has risen at ' + st.sunriseStr, '#F5C842');
+      }
+    }
+  }
+
+  alertTimer = setInterval(checkAlerts, 60000);
+  checkAlerts();
+}
+
+function showAlert(title, sub, color) {
+  var alert = document.getElementById('sunset-alert');
+  document.getElementById('alert-title').textContent = title;
+  document.getElementById('alert-sub').textContent = sub;
+  alert.style.borderBottomColor = color || '#F59E0B';
+  alert.classList.add('show');
+
+  // Request notification if supported
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('ACR Solar — ' + title, { body: sub, icon: 'icon.png' });
+  }
+
+  setTimeout(function() { alert.classList.remove('show'); }, 8000);
+}
+
+function dismissAlert() {
+  document.getElementById('sunset-alert').classList.remove('show');
+}
+
+// Request notification permission
+if ('Notification' in window && Notification.permission === 'default') {
+  setTimeout(function() {
+    Notification.requestPermission();
+  }, 3000);
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+
+function prevMonth() {
+  viewDate.setMonth(viewDate.getMonth() - 1);
+  renderMonth();
+}
+function nextMonth() {
+  viewDate.setMonth(viewDate.getMonth() + 1);
+  renderMonth();
+}
+function goToday() {
+  viewDate = new Date(today);
+  selectedDate = new Date(today);
+  renderMonth();
+}
+function toggleSetting(id, key) {
+  settings[key] = !settings[key];
+  document.getElementById(id).className = 'toggle' + (settings[key] ? ' on' : '');
+  saveSettings();
+  if (currentView === 'month') renderMonth();
+  if (currentView === 'sun') renderSunView();
+}
+function setAlertMins(v) {
+  settings.alert_mins = parseInt(v);
+  saveSettings();
+  document.getElementById('alert-mins-desc').textContent = 'Alert ' + v + ' minutes before sunset';
+}
+
+// ─── UTILITIES ────────────────────────────────────────────────────────────────
+
+function hexToRgba(hex, alpha) {
+  var r = parseInt(hex.slice(1,3),16);
+  var g = parseInt(hex.slice(3,5),16);
+  var b = parseInt(hex.slice(5,7),16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+
+// Select first color option
+document.querySelector('.color-opt').style.borderColor = 'white';
+
+// Initial render
+renderMonth();
+
+// If location stored, start alerts
+if (userLocation) {
+  scheduleAlerts();
+  setTimeout(renderSunView, 100);
+}
+
+// Update sun progress every minute
+setInterval(function() {
+  if (currentView === 'sun' && userLocation) renderSunView();
+}, 60000);
+</script>
+</body>
+</html>
