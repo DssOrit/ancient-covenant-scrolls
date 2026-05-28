@@ -2482,6 +2482,42 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="image-prompt"></div><div class="local-list" id="list-image-prompt"></div></div>
   </div>
 </section>
+<script id="ls-ips-v238">(function(){
+  var sec=document.getElementById('section-image-prompt');
+  if(!sec)return;
+  var PREFILL_KEY='ls_aid_prefill';
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function readPrefill(){
+    var pf;
+    try{pf=JSON.parse(localStorage.getItem(PREFILL_KEY)||'null');}catch(_){pf=null;}
+    if(!pf)return;
+    try{localStorage.removeItem(PREFILL_KEY);}catch(_){}
+    var list=document.getElementById('list-image-prompt');
+    if(!list)return;
+    var card=document.createElement('div');
+    card.style.cssText='background:rgba(156,156,255,.08);border:1px solid rgba(156,156,255,.25);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:0.82rem';
+    card.innerHTML='<div style="color:#9c9cff;font-weight:600;margin-bottom:8px">Scene '+esc(pf.sceneId||'')+' — prompt loaded from script</div>'
+      +'<div style="margin-bottom:6px;color:#ccc"><b>Image prompt:</b> '+esc(pf.imagePrompt||'')+'</div>'
+      +(pf.negativePrompt?'<div style="margin-bottom:6px;color:#aaa"><b>Negative:</b> '+esc(pf.negativePrompt)+'</div>':'')
+      +(pf.continuityNotes||pf.characters?'<div style="margin-bottom:6px;color:#aaa"><b>Characters:</b> '+esc(pf.continuityNotes||(pf.characters&&pf.characters.join(', '))||'')+'</div>':'')
+      +'<div style="display:flex;gap:8px;margin-top:10px">'
+      +'<button class="mini" id="ls-ips-copy-prompt">Copy Prompt</button>'
+      +'<button class="mini secondary" id="ls-ips-dismiss">Dismiss</button>'
+      +'</div>';
+    list.insertBefore(card,list.firstChild);
+    var copyBtn=card.querySelector('#ls-ips-copy-prompt');
+    if(copyBtn)copyBtn.addEventListener('click',function(){
+      if(navigator.clipboard&&pf.imagePrompt){navigator.clipboard.writeText(pf.imagePrompt).catch(function(){});}
+      copyBtn.textContent='Copied';
+      setTimeout(function(){copyBtn.textContent='Copy Prompt';},2000);
+    });
+    var dismissBtn=card.querySelector('#ls-ips-dismiss');
+    if(dismissBtn)dismissBtn.addEventListener('click',function(){card.remove();});
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains('active'))readPrefill();});
+  obs.observe(sec,{attributes:true,attributeFilter:['class']});
+  if(sec.classList.contains('active'))readPrefill();
+}());</script>
 <section id="section-image-editing" class="section" data-title="AI Edit">
   <div class="section-head"><div><h2>AI Edit</h2><p>Image manipulation and enhancement tools routed to capable providers.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="image-editing">Audit Section</button></div>
   <div class="panel-grid">
@@ -5003,7 +5039,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     </div>
   </div>
 </section>
-<script id="ls-aid-v237">(function(){
+<script id="ls-aid-v238">(function(){
   var KEY='ls_aid_entries';
   var SCRIPT_KEY='ls_script_data';
   var PREFILL_KEY='ls_aid_prefill';
@@ -5082,10 +5118,55 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     return null;
   }
 
+  function pollHorde(jobId,providerId,sceneId,maxAttempts){
+    var attempt=0;
+    var iv=setInterval(function(){
+      attempt++;
+      if(attempt>maxAttempts){
+        clearInterval(iv);
+        genStatus('Polling timed out after '+maxAttempts+' attempts — no image returned.','#ef5350');
+        document.getElementById('ls-aid-status').value='Failed';
+        document.getElementById('ls-aid-prov').value='Failed';
+        return;
+      }
+      genStatus('Polling '+providerId+'... attempt '+attempt+'/'+maxAttempts,'#ffa726');
+      window.LoadProviderRegistry.pollJobResult({jobId:jobId,providerId:providerId})
+        .then(function(pr){
+          if(!pr||!pr.done)return;
+          clearInterval(iv);
+          var url=validateResult(pr);
+          if(!url){
+            genStatus('Polling complete — no image in result.','#ef5350');
+            document.getElementById('ls-aid-status').value='Failed';
+            document.getElementById('ls-aid-prov').value='Failed';
+            return;
+          }
+          _genUrl=url;
+          var previewWrap=document.getElementById('ls-aid-gen-preview');
+          var imgEl=document.getElementById('ls-aid-gen-img');
+          var labelEl=document.getElementById('ls-aid-gen-result-label');
+          if(imgEl)imgEl.src=url;
+          if(labelEl)labelEl.textContent='Generated via '+esc(providerId)+' (polled) — approve to attach to scene.';
+          if(previewWrap)previewWrap.style.display='';
+          var proofEl=document.getElementById('ls-aid-proof');
+          if(proofEl)proofEl.value=url;
+          genStatus('Ready — image returned after '+attempt+' poll(s). Tap Approve Image to attach to scene.','#66bb6a');
+          document.getElementById('ls-aid-status').value='Local Ready';
+          document.getElementById('ls-aid-prov').value='Local Ready';
+          writeBackToScene(sceneId,url,providerId);
+        }).catch(function(err){
+          clearInterval(iv);
+          genStatus('Polling error: '+(err.message||String(err)),'#ef5350');
+          document.getElementById('ls-aid-status').value='Failed';
+          document.getElementById('ls-aid-prov').value='Failed';
+        });
+    },8000);
+  }
+
   function wireGenerate(){
     var genBtn=document.getElementById('ls-aid-gen-btn');
-    if(!genBtn||genBtn._v237g)return;
-    genBtn._v237g=true;
+    if(!genBtn||genBtn._v238g)return;
+    genBtn._v238g=true;
     function doGen(e){
       if(e&&e.preventDefault)e.preventDefault();
       var prompt=(document.getElementById('ls-aid-prompt')||{}).value||'';
@@ -5105,9 +5186,10 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       }).then(function(r){
         var url=validateResult(r);
         if(r&&r.type==='image-job'){
-          genStatus('Job submitted to '+providerId+' ('+r.jobId+') — check provider for result. Prompt Saved.','#ffa726');
+          genStatus('Job queued ('+providerId+' / '+r.jobId+') — polling every 8s, up to 15 attempts.','#ffa726');
           document.getElementById('ls-aid-status').value='Provider Needed';
           document.getElementById('ls-aid-prov').value='Provider Needed';
+          pollHorde(r.jobId,r.provider||providerId,sceneId,15);
           return;
         }
         if(!url){
@@ -5138,7 +5220,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     genBtn.addEventListener('touchend',function(e){e.preventDefault();doGen(e);});
 
     var approveBtn=document.getElementById('ls-aid-gen-approve-btn');
-    if(approveBtn&&!approveBtn._v237a){approveBtn._v237a=true;
+    if(approveBtn&&!approveBtn._v238a){approveBtn._v238a=true;
       function doApprove(e){
         if(e&&e.preventDefault)e.preventDefault();
         if(!_genUrl){genStatus('No generated image to approve.','#ffa726');return;}
