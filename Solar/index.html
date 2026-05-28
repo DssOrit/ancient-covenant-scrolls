@@ -478,6 +478,45 @@ select.form-input option { background: var(--surface2); }
   .cal-day { font-size: 13px; }
   #topbar-title { font-size: 16px; }
 }
+
+/* ── TEXT PAGE / SHEMA ── */
+#shema-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  background: #0D0B07; display: none; flex-direction: column;
+}
+#shema-overlay.open { display: flex; }
+#shema-topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; padding-top: calc(14px + env(safe-area-inset-top));
+  background: #000; flex-shrink: 0; border-bottom: 1px solid #333;
+}
+.shema-back { color: #fff; font-size: 22px; cursor: pointer; padding: 4px; line-height: 1; }
+.shema-bar-title { flex: 1; font-size: 15px; font-weight: 700; color: #fff; font-family: Arial, sans-serif; }
+#shema-scroll { flex: 1; overflow-y: auto; background: #0D0B07; }
+#shema-content {
+  background: #f5f5f0; max-width: 860px; margin: 0 auto;
+  padding: 28px 24px 40px; font-family: Arial, sans-serif; min-height: 100%;
+}
+.tp-paleo { text-align: center; font-size: 2em; color: #C8971F; margin-bottom: 20px; line-height: 1.4; }
+.tp-title { font-family: Arial, sans-serif; font-size: 1.3em; font-weight: 700; color: #222222; text-align: center; margin-bottom: 8px; }
+.tp-subtitle { font-family: Arial, sans-serif; font-size: 0.9em; color: #555555; font-style: italic; text-align: center; line-height: 1.8; margin-bottom: 28px; }
+.tp-section-header { font-family: Arial, sans-serif; font-size: 1em; font-weight: 700; color: #222222; border-bottom: 1.5px solid #666666; padding-bottom: 6px; margin: 28px 0 16px; }
+.tp-verse-ref { font-family: Arial, sans-serif; font-weight: bold; color: #444444; font-size: 0.9em; margin-bottom: 4px; }
+.tp-hebrew { font-family: Arial, sans-serif; color: #C8971F; direction: rtl; text-align: right; font-size: 1.3em; line-height: 1.8; padding-left: 1.8em; margin-bottom: 8px; }
+p[data-ptype="verse"] { font-family: Arial, sans-serif; color: #111111; font-size: 1em; line-height: 1.8; padding-left: 1.8em; margin-bottom: 20px; }
+p[data-ptype="note"] { font-family: Arial, sans-serif; font-style: italic; color: #555555; font-size: 0.95em; line-height: 1.8; padding-left: 2.4em; margin-bottom: 12px; }
+.tp-dss { font-weight: bold; font-style: italic; color: #1A5276; }
+/* VOICE BAR */
+#shema-voicebar { background: #111; border-top: 1px solid #333; padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); flex-shrink: 0; }
+.vb-row1 { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.vb-btn { background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; padding: 2px; line-height: 1; display: flex; align-items: center; }
+.vb-btn:disabled { color: #555; }
+.vb-progress { flex: 1; height: 4px; background: #333; border-radius: 4px; }
+.vb-progress-fill { height: 100%; border-radius: 4px; background: #C8971F; width: 0%; transition: width 0.5s; }
+.vb-row2 { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.vb-select { background: #222; border: 1px solid #444; color: #ccc; font-size: 12px; border-radius: 6px; padding: 4px 8px; font-family: Arial, sans-serif; cursor: pointer; max-width: 180px; }
+.vb-speed-btn { background: #222; border: 1px solid #444; color: #aaa; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-family: Arial, sans-serif; }
+.vb-speed-btn.active { background: #C8971F; color: #000; border-color: #C8971F; }
 </style>
 </head>
 <body>
@@ -502,11 +541,14 @@ select.form-input option { background: var(--surface2); }
       <div id="topbar-title">ACR Solar</div>
     </div>
     <div id="topbar-actions">
+      <div class="icon-btn" onclick="openShema()" title="Covenant Declaration">
+        <i class="ri-text-snippet"></i>
+      </div>
       <div class="icon-btn" onclick="goToday()" title="Go to today">
         <i class="ri-focus-3-line"></i>
       </div>
       <div class="icon-btn" id="add-event-btn" onclick="openAddEvent()" title="Add reminder">
-        <i class="ri-add-line"></i>
+        <i class="ri-add-circle-line"></i>
       </div>
     </div>
   </div>
@@ -1777,6 +1819,180 @@ if (userLocation) {
 setInterval(function() {
   if (currentView === 'sun' && userLocation) renderSunView();
 }, 60000);
+// ─── SHEMA PAGE ───────────────────────────────────────────────────────────────
+
+var shemaPlaying = false;
+var shemaVoice = null;
+var shemaRate = 1.0;
+var shemaMode = 'english';
+var shemaUtterIdx = 0;
+
+var SHEMA_VERSES = [
+  {ref:'6:4', text:"Hear, O Yisra-el: Yahweh is our Creator, Yahweh is One."},
+  {ref:'6:5', text:"And you shall love Yahweh your Creator with all your heart and with all your soul and with all your strength."},
+  {ref:'6:6', text:"And these words which I command you today shall be upon your heart."},
+  {ref:'6:7', text:"You shall teach them diligently to your children, and shall speak of them when you sit in your house and when you walk by the way and when you lie down and when you rise up."},
+  {ref:'6:8', text:"You shall bind them as a sign upon your hand and they shall be as frontlets between your eyes."},
+  {ref:'6:9', text:"You shall write them on the doorposts of your house and on your gates."}
+];
+
+function openShema() {
+  document.getElementById('shema-overlay').classList.add('open');
+  shemaLoadVoices();
+}
+
+function closeShema() {
+  shemaStop();
+  document.getElementById('shema-overlay').classList.remove('open');
+}
+
+function shemaLoadVoices() {
+  var sel = document.getElementById('shema-voice-sel');
+  function populate() {
+    var all = speechSynthesis.getVoices();
+    var voices = all.filter(function(v){return v.lang.indexOf('en')===0;});
+    if (!voices.length) voices = all;
+    sel.innerHTML = '';
+    voices.forEach(function(v, i) {
+      var opt = document.createElement('option');
+      var enhanced = /enhanced|premium|neural|google/i.test(v.name);
+      opt.value = i;
+      opt.textContent = (enhanced ? '* ' : '') + v.name;
+      sel.appendChild(opt);
+    });
+    if (!shemaVoice && voices.length) shemaVoice = voices[0];
+  }
+  if (speechSynthesis.getVoices().length) { populate(); }
+  else { speechSynthesis.onvoiceschanged = populate; }
+}
+
+function shemaSetVoice(idx) {
+  var all = speechSynthesis.getVoices();
+  var voices = all.filter(function(v){return v.lang.indexOf('en')===0;});
+  if (!voices.length) voices = all;
+  shemaVoice = voices[parseInt(idx)] || voices[0];
+}
+
+function shemaSetMode(val) { shemaMode = val; }
+
+function shemaSetSpeed(rate) {
+  shemaRate = rate;
+  document.querySelectorAll('.vb-speed-btn').forEach(function(b) {
+    b.classList.toggle('active', parseFloat(b.dataset.speed) === rate);
+  });
+  if (shemaPlaying) { shemaStop(); shemaPlay(); }
+}
+
+function shemaPlay() {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  shemaPlaying = true;
+  shemaUtterIdx = 0;
+  document.getElementById('shema-play').disabled = true;
+  document.getElementById('shema-pause').disabled = false;
+  document.getElementById('shema-stop').disabled = false;
+  shemaSpeakNext();
+}
+
+function shemaSpeakNext() {
+  if (shemaUtterIdx >= SHEMA_VERSES.length) { shemaStop(); return; }
+  var v = SHEMA_VERSES[shemaUtterIdx];
+  var text = shemaMode === 'full' ? 'Dev-ah-reem ' + v.ref + '. ' + v.text : v.text;
+  var utt = new SpeechSynthesisUtterance(text);
+  utt.rate = shemaRate;
+  utt.lang = 'en-US';
+  if (shemaVoice) utt.voice = shemaVoice;
+  var pct = Math.round((shemaUtterIdx / SHEMA_VERSES.length) * 100);
+  document.getElementById('shema-prog').style.width = pct + '%';
+  utt.onend = function() { shemaUtterIdx++; if (shemaPlaying) shemaSpeakNext(); };
+  speechSynthesis.speak(utt);
+}
+
+function shemaPause() {
+  if (!speechSynthesis.speaking) return;
+  var icon = document.getElementById('shema-pause').querySelector('i');
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+    icon.className = 'ri-pause-circle-line';
+  } else {
+    speechSynthesis.pause();
+    icon.className = 'ri-play-circle-line';
+  }
+}
+
+function shemaStop() {
+  shemaPlaying = false;
+  speechSynthesis.cancel();
+  document.getElementById('shema-play').disabled = false;
+  document.getElementById('shema-pause').disabled = true;
+  document.getElementById('shema-stop').disabled = true;
+  document.getElementById('shema-prog').style.width = '0%';
+  var pi = document.getElementById('shema-pause');
+  if (pi) pi.querySelector('i').className = 'ri-pause-circle-line';
+}
 </script>
+
+<!-- SHEMA PAGE OVERLAY -->
+<div id="shema-overlay">
+  <div id="shema-topbar">
+    <i class="ri-arrow-left-line shema-back" onclick="closeShema()"></i>
+    <div class="shema-bar-title">The Covenant Declaration</div>
+  </div>
+  <div id="shema-scroll">
+    <div id="shema-content">
+      <div class="tp-paleo">𐤉𐤄𐤅𐤄</div>
+      <div class="tp-title">The Covenant Declaration</div>
+      <div class="tp-subtitle">Devarim 6:4–9 as preserved in the Dead Sea Scrolls Nash Papyrus and 4Q fragments.<br>Presented as DSS primary text — not as Rabbinic liturgy.</div>
+
+      <div class="tp-verse-ref">6:4</div>
+      <div class="tp-hebrew">שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד</div>
+      <p data-ptype="verse">Hear, O Yisra'el: YHWH is our Creator, YHWH is One.</p>
+
+      <div class="tp-verse-ref">6:5</div>
+      <div class="tp-hebrew">וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ</div>
+      <p data-ptype="verse">And you shall love YHWH your Creator with all your heart and with all your soul and with all your strength.</p>
+
+      <div class="tp-verse-ref">6:6</div>
+      <div class="tp-hebrew">וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ</div>
+      <p data-ptype="verse">And these words which I command you today shall be upon your heart.</p>
+
+      <div class="tp-verse-ref">6:7</div>
+      <div class="tp-hebrew">וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ</div>
+      <p data-ptype="verse">You shall teach them diligently to your children, and shall speak of them when you sit in your house and when you walk by the way and when you lie down and when you rise up.</p>
+
+      <div class="tp-verse-ref">6:8</div>
+      <div class="tp-hebrew">וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ</div>
+      <p data-ptype="verse">You shall bind them as a sign upon your hand and they shall be as frontlets between your eyes.</p>
+
+      <div class="tp-verse-ref">6:9</div>
+      <div class="tp-hebrew">וּכְתַבְתָּם עַל־מְזוּזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ</div>
+      <p data-ptype="verse">You shall write them on the doorposts of your house and on your gates.</p>
+
+      <div class="tp-section-header">Manuscript Source</div>
+      <p data-ptype="note"><span class="tp-dss">Nash Papyrus</span> — 2nd century BCE — oldest known manuscript containing this text. <span class="tp-dss">4Q fragments</span> from Cave 4 Qumran confirm the Hebrew. Predates all Rabbinic liturgical framing by centuries. This is the covenant text in its original ancient form.</p>
+    </div>
+  </div>
+  <div id="shema-voicebar">
+    <div class="vb-row1">
+      <button class="vb-btn" id="shema-play" onclick="shemaPlay()"><i class="ri-play-circle-line"></i></button>
+      <button class="vb-btn" id="shema-pause" onclick="shemaPause()" disabled><i class="ri-pause-circle-line"></i></button>
+      <button class="vb-btn" id="shema-stop" onclick="shemaStop()" disabled><i class="ri-stop-circle-line"></i></button>
+      <div class="vb-progress"><div class="vb-progress-fill" id="shema-prog"></div></div>
+    </div>
+    <div class="vb-row2">
+      <select class="vb-select" id="shema-voice-sel" onchange="shemaSetVoice(this.value)"></select>
+      <select class="vb-select" id="shema-mode-sel" onchange="shemaSetMode(this.value)">
+        <option value="english">English Only</option>
+        <option value="full">With References</option>
+      </select>
+      <button class="vb-speed-btn" data-speed="0.7" onclick="shemaSetSpeed(0.7)">0.7x</button>
+      <button class="vb-speed-btn" data-speed="0.9" onclick="shemaSetSpeed(0.9)">0.9x</button>
+      <button class="vb-speed-btn active" data-speed="1.0" onclick="shemaSetSpeed(1.0)">1.0x</button>
+      <button class="vb-speed-btn" data-speed="1.2" onclick="shemaSetSpeed(1.2)">1.2x</button>
+      <button class="vb-speed-btn" data-speed="1.5" onclick="shemaSetSpeed(1.5)">1.5x</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
