@@ -2,7 +2,8 @@
   "name": "The Ancient Covenant Record",
   "short_name": "ACR",
   "description": "46 Volumes — Dead Sea Scrolls — Orit Ge'ez — Ancient Hebrew",
-  "start_url": "index.html",
+  "start_url": "/ancient-covenant-scrolls/",
+  "scope": "/ancient-covenant-scrolls/",
   "display": "standalone",
   "background_color": "#f5f5f0",
   "theme_color": "#222222",
@@ -11,3 +12,4 @@
     {"src": "icon.png", "sizes": "192x192", "type": "image/png"},
     {"src": "icon.png", "sizes": "512x512", "type": "image/png"}
   ]
+}
