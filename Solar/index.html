@@ -2185,6 +2185,7 @@ function openVolOfDay(){
   var idx=sd.dayOfYear%labels.length;
   localStorage.setItem('acr_ok','1');
   localStorage.setItem('acr_last',String(idx));
+  localStorage.setItem('acr_from_solar','1');
   window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/';
 }
 function renderVolOfDay(){
