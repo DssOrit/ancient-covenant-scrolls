@@ -726,7 +726,7 @@ select.form-input option { background: var(--surface2); }
         </div>
       </div>
 
-      <div id="vol-day-card" onclick="localStorage.setItem('acr_ok','1');window.open('https://dssorit.github.io/ancient-covenant-scrolls/','_blank')">
+      <div id="vol-day-card" onclick="openVolOfDay()">
         <i class="ri-book-open-line vdc-icon"></i>
         <div class="vdc-info">
           <div class="vdc-label">Volume of the Day</div>
@@ -2178,6 +2178,14 @@ function updateShabbatDisplay(){
   var dur=document.getElementById('shab-duration');if(dur)dur.textContent='Duration: approximately 24 hours \u2014 Saturday sunrise to Sunday sunrise';
   var cd=document.getElementById('shab-countdown');
   if(cd){var isNow=(dow===6)||(dow===0&&now.getHours()<8);if(isNow){cd.textContent='Shabbat is active \u2014 ends Sunday at sunrise '+en;}else{var ms2=sat.getTime()-now.getTime();var h2=Math.floor(ms2/3600000);var m2=Math.floor((ms2%3600000)/60000);cd.textContent='Shabbat begins in '+h2+'h '+m2+'m \u2014 Saturday at '+st;}}
+}
+function openVolOfDay(){
+  var sd=gregorianToSolar(new Date());
+  var labels=['Bereshit Part 1','Bereshit Part 2','Shemot Part 1','Shemot Part 2','Vayikra Part 1','Vayikra Part 2','Bamidbar Part 1','Bamidbar Part 2','Devarim Part 1','Devarim Part 2','Chanokh Part 1','Chanokh Part 2','Chanokh Part 3','Yovelim Part 1','Yovelim Part 2','War Scroll 1QM','Yehoshua','Shofetim','Shemu’el Aleph','Shemu’el Bet','Melakhim Aleph','Melakhim Bet','Yeshayahu Part 1','Yeshayahu Part 2','Yirmeyahu','Yehezkel Part 1','Yehezkel Part 2','Twelve Minor Prophets','Tehillim Part 1','Tehillim Part 2','Iyov','Mishlei','Shir HaShirim','Ruth','Eikha','Kohelet','Daniyel','Ezra-Nekhemyah','Divrei HaYamim','Community Rule 1QS','Damascus Document','Temple Scroll Part 1','Temple Scroll Part 2','Book of Mysteries','Hodayot','Pesher Habakkuk','Genesis Apocryphon','New Jerusalem','4QInstruction Part 1','4QInstruction Part 2','Aramaic Levi Document','4QBeatitudes','Book of War','Songs of Sabbath Sacrifice','Meqabyan Book 1','Meqabyan Book 2','Words of Michael','Birth of Noah','Prayer of Nabonidus','Pseudo-Jubilees','Angels of Mastemah','Wicked and the Holy'];
+  var idx=sd.dayOfYear%labels.length;
+  localStorage.setItem('acr_ok','1');
+  localStorage.setItem('acr_last',String(idx));
+  window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/';
 }
 function renderVolOfDay(){
   var card=document.getElementById('vol-title');if(!card)return;
