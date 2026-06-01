@@ -1222,18 +1222,19 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     // Classification filter lists — words that are never characters
     var ANIMAL_LIST=['fish','whale','worm','crab','snake','serpent','bird','eagle','dove','pigeon','lion','wolf','bear','fox','rabbit','hare','dog','cat','horse','sheep','goat','ox','cattle','cow','bull','calf','locust','frog','fly','mosquito','shark','dolphin','octopus','squid','beetle','ant','spider','crow','raven','hawk','vulture','cricket','grasshopper','leviathan','beast','creature','insect','bug','deer','elk','camel','donkey','ass','mule','pig','swine','hen','rooster','rat','mouse','scorpion','crocodile','flamingo','stork','pelican','ibis','turtle','tortoise','lizard'];
     var GEO_LIST=['nineveh','babylon','jerusalem','egypt','israel','judah','jericho','bethlehem','nazareth','galilee','tarshish','joppa','rome','persia','assyria','samaria','euphrates','jordan','sinai','canaan','tyre','sidon','damascus','sheba','midian','edom','moab','ammon','bashan','gilead','hebron','beersheba','sodom','gomorrah','eden','goshen','zion','moriah','sea','ocean','land','earth','sky','heaven','hell','sheol','hades'];
-    var SKIP_WORDS=['what','when','where','how','why','which','then','there','here','still','just','even','also','very','never','always','soon','again','away','back','down','over','under','above','below','indeed','truly','verily','thus','therefore','hence','man','men','woman','women','people','folk','ones'];
+    var SKIP_WORDS=['what','when','where','how','why','which','then','there','here','still','just','even','also','very','never','always','soon','again','away','back','down','over','under','above','below','indeed','truly','verily','thus','therefore','hence','man','men','people','folk','ones','as','you','lord','vo'];
     function isAnimal(w){return ANIMAL_LIST.indexOf(w.toLowerCase())>=0;}
     function isGeo(w){return GEO_LIST.indexOf(w.toLowerCase())>=0;}
     function isSkipWord(w){return SKIP_WORDS.indexOf(w.toLowerCase())>=0;}
     function isValidChar(w){return !isAnimal(w)&&!isGeo(w)&&!isSkipWord(w)&&w.length>=2&&!NON_NAME.test(w)&&!SKIP_PROPER.test(w);}
 
+    var VO_NORM_RE=/\s*\(?\s*V\.?O\.?\s*\)?\s*\.?\s*$/i;
     // Phase 1: Dialogue-pattern characters (Name: text) — high confidence
     var cCount={};var dialogueSet={};
     var allLines=raw.split(/\r?\n/);
     for(var li=0;li<allLines.length;li++){
       var dm=DIAL_RE.exec(allLines[li].trim());
-      if(dm){var cn=dm[1].trim();if(isValidChar(cn)){cCount[cn]=(cCount[cn]||0)+5;dialogueSet[cn]=true;}}
+      if(dm){var cn=dm[1].trim().replace(VO_NORM_RE,'').trim();if(cn&&isValidChar(cn)){cCount[cn]=(cCount[cn]||0)+5;dialogueSet[cn]=true;}}
     }
     // Phase 2: Verb-context characters (Name + action verb) — medium confidence
     var VRBS='said|told|asked|answered|replied|cried|shouted|walked|ran|went|came|stood|looked|heard|saw|turned|rose|fell|wept|laughed|prayed|arose|fled|entered|left|spoke|thought|felt|knew|returned|called|exclaimed|declared|nodded|smiled|frowned|woke|ate|drank|feared|believed|obeyed|whispered|continued|began|tried|started|sat|knelt|bowed|stretched|raised|lifted|threw|grabbed|picked|held|carried|brought|sent|received|took|gave|made|moved|stayed|waited|opened|closed|commanded|warned|rescued|jumped|swam|sailed|sank|slept|awoke|rolled|climbed|reached|pointed|breathed|sighed|pressed|pulled|pushed|crossed|followed|pleaded|begged|demanded|insisted|refused|accepted|agreed|denied|exclaimed|lamented|questioned';
@@ -1248,7 +1249,9 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     var chars=Object.keys(cCount).filter(function(c){
       if(!isValidChar(c))return false;
       return dialogueSet[c]?cCount[c]>=1:cCount[c]>=6;
-    }).sort(function(a,b){return cCount[b]-cCount[a];}).slice(0,10);
+    }).map(function(c){return c.replace(VO_NORM_RE,'').trim();})
+    .filter(function(c,i,arr){return c&&arr.indexOf(c)===i;})
+    .sort(function(a,b){return(cCount[b]||0)-(cCount[a]||0);}).slice(0,10);
 
     // Location detection — descriptive common nouns
     var LOC_WORDS='yard|garden|park|field|forest|woods|desert|valley|cave|basement|attic|hallway|bedroom|kitchen|living room|office|library|school|church|hospital|market|street|road|city|town|village|farm|barn|factory|dock|shore|beach|lake|river|house|home|room|hall|arena|stadium|theater|bar|restaurant|cafe|hotel|inn|castle|prison|shop|store|alley|station';
@@ -1279,12 +1282,45 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     function sceneBreakScore(bt){var s=0;if(LOC_MOVE_RE.test(bt))s+=2;if(STORY_LOC_RE.test(bt))s+=2;if(TIME_BREAK_RE.test(bt))s+=2;if(EVENT_RE.test(bt))s+=1;return s;}
     // Extract a location/event-based title from the opening text of a scene group
     function bestTitle(sceneText){
-      var t=sceneText.substring(0,500);
+      var t=sceneText.substring(0,600);
       var mv=/\b(?:went\s+(?:to|down\s+to|into)|arrived\s+(?:at|in)|entered|boarded|sailed\s+to)\s+(Nineveh|Joppa|Tarshish|the\s+ship|the\s+sea|the\s+city|the\s+fish)\b/i.exec(t);
       if(mv)return mv[0].charAt(0).toUpperCase()+mv[0].slice(1,50);
-      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t);if(nm)return 'At '+nm[1];
+      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t.substring(0,300));if(nm)return 'At '+nm[1];
+      var evtMap=[
+        [/\bcast\s+lots?\b|\bdrew\s+lots?\b|\blot[s]?\s+fell\b/i,'Jonah Loses the Toss'],
+        [/\bwoman\b[\s\S]{0,60}(?:fall|fell|overboard|thrown)\b|\b(?:fall|fell|overboard)\b[\s\S]{0,60}\bwoman\b/i,'Woman Falls Overboard'],
+        [/\bband\b[\s\S]{0,60}\bplay|\bplay[\s\S]{0,60}\bband\b/i,'Band Plays During the Storm'],
+        [/\b(?:thrown\s+)?overboard\b|\bhurl(?:ed|s)?\s+(?:him\s+)?into\s+the\s+sea\b/i,'Cast into the Sea'],
+        [/\bbelly\s+of\s+the\s+(?:fish|whale)\b|\binside\s+the\s+(?:fish|whale)\b/i,'Inside the Fish'],
+        [/\bfish\s+(?:spit|vomit|spew)\b|\bvomit\b[\s\S]{0,40}\bjonah\b/i,'Jonah Released from Fish'],
+        [/\bplant\b[\s\S]{0,80}\bworm\b|\bworm\b[\s\S]{0,80}\bplant\b/i,'The Plant and the Worm'],
+        [/\bGod\s+(?:appoint|send)\b[\s\S]{0,60}\bplant\b|\bplant\b[\s\S]{0,60}\bgrow\b/i,'God Provides a Plant'],
+        [/\bworm\b[\s\S]{0,60}\b(?:gnaw|bit|destroy|wither)\b/i,'The Worm'],
+        [/\brepent\b[\s\S]{0,60}\bNineveh\b|\bNineveh\b[\s\S]{0,60}\brepent\b/i,'Nineveh Repents'],
+        [/\bking\b[\s\S]{0,60}\brepent\b|\brepent\b[\s\S]{0,60}\bking\b/i,'The King Orders Fasting'],
+        [/\bsecond\s+time\b/i,'God Speaks a Second Time'],
+        [/\bpray(?:s|ed|er)?\b[\s\S]{0,80}\bfish\b|\bfish\b[\s\S]{0,80}\bpray/i,'Jonah Prays in the Fish'],
+        [/\bgreat\s+(?:storm|wind|tempest)\b|\btempest\b/i,'The Great Storm'],
+        [/\bwatch\b[\s\S]{0,60}\bcity\b|\beast\s+of\s+the\s+city\b|\bsit\b[\s\S]{0,40}\beast\b/i,'Jonah Watches the City'],
+        [/\bswallow(?:ed|s)?\b/i,'Swallowed by the Fish'],
+        [/\bfled?\b|\brun\s+away\b|\bran\s+away\b/i,'Jonah Flees'],
+        [/\bboard(?:ed|s)?\b[\s\S]{0,30}\bship\b|\bship\b[\s\S]{0,30}\bTarshish\b/i,'Jonah Boards the Ship'],
+        [/\bsailor[s]?\b[\s\S]{0,60}\bfear\b|\bfear\b[\s\S]{0,60}\bsailor\b/i,'Sailors in Fear'],
+        [/\bgreat\s+fish\b|\bfish\s+swallow\b/i,'The Great Fish'],
+      ];
+      for(var ei=0;ei<evtMap.length;ei++){if(evtMap[ei][0].test(t))return evtMap[ei][1];}
       var st=/\bthe\s+(ship|sea|fish|belly|city|port|shore|desert|plant|shade)\b/i.exec(t);
       if(st)return 'On the '+st[1].charAt(0).toUpperCase()+st[1].slice(1);
+      var ca=/\b(Jonah|God|Captain|Sailor|Woman|King)\s+(fled|went|prayed|boards?|entered?|warned?|watched?|obey(?:s|ed)?|sits?|sat)\b/i.exec(t);
+      if(ca)return ca[1]+' '+ca[2].charAt(0).toUpperCase()+ca[2].slice(1);
+      var lines=t.split(/\r?\n/).filter(function(l){var lt=l.trim();return lt.length>10&&!DIAL_RE.test(lt)&&!(lt===lt.toUpperCase()&&lt.length<50);});
+      if(lines.length){
+        var fl=lines[0].trim();
+        fl=fl.replace(/^(?:scene\s+(?:shows?|opens?|cuts?\s+to|begins?|depicts?)[\s:,]+)/i,'');
+        fl=fl.replace(/^(?:as\s+(?:a|the|we|they|he|she)\s+)/i,'');
+        fl=fl.replace(/^(?:we\s+see\s+)/i,'');
+        if(fl.length>5)return fl.substring(0,50);
+      }
       return null;
     }
     // Pre-pass: identify all-caps speaker-only blocks (JONAH, SEA MAN #1, GOD)
@@ -1407,7 +1443,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       scenes.push(sc);
     });
 
-    var allChars=Object.keys(cCount).filter(function(c){return (dialogueSet[c]?cCount[c]>=1:cCount[c]>=6)&&isValidChar(c);}).sort(function(a,b){return cCount[b]-cCount[a];}).slice(0,30);
+    var allChars=Object.keys(cCount).filter(function(c){return (dialogueSet[c]?cCount[c]>=1:cCount[c]>=6)&&isValidChar(c);}).map(function(c){return c.replace(VO_NORM_RE,'').trim();}).filter(function(c,i,arr){return c&&arr.indexOf(c)===i;}).sort(function(a,b){return(cCount[b]||0)-(cCount[a]||0);}).slice(0,30);
     return{project:meta||{},rawScript:raw.substring(0,50000),scenes:scenes,
       extractedCharacters:allChars,extractedLocations:allLocs,
       analyzedAt:new Date().toISOString(),sceneCount:scenes.length,parseMode:confidence,
