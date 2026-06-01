@@ -1263,14 +1263,32 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     while((gm=GEO_NAME_RE.exec(raw))!==null){if(namedLocs.indexOf(gm[1])<0)namedLocs.push(gm[1]);}
     var allLocs=[];locs.concat(namedLocs.map(function(n){return n.toLowerCase();})).forEach(function(l){if(allLocs.indexOf(l)<0)allLocs.push(l);});
 
-    // Scene grouping by word count — prevents one-paragraph-per-scene over-splitting
+    // Event/location-based scene detection — scenes form at narrative transitions
+    // (location arrivals, time shifts, dramatic events) not at word-count thresholds.
     var totalWords=raw.split(/\s+/).filter(Boolean).length;
-    var targetScenes=totalWords<150?1:totalWords<400?2:totalWords<900?3:totalWords<2000?5:totalWords<4000?8:12;
-    targetScenes=Math.min(targetScenes,blocks.length);
-    var wordsPerScene=targetScenes>0?Math.ceil(totalWords/targetScenes):100;
+    var MIN_SCENE_WORDS=80;   // minimum words before a break can fire
+    var MAX_SCENE_WORDS=600;  // safety valve: always break when a scene gets too long
+    // Movement/arrival (+2): character travels to or enters a new place
+    var LOC_MOVE_RE=/\b(?:went|walked|ran|fled|traveled|sailed|arrived|entered|boarded|descended|crossed|headed|set\s+out|departed|returned|came)\b/i;
+    // Named story locations (+2): a key place name appears in narrative block
+    var STORY_LOC_RE=/\b(Nineveh|Joppa|Tarshish|the\s+sea|the\s+ship|a\s+ship|the\s+fish|the\s+belly|the\s+city|the\s+port|the\s+shore|the\s+road|the\s+desert|the\s+plant|the\s+worm|the\s+shade)\b/i;
+    // Time transition (+2): explicit new time period or second occasion
+    var TIME_BREAK_RE=/\b(?:later|(?:the\s+)?next\s+(?:day|morning|evening)|three\s+days|after\s+(?:three|that|this|two)|meanwhile|that\s+(?:night|morning|evening|day)|at\s+(?:dawn|dusk|midnight|noon)|a\s+second\s+time|once\s+more|many\s+days)\b/i;
+    // Notable event (+1): dramatic action or divine intervention
+    var EVENT_RE=/\b(?:storm|suddenly|hurled|threw|swallowed|appointed|cast\s+lots|overboard|great\s+wind|mighty\s+tempest|LORD\s+(?:spoke|said|commanded|sent|appointed|caused|prepared))\b/i;
+    function sceneBreakScore(bt){var s=0;if(LOC_MOVE_RE.test(bt))s+=2;if(STORY_LOC_RE.test(bt))s+=2;if(TIME_BREAK_RE.test(bt))s+=2;if(EVENT_RE.test(bt))s+=1;return s;}
+    // Extract a location/event-based title from the opening text of a scene group
+    function bestTitle(sceneText){
+      var t=sceneText.substring(0,500);
+      var mv=/\b(?:went\s+(?:to|down\s+to|into)|arrived\s+(?:at|in)|entered|boarded|sailed\s+to)\s+(Nineveh|Joppa|Tarshish|the\s+ship|the\s+sea|the\s+city|the\s+fish)\b/i.exec(t);
+      if(mv)return mv[0].charAt(0).toUpperCase()+mv[0].slice(1,50);
+      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t);if(nm)return 'At '+nm[1];
+      var st=/\bthe\s+(ship|sea|fish|belly|city|port|shore|desert|plant|shade)\b/i.exec(t);
+      if(st)return 'On the '+st[1].charAt(0).toUpperCase()+st[1].slice(1);
+      return null;
+    }
     // Pre-pass: identify all-caps speaker-only blocks (JONAH, SEA MAN #1, GOD)
     // so they are not mistaken for scene headings in the grouping loop.
-    // A block is a speaker if it is a single all-caps line followed by prose text.
     var speakerBlockIdxs={};
     for(var blkIdx=0;blkIdx<blocks.length;blkIdx++){
       var pb2=blocks[blkIdx];
@@ -1287,17 +1305,18 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     blocks.forEach(function(block,blkIdx){
       var bt=block.join('\n');
       var bw=bt.split(/\s+/).filter(Boolean).length;
-      // Dialogue blocks (single-line Name: text colon format) must never start a new scene
+      // Dialogue and speaker blocks never trigger scene breaks
       var isDial=block.length===1&&DIAL_RE.test(block[0].trim());
-      // Scene breaks only allowed at narrative blocks — not speaker lines, not dialogue lines
       var canBreakHere=!speakerBlockIdxs[blkIdx]&&!isDial;
-      var isHd=canBreakHere&&block.length===1&&block[0].length<60&&!/[.!?]$/.test(block[0])&&/^[A-Z]/.test(block[0]);
-      if(isHd&&curLines.length>0){
+      // Structural heading: explicit section marker (CHAPTER, ACT, SCENE, etc.)
+      var isHd=canBreakHere&&block.length===1&&isHeadingLine(block[0])&&block[0].length<80;
+      // Event/location score — only fires when minimum content is accumulated
+      var evtScore=(canBreakHere&&curWds>=MIN_SCENE_WORDS)?sceneBreakScore(bt):0;
+      var tooLong=canBreakHere&&curWds>=MAX_SCENE_WORDS;
+      if(curLines.length>0&&(isHd||(evtScore>=3)||tooLong)){
         groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);
-        curLines=[bt];curWds=bw;nextSrc='heading';
-      } else if(curWds>=wordsPerScene&&curLines.length>0&&canBreakHere){
-        groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);
-        curLines=[bt];curWds=bw;nextSrc='narrative block';
+        curLines=[bt];curWds=bw;
+        nextSrc=isHd?'heading':tooLong?'max length':'location change';
       } else {
         curLines.push(bt);curWds+=bw;
       }
@@ -1327,7 +1346,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)&&(!isValidChar(bl)||isHeadingLine(bl))){heading=bl;continue;}
         contentLines.push(bl);
       }
-      if(!heading)heading=scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1);
+      if(!heading){var autoTitle=bestTitle(sceneText);heading=autoTitle||(scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1));}
       if(!contentLines.length)contentLines=scLines.slice();
       sc.title=heading.substring(0,50);
       sc.sceneId='SC'+String(bIdx+1).padStart(2,'0');
