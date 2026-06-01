@@ -1222,7 +1222,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     // Classification filter lists — words that are never characters
     var ANIMAL_LIST=['fish','whale','worm','crab','snake','serpent','bird','eagle','dove','pigeon','lion','wolf','bear','fox','rabbit','hare','dog','cat','horse','sheep','goat','ox','cattle','cow','bull','calf','locust','frog','fly','mosquito','shark','dolphin','octopus','squid','beetle','ant','spider','crow','raven','hawk','vulture','cricket','grasshopper','leviathan','beast','creature','insect','bug','deer','elk','camel','donkey','ass','mule','pig','swine','hen','rooster','rat','mouse','scorpion','crocodile','flamingo','stork','pelican','ibis','turtle','tortoise','lizard'];
     var GEO_LIST=['nineveh','babylon','jerusalem','egypt','israel','judah','jericho','bethlehem','nazareth','galilee','tarshish','joppa','rome','persia','assyria','samaria','euphrates','jordan','sinai','canaan','tyre','sidon','damascus','sheba','midian','edom','moab','ammon','bashan','gilead','hebron','beersheba','sodom','gomorrah','eden','goshen','zion','moriah','sea','ocean','land','earth','sky','heaven','hell','sheol','hades'];
-    var SKIP_WORDS=['what','when','where','how','why','which','then','there','here','still','just','even','also','very','never','always','soon','again','away','back','down','over','under','above','below','indeed','truly','verily','thus','therefore','hence','man','men','people','folk','ones','as','you','lord','vo'];
+    var SKIP_WORDS=['what','when','where','how','why','which','then','there','here','still','just','even','also','very','never','always','soon','again','away','back','down','over','under','above','below','indeed','truly','verily','thus','therefore','hence','man','men','people','folk','ones','as','you','lord','vo','hey','ah','oh','nah','na','yea','aye','hark','alas','well'];
     function isAnimal(w){return ANIMAL_LIST.indexOf(w.toLowerCase())>=0;}
     function isGeo(w){return GEO_LIST.indexOf(w.toLowerCase())>=0;}
     function isSkipWord(w){return SKIP_WORDS.indexOf(w.toLowerCase())>=0;}
@@ -1285,11 +1285,13 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       var t=sceneText.substring(0,600);
       var mv=/\b(?:went\s+(?:to|down\s+to|into)|arrived\s+(?:at|in)|entered|boarded|sailed\s+to)\s+(Nineveh|Joppa|Tarshish|the\s+ship|the\s+sea|the\s+city|the\s+fish)\b/i.exec(t);
       if(mv)return mv[0].charAt(0).toUpperCase()+mv[0].slice(1,50);
-      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t.substring(0,300));if(nm)return 'At '+nm[1];
       var evtMap=[
+        [/\bthrow\s+(?:me|him|jonah)\s+(?:in|into)\s+the\s+sea\b|\bsailors?\s+threw\s+him\b/i,'Cast into the Sea'],
+        [/\bkill\s+me\s+now\b|\bI.d\s+rather\s+be\s+dead\b|\bjust\s+kill\s+me\b|\bnothing\s+I\s+predicted\b/i,"Jonah's Anger"],
         [/\bcast\s+lots?\b|\bdrew\s+lots?\b|\blot[s]?\s+fell\b/i,'Jonah Loses the Toss'],
-        [/\bwoman\b[\s\S]{0,60}(?:fall|fell|overboard|thrown)\b|\b(?:fall|fell|overboard)\b[\s\S]{0,60}\bwoman\b/i,'Woman Falls Overboard'],
-        [/\bband\b[\s\S]{0,60}\bplay|\bplay[\s\S]{0,60}\bband\b/i,'Band Plays During the Storm'],
+        [/\bgreat\s+(?:storm|wind|tempest)\b|\btempest\b|\bviolent\s+storm\b/i,'The Great Storm'],
+        [/\bwoman\b[\s\S]{0,60}(?:fall(?:s|ing)?\b|fell|overboard|thrown)\b|\b(?:fall(?:s|ing)?\b|fell|overboard)\b[\s\S]{0,60}\bwoman\b/i,'Woman Falls Overboard'],
+        [/\bband\b[\s\S]{0,60}\bplay|\bplay[\s\S]{0,60}\bband\b|\btitanic\b/i,'Band Plays During the Storm'],
         [/\b(?:thrown\s+)?overboard\b|\bhurl(?:ed|s)?\s+(?:him\s+)?into\s+the\s+sea\b/i,'Cast into the Sea'],
         [/\bbelly\s+of\s+the\s+(?:fish|whale)\b|\binside\s+the\s+(?:fish|whale)\b/i,'Inside the Fish'],
         [/\bfish\s+(?:spit|vomit|spew)\b|\bvomit\b[\s\S]{0,40}\bjonah\b/i,'Jonah Released from Fish'],
@@ -1300,7 +1302,6 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         [/\bking\b[\s\S]{0,60}\brepent\b|\brepent\b[\s\S]{0,60}\bking\b/i,'The King Orders Fasting'],
         [/\bsecond\s+time\b/i,'God Speaks a Second Time'],
         [/\bpray(?:s|ed|er)?\b[\s\S]{0,80}\bfish\b|\bfish\b[\s\S]{0,80}\bpray/i,'Jonah Prays in the Fish'],
-        [/\bgreat\s+(?:storm|wind|tempest)\b|\btempest\b/i,'The Great Storm'],
         [/\bwatch\b[\s\S]{0,60}\bcity\b|\beast\s+of\s+the\s+city\b|\bsit\b[\s\S]{0,40}\beast\b/i,'Jonah Watches the City'],
         [/\bswallow(?:ed|s)?\b/i,'Swallowed by the Fish'],
         [/\bfled?\b|\brun\s+away\b|\bran\s+away\b/i,'Jonah Flees'],
@@ -1309,6 +1310,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         [/\bgreat\s+fish\b|\bfish\s+swallow\b/i,'The Great Fish'],
       ];
       for(var ei=0;ei<evtMap.length;ei++){if(evtMap[ei][0].test(t))return evtMap[ei][1];}
+      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t.substring(0,300));if(nm)return 'At '+nm[1];
       var st=/\bthe\s+(ship|sea|fish|belly|city|port|shore|desert|plant|shade)\b/i.exec(t);
       if(st)return 'On the '+st[1].charAt(0).toUpperCase()+st[1].slice(1);
       var ca=/\b(Jonah|God|Captain|Sailor|Woman|King)\s+(fled|went|prayed|boards?|entered?|warned?|watched?|obey(?:s|ed)?|sits?|sat)\b/i.exec(t);
@@ -1336,7 +1338,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         }
       }
     }
-    function isHeadingLine(bl){return /\b(chapter|part|act|scene|book|section|episode)\b/i.test(bl);}
+    function isHeadingLine(bl){return /^\s*(?:chapter|act|part|book|section|episode)\b/i.test(bl)||/^\s*scene\s+\d+/i.test(bl);}
     var groupedTexts=[];var groupSources=[];var curLines=[];var curWds=0;var nextSrc='paragraph group';
     blocks.forEach(function(block,blkIdx){
       var bt=block.join('\n');
@@ -1369,6 +1371,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
 
     var mainLoc=allLocs.length?allLocs[0]:'Location to confirm';
     var scenes=[];
+    var usedTitles={};
 
     groupedTexts.forEach(function(sceneText,bIdx){
       var sc=buildScene(bIdx+1,'',mainLoc,'');
@@ -1382,7 +1385,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)&&(!isValidChar(bl)||isHeadingLine(bl))){heading=bl;continue;}
         contentLines.push(bl);
       }
-      if(!heading){var autoTitle=bestTitle(sceneText);heading=autoTitle||(scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1));}
+      if(!heading){var autoTitle=bestTitle(sceneText);if(autoTitle&&usedTitles[autoTitle])autoTitle=null;if(autoTitle)usedTitles[autoTitle]=true;heading=autoTitle||(scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1));}
       if(!contentLines.length)contentLines=scLines.slice();
       sc.title=heading.substring(0,50);
       sc.sceneId='SC'+String(bIdx+1).padStart(2,'0');
