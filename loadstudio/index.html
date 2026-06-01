@@ -1268,11 +1268,26 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     var targetScenes=totalWords<150?1:totalWords<400?2:totalWords<900?3:totalWords<2000?5:totalWords<4000?8:12;
     targetScenes=Math.min(targetScenes,blocks.length);
     var wordsPerScene=targetScenes>0?Math.ceil(totalWords/targetScenes):100;
+    // Pre-pass: identify all-caps speaker-only blocks (JONAH, SEA MAN #1, GOD)
+    // so they are not mistaken for scene headings in the grouping loop.
+    // A block is a speaker if it is a single all-caps line followed by prose text.
+    var speakerBlockIdxs={};
+    for(var blkIdx=0;blkIdx<blocks.length;blkIdx++){
+      var pb2=blocks[blkIdx];
+      if(pb2.length===1){
+        var pt2=pb2[0].trim();
+        if(pt2===pt2.toUpperCase()&&/[A-Z]/.test(pt2)&&pt2.length<50&&!/[.!?]$/.test(pt2)&&blkIdx+1<blocks.length){
+          var nbt2=blocks[blkIdx+1].join(' ').trim();
+          if(!(nbt2===nbt2.toUpperCase()&&/[A-Z]/.test(nbt2)&&nbt2.length<50))speakerBlockIdxs[blkIdx]=true;
+        }
+      }
+    }
+    function isHeadingLine(bl){return /\b(chapter|part|act|scene|book|section|episode)\b/i.test(bl);}
     var groupedTexts=[];var curLines=[];var curWds=0;
-    blocks.forEach(function(block){
+    blocks.forEach(function(block,blkIdx){
       var bt=block.join('\n');
       var bw=bt.split(/\s+/).filter(Boolean).length;
-      var isHd=block.length===1&&block[0].length<60&&!/[.!?]$/.test(block[0])&&/^[A-Z]/.test(block[0]);
+      var isHd=!speakerBlockIdxs[blkIdx]&&block.length===1&&block[0].length<60&&!/[.!?]$/.test(block[0])&&/^[A-Z]/.test(block[0]);
       if(isHd&&curLines.length>0){groupedTexts.push(curLines.join('\n\n'));curLines=[bt];curWds=bw;}
       else if(curWds>=wordsPerScene&&curLines.length>0&&!isHd){groupedTexts.push(curLines.join('\n\n'));curLines=[bt];curWds=bw;}
       else{curLines.push(bt);curWds+=bw;}
@@ -1296,8 +1311,10 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       var heading='',contentLines=[];
       for(var bi=0;bi<scLines.length;bi++){
         var bl=scLines[bi];
-        if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)){heading=bl;continue;}
-        if(!heading&&bi===0&&bl.length<60&&!/[.!?]$/.test(bl)&&/^[A-Z]/.test(bl)){heading=bl;continue;}
+        // All-caps line: only treat as a scene heading when it contains structural keywords
+        // (CHAPTER, ACT, etc.) OR fails isValidChar (i.e. not a character name).
+        // Prevents JONAH, GOD, SEA MAN #1 from becoming scene titles.
+        if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)&&(!isValidChar(bl)||isHeadingLine(bl))){heading=bl;continue;}
         contentLines.push(bl);
       }
       if(!heading)heading=scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1);
@@ -1307,13 +1324,22 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       sc.scriptOrder=bIdx+1;sc.sceneIndex=bIdx+1;
       sc.location=mainLoc;sc.characters=chars.slice(0,5);
       var bAction=[],bDialogue=[];
-      for(var ci=0;ci<contentLines.length;ci++){
+      var ci=0;
+      while(ci<contentLines.length){
         var cl=contentLines[ci];
         var dlm=DIAL_RE.exec(cl);
+        // All-caps standalone speaker line (JONAH, SEA MAN #1): pair with the next line as dialogue
+        var isRawSpeaker=cl===cl.toUpperCase()&&cl.length>0&&cl.length<50&&/[A-Za-z]/.test(cl)&&isValidChar(cl);
         if(dlm&&isValidChar(dlm[1].trim())){
           bDialogue.push({ch:dlm[1].trim(),text:dlm[2].trim()});
           if(sc.characters.indexOf(dlm[1].trim())<0)sc.characters.push(dlm[1].trim());
+        }else if(isRawSpeaker&&ci+1<contentLines.length){
+          var spTxt=contentLines[ci+1];
+          bDialogue.push({ch:cl.trim(),text:spTxt.trim()});
+          if(sc.characters.indexOf(cl.trim())<0)sc.characters.push(cl.trim());
+          ci++;
         }else if(cl.length>8){bAction.push(cl);}
+        ci++;
       }
       sc.dialogue=bDialogue;sc.action=bAction;
       var narText=bAction.join(' ').substring(0,300);
