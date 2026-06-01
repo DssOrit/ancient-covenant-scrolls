@@ -1244,7 +1244,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     var SP_RE=/\b([A-Z][a-z]{1,20})\b/g;var wm;
     while((wm=SP_RE.exec(raw))!==null){var w=wm[1];if(!SKIP_PROPER.test(w)&&isValidChar(w)){cCount[w]=(cCount[w]||0)+1;}}
 
-    // Keep names with sufficient evidence: dialogue-found → always include; non-dialogue → need verb+noun score ≥6
+    // Keep names with sufficient evidence: dialogue-found always included; non-dialogue need score >=6
     var chars=Object.keys(cCount).filter(function(c){
       if(!isValidChar(c))return false;
       return dialogueSet[c]?cCount[c]>=1:cCount[c]>=6;
