@@ -1208,6 +1208,123 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       analyzedAt:new Date().toISOString(),sceneCount:scenes.length};
   }
 
+  // Fallback parser for plain text, prose, book excerpts, nonprofessional scripts.
+  // Called when analyzeScript() finds 0 scenes (no INT./EXT. headers).
+  function parsePlainText(raw,meta){
+    // Split into paragraph blocks
+    var rawBlocks=raw.split(/\r?\n\s*\r?\n/);
+    var blocks=rawBlocks.map(function(b){return b.split(/\r?\n/).map(function(l){return l.trim();}).filter(Boolean);}).filter(function(b){return b.length>0;});
+    if(!blocks.length)blocks=[[raw.trim().substring(0,500)]];
+    var MAX_SC=12;if(blocks.length>MAX_SC)blocks=blocks.slice(0,MAX_SC);
+
+    var DIAL_RE=/^([A-Za-z][A-Za-z\s\-\.]{1,30}?)\s*:\s+(.+)$/;
+    var NON_NAME=/^(note|chapter|part|scene|act|book|page|section|the|a|an|and|but|for|or|nor|so|yet|he|she|it|we|they|fade|cut|int|ext)$/i;
+    var SKIP_PROPER=/^(The|A|An|In|At|On|By|And|But|For|Or|He|She|It|We|They|His|Her|Its|Their|Our|My|Your|This|That|These|Those|To|Of|Is|Was|Are|Were|Has|Had|Have|Will|Would|Could|Should|May|Might|Can)$/;
+
+    // Global character detection: dialogue pattern + repeated proper nouns
+    var cCount={};
+    var allLines=raw.split(/\r?\n/);
+    for(var li=0;li<allLines.length;li++){
+      var dm=DIAL_RE.exec(allLines[li].trim());
+      if(dm&&!NON_NAME.test(dm[1].trim())){cCount[dm[1].trim()]=(cCount[dm[1].trim()]||0)+3;}
+    }
+    var PROPER=/\b([A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20})?)\b/g;var wm;
+    while((wm=PROPER.exec(raw))!==null){var w=wm[1];if(!SKIP_PROPER.test(w)){cCount[w]=(cCount[w]||0)+1;}}
+    var chars=Object.keys(cCount).filter(function(c){return cCount[c]>=2;}).sort(function(a,b){return cCount[b]-cCount[a];}).slice(0,10);
+
+    // Location detection
+    var LOC_WORDS='yard|garden|park|field|forest|woods|desert|valley|cave|basement|attic|hallway|bedroom|kitchen|living room|office|library|school|church|hospital|market|street|road|city|town|village|farm|barn|factory|dock|shore|beach|lake|river|house|home|room|hall|arena|stadium|theater|bar|restaurant|cafe|hotel|inn|castle|prison|shop|store|alley|station';
+    var locs=[];var lm;
+    var LOC_RE=new RegExp('\\b(?:in|at|near|inside|outside|around|by)\\s+(?:the\\s+|his\\s+|her\\s+|their\\s+|a\\s+)?(?:own\\s+)?('+LOC_WORDS+')\\b','gi');
+    while((lm=LOC_RE.exec(raw))!==null){var ll=lm[1].toLowerCase();if(locs.indexOf(ll)<0)locs.push(ll);if(locs.length>=5)break;}
+    var POS_RE=new RegExp('\\b(?:his|her|their|the)\\s+('+LOC_WORDS+')\\b','gi');
+    while((lm=POS_RE.exec(raw))!==null){var pl=lm[1].toLowerCase();if(locs.indexOf(pl)<0)locs.push(pl);if(locs.length>=5)break;}
+
+    var confidence=chars.length>0||locs.length>0?'Plain Text Parse':'Low Confidence, Review Needed';
+    var mainLoc=locs.length?locs[0]:'Location to confirm';
+    var scenes=[];
+
+    blocks.forEach(function(blockLines,bIdx){
+      var sc=buildScene(bIdx+1,'',mainLoc,'');
+      var blockText=blockLines.join('\n');
+
+      // Heading detection: ALL CAPS line, or short first line with no terminal punctuation
+      var heading='',contentLines=[];
+      for(var bi=0;bi<blockLines.length;bi++){
+        var bl=blockLines[bi];
+        if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)){heading=bl;continue;}
+        if(!heading&&bi===0&&bl.length<60&&!/[.!?]$/.test(bl)&&/^[A-Z]/.test(bl)){heading=bl;continue;}
+        contentLines.push(bl);
+      }
+      if(!heading)heading=blockLines[0]?blockLines[0].substring(0,50):'Scene '+(bIdx+1);
+      if(!contentLines.length)contentLines=blockLines.slice();
+
+      sc.title=heading.substring(0,50);
+      sc.sceneId='SC'+String(bIdx+1).padStart(2,'0');
+      sc.scriptOrder=bIdx+1;sc.sceneIndex=bIdx+1;
+      sc.location=mainLoc;
+      sc.characters=chars.slice(0,5);
+
+      // Parse content lines: dialogue vs action
+      var bAction=[],bDialogue=[];
+      for(var ci=0;ci<contentLines.length;ci++){
+        var cl=contentLines[ci];
+        var dlm=DIAL_RE.exec(cl);
+        if(dlm&&!NON_NAME.test(dlm[1].trim())){
+          bDialogue.push({ch:dlm[1].trim(),text:dlm[2].trim()});
+          if(sc.characters.indexOf(dlm[1].trim())<0)sc.characters.push(dlm[1].trim());
+        }else if(cl.length>8){bAction.push(cl);}
+      }
+      sc.dialogue=bDialogue;sc.action=bAction;
+
+      var narText=bAction.join(' ').substring(0,300);
+      sc.narration=narText?[narText]:[];
+      sc.narrationScript=narText;sc.narrationPrompt=narText;
+
+      if(bDialogue.length)sc.subtitleText=bDialogue[0].ch+': '+bDialogue[0].text.substring(0,120);
+      else if(bAction.length)sc.subtitleText=bAction.slice().sort(function(a,b){return b.length-a.length;})[0].substring(0,120);
+
+      sc.moodWords=detectMood(blockText);sc.wardrobeNotes=detectWardrobe(blockText);
+      sc.propNotes=detectProps(blockText);sc.cameraNotes=extractCamera(blockText);
+
+      var imgParts=[];
+      if(sc.location!=='Location to confirm')imgParts.push(sc.location);
+      if(sc.characters.length)imgParts.push(sc.characters.slice(0,3).join(', '));
+      if(sc.moodWords.length)imgParts.push(sc.moodWords.slice(0,2).join(', ')+' atmosphere');
+      if(meta&&meta.genre)imgParts.push(meta.genre+' film style');
+      if(meta&&meta.style)imgParts.push(meta.style);
+      if(!imgParts.length)imgParts.push(blockText.substring(0,80).replace(/\n/g,' '));
+      sc.imagePrompt=imgParts.join(', ');
+
+      sc.musicPrompt=(sc.moodWords.length?sc.moodWords[0]:'ambient')+', cinematic score';
+      sc.ambiencePrompt='ambient scene: '+(sc.location!=='Location to confirm'?sc.location:'room tone');
+      sc.sfxPrompt='ambient '+(sc.location!=='Location to confirm'?sc.location:'environment')+' sound effects';
+      sc.voicePrompt=sc.characters.length?'Voice for '+sc.characters[0]+': '+(sc.moodWords[0]||'neutral')+' tone':'Narrator voice, neutral tone';
+      sc.animationPrompt=bAction.slice(0,2).join('. ').substring(0,200)||'subtle ambient motion';
+      sc.movementType='subtle ambient motion';
+      sc.cameraMovement=sc.moodWords.indexOf('dramatic')>=0||sc.moodWords.indexOf('tense')>=0?'slow push in, handheld':'steady, smooth pan';
+      sc.cinematicMotion='parallax depth, subtle environmental motion';
+      sc.cameraPrompt=sc.cameraNotes||'medium shot, '+(sc.moodWords[0]||'neutral')+' lighting';
+      sc.lipSyncPlanning=sc.dialogue.length>0?'Dialogue: '+sc.dialogue.slice(0,2).map(function(d){return d.ch;}).join(', '):'No dialogue in this scene';
+      sc.sceneTiming=(sc.dialogue.length>0?4+sc.dialogue.length:3)+' seconds estimated';
+      sc.summary=blockText.substring(0,250).replace(/\n/g,' ');
+      sc.continuityNotes=sc.characters.length?'Characters: '+sc.characters.join(', ')+(sc.location?' Location: '+sc.location:''):'';
+      sc.enhancementPrompt='Enhance image quality, sharpen details, improve lighting consistency';
+      sc.upscalePrompt='4x upscale, preserve cinematic grain, enhance detail';
+      sc.faceRepairPrompt=sc.characters.length?'Restore facial features for '+sc.characters.slice(0,2).join(', '):'';
+      sc.cinematicPolishPrompt='Cinematic color grade, '+(meta&&meta.tone?meta.tone:'dramatic')+' tone, film-like quality';
+      sc.lookNotes=(meta&&meta.tone?meta.tone+', ':'')+(meta&&meta.style?meta.style+', ':'')+'cinematic';
+      sc.parseMode=confidence;
+      sc.rawText=blockText;delete sc.rawLines;
+      scenes.push(sc);
+    });
+
+    var allChars=Object.keys(cCount).filter(function(c){return cCount[c]>=2;}).sort(function(a,b){return cCount[b]-cCount[a];}).slice(0,30);
+    return{project:meta||{},rawScript:raw.substring(0,50000),scenes:scenes,
+      extractedCharacters:allChars,extractedLocations:locs,
+      analyzedAt:new Date().toISOString(),sceneCount:scenes.length,parseMode:confidence};
+  }
+
   function statusColor(s){
     return{'Draft':'#bdbdbd','Approved':'#66bb6a','Ready for Editing Bay':'#42a5f5',
       'Needs Revision':'#ef5350','Rejected':'#ff6b6b'}[s]||'#9e97c0';
@@ -1639,6 +1756,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       if(!raw.trim()){flash('ls-sps-msg','Paste or upload a script first.','#ff6b6b');return;}
       var meta=getProjMeta();
       var result=analyzeScript(raw,meta);
+      if(!result.scenes.length&&raw.trim().length>20){result=parsePlainText(raw,meta);}
       var err=saveData(result);
       var sum=document.getElementById('ls-sps-analysis-summary');
       if(sum){
@@ -1647,10 +1765,11 @@ body.ls-contrast-safe{filter:contrast(1.15)}
           +'  Scenes detected: '+result.scenes.length+'\n'
           +'  Characters found: '+(result.extractedCharacters.slice(0,10).join(', ')||'none detected')+'\n'
           +'  Locations found: '+(result.extractedLocations.slice(0,8).join(', ')||'none detected')+'\n'
+          +(result.parseMode?'  Parse mode: '+result.parseMode+'\n':'')
           +(err?'  Save error: '+err:'  Saved to: '+SCRIPT_KEY);
       }
       renderTable();
-      flash('ls-sps-msg',err?'Error: '+err:'Analyzed: '+result.scenes.length+' scenes.',err?'#ff6b6b':'#4caf50');
+      flash('ls-sps-msg',err?'Error: '+err:'Analyzed: '+result.scenes.length+' scene'+(result.scenes.length===1?'':'s')+(result.parseMode?' ('+result.parseMode+')':'')+'.',err?'#ff6b6b':'#4caf50');
     });
 
     var fi=document.getElementById('ls-sps-file');
