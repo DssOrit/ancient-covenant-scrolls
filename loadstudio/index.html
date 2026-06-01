@@ -1283,16 +1283,26 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       }
     }
     function isHeadingLine(bl){return /\b(chapter|part|act|scene|book|section|episode)\b/i.test(bl);}
-    var groupedTexts=[];var curLines=[];var curWds=0;
+    var groupedTexts=[];var groupSources=[];var curLines=[];var curWds=0;var nextSrc='paragraph group';
     blocks.forEach(function(block,blkIdx){
       var bt=block.join('\n');
       var bw=bt.split(/\s+/).filter(Boolean).length;
-      var isHd=!speakerBlockIdxs[blkIdx]&&block.length===1&&block[0].length<60&&!/[.!?]$/.test(block[0])&&/^[A-Z]/.test(block[0]);
-      if(isHd&&curLines.length>0){groupedTexts.push(curLines.join('\n\n'));curLines=[bt];curWds=bw;}
-      else if(curWds>=wordsPerScene&&curLines.length>0&&!isHd){groupedTexts.push(curLines.join('\n\n'));curLines=[bt];curWds=bw;}
-      else{curLines.push(bt);curWds+=bw;}
+      // Dialogue blocks (single-line Name: text colon format) must never start a new scene
+      var isDial=block.length===1&&DIAL_RE.test(block[0].trim());
+      // Scene breaks only allowed at narrative blocks — not speaker lines, not dialogue lines
+      var canBreakHere=!speakerBlockIdxs[blkIdx]&&!isDial;
+      var isHd=canBreakHere&&block.length===1&&block[0].length<60&&!/[.!?]$/.test(block[0])&&/^[A-Z]/.test(block[0]);
+      if(isHd&&curLines.length>0){
+        groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);
+        curLines=[bt];curWds=bw;nextSrc='heading';
+      } else if(curWds>=wordsPerScene&&curLines.length>0&&canBreakHere){
+        groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);
+        curLines=[bt];curWds=bw;nextSrc='narrative block';
+      } else {
+        curLines.push(bt);curWds+=bw;
+      }
     });
-    if(curLines.length)groupedTexts.push(curLines.join('\n\n'));
+    if(curLines.length){groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);}
 
     // Confidence scoring
     var dialCharCount=Object.keys(dialogueSet).length;
@@ -1374,7 +1384,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       sc.faceRepairPrompt=sc.characters.length?'Restore facial features for '+sc.characters.slice(0,2).join(', '):'';
       sc.cinematicPolishPrompt='Cinematic color grade, '+(meta&&meta.tone?meta.tone:'dramatic')+' tone, film-like quality';
       sc.lookNotes=(meta&&meta.tone?meta.tone+', ':'')+(meta&&meta.style?meta.style+', ':'')+'cinematic';
-      sc.parseMode=confidence;sc.rawText=sceneText;delete sc.rawLines;
+      sc.parseMode=confidence;sc.sceneSource=groupSources[bIdx]||'paragraph group';sc.rawText=sceneText;delete sc.rawLines;
       scenes.push(sc);
     });
 
@@ -1831,6 +1841,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
           +(result.characterConfidence?'  Character Confidence: '+result.characterConfidence+'\n':'')
           +(result.locationConfidence?'  Location Confidence: '+result.locationConfidence+'\n':'')
           +(result.namedLocations&&result.namedLocations.length?'  Named Locations: '+result.namedLocations.join(', ')+'\n':'')
+          +(result.scenes&&result.scenes.length&&result.scenes[0].sceneSource?'  Scene sources: '+result.scenes.map(function(s){return(s.sceneId||'SC')+': '+(s.sceneSource||'?');}).join(' | ')+'\n':'')
           +(err?'  Save error: '+err:'  Saved to: '+SCRIPT_KEY);
       }
       renderTable();
