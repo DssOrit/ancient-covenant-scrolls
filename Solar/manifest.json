@@ -1,0 +1,13 @@
+{
+  "name": "ACR Solar",
+  "short_name": "ACR Solar",
+  "description": "Ancient Covenant Record Solar Calendar",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0A0F1E",
+  "theme_color": "#0A0F1E",
+  "orientation": "any",
+  "icons": [
+    {"src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

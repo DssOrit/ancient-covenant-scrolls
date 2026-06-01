@@ -58,7 +58,7 @@ body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-u
    surface area more clearly. */
 header.topbar > button.tool{display:none !important}
 
-/* === LoadStudio v233 asset-registry-save-fix — full script rewrite ls-ar-v233, addEventListener wiring, plain-array storage, immediate diagnostic === */
+/* === LoadStudio v235 image-proof-eb-sequence — ls-sps-v235, image proof URL per scene, Mark Ready for Editing Bay, Load to EB in Script Order, Look Lab + Voice Studio push === */
 .ls-feature-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 6px;max-width:1100px;margin:0 auto}
 @media (min-width:760px){.ls-feature-row{grid-template-columns:repeat(4,1fr)}}
 .ls-feat{background:transparent;border:1px solid rgba(125,42,232,.28);border-radius:14px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-height:160px;transition:border-color .14s,background .14s}
@@ -913,12 +913,950 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="asset-library"></div><div class="local-list" id="list-asset-library"></div></div>
   </div>
 </section>
-<section id="section-script-tools" class="section" data-title="Script Import and Breakdown">
-  <div class="section-head"><div><h2>Script Import and Breakdown</h2><p>Turn scripts into scene cards, characters, locations, props, wardrobe, dialogue, narration and action lines.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="script-tools">Audit Section</button></div>
-  <div class="panel-grid">
-    <div class="panel"><h3>Feature tools</h3><div class="feature-list"><button class="feature-btn" data-feature="script-tools-paste-script" data-section-id="script-tools"><b>paste script</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-import-docx-script" data-section-id="script-tools"><b>import DOCX script</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-import-txt-script" data-section-id="script-tools"><b>import TXT script</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-import-markdown-script" data-section-id="script-tools"><b>import Markdown script</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-split-into-scenes" data-section-id="script-tools"><b>split into scenes</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-extract-characters" data-section-id="script-tools"><b>extract characters</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-extract-locations" data-section-id="script-tools"><b>extract locations</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-extract-props" data-section-id="script-tools"><b>extract props</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-extract-wardrobe-notes" data-section-id="script-tools"><b>extract wardrobe notes</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-identify-dialogue" data-section-id="script-tools"><b>identify dialogue</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-identify-narration" data-section-id="script-tools"><b>identify narration</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-identify-action-lines" data-section-id="script-tools"><b>identify action lines</b><small>local plus integration</small></button><button class="feature-btn" data-feature="script-tools-create-scene-cards" data-section-id="script-tools"><b>create scene cards</b><small>local plus integration</small></button></div></div>
-    <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="script-tools"></div><div class="local-list" id="list-script-tools"></div></div>
+<section id="section-script-tools" class="section" data-title="Script to Prompt-Script Studio">
+<div class="ls-frame">
+  <div class="ls-bar" style="background:linear-gradient(90deg,#4a148c,#ab47bc)"></div>
+  <div class="ls-h"><h2>Script to Prompt-Script Studio</h2></div>
+  <p class="ls-lead">Import a screenplay or script, analyze its structure locally, generate structured scene prompts, and route production data directly into Scene Workshop, Prompt Writer, Character Studio, Wardrobe, Props, Locations, and the Editing Bay queue.</p>
+
+  <div class="ls-panel">
+    <h3 style="margin:0 0 14px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Project Details</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Project Title</label>
+        <input id="ls-sps-project-title" type="text" placeholder="My Film Project" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Screenplay Title</label>
+        <input id="ls-sps-screenplay-title" type="text" placeholder="The Title" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Type</label>
+        <select id="ls-sps-type" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+          <option value="">Select type</option>
+          <option>Feature Film</option>
+          <option>Short Film</option>
+          <option>Series Episode</option>
+          <option>Documentary</option>
+          <option>Music Video</option>
+          <option>Promo / Ad</option>
+          <option>Animation</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Genre</label>
+        <input id="ls-sps-genre" type="text" placeholder="e.g. Drama, Thriller, Sci-Fi" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Tone</label>
+        <input id="ls-sps-tone" type="text" placeholder="e.g. dark, whimsical, intense" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Target Style</label>
+        <input id="ls-sps-style" type="text" placeholder="e.g. cinematic noir, anime, documentary" style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box">
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Production Notes</label>
+      <textarea id="ls-sps-notes" placeholder="References, special instructions, continuity rules..." style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 14px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:60px;resize:vertical"></textarea>
+    </div>
   </div>
+
+  <div class="ls-panel">
+    <h3 style="margin:0 0 14px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Script Import</h3>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Upload Script File (.txt or .md)</label>
+      <input id="ls-sps-file" type="file" accept=".txt,.md,.text" style="color:#c0b8d9;font:400 13px Inter,system-ui,sans-serif">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px">
+      <label style="font:500 12px Inter,system-ui,sans-serif;color:#b0a8d0">Or Paste Script Here</label>
+      <textarea id="ls-sps-script" placeholder="Paste screenplay text here. Standard screenplay format works best (INT./EXT. scene headers, character names in CAPS, dialogue below character name)." style="background:#0c0518;border:1px solid rgba(171,71,188,.4);border-radius:9px;color:#f5f0ff;font:400 13px Inter,system-ui,sans-serif;padding:10px 12px;width:100%;box-sizing:border-box;min-height:200px;resize:vertical"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button id="ls-sps-analyze-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(171,71,188,.5);background:rgba(171,71,188,.18);color:#ce93d8;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Analyze Script</button>
+      <button id="ls-sps-generate-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(171,71,188,.35);background:transparent;color:#b0a8d0;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Generate Prompts</button>
+      <button id="ls-sps-save-btn" type="button" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(171,71,188,.35);background:transparent;color:#b0a8d0;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer">Save Project Draft</button>
+      <span id="ls-sps-msg" style="display:none;font:400 12px Inter,system-ui,sans-serif;color:#4caf50"></span>
+    </div>
+    <div id="ls-sps-analysis-summary" style="display:none;margin-top:12px;padding:10px 12px;background:#0c0518;border:1px solid rgba(171,71,188,.3);border-radius:8px;font:400 11px monospace;color:#ce93d8;white-space:pre-wrap;line-height:1.6"></div>
+  </div>
+
+  <div class="ls-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="margin:0;font:600 15px Inter,system-ui,sans-serif;color:#fff">Prompt Script Scenes</h3>
+      <span id="ls-sps-count" style="font:400 12px Inter,system-ui,sans-serif;color:#9e97c0">0 scenes</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font:400 12px Inter,system-ui,sans-serif;color:#c0b8d9">
+        <thead><tr style="border-bottom:1px solid rgba(171,71,188,.25)">
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Scene</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Location / Title</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Characters</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Image</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Pipeline</th>
+          <th style="text-align:left;padding:8px 10px;font:600 11px Inter,system-ui,sans-serif;color:#ab47bc">Status</th>
+          <th style="padding:8px 10px"></th>
+        </tr></thead>
+        <tbody id="ls-sps-tbody"><tr><td colspan="7" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ls-panel">
+    <h3 style="margin:0 0 10px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Route to Production Rooms</h3>
+    <p style="font:400 12px Inter,system-ui,sans-serif;color:#9e97c0;margin:0 0 14px">Push generated data into existing LoadStudio rooms. Scenes marked Ready for Editing Bay load into the Editing Bay in script order.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button id="ls-sps-push-scenes-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(66,165,245,.35);background:rgba(66,165,245,.08);color:#90caf9;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Scene Workshop</button>
+      <button id="ls-sps-push-prompts-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,152,0,.35);background:rgba(255,152,0,.08);color:#ffa726;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Prompt Writer</button>
+      <button id="ls-sps-push-chars-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(240,98,146,.35);background:rgba(240,98,146,.08);color:#f48fb1;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Characters</button>
+      <button id="ls-sps-push-locs-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(102,187,106,.35);background:rgba(102,187,106,.08);color:#81c784;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Locations</button>
+      <button id="ls-sps-push-wd-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,183,77,.35);background:rgba(255,183,77,.08);color:#ffb74d;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Wardrobe Notes</button>
+      <button id="ls-sps-push-pr-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(255,138,101,.35);background:rgba(255,138,101,.08);color:#ff8a65;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push Props Notes</button>
+      <button id="ls-sps-push-ll-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(129,199,132,.35);background:rgba(129,199,132,.08);color:#a5d6a7;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Look Lab</button>
+      <button id="ls-sps-push-vs-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(159,168,218,.35);background:rgba(159,168,218,.08);color:#9fa8da;font:500 12.5px Inter,system-ui,sans-serif;cursor:pointer">Push to Voice Studio</button>
+      <button id="ls-sps-push-eb-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(171,71,188,.5);background:rgba(171,71,188,.15);color:#ce93d8;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer">Send Approved to Editing Bay Queue</button>
+      <button id="ls-sps-load-eb-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(66,165,245,.6);background:rgba(66,165,245,.2);color:#42a5f5;font:700 12.5px Inter,system-ui,sans-serif;cursor:pointer">Load to Editing Bay in Script Order</button>
+      <button id="ls-sps-export-pkg-btn" type="button" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(0,230,118,.4);background:rgba(0,230,118,.08);color:#00e676;font:600 12.5px Inter,system-ui,sans-serif;cursor:pointer">Export Pipeline Package</button>
+    </div>
+    <div id="ls-sps-push-status" style="margin-top:10px;font:400 12px Inter,system-ui,sans-serif;color:#9e97c0;min-height:18px"></div>
+  </div>
+
+  <div class="ls-panel">
+    <h3 style="margin:0 0 12px;font:600 15px Inter,system-ui,sans-serif;color:#fff">Editing Bay Queue</h3>
+    <div id="ls-sps-eb-queue-list" style="font:400 12px Inter,system-ui,sans-serif;color:#9e97c0">No scenes in queue yet. Approve scenes above and tap Send Approved to Editing Bay Queue.</div>
+  </div>
+
+  <div class="ls-related">
+    <h4 style="margin:0 0 10px;font:600 12px Inter,system-ui,sans-serif;color:#9e97c0;letter-spacing:.06em;text-transform:uppercase">Quick Links</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button type="button" onclick="go('scene-builder')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Scene Workshop</button>
+      <button type="button" onclick="go('prompt-writer')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Prompt Writer</button>
+      <button type="button" onclick="go('character-studio')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Character Studio</button>
+      <button type="button" onclick="go('locations')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Digital Backlot</button>
+      <button type="button" onclick="go('wardrobe')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Wardrobe</button>
+      <button type="button" onclick="go('props')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Props</button>
+      <button type="button" onclick="go('look-lab')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Look Lab</button>
+      <button type="button" onclick="go('timeline-editor')" style="padding:8px 14px;border-radius:8px;border:1px solid rgba(171,71,188,.3);background:rgba(171,71,188,.08);color:#ce93d8;font:500 12px Inter,system-ui,sans-serif;cursor:pointer">Editing Bay</button>
+    </div>
+  </div>
+</div>
+<script id="ls-sps-v236">(function(){
+  var SCRIPT_KEY='ls_script_data';
+  var EB_KEY='ls_eb_queue';
+  var EB_STORE='ls_editbay_v1';
+  var SCENES_KEY='ls_sw_scenes';
+  var PROMPTS_KEY='ls_scene_prompts';
+  var CHARS_KEY='ls_characters_data';
+  var LOCS_KEY='ls_loc_items';
+  var WD_KEY='ls_wd_items';
+  var PR_KEY='ls_pr_items';
+  var LL_KEY='ls_ll_items';
+  var VS_KEY='ls_vs_profiles';
+
+  function load(){try{return JSON.parse(localStorage.getItem(SCRIPT_KEY)||'null')||null;}catch(_){return null;}}
+  function saveData(d){try{localStorage.setItem(SCRIPT_KEY,JSON.stringify(d));return '';}catch(e){return e.message||String(e);}}
+  function loadArr(k){try{return JSON.parse(localStorage.getItem(k)||'[]');}catch(_){return[];}}
+  function loadObj(k){try{return JSON.parse(localStorage.getItem(k)||'{}');}catch(_){return {};}}
+  function uid(){return 'sp'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var MOOD_WORDS=['tense','dramatic','suspenseful','melancholy','hopeful','joyful','frightening','mysterious','romantic','nostalgic','dark','peaceful','chaotic','quiet','somber','triumphant','intense','whimsical'];
+  var WARDROBE_KW=['wear','dress','costume','outfit','jacket','coat','suit','uniform','hat','gloves','boots','armor','robe','cloak','gown'];
+  var PROP_KW=['holds','carries','picks up','grabs','draws','gun','knife','sword','letter','phone','book','key','bag','briefcase','camera','rope','torch','lantern'];
+  var HEADER_RE=/^(INT\.|EXT\.|INT\/EXT\.|I\/E\.)\s*(.+?)(?:\s*[-—]\s*(.+?))?$/i;
+  var SCENE_NUM_RE=/^(SCENE\s+\d+|SC\d+)\s*[:\-—]?\s*(.*)$/i;
+  var TRANS_RE=/^(FADE\s+(IN|OUT)[:\.]?|CUT\s+TO[:\.]?|DISSOLVE\s+TO[:\.]?|SMASH\s+CUT[:\.]?|MATCH\s+CUT[:\.]?|WIPE\s+TO[:\.]?)$/i;
+  var CAP_RE=/^[A-Z][A-Z\s\(\)\'\.]{2,39}$/;
+
+  function detectMood(text){var t=text.toLowerCase();return MOOD_WORDS.filter(function(w){return t.indexOf(w)>=0;});}
+  function detectWardrobe(text){var t=text.toLowerCase();var h=WARDROBE_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):''; }
+  function detectProps(text){var t=text.toLowerCase();var h=PROP_KW.filter(function(w){return t.indexOf(w)>=0;});return h.length?'Mentions: '+h.join(', '):''; }
+  function extractCamera(text){var m=text.match(/\b(WIDE\s+SHOT|CLOSE[\-\s]?UP|ECU|MCU|POV|ESTABLISHING|AERIAL|CRANE|DOLLY|HANDHELD|TRACKING\s+SHOT|TWO\s+SHOT|OVER\s+THE\s+SHOULDER)\b/gi);return m?m.join(', '):'';}
+
+  function buildScene(idx,intExt,loc,tod){
+    return{id:uid(),sceneId:'SC'+String(idx).padStart(2,'0'),scriptOrder:idx,sceneIndex:idx,
+      title:loc.substring(0,50),intExt:intExt,location:loc,timeOfDay:tod,summary:'',
+      characters:[],dialogue:[],narration:[],action:[],transitions:[],rawLines:[],
+      imagePrompt:'',negativePrompt:'blurry, low quality, watermark, text overlay, distorted',
+      animationPrompt:'',cameraPrompt:'',subtitleText:'',narrationScript:'',voicePrompt:'',
+      musicPrompt:'',ambiencePrompt:'',sfxPrompt:'',continuityNotes:'',
+      cameraNotes:'',moodWords:[],lookNotes:'',wardrobeNotes:'',propNotes:'',
+      dialogueNotes:'',imageProofUrl:'',motionNotes:'',narrationPrompt:'',
+      enhancementPrompt:'',upscalePrompt:'',faceRepairPrompt:'',cinematicPolishPrompt:'',
+      movementType:'',cameraMovement:'',cinematicMotion:'',lipSyncPlanning:'',sceneTiming:'',
+      narrationAudioUrl:'',voiceClipUrl:'',musicUrl:'',ambienceUrl:'',sfxUrl:'',
+      status:'Draft',imageStatus:'draft',enhanceStatus:'draft',animationStatus:'draft',
+      audioStatus:'draft',greenFlagReady:false,createdAt:new Date().toISOString()};
+  }
+
+  function upgradeScene(sc,idx){
+    var defaults=buildScene(sc.sceneIndex||idx||1,sc.intExt||'',sc.location||sc.title||'',sc.timeOfDay||'');
+    var keys=Object.keys(defaults);
+    for(var k=0;k<keys.length;k++){if(!(keys[k] in sc))sc[keys[k]]=defaults[keys[k]];}
+    if(!sc.scriptOrder)sc.scriptOrder=sc.sceneIndex||idx||1;
+    if(!sc.summary&&sc.action&&sc.action.length)sc.summary=sc.action.slice(0,3).join(' ').substring(0,250);
+    if(!sc.subtitleText&&sc.narration&&sc.narration.length)sc.subtitleText=sc.narration.join(' ').substring(0,200);
+    if(!sc.narrationScript)sc.narrationScript=sc.narrationPrompt||'';
+    if(!sc.cameraPrompt)sc.cameraPrompt=sc.cameraNotes||'';
+    return sc;
+  }
+
+  function finishScene(sc,meta){
+    var full=sc.rawLines.join('\n');
+    sc.rawText=full; delete sc.rawLines;
+    sc.moodWords=detectMood(full);
+    sc.cameraNotes=extractCamera(full);
+    sc.cameraPrompt=sc.cameraNotes||(sc.intExt==='EXT'?'wide establishing shot, natural light':'medium shot, interior lighting');
+    sc.wardrobeNotes=detectWardrobe(full);
+    sc.propNotes=detectProps(full);
+    sc.summary=sc.action.slice(0,3).join(' ').substring(0,250)||sc.title||sc.location||'';
+    var parts=[];
+    if(sc.location)parts.push(sc.location);
+    if(sc.moodWords.length)parts.push(sc.moodWords.slice(0,2).join(', ')+' atmosphere');
+    if(sc.characters.length)parts.push(sc.characters.slice(0,3).join(', '));
+    if(meta&&meta.genre)parts.push(meta.genre+' film style');
+    if(meta&&meta.style)parts.push(meta.style);
+    sc.imagePrompt=parts.join(', ');
+    sc.animationPrompt=sc.action.slice(0,2).join('. ').substring(0,200);
+    sc.movementType=sc.intExt==='EXT'?'natural movement':'subtle ambient motion';
+    sc.cameraMovement=(sc.moodWords.indexOf('tense')>=0||sc.moodWords.indexOf('dramatic')>=0)?'slow push in, handheld':'steady, smooth pan';
+    sc.cinematicMotion='parallax depth, subtle environmental motion';
+    sc.lipSyncPlanning=sc.dialogue.length>0?'Dialogue: '+sc.dialogue.slice(0,2).map(function(d){return d.ch;}).join(', '):'No dialogue in this scene';
+    sc.sceneTiming=(sc.dialogue.length>0?4+sc.dialogue.length:3)+' seconds estimated';
+    var mp=[];if(sc.moodWords.length)mp.push(sc.moodWords[0]);if(meta&&meta.genre)mp.push(meta.genre.toLowerCase());mp.push('cinematic score');
+    sc.musicPrompt=mp.join(', ');
+    sc.ambiencePrompt=sc.intExt==='EXT'?'ambient outdoor: wind, nature, distant sounds':'ambient interior: room tone, subtle hum';
+    sc.sfxPrompt=sc.intExt==='EXT'?'ambient outdoor, natural environment':'ambient indoor, room tone';
+    sc.lookNotes=(meta&&meta.tone?meta.tone+', ':'')+(meta&&meta.style?meta.style+', ':'')+'cinematic';
+    sc.narrationScript=sc.narration.join(' ').substring(0,300);
+    sc.narrationPrompt=sc.narrationScript;
+    sc.subtitleText=sc.narration.length?sc.narration.slice(0,2).join(' ').substring(0,200):sc.dialogue.slice(0,2).map(function(d){return d.ch+': '+d.text;}).join(' | ').substring(0,200);
+    sc.voicePrompt=sc.characters.length?'Voice for '+sc.characters[0]+': '+(sc.moodWords[0]||'neutral')+' tone, clear diction':'Narrator voice, '+(sc.moodWords[0]||'neutral')+' tone';
+    sc.dialogueNotes=sc.dialogue.map(function(d){return d.ch+': "'+d.text.substring(0,60)+'"';}).slice(0,3).join('\n');
+    sc.continuityNotes=sc.characters.length?'Characters: '+sc.characters.join(', ')+(sc.location?'. Location: '+sc.location:''):'';
+    sc.enhancementPrompt='Enhance image quality, sharpen details, improve lighting consistency';
+    sc.upscalePrompt='4x upscale, preserve cinematic grain, enhance detail';
+    sc.faceRepairPrompt=sc.characters.length?'Restore facial features for '+sc.characters.slice(0,2).join(', '):'';
+    sc.cinematicPolishPrompt='Cinematic color grade, '+(meta&&meta.tone?meta.tone:'dramatic')+' tone, film-like quality';
+  }
+
+  function computeGreenFlag(sc){
+    var hasImage=!!(sc.imageProofUrl&&sc.imageProofUrl.trim());
+    var imgOk=sc.imageStatus==='approved'||(hasImage&&sc.imageStatus!=='needs-correction');
+    var enhOk=sc.enhanceStatus==='approved'||sc.enhanceStatus==='skipped';
+    var animOk=sc.animationStatus==='approved'||sc.animationStatus==='skipped'||sc.animationStatus==='ready';
+    var audOk=sc.audioStatus!=='missing'&&sc.audioStatus!=='draft';
+    var statusOk=sc.status==='Approved'||sc.status==='Ready for Editing Bay'||sc.status==='Green Flag Ready';
+    var metaOk=!!(sc.imagePrompt||sc.title||sc.location);
+    return hasImage&&imgOk&&enhOk&&animOk&&audOk&&statusOk&&metaOk;
+  }
+
+  var IMG_STATUS={draft:{label:'Draft',color:'#9e97c0'},'needs-correction':{label:'Needs Correction',color:'#ef5350'},approved:{label:'Approved',color:'#66bb6a'},'green-flag':{label:'Green Flag',color:'#00e676'}};
+  var ENH_STATUS={draft:{label:'Draft',color:'#9e97c0'},'prompt-saved':{label:'Prompt Saved',color:'#90caf9'},'awaiting-provider':{label:'Awaiting Provider',color:'#ffa726'},'provider-needed':{label:'Provider Needed',color:'#ff8a65'},approved:{label:'Approved',color:'#66bb6a'},skipped:{label:'Skipped',color:'#78909c'},failed:{label:'Failed',color:'#ef5350'}};
+  var ANIM_STATUS={draft:{label:'Draft',color:'#9e97c0'},'prompt-saved':{label:'Prompt Saved',color:'#90caf9'},rendering:{label:'Rendering',color:'#ffa726'},ready:{label:'Ready',color:'#66bb6a'},failed:{label:'Failed',color:'#ef5350'},'provider-needed':{label:'Provider Needed',color:'#ff8a65'},skipped:{label:'Skipped',color:'#78909c'}};
+  var AUD_STATUS={draft:{label:'Draft',color:'#9e97c0'},'prompt-saved':{label:'Prompt Saved',color:'#90caf9'},'audio-ready':{label:'Audio Ready',color:'#66bb6a'},'voice-ready':{label:'Voice Ready',color:'#66bb6a'},'narration-ready':{label:'Narration Ready',color:'#66bb6a'},'music-ready':{label:'Music Ready',color:'#a5d6a7'},missing:{label:'Missing Audio',color:'#ef5350'},'provider-needed':{label:'Provider Needed',color:'#ff8a65'},skipped:{label:'Skipped',color:'#78909c'}};
+
+  function pill(val,map){var e=map[val]||{label:val||'Draft',color:'#9e97c0'};return '<span style="display:inline-block;padding:1px 6px;border-radius:8px;font:500 10px Inter,system-ui,sans-serif;color:'+e.color+';border:1px solid '+e.color+'22;background:'+e.color+'14">'+esc(e.label)+'</span>';}
+
+  function statusColor(s){return{'Draft':'#bdbdbd','Approved':'#66bb6a','Green Flag Ready':'#00e676','Ready for Editing Bay':'#42a5f5','Needs Revision':'#ef5350','Rejected':'#ff6b6b'}[s]||'#9e97c0';}
+
+  function analyzeScript(raw,meta){
+    var lines=raw.split(/\r?\n/);
+    var scenes=[]; var cur=null; var idx=0;
+    var charCounts={}; var locs=[];
+    function flush(){if(!cur)return; finishScene(cur,meta); scenes.push(cur); cur=null;}
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i].trim(); if(!line)continue;
+      var hm=HEADER_RE.exec(line);
+      if(hm){
+        flush(); idx++;
+        var ie=hm[1].toUpperCase().indexOf('EXT')>=0?'EXT':'INT';
+        var loc=(hm[2]||'').trim(); var tod=(hm[3]||'').trim();
+        cur=buildScene(idx,ie,loc,tod);
+        if(loc&&locs.indexOf(loc)<0)locs.push(loc);
+        continue;
+      }
+      var snm=SCENE_NUM_RE.exec(line);
+      if(snm&&!cur){
+        flush(); idx++;
+        var stitle=(snm[2]||'Scene '+idx).trim();
+        cur=buildScene(idx,'',stitle,'');
+        continue;
+      }
+      if(!cur)continue;
+      cur.rawLines.push(line);
+      if(TRANS_RE.test(line)){cur.transitions.push(line);continue;}
+      if(CAP_RE.test(line)&&line.length<42&&line!=='CUT'&&line!=='FADE'&&line!=='DISSOLVE'&&line!=='SMASH'){
+        var cname=line.replace(/\s*\(.*?\)\s*/g,'').trim();
+        if(cname.length>1){
+          if(cur.characters.indexOf(cname)<0)cur.characters.push(cname);
+          charCounts[cname]=(charCounts[cname]||0)+1;
+          if(i+1<lines.length){var dl=lines[i+1].trim();if(dl&&!CAP_RE.test(dl)&&!HEADER_RE.test(dl)){cur.dialogue.push({ch:cname,text:dl});i++;}}
+        }
+        continue;
+      }
+      if(/^(V\.O\.|NARRATOR|VOICE\s+OVER|VO:)/i.test(line)&&i+1<lines.length){
+        var nl=lines[i+1].trim();if(nl){cur.narration.push(nl);i++;}continue;
+      }
+      if(line.length>10)cur.action.push(line);
+    }
+    flush();
+    var extractedChars=Object.keys(charCounts).sort(function(a,b){return charCounts[b]-charCounts[a];}).slice(0,30);
+    return{project:meta||{},rawScript:raw.substring(0,50000),scenes:scenes,
+      extractedCharacters:extractedChars,extractedLocations:locs,
+      analyzedAt:new Date().toISOString(),sceneCount:scenes.length};
+  }
+
+  function statusColor(s){
+    return{'Draft':'#bdbdbd','Approved':'#66bb6a','Ready for Editing Bay':'#42a5f5',
+      'Needs Revision':'#ef5350','Rejected':'#ff6b6b'}[s]||'#9e97c0';
+  }
+
+  function iField(label,id,value,ph,textarea){
+    if(textarea)return '<div style="display:flex;flex-direction:column;gap:4px"><label style="font:500 11px Inter,system-ui,sans-serif;color:#9e97c0">'+esc(label)+'</label><textarea id="'+id+'" placeholder="'+esc(ph)+'" style="background:#0c0518;border:1px solid rgba(171,71,188,.28);border-radius:7px;color:#f5f0ff;font:400 12px Inter,system-ui,sans-serif;padding:7px 9px;min-height:56px;resize:vertical;box-sizing:border-box;width:100%">'+esc(value)+'</textarea></div>';
+    return '<div style="display:flex;flex-direction:column;gap:4px"><label style="font:500 11px Inter,system-ui,sans-serif;color:#9e97c0">'+esc(label)+'</label><input id="'+id+'" type="text" value="'+esc(value)+'" placeholder="'+esc(ph)+'" style="background:#0c0518;border:1px solid rgba(171,71,188,.28);border-radius:7px;color:#f5f0ff;font:400 12px Inter,system-ui,sans-serif;padding:7px 9px;box-sizing:border-box;width:100%"></div>';
+  }
+  function aBtn(label,inputId,idx,field){return '<label style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;border:1px solid rgba(251,210,74,.25);background:rgba(251,210,74,.05);color:#e0d8c0;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">'+esc(label)+'<input id="'+inputId+'" type="file" accept="audio/*" data-field="'+field+'" data-idx="'+idx+'" style="display:none" onchange="window.lsSPS.attachAudio(this)"></label>';}
+  function gfCheck(label,ok){return '<span style="display:inline-block;margin-right:10px;color:'+(ok?'#66bb6a':'#5a5a78')+'">'+(ok?'[+]':'[ ]')+' '+esc(label)+'</span>';}
+
+  function renderDetailPanel(sc,i){
+    var gf=computeGreenFlag(sc);
+    return '<div style="padding:14px 16px 16px;border-top:1px solid rgba(171,71,188,.15)">'
+      // Image stage
+      +'<div style="margin-bottom:14px">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font:600 11px Inter,system-ui,sans-serif;color:#ce93d8;letter-spacing:.07em;text-transform:uppercase">Image Stage</span>'+pill(sc.imageStatus||'draft',IMG_STATUS)+'</div>'
+        +'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px">'
+          +'<label style="font:500 11px Inter,system-ui,sans-serif;color:#90caf9;white-space:nowrap">Image URL:</label>'
+          +'<input id="ls-sps-imgurl-'+i+'" type="text" value="'+esc(sc.imageProofUrl||'')+'" placeholder="Paste image URL or data:image/..." style="flex:1;min-width:160px;background:#0c0518;border:1px solid rgba(66,165,245,.4);border-radius:7px;color:#f5f0ff;font:400 12px Inter,system-ui,sans-serif;padding:6px 9px;box-sizing:border-box">'
+          +'<button type="button" onclick="window.lsSPS.saveImageUrl('+i+')" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(66,165,245,.5);background:rgba(66,165,245,.12);color:#42a5f5;font:600 11px Inter,system-ui,sans-serif;cursor:pointer">Save</button>'
+          +'<button type="button" onclick="window.lsSPS.openInAID('+i+')" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(179,136,255,.5);background:rgba(179,136,255,.1);color:#b388ff;font:600 11px Inter,system-ui,sans-serif;cursor:pointer">Open in AI Image Director</button>'
+        +'</div>'
+        +'<div style="font:400 10px Inter,system-ui,sans-serif;color:#7a6fa0;margin-bottom:6px">'+(sc.imagePrompt?'Prompt: '+esc(sc.imagePrompt.substring(0,120))+'...':'No image prompt.')+' | Negative: '+(sc.negativePrompt?esc(sc.negativePrompt.substring(0,60)):'—')+'</div>'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap">'
+          +'<button type="button" onclick="window.lsSPS.setImageStatus('+i+',\'approved\')" style="padding:3px 9px;border-radius:6px;border:1px solid rgba(102,187,106,.4);background:rgba(102,187,106,.08);color:#66bb6a;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Mark Image Approved</button>'
+          +'<button type="button" onclick="window.lsSPS.setImageStatus('+i+',\'needs-correction\')" style="padding:3px 9px;border-radius:6px;border:1px solid rgba(239,83,80,.4);background:rgba(239,83,80,.06);color:#ef5350;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Needs Correction</button>'
+        +'</div>'
+      +'</div>'
+      // Enhancement stage
+      +'<div style="margin-bottom:14px;padding-top:12px;border-top:1px solid rgba(171,71,188,.08)">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font:600 11px Inter,system-ui,sans-serif;color:#ff8a65;letter-spacing:.07em;text-transform:uppercase">Enhancement Stage</span>'+pill(sc.enhanceStatus||'draft',ENH_STATUS)+'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">'
+          +iField('Enhancement Prompt','ls-sps-enh-'+i,sc.enhancementPrompt||'','Enhance quality, improve lighting...')
+          +iField('Upscale Prompt','ls-sps-usc-'+i,sc.upscalePrompt||'','4x upscale, cinematic grain...')
+          +iField('Face Repair','ls-sps-face-'+i,sc.faceRepairPrompt||'','Restore facial features...')
+          +iField('Cinematic Polish','ls-sps-cpol-'+i,sc.cinematicPolishPrompt||'','Color grade, film look...')
+        +'</div>'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap">'
+          +'<button type="button" onclick="window.lsSPS.saveEnhancement('+i+')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(255,138,101,.4);background:rgba(255,138,101,.08);color:#ff8a65;font:600 10px Inter,system-ui,sans-serif;cursor:pointer">Save Enhancement Prompts</button>'
+          +'<button type="button" onclick="window.lsSPS.setEnhanceStatus('+i+',\'skipped\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(120,144,156,.35);background:transparent;color:#78909c;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Skip Enhancement</button>'
+          +'<button type="button" onclick="window.lsSPS.setEnhanceStatus('+i+',\'approved\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(102,187,106,.4);background:rgba(102,187,106,.06);color:#66bb6a;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Mark Enhanced</button>'
+        +'</div>'
+        +'<div style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78;margin-top:4px">No provider connected — prompts save locally. Mark Enhanced only after real result.</div>'
+      +'</div>'
+      // Animation stage
+      +'<div style="margin-bottom:14px;padding-top:12px;border-top:1px solid rgba(171,71,188,.08)">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font:600 11px Inter,system-ui,sans-serif;color:#90caf9;letter-spacing:.07em;text-transform:uppercase">Animation Stage</span>'+pill(sc.animationStatus||'draft',ANIM_STATUS)+'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">'
+          +iField('Animation Prompt','ls-sps-anm-'+i,sc.animationPrompt||'','Describe motion, action...')
+          +iField('Movement Type','ls-sps-mvt-'+i,sc.movementType||'','natural movement, subtle motion...')
+          +iField('Camera Movement','ls-sps-cmv-'+i,sc.cameraMovement||'','slow pan, dolly in...')
+          +iField('Cinematic Motion','ls-sps-cmo-'+i,sc.cinematicMotion||'','parallax, depth of field...')
+          +iField('Lip-Sync Planning','ls-sps-lip-'+i,sc.lipSyncPlanning||'','Characters speaking...')
+          +iField('Scene Timing','ls-sps-stm-'+i,sc.sceneTiming||'','4 seconds estimated...')
+        +'</div>'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap">'
+          +'<button type="button" onclick="window.lsSPS.saveAnimation('+i+')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(144,202,249,.4);background:rgba(144,202,249,.06);color:#90caf9;font:600 10px Inter,system-ui,sans-serif;cursor:pointer">Save Animation Prompts</button>'
+          +'<button type="button" onclick="window.lsSPS.setAnimStatus('+i+',\'skipped\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(120,144,156,.35);background:transparent;color:#78909c;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Skip Animation</button>'
+          +'<button type="button" onclick="window.lsSPS.setAnimStatus('+i+',\'ready\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(102,187,106,.4);background:rgba(102,187,106,.06);color:#66bb6a;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Mark Animation Ready</button>'
+        +'</div>'
+        +'<div style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78;margin-top:4px">No provider connected — prompts save locally. Mark Animation Ready only after real animation is returned.</div>'
+      +'</div>'
+      // Audio stage
+      +'<div style="margin-bottom:14px;padding-top:12px;border-top:1px solid rgba(171,71,188,.08)">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font:600 11px Inter,system-ui,sans-serif;color:#fbd24a;letter-spacing:.07em;text-transform:uppercase">Audio Stage</span>'+pill(sc.audioStatus||'draft',AUD_STATUS)+'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">'
+          +iField('Narration Script','ls-sps-nar-'+i,sc.narrationScript||'','Narration text for this scene...',true)
+          +iField('Voice Prompt','ls-sps-vp-'+i,sc.voicePrompt||'','Character voice, tone, diction...')
+          +iField('Music Prompt','ls-sps-mp-'+i,sc.musicPrompt||'','Cinematic score, mood...')
+          +iField('Ambience Prompt','ls-sps-ap-'+i,sc.ambiencePrompt||'','Room tone, outdoor ambience...')
+          +iField('SFX Prompt','ls-sps-sfx-'+i,sc.sfxPrompt||'','Sound effects for this scene...')
+          +iField('Subtitle Draft','ls-sps-sub-'+i,sc.subtitleText||'','Caption or subtitle text...')
+        +'</div>'
+        +'<div style="padding:8px 10px;background:rgba(251,210,74,.04);border:1px solid rgba(251,210,74,.14);border-radius:8px;margin-bottom:7px">'
+          +'<div style="font:600 10px Inter,system-ui,sans-serif;color:#fbd24a;margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase">Attach Audio Files</div>'
+          +'<div style="display:flex;flex-wrap:wrap;gap:5px">'
+            +aBtn('Narration Audio','ls-sps-aud-nar-'+i,i,'narrationAudioUrl')
+            +aBtn('Voice Clip','ls-sps-aud-vc-'+i,i,'voiceClipUrl')
+            +aBtn('Music','ls-sps-aud-mus-'+i,i,'musicUrl')
+            +aBtn('Ambience','ls-sps-aud-amb-'+i,i,'ambienceUrl')
+            +aBtn('SFX','ls-sps-aud-sfx-'+i,i,'sfxUrl')
+          +'</div>'
+        +'</div>'
+        +'<div style="display:flex;gap:5px;flex-wrap:wrap">'
+          +'<button type="button" onclick="window.lsSPS.saveAudio('+i+')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(251,210,74,.4);background:rgba(251,210,74,.06);color:#fbd24a;font:600 10px Inter,system-ui,sans-serif;cursor:pointer">Save Audio Prompts</button>'
+          +'<button type="button" onclick="window.lsSPS.setAudioStatus('+i+',\'narration-ready\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(102,187,106,.4);background:rgba(102,187,106,.06);color:#66bb6a;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Narration Ready</button>'
+          +'<button type="button" onclick="window.lsSPS.setAudioStatus('+i+',\'audio-ready\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(102,187,106,.4);background:rgba(102,187,106,.06);color:#66bb6a;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">All Audio Ready</button>'
+          +'<button type="button" onclick="window.lsSPS.setAudioStatus('+i+',\'skipped\')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(120,144,156,.35);background:transparent;color:#78909c;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Skip Audio</button>'
+        +'</div>'
+      +'</div>'
+      // Green Flag section
+      +'<div style="padding-top:12px;border-top:1px solid rgba(0,230,118,.15)">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">'
+          +'<span style="font:600 11px Inter,system-ui,sans-serif;color:'+(gf?'#00e676':'#5a5a78')+';letter-spacing:.07em;text-transform:uppercase">Green Flag</span>'
+          +(gf?'<span style="display:inline-block;padding:2px 9px;border-radius:9px;font:700 10px Inter,system-ui,sans-serif;color:#00e676;border:1px solid rgba(0,230,118,.4);background:rgba(0,230,118,.08)">READY</span>':'<span style="display:inline-block;padding:2px 9px;border-radius:9px;font:500 10px Inter,system-ui,sans-serif;color:#5a5a78;border:1px solid rgba(90,90,120,.28);background:rgba(90,90,120,.05)">Conditions not met</span>')
+        +'</div>'
+        +'<div style="font:400 11px Inter,system-ui,sans-serif;color:#7a6fa0;margin-bottom:9px;line-height:1.8">'
+          +gfCheck('Image uploaded',!!(sc.imageProofUrl&&sc.imageProofUrl.trim()))
+          +gfCheck('Image approved',sc.imageStatus==='approved')
+          +gfCheck('Enhancement done or skipped',sc.enhanceStatus==='approved'||sc.enhanceStatus==='skipped')
+          +gfCheck('Animation done or skipped',sc.animationStatus==='approved'||sc.animationStatus==='skipped'||sc.animationStatus==='ready')
+          +gfCheck('Audio acceptable',sc.audioStatus!=='missing'&&sc.audioStatus!=='draft')
+          +gfCheck('Scene Approved',sc.status==='Approved'||sc.status==='Green Flag Ready'||sc.status==='Ready for Editing Bay')
+        +'</div>'
+        +(gf?'<button type="button" onclick="window.lsSPS.setGreenFlag('+i+')" style="padding:8px 18px;border-radius:9px;border:1px solid rgba(0,230,118,.5);background:rgba(0,230,118,.1);color:#00e676;font:700 12px Inter,system-ui,sans-serif;cursor:pointer;letter-spacing:.02em">Set Green Flag — Send to Editing Bay</button>':'<div style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78">Complete all stages above before setting Green Flag.</div>')
+      +'</div>'
+    +'</div>';
+  }
+
+  function renderTable(){
+    var d=load(); var tb=document.getElementById('ls-sps-tbody'); var ct=document.getElementById('ls-sps-count');
+    if(!tb)return;
+    var scenes=d&&d.scenes?d.scenes:[];
+    scenes=scenes.map(function(sc,i){return upgradeScene(sc,i+1);});
+    if(ct)ct.textContent=scenes.length+' scene'+(scenes.length===1?'':'s');
+    if(!scenes.length){tb.innerHTML='<tr><td colspan="7" style="padding:20px 10px;text-align:center;color:#5a5a78">No scenes yet. Paste a script and tap Analyze Script.</td></tr>';return;}
+    tb.innerHTML=scenes.map(function(sc,i){
+      var col=statusColor(sc.status);
+      var isGF=sc.greenFlagReady||sc.status==='Green Flag Ready';
+      var imgThumb=sc.imageProofUrl
+        ?'<img src="'+esc(sc.imageProofUrl)+'" style="width:32px;height:22px;object-fit:cover;border-radius:3px;border:1px solid rgba(66,165,245,.4)" onerror="this.style.display=\'none\'">'
+        :'<span style="font:400 10px Inter,system-ui,sans-serif;color:#5a5a78">—</span>';
+      var gfBadge=isGF?'<span style="display:inline-block;padding:1px 5px;border-radius:7px;font:700 9px Inter,system-ui,sans-serif;color:#00e676;border:1px solid rgba(0,230,118,.3);background:rgba(0,230,118,.09);margin-left:3px">GF</span>':'';
+      var pipelinePills='<div style="display:flex;flex-direction:column;gap:2px">'
+        +pill(sc.imageStatus||'draft',IMG_STATUS)
+        +pill(sc.enhanceStatus||'draft',ENH_STATUS)
+        +pill(sc.animationStatus||'draft',ANIM_STATUS)
+        +pill(sc.audioStatus||'draft',AUD_STATUS)
+        +'</div>';
+      return '<tr style="border-bottom:1px solid rgba(171,71,188,.1)">'
+        +'<td style="padding:7px 10px;font:600 12px monospace;color:#ce93d8">'+esc(sc.sceneId)+gfBadge+'</td>'
+        +'<td style="padding:7px 10px"><span style="display:block;font:500 13px Inter,system-ui,sans-serif;color:#f5f0ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px" title="'+esc(sc.title||sc.location||'')+'">'+esc(sc.title||sc.location||'Untitled')+'</span>'
+          +(sc.intExt?'<span style="font:400 10px Inter,system-ui,sans-serif;color:#7a6fa0">'+esc(sc.intExt+(sc.timeOfDay?' - '+sc.timeOfDay:''))+'</span>':'')+'</td>'
+        +'<td style="padding:7px 10px;font:400 11px Inter,system-ui,sans-serif;color:#c0b8d9;max-width:100px"><span style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc((sc.characters||[]).slice(0,3).join(', ')||'—')+'</span></td>'
+        +'<td style="padding:7px 10px">'+imgThumb+'</td>'
+        +'<td style="padding:5px 8px">'+pipelinePills+'</td>'
+        +'<td style="padding:7px 10px"><span style="color:'+col+';font:600 11px Inter,system-ui,sans-serif">'+esc(sc.status||'Draft')+'</span></td>'
+        +'<td style="padding:5px 6px;white-space:nowrap">'
+          +'<button type="button" onclick="window.lsSPS.toggleDetail('+i+')" style="display:block;width:100%;margin-bottom:2px;background:rgba(125,42,232,.1);border:1px solid rgba(171,71,188,.32);color:#ce93d8;border-radius:5px;padding:3px 7px;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Edit</button>'
+          +'<button type="button" onclick="window.lsSPS.approve('+i+')" style="display:block;width:100%;margin-bottom:2px;background:none;border:1px solid rgba(102,187,106,.35);color:#66bb6a;border-radius:5px;padding:2px 7px;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Approve</button>'
+          +'<button type="button" onclick="window.lsSPS.revise('+i+')" style="display:block;width:100%;background:none;border:1px solid rgba(239,83,80,.35);color:#ef5350;border-radius:5px;padding:2px 7px;font:500 10px Inter,system-ui,sans-serif;cursor:pointer">Revise</button>'
+        +'</td>'
+        +'</tr>'
+        +'<tr id="ls-sps-detail-'+i+'" style="display:none;background:rgba(20,8,45,.8)">'
+          +'<td colspan="7" style="padding:0">'+renderDetailPanel(sc,i)+'</td>'
+        +'</tr>';
+    }).join('');
+  }
+
+  function renderEBQueue(){
+    var el=document.getElementById('ls-sps-eb-queue-list'); if(!el)return;
+    var q=loadArr(EB_KEY);
+    if(!q.length){el.innerHTML='<span style="color:#5a5a78">No scenes in queue. Approve scenes and tap Send Approved to Editing Bay Queue.</span>';return;}
+    el.innerHTML=q.map(function(sc,i){
+      var thumb=sc.imageProofUrl
+        ?'<img src="'+esc(sc.imageProofUrl)+'" style="width:44px;height:30px;object-fit:cover;border-radius:4px;border:1px solid rgba(66,165,245,.3);flex-shrink:0" onerror="this.style.display=\'none\'">'
+        :'<div style="width:44px;height:30px;background:rgba(255,255,255,.04);border-radius:4px;border:1px solid rgba(255,255,255,.08);flex-shrink:0"></div>';
+      var gfBadge=sc.greenFlagReady?'<span style="font:700 9px Inter,system-ui,sans-serif;color:#00e676;margin-left:4px">[GF]</span>':'';
+      var statusCol=sc.greenFlagReady?'#00e676':sc.status==='Ready for Editing Bay'?'#42a5f5':'#66bb6a';
+      return '<div style="display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:7px;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.15);margin-bottom:5px">'
+        +'<span style="font:600 10px monospace;color:#78909c;min-width:16px">'+(i+1)+'</span>'
+        +thumb
+        +'<span style="font:600 11px monospace;color:#90caf9;min-width:36px">'+esc(sc.sceneId)+'</span>'
+        +'<span style="flex:1;font:400 12px Inter,system-ui,sans-serif;color:#c0b8d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(sc.title||sc.location||'Scene '+(i+1))+'</span>'
+        +'<span style="font:600 11px Inter,system-ui,sans-serif;color:'+statusCol+'">'+esc(sc.greenFlagReady?'Green Flag':sc.status||'Approved')+gfBadge+'</span>'
+        +'</div>';
+    }).join('');
+  }
+
+  function flash(id,msg,color,dur){var el=document.getElementById(id);if(!el)return;el.textContent=msg;el.style.color=color||'#4caf50';el.style.display='inline';setTimeout(function(){el.style.display='none';},dur||2500);}
+  function setPushStatus(msg,color){var el=document.getElementById('ls-sps-push-status');if(el){el.textContent=msg;el.style.color=color||'#9e97c0';}}
+
+  function getProjMeta(){
+    function v(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';}
+    return{projectTitle:v('ls-sps-project-title'),screenplayTitle:v('ls-sps-screenplay-title'),
+      type:v('ls-sps-type'),genre:v('ls-sps-genre'),tone:v('ls-sps-tone'),
+      style:v('ls-sps-style'),notes:v('ls-sps-notes')};
+  }
+
+  function loadProjectToForm(){
+    var d=load(); if(!d||!d.project)return; var p=d.project;
+    function s(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
+    s('ls-sps-project-title',p.projectTitle);s('ls-sps-screenplay-title',p.screenplayTitle);
+    s('ls-sps-type',p.type);s('ls-sps-genre',p.genre);s('ls-sps-tone',p.tone);
+    s('ls-sps-style',p.style);s('ls-sps-notes',p.notes);
+  }
+
+  function syncEBQueue(d){
+    if(!d||!d.scenes)return;
+    var approved=d.scenes.filter(function(sc){return sc.status==='Approved'||sc.status==='Ready for Editing Bay'||sc.status==='Green Flag Ready'||sc.greenFlagReady;});
+    var queue=approved
+      .sort(function(a,b){return (a.scriptOrder||a.sceneIndex||0)-(b.scriptOrder||b.sceneIndex||0);})
+      .map(function(sc){
+        return{sceneId:sc.sceneId,scriptOrder:sc.scriptOrder||sc.sceneIndex,
+          title:sc.title||sc.location||'',summary:sc.summary||'',
+          imagePrompt:sc.imagePrompt,negativePrompt:sc.negativePrompt,
+          animationPrompt:sc.animationPrompt,cameraPrompt:sc.cameraPrompt,
+          musicPrompt:sc.musicPrompt,sfxPrompt:sc.sfxPrompt,
+          ambiencePrompt:sc.ambiencePrompt,voicePrompt:sc.voicePrompt,
+          narrationScript:sc.narrationScript||sc.narrationPrompt,
+          subtitleText:sc.subtitleText,continuityNotes:sc.continuityNotes,
+          imageStatus:sc.imageStatus||'draft',enhanceStatus:sc.enhanceStatus||'draft',
+          animationStatus:sc.animationStatus||'draft',audioStatus:sc.audioStatus||'draft',
+          greenFlagReady:!!(sc.greenFlagReady),status:sc.status,
+          imageProofUrl:sc.imageProofUrl||'',narrationAudioUrl:sc.narrationAudioUrl||'',
+          voiceClipUrl:sc.voiceClipUrl||'',musicUrl:sc.musicUrl||'',
+          ambienceUrl:sc.ambienceUrl||'',sfxUrl:sc.sfxUrl||'',
+          characters:sc.characters||[],location:sc.location,
+          approvedAt:sc.approvedAt||sc.createdAt,
+          scriptTitle:(d.project&&d.project.screenplayTitle)||''};
+      });
+    try{localStorage.setItem(EB_KEY,JSON.stringify(queue));}catch(_){}
+  }
+
+  function loadToEditingBay(){
+    var d=load();
+    if(!d||!d.scenes){setPushStatus('No scenes. Analyze a script first.','#ffa726');return;}
+    var ready=d.scenes
+      .filter(function(sc){return sc.status==='Ready for Editing Bay'||sc.status==='Approved'||sc.status==='Green Flag Ready'||sc.greenFlagReady;})
+      .sort(function(a,b){return (a.scriptOrder||a.sceneIndex||0)-(b.scriptOrder||b.sceneIndex||0);});
+    if(!ready.length){setPushStatus('No approved or ready scenes to load.','#ffa726');return;}
+    var ts=Date.now();
+    var ebScenes=ready.map(function(sc,i){
+      var hasImg=!!(sc.imageProofUrl);
+      return{
+        id:'lseb_sps_'+ts+'_'+i,
+        title:sc.sceneId+(sc.title?' - '+sc.title:''),
+        scriptOrder:sc.scriptOrder||sc.sceneIndex||(i+1),
+        narration:sc.narrationScript||sc.narrationPrompt||'',
+        captions:sc.subtitleText||'',
+        musicMood:sc.musicPrompt||'',sfx:sc.sfxPrompt||'',
+        ambience:sc.ambiencePrompt||'',voicePrompt:sc.voicePrompt||'',
+        transition:'cut',duration:5,
+        media:{image:hasImg?sc.imageProofUrl:null,video:null,
+          narration:sc.narrationAudioUrl||null,music:sc.musicUrl||null,
+          sfxAudio:sc.sfxUrl||null,ambience:sc.ambienceUrl||null},
+        clips:hasImg?[{id:'clip_sps_'+i,type:'image',src:sc.imageProofUrl,dur:5}]:[],
+        tracks:{music:[],text:[],sticker:[],overlay:[],sfx:[],voice:[],transition:[]},
+        fx:{filter:'none',mirror:false,flip:false,rotate:0,opacity:100},
+        continuityNotes:sc.continuityNotes||'',characters:sc.characters||[],location:sc.location||'',
+        imageStatus:sc.imageStatus||'draft',enhanceStatus:sc.enhanceStatus||'draft',
+        animationStatus:sc.animationStatus||'draft',audioStatus:sc.audioStatus||'draft',
+        greenFlagReady:!!(sc.greenFlagReady),
+        status:hasImg?'has-image':'empty',
+        createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()
+      };
+    });
+    var existing;
+    try{existing=JSON.parse(localStorage.getItem(EB_STORE)||'null');}catch(_){existing=null;}
+    var existScenes=(existing&&Array.isArray(existing.scenes))?existing.scenes:[];
+    var merged=existScenes.concat(ebScenes);
+    try{
+      localStorage.setItem(EB_STORE,JSON.stringify({scenes:merged,selectedIdx:existScenes.length}));
+      setPushStatus('Loaded '+ebScenes.length+' scenes into Editing Bay in script order.','#42a5f5');
+      setTimeout(function(){if(typeof go==='function')go('timeline-editor');},400);
+    }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+  }
+
+  function exportPipelinePackage(){
+    var d=load()||{};
+    var q=loadArr(EB_KEY);
+    var pkg={
+      exportVersion:'v236',exportedAt:new Date().toISOString(),
+      project:d.project||{},sceneCount:(d.scenes||[]).length,
+      scenes:(d.scenes||[]).map(function(sc,i){return upgradeScene(sc,i+1);}),
+      'editing-bay-queue':q,
+      'prompt-log':loadObj(PROMPTS_KEY),
+      'continuity-notes':(d.scenes||[]).map(function(sc){return{sceneId:sc.sceneId,notes:sc.continuityNotes||'',characters:sc.characters||[]};}),
+      exportedKeys:[SCRIPT_KEY,EB_KEY,SCENES_KEY,PROMPTS_KEY]
+    };
+    var blob=new Blob([JSON.stringify(pkg,null,2)],{type:'application/json'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.download=(d.project&&d.project.projectTitle?d.project.projectTitle.replace(/[^a-z0-9]/gi,'_'):'loadstudio_pipeline')+'_v236.json';
+    document.body.appendChild(a);a.click();
+    setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},100);
+    setPushStatus('Pipeline package exported.','#4caf50');
+  }
+
+  function gv(id){var el=document.getElementById(id);return el?(el.value||'').trim():null;}
+
+  window.lsSPS={
+    approve:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i]=upgradeScene(d.scenes[i],i+1);
+      d.scenes[i].status='Approved';d.scenes[i].approvedAt=new Date().toISOString();
+      if(computeGreenFlag(d.scenes[i])){d.scenes[i].greenFlagReady=true;d.scenes[i].status='Green Flag Ready';}
+      syncEBQueue(d);saveData(d);renderTable();renderEBQueue();
+    },
+    revise:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].status='Needs Revision';d.scenes[i].greenFlagReady=false;saveData(d);renderTable();
+    },
+    toggleDetail:function(i){
+      var row=document.getElementById('ls-sps-detail-'+i);
+      if(row)row.style.display=row.style.display==='none'?'':'none';
+    },
+    saveImageUrl:function(i){
+      var inp=document.getElementById('ls-sps-imgurl-'+i);
+      if(!inp)return;
+      var url=(inp.value||'').trim();
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].imageProofUrl=url;
+      if(url&&d.scenes[i].imageStatus==='draft')d.scenes[i].imageStatus='approved';
+      saveData(d);renderTable();renderEBQueue();
+      setPushStatus('Image URL saved for scene '+(i+1)+'.','#4caf50');
+    },
+    setImageStatus:function(i,status){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].imageStatus=status;
+      if(computeGreenFlag(d.scenes[i])){d.scenes[i].greenFlagReady=true;d.scenes[i].status='Green Flag Ready';syncEBQueue(d);}
+      saveData(d);renderTable();
+    },
+    openInAID:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      try{localStorage.setItem('ls_aid_prefill',JSON.stringify({
+        imagePrompt:sc.imagePrompt||'',negativePrompt:sc.negativePrompt||'',
+        cameraPrompt:sc.cameraPrompt||'',continuityNotes:sc.continuityNotes||'',
+        characters:sc.characters||[],location:sc.location||'',
+        wardrobeNotes:sc.wardrobeNotes||'',sceneId:sc.sceneId,sourceScene:i
+      }));}catch(_){}
+      if(typeof go==='function')go('director-ai');
+      setPushStatus('Opened AI Image Director with scene '+sc.sceneId+' data.','#b388ff');
+    },
+    saveEnhancement:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      var ep=gv('ls-sps-enh-'+i);if(ep!==null)sc.enhancementPrompt=ep;
+      var up=gv('ls-sps-usc-'+i);if(up!==null)sc.upscalePrompt=up;
+      var fp=gv('ls-sps-face-'+i);if(fp!==null)sc.faceRepairPrompt=fp;
+      var cp=gv('ls-sps-cpol-'+i);if(cp!==null)sc.cinematicPolishPrompt=cp;
+      if(sc.enhanceStatus==='draft')sc.enhanceStatus='prompt-saved';
+      saveData(d);renderTable();
+      setPushStatus('Enhancement prompts saved for scene '+sc.sceneId+'.','#ff8a65');
+    },
+    setEnhanceStatus:function(i,status){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].enhanceStatus=status;
+      if(computeGreenFlag(d.scenes[i])){d.scenes[i].greenFlagReady=true;d.scenes[i].status='Green Flag Ready';syncEBQueue(d);}
+      saveData(d);renderTable();
+    },
+    saveAnimation:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      var ap=gv('ls-sps-anm-'+i);if(ap!==null)sc.animationPrompt=ap;
+      var mv=gv('ls-sps-mvt-'+i);if(mv!==null)sc.movementType=mv;
+      var cm=gv('ls-sps-cmv-'+i);if(cm!==null)sc.cameraMovement=cm;
+      var cmo=gv('ls-sps-cmo-'+i);if(cmo!==null)sc.cinematicMotion=cmo;
+      var ls=gv('ls-sps-lip-'+i);if(ls!==null)sc.lipSyncPlanning=ls;
+      var st=gv('ls-sps-stm-'+i);if(st!==null)sc.sceneTiming=st;
+      if(sc.animationStatus==='draft')sc.animationStatus='prompt-saved';
+      saveData(d);renderTable();
+      setPushStatus('Animation prompts saved for scene '+sc.sceneId+'.','#90caf9');
+    },
+    setAnimStatus:function(i,status){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].animationStatus=status;
+      if(computeGreenFlag(d.scenes[i])){d.scenes[i].greenFlagReady=true;d.scenes[i].status='Green Flag Ready';syncEBQueue(d);}
+      saveData(d);renderTable();
+    },
+    saveAudio:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      var nr=gv('ls-sps-nar-'+i);if(nr!==null){sc.narrationScript=nr;sc.narrationPrompt=nr;}
+      var vp=gv('ls-sps-vp-'+i);if(vp!==null)sc.voicePrompt=vp;
+      var mp=gv('ls-sps-mp-'+i);if(mp!==null)sc.musicPrompt=mp;
+      var ap=gv('ls-sps-ap-'+i);if(ap!==null)sc.ambiencePrompt=ap;
+      var sp=gv('ls-sps-sfx-'+i);if(sp!==null)sc.sfxPrompt=sp;
+      var sb=gv('ls-sps-sub-'+i);if(sb!==null)sc.subtitleText=sb;
+      if(sc.audioStatus==='draft')sc.audioStatus='prompt-saved';
+      saveData(d);renderTable();
+      setPushStatus('Audio prompts saved for scene '+sc.sceneId+'.','#fbd24a');
+    },
+    setAudioStatus:function(i,status){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      d.scenes[i].audioStatus=status;
+      if(computeGreenFlag(d.scenes[i])){d.scenes[i].greenFlagReady=true;d.scenes[i].status='Green Flag Ready';syncEBQueue(d);}
+      saveData(d);renderTable();
+    },
+    attachAudio:function(input){
+      var file=input.files&&input.files[0];if(!file)return;
+      var idx=parseInt(input.dataset.idx||'0',10);
+      var field=input.dataset.field||'narrationAudioUrl';
+      var reader=new FileReader();
+      reader.onload=function(ev){
+        var d=load();if(!d||!d.scenes||!d.scenes[idx])return;
+        d.scenes[idx][field]=ev.target.result;
+        if(d.scenes[idx].audioStatus==='draft')d.scenes[idx].audioStatus='prompt-saved';
+        saveData(d);renderTable();
+        setPushStatus('Audio attached to scene '+(idx+1)+'.','#fbd24a');
+      };
+      reader.readAsDataURL(file);
+    },
+    setGreenFlag:function(i){
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      sc.greenFlagReady=true;sc.status='Green Flag Ready';sc.greenFlagAt=new Date().toISOString();
+      syncEBQueue(d);saveData(d);renderTable();renderEBQueue();
+      setPushStatus('Scene '+sc.sceneId+' is Green Flag Ready — added to Editing Bay queue.','#00e676');
+    },
+    markReady:function(i){
+      var inp=document.getElementById('ls-sps-imgurl-'+i);
+      var d=load();if(!d||!d.scenes||!d.scenes[i])return;
+      var sc=d.scenes[i];
+      if(inp&&inp.value.trim())sc.imageProofUrl=inp.value.trim();
+      if(sc.status!=='Approved'&&sc.status!=='Ready for Editing Bay'&&sc.status!=='Green Flag Ready'){
+        setPushStatus('Scene must be Approved before marking Ready.','#ffa726');return;
+      }
+      sc.status='Ready for Editing Bay';
+      syncEBQueue(d);saveData(d);renderTable();renderEBQueue();
+      setPushStatus('Scene '+(i+1)+' marked Ready for Editing Bay.','#42a5f5');
+    }
+  };
+
+  function btn(id,fn){
+    var el=document.getElementById(id);
+    if(el&&!el._v235){el._v235=true;
+      el.addEventListener('click',fn);
+      el.addEventListener('touchend',function(e){e.preventDefault();fn.call(this,e);});
+    }
+  }
+
+  function wire(){
+    btn('ls-sps-analyze-btn',function(){
+      var raw=(document.getElementById('ls-sps-script')||{}).value||'';
+      if(!raw.trim()){flash('ls-sps-msg','Paste or upload a script first.','#ff6b6b');return;}
+      var meta=getProjMeta();
+      var result=analyzeScript(raw,meta);
+      var err=saveData(result);
+      var sum=document.getElementById('ls-sps-analysis-summary');
+      if(sum){
+        sum.style.display='';
+        sum.textContent='ANALYSIS COMPLETE\n'
+          +'  Scenes detected: '+result.scenes.length+'\n'
+          +'  Characters found: '+(result.extractedCharacters.slice(0,10).join(', ')||'none detected')+'\n'
+          +'  Locations found: '+(result.extractedLocations.slice(0,8).join(', ')||'none detected')+'\n'
+          +(err?'  Save error: '+err:'  Saved to: '+SCRIPT_KEY);
+      }
+      renderTable();
+      flash('ls-sps-msg',err?'Error: '+err:'Analyzed: '+result.scenes.length+' scenes.',err?'#ff6b6b':'#4caf50');
+    });
+
+    var fi=document.getElementById('ls-sps-file');
+    if(fi&&!fi._v235){fi._v235=true;
+      fi.addEventListener('change',function(){
+        var file=this.files&&this.files[0];if(!file)return;
+        var reader=new FileReader();
+        reader.onload=function(ev){
+          var ta=document.getElementById('ls-sps-script');if(ta)ta.value=ev.target.result||'';
+          flash('ls-sps-msg','File loaded: '+file.name,'#4caf50');
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    btn('ls-sps-generate-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){flash('ls-sps-msg','Analyze script first.','#ffa726');return;}
+      flash('ls-sps-msg','Prompt script ready: '+d.scenes.length+' scenes with generated prompts.','#4caf50');
+    });
+
+    btn('ls-sps-save-btn',function(){
+      var d=load()||{};
+      d.project=getProjMeta();d.savedAt=new Date().toISOString();
+      var err=saveData(d);
+      flash('ls-sps-msg',err?'Error: '+err:'Project draft saved.',err?'#ff6b6b':'#4caf50');
+    });
+
+    btn('ls-sps-push-scenes-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze script first.','#ffa726');return;}
+      try{
+        var existing=loadArr(SCENES_KEY);
+        var existIds=existing.map(function(s){return s.sceneId;});
+        var added=0;
+        d.scenes.forEach(function(sc){
+          if(existIds.indexOf(sc.sceneId)>=0)return;
+          existing.push({sceneId:sc.sceneId,title:sc.title||sc.location||'',chapter:'Script Auto-Import',
+            summary:(sc.action||[]).slice(0,2).join(' ').substring(0,200),mood:(sc.moodWords||[]).slice(0,2).join(', '),
+            location:sc.location||'',characters:(sc.characters||[]).join(', '),
+            wardrobeNotes:sc.wardrobeNotes||'',propsNotes:sc.propNotes||'',
+            voiceNotes:sc.narrationPrompt||'',musicPrompt:sc.musicPrompt||'',
+            sfxPrompt:sc.sfxPrompt||'',imagePrompt:sc.imagePrompt||'',
+            videoPrompt:sc.animationPrompt||'',negativePrompt:sc.negativePrompt||'',
+            transitionIn:(sc.transitions&&sc.transitions[0])||'',transitionOut:'',
+            status:sc.status==='Approved'||sc.status==='Ready for Editing Bay'?'Approved':'Draft',
+            notes:sc.continuityNotes||'',savedAt:new Date().toISOString()});
+          added++;
+        });
+        localStorage.setItem(SCENES_KEY,JSON.stringify(existing));
+        setPushStatus('Scene Workshop: '+added+' scenes added ('+existing.length+' total).');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-prompts-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadObj(PROMPTS_KEY);
+        d.scenes.forEach(function(sc){
+          existing[sc.sceneId]={sceneId:sc.sceneId,title:sc.title||sc.location||'',
+            imagePrompt:sc.imagePrompt,negativePrompt:sc.negativePrompt,
+            animationPrompt:sc.animationPrompt,musicPrompt:sc.musicPrompt,
+            sfxPrompt:sc.sfxPrompt,narrationPrompt:sc.narrationPrompt,
+            dialogueNotes:sc.dialogueNotes,lookNotes:sc.lookNotes,
+            cameraNotes:sc.cameraNotes,continuityNotes:sc.continuityNotes,
+            status:sc.status,updatedAt:new Date().toISOString()};
+        });
+        localStorage.setItem(PROMPTS_KEY,JSON.stringify(existing));
+        setPushStatus('Prompt Writer: '+d.scenes.length+' scene prompts synced.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-chars-btn',function(){
+      var d=load();
+      if(!d||!d.extractedCharacters||!d.extractedCharacters.length){setPushStatus('No characters found. Analyze script first.','#ffa726');return;}
+      try{
+        var existing=loadArr(CHARS_KEY);
+        var existNames=existing.map(function(c){return(c.name||'').toLowerCase();});
+        var added=0;
+        d.extractedCharacters.forEach(function(name){
+          if(existNames.indexOf(name.toLowerCase())>=0)return;
+          existing.push({id:'ch'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:name,role:'Script Character',source:'Script Auto-Extract',
+            addedAt:new Date().toISOString()});
+          existNames.push(name.toLowerCase());added++;
+        });
+        localStorage.setItem(CHARS_KEY,JSON.stringify(existing));
+        setPushStatus('Character Studio: '+added+' characters added ('+existing.length+' total).');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-locs-btn',function(){
+      var d=load();
+      if(!d||!d.extractedLocations||!d.extractedLocations.length){setPushStatus('No locations found. Analyze script first.','#ffa726');return;}
+      try{
+        var existing=loadArr(LOCS_KEY);
+        var existNames=existing.map(function(l){return(l.name||'').toLowerCase();});
+        var added=0;
+        d.extractedLocations.forEach(function(loc){
+          if(existNames.indexOf(loc.toLowerCase())>=0)return;
+          existing.push({id:'loc'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:loc,type:'Script Location',source:'Script Auto-Extract',
+            addedAt:new Date().toISOString()});
+          existNames.push(loc.toLowerCase());added++;
+        });
+        localStorage.setItem(LOCS_KEY,JSON.stringify(existing));
+        setPushStatus('Digital Backlot: '+added+' locations added ('+existing.length+' total).');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-wd-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(WD_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.wardrobeNotes)return;
+          existing.push({id:'wd'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:'Scene '+sc.sceneId+' Wardrobe Note',character:(sc.characters||[]).join(', '),
+            category:'Script Note',era:'',scenes:sc.sceneId,notes:sc.wardrobeNotes,
+            source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+        });
+        localStorage.setItem(WD_KEY,JSON.stringify(existing));
+        setPushStatus('Wardrobe: '+added+' notes added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-pr-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(PR_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.propNotes)return;
+          existing.push({id:'pr'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:'Scene '+sc.sceneId+' Prop Note',scenes:sc.sceneId,
+            notes:sc.propNotes,source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+        });
+        localStorage.setItem(PR_KEY,JSON.stringify(existing));
+        setPushStatus('Props: '+added+' notes added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-ll-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(LL_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.lookNotes)return;
+          existing.push({id:'ll'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+            name:'Scene '+sc.sceneId+' Look',sceneId:sc.sceneId,
+            lookNotes:sc.lookNotes,imagePrompt:sc.imagePrompt||'',
+            moodWords:(sc.moodWords||[]).join(', '),
+            source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+        });
+        localStorage.setItem(LL_KEY,JSON.stringify(existing));
+        setPushStatus('Look Lab: '+added+' look entries added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-vs-btn',function(){
+      var d=load();
+      if(!d||!d.scenes||!d.scenes.length){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      try{
+        var existing=loadArr(VS_KEY);var added=0;
+        d.scenes.forEach(function(sc){
+          if(!sc.narrationPrompt&&!(sc.characters&&sc.characters.length))return;
+          (sc.characters||[]).slice(0,3).forEach(function(name){
+            var exists=existing.some(function(p){return p.name===name&&p.sceneId===sc.sceneId;});
+            if(exists)return;
+            existing.push({id:'vs'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),
+              name:name,sceneId:sc.sceneId,
+              narrationPrompt:sc.narrationPrompt||'',dialogueNotes:sc.dialogueNotes||'',
+              source:'Script Auto-Extract',addedAt:new Date().toISOString()});added++;
+          });
+        });
+        localStorage.setItem(VS_KEY,JSON.stringify(existing));
+        setPushStatus('Voice Studio: '+added+' voice profiles added.');
+      }catch(e){setPushStatus('Error: '+e.message,'#ff6b6b');}
+    });
+
+    btn('ls-sps-push-eb-btn',function(){
+      var d=load();
+      if(!d||!d.scenes){setPushStatus('No scenes. Analyze first.','#ffa726');return;}
+      syncEBQueue(d);
+      var approved=d.scenes.filter(function(sc){return sc.status==='Approved'||sc.status==='Ready for Editing Bay';});
+      setPushStatus('Editing Bay queue: '+approved.length+' approved scenes queued.');
+      renderEBQueue();
+    });
+
+    btn('ls-sps-load-eb-btn',function(){loadToEditingBay();});
+    btn('ls-sps-export-pkg-btn',function(){exportPipelinePackage();});
+
+    renderTable();
+    renderEBQueue();
+  }
+
+  var _sec=document.getElementById('section-script-tools');
+  if(_sec){
+    var _obs=new MutationObserver(function(){if(_sec.classList.contains('active')){loadProjectToForm();wire();}});
+    _obs.observe(_sec,{attributes:true,attributeFilter:['class']});
+    wire();
+  }
+})();</script>
 </section>
 <section id="section-book-cinema" class="section" data-title="Book PDF Manuscript to Cinema">
   <div class="section-head"><div><h2>Book PDF Manuscript to Cinema</h2><p>Convert books and manuscripts into scene-by-scene cinema structure.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="book-cinema">Audit Section</button></div>
@@ -1544,6 +2482,42 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     <div class="panel"><h3>Working controls</h3><div class="section-controls" data-controls="image-prompt"></div><div class="local-list" id="list-image-prompt"></div></div>
   </div>
 </section>
+<script id="ls-ips-v238">(function(){
+  var sec=document.getElementById('section-image-prompt');
+  if(!sec)return;
+  var PREFILL_KEY='ls_aid_prefill';
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function readPrefill(){
+    var pf;
+    try{pf=JSON.parse(localStorage.getItem(PREFILL_KEY)||'null');}catch(_){pf=null;}
+    if(!pf)return;
+    try{localStorage.removeItem(PREFILL_KEY);}catch(_){}
+    var list=document.getElementById('list-image-prompt');
+    if(!list)return;
+    var card=document.createElement('div');
+    card.style.cssText='background:rgba(156,156,255,.08);border:1px solid rgba(156,156,255,.25);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:0.82rem';
+    card.innerHTML='<div style="color:#9c9cff;font-weight:600;margin-bottom:8px">Scene '+esc(pf.sceneId||'')+' — prompt loaded from script</div>'
+      +'<div style="margin-bottom:6px;color:#ccc"><b>Image prompt:</b> '+esc(pf.imagePrompt||'')+'</div>'
+      +(pf.negativePrompt?'<div style="margin-bottom:6px;color:#aaa"><b>Negative:</b> '+esc(pf.negativePrompt)+'</div>':'')
+      +(pf.continuityNotes||pf.characters?'<div style="margin-bottom:6px;color:#aaa"><b>Characters:</b> '+esc(pf.continuityNotes||(pf.characters&&pf.characters.join(', '))||'')+'</div>':'')
+      +'<div style="display:flex;gap:8px;margin-top:10px">'
+      +'<button class="mini" id="ls-ips-copy-prompt">Copy Prompt</button>'
+      +'<button class="mini secondary" id="ls-ips-dismiss">Dismiss</button>'
+      +'</div>';
+    list.insertBefore(card,list.firstChild);
+    var copyBtn=card.querySelector('#ls-ips-copy-prompt');
+    if(copyBtn)copyBtn.addEventListener('click',function(){
+      if(navigator.clipboard&&pf.imagePrompt){navigator.clipboard.writeText(pf.imagePrompt).catch(function(){});}
+      copyBtn.textContent='Copied';
+      setTimeout(function(){copyBtn.textContent='Copy Prompt';},2000);
+    });
+    var dismissBtn=card.querySelector('#ls-ips-dismiss');
+    if(dismissBtn)dismissBtn.addEventListener('click',function(){card.remove();});
+  }
+  var obs=new MutationObserver(function(){if(sec.classList.contains('active'))readPrefill();});
+  obs.observe(sec,{attributes:true,attributeFilter:['class']});
+  if(sec.classList.contains('active'))readPrefill();
+}());</script>
 <section id="section-image-editing" class="section" data-title="AI Edit">
   <div class="section-head"><div><h2>AI Edit</h2><p>Image manipulation and enhancement tools routed to capable providers.</p></div><button class="btn secondary" data-action="audit-section" data-section-id="image-editing">Audit Section</button></div>
   <div class="panel-grid">
@@ -3596,7 +4570,9 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       {key:'ls_rights',label:'Rights Profile'},
       {key:'ls_rc_assets',label:'Rights Asset Declarations'},
       {key:'ls_asset_registry',label:'Asset Registry'},
-      {key:'ls_continuity_log',label:'Continuity Log'}
+      {key:'ls_continuity_log',label:'Continuity Log'},
+      {key:'ls_script_data',label:'Script to Prompt Data'},
+      {key:'ls_eb_queue',label:'Editing Bay Queue'}
     ];
     function hasData(val){
       if(val===null||val===undefined)return false;
@@ -4037,10 +5013,14 @@ body.ls-contrast-safe{filter:contrast(1.15)}
         <label>Provider Status<select id="ls-aid-prov"><option>Untested</option><option>Local Ready</option><option>Provider Needed</option><option>Integration Required</option><option>Manual Review</option><option>Failed</option></select></label>
         <label>Generated Asset Proof (path or URL)<input id="ls-aid-proof" type="text" placeholder="Path or URL to approved output"></label>
       </div>
-      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <div class="actions" style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <button id="ls-aid-save" class="btn primary" type="button">Save Entry</button>
         <button id="ls-aid-export" class="btn secondary" type="button">Export JSON</button>
+        <select id="ls-aid-gen-provider" style="background:#0c0518;border:1px solid rgba(156,156,255,.4);border-radius:8px;color:#c0b8d9;font:400 12px Inter,system-ui,sans-serif;padding:6px 10px;cursor:pointer"><option value="pollinations-image">Pollinations (free, no key)</option><option value="aihorde">AI Horde (free, no key)</option><option value="huggingface">HuggingFace (requires key)</option><option value="a1111">Local A1111</option></select>
+        <button id="ls-aid-gen-btn" type="button" style="padding:8px 16px;border-radius:9px;border:1px solid rgba(156,156,255,.5);background:rgba(156,156,255,.14);color:#9c9cff;font:700 13px Inter,system-ui,sans-serif;cursor:pointer">Generate Image</button>
       </div>
+      <div id="ls-aid-gen-status" style="font:400 12px Inter,system-ui,sans-serif;min-height:18px;padding-top:8px;color:#9e97c0"></div>
+      <div id="ls-aid-gen-preview" style="margin-top:10px;display:none"><img id="ls-aid-gen-img" src="" alt="Generated image" style="max-width:100%;max-height:360px;border-radius:10px;border:1px solid rgba(156,156,255,.3);display:block"><div id="ls-aid-gen-proof-row" style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap"><span id="ls-aid-gen-result-label" style="font:400 11px Inter,system-ui,sans-serif;color:#c0b8d9;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span><button id="ls-aid-gen-approve-btn" type="button" style="padding:5px 12px;border-radius:7px;border:1px solid rgba(102,187,106,.5);background:rgba(102,187,106,.1);color:#66bb6a;font:600 11px Inter,system-ui,sans-serif;cursor:pointer">Approve Image</button></div></div>
       <div id="ls-aid-msg" style="font-size:0.8rem;min-height:16px;padding-top:6px"></div>
     </div>
     <div class="ls-panel">
@@ -4059,53 +5039,233 @@ body.ls-contrast-safe{filter:contrast(1.15)}
     </div>
   </div>
 </section>
-<script id="ls-aid-v225">(function(){
-  var KEY="ls_aid_entries";
-  var sec=document.getElementById("section-director-ai");
+<script id="ls-aid-v238">(function(){
+  var KEY='ls_aid_entries';
+  var SCRIPT_KEY='ls_script_data';
+  var PREFILL_KEY='ls_aid_prefill';
+  var sec=document.getElementById('section-director-ai');
   if(!sec)return;
-  function get(){try{return JSON.parse(localStorage.getItem(KEY)||"[]");}catch(_){return [];}}
-  function msg(t,c){var e=document.getElementById("ls-aid-msg");if(e){e.textContent=t;e.style.color=c||"#5ee0a5";}}
+  var _genUrl=null;
+  function get(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){return [];}}
+  function sdata(){try{return JSON.parse(localStorage.getItem(SCRIPT_KEY)||'null')||null;}catch(_){return null;}}
+  function genStatus(t,c){var e=document.getElementById('ls-aid-gen-status');if(e){e.textContent=t;e.style.color=c||'#9e97c0';}}
+  function msg(t,c){var e=document.getElementById('ls-aid-msg');if(e){e.textContent=t;e.style.color=c||'#5ee0a5';}}
   function ss(s){var m={'Local Ready':'color:#5ee0a5;background:rgba(94,224,165,.12);border:1px solid rgba(94,224,165,.3)','Provider Needed':'color:#ffa726;background:rgba(255,167,38,.12);border:1px solid rgba(255,167,38,.3)','Integration Required':'color:#9c9cff;background:rgba(156,156,255,.12);border:1px solid rgba(156,156,255,.3)','Manual Review':'color:#ff6e9c;background:rgba(255,110,156,.12);border:1px solid rgba(255,110,156,.3)','Untested':'color:#888;background:rgba(136,136,136,.12);border:1px solid rgba(136,136,136,.3)','Failed':'color:#ef5350;background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.3)'};return 'padding:2px 8px;border-radius:4px;font-size:0.75rem;white-space:nowrap;'+(m[s]||m['Untested']);}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function renderTbl(){
-    var w=document.getElementById("ls-aid-tbl");if(!w)return;
+    var w=document.getElementById('ls-aid-tbl');if(!w)return;
     var es=get();
     if(!es.length){w.innerHTML='<p style="font-size:0.82rem;color:#888">No entries saved yet.</p>';return;}
     var rows=es.map(function(e,i){
       return '<tr style="border-bottom:1px solid #1e1e2e">'
-        +'<td style="padding:5px 8px;white-space:nowrap">'+e.sceneId+'</td>'
-        +'<td style="padding:5px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+e.imagePrompt+'">'+e.imagePrompt+'</td>'
-        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+e.status+'</span></td>'
-        +'<td style="padding:5px 8px"><span style="'+ss(e.providerStatus)+'">'+e.providerStatus+'</span></td>'
-        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+e.savedAt.slice(0,10)+'</td>'
+        +'<td style="padding:5px 8px;white-space:nowrap">'+esc(e.sceneId)+'</td>'
+        +'<td style="padding:5px 8px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(e.imagePrompt||'')+'">'+esc(e.imagePrompt||'')+'</td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.status)+'">'+esc(e.status)+'</span></td>'
+        +'<td style="padding:5px 8px"><span style="'+ss(e.providerStatus)+'">'+esc(e.providerStatus)+'</span></td>'
+        +(e.assetProof?'<td style="padding:5px 8px"><img src="'+esc(e.assetProof)+'" style="width:44px;height:30px;object-fit:cover;border-radius:4px" onerror="this.style.display=\'none\'"></td>':'<td></td>')
+        +'<td style="padding:5px 8px;color:#888;font-size:0.75rem;white-space:nowrap">'+(e.savedAt||'').slice(0,10)+'</td>'
         +'<td style="padding:5px 8px"><button class="btn secondary" style="padding:2px 8px;font-size:0.75rem" onclick="lsAidDel('+i+')">Del</button></td>'
         +'</tr>';
-    }).join("");
+    }).join('');
     w.innerHTML='<table style="width:100%;border-collapse:collapse;font-size:0.8rem">'
       +'<thead><tr style="background:rgba(0,0,0,.3)">'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Scene</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Prompt</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Status</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Provider</th>'
+      +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Image</th>'
       +'<th style="padding:6px 8px;text-align:left;color:#888;font-weight:500">Saved</th>'
       +'<th></th></tr></thead><tbody>'+rows+'</tbody></table>';
   }
   window.lsAidDel=function(i){var es=get();es.splice(i,1);localStorage.setItem(KEY,JSON.stringify(es));renderTbl();};
-  function addH(el,fn){if(!el||el._lsAid)return;el._lsAid=true;el.addEventListener("click",fn);el.addEventListener("touchend",function(e){e.preventDefault();fn(e);});}
+
+  function applyPrefill(){
+    var pf;
+    try{pf=JSON.parse(localStorage.getItem(PREFILL_KEY)||'null');}catch(_){pf=null;}
+    if(!pf)return;
+    function sv(id,val){var el=document.getElementById(id);if(el&&val)el.value=val;}
+    sv('ls-aid-prompt',pf.imagePrompt);
+    sv('ls-aid-neg',pf.negativePrompt);
+    sv('ls-aid-char',pf.continuityNotes||(pf.characters&&pf.characters.join(', '))||'');
+    sv('ls-aid-look',pf.wardrobeNotes||'');
+    sv('ls-aid-scene',pf.sceneId||'');
+    var lookEl=document.getElementById('ls-aid-look');
+    if(lookEl&&!lookEl.value&&pf.location)lookEl.value=pf.location;
+    try{localStorage.removeItem(PREFILL_KEY);}catch(_){}
+    genStatus('Scene '+esc(pf.sceneId||'')+' loaded. Review prompts, then tap Generate Image.','#9c9cff');
+  }
+
+  function writeBackToScene(sceneId,imageUrl,providerUsed){
+    var d=sdata();
+    if(!d||!d.scenes||!sceneId)return;
+    var idx=-1;
+    for(var k=0;k<d.scenes.length;k++){
+      if(d.scenes[k].sceneId===sceneId||d.scenes[k].id===sceneId){idx=k;break;}
+    }
+    if(idx<0)return;
+    d.scenes[idx].imageProofUrl=imageUrl;
+    d.scenes[idx].imageStatus='approved';
+    d.scenes[idx].generatedAt=new Date().toISOString();
+    d.scenes[idx].generatedByProvider=providerUsed||'';
+    try{localStorage.setItem(SCRIPT_KEY,JSON.stringify(d));}catch(_){}
+  }
+
+  function validateResult(r){
+    if(!r)return null;
+    if(r.url&&typeof r.url==='string'&&r.url.length>4)return r.url;
+    if(r.dataURL&&typeof r.dataURL==='string'&&r.dataURL.indexOf('data:image')===0)return r.dataURL;
+    if(r.blob&&r.blob instanceof Blob)return URL.createObjectURL(r.blob);
+    return null;
+  }
+
+  function pollHorde(jobId,providerId,sceneId,maxAttempts){
+    var attempt=0;
+    var iv=setInterval(function(){
+      attempt++;
+      if(attempt>maxAttempts){
+        clearInterval(iv);
+        genStatus('Polling timed out after '+maxAttempts+' attempts — no image returned.','#ef5350');
+        document.getElementById('ls-aid-status').value='Failed';
+        document.getElementById('ls-aid-prov').value='Failed';
+        return;
+      }
+      genStatus('Polling '+providerId+'... attempt '+attempt+'/'+maxAttempts,'#ffa726');
+      window.LoadProviderRegistry.pollJobResult({jobId:jobId,providerId:providerId})
+        .then(function(pr){
+          if(!pr||!pr.done)return;
+          clearInterval(iv);
+          var url=validateResult(pr);
+          if(!url){
+            genStatus('Polling complete — no image in result.','#ef5350');
+            document.getElementById('ls-aid-status').value='Failed';
+            document.getElementById('ls-aid-prov').value='Failed';
+            return;
+          }
+          _genUrl=url;
+          var previewWrap=document.getElementById('ls-aid-gen-preview');
+          var imgEl=document.getElementById('ls-aid-gen-img');
+          var labelEl=document.getElementById('ls-aid-gen-result-label');
+          if(imgEl)imgEl.src=url;
+          if(labelEl)labelEl.textContent='Generated via '+esc(providerId)+' (polled) — approve to attach to scene.';
+          if(previewWrap)previewWrap.style.display='';
+          var proofEl=document.getElementById('ls-aid-proof');
+          if(proofEl)proofEl.value=url;
+          genStatus('Ready — image returned after '+attempt+' poll(s). Tap Approve Image to attach to scene.','#66bb6a');
+          document.getElementById('ls-aid-status').value='Local Ready';
+          document.getElementById('ls-aid-prov').value='Local Ready';
+          writeBackToScene(sceneId,url,providerId);
+        }).catch(function(err){
+          clearInterval(iv);
+          genStatus('Polling error: '+(err.message||String(err)),'#ef5350');
+          document.getElementById('ls-aid-status').value='Failed';
+          document.getElementById('ls-aid-prov').value='Failed';
+        });
+    },8000);
+  }
+
+  function wireGenerate(){
+    var genBtn=document.getElementById('ls-aid-gen-btn');
+    if(!genBtn||genBtn._v238g)return;
+    genBtn._v238g=true;
+    function doGen(e){
+      if(e&&e.preventDefault)e.preventDefault();
+      var prompt=(document.getElementById('ls-aid-prompt')||{}).value||'';
+      if(!prompt.trim()){genStatus('Enter an image prompt first.','#ffa726');return;}
+      var neg=(document.getElementById('ls-aid-neg')||{}).value||'';
+      var provSel=document.getElementById('ls-aid-gen-provider');
+      var providerId=provSel?provSel.value:'pollinations-image';
+      var sceneId=(document.getElementById('ls-aid-scene')||{}).value||'';
+      if(!window.LoadProviderRegistry){genStatus('Provider registry not loaded.','#ef5350');return;}
+      genStatus('Generating... ('+providerId+')','#ffa726');
+      var previewWrap=document.getElementById('ls-aid-gen-preview');
+      if(previewWrap)previewWrap.style.display='none';
+      _genUrl=null;
+      window.LoadProviderRegistry.generateImage({
+        prompt:prompt,negativePrompt:neg,width:1024,height:576,
+        seed:Math.floor(Math.random()*999999),providerId:providerId
+      }).then(function(r){
+        var url=validateResult(r);
+        if(r&&r.type==='image-job'){
+          genStatus('Job queued ('+providerId+' / '+r.jobId+') — polling every 8s, up to 15 attempts.','#ffa726');
+          document.getElementById('ls-aid-status').value='Provider Needed';
+          document.getElementById('ls-aid-prov').value='Provider Needed';
+          pollHorde(r.jobId,r.provider||providerId,sceneId,15);
+          return;
+        }
+        if(!url){
+          genStatus('Failed: provider returned no image.','#ef5350');
+          document.getElementById('ls-aid-status').value='Failed';
+          document.getElementById('ls-aid-prov').value='Failed';
+          return;
+        }
+        _genUrl=url;
+        var imgEl=document.getElementById('ls-aid-gen-img');
+        var labelEl=document.getElementById('ls-aid-gen-result-label');
+        if(imgEl)imgEl.src=url;
+        if(labelEl)labelEl.textContent='Generated via '+esc(r.provider||providerId)+' — approve to attach to scene.';
+        if(previewWrap)previewWrap.style.display='';
+        var proofEl=document.getElementById('ls-aid-proof');
+        if(proofEl)proofEl.value=url;
+        genStatus('Ready — image returned. Tap Approve Image to attach to scene.','#66bb6a');
+        document.getElementById('ls-aid-status').value='Local Ready';
+        document.getElementById('ls-aid-prov').value='Local Ready';
+        writeBackToScene(sceneId,url,r.provider||providerId);
+      }).catch(function(err){
+        genStatus('Failed: '+(err.message||String(err)),'#ef5350');
+        document.getElementById('ls-aid-status').value='Failed';
+        document.getElementById('ls-aid-prov').value='Failed';
+      });
+    }
+    genBtn.addEventListener('click',doGen);
+    genBtn.addEventListener('touchend',function(e){e.preventDefault();doGen(e);});
+
+    var approveBtn=document.getElementById('ls-aid-gen-approve-btn');
+    if(approveBtn&&!approveBtn._v238a){approveBtn._v238a=true;
+      function doApprove(e){
+        if(e&&e.preventDefault)e.preventDefault();
+        if(!_genUrl){genStatus('No generated image to approve.','#ffa726');return;}
+        var sceneId=(document.getElementById('ls-aid-scene')||{}).value||'';
+        var proofEl=document.getElementById('ls-aid-proof');
+        if(proofEl)proofEl.value=_genUrl;
+        document.getElementById('ls-aid-status').value='Local Ready';
+        document.getElementById('ls-aid-prov').value='Local Ready';
+        writeBackToScene(sceneId,_genUrl,'approved');
+        genStatus('Image approved and written to scene '+esc(sceneId)+'.','#66bb6a');
+        msg('Approved — save entry to log.','#66bb6a');
+      }
+      approveBtn.addEventListener('click',doApprove);
+      approveBtn.addEventListener('touchend',function(e){e.preventDefault();doApprove(e);});
+    }
+  }
+
+  function addH(el,fn){if(!el||el._lsAid)return;el._lsAid=true;el.addEventListener('click',fn);el.addEventListener('touchend',function(e){e.preventDefault();fn(e);});}
   function wire(){
     if(sec._lsAidW)return;sec._lsAidW=true;
-    addH(document.getElementById("ls-aid-save"),function(){
-      var e={sceneId:document.getElementById("ls-aid-scene").value.trim(),imagePrompt:document.getElementById("ls-aid-prompt").value.trim(),negativePrompt:document.getElementById("ls-aid-neg").value.trim(),charLock:document.getElementById("ls-aid-char").value.trim(),lookNotes:document.getElementById("ls-aid-look").value.trim(),refPath:document.getElementById("ls-aid-ref").value.trim(),status:document.getElementById("ls-aid-status").value,providerStatus:document.getElementById("ls-aid-prov").value,assetProof:document.getElementById("ls-aid-proof").value.trim(),savedAt:new Date().toISOString()};
+    addH(document.getElementById('ls-aid-save'),function(){
+      var e={sceneId:(document.getElementById('ls-aid-scene')||{}).value||'',
+        imagePrompt:(document.getElementById('ls-aid-prompt')||{}).value||'',
+        negativePrompt:(document.getElementById('ls-aid-neg')||{}).value||'',
+        charLock:(document.getElementById('ls-aid-char')||{}).value||'',
+        lookNotes:(document.getElementById('ls-aid-look')||{}).value||'',
+        refPath:(document.getElementById('ls-aid-ref')||{}).value||'',
+        status:(document.getElementById('ls-aid-status')||{}).value||'Untested',
+        providerStatus:(document.getElementById('ls-aid-prov')||{}).value||'Untested',
+        assetProof:_genUrl||((document.getElementById('ls-aid-proof')||{}).value||''),
+        savedAt:new Date().toISOString()};
       var es=get();es.push(e);localStorage.setItem(KEY,JSON.stringify(es));
-      msg("Entry saved.","#5ee0a5");renderTbl();setTimeout(function(){msg("");},3000);
+      msg('Entry saved.','#5ee0a5');renderTbl();setTimeout(function(){msg('');},3000);
     });
-    addH(document.getElementById("ls-aid-export"),function(){
-      var a=document.createElement("a");a.href="data:application/json,"+encodeURIComponent(JSON.stringify(get(),null,2));a.download="ai-image-director.json";a.click();
+    addH(document.getElementById('ls-aid-export'),function(){
+      var a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(get(),null,2));a.download='ai-image-director.json';a.click();
     });
+    wireGenerate();
     renderTbl();
   }
-  var obs=new MutationObserver(function(){if(sec.classList.contains("active"))wire();});
-  obs.observe(sec,{attributes:true,attributeFilter:["class"]});
-  if(sec.classList.contains("active"))wire();
+  var obs=new MutationObserver(function(){
+    if(sec.classList.contains('active')){wire();applyPrefill();}
+  });
+  obs.observe(sec,{attributes:true,attributeFilter:['class']});
+  if(sec.classList.contains('active')){wire();applyPrefill();}
 }());</script>
 
 <section id="section-character-stability" class="section" data-title="Character Stability Engine">
@@ -7238,7 +8398,9 @@ document.addEventListener('click',function(e){
       {file:'image-to-video-log.json',    key:'ls_i2v_entries',  label:'Image-to-Video Plans'},
       {file:'video-stylizer-log.json',    key:'ls_vs_entries',   label:'Video Stylizer Plans'},
       {file:'video-outpainting-log.json', key:'ls_vop_entries',  label:'Video Outpainting Plans'},
-      {file:'lipsync-log.json',           key:'ls_lsp_entries',  label:'Lip Sync Plans'}
+      {file:'lipsync-log.json',           key:'ls_lsp_entries',  label:'Lip Sync Plans'},
+      {file:'script-data.json',           key:'ls_script_data',  label:'Script to Prompt Data'},
+      {file:'editing-bay-queue.json',     key:'ls_eb_queue',     label:'Editing Bay Queue'}
     ];
     var ASSET_FOLDERS=['assets/images/.keep','assets/audio/.keep','assets/music/.keep','assets/sfx/.keep','assets/subtitles/.keep','assets/icons/.keep'];
 
@@ -7449,7 +8611,9 @@ document.addEventListener('click',function(e){
       'character-stability-takes.json':'ls_cs_takes',
       'character-stability-refs.json': 'ls_cs_refs',
       'characters.json':               'ls_characters_data',
-      'rights.json':                   'ls_rights'
+      'rights.json':                   'ls_rights',
+      'script-data.json':              'ls_script_data',
+      'editing-bay-queue.json':        'ls_eb_queue'
     };
 
     /* ── Required files for completeness check ── */
