@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ACR Solar">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>ACR Solar</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #080C18;
+  --surface: #0F1629;
+  --surface2: #161E35;
+  --surface3: #1C2640;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #F0F4FF;
+  --text2: #8B96B4;
+  --text3: #4A5470;
+  --gold: #F5C842;
+  --gold2: #FFDB6B;
+  --blue: #4B8EFF;
+  --blue2: #6BA3FF;
+  --teal: #00D4AA;
+  --purple: #9B6DFF;
+  --rose: #FF6B8A;
+  --orange: #FF8C42;
+  --green: #36D399;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font: 'Outfit', sans-serif;
+  --mono: 'Space Mono', monospace;
+  --spring: #10B981;
+  --summer: #F59E0B;
+  --autumn: #EF4444;
+  --winter: #3B82F6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* DYSLEXIA: generous spacing, clear fonts, no all-caps heavy usage */
+h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+
+/* LAYOUT */
+#app { display: flex; flex-direction: column; height: 100vh; height: -webkit-fill-available; overflow: hidden; }
+
+/* TOP BAR */
+#topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; padding-top: calc(14px + env(safe-area-inset-top));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+}
+#topbar-left { display: flex; align-items: center; gap: 12px; }
+#app-logo { 
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--bg); font-weight: 800;
+  font-family: var(--mono);
+  flex-shrink: 0;
+}
+#topbar-title { font-size: 18px; font-weight: 700; color: var(--text); }
+#topbar-actions { display: flex; gap: 8px; }
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); font-size: 18px;
+  transition: all 0.2s;
+}
+.icon-btn:hover, .icon-btn.active { background: var(--surface3); color: var(--gold); border-color: var(--border2); }
+
+/* MAIN CONTENT */
+#main { flex: 1; overflow: hidden; position: relative; }
+.view { position: absolute; inset: 0; overflow-y: auto; display: none; padding: 20px; }
+.view.active { display: block; }
+
+/* BOTTOM NAV */
+#bottomnav {
+  display: flex; background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  flex-shrink: 0;
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 10px 4px;
+  cursor: pointer; color: var(--text3); font-size: 11px; font-weight: 500;
+  gap: 4px; transition: all 0.2s; position: relative;
+}
+.nav-item i { font-size: 22px; }
+.nav-item.active { color: var(--gold); }
+.nav-item.active::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%;
+  height: 2px; background: linear-gradient(90deg, var(--gold), var(--orange));
+  border-radius: 0 0 4px 4px;
+}
+
+/* MONTH CALENDAR VIEW */
+#month-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+#month-title { font-size: 24px; font-weight: 800; }
+#month-title span { color: var(--gold); }
+.month-nav { display: flex; gap: 8px; }
+.month-nav-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); font-size: 18px; transition: all 0.2s;
+}
+.month-nav-btn:hover { color: var(--gold); border-color: var(--border2); }
+
+/* Solar month info strip */
+#solar-info {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 14px;
+}
+.solar-season-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.solar-info-text { flex: 1; }
+.solar-info-text .sol-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.solar-info-text .sol-name { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* DAY GRID */
+#day-labels {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+.day-label { text-align: center; font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 0; }
+.day-label.shabbat { color: var(--gold); }
+
+#cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-day {
+  aspect-ratio: 1; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; position: relative; transition: all 0.15s;
+  background: var(--surface2); border: 1px solid transparent;
+  font-size: 15px; font-weight: 500; min-height: 44px;
+}
+.cal-day:hover { background: var(--surface3); border-color: var(--border2); }
+.cal-day.other-month { opacity: 0.3; }
+.cal-day.today {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(255,140,66,0.1));
+  border-color: var(--gold);
+  color: var(--gold); font-weight: 700;
+}
+.cal-day.selected {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; border-color: transparent;
+}
+.cal-day.shabbat-day { color: var(--gold2); }
+.cal-day .holiday-dot {
+  position: absolute; bottom: 4px;
+  display: flex; gap: 2px;
+}
+.h-dot { width: 5px; height: 5px; border-radius: 50%; }
+.cal-day .sol-day { font-size: 9px; color: var(--text3); font-weight: 600; }
+
+/* HOLIDAYS STRIP */
+#today-events {
+  margin-top: 20px;
+}
+.section-title {
+  font-size: 12px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+/* EVENT CARD */
+.event-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+  margin-bottom: 10px; display: flex; gap: 14px; align-items: flex-start;
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.event-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+}
+.event-card:hover { background: var(--surface3); border-color: var(--border2); }
+.event-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.event-content { flex: 1; }
+.event-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.event-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.event-source { font-size: 10px; font-weight: 700; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+.event-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.event-time { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+
+/* AGENDA VIEW */
+#agenda-view .month-section { margin-bottom: 28px; }
+#agenda-view .month-section-title {
+  font-size: 18px; font-weight: 700; margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.agenda-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.agenda-date {
+  flex-shrink: 0; width: 48px; text-align: center;
+}
+.agenda-date .ad-day { font-size: 22px; font-weight: 800; line-height: 1; }
+.agenda-date .ad-dow { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.agenda-dot { width: 3px; flex-shrink: 0; border-radius: 4px; min-height: 40px; margin-top: 4px; }
+.agenda-info { flex: 1; }
+.agenda-info .ai-name { font-size: 15px; font-weight: 600; }
+.agenda-info .ai-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-top: 2px; }
+.agenda-info .ai-source { font-size: 10px; color: var(--text3); font-weight: 700; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.06em; }
+
+/* SUN TIMES WIDGET */
+#sun-widget {
+  background: linear-gradient(135deg, #0A1628, #1A2845);
+  border: 1px solid rgba(75,142,255,0.3);
+  border-radius: var(--radius); padding: 20px;
+  margin-bottom: 20px; position: relative; overflow: hidden;
+}
+#sun-widget::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,200,66,0.15), transparent 70%);
+}
+.sun-widget-title { font-size: 12px; font-weight: 700; color: var(--blue2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+.sun-times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sun-time-item {
+  background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sun-time-icon { font-size: 22px; color: var(--gold); }
+.sun-time-icon.set { color: var(--orange); }
+.sun-time-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.sun-time-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); }
+.sun-progress-bar {
+  margin-top: 16px; height: 6px; background: rgba(255,255,255,0.06);
+  border-radius: 6px; overflow: hidden; position: relative;
+}
+.sun-progress-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--orange));
+  transition: width 1s ease;
+}
+.sun-progress-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--gold2); position: absolute; top: 50%; transform: translateY(-50%);
+  margin-left: -6px; box-shadow: 0 0 8px var(--gold);
+  transition: left 1s ease;
+}
+.sun-shabbat-alert {
+  margin-top: 12px; padding: 10px 14px; border-radius: 10px;
+  background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3);
+  font-size: 13px; color: var(--gold); font-weight: 500; display: none;
+}
+
+/* SOLAR CALENDAR INFO PANEL */
+#solar-panel {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+}
+.solar-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.solar-month-chip {
+  background: var(--surface3); border-radius: 10px; padding: 10px;
+  text-align: center; border: 1px solid var(--border); cursor: pointer;
+  transition: all 0.2s;
+}
+.solar-month-chip:hover { border-color: var(--border2); }
+.solar-month-chip.current { border-color: var(--gold); background: rgba(245,200,66,0.08); }
+.smc-num { font-size: 11px; color: var(--text3); font-weight: 700; text-transform: uppercase; }
+.smc-name { font-size: 13px; font-weight: 600; }
+.smc-days { font-size: 10px; color: var(--text3); }
+
+/* SETTINGS VIEW */
+#settings-view .setting-group { margin-bottom: 24px; }
+.setting-group-title {
+  font-size: 12px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+}
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.setting-info { flex: 1; }
+.setting-name { font-size: 15px; font-weight: 500; color: var(--text); }
+.setting-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
+/* TOGGLE */
+.toggle {
+  width: 48px; height: 26px; border-radius: 13px;
+  background: var(--surface3); border: 1px solid var(--border2);
+  position: relative; cursor: pointer; transition: all 0.3s; flex-shrink: 0;
+}
+.toggle.on { background: var(--gold); border-color: var(--gold); }
+.toggle::after {
+  content: ''; position: absolute; width: 20px; height: 20px;
+  border-radius: 50%; background: white; top: 2px; left: 2px;
+  transition: transform 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.toggle.on::after { transform: translateX(22px); }
+
+/* REMINDER FORM */
+.add-reminder-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: var(--bg); font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px; font-family: var(--font);
+  margin-bottom: 16px; transition: opacity 0.2s;
+}
+.add-reminder-btn:hover { opacity: 0.9; }
+
+/* MODAL */
+#modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 1000; display: none; align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+#modal-overlay.open { display: flex; }
+#modal-sheet {
+  background: var(--surface); border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 600px; padding: 24px 24px 40px;
+  max-height: 85vh; overflow-y: auto;
+  border: 1px solid var(--border2); border-bottom: none;
+}
+.modal-handle {
+  width: 40px; height: 4px; border-radius: 2px;
+  background: var(--border2); margin: 0 auto 20px;
+}
+.modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+.form-input {
+  width: 100%; padding: 13px 16px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); font-size: 15px; font-family: var(--font);
+  outline: none; transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--blue); }
+.form-input select { appearance: none; }
+select.form-input option { background: var(--surface2); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-primary {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; font-size: 15px; font-weight: 700;
+  border: none; cursor: pointer; font-family: var(--font);
+  margin-top: 8px; transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-cancel {
+  width: 100%; padding: 14px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text2); font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: var(--font); margin-top: 8px;
+}
+
+/* REMINDERS */
+.reminder-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
+}
+.reminder-color { width: 4px; border-radius: 4px; align-self: stretch; flex-shrink: 0; }
+.reminder-info { flex: 1; }
+.reminder-title { font-size: 14px; font-weight: 600; }
+.reminder-time { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.reminder-delete { color: var(--text3); cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.2s; }
+.reminder-delete:hover { color: var(--rose); }
+
+/* SUNSET ALERT */
+#sunset-alert {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+  background: linear-gradient(135deg, #1A0800, #2A1200);
+  border-bottom: 2px solid var(--orange);
+  padding: 16px 20px; padding-top: calc(16px + env(safe-area-inset-top));
+  display: none; transform: translateY(-100%); transition: transform 0.4s ease;
+}
+#sunset-alert.show { display: block; transform: translateY(0); }
+.alert-content { display: flex; align-items: center; gap: 14px; }
+.alert-icon { font-size: 28px; color: var(--orange); flex-shrink: 0; }
+.alert-text .alert-title { font-size: 16px; font-weight: 700; color: var(--gold); }
+.alert-text .alert-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.alert-close { margin-left: auto; color: var(--text3); cursor: pointer; font-size: 20px; padding: 4px; }
+
+/* TODAY HIGHLIGHT */
+.today-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(255,140,66,0.1));
+  border: 1px solid rgba(245,200,66,0.4);
+  border-radius: 100px; padding: 6px 14px;
+  font-size: 13px; font-weight: 600; color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* YEAR VIEW */
+#year-view .year-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.mini-month { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: all 0.2s; }
+.mini-month:hover { border-color: var(--border2); background: var(--surface3); }
+.mini-month.current-month { border-color: var(--gold); }
+.mini-month-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.mini-cell { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--text3); }
+.mini-cell.has-event { background: var(--surface3); color: var(--text); }
+.mini-cell.today-mini { background: var(--gold); color: var(--bg); font-weight: 700; }
+
+/* EVENT DETAIL MODAL */
+.event-detail-header {
+  display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px;
+}
+.event-detail-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+}
+.event-detail-title { font-size: 22px; font-weight: 800; }
+.event-detail-date { font-size: 14px; color: var(--text3); margin-top: 4px; }
+.detail-section { margin-bottom: 16px; }
+.detail-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.detail-text { font-size: 15px; color: var(--text2); line-height: 1.7; }
+.source-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* LOCATION PROMPT */
+#location-prompt {
+  background: linear-gradient(135deg, var(--surface2), var(--surface3));
+  border: 1px solid rgba(75,142,255,0.3); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 20px; text-align: center;
+}
+.loc-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.loc-desc { font-size: 13px; color: var(--text3); margin-bottom: 16px; line-height: 1.6; }
+.loc-btn {
+  padding: 11px 24px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer; font-family: var(--font);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.view.active > * { animation: fadeUp 0.3s ease forwards; }
+
+/* RESPONSIVE */
+@media (max-width: 380px) {
+  .cal-day { font-size: 13px; }
+  #topbar-title { font-size: 16px; }
+}
+
+/* TEXT PAGE */
+#text-page-overlay{position:fixed;inset:0;z-index:5000;display:none;flex-direction:column;background:#0D0B07;}
+#text-page-overlay.open{display:flex;}
+#text-page-topbar{display:flex;align-items:center;gap:10px;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));background:#111;border-bottom:1px solid #333;flex-shrink:0;}
+#text-page-back{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);border:none;color:#C8971F;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#text-page-label{font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:#C8971F;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#text-page-content{flex:1;overflow-y:auto;background:#0D0B07;padding:0 0 100px 0;}
+.tp-inner{background:#f5f5f0;max-width:860px;margin:0 auto;padding:24px 20px 40px;min-height:100%;}
+.tp-paleo{text-align:center;font-size:48px;color:#111;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;margin-bottom:10px;line-height:1;}
+.tp-title{text-align:center;font-size:19px;font-weight:700;color:#111;font-family:Arial;margin-bottom:6px;line-height:1.3;}
+.tp-subtitle{text-align:center;font-size:12px;color:#555;font-style:italic;font-family:Arial;margin-bottom:18px;line-height:1.6;}
+.tp-section-header{font-family:Arial;font-size:13px;font-weight:700;color:#222;border-bottom:1.5px solid #666;padding:5px 0 3px;margin:16px 0 7px;}
+.tp-banner{font-family:Arial;font-size:12px;font-weight:700;font-style:italic;color:#333;border-top:1.5px solid #888;border-bottom:1.5px solid #888;padding:5px 0;margin:14px 0 9px;text-align:center;}
+.tp-verse{font-family:Arial;font-size:15px;color:#111;line-height:1.8;padding-left:1.8em;margin:3px 0;}
+.tp-ref{font-family:Arial;font-size:15px;font-weight:700;color:#444;margin-right:5px;}
+.tp-note{font-family:Arial;font-size:12px;font-style:italic;color:#555;line-height:1.7;padding-left:2.4em;margin:2px 0;}
+.tp-hebrew{direction:rtl;text-align:right;color:#C8971F;font-size:1.3em;line-height:1.8;font-family:Arial;margin:7px 0;padding:5px 10px;background:rgba(200,151,31,0.06);border-radius:6px;}
+.tp-hebrew-ref{font-family:Arial;font-size:10px;color:#7D6608;font-style:italic;margin-bottom:8px;text-align:right;}
+.tp-manuscript{background:#f0ece4;border-radius:8px;padding:11px 13px;margin-top:18px;border-left:3px solid #C8971F;}
+.tp-manuscript-title{font-family:Arial;font-size:10px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+.tp-manuscript-text{font-family:Arial;font-size:11px;color:#555;line-height:1.7;font-style:italic;}
+.tp-so-be-it{font-family:Arial;font-size:15px;font-weight:700;color:#444;text-align:center;margin:14px 0 7px;padding:9px;border-top:1px solid #ccc;}
+#tp-voice-bar{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:7px 12px;padding-bottom:calc(7px + env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;gap:5px;align-items:center;z-index:5001;}
+.tp-vbtn{background:#222;color:#C8971F;border:none;border-radius:6px;padding:6px 10px;font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;}
+.tp-vbtn:hover{background:#333;color:#FFD700;}
+.tp-vselect{background:#222;border:1px solid #444;border-radius:6px;color:#C8971F;padding:4px 7px;font-size:10px;font-family:'Outfit',sans-serif;max-width:120px;}
+#tp-vstatus{font-size:10px;color:#666;flex:1;text-align:right;font-family:'Outfit',sans-serif;}
+/* SHABBAT OVERLAY */
+#shabbat-overlay{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;background:#0D0B07;overflow-y:auto;}
+#shabbat-overlay.open{display:flex;}
+.shab-topbar{display:flex;align-items:center;gap:10px;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));background:#111;border-bottom:1px solid #333;flex-shrink:0;}
+.shab-inner{max-width:860px;margin:0 auto;padding:20px 16px 80px;background:#f5f5f0;min-height:100%;}
+.shab-times-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.shab-time-block{border-radius:12px;padding:14px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(200,151,31,0.3);}
+.stb-label{font-size:10px;font-weight:700;color:#C8971F;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.stb-time{font-size:24px;font-weight:800;color:#fff;font-family:'Space Mono',monospace;line-height:1;}
+.stb-day{font-size:11px;color:#888;margin-top:3px;}
+.stb-note{font-size:9px;color:#C8971F;margin-top:5px;font-style:italic;}
+.shab-duration{text-align:center;padding:9px;background:rgba(200,151,31,0.1);border-radius:8px;border:1px solid rgba(200,151,31,0.3);font-family:Arial;font-size:13px;color:#333;margin-bottom:10px;}
+.shab-countdown{text-align:center;padding:11px;border-radius:10px;margin-bottom:18px;background:#1a1a2e;border:1px solid rgba(200,151,31,0.4);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:#C8971F;}
+.shab-rule-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #e0dcd4;align-items:flex-start;}
+.shab-rule-num{width:26px;height:26px;border-radius:50%;background:#333;color:#C8971F;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.shab-rule-text{font-family:Arial;font-size:14px;color:#111;line-height:1.6;}
+.shab-rule-src{font-size:10px;color:#888;margin-top:2px;font-style:italic;}
+/* SERVICE CARDS */
+.service-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:all 0.2s;}
+.service-card:hover{background:var(--surface3);}
+.service-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));color:var(--bg);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.service-info .si-title{font-size:14px;font-weight:600;color:var(--text);}
+.service-info .si-desc{font-size:12px;color:var(--text3);margin-top:2px;}
+/* PRAYER CARDS */
+.prayer-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:13px 15px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:all 0.2s;}
+.prayer-card:hover{background:var(--surface3);}
+.prayer-card-icon{width:38px;height:38px;border-radius:11px;background:rgba(245,200,66,0.12);color:var(--gold);font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.prayer-card-info .pci-title{font-size:14px;font-weight:600;color:var(--text);}
+.prayer-card-info .pci-desc{font-size:11px;color:var(--text3);margin-top:2px;}
+/* VOLUME OF DAY */
+#vol-day-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:13px 15px;margin-bottom:15px;display:flex;align-items:center;gap:13px;cursor:pointer;}
+#vol-day-card:hover{background:var(--surface3);}
+.vdc-icon{font-size:22px;color:var(--gold);flex-shrink:0;}
+.vdc-info{flex:1;}
+.vdc-label{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+.vdc-title{font-size:14px;font-weight:600;color:var(--text);margin-top:2px;}
+.vdc-btn{font-size:11px;color:var(--blue2);margin-top:3px;}
+/* SCROLLABLE TOP BAR */
+#topbar-scroll{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);scrollbar-width:none;flex-shrink:0;}
+#topbar-scroll::-webkit-scrollbar{display:none;}
+.tbs-pill{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:7px 13px;white-space:nowrap;cursor:pointer;color:var(--text2);font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;flex-shrink:0;transition:all 0.2s;}
+.tbs-pill:hover{background:rgba(245,200,66,0.12);border-color:var(--gold);color:var(--gold);}
+.tbs-pill i{font-size:14px;}
+.shema-verse-block{margin-bottom:18px;}
+
+
+#text-page-overlay{position:fixed;inset:0;z-index:5000;display:none;flex-direction:column;background:#0D0B07;}
+#text-page-overlay.open{display:flex;}
+#text-page-topbar{display:flex;align-items:center;gap:10px;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));background:#111;border-bottom:1px solid #333;flex-shrink:0;}
+#text-page-back{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);border:none;color:#C8971F;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#text-page-label{font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:#C8971F;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#text-page-content{flex:1;overflow-y:auto;padding:0 0 100px;}
+.tp-inner{background:#f5f5f0;max-width:860px;margin:0 auto;padding:24px 20px 40px;min-height:100%;}
+.tp-paleo{text-align:center;font-size:48px;color:#111;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;margin-bottom:10px;line-height:1;}
+.tp-title{text-align:center;font-size:19px;font-weight:700;color:#111;font-family:Arial;margin-bottom:6px;line-height:1.3;}
+.tp-subtitle{text-align:center;font-size:12px;color:#555;font-style:italic;font-family:Arial;margin-bottom:18px;line-height:1.6;}
+.tp-section-header{font-family:Arial;font-size:13px;font-weight:700;color:#222;border-bottom:1.5px solid #666;padding:5px 0 3px;margin:16px 0 7px;}
+.tp-banner{font-family:Arial;font-size:12px;font-weight:700;font-style:italic;color:#333;border-top:1.5px solid #888;border-bottom:1.5px solid #888;padding:5px 0;margin:14px 0 9px;text-align:center;}
+.tp-verse{font-family:Arial;font-size:15px;color:#111;line-height:1.8;padding-left:1.8em;margin:3px 0;}
+.tp-ref{font-family:Arial;font-size:15px;font-weight:700;color:#444;margin-right:5px;}
+.tp-note{font-family:Arial;font-size:12px;font-style:italic;color:#555;line-height:1.7;padding-left:2.4em;margin:2px 0;}
+.tp-hebrew{direction:rtl;text-align:right;color:#C8971F;font-size:1.3em;line-height:1.8;font-family:Arial;margin:7px 0;padding:5px 10px;background:rgba(200,151,31,0.06);border-radius:6px;}
+.tp-hebrew-ref{font-family:Arial;font-size:10px;color:#7D6608;font-style:italic;margin-bottom:8px;text-align:right;}
+.tp-manuscript{background:#f0ece4;border-radius:8px;padding:11px 13px;margin-top:18px;border-left:3px solid #C8971F;}
+.tp-manuscript-title{font-family:Arial;font-size:10px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+.tp-manuscript-text{font-family:Arial;font-size:11px;color:#555;line-height:1.7;font-style:italic;}
+.tp-so-be-it{font-family:Arial;font-size:15px;font-weight:700;color:#444;text-align:center;margin:14px 0 7px;padding:9px;border-top:1px solid #ccc;}
+#tp-voice-bar{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:7px 12px;padding-bottom:calc(7px + env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;gap:5px;align-items:center;z-index:5001;}
+.tp-vbtn{background:#222;color:#C8971F;border:none;border-radius:6px;padding:6px 10px;font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;}
+.tp-vbtn:hover{background:#333;}
+.tp-vselect{background:#222;border:1px solid #444;border-radius:6px;color:#C8971F;padding:4px 7px;font-size:10px;font-family:'Outfit',sans-serif;max-width:120px;}
+#tp-vstatus{font-size:10px;color:#666;flex:1;text-align:right;font-family:'Outfit',sans-serif;}
+#shabbat-overlay{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column;background:#0D0B07;overflow-y:auto;}
+#shabbat-overlay.open{display:flex;}
+.shab-topbar{display:flex;align-items:center;gap:10px;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));background:#111;border-bottom:1px solid #333;flex-shrink:0;}
+.shab-inner{max-width:860px;margin:0 auto;padding:20px 16px 80px;background:#f5f5f0;min-height:100%;}
+.shab-times-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.shab-time-block{border-radius:12px;padding:14px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(200,151,31,0.3);}
+.stb-label{font-size:10px;font-weight:700;color:#C8971F;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.stb-time{font-size:24px;font-weight:800;color:#fff;font-family:'Space Mono',monospace;line-height:1;}
+.stb-day{font-size:11px;color:#888;margin-top:3px;}
+.stb-note{font-size:9px;color:#C8971F;margin-top:5px;font-style:italic;}
+.shab-duration{text-align:center;padding:9px;background:rgba(200,151,31,0.1);border-radius:8px;border:1px solid rgba(200,151,31,0.3);font-family:Arial;font-size:13px;color:#333;margin-bottom:10px;}
+.shab-countdown{text-align:center;padding:11px;border-radius:10px;margin-bottom:18px;background:#1a1a2e;border:1px solid rgba(200,151,31,0.4);font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:#C8971F;}
+.shab-rule-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #e0dcd4;align-items:flex-start;}
+.shab-rule-num{width:26px;height:26px;border-radius:50%;background:#333;color:#C8971F;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.shab-rule-text{font-family:Arial;font-size:14px;color:#111;line-height:1.6;}
+.shab-rule-src{font-size:10px;color:#888;margin-top:2px;font-style:italic;}
+.service-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:all 0.2s;}
+.service-card:hover{background:var(--surface3);}
+.service-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));color:var(--bg);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.service-info .si-title{font-size:14px;font-weight:600;color:var(--text);}
+.service-info .si-desc{font-size:12px;color:var(--text3);margin-top:2px;}
+.prayer-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:13px 15px;margin-bottom:7px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:all 0.2s;}
+.prayer-card:hover{background:var(--surface3);}
+.prayer-card-icon{width:38px;height:38px;border-radius:11px;background:rgba(245,200,66,0.12);color:var(--gold);font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.prayer-card-info .pci-title{font-size:14px;font-weight:600;color:var(--text);}
+.prayer-card-info .pci-desc{font-size:11px;color:var(--text3);margin-top:2px;}
+#vol-day-card{background:var(--surface2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:var(--radius);padding:13px 15px;margin-bottom:15px;display:flex;align-items:center;gap:13px;cursor:pointer;}
+#vol-day-card:hover{background:var(--surface3);}
+.vdc-icon{font-size:22px;color:var(--gold);flex-shrink:0;}
+.vdc-info{flex:1;}
+.vdc-label{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+.vdc-title{font-size:14px;font-weight:600;color:var(--text);margin-top:2px;}
+.vdc-btn{font-size:11px;color:var(--blue2);margin-top:3px;}
+#topbar-scroll{display:flex;align-items:center;gap:7px;overflow-x:auto;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);scrollbar-width:none;flex-shrink:0;}
+#topbar-scroll::-webkit-scrollbar{display:none;}
+.tbs-pill{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:7px 13px;white-space:nowrap;cursor:pointer;color:var(--text2);font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;flex-shrink:0;transition:all 0.2s;}
+.tbs-pill:hover{background:rgba(245,200,66,0.12);border-color:var(--gold);color:var(--gold);}
+.tbs-pill i{font-size:14px;}
+.shema-verse-block{margin-bottom:18px;}
+
+</style>
+
+</head>
+<body>
+
+<!-- SUNSET ALERT BANNER -->
+<div id="sunset-alert">
+  <div class="alert-content">
+    <i class="ri-sun-foggy-line alert-icon"></i>
+    <div class="alert-text">
+      <div class="alert-title" id="alert-title">Sunset Approaching</div>
+      <div class="alert-sub" id="alert-sub">Shabbat begins in 30 minutes</div>
+    </div>
+    <i class="ri-close-line alert-close" onclick="dismissAlert()"></i>
+  </div>
+</div>
+
+
+<div id="shabbat-overlay">
+  <div class="shab-topbar">
+    <button onclick="closeShabbatMode()" style="background:rgba(255,255,255,0.08);border:none;color:#C8971F;font-size:20px;cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="ri-close-line"></i></button>
+    <span style="color:#C8971F;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;"><i class="ri-moon-clear-fill"></i> Shabbat Mode</span>
+  </div>
+  <div class="shab-inner">
+    <div style="text-align:center;font-family:'Segoe UI Historic','Noto Sans Phoenician',serif;font-size:40px;color:#111;margin-bottom:8px;">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+    <div style="font-family:Arial;font-size:20px;font-weight:700;color:#222;text-align:center;margin-bottom:4px;">Shabbat &#x2014; The Seventh Day</div>
+    <div style="font-family:Arial;font-size:12px;color:#666;text-align:center;margin-bottom:20px;font-style:italic;">DSS and Orit Ge&#x2019;ez Solar Calendar &#x2014; Day begins at sunrise</div>
+    <div class="shab-times-row">
+      <div class="shab-time-block"><div class="stb-label">Shabbat Begins</div><div class="stb-time" id="shab-start-time">--:--</div><div class="stb-day">Saturday</div><div class="stb-note">At first light &#x2014; when the sun rises</div></div>
+      <div class="shab-time-block"><div class="stb-label">Shabbat Ends</div><div class="stb-time" id="shab-end-time">--:--</div><div class="stb-day">Sunday</div><div class="stb-note">At first light &#x2014; when the sun rises</div></div>
+    </div>
+    <div class="shab-duration" id="shab-duration">Duration: approximately 24 hours</div>
+    <div class="shab-countdown" id="shab-countdown">Calculating...</div>
+    <div style="background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid #e0dcd4;">
+      <div class="tp-section-header">Why Sunrise to Sunrise</div>
+      <p style="font-family:Arial;font-size:14px;color:#444;line-height:1.8;margin-top:8px;">The ancient Hebrew solar day runs from morning to morning. The Book of Yovelim states in the Orit Ge&#x2019;ez that the day runs from morning to the following day at even-tide. Bereshit 1 in the DSS establishes light came first &#x2014; day preceded night. Sunset-to-sunset follows the Babylonian lunisolar calendar adopted by Rabbinic tradition after the exile. The DSS community and the Orit Ge&#x2019;ez preserved the original solar reckoning.</p>
+      <div style="font-family:Arial;font-size:11px;color:#888;margin-top:8px;font-style:italic;">Source: Yovelim 2:9 &#x2014; Damascus Document CD Columns 10-11 &#x2014; 4QCalendrical Texts 4Q320-330</div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;border:1px solid #e0dcd4;">
+      <div class="tp-section-header">Shabbat Rules &#x2014; Damascus Document and Community Rule</div>
+      <div class="shab-rule-item"><div class="shab-rule-num">1</div><div><div class="shab-rule-text">No work of any kind from Saturday sunrise to Sunday sunrise</div><div class="shab-rule-src">Damascus Document CD Column 10</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">2</div><div><div class="shab-rule-text">No commerce or financial transaction</div><div class="shab-rule-src">Damascus Document CD Column 11</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">3</div><div><div class="shab-rule-text">No travel beyond 2000 cubits from your dwelling</div><div class="shab-rule-src">Damascus Document CD Column 10:21</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">4</div><div><div class="shab-rule-text">No preparing or cooking food &#x2014; eat what was prepared before Shabbat</div><div class="shab-rule-src">Damascus Document CD Column 10</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">5</div><div><div class="shab-rule-text">No carrying objects from private to public space</div><div class="shab-rule-src">Damascus Document CD Column 11</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">6</div><div><div class="shab-rule-text">Speech restricted to matters of holiness and necessity</div><div class="shab-rule-src">Community Rule 1QS</div></div></div>
+      <div class="shab-rule-item" style="border-bottom:none;"><div class="shab-rule-num">7</div><div><div class="shab-rule-text">Gather for prayer at three times &#x2014; sunrise, solar noon, and sunset</div><div class="shab-rule-src">Community Rule 1QS Column 10 &#x2014; 4QCalendrical Texts</div></div></div>
+    </div>
+  </div>
+</div>
+<div id="text-page-overlay">
+  <div id="text-page-topbar">
+    <button id="text-page-back" onclick="closeTextPage()"><i class="ri-arrow-left-line"></i></button>
+    <span id="text-page-label">ACR Solar</span>
+  </div>
+  <div id="text-page-content"><div class="tp-inner" id="text-page-inner"></div></div>
+  <div id="tp-voice-bar">
+    <button class="tp-vbtn" id="tp-play-btn" onclick="tpPlay()"><i class="ri-play-circle-line"></i> Play</button>
+    <button class="tp-vbtn" onclick="tpPause()"><i class="ri-pause-circle-line"></i></button>
+    <button class="tp-vbtn" onclick="tpStop()"><i class="ri-stop-circle-line"></i></button>
+    <select class="tp-vselect" onchange="tpSetSpeed(this.value)">
+      <option value="0.7">0.7x</option><option value="0.85">0.85x</option>
+      <option value="1" selected>1x</option><option value="1.2">1.2x</option>
+      <option value="1.5">1.5x</option>
+    </select>
+    <select class="tp-vselect" id="tp-voice" onchange="tpSetVoice(this.value)" style="max-width:110px;"></select>
+    <div id="tp-vstatus">--</div>
+  </div>
+</div>
+
+<div id="app">
+  <div id="topbar-scroll"></div>
+
+  <!-- TOP BAR -->
+  
+<div id="topbar-scroll"></div>
+<div id="topbar">
+    <div id="topbar-left">
+      <div id="app-logo">S</div>
+      <div id="topbar-title">ACR Solar</div>
+    </div>
+    <div id="topbar-actions">
+      <div class="icon-btn" onclick="goToday()" title="Go to today">
+        <i class="ri-focus-3-line"></i>
+      </div>
+      <div class="icon-btn" id="add-event-btn" onclick="openAddEvent()" title="Add reminder">
+        <i class="ri-add-line"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- MONTH VIEW -->
+    <div class="view active" id="month-view">
+      <div id="month-header">
+        <div>
+          <div id="month-title">Loading...</div>
+          <div id="solar-month-sub" style="font-size:13px;color:var(--text3);margin-top:2px;"></div>
+        </div>
+        <div class="month-nav">
+          <div class="month-nav-btn" onclick="prevMonth()"><i class="ri-arrow-left-s-line"></i></div>
+          <div class="month-nav-btn" onclick="nextMonth()"><i class="ri-arrow-right-s-line"></i></div>
+        </div>
+      </div>
+
+      <div id="vol-day-card" onclick="openVolOfDay()">
+        <i class="ri-book-open-line vdc-icon"></i>
+        <div class="vdc-info">
+          <div class="vdc-label">Volume of the Day</div>
+          <div class="vdc-title" id="vol-title">Loading...</div>
+          <div class="vdc-btn">Open in ACR &#x2192;</div>
+        </div>
+      </div>
+      <div id="solar-info">
+        <div class="solar-season-dot" id="season-dot"></div>
+        <div class="solar-info-text">
+          <div class="sol-label">Solar Calendar Position</div>
+          <div class="sol-name" id="sol-name-text">Loading...</div>
+        </div>
+        <div id="sol-day-count" style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gold);"></div>
+      </div>
+
+      <div id="day-labels">
+        <div class="day-label">Sun</div>
+        <div class="day-label">Mon</div>
+        <div class="day-label">Tue</div>
+        <div class="day-label">Wed</div>
+        <div class="day-label">Thu</div>
+        <div class="day-label">Fri</div>
+        <div class="day-label shabbat">Shab</div>
+      </div>
+
+      <div id="cal-grid"></div>
+
+      <div id="today-events">
+        <div id="selected-date-label" class="today-pill">
+          <i class="ri-calendar-line"></i>
+          <span id="selected-label-text">Today</span>
+        </div>
+        <div id="events-list"></div>
+        <div id="no-events" style="text-align:center;color:var(--text3);font-size:14px;padding:24px 0;display:none;">
+          <i class="ri-moon-line" style="font-size:28px;display:block;margin-bottom:8px;"></i>
+          No sacred events on this day
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENDA VIEW -->
+    <div class="view" id="agenda-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Sacred Calendar</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">All DSS and Orit Ge'ez observances</p>
+      </div>
+      <div id="agenda-content"></div>
+    </div>
+
+    <!-- SUN TIMES VIEW -->
+    <div class="view" id="sun-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Sun Times</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">Sunrise, sunset and Shabbat alerts</p>
+      </div>
+
+      <div id="location-prompt">
+        <div class="loc-title">Enable Location</div>
+        <div class="loc-desc">ACR Solar uses your location to calculate precise sunrise and sunset times for Shabbat and holy day alerts.</div>
+        <button class="loc-btn" onclick="requestLocation()">
+          <i class="ri-map-pin-2-line"></i> Enable Location
+        </button>
+      </div>
+
+      <div id="sun-widget">
+        <div class="sun-widget-title">
+          <i class="ri-sun-line"></i> Today — <span id="sun-date-label"></span>
+        </div>
+        <div class="sun-times">
+          <div class="sun-time-item">
+            <i class="ri-sun-line sun-time-icon"></i>
+            <div>
+              <div class="sun-time-label">Sunrise</div>
+              <div class="sun-time-val" id="sunrise-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-sunset-line sun-time-icon set"></i>
+            <div>
+              <div class="sun-time-label">Sunset</div>
+              <div class="sun-time-val" id="sunset-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-moon-line sun-time-icon" style="color:var(--purple)"></i>
+            <div>
+              <div class="sun-time-label">Nightfall</div>
+              <div class="sun-time-val" id="nightfall-time">--:--</div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-sun-foggy-line sun-time-icon" style="color:var(--teal)"></i>
+            <div>
+              <div class="sun-time-label">Day Length</div>
+              <div class="sun-time-val" id="day-length">--h --m</div>
+            </div>
+          </div>
+        </div>
+        <div class="sun-progress-bar">
+          <div class="sun-progress-fill" id="sun-progress" style="width:0%"></div>
+          <div class="sun-progress-dot" id="sun-dot" style="left:0%"></div>
+        </div>
+        <div class="sun-shabbat-alert" id="shabbat-notice"></div>
+      </div>
+
+      <!-- ALERT SETTINGS -->
+      <div class="setting-group">
+        <div class="setting-group-title">Sunset Alerts</div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Shabbat Alert</div>
+            <div class="setting-desc">Alert when Shabbat is approaching at sunset Friday</div>
+          </div>
+          <div class="toggle on" id="shabbat-toggle" onclick="toggleSetting('shabbat-toggle','shabbat_alert')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Holy Day Alert</div>
+            <div class="setting-desc">Alert before sunset on eve of sacred festivals</div>
+          </div>
+          <div class="toggle on" id="holyday-toggle" onclick="toggleSetting('holyday-toggle','holyday_alert')"></div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Alert Before Sunset</div>
+            <div class="setting-desc" id="alert-mins-desc">Alert 30 minutes before sunset</div>
+          </div>
+          <select class="form-input" style="width:90px;" onchange="setAlertMins(this.value)">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Daily Sunrise Alert</div>
+            <div class="setting-desc">Notification at each sunrise</div>
+          </div>
+          <div class="toggle" id="sunrise-toggle" onclick="toggleSetting('sunrise-toggle','sunrise_alert')"></div>
+        </div>
+      </div>
+
+      <!-- UPCOMING SUN EVENTS -->
+      <div>
+        <div class="section-title">Upcoming Holy Day Eves</div>
+        <div id="upcoming-eves"></div>
+      </div>
+    </div>
+
+    <!-- YEAR VIEW -->
+    <div class="view" id="year-view">
+      <div id="year-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;" id="year-title"></h2>
+        <div style="display:flex;gap:8px;">
+          <div class="month-nav-btn" onclick="prevYear()"><i class="ri-arrow-left-s-line"></i></div>
+          <div class="month-nav-btn" onclick="nextYear()"><i class="ri-arrow-right-s-line"></i></div>
+        </div>
+      </div>
+      <div class="year-grid" id="year-grid"></div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div class="view" id="settings-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Settings</h2>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">Calendar Display</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Show Solar Month Numbers</div>
+            <div class="setting-desc">Display DSS solar month number alongside Gregorian date</div>
+          </div>
+          <div class="toggle on" id="solar-nums-toggle" onclick="toggleSetting('solar-nums-toggle','show_solar_nums')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Highlight Shabbat</div>
+            <div class="setting-desc">Mark every 7th day in gold</div>
+          </div>
+          <div class="toggle on" id="shabbat-hl-toggle" onclick="toggleSetting('shabbat-hl-toggle','highlight_shabbat')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Show Source Labels</div>
+            <div class="setting-desc">Display DSS / Orit Ge'ez source on each event</div>
+          </div>
+          <div class="toggle on" id="source-toggle" onclick="toggleSetting('source-toggle','show_source')"></div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">Reminders</div>
+        <button class="add-reminder-btn" onclick="openAddEvent()">
+          <i class="ri-add-circle-line"></i> Add New Reminder
+        </button>
+        <div id="reminders-list"></div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-group-title">About</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Calendar System</div>
+            <div class="setting-desc">364-day Qumran Solar Calendar — 4 seasons of 91 days — DSS primary authority</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Holiday Sources</div>
+            <div class="setting-desc">Dead Sea Scrolls calendrical texts (4Q320-330, 11Q19) and Orit Ge'ez Ethiopian canon</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-name">Version</div>
+            <div class="setting-desc">ACR Solar 1.0 — Ancient Covenant Record</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SABBATH PRAYERS VIEW -->
+    <div class="view" id="sabbath-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Sabbath Prayers</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">Five services for the Shabbat day &#x2014; Saturday sunrise to Sunday sunrise</p>
+      </div>
+      <div id="services-list">
+        <div class="service-card" onclick="openService(0)"><div class="service-num">1</div><div class="service-info"><div class="si-title">Preparation for the Sabbath</div><div class="si-desc">Purification before standing before YHWH</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+        <div class="service-card" onclick="openService(1)"><div class="service-num">2</div><div class="service-info"><div class="si-title">Sabbath Sunrise Service</div><div class="si-desc">Opening of the Sabbath at first light</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+        <div class="service-card" onclick="openService(2)"><div class="service-num">3</div><div class="service-info"><div class="si-title">Midday Sabbath Service</div><div class="si-desc">Covenant reading and communal meal</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+        <div class="service-card" onclick="openService(3)"><div class="service-num">4</div><div class="service-info"><div class="si-title">Evening Watch Service</div><div class="si-desc">Meditation during the night of the Sabbath</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+        <div class="service-card" onclick="openService(4)"><div class="service-num">5</div><div class="service-info"><div class="si-title">Sabbath Sunday Sunrise Closing</div><div class="si-desc">Completion of the Sabbath at first light</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+      </div>
+    </div>
+
+    <!-- PRAYERS VIEW -->
+    <div class="view" id="prayers-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Prayer Library</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">34 categories &#x2014; DSS and Orit Ge&#x2019;ez sources only</p>
+      </div>
+      <div id="prayers-list"></div>
+    </div>
+
+    <div class="view" id="sabbath-view">
+      <div style="margin-bottom:20px;"><h2 style="font-size:22px;font-weight:800;">Sabbath Prayers</h2><p style="font-size:13px;color:var(--text3);margin-top:4px;">Five services &#x2014; Saturday sunrise to Sunday sunrise</p></div>
+      <div class="service-card" onclick="openService(0)"><div class="service-num">1</div><div class="service-info"><div class="si-title">Preparation for the Sabbath</div><div class="si-desc">Purification before standing before YHWH</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+      <div class="service-card" onclick="openService(1)"><div class="service-num">2</div><div class="service-info"><div class="si-title">Sabbath Sunrise Service</div><div class="si-desc">Opening of the Sabbath at first light</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+      <div class="service-card" onclick="openService(2)"><div class="service-num">3</div><div class="service-info"><div class="si-title">Midday Sabbath Service</div><div class="si-desc">Covenant reading and communal meal</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+      <div class="service-card" onclick="openService(3)"><div class="service-num">4</div><div class="service-info"><div class="si-title">Evening Watch Service</div><div class="si-desc">Meditation during the night of the Sabbath</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+      <div class="service-card" onclick="openService(4)"><div class="service-num">5</div><div class="service-info"><div class="si-title">Sabbath Sunday Sunrise Closing</div><div class="si-desc">Completion of the Sabbath at first light</div></div><i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;"></i></div>
+    </div>
+    <div class="view" id="prayers-view">
+      <div style="margin-bottom:20px;"><h2 style="font-size:22px;font-weight:800;">Prayer Library</h2><p style="font-size:13px;color:var(--text3);margin-top:4px;">34 categories &#x2014; DSS and Orit Ge&#x2019;ez sources only</p></div>
+      <div id="prayers-list"></div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomnav">
+    <div class="nav-item active" id="nav-month" onclick="switchView('month')">
+      <i class="ri-calendar-2-line"></i>
+      <span>Month</span>
+    </div>
+    <div class="nav-item" id="nav-agenda" onclick="switchView('agenda')">
+      <i class="ri-list-check-3"></i>
+      <span>Agenda</span>
+    </div>
+    <div class="nav-item" id="nav-sun" onclick="switchView('sun')">
+      <i class="ri-sun-line"></i>
+      <span>Sun Times</span>
+    </div>
+    <div class="nav-item" id="nav-year" onclick="switchView('year')">
+      <i class="ri-calendar-line"></i>
+      <span>Year</span>
+    </div>
+    <div class="nav-item" id="nav-settings" onclick="switchView('settings')">
+      <i class="ri-settings-3-line"></i>
+      <span>Settings</span>
+    </div>
+    <div class="nav-item" id="nav-sabbath" onclick="switchView('sabbath')">
+      <i class="ri-book-2-line"></i>
+      <span>Sabbath</span>
+    </div>
+    <div class="nav-item" id="nav-prayers" onclick="switchView('prayers')">
+      <i class="ri-heart-2-line"></i>
+      <span>Prayers</span>
+    </div>
+  </div>
+</div>
+
+<!-- ADD REMINDER MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title">Add Reminder</div>
+
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-input" id="rem-title" placeholder="Reminder title...">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-input" id="rem-date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Time</label>
+        <input type="time" class="form-input" id="rem-time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-input" id="rem-notes" rows="3" placeholder="Optional notes..." style="resize:none;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="color-picker">
+        <div class="color-opt" data-color="#F5C842" style="width:32px;height:32px;border-radius:50%;background:#F5C842;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#F5C842',this)"></div>
+        <div class="color-opt" data-color="#4B8EFF" style="width:32px;height:32px;border-radius:50%;background:#4B8EFF;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#4B8EFF',this)"></div>
+        <div class="color-opt" data-color="#36D399" style="width:32px;height:32px;border-radius:50%;background:#36D399;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#36D399',this)"></div>
+        <div class="color-opt" data-color="#FF6B8A" style="width:32px;height:32px;border-radius:50%;background:#FF6B8A;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#FF6B8A',this)"></div>
+        <div class="color-opt" data-color="#9B6DFF" style="width:32px;height:32px;border-radius:50%;background:#9B6DFF;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#9B6DFF',this)"></div>
+        <div class="color-opt" data-color="#FF8C42" style="width:32px;height:32px;border-radius:50%;background:#FF8C42;cursor:pointer;border:3px solid transparent;" onclick="selectColor('#FF8C42',this)"></div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="saveReminder()">Save Reminder</button>
+    <button class="btn-cancel" onclick="document.getElementById('modal-overlay').classList.remove('open')">Cancel</button>
+  </div>
+</div>
+
+<!-- EVENT DETAIL MODAL -->
+<div id="event-modal-overlay" onclick="closeEventModal(event)" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);">
+  <div id="event-modal-sheet" onclick="event.stopPropagation()" style="background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:24px 24px 48px;max-height:80vh;overflow-y:auto;border:1px solid var(--border2);border-bottom:none;">
+    <div class="modal-handle"></div>
+    <div id="event-detail-content"></div>
+  </div>
+</div>
+
+
+<!-- SHABBAT MODE OVERLAY -->
+<div id="shabbat-overlay">
+  <div class="shab-topbar">
+    <button onclick="closeShabbatMode()" style="background:rgba(255,255,255,0.08);border:none;color:#C8971F;font-size:20px;cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="ri-close-line"></i></button>
+    <span style="color:#C8971F;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;"><i class="ri-moon-clear-fill"></i> Shabbat Mode</span>
+  </div>
+  <div class="shab-inner">
+    <div style="text-align:center;font-family:'Segoe UI Historic','Noto Sans Phoenician',serif;font-size:40px;color:#111;margin-bottom:8px;">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+    <div style="font-family:Arial,sans-serif;font-size:20px;font-weight:700;color:#222;text-align:center;margin-bottom:4px;">Shabbat &#x2014; The Seventh Day</div>
+    <div style="font-family:Arial,sans-serif;font-size:12px;color:#666;text-align:center;margin-bottom:20px;font-style:italic;">DSS and Orit Ge&#x2019;ez Solar Calendar &#x2014; Day begins at sunrise</div>
+    <div class="shab-times-row">
+      <div class="shab-time-block"><div class="stb-label">Shabbat Begins</div><div class="stb-time" id="shab-start-time">--:--</div><div class="stb-day">Saturday</div><div class="stb-note">At first light &#x2014; when the sun rises</div></div>
+      <div class="shab-time-block"><div class="stb-label">Shabbat Ends</div><div class="stb-time" id="shab-end-time">--:--</div><div class="stb-day">Sunday</div><div class="stb-note">At first light &#x2014; when the sun rises</div></div>
+    </div>
+    <div class="shab-duration" id="shab-duration">Duration: approximately 24 hours</div>
+    <div class="shab-countdown" id="shab-countdown">Calculating...</div>
+    <div style="background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid #e0dcd4;">
+      <div class="tp-section-header">Why Sunrise to Sunrise</div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#444;line-height:1.8;margin-top:8px;">The ancient Hebrew solar day runs from morning to morning. Yovelim states in the Orit Ge&#x2019;ez that the day runs from morning to the following day at even-tide. Bereshit 1 in the DSS establishes light came first &#x2014; day preceded night. The sunset-to-sunset reckoning follows the Babylonian lunisolar calendar adopted by Rabbinic tradition after the exile.</p>
+      <div style="font-family:Arial,sans-serif;font-size:11px;color:#888;margin-top:8px;font-style:italic;">Source: Yovelim 2:9 &#x2014; Damascus Document CD Columns 10-11 &#x2014; 4QCalendrical Texts 4Q320-330</div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;border:1px solid #e0dcd4;">
+      <div class="tp-section-header">Shabbat Rules &#x2014; Damascus Document and Community Rule</div>
+      <div class="shab-rule-item"><div class="shab-rule-num">1</div><div><div class="shab-rule-text">No work of any kind from Saturday sunrise to Sunday sunrise</div><div class="shab-rule-src">Damascus Document CD Column 10</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">2</div><div><div class="shab-rule-text">No commerce or financial transaction</div><div class="shab-rule-src">Damascus Document CD Column 11</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">3</div><div><div class="shab-rule-text">No travel beyond 2000 cubits from your dwelling</div><div class="shab-rule-src">Damascus Document CD Column 10:21</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">4</div><div><div class="shab-rule-text">No preparing or cooking food &#x2014; eat what was prepared before Shabbat</div><div class="shab-rule-src">Damascus Document CD Column 10</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">5</div><div><div class="shab-rule-text">No carrying objects from private to public space</div><div class="shab-rule-src">Damascus Document CD Column 11</div></div></div>
+      <div class="shab-rule-item"><div class="shab-rule-num">6</div><div><div class="shab-rule-text">Speech restricted to matters of holiness and necessity</div><div class="shab-rule-src">Community Rule 1QS</div></div></div>
+      <div class="shab-rule-item" style="border-bottom:none;"><div class="shab-rule-num">7</div><div><div class="shab-rule-text">Gather for prayer at three times &#x2014; sunrise, solar noon, and sunset</div><div class="shab-rule-src">Community Rule 1QS Column 10 &#x2014; 4QCalendrical Texts</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT PAGE OVERLAY -->
+<div id="text-page-overlay">
+  <div id="text-page-topbar">
+    <button id="text-page-back" onclick="closeTextPage()"><i class="ri-arrow-left-line"></i></button>
+    <span id="text-page-label">ACR Solar</span>
+  </div>
+  <div id="text-page-content"><div class="tp-inner" id="text-page-inner"></div></div>
+  <div id="tp-voice-bar">
+    <button class="tp-vbtn" id="tp-play-btn" onclick="tpPlay()"><i class="ri-play-circle-line"></i> Play</button>
+    <button class="tp-vbtn" onclick="tpPause()"><i class="ri-pause-circle-line"></i></button>
+    <button class="tp-vbtn" onclick="tpStop()"><i class="ri-stop-circle-line"></i></button>
+    <select class="tp-vselect" id="tp-speed" onchange="tpSetSpeed(this.value)">
+      <option value="0.7">0.7x</option><option value="0.85">0.85x</option>
+      <option value="1" selected>1x</option><option value="1.2">1.2x</option>
+      <option value="1.5">1.5x</option>
+    </select>
+    <select class="tp-vselect" id="tp-voice" onchange="tpSetVoice(this.value)" style="max-width:110px;"></select>
+    <div id="tp-vstatus">--</div>
+  </div>
+</div>
+
+<script>
+// ─── SOLAR CALENDAR ENGINE ────────────────────────────────────────────────────
+
+// The 364-day Qumran solar calendar
+// Year begins at Spring Equinox
+// 4 seasons x 91 days = 364 days
+// Each season: Month1=30d, Month2=30d, Month3=31d
+// The year 2025: Solar Year starts approx March 20 (spring equinox)
+
+var SOLAR_MONTHS = [
+  {num:1, name:'Aviv', season:'Spring', days:30},
+  {num:2, name:'Ziv', season:'Spring', days:30},
+  {num:3, name:'Sivan', season:'Spring', days:31},
+  {num:4, name:'Tammuz', season:'Summer', days:30},
+  {num:5, name:'Av', season:'Summer', days:30},
+  {num:6, name:'Elul', season:'Summer', days:31},
+  {num:7, name:'Ethanim', season:'Autumn', days:30},
+  {num:8, name:'Bul', season:'Autumn', days:30},
+  {num:9, name:'Kislev', season:'Autumn', days:31},
+  {num:10, name:'Tevet', season:'Winter', days:30},
+  {num:11, name:'Shevat', season:'Winter', days:30},
+  {num:12, name:'Adar', season:'Winter', days:31}
+];
+
+var SEASON_COLORS = {
+  Spring: '#10B981', Summer: '#F59E0B',
+  Autumn: '#EF4444', Winter: '#3B82F6'
+};
+
+// Get solar year start (spring equinox) for a given Gregorian year
+function getSolarYearStart(year) {
+  // Spring equinox is approx March 20-21
+  // For precision, use March 20 as the anchor
+  return new Date(year, 2, 20); // March 20
+}
+
+// Convert Gregorian date to solar calendar date
+function gregorianToSolar(date) {
+  var year = date.getFullYear();
+  var yearStart = getSolarYearStart(year);
+  var dayOfYear = Math.floor((date - yearStart) / 86400000);
+
+  // If before this year's equinox, use previous year
+  if (dayOfYear < 0) {
+    year -= 1;
+    yearStart = getSolarYearStart(year);
+    dayOfYear = Math.floor((date - yearStart) / 86400000);
+  }
+
+  // Solar year is 364 days; day 364+ is next year
+  if (dayOfYear >= 364) {
+    year += 1;
+    yearStart = getSolarYearStart(year);
+    dayOfYear = Math.floor((date - yearStart) / 86400000);
+  }
+
+  var remaining = dayOfYear;
+  var solarMonth = 0, solarDay = 0;
+  for (var i = 0; i < SOLAR_MONTHS.length; i++) {
+    if (remaining < SOLAR_MONTHS[i].days) {
+      solarMonth = i + 1;
+      solarDay = remaining + 1;
+      break;
+    }
+    remaining -= SOLAR_MONTHS[i].days;
+  }
+  if (solarMonth === 0) { solarMonth = 12; solarDay = SOLAR_MONTHS[11].days; }
+
+  // Day of solar week (starts Sunday = 1, Shabbat = 7)
+  var dayOfSolarYear = dayOfYear;
+  var shabbat = ((dayOfSolarYear % 7) === 6); // every 7th day from equinox
+  var weekDay = (dayOfSolarYear % 7) + 1; // 1=Sun... 7=Shab
+
+  return {
+    year: year,
+    month: solarMonth,
+    day: solarDay,
+    monthInfo: SOLAR_MONTHS[solarMonth - 1],
+    dayOfYear: dayOfYear + 1,
+    weekDay: weekDay,
+    isShabbat: shabbat
+  };
+}
+
+// Convert solar date back to Gregorian
+function solarToGregorian(solarYear, solarMonth, solarDay) {
+  var yearStart = getSolarYearStart(solarYear);
+  var daysOffset = 0;
+  for (var i = 0; i < solarMonth - 1; i++) {
+    daysOffset += SOLAR_MONTHS[i].days;
+  }
+  daysOffset += solarDay - 1;
+  return new Date(yearStart.getTime() + daysOffset * 86400000);
+}
+
+// ─── HOLIDAYS ─────────────────────────────────────────────────────────────────
+
+var HOLIDAYS = [
+  {month:1,day:1,name:'New Year — Rosh HaShanah',desc:'First day of the first month — Creation of Light — Beginning of the sacred year in the 364-day solar calendar. Attested in 4QCalendrical Text A.',source:'DSS',color:'#F5C842',icon:'ri-sun-rise-line'},
+  {month:1,day:14,name:'Pesach Eve',desc:'Preparation day — The 14th of the first month at evening. Slaughter of the Passover lamb. Confirmed in the Temple Scroll (11Q19) and 4QMMT.',source:'DSS/Orit',color:'#EF4444',icon:'ri-fire-line'},
+  {month:1,day:15,name:'Pesach — First Day',desc:'Passover — First day of the Festival of Unleavened Bread. The night of the Exodus from Egypt. Seven-day festival begins.',source:'DSS/Orit',color:'#EF4444',icon:'ri-leaf-line'},
+  {month:1,day:21,name:'Pesach — Seventh Day',desc:'Final day of Passover — Crossing of the Sea of Reeds. End of the Festival of Unleavened Bread. Confirmed in 4QCalendrical Text.',source:'DSS/Orit',color:'#EF4444',icon:'ri-water-flash-line'},
+  {month:1,day:26,name:'First Fruits of Barley',desc:'Wave sheaf offering — The Sunday after the full Pesach week. The 26th of the first month. Beginning of the count toward Shavuot. Confirmed in 11Q19 Temple Scroll.',source:'DSS',color:'#10B981',icon:'ri-seedling-line'},
+  {month:2,day:15,name:'Pesach Sheni',desc:'Second Passover — For those who were ritually impure or on a distant journey during the first Pesach. Attested in DSS calendrical texts.',source:'DSS/Orit',color:'#F97316',icon:'ri-repeat-line'},
+  {month:3,day:15,name:'Shavuot — Feast of Weeks',desc:'Feast of Weeks — 50 days from the First Fruits offering. Revelation at Sinai. First Fruits of the Wheat harvest. One of the three pilgrimage festivals. Confirmed in 4Q319-330.',source:'DSS/Orit',color:'#8B5CF6',icon:'ri-book-2-line'},
+  {month:3,day:31,name:'Summer Tekufah',desc:'Seasonal marker — 91st day of the solar year. The turning point into summer. Not counted in the weekly cycle. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:4,day:1,name:'New Season — Summer',desc:'First day of the summer season. Beginning of the second quarter of the solar year.',source:'DSS',color:'#F59E0B',icon:'ri-sun-line'},
+  {month:5,day:15,name:'Festival of New Wine',desc:'New Wine offering — Festival of the first wine of the summer harvest. Confirmed in 4QCalendrical Texts (4Q327) as falling on the 15th of the 5th month.',source:'DSS',color:'#EC4899',icon:'ri-goblet-line'},
+  {month:6,day:22,name:'Festival of New Oil',desc:'New Oil offering — Festival of the first olive oil pressed from the summer harvest. Confirmed in 4Q327 Calendrical Text. Falls on the 22nd of the 6th month.',source:'DSS',color:'#F59E0B',icon:'ri-drop-line'},
+  {month:6,day:23,name:'Wood Offering — Day 1',desc:'Six-day Wood Offering festival begins. The community brings wood for the altar. Temple Scroll (11Q19) devotes extensive detail to this festival. Runs through the 28th of the 6th month.',source:'DSS',color:'#92400E',icon:'ri-home-3-line'},
+  {month:6,day:31,name:'Autumn Tekufah',desc:'Seasonal marker — 182nd day of the solar year. The turning point into autumn. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:7,day:1,name:'Yom Teruah',desc:'Day of Trumpet Blasts — First day of the seventh month. Autumn New Year. Beginning of the third quarter of the solar year. Major festival of alarm and gathering.',source:'DSS/Orit',color:'#3B82F6',icon:'ri-alarm-warning-line'},
+  {month:7,day:10,name:'Yom Kippur',desc:'Day of Atonement — The tenth of the seventh month. The High Priest enters the Holy of Holies. Complete fast from sunset to sunset. The most solemn day of the sacred year. Confirmed across all DSS legal texts.',source:'DSS/Orit',color:'#1E3A8A',icon:'ri-shield-star-line'},
+  {month:7,day:15,name:'Sukkot — First Day',desc:'Feast of Tabernacles — First day of the seven-day harvest festival. Pilgrimage to the sanctuary. Construction of booths. Celebrated with great joy and abundant sacrifice.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:21,name:'Sukkot — Seventh Day',desc:'Final day of Sukkot — The seventh day of the Feast of Tabernacles. Day of great ceremony and water libation.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:22,name:'Shemini Atzeret',desc:'Eighth Day Assembly — The day after Sukkot. A closing solemn gathering distinct from the seven days of Tabernacles. Confirmed in DSS legal texts.',source:'DSS/Orit',color:'#6366F1',icon:'ri-group-line'},
+  {month:9,day:31,name:'Winter Tekufah',desc:'Seasonal marker — 273rd day of the solar year. The turning point into winter. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:10,day:1,name:'New Season — Winter',desc:'First day of the winter season. Beginning of the fourth and final quarter of the solar year.',source:'DSS',color:'#3B82F6',icon:'ri-snowy-line'},
+  {month:12,day:14,name:'Purim — Orit Ge\'ez',desc:'Festival of Lots — The 14th of the 12th month. Based on the Book of Esther as preserved in the Orit Ge\'ez Ethiopian canon. Celebration of deliverance.',source:'Orit',color:'#A855F7',icon:'ri-star-smile-line'},
+  {month:12,day:31,name:'Year End Tekufah',desc:'Seasonal marker — 364th and final day of the solar year. The turning point back to spring. Completes the full cycle. The new year begins with the spring equinox.',source:'DSS',color:'#64748B',icon:'ri-clockwise-line'},
+];
+
+// Shabbat check — in the solar calendar every 7th day from the equinox is Shabbat
+function isShabbat(date) {
+  var s = gregorianToSolar(date);
+  return s.isShabbat;
+}
+
+// Get holidays for a given solar month and day
+function getHolidays(solarMonth, solarDay) {
+  return HOLIDAYS.filter(function(h) { return h.month === solarMonth && h.day === solarDay; });
+}
+
+// Get ALL holidays for a Gregorian date
+function getHolidaysForGregorian(date) {
+  var s = gregorianToSolar(date);
+  return getHolidays(s.month, s.day);
+}
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+
+var today = new Date();
+today.setHours(0,0,0,0);
+var viewDate = new Date(today);
+var selectedDate = new Date(today);
+var currentView = 'month';
+var userLocation = null;
+var reminders = [];
+var settings = {
+  shabbat_alert: true, holyday_alert: true, sunrise_alert: false,
+  show_solar_nums: true, highlight_shabbat: true, show_source: true,
+  alert_mins: 30
+};
+var selectedColor = '#F5C842';
+var alertTimer = null;
+
+try {
+  var saved = localStorage.getItem('acr_solar_settings');
+  if (saved) settings = Object.assign(settings, JSON.parse(saved));
+  var savedRem = localStorage.getItem('acr_solar_reminders');
+  if (savedRem) reminders = JSON.parse(savedRem);
+  var savedLoc = localStorage.getItem('acr_solar_location');
+  if (savedLoc) {
+    userLocation = JSON.parse(savedLoc);
+    document.getElementById('location-prompt').style.display = 'none';
+  }
+} catch(e) {}
+
+function saveSettings() {
+  localStorage.setItem('acr_solar_settings', JSON.stringify(settings));
+}
+function saveReminders() {
+  localStorage.setItem('acr_solar_reminders', JSON.stringify(reminders));
+}
+
+// ─── VIEWS ────────────────────────────────────────────────────────────────────
+
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.getElementById(name + '-view').classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  currentView = name;
+  if (name === 'month') renderMonth();
+  if (name === 'agenda') renderAgenda();
+  if (name === 'sun') renderSunView();
+  if (name === 'year') renderYear();
+  if (name === 'settings') renderSettings();
+}
+
+// ─── MONTH VIEW ───────────────────────────────────────────────────────────────
+
+function renderMonth() {
+  var sd = gregorianToSolar(viewDate);
+  var season = sd.monthInfo ? sd.monthInfo.season : 'Spring';
+  var seasonColor = SEASON_COLORS[season] || '#F5C842';
+
+  // Month title
+  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-title').innerHTML =
+    monthNames[viewDate.getMonth()] + ' <span>' + viewDate.getFullYear() + '</span>';
+
+  // Solar month sub
+  var solarM = gregorianToSolar(new Date(viewDate.getFullYear(), viewDate.getMonth(), 15));
+  document.getElementById('solar-month-sub').textContent =
+    'Solar Month ' + solarM.month + ' — ' + SOLAR_MONTHS[solarM.month-1].name + ' (' + season + ')';
+
+  // Season dot
+  document.getElementById('season-dot').style.background = seasonColor;
+
+  // Solar info
+  var solToday = gregorianToSolar(today);
+  document.getElementById('sol-name-text').textContent =
+    season + ' — Solar Year ' + solToday.year + ' — Day ' + solToday.dayOfYear + ' of 364';
+  document.getElementById('sol-day-count').textContent = solToday.dayOfYear;
+
+  // Build grid
+  var grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  var firstDay = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
+  var lastDay = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0);
+  var startDow = firstDay.getDay(); // 0=Sun
+
+  // Previous month days
+  for (var i = 0; i < startDow; i++) {
+    var prevDate = new Date(firstDay);
+    prevDate.setDate(prevDate.getDate() - (startDow - i));
+    grid.appendChild(buildCalDay(prevDate, true));
+  }
+
+  // Current month days
+  for (var d = 1; d <= lastDay.getDate(); d++) {
+    var curDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
+    grid.appendChild(buildCalDay(curDate, false));
+  }
+
+  // Next month days to fill
+  var total = startDow + lastDay.getDate();
+  var remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (var j = 1; j <= remaining; j++) {
+    var nextDate = new Date(lastDay);
+    nextDate.setDate(nextDate.getDate() + j);
+    grid.appendChild(buildCalDay(nextDate, true));
+  }
+
+  renderSelectedDayEvents();
+}
+
+function buildCalDay(date, otherMonth) {
+  var cell = document.createElement('div');
+  cell.className = 'cal-day';
+  if (otherMonth) cell.classList.add('other-month');
+
+  var isToday = date.getTime() === today.getTime();
+  var isSel = date.getTime() === selectedDate.getTime();
+  var shab = settings.highlight_shabbat && isShabbat(date);
+
+  if (isToday) cell.classList.add('today');
+  if (isSel && !isToday) cell.classList.add('selected');
+  if (shab && !isSel && !isToday) cell.classList.add('shabbat-day');
+
+  var sd = gregorianToSolar(date);
+  var holidays = getHolidays(sd.month, sd.day);
+
+  var numDiv = document.createElement('div');
+  numDiv.textContent = date.getDate();
+  cell.appendChild(numDiv);
+
+  if (settings.show_solar_nums && !otherMonth) {
+    var solDiv = document.createElement('div');
+    solDiv.className = 'sol-day';
+    solDiv.textContent = sd.month + '/' + sd.day;
+    cell.appendChild(solDiv);
+  }
+
+  if (holidays.length > 0) {
+    var dotContainer = document.createElement('div');
+    dotContainer.className = 'holiday-dot';
+    holidays.slice(0,3).forEach(function(h) {
+      var dot = document.createElement('div');
+      dot.className = 'h-dot';
+      dot.style.background = h.color;
+      dotContainer.appendChild(dot);
+    });
+    cell.appendChild(dotContainer);
+  }
+
+  // Reminder dots
+  var dayStr = date.toISOString().split('T')[0];
+  var dayRems = reminders.filter(function(r) { return r.date === dayStr; });
+  if (dayRems.length > 0 && holidays.length < 3) {
+    var rdot = document.createElement('div');
+    rdot.className = 'h-dot';
+    rdot.style.background = dayRems[0].color || '#4B8EFF';
+    if (!cell.querySelector('.holiday-dot')) {
+      var dc = document.createElement('div'); dc.className = 'holiday-dot';
+      dc.appendChild(rdot); cell.appendChild(dc);
+    } else {
+      cell.querySelector('.holiday-dot').appendChild(rdot);
+    }
+  }
+
+  cell.addEventListener('click', function() {
+    selectedDate = new Date(date);
+    renderMonth();
+  });
+
+  return cell;
+}
+
+function renderSelectedDayEvents() {
+  var sd = gregorianToSolar(selectedDate);
+  var holidays = getHolidays(sd.month, sd.day);
+  var dayStr = selectedDate.toISOString().split('T')[0];
+  var dayRems = reminders.filter(function(r) { return r.date === dayStr; });
+
+  // Label
+  var isToday = selectedDate.getTime() === today.getTime();
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Shabbat'];
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var label = isToday ? 'Today' :
+    days[selectedDate.getDay()] + ', ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getDate();
+  document.getElementById('selected-label-text').textContent = label;
+
+  var list = document.getElementById('events-list');
+  var noEvt = document.getElementById('no-events');
+  list.innerHTML = '';
+
+  var allEvents = holidays.concat(dayRems.map(function(r) {
+    return { name: r.title, desc: r.notes || '', source: 'Reminder', color: r.color || '#4B8EFF', icon: 'ri-alarm-line', isReminder: true, time: r.time };
+  }));
+
+  if (allEvents.length === 0) {
+    noEvt.style.display = 'block';
+  } else {
+    noEvt.style.display = 'none';
+    allEvents.forEach(function(evt) {
+      var card = document.createElement('div');
+      card.className = 'event-card';
+      card.style.setProperty('--evt-color', evt.color);
+      card.style.cssText += '; border-left: 4px solid ' + evt.color + ';';
+
+      var iconBg = hexToRgba(evt.color, 0.15);
+      card.innerHTML =
+        '<div class="event-icon" style="background:' + iconBg + ';color:' + evt.color + '">' +
+          '<i class="' + (evt.icon || 'ri-calendar-event-line') + '"></i>' +
+        '</div>' +
+        '<div class="event-content">' +
+          '<div class="event-name">' + evt.name + '</div>' +
+          '<div class="event-desc">' + (evt.desc || '') + '</div>' +
+          (settings.show_source && evt.source && evt.source !== 'Reminder' ?
+            '<div class="event-source">' + evt.source + '</div>' : '') +
+          (evt.time ? '<div class="event-source">' + evt.time + '</div>' : '') +
+        '</div>';
+
+      if (!evt.isReminder) {
+        card.addEventListener('click', function() { showEventDetail(evt, sd); });
+      }
+      list.appendChild(card);
+    });
+  }
+}
+
+function showEventDetail(evt, sd) {
+  var greg = solarToGregorian(sd.year, evt.month, evt.day);
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Shabbat'];
+
+  var iconBg = hexToRgba(evt.color, 0.15);
+  var sourceBg = hexToRgba(evt.color, 0.1);
+
+  document.getElementById('event-detail-content').innerHTML =
+    '<div class="event-detail-header">' +
+      '<div class="event-detail-icon" style="background:' + iconBg + ';color:' + evt.color + '">' +
+        '<i class="' + (evt.icon || 'ri-calendar-event-line') + '"></i>' +
+      '</div>' +
+      '<div>' +
+        '<div class="event-detail-title">' + evt.name + '</div>' +
+        '<div class="event-detail-date">Solar Month ' + evt.month + ', Day ' + evt.day + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Description</div>' +
+      '<div class="detail-text">' + evt.desc + '</div>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Primary Source</div>' +
+      '<span class="source-badge" style="background:' + sourceBg + ';color:' + evt.color + '">' +
+        evt.source +
+      '</span>' +
+    '</div>' +
+    '<div class="detail-section">' +
+      '<div class="detail-label">Solar Calendar Position</div>' +
+      '<div class="detail-text">Month ' + evt.month + ' (' + SOLAR_MONTHS[evt.month-1].name + ') — Day ' + evt.day + '<br>' +
+      SOLAR_MONTHS[evt.month-1].season + ' Season</div>' +
+    '</div>';
+
+  document.getElementById('event-modal-overlay').style.display = 'flex';
+}
+
+function closeEventModal(e) {
+  if (e.target === document.getElementById('event-modal-overlay')) {
+    document.getElementById('event-modal-overlay').style.display = 'none';
+  }
+}
+
+// ─── AGENDA VIEW ──────────────────────────────────────────────────────────────
+
+function renderAgenda() {
+  var container = document.getElementById('agenda-content');
+  container.innerHTML = '';
+
+  // Group all holidays by solar month
+  var byMonth = {};
+  HOLIDAYS.forEach(function(h) {
+    if (!byMonth[h.month]) byMonth[h.month] = [];
+    byMonth[h.month].push(h);
+  });
+
+  // Add reminders
+  reminders.forEach(function(r) {
+    var d = new Date(r.date + 'T12:00:00');
+    var sd = gregorianToSolar(d);
+    if (!byMonth[sd.month]) byMonth[sd.month] = [];
+    byMonth[sd.month].push({
+      month: sd.month, day: sd.day, name: r.title,
+      desc: r.notes || '', source: 'Reminder', color: r.color || '#4B8EFF',
+      icon: 'ri-alarm-line', isReminder: true
+    });
+  });
+
+  var solToday = gregorianToSolar(today);
+
+  for (var m = 1; m <= 12; m++) {
+    var events = byMonth[m];
+    if (!events || events.length === 0) continue;
+
+    events.sort(function(a,b){ return a.day - b.day; });
+
+    var sec = document.createElement('div');
+    sec.className = 'month-section';
+
+    var mInfo = SOLAR_MONTHS[m-1];
+    var seasonColor = SEASON_COLORS[mInfo.season];
+    var isCurrent = (m === solToday.month);
+
+    sec.innerHTML =
+      '<div class="month-section-title" style="' + (isCurrent ? 'color:' + seasonColor : '') + '">' +
+        'Month ' + m + ' — ' + mInfo.name +
+        ' <span style="font-size:12px;color:var(--text3);font-weight:500;">(' + mInfo.season + ')</span>' +
+      '</div>';
+
+    events.forEach(function(evt) {
+      var item = document.createElement('div');
+      item.className = 'agenda-item';
+
+      // Check if today
+      var greg = solarToGregorian(solToday.year, evt.month, evt.day);
+      var isToday = (greg.getTime() === today.getTime());
+
+      item.innerHTML =
+        '<div class="agenda-date" style="' + (isToday ? 'color:' + evt.color : '') + '">' +
+          '<div class="ad-day">' + evt.day + '</div>' +
+          '<div class="ad-dow">' + mInfo.name.substring(0,3) + '</div>' +
+        '</div>' +
+        '<div class="agenda-dot" style="background:' + evt.color + ';min-height:48px;"></div>' +
+        '<div class="agenda-info">' +
+          '<div class="ai-name">' + evt.name + '</div>' +
+          '<div class="ai-desc">' + evt.desc.substring(0,120) + (evt.desc.length > 120 ? '...' : '') + '</div>' +
+          (settings.show_source && evt.source !== 'Reminder' ?
+            '<div class="ai-source">' + evt.source + '</div>' : '') +
+        '</div>';
+
+      sec.appendChild(item);
+    });
+
+    container.appendChild(sec);
+  }
+}
+
+// ─── SUN VIEW ─────────────────────────────────────────────────────────────────
+
+function requestLocation() {
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      localStorage.setItem('acr_solar_location', JSON.stringify(userLocation));
+      document.getElementById('location-prompt').style.display = 'none';
+      renderSunView();
+      scheduleAlerts();
+    }, function() {
+      // Use a default location (Jerusalem) as fallback
+      userLocation = { lat: 31.7683, lon: 35.2137 };
+      document.getElementById('location-prompt').style.display = 'none';
+      renderSunView();
+    });
+  }
+}
+
+// Sun position calculations (simplified but accurate to ~minutes)
+function getSunTimes(date, lat, lon) {
+  var J2000 = 2451545.0;
+  var JD = date.getTime()/86400000 + 2440587.5;
+  var n = JD - J2000;
+
+  var L = (280.46 + 0.9856474 * n) % 360;
+  var g = ((357.528 + 0.9856003 * n) % 360) * Math.PI / 180;
+  var lam = (L + 1.915 * Math.sin(g) + 0.02 * Math.sin(2*g)) * Math.PI / 180;
+  var eps = 23.439 * Math.PI / 180;
+  var dec = Math.asin(Math.sin(eps) * Math.sin(lam));
+  var RA = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam));
+
+  var latR = lat * Math.PI / 180;
+  var cosHA = (Math.cos(90.833 * Math.PI / 180) - Math.sin(latR) * Math.sin(dec)) / (Math.cos(latR) * Math.cos(dec));
+
+  if (cosHA > 1) return null; // no sunrise
+  if (cosHA < -1) return null; // no sunset
+
+  var HA = Math.acos(cosHA) * 180 / Math.PI;
+
+  // Equation of time correction
+  var EqT = 4 * (L - 0.0057183 - RA * 180/Math.PI + 360 * Math.round((L - RA * 180/Math.PI)/360));
+  var lonCorr = lon / 15;
+  var tzOffset = -date.getTimezoneOffset() / 60;
+
+  var noon = 12 - lonCorr + EqT/60 + (tzOffset - lon/15);
+  var sunriseH = noon - HA/15;
+  var sunsetH = noon + HA/15;
+
+  function hToTime(h) {
+    h = ((h % 24) + 24) % 24;
+    var hh = Math.floor(h);
+    var mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh++; mm = 0; }
+    return { h: hh, m: mm, total: h };
+  }
+
+  var sr = hToTime(sunriseH);
+  var ss = hToTime(sunsetH);
+  var nf = hToTime(sunsetH + 0.3); // nightfall ~18 min after sunset
+
+  return {
+    sunrise: sr, sunset: ss, nightfall: nf,
+    dayLength: sunsetH - sunriseH,
+    sunriseStr: pad(sr.h) + ':' + pad(sr.m),
+    sunsetStr: pad(ss.h) + ':' + pad(ss.m),
+    nightfallStr: pad(nf.h) + ':' + pad(nf.m)
+  };
+}
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+function renderSunView() {
+  if (!userLocation) return;
+
+  var loc = userLocation;
+  var st = getSunTimes(today, loc.lat, loc.lon);
+  if (!st) return;
+
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('sun-date-label').textContent =
+    months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+
+  document.getElementById('sunrise-time').textContent = st.sunriseStr;
+  document.getElementById('sunset-time').textContent = st.sunsetStr;
+  document.getElementById('nightfall-time').textContent = st.nightfallStr;
+
+  var dl = st.dayLength;
+  var dlH = Math.floor(dl), dlM = Math.round((dl - dlH) * 60);
+  document.getElementById('day-length').textContent = dlH + 'h ' + pad(dlM) + 'm';
+
+  // Progress bar
+  var now = new Date();
+  var currentH = now.getHours() + now.getMinutes()/60;
+  var prog = Math.max(0, Math.min(100, (currentH - st.sunrise.total) / (st.sunset.total - st.sunrise.total) * 100));
+  document.getElementById('sun-progress').style.width = prog + '%';
+  document.getElementById('sun-dot').style.left = prog + '%';
+
+  // Shabbat notice
+  var shabbatNotice = document.getElementById('shabbat-notice');
+  var nowDay = today.getDay(); // 5=Friday
+  if (nowDay === 5) {
+    var minsToSunset = (st.sunset.total - currentH) * 60;
+    if (minsToSunset > 0 && minsToSunset < 120) {
+      shabbatNotice.style.display = 'block';
+      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at ' + st.sunsetStr + ' — ' + Math.round(minsToSunset) + ' minutes';
+    }
+  }
+
+  // Upcoming eves
+  renderUpcomingEves();
+
+  // Sync toggles
+  ['shabbat-toggle','holyday-toggle','sunrise-toggle'].forEach(function(id) {
+    var key = id.replace('-toggle','_alert').replace('-','_');
+    var el = document.getElementById(id);
+    if (el) el.className = 'toggle' + (settings[key] ? ' on' : '');
+  });
+}
+
+function renderUpcomingEves() {
+  var container = document.getElementById('upcoming-eves');
+  if (!container) return;
+  container.innerHTML = '';
+
+  var solToday = gregorianToSolar(today);
+  var upcoming = [];
+
+  // Find next 5 holy days that have sunset significance
+  var majorHolidays = HOLIDAYS.filter(function(h) {
+    return ['DSS/Orit','DSS','Orit'].indexOf(h.source) >= 0 &&
+           h.color !== '#64748B'; // exclude tekufah markers
+  });
+
+  majorHolidays.forEach(function(h) {
+    var greg = solarToGregorian(solToday.year, h.month, h.day);
+    if (greg >= today) {
+      var eveDate = new Date(greg);
+      eveDate.setDate(eveDate.getDate() - 1);
+      upcoming.push({ evt: h, date: greg, eve: eveDate });
+    }
+  });
+
+  upcoming.sort(function(a,b){ return a.date - b.date; });
+  upcoming.slice(0,5).forEach(function(u) {
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var iconBg = hexToRgba(u.evt.color, 0.12);
+    var card = document.createElement('div');
+    card.className = 'event-card';
+    card.style.borderLeft = '4px solid ' + u.evt.color;
+    card.innerHTML =
+      '<div class="event-icon" style="background:' + iconBg + ';color:' + u.evt.color + '">' +
+        '<i class="' + u.evt.icon + '"></i>' +
+      '</div>' +
+      '<div class="event-content">' +
+        '<div class="event-name">' + u.evt.name + '</div>' +
+        '<div class="event-desc">Begins at sunset</div>' +
+      '</div>' +
+      '<div class="event-meta">' +
+        '<div class="event-time">' + months[u.date.getMonth()] + ' ' + u.date.getDate() + '</div>' +
+      '</div>';
+    container.appendChild(card);
+  });
+}
+
+// ─── YEAR VIEW ────────────────────────────────────────────────────────────────
+
+function renderYear() {
+  var year = viewDate.getFullYear();
+  document.getElementById('year-title').textContent = year;
+
+  var grid = document.getElementById('year-grid');
+  grid.innerHTML = '';
+
+  var solToday = gregorianToSolar(today);
+
+  for (var m = 0; m < 12; m++) {
+    var mini = document.createElement('div');
+    mini.className = 'mini-month';
+    if (m === today.getMonth() && year === today.getFullYear()) {
+      mini.classList.add('current-month');
+    }
+
+    var firstDay = new Date(year, m, 1);
+    var lastDay = new Date(year, m+1, 0);
+    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // Count holidays this month
+    var holiCount = 0;
+    for (var d = 1; d <= lastDay.getDate(); d++) {
+      var td = new Date(year, m, d);
+      var sd = gregorianToSolar(td);
+      if (getHolidays(sd.month, sd.day).length > 0) holiCount++;
+    }
+
+    mini.innerHTML =
+      '<div class="mini-month-name">' + monthNames[m] +
+        '<span style="font-size:10px;color:var(--text3);">' + holiCount + ' events</span>' +
+      '</div>' +
+      '<div class="mini-grid" id="mini-' + m + '"></div>';
+
+    var mg = mini.querySelector('.mini-grid');
+    var startDow = firstDay.getDay();
+    for (var i = 0; i < startDow; i++) {
+      var blank = document.createElement('div'); blank.className = 'mini-cell';
+      mg.appendChild(blank);
+    }
+    for (var dd = 1; dd <= lastDay.getDate(); dd++) {
+      var cell = document.createElement('div');
+      cell.className = 'mini-cell';
+      var cDate = new Date(year, m, dd);
+      var csd = gregorianToSolar(cDate);
+      var hasHol = getHolidays(csd.month, csd.day).length > 0;
+      var isToday = cDate.getTime() === today.getTime();
+      if (isToday) cell.classList.add('today-mini');
+      else if (hasHol) cell.classList.add('has-event');
+      cell.textContent = dd;
+      mg.appendChild(cell);
+    }
+
+    var m2 = m; // closure
+    mini.addEventListener('click', function() {
+      viewDate = new Date(year, m2, 1);
+      switchView('month');
+    });
+
+    grid.appendChild(mini);
+  }
+}
+
+function prevYear() { viewDate.setFullYear(viewDate.getFullYear()-1); renderYear(); }
+function nextYear() { viewDate.setFullYear(viewDate.getFullYear()+1); renderYear(); }
+
+// ─── SETTINGS VIEW ────────────────────────────────────────────────────────────
+
+function renderSettings() {
+  // Sync all toggles
+  var toggleMap = {
+    'solar-nums-toggle': 'show_solar_nums',
+    'shabbat-hl-toggle': 'highlight_shabbat',
+    'source-toggle': 'show_source'
+  };
+  Object.keys(toggleMap).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.className = 'toggle' + (settings[toggleMap[id]] ? ' on' : '');
+  });
+
+  // Render reminders
+  renderRemindersList();
+}
+
+function renderRemindersList() {
+  var list = document.getElementById('reminders-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (reminders.length === 0) {
+    list.innerHTML = '<p style="color:var(--text3);font-size:14px;text-align:center;padding:16px 0;">No reminders yet</p>';
+    return;
+  }
+  reminders.forEach(function(r, i) {
+    var card = document.createElement('div');
+    card.className = 'reminder-card';
+    card.innerHTML =
+      '<div class="reminder-color" style="background:' + (r.color||'#4B8EFF') + '"></div>' +
+      '<div class="reminder-info">' +
+        '<div class="reminder-title">' + r.title + '</div>' +
+        '<div class="reminder-time">' + r.date + (r.time ? ' at ' + r.time : '') + '</div>' +
+      '</div>' +
+      '<i class="ri-delete-bin-line reminder-delete" onclick="deleteReminder(' + i + ')"></i>';
+    list.appendChild(card);
+  });
+}
+
+function deleteReminder(i) {
+  reminders.splice(i, 1);
+  saveReminders();
+  renderRemindersList();
+  renderMonth();
+}
+
+// ─── REMINDERS / MODAL ────────────────────────────────────────────────────────
+
+function openAddEvent() {
+  document.getElementById('rem-title').value = '';
+  document.getElementById('rem-date').value = today.toISOString().split('T')[0];
+  document.getElementById('rem-time').value = '';
+  document.getElementById('rem-notes').value = '';
+  selectColor('#F5C842', document.querySelector('.color-opt'));
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+function selectColor(color, el) {
+  selectedColor = color;
+  document.querySelectorAll('.color-opt').forEach(function(c) {
+    c.style.borderColor = 'transparent';
+  });
+  if (el) el.style.borderColor = 'white';
+}
+
+function saveReminder() {
+  var title = document.getElementById('rem-title').value.trim();
+  var date = document.getElementById('rem-date').value;
+  var time = document.getElementById('rem-time').value;
+  var notes = document.getElementById('rem-notes').value.trim();
+
+  if (!title || !date) {
+    document.getElementById('rem-title').style.borderColor = '#EF4444';
+    setTimeout(function(){ document.getElementById('rem-title').style.borderColor = ''; }, 2000);
+    return;
+  }
+
+  reminders.push({ title: title, date: date, time: time, notes: notes, color: selectedColor });
+  saveReminders();
+  document.getElementById('modal-overlay').classList.remove('open');
+  renderMonth();
+  if (currentView === 'settings') renderRemindersList();
+  scheduleAlerts();
+}
+
+// ─── ALERTS ───────────────────────────────────────────────────────────────────
+
+function scheduleAlerts() {
+  if (alertTimer) clearInterval(alertTimer);
+
+  function checkAlerts() {
+    if (!userLocation) return;
+    var now = new Date();
+    var st = getSunTimes(now, userLocation.lat, userLocation.lon);
+    if (!st) return;
+
+    var nowMins = now.getHours() * 60 + now.getMinutes();
+    var sunsetMins = Math.round(st.sunset.total * 60);
+    var alertMins = settings.alert_mins || 30;
+    var alertAt = sunsetMins - alertMins;
+
+    // Check reminders
+    var todayStr = now.toISOString().split('T')[0];
+    reminders.forEach(function(r) {
+      if (r.date === todayStr && r.time) {
+        var parts = r.time.split(':');
+        var remMins = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        if (Math.abs(nowMins - remMins) < 1) {
+          showAlert('Reminder', r.title, '#4B8EFF');
+        }
+      }
+    });
+
+    // Shabbat alert
+    if (settings.shabbat_alert && now.getDay() === 5) {
+      if (Math.abs(nowMins - alertAt) < 1) {
+        showAlert('Shabbat Approaching', 'Shabbat begins in ' + alertMins + ' minutes at ' + st.sunsetStr, '#F5C842');
+      }
+    }
+
+    // Holy day alert
+    if (settings.holyday_alert) {
+      var sd = gregorianToSolar(now);
+      var tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate()+1);
+      var sdTomorrow = gregorianToSolar(tomorrow);
+      var tomorrowHols = getHolidays(sdTomorrow.month, sdTomorrow.day);
+      if (tomorrowHols.length > 0 && Math.abs(nowMins - alertAt) < 1) {
+        showAlert('Sacred Day Eve', tomorrowHols[0].name + ' begins at sunset', tomorrowHols[0].color);
+      }
+    }
+
+    // Sunrise alert
+    if (settings.sunrise_alert) {
+      var sunriseMins = Math.round(st.sunrise.total * 60);
+      if (Math.abs(nowMins - sunriseMins) < 1) {
+        showAlert('Sunrise', 'The sun has risen at ' + st.sunriseStr, '#F5C842');
+      }
+    }
+  }
+
+  alertTimer = setInterval(checkAlerts, 60000);
+  checkAlerts();
+}
+
+function showAlert(title, sub, color) {
+  var alert = document.getElementById('sunset-alert');
+  document.getElementById('alert-title').textContent = title;
+  document.getElementById('alert-sub').textContent = sub;
+  alert.style.borderBottomColor = color || '#F59E0B';
+  alert.classList.add('show');
+
+  // Request notification if supported
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('ACR Solar — ' + title, { body: sub, icon: 'icon.png' });
+  }
+
+  setTimeout(function() { alert.classList.remove('show'); }, 8000);
+}
+
+function dismissAlert() {
+  document.getElementById('sunset-alert').classList.remove('show');
+}
+
+// Request notification permission
+if ('Notification' in window && Notification.permission === 'default') {
+  setTimeout(function() {
+    Notification.requestPermission();
+  }, 3000);
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+
+function prevMonth() {
+  viewDate.setMonth(viewDate.getMonth() - 1);
+  renderMonth();
+}
+function nextMonth() {
+  viewDate.setMonth(viewDate.getMonth() + 1);
+  renderMonth();
+}
+function goToday() {
+  viewDate = new Date(today);
+  selectedDate = new Date(today);
+  renderMonth();
+}
+function toggleSetting(id, key) {
+  settings[key] = !settings[key];
+  document.getElementById(id).className = 'toggle' + (settings[key] ? ' on' : '');
+  saveSettings();
+  if (currentView === 'month') renderMonth();
+  if (currentView === 'sun') renderSunView();
+}
+function setAlertMins(v) {
+  settings.alert_mins = parseInt(v);
+  saveSettings();
+  document.getElementById('alert-mins-desc').textContent = 'Alert ' + v + ' minutes before sunset';
+}
+
+// ─── UTILITIES ────────────────────────────────────────────────────────────────
+
+function hexToRgba(hex, alpha) {
+  var r = parseInt(hex.slice(1,3),16);
+  var g = parseInt(hex.slice(3,5),16);
+  var b = parseInt(hex.slice(5,7),16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+
+// Select first color option
+document.querySelector('.color-opt').style.borderColor = 'white';
+
+// Initial render
+renderMonth();
+
+// If location stored, start alerts
+if (userLocation) {
+  scheduleAlerts();
+  setTimeout(renderSunView, 100);
+}
+
+// Update sun progress every minute
+setInterval(function() {
+  if (currentView === 'sun' && userLocation) renderSunView();
+}, 60000);
+</script>
+<script>
+var TP_VOICES=[],TP_VIDX=parseInt(localStorage.getItem('tp_vi')||'0'),TP_RATE=parseFloat(localStorage.getItem('tp_vr')||'1'),TP_PARAS=[],TP_POS=0,TP_PLAYING=false;
+function pronounceTP(t){return(t||'').replace(/[\uD800-\uDFFF][\uD800-\uDFFF]/g,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bTehillim\b/gi,'Teh-hee-leem').replace(/\bDevarim\b/gi,'Dev-ah-reem').replace(/\bShemot\b/gi,'Sheh-moht').replace(/\bBereshit\b/gi,'Beh-reh-sheet').replace(/\bDaniyyel\b/gi,'Dah-nee-yel').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
+function loadTPVoices(){function d(){TP_VOICES=window.speechSynthesis.getVoices();var s=document.getElementById('tp-voice');if(!s)return;s.innerHTML=TP_VOICES.map(function(v,i){var x=(v.name.includes('Enhanced')||v.name.includes('Neural'))?'\u2605 ':'';return'<option value="'+i+'"'+(i===TP_VIDX?' selected':'')+'>'+x+v.name.substring(0,22)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)d();else window.speechSynthesis.onvoiceschanged=d;}
+function openTextPage(title,content){document.getElementById('text-page-label').textContent=title;document.getElementById('text-page-inner').innerHTML=content;document.getElementById('text-page-overlay').classList.add('open');tpStop();TP_POS=0;setTimeout(function(){TP_PARAS=Array.from(document.querySelectorAll('#text-page-inner [data-ptype="verse"]'));loadTPVoices();},150);document.getElementById('text-page-content').scrollTop=0;}
+function closeTextPage(){tpStop();document.getElementById('text-page-overlay').classList.remove('open');}
+function tpPlay(){if(TP_PLAYING)return;TP_PARAS=Array.from(document.querySelectorAll('#text-page-inner [data-ptype="verse"]'));if(!TP_PARAS.length)return;TP_PLAYING=true;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Playing';tpNext();}
+function tpNext(){if(!TP_PLAYING||TP_POS>=TP_PARAS.length){tpStop();return;}var p=TP_PARAS[TP_POS];var t=pronounceTP(p.textContent||'');if(!t.trim()){TP_POS++;tpNext();return;}p.style.background='rgba(200,151,31,0.15)';var s=document.getElementById('tp-vstatus');if(s)s.textContent=(TP_POS+1)+'/'+TP_PARAS.length;var u=new SpeechSynthesisUtterance(t);if(TP_VOICES[TP_VIDX])u.voice=TP_VOICES[TP_VIDX];u.rate=TP_RATE;u.onend=function(){if(p)p.style.background='';TP_POS++;tpNext();};u.onerror=function(){if(p)p.style.background='';TP_POS++;tpNext();};window.speechSynthesis.speak(u);}
+function tpPause(){window.speechSynthesis.pause();TP_PLAYING=false;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Play';}
+function tpStop(){window.speechSynthesis.cancel();TP_PLAYING=false;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Play';document.querySelectorAll('#text-page-inner [data-ptype="verse"]').forEach(function(p){p.style.background='';});}
+function tpSetSpeed(v){TP_RATE=parseFloat(v);localStorage.setItem('tp_vr',TP_RATE);}
+function tpSetVoice(i){TP_VIDX=parseInt(i);localStorage.setItem('tp_vi',TP_VIDX);}
+function _p(tag,cls,style,content){return'<'+tag+(cls?' class="'+cls+'"':'')+(style?' style="'+style+'"':'')+'>'+content+'</'+tag+'>';}
+function tpPaleo(){return _p('div','tp-paleo','','\u{10909}\u{10904}\u{10905}\u{10904}');}
+function tpTitle(t){return _p('div','tp-title','',t);}
+function tpSub(t){return _p('div','tp-subtitle','',t);}
+function tpHdr(t){return _p('div','tp-section-header','',t);}
+function tpBnr(t){return _p('div','tp-banner','',t);}
+function tpV(ref,text){return'<p data-ptype="verse" class="tp-verse"><span class="tp-ref">'+ref+'</span>'+text+'</p>';}
+function tpP(t){return'<p data-ptype="verse" class="tp-verse" style="font-style:italic;color:#333;">'+t+'</p>';}
+function tpN(t){return'<p data-ptype="note" class="tp-note">'+t+'</p>';}
+function tpHeb(h,r){return _p('div','tp-hebrew','',h)+(r?_p('div','tp-hebrew-ref','',r):'');}
+function tpMS(t){return'<div class="tp-manuscript"><div class="tp-manuscript-title">Manuscript Source</div><div class="tp-manuscript-text">'+t+'</div></div>';}
+function tpSB(){return _p('div','tp-so-be-it','','So Be It.');}
+function openService(i){var t=['Preparation for the Sabbath Service','Sabbath Sunrise Service','Midday Sabbath Service','Evening Watch Service','Sabbath Sunday Sunrise Closing'];var b=[bS1,bS2,bS3,bS4,bS5];if(b[i])openTextPage(t[i],b[i]());}
+function bS1(){var h=tpPaleo()+tpTitle('Preparation for the Sabbath Service')+tpSub('Purification Before Standing Before YHWH');h+=tpHdr('Washing of Hands')+tpV('Tehillim 26:6','I will wash my hands in innocence, and so will I compass Your altar, O YHWH.')+tpP('May my hands be cleansed of wrongdoing and prepared to serve in righteousness before YHWH.')+tpSB();h+=tpHdr('Washing of Face')+tpV('Tehillim 51:10','Create in me a clean heart, O YHWH, and renew a steadfast spirit within me.')+tpP('Let my thoughts be purified, my heart made upright, and my spirit renewed before YHWH.')+tpSB();h+=tpN('Before the assembly begins the Sabbath readings, the worshiper prepares by washing the hands and face. This symbolizes purification before approaching the presence of YHWH.');h+=tpMS('Tehillim 26:6 and 51:10 \u2014 11QPs Dead Sea Scrolls, Cave 11, Qumran.');return h;}
+function bS2(){var h=tpPaleo()+tpTitle('Sabbath Sunrise Service')+tpSub('Opening of the Sabbath at First Light');h+=tpHdr('Bereshit (Genesis) 1:1\u20135');h+=tpV('1','In the beginning The Creator created the heavens and the earth.');h+=tpV('2','And the earth was without form and void, and darkness was upon the face of the deep; and the spirit of The Creator moved upon the face of the waters.');h+=tpV('3','And YHWH said, Let there be light, and there was light.');h+=tpV('4','And YHWH saw the light, that it was good; and YHWH divided the light from the darkness.');h+=tpV('5','YHWH called the light Day, and the darkness He called Night. And there was evening and there was morning, the first day.');h+=tpHdr('Bereshit (Genesis) 2:1\u20133');h+=tpV('1','Thus the heavens and the earth were finished, and all their array.');h+=tpV('2','On the seventh day YHWH finished the work; and He ceased on the seventh day from all the work which had been done.');h+=tpV('3','And YHWH blessed the seventh day and declared it holy, because on it He ceased from all the work of creation.');h+=tpHdr('Shemot (Exodus) 20:8\u201311 \u2014 The Sabbath Commandment');h+=tpV('8','Remember the Sabbath day, to keep it holy.');h+=tpV('9','Six days you shall labor and do all your work.');h+=tpV('10','But the seventh day is a Sabbath to YHWH. On it you shall not do any work, you or your son or your daughter, your servant or your livestock or the stranger within your gates.');h+=tpV('11','For in six days The Creator made the heavens and the earth and the sea and all that is in them, and rested on the seventh day. Therefore YHWH blessed the Sabbath day and made it holy.');h+=tpHdr('Tehillim (Psalms) 103:1\u201322 \u2014 A Psalm of David');h+=tpHeb('\u05d1\u05e8\u05db\u05d9 \u05e0\u05e4\u05e9\u05d9 \u05d0\u05ea\u05be\u05d9\u05d4\u05d5\u05d4 \u05d5\u05db\u05dc\u05be\u05e7\u05e8\u05d1\u05d9 \u05d0\u05ea\u05be\u05e9\u05dd \u05e7\u05d3\u05e9\u05d5','Tehillim 103:1 \u2014 11QPs Dead Sea Scrolls');['Bless YHWH, O my soul, and all that is within me bless His holy name.','Bless YHWH, O my soul, and do not forget all His benefits.','He forgives all your transgressions and heals all your diseases.','He redeems your life from destruction and crowns you with mercy and compassion.','He fills your life with good things so that your youth is renewed like the eagle.','YHWH performs righteousness and justice for all who are oppressed.','He made known His ways to Moshe and His works to the children of Yisra\u2019el.','YHWH is compassionate and merciful, slow to anger and abundant in mercy.','He will not accuse forever, nor will He keep anger for all time.','He has not dealt with us according to our sins nor repaid us according to our transgressions.','For as the heavens are high above the earth, so great is His mercy toward those who revere Him.','As far as the east is from the west, so far has He removed our transgressions from us.','As a father shows compassion to his children, so YHWH shows compassion to those who revere Him.','For He knows our frame and remembers that we are dust.','As for man, his days are like grass; like a flower of the field he flourishes.','When the wind passes over it, it is gone, and its place remembers it no more.','But the mercy of YHWH is from everlasting to everlasting upon those who revere Him, and His righteousness to the children of their children.','To those who keep His covenant and remember His commandments to do them.','YHWH has established His throne in the heavens, and His kingdom rules over all.','Bless YHWH, you His messengers who excel in strength, who perform His word, obeying the voice of His command.','Bless YHWH, all His hosts, His servants who do His will.','Bless YHWH, all His works in every place of His dominion. Bless YHWH, O my soul.'].forEach(function(v,i){h+=tpV(String(i+1),v);});h+=tpHdr('Petition Prayer \u2014 Daniyyel 9:4');h+=tpP('O YHWH, the great Creator, who keeps covenant and mercy with those who love You and keep Your commandments.');h+=tpP('O YHWH, hear. O YHWH, forgive. O YHWH, listen and act.');h+=tpP('Delay not, for Your own sake, for Your people are called by Your name.');h+=tpSB()+tpMS('Bereshit, Shemot \u2014 DSS Cave 4. Tehillim 103 \u2014 11QPs Cave 11. Daniyyel 9 \u2014 DSS Cave 4.');return h;}
+function bS3(){var h=tpPaleo()+tpTitle('Midday Sabbath Service')+tpSub('At the height of the day the assembly gathers to remember the covenant and to bless the provisions given by The Creator.');h+=tpHdr('Shemot (Exodus) 31:13\u201317');h+=tpV('13','Speak also unto the children of Yisra\u2019el: Verily My Sabbaths you shall keep, for it is a sign between Me and you throughout your generations; that you may know that I am YHWH that sanctifies you.');h+=tpV('14','You shall keep the Sabbath therefore; for it is holy unto you.');h+=tpV('15','Six days may work be done; but on the seventh is the Sabbath of rest, holy to YHWH.');h+=tpV('16','Wherefore the children of Yisra\u2019el shall keep the Sabbath throughout their generations, for a perpetual covenant.');h+=tpV('17','It is a sign between Me and the children of Yisra\u2019el forever: for in six days YHWH made heaven and earth, and on the seventh day He rested and was refreshed.');h+=tpHdr('Provision \u2014 Tehillim 104:14\u201315');h+=tpV('14','He causes the grass to grow for the cattle, and herb for the service of man, that he may bring forth food from the earth.');h+=tpV('15','And wine that makes glad the heart of man, and oil to make his face shine, and bread which strengthens man\u2019s heart.');h+=tpHdr('Yoel 2:19, 24');h+=tpV('19','Behold, I will send you grain and wine and oil, and you shall be satisfied.');h+=tpV('24','The threshing floors shall be full of wheat, and the vats shall overflow with wine and oil.');h+=tpHdr('Blessing Over the Bread');h+=tpP('Blessed are You, YHWH, who brings forth bread from the earth.');h+=tpHdr('Blessing Over the Wine');h+=tpP('Blessed are You, YHWH, Creator of the fruit of the vine.');h+=tpHdr('Thanksgiving \u2014 Devarim 8:10');h+=tpV('10','When you have eaten and are satisfied, you shall bless YHWH for the good land which He has given you.');h+=tpSB()+tpMS('Shemot 31 \u2014 DSS. Tehillim 104 \u2014 11QPs Cave 11. Yoel \u2014 DSS. Devarim 8 \u2014 DSS.');return h;}
+function bS4(){var h=tpPaleo()+tpTitle('Evening Watch Service')+tpSub('As the light fades and the Sabbath continues into the night, the assembly reflects on the faithfulness of YHWH and the protection given during the night watches.');h+=tpHdr('Shemot 16:23\u201325');h+=tpV('23','This is what YHWH has said: Tomorrow is a Sabbath rest, a holy Sabbath to YHWH. Bake what you will bake today and lay up for yourselves all that remains until morning.');h+=tpV('24','Eat that today; for today is a Sabbath unto YHWH.');h+=tpV('25','And Moshe said, Eat it today; for today is a Sabbath to YHWH. Today you will not find it in the field.');h+=tpHdr('Blessing Over the Bread');h+=tpP('Blessed are You, YHWH, who brings forth bread from the earth.');h+=tpHdr('Blessing Over the Wine');h+=tpP('Blessed are You, YHWH, Creator of the fruit of the vine.');h+=tpV('Devarim 8:10','When you have eaten and are satisfied, you shall bless YHWH for the good land which He has given you.');h+=tpV('Tehillim 4:8','In peace I will lie down and sleep, for You alone, YHWH, make me dwell in safety.');h+=tpV('Mishlei 3:24','When you lie down, you will not be afraid; when you lie down, your sleep will be sweet.');h+=tpV('Tehillim 121:3','He will not let your foot slip; He who watches over you will not slumber.');h+=tpV('121:4','Behold, He who watches over Yisra\u2019el will neither slumber nor sleep.');h+=tpV('Tehillim 91:4','With pinions you will be covered; you will find refuge under wings whose faithfulness is an encircling shield.');h+=tpV('91:5','You need not fear the terror by night, nor the arrow that flies by day.');h+=tpV('91:6','The plague that stalks in the darkness, or the scourge that ravages at noon.');h+=tpHdr('Yesha\u2019yahu 56:6\u20137');h+=tpV('6','And the sons of the foreigner who join themselves to YHWH, to serve Him and to love the name of YHWH, everyone who keeps the Sabbath without profaning it and holds fast to My covenant.');h+=tpV('7','These I will bring to My holy mountain and make them joyful in My house of prayer. My house shall be called a house of prayer for all peoples.');h+=tpHdr('Confession Prayer \u2014 Daniyyel 9:4');h+=tpP('O YHWH, the great Creator, who keeps covenant and mercy with those who love You.');h+=tpP('O YHWH, hear. O YHWH, forgive. O YHWH, listen and act. Delay not, for Your own sake.');h+=tpSB()+tpMS('Shemot 16 \u2014 DSS. Tehillim 4, 91, 121 \u2014 11QPs. Yeshayahu 56 \u2014 1QIsa-a Cave 1. Daniyyel 9 \u2014 DSS.');return h;}
+function bS5(){var h=tpPaleo()+tpTitle('Sabbath Sunday Sunrise Closing')+tpSub('Completion of the Sabbath \u2014 Saturday sunrise to Sunday sunrise \u2014 DSS solar calendar reckoning');h+=tpHdr('Tehillim 91:1\u20133, 7\u201316');[['1','He who dwells in the shelter of the Most High shall abide under the shadow of the Almighty.'],['2','I will say of YHWH, my refuge and my fortress, my Creator in whom I trust.'],['3','Surely He will deliver you from the snare of the fowler and from the destructive pestilence.'],['7','A thousand may fall at your side and ten thousand at your right hand, but it shall not come near you.'],['8','Only with your eyes shall you behold and see the recompense of the wicked.'],['9','Because you have made YHWH your refuge, the Most High your dwelling place.'],['10','No evil shall befall you, nor shall any plague come near your dwelling.'],['11','For He will command His messengers concerning you to guard you in all your ways.'],['12','They shall bear you up in their hands, lest you strike your foot against a stone.'],['13','You shall tread upon the lion and the serpent; the young lion and the dragon you shall trample underfoot.'],['14','Because they have set their love upon Me, I will deliver them; I will set them on high because they know My name.'],['15','They shall call upon Me, and I will answer them. I will be with them in trouble; I will rescue them and honor them.'],['16','With long life I will satisfy them and show them My salvation.']].forEach(function(v){h+=tpV(v[0],v[1]);});h+=tpHdr('Prayer for Guidance \u2014 Tehillim 121');h+=tpV('1','I lift up my eyes to the hills \u2014 from where will my help come?');h+=tpV('2','My help comes from YHWH, maker of heaven and earth.');h+=tpV('7','YHWH will guard you from all evil; He will guard your life.');h+=tpV('8','YHWH will guard your going out and your coming in from this time forth and forever.');h+=tpV('Devarim 28:12','YHWH will open to you His good treasure, the heavens, to give the rain to your land in its season, and to bless all the work of your hand.');h+=tpV('Shemot 33:14','And He said, My presence will go, and I will give you rest.');h+=tpHdr('Closing Blessing');h+=tpP('Surely My Sabbaths you shall keep, for it is a sign between Me and you throughout your generations, that you may know that I am YHWH who sanctifies you.');h+=tpP('By this Word, I set apart this day from the common week, marking the separation between the profane and the holy, that its witness may be to the holiness of the Sabbath of YHWH.');h+=tpP('Blessed be YHWH forever.');h+=tpSB()+tpMS('Tehillim 91, 121 \u2014 11QPs Cave 11. Devarim 28, Shemot 13, 33 \u2014 DSS Torah scrolls Cave 4.');return h;}
+function openShema(){var h=tpPaleo()+tpTitle('The Covenant Declaration')+tpSub('Devarim 6:4-9 \u2014 DSS Nash Papyrus and 4Q fragments. Presented as primary text, not as Rabbinic liturgy.');h+=tpBnr('DEVARIM 6:4\u20139 \u2014 DEAD SEA SCROLLS');[['6:4','\u05e9\u05b0\u05de\u05b7\u05e2 \u05d9\u05b4\u05e9\u05b0\u05c2\u05e8\u05b8\u05d0\u05b5\u05dc \u05d9\u05b0\u05d4\u05d5\u05b8\u05d4 \u05d0\u05b1\u05dc\u05b9\u05d4\u05b5\u05d9\u05e0\u05d5\u05bc \u05d9\u05b0\u05d4\u05d5\u05b8\u05d4 \u05d0\u05b6\u05d7\u05b8\u05d3','Hear, O Yisra\u2019el: YHWH is our Creator, YHWH is One.'],['6:5','\u05d5\u05b0\u05d0\u05b8\u05d4\u05b7\u05d1\u05b0\u05ea\u05b8 \u05d0\u05b5\u05ea \u05d9\u05b0\u05d4\u05d5\u05b8\u05d4 \u05d0\u05b1\u05dc\u05b9\u05d4\u05b6\u05d9\u05da\u05b8 \u05d1\u05b0\u05db\u05b8\u05dc\u05be\u05dc\u05b0\u05d1\u05b8\u05d1\u05b0\u05da\u05b8','And you shall love YHWH your Creator with all your heart and with all your soul and with all your strength.'],['6:6','\u05d5\u05b0\u05d4\u05b8\u05d9\u05d5\u05bc \u05d4\u05b7\u05d3\u05bc\u05b0\u05d1\u05b8\u05e8\u05b4\u05d9\u05dd \u05d4\u05b8\u05d0\u05b5\u05dc\u05bc\u05b6\u05d4 \u05d0\u05b2\u05e9\u05c1\u05b6\u05e8 \u05d0\u05b8\u05e0\u05b9\u05db\u05b4\u05d9 \u05de\u05b0\u05e6\u05b7\u05d5\u05bc\u05da\u05b8 \u05d4\u05b7\u05d9\u05bc\u05d5\u05b9\u05dd \u05e2\u05b7\u05dc\u05be\u05dc\u05b0\u05d1\u05b8\u05d1\u05b6\u05da\u05b8','And these words which I command you today shall be upon your heart.'],['6:7','\u05d5\u05b0\u05e9\u05c1\u05b4\u05e0\u05bc\u05b7\u05e0\u05b0\u05ea\u05bc\u05b8\u05dd \u05dc\u05b0\u05d1\u05b8\u05e0\u05b6\u05d9\u05da\u05b8 \u05d5\u05b0\u05d3\u05b4\u05d1\u05bc\u05b7\u05e8\u05b0\u05ea\u05bc\u05b8 \u05d1\u05b8\u05dd','You shall teach them diligently to your children, and shall speak of them when you sit in your house and when you walk by the way and when you lie down and when you rise up.'],['6:8','\u05d5\u05bc\u05e7\u05b0\u05e9\u05c1\u05b7\u05e8\u05b0\u05ea\u05bc\u05b8\u05dd \u05dc\u05b0\u05d0\u05d5\u05b9\u05ea \u05e2\u05b7\u05dc\u05be\u05d9\u05b8\u05d3\u05b6\u05da\u05b8 \u05d5\u05b0\u05d4\u05b8\u05d9\u05d5\u05bc \u05dc\u05b0\u05d8\u05b9\u05d8\u05b8\u05e4\u05b9\u05ea \u05d1\u05b5\u05bc\u05d9\u05df \u05e2\u05b5\u05d9\u05e0\u05b6\u05d9\u05da\u05b8','You shall bind them as a sign upon your hand, and they shall be as frontlets between your eyes.'],['6:9','\u05d5\u05bc\u05db\u05b0\u05ea\u05b7\u05d1\u05b0\u05ea\u05bc\u05b8\u05dd \u05e2\u05b7\u05dc\u05be\u05de\u05b0\u05d6\u05d5\u05bc\u05d6\u05b9\u05ea \u05d1\u05b5\u05bc\u05d9\u05ea\u05b6\u05da\u05b8 \u05d5\u05bc\u05d1\u05b4\u05e9\u05c1\u05b0\u05e2\u05b8\u05e8\u05b6\u05d9\u05da\u05b8','You shall write them on the doorposts of your house and on your gates.']].forEach(function(v){h+='<div class="shema-verse-block">'+tpHeb(v[1],'Devarim '+v[0]+' \u2014 Nash Papyrus')+tpV('Devarim '+v[0],v[2])+'</div>';});h+=tpMS('Nash Papyrus \u2014 2nd century BCE \u2014 oldest known manuscript containing this text. 4Q fragments Cave 4 Qumran confirm the Hebrew. Predates all Rabbinic liturgical framing. Presented here as DSS primary text.');openTextPage('The Covenant Declaration \u2014 Shema',h);}
+var PCATS=[{id:1,title:'Financial Provision and Poverty',icon:'ri-hand-coin-line',desc:'Provision, abundance and freedom from lack'},{id:2,title:'Healing and Physical Restoration',icon:'ri-heart-pulse-line',desc:'Healing of body and restoration of strength'},{id:3,title:'Protection from Spiritual Attack',icon:'ri-shield-star-line',desc:'Defense against evil spirits and darkness'},{id:4,title:'Guidance and Wisdom',icon:'ri-compass-3-line',desc:'Direction, clarity and understanding'},{id:5,title:'Repentance and Forgiveness',icon:'ri-refresh-line',desc:'Return to YHWH, cleansing and restoration'},{id:6,title:'Strength in Affliction',icon:'ri-mountain-2-line',desc:'Endurance through suffering and persecution'},{id:7,title:'Covenant Renewal and Faithfulness',icon:'ri-bookmark-3-line',desc:'Renewing your covenant with YHWH'},{id:8,title:'Thanksgiving and Praise',icon:'ri-music-2-line',desc:'Exalting YHWH for His works'},{id:9,title:'Restoration of the Community',icon:'ri-seedling-line',desc:'Healing of broken relationships and communities'},{id:10,title:'Morning Prayer',icon:'ri-sun-rise-line',desc:'Opening the day before YHWH'},{id:11,title:'Evening Prayer',icon:'ri-moon-line',desc:"Closing the day in YHWH's presence"},{id:12,title:'Protection of Children and Family',icon:'ri-home-heart-line',desc:'Covering your household in covenant'},{id:13,title:'Loneliness and Isolation',icon:'ri-user-heart-line',desc:'YHWH as companion to the solitary'},{id:14,title:'Fear and Anxiety',icon:'ri-wind-line',desc:'Peace and courage from YHWH'},{id:15,title:'Justice and Deliverance from Oppression',icon:'ri-scales-3-line',desc:'YHWH as defender of the oppressed'},{id:16,title:'Marriage and Relationships',icon:'ri-hearts-line',desc:'Covenant blessing over unions and bonds'},{id:17,title:'Grief and Mourning',icon:'ri-drop-line',desc:'Comfort from YHWH in loss'},{id:18,title:'Enemies and Conflict',icon:'ri-sword-line',desc:'YHWH as warrior and shield'},{id:19,title:'Leadership and Responsibility',icon:'ri-award-line',desc:'Wisdom for those in authority'},{id:20,title:'Gratitude for Creation',icon:'ri-landscape-line',desc:'Praise for the works of The Creator'},{id:21,title:'Faith and Trust in YHWH',icon:'ri-anchor-line',desc:'Anchoring your soul in YHWH alone'},{id:22,title:'Guidance in Confusion',icon:'ri-route-line',desc:'Clarity when the path is unclear'},{id:23,title:'Division and Strife',icon:'ri-git-branch-line',desc:'Prayer for unity in the community'},{id:24,title:'Greed and Covetousness',icon:'ri-hand-coin-line',desc:'Freedom from the love of possessions'},{id:25,title:'Selfishness and Pride',icon:'ri-arrow-up-circle-line',desc:'Humility before YHWH'},{id:26,title:'Idolatry and False Religion',icon:'ri-prohibited-line',desc:'Returning to YHWH alone'},{id:27,title:'Lies and Dishonesty',icon:'ri-chat-off-line',desc:'Prayer for truth and integrity'},{id:28,title:'Fornication and Sexual Immorality',icon:'ri-shield-line',desc:'Covenant purity and restoration'},{id:29,title:'Hope in YHWH',icon:'ri-sun-rise-2-line',desc:'Anchoring hope when all seems lost'},{id:30,title:'Encouragement and Perseverance',icon:'ri-restart-line',desc:'Strength to continue in the covenant'},{id:31,title:'Wisdom for Daily Life',icon:'ri-lightbulb-line',desc:'Practical understanding for every decision'},{id:32,title:'Gluttony and Excess',icon:'ri-goblet-line',desc:'Freedom from the desires of the flesh'},{id:33,title:'Disobedience and Stubbornness',icon:'ri-arrow-go-back-line',desc:'Returning from rebellion to covenant'},{id:34,title:'Trust in YHWH Alone',icon:'ri-focus-2-line',desc:'Releasing all other sources of trust'}];
+function renderPrayersList(){var l=document.getElementById('prayers-list');if(!l)return;l.innerHTML=PCATS.map(function(p){return'<div class="prayer-card" onclick="openPrayer('+p.id+')">'+'<div class="prayer-card-icon"><i class="'+p.icon+'"></i></div>'+'<div class="prayer-card-info"><div class="pci-title">'+p.title+'</div><div class="pci-desc">'+p.desc+'</div></div>'+'<i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;flex-shrink:0;"></i></div>';}).join('');}
+function openPrayer(id){var cat=PCATS.find(function(p){return p.id===id;});if(!cat)return;openTextPage(cat.title,buildPrayer(id,cat.title));}
+function buildPrayer(id,title){var src={1:'Tehillim 112 \u00b7 4QInstruction 4Q415-418 \u00b7 Devarim 28 \u00b7 Yovelim 23 (Orit Ge\u2019ez)',2:'Tehillim 103 \u00b7 Tehillim 30 \u00b7 4Q521 Cave 4 \u00b7 1QapGen Column 20',3:'Tehillim 91 \u00b7 11Q11 Cave 11 \u00b7 Songs of Sabbath Sacrifice 4Q400 \u00b7 Tehillim 121',4:'4QInstruction raz nihyeh \u00b7 Aramaic Levi Document 4Q213 \u00b7 Tehillim 25 \u00b7 Daniyyel 2',5:'Daniyyel 9:4-19 \u00b7 Tehillim 51 \u00b7 Words of the Luminaries 4QDibHam \u00b7 Tehillim 32',6:'Tehillim 22 \u00b7 Tehillim 46 \u00b7 Tehillim 27 \u00b7 Hodayot 1QH Column 10',7:'Community Rule 1QS \u00b7 Yovelim Orit Ge\u2019ez \u00b7 Shemot 19:5-6 \u00b7 Tehillim 103',8:'Hodayot 1QH Cave 1 \u00b7 Tehillim 148-150 \u00b7 Chanokh 36:4 Orit Ge\u2019ez',9:'Yirmeyahu 29 DSS \u00b7 Yehezkel 37 DSS \u00b7 New Jerusalem 4Q554',10:'Words of the Luminaries 4QDibHam \u00b7 Tehillim 19 \u00b7 Tehillim 5 \u00b7 Bereshit 1',11:'4QDibHam evening \u00b7 Tehillim 134 \u00b7 Tehillim 4:8 \u00b7 Tehillim 91:1-6',12:'Tehillim 127 \u00b7 Tehillim 128 \u00b7 Yovelim Orit Ge\u2019ez \u00b7 Devarim 6:6-7',13:'Tehillim 25:16-18 \u00b7 Tehillim 68:5-6 \u00b7 Tehillim 23 \u00b7 Hodayot 1QH Column 13',14:'Tehillim 34 \u00b7 Tehillim 56:3-4 \u00b7 Yeshayahu 41:10 1QIsa-a \u00b7 4QInstruction',15:'Tehillim 82 \u00b7 Tehillim 10 \u00b7 Tehillim 12 \u00b7 Hodayot 1QH Column 12',16:'4QInstruction 4Q416 Fragment 2 \u00b7 Tehillim 128 \u00b7 Yovelim 25 Orit Ge\u2019ez \u00b7 Tehillim 45',17:'Tehillim 22:1-5 \u00b7 Tehillim 116 \u00b7 Hodayot 1QH Column 11 \u00b7 Eikha 3:19-33',18:'Tehillim 35 \u00b7 Tehillim 59 \u00b7 War Scroll 1QM Column 13 \u00b7 Book of War 4Q285',19:'Tehillim 72 \u00b7 4QInstruction authority \u00b7 Daniyyel 2:20-23 \u00b7 Aramaic Levi 4Q213',20:'Tehillim 104 \u00b7 Chanokh 2:1-5 Orit Ge\u2019ez \u00b7 Songs of Sabbath Sacrifice 4Q403',21:'Tehillim 37:1-7 \u00b7 Tehillim 62 \u00b7 4QInstruction \u00b7 Habakkuk 2:4 1QpHab',22:'Tehillim 25:4-5 \u00b7 Tehillim 143:8-10 \u00b7 4QInstruction 4Q417 \u00b7 Daniyyel 2:21-22',23:'Community Rule 1QS Column 5 \u00b7 Damascus Document CD Column 7 \u00b7 Tehillim 133 \u00b7 Yovelim 7',24:'4QInstruction Column 2 \u00b7 Tehillim 49 \u00b7 Damascus Document CD Column 14 \u00b7 Devarim 8',25:'4QInstruction 4Q418 Fragment 81 \u00b7 Tehillim 131 \u00b7 Hodayot 1QH Column 15',26:'Tehillim 115 \u00b7 Prayer of Nabonidus 4Q242 \u00b7 Tehillim 97 \u00b7 Yovelim 22 Orit Ge\u2019ez',27:'4QBeatitudes 4Q525 \u00b7 Tehillim 12 \u00b7 Tehillim 52 \u00b7 Community Rule 1QS Column 6',28:'Damascus Document CD Column 4 \u00b7 4QInstruction 4Q416 \u00b7 Temple Scroll 11Q19 Column 57',29:'Tehillim 42 \u00b7 Tehillim 130 \u00b7 4Q521 Cave 4 \u00b7 Hodayot 1QH Column 14',30:'Tehillim 37:23-24 \u00b7 Tehillim 34:18-19 \u00b7 4QInstruction \u00b7 Hodayot 1QH Column 10',31:'Tehillim 111 \u00b7 4QInstruction 4Q416-418 \u00b7 4QBeatitudes 4Q525 \u00b7 Daniyyel 1:17',32:'4QInstruction 4Q416 Fragment 2 \u00b7 Tehillim 78:17-31 \u00b7 Devarim 8:11-14',33:'Damascus Document CD Columns 2-3 \u00b7 Community Rule 1QS Column 3 \u00b7 Tehillim 78:8',34:'Tehillim 20:7 \u00b7 Tehillim 125 \u00b7 4QInstruction \u00b7 Book of War 4Q285 \u00b7 Tehillim 118'};
+var ms={1:'Tehillim 112 \u2014 11QPs Cave 11. 4QInstruction 4Q415-418 \u2014 Cave 4. Yovelim 23 \u2014 Orit Ge\u2019ez.',2:'Tehillim 103, 30 \u2014 11QPs Cave 11. 4Q521 \u2014 Cave 4. 1QapGen \u2014 Cave 1.',3:'Tehillim 91, 121 \u2014 11QPs Cave 11. 11Q11 \u2014 Cave 11. 4Q400 \u2014 Cave 4.',4:'4QInstruction 4Q415-418 \u2014 Cave 4. Aramaic Levi 4Q213 \u2014 Cave 4. Tehillim 25 \u2014 11QPs.',5:'Daniyyel 9 \u2014 DSS Cave 4. Tehillim 51, 32 \u2014 11QPs. 4QDibHam \u2014 Cave 4.',6:'Tehillim 22, 27, 46 \u2014 11QPs Cave 11. Hodayot 1QH Column 10 \u2014 Cave 1.',7:'Community Rule 1QS \u2014 Cave 1. Shemot 19 \u2014 DSS. Tehillim 103 \u2014 11QPs. Yovelim \u2014 Orit Ge\u2019ez.',8:'Hodayot 1QH \u2014 Cave 1. Tehillim 148-150 \u2014 11QPs. Chanokh 36:4 \u2014 Orit Ge\u2019ez.',9:'Yirmeyahu 29 \u2014 DSS primary witness. Yehezkel 37 \u2014 DSS. 4Q554 \u2014 Cave 4.',10:'4QDibHam \u2014 Cave 4. Tehillim 19, 5 \u2014 11QPs. Bereshit \u2014 DSS scrolls.',11:'4QDibHam \u2014 Cave 4. Tehillim 134, 4, 91, 121 \u2014 11QPs.',12:'Tehillim 127, 128 \u2014 11QPs. Devarim 6 \u2014 DSS. Yovelim \u2014 Orit Ge\u2019ez.',13:'Tehillim 23, 25, 68, 73 \u2014 11QPs. Hodayot 1QH Column 13 \u2014 Cave 1.',14:'Tehillim 34, 56 \u2014 11QPs. Yeshayahu 41:10 \u2014 1QIsa-a Cave 1. 4QInstruction \u2014 Cave 4.',15:'Tehillim 10, 12, 82 \u2014 11QPs. Hodayot 1QH Column 12 \u2014 Cave 1. 4Q381 \u2014 Cave 4.',16:'4QInstruction 4Q416 Fragment 2 \u2014 Cave 4. Tehillim 45, 128 \u2014 11QPs. Yovelim 25 \u2014 Orit Ge\u2019ez.',17:'Tehillim 22, 116 \u2014 11QPs. Hodayot 1QH Column 11 \u2014 Cave 1. Eikha \u2014 DSS.',18:'Tehillim 35, 59 \u2014 11QPs. War Scroll 1QM Column 13 \u2014 Cave 1. Book of War 4Q285 \u2014 Cave 4.',19:'Tehillim 72 \u2014 11QPs. 4QInstruction \u2014 Cave 4. Aramaic Levi 4Q213 \u2014 Cave 4.',20:'Tehillim 104 \u2014 11QPs. Chanokh 2:1-5 \u2014 Orit Ge\u2019ez. 4Q403 \u2014 Cave 4.',21:'Tehillim 37, 62 \u2014 11QPs. 4QInstruction \u2014 Cave 4. 1QpHab \u2014 Cave 1.',22:'Tehillim 25, 143 \u2014 11QPs. 4QInstruction 4Q417 \u2014 Cave 4. 4QDibHam \u2014 Cave 4.',23:'Community Rule 1QS Column 5 \u2014 Cave 1. Damascus Document CD Column 7. Tehillim 133 \u2014 11QPs.',24:'4QInstruction Column 2 \u2014 Cave 4. Tehillim 49 \u2014 11QPs. Damascus Document CD Column 14.',25:'4QInstruction 4Q418 Fragment 81 \u2014 Cave 4. Tehillim 131 \u2014 11QPs. Hodayot 1QH Column 15 \u2014 Cave 1.',26:'Tehillim 97, 115 \u2014 11QPs. Prayer of Nabonidus 4Q242 \u2014 Cave 4. Yovelim 22 \u2014 Orit Ge\u2019ez.',27:'4QBeatitudes 4Q525 \u2014 Cave 4. Tehillim 12, 52 \u2014 11QPs. Community Rule 1QS Column 6 \u2014 Cave 1.',28:'Damascus Document CD Column 4. 4QInstruction 4Q416 \u2014 Cave 4. Temple Scroll 11Q19 Column 57.',29:'Tehillim 42, 130 \u2014 11QPs. 4Q521 \u2014 Cave 4. Hodayot 1QH Column 14 \u2014 Cave 1.',30:'Tehillim 34, 37 \u2014 11QPs. 4QInstruction \u2014 Cave 4. Hodayot 1QH Column 10 \u2014 Cave 1.',31:'Tehillim 111 \u2014 11QPs. 4QInstruction 4Q416-418 \u2014 Cave 4. 4QBeatitudes 4Q525 \u2014 Cave 4.',32:'4QInstruction 4Q416 Fragment 2 \u2014 Cave 4. Tehillim 78 \u2014 11QPs. Devarim 8 \u2014 DSS.',33:'Damascus Document CD Columns 2-3. Community Rule 1QS Column 3 \u2014 Cave 1. Tehillim 78 \u2014 11QPs.',34:'Tehillim 20, 118, 125 \u2014 11QPs. 4QInstruction \u2014 Cave 4. Book of War 4Q285 \u2014 Cave 4.'};
+var heb={1:tpHeb('\u05d4\u05dc\u05dc\u05d5\u05d9\u05d4 \u05d0\u05e9\u05e8\u05d9 \u05d0\u05d9\u05e9 \u05d9\u05e8\u05d0 \u05d0\u05ea\u05be\u05d9\u05d4\u05d5\u05d4','Tehillim 112:1 \u2014 11QPs'),2:tpHeb('\u05d1\u05e8\u05db\u05d9 \u05e0\u05e4\u05e9\u05d9 \u05d0\u05ea\u05be\u05d9\u05d4\u05d5\u05d4 \u05d5\u05db\u05dc\u05be\u05e7\u05e8\u05d1\u05d9 \u05d0\u05ea\u05be\u05e9\u05dd \u05e7\u05d3\u05e9\u05d5','Tehillim 103:1 \u2014 11QPs'),3:tpHeb('\u05d9\u05e9\u05d1 \u05d1\u05e1\u05ea\u05e8 \u05e2\u05dc\u05d9\u05d5\u05df \u05d1\u05e6\u05dc \u05e9\u05d3\u05d9 \u05d9\u05ea\u05dc\u05d5\u05e0\u05df','Tehillim 91:1 \u2014 11QPs'),4:tpHeb('\u05d9\u05d4\u05d1 \u05d7\u05db\u05de\u05ea\u05d0 \u05dc\u05d7\u05db\u05d9\u05de\u05d9\u05df \u05d5\u05de\u05e0\u05d3\u05e2\u05d0 \u05dc\u05d9\u05d3\u05e2\u05d9 \u05d1\u05d9\u05e0\u05d4','Daniyyel 2:21 \u2014 DSS'),5:tpHeb('\u05d1\u05e8\u05d0 \u05dc\u05d9 \u05d0\u05dc\u05d4\u05d9\u05dd \u05dc\u05d1 \u05d8\u05d4\u05d5\u05e8','Tehillim 51:10 \u2014 11QPs'),6:tpHeb('\u05d9\u05d4\u05d5\u05d4 \u05e2\u05d6\u05d9 \u05d5\u05de\u05e2\u05d5\u05d6\u05d9 \u05de\u05e9\u05d2\u05d1 \u05dc\u05d9 \u05d1\u05e6\u05e8\u05d5\u05ea','Tehillim 46:1 \u2014 11QPs')};
+var bodies={
+1:tpP('O YHWH, The Creator of all things, I come before You in the name of Your covenant. Tehillim 112:1 declares that blessed is the one who fears YHWH and delights greatly in Your commandments. I stand on that covenant promise today.')+tpV('Tehillim 112:3','Wealth and riches are in the house of the one who fears You, and their righteousness endures forever.')+tpP('You are the source of all provision. Devarim 28:2 declares that if I diligently obey Your voice, all these blessings shall come upon me and overtake me. I receive that word, YHWH.')+tpV('Devarim 28:12','YHWH will open to you His good treasure, the heavens, to give rain to your land in its season and to bless all the work of your hand.')+tpP('4QInstruction from Cave 4 teaches me not to desire beyond my appointed portion and not to grasp what is not mine. Where there is lack, be my provider. Where there is debt, be my deliverer.')+tpV('Tehillim 37:25','I have not seen the righteous forsaken nor their children begging bread.')+tpP('Not for excess but for sufficiency and the ability to serve You fully. This is my petition.'),
+2:tpP('O YHWH, The Creator who formed this body, I come to You for restoration. You alone are the healer. The 4Q521 scroll from Cave 4 declares that YHWH Himself heals the wounded and gives life to the dead. You are the subject. You are the healer.')+tpV('Tehillim 103:2-3','Bless YHWH, O my soul, and forget not all His benefits \u2014 who forgives all your transgressions and heals all your diseases.')+tpP('All diseases. Not some. All. Restore strength where there is weakness. Bring wholeness where there is pain.')+tpV('Tehillim 30:2','O YHWH my Creator, I cried to You for help and You healed me.')+tpP('That testimony is mine to stand on. Your word does not return empty.'),
+3:tpP('O YHWH, Most High, I take refuge under Your shadow now. No evil force has authority over the one who stands in Your shelter. The 11Q11 scroll from Cave 11 at Qumran contains five ancient psalms written specifically for protection against evil spirits. This is the ancient Hebrew weapon against darkness.')+tpV('Tehillim 91:1-2','He who dwells in the shelter of the Most High shall abide under the shadow of the Almighty. I will say of YHWH, my refuge and my fortress, my Creator in whom I trust.')+tpV('Tehillim 91:11','For He will command His messengers concerning you to guard you in all your ways.')+tpV('Tehillim 121:7-8','YHWH will guard you from all evil; He will guard your life. YHWH will guard your going out and your coming in from this time forth and forever.')+tpP('I stand in the authority of Your covenant. Every dark thing is subject to Your word and Your name.'),
+4:tpP('O YHWH, the great Creator who holds all wisdom and knowledge, I come to You for direction. Daniyyel 2:22 declares You reveal deep and hidden things. The 4QInstruction scroll from Cave 4 teaches the discerning one to meditate on the raz nihyeh \u2014 the mystery of existence \u2014 the divine ordering of all reality. Open that mystery before me. Show me the path.')+tpV('Tehillim 25:4-5','Show me Your ways YHWH, teach me Your paths. Lead me in Your truth and teach me, for You are The Creator of my salvation.')+tpP('The prayer of Levi in the Aramaic Levi Document 4Q213 cries \u2014 show me YHWH the holy spirit and give me counsel and wisdom and strength to do what pleases You. That is my prayer. Not my own wisdom but Yours working through me.'),
+5:tpP('O YHWH, the great Creator who keeps covenant and mercy \u2014 as Daniyyel prayed in Daniyyel 9:4 \u2014 I come before You not in my own righteousness but in Your great mercy alone.')+tpV('Tehillim 51:1-2','Have mercy upon me O YHWH according to Your lovingkindness. According to the abundance of Your compassion blot out my transgressions. Wash me thoroughly from my iniquity and cleanse me from my sin.')+tpP('The Words of the Luminaries from Cave 4 carries the ancient community confession. I add my voice to that confession now. I return to You.')+tpV('Tehillim 103:12','As far as the east is from the west, so far has He removed our transgressions from us.')+tpP('I receive that removal now.'),
+6:tpP('O YHWH, I come to You from the middle of affliction. Not asking You to remove it before its time but asking for the strength to stand inside it. The Hodayot from Cave 1 was written inside genuine persecution. The Teacher of Righteousness said \u2014 You have been my strength in the day of my affliction.')+tpV('Tehillim 46:1-2','YHWH is our strength and refuge, a very present help in trouble. Therefore we will not fear though the earth gives way.')+tpV('Tehillim 27:1','YHWH is my light and my salvation \u2014 whom shall I fear? YHWH is the stronghold of my life \u2014 of whom shall I be afraid?')+tpP('I wait. I trust. I will not be shaken.'),
+7:tpP('O YHWH, I stand before You to renew my covenant. The ancient one \u2014 sealed with Avraham, Yitzhak, Yaakov, confirmed at Sinai. The Community Rule 1QS from Cave 1 preserves the covenant renewal ceremony. I enter that renewal now.')+tpV('Shemot 19:5-6','If you will indeed obey My voice and keep My covenant, you shall be My treasured possession among all peoples. You shall be to Me a kingdom of priests and a holy nation.')+tpV('Tehillim 103:17-18','The mercy of YHWH is from everlasting to everlasting upon those who revere Him, to those who keep His covenant and remember His commandments to do them.')+tpP('I choose the covenant. I choose YHWH. I will keep His commandments all my days.'),
+8:tpP('O YHWH, I come not with a petition but with praise. The Hodayot prayers from Cave 1 rise from the deepest place of gratitude. In the midst of persecution the Teacher of Righteousness praised. That is the standard I reach for.')+tpV('Tehillim 150:1-2','Praise YHWH in His sanctuary; praise Him in His mighty expanse. Praise Him for His mighty acts; praise Him according to His excellent greatness.')+tpV('Tehillim 150:6','Let everything that has breath praise YHWH. Praise YHWH.')+tpP('Everything in me praises You, YHWH. Every breath is a gift from Your hand.'),
+9:tpP('O YHWH, I cry to You for the restoration of Your people. The DSS text of Yirmeyahu \u2014 the primary witness shorter than the Masoretic \u2014 carries Your promise clearly.')+tpV('Yirmeyahu 29:11','For I know the plans I have for you, declares YHWH, plans for wholeness and not for evil, to give you a future and a hope.')+tpV('Yirmeyahu 29:13-14','You will seek Me and find Me when you seek Me with all your heart. I will be found by you and I will restore your fortunes.')+tpP('Restore what was scattered. Heal what was broken. Gather what was dispersed.'),
+10:tpP('O YHWH, as the light of this new day comes I stand before You. The Words of the Luminaries from Cave 4 contains the ancient community prayer for the first day of the solar week. I join that prayer now.')+tpV('Bereshit 1:3-4','And YHWH said, Let there be light, and there was light. And YHWH saw the light, that it was good.')+tpV('Tehillim 19:1-2','The heavens declare the glory of The Creator, and the sky above proclaims His handiwork. Day to day pours out speech.')+tpP('Guide my steps. Guard my words. Let nothing I do today be done outside of Your covenant.'),
+11:tpP('O YHWH, as this day draws to its close I come before You in the evening watch. The Words of the Luminaries from Cave 4 contains the ancient evening prayers of the Qumran community who gathered at sunset to bless Your name.')+tpV('Tehillim 134:1-2','Behold, bless YHWH, all you servants of YHWH who stand by night in the house of YHWH. Lift up your hands to the holy place and bless YHWH.')+tpV('Tehillim 4:8','In peace I will lie down and sleep, for You alone, YHWH, make me dwell in safety.')+tpP('In that peace I rest. YHWH watches over my going out and my coming in.'),
+12:tpP('O YHWH, The Creator who established the family as covenant community, I bring my household before You now. Every member. Every child. Every relationship in this home.')+tpV('Tehillim 127:1','Unless YHWH builds the house, those who build it labor in vain.')+tpV('Devarim 6:6-7','These words shall be on your heart. You shall teach them diligently to your children.')+tpP('Guard the children of this household. Let them know Your name and walk in Your ways all the days of their lives.'),
+13:tpP('O YHWH, I come to You from a place of loneliness. The Hodayot from Cave 1 was written from isolation. Yet the Teacher of Righteousness said \u2014 You have been a father to me.')+tpV('Tehillim 68:5-6','A father to the fatherless is YHWH in His holy habitation. YHWH sets the solitary in families.')+tpV('Tehillim 23:4','Even though I walk through the valley of the shadow of death, I will fear no evil, for You are with me.')+tpP('You hold my right hand even when I cannot feel another human presence. That is enough. You are enough.'),
+14:tpP('O YHWH, I bring my fear before You. Not pretending it is not there but bringing it directly to the one who is able to replace it with peace.')+tpV('Tehillim 56:3-4','When I am afraid, I put my trust in You. In YHWH whose word I praise, in YHWH I trust. I shall not be afraid. What can flesh do to me?')+tpV('Yeshayahu 41:10','Fear not, for I am with you; be not dismayed, for I am your Creator. I will strengthen you, I will help you, I will uphold you with My righteous right hand.')+tpP('Deliver me from all my fears, YHWH. Replace them with the settled peace of knowing You are sovereign.'),
+15:tpP('O YHWH, the righteous judge of all the earth, I bring before You the injustice I have witnessed and experienced. You see it. Nothing done in darkness is hidden from You.')+tpV('Tehillim 82:3-4','Give justice to the weak and the fatherless; maintain the right of the afflicted and the destitute. Rescue the weak and the needy; deliver them from the hand of the wicked.')+tpV('Tehillim 12:5','Because the poor are plundered and the needy groan, I will now arise, says YHWH.')+tpP('Arise, YHWH. Do justice. Deliver the oppressed. Let every unjust thing be set right by Your hand.'),
+16:tpP('O YHWH, The Creator who established covenant union at the beginning, I bring this relationship before You. The 4QInstruction scroll from Cave 4 Fragment 2 says: honour your wife in your poverty, for in your union you have become one flesh. Take hold of her in truth and walk with her in righteousness.')+tpV('Tehillim 128:1-2','Blessed is everyone who fears YHWH, who walks in His ways. You shall eat the fruit of the labor of your hands; you shall be blessed.')+tpP('Let love be renewed. Let understanding increase. Let the covenant of this relationship be stronger than any pressure brought against it.'),
+17:tpP('O YHWH, I come to You with grief. Real grief. You put the cry in Your word \u2014 my Creator, my Creator, why have You forsaken me. You are not afraid of grief. You welcome the honest cry.')+tpV('Eikha 3:21-23','But this I call to mind, and therefore I have hope: The steadfast love of YHWH never ceases; His mercies never come to an end; they are new every morning.')+tpV('Tehillim 116:15','Precious in the sight of YHWH is the death of His faithful ones.')+tpP('You see every loss. Nothing is overlooked. Hold me in this grief.'),
+18:tpP('O YHWH, the warrior who fights for His people, I bring before You the conflict I face. I do not take revenge into my own hands. That belongs to You. The War Scroll 1QM Column 13 declares the battle belongs to YHWH.')+tpV('Tehillim 35:1','Contend, O YHWH, with those who contend with me; fight against those who fight against me.')+tpV('Tehillim 18:2','YHWH is my rock and my fortress and my deliverer, my Creator in whom I take refuge, my shield and the horn of my salvation, my stronghold.')+tpP('You contend for me. You shield me. I trust You with this conflict entirely.'),
+19:tpP('O YHWH, giver of all wisdom and authority, I come before You as one who carries responsibility over others. Let me not carry it in my own strength. Daniyyel 2:20 declares \u2014 wisdom and power belong to YHWH.')+tpV('Tehillim 72:1-2','Give the king Your judgments, O Creator, and Your righteousness to the royal son. May he judge Your people with righteousness and Your poor with justice.')+tpP('The Aramaic Levi Document from Cave 4 preserves the prayer of Levi for wisdom before service. That is my prayer before every responsibility I carry.'),
+20:tpP('O YHWH, The Creator of all that exists, I pause to simply behold what You have made. Chanokh walked through creation in the Orit Ge\u2019ez and observed that the sun, moon, and stars do not depart from their appointed courses. Everything You made obeys You perfectly.')+tpV('Tehillim 104:1-2','Bless YHWH, O my soul. O YHWH my Creator, You are very great. You are clothed with splendor and majesty, covering Yourself with light as with a garment.')+tpV('Tehillim 104:24','O YHWH, how manifold are Your works. In wisdom have You made them all; the earth is full of Your creatures.')+tpP('I stand in awe of what Your hands have made. Every sunrise is a declaration. Every star is a testimony.'),
+21:tpP('O YHWH, I choose to trust You today. Not because circumstances make it easy but because Your word makes it possible. The 1QpHab Pesher Habakkuk from Cave 1 preserves the declaration \u2014 the righteous live by their faithfulness.')+tpV('Tehillim 62:1-2','For YHWH alone my soul waits in silence; from Him comes my salvation. He alone is my rock and my salvation, my fortress; I shall not be greatly shaken.')+tpV('Tehillim 37:3-5','Trust in YHWH and do good; dwell in the land and befriend faithfulness. Delight yourself in YHWH, and He will give you the desires of your heart. Commit your way to YHWH; trust in Him and He will act.')+tpP('I commit my way to You now. I trust and I will not be shaken.'),
+22:tpP('O YHWH, I am confused. The path is not clear. I cannot see which way to go. I bring that confusion honestly to You because You are the one who reveals deep and hidden things.')+tpV('Tehillim 25:4-5','Make me to know Your ways, O YHWH; teach me Your paths. Lead me in Your truth and teach me, for You are The Creator of my salvation.')+tpV('Daniyyel 2:22','He reveals deep and hidden things; He knows what is in the darkness, and the light dwells with Him.')+tpP('Where I am confused bring clarity. Where I face a decision make the path plain. Not my own wisdom but Yours working through me.'),
+23:tpP('O YHWH, You delight in unity among Your people. The Community Rule from Cave 1 contains specific laws against slander and division because such things destroy the covenant community. Heal what is divided among Your people.')+tpV('Tehillim 133:1','Behold, how good and pleasant it is when brothers dwell in unity.')+tpP('Yovelim 7:20-24 in the Orit Ge\u2019ez preserves Noach\u2019s warning against division among his sons. I receive that warning now. Let me be a builder of unity not a source of division.'),
+24:tpP('O YHWH, I confess the pull of greed that is common to human nature. The desire for more. The eye that is never satisfied. 4QInstruction from Cave 4 addresses this directly \u2014 do not stretch out your hand toward what does not belong to you.')+tpV('Tehillim 49:16-17','Be not afraid when a man becomes rich, when the glory of his house increases. For when he dies he will carry nothing away.')+tpV('Tehillim 37:16','Better is the little that the righteous has than the abundance of many wicked.')+tpP('Free me from the love of money. Let my contentment be in You alone.'),
+25:tpP('O YHWH, I come before You with the pride that is in me. The Hodayot from Cave 1 Column 15 contains the Teacher of Righteousness confessing his own lowliness \u2014 I am but dust and ashes before You.')+tpV('Tehillim 131:1-2','O YHWH, my heart is not lifted up; my eyes are not raised too high. I have calmed and quieted my soul, like a weaned child with its mother.')+tpV('Tehillim 18:27','You save a humble people, but the haughty eyes You bring down.')+tpP('Work humility in me, YHWH. Let me walk in my appointed station without grasping beyond it.'),
+26:tpP('O YHWH, You alone are The Creator. There is no other. Tehillim 115 declares with absolute clarity \u2014 their idols are silver and gold, the work of human hands. The Prayer of Nabonidus from Cave 4 records the Babylonian king confessing \u2014 I prayed to gods of silver and gold and none of them healed me. Then I acknowledged YHWH alone.')+tpV('Tehillim 115:3','Our Creator is in the heavens; He does all that He pleases.')+tpV('Tehillim 97:7','All worshipers of images are put to shame, who make their boast in worthless idols. Worship Him, all you mighty ones.')+tpP('I bow before You alone, YHWH. No carved image. No man-made system. No substitute. You alone.'),
+27:tpP('O YHWH, You are truth and in You there is no darkness at all. 4QBeatitudes from Cave 4 opens by declaring \u2014 blessed is the one who speaks truth with a pure heart and who does not slander with his tongue.')+tpV('Tehillim 12:2','Everyone utters lies to his neighbor; with flattering lips and a double heart they speak.')+tpV('Tehillim 101:7','No one who practices deceit shall dwell in my house; no one who utters lies shall continue before my eyes.')+tpP('Work truth in my inward parts, YHWH. Let my mouth speak what my heart believes. Let my yes be yes and my no be no.'),
+28:tpP('O YHWH, The Creator who established the sacred covenant of union, I come before You for purity. The Damascus Document CD Column 4 names fornication as the first net of Mastemah by which the covenant community is ensnared.')+tpV('Tehillim 119:9','How can a young man keep his way pure? By guarding it according to Your word.')+tpP('Temple Scroll 11Q19 Column 57 and 4QInstruction from Cave 4 establish the standard for covenant purity. I ask You to establish that standard in me. Where I have fallen short, forgive. Where I am weak, strengthen.'),
+29:tpP('O YHWH, I bring You my hope. Not what I can see but what I trust is coming. Tehillim 42 \u2014 why are you downcast my soul? Hope in YHWH. That question and that answer is the entire movement of hope.')+tpV('Tehillim 42:11','Why are you cast down, O my soul, and why are you in turmoil within me? Hope in YHWH; for I shall again praise Him, my salvation and my Creator.')+tpV('Tehillim 130:5','I wait for YHWH, my soul waits, and in His word I hope.')+tpP('The 4Q521 scroll from Cave 4 declares YHWH will give life to the dead and heal the wounded. That is the God I hope in. A God who acts. A God who keeps His word.'),
+30:tpP('O YHWH, I need encouragement to continue. The road has been long. The opposition has been real. But Your word speaks directly to this.')+tpV('Tehillim 37:23-24','The steps of a man are established by YHWH when He delights in his way; though he fall, he shall not be cast headlong, for YHWH upholds his hand.')+tpV('Tehillim 34:18-19','YHWH is near to the broken-hearted and saves the crushed in spirit. Many are the afflictions of the righteous, but YHWH delivers him out of them all.')+tpP('Out of them all. Not some. All. I hold that promise. YHWH upholds my hand.'),
+31:tpP('O YHWH, Tehillim 111:10 declares \u2014 the fear of YHWH is the beginning of wisdom. All the practical understanding I need for daily life flows from that single foundation.')+tpV('Tehillim 111:10','The fear of YHWH is the beginning of wisdom; all those who practice it have a good understanding.')+tpP('4QInstruction from Cave 4 \u2014 the largest DSS wisdom text \u2014 addresses daily decisions, relationships, finances, speech, and every area of practical life. Its foundation is the raz nihyeh \u2014 the mystery of existence. I ground my daily decisions in Your wisdom, not my own. Give me understanding for this day.'),
+32:tpP('O YHWH, I confess the pull of excess. The body that wants more than its portion. 4QInstruction from Cave 4 addresses this plainly \u2014 do not desire anything beyond your appointed portion.')+tpV('Devarim 8:11-12','Take care lest you forget YHWH your Creator by not keeping His commandments. Lest when you have eaten and are full and have built good houses and live in them, you then become proud.')+tpP('The Damascus Document CD Column 3 warns against those who walked in the stubbornness of their hearts and followed the desires of the flesh. Let me not be among them. Teach me contentment.'),
+33:tpP('O YHWH, I come in honesty. I have been stubborn at times rather than walking in Your ways. The Damascus Document CD Column 2 describes the generations who walked in stubbornness of heart and perished in their rebellion.')+tpV('Tehillim 78:8','And that they should not be like their fathers, a stubborn and rebellious generation, a generation whose heart was not steadfast, whose spirit was not faithful to YHWH.')+tpV('Devarim 30:19-20','I call heaven and earth to witness against you today, that I have set before you life and death, blessing and curse. Choose life, that you and your offspring may live.')+tpP('I choose life. I choose covenant. I choose YHWH. Soften my stubborn heart and make me pliable in Your hands.'),
+34:tpP('O YHWH, I declare today that my trust is in You alone. Not in any human power. Not in wealth or strategy or the strength of any arm. The Book of War from Cave 4 declares that the victory belongs to YHWH \u2014 not to human strength.')+tpV('Tehillim 20:7','Some trust in chariots and some in horses, but we trust in the name of YHWH our Creator.')+tpV('Tehillim 118:8-9','It is better to take refuge in YHWH than to trust in man. It is better to take refuge in YHWH than to trust in princes.')+tpV('Tehillim 125:1','Those who trust in YHWH are like Mount Tsiyon, which cannot be moved, but abides forever.')+tpP('Cannot be moved. Abides forever. That is the promise over everyone who trusts in You alone. I release every other trust. You are my only trust.')};
+var h=tpPaleo()+tpTitle(title)+tpSub('Sources: '+(src[id]||'DSS and Orit Ge\u2019ez primary sources'));if(heb[id])h+=heb[id];h+=bodies[id]||tpP('This prayer is being prepared.');h+=tpSB()+tpMS(ms[id]||'DSS primary sources, Qumran.');return h;}
+var SHABBT=null;
+function openShabbatMode(){document.getElementById('shabbat-overlay').classList.add('open');updateShabbatDisplay();SHABBT=setInterval(updateShabbatDisplay,60000);}
+function closeShabbatMode(){document.getElementById('shabbat-overlay').classList.remove('open');if(SHABBT){clearInterval(SHABBT);SHABBT=null;}}
+function updateShabbatDisplay(){
+  var now=new Date(),dow=now.getDay();
+  var sat=new Date(now);if(dow!==6){var d=(6-dow+7)%7;if(d===0)d=7;sat.setDate(now.getDate()+d);}sat.setHours(0,0,0,0);
+  var sun=new Date(sat);sun.setDate(sat.getDate()+1);
+  var st='06:00',en='06:00';
+  if(typeof userLocation!=='undefined'&&userLocation){
+    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon);
+    var es=getSunTimes(sun,userLocation.lat,userLocation.lon);
+    if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;
+  }
+  var el1=document.getElementById('shab-start-time');if(el1)el1.textContent=st;
+  var el2=document.getElementById('shab-end-time');if(el2)el2.textContent=en;
+  var dur=document.getElementById('shab-duration');if(dur)dur.textContent='Duration: approximately 24 hours \u2014 Saturday sunrise to Sunday sunrise';
+  var cd=document.getElementById('shab-countdown');
+  if(cd){var isNow=(dow===6)||(dow===0&&now.getHours()<8);if(isNow){cd.textContent='Shabbat is active \u2014 ends Sunday at sunrise '+en;}else{var ms2=sat.getTime()-now.getTime();var h2=Math.floor(ms2/3600000);var m2=Math.floor((ms2%3600000)/60000);cd.textContent='Shabbat begins in '+h2+'h '+m2+'m \u2014 Saturday at '+st;}}
+}
+function openVolOfDay(){
+  var sd=gregorianToSolar(new Date());
+  var labels=['Bereshit Part 1','Bereshit Part 2','Shemot Part 1','Shemot Part 2','Vayikra Part 1','Vayikra Part 2','Bamidbar Part 1','Bamidbar Part 2','Devarim Part 1','Devarim Part 2','Chanokh Part 1','Chanokh Part 2','Chanokh Part 3','Yovelim Part 1','Yovelim Part 2','War Scroll 1QM','Yehoshua','Shofetim','Shemu’el Aleph','Shemu’el Bet','Melakhim Aleph','Melakhim Bet','Yeshayahu Part 1','Yeshayahu Part 2','Yirmeyahu','Yehezkel Part 1','Yehezkel Part 2','Twelve Minor Prophets','Tehillim Part 1','Tehillim Part 2','Iyov','Mishlei','Shir HaShirim','Ruth','Eikha','Kohelet','Daniyel','Ezra-Nekhemyah','Divrei HaYamim','Community Rule 1QS','Damascus Document','Temple Scroll Part 1','Temple Scroll Part 2','Book of Mysteries','Hodayot','Pesher Habakkuk','Genesis Apocryphon','New Jerusalem','4QInstruction Part 1','4QInstruction Part 2','Aramaic Levi Document','4QBeatitudes','Book of War','Songs of Sabbath Sacrifice','Meqabyan Book 1','Meqabyan Book 2','Words of Michael','Birth of Noah','Prayer of Nabonidus','Pseudo-Jubilees','Angels of Mastemah','Wicked and the Holy'];
+  var idx=(sd.dayOfYear*17)%labels.length;
+  var readerIdx=[0,1,4,5,6,7,8,9,10,11,12,13,14,15,16,93,19,22,25,29,33,37,41,43,46,53,56,59,64,68,76,73,79,80,81,82,84,86,88,97,95,108,109,111,102,104,106,107,94,94,106,102,93,105,15,16,12,17,84,15,12,93];
+  localStorage.setItem('acr_ok','1');
+  localStorage.setItem('acr_last',String(readerIdx[idx]));
+  localStorage.setItem('acr_from_solar','1');
+  window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/';
+}
+function renderVolOfDay(){
+  var card=document.getElementById('vol-title');if(!card)return;
+  var sd=gregorianToSolar(new Date());
+  var labels=['Bereshit Part 1','Bereshit Part 2','Shemot Part 1','Shemot Part 2','Vayikra Part 1','Vayikra Part 2','Bamidbar Part 1','Bamidbar Part 2','Devarim Part 1','Devarim Part 2','Chanokh Part 1','Chanokh Part 2','Chanokh Part 3','Yovelim Part 1','Yovelim Part 2','War Scroll 1QM','Yehoshua','Shofetim','Shemu\u2019el Aleph','Shemu\u2019el Bet','Melakhim Aleph','Melakhim Bet','Yeshayahu Part 1','Yeshayahu Part 2','Yirmeyahu','Yehezkel Part 1','Yehezkel Part 2','Twelve Minor Prophets','Tehillim Part 1','Tehillim Part 2','Iyov','Mishlei','Shir HaShirim','Ruth','Eikha','Kohelet','Daniyel','Ezra-Nekhemyah','Divrei HaYamim','Community Rule 1QS','Damascus Document','Temple Scroll Part 1','Temple Scroll Part 2','Book of Mysteries','Hodayot','Pesher Habakkuk','Genesis Apocryphon','New Jerusalem','4QInstruction Part 1','4QInstruction Part 2','Aramaic Levi Document','4QBeatitudes','Book of War','Songs of Sabbath Sacrifice','Meqabyan Book 1','Meqabyan Book 2','Words of Michael','Birth of Noah','Prayer of Nabonidus','Pseudo-Jubilees','Angels of Mastemah','Wicked and the Holy'];
+  var idx=(sd.dayOfYear*17)%labels.length;
+  card.textContent='Vol '+(idx+1)+' \u2014 '+labels[idx];
+}
+function renderTopBar(){
+  var bar=document.getElementById('topbar-scroll');if(!bar)return;
+  bar.innerHTML=[{i:'ri-focus-3-line',l:'Today',f:'goToday()'},{i:'ri-moon-clear-line',l:'Shabbat',f:'openShabbatMode()'},{i:'ri-text-snippet',l:'Shema',f:'openShema()'},{i:'ri-book-2-line',l:'Sabbath Prayers',f:"switchView('sabbath')"},{i:'ri-heart-2-line',l:'Prayers',f:"switchView('prayers')"},{i:'ri-add-circle-line',l:'Add Reminder',f:'openAddEvent()'},{i:'ri-notification-3-line',l:'Alerts',f:"switchView('sun')"}].map(function(b){return'<div class="tbs-pill" onclick="'+b.f+'"><i class="'+b.i+'"></i>'+b.l+'</div>';}).join('');
+}
+function playTone(type){try{var ctx=new(window.AudioContext||window.webkitAudioContext)();var p={sunrise:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],shabbat:[[784,0,0.5],[659,0.6,0.7]],holyday:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],reminder:[[660,0,0.4]],midday:[[528,0,0.4],[528,0.5,0.4]]};var ns=p[type]||p.reminder;ns.forEach(function(n){var o=ctx.createOscillator();var g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=n[0];o.type='sine';g.gain.setValueAtTime(0,ctx.currentTime+n[1]);g.gain.linearRampToValueAtTime(0.3,ctx.currentTime+n[1]+0.05);g.gain.linearRampToValueAtTime(0,ctx.currentTime+n[1]+n[2]);o.start(ctx.currentTime+n[1]);o.stop(ctx.currentTime+n[1]+n[2]+0.1);});}catch(e){}}
+var _sw=switchView;switchView=function(n){_sw(n);if(n==='prayers')renderPrayersList();if(n==='month')renderVolOfDay();document.querySelectorAll('.nav-item').forEach(function(x){x.classList.toggle('active',x.id==='nav-'+n);});};
+window.addEventListener('load',function(){renderTopBar();renderVolOfDay();loadTPVoices();});
+
+</script>
+</body>
+</html>
