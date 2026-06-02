@@ -47,11 +47,18 @@ These have been re-locked on 2026-05-04 after repeated violations.
    This is also the first thing to do at session start. If a direct
    push to `main` fails, fall back to the PR workflow in rule 6.
    Do not ship from a stale branch. Do not force push.
-8. **DO NOT TOUCH ACR READER** (the root `/` app — files at repo
-   root: `index.html`, `acr.css`, `sw.js`, etc., and the
-   `content/` folder). Locked 2026-05-04 by user. Only edit if the
-   user explicitly says "edit ACR reader" / "fix the reader" /
-   names a root-app file. Otherwise leave the root untouched.
+8. **DO NOT TOUCH ACR READER, ACR2, OR ACR SOLAR — EVER, WITHOUT DIRECT APPROVAL.**
+   Locked 2026-06-02 by user. Covers all three apps:
+   - ACR Reader (root `/` app): `index.html`, `acr.css`, `sw.js`, etc.,
+     and the `content/` folder.
+   - ACR2: the `/ACR2/` subfolder and all files inside it.
+   - ACR Solar: the `/solar/` subfolder and all files inside it (including
+     any solar-reader, solar-vol, or solar-day files).
+   Only edit any of the above if the user says one of these exact phrases:
+   "edit ACR reader", "fix the reader", "edit ACR2", "fix ACR2",
+   "edit ACR Solar", "fix Solar", or explicitly names a file inside one
+   of those folders. A general bug report or question about those apps
+   does NOT count as approval — stop and ask before touching anything.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
 9. **SELF-MERGE POLICY — updated 2026-05-15 by user.**
