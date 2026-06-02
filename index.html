@@ -296,6 +296,7 @@ var VMODE=localStorage.getItem('acr_vm')||'all';
 var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
+var VPAUSED=false;
 var VGEN=0;
 var VTAP_TIME=0;
 var HL_DATA={};
@@ -686,11 +687,16 @@ function speakExactElement(el){
 }
 function vPlay(){
   if(VPLAYING) return;
-  if(window.speechSynthesis.paused){
+  // Only resume if we explicitly paused — iOS Safari leaves paused=true after
+  // cancel(), so checking the flag avoids falsely hitting the resume path after
+  // stop or navigation, which would show "Playing" with nothing queued.
+  if(VPAUSED && window.speechSynthesis.paused){
     window.speechSynthesis.resume();
+    VPAUSED=false;
     VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
     return;
   }
+  VPAUSED=false;
   buildVP();if(!VPARAS.length) return;
   VGEN++;
   VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
@@ -726,9 +732,10 @@ function vNext(){
   u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
   window.speechSynthesis.speak(u);
 }
-function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
+function vPause(){window.speechSynthesis.pause();VPAUSED=true;VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
 function vStop(){
   VGEN++;
+  VPAUSED=false;
   window.speechSynthesis.cancel();VPLAYING=false;VPOS=0;
   document.getElementById('vbtn-play').textContent='▶ Play';
   document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
@@ -755,6 +762,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v42</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v43</div>
 </body>
 </html>
