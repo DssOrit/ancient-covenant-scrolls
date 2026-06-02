@@ -297,7 +297,6 @@ var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
 var VGEN=0;
-var CURRENT_UTT=null;
 var VTAP_TIME=0;
 var HL_DATA={};
 var SEL_RANGE=null;
@@ -680,9 +679,9 @@ function speakExactElement(el){
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){console.log('TAP_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
-  u.onerror=function(ev){console.log('TAP_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
-  if(VGEN===myGen){CURRENT_UTT=u;window.speechSynthesis.speak(u);}
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  Promise.resolve().then(function(){if(VGEN!==myGen)return;window.speechSynthesis.speak(u);});
 }
 function vPlay(){
   if(VPLAYING) return;
@@ -723,9 +722,9 @@ function vNext(){
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){console.log('VNEXT_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
-  u.onerror=function(ev){console.log('VNEXT_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
-  CURRENT_UTT=u;window.speechSynthesis.speak(u);
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
+  window.speechSynthesis.speak(u);
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
 function vStop(){
@@ -756,6 +755,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-iphoneSB2</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-rollback36</div>
 </body>
 </html>
