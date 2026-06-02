@@ -616,9 +616,9 @@ document.getElementById('content').addEventListener('click',function(e){
   var now=Date.now();
   if(now-VTAP_TIME<150){VTAP_TIME=now;return;}
   VTAP_TIME=now;
-  var mode=VMODE||'verses';
-  var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';
-  var el=e.target.closest(sel);
+  // Find the tapped paragraph regardless of tagging (early books are untagged);
+  // speakExactElement() decides if it belongs to the current mode's set.
+  var el=e.target.closest('#content [data-ptype],#content p.dp');
   if(!el||!document.getElementById('content').contains(el)) return;
   speakExactElement(el);
 });
@@ -641,10 +641,23 @@ function toggleVoice(){
   bar.classList.toggle('show');
   document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));
 }
+function isVerseEl(el){
+  if(!el||!el.getAttribute) return false;
+  var pt=el.getAttribute('data-ptype');
+  if(pt==='note') return false;
+  if(pt==='verse') return true;
+  // Untagged early books (files 2-12): a verse paragraph begins with chapter:verse, e.g. 1:1
+  return el.classList&&el.classList.contains('dp')&&/^\s*\d+\s*:\s*\d+/.test(el.textContent||'');
+}
 function buildVP(){
   var mode=VMODE||'verses';
-  var sel=mode==='verses'?'p.dp:not([data-ptype="note"])':mode==='notes'?'[data-ptype="note"]':'p.dp';
-  VPARAS=Array.from(document.querySelectorAll('#content '+sel));
+  if(mode==='notes'){
+    VPARAS=Array.from(document.querySelectorAll('#content [data-ptype="note"]'));
+  } else if(mode==='all'){
+    VPARAS=Array.from(document.querySelectorAll('#content p.dp'));
+  } else {
+    VPARAS=Array.from(document.querySelectorAll('#content [data-ptype="verse"],#content p.dp')).filter(isVerseEl);
+  }
 }
 function pronounce(t){
   return t
@@ -767,6 +780,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v47</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v49</div>
 </body>
 </html>
