@@ -166,7 +166,7 @@ body.dark #bnav{background:#111}
   <button class="hx" onclick="hideHL()" style="color:#555">—</button>
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
-<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v-safefooter</div>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v9</div>
 <script>
 window.addEventListener('load',function(){
   document.getElementById('nav').style.display='flex';
@@ -196,6 +196,7 @@ var VPLAYING=false;
 var HL_DATA={};
 var SEL_RANGE=null;
 var SCROLL_T=null;
+var VTAP_TIME=0;
 function start(){
   document.body.classList.add('loaded');
   applyFS();applyLH();
@@ -247,6 +248,7 @@ function buildSB(){
     else if(e.type==='vol')h+='<div class="tv">'+e.label+'</div>';
     else h+='<div class="tf" data-idx="'+e.idx+'" onclick="loadSection('+e.idx+',true)">'+e.label+'</div>';
   }
+  h+='<a href="../index.html" style="display:block;margin:16px 8px 12px;padding:11px 12px;border-top:1px solid #2a2a2a;color:#9bb0c4;text-decoration:none;font-size:12px;font-weight:600">Open ACR Main Reader →</a>';
   document.getElementById('sb').innerHTML=h;
   if(!SB_OPEN&&window.innerWidth>680)document.getElementById('sb').classList.add('hide');
 }
@@ -278,10 +280,40 @@ function copyHL(){var sel=window.getSelection();if(sel&&!sel.isCollapsed){try{na
 function saveHL(){var fid=NAVIDS[CUR];var spans=document.getElementById('content').querySelectorAll('.hy,.hg,.hb,.hp,.ho');var saved=[];spans.forEach(function(s){saved.push({t:s.textContent,c:s.className});});HL_DATA[fid]=saved;localStorage.setItem('acr2_hl',JSON.stringify(HL_DATA));}
 function restoreHL(fid){var saved=HL_DATA[fid];if(!saved||!saved.length)return;var content=document.getElementById('content');saved.forEach(function(h){if(!h.t||!h.c)return;var w=document.createTreeWalker(content,NodeFilter.SHOW_TEXT,null,false);var nd;while(nd=w.nextNode()){var j=nd.textContent.indexOf(h.t);if(j>=0){try{var r=document.createRange();r.setStart(nd,j);r.setEnd(nd,j+h.t.length);var sp=document.createElement('span');sp.className=h.c;r.surroundContents(sp);}catch(e){}break;}}});}
 document.addEventListener('click',function(e){if(!e.target.closest('#hlp')&&!e.target.closest('#content'))hideHL();});
+document.getElementById('content').addEventListener('click',function(e){
+  if(!document.getElementById('voice-bar').classList.contains('show'))return;
+  var now=Date.now();
+  if(now-VTAP_TIME<150){VTAP_TIME=now;return;}
+  VTAP_TIME=now;
+  // Tap a paragraph to jump to it, highlight, and read from there.
+  var el=e.target.closest('#content [data-ptype],#content p.dp');
+  if(!el||!document.getElementById('content').contains(el))return;
+  speakExactElement(el);
+});
 function loadVoices(){function doit(){VOICES=window.speechSynthesis.getVoices();var sel=document.getElementById('vvoice');sel.innerHTML=VOICES.map(function(v,i){var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'\u2605 ':'';return '<option value="'+i+'"'+(i===VIDX?' selected':'')+'>'+star+v.name.substring(0,26)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)doit();else window.speechSynthesis.onvoiceschanged=doit;}
 function toggleVoice(){var bar=document.getElementById('voice-bar');var nav=document.getElementById('bnav');bar.classList.toggle('show');document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);var barH=bar.classList.contains('show')?bar.offsetHeight:0;document.getElementById('main').style.marginBottom=(nav.offsetHeight+barH)+'px';}
 function buildVP(){var mode=VMODE||'verses';var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';VPARAS=Array.from(document.querySelectorAll('#content '+sel));}
 function pronounce(t){return t.replace(/\u{10909}\u{10904}\u{10905}\u{10904}/gu,'').replace(/[\u{10900}-\u{1091F}]+/gu,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bOrit\b/gi,'Oh-reet').replace(/Ge.ez/gi,'Geh-ez').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/\[DSS\]/g,'Dead Sea Scrolls note:').replace(/ORIT GE.EZ/gi,'Orit Gezz note:').replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:').replace(/\[CRITICAL NOTE\]/gi,'Critical note:').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
+function speakExactElement(el){
+  window.speechSynthesis.cancel();
+  buildVP();
+  var idx=VPARAS.indexOf(el);
+  if(idx<0)return;
+  VPOS=idx;VPLAYING=true;
+  document.getElementById('vbtn-play').textContent='\u25BA Playing';
+  document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
+  el.style.background='rgba(255,235,59,.15)';
+  window.scrollTo(0,el.getBoundingClientRect().top+(window.pageYOffset||0)-80);
+  var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');
+  vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));
+  updateVS();
+  var u=new SpeechSynthesisUtterance(pronounce(el.textContent||''));
+  if(VOICES[VIDX])u.voice=VOICES[VIDX];
+  u.rate=VRATE;
+  u.onend=function(){el.style.background='';VPOS++;vNext();};
+  u.onerror=function(){el.style.background='';VPOS++;vNext();};
+  Promise.resolve().then(function(){window.speechSynthesis.speak(u);});
+}
 function vPlay(){if(VPLAYING)return;buildVP();if(!VPARAS.length)return;VPLAYING=true;document.getElementById('vbtn-play').textContent='\u25BA Playing';vNext();}
 function vNext(){if(!VPLAYING||VPOS>=VPARAS.length){if(VPLAYING&&document.getElementById('vauto').checked){vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);}else vStop();return;}var para=VPARAS[VPOS];var txt=pronounce(para.textContent||'');if(!txt.trim()){VPOS++;vNext();return;}window.scrollTo(0,para.getBoundingClientRect().top+(window.pageYOffset||0)-80);para.style.background='rgba(255,235,59,.15)';var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));updateVS();var u=new SpeechSynthesisUtterance(txt);if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};window.speechSynthesis.speak(u);}
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';}
