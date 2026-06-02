@@ -1208,6 +1208,252 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       analyzedAt:new Date().toISOString(),sceneCount:scenes.length};
   }
 
+  // Fallback parser for plain text, prose, book excerpts, nonprofessional scripts.
+  // Called when analyzeScript() finds 0 scenes (no INT./EXT. headers).
+  function parsePlainText(raw,meta){
+    var rawBlocks=raw.split(/\r?\n\s*\r?\n/);
+    var blocks=rawBlocks.map(function(b){return b.split(/\r?\n/).map(function(l){return l.trim();}).filter(Boolean);}).filter(function(b){return b.length>0;});
+    if(!blocks.length)blocks=[[raw.trim().substring(0,500)]];
+
+    var DIAL_RE=/^([A-Za-z][A-Za-z\s\-\.]{1,30}?)\s*:\s+(.+)$/;
+    var NON_NAME=/^(note|chapter|part|scene|act|book|page|section|the|a|an|and|but|for|or|nor|so|yet|he|she|it|we|they|fade|cut|int|ext)$/i;
+    var SKIP_PROPER=/^(The|A|An|In|At|On|By|And|But|For|Or|He|She|It|We|They|His|Her|Its|Their|Our|My|Your|This|That|These|Those|To|Of|Is|Was|Are|Were|Has|Had|Have|Will|Would|Could|Should|May|Might|Can)$/;
+
+    // Classification filter lists — words that are never characters
+    var ANIMAL_LIST=['fish','whale','worm','crab','snake','serpent','bird','eagle','dove','pigeon','lion','wolf','bear','fox','rabbit','hare','dog','cat','horse','sheep','goat','ox','cattle','cow','bull','calf','locust','frog','fly','mosquito','shark','dolphin','octopus','squid','beetle','ant','spider','crow','raven','hawk','vulture','cricket','grasshopper','leviathan','beast','creature','insect','bug','deer','elk','camel','donkey','ass','mule','pig','swine','hen','rooster','rat','mouse','scorpion','crocodile','flamingo','stork','pelican','ibis','turtle','tortoise','lizard'];
+    var GEO_LIST=['nineveh','babylon','jerusalem','egypt','israel','judah','jericho','bethlehem','nazareth','galilee','tarshish','joppa','rome','persia','assyria','samaria','euphrates','jordan','sinai','canaan','tyre','sidon','damascus','sheba','midian','edom','moab','ammon','bashan','gilead','hebron','beersheba','sodom','gomorrah','eden','goshen','zion','moriah','sea','ocean','land','earth','sky','heaven','hell','sheol','hades'];
+    var SKIP_WORDS=['what','when','where','how','why','which','then','there','here','still','just','even','also','very','never','always','soon','again','away','back','down','over','under','above','below','indeed','truly','verily','thus','therefore','hence','man','men','people','folk','ones','as','you','lord','vo','hey','ah','oh','nah','na','yea','aye','hark','alas','well'];
+    function isAnimal(w){return ANIMAL_LIST.indexOf(w.toLowerCase())>=0;}
+    function isGeo(w){return GEO_LIST.indexOf(w.toLowerCase())>=0;}
+    function isSkipWord(w){return SKIP_WORDS.indexOf(w.toLowerCase())>=0;}
+    function isValidChar(w){return !isAnimal(w)&&!isGeo(w)&&!isSkipWord(w)&&w.length>=2&&!NON_NAME.test(w)&&!SKIP_PROPER.test(w);}
+
+    var VO_NORM_RE=/\s*\(?\s*V\.?O\.?\s*\)?\s*\.?\s*$/i;
+    // Phase 1: Dialogue-pattern characters (Name: text) — high confidence
+    var cCount={};var dialogueSet={};
+    var allLines=raw.split(/\r?\n/);
+    for(var li=0;li<allLines.length;li++){
+      var dm=DIAL_RE.exec(allLines[li].trim());
+      if(dm){var cn=dm[1].trim().replace(VO_NORM_RE,'').trim();if(cn&&isValidChar(cn)){cCount[cn]=(cCount[cn]||0)+5;dialogueSet[cn]=true;}}
+    }
+    // Phase 2: Verb-context characters (Name + action verb) — medium confidence
+    var VRBS='said|told|asked|answered|replied|cried|shouted|walked|ran|went|came|stood|looked|heard|saw|turned|rose|fell|wept|laughed|prayed|arose|fled|entered|left|spoke|thought|felt|knew|returned|called|exclaimed|declared|nodded|smiled|frowned|woke|ate|drank|feared|believed|obeyed|whispered|continued|began|tried|started|sat|knelt|bowed|stretched|raised|lifted|threw|grabbed|picked|held|carried|brought|sent|received|took|gave|made|moved|stayed|waited|opened|closed|commanded|warned|rescued|jumped|swam|sailed|sank|slept|awoke|rolled|climbed|reached|pointed|breathed|sighed|pressed|pulled|pushed|crossed|followed|pleaded|begged|demanded|insisted|refused|accepted|agreed|denied|exclaimed|lamented|questioned';
+    var VERB_RE=new RegExp('\\b([A-Z][a-z]{2,20})\\s+(?:'+VRBS+')\\b','g');
+    var vm;
+    while((vm=VERB_RE.exec(raw))!==null){var vn=vm[1];if(isValidChar(vn)){cCount[vn]=(cCount[vn]||0)+3;}}
+    // Phase 3: Repeated single-word proper nouns only — low weight, high threshold
+    var SP_RE=/\b([A-Z][a-z]{1,20})\b/g;var wm;
+    while((wm=SP_RE.exec(raw))!==null){var w=wm[1];if(!SKIP_PROPER.test(w)&&isValidChar(w)){cCount[w]=(cCount[w]||0)+1;}}
+
+    // Keep names with sufficient evidence: dialogue-found always included; non-dialogue need score >=6
+    var chars=Object.keys(cCount).filter(function(c){
+      if(!isValidChar(c))return false;
+      return dialogueSet[c]?cCount[c]>=1:cCount[c]>=6;
+    }).map(function(c){return c.replace(VO_NORM_RE,'').trim();})
+    .filter(function(c,i,arr){return c&&arr.indexOf(c)===i;})
+    .sort(function(a,b){return(cCount[b]||0)-(cCount[a]||0);}).slice(0,10);
+
+    // Location detection — descriptive common nouns
+    var LOC_WORDS='yard|garden|park|field|forest|woods|desert|valley|cave|basement|attic|hallway|bedroom|kitchen|living room|office|library|school|church|hospital|market|street|road|city|town|village|farm|barn|factory|dock|shore|beach|lake|river|house|home|room|hall|arena|stadium|theater|bar|restaurant|cafe|hotel|inn|castle|prison|shop|store|alley|station';
+    var locs=[];var lm;
+    var LOC_RE=new RegExp('\\b(?:in|at|near|inside|outside|around|by)\\s+(?:the\\s+|his\\s+|her\\s+|their\\s+|a\\s+)?(?:own\\s+)?('+LOC_WORDS+')\\b','gi');
+    while((lm=LOC_RE.exec(raw))!==null){var ll=lm[1].toLowerCase();if(locs.indexOf(ll)<0)locs.push(ll);if(locs.length>=5)break;}
+    var POS_RE=new RegExp('\\b(?:his|her|their|the)\\s+('+LOC_WORDS+')\\b','gi');
+    while((lm=POS_RE.exec(raw))!==null){var pl=lm[1].toLowerCase();if(locs.indexOf(pl)<0)locs.push(pl);if(locs.length>=5)break;}
+    // Named geographical locations (proper place names) — always location, never character
+    var namedLocs=[];var gm;
+    var GEO_NAME_RE=/\b(Nineveh|Babylon|Jerusalem|Egypt|Israel|Joppa|Tarshish|Galilee|Judah|Judea|Persia|Assyria|Rome|Greece|Samaria|Euphrates|Jordan|Sinai|Canaan|Philistia|Tyre|Sidon|Damascus|Sheba|Midian|Edom|Moab|Ammon|Bashan|Gilead|Hebron|Beersheba|Sodom|Gomorrah|Eden|Goshen|Zion|Moriah)\b/g;
+    while((gm=GEO_NAME_RE.exec(raw))!==null){if(namedLocs.indexOf(gm[1])<0)namedLocs.push(gm[1]);}
+    var allLocs=[];locs.concat(namedLocs.map(function(n){return n.toLowerCase();})).forEach(function(l){if(allLocs.indexOf(l)<0)allLocs.push(l);});
+
+    // Event/location-based scene detection — scenes form at narrative transitions
+    // (location arrivals, time shifts, dramatic events) not at word-count thresholds.
+    var totalWords=raw.split(/\s+/).filter(Boolean).length;
+    var MIN_SCENE_WORDS=80;   // minimum words before a break can fire
+    var MAX_SCENE_WORDS=600;  // safety valve: always break when a scene gets too long
+    // Movement/arrival (+2): character travels to or enters a new place
+    var LOC_MOVE_RE=/\b(?:went|walked|ran|fled|traveled|sailed|arrived|entered|boarded|descended|crossed|headed|set\s+out|departed|returned|came)\b/i;
+    // Named story locations (+2): a key place name appears in narrative block
+    var STORY_LOC_RE=/\b(Nineveh|Joppa|Tarshish|the\s+sea|the\s+ship|a\s+ship|the\s+fish|the\s+belly|the\s+city|the\s+port|the\s+shore|the\s+road|the\s+desert|the\s+plant|the\s+worm|the\s+shade)\b/i;
+    // Time transition (+2): explicit new time period or second occasion
+    var TIME_BREAK_RE=/\b(?:later|(?:the\s+)?next\s+(?:day|morning|evening)|three\s+days|after\s+(?:three|that|this|two)|meanwhile|that\s+(?:night|morning|evening|day)|at\s+(?:dawn|dusk|midnight|noon)|a\s+second\s+time|once\s+more|many\s+days)\b/i;
+    // Notable event (+1): dramatic action or divine intervention
+    var EVENT_RE=/\b(?:storm|suddenly|hurled|threw|swallowed|appointed|cast\s+lots|overboard|great\s+wind|mighty\s+tempest|LORD\s+(?:spoke|said|commanded|sent|appointed|caused|prepared))\b/i;
+    function sceneBreakScore(bt){var s=0;if(LOC_MOVE_RE.test(bt))s+=2;if(STORY_LOC_RE.test(bt))s+=2;if(TIME_BREAK_RE.test(bt))s+=2;if(EVENT_RE.test(bt))s+=1;return s;}
+    // Extract a location/event-based title from the opening text of a scene group
+    function bestTitle(sceneText){
+      var t=sceneText.substring(0,600);
+      var mv=/\b(?:went\s+(?:to|down\s+to|into)|arrived\s+(?:at|in)|entered|boarded|sailed\s+to)\s+(Nineveh|Joppa|Tarshish|the\s+ship|the\s+sea|the\s+city|the\s+fish)\b/i.exec(t);
+      if(mv)return mv[0].charAt(0).toUpperCase()+mv[0].slice(1,50);
+      var evtMap=[
+        [/\bthrow\s+(?:me|him|jonah)\s+(?:in|into)\s+the\s+sea\b|\bsailors?\s+threw\s+him\b/i,'Cast into the Sea'],
+        [/\bkill\s+me\s+now\b|\bI.d\s+rather\s+be\s+dead\b|\bjust\s+kill\s+me\b|\bnothing\s+I\s+predicted\b/i,"Jonah's Anger"],
+        [/\bcast\s+lots?\b|\bdrew\s+lots?\b|\blot[s]?\s+fell\b/i,'Jonah Loses the Toss'],
+        [/\bgreat\s+(?:storm|wind|tempest)\b|\btempest\b|\bviolent\s+storm\b/i,'The Great Storm'],
+        [/\bwoman\b[\s\S]{0,60}(?:fall(?:s|ing)?\b|fell|overboard|thrown)\b|\b(?:fall(?:s|ing)?\b|fell|overboard)\b[\s\S]{0,60}\bwoman\b/i,'Woman Falls Overboard'],
+        [/\bband\b[\s\S]{0,60}\bplay|\bplay[\s\S]{0,60}\bband\b|\btitanic\b/i,'Band Plays During the Storm'],
+        [/\b(?:thrown\s+)?overboard\b|\bhurl(?:ed|s)?\s+(?:him\s+)?into\s+the\s+sea\b/i,'Cast into the Sea'],
+        [/\bbelly\s+of\s+the\s+(?:fish|whale)\b|\binside\s+the\s+(?:fish|whale)\b/i,'Inside the Fish'],
+        [/\bfish\s+(?:spit|vomit|spew)\b|\bvomit\b[\s\S]{0,40}\bjonah\b/i,'Jonah Released from Fish'],
+        [/\bplant\b[\s\S]{0,80}\bworm\b|\bworm\b[\s\S]{0,80}\bplant\b/i,'The Plant and the Worm'],
+        [/\bGod\s+(?:appoint|send)\b[\s\S]{0,60}\bplant\b|\bplant\b[\s\S]{0,60}\bgrow\b/i,'God Provides a Plant'],
+        [/\bworm\b[\s\S]{0,60}\b(?:gnaw|bit|destroy|wither)\b/i,'The Worm'],
+        [/\brepent\b[\s\S]{0,60}\bNineveh\b|\bNineveh\b[\s\S]{0,60}\brepent\b/i,'Nineveh Repents'],
+        [/\bking\b[\s\S]{0,60}\brepent\b|\brepent\b[\s\S]{0,60}\bking\b/i,'The King Orders Fasting'],
+        [/\bsecond\s+time\b/i,'God Speaks a Second Time'],
+        [/\bpray(?:s|ed|er)?\b[\s\S]{0,80}\bfish\b|\bfish\b[\s\S]{0,80}\bpray/i,'Jonah Prays in the Fish'],
+        [/\bwatch\b[\s\S]{0,60}\bcity\b|\beast\s+of\s+the\s+city\b|\bsit\b[\s\S]{0,40}\beast\b/i,'Jonah Watches the City'],
+        [/\bswallow(?:ed|s)?\b/i,'Swallowed by the Fish'],
+        [/\bfled?\b|\brun\s+away\b|\bran\s+away\b/i,'Jonah Flees'],
+        [/\bboard(?:ed|s)?\b[\s\S]{0,30}\bship\b|\bship\b[\s\S]{0,30}\bTarshish\b/i,'Jonah Boards the Ship'],
+        [/\bsailor[s]?\b[\s\S]{0,60}\bfear\b|\bfear\b[\s\S]{0,60}\bsailor\b/i,'Sailors in Fear'],
+        [/\bgreat\s+fish\b|\bfish\s+swallow\b/i,'The Great Fish'],
+      ];
+      for(var ei=0;ei<evtMap.length;ei++){if(evtMap[ei][0].test(t))return evtMap[ei][1];}
+      var nm=/(Nineveh|Joppa|Tarshish)/.exec(t.substring(0,300));if(nm)return 'At '+nm[1];
+      var st=/\bthe\s+(ship|sea|fish|belly|city|port|shore|desert|plant|shade)\b/i.exec(t);
+      if(st)return 'On the '+st[1].charAt(0).toUpperCase()+st[1].slice(1);
+      var ca=/\b(Jonah|God|Captain|Sailor|Woman|King)\s+(fled|went|prayed|boards?|entered?|warned?|watched?|obey(?:s|ed)?|sits?|sat)\b/i.exec(t);
+      if(ca)return ca[1]+' '+ca[2].charAt(0).toUpperCase()+ca[2].slice(1);
+      var lines=t.split(/\r?\n/).filter(function(l){var lt=l.trim();return lt.length>10&&!DIAL_RE.test(lt)&&!(lt===lt.toUpperCase()&&lt.length<50);});
+      if(lines.length){
+        var fl=lines[0].trim();
+        fl=fl.replace(/^(?:scene\s+(?:shows?|opens?|cuts?\s+to|begins?|depicts?)[\s:,]+)/i,'');
+        fl=fl.replace(/^(?:as\s+(?:a|the|we|they|he|she)\s+)/i,'');
+        fl=fl.replace(/^(?:we\s+see\s+)/i,'');
+        if(fl.length>5)return fl.substring(0,50);
+      }
+      return null;
+    }
+    // Pre-pass: identify all-caps speaker-only blocks (JONAH, SEA MAN #1, GOD)
+    // so they are not mistaken for scene headings in the grouping loop.
+    var speakerBlockIdxs={};
+    for(var blkIdx=0;blkIdx<blocks.length;blkIdx++){
+      var pb2=blocks[blkIdx];
+      if(pb2.length===1){
+        var pt2=pb2[0].trim();
+        if(pt2===pt2.toUpperCase()&&/[A-Z]/.test(pt2)&&pt2.length<50&&!/[.!?]$/.test(pt2)&&blkIdx+1<blocks.length){
+          var nbt2=blocks[blkIdx+1].join(' ').trim();
+          if(!(nbt2===nbt2.toUpperCase()&&/[A-Z]/.test(nbt2)&&nbt2.length<50))speakerBlockIdxs[blkIdx]=true;
+        }
+      }
+    }
+    function isHeadingLine(bl){return /^\s*(?:chapter|act|part|book|section|episode)\b/i.test(bl)||/^\s*scene\s+\d+/i.test(bl);}
+    var groupedTexts=[];var groupSources=[];var curLines=[];var curWds=0;var nextSrc='paragraph group';
+    blocks.forEach(function(block,blkIdx){
+      var bt=block.join('\n');
+      var bw=bt.split(/\s+/).filter(Boolean).length;
+      // Dialogue and speaker blocks never trigger scene breaks
+      var isDial=block.length===1&&DIAL_RE.test(block[0].trim());
+      var canBreakHere=!speakerBlockIdxs[blkIdx]&&!isDial;
+      // Structural heading: explicit section marker (CHAPTER, ACT, SCENE, etc.)
+      var isHd=canBreakHere&&block.length===1&&isHeadingLine(block[0])&&block[0].length<80;
+      // Event/location score — only fires when minimum content is accumulated
+      var evtScore=(canBreakHere&&curWds>=MIN_SCENE_WORDS)?sceneBreakScore(bt):0;
+      var tooLong=canBreakHere&&curWds>=MAX_SCENE_WORDS;
+      if(curLines.length>0&&(isHd||(evtScore>=3)||tooLong)){
+        groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);
+        curLines=[bt];curWds=bw;
+        nextSrc=isHd?'heading':tooLong?'max length':'location change';
+      } else {
+        curLines.push(bt);curWds+=bw;
+      }
+    });
+    if(curLines.length){groupedTexts.push(curLines.join('\n\n'));groupSources.push(nextSrc);}
+
+    // Confidence scoring
+    var dialCharCount=Object.keys(dialogueSet).length;
+    var charConf=dialCharCount>0?'High':chars.length>0?'Medium':'Low';
+    var locConf=locs.length>0?'High':namedLocs.length>0?'Medium':'Low';
+    var hasHdgs=blocks.some(function(b){return b.length===1&&b[0]===b[0].toUpperCase()&&b[0].length>1&&/[A-Za-z]/.test(b[0]);});
+    var sceneConf=hasHdgs?'High':totalWords>=150?'Medium':'Low';
+    var confidence=chars.length>0||allLocs.length>0?'Plain Text Parse':'Low Confidence, Review Needed';
+
+    var mainLoc=allLocs.length?allLocs[0]:'Location to confirm';
+    var scenes=[];
+    var usedTitles={};
+
+    groupedTexts.forEach(function(sceneText,bIdx){
+      var sc=buildScene(bIdx+1,'',mainLoc,'');
+      var scLines=sceneText.split(/\r?\n/).map(function(l){return l.trim();}).filter(Boolean);
+      var heading='',contentLines=[];
+      for(var bi=0;bi<scLines.length;bi++){
+        var bl=scLines[bi];
+        // All-caps line: only treat as a scene heading when it contains structural keywords
+        // (CHAPTER, ACT, etc.) OR fails isValidChar (i.e. not a character name).
+        // Prevents JONAH, GOD, SEA MAN #1 from becoming scene titles.
+        if(!heading&&bl===bl.toUpperCase()&&bl.length>1&&bl.length<60&&/[A-Za-z]/.test(bl)&&(!isValidChar(bl)||isHeadingLine(bl))){heading=bl;continue;}
+        contentLines.push(bl);
+      }
+      if(!heading){var autoTitle=bestTitle(sceneText);if(autoTitle&&usedTitles[autoTitle])autoTitle=null;if(autoTitle)usedTitles[autoTitle]=true;heading=autoTitle||(scLines[0]?scLines[0].substring(0,50):'Scene '+(bIdx+1));}
+      if(!contentLines.length)contentLines=scLines.slice();
+      sc.title=heading.substring(0,50);
+      sc.sceneId='SC'+String(bIdx+1).padStart(2,'0');
+      sc.scriptOrder=bIdx+1;sc.sceneIndex=bIdx+1;
+      sc.location=mainLoc;sc.characters=chars.slice(0,5);
+      var bAction=[],bDialogue=[];
+      var ci=0;
+      while(ci<contentLines.length){
+        var cl=contentLines[ci];
+        var dlm=DIAL_RE.exec(cl);
+        // All-caps standalone speaker line (JONAH, SEA MAN #1): pair with the next line as dialogue
+        var isRawSpeaker=cl===cl.toUpperCase()&&cl.length>0&&cl.length<50&&/[A-Za-z]/.test(cl)&&isValidChar(cl);
+        if(dlm&&isValidChar(dlm[1].trim())){
+          bDialogue.push({ch:dlm[1].trim(),text:dlm[2].trim()});
+          if(sc.characters.indexOf(dlm[1].trim())<0)sc.characters.push(dlm[1].trim());
+        }else if(isRawSpeaker&&ci+1<contentLines.length){
+          var spTxt=contentLines[ci+1];
+          bDialogue.push({ch:cl.trim(),text:spTxt.trim()});
+          if(sc.characters.indexOf(cl.trim())<0)sc.characters.push(cl.trim());
+          ci++;
+        }else if(cl.length>8){bAction.push(cl);}
+        ci++;
+      }
+      sc.dialogue=bDialogue;sc.action=bAction;
+      var narText=bAction.join(' ').substring(0,300);
+      sc.narration=narText?[narText]:[];sc.narrationScript=narText;sc.narrationPrompt=narText;
+      if(bDialogue.length)sc.subtitleText=bDialogue[0].ch+': '+bDialogue[0].text.substring(0,120);
+      else if(bAction.length)sc.subtitleText=bAction.slice().sort(function(a,b){return b.length-a.length;})[0].substring(0,120);
+      sc.moodWords=detectMood(sceneText);sc.wardrobeNotes=detectWardrobe(sceneText);
+      sc.propNotes=detectProps(sceneText);sc.cameraNotes=extractCamera(sceneText);
+      var imgParts=[];
+      if(sc.location!=='Location to confirm')imgParts.push(sc.location);
+      if(sc.characters.length)imgParts.push(sc.characters.slice(0,3).join(', '));
+      if(sc.moodWords.length)imgParts.push(sc.moodWords.slice(0,2).join(', ')+' atmosphere');
+      if(meta&&meta.genre)imgParts.push(meta.genre+' film style');
+      if(meta&&meta.style)imgParts.push(meta.style);
+      if(!imgParts.length)imgParts.push(sceneText.substring(0,80).replace(/\n/g,' '));
+      sc.imagePrompt=imgParts.join(', ');
+      sc.musicPrompt=(sc.moodWords.length?sc.moodWords[0]:'ambient')+', cinematic score';
+      sc.ambiencePrompt='ambient scene: '+(sc.location!=='Location to confirm'?sc.location:'room tone');
+      sc.sfxPrompt='ambient '+(sc.location!=='Location to confirm'?sc.location:'environment')+' sound effects';
+      sc.voicePrompt=sc.characters.length?'Voice for '+sc.characters[0]+': '+(sc.moodWords[0]||'neutral')+' tone':'Narrator voice, neutral tone';
+      sc.animationPrompt=bAction.slice(0,2).join('. ').substring(0,200)||'subtle ambient motion';
+      sc.movementType='subtle ambient motion';
+      sc.cameraMovement=sc.moodWords.indexOf('dramatic')>=0||sc.moodWords.indexOf('tense')>=0?'slow push in, handheld':'steady, smooth pan';
+      sc.cinematicMotion='parallax depth, subtle environmental motion';
+      sc.cameraPrompt=sc.cameraNotes||'medium shot, '+(sc.moodWords[0]||'neutral')+' lighting';
+      sc.lipSyncPlanning=sc.dialogue.length>0?'Dialogue: '+sc.dialogue.slice(0,2).map(function(d){return d.ch;}).join(', '):'No dialogue in this scene';
+      sc.sceneTiming=(sc.dialogue.length>0?4+sc.dialogue.length:3)+' seconds estimated';
+      sc.summary=sceneText.substring(0,250).replace(/\n/g,' ');
+      sc.continuityNotes=sc.characters.length?'Characters: '+sc.characters.join(', ')+(sc.location?' Location: '+sc.location:''):'';
+      sc.enhancementPrompt='Enhance image quality, sharpen details, improve lighting consistency';
+      sc.upscalePrompt='4x upscale, preserve cinematic grain, enhance detail';
+      sc.faceRepairPrompt=sc.characters.length?'Restore facial features for '+sc.characters.slice(0,2).join(', '):'';
+      sc.cinematicPolishPrompt='Cinematic color grade, '+(meta&&meta.tone?meta.tone:'dramatic')+' tone, film-like quality';
+      sc.lookNotes=(meta&&meta.tone?meta.tone+', ':'')+(meta&&meta.style?meta.style+', ':'')+'cinematic';
+      sc.parseMode=confidence;sc.sceneSource=groupSources[bIdx]||'paragraph group';sc.rawText=sceneText;delete sc.rawLines;
+      scenes.push(sc);
+    });
+
+    var allChars=Object.keys(cCount).filter(function(c){return (dialogueSet[c]?cCount[c]>=1:cCount[c]>=6)&&isValidChar(c);}).map(function(c){return c.replace(VO_NORM_RE,'').trim();}).filter(function(c,i,arr){return c&&arr.indexOf(c)===i;}).sort(function(a,b){return(cCount[b]||0)-(cCount[a]||0);}).slice(0,30);
+    return{project:meta||{},rawScript:raw.substring(0,50000),scenes:scenes,
+      extractedCharacters:allChars,extractedLocations:allLocs,
+      analyzedAt:new Date().toISOString(),sceneCount:scenes.length,parseMode:confidence,
+      sceneCountConfidence:sceneConf,characterConfidence:charConf,locationConfidence:locConf,
+      namedLocations:namedLocs};
+  }
+
   function statusColor(s){
     return{'Draft':'#bdbdbd','Approved':'#66bb6a','Ready for Editing Bay':'#42a5f5',
       'Needs Revision':'#ef5350','Rejected':'#ff6b6b'}[s]||'#9e97c0';
@@ -1639,6 +1885,7 @@ body.ls-contrast-safe{filter:contrast(1.15)}
       if(!raw.trim()){flash('ls-sps-msg','Paste or upload a script first.','#ff6b6b');return;}
       var meta=getProjMeta();
       var result=analyzeScript(raw,meta);
+      if(!result.scenes.length&&raw.trim().length>20){result=parsePlainText(raw,meta);}
       var err=saveData(result);
       var sum=document.getElementById('ls-sps-analysis-summary');
       if(sum){
@@ -1647,10 +1894,16 @@ body.ls-contrast-safe{filter:contrast(1.15)}
           +'  Scenes detected: '+result.scenes.length+'\n'
           +'  Characters found: '+(result.extractedCharacters.slice(0,10).join(', ')||'none detected')+'\n'
           +'  Locations found: '+(result.extractedLocations.slice(0,8).join(', ')||'none detected')+'\n'
+          +(result.parseMode?'  Parse mode: '+result.parseMode+'\n':'')
+          +(result.sceneCountConfidence?'  Scene Count Confidence: '+result.sceneCountConfidence+'\n':'')
+          +(result.characterConfidence?'  Character Confidence: '+result.characterConfidence+'\n':'')
+          +(result.locationConfidence?'  Location Confidence: '+result.locationConfidence+'\n':'')
+          +(result.namedLocations&&result.namedLocations.length?'  Named Locations: '+result.namedLocations.join(', ')+'\n':'')
+          +(result.scenes&&result.scenes.length&&result.scenes[0].sceneSource?'  Scene sources: '+result.scenes.map(function(s){return(s.sceneId||'SC')+': '+(s.sceneSource||'?');}).join(' | ')+'\n':'')
           +(err?'  Save error: '+err:'  Saved to: '+SCRIPT_KEY);
       }
       renderTable();
-      flash('ls-sps-msg',err?'Error: '+err:'Analyzed: '+result.scenes.length+' scenes.',err?'#ff6b6b':'#4caf50');
+      flash('ls-sps-msg',err?'Error: '+err:'Analyzed: '+result.scenes.length+' scene'+(result.scenes.length===1?'':'s')+(result.parseMode?' ('+result.parseMode+')':'')+'.',err?'#ff6b6b':'#4caf50');
     });
 
     var fi=document.getElementById('ls-sps-file');

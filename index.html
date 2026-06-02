@@ -681,7 +681,7 @@ function speakExactElement(el){
   u.rate=VRATE;u.volume=VOL;
   u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
   u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
-  Promise.resolve().then(function(){if(VGEN!==myGen)return;window.speechSynthesis.speak(u);});
+  if(VGEN===myGen) window.speechSynthesis.speak(u);
 }
 function vPlay(){
   if(VPLAYING) return;
@@ -701,9 +701,7 @@ function vNext(){
     if(VPLAYING&&document.getElementById('vauto').checked){
       vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);
     } else if(VPLAYING){
-      VPOS=0;
-      document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
-      vNext();
+      vStop();
     } else {
       vStop();
     }
@@ -755,6 +753,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-iphoneSB</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-stop38</div>
 </body>
 </html>
