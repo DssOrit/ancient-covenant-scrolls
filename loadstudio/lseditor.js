@@ -4623,6 +4623,8 @@ window.LoadAudioFix = {
  renderStep();
  }
  function maybeAutoStartTour() {
+ // Do not auto-run the generic Load intro inside LoadStudio.
+ if (document.body.classList.contains('ls-host')) return;
  try {
  if (localStorage.getItem(LS_TOUR_SEEN)) return;
  } catch (_) { return; }

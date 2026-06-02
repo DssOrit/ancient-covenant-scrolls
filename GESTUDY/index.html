@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0E1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Great Eraser Study">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="./icon.png"/>
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
+<title>Great Eraser Study</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root{
+  --navy:#0A0E1A;
+  --navy2:#111827;
+  --navy3:#1C2437;
+  --gold:#C8971F;
+  --gold-lt:#E8B84B;
+  --gold-dim:#5C4510;
+  --teal:#1A9B9B;
+  --teal-lt:#2EC4C4;
+  --coral:#E8735A;
+  --coral-lt:#F09080;
+  --lavender:#8B7EC8;
+  --lavender-lt:#A897E8;
+  --emerald:#2ECC71;
+  --emerald-lt:#52D98A;
+  --cream:#FAF7EE;
+  --cream2:#F0EBD8;
+  --text:#F0EAD6;
+  --text2:#B8A88A;
+  --text3:#6B5E4A;
+  --dss:#2E6DA4;
+  --orit:#1E8449;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --font-size:17px;
+  --line-height:1.8;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;font-size:var(--font-size);background:var(--navy);color:var(--text);line-height:var(--line-height)}
+
+/* ── SCREEN SYSTEM ── */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex}
+.screen-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 100px}
+
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#000;cursor:pointer;transition:opacity .6s ease}
+#splash.fade-out{opacity:0;pointer-events:none}
+#splash.gone{display:none}
+#splash img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+/* ── LOADING ── */
+#loading{background:var(--navy);align-items:center;justify-content:center}
+.load-logo{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold);text-align:center;line-height:1.2}
+.load-sub{color:var(--text2);font-size:.85rem;text-align:center;margin-top:8px;letter-spacing:.08em}
+.load-bar{width:200px;height:3px;background:var(--navy3);border-radius:2px;margin:24px auto 0;overflow:hidden}
+.load-fill{height:100%;background:var(--gold);border-radius:2px;animation:loadfill 1.2s ease forwards}
+@keyframes loadfill{from{width:0}to{width:100%}}
+
+/* ── HOME ── */
+#home{background:var(--navy)}
+.home-header{padding:60px 24px 24px;text-align:center}
+.home-logo{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold);letter-spacing:.06em}
+.home-greeting{font-size:.85rem;color:var(--text2);margin-top:4px}
+.streak-bar{display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0;padding:12px 20px;background:var(--navy3);border-radius:var(--radius);border:1px solid var(--navy3)}
+.streak-item{text-align:center}
+.streak-num{font-size:1.4rem;font-weight:700;color:var(--gold)}
+.streak-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.continue-btn{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--gold),#8B6010);border:none;border-radius:var(--radius);padding:20px 24px;width:100%;cursor:pointer;margin-bottom:16px;box-shadow:0 4px 20px rgba(200,151,31,0.3)}
+.continue-btn .cb-left{text-align:left}
+.continue-btn .cb-title{font-size:1rem;font-weight:700;color:#0A0E1A;letter-spacing:.03em}
+.continue-btn .cb-sub{font-size:.75rem;color:rgba(10,14,26,0.7);margin-top:2px}
+.continue-btn .cb-arrow{font-size:1.8rem;color:#0A0E1A;opacity:0.8}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.mode-card{border:none;border-radius:var(--radius);padding:18px 16px;cursor:pointer;text-align:left;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+.mode-card:active{transform:scale(0.97)}
+.mode-card .mc-icon{font-size:1.6rem;margin-bottom:8px;display:block}
+.mode-card .mc-title{font-size:.85rem;font-weight:700;display:block;margin-bottom:2px}
+.mode-card .mc-sub{font-size:.72rem;opacity:0.8;display:block;line-height:1.4}
+.mode-card .mc-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.3);border-radius:20px;padding:2px 8px;font-size:.65rem;font-weight:600}
+.mc-study{background:linear-gradient(135deg,var(--teal),#0D6B6B);color:#fff}
+.mc-cards{background:linear-gradient(135deg,var(--coral),#B84E35);color:#fff}
+.mc-verse{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:#0A0E1A}
+.mc-compare{background:linear-gradient(135deg,var(--lavender),#5C4EA8);color:#fff}
+.mc-timeline{background:linear-gradient(135deg,var(--emerald),#1A8A4A);color:#fff}
+.mc-hard{background:linear-gradient(135deg,#E84040,#8A1A1A);color:#fff}
+
+/* ── TOP BAR ── */
+.top-bar{display:flex;align-items:center;padding:16px 20px 8px;gap:12px;background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.top-bar-title{flex:1;font-family:'Cinzel',serif;font-size:.95rem;color:var(--gold);letter-spacing:.04em}
+.back-btn{background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer;padding:4px 8px;border-radius:8px}
+.back-btn:hover{background:var(--navy3);color:var(--text)}
+.settings-btn{background:none;border:none;color:var(--text2);font-size:1.1rem;cursor:pointer;padding:4px 8px;border-radius:8px}
+
+/* ── STUDY MODE ── */
+#study .screen-body{padding:16px 16px 100px}
+.module-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+.module-tabs::-webkit-scrollbar{display:none}
+.mod-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;border:none;background:var(--navy3);color:var(--text2);font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mod-tab.active{color:#0A0E1A}
+.section-card{background:var(--navy2);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.06);position:relative}
+.section-tag{display:inline-flex;align-items:center;gap:4px;background:var(--navy3);border-radius:20px;padding:4px 10px;font-size:.7rem;color:var(--text2);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.section-claim{font-size:1rem;line-height:1.75;color:var(--text);margin-bottom:16px;font-weight:400}
+.section-claim strong{color:var(--gold)}
+.verse-connect-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:linear-gradient(135deg,rgba(200,151,31,0.15),rgba(200,151,31,0.05));border:1px solid rgba(200,151,31,0.4);border-radius:var(--radius-sm);padding:12px 16px;cursor:pointer;color:var(--gold);font-size:.85rem;font-weight:600;letter-spacing:.02em;margin-bottom:8px;transition:all .2s}
+.verse-connect-btn:active{transform:scale(0.98)}
+.verse-connect-btn span{display:flex;align-items:center;gap:8px}
+.vcb-arrow{font-size:1.1rem;transition:transform .2s}
+.section-actions{display:flex;gap:8px}
+.sa-btn{flex:1;padding:10px;border:none;border-radius:var(--radius-sm);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s}
+.sa-btn:active{transform:scale(0.96)}
+.sa-quiz{background:rgba(46,204,113,0.2);color:var(--emerald);border:1px solid rgba(46,204,113,0.3)}
+.sa-save{background:rgba(139,126,200,0.2);color:var(--lavender);border:1px solid rgba(139,126,200,0.3)}
+.sa-hard{background:rgba(232,115,90,0.2);color:var(--coral);border:1px solid rgba(232,115,90,0.3)}
+
+/* ── VERSE PANEL (slide up) ── */
+#verse-panel{position:fixed;inset:0;z-index:1000;display:none;flex-direction:column;justify-content:flex-end;background:rgba(0,0,0,0.7);-webkit-backdrop-filter:blur(4px)}
+#verse-panel.open{display:flex}
+.vp-sheet{background:var(--navy2);border-radius:24px 24px 0 0;max-height:88vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94)}
+#verse-panel.open .vp-sheet{transform:translateY(0)}
+.vp-handle{width:40px;height:4px;background:var(--navy3);border-radius:2px;margin:12px auto 8px;flex-shrink:0}
+.vp-scroll{overflow-y:auto;flex:1;padding:0 20px 40px;-webkit-overflow-scrolling:touch}
+.vp-scroll::-webkit-scrollbar{display:none}
+.vp-tabs{display:flex;gap:8px;padding:8px 0 16px;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0;margin-bottom:16px}
+.vp-tab{padding:7px 14px;border-radius:20px;border:none;background:var(--navy3);color:var(--text2);font-size:.78rem;font-weight:600;cursor:pointer}
+.vp-tab.active{background:var(--gold);color:#0A0E1A}
+.verse-tradition-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.vtb-dss{background:rgba(46,109,164,0.2);color:#5DADE2;border:1px solid rgba(46,109,164,0.3)}
+.vtb-orit{background:rgba(30,132,73,0.2);color:#58D68D;border:1px solid rgba(30,132,73,0.3)}
+.vtb-historical{background:rgba(200,151,31,0.15);color:var(--gold);border:1px solid rgba(200,151,31,0.3)}
+.verse-ref{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin-bottom:4px;font-weight:600}
+.verse-scroll{font-size:.78rem;color:var(--text3);margin-bottom:14px;line-height:1.5}
+.verse-text-box{background:var(--navy3);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;border-left:4px solid var(--gold);font-size:.95rem;line-height:1.8;color:var(--cream);font-style:italic}
+.verse-plain-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);font-weight:600;margin-bottom:6px}
+.verse-plain{font-size:.9rem;line-height:1.75;color:var(--text2);margin-bottom:16px}
+.bridge-box{background:linear-gradient(135deg,rgba(200,151,31,0.12),rgba(200,151,31,0.04));border:1px solid rgba(200,151,31,0.3);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px}
+.bridge-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.bridge-text{font-size:.88rem;line-height:1.75;color:var(--text)}
+.keyword-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.kw-chip{background:var(--navy3);border-radius:20px;padding:4px 10px;font-size:.73rem;color:var(--text2);font-weight:500}
+.vp-actions{display:flex;gap:10px;padding:12px 20px 20px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.07)}
+.vpa-btn{flex:1;padding:13px;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .15s}
+.vpa-btn:active{transform:scale(0.96)}
+.vpa-save{background:var(--navy3);color:var(--lavender);border:1px solid rgba(139,126,200,0.3)}
+.vpa-quiz{background:var(--emerald);color:#0A0E1A}
+.vpa-close{background:var(--navy3);color:var(--text2)}
+
+/* ── MEMORY CARDS ── */
+#cards .screen-body{padding:20px 20px 100px}
+.card-progress{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.cp-bar{flex:1;height:6px;background:var(--navy3);border-radius:3px;overflow:hidden}
+.cp-fill{height:100%;background:var(--emerald);border-radius:3px;transition:width .3s}
+.cp-text{font-size:.78rem;color:var(--text3);white-space:nowrap}
+.flashcard{perspective:1000px;height:300px;margin-bottom:24px;cursor:pointer}
+.fc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.flashcard.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:var(--radius);backface-visibility:hidden;display:flex;flex-direction:column;padding:24px;justify-content:center}
+.fc-front{background:linear-gradient(135deg,var(--navy2),var(--navy3));border:1px solid rgba(255,255,255,0.08)}
+.fc-back{background:linear-gradient(135deg,var(--navy3),var(--navy2));border:1px solid rgba(200,151,31,0.25);transform:rotateY(180deg)}
+.fc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600;margin-bottom:12px}
+.fc-question{font-size:1.05rem;line-height:1.7;color:var(--text);font-weight:500;text-align:center}
+.fc-answer{font-size:.9rem;line-height:1.75;color:var(--text)}
+.fc-source{font-size:.72rem;color:var(--gold);margin-top:12px;font-style:italic}
+.fc-tap{font-size:.72rem;color:var(--text3);text-align:center;margin-top:12px}
+.rating-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rating-btn{padding:14px;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .15s}
+.rating-btn:active{transform:scale(0.96)}
+.rb-easy{background:rgba(46,204,113,0.2);color:var(--emerald);border:1px solid rgba(46,204,113,0.3)}
+.rb-almost{background:rgba(200,151,31,0.2);color:var(--gold);border:1px solid rgba(200,151,31,0.3)}
+.rb-hard{background:rgba(232,115,90,0.2);color:var(--coral);border:1px solid rgba(232,115,90,0.3)}
+.rb-again{background:rgba(139,126,200,0.2);color:var(--lavender);border:1px solid rgba(139,126,200,0.3)}
+
+/* ── QUIZ MODE ── */
+#quiz .screen-body{padding:20px 20px 100px}
+.quiz-question-card{background:var(--navy2);border-radius:var(--radius);padding:24px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.06)}
+.qq-num{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:10px}
+.qq-text{font-size:1rem;line-height:1.75;color:var(--text);font-weight:500}
+.quiz-options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.qo-btn{background:var(--navy2);border:2px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:16px;text-align:left;font-size:.9rem;color:var(--text);cursor:pointer;transition:all .2s;line-height:1.5}
+.qo-btn:active{transform:scale(0.98)}
+.qo-btn.correct{background:rgba(46,204,113,0.2);border-color:var(--emerald);color:var(--emerald)}
+.qo-btn.wrong{background:rgba(232,115,90,0.15);border-color:var(--coral);color:var(--coral)}
+.qo-btn.reveal{background:rgba(46,204,113,0.1);border-color:rgba(46,204,113,0.3);color:var(--text2)}
+.fill-input{width:100%;background:var(--navy3);border:2px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:16px;font-size:1rem;color:var(--text);font-family:'Inter',sans-serif;outline:none;margin-bottom:12px}
+.fill-input:focus{border-color:var(--gold)}
+.fill-options{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.fo-chip{background:var(--navy3);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:8px 14px;font-size:.85rem;color:var(--text2);cursor:pointer;transition:all .15s}
+.fo-chip:active{transform:scale(0.96)}
+.fo-chip.selected{background:rgba(200,151,31,0.2);border-color:var(--gold);color:var(--gold)}
+.quiz-submit{width:100%;padding:16px;border:none;border-radius:var(--radius-sm);background:var(--gold);color:#0A0E1A;font-size:1rem;font-weight:700;cursor:pointer;transition:all .15s;margin-bottom:12px}
+.quiz-submit:active{transform:scale(0.98)}
+.quiz-result{background:var(--navy3);border-radius:var(--radius-sm);padding:16px;display:none}
+.quiz-result.show{display:block}
+.qr-correct{color:var(--emerald)}
+.qr-wrong{color:var(--coral)}
+
+/* ── TIMELINE ── */
+#timeline .screen-body{padding:16px 16px 100px}
+.timeline-filter{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:4px}
+.timeline-filter::-webkit-scrollbar{display:none}
+.tf-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;border:none;background:var(--navy3);color:var(--text2);font-size:.78rem;font-weight:600;cursor:pointer}
+.tf-btn.active{background:var(--gold);color:#0A0E1A}
+.tl-item{display:flex;gap:16px;margin-bottom:20px}
+.tl-spine{display:flex;flex-direction:column;align-items:center;width:3px;flex-shrink:0;margin-top:6px}
+.tl-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid var(--navy);margin-left:-5.5px}
+.tl-line{flex:1;width:2px;background:var(--navy3);margin-top:4px}
+.tl-card{flex:1;background:var(--navy2);border-radius:var(--radius-sm);padding:16px;border:1px solid rgba(255,255,255,0.05)}
+.tl-year{font-family:'Cinzel',serif;font-size:.8rem;font-weight:700;margin-bottom:6px}
+.tl-event{font-size:.88rem;line-height:1.65;color:var(--text);margin-bottom:10px}
+.tl-erased{font-size:.78rem;line-height:1.55;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:rgba(232,115,90,0.1);border-left:3px solid var(--coral);color:var(--text2)}
+.tl-restored{font-size:.78rem;line-height:1.55;padding:8px 10px;border-radius:8px;background:rgba(46,204,113,0.1);border-left:3px solid var(--emerald);color:var(--text2)}
+.tl-erased::before{content:'✗ ERASED: ';color:var(--coral);font-weight:700}
+.tl-restored::before{content:'✓ RESTORED: ';color:var(--emerald);font-weight:700}
+
+/* ── COMPARE MODE ── */
+#compare .screen-body{padding:16px 16px 100px}
+.compare-card{background:var(--navy2);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.06)}
+.compare-ref{font-family:'Cinzel',serif;font-size:.95rem;color:var(--gold);margin-bottom:4px}
+.compare-source{font-size:.75rem;color:var(--text3);margin-bottom:16px}
+.compare-panels{display:flex;flex-direction:column;gap:12px}
+.cp-panel{border-radius:var(--radius-sm);padding:14px}
+.cpp-dss{background:rgba(46,109,164,0.12);border:1px solid rgba(46,109,164,0.25)}
+.cpp-orit{background:rgba(30,132,73,0.12);border:1px solid rgba(30,132,73,0.25)}
+.cpp-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.cpp-dss .cpp-label{color:#5DADE2}
+.cpp-orit .cpp-label{color:#58D68D}
+.cpp-text{font-size:.88rem;line-height:1.75;font-style:italic}
+.cpp-plain{font-size:.82rem;line-height:1.65;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.07)}
+.cpp-plain::before{content:'Plain language: ';color:var(--text3);font-weight:600}
+.compare-question{background:var(--navy3);border-radius:var(--radius-sm);padding:12px;margin-top:12px}
+.cq-label{font-size:.7rem;text-transform:uppercase;color:var(--gold);font-weight:600;letter-spacing:.06em;margin-bottom:6px}
+.cq-text{font-size:.85rem;color:var(--text2);line-height:1.6}
+
+/* ── HARD LIST ── */
+#hard-list .screen-body{padding:20px 20px 100px}
+.hl-empty{text-align:center;padding:60px 20px;color:var(--text3)}
+.hl-empty .hle-icon{font-size:3rem;margin-bottom:12px;display:block}
+.hl-empty .hle-text{font-size:.9rem;line-height:1.6}
+.hard-item{background:var(--navy2);border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;border-left:4px solid var(--coral);display:flex;align-items:flex-start;gap:14px}
+.hi-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.hi-body{flex:1}
+.hi-title{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:4px}
+.hi-sub{font-size:.78rem;color:var(--text3)}
+.hi-actions{display:flex;gap:8px;margin-top:10px}
+.hi-btn{padding:7px 12px;border:none;border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer}
+.hi-review{background:rgba(200,151,31,0.2);color:var(--gold);border:1px solid rgba(200,151,31,0.3)}
+.hi-remove{background:rgba(255,255,255,0.06);color:var(--text3)}
+
+/* ── SETTINGS ── */
+#settings .screen-body{padding:20px 20px 100px}
+.setting-group{background:var(--navy2);border-radius:var(--radius);padding:8px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.05)}
+.setting-group-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:700;padding:10px 14px 6px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-radius:var(--radius-sm);gap:12px}
+.setting-row:active{background:var(--navy3)}
+.sr-label{font-size:.9rem;color:var(--text);font-weight:500}
+.sr-sub{font-size:.75rem;color:var(--text3);margin-top:1px}
+.sr-right{flex-shrink:0}
+.toggle{width:46px;height:26px;background:var(--navy3);border-radius:13px;position:relative;cursor:pointer;transition:background .2s;border:none}
+.toggle.on{background:var(--emerald)}
+.toggle::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.toggle.on::after{left:23px}
+.font-controls{display:flex;align-items:center;gap:8px}
+.fc-btn{width:32px;height:32px;border-radius:50%;border:none;background:var(--navy3);color:var(--text);font-size:.9rem;cursor:pointer;font-family:'Inter',sans-serif}
+.fc-val{font-size:.85rem;color:var(--text2);min-width:30px;text-align:center}
+.font-option-row{display:flex;gap:8px;flex-wrap:wrap;padding:8px 14px 14px}
+.font-opt{padding:8px 14px;border-radius:20px;border:1px solid var(--navy3);background:none;font-size:.8rem;color:var(--text2);cursor:pointer}
+.font-opt.active{background:var(--navy3);color:var(--text);border-color:rgba(200,151,31,0.4)}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{display:flex;background:rgba(10,14,26,0.95);border-top:1px solid rgba(255,255,255,0.06);padding:8px 0 env(safe-area-inset-bottom,8px);-webkit-backdrop-filter:blur(20px);flex-shrink:0}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;cursor:pointer;transition:all .15s;background:none;border:none;color:var(--text3)}
+.bn-item.active{color:var(--gold)}
+.bn-item:active{opacity:0.7}
+.bn-icon{font-size:1.3rem;line-height:1}
+.bn-label{font-size:.62rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+
+/* ── READING MODE OVERLAY ── */
+body.reading-mode #study .section-claim{
+  font-family:'Atkinson Hyperlegible',sans-serif!important;
+  font-size:calc(var(--font-size) + 2px)!important;
+  line-height:2!important;
+  letter-spacing:.01em;
+  word-spacing:.05em;
+}
+body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!important}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy3);border:1px solid rgba(255,255,255,0.15);color:var(--text);padding:10px 20px;border-radius:20px;font-size:.82rem;font-weight:600;opacity:0;transition:all .25s;z-index:2000;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── UTILITIES ── */
+.hidden{display:none!important}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--navy3);border-radius:2px}
+.progress-ring{width:52px;height:52px}
+.pr-bg{fill:none;stroke:var(--navy3);stroke-width:4}
+.pr-fill{fill:none;stroke:var(--emerald);stroke-width:4;stroke-linecap:round;stroke-dasharray:138;stroke-dashoffset:138;transition:stroke-dashoffset .6s;transform:rotate(-90deg);transform-origin:50% 50%}
+.pr-text{font-size:11px;font-weight:700;fill:var(--text);text-anchor:middle;dominant-baseline:middle}
+
+/* ── SESSION COMPLETE ── */
+.session-complete{text-align:center;padding:40px 20px}
+.sc-icon{font-size:4rem;margin-bottom:16px;display:block}
+.sc-title{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold);margin-bottom:8px}
+.sc-sub{font-size:.9rem;color:var(--text2);line-height:1.7;margin-bottom:24px}
+.sc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px}
+.sc-stat{background:var(--navy2);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.sc-num{font-size:1.5rem;font-weight:700;color:var(--gold)}
+.sc-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.sc-btn{width:100%;padding:16px;border:none;border-radius:var(--radius-sm);background:var(--gold);color:#0A0E1A;font-size:1rem;font-weight:700;cursor:pointer}
+/* ── TEACHING LAYER ─────────────────────────────────────────────────────── */
+/* Concept mastery row */
+.concept-row{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;margin-bottom:4px}
+.concept-row::-webkit-scrollbar{display:none}
+.concept-pill{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 12px;border-radius:12px;cursor:pointer;min-width:72px;border:1px solid transparent;transition:all .2s}
+.concept-pill:active{transform:scale(0.95)}
+.cp-icon{font-size:1.3rem}
+.cp-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;text-align:center;line-height:1.2}
+.cp-score{font-size:.7rem;font-weight:600;opacity:0.8}
+/* Today path */
+.today-path{background:var(--navy2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:14px;border:1px solid rgba(200,151,31,0.2)}
+.tp-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);font-weight:700;margin-bottom:8px}
+.tp-steps{display:flex;gap:8px;overflow-x:auto}
+.tp-steps::-webkit-scrollbar{display:none}
+.tp-step{flex-shrink:0;background:var(--navy3);border-radius:8px;padding:8px 12px;font-size:.75rem;color:var(--text2);cursor:pointer;white-space:nowrap;border:1px solid rgba(255,255,255,0.06)}
+.tp-step.done{background:rgba(46,204,113,0.15);color:var(--emerald);border-color:rgba(46,204,113,0.3)}
+.tp-step.current{background:rgba(200,151,31,0.15);color:var(--gold);border-color:rgba(200,151,31,0.4)}
+/* Lesson screen */
+#lesson{background:var(--navy)}
+.lesson-header{display:flex;align-items:center;gap:10px;padding:12px 16px;flex-shrink:0}
+.lesson-step-pills{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;flex-shrink:0}
+.lesson-step-pills::-webkit-scrollbar{display:none}
+.ls-pill{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;border:none;cursor:pointer;opacity:0.5;background:var(--navy3);color:var(--text2);transition:all .2s}
+.ls-pill.active{opacity:1}
+/* Teach Me card */
+.teach-me-card{background:linear-gradient(135deg,rgba(26,155,155,0.12),rgba(26,155,155,0.04));border:1px solid rgba(26,155,155,0.3);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.tmc-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(26,155,155,0.2);border-radius:20px;padding:4px 12px;font-size:.7rem;font-weight:700;color:#2EC4C4;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.tmc-main{font-size:1rem;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:8px}
+.tmc-plain{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.tmc-why{font-size:.82rem;color:var(--gold);line-height:1.6;padding:8px 12px;background:rgba(200,151,31,0.08);border-radius:8px;border-left:3px solid var(--gold);margin-bottom:10px}
+.tmc-why::before{content:'Why it matters: ';font-weight:700}
+.memory-anchor{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--navy3);border-radius:var(--radius-sm);margin-bottom:12px}
+.ma-icon{font-size:1.5rem;flex-shrink:0}
+.ma-phrase{font-size:.9rem;font-weight:700;color:var(--text);font-style:italic}
+.ma-source{font-size:.72rem;color:var(--text3);margin-top:2px}
+/* Active recall */
+.recall-card{background:var(--navy2);border:2px dashed rgba(200,151,31,0.3);border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:center}
+.rc-prompt{font-size:.8rem;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:12px}
+.rc-question{font-size:1rem;color:var(--text);line-height:1.6;margin-bottom:16px;font-weight:500}
+.rc-options{display:flex;flex-direction:column;gap:8px}
+.rc-opt{padding:13px 16px;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);background:var(--navy3);color:var(--text);font-size:.9rem;cursor:pointer;text-align:left;transition:all .2s}
+.rc-opt:active{transform:scale(0.98)}
+.rc-opt.correct{background:rgba(46,204,113,0.15);border-color:var(--emerald);color:var(--emerald)}
+.rc-opt.wrong{background:rgba(232,115,90,0.1);border-color:var(--coral);color:var(--coral)}
+/* Lesson step content */
+.lesson-chunk{background:var(--navy2);border-radius:var(--radius);padding:18px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.05)}
+.lc-step-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.lc-text{font-size:.95rem;line-height:1.8;color:var(--text)}
+.lc-text.plain{color:var(--text2);font-size:.9rem}
+/* Reteach card */
+.reteach-card{background:linear-gradient(135deg,rgba(232,115,90,0.1),rgba(232,115,90,0.04));border:1px solid rgba(232,115,90,0.3);border-radius:var(--radius-sm);padding:14px;margin-top:10px}
+.reteach-card .rt-label{font-size:.7rem;color:var(--coral);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.reteach-card .rt-text{font-size:.85rem;color:var(--text2);line-height:1.65}
+/* Mastery badge */
+.mastery-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;font-size:.68rem;font-weight:700}
+.mb-0{background:rgba(232,115,90,0.2);color:var(--coral)}
+.mb-1,.mb-2{background:rgba(200,151,31,0.2);color:var(--gold)}
+.mb-3,.mb-4{background:rgba(46,204,113,0.2);color:var(--emerald)}
+.mb-5{background:rgba(46,204,113,0.3);color:#fff}
+/* Lesson nav buttons */
+.lesson-nav{display:flex;gap:10px;padding:12px 16px;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.06)}
+.ln-btn{flex:1;padding:14px;border:none;border-radius:var(--radius-sm);font-size:.9rem;font-weight:700;cursor:pointer}
+.ln-next{background:var(--gold);color:#0A0E1A}
+.ln-back{background:var(--navy3);color:var(--text2)}
+.ln-done{background:var(--emerald);color:#0A0E1A}
+/* Teach Me button in study */
+.teach-me-btn{display:flex;align-items:center;gap:8px;width:100%;background:linear-gradient(135deg,rgba(26,155,155,0.12),rgba(26,155,155,0.04));border:1px solid rgba(26,155,155,0.35);border-radius:var(--radius-sm);padding:11px 14px;cursor:pointer;color:#2EC4C4;font-size:.83rem;font-weight:600;margin-bottom:8px;transition:all .2s}
+.teach-me-btn:active{transform:scale(0.98)}
+/* Lesson panel */
+#lesson-panel{position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;background:var(--navy)}
+#lesson-panel.open{display:flex}
+
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" onclick="dismissSplash()">
+  <img src="splash.png" alt="Great Eraser Study"/>
+</div>
+
+<!-- LOADING -->
+<div class="screen" id="loading">
+  <div style="text-align:center;padding:40px 20px">
+    <div class="load-logo">Great Eraser<br>Study</div>
+    <div class="load-sub">GUIDED LEARNING · MEMORY SUPPORT · FOCUS-FRIENDLY</div>
+    <div class="load-bar"><div class="load-fill"></div></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="home">
+  <div class="screen-body" style="padding-top:50px">
+    <div class="home-header">
+      <div class="home-logo">Great Eraser Study</div>
+      <div class="home-greeting" id="home-greeting">Loading your progress...</div>
+    </div>
+    <div class="streak-bar">
+      <div class="streak-item"><div class="streak-num" id="streak-num">0</div><div class="streak-label">Day Streak</div></div>
+      <div class="streak-item"><div class="streak-num" id="cards-due">0</div><div class="streak-label">Cards Due</div></div>
+      <div class="streak-item">
+        <svg class="progress-ring" viewBox="0 0 44 44">
+          <circle class="pr-bg" cx="22" cy="22" r="18"/>
+          <circle class="pr-fill" id="daily-ring" cx="22" cy="22" r="18"/>
+          <text class="pr-text" x="22" y="22" id="daily-pct">0%</text>
+        </svg>
+        <div class="streak-label">Today</div>
+      </div>
+    </div>
+    <div id="concept-row" class="concept-row"></div>
+    <div class="today-path" id="today-path">
+      <div class="tp-label">📚 Today's 10-Minute Path</div>
+      <div class="tp-steps" id="tp-steps">
+        <div class="tp-step current">Loading...</div>
+      </div>
+    </div>
+    <button class="continue-btn" onclick="App.continueSession()">
+      <div class="cb-left">
+        <div class="cb-title" id="continue-title">▶ Begin Learning</div>
+        <div class="cb-sub" id="continue-sub">Start with the Great Eraser foundations</div>
+      </div>
+      <div class="cb-arrow">→</div>
+    </button>
+    <div class="mode-grid">
+      <button class="mode-card mc-study" onclick="App.showScreen('study')">
+        <span class="mc-icon">📖</span>
+        <span class="mc-title">Great Eraser Study</span>
+        <span class="mc-sub">Arguments + verse connections</span>
+      </button>
+      <button class="mode-card mc-cards" onclick="App.showScreen('cards')">
+        <span class="mc-icon">🃏</span>
+        <span class="mc-title">Memory Cards</span>
+        <span class="mc-sub">Spaced repetition review</span>
+        <span class="mc-badge" id="cards-badge">0 due</span>
+      </button>
+      <button class="mode-card mc-verse" onclick="App.showScreen('quiz')">
+        <span class="mc-icon">❓</span>
+        <span class="mc-title">Quiz Modes</span>
+        <span class="mc-sub">Fill blank · Multiple choice</span>
+      </button>
+      <button class="mode-card mc-compare" onclick="App.showScreen('compare')">
+        <span class="mc-icon">⚖️</span>
+        <span class="mc-title">DSS vs Orit</span>
+        <span class="mc-sub">Compare primary sources</span>
+      </button>
+      <button class="mode-card mc-timeline" onclick="App.showScreen('timeline')">
+        <span class="mc-icon">📅</span>
+        <span class="mc-title">Timeline</span>
+        <span class="mc-sub">Erased · Restored evidence</span>
+      </button>
+      <button class="mode-card" style="background:linear-gradient(135deg,#1E5580,#0D2A40);color:#fff" onclick="App.showScreen('lesson')">
+        <span class="mc-icon">🎓</span>
+        <span class="mc-title">Lesson Mode</span>
+        <span class="mc-sub">Learn · Explain · Practice</span>
+      </button>
+      <button class="mode-card" style="background:linear-gradient(135deg,#1a1a1a,#0D0B07);color:#C8971F;border:1px solid #C8971F44" onclick="App.openGEApp()">
+        <span class="mc-icon">📚</span>
+        <span class="mc-title">Read The Great Eraser</span>
+        <span class="mc-sub">Open full book reader</span>
+      </button>
+      <button class="mode-card mc-hard" onclick="App.showScreen('hard-list')">
+        <span class="mc-icon">🔥</span>
+        <span class="mc-title">Still Hard For Me</span>
+        <span class="mc-sub">Review difficult material</span>
+        <span class="mc-badge" id="hard-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="bottom-nav" id="home-nav">
+    <button class="bn-item active" onclick="App.showScreen('home')"><span class="bn-icon">🏠</span><span class="bn-label">Home</span></button>
+    <button class="bn-item" onclick="App.showScreen('study')"><span class="bn-icon">📖</span><span class="bn-label">Study</span></button>
+    <button class="bn-item" onclick="App.showScreen('cards')"><span class="bn-icon">🃏</span><span class="bn-label">Cards</span></button>
+    <button class="bn-item" onclick="App.showScreen('quiz')"><span class="bn-icon">❓</span><span class="bn-label">Quiz</span></button>
+    <button class="bn-item" onclick="App.showScreen('settings')"><span class="bn-icon">⚙️</span><span class="bn-label">Settings</span></button>
+  </nav>
+</div>
+
+<!-- STUDY -->
+<div class="screen" id="study">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Great Eraser Study</div>
+    <button class="settings-btn" onclick="App.toggleVoice()">🔊</button>
+  </div>
+  <div style="padding:12px 16px 0;flex-shrink:0">
+    <div class="module-tabs" id="module-tabs"></div>
+  </div>
+  <div class="screen-body" id="study-body"></div>
+</div>
+
+<!-- VERSE PANEL -->
+<div id="verse-panel" onclick="App.closeVersePanel(event)">
+  <div class="vp-sheet" id="vp-sheet">
+    <div class="vp-handle"></div>
+    <div style="padding:0 20px;flex-shrink:0">
+      <div class="vp-tabs" id="vp-tabs"></div>
+    </div>
+    <div class="vp-scroll" id="vp-content"></div>
+    <div class="vp-actions">
+      <button class="vpa-btn vpa-save" onclick="App.saveVerse()">★ Save</button>
+      <button class="vpa-btn vpa-quiz" onclick="App.quizFromVerse()">Quiz Me</button>
+      <button class="vpa-btn vpa-close" onclick="App.closeVersePanel()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMORY CARDS -->
+<div class="screen" id="cards">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Memory Cards</div>
+    <span id="cards-count" style="font-size:.8rem;color:var(--text3)"></span>
+  </div>
+  <div class="screen-body" id="cards-body"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="quiz">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Quiz Mode</div>
+    <span id="quiz-score" style="font-size:.8rem;color:var(--gold)"></span>
+  </div>
+  <div class="screen-body" id="quiz-body"></div>
+</div>
+
+<!-- TIMELINE -->
+<div class="screen" id="timeline">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Timeline</div>
+  </div>
+  <div style="padding:12px 16px 0;flex-shrink:0">
+    <div class="timeline-filter" id="tl-filter">
+      <button class="tf-btn active" onclick="App.filterTimeline('all',this)">All</button>
+      <button class="tf-btn" onclick="App.filterTimeline('erased',this)">Erased</button>
+      <button class="tf-btn" onclick="App.filterTimeline('restored',this)">Restored</button>
+    </div>
+  </div>
+  <div class="screen-body" id="timeline-body"></div>
+</div>
+
+<!-- COMPARE -->
+<div class="screen" id="compare">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">DSS vs Orit Compare</div>
+  </div>
+  <div class="screen-body" id="compare-body"></div>
+</div>
+
+<!-- HARD LIST -->
+<div class="screen" id="hard-list">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Still Hard For Me</div>
+    <button class="settings-btn" onclick="App.clearHardList()">Clear All</button>
+  </div>
+  <div class="screen-body" id="hard-body"></div>
+</div>
+
+<!-- SETTINGS -->
+<div class="screen" id="settings">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Reading & Display</div>
+  </div>
+  <div class="screen-body">
+    <div class="setting-group">
+      <div class="setting-group-title">Reading Support</div>
+      <div class="setting-row">
+        <div><div class="sr-label">Focus Line Mode</div><div class="sr-sub">One section at a time</div></div>
+        <div class="sr-right"><button class="toggle" id="t-focus" onclick="App.toggleSetting('focus',this)"></button></div>
+      </div>
+      <div class="setting-row">
+        <div><div class="sr-label">Wider Line Spacing</div><div class="sr-sub">More space between lines</div></div>
+        <div class="sr-right"><button class="toggle" id="t-spacing" onclick="App.toggleSetting('spacing',this)"></button></div>
+      </div>
+      <div class="setting-row">
+        <div><div class="sr-label">Cream Reading Mode</div><div class="sr-sub">Softer background for reading</div></div>
+        <div class="sr-right"><button class="toggle" id="t-cream" onclick="App.toggleSetting('cream',this)"></button></div>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-group-title">Font Size</div>
+      <div class="setting-row">
+        <div><div class="sr-label">Reading Text Size</div></div>
+        <div class="sr-right">
+          <div class="font-controls">
+            <button class="fc-btn" onclick="App.changeFontSize(-1)">A-</button>
+            <span class="fc-val" id="font-size-val">17px</span>
+            <button class="fc-btn" onclick="App.changeFontSize(1)">A+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-group-title">Readability-Friendly Fonts</div>
+      <div class="font-option-row" id="font-opts">
+        <button class="font-opt active" onclick="App.setFont('default',this)">Standard</button>
+        <button class="font-opt" onclick="App.setFont('atkinson',this)" style="font-family:Georgia,serif">Atkinson</button>
+        <button class="font-opt" onclick="App.setFont('dyslexic',this)">OpenDyslexic</button>
+        <button class="font-opt" onclick="App.setFont('large',this)">Large & Clear</button>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-group-title">Progress</div>
+      <div class="setting-row">
+        <div><div class="sr-label">Reset All Progress</div><div class="sr-sub">Clear saved cards and streak</div></div>
+        <div class="sr-right"><button class="fc-btn" onclick="App.resetProgress()" style="width:auto;padding:0 12px;color:var(--coral)">Reset</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- LESSON PANEL -->
+<div id="lesson-panel">
+  <div class="lesson-header" style="border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
+    <button class="back-btn" onclick="Lesson.close()">←</button>
+    <div style="flex:1">
+      <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold)" id="lp-title">Lesson</div>
+      <div style="font-size:.72rem;color:var(--text3)" id="lp-subtitle"></div>
+    </div>
+    <div id="lp-mastery" class="mastery-badge mb-0">0 / 5</div>
+  </div>
+  <div class="lesson-step-pills" id="lp-steps">
+    <button class="ls-pill active" data-step="0" onclick="Lesson.goStep(0)" style="background:rgba(26,155,155,0.3);color:#2EC4C4">📖 Learn</button>
+    <button class="ls-pill" data-step="1" onclick="Lesson.goStep(1)">💬 Explain</button>
+    <button class="ls-pill" data-step="2" onclick="Lesson.goStep(2)">🧠 Remember</button>
+    <button class="ls-pill" data-step="3" onclick="Lesson.goStep(3)">✏️ Practice</button>
+    <button class="ls-pill" data-step="4" onclick="Lesson.goStep(4)">🔁 Review</button>
+  </div>
+  <div class="screen-body" id="lp-body" style="padding:16px 16px 20px"></div>
+  <div class="lesson-nav">
+    <button class="ln-btn ln-back" id="lp-back" onclick="Lesson.prevStep()" style="display:none">← Back</button>
+    <button class="ln-btn ln-next" id="lp-next" onclick="Lesson.nextStep()">Continue →</button>
+  </div>
+</div>
+
+<!-- LESSON SCREEN (menu) -->
+<div class="screen" id="lesson">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <div class="top-bar-title">Lesson Mode</div>
+  </div>
+  <div class="screen-body" id="lesson-body"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+let DATA = null;
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const State = {
+  currentScreen: 'loading',
+  currentModule: 0,
+  currentVerse: null,
+  currentVerseIdx: 0,
+  currentCard: 0,
+  cardQueue: [],
+  quizQueue: [],
+  quizIdx: 0,
+  quizScore: 0,
+  quizTotal: 0,
+  voice: null,
+  speaking: false,
+  sessionCards: 0,
+  sessionCorrect: 0,
+};
+
+// ── STORAGE ──────────────────────────────────────────────────────────────────
+const Store = {
+  get(k){try{return JSON.parse(localStorage.getItem('ges_'+k));}catch(e){return null;}},
+  set(k,v){localStorage.setItem('ges_'+k,JSON.stringify(v));},
+  progress(){return this.get('progress')||{};},
+  saveProgress(p){this.set('progress',p);},
+  hard(){return this.get('hard')||[];},
+  saved(){return this.get('saved')||[];},
+  settings(){return this.get('settings')||{fontSize:17,font:'default',spacing:false,cream:false,focus:false};},
+  saveSettings(s){this.set('settings',s);},
+  stats(){return this.get('stats')||{streak:0,lastDate:'',daily:0,totalCards:0};},
+  saveStats(s){this.set('stats',s);},
+  cardProgress(){return this.get('card_progress')||{};},
+  saveCardProgress(p){this.set('card_progress',p);},
+};
+
+// ── APP ───────────────────────────────────────────────────────────────────────
+const App = {
+  async init(){
+    // Load data — use inline data immediately for offline/HtmlQ support
+    DATA = (typeof INLINE_DATA !== 'undefined') ? INLINE_DATA : null;
+    // Try to fetch updated data if online
+    try{
+      const r = await fetch('data/app_data.json');
+      const fetched = await r.json();
+      if(fetched) DATA = fetched;
+    }catch(e){
+      // Offline or HtmlQ — use inline data
+    }
+    // Update streak
+    this.updateStreak();
+    // Apply settings
+    const s = Store.settings();
+    document.documentElement.style.setProperty('--font-size', s.fontSize+'px');
+    document.getElementById('font-size-val').textContent = s.fontSize+'px';
+    if(s.spacing) document.body.style.setProperty('--line-height','2.2');
+    if(s.cream) document.body.style.background = 'var(--cream)';
+    // Load voice
+    if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>this.loadVoice();
+    this.loadVoice();
+    // Show home after load
+    // Auto-dismiss splash after 3s, then show loading briefly, then home
+    setTimeout(()=>dismissSplash(), 3000);
+  },
+
+  loadVoice(){
+    const voices = window.speechSynthesis?.getVoices()||[];
+    const enh = voices.find(v=>v.name.includes('Enhanced'));
+    State.voice = enh || voices.find(v=>v.lang.startsWith('en')) || voices[0] || null;
+  },
+
+  updateStreak(){
+    const stats = Store.stats();
+    const today = new Date().toDateString();
+    if(stats.lastDate !== today){
+      const yesterday = new Date(Date.now()-86400000).toDateString();
+      if(stats.lastDate === yesterday) stats.streak++;
+      else if(stats.lastDate !== today) stats.streak = stats.lastDate ? 0 : 1;
+      stats.lastDate = today;
+      stats.daily = 0;
+      Store.saveStats(stats);
+    }
+    document.getElementById('streak-num').textContent = stats.streak||0;
+    const pct = Math.min(100, Math.round((stats.daily||0)/10*100));
+    document.getElementById('daily-ring').style.strokeDashoffset = 138 - (138*pct/100);
+    document.getElementById('daily-pct').textContent = pct+'%';
+  },
+
+  showScreen(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    State.currentScreen = id;
+    this.renderScreen(id);
+    // Update bottom nav
+    document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.bn-item').forEach(b=>{
+      if(b.querySelector('.bn-label')?.textContent.toLowerCase()===id) b.classList.add('active');
+    });
+    window.scrollTo(0,0);
+  },
+
+  renderScreen(id){
+    if(!DATA){
+      if(id==='loading') return;
+      // Data not ready - try to recover
+      DATA = (typeof INLINE_DATA !== 'undefined') ? INLINE_DATA : null;
+      if(!DATA) return;
+    }
+    switch(id){
+      case 'home': this.renderHome(); break;
+      case 'study': this.renderStudy(); break;
+      case 'cards': this.renderCards(); break;
+      case 'quiz': this.renderQuiz(); break;
+      case 'timeline': this.renderTimeline(); break;
+      case 'compare': this.renderCompare(); break;
+      case 'hard-list': this.renderHardList(); break;
+    }
+  },
+
+  renderHome(){
+    if(!DATA){document.getElementById('home-greeting').textContent='Tap any mode to begin';return;}
+    const cards = DATA.memory_cards||[];
+    const cp = Store.cardProgress();
+    const due = cards.filter(c=>this.isCardDue(c.id, cp)).length;
+    document.getElementById('cards-due').textContent = due;
+    document.getElementById('cards-badge').textContent = due+' due';
+    const hard = Store.hard();
+    document.getElementById('hard-badge').textContent = hard.length;
+    const stats = Store.stats();
+    const pct = Math.min(100, Math.round((stats.daily||0)/10*100));
+    document.getElementById('daily-ring').style.strokeDashoffset = 138-(138*pct/100);
+    document.getElementById('daily-pct').textContent = pct+'%';
+    if(due>0){
+      document.getElementById('continue-title').textContent = '▶ Today\'s Review';
+      document.getElementById('continue-sub').textContent = due+' memory cards ready for review';
+    } else {
+      document.getElementById('continue-title').textContent = '▶ Continue Learning';
+      document.getElementById('continue-sub').textContent = 'Start with the Great Eraser foundations';
+    }
+    const h = new Date().getHours();
+    let greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+    document.getElementById('home-greeting').textContent = greet + ' — ready to recall?';
+  },
+
+  // ── STUDY MODE ──
+  renderStudy(){
+    if(!DATA) return;
+    // Use volumes as the study modules
+    const vols = DATA.volumes||[];
+    const tabs = document.getElementById('module-tabs');
+    const colors = ['#1A9B9B','#C8971F','#E8735A','#8B7EC8','#2ECC71','#E84040','#1A9B9B','#C8971F','#8B7EC8'];
+    const icons = ['📜','📖','⛪','🧬','🗺️','⚡','🌿','📚','🌌'];
+    tabs.innerHTML = vols.map((v,i)=>`
+      <button class="mod-tab${i===State.currentModule?' active':''}"
+        style="${i===State.currentModule?'background:'+colors[i%colors.length]+';color:#0A0E1A':''}"
+        onclick="App.selectModule(${i})">
+        ${icons[i%icons.length]} Vol.${v.vol}
+      </button>
+    `).join('');
+    this.renderStudyContent(State.currentModule);
+  },
+
+  selectModule(i){
+    State.currentModule = i;
+    this.renderStudy();
+  },
+
+  renderStudyContent(idx){
+    const vol = (DATA.volumes||[])[idx];
+    if(!vol) return;
+    const colors = ['#1A9B9B','#C8971F','#E8735A','#8B7EC8','#2ECC71','#E84040','#1A9B9B','#C8971F','#8B7EC8'];
+    const color = colors[idx%colors.length];
+    const body = document.getElementById('study-body');
+    
+    // Volume header
+    let html = `<div style="background:linear-gradient(135deg,${color}22,${color}08);border:1px solid ${color}44;border-radius:var(--radius);padding:16px;margin-bottom:16px">
+      <div style="font-size:.75rem;color:${color};font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Volume ${vol.name}</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px">${vol.desc}</div>
+      <div style="font-size:.75rem;color:var(--text3)">${vol.chapters.length} chapters</div>
+    </div>`;
+    
+    // Chapters
+    vol.chapters.forEach((ch, ci) => {
+      const verseData = DATA.verse_map ? DATA.verse_map[ch.id] : null;
+      const verseCount = verseData && verseData.verses ? verseData.verses.length : 0;
+      const hasContent = ch.content && ch.content.length > 0;
+      
+      // Get first body paragraph as preview
+      let preview = '';
+      if(hasContent) {
+        const firstBody = ch.content.find(c => c.type === 'body' && c.text && c.text.length > 30);
+        if(firstBody) preview = firstBody.text.substring(0, 180) + (firstBody.text.length > 180 ? '...' : '');
+      }
+      
+      html += `<div class="section-card" id="ch-${ch.id}">
+        <div class="section-tag" style="border-left:3px solid ${color}">
+          <span style="color:${color}">Ch.${ch.num}</span>
+        </div>
+        <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:${preview?'10px':'8px'};line-height:1.4">${this.highlightClaim(ch.title)}</div>
+        ${preview ? `<div style="font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:12px">${this.highlightClaim(preview)}</div>` : ''}
+        ${verseCount > 0 ? `<button class="verse-connect-btn" onclick="App.openVersePanelDirect('${ch.id}',${idx},${ci})">
+          <span>📜 Connected Verses (${verseCount})</span>
+          <span class="vcb-arrow">↑</span>
+        </button>` : `<div style="font-size:.75rem;color:var(--text3);margin-bottom:8px;padding:8px;background:var(--navy3);border-radius:8px">📖 Read full chapter in Great Eraser PWA</div>`}
+        <div class="section-actions">
+          ${verseData && verseData.quiz && verseData.quiz.length > 0 ? `<button class="sa-btn sa-quiz" onclick="App.quizFromChapter('${ch.id}')">❓ Quiz</button>` : ''}
+          <button class="sa-btn sa-save" onclick="App.saveChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}')">★ Save</button>
+          <button class="sa-btn sa-hard" onclick="App.markHardChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}',${idx},${ci})">🔥 Hard</button>
+        </div>
+      </div>`;
+    });
+    
+    body.innerHTML = html;
+  },
+
+  highlightClaim(text){
+    // Bold key phrases automatically
+    const keywords = ['YHWH','DSS','Orit','Dead Sea Scrolls','Ge\'ez','400 year','Kingdom of JUDA','Khazar','Watchers','Nephilim','Mastema','364-day','solar calendar','War Scroll','1QM'];
+    let t = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    keywords.forEach(kw=>{
+      const re = new RegExp('('+kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+      t = t.replace(re,'<strong style="color:var(--gold)">$1</strong>');
+    });
+    return t;
+  },
+
+  // ── VERSE PANEL ──
+  openVersePanelDirect(chId, volIdx, chIdx){
+    const verseData = DATA.verse_map && DATA.verse_map[chId];
+    if(!verseData || !verseData.verses || !verseData.verses.length) return;
+    const vol = DATA.volumes[volIdx];
+    const ch = vol.chapters[chIdx];
+    State.currentVerse = {verses: verseData.verses, claim: ch.title, quiz: verseData.quiz||[], ge_source: 'Vol.'+vol.vol+' Ch.'+ch.num};
+    State.currentVerseIdx = 0;
+    document.getElementById('verse-panel').classList.add('open');
+    this.renderVerseTabs(State.currentVerse);
+    this.renderVerseContent(State.currentVerse, 0);
+    setTimeout(()=>{document.getElementById('vp-sheet').scrollTop=0;},100);
+  },
+
+  openVersePanel(modIdx, secIdx){
+    this.openVersePanelDirect(
+      (DATA.volumes[modIdx]?.chapters[secIdx]?.id)||'',
+      modIdx, secIdx
+    );
+  },
+
+  saveChapter(id, title, source){
+    const saved = Store.saved();
+    if(!saved.find(s=>s.id===id)){
+      saved.push({id, type:'chapter', title:title.substring(0,80), source});
+      Store.set('saved',saved);
+      this.toast('✓ Saved');
+    } else { this.toast('Already saved'); }
+  },
+
+  markHardChapter(id, title, source, volIdx, chIdx){
+    const hard = Store.hard();
+    if(!hard.find(h=>h.id===id)){
+      hard.push({id, title:title.substring(0,80), source, type:'chapter', volIdx, chIdx});
+      Store.set('hard',hard);
+      this.toast('Added to Hard list');
+    } else { this.toast('Already in Hard list'); }
+  },
+
+  quizFromChapter(chId){
+    const verseData = DATA.verse_map && DATA.verse_map[chId];
+    if(!verseData || !verseData.quiz || !verseData.quiz.length){
+      this.toast('No quiz for this chapter yet');return;
+    }
+    State.quizQueue = verseData.quiz;
+    State.quizIdx = 0;
+    State.quizScore = 0;
+    State.quizTotal = verseData.quiz.length;
+    this.showScreen('quiz');
+  },
+
+  renderVerseTabs(section){
+    document.getElementById('vp-tabs').innerHTML = section.verses.map((v,i)=>`
+      <button class="vp-tab${i===0?' active':''}" onclick="App.selectVerse(${i})">
+        ${v.tradition==='dss'?'📜 DSS':v.tradition==='orit'?'🌿 Orit':'📍 Record'} ${i+1}
+      </button>
+    `).join('');
+  },
+
+  selectVerse(i){
+    State.currentVerseIdx = i;
+    document.querySelectorAll('.vp-tab').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+    this.renderVerseContent(State.currentVerse, i);
+    document.getElementById('vp-content').scrollTop = 0;
+  },
+
+  renderVerseContent(section, idx){
+    const v = section.verses[idx];
+    const badgeCls = v.tradition==='dss'?'vtb-dss':v.tradition==='orit'?'vtb-orit':'vtb-historical';
+    const badgeTxt = v.tradition==='dss'?'📜 Dead Sea Scrolls':v.tradition==='orit'?'🌿 Ge\'ez Orit':'📍 Historical Record';
+    document.getElementById('vp-content').innerHTML = `
+      <div class="verse-tradition-badge ${badgeCls}">${badgeTxt}</div>
+      <div class="verse-ref">${v.ref}</div>
+      <div class="verse-scroll">${v.scroll} · ${v.cave}<br>${v.archive} · ${v.date}</div>
+      <div class="verse-text-box">"${v.text}"</div>
+      <div class="verse-plain-label">Plain Language</div>
+      <div class="verse-plain">${v.plain}</div>
+      <div class="bridge-box">
+        <div class="bridge-label">🔗 Why This Connects to the Great Eraser</div>
+        <div class="bridge-text">${v.bridge}</div>
+      </div>
+      <div class="verse-plain-label">Key Words to Remember</div>
+      <div class="keyword-row">${v.keywords.map(k=>`<span class="kw-chip">${k}</span>`).join('')}</div>
+      <button onclick="App.speakVerse('${this.esc(v.text)}')" style="width:100%;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(200,151,31,0.15);color:var(--gold);font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:12px;border:1px solid rgba(200,151,31,0.3)">🔊 Listen to This Verse</button>
+    `;
+  },
+
+  closeVersePanel(e){
+    if(!e || e.target===document.getElementById('verse-panel')){
+      document.getElementById('verse-panel').classList.remove('open');
+    }
+  },
+
+  saveVerse(){
+    if(!State.currentVerse) return;
+    const saved = Store.saved();
+    const v = State.currentVerse.verses[State.currentVerseIdx];
+    if(!saved.find(s=>s.ref===v.ref)){
+      saved.push({ref:v.ref, scroll:v.scroll, text:v.text.substring(0,100), bridge:v.bridge.substring(0,100)});
+      Store.set('saved',saved);
+      this.toast('✓ Verse saved to collection');
+    } else {
+      this.toast('Already saved');
+    }
+  },
+
+  quizFromVerse(){
+    this.closeVersePanel();
+    this.showScreen('quiz');
+  },
+
+  quizFromSection(modIdx, secIdx){
+    const section = DATA.modules[modIdx].sections[secIdx];
+    State.quizQueue = section.quiz;
+    State.quizIdx = 0;
+    State.quizScore = 0;
+    State.quizTotal = section.quiz.length;
+    this.showScreen('quiz');
+  },
+
+  saveSection(modIdx, secIdx){
+    const section = DATA.modules[modIdx].sections[secIdx];
+    const saved = Store.saved();
+    if(!saved.find(s=>s.id===section.id)){
+      saved.push({id:section.id, type:'section', title:section.claim.substring(0,80)+'...', source:section.ge_source});
+      Store.set('saved',saved);
+      this.toast('✓ Section saved');
+    }
+  },
+
+  markHard(modIdx, secIdx){
+    const section = DATA.modules[modIdx].sections[secIdx];
+    const hard = Store.hard();
+    if(!hard.find(h=>h.id===section.id)){
+      hard.push({id:section.id, title:section.claim.substring(0,80)+'...', source:section.ge_source, type:'section', modIdx, secIdx});
+      Store.set('hard',hard);
+      this.toast('Added to Hard list');
+    } else {
+      this.toast('Already in Hard list');
+    }
+  },
+
+  // ── MEMORY CARDS ──
+  renderCards(){
+    const cp = Store.cardProgress();
+    const allCards = DATA.memory_cards||[];
+    const due = allCards.filter(c=>this.isCardDue(c.id, cp));
+    State.cardQueue = due.length > 0 ? due : allCards;
+    State.currentCard = 0;
+    document.getElementById('cards-count').textContent = State.cardQueue.length+' cards';
+    if(State.cardQueue.length===0){
+      document.getElementById('cards-body').innerHTML = `
+        <div class="session-complete">
+          <span class="sc-icon">🎉</span>
+          <div class="sc-title">All caught up!</div>
+          <div class="sc-sub">You've reviewed all your memory cards. Come back tomorrow for your next scheduled review.</div>
+          <button class="sc-btn" onclick="App.showScreen('home')">Back to Home</button>
+        </div>`;
+      return;
+    }
+    this.renderCurrentCard();
+  },
+
+  renderCurrentCard(){
+    const card = State.cardQueue[State.currentCard];
+    if(!card){this.renderCardsComplete();return;}
+    const total = State.cardQueue.length;
+    const current = State.currentCard+1;
+    const pct = Math.round((State.currentCard/total)*100);
+    const catColor = {covenant:'var(--teal)',name:'var(--gold)',calendar:'var(--lavender)',watchers:'var(--coral)',khazar:'var(--emerald)',genetics:'var(--emerald)',institutions:'var(--lavender)',erasure:'var(--coral)'}[card.category]||'var(--gold)';
+    document.getElementById('cards-body').innerHTML = `
+      <div class="card-progress">
+        <div class="cp-bar"><div class="cp-fill" style="width:${pct}%"></div></div>
+        <span class="cp-text">${current}/${total}</span>
+      </div>
+      <div class="flashcard" id="fc" onclick="App.flipCard()">
+        <div class="fc-inner" id="fc-inner">
+          <div class="fc-front">
+            <div class="fc-label" style="color:${catColor}">▶ ${card.category.toUpperCase()} · QUESTION</div>
+            <div class="fc-question">${card.front}</div>
+            <div class="fc-tap">Tap to reveal answer</div>
+          </div>
+          <div class="fc-back">
+            <div class="fc-label" style="color:${catColor}">✓ ANSWER</div>
+            <div class="fc-answer">${card.back}</div>
+            <div class="fc-source">Source: ${card.source}</div>
+          </div>
+        </div>
+      </div>
+      <div id="rating-area" style="display:none">
+        <div style="text-align:center;font-size:.8rem;color:var(--text3);margin-bottom:12px">How well did you remember this?</div>
+        <div class="rating-row">
+          <button class="rating-btn rb-easy" onclick="App.rateCard('easy')">✓ Easy</button>
+          <button class="rating-btn rb-almost" onclick="App.rateCard('almost')">≈ Almost</button>
+          <button class="rating-btn rb-hard" onclick="App.rateCard('hard')">✗ Hard</button>
+          <button class="rating-btn rb-again" onclick="App.rateCard('again')">↩ Again</button>
+        </div>
+      </div>
+      <div id="fc-actions" style="margin-top:12px;display:flex;gap:10px">
+        <button onclick="App.speakCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:var(--navy3);color:var(--text2);font-size:.82rem;cursor:pointer">🔊 Listen</button>
+        <button onclick="App.hardCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(232,115,90,0.15);color:var(--coral);font-size:.82rem;cursor:pointer;border:1px solid rgba(232,115,90,0.3)">🔥 Mark Hard</button>
+      </div>`;
+  },
+
+  flipCard(){
+    document.getElementById('fc-inner').classList.add('flipped');
+    document.getElementById('fc').onclick = null;
+    document.getElementById('rating-area').style.display = 'block';
+    document.getElementById('fc-actions').style.display = 'none';
+  },
+
+  rateCard(rating){
+    const card = State.cardQueue[State.currentCard];
+    const cp = Store.cardProgress();
+    const now = Date.now();
+    const intervals = {easy:4,almost:2,hard:0.5,again:0};
+    const days = intervals[rating]||1;
+    cp[card.id] = {lastReview:now, nextReview:now+days*86400000, rating};
+    Store.saveCardProgress(cp);
+    const stats = Store.stats();
+    stats.daily = (stats.daily||0)+1;
+    Store.saveStats(stats);
+    State.currentCard++;
+    if(rating==='easy'||rating==='almost') State.sessionCorrect++;
+    State.sessionCards++;
+    this.renderCurrentCard();
+  },
+
+  isCardDue(id, cp){
+    if(!cp[id]) return true;
+    return Date.now() >= cp[id].nextReview;
+  },
+
+  hardCard(){
+    const card = State.cardQueue[State.currentCard];
+    const hard = Store.hard();
+    if(!hard.find(h=>h.id===card.id)){
+      hard.push({id:card.id, title:card.front, source:card.source, type:'card', cardId:card.id});
+      Store.set('hard',hard);
+    }
+    this.toast('Added to Hard list');
+  },
+
+  speakCard(){
+    const card = State.cardQueue[State.currentCard];
+    this.speak(card.front + '. ' + card.back);
+  },
+
+  renderCardsComplete(){
+    document.getElementById('cards-body').innerHTML = `
+      <div class="session-complete">
+        <span class="sc-icon">⭐</span>
+        <div class="sc-title">Session Complete</div>
+        <div class="sc-sub">Great work reviewing your memory cards.</div>
+        <div class="sc-stats">
+          <div class="sc-stat"><div class="sc-num">${State.sessionCards}</div><div class="sc-label">Reviewed</div></div>
+          <div class="sc-stat"><div class="sc-num">${State.sessionCorrect}</div><div class="sc-label">Recalled</div></div>
+          <div class="sc-stat"><div class="sc-num">${State.sessionCards>0?Math.round(State.sessionCorrect/State.sessionCards*100):0}%</div><div class="sc-label">Accuracy</div></div>
+        </div>
+        <button class="sc-btn" onclick="App.showScreen('home')">Back to Home</button>
+      </div>`;
+  },
+
+  // ── QUIZ ──
+  renderQuiz(){
+    if(!State.quizQueue || State.quizQueue.length===0){
+      State.quizQueue = [];
+      // Build quiz from verse_map
+      if(DATA.verse_map){
+        Object.values(DATA.verse_map).forEach(v=>{
+          if(v.quiz) State.quizQueue.push(...v.quiz);
+        });
+      }
+      // Shuffle
+      State.quizQueue = State.quizQueue.sort(()=>Math.random()-0.5).slice(0,15);
+      State.quizIdx = 0;
+      State.quizScore = 0;
+      State.quizTotal = State.quizQueue.length;
+    }
+    if(State.quizIdx >= State.quizQueue.length){
+      this.renderQuizComplete();
+      return;
+    }
+    document.getElementById('quiz-score').textContent = State.quizScore+'/'+State.quizIdx;
+    this.renderQuizQuestion();
+  },
+
+  renderQuizQuestion(){
+    const q = State.quizQueue[State.quizIdx];
+    if(!q){this.renderQuizComplete();return;}
+    const body = document.getElementById('quiz-body');
+    if(q.type==='multiple_choice'){
+      const opts = q.options.sort(()=>Math.random()-0.5);
+      body.innerHTML = `
+        <div class="quiz-question-card">
+          <div class="qq-num">Question ${State.quizIdx+1} of ${State.quizTotal}</div>
+          <div class="qq-text">${q.text}</div>
+        </div>
+        <div class="quiz-options" id="quiz-opts">
+          ${opts.map(o=>`<button class="qo-btn" onclick="App.checkAnswer('${this.esc(o)}','${this.esc(q.answer)}')">${o}</button>`).join('')}
+        </div>
+        <div class="quiz-result" id="qr"></div>`;
+    } else if(q.type==='fill_blank'){
+      body.innerHTML = `
+        <div class="quiz-question-card">
+          <div class="qq-num">Question ${State.quizIdx+1} of ${State.quizTotal}</div>
+          <div class="qq-text">${q.text.replace('___','<span style="background:var(--navy3);border-radius:4px;padding:2px 12px;color:var(--gold)">___</span>')}</div>
+        </div>
+        <div class="fill-options">${q.options.map(o=>`<button class="fo-chip" onclick="App.selectFill('${this.esc(o)}',this)">${o}</button>`).join('')}</div>
+        <button class="quiz-submit" onclick="App.submitFill('${this.esc(q.answer)}')">Check Answer</button>
+        <div class="quiz-result" id="qr"></div>`;
+    }
+  },
+
+  checkAnswer(selected, correct){
+    const isCorrect = selected.toLowerCase()===correct.toLowerCase();
+    document.querySelectorAll('.qo-btn').forEach(b=>{
+      b.onclick = null;
+      const bText = b.textContent.trim();
+      if(bText.toLowerCase()===correct.toLowerCase()) b.classList.add('correct');
+      else if(bText.toLowerCase()===selected.toLowerCase()&&!isCorrect) b.classList.add('wrong');
+    });
+    if(isCorrect) State.quizScore++;
+    const qr = document.getElementById('qr');
+    qr.className = 'quiz-result show';
+    qr.innerHTML = isCorrect
+      ? '<div class="qr-correct">✓ Correct! Well recalled.</div>'
+      : `<div class="qr-wrong">✗ The answer is: ${correct}</div>`;
+    const stats = Store.stats();
+    stats.daily = (stats.daily||0)+1;
+    Store.saveStats(stats);
+    setTimeout(()=>{State.quizIdx++;this.renderQuizQuestion();},1800);
+  },
+
+  selectFill(val, el){
+    document.querySelectorAll('.fo-chip').forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelector('.fill-input') && (document.querySelector('.fill-input').value=val);
+    el.closest('.screen-body').querySelector('.quiz-submit').setAttribute('data-selected',val);
+  },
+
+  submitFill(correct){
+    const selected = document.querySelector('.quiz-submit')?.getAttribute('data-selected')||
+                     document.querySelector('.fo-chip.selected')?.textContent||'';
+    this.checkAnswer(selected, correct);
+  },
+
+  renderQuizComplete(){
+    const pct = State.quizTotal>0?Math.round(State.quizScore/State.quizTotal*100):0;
+    document.getElementById('quiz-body').innerHTML = `
+      <div class="session-complete">
+        <span class="sc-icon">${pct>=80?'🏆':pct>=60?'⭐':'📚'}</span>
+        <div class="sc-title">${pct>=80?'Outstanding':'Good work'}</div>
+        <div class="sc-sub">${pct>=80?'Your recall is strong. The evidence is anchoring.':pct>=60?'Solid recall. Keep reviewing the harder passages.':'Keep going — deep learning takes repeated exposure.'}</div>
+        <div class="sc-stats">
+          <div class="sc-stat"><div class="sc-num">${State.quizScore}</div><div class="sc-label">Correct</div></div>
+          <div class="sc-stat"><div class="sc-num">${State.quizTotal}</div><div class="sc-label">Total</div></div>
+          <div class="sc-stat"><div class="sc-num">${pct}%</div><div class="sc-label">Score</div></div>
+        </div>
+        <button class="sc-btn" onclick="App.restartQuiz()">Try Again</button>
+      </div>`;
+    State.quizQueue = [];
+  },
+
+  restartQuiz(){
+    State.quizQueue = [];
+    State.quizIdx = 0;
+    State.quizScore = 0;
+    this.renderQuiz();
+  },
+
+  // ── TIMELINE ──
+  renderTimeline(){
+    this.filterTimeline('all', document.querySelector('.tf-btn'));
+  },
+
+  filterTimeline(filter, btn){
+    document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const items = DATA.timelines||[];
+    const filtered = filter==='all'?items:items;
+    const body = document.getElementById('timeline-body');
+    body.innerHTML = items.map((t,i)=>`
+      <div class="tl-item">
+        <div class="tl-spine">
+          <div class="tl-dot" style="background:${t.color}"></div>
+          ${i<items.length-1?'<div class="tl-line"></div>':''}
+        </div>
+        <div class="tl-card">
+          <div class="tl-year" style="color:${t.color}">${t.year}</div>
+          <div class="tl-event">${t.event}</div>
+          ${t.erased_by?`<div class="tl-erased">${t.erased_by}</div>`:''}
+          ${t.restored_by?`<div class="tl-restored">${t.restored_by}</div>`:''}
+        </div>
+      </div>
+    `).join('');
+  },
+
+  // ── COMPARE ──
+  renderCompare(){
+    const pairs = [
+      {
+        ref:'Bereshit 15:13 — The 400-Year Covenant',
+        source:'DSS (4QGen-Exoda) vs Ge\'ez Orit (Jubilees 14:18)',
+        dss:{label:'DSS — 4QGen-Exoda, Cave 4', text:'Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.', plain:'A binding legal decree: four centuries of bondage for the covenant people in a foreign land.'},
+        orit:{label:'Ge\'ez Orit — Jubilees 14:18', text:'And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.', plain:'The Orit confirms the covenant countdown — four generations equals the 400-year term. Return is guaranteed after the full term.'},
+        consistent:'Both texts confirm the 400-year bondage period as a binding legal covenant term, not a prediction.',
+        changed:'The DSS gives the specific number (400 years) while the Orit specifies the mechanism (four generations), providing complementary precision.',
+        prompt:'What does the consistency between these two independent sources prove about the authority of this covenant claim?'
+      },
+      {
+        ref:'The Solar Calendar — 364 Days',
+        source:'DSS (4Q317) vs Ge\'ez Orit (Jubilees 6:36-38)',
+        dss:{label:'DSS — 4Q317 Mishmarot Fragments', text:'The 364-day solar calendar documented in the Mishmarot fragments: 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.', plain:'The Qumran community maintained a precise solar calendar where festivals never shifted — every year the same weekday.'},
+        orit:{label:'Ge\'ez Orit — Jubilees 6:36-38', text:'For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.', plain:'Jubilees explicitly warns that lunar observation is a deliberate corruption that causes the covenant people to miss their appointed times with YHWH.'},
+        consistent:'Both sources confirm the 364-day solar calendar as the only valid covenant calendar and treat the lunar system as a corruption.',
+        changed:'The DSS gives the mathematical structure; the Orit gives the prophetic warning — together they provide both the system and the consequence of deviation.',
+        prompt:'Why would both texts preserved independently in two different communities agree on condemning the lunar calendar?'
+      }
+    ];
+    const body = document.getElementById('compare-body');
+    body.innerHTML = pairs.map(p=>`
+      <div class="compare-card">
+        <div class="compare-ref">${p.ref}</div>
+        <div class="compare-source">${p.source}</div>
+        <div class="compare-panels">
+          <div class="cp-panel cpp-dss">
+            <div class="cpp-label">📜 ${p.dss.label}</div>
+            <div class="cpp-text">"${p.dss.text}"</div>
+            <div class="cpp-plain">${p.dss.plain}</div>
+          </div>
+          <div class="cp-panel cpp-orit">
+            <div class="cpp-label">🌿 ${p.orit.label}</div>
+            <div class="cpp-text">"${p.orit.text}"</div>
+            <div class="cpp-plain">${p.orit.plain}</div>
+          </div>
+        </div>
+        <div style="background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.2);border-radius:var(--radius-sm);padding:12px;margin-top:10px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--emerald);margin-bottom:5px">✓ What Stayed Consistent</div>
+          <div style="font-size:.85rem;color:var(--text2);line-height:1.65">${p.consistent}</div>
+        </div>
+        <div style="background:rgba(139,126,200,0.08);border:1px solid rgba(139,126,200,0.2);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lavender);margin-bottom:5px">⚡ What Changed / Added</div>
+          <div style="font-size:.85rem;color:var(--text2);line-height:1.65">${p.changed}</div>
+        </div>
+        <div class="compare-question">
+          <div class="cq-label">💭 Memory Prompt</div>
+          <div class="cq-text">${p.prompt}</div>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  // ── HARD LIST ──
+  renderHardList(){
+    const hard = Store.hard();
+    const body = document.getElementById('hard-body');
+    if(hard.length===0){
+      body.innerHTML = `<div class="hl-empty"><span class="hle-icon">✨</span><div class="hle-text">Nothing here yet. When you find passages or concepts you want to revisit, tap <strong>Hard</strong> on any section or card and it will appear here.</div></div>`;
+      return;
+    }
+    body.innerHTML = hard.map((h,i)=>`
+      <div class="hard-item">
+        <div class="hi-icon">🔥</div>
+        <div class="hi-body">
+          <div class="hi-title">${h.title}</div>
+          <div class="hi-sub">${h.source||h.type}</div>
+          <div class="hi-actions">
+            <button class="hi-btn hi-review" onclick="App.reviewHard(${i})">Review</button>
+            <button class="hi-btn hi-remove" onclick="App.removeHard(${i})">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  reviewHard(i){
+    const hard = Store.hard()[i];
+    if(hard.type==='card'){
+      const card = DATA.memory_cards.find(c=>c.id===hard.cardId);
+      if(card){
+        State.cardQueue = [card];
+        State.currentCard = 0;
+        this.showScreen('cards');
+      }
+    } else if(hard.type==='section'){
+      State.currentModule = hard.modIdx||0;
+      this.showScreen('study');
+    }
+  },
+
+  removeHard(i){
+    const hard = Store.hard();
+    hard.splice(i,1);
+    Store.set('hard',hard);
+    this.renderHardList();
+    document.getElementById('hard-badge').textContent = hard.length;
+  },
+
+  clearHardList(){
+    Store.set('hard',[]);
+    this.renderHardList();
+    document.getElementById('hard-badge').textContent = '0';
+    this.toast('Hard list cleared');
+  },
+
+  // ── SETTINGS ──
+  toggleSetting(key, el){
+    el.classList.toggle('on');
+    const s = Store.settings();
+    s[key] = el.classList.contains('on');
+    Store.saveSettings(s);
+    if(key==='spacing') document.body.style.setProperty('--line-height',s.spacing?'2.2':'1.8');
+    if(key==='cream') document.body.style.background = s.cream?'var(--cream)':'var(--navy)';
+  },
+
+  changeFontSize(delta){
+    const s = Store.settings();
+    s.fontSize = Math.max(14, Math.min(26, (s.fontSize||17)+delta));
+    Store.saveSettings(s);
+    document.documentElement.style.setProperty('--font-size', s.fontSize+'px');
+    document.getElementById('font-size-val').textContent = s.fontSize+'px';
+  },
+
+  setFont(font, el){
+    document.querySelectorAll('.font-opt').forEach(f=>f.classList.remove('active'));
+    el.classList.add('active');
+    const s = Store.settings();
+    s.font = font;
+    Store.saveSettings(s);
+    const fontMap = {
+      default:'Inter,sans-serif',
+      atkinson:'Georgia,serif',
+      dyslexic:'Helvetica Neue,Arial,sans-serif',
+      large:'Georgia,Times,serif'
+    };
+    document.documentElement.style.fontFamily = fontMap[font]||'Inter,sans-serif';
+    if(font==='large') document.documentElement.style.setProperty('--font-size','20px');
+  },
+
+  resetProgress(){
+    if(confirm('Reset all progress? This cannot be undone.')){
+      localStorage.removeItem('ges_card_progress');
+      localStorage.removeItem('ges_stats');
+      localStorage.removeItem('ges_hard');
+      this.toast('Progress reset');
+      this.renderHome();
+    }
+  },
+
+  // ── VOICE ──
+  speak(text){
+    if(!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(State.voice) u.voice = State.voice;
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  },
+
+  speakVerse(text){this.speak(text);},
+
+  toggleVoice(){
+    if(State.speaking){window.speechSynthesis?.cancel();State.speaking=false;this.toast('Voice off');}
+    else{
+      const c = document.getElementById('study-body')?.textContent||'';
+      if(c){this.speak(c.substring(0,500));State.speaking=true;this.toast('Reading...');}
+    }
+  },
+
+  // ── UTILS ──
+  esc(t){if(!t)return'';return t.replace(/'/g,"\\'").replace(/"/g,'&quot;').replace(/\n/g,' ');},
+
+  toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
+  },
+
+  continueSession(){
+    if(!DATA){this.showScreen('study');return;}
+    const cp = Store.cardProgress();
+    const due = (DATA?.memory_cards||[]).filter(c=>this.isCardDue(c.id,cp));
+    if(due.length>0) this.showScreen('cards');
+    else this.showScreen('study');
+  },
+};
+
+// ── TEACHING LAYER ──────────────────────────────────────────────────────────
+
+const CONCEPTS = [
+  {id:'covenant',   label:'Covenant',      icon:'📜', color:'#C8971F',
+   mem:'Legal contract. 400 years. Defined terms.',
+   chapters:['ch40','ch41','ch52','chI','chII'],
+   teach:'YHWH made a binding legal covenant with Abraham — not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
+   why:'Without the covenant framework, the historical evidence has no legal context. With it, every piece of evidence becomes a clause in a contract.',
+   question:'What three elements does the 400-year covenant declare?',
+   answer:'400 years of bondage → Judgment of the enslaving nation → Liberation with possessions',
+   options:['400 years bondage → Judgment → Liberation','Ships → Slavery → No buyer','Calendar → Language → Territory']},
+
+  {id:'dss',        label:'DSS',           icon:'📜', color:'#5DADE2',
+   mem:'972 scrolls. 11 caves. 50 BCE – 68 CE.',
+   chapters:['ch17','ch18','ch20','ch28'],
+   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947–1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT — all contradicting later institutional religious claims.',
+   why:'The DSS are the oldest surviving Hebrew manuscript tradition. Any claim about ancient Hebrew religion must answer to these texts first.',
+   question:'How many years older are the DSS than the Masoretic Text?',
+   answer:'Approximately 1,200 years older — DSS c. 100 BCE vs Masoretic Text c. 950 CE',
+   options:['1,200 years older','100 years older','500 years older','They are the same age']},
+
+  {id:'orit',       label:'Ge\'ez Orit',   icon:'🌿', color:'#58D68D',
+   mem:'Ethiopia. Beta Israel. 1 Enoch + Jubilees complete.',
+   chapters:['ch19','ch29','ch31'],
+   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters) — texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
+   why:'The Orit preserved the most complete surviving covenant textual tradition. The double exclusion of 1 Enoch and Jubilees by two competing institutions is itself evidence of coordinated suppression.',
+   question:'Which two institutions simultaneously excluded 1 Enoch and Jubilees?',
+   answer:'Council of Yavneh (90 CE) and Council of Nicaea (325 CE)',
+   options:['Council of Yavneh (90 CE) and Council of Nicaea (325 CE)','British Museum and Vatican','Athens and Rome','Babylon and Egypt']},
+
+  {id:'ships',      label:'Ships',         icon:'⛵', color:'#E8735A',
+   mem:'Devarim 28:68. Ships. Sold. No buyer.',
+   chapters:['ch14','ch32','ch45'],
+   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific — not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
+   why:'The ships element is the most specific and historically verifiable element of the covenant curse. It rules out every other mass displacement event in history and points to one.',
+   question:'What three specific elements does Devarim 28:68 declare?',
+   answer:'Ships + Sold as slaves + No man shall buy you (no mass redemption)',
+   options:['Ships + Sold as slaves + No mass redemption','Chains + Prison + No freedom','Exile + Wandering + Homeless','Famine + Plague + Drought']},
+
+  {id:'400_years',  label:'400 Years',     icon:'⏳', color:'#C8971F',
+   mem:'1619 + 400 = 2019. Legal expiration.',
+   chapters:['ch40','ch41','chII','chVIII'],
+   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619 — the documented arrival of Africans at Point Comfort, Virginia — is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
+   why:'The 400-year calculation is not speculation — it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
+   question:'When does the 400-year covenant bondage term expire according to the 1619 start date?',
+   answer:'2019 CE — 1619 + 400 = 2019',
+   options:['2019 CE','1865 CE','2000 CE','1965 CE']},
+
+  {id:'kingdom_juda', label:'Kingdom of JUDA', icon:'🗺️', color:'#1A9B9B',
+   mem:'Bowen 1747. Library of Congress. West Africa.',
+   chapters:['ch36','ch37'],
+   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map — produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
+   why:'The cartographic evidence is physical proof in a named archive. It predates the Berlin Conference (1884-1885) which erased all Hebrew territorial identifications from Africa.',
+   question:'Where is Bowen\'s 1747 map permanently archived?',
+   answer:'Library of Congress — Geography and Map Division',
+   options:['Library of Congress — Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
+
+  {id:'erased',     label:'What Was Erased', icon:'🚫', color:'#E84040',
+   mem:'Calendar. Name. Territory. Identity.',
+   chapters:['ch22','ch16','chXVII'],
+   teach:'The erasure operated on four levels simultaneously: (1) The divine name YHWH replaced by "Lord" 7,000+ times in the textual tradition, (2) The 364-day solar calendar replaced by lunar systems disconnecting covenant timing, (3) African territorial identity erased by the Berlin Conference 1884-1885, (4) The identity of the covenant people replaced by Eurocentric framing.',
+   why:'The erasure was systematic and multi-institutional — Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
+   question:'How many times was the divine name YHWH replaced by "Lord" in the standard textual tradition?',
+   answer:'Over 7,000 times — confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
+   options:['Over 7,000 times','Fewer than 100 times','Once in translation','It was never replaced']},
+
+  {id:'restored',   label:'Restored Evidence', icon:'✅', color:'#2ECC71',
+   mem:'DSS 1947. Genetics 2000-2012. Maps. Archives.',
+   chapters:['ch21','ch33','ch34'],
+   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts — Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics — Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography — Bowen 1747 map in Library of Congress, (4) Epigraphy — Soleb Temple inscription 1400 BCE in Sudan National Museum.',
+   why:'The convergence of four independent fields — manuscript, genetic, cartographic, and epigraphic — all pointing to the same conclusion is the Three-Witness method applied at scale.',
+   question:'In what year were the Dead Sea Scrolls discovered?',
+   answer:'1947 — Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
+   options:['1947','1920','1967','2000']},
+];
+
+// ── CONCEPT MASTERY ──────────────────────────────────────────────────────────
+const Mastery = {
+  get(id){ try{return parseInt(localStorage.getItem('ges_m_'+id))||0;}catch(e){return 0;}},
+  set(id,v){ v=Math.max(0,Math.min(5,v)); localStorage.setItem('ges_m_'+id,v); },
+  increment(id){ this.set(id, this.get(id)+1); },
+  decrement(id){ this.set(id, this.get(id)-1); },
+  levelText(n){ return ['Not started','Just beginning','Developing','Getting it','Strong','Mastered'][n]||''; },
+  relatedConcepts(chapterId){
+    return CONCEPTS.filter(c=>c.chapters && c.chapters.includes(chapterId));
+  }
+};
+
+// ── LESSON ENGINE ────────────────────────────────────────────────────────────
+const Lesson = {
+  current: null, // current concept
+  step: 0,
+  steps: ['learn','explain','remember','practice','review'],
+  stepColors: ['#1A9B9B','#C8971F','#8B7EC8','#E8735A','#2ECC71'],
+
+  open(conceptId){
+    const c = CONCEPTS.find(x=>x.id===conceptId) || CONCEPTS[0];
+    this.current = c;
+    this.step = 0;
+    document.getElementById('lesson-panel').classList.add('open');
+    this.render();
+  },
+
+  close(){
+    document.getElementById('lesson-panel').classList.remove('open');
+    // Refresh home mastery display
+    if(typeof App !== 'undefined') App.renderConceptRow();
+  },
+
+  goStep(n){
+    this.step = n;
+    this.render();
+  },
+
+  nextStep(){
+    if(this.step < 4) { this.step++; this.render(); }
+    else { this.markDone(); this.close(); }
+  },
+
+  prevStep(){
+    if(this.step > 0) { this.step--; this.render(); }
+  },
+
+  markDone(){
+    if(this.current) Mastery.increment(this.current.id);
+    App.toast('✓ Lesson complete — mastery updated');
+  },
+
+  render(){
+    const c = this.current;
+    if(!c) return;
+    const score = Mastery.get(c.id);
+    // Header
+    document.getElementById('lp-title').textContent = c.icon + ' ' + c.label;
+    document.getElementById('lp-subtitle').textContent = this.steps[this.step].charAt(0).toUpperCase()+this.steps[this.step].slice(1)+' · Step '+(this.step+1)+' of 5';
+    const mb = document.getElementById('lp-mastery');
+    mb.className = 'mastery-badge mb-'+score;
+    mb.textContent = score+'/5 '+Mastery.levelText(score);
+    // Step pills
+    document.querySelectorAll('.ls-pill').forEach((p,i)=>{
+      p.classList.toggle('active', i===this.step);
+      if(i===this.step) p.style.cssText=`background:${this.stepColors[i]}33;color:${this.stepColors[i]};opacity:1`;
+      else p.style.cssText='opacity:0.45';
+    });
+    // Nav
+    document.getElementById('lp-back').style.display = this.step>0?'':'none';
+    const nextBtn = document.getElementById('lp-next');
+    if(this.step===4){ nextBtn.className='ln-btn ln-done'; nextBtn.textContent='✓ Mark Complete'; }
+    else { nextBtn.className='ln-btn ln-next'; nextBtn.textContent='Continue →'; }
+    // Content
+    this.renderStep(c, this.step);
+  },
+
+  renderStep(c, step){
+    const body = document.getElementById('lp-body');
+    const col = this.stepColors[step];
+    let html = '';
+
+    if(step===0){ // LEARN
+      html = `
+        <div class="teach-me-card">
+          <div class="tmc-badge">📖 Learn</div>
+          <div class="tmc-main">${c.icon} ${c.label}</div>
+          <div class="tmc-plain">${c.teach}</div>
+          <div class="tmc-why">${c.why}</div>
+        </div>
+        <div class="memory-anchor">
+          <div class="ma-icon">${c.icon}</div>
+          <div>
+            <div class="ma-phrase">"${c.mem}"</div>
+            <div class="ma-source">Memory phrase — repeat this to lock it in</div>
+          </div>
+        </div>`;
+    }
+    else if(step===1){ // EXPLAIN
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">💬 Plain Language Explanation</div>
+        <div class="lc-text">${c.teach}</div>
+      </div>
+      <div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🔗 Why It Matters</div>
+        <div class="lc-text plain">${c.why}</div>
+      </div>`;
+    }
+    else if(step===2){ // REMEMBER
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🧠 Memory Anchor</div>
+        <div class="memory-anchor" style="background:${col}11;border:1px solid ${col}33;margin:0 0 12px">
+          <div class="ma-icon" style="font-size:2rem">${c.icon}</div>
+          <div>
+            <div class="ma-phrase" style="font-size:1rem">"${c.mem}"</div>
+            <div class="ma-source">Say it aloud. Repeat it three times.</div>
+          </div>
+        </div>
+      </div>
+      <div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🎨 Visual Anchor</div>
+        <div style="text-align:center;padding:20px;background:${col}11;border-radius:var(--radius-sm)">
+          <div style="font-size:3.5rem;margin-bottom:8px">${c.icon}</div>
+          <div style="font-size:1rem;font-weight:700;color:${col}">${c.label}</div>
+          <div style="font-size:.82rem;color:var(--text2);margin-top:6px;line-height:1.6;font-style:italic">"${c.mem}"</div>
+        </div>
+      </div>`;
+    }
+    else if(step===3){ // PRACTICE — active recall
+      const opts = (c.options||[c.answer,'Wrong answer A','Wrong answer B']).sort(()=>Math.random()-0.5);
+      html = `<div class="recall-card">
+        <div class="rc-prompt">✏️ Active Recall — Before we show you — what do you remember?</div>
+        <div class="rc-question">${c.question}</div>
+        <div class="rc-options" id="rc-opts">
+          ${opts.map(o=>`<button class="rc-opt" onclick="Lesson.checkAnswer(this,'${this.esc(o)}','${this.esc(c.answer)}')">${o}</button>`).join('')}
+        </div>
+      </div>
+      <div id="rc-explanation" style="display:none" class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">✓ Full Answer</div>
+        <div class="lc-text plain">${c.answer}</div>
+      </div>`;
+    }
+    else if(step===4){ // REVIEW
+      const score = Mastery.get(c.id);
+      html = `<div class="lesson-chunk">
+        <div class="lc-step-label" style="color:${col}">🔁 Review Summary</div>
+        <div class="lc-text">${c.teach}</div>
+      </div>
+      <div class="memory-anchor">
+        <div class="ma-icon">${c.icon}</div>
+        <div>
+          <div class="ma-phrase">"${c.mem}"</div>
+          <div class="ma-source">Lock this phrase. It carries the entire concept.</div>
+        </div>
+      </div>
+      <div style="background:${col}11;border:1px solid ${col}33;border-radius:var(--radius-sm);padding:14px;margin-top:4px;text-align:center">
+        <div style="font-size:.75rem;color:${col};font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Current Mastery</div>
+        <div style="font-size:1.8rem;font-weight:700;color:${col}">${score}/5</div>
+        <div style="font-size:.8rem;color:var(--text2);margin-top:4px">${Mastery.levelText(score)}</div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button onclick="Mastery.decrement('${c.id}');Lesson.render()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(232,115,90,0.15);color:var(--coral);font-size:.85rem;cursor:pointer;font-weight:600">Still Hard</button>
+        <button onclick="Mastery.increment('${c.id}');Lesson.render()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(46,204,113,0.15);color:var(--emerald);font-size:.85rem;cursor:pointer;font-weight:600">Got It!</button>
+      </div>`;
+    }
+    body.innerHTML = html;
+  },
+
+  checkAnswer(el, selected, correct){
+    document.querySelectorAll('.rc-opt').forEach(b=>{
+      b.onclick=null;
+      if(b.textContent.trim()===correct) b.classList.add('correct');
+      else if(b===el && selected!==correct) b.classList.add('wrong');
+    });
+    const isCorrect = selected===correct;
+    if(isCorrect){ Mastery.increment(this.current.id); App.toast('✓ Correct!'); }
+    else { Mastery.decrement(this.current.id); App.toast('Not quite — review the answer'); }
+    document.getElementById('rc-explanation').style.display='block';
+  },
+
+  esc(t){ if(!t)return''; return t.replace(/'/g,"\\'").replace(/"/g,'&quot;'); },
+};
+
+// ── LESSON SCREEN MENU ───────────────────────────────────────────────────────
+App.renderLesson = function(){
+  const body = document.getElementById('lesson-body');
+  let html = '<div style="padding-bottom:8px">';
+  html += '<div style="background:var(--navy3);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:16px;font-size:.85rem;color:var(--text2);line-height:1.65">Each lesson walks you through 5 steps: <strong style="color:var(--text)">Learn → Explain → Remember → Practice → Review.</strong> Tap a concept below to begin.</div>';
+  
+  CONCEPTS.forEach(c=>{
+    const score = Mastery.get(c.id);
+    const pct = Math.round(score/5*100);
+    html += `<div style="background:var(--navy2);border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.05);cursor:pointer" onclick="Lesson.open('${c.id}')">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="font-size:1.6rem">${c.icon}</div>
+        <div style="flex:1">
+          <div style="font-size:.95rem;font-weight:700;color:var(--text)">${c.label}</div>
+          <div style="font-size:.75rem;color:var(--text3);margin-top:2px">${c.mem}</div>
+        </div>
+        <div class="mastery-badge mb-${score}">${score}/5</div>
+      </div>
+      <div style="height:4px;background:var(--navy3);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${c.color};border-radius:2px;transition:width .4s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px">
+        <div style="font-size:.72rem;color:var(--text3)">${Mastery.levelText(score)}</div>
+        <div style="font-size:.72rem;color:${c.color};font-weight:600">Tap to study →</div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  body.innerHTML = html;
+};
+
+// ── CONCEPT ROW on home ──────────────────────────────────────────────────────
+App.renderConceptRow = function(){
+  const row = document.getElementById('concept-row');
+  if(!row) return;
+  row.innerHTML = CONCEPTS.map(c=>{
+    const score = Mastery.get(c.id);
+    return `<div class="concept-pill" style="background:${c.color}11;border-color:${c.color}33" onclick="Lesson.open('${c.id}')">
+      <span class="cp-icon">${c.icon}</span>
+      <span class="cp-label" style="color:${c.color}">${c.label}</span>
+      <span class="cp-score" style="color:${c.color}">${score}/5</span>
+    </div>`;
+  }).join('');
+};
+
+// ── TODAY PATH ───────────────────────────────────────────────────────────────
+App.renderTodayPath = function(){
+  const steps = document.getElementById('tp-steps');
+  if(!steps) return;
+  const allConcepts = [...CONCEPTS];
+  const notDone = allConcepts.filter(c=>Mastery.get(c.id)<3);
+  const done = allConcepts.filter(c=>Mastery.get(c.id)>=3);
+  const path = [...notDone.slice(0,3), ...done.slice(0,1)];
+  if(path.length===0){ steps.innerHTML='<div class="tp-step done">🏆 All concepts developing!</div>'; return; }
+  steps.innerHTML = path.map((c,i)=>`
+    <div class="tp-step ${Mastery.get(c.id)>=3?'done':i===0?'current':''}" onclick="Lesson.open('${c.id}')">
+      ${c.icon} ${c.label}
+    </div>`).join('');
+};
+
+// ── TEACH ME in study mode ───────────────────────────────────────────────────
+App.getTeachMeButton = function(chId){
+  const related = Mastery.relatedConcepts(chId);
+  if(!related.length) return '';
+  return related.map(c=>`
+    <button class="teach-me-btn" onclick="Lesson.open('${c.id}')">
+      <span style="font-size:1.1rem">${c.icon}</span>
+      <span>Teach Me: ${c.label}</span>
+      <span style="margin-left:auto;font-size:.7rem;opacity:0.7">${Mastery.get(c.id)}/5 mastered</span>
+    </button>`).join('');
+};
+
+// ── RETEACH in hard list ─────────────────────────────────────────────────────
+App.getReteachCard = function(item){
+  const related = CONCEPTS.filter(c=>c.chapters && item.id && c.chapters.includes(item.id));
+  if(!related.length) return '';
+  const c = related[0];
+  return `<div class="reteach-card">
+    <div class="rt-label">${c.icon} Quick Re-teach: ${c.label}</div>
+    <div class="rt-text">${c.teach.substring(0,200)}...</div>
+    <button onclick="Lesson.open('${c.id}')" style="margin-top:8px;padding:8px 14px;border:none;border-radius:20px;background:${c.color}22;color:${c.color};font-size:.78rem;font-weight:600;cursor:pointer">Full Lesson →</button>
+  </div>`;
+};
+
+// ── PATCH renderScreen for lesson ────────────────────────────────────────────
+const _origRenderScreen = App.renderScreen.bind(App);
+App.renderScreen = function(id){
+  _origRenderScreen(id);
+  if(id==='home'){ App.renderConceptRow(); App.renderTodayPath(); }
+  if(id==='lesson') App.renderLesson();
+};
+
+// ── PATCH renderHardList to add reteach cards ─────────────────────────────────
+const _origHardList = App.renderHardList.bind(App);
+App.renderHardList = function(){
+  _origHardList();
+  // Inject reteach cards into each hard item
+  document.querySelectorAll('.hard-item').forEach((el,i)=>{
+    const hard = Store.hard();
+    if(hard[i]){
+      const rt = App.getReteachCard(hard[i]);
+      if(rt) el.insertAdjacentHTML('beforeend', rt);
+    }
+  });
+};
+
+// ── PATCH renderStudyContent to add Teach Me buttons ────────────────────────
+const _origStudyContent = App.renderStudyContent.bind(App);
+App.renderStudyContent = function(idx){
+  _origStudyContent(idx);
+  // Inject Teach Me buttons into section cards
+  const body = document.getElementById('study-body');
+  if(!body) return;
+  const vol = (DATA&&DATA.volumes)?DATA.volumes[idx]:null;
+  if(!vol) return;
+  vol.chapters.forEach((ch,ci)=>{
+    const card = body.querySelector(`#ch-${ch.id}`);
+    if(card){
+      const btn = App.getTeachMeButton(ch.id);
+      if(btn){
+        const existingVCB = card.querySelector('.verse-connect-btn');
+        if(existingVCB) existingVCB.insertAdjacentHTML('afterend', btn);
+      }
+    }
+  });
+};
+
+// ── PATCH quiz to add active recall framing ──────────────────────────────────
+const _origQuizQ = App.renderQuizQuestion.bind(App);
+App.renderQuizQuestion = function(){
+  _origQuizQ();
+  // Add recall framing label above quiz
+  const body = document.getElementById('quiz-body');
+  if(!body) return;
+  const qqCard = body.querySelector('.quiz-question-card');
+  if(qqCard && !qqCard.querySelector('.recall-framing')){
+    qqCard.insertAdjacentHTML('afterbegin','<div class="recall-framing" style="font-size:.7rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">✏️ What do you remember?</div>');
+  }
+};
+
+// ── PATCH rateCard to update concept mastery ─────────────────────────────────
+const _origRateCard = App.rateCard.bind(App);
+App.rateCard = function(rating){
+  const card = State.cardQueue && State.cardQueue[State.currentCard];
+  if(card){
+    const related = CONCEPTS.filter(c=>card.category && c.id===card.category);
+    if(related.length){
+      if(rating==='easy') Mastery.increment(related[0].id);
+      else if(rating==='hard'||rating==='again') Mastery.decrement(related[0].id);
+    }
+  }
+  _origRateCard(rating);
+};
+
+
+// ── GE APP LINK ──────────────────────────────────────────────────────────────
+App.openGEApp = function(){
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  overlay.innerHTML = `
+    <div style="background:#111109;border:1px solid #C8971F;border-radius:16px;padding:28px 24px;max-width:340px;width:100%">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:1.8rem;margin-bottom:8px">📚</div>
+        <div style="font-family:'Cinzel',serif;font-size:1rem;color:#C8971F;letter-spacing:.05em">Open a companion app</div>
+      </div>
+      <a href="https://dssorit.github.io/ancient-covenant-scrolls/" target="_blank"
+         style="display:flex;align-items:center;gap:14px;background:rgba(26,155,155,0.12);border:1px solid rgba(26,155,155,0.35);border-radius:12px;padding:16px;margin-bottom:10px;text-decoration:none;cursor:pointer">
+        <div style="font-size:1.8rem">📜</div>
+        <div>
+          <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">Ancient Covenant Scrolls</div>
+          <div style="font-size:.72rem;color:#5DADE2;line-height:1.4">DSS · Orit · 46 volumes · Primary source reader</div>
+          <div style="font-size:.68rem;color:#5C4510;margin-top:4px;word-break:break-all">dssorit.github.io/ancient-covenant-scrolls</div>
+        </div>
+      </a>
+      <a href="https://dssorit.github.io/ancient-covenant-scrolls/GreatE/" target="_blank"
+         style="display:flex;align-items:center;gap:14px;background:rgba(200,151,31,0.1);border:1px solid rgba(200,151,31,0.35);border-radius:12px;padding:16px;margin-bottom:20px;text-decoration:none;cursor:pointer">
+        <div style="font-size:1.8rem">🔥</div>
+        <div>
+          <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">The Great Eraser</div>
+          <div style="font-size:.72rem;color:#C8971F;line-height:1.4">Full 8-volume research record · Primary source evidence</div>
+          <div style="font-size:.68rem;color:#5C4510;margin-top:4px;word-break:break-all">dssorit.github.io/ancient-covenant-scrolls/GreatE</div>
+        </div>
+      </a>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#1C1708;color:#9A8E72;font-size:.85rem;cursor:pointer;font-weight:600">Close</button>
+    </div>`;
+  document.body.appendChild(overlay);
+};
+
+// ── SPLASH DISMISS ───────────────────────────────────────────────────────────
+var _splashDismissed = false;
+function dismissSplash(){
+  if(_splashDismissed) return;
+  _splashDismissed = true;
+  var sp = document.getElementById('splash');
+  sp.classList.add('fade-out');
+  setTimeout(function(){
+    sp.classList.add('gone');
+    var loading = document.getElementById('loading');
+    loading.classList.add('active');
+    setTimeout(function(){ App.showScreen('home'); }, 1200);
+  }, 600);
+}
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', ()=>{
+  App.init();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+});
+</script>
+</body>
+</html>

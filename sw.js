@@ -5,7 +5,7 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v21';
+const CACHE = 'acr-v43';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
@@ -14,6 +14,8 @@ const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 const DATA_FILES = (function () {
   const arr = [];
   for (let i = 1; i <= 111; i++) arr.push('data/file_' + i + '.json');
+  arr.push('data/file 112.json');
+  arr.push('data/file_113.json');
   return arr;
 })();
 
@@ -74,7 +76,7 @@ self.addEventListener('fetch', e => {
   // reported for /loadstudio/ on 2026-05-02).
   const SUBAPP_PATHS = [
     '/study/', '/load/', '/LoadPlay/', '/loadstudio/',
-    '/attain/', '/attain-jr/', '/GreatE/'
+    '/attain/', '/attain-jr/', '/GreatE/', '/ACR2/'
   ];
   for (let i = 0; i < SUBAPP_PATHS.length; i++) {
     if (url.pathname.indexOf(SUBAPP_PATHS[i]) >= 0) return;
