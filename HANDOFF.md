@@ -403,6 +403,84 @@ User unpacks into a new private repo on a different GitHub account.
 
 ---
 
+---
+
+## ACR Reader Audio — Bug History & Fix Reference (2026-06-02)
+
+If ACR audio breaks again, read this first before touching any code.
+
+### Working state as of 2026-06-02
+- Cache: `acr-v43`
+- Backup: `backup/2026-06-02-acr-v43` (SHA `a19f966`)
+- Recovery: `git checkout backup/2026-06-02-acr-v43`
+
+### Bug 1 — Play button did nothing on files 2–12 (fixed acr-v42)
+
+**Symptom:** Tap Play, nothing happens, button never changes to "Playing".
+
+**Root cause:** Files 2–12 (Shemot and other early books) contain only DSS
+manuscript comparison notes tagged `data-ptype="note"`. They have zero
+`data-ptype="verse"` elements. VMODE defaulted to `'verses'` in memory and
+was never persisted to localStorage. After a page reload, VMODE silently
+reset to `'verses'`, `buildVP()` returned an empty array, and `vPlay()`
+returned early at `if(!VPARAS.length) return` without touching the button.
+
+**What made it look intermittent:** If the user had manually switched the
+VMODE selector to Notes or All during a session, it worked — but the next
+page reload reset VMODE back to `'verses'` and it broke again.
+
+**Fix:** Changed default `VMODE` to `'all'` so every `data-ptype` element
+is selected regardless of type. Persisted VMODE to localStorage under key
+`acr_vm` so the user's choice survives page reloads. Initialised the select
+element from the saved value in `start()`.
+
+**Key variables:** `VMODE`, `VPARAS`, `buildVP()`, `vPlay()`.
+
+**If this breaks again:** Open DevTools console, navigate to a chapter like
+Shemot (file_2), call `buildVP()` manually, then `console.log(VPARAS.length)`.
+If it logs 0, VMODE is wrong for that chapter's content. Check
+`document.querySelectorAll('#content [data-ptype]').length` vs
+`document.querySelectorAll('#content [data-ptype="verse"]').length`.
+
+---
+
+### Bug 2 — Play broken after Stop then navigate to different volume (fixed acr-v43)
+
+**Symptom:** Play works on first load. Stop audio, navigate to a different
+volume, tap Play — button shows "Playing" but nothing speaks.
+
+**Root cause:** iOS Safari leaves `speechSynthesis.paused = true` after
+`cancel()` is called, even though no utterance is queued. `vPlay()` was
+checking `window.speechSynthesis.paused` without knowing whether we actually
+paused (mid-utterance, something to resume) vs stopped (cancel() called,
+nothing queued). After Stop + navigate, the resume branch fired, set button
+to "Playing", and returned — with nothing to speak.
+
+**Fix:** Added `var VPAUSED = false`. Only `vPause()` sets it `true`. `vStop()`
+clears it. The resume branch in `vPlay()` is now gated on
+`if(VPAUSED && window.speechSynthesis.paused)` — so it only fires when we
+genuinely paused mid-utterance.
+
+**Key variables:** `VPAUSED`, `vPlay()`, `vPause()`, `vStop()`.
+
+**If this breaks again:** In DevTools console, after Stop check
+`window.speechSynthesis.paused`. If true (iOS bug), check `VPAUSED`. If
+`VPAUSED` is false but `paused` is true, the iOS cancel() bug is the cause.
+
+---
+
+### Known iOS speechSynthesis quirks to watch for
+
+- `cancel()` leaves `paused = true` — guarded by VPAUSED flag (v43).
+- Synth can silently freeze after ~15 utterances — no guard yet; if audio
+  stops mid-chapter with no error, this is the likely cause.
+- `onend` can fail to fire on dropped utterances — no guard yet.
+- Quick successive `cancel()` + `speak()` in the same sync task can cause
+  the utterance to be silently dropped — use `Promise.resolve().then(...)` to
+  defer `speak()` (already done in `speakExactElement`).
+
+---
+
 ## Notes for future sessions
 
 - This file is the source of truth for cross-session handoffs.
