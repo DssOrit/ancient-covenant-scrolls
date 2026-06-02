@@ -166,7 +166,7 @@ body.dark #bnav{background:#111}
   <button class="hx" onclick="hideHL()" style="color:#555">—</button>
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
-<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v9</div>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v10</div>
 <script>
 window.addEventListener('load',function(){
   document.getElementById('nav').style.display='flex';
@@ -248,7 +248,7 @@ function buildSB(){
     else if(e.type==='vol')h+='<div class="tv">'+e.label+'</div>';
     else h+='<div class="tf" data-idx="'+e.idx+'" onclick="loadSection('+e.idx+',true)">'+e.label+'</div>';
   }
-  h+='<a href="../index.html" style="display:block;margin:16px 8px 12px;padding:11px 12px;border-top:1px solid #2a2a2a;color:#9bb0c4;text-decoration:none;font-size:12px;font-weight:600">Open ACR Main Reader →</a>';
+  h+='<a href="../index.html" onclick="localStorage.setItem(\'acr_ok\',\'1\')" style="display:block;margin:16px 8px 12px;padding:11px 12px;border-top:1px solid #2a2a2a;color:#9bb0c4;text-decoration:none;font-size:12px;font-weight:600">Open ACR Main Reader →</a>';
   document.getElementById('sb').innerHTML=h;
   if(!SB_OPEN&&window.innerWidth>680)document.getElementById('sb').classList.add('hide');
 }
