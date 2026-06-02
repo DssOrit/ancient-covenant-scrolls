@@ -409,7 +409,14 @@ User unpacks into a new private repo on a different GitHub account.
 
 If ACR audio breaks again, read this first before touching any code.
 
-### Working state as of 2026-06-02
+### Working state as of 2026-06-02 (latest — VERIFIED on iPad + iPhone)
+- Cache: `acr-v49`
+- Backup: `backup/2026-06-02-acr-v49` (SHA `d9122045`)
+- Recovery: `git checkout backup/2026-06-02-acr-v49`
+- Verified by user: Play Verses audio plays, advances verse-to-verse, and
+  tap-a-verse jumps + highlights + reads — on iPad and iPhone.
+
+### Earlier known-good (superseded by v49)
 - Cache: `acr-v43`
 - Backup: `backup/2026-06-02-acr-v43` (SHA `a19f966`)
 - Recovery: `git checkout backup/2026-06-02-acr-v43`
@@ -468,6 +475,43 @@ genuinely paused mid-utterance.
 `VPAUSED` is false but `paused` is true, the iOS cancel() bug is the cause.
 
 ---
+
+### Bug 3 — Play Verses regression after v44-v46 (fixed acr-v47 + acr-v49)
+
+Three things broke together after the v44/v45/v46 changes and were restored
+in two PRs (#370 -> acr-v47, #371 -> acr-v49). All VERIFIED working by user.
+
+**3a — Audio silently dropped (fixed acr-v47, PR #370).**
+v45 added `window.speechSynthesis.resume()` right after `cancel()` in
+`vStop()`. On iOS, `resume()` on an empty queue poisons the synth so the
+next `speak()` is silently dropped (button shows Playing, no sound).
+`vStop()` runs on every chapter load, so Play Verses broke from the first
+tap. Fix: removed the `resume()` line, restoring v43 `vStop()`. The iOS
+paused-after-cancel case is already handled by the `VPAUSED` guard in
+`vPlay()` — no replacement needed.
+
+**3b — "Verses" mode read titles/headers, not verses only (fixed acr-v49).**
+**3c — Tapping a verse did nothing (fixed acr-v49, PR #371).**
+
+Root cause for 3b/3c: 11 early-book data files (`file_2`-`file_12`, incl.
+`file_9`/Bamidbar) have NO `data-ptype="verse"` tags — only their notes are
+tagged. The other 101 volumes ARE tagged. v46 changed `buildVP()`'s verses
+selector to `p.dp:not([data-ptype="note"])`, which on untagged volumes swept
+in the centered title blocks AND no longer matched the tap handler (still
+`[data-ptype="verse"]`), so taps found nothing.
+
+Fix (acr-v49): added `isVerseEl(el)` — note -> no; verse -> yes; otherwise a
+`p.dp` whose text begins with chapter:verse (e.g. `1:1`) -> yes. Both
+`buildVP()` and the content tap handler use it, so Play and tap stay
+consistent. Tagged volumes unchanged (verses still matched by tag, same as
+ACR2). Verified: Bamidbar selects 239 verses (excludes 64 headers, 79 notes);
+Genesis unchanged at 299. Playback engine (`vPlay`/`vNext`/`vStop`/
+`speakExactElement`) was NOT touched.
+
+**Open follow-up (not a bug):** the 11 early-book files would ideally be
+re-tagged with `data-ptype="verse"` in the data so they match the 101 others;
+until then the `isVerseEl` number-pattern fallback covers them. ACR2 still
+uses the pure tag selector and has no tap-to-play handler — see SESSION_NOTES.
 
 ### Known iOS speechSynthesis quirks to watch for
 
