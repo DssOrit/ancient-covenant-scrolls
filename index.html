@@ -701,9 +701,7 @@ function vNext(){
     if(VPLAYING&&document.getElementById('vauto').checked){
       vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);
     } else if(VPLAYING){
-      VPOS=0;
-      document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
-      vNext();
+      vStop();
     } else {
       vStop();
     }
@@ -755,6 +753,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-sync37</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-stop38</div>
 </body>
 </html>
