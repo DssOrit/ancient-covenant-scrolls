@@ -52,6 +52,8 @@ These have been re-locked on 2026-05-04 after repeated violations.
    `content/` folder). Locked 2026-05-04 by user. Only edit if the
    user explicitly says "edit ACR reader" / "fix the reader" /
    names a root-app file. Otherwise leave the root untouched.
+   If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
+   Bug History & Fix Reference" before touching any code.
 9. **SELF-MERGE POLICY — updated 2026-05-15 by user.**
    Claude MAY call `mcp__github__enable_pr_auto_merge` (squash) and
    `mcp__github__merge_pull_request` without per-PR manual approval
