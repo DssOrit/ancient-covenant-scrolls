@@ -681,20 +681,32 @@ function speakExactElement(el){
   u.rate=VRATE;u.volume=VOL;
   u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
   u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
-  if(VGEN===myGen) window.speechSynthesis.speak(u);
+  Promise.resolve().then(function(){if(VGEN!==myGen)return;window.speechSynthesis.speak(u);});
 }
 function vPlay(){
   if(VPLAYING) return;
+  if(window.speechSynthesis.paused){
+    window.speechSynthesis.resume();
+    VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
+    return;
+  }
   buildVP();if(!VPARAS.length) return;
   VGEN++;
   VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
+  window.speechSynthesis.cancel();
   vNext();
 }
 function vNext(){
   if(!VPLAYING||VPOS>=VPARAS.length){
     if(VPLAYING&&document.getElementById('vauto').checked){
       vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);
-    } else vStop();
+    } else if(VPLAYING){
+      VPOS=0;
+      document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
+      vNext();
+    } else {
+      vStop();
+    }
     return;
   }
   var para=VPARAS[VPOS];
@@ -705,11 +717,13 @@ function vNext(){
   var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
   vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
   updateVS();
+  var myGen=VGEN;
+  var fired=false;
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};
-  u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};
   window.speechSynthesis.speak(u);
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
@@ -741,6 +755,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-acr2audio</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v40</div>
 </body>
 </html>
