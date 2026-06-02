@@ -36,6 +36,30 @@ Triggered the moment the user says "perfect", "that fixed it",
 
 ## Versions
 
+### acr-v49 — `d9122045` — 2026-06-02
+
+- **Status:** ACR main (root reader) Play Verses audio + tap-to-read
+  **VERIFIED WORKING** by user.
+- **Browser/device:** iPad and iPhone (Safari).
+- **User words:** "ACR main audio fully works on iPad & iPhone."
+- **Test the user ran:** opened the live reader, played verses, and used
+  tap-a-verse on the early-book volumes (Bamidbar etc.).
+- **Confirmed working (proven by the user's result):**
+  - Play Verses starts audio and advances verse-to-verse.
+  - Tap a verse jumps to it, highlights, and reads from there.
+  - Plays verses only (title/header blocks excluded), including on the
+    untagged early books (file_2-file_12).
+- **What this build fixed:** acr-v47 removed the iOS-poisoning
+  `resume()` from `vStop()` (PR #370); acr-v49 added `isVerseEl()` so
+  verses are matched by tag OR leading verse-number, fixing verses-only
+  playback + tap on the 11 untagged early-book volumes (PR #371).
+- **NOT tested in this run:** Notes mode, Auto-next chapter advance,
+  voice/speed selectors, the 101 tagged volumes individually (selection
+  there is unchanged from prior known-good, matched by tag).
+- **Known unrelated gap:** ACR2 (separate app) has no tap-a-verse-to-play
+  handler — not part of this fix; locked, awaiting user go-ahead.
+- **Recovery:** `git checkout backup/2026-06-02-acr-v49`
+
 ### v17dg — `dddcc3c` — 2026-04-29
 
 - **Status:** Last user-verified working state for Image Prompt
