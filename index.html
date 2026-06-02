@@ -619,6 +619,7 @@ document.getElementById('content').addEventListener('click',function(e){
   var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';
   var el=e.target.closest(sel);
   if(!el||!document.getElementById('content').contains(el)) return;
+  console.log('ACR_TAP_RECEIVED',{VGEN:VGEN,VPLAYING:VPLAYING,CURRENT_UTT:!!CURRENT_UTT,speaking:window.speechSynthesis.speaking,pending:window.speechSynthesis.pending,paused:window.speechSynthesis.paused,text:(el.innerText||'').slice(0,60)});
   speakExactElement(el);
 });
 
@@ -680,8 +681,10 @@ function speakExactElement(el){
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){console.log('TAP_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
-  u.onerror=function(ev){console.log('TAP_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
+  u.onstart=function(){console.log('TAP_UTT_START',{VGEN:VGEN,myGen:myGen,speaking:window.speechSynthesis.speaking,pending:window.speechSynthesis.pending});};
+  u.onend=function(){console.log('TAP_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS,VPLAYING:VPLAYING});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
+  u.onerror=function(ev){console.log('TAP_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS,VPLAYING:VPLAYING});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;el.style.background='';VPOS++;vNext();};
+  console.log('TAP_PRE_SPEAK',{VGEN:VGEN,myGen:myGen,CURRENT_UTT:!!CURRENT_UTT,speaking:window.speechSynthesis.speaking,pending:window.speechSynthesis.pending,paused:window.speechSynthesis.paused});
   if(VGEN===myGen){CURRENT_UTT=u;window.speechSynthesis.speak(u);}
 }
 function vPlay(){
@@ -723,8 +726,10 @@ function vNext(){
   var u=new SpeechSynthesisUtterance(txt);
   if(VOICES[VIDX]) u.voice=VOICES[VIDX];
   u.rate=VRATE;u.volume=VOL;
-  u.onend=function(){console.log('VNEXT_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
-  u.onerror=function(ev){console.log('VNEXT_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
+  u.onstart=function(){console.log('VNEXT_UTT_START',{VGEN:VGEN,myGen:myGen,VPOS:VPOS,speaking:window.speechSynthesis.speaking,pending:window.speechSynthesis.pending});};
+  u.onend=function(){console.log('VNEXT_UTT_END',{VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS,VPLAYING:VPLAYING});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
+  u.onerror=function(ev){console.log('VNEXT_UTT_ERROR',{error:ev&&ev.error,VGEN:VGEN,myGen:myGen,fired:fired,VPOS:VPOS,VPLAYING:VPLAYING});if(VGEN!==myGen||fired)return;fired=true;CURRENT_UTT=null;if(para)para.style.background='';VPOS++;vNext();};
+  console.log('VNEXT_PRE_SPEAK',{VGEN:VGEN,myGen:myGen,VPOS:VPOS,CURRENT_UTT:!!CURRENT_UTT,speaking:window.speechSynthesis.speaking,pending:window.speechSynthesis.pending});
   CURRENT_UTT=u;window.speechSynthesis.speak(u);
 }
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='▶ Play';}
@@ -756,6 +761,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-iphoneSB2</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-iphoneSB3</div>
 </body>
 </html>
