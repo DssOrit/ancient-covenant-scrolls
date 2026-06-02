@@ -685,7 +685,6 @@ function speakExactElement(el){
 }
 function vPlay(){
   if(VPLAYING) return;
-  if(window.speechSynthesis.paused) window.speechSynthesis.resume();
   buildVP();if(!VPARAS.length) return;
   VGEN++;
   VPLAYING=true;document.getElementById('vbtn-play').textContent='▶ Playing';
@@ -748,6 +747,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-play39</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v-play40</div>
 </body>
 </html>
