@@ -36,6 +36,25 @@ Triggered the moment the user says "perfect", "that fixed it",
 
 ## Versions
 
+### acr2-v10 — `76266c6` — 2026-06-02
+
+- **Status:** ACR2 (supplementary volumes) tap-to-play + ACR main link +
+  no-password hop **VERIFIED WORKING** by user.
+- **Browser/device:** iPad (Safari).
+- **User words:** "It's live & works"; later "Everything works."
+- **Confirmed working (proven by the user's result):**
+  - Tap a verse in ACR2 jumps to it, highlights, and reads (acr2-v9).
+  - "Open ACR Main Reader" link appears at the bottom of the sidebar and
+    navigates to ACR main (acr2-v9).
+  - Tapping that link enters ACR main WITHOUT the password (acr2-v10),
+    via the shared `acr_ok` marker (same mechanism as Solar).
+- **What these builds added:** acr2-v9 (PR #373) `speakExactElement()` +
+  tap handler + sidebar link; acr2-v10 (PR #374) link sets `acr_ok` before
+  navigating. ACR2 playback engine and the ACR main login page unchanged.
+- **NOT tested in this run:** ACR2 Notes/All modes, Auto-next, voice
+  selectors.
+- **Recovery:** `git checkout backup/2026-06-02-acr2-v10`
+
 ### acr-v49 — `d9122045` — 2026-06-02
 
 - **Status:** ACR main (root reader) Play Verses audio + tap-to-read
