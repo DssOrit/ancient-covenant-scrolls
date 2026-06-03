@@ -16,7 +16,7 @@ body.dark{background:#1a1a1a;color:#e8e8e0}
 body.sepia{background:#f4ecd8;color:#3b2a1a}
 
 /* AUTH */
-#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 #auth-logo{font-size:52px;letter-spacing:4px;color:#fff}
 #auth-title{color:#fff;font-size:14px;font-weight:bold;letter-spacing:.08em;text-align:center;line-height:1.6}
 #auth-sub{color:#888;font-size:11px}
@@ -125,10 +125,8 @@ body.dark #reader-footer{background:#0a0a0a}
 <div id="auth">
   <div id="auth-logo">𐤉𐤄𐤅𐤄</div>
   <div id="auth-title">THE ANCIENT COVENANT RECORD</div>
-  <div id="auth-sub">Enter access code to continue</div>
-  <input id="auth-pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')doAuth()">
-  <button id="auth-btn" onclick="doAuth()">Enter</button>
-  <div id="auth-msg"></div>
+  <div id="auth-sub">Tap Enter to begin</div>
+  <button id="auth-btn" onclick="doEnter()">Enter</button>
 </div>
 
 <!-- PROGRESS -->
@@ -240,32 +238,20 @@ body.dark #reader-footer{background:#0a0a0a}
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">↑</button>
 
 <script>
-function doAuth(){
-  var pw=document.getElementById('auth-pw').value;
-  if(pw==='Pr@y3r*'){
-    localStorage.setItem('acr_ok','1');
-    document.getElementById('auth').style.display='none';
-    document.getElementById('nav').style.display='flex';
-    document.getElementById('reader-footer').style.display='flex';
-    document.body.style.background='';
-    if(typeof start==='function') start();
-  } else {
-    var m=document.getElementById('auth-msg');
-    if(m){ m.textContent='Incorrect password'; setTimeout(function(){m.textContent='';},2000); }
-    document.getElementById('auth-pw').value='';
-  }
+function doEnter(){
+  // No password — the splash just opens the reader on tap.
+  document.getElementById('auth').style.display='none';
+  document.getElementById('nav').style.display='flex';
+  document.getElementById('reader-footer').style.display='flex';
+  document.body.style.background='';
+  if(typeof start==='function') start();
 }
 function goBackToSolar(){
   document.getElementById('solar-back').style.display='none';
   window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/Solar/';
 }
 window.addEventListener('load',function(){
-  // Password gate removed — open the reader directly for everyone.
-  document.getElementById('auth').style.display='none';
-  document.getElementById('nav').style.display='flex';
-  document.getElementById('reader-footer').style.display='flex';
-  document.body.style.background='';
-  if(typeof start==='function') start();
+  // Splash stays visible until the user taps Enter (doEnter opens the reader).
   if(localStorage.getItem('acr_from_solar')==='1'){
     document.getElementById('solar-back').style.display='block';
     localStorage.removeItem('acr_from_solar');
@@ -783,6 +769,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v51</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v52</div>
 </body>
 </html>
