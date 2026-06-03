@@ -166,7 +166,7 @@ body.dark #bnav{background:#111}
   <button class="hx" onclick="hideHL()" style="color:#555">—</button>
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
-<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v10</div>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v11</div>
 <script>
 window.addEventListener('load',function(){
   document.getElementById('nav').style.display='flex';
@@ -290,7 +290,7 @@ document.getElementById('content').addEventListener('click',function(e){
   if(!el||!document.getElementById('content').contains(el))return;
   speakExactElement(el);
 });
-function loadVoices(){function doit(){VOICES=window.speechSynthesis.getVoices();var sel=document.getElementById('vvoice');sel.innerHTML=VOICES.map(function(v,i){var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'\u2605 ':'';return '<option value="'+i+'"'+(i===VIDX?' selected':'')+'>'+star+v.name.substring(0,26)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)doit();else window.speechSynthesis.onvoiceschanged=doit;}
+function loadVoices(){function doit(){VOICES=window.speechSynthesis.getVoices();if(localStorage.getItem('acr2_vi')===null){for(var k=0;k<VOICES.length;k++){if(/samantha/i.test(VOICES[k].name)){VIDX=k;break;}}}var sel=document.getElementById('vvoice');sel.innerHTML=VOICES.map(function(v,i){var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'\u2605 ':'';return '<option value="'+i+'"'+(i===VIDX?' selected':'')+'>'+star+v.name.substring(0,26)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)doit();else window.speechSynthesis.onvoiceschanged=doit;}
 function toggleVoice(){var bar=document.getElementById('voice-bar');var nav=document.getElementById('bnav');bar.classList.toggle('show');document.getElementById('voice-btn').classList.toggle('on',bar.classList.contains('show'));bar.classList.toggle('wide',!SB_OPEN||window.innerWidth<=680||READING);var barH=bar.classList.contains('show')?bar.offsetHeight:0;document.getElementById('main').style.marginBottom=(nav.offsetHeight+barH)+'px';}
 function buildVP(){var mode=VMODE||'verses';var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';VPARAS=Array.from(document.querySelectorAll('#content '+sel));}
 function pronounce(t){return t.replace(/\u{10909}\u{10904}\u{10905}\u{10904}/gu,'').replace(/[\u{10900}-\u{1091F}]+/gu,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bOrit\b/gi,'Oh-reet').replace(/Ge.ez/gi,'Geh-ez').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/\[DSS\]/g,'Dead Sea Scrolls note:').replace(/ORIT GE.EZ/gi,'Orit Gezz note:').replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:').replace(/\[CRITICAL NOTE\]/gi,'Critical note:').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
