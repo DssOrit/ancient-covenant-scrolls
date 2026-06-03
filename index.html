@@ -291,7 +291,7 @@ var VOICES=[];
 var VIDX=parseInt(localStorage.getItem('acr_vi')||'0');
 var VRATE=parseFloat(localStorage.getItem('acr_vr')||'1');
 var VOL=1;
-var VMODE=localStorage.getItem('acr_vm')||'all';
+var VMODE=localStorage.getItem('acr_vm')||'verses';
 var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
@@ -626,6 +626,10 @@ document.getElementById('content').addEventListener('click',function(e){
 function loadVoices(){
   function doit(){
     VOICES=window.speechSynthesis.getVoices();
+    // Default to the Samantha voice when the user hasn't chosen one yet.
+    if(localStorage.getItem('acr_vi')===null){
+      for(var k=0;k<VOICES.length;k++){ if(/samantha/i.test(VOICES[k].name)){ VIDX=k; break; } }
+    }
     var sel=document.getElementById('vvoice');
     sel.innerHTML=VOICES.map(function(v,i){
       var star=(v.name.includes('Enhanced')||v.name.includes('Neural')||v.name.includes('Premium'))?'★ ':'';
@@ -779,6 +783,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v50</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v51</div>
 </body>
 </html>
