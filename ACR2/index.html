@@ -166,7 +166,7 @@ body.dark #bnav{background:#111}
   <button class="hx" onclick="hideHL()" style="color:#555">—</button>
 </div>
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">&#8593;</button>
-<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v11</div>
+<div id="build-marker" style="position:fixed;bottom:calc(55px + env(safe-area-inset-bottom,0px));right:8px;font-size:8px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR2 v12</div>
 <script>
 window.addEventListener('load',function(){
   document.getElementById('nav').style.display='flex';
@@ -193,6 +193,7 @@ var VMODE='verses';
 var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
+var VGEN=0;
 var HL_DATA={};
 var SEL_RANGE=null;
 var SCROLL_T=null;
@@ -295,6 +296,8 @@ function toggleVoice(){var bar=document.getElementById('voice-bar');var nav=docu
 function buildVP(){var mode=VMODE||'verses';var sel=mode==='verses'?'[data-ptype="verse"]':mode==='notes'?'[data-ptype="note"]':'[data-ptype]';VPARAS=Array.from(document.querySelectorAll('#content '+sel));}
 function pronounce(t){return t.replace(/\u{10909}\u{10904}\u{10905}\u{10904}/gu,'').replace(/[\u{10900}-\u{1091F}]+/gu,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bOrit\b/gi,'Oh-reet').replace(/Ge.ez/gi,'Geh-ez').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/\[DSS\]/g,'Dead Sea Scrolls note:').replace(/ORIT GE.EZ/gi,'Orit Gezz note:').replace(/\[MASORETIC VARIANT\]/gi,'Masoretic variant note:').replace(/\[CRITICAL NOTE\]/gi,'Critical note:').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
 function speakExactElement(el){
+  VGEN++;
+  var myGen=VGEN;
   window.speechSynthesis.cancel();
   buildVP();
   var idx=VPARAS.indexOf(el);
@@ -307,17 +310,18 @@ function speakExactElement(el){
   var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');
   vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));
   updateVS();
+  var fired=false;
   var u=new SpeechSynthesisUtterance(pronounce(el.textContent||''));
   if(VOICES[VIDX])u.voice=VOICES[VIDX];
   u.rate=VRATE;
-  u.onend=function(){el.style.background='';VPOS++;vNext();};
-  u.onerror=function(){el.style.background='';VPOS++;vNext();};
-  Promise.resolve().then(function(){window.speechSynthesis.speak(u);});
+  u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;el.style.background='';VPOS++;vNext();};
+  Promise.resolve().then(function(){if(VGEN!==myGen)return;window.speechSynthesis.speak(u);});
 }
-function vPlay(){if(VPLAYING)return;buildVP();if(!VPARAS.length)return;VPLAYING=true;document.getElementById('vbtn-play').textContent='\u25BA Playing';vNext();}
-function vNext(){if(!VPLAYING||VPOS>=VPARAS.length){if(VPLAYING&&document.getElementById('vauto').checked){vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);}else vStop();return;}var para=VPARAS[VPOS];var txt=pronounce(para.textContent||'');if(!txt.trim()){VPOS++;vNext();return;}window.scrollTo(0,para.getBoundingClientRect().top+(window.pageYOffset||0)-80);para.style.background='rgba(255,235,59,.15)';var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));updateVS();var u=new SpeechSynthesisUtterance(txt);if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;u.onend=function(){if(para)para.style.background='';VPOS++;vNext();};u.onerror=function(){if(para)para.style.background='';VPOS++;vNext();};window.speechSynthesis.speak(u);}
+function vPlay(){if(VPLAYING)return;buildVP();if(!VPARAS.length)return;VGEN++;VPLAYING=true;document.getElementById('vbtn-play').textContent='\u25BA Playing';vNext();}
+function vNext(){if(!VPLAYING||VPOS>=VPARAS.length){if(VPLAYING&&document.getElementById('vauto').checked){vStop();setTimeout(function(){navTo(CUR+1);setTimeout(function(){buildVP();VPOS=0;vPlay();},800);},400);}else vStop();return;}var para=VPARAS[VPOS];var txt=pronounce(para.textContent||'');if(!txt.trim()){VPOS++;vNext();return;}window.scrollTo(0,para.getBoundingClientRect().top+(window.pageYOffset||0)-80);para.style.background='rgba(255,235,59,.15)';var vp=JSON.parse(localStorage.getItem('acr2_vp')||'{}');vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr2_vp',JSON.stringify(vp));updateVS();var myGen=VGEN;var fired=false;var u=new SpeechSynthesisUtterance(txt);if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;u.onend=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};u.onerror=function(){if(VGEN!==myGen||fired)return;fired=true;if(para)para.style.background='';VPOS++;vNext();};window.speechSynthesis.speak(u);}
 function vPause(){window.speechSynthesis.pause();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';}
-function vStop(){window.speechSynthesis.cancel();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});}
+function vStop(){VGEN++;window.speechSynthesis.cancel();VPLAYING=false;document.getElementById('vbtn-play').textContent='\u25BA Play';document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});}
 function vSetSpeed(v){VRATE=parseFloat(v);localStorage.setItem('acr2_vr',VRATE);}
 function vSetVoice(i){VIDX=parseInt(i);localStorage.setItem('acr2_vi',VIDX);}
 function vPreview(){window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance('In the beginning, The Creator created the heavens and the earth.');if(VOICES[VIDX])u.voice=VOICES[VIDX];u.rate=VRATE;window.speechSynthesis.speak(u);}
