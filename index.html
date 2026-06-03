@@ -16,7 +16,7 @@ body.dark{background:#1a1a1a;color:#e8e8e0}
 body.sepia{background:#f4ecd8;color:#3b2a1a}
 
 /* AUTH */
-#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 #auth-logo{font-size:52px;letter-spacing:4px;color:#fff}
 #auth-title{color:#fff;font-size:14px;font-weight:bold;letter-spacing:.08em;text-align:center;line-height:1.6}
 #auth-sub{color:#888;font-size:11px}
@@ -260,13 +260,12 @@ function goBackToSolar(){
   window.location.href='https://dssorit.github.io/ancient-covenant-scrolls/Solar/';
 }
 window.addEventListener('load',function(){
-  if(localStorage.getItem('acr_ok')==='1'){
-    document.getElementById('auth').style.display='none';
-    document.getElementById('nav').style.display='flex';
-    document.getElementById('reader-footer').style.display='flex';
-    document.body.style.background='';
-    if(typeof start==='function') start();
-  }
+  // Password gate removed — open the reader directly for everyone.
+  document.getElementById('auth').style.display='none';
+  document.getElementById('nav').style.display='flex';
+  document.getElementById('reader-footer').style.display='flex';
+  document.body.style.background='';
+  if(typeof start==='function') start();
   if(localStorage.getItem('acr_from_solar')==='1'){
     document.getElementById('solar-back').style.display='block';
     localStorage.removeItem('acr_from_solar');
@@ -780,6 +779,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v49</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v50</div>
 </body>
 </html>
