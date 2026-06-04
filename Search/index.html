@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ACR Search">
+<title>ACR Search — The Covenant Concordance</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#0D0B07;--s1:#111111;--s2:#1a1a1a;--s3:#222222;
+--gold:#C8971F;--gold2:#E8B83F;--content:#f5f5f0;
+--dss:#1A5276;--orit:#1E8449;--maso:#7D6608;--crit:#6E2F8A;
+--red:#C0392B;--tx:#f0ede8;--tx2:#aaa;--tx3:#666;
+--r:12px;--font:'Outfit',sans-serif;
+--tc-cosmo:#1E8449;--tc-temp:#1A5276;--tc-moral:#7D6608;--tc-hist:#6E2F8A;--tc-escha:#C0392B;
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--font);overflow:hidden}
+
+/* AUTH */
+#auth{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+#auth.hidden{display:none}
+.a-paleo{font-size:56px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold);margin-bottom:16px;line-height:1;text-align:center}
+.a-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
+.a-sub{font-size:13px;color:var(--tx2);margin-bottom:32px;text-align:center;line-height:1.6}
+.a-input{width:100%;max-width:320px;background:var(--s2);border:1px solid #333;border-radius:10px;padding:14px 16px;color:#fff;font-size:16px;font-family:var(--font);text-align:center;letter-spacing:0.15em;margin-bottom:12px}
+.a-input:focus{outline:none;border-color:var(--gold)}
+.a-btn{width:100%;max-width:320px;background:var(--gold);color:#000;font-weight:800;font-size:16px;font-family:var(--font);border:none;border-radius:10px;padding:14px;cursor:pointer}
+.a-err{color:#e74c3c;font-size:13px;margin-top:8px;display:none}
+
+/* LOADING */
+#loading-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#loading-screen.show{display:flex}
+.ld-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold)}
+.ld-text{font-size:14px;color:var(--tx2)}
+.ld-bar{width:240px;height:3px;background:#222;border-radius:2px;overflow:hidden}
+.ld-fill{height:100%;width:0;background:var(--gold);transition:width 0.4s ease;border-radius:2px}
+
+/* APP SHELL */
+#app{height:100%;display:flex;flex-direction:column;overflow:hidden}
+#app.hidden{display:none}
+
+/* TOPBAR */
+#topbar{background:var(--s1);border-bottom:1px solid #1e1e1e;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));flex-shrink:0}
+.tb-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tb-logo{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold);font-size:20px;line-height:1}
+.tb-titles{flex:1}
+.tb-name{font-size:14px;font-weight:800;color:#fff}
+.tb-sub{font-size:10px;color:var(--tx3)}
+.tb-journal-btn{background:none;border:1px solid #333;border-radius:8px;width:34px;height:34px;color:var(--tx2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tb-journal-btn:hover{border-color:var(--gold);color:var(--gold)}
+.search-wrap{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.si-wrap{flex:1;position:relative}
+.search-input{width:100%;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:10px 70px 10px 14px;color:#fff;font-size:15px;font-family:var(--font)}
+.search-input:focus{outline:none;border-color:var(--gold)}
+.search-input::placeholder{color:var(--tx3)}
+.si-btns{position:absolute;right:4px;top:50%;transform:translateY(-50%);display:flex;gap:2px}
+.si-btn{background:none;border:none;color:var(--tx2);font-size:17px;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:center}
+.si-btn:hover{color:var(--gold)}
+.si-btn.root-active{color:var(--gold)}
+.mode-pills{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.mode-pills::-webkit-scrollbar{display:none}
+.mpill{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background 0.15s,border-color 0.15s,color 0.15s;display:flex;align-items:center;gap:5px}
+.mpill.active{background:rgba(200,151,31,0.15);border-color:var(--gold);color:var(--gold)}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;background:var(--bg);overflow-x:hidden}
+
+/* HOME */
+#home-view{padding:16px}
+.home-paleo{text-align:center;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:48px;color:var(--gold);margin:12px 0 6px;line-height:1}
+.home-title{text-align:center;font-size:18px;font-weight:800;color:#fff;margin-bottom:3px}
+.home-sub{text-align:center;font-size:11px;color:var(--tx2);margin-bottom:3px}
+.home-tagline{text-align:center;font-size:11px;color:var(--tx3);font-style:italic;margin-bottom:20px}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.feat-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;cursor:pointer;transition:background 0.15s;border-left:3px solid var(--gold)}
+.feat-card:active{background:var(--s2)}
+.fc-icon{font-size:20px;color:var(--gold);margin-bottom:5px}
+.fc-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px;line-height:1.3}
+.fc-desc{font-size:10px;color:var(--tx3);line-height:1.5}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:5px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
+.filter-bar::-webkit-scrollbar{display:none}
+.fpill{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:4px 11px;font-size:10px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.15s}
+.fpill.active{border-color:var(--gold);color:var(--gold);background:rgba(200,151,31,0.1)}
+.fpill.cosmo.active{border-color:var(--tc-cosmo);color:var(--tc-cosmo);background:rgba(30,132,73,0.1)}
+.fpill.temp.active{border-color:var(--tc-temp);color:var(--tc-temp);background:rgba(26,82,118,0.1)}
+.fpill.moral.active{border-color:var(--tc-moral);color:var(--tc-moral);background:rgba(125,102,8,0.1)}
+.fpill.hist.active{border-color:var(--tc-hist);color:var(--tc-hist);background:rgba(110,47,138,0.1)}
+.fpill.escha.active{border-color:var(--tc-escha);color:var(--tc-escha);background:rgba(192,57,43,0.1)}
+
+/* RESULTS */
+#results-view{padding:0}
+.results-hdr{font-size:12px;color:var(--tx2);padding:12px 14px 6px;display:flex;align-items:center;justify-content:space-between}
+.results-hdr span{font-size:11px;color:var(--tx3)}
+#results-list{padding:0 14px 80px}
+
+/* RESULT CARD */
+.rc{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;margin-bottom:9px;cursor:pointer;transition:background 0.15s}
+.rc:active{background:var(--s2)}
+.rc-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em;display:flex;align-items:center;gap:6px}
+.rc-ms{font-size:10px;color:var(--tx3);margin-bottom:5px}
+.rc-text{font-size:13px;color:#fff;line-height:1.7;font-style:italic;margin-bottom:7px}
+.rc-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
+.ttag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;color:#fff}
+.ttag.Cosmological{background:var(--tc-cosmo)}
+.ttag.Temporal{background:var(--tc-temp)}
+.ttag.Moral{background:var(--tc-moral)}
+.ttag.Historical{background:var(--tc-hist)}
+.ttag.Eschatological{background:var(--tc-escha)}
+.rc-actions{display:flex;gap:6px;flex-wrap:wrap}
+.rc-btn{background:none;border:1px solid #2a2a2a;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:600;color:var(--tx2);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:4px;transition:all 0.15s}
+.rc-btn:hover,.rc-btn:active{border-color:var(--gold);color:var(--gold)}
+.rc-btn.saved{border-color:var(--gold);color:var(--gold)}
+.manip-flag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--red);color:#fff}
+.witness-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--s3);color:var(--tx2)}
+
+/* DNA CARD */
+.dna-card{background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;padding:12px;margin-top:8px}
+.dna-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.dna-label{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.root-chip{background:var(--s3);border:1px solid #333;border-radius:4px;padding:2px 7px;font-size:10px;color:var(--tx2);cursor:pointer;transition:all 0.15s;font-family:'Space Mono',monospace}
+.root-chip:hover{border-color:var(--gold);color:var(--gold)}
+.ms-chain{font-size:11px;color:var(--tx2);line-height:1.7}
+.ms-chain b{color:#fff}
+
+/* NT VIEW */
+#nt-view{padding:14px}
+.nt-iw{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;margin-bottom:14px}
+.nt-label{font-size:11px;color:var(--tx2);margin-bottom:7px;font-weight:600}
+.nt-ri{width:100%;background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#fff;font-size:15px;font-family:var(--font);margin-bottom:9px}
+.nt-ri:focus{outline:none;border-color:var(--gold)}
+.nt-go{background:var(--gold);color:#000;font-weight:700;font-size:14px;font-family:var(--font);border:none;border-radius:8px;padding:10px 20px;cursor:pointer;width:100%;margin-bottom:10px}
+.nt-pills{display:flex;flex-wrap:wrap;gap:5px}
+.nt-pill{background:var(--s2);border:1px solid #2a2a2a;border-radius:5px;padding:3px 9px;font-size:10px;color:var(--tx2);cursor:pointer;transition:all 0.15s}
+.nt-pill:hover{border-color:var(--gold);color:var(--gold)}
+.nt-result{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);overflow:hidden}
+.nt-sec{padding:12px 14px;border-bottom:1px solid #1e1e1e}
+.nt-sec:last-child{border-bottom:none}
+.nt-sl{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px}
+.nt-st{font-size:13px;color:var(--tx);line-height:1.7}
+.nt-st.orig{color:#b8f0c8;font-style:italic}
+.nt-st.verd{color:#f0b8b8;font-weight:600}
+.cat-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;font-size:11px;font-weight:700;margin-bottom:10px}
+.cat-A{background:rgba(200,151,31,0.15);color:var(--gold);border:1px solid var(--gold)}
+.cat-F{background:rgba(230,126,34,0.15);color:#e67e22;border:1px solid #e67e22}
+.cat-N{background:rgba(192,57,43,0.15);color:#e74c3c;border:1px solid #e74c3c}
+.cat-C{background:rgba(80,80,80,0.15);color:#888;border:1px solid #555}
+
+/* SUPPRESSED */
+#suppressed-view{padding:14px}
+.sv-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
+.sv-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6}
+.supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
+.supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
+.supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
+.supp-ccount{font-size:10px;color:var(--tx3)}
+.supp-verses{display:none;padding:0 13px 13px}
+.sv-v{padding:11px 0;border-bottom:1px solid #1e1e1e}
+.sv-v:last-child{border-bottom:none}
+.sv-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:2px}
+.sv-ms{font-size:10px;color:var(--tx3);margin-bottom:5px}
+.sv-text{font-size:13px;color:#fff;line-height:1.7;font-style:italic;margin-bottom:5px}
+.sv-contra{font-size:11px;color:#e74c3c;line-height:1.5}
+
+/* CONTRADICTIONS */
+#contradictions-view{padding:14px}
+.contr-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.contr-hdr{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.contr-title{font-size:14px;font-weight:700;color:#fff;flex:1}
+.contr-sev{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px}
+.sev-F{background:#e67e22;color:#fff}
+.sev-A{background:var(--maso);color:#fff}
+.contr-body{display:none}
+.contr-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 12px 12px}
+.contr-col{background:var(--s2);border-radius:8px;padding:10px}
+.contr-col-head{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid #333}
+.contr-col-text{font-size:11px;color:var(--tx2);line-height:1.7;font-style:italic}
+.contr-note{padding:0 12px 12px;font-size:12px;color:var(--tx2);line-height:1.7}
+.contr-nt-uses{padding:0 12px 12px;font-size:11px;color:var(--tx3)}
+
+/* TIMELINE */
+#timeline-view{padding:14px}
+.tl-item{display:flex;gap:11px;margin-bottom:18px;position:relative}
+.tl-item::before{content:'';position:absolute;left:19px;top:39px;bottom:-18px;width:2px;background:#1e1e1e;z-index:0}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;position:relative;z-index:1;border:2px solid var(--bg)}
+.tl-content{flex:1;background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:11px}
+.tl-period{font-size:10px;color:var(--tx3);margin-bottom:3px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.tl-label{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
+.tl-desc{font-size:12px;color:var(--tx2);line-height:1.7}
+
+/* APOCRYPHA */
+#apocrypha-view{padding:14px}
+.apo-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:11px;overflow:hidden;border-left:3px solid var(--crit)}
+.apo-hdr{padding:13px;cursor:pointer}
+.apo-council{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.apo-by{font-size:10px;color:var(--tx3)}
+.apo-body{display:none;padding:0 13px 13px}
+.apo-sec{margin-bottom:10px}
+.apo-sl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px}
+.apo-st{font-size:12px;color:var(--tx2);line-height:1.7}
+.apo-list{padding-left:1.2em;margin-top:3px}
+.apo-list li{font-size:12px;color:var(--tx2);line-height:1.8;margin-bottom:1px}
+
+/* JOURNAL */
+#journal-view{padding:14px}
+.jn-toolbar{display:flex;gap:8px;margin-bottom:12px}
+.jn-search{flex:1;background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;padding:9px 12px;color:#fff;font-size:14px;font-family:var(--font)}
+.jn-search:focus{outline:none;border-color:var(--gold)}
+.jn-export-btn{background:none;border:1px solid #2a2a2a;border-radius:8px;padding:9px 14px;color:var(--tx2);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap}
+.jn-export-btn:hover{border-color:var(--gold);color:var(--gold)}
+.jn-empty{text-align:center;padding:40px 20px;color:var(--tx3);font-size:13px;line-height:1.8}
+.jn-entry{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;margin-bottom:9px}
+.jn-date{font-size:10px;color:var(--tx3);margin-bottom:3px}
+.jn-ref{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.jn-ms{font-size:10px;color:var(--tx3);margin-bottom:7px}
+.jn-text{font-size:13px;color:#fff;line-height:1.7;font-style:italic;margin-bottom:9px}
+.jn-note-wrap{position:relative}
+.jn-note{width:100%;background:var(--s2);border:1px solid #2a2a2a;border-radius:7px;padding:9px 12px;color:#fff;font-size:12px;font-family:var(--font);resize:none;min-height:60px;line-height:1.6}
+.jn-note:focus{outline:none;border-color:var(--gold)}
+.jn-delete{background:none;border:none;color:var(--tx3);font-size:16px;cursor:pointer;margin-top:7px;font-family:var(--font)}
+.jn-delete:hover{color:#e74c3c}
+
+/* ROOT SEARCH */
+#root-search-view{padding:14px}
+.rs-intro{font-size:12px;color:var(--tx3);margin-bottom:14px;line-height:1.6}
+.rs-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.rs-chip{background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;padding:8px 13px;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;gap:2px}
+.rs-chip:active,.rs-chip.active{background:rgba(200,151,31,0.15);border-color:var(--gold)}
+.rs-heb{font-family:'Space Mono',monospace;font-size:13px;color:#fff;font-weight:700}
+.rs-eng{font-size:10px;color:var(--tx3)}
+.rs-results{display:none}
+.rs-results.show{display:block}
+.rs-hdr{font-size:12px;color:var(--tx2);margin-bottom:10px}
+
+/* CONCEPT MAP */
+#conceptmap-view{display:flex;flex-direction:column;height:100%}
+.cm-toolbar{display:flex;gap:7px;padding:10px 14px;background:var(--s1);border-bottom:1px solid #1e1e1e;flex-shrink:0;align-items:center}
+.cm-toolbar-title{font-size:13px;font-weight:700;color:#fff;flex:1}
+.cm-btn{background:none;border:1px solid #2a2a2a;border-radius:7px;padding:6px 12px;color:var(--tx2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.cm-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cm-canvas-wrap{flex:1;position:relative;overflow:hidden}
+#cm-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.cm-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--tx3);background:rgba(0,0,0,0.6);padding:5px 12px;border-radius:100px;pointer-events:none}
+
+/* OVERLAYS */
+.overlay{position:fixed;inset:0;z-index:8000;background:var(--bg);display:none;flex-direction:column}
+.overlay.open{display:flex}
+.ov-topbar{display:flex;align-items:center;gap:10px;padding:13px 14px;padding-top:calc(13px + env(safe-area-inset-top));background:var(--s1);border-bottom:1px solid #1e1e1e;flex-shrink:0}
+.ov-back{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.07);border:none;color:var(--gold);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ov-title{font-size:14px;font-weight:700;color:var(--gold);flex:1}
+.ov-save-btn{background:none;border:1px solid #2a2a2a;border-radius:7px;padding:6px 12px;color:var(--tx2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap}
+.ov-save-btn:hover,.ov-save-btn.saved{border-color:var(--gold);color:var(--gold)}
+.ov-body{flex:1;overflow-y:auto;padding-bottom:40px}
+
+/* TEXT PAGE OVERLAY */
+#text-overlay .ov-body{background:#f5f5f0}
+.to-inner{max-width:860px;margin:0 auto;padding:22px 18px 40px;min-height:100%;background:#f5f5f0}
+.to-paleo{text-align:center;font-size:46px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#111;margin-bottom:8px}
+.to-title{text-align:center;font-size:17px;font-weight:700;color:#111;font-family:Arial;margin-bottom:5px}
+.to-sub{text-align:center;font-size:11px;color:#555;font-style:italic;font-family:Arial;margin-bottom:18px}
+.to-sh{font-family:Arial;font-size:12px;font-weight:700;color:#222;border-bottom:1.5px solid #888;padding:3px 0 3px;margin:14px 0 6px}
+.to-verse{font-family:Arial;font-size:14px;color:#111;line-height:1.8;padding-left:1.8em;margin:2px 0}
+.to-note{font-family:Arial;font-size:11px;font-style:italic;color:#555;line-height:1.7;padding-left:2.2em;margin:2px 0}
+.col3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0}
+.col3-cell{background:#ede9e0;border-radius:6px;padding:9px}
+.col3-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;font-family:Arial}
+.col3-txt{font-size:11px;color:#333;line-height:1.7;font-style:italic;font-family:Arial}
+.sev-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;margin:6px 0;font-family:Arial}
+@media(max-width:600px){.col3{grid-template-columns:1fr}.contr-grid{grid-template-columns:1fr}.feat-grid{grid-template-columns:1fr}}
+
+/* WITNESS WALL */
+#witness-wall .ov-body{padding:14px}
+.ww-summary{background:var(--s2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--tx);line-height:1.7}
+.ww-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ww-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:12px}
+.ww-ms-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px}
+.ww-loc{font-size:10px;color:var(--tx3);margin-bottom:4px}
+.ww-date{font-size:10px;color:var(--tx2);margin-bottom:5px}
+.ww-lang{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;color:#fff;display:inline-block}
+.ww-dss{background:var(--dss)}
+.ww-orit{background:var(--orit)}
+.ww-maso{background:var(--maso)}
+
+/* PARALLEL VIEW */
+#parallel-view .ov-body{padding:0}
+.pv-primary{padding:14px;background:var(--s2);border-bottom:1px solid #1e1e1e}
+.pv-primary-ref{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:3px;text-transform:uppercase}
+.pv-primary-text{font-size:13px;color:#fff;line-height:1.7;font-style:italic}
+.pv-list{padding:14px}
+.pv-item{background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:12px;margin-bottom:9px}
+.pv-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.pv-ms{font-size:10px;color:var(--tx3);margin-bottom:5px}
+.pv-text{font-size:12px;color:#fff;line-height:1.7;font-style:italic}
+
+/* STUDY PATH */
+#studypath-view{padding:14px}
+.sp-input-wrap{display:flex;gap:8px;margin-bottom:14px}
+.sp-input{flex:1;background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#fff;font-size:15px;font-family:var(--font)}
+.sp-input:focus{outline:none;border-color:var(--gold)}
+.sp-go{background:var(--gold);color:#000;font-weight:700;font-size:14px;font-family:var(--font);border:none;border-radius:8px;padding:10px 18px;cursor:pointer}
+.sp-steps{padding-bottom:60px}
+.sp-step{display:flex;gap:11px;margin-bottom:16px}
+.sp-num{width:32px;height:32px;border-radius:50%;background:rgba(200,151,31,0.15);border:1px solid var(--gold);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sp-content{flex:1;background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:12px}
+.sp-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px;text-transform:uppercase}
+.sp-text{font-size:13px;color:#fff;line-height:1.7;font-style:italic;margin-bottom:5px}
+.sp-why{font-size:11px;color:var(--tx3);line-height:1.6}
+
+/* LOADING DOTS */
+.dots-wrap{text-align:center;padding:40px;color:var(--tx3);font-size:13px}
+</style>
+</head>
+<body>
+
+<div id="auth">
+  <div class="a-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="a-title">ACR Search</div>
+  <div class="a-sub">The Covenant Concordance<br>Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez<br><em>The primary ancient text sources, gathered digitally, in their original form.</em></div>
+  <input class="a-input" type="password" id="pw-input" placeholder="Access code" autocomplete="off">
+  <button class="a-btn" onclick="doAuth()">Enter</button>
+  <div class="a-err" id="auth-err">Incorrect access code</div>
+</div>
+
+<div id="loading-screen">
+  <div class="ld-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="ld-text" id="ld-text">Loading primary sources...</div>
+  <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
+</div>
+
+<div id="app" class="hidden">
+  <div id="topbar">
+    <div class="tb-row">
+      <div class="tb-logo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+      <div class="tb-titles">
+        <div class="tb-name">ACR Search</div>
+        <div class="tb-sub">The Covenant Concordance</div>
+      </div>
+      <button class="tb-journal-btn" onclick="setMode('journal')" title="Research Journal"><i class="ri-book-2-line"></i></button>
+    </div>
+    <div class="search-wrap">
+      <div class="si-wrap">
+        <input class="search-input" id="search-input" type="text" placeholder="Search verses, themes, concepts..." autocomplete="off" oninput="onSearch(this.value)">
+        <div class="si-btns">
+          <button class="si-btn" id="root-toggle-btn" onclick="toggleRootMode()" title="Root search"><i class="ri-text"></i></button>
+          <button class="si-btn" onclick="startVoice()" title="Voice search"><i class="ri-mic-line"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mode-pills" id="mode-pills">
+      <div class="mpill active" data-mode="home" onclick="setMode('home')">Home</div>
+      <div class="mpill" data-mode="nt" onclick="setMode('nt')"><i class="ri-arrow-left-right-line"></i> NT Lookup</div>
+      <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
+      <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
+      <div class="mpill" data-mode="contradictions" onclick="setMode('contradictions')">Contradictions</div>
+      <div class="mpill" data-mode="timeline" onclick="setMode('timeline')">Chain of Custody</div>
+      <div class="mpill" data-mode="apocrypha" onclick="setMode('apocrypha')">Apocrypha Audit</div>
+      <div class="mpill" data-mode="studypath" onclick="setMode('studypath')"><i class="ri-route-line"></i> Study Path</div>
+      <div class="mpill" data-mode="conceptmap" onclick="setMode('conceptmap')"><i class="ri-mind-map"></i> Concept Map</div>
+      <div class="mpill" data-mode="journal" onclick="setMode('journal')"><i class="ri-book-2-line"></i> Journal</div>
+    </div>
+  </div>
+
+  <div id="main">
+    <!-- HOME -->
+    <div id="home-view" style="display:block">
+      <div class="home-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+      <div class="home-title">ACR Search — The Covenant Concordance</div>
+      <div class="home-sub">Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez — Digitally Compiled</div>
+      <div class="home-tagline">The primary ancient text sources, gathered digitally, in their original form.</div>
+      <div class="feat-grid">
+        <div class="feat-card" onclick="document.getElementById('search-input').focus()">
+          <div class="fc-icon"><i class="ri-search-line"></i></div>
+          <div class="fc-title">Semantic Thread Search</div>
+          <div class="fc-desc">Search by word, theme, concept, or ancient root across 21,000+ passages from the full corpus.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('nt')">
+          <div class="fc-icon"><i class="ri-arrow-left-right-line"></i></div>
+          <div class="fc-title">NT Reverse Lookup</div>
+          <div class="fc-desc">Enter any NT reference. See the primary source truth and the documented manipulation.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('root-search')">
+          <div class="fc-icon"><i class="ri-text"></i></div>
+          <div class="fc-title">Root Search</div>
+          <div class="fc-desc">Search by ancient Hebrew, Aramaic, or Ge'ez root. Bypass all translation layers entirely.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('suppressed')">
+          <div class="fc-icon"><i class="ri-eye-off-line"></i></div>
+          <div class="fc-title">Suppressed Verse Library</div>
+          <div class="fc-desc">Every DSS and Orit Ge'ez verse that directly contradicts later theological constructs.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('contradictions')">
+          <div class="fc-icon"><i class="ri-scales-3-line"></i></div>
+          <div class="fc-title">Contradiction Revealer</div>
+          <div class="fc-desc">DSS original alongside Masoretic variant alongside critical note. Three columns. No softening.</div>
+        </div>
+        <div class="feat-card" onclick="openOriginalVsManipulated()">
+          <div class="fc-icon"><i class="ri-eye-2-line"></i></div>
+          <div class="fc-title">Original vs. Manipulated</div>
+          <div class="fc-desc">Primary source texts alongside what was constructed from them. Manuscript evidence only.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('timeline')">
+          <div class="fc-icon"><i class="ri-timeline-line"></i></div>
+          <div class="fc-title">Chain of Custody</div>
+          <div class="fc-desc">How texts changed from DSS original through Greek translation through institutional canonization.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('apocrypha')">
+          <div class="fc-icon"><i class="ri-archive-line"></i></div>
+          <div class="fc-title">Apocrypha Audit</div>
+          <div class="fc-desc">Every text removed at specific councils with the documented political reasons.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('studypath')">
+          <div class="fc-icon"><i class="ri-route-line"></i></div>
+          <div class="fc-title">Study Path</div>
+          <div class="fc-desc">Enter a concept. Receive a guided sequence from foundational to advanced passages.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('journal')">
+          <div class="fc-icon"><i class="ri-book-2-line"></i></div>
+          <div class="fc-title">Research Journal</div>
+          <div class="fc-desc">Save passages locally. Add notes. Export your research. Everything stored on-device.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results-view" style="display:none">
+      <div class="results-hdr">
+        <div id="results-hdr-text">Results</div>
+        <span id="results-count-text"></span>
+      </div>
+      <div class="filter-bar" id="filter-bar">
+        <div class="fpill active" data-thread="All" onclick="setThreadFilter('All')">All</div>
+        <div class="fpill cosmo" data-thread="Cosmological" onclick="setThreadFilter('Cosmological')">Cosmological</div>
+        <div class="fpill temp" data-thread="Temporal" onclick="setThreadFilter('Temporal')">Temporal</div>
+        <div class="fpill moral" data-thread="Moral" onclick="setThreadFilter('Moral')">Moral</div>
+        <div class="fpill hist" data-thread="Historical" onclick="setThreadFilter('Historical')">Historical</div>
+        <div class="fpill escha" data-thread="Eschatological" onclick="setThreadFilter('Eschatological')">Eschatological</div>
+      </div>
+      <div id="results-list"></div>
+      <div style="padding:0 14px 16px;display:none" id="load-more-wrap">
+        <button onclick="loadMoreResults()" style="width:100%;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:12px;color:var(--tx2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Load More</button>
+      </div>
+    </div>
+
+    <!-- NT LOOKUP -->
+    <div id="nt-view" style="display:none">
+      <div class="nt-iw">
+        <div class="nt-label">Enter a New Testament reference</div>
+        <input class="nt-ri" id="nt-ref-input" placeholder="e.g. John 1:1 or Matthew 1:23" autocomplete="off">
+        <button class="nt-go" onclick="doNTLookup()">Look Up Primary Source Truth</button>
+        <div class="nt-pills" id="nt-preloaded"></div>
+      </div>
+      <div id="nt-result-area"></div>
+    </div>
+
+    <!-- SUPPRESSED -->
+    <div id="suppressed-view" style="display:none">
+      <div class="sv-hdr">Suppressed Verse Library</div>
+      <div class="sv-sub">Every verse in the DSS and Orit Ge'ez that directly contradicts later theological constructs. Manuscript evidence only.</div>
+      <div id="suppressed-list"></div>
+    </div>
+
+    <!-- CONTRADICTIONS -->
+    <div id="contradictions-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Contradiction Revealer</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6">DSS primary reading alongside Masoretic variant alongside critical note. No softening. Manuscript evidence stated plainly.</div>
+      <div id="contradictions-list"></div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div id="timeline-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Chain of Custody Timeline</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6">How the texts changed from primary source through translation through institutional canonization. Documented historical record only.</div>
+      <div id="timeline-list"></div>
+    </div>
+
+    <!-- APOCRYPHA -->
+    <div id="apocrypha-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Apocrypha Audit</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6">Every text removed at specific historical councils with the documented political and theological reasons for each removal.</div>
+      <div id="apocrypha-list"></div>
+    </div>
+
+    <!-- ROOT SEARCH -->
+    <div id="root-search-view" style="display:none">
+      <div class="rs-intro">Search by ancient root. Each root queries the concordance directly, bypassing all translation layers.</div>
+      <div class="rs-chips" id="root-chips"></div>
+      <div class="rs-results" id="rs-results">
+        <div class="rs-hdr" id="rs-hdr"></div>
+        <div id="rs-list"></div>
+      </div>
+    </div>
+
+    <!-- STUDY PATH -->
+    <div id="studypath-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Study Path Generator</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6">Enter a concept or theme. Receive a guided reading sequence from foundational to advanced — ordered Cosmological through Eschatological.</div>
+      <div class="sp-input-wrap">
+        <input class="sp-input" id="sp-input" placeholder="e.g. raz nihyeh, Shabbat, covenant, judgment..." autocomplete="off">
+        <button class="sp-go" onclick="generateStudyPath()">Generate</button>
+      </div>
+      <div class="sp-steps" id="sp-steps"></div>
+    </div>
+
+    <!-- CONCEPT MAP -->
+    <div id="conceptmap-view" style="display:none;height:calc(100vh - 200px)">
+      <div class="cm-toolbar">
+        <span class="cm-toolbar-title">Concept Map</span>
+        <button class="cm-btn" onclick="exportConceptMap()"><i class="ri-image-line"></i> Export</button>
+        <button class="cm-btn" onclick="clearConceptMap()"><i class="ri-delete-bin-line"></i> Reset</button>
+      </div>
+      <div class="cm-canvas-wrap">
+        <canvas id="cm-canvas"></canvas>
+        <div class="cm-hint">Tap a node to re-run search. Long-press to delete.</div>
+      </div>
+    </div>
+
+    <!-- JOURNAL -->
+    <div id="journal-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Research Journal</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:12px;line-height:1.6">Passages saved on this device. Add notes and export as plain text.</div>
+      <div class="jn-toolbar">
+        <input class="jn-search" id="jn-search" placeholder="Search saved passages..." oninput="renderJournal(this.value)">
+        <button class="jn-export-btn" onclick="exportJournal()"><i class="ri-download-line"></i> Export</button>
+      </div>
+      <div id="journal-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEXT OVERLAY -->
+<div class="overlay" id="text-overlay">
+  <div class="ov-topbar">
+    <button class="ov-back" onclick="closeOverlay('text-overlay')"><i class="ri-arrow-left-line"></i></button>
+    <span class="ov-title" id="to-label">ACR Search</span>
+  </div>
+  <div class="ov-body">
+    <div class="to-inner" id="to-inner"></div>
+  </div>
+</div>
+
+<!-- WITNESS WALL -->
+<div class="overlay" id="witness-wall">
+  <div class="ov-topbar">
+    <button class="ov-back" onclick="closeOverlay('witness-wall')"><i class="ri-arrow-left-line"></i></button>
+    <span class="ov-title" id="ww-title">Witness Wall</span>
+  </div>
+  <div class="ov-body" id="ww-body"></div>
+</div>
+
+<!-- PARALLEL VIEW -->
+<div class="overlay" id="parallel-view">
+  <div class="ov-topbar">
+    <button class="ov-back" onclick="closeOverlay('parallel-view')"><i class="ri-arrow-left-line"></i></button>
+    <span class="ov-title">Parallel Passages</span>
+  </div>
+  <div class="ov-body" id="pv-body"></div>
+</div>
+
+<!-- DNA OVERLAY -->
+<div class="overlay" id="dna-overlay">
+  <div class="ov-topbar">
+    <button class="ov-back" onclick="closeOverlay('dna-overlay')"><i class="ri-arrow-left-line"></i></button>
+    <span class="ov-title" id="dna-title">Verse DNA</span>
+    <button class="ov-save-btn" id="dna-save-btn" onclick="saveDnaPassage()">Save to Journal</button>
+  </div>
+  <div class="ov-body" id="dna-body"></div>
+</div>
+
+<script>
+// ── CONSTANTS ─────────────────────────────────────────────────────────────────
+var HASH = 3029588639;
+var THREAD_ORDER = ['Cosmological','Temporal','Moral','Historical','Eschatological'];
+var ROOT_CHIPS = [
+  {heb:'רז',eng:'Raz — mystery',root:'raz'},
+  {heb:'מועד',eng:'Mo\'ed — appointed time',root:'moed'},
+  {heb:'רוח',eng:'Ruach — spirit/breath',root:'ruach'},
+  {heb:'אמן',eng:'Amen — faithfulness',root:'amen'},
+  {heb:'שלם',eng:'Shalom — wholeness',root:'shalom'},
+  {heb:'ברית',eng:'Brit — covenant',root:'brit'},
+  {heb:'דעת',eng:'Da\'at — knowledge',root:'daat'},
+  {heb:'צדק',eng:'Tzedek — righteousness',root:'tzedek'},
+  {heb:'אלמה',eng:'Almah — young woman',root:'almah'},
+  {heb:'בתולה',eng:'Betulah — virgin',root:'betulah'},
+  {heb:'משיח',eng:'Mashiach — anointed',root:'mashiach'},
+  {heb:'אור',eng:'Or — light',root:'or'},
+  {heb:'חשך',eng:'Choshekh — darkness',root:'choshekh'},
+  {heb:'שמש',eng:'Shemesh — sun',root:'shemesh'},
+  {heb:'אמת',eng:'Emet — truth',root:'emet'},
+  {heb:'חסד',eng:'Chesed — loving-kindness',root:'chesed'},
+  {heb:'משפט',eng:'Mishpat — judgment',root:'mishpat'}
+];
+var THREAD_COLORS = {Cosmological:'#1E8449',Temporal:'#1A5276',Moral:'#7D6608',Historical:'#6E2F8A',Eschatological:'#C0392B'};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+var DATA = null;
+var CONCORDANCE = null;
+var currentMode = 'home';
+var currentResults = [];
+var filteredResults = [];
+var displayedCount = 0;
+var PAGE_SIZE = 30;
+var activeThreadFilter = 'All';
+var rootMode = false;
+var searchTimer = null;
+var currentDnaPassageId = null;
+
+// Concept map state
+var cmNodes = [];
+var cmDragging = null;
+var cmLongPressTimer = null;
+var cmAnimFrame = null;
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function djb2(s) {
+  var h = 5381;
+  for (var i = 0; i < s.length; i++) h = ((h << 5) + h) ^ s.charCodeAt(i);
+  return h >>> 0;
+}
+function doAuth() {
+  var pw = document.getElementById('pw-input').value;
+  if (djb2(pw) === HASH) {
+    document.getElementById('auth').classList.add('hidden');
+    startLoading();
+  } else {
+    document.getElementById('auth-err').style.display = 'block';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') doAuth(); });
+
+// ── LOADING ───────────────────────────────────────────────────────────────────
+function startLoading() {
+  var ls = document.getElementById('loading-screen');
+  ls.classList.add('show');
+  setLdProgress(10, 'Loading reference data...');
+
+  fetch('acr_search_data.json').then(function(r) { return r.json(); }).then(function(d) {
+    DATA = d;
+    setLdProgress(30, 'Loading primary source concordance...');
+    return fetch('acr_concordance.json');
+  }).then(function(r) {
+    setLdProgress(55, 'Parsing 21,000+ passages...');
+    return r.json();
+  }).then(function(c) {
+    CONCORDANCE = c;
+    setLdProgress(90, 'Indexing complete. Opening...');
+    setTimeout(function() {
+      ls.classList.remove('show');
+      document.getElementById('app').classList.remove('hidden');
+      initApp();
+    }, 300);
+  }).catch(function(err) {
+    console.error('Load error:', err);
+    setLdProgress(0, 'Load error. Please refresh.');
+  });
+}
+function setLdProgress(pct, msg) {
+  document.getElementById('ld-fill').style.width = pct + '%';
+  document.getElementById('ld-text').textContent = msg;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function initApp() {
+  renderNTPreloaded();
+  renderSuppressedLibrary();
+  renderContradictions();
+  renderTimeline();
+  renderApocrypha();
+  renderRootChips();
+  renderJournal('');
+  loadConceptMapNodes();
+  // Register SW
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function() {});
+  }
+}
+
+// ── MODE ──────────────────────────────────────────────────────────────────────
+function setMode(mode) {
+  currentMode = mode;
+  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal'];
+  views.forEach(function(v) {
+    var el = document.getElementById(v + '-view');
+    if (el) el.style.display = (v === mode) ? 'block' : 'none';
+  });
+  if (mode === 'conceptmap') {
+    document.getElementById('conceptmap-view').style.display = 'flex';
+    document.getElementById('conceptmap-view').style.flexDirection = 'column';
+    setTimeout(initConceptMapCanvas, 50);
+  }
+  document.querySelectorAll('.mpill').forEach(function(p) {
+    p.classList.toggle('active', p.dataset.mode === mode);
+  });
+  document.getElementById('main').scrollTop = 0;
+  if (mode === 'journal') renderJournal(document.getElementById('jn-search').value);
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch(val) {
+  clearTimeout(searchTimer);
+  if (!val.trim()) { setMode('home'); return; }
+  searchTimer = setTimeout(function() { doSearch(val); }, 300);
+}
+
+function doSearch(q) {
+  var query = q.trim().toLowerCase();
+  if (!query) return;
+  var results = [];
+
+  // Concordance search
+  if (CONCORDANCE) {
+    var passages = CONCORDANCE.passages;
+    var exact = [], allWords = [], themeMatch = [], other = [];
+    var words = query.split(/\s+/).filter(Boolean);
+
+    for (var i = 0; i < passages.length; i++) {
+      var p = passages[i];
+      var t = p.text.toLowerCase();
+      if (t.includes(query)) {
+        exact.push(p);
+      } else if (words.every(function(w) { return t.includes(w); })) {
+        allWords.push(p);
+      } else {
+        var themeHit = p.themes.some(function(th) { return th.toLowerCase().includes(query); }) ||
+                       p.roots.some(function(r) { return r.toLowerCase().includes(query); }) ||
+                       p.threads.some(function(tr) { return tr.toLowerCase().includes(query); });
+        if (themeHit) themeMatch.push(p);
+      }
+    }
+    // Sort each tier by witness_count desc
+    function byWitness(a, b) { return b.witness_count - a.witness_count; }
+    exact.sort(byWitness);
+    allWords.sort(byWitness);
+    themeMatch.sort(byWitness);
+    results = exact.concat(allWords).concat(themeMatch);
+  }
+
+  // Also search NT database and suppressed
+  if (DATA) {
+    var db = DATA.nt_database;
+    Object.keys(db).forEach(function(ref) {
+      var e = db[ref];
+      if (ref.toLowerCase().includes(query) ||
+          (e.nt_text || '').toLowerCase().includes(query) ||
+          (e.original_dss_reading || '').toLowerCase().includes(query) ||
+          (e.verdict || '').toLowerCase().includes(query)) {
+        results.push({ _type: 'nt', ref: ref, entry: e });
+      }
+    });
+    var supp = DATA.suppressed_verses;
+    Object.keys(supp).forEach(function(cat) {
+      supp[cat].forEach(function(v) {
+        if (v.text.toLowerCase().includes(query) || v.ref.toLowerCase().includes(query)) {
+          results.push({ _type: 'suppressed', cat: cat, v: v });
+        }
+      });
+    });
+  }
+
+  currentResults = results;
+  activeThreadFilter = 'All';
+  document.querySelectorAll('#filter-bar .fpill').forEach(function(p) {
+    p.classList.toggle('active', p.dataset.thread === 'All');
+  });
+  applyFilterAndRender(q);
+  setMode('results');
+
+  // Add to concept map
+  if (CONCORDANCE && results.length > 0) addConceptMapNode(q, results[0]);
+}
+
+function setThreadFilter(thread) {
+  activeThreadFilter = thread;
+  document.querySelectorAll('#filter-bar .fpill').forEach(function(p) {
+    p.classList.toggle('active', p.dataset.thread === thread);
+  });
+  applyFilterAndRender(document.getElementById('search-input').value);
+}
+
+function applyFilterAndRender(q) {
+  if (activeThreadFilter === 'All') {
+    filteredResults = currentResults;
+  } else {
+    filteredResults = currentResults.filter(function(r) {
+      if (r._type) return true;
+      return r.threads && r.threads.includes(activeThreadFilter);
+    });
+  }
+  displayedCount = 0;
+  document.getElementById('results-hdr-text').textContent = filteredResults.length + ' results for "' + q + '"';
+  document.getElementById('results-count-text').textContent = filteredResults.length > PAGE_SIZE ? 'Showing ' + PAGE_SIZE : '';
+  document.getElementById('results-list').innerHTML = '';
+  loadMoreResults();
+}
+
+function loadMoreResults() {
+  var list = document.getElementById('results-list');
+  var slice = filteredResults.slice(displayedCount, displayedCount + PAGE_SIZE);
+  slice.forEach(function(r) {
+    var el = document.createElement('div');
+    el.innerHTML = renderResultCard(r);
+    list.appendChild(el.firstChild);
+  });
+  displayedCount += slice.length;
+  var wrap = document.getElementById('load-more-wrap');
+  wrap.style.display = (displayedCount < filteredResults.length) ? 'block' : 'none';
+  if (!filteredResults.length) {
+    list.innerHTML = '<div class="dots-wrap">No results found. Try different search terms or a root search.</div>';
+  }
+}
+
+function renderResultCard(r) {
+  if (r._type === 'nt') {
+    var catL = {A:'APPROPRIATED',F:'FABRICATED FROM MISTRANSLATION',N:'NO PRIMARY SOURCE',C:'DIRECTLY CONTRADICTED'}[r.entry.category] || r.entry.category;
+    return '<div class="rc" onclick="setMode(\'nt\');showNTEntry(\'' + esc(r.ref) + '\')">' +
+      '<div class="rc-ref">NT Reference: ' + r.ref + '</div>' +
+      '<div class="rc-text">' + esc(r.entry.nt_text || '').substring(0, 120) + '...</div>' +
+      '<div class="rc-ms">Category: ' + catL + '</div>' +
+      '</div>';
+  }
+  if (r._type === 'suppressed') {
+    return '<div class="rc" onclick="setMode(\'suppressed\')">' +
+      '<div class="rc-ref">' + r.v.ref + '</div>' +
+      '<div class="rc-text">' + esc(r.v.text).substring(0, 140) + '</div>' +
+      '<div class="rc-ms">' + esc(r.v.ms) + '</div>' +
+      '</div>';
+  }
+  // Concordance passage
+  var tags = (r.threads || []).map(function(t) {
+    return '<span class="ttag ' + t + '">' + t + '</span>';
+  }).join('');
+  var manip = r.manipulation_flag ? '<span class="manip-flag">Manipulation</span>' : '';
+  var witness = '<span class="witness-badge">' + r.witness_count + ' witness' + (r.witness_count !== 1 ? 'es' : '') + '</span>';
+  var sid = esc(r.id);
+  return '<div class="rc">' +
+    '<div class="rc-ref">' + esc(r.ref) + ' ' + manip + ' ' + witness + '</div>' +
+    '<div class="rc-ms">' + esc(r.manuscript) + ' — ' + esc(r.date_range) + '</div>' +
+    '<div class="rc-text">' + esc(r.text).substring(0, 200) + (r.text.length > 200 ? '...' : '') + '</div>' +
+    '<div class="rc-tags">' + tags + '</div>' +
+    '<div class="rc-actions">' +
+      '<button class="rc-btn" onclick="openDNA(\'' + sid + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+      '<button class="rc-btn" onclick="openWitnessWall(\'' + sid + '\')"><i class="ri-file-list-3-line"></i> Witnesses</button>' +
+      '<button class="rc-btn" onclick="openParallelView(\'' + sid + '\')"><i class="ri-layout-column-line"></i> Parallel</button>' +
+      '<button class="rc-btn" onclick="openManuscriptTrail(\'' + sid + '\')"><i class="ri-map-pin-line"></i> Trail</button>' +
+      '<button class="rc-btn" id="save-btn-' + sid + '" onclick="saveToJournal(\'' + sid + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+    '</div>' +
+    '</div>';
+}
+
+// ── ROOT MODE TOGGLE ──────────────────────────────────────────────────────────
+function toggleRootMode() {
+  rootMode = !rootMode;
+  var btn = document.getElementById('root-toggle-btn');
+  btn.classList.toggle('root-active', rootMode);
+  document.getElementById('search-input').placeholder = rootMode ? 'Type a root term (raz, ruach, brit...)' : 'Search verses, themes, concepts...';
+  if (rootMode) setMode('root-search');
+}
+
+// ── VERSE DNA ─────────────────────────────────────────────────────────────────
+function openDNA(pid) {
+  var p = getPassageById(pid);
+  if (!p) return;
+  currentDnaPassageId = pid;
+  document.getElementById('dna-title').textContent = p.ref;
+  var saved = isInJournal(pid);
+  var saveBtn = document.getElementById('dna-save-btn');
+  saveBtn.textContent = saved ? 'Saved' : 'Save to Journal';
+  saveBtn.classList.toggle('saved', saved);
+
+  var threadTags = (p.threads || []).map(function(t) {
+    return '<span class="ttag ' + t + '" style="font-size:11px;padding:3px 8px">' + t + '</span>';
+  }).join('');
+  var rootChips = (p.roots || []).map(function(r) {
+    return '<span class="root-chip" onclick="doRootSearch(\'' + r + '\')">' + r + '</span>';
+  }).join('');
+  var manip = p.manipulation_flag ? '<div style="margin-top:10px;padding:10px;background:rgba(192,57,43,0.1);border-radius:8px;border:1px solid rgba(192,57,43,0.3)">' +
+    '<div class="dna-label" style="color:var(--red)">Manipulation Flag</div>' +
+    '<div style="font-size:12px;color:var(--tx2)">This passage was appropriated by NT tradition.</div>' +
+    (p.nt_appropriated_by ? '<div style="font-size:11px;color:#e74c3c;margin-top:4px">NT references: ' + p.nt_appropriated_by.join(', ') + '</div>' : '') +
+    '</div>' : '';
+
+  document.getElementById('dna-body').innerHTML =
+    '<div style="padding:14px">' +
+    '<div style="font-size:14px;color:#fff;line-height:1.8;font-style:italic;margin-bottom:14px;padding:13px;background:var(--s2);border-radius:8px">' + esc(p.text) + '</div>' +
+    '<div class="dna-label">Thread Tags</div>' +
+    '<div class="dna-row" style="margin-bottom:12px">' + threadTags + '</div>' +
+    '<div class="dna-label">Ancient Roots</div>' +
+    '<div class="dna-row" style="margin-bottom:12px">' + rootChips + '</div>' +
+    '<div class="dna-label">Manuscript Source</div>' +
+    '<div class="ms-chain" style="margin-bottom:12px"><b>' + esc(p.manuscript) + '</b><br>' + esc(p.cave) + ' — ' + esc(p.date_range) + '<br>Language: ' + esc(p.language) + '</div>' +
+    '<div class="dna-label">Witness Count</div>' +
+    '<div style="font-size:13px;color:var(--tx);margin-bottom:12px">' + p.witness_count + ' independent manuscript' + (p.witness_count !== 1 ? 's' : '') + ' confirm this text. <span style="cursor:pointer;color:var(--gold);text-decoration:underline" onclick="openWitnessWall(\'' + esc(pid) + '\')">View Witness Wall</span></div>' +
+    manip +
+    '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">' +
+      '<button class="rc-btn" onclick="openParallelView(\'' + esc(pid) + '\')"><i class="ri-layout-column-line"></i> Parallel Passages</button>' +
+      '<button class="rc-btn" onclick="openManuscriptTrail(\'' + esc(pid) + '\')"><i class="ri-map-pin-line"></i> Manuscript Trail</button>' +
+    '</div>' +
+    '</div>';
+
+  openOverlay('dna-overlay');
+}
+function saveDnaPassage() {
+  if (currentDnaPassageId) saveToJournal(currentDnaPassageId);
+  var btn = document.getElementById('dna-save-btn');
+  btn.textContent = 'Saved';
+  btn.classList.add('saved');
+}
+
+// ── WITNESS WALL ──────────────────────────────────────────────────────────────
+function openWitnessWall(pid) {
+  var p = getPassageById(pid);
+  if (!p) return;
+  document.getElementById('ww-title').textContent = 'Witness Wall — ' + p.ref;
+  var ms = buildManuscriptList(p);
+  var summary = p.witness_count + ' manuscript' + (p.witness_count !== 1 ? 's' : '') + ' confirm the primary reading for this passage.';
+  var cards = ms.map(function(m) {
+    var langClass = m.lang === 'Ge\'ez' ? 'ww-orit' : (m.lang === 'Aramaic' ? 'ww-maso' : 'ww-dss');
+    return '<div class="ww-card">' +
+      '<div class="ww-ms-name">' + esc(m.name) + '</div>' +
+      '<div class="ww-loc"><i class="ri-map-pin-line"></i> ' + esc(m.loc) + '</div>' +
+      '<div class="ww-date">' + esc(m.date) + '</div>' +
+      '<span class="ww-lang ' + langClass + '">' + m.lang + '</span>' +
+      '</div>';
+  }).join('');
+  document.getElementById('ww-body').innerHTML =
+    '<div class="ww-summary">' + summary + '</div>' +
+    '<div class="ww-grid">' + cards + '</div>';
+  openOverlay('witness-wall');
+}
+function buildManuscriptList(p) {
+  var base = [{name: p.manuscript, loc: p.cave, date: p.date_range, lang: p.language}];
+  // Add additional witnesses based on witness count
+  if (p.witness_count > 1) {
+    var extras = [
+      {name: 'Orit Ge\'ez — Ethiopian Canon', loc: 'Ethiopia', date: 'Ancient', lang: 'Ge\'ez'},
+      {name: 'Septuagint — LXX', loc: 'Alexandria', date: '250-100 BCE', lang: 'Greek'},
+      {name: 'Masoretic Text', loc: 'Tiberian tradition', date: '600-900 CE', lang: 'Hebrew'},
+      {name: 'Cairo Geniza Fragment', loc: 'Cairo Geniza', date: '900-1100 CE', lang: 'Hebrew'},
+      {name: 'Samaritan Pentateuch', loc: 'Nablus', date: '300 BCE onwards', lang: 'Hebrew'},
+    ];
+    for (var i = 0; i < Math.min(p.witness_count - 1, extras.length); i++) {
+      base.push(extras[i]);
+    }
+  }
+  return base;
+}
+
+// ── PARALLEL VIEW ─────────────────────────────────────────────────────────────
+function openParallelView(pid) {
+  var p = getPassageById(pid);
+  if (!p || !CONCORDANCE) return;
+  // Find passages sharing primary theme
+  var primaryTheme = p.themes[0];
+  var parallelIds = (CONCORDANCE.themes[primaryTheme] || []).filter(function(id) { return id !== pid; });
+  var parallels = parallelIds.slice(0, 12).map(getPassageById).filter(Boolean);
+  parallels.sort(function(a, b) { return b.witness_count - a.witness_count; });
+
+  var items = parallels.map(function(pp) {
+    return '<div class="pv-item">' +
+      '<div class="pv-ref">' + esc(pp.ref) + '</div>' +
+      '<div class="pv-ms">' + esc(pp.manuscript) + ' — ' + esc(pp.date_range) + '</div>' +
+      '<div class="pv-text">' + esc(pp.text).substring(0, 200) + (pp.text.length > 200 ? '...' : '') + '</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('pv-body').innerHTML =
+    '<div class="pv-primary">' +
+      '<div class="pv-primary-ref">' + esc(p.ref) + ' — Theme: ' + esc(primaryTheme) + '</div>' +
+      '<div class="pv-primary-text">' + esc(p.text) + '</div>' +
+    '</div>' +
+    '<div class="pv-list">' +
+      '<div style="font-size:11px;color:var(--tx3);margin-bottom:10px">' + parallels.length + ' parallel passages sharing theme: ' + esc(primaryTheme) + '</div>' +
+      items +
+    '</div>';
+  openOverlay('parallel-view');
+}
+
+// ── MANUSCRIPT TRAIL ──────────────────────────────────────────────────────────
+function openManuscriptTrail(pid) {
+  var p = getPassageById(pid);
+  if (!p) return;
+  var html = '<div class="to-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>' +
+    '<div class="to-title">Manuscript Trail</div>' +
+    '<div class="to-sub">' + esc(p.ref) + '</div>' +
+    '<div class="to-sh">Physical Provenance</div>' +
+    '<div style="font-family:Arial;font-size:14px;color:#111;line-height:1.9">' +
+      '<b>Manuscript:</b> ' + esc(p.manuscript) + '<br>' +
+      '<b>Location:</b> ' + esc(p.cave) + '<br>' +
+      '<b>Date range:</b> ' + esc(p.date_range) + '<br>' +
+      '<b>Language:</b> ' + esc(p.language) + '<br>' +
+      '<b>Independent witnesses:</b> ' + p.witness_count + '<br>' +
+    '</div>' +
+    '<div class="to-sh">Custody Chain</div>' +
+    '<div style="font-family:Arial;font-size:13px;color:#333;line-height:1.8">' +
+      '<b>1.</b> Original composition — ' + esc(p.date_range) + '<br>' +
+      '<b>2.</b> Physical deposit — ' + esc(p.cave) + '<br>' +
+      '<b>3.</b> Discovery — 1947-1956 CE, Qumran region<br>' +
+      '<b>4.</b> Israel Antiquities Authority — current custodian of DSS originals<br>' +
+      '<b>5.</b> Digital compilation — ACR collection<br>' +
+    '</div>' +
+    (p.manipulation_flag ? '<div class="to-sh" style="color:var(--red)">Manipulation Record</div>' +
+      '<div style="font-family:Arial;font-size:13px;color:#c0392b;line-height:1.8">' +
+        'This passage was appropriated by later tradition.<br>' +
+        (p.nt_appropriated_by ? 'NT references: ' + p.nt_appropriated_by.join(', ') : '') +
+      '</div>' : '');
+  openTextOverlay('Manuscript Trail — ' + p.ref, html);
+}
+
+// ── NT LOOKUP ─────────────────────────────────────────────────────────────────
+function renderNTPreloaded() {
+  if (!DATA) return;
+  var wrap = document.getElementById('nt-preloaded');
+  wrap.innerHTML = '<div style="font-size:10px;color:var(--tx3);width:100%;margin-bottom:4px">Pre-loaded references:</div>' +
+    Object.keys(DATA.nt_database).map(function(ref) {
+      return '<div class="nt-pill" onclick="showNTEntry(\'' + esc(ref) + '\')">' + ref + '</div>';
+    }).join('');
+}
+function doNTLookup() {
+  var val = document.getElementById('nt-ref-input').value.trim();
+  if (!val || !DATA) return;
+  var found = null;
+  Object.keys(DATA.nt_database).forEach(function(k) {
+    if (k.toLowerCase() === val.toLowerCase() || k.toLowerCase().includes(val.toLowerCase())) found = k;
+  });
+  if (found) {
+    showNTEntry(found);
+  } else {
+    document.getElementById('nt-result-area').innerHTML =
+      '<div class="nt-result"><div class="nt-sec"><div class="nt-sl">Not Found</div>' +
+      '<div class="nt-st">Reference not yet in database. Check the Suppressed Verse Library for related primary source content.</div></div></div>';
+  }
+}
+function showNTEntry(ref) {
+  if (!DATA || !DATA.nt_database[ref]) return;
+  var e = DATA.nt_database[ref];
+  var catLabels = {A:'APPROPRIATED',F:'FABRICATED FROM MISTRANSLATION',N:'NO PRIMARY SOURCE — CREATED IN GRECO-ROMAN WORLD',C:'DIRECTLY CONTRADICTED BY PRIMARY SOURCES'};
+  var catLabel = catLabels[e.category] || e.category;
+  var catCls = 'cat-' + e.category;
+  var area = document.getElementById('nt-result-area');
+  area.innerHTML =
+    '<div class="nt-result">' +
+    '<div style="padding:13px;border-bottom:1px solid #1e1e1e">' +
+      '<div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:7px">' + esc(ref) + '</div>' +
+      '<div class="cat-badge ' + catCls + '">' + catLabel + '</div>' +
+    '</div>' +
+    ntSec('NT Text', esc(e.nt_text || ''), 'font-style:italic;color:var(--tx2)') +
+    ntSec('Authorship', esc(e.authorship || '')) +
+    ntSec('Oldest Manuscript Evidence', esc(e.oldest_manuscript || '')) +
+    (e.primary_source_connection ? ntSec('Primary Source Connection', esc(e.primary_source_connection)) : '') +
+    (e.original_dss_reading ? ntSec('Original DSS / Orit Ge\'ez Reading', esc(e.original_dss_reading), 'color:#b8f0c8;font-style:italic') : '') +
+    (e.manipulation ? ntSec('Documented Manipulation', esc(e.manipulation)) : '') +
+    (e.greco_roman_parallel ? ntSec('Greco-Roman Parallel — Pre-existing Traditions', esc(e.greco_roman_parallel)) : '') +
+    (e.dss_contradiction ? ntSec('DSS / Orit Ge\'ez Contradiction', esc(e.dss_contradiction)) : '') +
+    (e.historical_context ? ntSec('Original Historical Context', esc(e.historical_context)) : '') +
+    ntSec('Verdict', esc(e.verdict || ''), 'color:#f0b8b8;font-weight:600', 'background:rgba(192,57,43,0.08)') +
+    '</div>';
+  document.getElementById('nt-ref-input').value = ref;
+  document.getElementById('main').scrollTop = 0;
+}
+function ntSec(label, content, style, wrapStyle) {
+  return '<div class="nt-sec"' + (wrapStyle ? ' style="' + wrapStyle + '"' : '') + '>' +
+    '<div class="nt-sl">' + label + '</div>' +
+    '<div class="nt-st"' + (style ? ' style="' + style + '"' : '') + '>' + content + '</div>' +
+    '</div>';
+}
+
+// ── SUPPRESSED LIBRARY ────────────────────────────────────────────────────────
+function renderSuppressedLibrary() {
+  if (!DATA) return;
+  var list = document.getElementById('suppressed-list');
+  var supp = DATA.suppressed_verses;
+  list.innerHTML = Object.keys(supp).map(function(cat) {
+    var verses = supp[cat];
+    return '<div class="supp-cat">' +
+      '<div class="supp-ch" onclick="toggleAccordion(this)">' +
+        '<i class="ri-eye-off-line" style="color:var(--gold);font-size:17px;flex-shrink:0"></i>' +
+        '<div class="supp-ctitle">' + esc(cat) + '</div>' +
+        '<div class="supp-ccount">' + verses.length + ' verse' + (verses.length !== 1 ? 's' : '') + '</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div style="display:none;padding:0 13px 13px">' +
+        verses.map(function(v) {
+          return '<div class="sv-v">' +
+            '<div class="sv-ref">' + esc(v.ref) + '</div>' +
+            '<div class="sv-ms">' + esc(v.ms) + '</div>' +
+            '<div class="sv-text">' + esc(v.text) + '</div>' +
+            '<div class="sv-contra"><i class="ri-close-circle-line"></i> Contradicts: ' + esc(v.contradicts) + '</div>' +
+            '</div>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── CONTRADICTIONS ────────────────────────────────────────────────────────────
+function renderContradictions() {
+  if (!CONCORDANCE) {
+    setTimeout(renderContradictions, 500);
+    return;
+  }
+  var list = document.getElementById('contradictions-list');
+  var contrs = CONCORDANCE.contradictions || [];
+  list.innerHTML = contrs.map(function(c) {
+    var sevCls = 'sev-' + c.severity;
+    var sevLabel = {F:'FABRICATED FROM MISTRANSLATION',A:'APPROPRIATED',N:'NO PRIMARY SOURCE',C:'DIRECTLY CONTRADICTED'}[c.severity] || c.severity;
+    return '<div class="contr-card">' +
+      '<div class="contr-hdr" onclick="toggleAccordion(this)">' +
+        '<div class="contr-title">' + esc(c.title) + '</div>' +
+        '<span class="contr-sev ' + sevCls + '">' + sevLabel + '</span>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0;margin-left:6px"></i>' +
+      '</div>' +
+      '<div style="display:none">' +
+        '<div class="contr-grid">' +
+          '<div class="contr-col"><div class="contr-col-head" style="color:var(--orit)">DSS Primary</div><div style="font-size:10px;color:var(--tx3);margin-bottom:4px">' + esc(c.dss_ref) + '</div><div class="contr-col-text">' + esc(c.dss_text) + '</div></div>' +
+          '<div class="contr-col"><div class="contr-col-head" style="color:var(--maso)">Masoretic Variant</div><div style="font-size:10px;color:var(--tx3);margin-bottom:4px">' + esc(c.maso_ref) + '</div><div class="contr-col-text">' + esc(c.maso_text) + '</div></div>' +
+          '<div class="contr-col"><div class="contr-col-head" style="color:var(--crit)">Critical Note</div><div class="contr-col-text" style="font-style:normal">' + esc(c.critical_note) + '</div></div>' +
+        '</div>' +
+        (c.nt_uses && c.nt_uses.length ? '<div class="contr-nt-uses">NT uses: ' + c.nt_uses.join(', ') + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── TIMELINE ──────────────────────────────────────────────────────────────────
+function renderTimeline() {
+  if (!DATA) return;
+  var list = document.getElementById('timeline-list');
+  list.innerHTML = DATA.timeline.map(function(item) {
+    return '<div class="tl-item">' +
+      '<div class="tl-dot" style="background:' + item.color + ';border-color:' + item.color + '">' + item.period.substring(0, 4) + '</div>' +
+      '<div class="tl-content">' +
+        '<div class="tl-period">' + esc(item.period) + '</div>' +
+        '<div class="tl-label">' + esc(item.label) + '</div>' +
+        '<div class="tl-desc">' + esc(item.desc) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── APOCRYPHA ─────────────────────────────────────────────────────────────────
+function renderApocrypha() {
+  if (!DATA) return;
+  var list = document.getElementById('apocrypha-list');
+  list.innerHTML = DATA.apocrypha_audit.map(function(item) {
+    var books = Array.isArray(item.books_excluded)
+      ? '<ul class="apo-list">' + item.books_excluded.map(function(b) { return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>'
+      : '<div class="apo-st">' + esc(item.books_excluded || '') + '</div>';
+    return '<div class="apo-card">' +
+      '<div class="apo-hdr" onclick="toggleAccordion(this)">' +
+        '<div class="apo-council">' + esc(item.council) + '</div>' +
+        '<div class="apo-by">Convened by: ' + esc((item.convened_by || '').substring(0, 70)) + '</div>' +
+      '</div>' +
+      '<div class="apo-body" style="display:none">' +
+        '<div class="apo-sec"><div class="apo-sl" style="color:#9b59b6">Political Context</div><div class="apo-st">' + esc(item.political_context) + '</div></div>' +
+        '<div class="apo-sec"><div class="apo-sl" style="color:#e74c3c">Books / Positions Excluded</div>' + books + '</div>' +
+        '<div class="apo-sec"><div class="apo-sl" style="color:#e67e22">What Was Suppressed</div><div class="apo-st">' + esc(item.what_was_suppressed) + '</div></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── ROOT SEARCH ───────────────────────────────────────────────────────────────
+function renderRootChips() {
+  var wrap = document.getElementById('root-chips');
+  wrap.innerHTML = ROOT_CHIPS.map(function(c) {
+    return '<div class="rs-chip" onclick="doRootSearch(\'' + c.root + '\', this)">' +
+      '<span class="rs-heb">' + c.heb + '</span>' +
+      '<span class="rs-eng">' + c.eng + '</span>' +
+      '</div>';
+  }).join('');
+}
+function doRootSearch(root, chipEl) {
+  if (!CONCORDANCE) return;
+  document.querySelectorAll('.rs-chip').forEach(function(c) { c.classList.remove('active'); });
+  if (chipEl) chipEl.classList.add('active');
+
+  var ids = CONCORDANCE.roots[root] || [];
+  var passages = ids.slice(0, 50).map(getPassageById).filter(Boolean);
+  passages.sort(function(a, b) { return b.witness_count - a.witness_count; });
+
+  var hdr = document.getElementById('rs-hdr');
+  hdr.textContent = passages.length + ' passages containing root: ' + root + (ids.length > 50 ? ' (showing 50 of ' + ids.length + ')' : '');
+
+  var listEl = document.getElementById('rs-list');
+  listEl.innerHTML = passages.map(function(p) {
+    var tags = (p.threads || []).map(function(t) { return '<span class="ttag ' + t + '">' + t + '</span>'; }).join('');
+    return '<div class="rc" style="margin-bottom:9px">' +
+      '<div class="rc-ref">' + esc(p.ref) + '</div>' +
+      '<div class="rc-ms">' + esc(p.manuscript) + '</div>' +
+      '<div class="rc-text">' + esc(p.text).substring(0, 180) + (p.text.length > 180 ? '...' : '') + '</div>' +
+      '<div class="rc-tags">' + tags + '</div>' +
+      '<div class="rc-actions">' +
+        '<button class="rc-btn" onclick="openDNA(\'' + esc(p.id) + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+        '<button class="rc-btn" onclick="saveToJournal(\'' + esc(p.id) + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  var rs = document.getElementById('rs-results');
+  rs.classList.add('show');
+  setMode('root-search');
+}
+
+// ── STUDY PATH ────────────────────────────────────────────────────────────────
+function generateStudyPath() {
+  var query = document.getElementById('sp-input').value.trim().toLowerCase();
+  if (!query || !CONCORDANCE) return;
+  var steps = document.getElementById('sp-steps');
+  steps.innerHTML = '<div class="dots-wrap">Generating path...</div>';
+
+  // Collect candidate passages by theme/text match
+  var candidates = [];
+  var passages = CONCORDANCE.passages;
+  for (var i = 0; i < passages.length; i++) {
+    var p = passages[i];
+    if (p.text.toLowerCase().includes(query) ||
+        p.themes.some(function(t) { return t.toLowerCase().includes(query); }) ||
+        p.roots.some(function(r) { return r.toLowerCase().includes(query); })) {
+      candidates.push(p);
+    }
+  }
+  // Sort by thread order then witness count
+  candidates.sort(function(a, b) {
+    var ta = THREAD_ORDER.indexOf(a.threads[0] || '') ;
+    var tb = THREAD_ORDER.indexOf(b.threads[0] || '');
+    if (ta === tb) return b.witness_count - a.witness_count;
+    return (ta === -1 ? 99 : ta) - (tb === -1 ? 99 : tb);
+  });
+  // Deduplicate by thread, pick 12
+  var seen = {};
+  var path = [];
+  var allThreads = candidates.filter(function(p) { return true; });
+  THREAD_ORDER.forEach(function(thread) {
+    var forThread = allThreads.filter(function(p) { return p.threads.includes(thread); });
+    for (var i = 0; i < Math.min(3, forThread.length) && path.length < 12; i++) {
+      var p = forThread[i];
+      if (!seen[p.id]) { seen[p.id] = true; path.push(p); }
+    }
+  });
+  if (!path.length) {
+    steps.innerHTML = '<div class="dots-wrap">No passages found for that concept. Try a root search instead.</div>';
+    return;
+  }
+  var threadDesc = {Cosmological:'Foundation: cosmic and creation context',Temporal:'Calendar and appointed times context',Moral:'Ethical and covenant conduct context',Historical:'Historical and narrative context',Eschatological:'End-of-age and judgment context'};
+  steps.innerHTML = path.map(function(p, idx) {
+    var why = threadDesc[p.threads[0]] || 'Context: ' + (p.threads[0] || '');
+    return '<div class="sp-step">' +
+      '<div class="sp-num">' + (idx + 1) + '</div>' +
+      '<div class="sp-content">' +
+        '<div class="sp-ref">' + esc(p.ref) + ' — ' + esc(p.threads[0] || '') + '</div>' +
+        '<div class="sp-text">' + esc(p.text).substring(0, 200) + (p.text.length > 200 ? '...' : '') + '</div>' +
+        '<div class="sp-why">' + why + '</div>' +
+        '<div style="margin-top:8px;display:flex;gap:6px">' +
+          '<button class="rc-btn" onclick="openDNA(\'' + esc(p.id) + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+          '<button class="rc-btn" onclick="saveToJournal(\'' + esc(p.id) + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+document.getElementById('sp-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') generateStudyPath(); });
+
+// ── ORIGINAL VS MANIPULATED ───────────────────────────────────────────────────
+function openOriginalVsManipulated() {
+  if (!DATA) return;
+  var db = DATA.nt_database;
+  var sevColors = {A:'background:#7D6608;color:#fff',F:'background:#e67e22;color:#fff',N:'background:#c0392b;color:#fff',C:'background:#222;color:#888'};
+  var sevLabel = {A:'APPROPRIATED',F:'FABRICATED',N:'NO PRIMARY SOURCE',C:'DIRECTLY CONTRADICTED'};
+  var html = '<div class="to-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>' +
+    '<div class="to-title">Original vs. Manipulated</div>' +
+    '<div class="to-sub">Primary source text alongside what was constructed from it. Manuscript evidence. Documented historical record. No softening.</div>';
+  Object.keys(db).forEach(function(ref) {
+    var e = db[ref];
+    html += '<div style="margin-bottom:22px">' +
+      '<div class="to-sh">' + esc(ref) + '</div>' +
+      '<span class="sev-badge" style="' + sevColors[e.category] + '">' + sevLabel[e.category] + '</span>' +
+      '<div class="col3">' +
+        '<div class="col3-cell"><div class="col3-lbl" style="color:#1E8449">DSS / Orit Primary Source</div><div class="col3-txt">' + esc(e.original_dss_reading || e.primary_source_connection || 'No primary source exists in the DSS or Orit corpus for this claim.') + '</div></div>' +
+        '<div class="col3-cell"><div class="col3-lbl" style="color:#c0392b">What Was Constructed</div><div class="col3-txt">' + esc(e.nt_text || '') + '</div></div>' +
+        '<div class="col3-cell"><div class="col3-lbl" style="color:#6E2F8A">Documented Manipulation</div><div class="col3-txt">' + esc(((e.manipulation || '') + ' ' + (e.verdict || '')).trim()) + '</div></div>' +
+      '</div>' +
+    '</div>';
+  });
+  openTextOverlay('Original vs. Manipulated', html);
+}
+
+// ── JOURNAL ───────────────────────────────────────────────────────────────────
+function getJournal() {
+  try { return JSON.parse(localStorage.getItem('acr_journal') || '[]'); } catch(e) { return []; }
+}
+function saveJournal(entries) {
+  localStorage.setItem('acr_journal', JSON.stringify(entries));
+}
+function isInJournal(pid) {
+  return getJournal().some(function(e) { return e.id === pid; });
+}
+function saveToJournal(pid) {
+  var p = getPassageById(pid);
+  if (!p) return;
+  var entries = getJournal();
+  if (entries.some(function(e) { return e.id === pid; })) return;
+  entries.unshift({id: pid, ref: p.ref, ms: p.manuscript, text: p.text, note: '', date: new Date().toISOString().split('T')[0]});
+  saveJournal(entries);
+  var btn = document.getElementById('save-btn-' + pid);
+  if (btn) { btn.classList.add('saved'); btn.innerHTML = '<i class="ri-bookmark-fill"></i> Saved'; }
+}
+function renderJournal(filter) {
+  var entries = getJournal();
+  var f = (filter || '').toLowerCase();
+  if (f) entries = entries.filter(function(e) { return e.ref.toLowerCase().includes(f) || e.text.toLowerCase().includes(f) || (e.note || '').toLowerCase().includes(f); });
+  var list = document.getElementById('journal-list');
+  if (!entries.length) {
+    list.innerHTML = '<div class="jn-empty">No saved passages yet.<br>Use the Save button on any passage to add it here.<br>Notes are stored on this device only.</div>';
+    return;
+  }
+  list.innerHTML = entries.map(function(e, idx) {
+    return '<div class="jn-entry">' +
+      '<div class="jn-date">' + esc(e.date) + '</div>' +
+      '<div class="jn-ref">' + esc(e.ref) + '</div>' +
+      '<div class="jn-ms">' + esc(e.ms) + '</div>' +
+      '<div class="jn-text">' + esc(e.text).substring(0, 200) + '</div>' +
+      '<div class="jn-note-wrap">' +
+        '<textarea class="jn-note" placeholder="Cite your source..." onchange="updateNote(' + idx + ', this.value)">' + esc(e.note || '') + '</textarea>' +
+      '</div>' +
+      '<button class="jn-delete" onclick="deleteJournalEntry(' + idx + ')"><i class="ri-delete-bin-line"></i> Remove</button>' +
+    '</div>';
+  }).join('');
+}
+function updateNote(idx, val) {
+  var entries = getJournal();
+  var f = (document.getElementById('jn-search').value || '').toLowerCase();
+  if (f) {
+    var filtered = entries.filter(function(e) { return e.ref.toLowerCase().includes(f) || e.text.toLowerCase().includes(f) || (e.note || '').toLowerCase().includes(f); });
+    filtered[idx].note = val;
+  } else {
+    if (entries[idx]) entries[idx].note = val;
+  }
+  saveJournal(entries);
+}
+function deleteJournalEntry(idx) {
+  var entries = getJournal();
+  var f = (document.getElementById('jn-search').value || '').toLowerCase();
+  if (f) {
+    var filtered = entries.filter(function(e) { return e.ref.toLowerCase().includes(f) || e.text.toLowerCase().includes(f) || (e.note || '').toLowerCase().includes(f); });
+    var toRemove = filtered[idx];
+    entries = entries.filter(function(e) { return e !== toRemove; });
+  } else {
+    entries.splice(idx, 1);
+  }
+  saveJournal(entries);
+  renderJournal(document.getElementById('jn-search').value);
+}
+function exportJournal() {
+  var entries = getJournal();
+  if (!entries.length) return;
+  var text = 'ACR Search — Research Journal Export\n' + new Date().toLocaleDateString() + '\n\n';
+  entries.forEach(function(e, i) {
+    text += (i + 1) + '. ' + e.ref + '\n' + e.ms + '\n\n' + e.text + '\n\n';
+    if (e.note) text += 'Note: ' + e.note + '\n\n';
+    text += '---\n\n';
+  });
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'acr-journal-' + new Date().toISOString().split('T')[0] + '.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── CONCEPT MAP ───────────────────────────────────────────────────────────────
+function loadConceptMapNodes() {
+  try { cmNodes = JSON.parse(localStorage.getItem('acr_conceptmap') || '[]'); } catch(e) { cmNodes = []; }
+}
+function saveConceptMapNodes() {
+  localStorage.setItem('acr_conceptmap', JSON.stringify(cmNodes));
+}
+function addConceptMapNode(query, passage) {
+  if (cmNodes.some(function(n) { return n.query === query; })) return;
+  var thread = (passage && passage.threads && passage.threads[0]) || 'Cosmological';
+  var color = THREAD_COLORS[thread] || '#C8971F';
+  var cx = (cmNodes.length % 3) * 100 + 80 + Math.random() * 40;
+  var cy = Math.floor(cmNodes.length / 3) * 90 + 80 + Math.random() * 30;
+  cmNodes.push({query: query, thread: thread, color: color, x: cx, y: cy, pid: passage ? passage.id : null});
+  saveConceptMapNodes();
+  drawConceptMap();
+}
+function initConceptMapCanvas() {
+  var canvas = document.getElementById('cm-canvas');
+  var wrap = canvas.parentElement;
+  canvas.width = wrap.offsetWidth || 400;
+  canvas.height = wrap.offsetHeight || 400;
+  drawConceptMap();
+  canvas.addEventListener('touchstart', cmTouchStart, {passive: false});
+  canvas.addEventListener('touchmove', cmTouchMove, {passive: false});
+  canvas.addEventListener('touchend', cmTouchEnd);
+  canvas.addEventListener('click', cmClick);
+}
+function drawConceptMap() {
+  var canvas = document.getElementById('cm-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Draw edges
+  ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+  for (var i = 0; i < cmNodes.length; i++) {
+    for (var j = i + 1; j < cmNodes.length; j++) {
+      if (cmNodes[i].thread === cmNodes[j].thread) {
+        ctx.beginPath();
+        ctx.moveTo(cmNodes[i].x, cmNodes[i].y);
+        ctx.lineTo(cmNodes[j].x, cmNodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  // Draw nodes
+  cmNodes.forEach(function(n) {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 28, 0, Math.PI * 2);
+    ctx.fillStyle = n.color + '33';
+    ctx.fill();
+    ctx.strokeStyle = n.color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px Outfit,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var label = n.query.length > 10 ? n.query.substring(0, 9) + '...' : n.query;
+    ctx.fillText(label, n.x, n.y);
+  });
+}
+function cmGetNodeAt(x, y) {
+  for (var i = cmNodes.length - 1; i >= 0; i--) {
+    var n = cmNodes[i];
+    var dx = n.x - x, dy = n.y - y;
+    if (Math.sqrt(dx*dx + dy*dy) < 32) return i;
+  }
+  return -1;
+}
+var cmTouchStartTime = 0;
+function cmTouchStart(e) {
+  e.preventDefault();
+  var t = e.touches[0];
+  var rect = e.target.getBoundingClientRect();
+  var x = t.clientX - rect.left, y = t.clientY - rect.top;
+  cmDragging = cmGetNodeAt(x, y);
+  cmTouchStartTime = Date.now();
+  if (cmDragging >= 0) {
+    cmLongPressTimer = setTimeout(function() {
+      cmNodes.splice(cmDragging, 1);
+      saveConceptMapNodes(); drawConceptMap();
+      cmDragging = null;
+    }, 600);
+  }
+}
+function cmTouchMove(e) {
+  e.preventDefault();
+  clearTimeout(cmLongPressTimer);
+  if (cmDragging < 0) return;
+  var t = e.touches[0];
+  var rect = e.target.getBoundingClientRect();
+  cmNodes[cmDragging].x = t.clientX - rect.left;
+  cmNodes[cmDragging].y = t.clientY - rect.top;
+  drawConceptMap();
+}
+function cmTouchEnd(e) {
+  clearTimeout(cmLongPressTimer);
+  cmDragging = null;
+}
+function cmClick(e) {
+  var rect = e.target.getBoundingClientRect();
+  var x = e.clientX - rect.left, y = e.clientY - rect.top;
+  var idx = cmGetNodeAt(x, y);
+  if (idx >= 0) {
+    var n = cmNodes[idx];
+    document.getElementById('search-input').value = n.query;
+    doSearch(n.query);
+  }
+}
+function exportConceptMap() {
+  var canvas = document.getElementById('cm-canvas');
+  var url = canvas.toDataURL('image/png');
+  var a = document.createElement('a');
+  a.href = url; a.download = 'acr-concept-map.png';
+  a.click();
+}
+function clearConceptMap() {
+  if (!confirm('Clear all concept map nodes?')) return;
+  cmNodes = [];
+  saveConceptMapNodes();
+  drawConceptMap();
+}
+
+// ── VOICE SEARCH ──────────────────────────────────────────────────────────────
+function startVoice() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    alert('Voice search not supported on this device.');
+    return;
+  }
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var r = new SR();
+  r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 1;
+  r.onresult = function(e) {
+    var t = e.results[0][0].transcript;
+    document.getElementById('search-input').value = t;
+    doSearch(t);
+  };
+  r.start();
+}
+
+// ── OVERLAYS ──────────────────────────────────────────────────────────────────
+function openOverlay(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeOverlay(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function openTextOverlay(label, html) {
+  document.getElementById('to-label').textContent = label;
+  document.getElementById('to-inner').innerHTML = html;
+  openOverlay('text-overlay');
+}
+
+// ── ACCORDION ─────────────────────────────────────────────────────────────────
+function toggleAccordion(header) {
+  var body = header.nextElementSibling;
+  var isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  var icon = header.querySelector('.ri-arrow-down-s-line, .ri-arrow-up-s-line');
+  if (icon) icon.className = isOpen ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line';
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function getPassageById(pid) {
+  if (!CONCORDANCE) return null;
+  for (var i = 0; i < CONCORDANCE.passages.length; i++) {
+    if (CONCORDANCE.passages[i].id === pid) return CONCORDANCE.passages[i];
+  }
+  return null;
+}
+function esc(s) {
+  return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
