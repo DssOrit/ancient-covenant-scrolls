@@ -318,6 +318,34 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 
 /* LOADING DOTS */
 .dots-wrap{text-align:center;padding:40px;color:var(--tx3);font-size:13px}
+
+/* GUIDE VIEW */
+#guide-view{padding:14px 14px 80px}
+.guide-intro{background:var(--s2);border-radius:var(--r);padding:16px;margin-bottom:16px;border-left:3px solid var(--gold)}
+.guide-intro-paleo{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:32px;color:var(--gold);margin-bottom:8px;text-align:center}
+.guide-intro-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:6px;text-align:center}
+.guide-intro-text{font-size:13px;color:var(--tx2);line-height:1.9;text-align:center}
+.guide-section{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.guide-sec-hdr{padding:13px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.guide-sec-icon{font-size:20px;color:var(--gold);flex-shrink:0}
+.guide-sec-title{font-size:13px;font-weight:700;color:#fff;flex:1}
+.guide-speak-btn{background:none;border:1px solid #2a2a2a;border-radius:7px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:16px;cursor:pointer;flex-shrink:0;transition:all 0.15s}
+.guide-speak-btn:hover,.guide-speak-btn.speaking{border-color:var(--gold);color:var(--gold)}
+.guide-sec-body{display:none;padding:0 13px 14px}
+.guide-step{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.guide-step-num{width:24px;height:24px;border-radius:50%;background:rgba(200,151,31,0.15);border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.guide-step-text{font-size:13px;color:var(--tx2);line-height:1.8;flex:1}
+.guide-step-text b{color:#fff}
+.guide-tip{background:var(--s2);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--tx3);line-height:1.7;margin-top:4px;border-left:2px solid var(--gold)}
+
+/* AUDIO INDICATOR */
+.audio-bar{position:fixed;bottom:0;left:0;right:0;z-index:7000;background:var(--s1);border-top:1px solid #1e1e1e;padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:12px}
+.audio-bar.show{display:flex}
+.audio-bar-label{font-size:12px;color:var(--tx2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.audio-stop-btn{background:none;border:1px solid #444;border-radius:7px;padding:6px 14px;color:var(--tx2);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap}
+.audio-stop-btn:hover{border-color:var(--red);color:var(--red)}
+.tb-audio-btn{background:none;border:1px solid #333;border-radius:8px;width:34px;height:34px;color:var(--tx2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s}
+.tb-audio-btn:hover,.tb-audio-btn.speaking{border-color:var(--gold);color:var(--gold)}
 </style>
 </head>
 <body>
@@ -345,6 +373,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="tb-name">ACR Search</div>
         <div class="tb-sub">The Covenant Concordance</div>
       </div>
+      <button class="tb-audio-btn" id="tb-audio-btn" onclick="speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
       <button class="tb-journal-btn" onclick="setMode('journal')" title="Research Journal"><i class="ri-book-2-line"></i></button>
     </div>
     <div class="search-wrap">
@@ -367,6 +396,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="studypath" onclick="setMode('studypath')"><i class="ri-route-line"></i> Study Path</div>
       <div class="mpill" data-mode="conceptmap" onclick="setMode('conceptmap')"><i class="ri-mind-map"></i> Concept Map</div>
       <div class="mpill" data-mode="journal" onclick="setMode('journal')"><i class="ri-book-2-line"></i> Journal</div>
+      <div class="mpill" data-mode="guide" onclick="setMode('guide')"><i class="ri-question-line"></i> How to Use</div>
     </div>
   </div>
 
@@ -525,6 +555,164 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     </div>
 
     <!-- JOURNAL -->
+    <!-- GUIDE -->
+    <div id="guide-view" style="display:none">
+      <div class="guide-intro">
+        <div class="guide-intro-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+        <div class="guide-intro-title">How to Use ACR Search</div>
+        <div class="guide-intro-text">This is a research tool built on the primary ancient texts — the Dead Sea Scrolls and the Orit Ge'ez. Every result traces back to physical manuscript evidence. Use the sections below to learn each feature. Tap the speaker button on any section to hear it read aloud.</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-search-line"></i>
+          <div class="guide-sec-title">Search — Finding Passages</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'search')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-search">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Type any word, theme, or concept into the search bar at the top. Try words like <b>covenant</b>, <b>light</b>, <b>judgment</b>, or <b>raz</b>.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Results come from over 21,000 passages across all 48 volumes. They are ranked by how closely they match your search and by how many manuscripts confirm them.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Use the <b>thread filter pills</b> below the search bar to narrow results by category: Cosmological, Temporal, Moral, Historical, or Eschatological.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Each result card shows the manuscript source and date range. That is the physical evidence behind the text.</div></div>
+          <div class="guide-tip">Tip: The microphone button lets you speak your search instead of typing it.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-dna-line"></i>
+          <div class="guide-sec-title">Verse DNA — Full Fingerprint of a Passage</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'dna')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-dna">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">On any search result, tap <b>Verse DNA</b>. This opens the full fingerprint of that passage.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">You will see the <b>thread tags</b> — the category the passage belongs to — and the <b>ancient roots</b> — the original Hebrew, Aramaic, or Ge'ez root words present in it.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">The <b>witness count</b> tells you how many independent manuscripts confirm this passage. Higher is stronger evidence.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">If the passage has a <b>manipulation flag</b>, it means this text was later appropriated or misrepresented by another tradition. The NT references are listed.</div></div>
+          <div class="guide-tip">Tip: Tap any root chip inside Verse DNA to immediately search all passages containing that root.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-text"></i>
+          <div class="guide-sec-title">Root Search — Bypassing Translation</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'roots')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-roots">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Root Search</b> in the top navigation. This bypasses all English translation and searches by the original ancient root word.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Tap any root chip — for example <b>Raz</b> (mystery) or <b>Ruach</b> (spirit). Every passage in the corpus tagged with that root will appear.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">This is useful when you want to see every place a concept appears across the full corpus regardless of how it was translated into English.</div></div>
+          <div class="guide-tip">Tip: Root Search is the most direct path to the primary source. No translator's interpretation stands between you and the text.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-arrow-left-right-line"></i>
+          <div class="guide-sec-title">NT Reverse Lookup — What the Primary Source Actually Says</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'nt')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-nt">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>NT Lookup</b> in the navigation. Enter any New Testament reference, for example John 1:1 or Matthew 1:23.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">The result shows seven sections: authorship evidence, oldest manuscript, the primary source the NT claimed to draw from, what the DSS actually says, the documented manipulation, any Greco-Roman parallel, and a plain verdict.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Each entry is categorized: <b>Appropriated</b> means taken from a primary source and reframed. <b>Fabricated from mistranslation</b> means built on a Greek translation error. <b>No primary source</b> means created in the Greco-Roman world with no DSS origin. <b>Directly contradicted</b> means the primary source says the opposite.</div></div>
+          <div class="guide-tip">Tip: Tap any of the pre-loaded reference pills to jump straight to a documented entry.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-scales-3-line"></i>
+          <div class="guide-sec-title">Contradiction Revealer — DSS vs Masoretic</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'contradict')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-contradict">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Contradictions</b> in the navigation. This shows side-by-side comparisons of specific passages where the Dead Sea Scrolls reading differs from the Masoretic text.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Each card opens into three columns: the <b>DSS primary reading</b> in green, the <b>Masoretic variant</b> in gold, and a <b>critical note</b> in purple explaining what changed and why it matters.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">These are not opinions. Each entry is built on the physical manuscript record from named DSS documents with cave and date information.</div></div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-eye-off-line"></i>
+          <div class="guide-sec-title">Suppressed Verse Library</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'suppressed')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-suppressed">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Suppressed</b> in the navigation. This is a curated library of DSS and Orit Ge'ez passages that directly contradict claims made by later theological traditions.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Passages are grouped by category, such as Absolute Monotheism, Human Messiah Only, and Solar Calendar. Tap any category to expand it.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Every verse shows its manuscript source and a plain statement of what it contradicts. No interpretation. The text speaks for itself.</div></div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-route-line"></i>
+          <div class="guide-sec-title">Study Path — Guided Reading Sequence</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'studypath')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-studypath">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Study Path</b> in the navigation. Type a concept — for example <b>raz nihyeh</b>, <b>appointed times</b>, or <b>covenant</b>.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">The tool finds up to 12 relevant passages and arranges them in sequence from foundational to advanced. The order follows the thread structure: Cosmological, Temporal, Moral, Historical, Eschatological.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Each step shows why it comes where it does in the sequence. You can save any passage to your journal directly from the path.</div></div>
+          <div class="guide-tip">Tip: Study Path is the best starting point when you are new to a concept and want context before detail.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-book-2-line"></i>
+          <div class="guide-sec-title">Research Journal — Saving Your Work</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'journal')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-journal">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">On any search result or Verse DNA card, tap <b>Save</b>. The passage is stored in your journal on this device only. Nothing leaves your device.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Open the Journal from the navigation bar. Each saved passage has a <b>notes field</b> where you can write your own observations or citations.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap <b>Export</b> to download all saved passages and notes as a plain text file you can keep, print, or share.</div></div>
+          <div class="guide-tip">Tip: Your journal survives app restarts and is available offline. It is stored in your browser's local storage.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-mind-map"></i>
+          <div class="guide-sec-title">Concept Map — Visual Research Web</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'conceptmap')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-conceptmap">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Every search you run adds a node to the Concept Map. Open it from the navigation bar to see your research session as a visual web.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Nodes that share the same thread are connected by lines. Colors match the five threads: green for Cosmological, blue for Temporal, gold for Moral, purple for Historical, red for Eschatological.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap any node to re-run that search. Drag nodes to rearrange the map. Long-press a node to delete it. Tap Export to save the map as an image.</div></div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-volume-up-line"></i>
+          <div class="guide-sec-title">Audio — Reading Passages Aloud</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'audio')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-audio">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">The <b>speaker button</b> in the top right of the header reads the current view aloud using the Samantha voice.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Each section in this guide also has its own speaker button so you can listen to one topic at a time.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">A playback bar appears at the bottom of the screen while audio is playing. Tap <b>Stop</b> to end playback at any time.</div></div>
+          <div class="guide-tip">Tip: For best results, ensure your device is not on silent. The Samantha voice is the built-in iOS English voice and requires no download.</div>
+        </div>
+      </div>
+    </div>
+
     <div id="journal-view" style="display:none">
       <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Research Journal</div>
       <div style="font-size:11px;color:var(--tx3);margin-bottom:12px;line-height:1.6">Passages saved on this device. Add notes and export as plain text.</div>
@@ -535,6 +723,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="journal-list"></div>
     </div>
   </div>
+</div>
+
+<!-- AUDIO BAR -->
+<div class="audio-bar" id="audio-bar">
+  <i class="ri-volume-up-line" style="color:var(--gold);font-size:18px;flex-shrink:0"></i>
+  <div class="audio-bar-label" id="audio-bar-label">Reading...</div>
+  <button class="audio-stop-btn" onclick="stopAudio()">Stop</button>
 </div>
 
 <!-- TEXT OVERLAY -->
@@ -687,7 +882,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal'];
+  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -1532,6 +1727,111 @@ function openTextOverlay(label, html) {
 
 // ── ACCORDION ─────────────────────────────────────────────────────────────────
 function toggleAccordion(header) {
+  var body = header.nextElementSibling;
+  var isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  var icon = header.querySelector('.ri-arrow-down-s-line, .ri-arrow-up-s-line');
+  if (icon) icon.className = isOpen ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line';
+}
+
+// ── AUDIO / TTS ───────────────────────────────────────────────────────────────
+var samanthaVoice = null;
+var audioSpeaking = false;
+
+function loadVoices() {
+  var voices = window.speechSynthesis.getVoices();
+  samanthaVoice = voices.find(function(v) { return v.name === 'Samantha'; }) ||
+                  voices.find(function(v) { return v.name.toLowerCase().includes('samantha'); }) ||
+                  voices.find(function(v) { return v.lang === 'en-US' && v.localService; }) ||
+                  voices.find(function(v) { return v.lang.startsWith('en'); }) ||
+                  null;
+}
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function speakText(text, label) {
+  if (!window.speechSynthesis) return;
+  stopAudio();
+  loadVoices();
+  var utt = new SpeechSynthesisUtterance(text);
+  if (samanthaVoice) utt.voice = samanthaVoice;
+  utt.rate = 0.92;
+  utt.pitch = 1.0;
+  utt.volume = 1.0;
+  utt.onstart = function() {
+    audioSpeaking = true;
+    document.getElementById('audio-bar').classList.add('show');
+    document.getElementById('audio-bar-label').textContent = label || 'Reading...';
+    document.getElementById('tb-audio-btn').classList.add('speaking');
+  };
+  utt.onend = utt.onerror = function() {
+    audioSpeaking = false;
+    document.getElementById('audio-bar').classList.remove('show');
+    document.getElementById('tb-audio-btn').classList.remove('speaking');
+    document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
+  };
+  window.speechSynthesis.speak(utt);
+}
+
+function stopAudio() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  audioSpeaking = false;
+  document.getElementById('audio-bar').classList.remove('show');
+  document.getElementById('tb-audio-btn').classList.remove('speaking');
+  document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
+}
+
+function speakCurrentView() {
+  var text = '';
+  var label = '';
+  if (currentMode === 'home') {
+    text = 'ACR Search. The Covenant Concordance. Dead Sea Scrolls and the Orit Ge\'ez, digitally compiled. The primary ancient text sources, gathered digitally, in their original form. Use the search bar to search over 21,000 passages. Use NT Lookup to check any New Testament reference against the primary source record. Use Root Search to search by ancient Hebrew or Ge\'ez root. Tap How to Use for a full guide.';
+    label = 'Home';
+  } else if (currentMode === 'results') {
+    var items = document.querySelectorAll('#results-list .rc');
+    var first3 = [];
+    for (var i = 0; i < Math.min(3, items.length); i++) {
+      var ref = items[i].querySelector('.rc-ref');
+      var txt = items[i].querySelector('.rc-text');
+      if (ref && txt) first3.push(ref.textContent.trim() + '. ' + txt.textContent.trim());
+    }
+    text = document.getElementById('results-hdr-text').textContent + '. ' + first3.join('. ');
+    label = 'Search results';
+  } else if (currentMode === 'guide') {
+    text = 'How to use ACR Search. This is a primary source research tool built on the Dead Sea Scrolls and the Orit Ge\'ez. Type any word or concept in the search bar to find passages. Use Root Search to search by ancient root words. Use NT Lookup to see what the primary sources actually say about any New Testament reference. Use Study Path to get a guided reading sequence on any concept. Save passages to your Journal. Tap any section header in this guide for detailed instructions on each feature.';
+    label = 'How to Use guide';
+  } else {
+    var activeView = document.getElementById(currentMode + '-view');
+    if (activeView) {
+      text = activeView.innerText.substring(0, 1200);
+      label = currentMode;
+    }
+  }
+  if (text) speakText(text, label);
+}
+
+var GUIDE_TEXTS = {
+  search: 'Search — Finding Passages. Type any word, theme, or concept into the search bar at the top. Try words like covenant, light, judgment, or raz. Results come from over 21,000 passages across all 48 volumes. They are ranked by how closely they match your search and by how many manuscripts confirm them. Use the thread filter pills to narrow results by category: Cosmological, Temporal, Moral, Historical, or Eschatological. Each result card shows the manuscript source and date range. That is the physical evidence behind the text. Tip: the microphone button lets you speak your search instead of typing it.',
+  dna: 'Verse DNA — Full Fingerprint of a Passage. On any search result, tap Verse DNA. This opens the full fingerprint of that passage. You will see the thread tags — the category the passage belongs to — and the ancient roots — the original Hebrew, Aramaic, or Ge\'ez root words present in it. The witness count tells you how many independent manuscripts confirm this passage. Higher is stronger evidence. If the passage has a manipulation flag, it means this text was later appropriated or misrepresented by another tradition. Tip: tap any root chip inside Verse DNA to immediately search all passages containing that root.',
+  roots: 'Root Search — Bypassing Translation. Tap Root Search in the top navigation. This bypasses all English translation and searches by the original ancient root word. Tap any root chip — for example Raz, meaning mystery, or Ruach, meaning spirit. Every passage in the corpus tagged with that root will appear. This is useful when you want to see every place a concept appears across the full corpus regardless of how it was translated into English. Tip: Root Search is the most direct path to the primary source. No translator\'s interpretation stands between you and the text.',
+  nt: 'NT Reverse Lookup — What the Primary Source Actually Says. Tap NT Lookup in the navigation. Enter any New Testament reference, for example John 1:1 or Matthew 1:23. The result shows seven sections: authorship evidence, oldest manuscript, the primary source the NT claimed to draw from, what the DSS actually says, the documented manipulation, any Greco-Roman parallel, and a plain verdict. Each entry is categorized as Appropriated, Fabricated from mistranslation, No primary source, or Directly contradicted. Tip: tap any of the pre-loaded reference pills to jump straight to a documented entry.',
+  contradict: 'Contradiction Revealer. Tap Contradictions in the navigation. This shows side-by-side comparisons of specific passages where the Dead Sea Scrolls reading differs from the Masoretic text. Each card opens into three columns: the DSS primary reading in green, the Masoretic variant in gold, and a critical note in purple explaining what changed and why it matters. These are not opinions. Each entry is built on the physical manuscript record from named DSS documents with cave and date information.',
+  suppressed: 'Suppressed Verse Library. Tap Suppressed in the navigation. This is a curated library of DSS and Orit Ge\'ez passages that directly contradict claims made by later theological traditions. Passages are grouped by category, such as Absolute Monotheism, Human Messiah Only, and Solar Calendar. Tap any category to expand it. Every verse shows its manuscript source and a plain statement of what it contradicts. No interpretation. The text speaks for itself.',
+  studypath: 'Study Path — Guided Reading Sequence. Tap Study Path in the navigation. Type a concept — for example raz nihyeh, appointed times, or covenant. The tool finds up to 12 relevant passages and arranges them in sequence from foundational to advanced. The order follows the thread structure: Cosmological, Temporal, Moral, Historical, Eschatological. Each step shows why it comes where it does in the sequence. You can save any passage to your journal directly from the path. Tip: Study Path is the best starting point when you are new to a concept and want context before detail.',
+  journal: 'Research Journal — Saving Your Work. On any search result or Verse DNA card, tap Save. The passage is stored in your journal on this device only. Nothing leaves your device. Open the Journal from the navigation bar. Each saved passage has a notes field where you can write your own observations or citations. Tap Export to download all saved passages and notes as a plain text file you can keep, print, or share. Tip: your journal survives app restarts and is available offline.',
+  conceptmap: 'Concept Map — Visual Research Web. Every search you run adds a node to the Concept Map. Open it from the navigation bar to see your research session as a visual web. Nodes that share the same thread are connected by lines. Colors match the five threads: green for Cosmological, blue for Temporal, gold for Moral, purple for Historical, red for Eschatological. Tap any node to re-run that search. Drag nodes to rearrange the map. Long-press a node to delete it. Tap Export to save the map as an image.',
+  audio: 'Audio — Reading Passages Aloud. The speaker button in the top right of the header reads the current view aloud using the Samantha voice. Each section in this guide also has its own speaker button so you can listen to one topic at a time. A playback bar appears at the bottom of the screen while audio is playing. Tap Stop to end playback at any time. Tip: for best results ensure your device is not on silent. The Samantha voice is the built-in iOS English voice and requires no download.'
+};
+
+function speakGuideSection(btn, key) {
+  document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
+  btn.classList.add('speaking');
+  speakText(GUIDE_TEXTS[key] || '', 'Guide: ' + key);
+}
+
+function toggleGuideSection(header) {
   var body = header.nextElementSibling;
   var isOpen = body.style.display === 'block';
   body.style.display = isOpen ? 'none' : 'block';
