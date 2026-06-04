@@ -346,6 +346,58 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .audio-stop-btn:hover{border-color:var(--red);color:var(--red)}
 .tb-audio-btn{background:none;border:1px solid #333;border-radius:8px;width:34px;height:34px;color:var(--tx2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s}
 .tb-audio-btn:hover,.tb-audio-btn.speaking{border-color:var(--gold);color:var(--gold)}
+
+/* VOLUME BROWSER */
+#volumebrowser-view{padding:14px}
+.vb-intro{font-size:11px;color:var(--tx3);margin-bottom:12px;line-height:1.6}
+.vb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.vb-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:11px;cursor:pointer;transition:background 0.15s;border-left:3px solid var(--gold);text-align:center}
+.vb-card:active{background:var(--s2)}
+.vb-vol-num{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:1px}
+.vb-vol-count{font-size:10px;color:var(--tx3)}
+
+/* ROOT ETYMOLOGY PANEL */
+#root-etym-backdrop{position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,0.6);display:none}
+#root-etym-backdrop.open{display:block}
+#root-etym-panel{position:fixed;bottom:0;left:0;right:0;z-index:8500;background:var(--s1);border-top:1px solid #2a2a2a;border-radius:16px 16px 0 0;padding:20px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform 0.28s ease;max-height:70vh;overflow-y:auto}
+#root-etym-panel.open{transform:translateY(0)}
+.rep-handle{width:36px;height:4px;background:#333;border-radius:2px;margin:0 auto 16px}
+.rep-heb{font-family:'Space Mono',monospace;font-size:40px;color:#fff;text-align:center;margin-bottom:2px;direction:rtl;letter-spacing:0.05em}
+.rep-translit{font-size:20px;font-weight:800;color:var(--gold);text-align:center;margin-bottom:3px}
+.rep-lang{font-size:11px;color:var(--tx3);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:0.07em}
+.rep-meaning{font-size:14px;color:#fff;font-weight:700;margin-bottom:6px}
+.rep-range{font-size:13px;color:var(--tx2);line-height:1.9;margin-bottom:18px;border-left:2px solid var(--gold);padding-left:10px}
+.rep-actions{display:flex;gap:8px}
+.rep-search-btn{flex:1;background:var(--gold);color:#000;font-weight:800;font-size:14px;font-family:var(--font);border:none;border-radius:10px;padding:12px;cursor:pointer}
+.rep-close-btn{background:none;border:1px solid #333;border-radius:10px;padding:12px 16px;color:var(--tx2);font-size:14px;cursor:pointer;font-family:var(--font)}
+
+/* SEARCH HISTORY */
+#search-history{position:absolute;top:calc(100% + 2px);left:0;right:0;background:var(--s1);border:1px solid #2a2a2a;border-radius:0 0 10px 10px;z-index:5000;display:none;max-height:230px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+#search-history.show{display:block}
+.sh-hdr{padding:7px 14px;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:0.07em;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center}
+.sh-clear-btn{color:var(--gold);font-size:10px;cursor:pointer;background:none;border:none;font-family:var(--font);padding:0}
+.sh-item{padding:10px 14px;font-size:13px;color:var(--tx);cursor:pointer;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px}
+.sh-item:last-child{border-bottom:none}
+.sh-item:active,.sh-item:hover{background:var(--s2)}
+.sh-item i{color:var(--tx3);font-size:14px;flex-shrink:0}
+
+/* SWIPE GESTURE */
+.rc-swipe-wrap{position:relative;overflow:hidden;border-radius:var(--r);margin-bottom:9px}
+.rc-swipe-bg-r{position:absolute;inset:0;display:flex;align-items:center;padding-left:18px;gap:7px;font-size:12px;font-weight:700;color:#27ae60;pointer-events:none;background:rgba(39,174,96,0.12)}
+.rc-swipe-bg-l{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:18px;gap:7px;font-size:12px;font-weight:700;color:var(--gold);pointer-events:none;background:rgba(200,151,31,0.12)}
+.rc-swipe-inner{position:relative;z-index:1;background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;cursor:pointer;transition:background 0.15s;will-change:transform}
+.rc-swipe-inner:active{background:var(--s2)}
+
+/* CARD STAGGER ANIMATION */
+@keyframes rcFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* MORE FROM SCROLL */
+.mfs-section{margin-top:16px;padding-top:14px;border-top:1px solid #2a2a2a}
+.mfs-label{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px}
+.mfs-item{background:var(--s3);border:1px solid #1e1e1e;border-radius:8px;padding:10px;margin-bottom:7px;cursor:pointer;transition:background 0.15s}
+.mfs-item:active{background:#2a2a2a}
+.mfs-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.mfs-text{font-size:12px;color:var(--tx2);line-height:1.7;font-style:italic;margin-bottom:5px}
 </style>
 </head>
 <body>
@@ -378,7 +430,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     </div>
     <div class="search-wrap">
       <div class="si-wrap">
-        <input class="search-input" id="search-input" type="text" placeholder="Search verses, themes, concepts..." autocomplete="off" oninput="onSearch(this.value)">
+        <input class="search-input" id="search-input" type="text" placeholder="Search verses, themes, concepts..." autocomplete="off" oninput="onSearch(this.value)" onfocus="showSearchHistory()" onblur="setTimeout(hideSearchHistory,200)">
+        <div id="search-history"></div>
         <div class="si-btns">
           <button class="si-btn" id="root-toggle-btn" onclick="toggleRootMode()" title="Root search"><i class="ri-text"></i></button>
           <button class="si-btn" onclick="startVoice()" title="Voice search"><i class="ri-mic-line"></i></button>
@@ -397,6 +450,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="conceptmap" onclick="setMode('conceptmap')"><i class="ri-mind-map"></i> Concept Map</div>
       <div class="mpill" data-mode="journal" onclick="setMode('journal')"><i class="ri-book-2-line"></i> Journal</div>
       <div class="mpill" data-mode="guide" onclick="setMode('guide')"><i class="ri-question-line"></i> How to Use</div>
+      <div class="mpill" data-mode="volumebrowser" onclick="setMode('volumebrowser')"><i class="ri-grid-line"></i> Volumes</div>
     </div>
   </div>
 
@@ -722,6 +776,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
       <div id="journal-list"></div>
     </div>
+
+    <!-- VOLUME BROWSER -->
+    <div id="volumebrowser-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Volume Browser</div>
+      <div class="vb-intro">All 48 volumes in the corpus. Tap any volume to browse its passages without searching.</div>
+      <div id="vb-grid" class="vb-grid"></div>
+    </div>
   </div>
 </div>
 
@@ -730,6 +791,21 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
   <i class="ri-volume-up-line" style="color:var(--gold);font-size:18px;flex-shrink:0"></i>
   <div class="audio-bar-label" id="audio-bar-label">Reading...</div>
   <button class="audio-stop-btn" onclick="stopAudio()">Stop</button>
+</div>
+
+<!-- ROOT ETYMOLOGY PANEL -->
+<div id="root-etym-backdrop" onclick="closeRootEtym()"></div>
+<div id="root-etym-panel">
+  <div class="rep-handle"></div>
+  <div class="rep-heb" id="rep-heb"></div>
+  <div class="rep-translit" id="rep-translit"></div>
+  <div class="rep-lang" id="rep-lang"></div>
+  <div class="rep-meaning" id="rep-meaning"></div>
+  <div class="rep-range" id="rep-range"></div>
+  <div class="rep-actions">
+    <button class="rep-search-btn" onclick="doRootSearchFromPanel()">Search all passages with this root</button>
+    <button class="rep-close-btn" onclick="closeRootEtym()">Close</button>
+  </div>
 </div>
 
 <!-- TEXT OVERLAY -->
@@ -796,6 +872,28 @@ var ROOT_CHIPS = [
 ];
 var THREAD_COLORS = {Cosmological:'#1E8449',Temporal:'#1A5276',Moral:'#7D6608',Historical:'#6E2F8A',Eschatological:'#C0392B'};
 
+var ROOT_ETYM = {
+  raz:{heb:'רז',translit:'Raz',lang:'Hebrew / Aramaic',meaning:'Mystery — hidden divine secret',range:'Used exclusively for divine mysteries revealed only to the elect. In the DSS, especially the Hodayot and Mysteries texts, raz refers to the hidden plan of creation and end-times that YHWH discloses to the Teacher of Righteousness. Not a general secret but a specific covenantal disclosure. Found alongside the term nihyeh ("that which is to come"), forming the technical phrase raz nihyeh.'},
+  moed:{heb:'מועד',translit:"Mo'ed",lang:'Hebrew',meaning:'Appointed time — sacred assembly',range:"A divinely fixed point in the calendar when heaven and earth intersect. The 364-day solar calendar of the DSS is structured entirely around mo'adim (plural). The Masoretic tradition inherited the word but the DSS corpus shows a far more technical, astronomical usage tied to the sun rather than the lunar calendar later adopted."},
+  ruach:{heb:'רוח',translit:'Ruach',lang:'Hebrew / Aramaic',meaning:'Spirit, breath, wind — divine animating force',range:"The creative breath of YHWH in Genesis, the animating principle in living beings, and the divine presence that moves through prophets. In the DSS it frequently describes the holy spirit of truth given to the elect at initiation. Not a person of a trinity — a divine quality or force, comparable in function to pneuma in Greek but distinct in ontology."},
+  amen:{heb:'אמן',translit:'Amen',lang:'Hebrew',meaning:'Faithfulness — steadfast reliability',range:"Root of both amen (the affirmation) and emunah (faith/faithfulness). In the DSS context it describes the quality of being unmovable, trustworthy, confirmed. Not a ritual exclamation but an ontological claim about the nature of the covenant. The term signals that what is spoken is grounded in the same reliability as YHWH's covenant character."},
+  shalom:{heb:'שלם',translit:'Shalom',lang:'Hebrew',meaning:'Wholeness, completeness, right order',range:'Not merely absence of conflict but the state of integral completeness — physical, relational, cosmic. The DSS texts describe shalom as the condition of creation before corruption and the condition restored in the covenant community. Its opposite is not war but fragmentation. Closely related to the root for restitution: making something whole again.'},
+  brit:{heb:'ברית',translit:'Brit',lang:'Hebrew',meaning:'Covenant — binding agreement',range:"The foundational legal and relational structure of the DSS community's identity. The Qumran community called itself the New Covenant (brit hadashah) in the land of Damascus. Brit in the DSS is always conditional, bilateral, and ratified by physical or verbal act. Not a unilateral promise — a treaty between parties with stated obligations, blessings, and curses."},
+  daat:{heb:'דעת',translit:"Da'at",lang:'Hebrew',meaning:'Knowledge — intimate, experiential knowing',range:"Not intellectual knowledge but the knowing that comes from covenant relationship. In the DSS the Community Rule centers initiation on increasing access to da'at. The opposite of da'at is not ignorance but the state of the children of darkness. The NT concept of gnosis in Jewish apocalyptic literature derives from this root."},
+  tzedek:{heb:'צדק',translit:'Tzedek',lang:'Hebrew',meaning:'Righteousness — cosmic right order',range:"Both a legal and cosmic term. Legal: the correct verdict in a court case. Cosmic: alignment with YHWH's established order. The Teacher of Righteousness (moreh ha-tzedek) is not merely a moral teacher but one who restores correct legal and cultic order. Tzedakah (almsgiving) is derived from this root — giving correctly to restore order, not a voluntary act of kindness."},
+  almah:{heb:'אלמה',translit:'Almah',lang:'Hebrew',meaning:'Young woman of marriageable age',range:'Refers to a young woman, typically post-pubescent and unmarried. Not a technical term for sexual status. Isaiah 7:14 uses almah — the Septuagint (LXX) translated this as parthenos (Greek: virgin), which became the basis for the NT nativity claim. The DSS Hebrew texts use betulah when sexual virginity is the actual meaning. The substitution of almah with parthenos is the documented translation divergence.'},
+  betulah:{heb:'בתולה',translit:'Betulah',lang:'Hebrew',meaning:'Virgin — one who has not known a man',range:'The technical term in Hebrew law for a woman who has not had sexual relations. Used in legal contexts (e.g., Deuteronomy 22) where the distinction carries legal weight. When the DSS or Masoretic text means to state sexual virginity, betulah is the word used — not almah. The Isaiah 7:14 text uses almah, not betulah.'},
+  mashiach:{heb:'משיח',translit:'Mashiach',lang:'Hebrew',meaning:'Anointed one — appointed to office',range:'Any individual ritually anointed for a specific office: high priest, king, prophet. In the DSS there are two expected messianic figures — the Priest-Messiah and the King-Messiah. Neither is divine. The concept is fundamentally about appointment and function, not ontological status. The Greek transliteration is Christos (Christ), which lost the functional specificity of the Hebrew.'},
+  or:{heb:'אור',translit:'Or',lang:'Hebrew',meaning:'Light — divine illumination',range:'In the DSS dualistic framework, or and choshekh (darkness) represent the two primal forces in creation and human moral constitution. The sons of light (benei or) are the elect community; the sons of darkness are the corrupt world. Or is not merely physical light but the condition of correct alignment with the created order. The Solar calendar theology of Qumran is inseparable from the primacy of or.'},
+  choshekh:{heb:'חשך',translit:'Choshekh',lang:'Hebrew',meaning:'Darkness — primordial disorder',range:"The antithesis of or in the DSS dualistic cosmology. In the Qumran framework, choshekh has been conscripted by the Prince of Darkness (Belial) and represents the current corrupted age. The War Scroll depicts the final eschatological battle as the sons of light defeating the sons of darkness. Not inherently evil in Genesis — darkness simply pre-exists light there."},
+  shemesh:{heb:'שמש',translit:'Shemesh',lang:'Hebrew',meaning:'Sun — the governing timekeeper',range:"Central to the DSS solar calendar theology. The 364-day solar calendar (as preserved in 1 Enoch and the Temple Scroll) is determined by the sun, not the moon. Shemesh appears in the context of mo'adim and appointed times — the sun fixes the sacred calendar nodes. The Qumran community's rejection of the Jerusalem temple is partly rooted in the dispute over which calendar was divinely mandated."},
+  emet:{heb:'אמת',translit:'Emet',lang:'Hebrew',meaning:'Truth — ontological trustworthiness',range:"Derived from the same root as amen and emunah. Emet in the DSS describes the character of YHWH, the nature of the covenant, and the quality the elect community is to embody. Not merely factual accuracy but deep ontological reliability. The Spirit of truth (ruach emet) in the Community Rule is the divine quality given to those initiated into the covenant."},
+  chesed:{heb:'חסד',translit:'Chesed',lang:'Hebrew',meaning:'Covenant loyalty — steadfast love',range:"The quality that keeps a covenant party faithful to their obligations when no legal enforcement is present. Often translated as loving-kindness or mercy but these miss the legal-covenantal dimension. Chesed is what a covenant partner demonstrates when they go beyond what is strictly required because the relationship itself demands it. The DSS community is bound by chesed to one another and to YHWH."},
+  mishpat:{heb:'משפט',translit:'Mishpat',lang:'Hebrew',meaning:'Judgment — correct legal procedure',range:'Both a noun (the verdict) and a concept derived from judging correctly. In the DSS, mishpat often refers to the final divine judgment at the end of the age when all deeds are examined. But it also describes correct procedural order in the community\'s internal legal proceedings as detailed in the Community Rule and Damascus Document. Not punitive judgment as a general concept but restoration of right order through legal process.'}
+};
+var currentRootEtymKey = null;
+var VOLUME_INDEX = {};
+
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var DATA = null;
 var CONCORDANCE = null;
@@ -836,6 +934,7 @@ document.getElementById('pw-input').addEventListener('keydown', function(e) { if
 function startLoading() {
   var ls = document.getElementById('loading-screen');
   ls.classList.add('show');
+  startGlyphAnimation();
   setLdProgress(10, 'Loading reference data...');
 
   fetch('acr_search_data.json').then(function(r) { return r.json(); }).then(function(d) {
@@ -849,6 +948,7 @@ function startLoading() {
     CONCORDANCE = c;
     setLdProgress(90, 'Indexing complete. Opening...');
     setTimeout(function() {
+      stopGlyphAnimation();
       ls.classList.remove('show');
       document.getElementById('app').classList.remove('hidden');
       initApp();
@@ -873,6 +973,7 @@ function initApp() {
   renderRootChips();
   renderJournal('');
   loadConceptMapNodes();
+  buildVolumeIndex();
   // Register SW
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function() {});
@@ -882,7 +983,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide'];
+  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide','volumebrowser'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -903,6 +1004,7 @@ function setMode(mode) {
 function onSearch(val) {
   clearTimeout(searchTimer);
   if (!val.trim()) { setMode('home'); return; }
+  hideSearchHistory();
   searchTimer = setTimeout(function() { doSearch(val); }, 300);
 }
 
@@ -961,6 +1063,7 @@ function doSearch(q) {
     });
   }
 
+  addToSearchHistory(q.trim());
   currentResults = results;
   activeThreadFilter = 'All';
   document.querySelectorAll('#filter-bar .fpill').forEach(function(p) {
@@ -1000,10 +1103,17 @@ function applyFilterAndRender(q) {
 function loadMoreResults() {
   var list = document.getElementById('results-list');
   var slice = filteredResults.slice(displayedCount, displayedCount + PAGE_SIZE);
-  slice.forEach(function(r) {
+  slice.forEach(function(r, sliceIdx) {
     var el = document.createElement('div');
     el.innerHTML = renderResultCard(r);
-    list.appendChild(el.firstChild);
+    var cardEl = el.firstChild;
+    var delay = (sliceIdx % PAGE_SIZE * 0.04) + 's';
+    cardEl.style.animation = 'rcFadeIn 0.22s ease both';
+    cardEl.style.animationDelay = delay;
+    list.appendChild(cardEl);
+    if (!r._type && cardEl.classList.contains('rc-swipe-wrap')) {
+      initCardSwipe(cardEl, r.id);
+    }
   });
   displayedCount += slice.length;
   var wrap = document.getElementById('load-more-wrap');
@@ -1029,26 +1139,31 @@ function renderResultCard(r) {
       '<div class="rc-ms">' + esc(r.v.ms) + '</div>' +
       '</div>';
   }
-  // Concordance passage
+  // Concordance passage — swipe wrapper
   var tags = (r.threads || []).map(function(t) {
     return '<span class="ttag ' + t + '">' + t + '</span>';
   }).join('');
   var manip = r.manipulation_flag ? '<span class="manip-flag">Manipulation</span>' : '';
   var witness = '<span class="witness-badge">' + r.witness_count + ' witness' + (r.witness_count !== 1 ? 'es' : '') + '</span>';
   var sid = esc(r.id);
-  return '<div class="rc">' +
-    '<div class="rc-ref">' + esc(r.ref) + ' ' + manip + ' ' + witness + '</div>' +
-    '<div class="rc-ms">' + esc(r.manuscript) + ' — ' + esc(r.date_range) + '</div>' +
-    '<div class="rc-text">' + esc(r.text).substring(0, 200) + (r.text.length > 200 ? '...' : '') + '</div>' +
-    '<div class="rc-tags">' + tags + '</div>' +
-    '<div class="rc-actions">' +
-      '<button class="rc-btn" onclick="openDNA(\'' + sid + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
-      '<button class="rc-btn" onclick="openWitnessWall(\'' + sid + '\')"><i class="ri-file-list-3-line"></i> Witnesses</button>' +
-      '<button class="rc-btn" onclick="openParallelView(\'' + sid + '\')"><i class="ri-layout-column-line"></i> Parallel</button>' +
-      '<button class="rc-btn" onclick="openManuscriptTrail(\'' + sid + '\')"><i class="ri-map-pin-line"></i> Trail</button>' +
-      '<button class="rc-btn" id="save-btn-' + sid + '" onclick="saveToJournal(\'' + sid + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+  return '<div class="rc-swipe-wrap" data-pid="' + sid + '">' +
+    '<div class="rc-swipe-bg-r"><i class="ri-bookmark-line"></i> Save</div>' +
+    '<div class="rc-swipe-bg-l">Verse DNA <i class="ri-dna-line"></i></div>' +
+    '<div class="rc-swipe-inner">' +
+      '<div class="rc-ref">' + esc(r.ref) + ' ' + manip + ' ' + witness + '</div>' +
+      '<div class="rc-ms">' + esc(r.manuscript) + ' — ' + esc(r.date_range) + '</div>' +
+      '<div class="rc-text">' + esc(r.text).substring(0, 200) + (r.text.length > 200 ? '...' : '') + '</div>' +
+      '<div class="rc-tags">' + tags + '</div>' +
+      '<div class="rc-actions">' +
+        '<button class="rc-btn" onclick="openDNA(\'' + sid + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+        '<button class="rc-btn" onclick="openWitnessWall(\'' + sid + '\')"><i class="ri-file-list-3-line"></i> Witnesses</button>' +
+        '<button class="rc-btn" onclick="openParallelView(\'' + sid + '\')"><i class="ri-layout-column-line"></i> Parallel</button>' +
+        '<button class="rc-btn" onclick="openManuscriptTrail(\'' + sid + '\')"><i class="ri-map-pin-line"></i> Trail</button>' +
+        '<button class="rc-btn" id="save-btn-' + sid + '" onclick="saveToJournal(\'' + sid + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+        '<button class="rc-btn" onclick="copyPassage(\'' + sid + '\',this)"><i class="ri-clipboard-line"></i> Copy</button>' +
+      '</div>' +
     '</div>' +
-    '</div>';
+  '</div>';
 }
 
 // ── ROOT MODE TOGGLE ──────────────────────────────────────────────────────────
@@ -1075,13 +1190,27 @@ function openDNA(pid) {
     return '<span class="ttag ' + t + '" style="font-size:11px;padding:3px 8px">' + t + '</span>';
   }).join('');
   var rootChips = (p.roots || []).map(function(r) {
-    return '<span class="root-chip" onclick="doRootSearch(\'' + r + '\')">' + r + '</span>';
+    return '<span class="root-chip" onclick="openRootEtym(\'' + r + '\')">' + r + '</span>';
   }).join('');
   var manip = p.manipulation_flag ? '<div style="margin-top:10px;padding:10px;background:rgba(192,57,43,0.1);border-radius:8px;border:1px solid rgba(192,57,43,0.3)">' +
     '<div class="dna-label" style="color:var(--red)">Manipulation Flag</div>' +
     '<div style="font-size:12px;color:var(--tx2)">This passage was appropriated by NT tradition.</div>' +
     (p.nt_appropriated_by ? '<div style="font-size:11px;color:#e74c3c;margin-top:4px">NT references: ' + p.nt_appropriated_by.join(', ') + '</div>' : '') +
     '</div>' : '';
+
+  var mfsPassages = CONCORDANCE ? CONCORDANCE.passages.filter(function(op) {
+    return op.manuscript === p.manuscript && op.id !== pid &&
+      (op.threads.some(function(t) { return p.threads.includes(t); }) ||
+       op.roots.some(function(r) { return p.roots.includes(r); }));
+  }).sort(function(a, b) { return b.witness_count - a.witness_count; }).slice(0, 5) : [];
+  var mfsHtml = mfsPassages.length ? '<div class="mfs-section">' +
+    '<div class="mfs-label">More from this scroll — ' + esc(p.manuscript) + '</div>' +
+    mfsPassages.map(function(sp) {
+      return '<div class="mfs-item" onclick="openDNA(\'' + esc(sp.id) + '\')">' +
+        '<div class="mfs-ref">' + esc(sp.ref) + '</div>' +
+        '<div class="mfs-text">' + esc(sp.text).substring(0, 140) + (sp.text.length > 140 ? '...' : '') + '</div>' +
+      '</div>';
+    }).join('') + '</div>' : '';
 
   document.getElementById('dna-body').innerHTML =
     '<div style="padding:14px">' +
@@ -1099,6 +1228,7 @@ function openDNA(pid) {
       '<button class="rc-btn" onclick="openParallelView(\'' + esc(pid) + '\')"><i class="ri-layout-column-line"></i> Parallel Passages</button>' +
       '<button class="rc-btn" onclick="openManuscriptTrail(\'' + esc(pid) + '\')"><i class="ri-map-pin-line"></i> Manuscript Trail</button>' +
     '</div>' +
+    mfsHtml +
     '</div>';
 
   openOverlay('dna-overlay');
@@ -1790,7 +1920,7 @@ function speakCurrentView() {
     text = 'ACR Search. The Covenant Concordance. Dead Sea Scrolls and the Orit Ge\'ez, digitally compiled. The primary ancient text sources, gathered digitally, in their original form. Use the search bar to search over 21,000 passages. Use NT Lookup to check any New Testament reference against the primary source record. Use Root Search to search by ancient Hebrew or Ge\'ez root. Tap How to Use for a full guide.';
     label = 'Home';
   } else if (currentMode === 'results') {
-    var items = document.querySelectorAll('#results-list .rc');
+    var items = document.querySelectorAll('#results-list .rc-swipe-inner, #results-list .rc');
     var first3 = [];
     for (var i = 0; i < Math.min(3, items.length); i++) {
       var ref = items[i].querySelector('.rc-ref');
@@ -1837,6 +1967,213 @@ function toggleGuideSection(header) {
   body.style.display = isOpen ? 'none' : 'block';
   var icon = header.querySelector('.ri-arrow-down-s-line, .ri-arrow-up-s-line');
   if (icon) icon.className = isOpen ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line';
+}
+
+// ── VOLUME BROWSER ────────────────────────────────────────────────────────────
+function buildVolumeIndex() {
+  if (!CONCORDANCE) return;
+  VOLUME_INDEX = {};
+  CONCORDANCE.passages.forEach(function(p) {
+    var v = p.vol != null ? p.vol : 'Unknown';
+    if (!VOLUME_INDEX[v]) VOLUME_INDEX[v] = [];
+    VOLUME_INDEX[v].push(p.id);
+  });
+  renderVolumeGrid();
+}
+function renderVolumeGrid() {
+  var grid = document.getElementById('vb-grid');
+  if (!grid) return;
+  var vols = Object.keys(VOLUME_INDEX).map(Number).sort(function(a, b) { return a - b; });
+  grid.innerHTML = vols.map(function(v) {
+    var count = VOLUME_INDEX[v].length;
+    return '<div class="vb-card" onclick="openVolume(' + v + ')">' +
+      '<div class="vb-vol-num">Vol ' + v + '</div>' +
+      '<div class="vb-vol-count">' + count + ' passages</div>' +
+      '</div>';
+  }).join('');
+}
+function openVolume(volNum) {
+  if (!CONCORDANCE) return;
+  var ids = VOLUME_INDEX[volNum] || [];
+  var passages = ids.map(getPassageById).filter(Boolean);
+  passages.sort(function(a, b) { return b.witness_count - a.witness_count; });
+  var shown = passages.slice(0, 50);
+  var items = shown.map(function(p) {
+    var tags = (p.threads || []).map(function(t) { return '<span class="ttag ' + t + '">' + t + '</span>'; }).join('');
+    return '<div class="rc" style="margin-bottom:9px">' +
+      '<div class="rc-ref">' + esc(p.ref) + '</div>' +
+      '<div class="rc-ms">' + esc(p.manuscript) + ' — ' + esc(p.date_range) + '</div>' +
+      '<div class="rc-text">' + esc(p.text).substring(0, 180) + (p.text.length > 180 ? '...' : '') + '</div>' +
+      '<div class="rc-tags">' + tags + '</div>' +
+      '<div class="rc-actions">' +
+        '<button class="rc-btn" onclick="openDNA(\'' + esc(p.id) + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+        '<button class="rc-btn" onclick="saveToJournal(\'' + esc(p.id) + '\')"><i class="ri-bookmark-line"></i> Save</button>' +
+        '<button class="rc-btn" onclick="copyPassage(\'' + esc(p.id) + '\',this)"><i class="ri-clipboard-line"></i> Copy</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  var more = passages.length > 50 ? '<div style="font-size:12px;color:var(--tx3);text-align:center;padding:12px 0">Showing 50 of ' + passages.length + ' — use Search to narrow further.</div>' : '';
+  openTextOverlay('Volume ' + volNum + ' — ' + passages.length + ' passages',
+    '<div style="padding:14px">' + items + more + '</div>');
+}
+
+// ── ROOT ETYMOLOGY ─────────────────────────────────────────────────────────────
+function openRootEtym(root) {
+  var data = ROOT_ETYM[root];
+  if (!data) { doRootSearch(root); return; }
+  currentRootEtymKey = root;
+  document.getElementById('rep-heb').textContent = data.heb;
+  document.getElementById('rep-translit').textContent = data.translit;
+  document.getElementById('rep-lang').textContent = data.lang;
+  document.getElementById('rep-meaning').textContent = data.meaning;
+  document.getElementById('rep-range').textContent = data.range;
+  document.getElementById('root-etym-panel').classList.add('open');
+  document.getElementById('root-etym-backdrop').classList.add('open');
+}
+function closeRootEtym() {
+  document.getElementById('root-etym-panel').classList.remove('open');
+  document.getElementById('root-etym-backdrop').classList.remove('open');
+}
+function doRootSearchFromPanel() {
+  var key = currentRootEtymKey;
+  closeRootEtym();
+  if (key) { setMode('root-search'); doRootSearch(key); }
+}
+
+// ── SEARCH HISTORY ────────────────────────────────────────────────────────────
+function getSearchHistory() {
+  try { return JSON.parse(localStorage.getItem('acr_search_history') || '[]'); } catch(e) { return []; }
+}
+function addToSearchHistory(q) {
+  if (!q) return;
+  var hist = getSearchHistory().filter(function(h) { return h !== q; });
+  hist.unshift(q);
+  if (hist.length > 20) hist = hist.slice(0, 20);
+  localStorage.setItem('acr_search_history', JSON.stringify(hist));
+}
+function showSearchHistory() {
+  var q = document.getElementById('search-input').value;
+  if (q.trim()) return;
+  var hist = getSearchHistory();
+  var el = document.getElementById('search-history');
+  if (!hist.length) { el.classList.remove('show'); return; }
+  el.innerHTML = '<div class="sh-hdr">Recent Searches <button class="sh-clear-btn" onclick="clearSearchHistory()">Clear all</button></div>' +
+    hist.map(function(h) {
+      return '<div class="sh-item" onmousedown="runHistorySearch(\'' + esc(h) + '\')">' +
+        '<i class="ri-history-line"></i>' + esc(h) + '</div>';
+    }).join('');
+  el.classList.add('show');
+}
+function hideSearchHistory() {
+  var el = document.getElementById('search-history');
+  if (el) el.classList.remove('show');
+}
+function clearSearchHistory() {
+  localStorage.removeItem('acr_search_history');
+  hideSearchHistory();
+}
+function runHistorySearch(q) {
+  hideSearchHistory();
+  document.getElementById('search-input').value = q;
+  doSearch(q);
+}
+
+// ── COPY PASSAGE ──────────────────────────────────────────────────────────────
+function copyPassage(pid, btnEl) {
+  var p = getPassageById(pid);
+  if (!p) return;
+  var text = p.ref + '\n' + p.manuscript + ' — ' + p.date_range + '\nWitness count: ' + p.witness_count + '\n\n' + p.text;
+  var done = function() { flashCopied(btnEl); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function() { copyFallback(text, done); });
+  } else { copyFallback(text, done); }
+}
+function copyFallback(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); if (cb) cb(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+function flashCopied(btn) {
+  if (!btn) return;
+  var orig = btn.innerHTML;
+  btn.innerHTML = '<i class="ri-check-line"></i> Copied';
+  btn.classList.add('saved');
+  setTimeout(function() { btn.innerHTML = orig; btn.classList.remove('saved'); }, 2000);
+}
+
+// ── SWIPE GESTURES ────────────────────────────────────────────────────────────
+function initCardSwipe(wrapEl, pid) {
+  var innerEl = wrapEl.querySelector('.rc-swipe-inner');
+  var bgR = wrapEl.querySelector('.rc-swipe-bg-r');
+  var bgL = wrapEl.querySelector('.rc-swipe-bg-l');
+  if (!innerEl) return;
+  var startX = 0, startY = 0, deltaX = 0, isH = false, active = false;
+
+  innerEl.addEventListener('touchstart', function(e) {
+    var t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    deltaX = 0; isH = false; active = true;
+    innerEl.style.transition = 'none';
+  }, {passive: true});
+
+  innerEl.addEventListener('touchmove', function(e) {
+    if (!active) return;
+    var t = e.touches[0];
+    var dx = t.clientX - startX, dy = t.clientY - startY;
+    if (!isH && Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+    if (!isH) {
+      if (Math.abs(dx) > Math.abs(dy)) { isH = true; }
+      else { active = false; return; }
+    }
+    e.preventDefault();
+    deltaX = dx;
+    var clamped = Math.max(-120, Math.min(120, deltaX));
+    innerEl.style.transform = 'translateX(' + clamped + 'px)';
+    if (deltaX > 20) { bgR.style.opacity = '1'; bgL.style.opacity = '0'; }
+    else if (deltaX < -20) { bgL.style.opacity = '1'; bgR.style.opacity = '0'; }
+    else { bgR.style.opacity = '0'; bgL.style.opacity = '0'; }
+  }, {passive: false});
+
+  innerEl.addEventListener('touchend', function() {
+    if (!active) return;
+    active = false;
+    innerEl.style.transition = 'transform 0.2s ease';
+    if (bgR) bgR.style.opacity = '0';
+    if (bgL) bgL.style.opacity = '0';
+    if (isH && deltaX > 70) {
+      innerEl.style.transform = 'translateX(100%)';
+      setTimeout(function() { saveToJournal(pid); innerEl.style.transform = 'translateX(0)'; }, 180);
+    } else if (isH && deltaX < -70) {
+      innerEl.style.transform = 'translateX(-100%)';
+      setTimeout(function() { openDNA(pid); innerEl.style.transform = 'translateX(0)'; }, 180);
+    } else {
+      innerEl.style.transform = 'translateX(0)';
+    }
+    deltaX = 0; isH = false;
+  }, {passive: true});
+}
+
+// ── GLYPH ANIMATION ───────────────────────────────────────────────────────────
+var glyphInterval = null;
+var GLYPHS = [0x10900,0x10901,0x10902,0x10903,0x10904,0x10905,0x10906,0x10907,0x10908,0x10909,0x1090A,0x1090B,0x1090C,0x1090D,0x1090E,0x10910,0x10912,0x10913,0x10914,0x10915];
+function startGlyphAnimation() {
+  var el = document.querySelector('.ld-paleo');
+  if (!el) return;
+  var idx = 0;
+  glyphInterval = setInterval(function() {
+    var s = '';
+    for (var i = 0; i < 4; i++) s += String.fromCodePoint(GLYPHS[(idx + i) % GLYPHS.length]);
+    el.textContent = s;
+    idx = (idx + 1) % GLYPHS.length;
+  }, 320);
+}
+function stopGlyphAnimation() {
+  clearInterval(glyphInterval);
+  glyphInterval = null;
+  var el = document.querySelector('.ld-paleo');
+  if (el) el.innerHTML = '&#x10909;&#x10904;&#x10905;&#x10904;';
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
