@@ -1,0 +1,12 @@
+{
+  "name": "ACR Search — The Covenant Concordance",
+  "short_name": "ACR Search",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0D0B07",
+  "theme_color": "#0D0B07",
+  "icons": [
+    {"src": "icon.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-152.png", "sizes": "152x152", "type": "image/png"}
+  ]
+}
