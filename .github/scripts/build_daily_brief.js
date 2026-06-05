@@ -27,11 +27,25 @@ const KEYWORD_GROUPS = [
 
 // ── NEWS SOURCES ───────────────────────────────────────────────────────────────
 const SOURCES = [
-  {name:'BBC World',   url:'https://feeds.bbci.co.uk/news/world/rss.xml'},
-  {name:'Al Jazeera', url:'https://www.aljazeera.com/xml/rss/all.xml'},
-  {name:'VOA News',   url:'https://feeds.voanews.com/VOANews/world'},
-  {name:'France 24',  url:'https://www.france24.com/en/rss'},
-  {name:'DW World',   url:'https://rss.dw.com/xml/rss-en-world'},
+  // Global wire / international
+  {name:'BBC World',      url:'https://feeds.bbci.co.uk/news/world/rss.xml'},
+  {name:'Al Jazeera',     url:'https://www.aljazeera.com/xml/rss/all.xml'},
+  {name:'Reuters World',  url:'https://feeds.reuters.com/reuters/worldNews'},
+  {name:'France 24',      url:'https://www.france24.com/en/rss'},
+  {name:'DW World',       url:'https://rss.dw.com/xml/rss-en-world'},
+  // USA — wire / non-partisan
+  {name:'CNN World',      url:'http://rss.cnn.com/rss/edition_world.rss'},
+  {name:'AP News',        url:'https://feeds.apnews.com/rss/apf-topnews'},
+  {name:'NPR News',       url:'https://feeds.npr.org/1001/rss.xml'},
+  {name:'PBS NewsHour',   url:'https://www.pbs.org/newshour/feeds/rss/headlines'},
+  {name:'CS Monitor',     url:'https://www.csmonitor.com/rss/top_stories'},
+  // Portugal
+  {name:'Observador',     url:'https://observador.pt/feed/'},
+  {name:'RTP Noticias',   url:'https://www.rtp.pt/noticias/?visual=3&feed=rss'},
+  {name:'Publico',        url:'https://feeds.feedburner.com/PublicoRSS'},
+  // Africa / diaspora focus
+  {name:'VOA News',       url:'https://feeds.voanews.com/VOANews/world'},
+  {name:'AllAfrica',      url:'https://allafrica.com/tools/headlines/rdf/latest/headlines.rdf'},
 ];
 
 // ── HELPERS ────────────────────────────────────────────────────────────────────
