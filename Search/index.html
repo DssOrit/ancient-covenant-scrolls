@@ -2111,8 +2111,10 @@ function renderOriginsPanel() {
     '</ul>' +
     '<div class="hr-verdict-box">' + esc(TEACHER_OF_RIGHTEOUSNESS.note) + '</div>' +
   '</div>';
-  
-  
+  var empHtml = EMPEROR_WORSHIP.map(function(e) {
+    return '<div class="td-item"><div class="td-topic">' + esc(e.title) + '</div><div class="td-text">' + esc(e.text) + '</div></div>';
+  }).join('');
+
   panel.innerHTML =
     '<div class="hr-sec-head">The Name — Yeshua to Jesus</div>' +
     '<div class="hr-sec-sub">How the original Hebrew name was transformed through Greek and Latin into a word with no Hebrew meaning.</div>' +
