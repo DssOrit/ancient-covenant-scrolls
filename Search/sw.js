@@ -1,4 +1,4 @@
-var CACHE = 'acr-search-v5';
+var CACHE = 'acr-search-v6';
 var FILES = [
   './',
   './index.html',
@@ -6,7 +6,8 @@ var FILES = [
   './acr_concordance.json',
   './manifest.json',
   './icon.png',
-  './icon-152.png'
+  './icon-152.png',
+  './daily_brief.json'
 ];
 self.addEventListener('install', function(e) {
   e.waitUntil(
