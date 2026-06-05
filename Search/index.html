@@ -2033,14 +2033,7 @@ var TEACHER_OF_RIGHTEOUSNESS = {
   ],
   note:'The structural parallel between the Teacher of Righteousness and the NT\'s Yeshua figure is documented and significant. The DSS community already had a persecuted righteous teacher, a covenant community with ritual meals and immersion, and messianic expectation — over a century before the gospel narrative.'
 };
-var NAG_HAMMADI = {
-  discovery:'December 1945. Muhammad Ali al-Samman, a farmer near Nag Hammadi, Egypt, was digging for fertilizer at the base of a cliff when he struck a sealed earthenware jar containing 13 leather-bound codices. He initially used some pages as kindling. His mother burned others. What survived was eventually sold to a Cairo dealer.',
-  contents:'52 texts written in Coptic (Egyptian), translated from Greek originals dating to the 1st-3rd centuries CE. Includes: Gospel of Thomas, Gospel of Philip, Gospel of Truth (attributed to Valentinus), Gospel of the Egyptians, Apocryphon of John, Secret Book of James, Apocalypse of Paul, Letter of Peter to Philip, and others.',
-  suppression:'The texts passed through multiple hands and were partly held by a dealer for years. The Egyptian government eventually acquired them but access was restricted. Full scholarly publication of the complete library did not occur until 1977 — 32 years after discovery. Again, materials were controlled and publication was slow.',
-  theology:'Gnostic Christianity — the dominant framework: knowledge (gnosis) as the path to liberation. The creator god (Demiurge) who made the material world is a lesser, flawed being — distinct from the highest, unknowable God. Humans contain a divine spark imprisoned in matter. Salvation is awakening to this knowledge. The cross and blood atonement are absent or reframed.',
-  destroyed:'These texts were physically destroyed by the proto-orthodox church when found in the early centuries of Christianity. The Nag Hammadi copies survived only because someone — likely a monk from the nearby Pachomian monastery — buried them in a sealed jar when Bishop Athanasius ordered the destruction of "heretical" texts in 367 CE.',
-  significance:'The Nag Hammadi library proves that in the first centuries of the faith, multiple incompatible versions of the gospel coexisted. The version that won was not the only version — it was the one that aligned with Roman imperial power.'
-};
+
 var EMPEROR_WORSHIP = [
   {title:'The Existing Template',text:'The Roman Empire already had a fully developed divine son theology. The Emperor held the title divi filius — son of the deified one, or son of God. Augustus Caesar used this title on coins and inscriptions throughout his reign. The theological structure: a human being of divine parentage, performing divine acts on earth, ascending to divine status at death. This was not metaphor — it was official state theology enforced across the Empire.'},
   {title:'Julius Caesar and Augustus',text:'Julius Caesar was officially deified by the Roman Senate after his assassination in 44 BCE. His adopted son Octavian (Augustus) immediately took the title divi filius — son of the deified Julius. Augustus\'s own birth was given miraculous features by his biographers: Suetonius records that his mother Atia was visited by a divine serpent and became pregnant with Augustus. A star appeared at his birth. This was the ruling Emperor\'s official biography, published and distributed across the empire.'},
@@ -2099,16 +2092,7 @@ function renderOriginsPanel() {
     '<div class="hr-verdict-box">' + esc(TEACHER_OF_RIGHTEOUSNESS.note) + '</div>' +
   '</div>';
   
-  var nagHtml = '<div class="td-item">' +
-    '<div class="td-topic">Discovery — December 1945</div><div class="td-text">' + esc(NAG_HAMMADI.discovery) + '</div></div>' +
-    '<div class="td-item"><div class="td-topic">Contents — 52 Texts</div><div class="td-text">' + esc(NAG_HAMMADI.contents) + '</div></div>' +
-    '<div class="td-item"><div class="td-topic">Suppression — 32 Years</div><div class="td-text">' + esc(NAG_HAMMADI.suppression) + '</div></div>' +
-    '<div class="td-item"><div class="td-topic">Theological Framework</div><div class="td-text">' + esc(NAG_HAMMADI.theology) + '</div></div>' +
-    '<div class="td-item"><div class="td-topic">Why They Survived</div><div class="td-text">' + esc(NAG_HAMMADI.destroyed) + '</div></div>' +
-    '<div class="td-item"><div class="td-topic">Significance</div><div class="td-text">' + esc(NAG_HAMMADI.significance) + '</div></div>';
-  var empHtml = EMPEROR_WORSHIP.map(function(e) {
-    return '<div class="td-item"><div class="td-topic">' + esc(e.title) + '</div><div class="td-text">' + esc(e.text) + '</div></div>';
-  }).join('');
+  
   panel.innerHTML =
     '<div class="hr-sec-head">The Name — Yeshua to Jesus</div>' +
     '<div class="hr-sec-sub">How the original Hebrew name was transformed through Greek and Latin into a word with no Hebrew meaning.</div>' +
@@ -2125,9 +2109,6 @@ function renderOriginsPanel() {
     '<div class="hr-sec-head">Teacher of Righteousness — DSS Precursor</div>' +
     '<div class="hr-sec-sub">A figure in the Dead Sea Scrolls dating 100-150 years before Yeshua with documented structural parallels to the NT narrative.</div>' +
     torHtml +
-    '<div class="hr-sec-head">Nag Hammadi Library — 1945</div>' +
-    '<div class="hr-sec-sub">A second major ancient manuscript discovery, two years before the DSS. 52 texts. Also suppressed. Proves multiple incompatible gospels coexisted.</div>' +
-    nagHtml +
     '<div class="hr-sec-head">Emperor Worship — The Political Template</div>' +
     '<div class="hr-sec-sub">The NT divine son narrative was written into a world that already had a fully developed divine son theology — the Roman imperial cult.</div>' +
     empHtml +
