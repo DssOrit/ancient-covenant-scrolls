@@ -2033,14 +2033,6 @@ var TEACHER_OF_RIGHTEOUSNESS = {
   ],
   note:'The structural parallel between the Teacher of Righteousness and the NT\'s Yeshua figure is documented and significant. The DSS community already had a persecuted righteous teacher, a covenant community with ritual meals and immersion, and messianic expectation — over a century before the gospel narrative.'
 };
-var EXCLUDED_GOSPELS = [
-  {name:'Gospel of Thomas',date:'~60-140 CE (disputed)',why:'114 sayings attributed to Yeshua. No birth narrative. No crucifixion. No resurrection. No apocalyptic timeline. The kingdom of YHWH is present within the believer, not a future event. Many scholars consider some sayings older than the canonical gospels. Excluded because it contained no atonement theology and was used by Gnostic communities.',key:'Saying 3: "The kingdom is inside you and outside you." Saying 113: "The Father\'s kingdom is spread out upon the earth, and people don\'t see it." Directly contradicts the institutional church\'s power structure.'},
-  {name:'Gospel of Philip',date:'~3rd century CE',why:'Describes Miriam Magdalene as Yeshua\'s koinonos — companion or partner — and records Yeshua kissing her. Presents salvation through sacred union and knowledge rather than vicarious atonement. Excluded because it contradicted the emerging Christ theology and elevated Miriam Magdalene above the male apostles.',key:'"The companion of the Saviour is Miriam Magdalene. The Saviour loved her more than all the disciples."'},
-  {name:'Gospel of Miriam Magdalene',date:'~2nd century CE',why:'Presents Miriam Magdalene as the primary recipient of Yeshua\'s post-resurrection teaching and as the leader of the disciples. Kepha (Peter) disputes her authority. Levi defends her. The text directly challenges male apostolic authority. Excluded because it presented a woman as the primary witness and teacher.',key:'Kepha asks: "Did he really speak with a woman without our knowledge?" Levi responds: "If the Saviour made her worthy, who are you to reject her?"'},
-  {name:'Gospel of Peter',date:'~2nd century CE',why:'Contains a different crucifixion account. On the cross, Yeshua cries "My power, my power, thou hast forsaken me" — then falls silent and is taken up. Suggests he did not actually die. Also describes Roman soldiers witnessing the resurrection directly. Excluded for doctrinal deviation and for being too explicit about the resurrection having witnesses.',key:'The only gospel where Pilate and the soldiers feel guilt for the crucifixion. The Jewish leaders are the sole villains — an anti-Semitic sharpening absent from the earliest accounts.'},
-  {name:'Didache — Teaching of the Twelve',date:'~50-120 CE',why:'Early church manual. Describes baptism, fasting, Eucharist, and church governance. Predates most NT books in its community rules. The Eucharist prayer in Didache 9-10 contains no body-and-blood theology — it is a meal of thanksgiving with no atonement language. Excluded because it undermined the developing sacramental theology.',key:'The Eucharist prayer: "We give thanks to you, our Father, for the holy vine of David your servant, which you made known to us through Yeshua your servant." No sacrifice. No blood.'},
-  {name:'Shepherd of Hermas',date:'~100-160 CE',why:'Considered canonical scripture by Irenaeus, Origen, Clement of Alexandria, and Athanasius. Widely used across multiple early church communities. Excluded at the Council of Carthage 397 CE. Contains an extended vision narrative with an angelic shepherd figure and a second-chance repentance theology the institutional church found inconvenient.',key:'Hermas\'s repentance theology — that post-baptism sin could still be forgiven once — conflicted with the emerging baptismal theology that made priests the gatekeepers of forgiveness.'}
-];
 var NAG_HAMMADI = {
   discovery:'December 1945. Muhammad Ali al-Samman, a farmer near Nag Hammadi, Egypt, was digging for fertilizer at the base of a cliff when he struck a sealed earthenware jar containing 13 leather-bound codices. He initially used some pages as kindling. His mother burned others. What survived was eventually sold to a Cairo dealer.',
   contents:'52 texts written in Coptic (Egyptian), translated from Greek originals dating to the 1st-3rd centuries CE. Includes: Gospel of Thomas, Gospel of Philip, Gospel of Truth (attributed to Valentinus), Gospel of the Egyptians, Apocryphon of John, Secret Book of James, Apocalypse of Paul, Letter of Peter to Philip, and others.',
@@ -2106,20 +2098,7 @@ function renderOriginsPanel() {
     '</ul>' +
     '<div class="hr-verdict-box">' + esc(TEACHER_OF_RIGHTEOUSNESS.note) + '</div>' +
   '</div>';
-  var exclHtml = EXCLUDED_GOSPELS.map(function(g) {
-    return '<div class="rome-doctrine">' +
-      '<div class="rome-hdr" onclick="toggleAccordion(this)">' +
-        '<i class="ri-eye-off-line" style="color:#e67e22;font-size:15px;flex-shrink:0"></i>' +
-        '<div class="rome-name">' + esc(g.name) + '</div>' +
-        '<div class="rome-year" style="color:#e67e22">' + esc(g.date) + '</div>' +
-        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
-      '</div>' +
-      '<div style="display:none;padding:0 14px 13px;border-top:1px solid #1e1e1e">' +
-        '<div class="rome-claim">' + esc(g.why) + '</div>' +
-        '<div class="rome-verdict">Key content: ' + esc(g.key) + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+  
   var nagHtml = '<div class="td-item">' +
     '<div class="td-topic">Discovery — December 1945</div><div class="td-text">' + esc(NAG_HAMMADI.discovery) + '</div></div>' +
     '<div class="td-item"><div class="td-topic">Contents — 52 Texts</div><div class="td-text">' + esc(NAG_HAMMADI.contents) + '</div></div>' +
@@ -2146,9 +2125,6 @@ function renderOriginsPanel() {
     '<div class="hr-sec-head">Teacher of Righteousness — DSS Precursor</div>' +
     '<div class="hr-sec-sub">A figure in the Dead Sea Scrolls dating 100-150 years before Yeshua with documented structural parallels to the NT narrative.</div>' +
     torHtml +
-    '<div class="hr-sec-head">Excluded Gospels — Removed at Carthage 397 CE</div>' +
-    '<div class="hr-sec-sub">These texts were in active circulation. They were removed because they contradicted the developing institutional theology.</div>' +
-    exclHtml +
     '<div class="hr-sec-head">Nag Hammadi Library — 1945</div>' +
     '<div class="hr-sec-sub">A second major ancient manuscript discovery, two years before the DSS. 52 texts. Also suppressed. Proves multiple incompatible gospels coexisted.</div>' +
     nagHtml +
