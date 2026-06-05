@@ -353,8 +353,11 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .vb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .vb-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:11px;cursor:pointer;transition:background 0.15s;border-left:3px solid var(--gold);text-align:center}
 .vb-card:active{background:var(--s2)}
+.vb-card.acr2{border-left-color:var(--red)}
 .vb-vol-num{font-size:16px;font-weight:800;color:var(--gold);margin-bottom:1px}
+.vb-vol-num.acr2{color:var(--red)}
 .vb-vol-count{font-size:10px;color:var(--tx3)}
+.vb-section-header{grid-column:1/-1;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.08em;padding:14px 2px 5px;border-top:1px solid #1e1e1e;margin-top:4px}
 
 /* ROOT ETYMOLOGY PANEL */
 #root-etym-backdrop{position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,0.6);display:none}
@@ -800,7 +803,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     <!-- VOLUME BROWSER -->
     <div id="volumebrowser-view" style="display:none">
       <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Volume Browser</div>
-      <div class="vb-intro">All 48 volumes in the corpus. Tap any volume to browse its passages without searching.</div>
+      <div class="vb-intro">48 primary volumes (gold) and 13 secondary scrolls from ACR2 (red). Tap any card to browse passages.</div>
       <div id="vb-grid" class="vb-grid"></div>
     </div>
   </div>
@@ -913,6 +916,21 @@ var ROOT_ETYM = {
 };
 var currentRootEtymKey = null;
 var VOLUME_INDEX = {};
+var ACR2_VOLUMES = [
+  {file:1,  name:'4QInstruction 1',   label:'4QInstruction — Part 1 — Columns 1–12'},
+  {file:2,  name:'4QInstruction 2',   label:'4QInstruction — Part 2 — Columns 13–26'},
+  {file:3,  name:'Aramaic Levi',      label:'Aramaic Levi Document — 4Q213-214'},
+  {file:4,  name:'New Jerusalem',     label:'New Jerusalem — 4Q554-555, 11Q18'},
+  {file:5,  name:'Nabonidus',         label:'Prayer of Nabonidus — 4Q242'},
+  {file:6,  name:'4QBeatitudes',      label:'4QBeatitudes — 4Q525'},
+  {file:7,  name:'Apoc. Joshua',      label:'Apocryphon of Joshua — 4Q378-379'},
+  {file:8,  name:'Words of Michael',  label:'Words of Michael — 4Q529'},
+  {file:9,  name:'Birth of Noah',     label:'Birth of Noah — 4Q534-536'},
+  {file:10, name:'Pseudo-Jubilees',   label:'Pseudo-Jubilees — 4Q225-227'},
+  {file:11, name:'Mastemah',          label:'Angels of Mastemah — 4Q390'},
+  {file:12, name:'Wicked and Holy',   label:'Wicked and the Holy — 4Q181'},
+  {file:13, name:'Book of War',       label:'Book of War — 4Q285, 11Q14'}
+];
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 var DATA = null;
@@ -2005,13 +2023,22 @@ function renderVolumeGrid() {
   var grid = document.getElementById('vb-grid');
   if (!grid) return;
   var vols = Object.keys(VOLUME_INDEX).map(Number).sort(function(a, b) { return a - b; });
-  grid.innerHTML = vols.map(function(v) {
+  var main = vols.map(function(v) {
     var count = VOLUME_INDEX[v].length;
     return '<div class="vb-card" onclick="openVolume(' + v + ')">' +
       '<div class="vb-vol-num">Vol ' + v + '</div>' +
       '<div class="vb-vol-count">' + count + ' passages</div>' +
       '</div>';
   }).join('');
+  var acr2Header = '<div class="vb-section-header">Secondary Scrolls — ACR2</div>';
+  var acr2 = ACR2_VOLUMES.map(function(v) {
+    var safeLabel = v.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    return '<div class="vb-card acr2" onclick="openACR2Volume(' + v.file + ',\'' + safeLabel + '\')">' +
+      '<div class="vb-vol-num acr2">' + v.name + '</div>' +
+      '<div class="vb-vol-count">ACR2 · secondary scroll</div>' +
+      '</div>';
+  }).join('');
+  grid.innerHTML = main + acr2Header + acr2;
 }
 function openVolume(volNum) {
   if (!CONCORDANCE) return;
@@ -2036,6 +2063,38 @@ function openVolume(volNum) {
   var more = passages.length > 50 ? '<div style="font-size:12px;color:var(--tx3);text-align:center;padding:12px 0">Showing 50 of ' + passages.length + ' — use Search to narrow further.</div>' : '';
   openTextOverlay('Volume ' + volNum + ' — ' + passages.length + ' passages',
     '<div style="padding:14px">' + items + more + '</div>');
+}
+function openACR2Volume(fileIdx, label) {
+  document.getElementById('to-label').textContent = label;
+  document.getElementById('to-inner').innerHTML = '<div style="padding:32px;text-align:center;color:var(--tx3)">Loading passages...</div>';
+  openOverlay('text-overlay');
+  fetch('../ACR2/data/file_' + fileIdx + '.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(data.html, 'text/html');
+      var verseEls = Array.prototype.slice.call(doc.querySelectorAll('[data-ptype="verse"]'));
+      var items = verseEls.map(function(el) {
+        var spans = el.querySelectorAll('span');
+        if (spans.length < 2) return '';
+        var num = spans[0].textContent.trim();
+        var text = spans[spans.length - 1].textContent.trim();
+        if (!text) return '';
+        var preview = text.length > 220 ? text.substring(0, 220) + '...' : text;
+        return '<div class="rc" style="margin-bottom:9px;border-left:3px solid var(--red)">' +
+          '<div class="rc-ref" style="color:var(--red)">' + esc(label) + ' — ' + esc(num) + '</div>' +
+          '<div class="rc-text">' + esc(preview) + '</div>' +
+          '</div>';
+      }).filter(Boolean).join('');
+      var count = verseEls.length;
+      document.getElementById('to-label').textContent = label + ' — ' + count + ' passages';
+      document.getElementById('to-inner').innerHTML = items
+        ? '<div style="padding:14px">' + items + '</div>'
+        : '<div style="padding:14px;color:var(--tx3);text-align:center">No verse passages found.</div>';
+    })
+    .catch(function() {
+      document.getElementById('to-inner').innerHTML = '<div style="padding:14px;color:var(--tx3);text-align:center">Could not load — check your connection.</div>';
+    });
 }
 
 // ── ROOT ETYMOLOGY ─────────────────────────────────────────────────────────────
