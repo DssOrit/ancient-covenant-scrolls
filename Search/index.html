@@ -30,10 +30,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .a-paleo{font-size:56px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold);margin-bottom:16px;line-height:1;text-align:center}
 .a-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
 .a-sub{font-size:13px;color:var(--tx2);margin-bottom:32px;text-align:center;line-height:1.6}
-.a-input{width:100%;max-width:320px;background:var(--s2);border:1px solid #333;border-radius:10px;padding:14px 16px;color:#fff;font-size:16px;font-family:var(--font);text-align:center;letter-spacing:0.15em;margin-bottom:12px}
-.a-input:focus{outline:none;border-color:var(--gold)}
 .a-btn{width:100%;max-width:320px;background:var(--gold);color:#000;font-weight:800;font-size:16px;font-family:var(--font);border:none;border-radius:10px;padding:14px;cursor:pointer}
-.a-err{color:#e74c3c;font-size:13px;margin-top:8px;display:none}
 
 /* LOADING */
 #loading-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
@@ -454,9 +451,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
   <div class="a-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
   <div class="a-title">ACR Search</div>
   <div class="a-sub">The Covenant Concordance<br>Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez<br><em>The primary ancient text sources, gathered digitally, in their original form.</em></div>
-  <input class="a-input" type="password" id="pw-input" placeholder="Access code" autocomplete="off">
   <button class="a-btn" onclick="doAuth()">Enter</button>
-  <div class="a-err" id="auth-err">Incorrect access code</div>
 </div>
 
 <div id="loading-screen">
@@ -984,7 +979,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 
 <script>
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
-var HASH = 3431711733;
 var THREAD_ORDER = ['Cosmological','Temporal','Moral','Historical','Eschatological'];
 var ROOT_CHIPS = [
   {heb:'רז',eng:'Raz — mystery',root:'raz'},
@@ -1065,21 +1059,10 @@ var cmLongPressTimer = null;
 var cmAnimFrame = null;
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
-function djb2(s) {
-  var h = 5381;
-  for (var i = 0; i < s.length; i++) h = ((h << 5) + h) ^ s.charCodeAt(i);
-  return h >>> 0;
-}
 function doAuth() {
-  var pw = document.getElementById('pw-input').value;
-  if (djb2(pw) === HASH) {
-    document.getElementById('auth').classList.add('hidden');
-    startLoading();
-  } else {
-    document.getElementById('auth-err').style.display = 'block';
-  }
+  document.getElementById('auth').classList.add('hidden');
+  startLoading();
 }
-document.getElementById('pw-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') doAuth(); });
 
 // ── LOADING ───────────────────────────────────────────────────────────────────
 function startLoading() {
