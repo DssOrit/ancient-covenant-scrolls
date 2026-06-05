@@ -358,6 +358,49 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .vb-vol-num.acr2{color:var(--red)}
 .vb-vol-count{font-size:10px;color:var(--tx3)}
 .vb-section-header{grid-column:1/-1;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.08em;padding:14px 2px 5px;border-top:1px solid #1e1e1e;margin-top:4px}
+/* COVENANT RECORD */
+.cr-arc{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;padding:8px 0 14px;-webkit-overflow-scrolling:touch}
+.cr-arc-node{display:flex;flex-direction:column;align-items:center;flex-shrink:0;cursor:pointer;gap:4px}
+.cr-arc-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--gold);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--gold);transition:background 0.15s}
+.cr-arc-dot.done{background:var(--gold);color:#111}
+.cr-arc-label{font-size:8px;color:var(--tx3);text-align:center;max-width:44px;line-height:1.2}
+.cr-arc-line{width:16px;height:2px;background:#2a2a2a;flex-shrink:0;align-self:flex-start;margin-top:14px}
+.cr-subhead{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:0.07em;padding:12px 0 6px;border-top:1px solid #1e1e1e;margin-top:6px}
+.cr-subhead:first-child{border-top:none;padding-top:0;margin-top:0}
+.cr-verse{background:var(--s2);border-radius:6px;padding:11px 13px;margin-bottom:9px;border-left:3px solid #333}
+.cr-verse.documented{border-left-color:#B8860B}
+.cr-verse.active{border-left-color:var(--red)}
+.cr-verse.awaited{border-left-color:#555}
+.cr-ref{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:5px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.cr-text{font-size:13px;color:var(--tx);line-height:1.65;margin-bottom:5px}
+.cr-note{font-size:11px;color:var(--tx3);line-height:1.5;font-style:italic;border-top:1px solid #2a2a2a;padding-top:6px;margin-top:3px}
+.cr-badge{display:inline-block;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:0.05em;text-transform:uppercase}
+.cr-badge.documented{background:rgba(184,134,11,0.2);color:#B8860B;border:1px solid #B8860B}
+.cr-badge.active{background:rgba(192,57,43,0.15);color:#e74c3c;border:1px solid #e74c3c}
+.cr-badge.awaited{background:rgba(80,80,80,0.15);color:#888;border:1px solid #555}
+.cr-jump-btn{font-size:10px;padding:2px 7px;border:1px solid #333;border-radius:4px;background:none;color:var(--tx3);cursor:pointer;white-space:nowrap}
+.cr-table-wrap{overflow-x:auto;margin:10px 0;-webkit-overflow-scrolling:touch}
+.cr-table{border-collapse:collapse;width:100%;min-width:500px;font-size:11px}
+.cr-table th{background:var(--s2);color:var(--gold);font-size:9px;font-weight:700;padding:7px 9px;text-align:left;border-bottom:1px solid #333;white-space:nowrap;text-transform:uppercase;letter-spacing:0.05em}
+.cr-table td{padding:7px 9px;border-bottom:1px solid #1e1e1e;color:var(--tx);line-height:1.4;vertical-align:top}
+.cr-table tr:last-child td{border-bottom:none}
+.cr-table td.s-active{color:#e74c3c;font-weight:600}
+.cr-table td.s-none{color:var(--tx3)}
+.cr-progress-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);display:none;margin-left:4px;flex-shrink:0}
+.cr-progress-dot.show{display:inline-block}
+.cr-dl-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 13px;border:1px solid var(--gold);border-radius:6px;background:none;color:var(--gold);cursor:pointer;margin-bottom:14px}
+/* PROPHETIC WATCH */
+.pw-input-row{display:flex;gap:8px;margin-bottom:14px}
+.pw-input{flex:1;background:var(--s1);border:1px solid #333;border-radius:8px;padding:10px 12px;color:var(--tx);font-size:14px;outline:none;-webkit-appearance:none}
+.pw-input:focus{border-color:var(--gold)}
+.pw-go-btn{padding:10px 16px;background:var(--gold);border:none;border-radius:8px;color:#111;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0}
+.pw-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--tx3);padding:10px 0 5px;border-top:1px solid #1e1e1e;margin-top:6px}
+.pw-section-label:first-child{border-top:none;margin-top:0;padding-top:0}
+/* ACR SITES STRIP */
+.acr-sites-strip{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:16px 0 80px;border-top:1px solid #1e1e1e;margin-top:24px}
+.acr-site-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);white-space:nowrap;flex-shrink:0}
+.acr-site-chip{display:inline-block;padding:5px 11px;border:1px solid #2a2a2a;border-radius:16px;font-size:11px;color:var(--tx3);text-decoration:none;white-space:nowrap;flex-shrink:0}
+.acr-site-chip:active{background:var(--s2);color:var(--tx2)}
 
 /* ROOT ETYMOLOGY PANEL */
 #root-etym-backdrop{position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,0.6);display:none}
@@ -454,6 +497,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="journal" onclick="setMode('journal')"><i class="ri-book-2-line"></i> Journal</div>
       <div class="mpill" data-mode="guide" onclick="setMode('guide')"><i class="ri-question-line"></i> How to Use</div>
       <div class="mpill" data-mode="volumebrowser" onclick="setMode('volumebrowser')"><i class="ri-grid-line"></i> Volumes</div>
+      <div class="mpill" data-mode="record" onclick="setMode('record')"><i class="ri-file-list-3-line"></i> Record</div>
+      <div class="mpill" data-mode="propheticwatch" onclick="setMode('propheticwatch')"><i class="ri-eye-line"></i> Watch</div>
     </div>
   </div>
 
@@ -788,6 +833,34 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="guide-tip">Tip: Use Volume Browser when you want to explore a specific scroll or document rather than searching for a concept. It is a structural view of the corpus, not a keyword view.</div>
         </div>
       </div>
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-file-list-3-line"></i>
+          <div class="guide-sec-title">Covenant Record — Curated Prophetic Reference</div>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Record</b> in the top navigation to open the Covenant Record — a curated thematic reference compiled from Torah, Dead Sea Scrolls, and Ge'ez Orit. No Masoretic, Septuagint, or Rabbinic overlay.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">The <b>prophecy sequence arc</b> at the top shows seven connected nodes: Promise, Diaspora, Awakening, New Heart, Gathering, Abundance, Exodus. Tap any node to jump directly to that section.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Each passage has a colored <b>status badge</b>: amber <b>Documented</b> (historically recorded), red <b>Active</b> (currently unfolding), gray <b>Awaited</b> (future fulfillment). Derived from the editorial notes in the record.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Tap <b>Search corpus</b> on any passage to jump instantly into the 21,000-passage concordance and find all related passages with full Verse DNA access.</div></div>
+          <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text">Each section header shows a small gold dot once opened, tracking reading progress across sessions in device storage.</div></div>
+          <div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text">Tap <b>Download as HTML</b> to save a fully formatted copy to your device. On iPad it goes to Files — open in Pages or print to PDF from there.</div></div>
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-eye-line"></i>
+          <div class="guide-sec-title">Prophetic Watch — Search by Current Events</div>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Watch</b> in the top navigation. Type any current event, headline, or topic — for example "Lebanon ceasefire", "ship embargo", "Ethiopia gathering", "Israel war".</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">The search runs instantly across the full 21,000-passage corpus and all Covenant Record passages simultaneously. No network required — works completely offline.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Covenant Record matches show with fulfillment status badges and an <b>Open in Record</b> button. Corpus matches show standard cards with Verse DNA access.</div></div>
+          <div class="guide-tip">Tip: Use multiple keywords for precision — "ships slave trade" finds more specific matches than "ships" alone.</div>
+        </div>
+      </div>
     </div>
 
     <div id="journal-view" style="display:none">
@@ -805,6 +878,38 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Volume Browser</div>
       <div class="vb-intro">48 primary volumes (gold) and 13 secondary scrolls from ACR2 (red). Tap any card to browse passages.</div>
       <div id="vb-grid" class="vb-grid"></div>
+    </div>
+
+    <!-- COVENANT RECORD -->
+    <div id="record-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:2px">The Covenant Record</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:12px;line-height:1.5">Primary sources: Torah · Dead Sea Scrolls · Ge'ez Orit. No Masoretic. No Septuagint. No Rabbinic overlay. Compiled June 2026.</div>
+      <button class="cr-dl-btn" onclick="downloadCRRecord()"><i class="ri-download-line"></i> Download as HTML</button>
+      <div id="cr-arc" class="cr-arc"></div>
+      <div id="cr-sections"></div>
+    </div>
+
+    <!-- PROPHETIC WATCH -->
+    <div id="propheticwatch-view" style="display:none">
+      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Prophetic Watch</div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.5">Type a current event, headline, or topic. Searches the full corpus and Covenant Record instantly — works offline.</div>
+      <div class="pw-input-row">
+        <input class="pw-input" id="pw-input" type="text" placeholder="e.g. Lebanon ceasefire, ship embargo, Ethiopia" onkeydown="if(event.key==='Enter')doWatchSearch()">
+        <button class="pw-go-btn" onclick="doWatchSearch()">Search</button>
+      </div>
+      <div id="pw-results"></div>
+    </div>
+
+    <!-- ACR SITES STRIP -->
+    <div class="acr-sites-strip">
+      <span class="acr-site-label">Other ACR apps</span>
+      <a href="../" class="acr-site-chip">ACR Reader</a>
+      <a href="../ACR2/" class="acr-site-chip">ACR2</a>
+      <a href="../solar/" class="acr-site-chip">ACR Solar</a>
+      <a href="../load/" class="acr-site-chip">Load</a>
+      <a href="../attain/" class="acr-site-chip">Attain</a>
+      <a href="../attain-jr/" class="acr-site-chip">Attain Jr</a>
+      <a href="../study/" class="acr-site-chip">Study</a>
     </div>
   </div>
 </div>
@@ -1012,6 +1117,7 @@ function initApp() {
   renderJournal('');
   loadConceptMapNodes();
   buildVolumeIndex();
+  renderCRRecord();
   // Register SW
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function() {});
@@ -1021,7 +1127,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide','volumebrowser'];
+  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','propheticwatch'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2006,6 +2112,356 @@ function toggleGuideSection(header) {
   body.style.display = isOpen ? 'none' : 'block';
   var icon = header.querySelector('.ri-arrow-down-s-line, .ri-arrow-up-s-line');
   if (icon) icon.className = isOpen ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line';
+}
+
+// ── COVENANT RECORD ───────────────────────────────────────────────────────────
+var CR_ARC_LABELS = ['Promise','Diaspora','Awakening','New Heart','Gathering','Abundance','Exodus'];
+var crProgress = {};
+var CR_SECTIONS = [
+  {title:"Section 1 — The Covenant Promise and the Land", items:[
+    {type:"head",text:"The Original Covenant Made to Abram"},
+    {type:"verse",ref:"Bereshit (Genesis) 15:18-21",status:"awaited",
+      text:"To your seed I have given this land, from the river of Egypt to the great river, the river Euphrates — the Kenites, the Kenizzites, the Kadmonites, the Hittites, the Perizzites, the Rephaim, the Amorites, the Canaanites, the Girgashites, and the Jebusites.",
+      note:"DSS attested. Two boundary markers: southern river and northern Euphrates. Ten named peoples occupy the land at the time of the covenant."},
+    {type:"verse",ref:"Bereshit (Genesis) 17:7-8",status:"awaited",
+      text:"I will establish my covenant between me and you and your seed after you throughout their generations for an everlasting covenant, to be your sovereign and the sovereign of your seed after you. And I will give to you and to your seed after you the land of your sojournings, all the land of Canaan, for an everlasting possession.",
+      note:"The covenant is declared everlasting. It is not cancelled by the diaspora. Everlasting is the operative word in the text."},
+    {type:"head",text:"The Land Boundaries — Ancient Names and Today's Geography"},
+    {type:"table",
+      headers:["Ancient Name","Textual Reference","Today's Geography","Conflict Status June 2026"],
+      rows:[
+        ["Mitsrayim (Egypt)","Bereshit 15:18 — Southern boundary. River of Egypt / Nile / Wadi el-Arish.","Northeastern Egypt. Sinai Peninsula. Nile Delta.","No direct war. Regional pressure from Gaza border."],
+        ["Canaan / Yahudah","Bereshit 15:18-21 — Core covenant territory. Also on 1747 British maps labeling Judah on West African coast.","Modern Israel. Occupied Palestinian territories. Parts of western Jordan.","Active war. Gaza ongoing since Oct 2023. West Bank under occupation."],
+        ["Pelishtim Coast","Bereshit 15:19-21 — Named peoples of the covenant land.","Gaza Strip. Southern coastal Israel.","Active war zone."],
+        ["Lvanon (Lebanon)","Devarim 11:24 — Northern boundary extent.","Modern Lebanon.","Active war. Began March 2, 2026. Ceasefire June 1, 2026."],
+        ["Aram / Syria","Bereshit 15:18 — Territory toward the Euphrates.","Modern Syria.","Active conflict. Iranian missile interceptions. Post-civil war instability."],
+        ["Ever HaYarden","Bereshit 15:19-21 — Eastern territories.","Modern Jordan. Parts of southwestern Iraq.","Jordan struck by Iranian missiles 2026."],
+        ["Nahar Perat (Euphrates)","Bereshit 15:18 — Northern and eastern boundary.","Eastern Syria. Iraq. Southeastern Turkey.","Iraq — militia activity. Turkey — targeted 2026."],
+        ["Sinai","Shemot — Wilderness passage. African continental land bridge.","Sinai Peninsula, Egypt.","Military presence. No direct active war."],
+        ["Yahudah in Africa","1747 British cartographic maps — Kingdom of Judah on West African coast, Negroland region. Transatlantic slave trade departure zone.","Modern West Africa — Nigeria, Benin, Ghana, Togo coastal regions.","Nigeria — active insurgency. Regional instabilities."]
+      ]
+    }
+  ]},
+  {title:"Section 2 — The Diaspora and the Covenant Consequences", items:[
+    {type:"head",text:"The Prophecy of Affliction"},
+    {type:"verse",ref:"Bereshit (Genesis) 15:13-14",status:"documented",
+      text:"Know certainly that your seed shall be a stranger in a land that is not theirs, and shall serve them, and they shall afflict them four hundred years. And also that nation whom they shall serve I will judge, and afterward shall they come out with great substance.",
+      note:"Four components: foreign land, service, affliction, time period. The judgment of the afflicting nation and exit with substance are the second half of the same verse — not yet fulfilled as of June 2026."},
+    {type:"head",text:"The Full Covenant Consequences — Devarim 28"},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:15",status:"documented",
+      text:"But if you will not obey the voice of YHWH to do all his commandments and his statutes that I command you today, then all these curses shall come upon you and overtake you."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:25",status:"documented",
+      text:"YHWH will cause you to be defeated before your enemies. You shall go out one way against them and flee seven ways before them. And you shall be a terror to all the kingdoms of the earth."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:32",status:"documented",
+      text:"Your sons and your daughters shall be given to another people, while your eyes look on and fail with longing for them all day long, but you shall be helpless."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:36-37",status:"documented",
+      text:"YHWH will bring you and your king whom you set over you to a nation that neither you nor your fathers have known. And there you shall serve other sovereigns, of wood and stone. And you shall become a horror, a proverb, and a byword among all the peoples where YHWH will lead you away."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:41",status:"documented",
+      text:"You shall father sons and daughters, but they shall not be yours, for they shall go into captivity."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:48",status:"documented",
+      text:"Therefore you shall serve your enemies whom YHWH will send against you, in hunger and thirst, in nakedness, and lacking everything. And he will put an iron yoke on your neck until he has destroyed you."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:64-65",status:"documented",
+      text:"And YHWH will scatter you among all peoples, from one end of the earth to the other, and there you shall serve other sovereigns of wood and stone, which neither you nor your fathers have known. And among these nations you shall find no respite, and there shall be no resting place for the sole of your foot, but YHWH will give you there a trembling heart and failing eyes and a languishing soul."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 28:68",status:"documented",
+      text:"And YHWH will bring you back in ships to Egypt, by a way that I told you you should never see again. And there you shall offer yourselves for sale to your enemies as male and female slaves, but there will be no buyer.",
+      note:"The ships, the return to Egypt-like bondage, the slave trade with no buyer — the most specific verse in the diaspora record. A maritime slave trade from which no redemption comes through purchase. This matches the documented history of the transatlantic slave trade."},
+    {type:"head",text:"The Prophetic Confirmation of Diaspora"},
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 16:13",status:"documented",
+      text:"I will hurl you out of this land into a land that neither you nor your fathers have known, and there you shall serve other sovereigns day and night, for I will show you no favor."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 36:19",status:"documented",
+      text:"I scattered them among the nations, and they were dispersed through the countries. In accordance with their ways and their deeds I judged them."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 37:11",status:"documented",
+      text:"These bones are the whole house of Yisra'el. Behold, they say, our bones are dried up and our hope is lost. We are completely cut off.",
+      note:"The house of Yisra'el in complete disconnection from identity, hope, and covenant. This is the diaspora condition described in the valley of dry bones passage."}
+  ]},
+  {title:"Section 3 — The Awakening", items:[
+    {type:"head",text:"The Recognition — Calling It to Mind"},
+    {type:"verse",ref:"Devarim (Deuteronomy) 30:1-2",status:"active",
+      text:"When all these things come upon you — the blessing and the curse which I have set before you — and you call them to mind among all the nations where YHWH has driven you, and you return to YHWH and obey his voice in all that I command you today, with all your heart and with all your soul...",
+      note:"The awakening sequence: the curses are already present. The people call them to mind — they recognize the pattern. Recognition precedes full obedience. The awakening comes before the completed return, not after it."},
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 31:18-19",status:"active",
+      text:"I have surely heard Ephraim grieving. You have disciplined me, and I was disciplined, like an untrained calf. Bring me back that I may be restored, for you are YHWH. For after I turned away, I repented, and after I was instructed, I struck my thigh. I was ashamed and confounded, because I bore the disgrace of my youth.",
+      note:"The awakening produces grief, shame, and recognition — not triumph. It begins with understanding what was lost and why. The request for restoration follows from that grief."},
+    {type:"head",text:"The Valley of Dry Bones — The Awakening Described"},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 37:1-5",status:"active",
+      text:"The hand of YHWH was upon me, and he brought me out in the spirit of YHWH and set me down in the middle of the valley. It was full of bones. And he led me around among them, and behold, there were very many on the surface of the valley, and behold, they were very dry. And he said to me, Son of man, can these bones live? And I answered, O Sovereign YHWH, you know. Then he said to me, Prophesy over these bones, and say to them, O dry bones, hear the word of YHWH. Thus says the Sovereign YHWH to these bones: Behold, I will cause breath to enter you, and you shall live."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 37:7-10",status:"active",
+      text:"So I prophesied as I was commanded. And as I prophesied, there was a sound, and behold, a rattling, and the bones came together, bone to its bone. And I looked, and behold, there were sinews on them, and flesh had come upon them, and skin had covered them. But there was no breath in them. Then he said to me, Prophesy to the breath; prophesy, son of man, and say to the breath, Thus says the Sovereign YHWH: Come from the four winds, O breath, and breathe on these slain, that they may live. So I prophesied as he commanded me, and the breath came into them, and they lived and stood on their feet, an exceedingly great army."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 37:11-14",status:"awaited",
+      text:"Then he said to me, Son of man, these bones are the whole house of Yisra'el. Behold, they say, our bones are dried up, and our hope is lost; we are indeed cut off. Therefore prophesy, and say to them, Thus says the Sovereign YHWH: Behold, I will open your graves and raise you from your graves, O my people. And I will bring you into the land of Yisra'el. And you shall know that I am YHWH, when I open your graves, and raise you from your graves, O my people. And I will put my spirit within you, and you shall live, and I will place you in your own land. Then you shall know that I am YHWH; I have spoken, and I will do it, declares YHWH.",
+      note:"Sequence: scattered and cut off. Breath enters. They come together. YHWH opens their graves — restores their identity. He puts his spirit within them. He places them in the land. YHWH initiates each stage."}
+  ]},
+  {title:"Section 4 — The New Heart and YHWH Placing His Spirit", items:[
+    {type:"verse",ref:"Yechezkel (Ezekiel) 36:24-28",status:"awaited",
+      text:"I will take you from the nations and gather you from all the countries and bring you into your own land. I will sprinkle clean water on you, and you shall be clean from all your uncleannesses, and from all your idols I will cleanse you. And I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh. And I will put my spirit within you, and cause you to walk in my statutes and be careful to obey my rules. You shall dwell in the land that I gave to your fathers, and you shall be my people, and I will be your sovereign.",
+      note:"The complete sequence in one passage: gathering from nations, cleansing, new heart, new spirit placed by YHWH, then obedience follows from the spirit — not the other way around. Then dwelling in the land."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 30:6",status:"awaited",
+      text:"And YHWH will circumcise your heart and the heart of your offspring, so that you will love YHWH with all your heart and with all your soul, that you may live.",
+      note:"YHWH circumcises the heart of the people. This is not self-achieved. The ability to love fully comes after YHWH acts on the heart."},
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 31:31-33",status:"awaited",
+      text:"Behold, the days are coming, declares YHWH, when I will make a new covenant with the house of Yisra'el and the house of Yahudah. Not like the covenant that I made with their fathers on the day when I took them by the hand to bring them out of the land of Mitsrayim, my covenant that they broke, though I was their husband, declares YHWH. For this is the covenant that I will make with the house of Yisra'el after those days, declares YHWH: I will put my law within them, and I will write it on their hearts. And I will be their sovereign, and they shall be my people.",
+      note:"The covenant is with the house of Yisra'el and the house of Yahudah — specific identified seed lines. The law is written on the heart by YHWH. This is the same covenant people, not a replacement people."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 11:19-20",status:"awaited",
+      text:"And I will give them one heart, and a new spirit I will put within them. I will remove the heart of stone from their flesh and give them a heart of flesh, that they may walk in my statutes and keep my rules and obey them. And they shall be my people, and I will be their sovereign."}
+  ]},
+  {title:"Section 5 — The Gathering and the Return", items:[
+    {type:"head",text:"YHWH Gathers from All Nations"},
+    {type:"verse",ref:"Devarim (Deuteronomy) 30:3-5",status:"awaited",
+      text:"Then YHWH will restore your fortunes and have compassion on you, and he will gather you again from all the peoples where YHWH has scattered you. If your outcasts are in the uttermost parts of the heavens, from there YHWH will gather you and from there he will take you. And YHWH will bring you into the land that your fathers possessed, that you may possess it. And he will make you more prosperous and numerous than your fathers.",
+      note:"The gathering comes from everywhere simultaneously — including the uttermost parts of the heavens. No geographic limitation. Prosperity and increase follow restoration."},
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 16:14-15",status:"awaited",
+      text:"Therefore, behold, the days are coming, declares YHWH, when it shall no longer be said, YHWH lives who brought up the people of Yisra'el out of the land of Mitsrayim, but YHWH lives who brought up the people of Yisra'el out of the north country and out of all the countries where he had driven them. For I will bring them back to their own land that I gave to their fathers.",
+      note:"The second exodus surpasses the first in scope and significance. The seed is gathered from the north country and all countries — a global diaspora, not a regional one."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 36:24",status:"awaited",
+      text:"I will take you from the nations and gather you from all the countries and bring you into your own land."},
+    {type:"verse",ref:"Yeshayahu (Isaiah) 11:11-12",status:"awaited",
+      text:"In that day YHWH will extend his hand yet a second time to recover the remnant that remains of his people, from Assyria, from Mitsrayim, from Pathros, from Cush, from Elam, from Shinar, from Hamath, and from the coastlands of the sea. He will raise a signal for the nations and will assemble the banished of Yisra'el, and gather the dispersed of Yahudah from the four corners of the earth.",
+      note:"Second time — confirming this is the second gathering. From Cush (northeastern Africa / Ethiopia). From the four corners of the earth. The dispersed of Yahudah specifically named alongside banished Yisra'el."},
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 23:7-8",status:"awaited",
+      text:"Therefore, behold, the days are coming, declares YHWH, when they shall no longer say, As YHWH lives who brought up the people of Yisra'el out of the land of Mitsrayim, but As YHWH lives who brought up and led the offspring of the house of Yisra'el out of the north country and out of all the countries where he had driven them. Then they shall dwell in their own land."},
+    {type:"head",text:"Who Does Not Participate in the Restoration"},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 20:38",status:"awaited",
+      text:"I will purge out the rebels from among you, and those who transgress against me. I will bring them out of the land where they sojourn, but they shall not enter the land of Yisra'el. Then you will know that I am YHWH.",
+      note:"The restoration is not cancelled by individual non-compliance. Those who do not turn are purged from the returning remnant. The restoration proceeds. Participation is conditional — not the event itself."}
+  ]},
+  {title:"Section 6 — Abundance and Restoration of Prosperity", items:[
+    {type:"verse",ref:"Bereshit (Genesis) 15:14",status:"awaited",
+      text:"And also that nation whom they shall serve I will judge, and afterward shall they come out with great substance.",
+      note:"Exit with great substance is part of the original covenant promise to Abram. It mirrors the first exodus where the people left Mitsrayim with the wealth of their captors."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 30:9-10",status:"awaited",
+      text:"And YHWH will make you abundantly prosperous in all the work of your hand, in the fruit of your womb and in the fruit of your cattle and in the fruit of your ground. For YHWH will again take delight in prospering you, as he took delight in your fathers, when you obey the voice of YHWH to keep his commandments and his statutes that are written in this book of the law, when you turn to YHWH with all your heart and with all your soul."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 36:29-30",status:"awaited",
+      text:"And I will deliver you from all your uncleannesses. And I will summon the grain and make it abundant and lay no famine upon you. I will make the fruit of the tree and the increase of the field abundant, that you may never again suffer the disgrace of famine among the nations."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 36:33-35",status:"awaited",
+      text:"Thus says the Sovereign YHWH: On the day that I cleanse you from all your iniquities, I will cause the cities to be inhabited, and the waste places shall be rebuilt. And the land that was desolate shall be tilled, instead of being the desolation that it was in the sight of all who passed by. And they will say, This land that was desolate has become like the garden of Eden, and the waste and desolate and ruined cities are now fortified and inhabited.",
+      note:"The desolate land becomes like Gan Eden. Cities are rebuilt. Physical, material restoration — not spiritual metaphor."},
+    {type:"verse",ref:"Yeshayahu (Isaiah) 60:5",status:"awaited",
+      text:"Then you shall see and be radiant; your heart shall thrill and exult, because the abundance of the sea shall be turned to you, the wealth of the nations shall come to you."}
+  ]},
+  {title:"Section 7 — The Second Exodus and End Times", items:[
+    {type:"verse",ref:"Yirmeyahu (Jeremiah) 16:14-15",status:"awaited",
+      text:"Therefore, behold, the days are coming, declares YHWH, when it shall no longer be said, YHWH lives who brought up the people of Yisra'el out of the land of Mitsrayim, but YHWH lives who brought up the people of Yisra'el out of the north country and out of all the countries where he had driven them.",
+      note:"The second exodus is explicitly greater than the first. This is the text that reframes the entire covenant narrative from the first exodus to the second."},
+    {type:"verse",ref:"Yeshayahu (Isaiah) 43:5-6",status:"awaited",
+      text:"Fear not, for I am with you; I will bring your offspring from the east, and from the west I will gather you. I will say to the north, Give up, and to the south, Do not withhold; bring my sons from afar and my daughters from the end of the earth.",
+      note:"East, west, north, south — all four directions simultaneously. Sons and daughters both named. A global gathering from every compass point."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 20:33-34",status:"awaited",
+      text:"As I live, declares the Sovereign YHWH, surely with a mighty hand and an outstretched arm and with wrath poured out I will be sovereign over you. I will bring you out from the peoples and gather you out of the countries where you are scattered, with a mighty hand and an outstretched arm and with wrath poured out.",
+      note:"The same language used for the first exodus from Mitsrayim — mighty hand and outstretched arm — applied to the second gathering. The parallel is intentional in the text."},
+    {type:"verse",ref:"Devarim (Deuteronomy) 30:7",status:"awaited",
+      text:"And YHWH will put all these curses on your foes and enemies who persecuted you.",
+      note:"The curses that fell on the covenant people are redirected to those who afflicted them. This is the judgment of the afflicting nation referenced in Bereshit 15:14 — same covenant, fulfilled in the restoration sequence."},
+    {type:"verse",ref:"Yechezkel (Ezekiel) 39:27-28",status:"awaited",
+      text:"When I have brought them back from the peoples and gathered them from their enemies' lands, and through them have vindicated my holiness in the sight of many nations, then they shall know that I am YHWH their sovereign, because I sent them into exile among the nations and then assembled them into their own land. I will leave none of them remaining among the nations anymore.",
+      note:"None remaining among the nations. The gathering is complete. Vindication of holiness occurs in the sight of the nations who witnessed the diaspora. This is a public, visible event."}
+  ]}
+];
+
+function loadCRProgress() {
+  try { crProgress = JSON.parse(localStorage.getItem('acr_cr_progress') || '{}'); } catch(e) { crProgress = {}; }
+}
+function saveCRProgress() {
+  try { localStorage.setItem('acr_cr_progress', JSON.stringify(crProgress)); } catch(e) {}
+}
+function renderCRArc() {
+  var arc = document.getElementById('cr-arc');
+  if (!arc) return;
+  arc.innerHTML = CR_ARC_LABELS.map(function(label, i) {
+    var done = crProgress[i] ? ' done' : '';
+    return '<div class="cr-arc-node" onclick="openCRSection(' + i + ')">' +
+        '<div class="cr-arc-dot' + done + '">' + (i + 1) + '</div>' +
+        '<div class="cr-arc-label">' + label + '</div>' +
+      '</div>' +
+      (i < CR_ARC_LABELS.length - 1 ? '<div class="cr-arc-line"></div>' : '');
+  }).join('');
+}
+function openCRSection(idx) {
+  var body = document.getElementById('cr-sec-' + idx);
+  if (!body) return;
+  if (body.style.display !== 'block') {
+    body.style.display = 'block';
+    var hdr = body.previousElementSibling;
+    if (hdr) {
+      var icon = hdr.querySelector('.ri-arrow-down-s-line,.ri-arrow-up-s-line');
+      if (icon) icon.className = 'ri-arrow-up-s-line';
+      var dot = hdr.querySelector('.cr-progress-dot');
+      if (dot) dot.classList.add('show');
+    }
+    crProgress[idx] = true; saveCRProgress(); renderCRArc();
+  }
+  body.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function toggleCRSection(el, idx) {
+  var body = el.nextElementSibling;
+  var isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  var icon = el.querySelector('.ri-arrow-down-s-line,.ri-arrow-up-s-line');
+  if (icon) icon.className = isOpen ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line';
+  if (!isOpen) {
+    crProgress[idx] = true; saveCRProgress();
+    var dot = el.querySelector('.cr-progress-dot');
+    if (dot) dot.classList.add('show');
+    renderCRArc();
+  }
+}
+function renderCRRecord() {
+  loadCRProgress();
+  renderCRArc();
+  var container = document.getElementById('cr-sections');
+  if (!container || container.innerHTML) return;
+  var BL = {documented:'Documented', active:'Active', awaited:'Awaited'};
+  function statusClass(cell) {
+    var low = cell.toLowerCase();
+    if (low.indexOf('active war') !== -1 || low.indexOf('active conflict') !== -1 || low.indexOf('active insurgency') !== -1) return ' s-active';
+    if (low.indexOf('no direct war') !== -1 || low.indexOf('military presence') !== -1 || low.indexOf('no direct active') !== -1) return ' s-none';
+    return '';
+  }
+  container.innerHTML = CR_SECTIONS.map(function(sec, si) {
+    var dot = crProgress[si] ? ' show' : '';
+    var body = sec.items.map(function(item) {
+      if (item.type === 'head') {
+        return '<div class="cr-subhead">' + esc(item.text) + '</div>';
+      } else if (item.type === 'verse') {
+        var badge = item.status ? '<span class="cr-badge ' + item.status + '">' + BL[item.status] + '</span>' : '';
+        var safeRef = item.ref.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        var jump = '<button class="cr-jump-btn" onclick="crJumpToCorpus(\'' + safeRef + '\')"><i class="ri-search-line"></i> Search corpus</button>';
+        return '<div class="cr-verse ' + (item.status || '') + '">' +
+          '<div class="cr-ref">' + esc(item.ref) + badge + jump + '</div>' +
+          '<div class="cr-text">' + esc(item.text) + '</div>' +
+          (item.note ? '<div class="cr-note">' + esc(item.note) + '</div>' : '') +
+          '</div>';
+      } else if (item.type === 'table') {
+        return '<div class="cr-table-wrap"><table class="cr-table"><thead><tr>' +
+          item.headers.map(function(h) { return '<th>' + esc(h) + '</th>'; }).join('') +
+          '</tr></thead><tbody>' +
+          item.rows.map(function(row) {
+            return '<tr>' + row.map(function(cell, ci) {
+              var cls = ci === 3 ? statusClass(cell) : '';
+              return '<td' + (cls ? ' class="' + cls.trim() + '"' : '') + '>' + esc(cell) + '</td>';
+            }).join('') + '</tr>';
+          }).join('') +
+          '</tbody></table></div>';
+      }
+      return '';
+    }).join('');
+    return '<div class="guide-section">' +
+      '<div class="guide-sec-hdr" onclick="toggleCRSection(this,' + si + ')">' +
+        '<i class="guide-sec-icon ri-book-open-line"></i>' +
+        '<div class="guide-sec-title" style="flex:1">' + esc(sec.title) + '</div>' +
+        '<span class="cr-progress-dot' + dot + '"></span>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div class="guide-sec-body" id="cr-sec-' + si + '">' + body + '</div>' +
+    '</div>';
+  }).join('');
+}
+function crJumpToCorpus(ref) {
+  var inp = document.getElementById('search-input');
+  if (inp) inp.value = ref;
+  doSearch(ref);
+}
+function downloadCRRecord() {
+  var css = 'body{font-family:Georgia,serif;max-width:720px;margin:40px auto;padding:0 24px;color:#111;line-height:1.7;background:#fff}h1{font-family:Arial,sans-serif;border-bottom:2px solid #ccc;padding-bottom:10px}h2{font-family:Arial,sans-serif;border-bottom:1px solid #ddd;padding-bottom:6px;margin-top:40px;font-size:16px}h3{font-family:Arial,sans-serif;font-size:13px;color:#555;margin-top:22px}.ref{font-weight:bold;margin-top:20px;margin-bottom:4px;font-size:13px;font-family:Arial,sans-serif}.badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:8px;font-family:Arial,sans-serif;font-weight:700}.documented{background:#fdf3d7;color:#7a5c00;border:1px solid #B8860B}.active{background:#fde8e8;color:#c0392b;border:1px solid #e74c3c}.awaited{background:#f0f0f0;color:#666;border:1px solid #bbb}.verse-text{margin:0 0 8px;font-size:15px}.note{font-size:12px;color:#666;font-style:italic;border-top:1px solid #eee;padding-top:6px;margin-top:4px}table{border-collapse:collapse;width:100%;font-size:12px;margin:16px 0}th{background:#f5f5f5;padding:7px 10px;text-align:left;border-bottom:2px solid #ccc;font-family:Arial,sans-serif;font-size:11px;text-transform:uppercase}td{padding:7px 10px;border-bottom:1px solid #eee;vertical-align:top}.footer{margin-top:40px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:14px}';
+  var BL = {documented:'Documented',active:'Active',awaited:'Awaited'};
+  var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>The Covenant Record</title><style>' + css + '</style></head><body>';
+  html += '<h1>The Covenant Record</h1><p style="color:#666;font-size:13px;font-family:Arial,sans-serif">Primary Sources: Torah · Dead Sea Scrolls · Ge\'ez Orit (Beta Israel)<br>No Masoretic. No Septuagint. No Rabbinic overlay.<br>Compiled June 2026</p>';
+  CR_SECTIONS.forEach(function(sec) {
+    html += '<h2>' + esc(sec.title) + '</h2>';
+    sec.items.forEach(function(item) {
+      if (item.type === 'head') {
+        html += '<h3>' + esc(item.text) + '</h3>';
+      } else if (item.type === 'verse') {
+        var badge = item.status ? '<span class="badge ' + item.status + '">' + BL[item.status] + '</span>' : '';
+        html += '<div class="ref">' + esc(item.ref) + badge + '</div>';
+        html += '<p class="verse-text">' + esc(item.text) + '</p>';
+        if (item.note) html += '<div class="note">' + esc(item.note) + '</div>';
+      } else if (item.type === 'table') {
+        html += '<table><thead><tr>' + item.headers.map(function(h){return '<th>'+esc(h)+'</th>';}).join('') + '</tr></thead><tbody>';
+        item.rows.forEach(function(row){ html += '<tr>' + row.map(function(c){return '<td>'+esc(c)+'</td>';}).join('') + '</tr>'; });
+        html += '</tbody></table>';
+      }
+    });
+  });
+  html += '<div class="footer">The Covenant Record — Compiled June 2026 — ACR Search</div></body></html>';
+  var blob = new Blob([html], {type:'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'The_Covenant_Record_v2.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 1000);
+}
+
+// ── PROPHETIC WATCH ───────────────────────────────────────────────────────────
+function doWatchSearch() {
+  var q = (document.getElementById('pw-input').value || '').trim();
+  var resultsEl = document.getElementById('pw-results');
+  if (!q || !resultsEl) return;
+  var tokens = q.toLowerCase().split(/\s+/).filter(function(t) { return t.length > 2; });
+  if (!tokens.length) return;
+
+  var crHits = [];
+  CR_SECTIONS.forEach(function(sec, si) {
+    sec.items.forEach(function(item) {
+      if (item.type !== 'verse') return;
+      var hay = ((item.text || '') + ' ' + (item.ref || '') + ' ' + (item.note || '')).toLowerCase();
+      var score = tokens.reduce(function(s, t) { return s + (hay.split(t).length - 1); }, 0);
+      if (score > 0) crHits.push({item: item, si: si, score: score});
+    });
+  });
+  crHits.sort(function(a, b) { return b.score - a.score; });
+  crHits = crHits.slice(0, 10);
+
+  var corpusHits = [];
+  if (CONCORDANCE) {
+    CONCORDANCE.passages.forEach(function(p) {
+      var hay = ((p.text || '') + ' ' + (p.ref || '') + ' ' + ((p.themes || []).join(' '))).toLowerCase();
+      var score = tokens.reduce(function(s, t) { return s + (hay.split(t).length - 1); }, 0);
+      if (score > 0) corpusHits.push({p: p, score: score});
+    });
+    corpusHits.sort(function(a, b) { return b.score - a.score; });
+    corpusHits = corpusHits.slice(0, 12);
+  }
+
+  var BL = {documented:'Documented', active:'Active', awaited:'Awaited'};
+  var html = '';
+
+  if (crHits.length) {
+    html += '<div class="pw-section-label">Covenant Record — ' + crHits.length + ' match' + (crHits.length !== 1 ? 'es' : '') + '</div>';
+    html += crHits.map(function(h) {
+      var item = h.item;
+      var badge = item.status ? '<span class="cr-badge ' + item.status + '">' + BL[item.status] + '</span>' : '';
+      var preview = item.text.length > 180 ? item.text.substring(0, 180) + '...' : item.text;
+      return '<div class="cr-verse ' + (item.status || '') + '" style="margin-bottom:8px">' +
+        '<div class="cr-ref">' + esc(item.ref) + badge +
+          '<button class="cr-jump-btn" onclick="openCRSection(' + h.si + ');setMode(\'record\')">' +
+            '<i class="ri-book-open-line"></i> Open in Record</button>' +
+        '</div>' +
+        '<div class="cr-text" style="font-size:12px">' + esc(preview) + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  if (corpusHits.length) {
+    html += '<div class="pw-section-label">Corpus — ' + corpusHits.length + ' passage' + (corpusHits.length !== 1 ? 's' : '') + '</div>';
+    html += corpusHits.map(function(h) {
+      var p = h.p;
+      var preview = (p.text || '').length > 160 ? (p.text || '').substring(0, 160) + '...' : (p.text || '');
+      return '<div class="rc" style="margin-bottom:8px">' +
+        '<div class="rc-ref">' + esc(p.ref || '') + '</div>' +
+        '<div class="rc-ms">' + esc(p.manuscript || '') + '</div>' +
+        '<div class="rc-text">' + esc(preview) + '</div>' +
+        '<div class="rc-actions">' +
+          '<button class="rc-btn" onclick="openDNA(\'' + esc(p.id) + '\')"><i class="ri-dna-line"></i> Verse DNA</button>' +
+          '<button class="rc-btn" onclick="copyPassage(\'' + esc(p.id) + '\',this)"><i class="ri-clipboard-line"></i> Copy</button>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  if (!crHits.length && !corpusHits.length) {
+    html = '<div style="color:var(--tx3);padding:24px 0;text-align:center;font-size:13px">No matches for "' + esc(q) + '" — try different keywords.</div>';
+  }
+  resultsEl.innerHTML = html;
 }
 
 // ── VOLUME BROWSER ────────────────────────────────────────────────────────────
