@@ -154,6 +154,68 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .cat-N{background:rgba(192,57,43,0.15);color:#e74c3c;border:1px solid #e74c3c}
 .cat-C{background:rgba(80,80,80,0.15);color:#888;border:1px solid #555}
 
+/* NT TABS */
+.nt-tabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:0 0 12px;-webkit-overflow-scrolling:touch}
+.nt-tabs::-webkit-scrollbar{display:none}
+.nt-tab{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:5px 13px;font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.15s}
+.nt-tab.active{background:rgba(192,57,43,0.2);border-color:#e74c3c;color:#e74c3c}
+.nt-tab-pane{display:none}
+.nt-tab-pane.active{display:block}
+
+/* HISTORICAL & TRINITY */
+.hr-source{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.hr-source-hdr{padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.hr-source-name{font-size:12px;font-weight:700;color:#fff;flex:1;line-height:1.4}
+.hr-source-date{font-size:10px;color:var(--tx3);flex-shrink:0}
+.hr-sec-head{font-size:13px;font-weight:800;color:#fff;margin:18px 0 5px;padding-bottom:6px;border-bottom:1px solid #1e1e1e}
+.hr-sec-sub{font-size:11px;color:var(--tx3);margin-bottom:11px;line-height:1.6}
+.hr-what{font-size:11px;color:var(--tx2);line-height:1.7;padding:9px 0 5px;border-bottom:1px solid #111;margin-bottom:6px}
+.hr-problem{font-size:11px;color:#e8a87c;line-height:1.7;margin-bottom:7px}
+.hr-verdict-box{font-size:11px;font-weight:600;color:#f0b8b8;background:rgba(192,57,43,0.1);border-radius:5px;padding:7px 10px}
+.hr-parallel{background:var(--s1);border:1px solid #1e1e1e;border-radius:7px;padding:10px 12px;margin-bottom:8px}
+.hr-ptradition{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.hr-pelements{font-size:11px;color:var(--tx2);line-height:1.6}
+.hr-missing{background:var(--s1);border:1px solid #1e1e1e;border-left:3px solid #e74c3c;border-radius:var(--r);padding:11px 13px;margin-bottom:8px}
+.hr-missing-claim{font-size:12px;font-weight:700;color:#fff;margin-bottom:5px}
+.hr-missing-text{font-size:11px;color:var(--tx2);line-height:1.6}
+.trinity-tl{position:relative;padding-left:20px;margin-top:4px}
+.trinity-tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:#2a2a2a}
+.trinity-item{position:relative;margin-bottom:16px;padding-left:14px}
+.trinity-item::before{content:'';position:absolute;left:-13px;top:5px;width:10px;height:10px;border-radius:50%;background:#e74c3c;border:2px solid var(--bg)}
+.trinity-period{font-size:9px;font-weight:700;color:#e74c3c;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.trinity-label{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+.trinity-desc{font-size:11px;color:var(--tx2);line-height:1.7}
+
+/* RABBINIC */
+.rb-item{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.rb-hdr{padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.rb-ref{font-size:13px;font-weight:700;color:var(--gold);flex:1}
+.rb-dss-maso{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 8px}
+.rb-col{background:var(--s2);border-radius:7px;padding:9px}
+.rb-col-head{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid #333}
+.rb-dss .rb-col-head{color:#27ae60}
+.rb-maso .rb-col-head{color:#e67e22}
+.rb-col-text{font-size:11px;color:var(--tx2);line-height:1.6;font-style:italic}
+.rb-ms{font-size:10px;color:var(--tx3);line-height:1.5;margin-bottom:6px;padding:6px 0;border-top:1px solid #111}
+.rb-impact{font-size:11px;color:#f0b8b8;line-height:1.5}
+.td-item{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--gold)}
+.td-topic{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.td-text{font-size:11px;color:var(--tx2);line-height:1.7}
+
+/* ROME & DSS SUPPRESSION */
+.rome-doctrine{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.rome-hdr{padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.rome-name{font-size:12px;font-weight:700;color:#fff;flex:1;line-height:1.4}
+.rome-year{font-size:10px;font-weight:700;color:#e74c3c;flex-shrink:0}
+.rome-council{font-size:10px;color:var(--tx3);line-height:1.5;margin:8px 0 5px;font-style:italic}
+.rome-claim{font-size:11px;color:var(--tx2);line-height:1.7;margin-bottom:7px}
+.rome-verdict{font-size:11px;color:#f0b8b8;line-height:1.5;background:rgba(192,57,43,0.1);border-radius:5px;padding:7px 10px}
+.ds-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e1e1e}
+.ds-item:last-child{border-bottom:none}
+.ds-period{font-size:9px;font-weight:700;color:#e74c3c;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.ds-label{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
+.ds-desc{font-size:11px;color:var(--tx2);line-height:1.7}
+
 /* PAUL & ACTS PANEL */
 .pa-panel{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-top:14px;overflow:hidden}
 .pa-panel-hdr{padding:13px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid #e74c3c}
@@ -609,23 +671,33 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 
     <!-- NT LOOKUP -->
     <div id="nt-view" style="display:none">
-      <div class="nt-iw">
-        <div class="nt-label">Enter a New Testament reference</div>
-        <input class="nt-ri" id="nt-ref-input" placeholder="e.g. John 1:1 or Matthew 1:23" autocomplete="off">
-        <button class="nt-go" onclick="doNTLookup()">Look Up Primary Source Truth</button>
-        <div class="nt-pills" id="nt-preloaded"></div>
+      <div class="nt-tabs">
+        <div class="nt-tab active" id="nt-tab-lookup" onclick="switchNTTab('lookup')">NT Lookup</div>
+        <div class="nt-tab" id="nt-tab-paulacts" onclick="switchNTTab('paulacts')">Paul &amp; Acts</div>
+        <div class="nt-tab" id="nt-tab-historical" onclick="switchNTTab('historical')">Historical</div>
+        <div class="nt-tab" id="nt-tab-rabbinic" onclick="switchNTTab('rabbinic')">Rabbinic</div>
+        <div class="nt-tab" id="nt-tab-rome" onclick="switchNTTab('rome')">Rome</div>
       </div>
-      <div id="nt-result-area"></div>
-      <div class="pa-panel">
-        <div class="pa-panel-hdr" onclick="togglePaulActsPanel()">
-          <i class="ri-alert-line" style="color:#e74c3c;font-size:18px;flex-shrink:0"></i>
-          <div class="pa-panel-title">Paul &amp; Acts — Pattern Analysis</div>
-          <div style="font-size:10px;color:var(--tx3);flex-shrink:0">14 letters &amp; Acts</div>
-          <i class="ri-arrow-down-s-line" id="paul-acts-chevron" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>
+      <div id="nt-pane-lookup" class="nt-tab-pane active">
+        <div class="nt-iw">
+          <div class="nt-label">Enter a New Testament reference</div>
+          <input class="nt-ri" id="nt-ref-input" placeholder="e.g. John 1:1 or Matthew 1:23" autocomplete="off">
+          <button class="nt-go" onclick="doNTLookup()">Look Up Primary Source Truth</button>
+          <div class="nt-pills" id="nt-preloaded"></div>
         </div>
-        <div id="paul-acts-body" style="display:none">
-          <div id="paul-acts-panel"></div>
-        </div>
+        <div id="nt-result-area"></div>
+      </div>
+      <div id="nt-pane-paulacts" class="nt-tab-pane">
+        <div id="paul-acts-panel"></div>
+      </div>
+      <div id="nt-pane-historical" class="nt-tab-pane">
+        <div id="historical-panel"></div>
+      </div>
+      <div id="nt-pane-rabbinic" class="nt-tab-pane">
+        <div id="rabbinic-panel"></div>
+      </div>
+      <div id="nt-pane-rome" class="nt-tab-pane">
+        <div id="rome-panel"></div>
       </div>
     </div>
 
@@ -1138,6 +1210,9 @@ function setLdProgress(pct, msg) {
 function initApp() {
   renderNTPreloaded();
   renderPaulActsPanel();
+  renderHistoricalPanel();
+  renderRabbinicPanel();
+  renderRomePanel();
   renderSuppressedLibrary();
   renderContradictions();
   renderTimeline();
@@ -1661,6 +1736,193 @@ function togglePASub(hdr) {
   var open = body.style.display === 'block';
   body.style.display = open ? 'none' : 'block';
   if (icon) icon.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+// ── NT TAB SWITCH ─────────────────────────────────────────────────────────────
+function switchNTTab(tab) {
+  ['lookup','paulacts','historical','rabbinic','rome'].forEach(function(t) {
+    var tabEl = document.getElementById('nt-tab-' + t);
+    var paneEl = document.getElementById('nt-pane-' + t);
+    if (tabEl) tabEl.classList.toggle('active', t === tab);
+    if (paneEl) paneEl.classList.toggle('active', t === tab);
+  });
+}
+
+// ── HISTORICAL RECORD ─────────────────────────────────────────────────────────
+var HIST_SECULAR_SOURCES = [
+  {name:'Josephus — Testimonium Flavianum',date:'~93 CE',what:'Antiquities 18.3.3 — describes Yeshua as a wise man, the Messiah, crucified under Pilate, and risen on the third day.',problem:'Every church father before Eusebius of Caesarea (260-340 CE) fails to quote this passage, despite it being the single most useful argument for the faith. Origen (185-254 CE) states explicitly that Josephus did not believe Yeshua was the Messiah. The passage appears in no manuscript before Eusebius quotes it in full. Scholarly consensus: the current text is a Christian insertion into Josephus\'s work, or at minimum heavily interpolated. The earlier silence from Origen is decisive.',verdict:'Not independent. Either wholly inserted or heavily interpolated. Not usable as historical confirmation of the gospel narrative.'},
+  {name:'Josephus — James the Brother of Jesus',date:'~93 CE',what:'Antiquities 20.9.1 — brief mention of "James the brother of Jesus who was called Christ" in a description of a stoning.',problem:'Written 60+ years after the events. Does not describe Yeshua\'s life, ministry, or crucifixion. "Yeshua" (Jesus) was one of the most common Jewish names of the period. Even if authentic, this confirms only that a man named James had a brother named Yeshua whom some called the Messiah — not that the gospel narrative is historical.',verdict:'More likely authentic than the Testimonium but proves nothing about the gospel narrative. At most: a man named Yeshua existed and had a brother named James.'},
+  {name:'Tacitus — Annals 15.44',date:'~116 CE',what:'States Nero blamed the burning of Rome on Christians who took their name from "Christus," executed under Pontius Pilate during Tiberius\'s reign.',problem:'Written approximately 85 years after the alleged crucifixion. Tacitus was not alive during those events. He almost certainly sourced this from the Christian community itself, not from Roman administrative records — he was describing a current religious movement, not reporting from historical documents. Some scholars dispute the passage as an interpolation. Confirms the existence of Christians and their belief, not the historical events.',verdict:'Not independent. Secondary source written generations after the fact, most likely sourced from Christian testimony. Confirms the movement existed, not the narrative.'},
+  {name:'Pliny the Younger — Letters 10.96',date:'~112 CE',what:'Describes Christians in Bithynia who "sing hymns to Christus as to a god" on a fixed day before dawn and share a meal.',problem:'Says nothing about a historical person at all. Describes a living religious practice only. Pliny is asking how to handle members of this movement — he has no interest in or knowledge of the founding figure\'s historical existence.',verdict:'Confirms the Christian movement existed. Contains zero historical information about the person called Christus.'},
+  {name:'Suetonius — Life of Claudius 25.4',date:'~121 CE',what:'Mentions Jews causing disturbances in Rome "at the instigation of Chrestus."',problem:'"Chrestus" is a different spelling from "Christus" and was a common Greek and Latin name meaning "useful" or "good." The disturbances occurred under Emperor Claudius (~49 CE) in Rome. If this referred to Yeshua he would have been recently deceased and located in Jerusalem, not instigating disturbances in Rome. Most classical scholars read this as a reference to a local agitator of that name, not to Yeshua of Nazareth.',verdict:'Almost certainly refers to a different person entirely. Not a credible reference to Yeshua of Nazareth.'}
+];
+var HIST_PARALLELS = [
+  {tradition:'Osiris (Egyptian — 2400 BCE+)',elements:'Resurrection from death, body consumed symbolically by followers, divine parentage, eternal life through identification with the deity, judgment of the dead before entry to the afterlife'},
+  {tradition:'Horus (Egyptian — 3100 BCE+)',elements:'Born of a virgin (Isis), divine father (Osiris), star announced the birth, twelve followers, performed miracles, resurrection'},
+  {tradition:'Mithras (Persian/Roman — 1500 BCE+)',elements:'Born December 25, born of a virgin, twelve disciples, baptism ritual, sacred meal of bread and cup, called "the Light of the World," resurrection, Sunday as sacred day'},
+  {tradition:'Dionysus (Greek — 800 BCE+)',elements:'Born of a virgin (Semele) and a divine father (Zeus), water transformed to wine at a festival, resurrection, divine son, followers consumed his body and blood symbolically, called "Son of God" and "King of Kings"'},
+  {tradition:'Attis (Phrygian — 1200 BCE+)',elements:'Born of a virgin on December 25, death and resurrection observed at spring equinox, followers baptized in blood, ritual meal shared among initiates'},
+  {tradition:'Krishna (Vedic — 3000 BCE+)',elements:'Born of a virgin, divine father, star announced the birth, gifts brought by wise men at birth, baptized in a river, performed miracles, transfigured, ascended after death'}
+];
+var HIST_MISSING = [
+  {claim:'Roman Census — Luke 2:1-5',absence:'No Roman administrative record of a universal census requiring people to return to their ancestral towns — a logistically impossible order with no precedent in Roman practice. The census of Quirinius is historically dated to 6 CE. Herod the Great died in 4 BCE. Luke places the birth during Quirinius; Matthew places it during Herod. This is a minimum 10-year internal NT contradiction that has never been resolved.'},
+  {claim:'Massacre of the Innocents — Matthew 2:16',absence:'Herod ordering all male infants killed would have been recorded extensively. Josephus documented Herod\'s other atrocities in detail — including the killing of his own sons — and was openly hostile to Herod\'s legacy. The massacre appears in no source anywhere. Josephus\'s silence on an event of this scale is decisive.'},
+  {claim:'Trial Before Pilate',absence:'Roman governors kept meticulous administrative records of capital proceedings. No Roman court record, administrative document, or provincial record of a trial of Yeshua ben Yosef from Nazareth has ever been found. Pilate is historically confirmed as prefect — the trial he allegedly conducted is not.'},
+  {claim:'Three-Hour Darkness — Matthew 27:45, Mark 15:33',absence:'A midday darkness lasting three hours over "the whole land" would have been recorded by Roman, Greek, Egyptian, and Chinese astronomers and historians who were active and writing at this period. No contemporary source anywhere records such an event.'},
+  {claim:'Resurrection of Many Saints — Matthew 27:52-53',absence:'Matthew alone records that at the moment of the crucifixion many dead saints were raised and walked into Jerusalem and appeared to many. An event of this magnitude — the dead walking into a major city — would appear in Josephus, Philo, Tacitus, and every historian of the period. No other source mentions it, including the other three gospels.'}
+];
+var TRINITY_TIMELINE = [
+  {period:'Pre-200 CE',label:'Arian Baseline — the Default Position',desc:'Before any formal council, most believers held that Yeshua was divine but subordinate to the Father — created by him, not co-eternal with him. Justin Martyr (100-165 CE) called him "a second God" but clearly beneath the Father. Origen of Alexandria (185-254 CE) taught the Son was generated by the Father and therefore subordinate: "there was a time when the Son was not." This was not a fringe position — it was the dominant one.'},
+  {period:'~200 CE',label:'Tertullian Coins "Trinitas"',desc:'Tertullian (160-225 CE) is the first to use the Latin word "trinitas" in Christian writing. He was writing against Modalism — the idea that Father, Son, and Spirit are three masks of a single being. His own Trinity is not co-equal: the Father is greater, the Son is subordinate. Tertullian\'s "Trinity" is Arian in substance.'},
+  {period:'256-336 CE',label:'Arius States the Position Plainly',desc:'Arius of Alexandria taught explicitly: "There was a time when the Son was not." The Son is the greatest created being but is created, not eternal, not co-equal. This was not a new idea — it was the received position. The controversy was that Arius articulated it too precisely for some bishops at a moment when the Emperor wanted doctrinal unity.'},
+  {period:'325 CE',label:'Council of Nicaea — Political Vote',desc:'Convened by Emperor Constantine — a pagan who was not baptized until his deathbed and whose primary interest was imperial unity, not theology. Approximately 300 bishops attended out of an estimated 1,800 in the church. Homoousios ("same substance" — Father and Son identical in nature, co-eternal) was proposed and passed by majority vote. Those who refused to sign were exiled by imperial decree — not by theological consensus. The Holy Spirit was not defined at Nicaea. The Trinity was not yet complete.'},
+  {period:'361-363 CE',label:'Arius Reinstated Under Julian',desc:'Emperor Julian reversed Constantine\'s ruling. Arian bishops were recalled from exile and reinstated. Within one generation of Nicaea, the political enforcement was reversed. The Trinity was not a settled theological consensus — it was the position of whichever Emperor currently held power.'},
+  {period:'381 CE',label:'Council of Constantinople — Trinity Completed',desc:'Emperor Theodosius I convenes the council. The Holy Spirit is formally declared co-equal with Father and Son — completing the Trinity as three co-equal persons. The Nicene-Constantinopolitan Creed replaces the 325 version. The Trinity as understood today was not complete until this council — 56 years after Nicaea. Both councils were called by Roman Emperors and enforced by imperial authority.'},
+  {period:'431 CE',label:'Council of Ephesus — Miriam as Mother of God',desc:'A direct consequence of the Trinity definition: if Yeshua is fully God, then Miriam bore God. The council declared her Theotokos — "God-bearer" or "Mother of God." Nestorius opposed this title, arguing Miriam bore the human Yeshua, not the eternal God. He was declared a heretic by vote. His party disputed the vote as illegitimate. No primary source basis for Theotokos exists in any DSS or Orit Ge\'ez text.'},
+  {period:'451 CE',label:'Council of Chalcedon — Two Natures',desc:'Yeshua declared simultaneously fully divine and fully human — "two natures in one person without confusion, change, division, or separation." This created permanent schisms: the Oriental Orthodox churches (Coptic, Ethiopian, Armenian) rejected this council and remain non-Chalcedonian to this day. The "two natures" theology has no basis in any primary source text.'}
+];
+function renderHistoricalPanel() {
+  var panel = document.getElementById('historical-panel');
+  if (!panel) return;
+  var sourcesHtml = HIST_SECULAR_SOURCES.map(function(s) {
+    return '<div class="hr-source">' +
+      '<div class="hr-source-hdr" onclick="toggleAccordion(this)">' +
+        '<div class="hr-source-name">' + esc(s.name) + '</div>' +
+        '<div class="hr-source-date">' + esc(s.date) + '</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div style="display:none;padding:0 14px 13px;border-top:1px solid #1e1e1e">' +
+        '<div class="hr-what"><span style="font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);font-weight:700">What it says</span><br>' + esc(s.what) + '</div>' +
+        '<div class="hr-problem"><span style="font-size:9px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700">Problem</span><br>' + esc(s.problem) + '</div>' +
+        '<div class="hr-verdict-box">' + esc(s.verdict) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  var parallelsHtml = HIST_PARALLELS.map(function(p) {
+    return '<div class="hr-parallel"><div class="hr-ptradition">' + esc(p.tradition) + '</div><div class="hr-pelements">' + esc(p.elements) + '</div></div>';
+  }).join('');
+  var missingHtml = HIST_MISSING.map(function(m) {
+    return '<div class="hr-missing"><div class="hr-missing-claim">' + esc(m.claim) + '</div><div class="hr-missing-text">' + esc(m.absence) + '</div></div>';
+  }).join('');
+  var trinityHtml = TRINITY_TIMELINE.map(function(t) {
+    return '<div class="trinity-item"><div class="trinity-period">' + esc(t.period) + '</div><div class="trinity-label">' + esc(t.label) + '</div><div class="trinity-desc">' + esc(t.desc) + '</div></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="hr-sec-head">No Contemporary Historical Documentation</div>' +
+    '<div class="hr-sec-sub">Five sources are typically cited as secular confirmation of Yeshua\'s existence. Each is examined against the standard of independent contemporary documentation.</div>' +
+    sourcesHtml +
+    '<div class="hr-sec-head">Pre-Existing Parallel Traditions</div>' +
+    '<div class="hr-sec-sub">The following traditions predate the gospel accounts by centuries. Each contains documented structural parallels to the NT narrative.</div>' +
+    parallelsHtml +
+    '<div class="hr-sec-head">Missing Administrative Records</div>' +
+    '<div class="hr-sec-sub">Events described in the gospels that would have generated Roman administrative or historical records — none of which have been found.</div>' +
+    missingHtml +
+    '<div class="hr-sec-head">How the Trinity Was Constructed</div>' +
+    '<div class="hr-sec-sub">The Trinity as three co-equal persons was not a founding belief. It was constructed through politically convened councils over 130 years.</div>' +
+    '<div class="trinity-tl">' + trinityHtml + '</div>';
+}
+
+// ── RABBINIC RECORD ───────────────────────────────────────────────────────────
+var RABBINIC_DIVERGENCES = [
+  {ref:'Devarim 32:8',dss:'According to the number of the sons of El — bene El — the divine council. YHWH set the nations\' boundaries according to the number of divine beings in his assembly.',masoretic:'According to the number of the sons of Israel — bene Yisra\'el',ms:'4QDeut (Cave 4) reads bene El. The Septuagint also reads "sons of God/El" — both independent witnesses confirm the DSS reading. The Masoretic reading is the later text.',impact:'Removes the divine council (the assembly of Elohim) entirely from Torah. Changes a verse about YHWH apportioning nations among divine beings into a simple population reference. The concept of a heavenly council found throughout DSS texts is erased.'},
+  {ref:'Psalm 22:16',dss:'They pierced my hands and my feet — ka\'aru',masoretic:'Like a lion my hands and my feet — ka\'ari. One letter different: aleph vs vav at the word\'s end.',ms:'DSS Psalms scroll (11QPsa Cave 11) and several pre-Masoretic Hebrew manuscripts read ka\'aru (pierced). The Masoretic reading ka\'ari produces a grammatically incomplete sentence — "like a lion my hands and feet" with no verb. The DSS reading is syntactically complete.',impact:'The DSS reading is the more ancient and grammatically coherent. The Masoretic variant removes a verse the NT applies to crucifixion from the primary source text — one letter change.'},
+  {ref:'Jeremiah — Entire Book',dss:'DSS Jeremiah (4QJer, Cave 4) is approximately one-eighth shorter than the Masoretic version. Passages and chapters present in the Masoretic are absent from the DSS.',masoretic:'Substantially longer — contains material not in the DSS text.',ms:'4QJer agrees with the Septuagint against the Masoretic. Two editions of Jeremiah existed simultaneously. The shorter DSS/LXX version is the older one. The Masoretic is an expanded later edition.',impact:'The version of Jeremiah in most Bibles today is a later expanded edition. The older, shorter, primary source version was sidelined in favor of the Masoretic expansion.'},
+  {ref:'1 Samuel 10:27-11:1',dss:'Contains a full additional paragraph describing Nahash the Ammonite gouging out the right eyes of Gadites and Reubenites — establishing context for the following chapter.',masoretic:'This entire paragraph is absent.',ms:'4QSam (Cave 4). A complete narrative paragraph — not a variant word — present in the DSS primary source and entirely missing from the Masoretic and all subsequent Bible translations.',impact:'Substantive narrative content was removed. The DSS preserve text that was excised from the Masoretic tradition entirely.'},
+  {ref:'Exodus 1:5 — Number of Souls',dss:'75 souls went down to Egypt with Ya\'akov',masoretic:'70 souls',ms:'DSS fragments and the Septuagint both read 75. Acts 7:14 quotes 75 — meaning the NT author\'s Hebrew source text agreed with the DSS against the Masoretic. The NT accidentally confirms the DSS reading.',impact:'One of the clearest cases where DSS, Septuagint, and NT all agree against the Masoretic standard text. The number that went to Egypt in most Bibles today (70) is not the primary source number.'},
+  {ref:'Isaiah 7:14',dss:'Almah — young woman of marriageable age. A specific Hebrew word distinct from betulah (virgin), which does not appear in this verse in any ancient manuscript.',masoretic:'Also reads almah — the divergence here is not between DSS and Masoretic but between Hebrew and the Septuagint Greek translation.',ms:'1QIsa-a (Cave 1) confirms almah. Both DSS and Masoretic agree on almah. The Septuagint translators (~200 BCE) chose to render almah as parthenos (virgin) — a translation decision, not a textual variant. The NT quotes the Septuagint, not the Hebrew primary source.',impact:'The virgin birth doctrine rests on a translation choice made in 200 BCE, not on the Hebrew primary source text. Both DSS and Masoretic use almah — young woman — not betulah — virgin.'}
+];
+var TALMUD_DEPARTURES = [
+  {topic:'Oral Torah Claim',text:'The Talmud claims an Oral Torah was given to Moshe at Sinai alongside the written Torah and passed down in an unbroken chain to the Rabbinic sages. No DSS text — written within 200-300 years of the Second Temple period — references an oral Torah tradition. The Community Rule (1QS) and Damascus Document (CD) from Qumran describe covenant renewal through the written text alone. The Qumran community was contemporaneous with the Second Temple period and shows no awareness of a parallel oral tradition.'},
+  {topic:'Calendar — Solar vs Lunar',text:'DSS Calendar Texts (4Q319-330), the Book of Jubilees, and the astronomical sections of 1 Chanokh mandate a fixed 364-day solar calendar. YHWH\'s appointed times (moedim) fall on the same day of the week every year — Passover always on a Wednesday, Shavuot always on a Sunday — by design, so they never fall on Shabbat. The Rabbinic calendar is lunisolar, shifting festival dates each year. The DSS community explicitly rejected the Jerusalem Temple\'s calendar as corrupt and considered calendar deviation a fundamental covenant violation.'},
+  {topic:'Passover Date',text:'Shemot 12 and the DSS Book of Jubilees: Passover is 14 Nisan, the lamb slaughtered in the afternoon of the 14th. The Rabbinic calendar begins the Passover seder after nightfall beginning 15 Nisan — the start of the 15th, not the 14th. The DSS Temple Scroll confirms the 14th. The date shift places the Rabbinic Passover observance one day after the primary source mandate.'},
+  {topic:'Afterlife and Judgment',text:'The Talmud develops detailed afterlife categories: Gehinnom as a place of post-death purification of defined duration, multiple levels of the world to come, specific judgment processes. The DSS do describe resurrection (1QH Hodayot, 4Q521 the Messianic Apocalypse) but the elaborate Talmudic afterlife structure — its duration, its graduated levels, the specific conditions — is a later doctrinal layer not present in the primary source texts.'},
+  {topic:'Prayer Liturgy',text:'The Amidah (18-19 blessings), the structure of three daily prayer services, and the specific liturgical forms codified in the Siddur are Rabbinic constructions formalized after 70 CE. The DSS contain extensive prayer texts (the Hodayot, the Daily Prayers 4Q503, the Festival Prayers) but these do not mandate the specific Rabbinic liturgical structure. The formal Siddur is an institutional layer added centuries after the primary sources were written.'}
+];
+function renderRabbinicPanel() {
+  var panel = document.getElementById('rabbinic-panel');
+  if (!panel) return;
+  var divergHtml = RABBINIC_DIVERGENCES.map(function(d) {
+    return '<div class="rb-item">' +
+      '<div class="rb-hdr" onclick="toggleAccordion(this)">' +
+        '<i class="ri-book-mark-line" style="color:var(--gold);font-size:15px;flex-shrink:0"></i>' +
+        '<div class="rb-ref">' + esc(d.ref) + '</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div style="display:none;padding:0 14px 13px;border-top:1px solid #1e1e1e">' +
+        '<div class="rb-dss-maso">' +
+          '<div class="rb-col rb-dss"><div class="rb-col-head">DSS — Primary Source</div><div class="rb-col-text">' + esc(d.dss) + '</div></div>' +
+          '<div class="rb-col rb-maso"><div class="rb-col-head">Masoretic</div><div class="rb-col-text">' + esc(d.masoretic) + '</div></div>' +
+        '</div>' +
+        '<div class="rb-ms"><i class="ri-archive-line" style="margin-right:4px"></i>Manuscript evidence: ' + esc(d.ms) + '</div>' +
+        '<div class="rb-impact">Impact: ' + esc(d.impact) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  var talmudHtml = TALMUD_DEPARTURES.map(function(t) {
+    return '<div class="td-item"><div class="td-topic">' + esc(t.topic) + '</div><div class="td-text">' + esc(t.text) + '</div></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="hr-sec-head">DSS vs Masoretic — Key Documented Divergences</div>' +
+    '<div class="hr-sec-sub">The Masoretic Text was compiled 600-900 years after the DSS. These are specific documented points where the primary source text differs from the Masoretic Text used in most Bible translations today.</div>' +
+    divergHtml +
+    '<div class="hr-sec-head">Talmudic Tradition — Departures from Primary Sources</div>' +
+    '<div class="hr-sec-sub">The Talmud (Mishnah ~200 CE, Babylonian Talmud ~500 CE) is an institutional doctrinal layer built centuries after the primary sources. These are key areas where Talmudic teaching has no primary source basis or directly contradicts it.</div>' +
+    talmudHtml;
+}
+
+// ── ROME & DSS SUPPRESSION ────────────────────────────────────────────────────
+var ROME_DOCTRINES = [
+  {doctrine:'Papal Infallibility',year:'1870 CE',council:'First Vatican Council (Vatican I) — July 18, 1870. Defined by Pope Pius IX.',claim:'The Pope is infallible when speaking ex cathedra — from the chair — on matters of faith and morals binding the whole church.',source:'No primary source. Devarim 18:20-22 (DSS Torah) states plainly: the prophet who speaks what YHWH has not commanded shall die. The false prophet test. No human being is granted infallible interpretive authority over YHWH\'s covenant in any DSS or Orit Ge\'ez text.'},
+  {doctrine:'Immaculate Conception',year:'1854 CE',council:'Apostolic Constitution Ineffabilis Deus — Pope Pius IX, December 8, 1854.',claim:'Miriam (Mary) was preserved from original sin from the moment of her own conception in her mother\'s womb.',source:'No primary source text. No DSS text. No Orit Ge\'ez text. The doctrine depends on the prior doctrine of original sin — itself built from Jerome\'s Latin mistranslation of Romans 5:12. No church father before the medieval period held this position.'},
+  {doctrine:'Assumption of Mary',year:'1950 CE',council:'Apostolic Constitution Munificentissimus Deus — Pope Pius XII, November 1, 1950.',claim:'Miriam was taken body and soul into heaven at the end of her earthly life. Defined as binding dogma 75 years ago.',source:'No primary source. No ancient text. The earliest written references to this tradition appear no earlier than the 4th century CE. This is a doctrine invented within living memory, defined as required belief for all Catholics worldwide.'},
+  {doctrine:'Mary as Theotokos — Mother of God',year:'431 CE',council:'Council of Ephesus, 431 CE — proposed by Cyril of Alexandria. Nestorius of Constantinople opposed it.',claim:'Miriam is Theotokos — "God-bearer" or "Mother of God" — because Yeshua is fully God, she bore God.',source:'No primary source. Logically derived from the Nicene Trinity definition. Nestorius argued that Miriam bore the human Yeshua, not the eternal God, and that calling her "Mother of God" was a category error. He was declared a heretic by vote. The Assyrian Church of the East, which follows Nestorius, still rejects this title.'},
+  {doctrine:'Transubstantiation',year:'1215 CE',council:'Fourth Lateran Council, November 1215 CE.',claim:'During the Eucharist the bread and wine literally become the body and blood of Yeshua — the physical substance changes while the sensory appearance remains.',source:'No primary source. No DSS parallel. No Orit Ge\'ez parallel. The word "transubstantiation" is derived from Aristotelian philosophy — the categories of substance and accidents. A doctrine built on Greek metaphysics, formalized 1,200 years after the events it claims to describe.'},
+  {doctrine:'Purgatory',year:'1439 CE (formalized)',council:'Council of Florence 1439 CE. Further defined at Council of Trent 1563 CE.',claim:'A state or place of purification after death where souls not yet fully cleansed undergo purification before entering heaven.',source:'Based on 2 Maccabees 12:46 — a deuterocanonical text not found in the DSS corpus and not part of the Hebrew primary source tradition. The DSS describe judgment and resurrection but no purgatorial purification state. The fully developed Purgatory doctrine is medieval theology with no ancient primary source witness.'},
+  {doctrine:'Mandatory Priestly Celibacy',year:'1139 CE',council:'Second Lateran Council, 1139 CE — made celibacy mandatory for all priests in the Western church.',claim:'Priests must remain unmarried and sexually abstinent for life.',source:'Paul\'s own letter (1 Corinthians 9:5) states his right to travel with a wife, as other apostles do. All four gospels reference Shimon Kepha\'s mother-in-law, confirming the chief apostle was married. The DSS Community Rule describes a community with families. No primary source mandates celibacy for covenant leaders or teachers.'},
+  {doctrine:'Private Confession to a Priest',year:'1215 CE',council:'Fourth Lateran Council, 1215 CE — made annual private confession to a priest mandatory for all Catholics.',claim:'Sins must be confessed privately to a priest who holds the authority to grant or withhold absolution on behalf of YHWH.',source:'The DSS Community Rule (1QS) describes communal confession and communal discipline — accountability within the covenant assembly, not private confession to an authorized individual. No DSS or Orit Ge\'ez text grants a human priest the authority to grant YHWH\'s forgiveness through a private rite.'}
+];
+var DSS_SUPPRESSION = [
+  {period:'1947 CE',label:'Discovery',desc:'Bedouin shepherd Muhammad edh-Dhib discovers Cave 1 near Khirbet Qumran while searching for a lost animal. Clay jars containing ancient wrapped scrolls. The most significant manuscript discovery in history was accidental — not found by any institution or controlled excavation.'},
+  {period:'1947-1956 CE',label:'11 Caves, 900+ Manuscripts',desc:'Systematic exploration uncovers 11 caves containing approximately 900 manuscripts in 15,000+ fragments. Texts include every book of the Hebrew primary sources except Esther, plus texts previously unknown to the outside world: the Community Rule, the War Scroll, the Temple Scroll, the Copper Scroll, the Book of Giants, pesher commentaries, calendar texts, and liturgical works.'},
+  {period:'1952 CE',label:'Control Established — Catholic Institution',desc:'The international editorial team is assembled under Roland de Vaux — a Dominican Catholic priest and director of the Ecole Biblique et Archéologique Française in Jerusalem. Approximately 8 scholars are granted exclusive access to the entire fragment corpus. The institution controlling access to the most important ancient Hebrew manuscripts ever found is a Roman Catholic institution. Initially no Jewish scholars were on the team.'},
+  {period:'1955-1991 CE',label:'36 Years — Near-Total Non-Publication',desc:'The official team publishes only a small portion of the corpus over 36 years. Scholars outside the team are refused access to the fragments. When a team member died, their assigned fragments were passed to their graduate students — no public oversight, no accountability mechanism, no deadline. The full Cave 4 fragment corpus — the largest and most important cache — remains unpublished for decades.'},
+  {period:'1987-1990 CE',label:'Chief Editor John Strugnell',desc:'John Strugnell serves as chief editor of the official publication project from 1987. In 1990 he gives a published interview calling Judaism "a horrible religion" that should not exist. He is removed from the post following public outcry. That a person holding these views controlled access to the most important Jewish manuscripts in existence — for years, with no oversight — was not formally investigated.'},
+  {period:'1985-1991 CE',label:'Public Campaign for Access',desc:'Hershel Shanks, editor of Biblical Archaeology Review, leads a sustained public campaign accusing the team of deliberately suppressing publication. Other scholars and institutions formally demanded access. The team consistently cited the complexity of the work as justification. In 36 years the "complexity" argument covered the entire Cave 4 corpus — the fragments most likely to affect established doctrine.'},
+  {period:'1991 CE',label:'Monopoly Broken',desc:'The Huntington Library in California had acquired photographic copies made decades earlier by photographer John Trever. They publicly released the full photographic set against the official team\'s explicit objections. Simultaneously, scholars Ben Zion Wacholder and Martin Abegg used a published concordance to reconstruct texts the team had not released. The team\'s legal attempt to block publication failed. The monopoly was ended not by the team but by outside action.'},
+  {period:'Post-1991 CE',label:'What 40 Years of Suppression Cost',desc:'Once the full corpus was available, the divergences from both the Masoretic Text and the NT claims were fully documented and publishable. Devarim 32:8 (sons of El), Psalm 22:16 (pierced vs lion), the shorter Jeremiah, the 75 souls, the solar calendar mandate — and hundreds of other variants — were confirmed by open scholarship. Forty years of accessible research were lost. The institutional interests served by the delay — a Catholic institution controlling Hebrew primary source texts that contradict Catholic doctrine at multiple documented points — were never formally examined.'}
+];
+function renderRomePanel() {
+  var panel = document.getElementById('rome-panel');
+  if (!panel) return;
+  var docHtml = ROME_DOCTRINES.map(function(d) {
+    return '<div class="rome-doctrine">' +
+      '<div class="rome-hdr" onclick="toggleAccordion(this)">' +
+        '<i class="ri-shield-cross-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
+        '<div class="rome-name">' + esc(d.doctrine) + '</div>' +
+        '<div class="rome-year">' + esc(d.year) + '</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>' +
+      '</div>' +
+      '<div style="display:none;padding:0 14px 13px;border-top:1px solid #1e1e1e">' +
+        '<div class="rome-council">' + esc(d.council) + '</div>' +
+        '<div class="rome-claim">' + esc(d.claim) + '</div>' +
+        '<div class="rome-verdict">Primary source verdict: ' + esc(d.source) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  var suppHtml = DSS_SUPPRESSION.map(function(s) {
+    return '<div class="ds-item">' +
+      '<div class="ds-period">' + esc(s.period) + '</div>' +
+      '<div class="ds-label">' + esc(s.label) + '</div>' +
+      '<div class="ds-desc">' + esc(s.desc) + '</div>' +
+    '</div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="hr-sec-head">Post-Nicaea Doctrine — No Primary Source Basis</div>' +
+    '<div class="hr-sec-sub">Each of these doctrines was invented and formally declared centuries after the primary sources were written. Date, council, and primary source verdict for each.</div>' +
+    docHtml +
+    '<div class="hr-sec-head">DSS Publication Suppression — 1947 to 1991</div>' +
+    '<div class="hr-sec-sub">The most significant ancient manuscripts ever found were controlled by a small team under a Roman Catholic institution for 40 years. The documented record.</div>' +
+    '<div>' + suppHtml + '</div>';
 }
 
 // ── SUPPRESSED LIBRARY ────────────────────────────────────────────────────────
