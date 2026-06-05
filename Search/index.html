@@ -154,6 +154,32 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .cat-N{background:rgba(192,57,43,0.15);color:#e74c3c;border:1px solid #e74c3c}
 .cat-C{background:rgba(80,80,80,0.15);color:#888;border:1px solid #555}
 
+/* PAUL & ACTS PANEL */
+.pa-panel{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-top:14px;overflow:hidden}
+.pa-panel-hdr{padding:13px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid #e74c3c}
+.pa-panel-title{font-size:14px;font-weight:700;color:#fff;flex:1}
+.pa-sub{border-bottom:1px solid #1e1e1e}
+.pa-sub:last-child{border-bottom:none}
+.pa-sub-hdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--s2)}
+.pa-sub-title{font-size:12px;font-weight:700;color:var(--tx2);flex:1;text-transform:uppercase;letter-spacing:0.05em}
+.pa-sub-body{display:none}
+.pa-letter{padding:10px 14px;border-bottom:1px solid #111;display:flex;flex-direction:column;gap:5px}
+.pa-letter:last-child{border-bottom:none}
+.pa-letter-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pa-letter-name{font-size:13px;font-weight:700;color:#fff}
+.pa-letter-name.linkable{cursor:pointer;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.pa-auth-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:0.05em}
+.pa-auth-undisputed{background:rgba(39,174,96,0.15);color:#27ae60;border:1px solid #27ae60}
+.pa-auth-disputed{background:rgba(230,126,34,0.15);color:#e67e22;border:1px solid #e67e22}
+.pa-auth-deutero{background:rgba(192,57,43,0.15);color:#e74c3c;border:1px solid #e74c3c}
+.pa-auth-anon{background:rgba(80,80,80,0.15);color:#888;border:1px solid #555}
+.pa-greek{font-size:10px;color:#e67e22;line-height:1.5;font-style:italic}
+.pa-verdict{font-size:11px;color:var(--tx2);line-height:1.6}
+.pa-contr-item{padding:11px 14px;border-bottom:1px solid #111}
+.pa-contr-item:last-child{border-bottom:none}
+.pa-contr-title{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.pa-contr-text{font-size:12px;color:var(--tx2);line-height:1.7}
+
 /* SUPPRESSED */
 #suppressed-view{padding:14px}
 .sv-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
@@ -590,6 +616,17 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="nt-pills" id="nt-preloaded"></div>
       </div>
       <div id="nt-result-area"></div>
+      <div class="pa-panel">
+        <div class="pa-panel-hdr" onclick="togglePaulActsPanel()">
+          <i class="ri-alert-line" style="color:#e74c3c;font-size:18px;flex-shrink:0"></i>
+          <div class="pa-panel-title">Paul &amp; Acts — Pattern Analysis</div>
+          <div style="font-size:10px;color:var(--tx3);flex-shrink:0">14 letters &amp; Acts</div>
+          <i class="ri-arrow-down-s-line" id="paul-acts-chevron" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>
+        </div>
+        <div id="paul-acts-body" style="display:none">
+          <div id="paul-acts-panel"></div>
+        </div>
+      </div>
     </div>
 
     <!-- SUPPRESSED -->
@@ -1100,6 +1137,7 @@ function setLdProgress(pct, msg) {
 // ── INIT ──────────────────────────────────────────────────────────────────────
 function initApp() {
   renderNTPreloaded();
+  renderPaulActsPanel();
   renderSuppressedLibrary();
   renderContradictions();
   renderTimeline();
@@ -1533,6 +1571,96 @@ function ntSec(label, content, style, wrapStyle) {
     '<div class="nt-sl">' + label + '</div>' +
     '<div class="nt-st"' + (style ? ' style="' + style + '"' : '') + '>' + content + '</div>' +
     '</div>';
+}
+
+// ── PAUL & ACTS ───────────────────────────────────────────────────────────────
+var PAUL_CORPUS = [
+  {letter:'Romans',         status:'Undisputed',     category:'F', db_ref:'Romans 5:12',         greek_source:'Stoic concept of universal moral failure; original sin built from Jerome\'s Latin mistranslation of 5:12 — Augustine read eph ho as "in whom" not "because"', verdict:'Core doctrine of original sin fabricated from a single translation error. DSS primary source (1QS, 4QInstruction) assigns individual moral responsibility — not inherited guilt.'},
+  {letter:'1 Corinthians',  status:'Undisputed',     category:'N', db_ref:null,                   greek_source:'Dying-rising saviour theology common across Mediterranean mystery religions; resurrection framework drawn from Osiris, Dionysus, and Adonis traditions predating Paul by centuries', verdict:'Resurrection theology in 15:3-4 has no DSS parallel. Pattern matches pre-existing Hellenistic mystery religion framework, not the primary source corpus.'},
+  {letter:'2 Corinthians',  status:'Undisputed',     category:'N', db_ref:null,                   greek_source:'Platonic new covenant theology reframed as Torah replacement', verdict:'Reframes Yirmeyahu 31:31-34 DSS covenant renewal as Torah\'s abolition. DSS primary source confirms covenant renewal with Torah, not Torah\'s replacement.'},
+  {letter:'Galatians',      status:'Undisputed',     category:'N', db_ref:'Galatians 3:13',       greek_source:'Greco-Roman curse/redemption framework; Devarim 21:23 extracted from its narrow criminal law context and universalized', verdict:'Curse of the law doctrine built by stripping Devarim 21:23 of context. The DSS primary source text applies only to executed criminals displayed publicly — not to all Torah observance.'},
+  {letter:'Ephesians',      status:'Deutero-Pauline',category:'N', db_ref:'Ephesians 1:4',        greek_source:'Platonic pre-existence theology; Stoic predestination and cosmic order concepts', verdict:'Predestination before creation (1:4) has no DSS or Orit Ge\'ez source. Stylometric analysis identifies this as post-Pauline, written in Paul\'s name after his death.'},
+  {letter:'Philippians',    status:'Undisputed',     category:'N', db_ref:'Philippians 2:6',      greek_source:'Pre-Pauline Hellenistic Christ hymn incorporated by Paul; Platonic divine equality and kenosis (self-emptying) framework', verdict:'Philippians 2:6-11 is a pre-Pauline liturgical fragment Paul quotes, not composes. Directly contradicted by Yeshayahu 43:10 — no figure equal with YHWH existed before or after.'},
+  {letter:'Colossians',     status:'Deutero-Pauline',category:'N', db_ref:'Colossians 1:15-16',   greek_source:'Platonic and Philonic divine intermediary; Logos as pre-existent creative agent drawn from Philon of Alexandria\'s Jewish-Platonic synthesis', verdict:'Cosmic Christ as pre-existent creator has no DSS parallel. Directly contradicted by Yeshayahu 44:24 — YHWH created alone, by Himself, with no agent.'},
+  {letter:'1 Thessalonians',status:'Undisputed',     category:'N', db_ref:null,                   greek_source:'None documented', verdict:'Earliest surviving Pauline letter (~50 CE). Introduces parousia (second coming) with urgent near-term expectation not found in the DSS corpus. The urgency was later walked back in 2 Thessalonians.'},
+  {letter:'2 Thessalonians',status:'Disputed',       category:'N', db_ref:null,                   greek_source:'None documented', verdict:'Authorship disputed by scholars. Contradicts 1 Thessalonians on timing of the parousia — functions as a damage-control letter after Paul\'s imminent return prediction failed.'},
+  {letter:'1 Timothy',      status:'Deutero-Pauline',category:'N', db_ref:null,                   greek_source:'Greco-Roman household codes; Hellenistic institutional church governance structures anachronistic for Paul\'s era', verdict:'Not written by Paul. Vocabulary and institutional church structure postdate Paul\'s documented ministry. Contains "women must not teach" doctrine absent from Paul\'s own letters and contradicting his statements in 1 Corinthians 11.'},
+  {letter:'2 Timothy',      status:'Deutero-Pauline',category:'N', db_ref:'2 Timothy 3:16',       greek_source:'None documented', verdict:'"All scripture is God-breathed" (3:16) refers to the Hebrew Tanakh only — the NT did not yet exist. Used anachronistically to claim NT self-authority. The verse cannot mean what it is used to claim.'},
+  {letter:'Titus',          status:'Deutero-Pauline',category:'N', db_ref:null,                   greek_source:'Stoic moral philosophy; Greco-Roman civic virtue lists', verdict:'Pastoral epistle not written by Paul. Elder and bishop requirements reflect developed church structures that did not exist in Paul\'s documented period.'},
+  {letter:'Philemon',       status:'Undisputed',     category:'A', db_ref:null,                   greek_source:'None — personal letter', verdict:'Short personal letter, undisputed Pauline. No theological construction. Returns a runaway enslaved person to his owner — used historically to justify the institution of slavery as compatible with the faith.'},
+  {letter:'Hebrews',        status:'Anonymous',      category:'N', db_ref:'Hebrews 1:3',          greek_source:'Platonic philosophy throughout; Philon of Alexandria\'s Logos theology; Melchizedek recast via Platonic eternal archetypes rather than the Bereshit 14 historical context', verdict:'Not written by Paul. Origen of Alexandria (185-254 CE) stated explicitly: who wrote the epistle, only YHWH knows. Melchizedek (7:3) recast as an eternal divine figure — the DSS Melchizedek scroll (11QMelch) presents him as a human priestly figure, not an eternal being.'}
+];
+
+var ACTS_CONTRADICTIONS = [
+  {title:'Authorship and Dating', text:'Traditionally attributed to Luke, the same author as the third Gospel. Written approximately 80-90 CE — decades after the events described. Paul\'s letters predate Acts by 30 years and are primary sources written by an eyewitness. Where Acts and Paul\'s letters contradict, Paul\'s own letters carry greater evidential weight.'},
+  {title:'Paul\'s Conversion — Three Contradictory Accounts', text:'Acts 9:7 — the companions heard the voice but saw no one. Acts 22:9 — the companions saw the light but did not hear the voice. Acts 26 — no account of the companions\' experience is given at all. Three tellings of the same central event in the same book contradict each other on specific details.'},
+  {title:'Baptism Formula — Acts vs Matthew', text:'Acts 2:38 — baptism "in the name of Yeshua Christ" only. Matthew 28:19 — baptism "in the name of the Father, Son, and Holy Ghost." Two mutually exclusive formulas within the same NT. Church historian Eusebius of Caesarea quotes Matthew 28:19 more than 20 times before 325 CE — always without the Trinitarian formula. The three-name formula appears to have been inserted after Nicaea 325 CE, after Acts was already fixed.'},
+  {title:'Jerusalem Visits — Acts vs Galatians', text:'Acts describes Paul visiting Jerusalem multiple times in close succession after his conversion. Galatians 1:16-2:1 — Paul\'s own account — states he did not go to Jerusalem or consult anyone there for three years after his conversion, then visited once privately, then waited 14 more years. The accounts cannot be reconciled. Paul\'s letter is the primary source.'},
+  {title:'Council of Jerusalem — Acts 15 vs Galatians 2', text:'Acts 15 describes a formal public Jerusalem council resolving the Gentile Torah observance question with Paul present and accepting the outcome. Galatians 2 describes a private meeting — no public council — where Paul refused to yield on any point and considered the Jerusalem leaders to be of no special authority. Same event, irreconcilable accounts.'},
+  {title:'Paul\'s Character — Acts vs Paul\'s Own Letters', text:'Acts presents Paul as a powerful orator and miracle-worker drawing large crowds. 2 Corinthians 10:10 — Paul\'s own letter — records his critics saying: "his letters are weighty and forceful, but in person he is unimpressive and his speaking amounts to nothing." Paul himself does not contradict this. Acts\' portrait is hagiographic; Paul\'s own letters are the primary source for his actual presence.'},
+  {title:'Acts Ends Without Paul\'s Death', text:'Acts ends with Paul under house arrest in Rome around 62 CE, still alive and preaching. Paul\'s execution under Nero is estimated 64-68 CE. The author either wrote before Paul died, did not know the outcome, or deliberately omitted it. Either way, Acts is an incomplete historical record of its primary subject — and its silence on the founding figure\'s death is unresolved.'}
+];
+
+function renderPaulActsPanel() {
+  var panel = document.getElementById('paul-acts-panel');
+  if (!panel) return;
+  var catLabels = {A:'APPROPRIATED', F:'FABRICATED', N:'NO PRIMARY SOURCE', C:'CONTRADICTED'};
+  var lettersHtml = PAUL_CORPUS.map(function(l) {
+    var authCls = l.status === 'Undisputed' ? 'pa-auth-undisputed' :
+                  l.status === 'Disputed' ? 'pa-auth-disputed' :
+                  l.status === 'Deutero-Pauline' ? 'pa-auth-deutero' : 'pa-auth-anon';
+    var hasRef = l.db_ref && DATA && DATA.nt_database && DATA.nt_database[l.db_ref];
+    var nameAttrs = hasRef ? 'class="pa-letter-name linkable" onclick="showNTEntry(\'' + esc(l.db_ref) + '\')"' : 'class="pa-letter-name"';
+    var hasGreek = l.greek_source && l.greek_source !== 'None documented' && l.greek_source !== 'None — personal letter';
+    return '<div class="pa-letter">' +
+      '<div class="pa-letter-row">' +
+        '<span ' + nameAttrs + '>' + esc(l.letter) + '</span>' +
+        '<span class="pa-auth-tag ' + authCls + '">' + esc(l.status) + '</span>' +
+        '<span class="cat-badge cat-' + l.category + '" style="padding:2px 6px;font-size:9px;margin-bottom:0">' + (catLabels[l.category] || l.category) + '</span>' +
+      '</div>' +
+      (hasGreek ? '<div class="pa-greek">Source framework: ' + esc(l.greek_source) + '</div>' : '') +
+      '<div class="pa-verdict">' + esc(l.verdict) + '</div>' +
+    '</div>';
+  }).join('');
+  var actsHtml = ACTS_CONTRADICTIONS.map(function(c) {
+    return '<div class="pa-contr-item">' +
+      '<div class="pa-contr-title">' + esc(c.title) + '</div>' +
+      '<div class="pa-contr-text">' + esc(c.text) + '</div>' +
+    '</div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="pa-sub">' +
+      '<div class="pa-sub-hdr" onclick="togglePASub(this)">' +
+        '<i class="ri-book-open-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
+        '<div class="pa-sub-title">Paul\'s Letters — Corpus Overview</div>' +
+        '<div style="font-size:9px;color:var(--tx3);flex-shrink:0">' + PAUL_CORPUS.length + ' letters</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>' +
+      '</div>' +
+      '<div class="pa-sub-body">' + lettersHtml + '</div>' +
+    '</div>' +
+    '<div class="pa-sub">' +
+      '<div class="pa-sub-hdr" onclick="togglePASub(this)">' +
+        '<i class="ri-file-warning-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
+        '<div class="pa-sub-title">Acts — Internal Contradictions</div>' +
+        '<div style="font-size:9px;color:var(--tx3);flex-shrink:0">' + ACTS_CONTRADICTIONS.length + ' documented</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>' +
+      '</div>' +
+      '<div class="pa-sub-body">' + actsHtml + '</div>' +
+    '</div>';
+}
+function togglePaulActsPanel() {
+  var body = document.getElementById('paul-acts-body');
+  var icon = document.getElementById('paul-acts-chevron');
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (icon) icon.style.transform = open ? '' : 'rotate(180deg)';
+}
+function togglePASub(hdr) {
+  var body = hdr.nextElementSibling;
+  var icon = hdr.querySelector('.ri-arrow-down-s-line');
+  var open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  if (icon) icon.style.transform = open ? '' : 'rotate(180deg)';
 }
 
 // ── SUPPRESSED LIBRARY ────────────────────────────────────────────────────────
