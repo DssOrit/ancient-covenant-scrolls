@@ -1,0 +1,32 @@
+name: Daily Prophetic Watch Brief
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 6 AM UTC every day
+  workflow_dispatch:        # allow manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  build-brief:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build daily brief
+        run: node .github/scripts/build_daily_brief.js
+
+      - name: Commit and push brief
+        run: |
+          git config user.name "ACR News Bot"
+          git config user.email "noreply@anthropic.com"
+          git add Search/daily_brief.json
+          git diff --staged --quiet && echo "No changes to commit" || \
+            git commit -m "Prophetic Watch brief $(date -u +%Y-%m-%d)" && git push
