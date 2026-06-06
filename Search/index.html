@@ -1680,6 +1680,16 @@ var PAUL_CORPUS = [
   {letter:'Hebrews',        status:'Anonymous',      category:'N', db_ref:'Hebrews 1:3',          greek_source:'Platonic philosophy throughout; Philon of Alexandria\'s Logos theology; Melchizedek recast via Platonic eternal archetypes rather than the Bereshit 14 historical context', verdict:'Not written by Paul. Origen of Alexandria (185-254 CE) stated explicitly: who wrote the epistle, only YHWH knows. Melchizedek (7:3) recast as an eternal divine figure — the DSS Melchizedek scroll (11QMelch) presents him as a human priestly figure, not an eternal being.'}
 ];
 
+var PAUL_DECEPTIONS = [
+  {title:'Paul\'s Letters Contain No Earthly Biography',text:'Paul\'s letters (49-62 CE) are the earliest NT writings, predating every gospel by 10-30 years. In all of Paul\'s letters combined there is no Galilee ministry, no parables, no Sermon on the Mount, no miracles, no trial, no specific teachings, no named disciples, no village, no hometown. Paul\'s constructed figure has no earthly life — only a cosmic death, resurrection, and ascension. If a ministry had occurred and was known, Paul, writing before the gospels, would have referenced it. He never does. The gospels were written after Paul invented the theological framework — not before.'},
+  {title:'Paul Contradicts His Own Account of His Gospel Source',text:'Galatians 1:11-12: "I did not receive my gospel from any human source, nor was I taught it — I received it by revelation." Yet 1 Corinthians 15:3: "I delivered to you what I also received." Galatians 1:18-19 then records that he spent 15 days with Kepha in Jerusalem and met Ya\'akov there. Paul\'s own letters contradict his foundational claim within the same letter collection. A theology claiming divine revelation as its sole source while also drawing from human transmission is documenting its own construction.'},
+  {title:'The Eucharist — Constructed from Pre-Existing Rituals',text:'1 Corinthians 11:23-25 is the earliest NT account of the ritual meal Paul calls the Lord\'s Supper — predating all four gospels. Paul states he received this "from the Lord": by revelation, not from eyewitnesses. The ritual — bread identified as a body, wine identified as blood — mirrors the Mithraic sacred meal practiced across the Roman Empire before Paul wrote: bread and wine consumed as the body and blood of the deity. The DSS Vayikra 17:10-14, confirmed in multiple manuscripts, explicitly prohibits consuming blood in any form. The sacrament Paul constructed by revelation violates the covenant law his theology claimed to fulfill.'}
+];
+var NT_FABRICATIONS = [
+  {title:'The Resurrection — Four Irreconcilable Accounts',text:'Mark\'s original ending (16:1-8, confirmed in Codex Sinaiticus and Codex Vaticanus): no resurrection appearances — only an empty tomb and a young man. Women flee and say nothing. Mark 16:9-20 is universally identified as a later addition absent from the oldest manuscripts. Matthew: all appearances in Galilee. Luke: all appearances in Jerusalem — disciples explicitly commanded to stay in Jerusalem, directly contradicting Galilee. John: appearances in both locations. Who went to the tomb differs across all four accounts. Who or what was at the tomb — one young man, two men, two angels — differs. Whether the figure could be physically touched differs. Whether he ate differs. The central claim of the NT is told in four versions that directly contradict each other on every specific detail.'},
+  {title:'Judas — Two Completely Different Deaths in the Same Canon',text:'Matthew 27:3-10: Judas returns the 30 pieces of silver to the priests, then hangs himself. The priests use the money to buy a field called the Field of Blood because it was bought with blood money. Acts 1:18: Judas himself buys a field with the money, falls headlong in it, his body bursts open and his intestines spill out. The field is called the Field of Blood because of his blood. Same person. Same field. Same name. Opposite cause of death. Opposite who bought the field. Opposite what happened to the body. Both texts are in the same canon. The NT cannot agree on how its own betrayer died.'},
+  {title:'The Genealogies — Two Constructed and Contradictory Lineages',text:'Matthew 1:1-17 traces the lineage from Abraham through David to Joseph with 42 generations divided into three symbolic groups of 14. Luke 3:23-38 traces the lineage from Joseph back to Adam with 77 names — of which only a fraction overlap with Matthew\'s list from David forward. Matthew traces through Solomon. Luke traces through Nathan — a different son of David entirely. The two lists share almost no names from David to Joseph. Both authors constructed a genealogy to fulfill the "son of David" requirement — and produced incompatible constructions that directly contradict each other. Both genealogies trace Joseph\'s lineage, not the mother\'s — making them irrelevant to a virgin birth claim contained in the same texts.'}
+];
 var ACTS_CONTRADICTIONS = [
   {title:'Authorship and Dating', text:'Traditionally attributed to Luke, the same author as the third Gospel. Written approximately 80-90 CE — decades after the events described. Paul\'s letters predate Acts by 30 years and are primary sources written by an eyewitness. Where Acts and Paul\'s letters contradict, Paul\'s own letters carry greater evidential weight.'},
   {title:'Paul\'s Conversion — Three Contradictory Accounts', text:'Acts 9:7 — the companions heard the voice but saw no one. Acts 22:9 — the companions saw the light but did not hear the voice. Acts 26 — no account of the companions\' experience is given at all. Three tellings of the same central event in the same book contradict each other on specific details.'},
@@ -1717,7 +1727,31 @@ function renderPaulActsPanel() {
       '<div class="pa-contr-text">' + esc(c.text) + '</div>' +
     '</div>';
   }).join('');
+  var paulDeceptHtml = PAUL_DECEPTIONS.map(function(c) {
+    return '<div class="pa-contr-item"><div class="pa-contr-title">' + esc(c.title) + '</div><div class="pa-contr-text">' + esc(c.text) + '</div></div>';
+  }).join('');
+  var ntFabHtml = NT_FABRICATIONS.map(function(c) {
+    return '<div class="pa-contr-item"><div class="pa-contr-title">' + esc(c.title) + '</div><div class="pa-contr-text">' + esc(c.text) + '</div></div>';
+  }).join('');
   panel.innerHTML =
+    '<div class="pa-sub">' +
+      '<div class="pa-sub-hdr" onclick="togglePASub(this)">' +
+        '<i class="ri-alert-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
+        '<div class="pa-sub-title">Paul\'s Construction — The Invented Figure</div>' +
+        '<div style="font-size:9px;color:var(--tx3);flex-shrink:0">' + PAUL_DECEPTIONS.length + ' documented</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>' +
+      '</div>' +
+      '<div class="pa-sub-body">' + paulDeceptHtml + '</div>' +
+    '</div>' +
+    '<div class="pa-sub">' +
+      '<div class="pa-sub-hdr" onclick="togglePASub(this)">' +
+        '<i class="ri-error-warning-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
+        '<div class="pa-sub-title">NT Internal Contradictions — The Fabricated Record</div>' +
+        '<div style="font-size:9px;color:var(--tx3);flex-shrink:0">' + NT_FABRICATIONS.length + ' documented</div>' +
+        '<i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0;transition:transform 0.2s"></i>' +
+      '</div>' +
+      '<div class="pa-sub-body">' + ntFabHtml + '</div>' +
+    '</div>' +
     '<div class="pa-sub">' +
       '<div class="pa-sub-hdr" onclick="togglePASub(this)">' +
         '<i class="ri-book-open-line" style="color:#e74c3c;font-size:15px;flex-shrink:0"></i>' +
