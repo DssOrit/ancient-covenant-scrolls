@@ -274,13 +274,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .contr-note{padding:0 12px 12px;font-size:12px;color:var(--tx2);line-height:1.7}
 .contr-nt-uses{padding:0 12px 12px;font-size:11px;color:var(--tx3)}
 
-/* TIMELINE */
-#timeline-view{padding:14px}
-.tl-item{display:flex;gap:11px;margin-bottom:18px;position:relative}
-.tl-item::before{content:'';position:absolute;left:19px;top:39px;bottom:-18px;width:2px;background:#1e1e1e;z-index:0}
-.tl-item:last-child::before{display:none}
-.tl-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;position:relative;z-index:1;border:2px solid var(--bg)}
-.tl-content{flex:1;background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:11px}
 .tl-period{font-size:10px;color:var(--tx3);margin-bottom:3px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
 .tl-label{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
 .tl-desc{font-size:12px;color:var(--tx2);line-height:1.7}
@@ -576,7 +569,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
       <div class="mpill" data-mode="contradictions" onclick="setMode('contradictions')">Contradictions</div>
-      <div class="mpill" data-mode="timeline" onclick="setMode('timeline')">Chain of Custody</div>
       <div class="mpill" data-mode="apocrypha" onclick="setMode('apocrypha')">Apocrypha Audit</div>
       <div class="mpill" data-mode="studypath" onclick="setMode('studypath')"><i class="ri-route-line"></i> Study Path</div>
       <div class="mpill" data-mode="conceptmap" onclick="setMode('conceptmap')"><i class="ri-mind-map"></i> Concept Map</div>
@@ -625,11 +617,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="fc-icon"><i class="ri-eye-2-line"></i></div>
           <div class="fc-title">Original vs. Manipulated</div>
           <div class="fc-desc">Primary source texts alongside what was constructed from them. Manuscript evidence only.</div>
-        </div>
-        <div class="feat-card" onclick="setMode('timeline')">
-          <div class="fc-icon"><i class="ri-timeline-line"></i></div>
-          <div class="fc-title">Chain of Custody</div>
-          <div class="fc-desc">How texts changed from DSS original through Greek translation through institutional canonization.</div>
         </div>
         <div class="feat-card" onclick="setMode('apocrypha')">
           <div class="fc-icon"><i class="ri-archive-line"></i></div>
@@ -723,12 +710,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="contradictions-list"></div>
     </div>
 
-    <!-- TIMELINE -->
-    <div id="timeline-view" style="display:none">
-      <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Chain of Custody Timeline</div>
-      <div style="font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6">How the texts changed from primary source through translation through institutional canonization. Documented historical record only.</div>
-      <div id="timeline-list"></div>
-    </div>
 
     <!-- APOCRYPHA -->
     <div id="apocrypha-view" style="display:none">
@@ -1229,7 +1210,6 @@ function initApp() {
   renderOritPanel();
   renderSuppressedLibrary();
   renderContradictions();
-  renderTimeline();
   renderApocrypha();
   renderRootChips();
   renderJournal('');
@@ -1246,7 +1226,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','timeline','apocrypha','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch'];
+  var views = ['home','results','nt','suppressed','contradictions','apocrypha','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2060,7 +2040,7 @@ var SYNOPTIC_DATA = [
   {gospel:'Mark',date:'~70 CE',author:'Anonymous. Name assigned by Papias of Hierapolis ~125 CE, confirmed by Irenaeus ~180 CE — a century after writing.',notes:'Shortest gospel. Most primitive language. No birth narrative. No resurrection appearances in the original ending (Mark 16:9-20 is universally identified as a later addition — absent from the oldest manuscripts Codex Sinaiticus and Codex Vaticanus). The baseline document.'},
   {gospel:'Matthew',date:'~85 CE',author:'Anonymous. Assigned to the apostle Matthew by Irenaeus ~180 CE. Most scholars reject apostolic authorship — the author clearly used Mark as a source, which an eyewitness apostle would not need to do.',notes:'Copies approximately 90% of Mark verbatim or near-verbatim. Adds a birth narrative placing birth in Bethlehem with wise men, Herod, and Egypt. Adds the Sermon on the Mount. The birth narrative contradicts Luke\'s on multiple points.'},
   {gospel:'Luke',date:'~85-90 CE',author:'Anonymous. Traditionally attributed to Luke, a companion of Paul. The same author wrote Acts.',notes:'Copies approximately 60% of Mark. Adds a different birth narrative: census, shepherds, manger, no wise men, no Egypt. Luke\'s birth narrative and Matthew\'s birth narrative cannot both be true — they contradict each other on the year, the location of the family\'s home, the visitors, and the subsequent movements.'},
-  {gospel:'John',date:'~90-100 CE',author:'Anonymous. Attributed to "the beloved disciple." Most scholars identify the author as a late 1st-century community, not an eyewitness.',notes:'Entirely different theological document. No birth narrative, no baptism by Yahya, no exorcisms, no transfiguration, different chronology of the Temple incident, different Last Supper timing (no bread and cup — foot washing instead), different crucifixion timeline. Yeshua speaks in long theological monologues found nowhere in the Synoptics. The Logos theology (John 1:1) appears in no other gospel.'}
+  {gospel:'John',date:'~90-100 CE',author:'Anonymous. Attributed to "the beloved disciple." Most scholars identify the author as a late 1st-century community, not an eyewitness.',notes:'Entirely different theological document. No birth narrative, no baptism by Yahya, no exorcisms, no transfiguration, different chronology of the Temple incident, different Last Supper timing (no bread and cup — foot washing instead), different crucifixion timeline. The NT figure is written delivering long theological monologues found nowhere in the Synoptics. The Logos theology (John 1:1) appears in no other gospel and derives from Hellenistic philosophy, not any DSS or Orit text.'}
 ];
 var SEPTUAGINT_PROPHESIES = [
   {ref:'Isaiah 7:14 — The Virgin Birth',hebrew:'Almah — young woman of marriageable age. The Hebrew word for virgin is betulah, which does not appear in this verse in any ancient manuscript.',greek:'Septuagint translators (~200 BCE) rendered almah as parthenos — virgin. A translation choice, not a textual reading.',nt:'Matthew 1:23 quotes the Greek Septuagint parthenos as a fulfilled prophecy of virgin birth.',context:'Isaiah 7:14 is addressed to King Ahaz during the Syro-Ephraimite crisis (~735 BCE). The sign was for Ahaz in his lifetime — "before the child knows enough to reject evil, the land of the two kings you dread will be laid waste." A prediction about 8th century BCE political events was applied to a birth 700 years later.'},
@@ -2435,20 +2415,6 @@ function renderContradictions() {
 }
 
 // ── TIMELINE ──────────────────────────────────────────────────────────────────
-function renderTimeline() {
-  if (!DATA) return;
-  var list = document.getElementById('timeline-list');
-  list.innerHTML = DATA.timeline.map(function(item) {
-    return '<div class="tl-item">' +
-      '<div class="tl-dot" style="background:' + item.color + ';border-color:' + item.color + '">' + item.period.substring(0, 4) + '</div>' +
-      '<div class="tl-content">' +
-        '<div class="tl-period">' + esc(item.period) + '</div>' +
-        '<div class="tl-label">' + esc(item.label) + '</div>' +
-        '<div class="tl-desc">' + esc(item.desc) + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
 
 // ── APOCRYPHA ─────────────────────────────────────────────────────────────────
 function renderApocrypha() {
