@@ -765,9 +765,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <button class="cm-btn" onclick="exportConceptMap()"><i class="ri-image-line"></i> Export</button>
         <button class="cm-btn" onclick="clearConceptMap()"><i class="ri-delete-bin-line"></i> Reset</button>
       </div>
+      <div style="font-size:11px;color:var(--tx3);padding:6px 14px 2px;line-height:1.6">Each circle is a search term you ran. Circles of the same color share a topic thread. Lines connect related searches.</div>
       <div class="cm-canvas-wrap">
         <canvas id="cm-canvas"></canvas>
-        <div class="cm-hint">Tap a node to re-run search. Long-press to delete.</div>
+        <div class="cm-hint">Tap a circle to re-run that search. Long-press to delete it.</div>
       </div>
     </div>
 
@@ -2661,6 +2662,7 @@ function saveConceptMapNodes() {
   localStorage.setItem('acr_conceptmap', JSON.stringify(cmNodes));
 }
 function addConceptMapNode(query, passage) {
+  if (query.length < 4) return;
   if (cmNodes.some(function(n) { return n.query === query; })) return;
   var thread = (passage && passage.threads && passage.threads[0]) || 'Cosmological';
   var color = THREAD_COLORS[thread] || '#C8971F';
