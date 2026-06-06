@@ -61,35 +61,16 @@ These have been re-locked on 2026-05-04 after repeated violations.
    does NOT count as approval — stop and ask before touching anything.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
-9. **SELF-MERGE POLICY — updated 2026-05-15 by user.**
-   Claude MAY call `mcp__github__enable_pr_auto_merge` (squash) and
-   `mcp__github__merge_pull_request` without per-PR manual approval
-   for any routine PR once CI passes. This includes — but is not
-   limited to — LoadStudio UI, editor, playback, timeline, and
-   service-worker cache fixes.
+9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
+   Claude MUST NEVER merge any PR (via `mcp__github__enable_pr_auto_merge`,
+   `mcp__github__merge_pull_request`, or any other method) without first:
+   a. Telling the user exactly which PR number and branch is being merged.
+   b. Listing every file that will change and what each change does.
+   c. Receiving explicit user approval in the same session before proceeding.
 
-   Conditions that must all be true before self-merging:
-   - All required CI checks have passed (conclusion: success).
-   - No secrets, API keys, or tokens are exposed.
-   - No destructive migrations (data deletion, schema drops).
-   - No auth / security architecture is modified.
-   - No billing / payment systems are modified.
-   - No production credential handling is changed.
-   - No domain / DNS / deployment ownership is changed.
-   - No mass refactors touching unrelated systems.
-
-   Manual approval is ONLY required for:
-   - Auth / security architecture changes.
-   - Billing / payment system changes.
-   - Production credential or secret handling.
-   - Destructive data or storage migrations.
-   - DNS / domain / deployment ownership changes.
-   - Mass refactors spanning unrelated systems.
-
-   Merge flow: push branch → open/update PR → enable auto-merge OR
-   wait for CI then call merge_pull_request directly. Either path is
-   acceptable. Do not block on manual approval for routine fixes.
-   Do not ask the user for permission to merge routine PRs.
+   There are NO exceptions. Routine fixes, cache bumps, style changes —
+   all require confirmation. The previous self-merge authorization is
+   REVOKED. Do not merge anything until the user says to merge it.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
