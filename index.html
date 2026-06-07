@@ -16,16 +16,17 @@ body.dark{background:#1a1a1a;color:#e8e8e0}
 body.sepia{background:#f4ecd8;color:#3b2a1a}
 
 /* AUTH */
-#auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#111111;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-#auth-logo{font-size:52px;letter-spacing:4px;color:#fff}
-#auth-title{color:#fff;font-size:14px;font-weight:bold;letter-spacing:.08em;text-align:center;line-height:1.6}
-#auth-sub{color:#888;font-size:11px}
-#auth-note{color:#777;font-size:10.5px;max-width:300px;text-align:center;line-height:1.5;padding:0 16px}
-#auth-pw{background:#222;border:1px solid #444;border-radius:6px;color:#fff;padding:10px 16px;font-size:14px;width:220px;text-align:center;outline:none}
-#auth-pw:focus{border-color:#666}
-#auth-btn{background:#333;color:#ddd;border:none;border-radius:6px;padding:10px 0;font-size:13px;cursor:pointer;width:220px}
-#auth-btn:active{background:#555}
-#auth-msg{color:#c44;font-size:12px;min-height:18px}
+#auth{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+#auth-logo{font-size:56px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#e07828;margin-bottom:16px;line-height:1;text-align:center}
+#auth-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
+#auth-sub{font-size:13px;color:#aaa;margin-bottom:32px;text-align:center;line-height:1.6}
+#auth-btn{width:100%;max-width:320px;background:#e07828;color:#000;font-weight:800;font-size:16px;border:none;border-radius:10px;padding:14px;cursor:pointer}
+#auth-loading{position:fixed;inset:0;z-index:99998;background:#0a0a0a;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#auth-loading.show{display:flex}
+.al-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#e07828}
+.al-text{font-size:14px;color:#888}
+.al-bar{width:240px;height:3px;background:#222;border-radius:2px;overflow:hidden}
+.al-fill{height:100%;width:0;background:#e07828;transition:width 0.4s ease;border-radius:2px}
 
 /* PROGRESS */
 #prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:9000;background:transparent}
@@ -124,11 +125,15 @@ body.dark #reader-footer{background:#0a0a0a}
 
 <!-- AUTH -->
 <div id="auth">
-  <div id="auth-logo">𐤉𐤄𐤅𐤄</div>
+  <div id="auth-logo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
   <div id="auth-title">THE ANCIENT COVENANT RECORD</div>
-  <div id="auth-sub">Dead Sea Scrolls &amp; The Orit Ge’ez — Digitally Compiled</div>
-  <div id="auth-note">The primary ancient text sources, gathered digitally, in their original form.</div>
+  <div id="auth-sub">Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez<br><em>The primary ancient text sources, gathered digitally, in their original form.</em></div>
   <button id="auth-btn" onclick="doEnter()">Enter</button>
+</div>
+<div id="auth-loading">
+  <div class="al-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="al-text" id="al-text">Opening the Record...</div>
+  <div class="al-bar"><div class="al-fill" id="al-fill"></div></div>
 </div>
 
 <!-- PROGRESS -->
@@ -241,12 +246,29 @@ body.dark #reader-footer{background:#0a0a0a}
 
 <script>
 function doEnter(){
-  // No password — the splash just opens the reader on tap.
   document.getElementById('auth').style.display='none';
-  document.getElementById('nav').style.display='flex';
-  document.getElementById('reader-footer').style.display='flex';
-  document.body.style.background='';
-  if(typeof start==='function') start();
+  var loading=document.getElementById('auth-loading');
+  var fill=document.getElementById('al-fill');
+  var txt=document.getElementById('al-text');
+  loading.classList.add('show');
+  var msgs=['Opening the Record...','Loading manuscripts...','Preparing volumes...'];
+  var pcts=[30,65,100];
+  var i=0;
+  var iv=setInterval(function(){
+    fill.style.width=pcts[i]+'%';
+    txt.textContent=msgs[i];
+    i++;
+    if(i>=msgs.length){
+      clearInterval(iv);
+      setTimeout(function(){
+        loading.style.display='none';
+        document.getElementById('nav').style.display='flex';
+        document.getElementById('reader-footer').style.display='flex';
+        document.body.style.background='';
+        if(typeof start==='function') start();
+      },400);
+    }
+  },500);
 }
 function goBackToSolar(){
   document.getElementById('solar-back').style.display='none';
@@ -771,6 +793,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v52</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v54</div>
 </body>
 </html>
