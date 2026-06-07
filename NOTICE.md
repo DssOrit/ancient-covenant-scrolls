@@ -24,15 +24,15 @@ all copyright 2026 LBond. All Rights Reserved.
 - **Attain Jr™** — child-focused variant of Attain
 
 **Ancient Covenant Record (ACR) suite**
-- **The Ancient Covenant Record (ACR Reader)** — primary offline scripture reader
-- **The Ancient Covenant Record — Supplementary Volumes (ACR2)** — extended volumes
-- **ACR Search** ("The Covenant Concordance") — full-text search and concordance tool
-- **ACR Solar** — solar calendar and timeline tool
-- **ACR Study** — spaced-repetition study tool built on ACR content
+- **The Ancient Covenant Record™** (ACR Reader) — primary offline scripture reader
+- **The Ancient Covenant Record™** — Supplementary Volumes (ACR2) — extended volumes
+- **ACR Search™** ("The Covenant Concordance") — full-text search and concordance tool
+- **ACR Solar™** — solar calendar and timeline tool
+- **ACR Study™** — spaced-repetition study tool built on ACR content
 
 **Standalone apps**
-- **The Great Eraser** — standalone documentary/research PWA
-- **Great Eraser Study** — study companion to The Great Eraser
+- **The Great Eraser™** — standalone documentary/research PWA
+- **Great Eraser Study™** — study companion to The Great Eraser
 - **When Sharks Attack** — standalone PWA
 
 **Source code, design, artwork, audio, curated content, and documentation**
@@ -59,7 +59,7 @@ Copyright (c) 2026 LBond. All Rights Reserved.
 - ❌ **Use any part commercially** — including in another app, service, or product you sell.
 - ❌ **Incorporate the content or curation** (scripture arrangements, editorial notes, ACR material) into another work.
 - ❌ **Train machine-learning models** on this repository's contents.
-- ❌ **Use the names "Load", "Load Studio", "Load Play", "Load Tasks", "Attain", or "Attain Jr"** for a competing or derivative product.
+- ❌ **Use the names "Load", "Load Studio", "Load Play", "Load Tasks", "Attain", "Attain Jr", "The Ancient Covenant Record", "ACR Search", "ACR Solar", "ACR Study", or "The Great Eraser"** for a competing or derivative product.
 
 ---
 
@@ -81,6 +81,11 @@ for these marks.
 - **Load Tasks™**
 - **Attain™**
 - **Attain Jr™**
+- **The Ancient Covenant Record™**
+- **ACR Search™**
+- **ACR Solar™**
+- **ACR Study™**
+- **The Great Eraser™**
 
 Use of any of these names in connection with a competing or derivative
 product is not permitted.
