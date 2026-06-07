@@ -36,7 +36,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 /* LOADING */
 #loading-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 #loading-screen.show{display:flex}
-.ld-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold)}
+.ld-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:var(--gold);transition:opacity 0.2s}
+.ld-label{font-size:10px;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;text-align:center;min-height:14px}
 .ld-text{font-size:14px;color:var(--tx2)}
 .ld-bar{width:240px;height:3px;background:#222;border-radius:2px;overflow:hidden}
 .ld-fill{height:100%;width:0;background:var(--gold);transition:width 0.4s ease;border-radius:2px}
@@ -528,7 +529,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 </div>
 
 <div id="loading-screen">
-  <div class="ld-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="ld-paleo" id="ld-paleo-glyph">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="ld-label" id="ld-label"></div>
   <div class="ld-text" id="ld-text">Loading primary sources...</div>
   <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
 </div>
@@ -3751,23 +3753,42 @@ function initCardSwipe(wrapEl, pid) {
 
 // ── GLYPH ANIMATION ───────────────────────────────────────────────────────────
 var glyphInterval = null;
-var GLYPHS = [0x10900,0x10901,0x10902,0x10903,0x10904,0x10905,0x10906,0x10907,0x10908,0x10909,0x1090A,0x1090B,0x1090C,0x1090D,0x1090E,0x10910,0x10912,0x10913,0x10914,0x10915];
+var _YHWH_S = [
+  {text:String.fromCodePoint(0x10909,0x10904,0x10905,0x10904),label:'Paleo Hebrew',font:'"Segoe UI Historic","Noto Sans Phoenician",serif',size:'40px'},
+  {text:String.fromCodePoint(0x10849,0x10844,0x10845,0x10844),label:'Imperial Aramaic',font:'"Segoe UI Historic","Noto Sans Phoenician",serif',size:'40px'},
+  {text:'יהוה',label:'Square Hebrew',font:'serif',size:'40px'},
+  {text:'Yah',label:'Yah — Scriptural Short Form',font:'sans-serif',size:'22px'},
+  {text:'YHWH',label:'Tetragrammaton — Consonantal Form',font:'sans-serif',size:'22px'}
+];
 function startGlyphAnimation() {
-  var el = document.querySelector('.ld-paleo');
-  if (!el) return;
+  var el = document.getElementById('ld-paleo-glyph');
+  var lb = document.getElementById('ld-label');
+  if (!el || !lb) return;
   var idx = 0;
+  function _show(i) {
+    var f = _YHWH_S[i];
+    el.style.opacity = '0';
+    setTimeout(function() {
+      el.textContent = f.text;
+      el.style.fontFamily = f.font;
+      el.style.fontSize = f.size;
+      lb.textContent = f.label;
+      el.style.opacity = '1';
+    }, 200);
+  }
+  _show(0);
   glyphInterval = setInterval(function() {
-    var s = '';
-    for (var i = 0; i < 4; i++) s += String.fromCodePoint(GLYPHS[(idx + i) % GLYPHS.length]);
-    el.textContent = s;
-    idx = (idx + 1) % GLYPHS.length;
-  }, 320);
+    idx = (idx + 1) % _YHWH_S.length;
+    _show(idx);
+  }, 1000);
 }
 function stopGlyphAnimation() {
   clearInterval(glyphInterval);
   glyphInterval = null;
-  var el = document.querySelector('.ld-paleo');
-  if (el) el.innerHTML = '&#x10909;&#x10904;&#x10905;&#x10904;';
+  var el = document.getElementById('ld-paleo-glyph');
+  var lb = document.getElementById('ld-label');
+  if (el) { el.textContent = String.fromCodePoint(0x10909,0x10904,0x10905,0x10904); el.style.fontFamily = '"Segoe UI Historic","Noto Sans Phoenician",serif'; el.style.fontSize = '40px'; el.style.opacity = '1'; }
+  if (lb) lb.textContent = '';
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
