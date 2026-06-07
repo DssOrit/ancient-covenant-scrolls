@@ -1,0 +1,18 @@
+# Cloudflare Pages redirect rules
+# This file is ignored by GitHub Pages — safe to have in the repo at all times.
+
+# Normalise bare paths (no trailing slash) to their folder equivalents
+/load            /load/           301
+/loadstudio      /loadstudio/     301
+/LoadPlay        /LoadPlay/       301
+/LoadTasks       /LoadTasks/      301
+/LoadAI          /LoadAI/         301
+/Search          /Search/         301
+/study           /study/          301
+/attain          /attain/         301
+/attain-jr       /attain-jr/      301
+/ACR2            /ACR2/           301
+/Solar           /Solar/          301
+/GESTUDY         /GESTUDY/        301
+/GreatE          /GreatE/         301
+/WSA             /WSA/            301
