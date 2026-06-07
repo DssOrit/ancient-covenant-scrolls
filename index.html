@@ -17,19 +17,19 @@ body.sepia{background:#f4ecd8;color:#3b2a1a}
 
 /* AUTH */
 #auth{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#0a0a0a;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-#auth-logo{font-size:52px;letter-spacing:4px;color:#d94040}
+#auth-logo{font-size:52px;letter-spacing:4px;color:#b03030}
 #auth-title{color:#fff;font-size:14px;font-weight:bold;letter-spacing:.08em;text-align:center;line-height:1.6}
 #auth-sub{color:#888;font-size:11px}
 #auth-note{color:#777;font-size:10.5px;max-width:300px;text-align:center;line-height:1.5;padding:0 16px}
-#auth-btn{background:#d94040;color:#fff;border:none;border-radius:6px;padding:10px 0;font-size:13px;cursor:pointer;width:220px}
-#auth-btn:active{background:#b83030}
+#auth-btn{background:#b03030;color:#fff;border:none;border-radius:6px;padding:10px 0;font-size:13px;cursor:pointer;width:220px}
+#auth-btn:active{background:#8a2020}
 #auth-loading{position:fixed;inset:0;z-index:99998;background:#0a0a0a;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 #auth-loading.show{display:flex}
-.al-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#d94040;transition:opacity 0.2s}
-.al-label{font-size:10px;color:#d94040;letter-spacing:0.12em;text-transform:uppercase;text-align:center;min-height:14px}
+.al-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#b03030;transition:opacity 0.2s}
+.al-label{font-size:10px;color:#b03030;letter-spacing:0.12em;text-transform:uppercase;text-align:center;min-height:14px}
 .al-text{font-size:14px;color:#888}
 .al-bar{width:240px;height:3px;background:#222;border-radius:2px;overflow:hidden}
-.al-fill{height:100%;width:0;background:#d94040;transition:width 0.4s ease;border-radius:2px}
+.al-fill{height:100%;width:0;background:#b03030;transition:width 0.4s ease;border-radius:2px}
 
 /* PROGRESS */
 #prog{position:fixed;top:0;left:0;right:0;height:3px;z-index:9000;background:transparent}
@@ -252,11 +252,11 @@ body.dark #reader-footer{background:#0a0a0a}
 <script>
 var _glyphIv=null;
 var _YHWH=[
-  {text:String.fromCodePoint(0x10909,0x10904,0x10905,0x10904),label:'Paleo Hebrew',font:'"Segoe UI Historic","Noto Sans Phoenician",serif'},
-  {text:String.fromCodePoint(0x10849,0x10844,0x10845,0x10844),label:'Imperial Aramaic',font:'"Segoe UI Historic","Noto Sans Phoenician",serif'},
-  {text:'יהוה',label:'Square Hebrew',font:'serif'},
-  {text:'Yah',label:'Yah — Scriptural Short Form',font:'sans-serif'},
-  {text:'YHWH',label:'Tetragrammaton — Consonantal Form',font:'sans-serif'}
+  {text:String.fromCodePoint(0x10909,0x10904,0x10905,0x10904),label:'Paleo Hebrew',font:'"Segoe UI Historic","Noto Sans Phoenician",serif',size:'40px'},
+  {text:String.fromCodePoint(0x10849,0x10844,0x10845,0x10844),label:'Imperial Aramaic',font:'"Segoe UI Historic","Noto Sans Phoenician",serif',size:'40px'},
+  {text:'יהוה',label:'Square Hebrew',font:'serif',size:'40px'},
+  {text:'Yah',label:'Yah — Scriptural Short Form',font:'sans-serif',size:'22px'},
+  {text:'YHWH',label:'Tetragrammaton — Consonantal Form',font:'sans-serif',size:'22px'}
 ];
 function _startGlyphs(){
   var el=document.getElementById('al-paleo');
@@ -269,6 +269,7 @@ function _startGlyphs(){
     setTimeout(function(){
       el.textContent=f.text;
       el.style.fontFamily=f.font;
+      el.style.fontSize=f.size;
       lb.textContent=f.label;
       el.style.opacity='1';
     },200);
@@ -284,7 +285,7 @@ function _stopGlyphs(){
   _glyphIv=null;
   var el=document.getElementById('al-paleo');
   var lb=document.getElementById('al-label');
-  if(el){el.textContent=String.fromCodePoint(0x10909,0x10904,0x10905,0x10904);el.style.fontFamily='"Segoe UI Historic","Noto Sans Phoenician",serif';el.style.opacity='1';}
+  if(el){el.textContent=String.fromCodePoint(0x10909,0x10904,0x10905,0x10904);el.style.fontFamily='"Segoe UI Historic","Noto Sans Phoenician",serif';el.style.fontSize='40px';el.style.opacity='1';}
   if(lb)lb.textContent='';
 }
 function doEnter(){
@@ -837,6 +838,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v57</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v58</div>
 </body>
 </html>
