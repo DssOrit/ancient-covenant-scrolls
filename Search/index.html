@@ -1164,18 +1164,15 @@ function startLoading() {
   ls.classList.add('show');
   startGlyphAnimation();
 
-  // Fixed 1-second steps — one per YHWH form so every form gets its full second
-  var msgs = ['Loading reference data...','Loading concordance...','Parsing 21,000+ passages...','Indexing complete.','Opening...'];
+  var msgs = ['Opening the Concordance...','Loading manuscripts...','Preparing passages...','Gathering ancient texts...','Ready...'];
   var pcts = [20,40,60,80,100];
-  var step = 0;
+  var i = 0;
   var timerDone = false;
   var dataReady = false;
-  setLdProgress(pcts[0], msgs[0]);
-  step = 1;
   var progressIv = setInterval(function() {
-    setLdProgress(pcts[step], msgs[step]);
-    step++;
-    if (step >= msgs.length) {
+    setLdProgress(pcts[i], msgs[i]);
+    i++;
+    if (i >= msgs.length) {
       clearInterval(progressIv);
       timerDone = true;
       tryOpen();
@@ -1202,7 +1199,7 @@ function startLoading() {
       ls.classList.remove('show');
       document.getElementById('app').classList.remove('hidden');
       initApp();
-    }, 500);
+    }, 1000);
   }
 }
 function setLdProgress(pct, msg) {
