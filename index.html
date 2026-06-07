@@ -245,12 +245,32 @@ body.dark #reader-footer{background:#0a0a0a}
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">↑</button>
 
 <script>
+var _glyphIv=null;
+var _GLYPHS=[0x10900,0x10901,0x10902,0x10903,0x10904,0x10905,0x10906,0x10907,0x10908,0x10909,0x1090A,0x1090B,0x1090C,0x1090D,0x1090E,0x10910,0x10912,0x10913,0x10914,0x10915];
+function _startGlyphs(){
+  var el=document.querySelector('.al-paleo');
+  if(!el)return;
+  var idx=0;
+  _glyphIv=setInterval(function(){
+    var s='';
+    for(var i=0;i<4;i++)s+=String.fromCodePoint(_GLYPHS[(idx+i)%_GLYPHS.length]);
+    el.textContent=s;
+    idx=(idx+1)%_GLYPHS.length;
+  },320);
+}
+function _stopGlyphs(){
+  clearInterval(_glyphIv);
+  _glyphIv=null;
+  var el=document.querySelector('.al-paleo');
+  if(el)el.innerHTML='&#x10909;&#x10904;&#x10905;&#x10904;';
+}
 function doEnter(){
   document.getElementById('auth').style.display='none';
   var loading=document.getElementById('auth-loading');
   var fill=document.getElementById('al-fill');
   var txt=document.getElementById('al-text');
   loading.classList.add('show');
+  _startGlyphs();
   var msgs=['Opening the Record...','Loading manuscripts...','Preparing volumes...'];
   var pcts=[30,65,100];
   var i=0;
@@ -261,6 +281,7 @@ function doEnter(){
     if(i>=msgs.length){
       clearInterval(iv);
       setTimeout(function(){
+        _stopGlyphs();
         loading.style.display='none';
         document.getElementById('nav').style.display='flex';
         document.getElementById('reader-footer').style.display='flex';
@@ -793,6 +814,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v54</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v55</div>
 </body>
 </html>
