@@ -9,12 +9,36 @@ This NOTICE is a friendly translation — it does not replace the LICENSE.
 
 ## What's in this repository
 
-- **Load™** — a PWA for running web apps offline on iPad.
-- **Attain™** (including **Attain Jr™**) — a separate app, intended for commercial release.
-- **ACR Reader, Study, Attain** — research tools built on the curated Ancient Covenant Record content.
-- **Source code, design, artwork, content, and documentation** for all of the above.
+This repository contains the following progressive web applications (PWAs),
+all copyright 2026 LBond. All Rights Reserved.
 
-Copyright © 2026 LBond. All Rights Reserved.
+**Load suite**
+- **Load™** ("Load — Run Web Apps on iPad") — offline-first app runner for iPad
+- **Load Studio™** — visual production companion to Load
+- **Load Play™** — media player module within the Load suite
+- **Load Tasks™** — task management module within the Load suite
+- **Load AI Director Studio** — AI-assisted content direction tool
+
+**Attain suite**
+- **Attain™** — reader and learning tool, intended for commercial release
+- **Attain Jr™** — child-focused variant of Attain
+
+**Ancient Covenant Record (ACR) suite**
+- **The Ancient Covenant Record (ACR Reader)** — primary offline scripture reader
+- **The Ancient Covenant Record — Supplementary Volumes (ACR2)** — extended volumes
+- **ACR Search** ("The Covenant Concordance") — full-text search and concordance tool
+- **ACR Solar** — solar calendar and timeline tool
+- **ACR Study** — spaced-repetition study tool built on ACR content
+
+**Standalone apps**
+- **The Great Eraser** — standalone documentary/research PWA
+- **Great Eraser Study** — study companion to The Great Eraser
+- **When Sharks Attack** — standalone PWA
+
+**Source code, design, artwork, audio, curated content, and documentation**
+for all of the above are included.
+
+Copyright (c) 2026 LBond. All Rights Reserved.
 
 ---
 
@@ -35,7 +59,7 @@ Copyright © 2026 LBond. All Rights Reserved.
 - ❌ **Use any part commercially** — including in another app, service, or product you sell.
 - ❌ **Incorporate the content or curation** (scripture arrangements, editorial notes, ACR material) into another work.
 - ❌ **Train machine-learning models** on this repository's contents.
-- ❌ **Use the names "Load" or "Attain"** for a competing or derivative product.
+- ❌ **Use the names "Load", "Load Studio", "Load Play", "Load Tasks", "Attain", or "Attain Jr"** for a competing or derivative product.
 
 ---
 
@@ -47,7 +71,19 @@ This repository is public **only** so the copyright holder and invited collabora
 
 ## Trademarks
 
-**Load™** and **Attain™** (plus **Attain Jr™**) are unregistered trademarks of LBond, claimed under U.S. common-law use since 2026. Formal USPTO registration is planned. Use of these names in connection with any competing or derivative product is not permitted.
+The following are unregistered trademarks of LBond, claimed under
+U.S. common-law use since 2026. Formal USPTO registration is planned
+for these marks.
+
+- **Load™**
+- **Load Studio™**
+- **Load Play™**
+- **Load Tasks™**
+- **Attain™**
+- **Attain Jr™**
+
+Use of any of these names in connection with a competing or derivative
+product is not permitted.
 
 ---
 
