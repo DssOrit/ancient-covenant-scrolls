@@ -1163,28 +1163,47 @@ function startLoading() {
   var ls = document.getElementById('loading-screen');
   ls.classList.add('show');
   startGlyphAnimation();
-  setLdProgress(10, 'Loading reference data...');
 
+  // Fixed 1-second steps — one per YHWH form so every form gets its full second
+  var msgs = ['Loading reference data...','Loading concordance...','Parsing 21,000+ passages...','Indexing complete.','Opening...'];
+  var pcts = [20,40,60,80,100];
+  var step = 0;
+  var timerDone = false;
+  var dataReady = false;
+  setLdProgress(pcts[0], msgs[0]);
+  step = 1;
+  var progressIv = setInterval(function() {
+    setLdProgress(pcts[step], msgs[step]);
+    step++;
+    if (step >= msgs.length) {
+      clearInterval(progressIv);
+      timerDone = true;
+      tryOpen();
+    }
+  }, 1000);
+
+  // Data loads in background; app opens only when both timer and data are ready
   fetch('acr_search_data.json').then(function(r) { return r.json(); }).then(function(d) {
     DATA = d;
-    setLdProgress(30, 'Loading primary source concordance...');
     return fetch('acr_concordance.json');
-  }).then(function(r) {
-    setLdProgress(55, 'Parsing 21,000+ passages...');
-    return r.json();
-  }).then(function(c) {
+  }).then(function(r) { return r.json(); }).then(function(c) {
     CONCORDANCE = c;
-    setLdProgress(90, 'Indexing complete. Opening...');
+    dataReady = true;
+    tryOpen();
+  }).catch(function(err) {
+    console.error('Load error:', err);
+    setLdProgress(0, 'Load error. Please refresh.');
+  });
+
+  function tryOpen() {
+    if (!timerDone || !dataReady) return;
     setTimeout(function() {
       stopGlyphAnimation();
       ls.classList.remove('show');
       document.getElementById('app').classList.remove('hidden');
       initApp();
-    }, 300);
-  }).catch(function(err) {
-    console.error('Load error:', err);
-    setLdProgress(0, 'Load error. Please refresh.');
-  });
+    }, 500);
+  }
 }
 function setLdProgress(pct, msg) {
   document.getElementById('ld-fill').style.width = pct + '%';
