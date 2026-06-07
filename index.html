@@ -23,7 +23,8 @@ body.sepia{background:#f4ecd8;color:#3b2a1a}
 #auth-btn{width:100%;max-width:320px;background:#e07828;color:#000;font-weight:800;font-size:16px;border:none;border-radius:10px;padding:14px;cursor:pointer}
 #auth-loading{position:fixed;inset:0;z-index:99998;background:#0a0a0a;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 #auth-loading.show{display:flex}
-.al-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#e07828}
+.al-paleo{font-size:40px;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;color:#e07828;transition:opacity 0.2s}
+.al-label{font-size:10px;color:#e07828;letter-spacing:0.12em;text-transform:uppercase;text-align:center;min-height:14px}
 .al-text{font-size:14px;color:#888}
 .al-bar{width:240px;height:3px;background:#222;border-radius:2px;overflow:hidden}
 .al-fill{height:100%;width:0;background:#e07828;transition:width 0.4s ease;border-radius:2px}
@@ -131,7 +132,8 @@ body.dark #reader-footer{background:#0a0a0a}
   <button id="auth-btn" onclick="doEnter()">Enter</button>
 </div>
 <div id="auth-loading">
-  <div class="al-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="al-paleo" id="al-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="al-label" id="al-label">Paleo Hebrew</div>
   <div class="al-text" id="al-text">Opening the Record...</div>
   <div class="al-bar"><div class="al-fill" id="al-fill"></div></div>
 </div>
@@ -246,23 +248,41 @@ body.dark #reader-footer{background:#0a0a0a}
 
 <script>
 var _glyphIv=null;
-var _GLYPHS=[0x10900,0x10901,0x10902,0x10903,0x10904,0x10905,0x10906,0x10907,0x10908,0x10909,0x1090A,0x1090B,0x1090C,0x1090D,0x1090E,0x10910,0x10912,0x10913,0x10914,0x10915];
+var _YHWH=[
+  {text:String.fromCodePoint(0x10909,0x10904,0x10905,0x10904),label:'Paleo Hebrew',font:'"Segoe UI Historic","Noto Sans Phoenician",serif'},
+  {text:String.fromCodePoint(0x10849,0x10844,0x10845,0x10844),label:'Imperial Aramaic',font:'"Segoe UI Historic","Noto Sans Phoenician",serif'},
+  {text:'יהוה',label:'Square Hebrew',font:'serif'},
+  {text:'Yah',label:'Yah — Scriptural Short Form',font:'sans-serif'},
+  {text:'YHWH',label:'Tetragrammaton — Consonantal Form',font:'sans-serif'}
+];
 function _startGlyphs(){
-  var el=document.querySelector('.al-paleo');
-  if(!el)return;
+  var el=document.getElementById('al-paleo');
+  var lb=document.getElementById('al-label');
+  if(!el||!lb)return;
   var idx=0;
+  function _show(i){
+    var f=_YHWH[i];
+    el.style.opacity='0';
+    setTimeout(function(){
+      el.textContent=f.text;
+      el.style.fontFamily=f.font;
+      lb.textContent=f.label;
+      el.style.opacity='1';
+    },200);
+  }
+  _show(0);
   _glyphIv=setInterval(function(){
-    var s='';
-    for(var i=0;i<4;i++)s+=String.fromCodePoint(_GLYPHS[(idx+i)%_GLYPHS.length]);
-    el.textContent=s;
-    idx=(idx+1)%_GLYPHS.length;
-  },320);
+    idx=(idx+1)%_YHWH.length;
+    _show(idx);
+  },1000);
 }
 function _stopGlyphs(){
   clearInterval(_glyphIv);
   _glyphIv=null;
-  var el=document.querySelector('.al-paleo');
-  if(el)el.innerHTML='&#x10909;&#x10904;&#x10905;&#x10904;';
+  var el=document.getElementById('al-paleo');
+  var lb=document.getElementById('al-label');
+  if(el){el.textContent=String.fromCodePoint(0x10909,0x10904,0x10905,0x10904);el.style.fontFamily='"Segoe UI Historic","Noto Sans Phoenician",serif';el.style.opacity='1';}
+  if(lb)lb.textContent='';
 }
 function doEnter(){
   document.getElementById('auth').style.display='none';
@@ -271,8 +291,8 @@ function doEnter(){
   var txt=document.getElementById('al-text');
   loading.classList.add('show');
   _startGlyphs();
-  var msgs=['Opening the Record...','Loading manuscripts...','Preparing volumes...'];
-  var pcts=[30,65,100];
+  var msgs=['Opening the Record...','Loading manuscripts...','Preparing volumes...','Gathering ancient texts...','Ready...'];
+  var pcts=[20,40,60,80,100];
   var i=0;
   var iv=setInterval(function(){
     fill.style.width=pcts[i]+'%';
@@ -287,9 +307,9 @@ function doEnter(){
         document.getElementById('reader-footer').style.display='flex';
         document.body.style.background='';
         if(typeof start==='function') start();
-      },400);
+      },500);
     }
-  },500);
+  },1000);
 }
 function goBackToSolar(){
   document.getElementById('solar-back').style.display='none';
@@ -814,6 +834,6 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
-<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v55</div>
+<div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v56</div>
 </body>
 </html>
