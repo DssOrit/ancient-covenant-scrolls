@@ -1,4 +1,4 @@
-const CACHE_NAME="load-ai-director-studio-v7-0-9";
+const CACHE_NAME="load-ai-director-studio-v7-1-0";
 const ASSETS=["./","./index.html","./styles.css","./app.js","./manifest.json","./data/provider-registry.json","./data/sample-project.json","./data/feature-matrix.json","./splash/splash-1080x1920.jpg","./icons/icon-72x72.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(ASSETS)));self.skipWaiting()});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))));self.clients.claim()});
