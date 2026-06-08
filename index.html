@@ -265,20 +265,21 @@ function _startGlyphs(){
   var idx=0;
   function _show(i){
     var f=_YHWH[i];
+    el.style.transition='none';
     el.style.opacity='0';
-    setTimeout(function(){
-      el.textContent='';
-      lb.textContent='';
-      el.style.fontFamily=f.font;
-      el.style.fontSize=f.size;
+    void el.offsetWidth;
+    el.textContent='';
+    lb.textContent='';
+    el.style.fontFamily=f.font;
+    el.style.fontSize=f.size;
+    requestAnimationFrame(function(){
+      el.textContent=f.text;
+      lb.textContent=f.label;
       requestAnimationFrame(function(){
-        el.textContent=f.text;
-        lb.textContent=f.label;
-        requestAnimationFrame(function(){
-          el.style.opacity='1';
-        });
+        el.style.transition='opacity 0.2s';
+        el.style.opacity='1';
       });
-    },200);
+    });
   }
   _show(0);
   _glyphIv=setInterval(function(){
