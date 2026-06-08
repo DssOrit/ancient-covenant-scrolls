@@ -91,10 +91,13 @@ Repeat for both domains.
 | `https://acrscrolls.com/study/` | ACR Study |
 | `https://acrscrolls.com/WSA/` | When Sharks Attack |
 | `https://acrscrolls.com/GreatE/` | The Great Eraser |
+| `https://acrscrolls.com/GESTUDY/` | Great Eraser Study |
 | `https://loadeco.app` | Redirects to `loadeco.app/load/` |
 | `https://loadeco.app/load/` | Load |
 | `https://loadeco.app/loadstudio/` | Load Studio |
 | `https://loadeco.app/LoadPlay/` | Load Play |
+| `https://loadeco.app/LoadTasks/` | Load Tasks |
+| `https://loadeco.app/LoadAI/` | Load AI Director Studio |
 | `https://loadeco.app/attain/` | Attain |
 | `https://loadeco.app/attain-jr/` | Attain Jr |
 
