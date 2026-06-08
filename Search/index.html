@@ -3785,11 +3785,17 @@ function startGlyphAnimation() {
     var f = _YHWH_S[i];
     el.style.opacity = '0';
     setTimeout(function() {
-      el.textContent = f.text;
+      el.textContent = '';
+      lb.textContent = '';
       el.style.fontFamily = f.font;
       el.style.fontSize = f.size;
-      lb.textContent = f.label;
-      el.style.opacity = '1';
+      requestAnimationFrame(function() {
+        el.textContent = f.text;
+        lb.textContent = f.label;
+        requestAnimationFrame(function() {
+          el.style.opacity = '1';
+        });
+      });
     }, 200);
   }
   _show(0);
