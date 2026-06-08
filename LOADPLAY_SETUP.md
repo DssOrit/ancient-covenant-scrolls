@@ -46,17 +46,17 @@ Back in Cloudflare, the Custom domains tab for the Pages project will show
 
 ---
 
-## What loadplay.app will serve
+## What loadplay.app is for
+
+`loadplay.app` is for the **AA Series books only**. It is not related to the
+Load Play app, which lives separately at `loadeco.app/LoadPlay/`.
 
 | URL | Content |
 |---|---|
-| `https://loadplay.app` | Repo root (ACR Reader) — same as acrscrolls.com |
 | `https://loadplay.app/AAseries/` | AA Series books |
-| `https://loadplay.app/load/` | Load |
-| `https://loadplay.app/LoadPlay/` | Load Play |
 
-> Note: A redirect rule can be added later if you want `loadplay.app/` to forward
-> somewhere specific (the same way `loadeco.app/` forwards to `/load/`).
+A redirect rule can be added so that `loadplay.app/` (root) forwards directly
+to `loadplay.app/AAseries/` — the same way `loadeco.app/` forwards to `/load/`.
 
 ---
 
