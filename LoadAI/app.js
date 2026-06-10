@@ -97,7 +97,7 @@ function runTests(){ const tests=[["Director input",!!$("#directorInput")],["Pro
 function renderAll(){ updateMode(); renderStream(); renderAssets(); renderProviders(); renderProof(); renderTimeline(); renderMatrix(); loadKeys(); runTests(); }
 function init(){
 load();
-$("#enterAppBtn").onclick=()=>{$("#splashScreen").style.display="none";$("#appShell").hidden=false;};
+const _dismissSplash=()=>{$("#splashScreen").style.display="none";$("#appShell").hidden=false;};$("#enterAppBtn").onclick=_dismissSplash;const _altBtn=document.getElementById("enterAppBtnAlt");if(_altBtn)_altBtn.onclick=_dismissSplash;
 $("#backToSplashBtn").onclick=()=>{$("#appShell").hidden=true;$("#splashScreen").style.display="flex";};
 $("#hardRefreshBtn").onclick=()=>location.reload();
 $$(".nav-chip").forEach(b=>b.onclick=()=>switchPanel(b.dataset.panel));
