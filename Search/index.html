@@ -120,6 +120,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .rc-actions{display:flex;gap:6px;flex-wrap:wrap}
 .rc-btn{background:none;border:1px solid #2a2a2a;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:600;color:var(--tx2);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:4px;transition:all 0.15s}
 .rc-btn:hover,.rc-btn:active{border-color:var(--gold);color:var(--gold)}
+.rc-site{border-left:3px solid var(--gold)}
 .rc-btn.saved{border-color:var(--gold);color:var(--gold)}
 .manip-flag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--red);color:#fff}
 .witness-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--s3);color:var(--tx2)}
@@ -1145,6 +1146,7 @@ var activeThreadFilter = 'All';
 var rootMode = false;
 var searchTimer = null;
 var currentDnaPassageId = null;
+var SITE_INDEX = null;
 
 // Concept map state
 var cmNodes = [];
@@ -1253,6 +1255,54 @@ function setMode(mode) {
   if (mode === 'journal') renderJournal(document.getElementById('jn-search').value);
 }
 
+// ── SITE INDEX ────────────────────────────────────────────────────────────────
+var PANEL_LABELS = {
+  paulacts:'Paul & Acts Record',
+  historical:'Historical Record',
+  rabbinic:'Rabbinic Record',
+  rome:'Rome & Canon Record',
+  origins:'Origins Record',
+  orit:'Orit Record',
+  covenant:'Covenant Record',
+  histdocs:'Historical Documents'
+};
+
+function buildSiteIndex() {
+  if (SITE_INDEX) return;
+  SITE_INDEX = [];
+  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs'];
+  tabs.forEach(function(tab) {
+    var panel = document.getElementById(tab + '-panel');
+    if (!panel) return;
+    panel.querySelectorAll('.td-item').forEach(function(item) {
+      var topicEl = item.querySelector('.td-topic');
+      var textEl = item.querySelector('.td-text');
+      var topic = topicEl ? topicEl.textContent : '';
+      var text = textEl ? textEl.textContent : '';
+      if (topic || text) {
+        SITE_INDEX.push({ _type:'site', tab:tab, topic:topic, text:text });
+      }
+    });
+  });
+}
+
+function goToSiteEntry(tab, topic) {
+  setMode('nt');
+  switchNTTab(tab);
+  var panel = document.getElementById(tab + '-panel');
+  if (!panel) return;
+  var items = panel.querySelectorAll('.td-item');
+  for (var i = 0; i < items.length; i++) {
+    var topicEl = items[i].querySelector('.td-topic');
+    if (topicEl && topicEl.textContent === topic) {
+      items[i].scrollIntoView({ behavior:'smooth', block:'center' });
+      items[i].style.outline = '2px solid var(--gold)';
+      setTimeout(function(el){ el.style.outline = ''; }, 2000, items[i]);
+      return;
+    }
+  }
+}
+
 // ── SEARCH ────────────────────────────────────────────────────────────────────
 function onSearch(val) {
   clearTimeout(searchTimer);
@@ -1315,6 +1365,16 @@ function doSearch(q) {
       });
     });
   }
+
+  // Search site content panels
+  buildSiteIndex();
+  var siteWords = query.split(/\s+/).filter(Boolean);
+  SITE_INDEX.forEach(function(entry) {
+    var combined = (entry.topic + ' ' + entry.text).toLowerCase();
+    if (combined.includes(query) || siteWords.every(function(w){ return combined.includes(w); })) {
+      results.push(entry);
+    }
+  });
 
   addToSearchHistory(q.trim());
   currentResults = results;
@@ -1390,6 +1450,15 @@ function renderResultCard(r) {
       '<div class="rc-ref">' + r.v.ref + '</div>' +
       '<div class="rc-text">' + esc(r.v.text).substring(0, 140) + '</div>' +
       '<div class="rc-ms">' + esc(r.v.ms) + '</div>' +
+      '</div>';
+  }
+  if (r._type === 'site') {
+    var snippet = r.text.length > 160 ? r.text.substring(0, 160) + '...' : r.text;
+    var panelLabel = PANEL_LABELS[r.tab] || r.tab;
+    return '<div class="rc rc-site" onclick="goToSiteEntry(\'' + esc(r.tab) + '\',\'' + r.topic.replace(/'/g,"&#39;") + '\')">' +
+      '<div class="rc-ref">' + esc(r.topic) + '</div>' +
+      '<div class="rc-ms">' + esc(panelLabel) + '</div>' +
+      '<div class="rc-text">' + esc(snippet) + '</div>' +
       '</div>';
   }
   // Concordance passage, swipe wrapper
