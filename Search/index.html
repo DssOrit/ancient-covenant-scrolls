@@ -250,6 +250,34 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 /* SUPPRESSED */
 #suppressed-view{padding:14px}
 #practices-view{padding:14px}
+#places-view{padding:14px}
+.places-filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.places-filter-row::-webkit-scrollbar{display:none}
+.pf-pill{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:4px 11px;font-size:10px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.15s}
+.pf-pill.active{border-color:var(--gold);color:var(--gold);background:rgba(200,151,31,0.1)}
+.place-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.place-card-hdr{padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;-webkit-tap-highlight-color:transparent}
+.place-card-hdr:active{background:var(--s2)}
+.place-badge{flex-shrink:0;font-size:9px;font-weight:700;padding:3px 7px;border-radius:3px;color:#fff;margin-top:3px;text-transform:uppercase;letter-spacing:0.04em}
+.pb-locatable{background:#1a5276}
+.pb-disputed{background:#7d6608}
+.pb-cosmological{background:#4a235a}
+.pb-symbolic{background:#444}
+.place-info{flex:1;min-width:0}
+.place-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px;line-height:1.3}
+.place-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px;letter-spacing:0.04em}
+.place-modern{font-size:11px;color:var(--tx2);margin-bottom:1px}
+.place-coords{font-size:10px;color:var(--tx3);font-family:'Space Mono',monospace}
+.place-chevron{margin-left:6px;color:var(--tx3);font-size:16px;flex-shrink:0;transition:transform 0.2s;margin-top:2px}
+.place-card.open .place-chevron{transform:rotate(180deg)}
+.place-body{display:none;padding:0 14px 14px;border-top:1px solid #1e1e1e}
+.place-card.open .place-body{display:block}
+.place-ancient-text{font-size:12px;color:var(--tx);line-height:1.75;font-style:italic;background:var(--s2);border-radius:7px;padding:10px 12px;margin:12px 0 10px;border-left:3px solid var(--gold)}
+.place-section-lbl{font-size:9px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;margin-top:10px}
+.place-desc{font-size:12px;color:var(--tx2);line-height:1.75}
+.place-status-box{background:var(--s2);border-radius:7px;padding:9px 11px;margin-top:10px;font-size:11px;color:var(--tx2);line-height:1.7}
+.place-map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:8px 16px;background:rgba(200,151,31,0.12);border:1px solid rgba(200,151,31,0.4);border-radius:8px;color:var(--gold);font-size:11px;font-weight:600;text-decoration:none;-webkit-tap-highlight-color:transparent;transition:all 0.15s}
+.place-map-btn:active{background:rgba(200,151,31,0.22)}
 .sv-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
 .sv-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
@@ -573,6 +601,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="record" onclick="setMode('record')"><i class="ri-file-list-3-line"></i> Record</div>
       <div class="mpill" data-mode="news" onclick="setMode('news')"><i class="ri-newspaper-line"></i> News<span class="mpill-dot" id="news-badge"></span></div>
       <div class="mpill" data-mode="propheticwatch" onclick="setMode('propheticwatch')"><i class="ri-eye-line"></i> Watch</div>
+      <div class="mpill" data-mode="places" onclick="setMode('places')"><i class="ri-map-pin-line"></i> Ancient Places</div>
     </div>
   </div>
 
@@ -1009,6 +1038,324 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="pw-results"></div>
     </div>
 
+    <!-- ANCIENT PLACES -->
+    <div id="places-view" style="display:none">
+      <div class="sv-hdr">Ancient Places</div>
+      <div class="sv-sub">Where the texts set these events — mapped to modern geography. Locatable sites include a map link. Cosmological places have no fixed coordinates by design.</div>
+      <div class="places-filter-row" id="places-filter-row">
+        <div class="pf-pill active" data-pf="all" onclick="filterPlaces('all')">All</div>
+        <div class="pf-pill" data-pf="locatable" onclick="filterPlaces('locatable')">Locatable Sites</div>
+        <div class="pf-pill" data-pf="disputed" onclick="filterPlaces('disputed')">Disputed</div>
+        <div class="pf-pill" data-pf="cosmological" onclick="filterPlaces('cosmological')">Cosmological</div>
+        <div class="pf-pill" data-pf="symbolic" onclick="filterPlaces('symbolic')">Symbolic</div>
+      </div>
+      <div id="places-list">
+
+        <!-- 1: Mount Hermon -->
+        <div class="place-card" data-pcat="locatable" id="pcard-0">
+          <div class="place-card-hdr" onclick="togglePlaceCard(0)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Mount Hermon</div>
+              <div class="place-ref">1 Enoch 6:6 — Descent of the Watchers</div>
+              <div class="place-modern">Modern: Jabal al-Sheikh — Syria / Lebanon / Israel</div>
+              <div class="place-coords">33&#xb0;25&#x2032;N, 35&#xb0;51&#x2032;E &nbsp;&#x2022;&nbsp; 2,814 m</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And they were in all two hundred; who descended in the days of Jared on the summit of Mount Hermon, and they called it Mount Hermon, because they had sworn and bound themselves by mutual imprecations upon it." — 1 Enoch 6:6</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Samyaza led 200 Watchers to descend here and swear a collective oath to take human wives. The Hebrew root of Hermon (herem) means oath or ban — the name is explained as commemorating this curse-oath. Aramaic Qumran fragments (4Q204) preserve the oath-taking scene. A Greek inscription from the Qasr Antar temple near the summit (ca. 200 CE, now in the British Museum) reads: "According to the command of the greatest and holy God, those who take an oath proceed from here" — a disputed but striking parallel to the Enoch tradition.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">The mountain massif spans Lebanon, Syria, and Israeli-administered Golan Heights. In December 2024, Israeli forces seized the summit following the fall of Assad's government and have stated they intend to remain. The UN previously maintained the world's highest permanently staffed position here ("Hermon Hotel"). Status is currently contested internationally.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=33.4161&mlon=35.8575&zoom=11" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 2: Dudael -->
+        <div class="place-card" data-pcat="disputed" id="pcard-1">
+          <div class="place-card-hdr" onclick="togglePlaceCard(1)">
+            <div><span class="place-badge pb-disputed">Disputed</span></div>
+            <div class="place-info">
+              <div class="place-name">Dudael</div>
+              <div class="place-ref">1 Enoch 10:4-6 — Prison of Azazel</div>
+              <div class="place-modern">Most likely: Judean Desert, east of Jerusalem</div>
+              <div class="place-coords">~31&#xb0;45&#x2032;N, 35&#xb0;15&#x2032;E &nbsp;&#x2022;&nbsp; No consensus</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"Bind Azazel hand and foot, and cast him into the darkness: and make an opening in the desert, which is in Dudael, and cast him therein. And place upon him rough and jagged rocks, and cover him with darkness, and let him abide there for ever, and cover his face that he may not see light." — 1 Enoch 10:4-6</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Raphael is commanded to imprison Azazel in Dudael — a desert place of jagged rocks and total darkness. The name likely means "cauldron of God" (Hebrew dud = pot/kettle + El). Scholars most commonly connect this to the Yom Kippur scapegoat ritual in Leviticus 16, where a goat is sent into the wilderness "for Azazel." The Mishnah (Yoma 67b) names the cliff from which the scapegoat was pushed as Beth Hadudo — strikingly similar to Dudael. This places Dudael in the Judean Desert east of Jerusalem.</div>
+            <div class="place-section-lbl">Scholarly debate</div>
+            <div class="place-status-box">No firm consensus. Three main proposals: (1) Judean Desert / scapegoat site near Jerusalem — most academically supported. (2) Rocky terrace 10 miles from Jerusalem. (3) Upper Egypt desert — minority view. Some treat it as symbolic underworld entry rather than a mapable site. The Judean Desert identification (Nickelsburg's Hermeneia commentary) is the leading academic position.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=31.75&mlon=35.25&zoom=9" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View General Region</a>
+          </div>
+        </div>
+
+        <!-- 3: Bashan / Rephaim Territory -->
+        <div class="place-card" data-pcat="locatable" id="pcard-2">
+          <div class="place-card-hdr" onclick="togglePlaceCard(2)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Bashan — Territory of the Rephaim</div>
+              <div class="place-ref">Genesis 14:5; Deuteronomy 3:1-13; 1 Enoch 6-11</div>
+              <div class="place-modern">Modern: Golan Heights / SW Syria</div>
+              <div class="place-coords">32&#xb0;30&#x2032;&#x2013;33&#xb0;30&#x2032;N, 35&#xb0;45&#x2032;&#x2013;36&#xb0;45&#x2032;E</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And the rest of Gilead, and all Bashan, being the kingdom of Og, gave I unto the half tribe of Manasseh... all the region of Argob, with all Bashan, which was called the land of giants." — Deuteronomy 3:13</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Bashan was the kingdom of Og, described in Deuteronomy as the last of the Rephaim (giants). His territory ran from Mount Hermon south to the Yarmuk River. The Rephaim are the post-Flood descendant lineage of the Nephilim — the giants produced by the Watchers' unions with human women (1 Enoch 6-11). Genesis 14:5 places the Rephaim specifically at Ashteroth-karnaim in Bashan before Abraham's time. The Watcher descent on Hermon (at Bashan's northern edge) and the Rephaim kingdom of Bashan form a single geographic cluster.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">The Golan Heights are under Israeli military administration, internationally recognized as Syrian territory (UN Security Council Resolution 497, 1981). The ancient sites of Og's capital Ashtaroth are in Daraa Governorate, Syria. The Rephaim valley southwest of Jerusalem (2 Samuel 5:18) is modern Emek Refa'im, Jerusalem.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=32.9&mlon=35.8&zoom=9" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 4: Gilgal Rephaim -->
+        <div class="place-card" data-pcat="locatable" id="pcard-3">
+          <div class="place-card-hdr" onclick="togglePlaceCard(3)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Gilgal Rephaim (Rujm el-Hiri)</div>
+              <div class="place-ref">Deuteronomy 3 / Rephaim Region</div>
+              <div class="place-modern">Modern: Golan Heights, northern Israel</div>
+              <div class="place-coords">32&#xb0;54&#x2032;N, 35&#xb0;48&#x2032;E</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-section-lbl">What this site is</div>
+            <div class="place-desc">Gilgal Rephaim means "Wheel of the Giants" or "Wheel of the Spirits of the Dead" in Hebrew. Rujm el-Hiri is the Arabic name. It is a massive megalithic stone circle on the Golan Heights, consisting of five concentric rings of basalt totaling an estimated 40,000 tons of stone. Built approximately 3500 BCE — predating the Enoch texts by over two millennia. Hidden in tall grass, it was not discovered by modern scholars until Israel took the Golan in 1967. A 2024 study identified 28 additional similar circular structures within 25 km.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">Located in the Golan Heights, currently under Israeli administration. Open to visitors. The site's exact function is still debated — astronomical observatory, sacred space, or mortuary monument. Its name in Hebrew directly connects it to the Rephaim (giant) tradition of the Bashan region.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=32.9086&mlon=35.8010&zoom=14" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 5: Babylon (Isaiah 13) -->
+        <div class="place-card" data-pcat="locatable" id="pcard-4">
+          <div class="place-card-hdr" onclick="togglePlaceCard(4)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Babylon — The Siren City</div>
+              <div class="place-ref">Isaiah 13:19-22 — Desolation Prophecy</div>
+              <div class="place-modern">Modern: Tell Babil, near Hillah, Iraq</div>
+              <div class="place-coords">32&#xb0;33&#x2032;N, 44&#xb0;25&#x2032;E &nbsp;&#x2022;&nbsp; 85 km S of Baghdad</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"Babylon, the glory of kingdoms, the beauty of the Chaldeans' pride, shall be as when God overthrew Sodom and Gomorrah... there sirens shall rest, and demons shall dance there." — Isaiah 13:19, 21 (LXX)</div>
+            <div class="place-section-lbl">The siren connection</div>
+            <div class="place-desc">The Septuagint (Greek) translation of Isaiah 13:21 uses the word seirenas — "sirens" — for the creatures that will inhabit the ruins of Babylon. This is the same Greek word used in 1 Enoch 19:2 to describe the fate of the Watchers' wives. The intertextual link is documented: both texts use the siren as a marker of the cursed, the desolate place where the supernatural inhabitants of fallen kingdoms and fallen angels dwell. Isaiah says Babylon will never be inhabited again, and its ruins will be home to these night creatures.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">UNESCO World Heritage Site since July 2019 (listed "in danger"). Ruins span 9 km² near Hillah, Iraq. Damaged by post-1991 military use and Saddam-era reconstruction brickwork overlaid on ancient foundations. No permanent habitation inside the ancient city since approximately 1000 CE. Major artifacts including the Ishtar Gate are in Berlin's Pergamon Museum.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=32.5424&mlon=44.4209&zoom=13" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 6: Edom / Bozrah -->
+        <div class="place-card" data-pcat="locatable" id="pcard-5">
+          <div class="place-card-hdr" onclick="togglePlaceCard(5)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Edom / Bozrah — Where Lilith Dwells</div>
+              <div class="place-ref">Isaiah 34:11-15 — Desolation Prophecy</div>
+              <div class="place-modern">Modern: Busaira, Tafila Governorate, Jordan</div>
+              <div class="place-coords">30&#xb0;44&#x2032;N, 35&#xb0;36&#x2032;E</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And thorns shall come up in her palaces, nettles and brambles in the fortresses thereof... and it shall be a habitation of jackals, and a court for ostriches. The wild beasts of the desert shall also meet with the wild beasts of the island, and the satyr shall cry to his fellow; the lilit also shall rest there." — Isaiah 34:13-14</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">The Hebrew word lilit (&#x05DC;&#x05B4;&#x05D9;&#x05DC;&#x05B4;&#x05D9;&#x05EA;) appears only once in all of scripture — here in Isaiah 34:14. It describes a creature that inhabits the ruins of Edom after YHWH's judgment. The word derives from Hebrew layla (night) and is translated variously as "screech owl," "night monster," "night creature," or "Lilith." The LXX renders this verse differently from the siren text of Isaiah 13 — no LXX siren connection here, though both describe supernatural inhabitants of cursed ruins. Bozrah was the capital of ancient Edom.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">Ancient Bozrah = modern Busaira (Busayra), Jordan, in the Tafila Governorate highlands. Active Iron Age Edomite excavations at nearby Umm al-Biyara and Tell el-Kheleifeh. The Petra basin (30°20′N 35°27′E), 50 km south, lies in the heart of former Edomite territory and is Jordan's most-visited UNESCO site. New tomb discovered beneath Petra's Treasury in October 2024.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=30.7389&mlon=35.6072&zoom=12" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 7: Ashtaroth-Karnaim -->
+        <div class="place-card" data-pcat="locatable" id="pcard-6">
+          <div class="place-card-hdr" onclick="togglePlaceCard(6)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Ashtaroth-Karnaim — Og's Capital</div>
+              <div class="place-ref">Genesis 14:5; Deuteronomy 1:4 — Rephaim Stronghold</div>
+              <div class="place-modern">Modern: Tell Ashtara, Daraa Governorate, Syria</div>
+              <div class="place-coords">32&#xb0;58&#x2032;N, 36&#xb0;02&#x2032;E</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And in the fourteenth year came Chedorlaomer... and smote the Rephaims in Ashteroth Karnaim." — Genesis 14:5</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Ashtaroth-Karnaim was the capital of Og of Bashan, identified in Deuteronomy 3:10-11 as the last of the Rephaim. Og's iron bedstead measured nine cubits long — approximately 4 meters — and was kept in Rabbah of the Ammonites as a monument. Genesis 14:5 mentions the Rephaim already present here in Abraham's time, linking this site to the earliest Nephilim/giant tradition in the Torah. The city is named for the Canaanite goddess Ashtarte, whose temple stood here. Edrei (modern Daraa/Der'a, Syria) 32°37′N 36°06′E was the secondary royal city where Israel's battle with Og took place (Deuteronomy 3:1).</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">Tell Ashtara lies in Daraa Governorate, Syria. The region was heavily affected by the Syrian civil war (2011-2024). Daraa city, the second site associated with Og, was the starting point of the 2011 uprising and saw significant destruction. Archaeological access is currently limited.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=32.9722&mlon=36.0333&zoom=12" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 8: Valley of Rephaim -->
+        <div class="place-card" data-pcat="locatable" id="pcard-7">
+          <div class="place-card-hdr" onclick="togglePlaceCard(7)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Valley of Rephaim</div>
+              <div class="place-ref">2 Samuel 5:18-22; Joshua 15:8 — Rephaim Territory</div>
+              <div class="place-modern">Modern: Emek Refa'im, southwest Jerusalem, Israel</div>
+              <div class="place-coords">31&#xb0;45&#x2032;N, 35&#xb0;11&#x2032;E</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"The Philistines also came and spread themselves in the valley of Rephaim." — 2 Samuel 5:18</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">The Valley of Rephaim is a second, separate cluster of giant-associated territory — not in Bashan/Golan but immediately southwest of Jerusalem. It appears in the tribal boundary descriptions (Joshua 15:8, 18:16) and as the staging area for Philistine forces against David (2 Samuel 5:18, 22; 23:13). Isaiah 17:5 uses it as a symbol of desolation. The name directly identifies it as land connected to the Rephaim lineage, distinct from the northern Bashan territory.</div>
+            <div class="place-section-lbl">Modern status</div>
+            <div class="place-status-box">The valley is today a residential and commercial neighborhood (German Colony / Emek Refaim Street) in western Jerusalem, Israel. The street running through the valley retains the ancient name. The broad agricultural plain where the ancient battles took place is now fully urbanized.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=31.7500&mlon=35.1861&zoom=14" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+        <!-- 9: Land of Nod -->
+        <div class="place-card" data-pcat="symbolic" id="pcard-8">
+          <div class="place-card-hdr" onclick="togglePlaceCard(8)">
+            <div><span class="place-badge pb-symbolic">Symbolic</span></div>
+            <div class="place-info">
+              <div class="place-name">The Land of Nod</div>
+              <div class="place-ref">Genesis 4:16 — Cain's Exile</div>
+              <div class="place-modern">East of Eden — No identified modern location</div>
+              <div class="place-coords">Scholars: possibly eastern Mesopotamia</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"Then Cain went out from the presence of YHWH, and settled in the land of Nod, east of Eden." — Genesis 4:16</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Nod is mentioned only once in scripture. No geographic markers are given beyond "east of Eden." There is no known ancient map, inscription, or text that identifies Nod as a specific place. The Hebrew root nod (&#x05E0;&#x05D5;&#x05D3;) means "to wander" or "to be a fugitive" — making this the Land of Wandering, a name that embodies Cain's sentence ("a fugitive and a wanderer on the earth") rather than a place name in the ordinary sense. Later traditions (Zohar, midrash) connected the inhabitants of Nod to the lineage that would eventually interact with the Watchers.</div>
+            <div class="place-section-lbl">Scholarly views</div>
+            <div class="place-status-box">No scholarly consensus on a geographic location. Speculative identifications: eastern Mesopotamia / Zagros foothills (following Genesis 2's Tigris-Euphrates river geography for Eden); the Sumerian concept of the edin (uncultivated steppe east of Eridu, modern Abu Shahrain, Iraq). Most modern scholars treat Nod as a symbolic construct — the embodiment of exile — rather than a mappable region. The Land of Nod is not referenced by name in any DSS fragment.</div>
+          </div>
+        </div>
+
+        <!-- 10: The Abyss / Pit of Fire -->
+        <div class="place-card" data-pcat="cosmological" id="pcard-9">
+          <div class="place-card-hdr" onclick="togglePlaceCard(9)">
+            <div><span class="place-badge pb-cosmological">Cosmological</span></div>
+            <div class="place-info">
+              <div class="place-name">The Abyss — Prison of the Watchers</div>
+              <div class="place-ref">1 Enoch 10:12; 18:11-16; 21:7-10</div>
+              <div class="place-modern">At the edge of the cosmos — no geographic location</div>
+              <div class="place-coords">Beyond the western mountains</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And I saw a deep abyss, with columns of heavenly fire, and among them I saw columns of fire fall, which were beyond measure alike towards the height and towards the depth... And beyond that abyss I saw a place which had no firmament of the heaven above, and no firmly founded earth beneath it: there was no water upon it, and no birds, but it was a waste and horrible place." — 1 Enoch 21:1-2, 18:12-13</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">The Abyss is where the fallen Watchers are imprisoned until the final judgment. Enoch reaches it by traveling west and then northwest, beyond the mountains at the edge of the inhabited world. The place is described as a zone of total cosmic breakdown — no sky above, no earth below, no water, no life. Seven great burning mountains are visible there — these are the imprisoned stars/angels, waiting in chains of fire. The description deliberately places this location beyond the accessible world.</div>
+            <div class="place-section-lbl">Cosmological context</div>
+            <div class="place-status-box">Ancient Near Eastern cosmology placed a ring of ocean and primordial chaos at the world's edge — Babylonian world maps (ca. 6th century BCE, British Museum) show this "beyond" zone. Enoch's Abyss maps onto this tradition. Kelley Coblentz Bautch (A Study of the Geography of 1 Enoch 17-19, Brill, 2003) establishes that Enoch's cosmic geography draws on Mesopotamian and early Greek traditions of the world's edge. No modern geographic equivalent exists by design — the text's point is that this place is beyond human access.</div>
+          </div>
+        </div>
+
+        <!-- 11: Mountains of Darkness / Siren Location -->
+        <div class="place-card" data-pcat="cosmological" id="pcard-10">
+          <div class="place-card-hdr" onclick="togglePlaceCard(10)">
+            <div><span class="place-badge pb-cosmological">Cosmological</span></div>
+            <div class="place-info">
+              <div class="place-name">The Mountains of Darkness</div>
+              <div class="place-ref">1 Enoch 17-19 — Where the Sirens Are Imprisoned</div>
+              <div class="place-modern">Western edge of the cosmos — no geographic location</div>
+              <div class="place-coords">Cosmological west / northwest of the inhabited world</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And their spirits shall become sirens." — 1 Enoch 19:2 (the wives of the fallen Watchers)</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">In 1 Enoch 17-19, Enoch is carried by angelic guides past the storehouses of wind, snow, and rain; past the cornerstone of the earth and the pillars of heaven; into a region of chaos where nothing is firmly established. Here, in the vicinity of the imprisoned Watchers and the burning abyss, are the imprisoned wives of the Watchers. 1 Enoch 19:2 states: "the spirits of the angels which had united themselves with women" are imprisoned here, and "the women also of the angels who went astray shall become sirens." The Greek word seirenas used here is the same term the LXX uses in Isaiah 13:21 for the creatures inhabiting ruined Babylon — a deliberate textual link.</div>
+            <div class="place-section-lbl">Cosmological context</div>
+            <div class="place-status-box">The chaotic mountains exist at the western/northwestern margin of the cosmos in Enoch's geographic framework. Scholars (Coblentz Bautch) show the imagery draws on ancient descriptions of the world's edge — possibly the far western Mediterranean or Black Sea region as conceived in Hellenistic geography, but the intention is cosmological, not literal. The imprisoned women/sirens are kept in the same region as the Watchers they followed into sin, waiting with them for the day of judgment.</div>
+          </div>
+        </div>
+
+        <!-- 12: Sheol Chambers -->
+        <div class="place-card" data-pcat="cosmological" id="pcard-11">
+          <div class="place-card-hdr" onclick="togglePlaceCard(11)">
+            <div><span class="place-badge pb-cosmological">Cosmological</span></div>
+            <div class="place-info">
+              <div class="place-name">The Sheol Chambers</div>
+              <div class="place-ref">1 Enoch 22 — The Four Hollow Places</div>
+              <div class="place-modern">A great mountain in the west — no geographic location</div>
+              <div class="place-coords">Cosmological western edge of the earth</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"There I saw another vision, the dwelling-places of the holy, and the resting-places of the righteous. Here mine eyes saw their dwellings with His righteous angels, and their resting-places with the holy." — 1 Enoch 22:1-2</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">A great hollow mountain of hard rock lies in the west. The archangel Raphael shows Enoch four chambers cut inside it, where the spirits of the dead are gathered and separated until the final judgment. Chamber 1 (bright, with a fountain of water): the righteous. Chamber 2: sinners who died without judgment. Chamber 3: Abel and those crying out for justice. Chamber 4: sinners who will not be raised at judgment. The text states the spirits of Abel cry out from one chamber, testifying against the unrighteous. This is the most fully developed theology of the afterlife in all Second Temple literature.</div>
+            <div class="place-section-lbl">Cosmological context</div>
+            <div class="place-status-box">The "great mountain in the west" reflects Mesopotamian and Greek underworld traditions — the Greek Hades at the world's western edge, reached via the Oceanus, and the Babylonian land of no return below the earth. Intertextual comparisons to Gilgamesh VII (where Enkidu sees the underworld in a dream) show the author drew on these traditions. No geographic location has been proposed by any scholar; this is the underworld mountain of ancient cosmological tradition.</div>
+          </div>
+        </div>
+
+        <!-- 13: Garden of Righteousness -->
+        <div class="place-card" data-pcat="cosmological" id="pcard-12">
+          <div class="place-card-hdr" onclick="togglePlaceCard(12)">
+            <div><span class="place-badge pb-cosmological">Cosmological</span></div>
+            <div class="place-info">
+              <div class="place-name">The Garden of Righteousness</div>
+              <div class="place-ref">1 Enoch 32 — Eden at the World's Eastern Edge</div>
+              <div class="place-modern">Far east, beyond the Erythraean Sea — no fixed location</div>
+              <div class="place-coords">Cosmological eastern edge of the world</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"And thence I went over the summits of all these mountains, far towards the east of the earth, and passed above the Erythraean sea and went far from it... and I came to the Garden of Righteousness and saw beyond those trees many large trees growing there and of goodly fragrance, large, very beautiful and glorious, and the tree of wisdom whereof they eat and know great wisdom." — 1 Enoch 32:1-3</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">After his western journey through the mountains of darkness and Sheol, Enoch travels far east — past mountains of spice, above the Erythraean Sea (a term covering the Red Sea, Persian Gulf, and Indian Ocean in ancient usage) — to reach the original Garden of Eden. The guiding angel identifies this as the place from which Adam and Eve were sent out. The tree of wisdom is still there. Enoch is not permitted to touch it before the day of judgment. The garden is at the "eastern edge of the earth" — deliberately placed beyond the known world.</div>
+            <div class="place-section-lbl">Cosmological context</div>
+            <div class="place-status-box">The direction (east, northeast, beyond the Erythraean Sea) points toward Mesopotamia or the Zagros / Iranian highlands in general terms. Some older scholars speculated about Armenia or Mesopotamia as Eden's geographic location. However, Enoch's Garden of Righteousness is placed at the cosmic eastern boundary — the mirror of the Abyss in the west. No modern geographic identification has scholarly support. The garden's inaccessibility before judgment is part of its theological point.</div>
+          </div>
+        </div>
+
+        <!-- 14: Abel-Main (Book of Giants) -->
+        <div class="place-card" data-pcat="locatable" id="pcard-13">
+          <div class="place-card-hdr" onclick="togglePlaceCard(13)">
+            <div><span class="place-badge pb-locatable">Locatable</span></div>
+            <div class="place-info">
+              <div class="place-name">Abel-Main — Where the Watchers Wept</div>
+              <div class="place-ref">Book of Giants 4Q203 — The Watchers' Lament</div>
+              <div class="place-modern">Modern: Tell Abil el-Qameh, northern Israel</div>
+              <div class="place-coords">33&#xb0;08&#x2032;N, 35&#xb0;33&#x2032;E &nbsp;&#x2022;&nbsp; ~7 km W of Tel Dan</div>
+            </div>
+            <i class="ri-arrow-down-s-line place-chevron"></i>
+          </div>
+          <div class="place-body">
+            <div class="place-ancient-text">"...sitting and weeping at Abel-Main, which is between Lebanon and Senir..." — Book of Giants 4Q203 (Aramaic Qumran fragment; Stuckenbruck reconstruction)</div>
+            <div class="place-section-lbl">What the texts say</div>
+            <div class="place-desc">Abel-Main (Aramaic: abel mayyâ, "meadow of waters") is named in 4Q203 — one of the Qumran Book of Giants fragments — as the place where the Watchers sat weeping after realizing the consequences of their sin. The text specifies it lies "between Lebanon and Senir" — Senir being the ancient Amorite name for Mount Hermon (Deuteronomy 3:9; Ezekiel 27:5). This places the Watchers' lamentation directly in the zone between the Lebanon mountains and Hermon, the same region as the Watcher descent. The name also appears as Abel-Beth-Maacah in the Hebrew Bible (1 Kings 15:20; 2 Chronicles 16:4).</div>
+            <div class="place-section-lbl">Modern identification</div>
+            <div class="place-status-box">Scholars (Milik, Stuckenbruck) consistently identify Abel-Main with Tell Abil el-Qameh (also spelled Abil al-Qamh), a known archaeological site approximately 7 km west-northwest of Tel Dan and about 2 km south of the modern Israeli town of Metula on the Lebanon border. This is a firmly identified, pinpointable real-world location. The site is in the Finger of Galilee region, northern Israel, near the sources of the Jordan River. Abel-Main is the most specifically mappable non-Hermon location in the entire Enoch / Book of Giants tradition.</div>
+            <a class="place-map-btn" href="https://www.openstreetmap.org/?mlat=33.132&mlon=35.556&zoom=13" target="_blank" rel="noopener"><i class="ri-map-pin-line"></i> View on Map</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -1246,7 +1593,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -3975,6 +4322,27 @@ function stopGlyphAnimation() {
   var lb = document.getElementById('ld-label');
   if (el) { el.textContent = String.fromCodePoint(0x10909,0x10904,0x10905,0x10904); el.style.fontFamily = '"Segoe UI Historic","Noto Sans Phoenician",serif'; el.style.fontSize = '40px'; el.style.opacity = '1'; }
   if (lb) lb.textContent = '';
+}
+
+// ── ANCIENT PLACES ────────────────────────────────────────────────────────────
+function togglePlaceCard(idx) {
+  var card = document.getElementById('pcard-' + idx);
+  if (!card) return;
+  card.classList.toggle('open');
+}
+
+function filterPlaces(cat) {
+  document.querySelectorAll('.pf-pill').forEach(function(p) {
+    p.classList.toggle('active', p.dataset.pf === cat);
+  });
+  document.querySelectorAll('.place-card').forEach(function(card) {
+    if (cat === 'all' || card.dataset.pcat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+      card.classList.remove('open');
+    }
+  });
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
