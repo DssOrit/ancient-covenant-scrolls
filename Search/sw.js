@@ -1,9 +1,8 @@
-var CACHE = 'acr-search-v78';
+var CACHE = 'acr-search-v79';
 var FILES = [
   './',
   './index.html',
   './acr_search_data.json',
-  './acr_concordance.json',
   './manifest.json',
   './icon.png',
   './icon-152.png',
