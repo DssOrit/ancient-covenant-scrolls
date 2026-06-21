@@ -1683,7 +1683,7 @@ function getSunTimes(date, lat, lon) {
   var lonCorr = lon / 15;
   var tzOffset = -date.getTimezoneOffset() / 60;
 
-  var noon = 12 - lonCorr + EqT/60 + (tzOffset - lon/15);
+  var noon = 12 - lonCorr + EqT/60 + tzOffset;
   var sunriseH = noon - HA/15;
   var sunsetH = noon + HA/15;
 
