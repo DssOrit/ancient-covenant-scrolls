@@ -785,10 +785,10 @@ select.form-input option { background: var(--surface2); }
       </div>
 
       <div id="location-prompt">
-        <div class="loc-title">Enable Location</div>
-        <div class="loc-desc">ACR Solar uses your location to calculate precise sunrise and sunset times for Shabbat and holy day alerts.</div>
+        <div class="loc-title">Showing times for Coimbra, Portugal</div>
+        <div class="loc-desc">Tap below to use your own location for precise local sunrise and sunset times.</div>
         <button class="loc-btn" onclick="requestLocation()">
-          <i class="ri-map-pin-2-line"></i> Enable Location
+          <i class="ri-map-pin-2-line"></i> Use My Location
         </button>
       </div>
 
@@ -1279,7 +1279,7 @@ today.setHours(0,0,0,0);
 var viewDate = new Date(today);
 var selectedDate = new Date(today);
 var currentView = 'month';
-var userLocation = null;
+var userLocation = { lat: 40.2033, lon: -8.4103 }; // Coimbra, Portugal default
 var reminders = [];
 var settings = {
   shabbat_alert: true, holyday_alert: true, sunrise_alert: false,
@@ -1625,9 +1625,8 @@ function requestLocation() {
       renderSunView();
       scheduleAlerts();
     }, function() {
-      // Use a default location (Jerusalem) as fallback
-      userLocation = { lat: 31.7683, lon: 35.2137 };
-      document.getElementById('location-prompt').style.display = 'none';
+      // Fall back to Coimbra default
+      userLocation = { lat: 40.2033, lon: -8.4103 };
       renderSunView();
     });
   }
