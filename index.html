@@ -122,6 +122,21 @@ body.dark #reader-footer{background:#0a0a0a}
 /* SCROLLBAR */
 #sb::-webkit-scrollbar,#notes-viewer::-webkit-scrollbar{width:3px}
 #sb::-webkit-scrollbar-thumb,#notes-viewer::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+#save-banner{position:fixed;bottom:calc(58px + env(safe-area-inset-bottom,0px));left:12px;right:12px;z-index:2000;background:#1e1e1e;border:1px solid rgba(176,48,48,.55);border-radius:14px;padding:12px 10px;display:none;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,.6)}
+#save-banner strong{display:block;font-size:13px;color:#f0ede8;margin-bottom:2px;font-family:Arial,sans-serif}
+#save-banner .sb-sub{display:block;font-size:11px;color:#aaa;line-height:1.4;font-family:Arial,sans-serif}
+.sb-info{flex:1}
+.sb-how{background:#b03030;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;font-family:Arial}
+.sb-x{background:#2a2a2a;color:#aaa;border:none;width:32px;height:32px;border-radius:6px;font-size:17px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:Arial}
+#save-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+#save-modal.on{display:flex}
+.sm-box{background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:22px;max-width:380px;width:100%;box-sizing:border-box}
+.sm-box h3{margin:0 0 8px;color:#f0ede8;font-size:16px;font-family:Arial}
+.sm-box p{margin:0 0 14px;color:#aaa;font-size:13px;line-height:1.6;font-family:Arial}
+.sm-steps{list-style:none;counter-reset:sc;margin:0 0 14px;padding:0}
+.sm-steps li{counter-increment:sc;position:relative;padding:10px 10px 10px 42px;background:#222;border:1px solid #333;border-radius:8px;margin-bottom:8px;color:#e0e0d8;font-size:13px;line-height:1.5;font-family:Arial}
+.sm-steps li::before{content:counter(sc);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:#b03030;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.sm-close{background:#b03030;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;width:100%;cursor:pointer;font-family:Arial;margin-top:4px}
 </style>
 </head>
 <body>
@@ -846,6 +861,9 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
 }
 </script>
+<div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
+<div id="save-modal"><div class="sm-box"><h3>Save to your home screen</h3><p>No App Store. Works offline. Tap once from your home screen to open.</p><ol class="sm-steps"><li>Open this page in <strong>Safari</strong> (not Chrome or another browser).</li><li>Tap the <strong>Share</strong> button — the square with an arrow pointing up, at the top of Safari.</li><li>Scroll down and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong> in the top right. Done.</li></ol><p style="font-size:12px;background:rgba(176,48,48,.12);padding:10px;border-radius:8px;border-left:3px solid #b03030;line-height:1.6">Open it from your home screen and it works offline — just like any app.</p><button class="sm-close" id="sm-close">Got it</button></div></div>
+<script>(function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='acr_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();</script>
 <div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v58</div>
 </body>
 </html>
