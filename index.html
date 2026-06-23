@@ -726,6 +726,7 @@ function buildVP(){
 }
 function pronounce(t){
   return t
+    .replace(/^\s*(\d+):(\d+)\s+/,'Chapter $1, verse $2. ')
     .replace(/𐤉𐤄𐤅𐤄/gu,'').replace(/[𐤀-𐤟]+/gu,'')
     .replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah')
     .replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bYehoshua\b/gi,'Yeh-ho-shua')
