@@ -592,6 +592,21 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .mfs-item:active{background:#2a2a2a}
 .mfs-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px}
 .mfs-text{font-size:12px;color:var(--tx2);line-height:1.7;font-style:italic;margin-bottom:5px}
+#save-banner{position:fixed;bottom:calc(60px + env(safe-area-inset-bottom,0px));left:12px;right:12px;z-index:2000;background:var(--s2);border:1px solid rgba(200,151,31,.5);border-radius:14px;padding:12px 10px;display:none;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,.65)}
+#save-banner strong{display:block;font-size:13px;color:var(--tx);margin-bottom:2px;font-family:var(--font)}
+#save-banner .sb-sub{display:block;font-size:11px;color:var(--tx2);line-height:1.4;font-family:var(--font)}
+.sb-info{flex:1}
+.sb-how{background:var(--gold);color:var(--bg);border:none;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;font-family:var(--font)}
+.sb-x{background:var(--s3);color:var(--tx2);border:none;width:32px;height:32px;border-radius:6px;font-size:17px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+#save-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+#save-modal.on{display:flex}
+.sm-box{background:var(--s1);border:1px solid #2a2a2a;border-radius:14px;padding:22px;max-width:380px;width:100%;box-sizing:border-box}
+.sm-box h3{margin:0 0 8px;color:var(--tx);font-size:16px;font-family:var(--font)}
+.sm-box p{margin:0 0 14px;color:var(--tx2);font-size:13px;line-height:1.6;font-family:var(--font)}
+.sm-steps{list-style:none;counter-reset:sc;margin:0 0 14px;padding:0}
+.sm-steps li{counter-increment:sc;position:relative;padding:10px 10px 10px 42px;background:var(--s2);border:1px solid #2a2a2a;border-radius:8px;margin-bottom:8px;color:var(--tx);font-size:13px;line-height:1.5;font-family:var(--font)}
+.sm-steps li::before{content:counter(sc);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--bg);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.sm-close{background:var(--gold);color:var(--bg);border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;width:100%;cursor:pointer;font-family:var(--font);margin-top:4px}
 </style>
 </head>
 <body>
@@ -4931,6 +4946,9 @@ function getPassageById(pid) {
 function esc(s) {
   return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+(function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='search_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();
 </script>
+<div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
+<div id="save-modal"><div class="sm-box"><h3>Save to your home screen</h3><p>No App Store. Works offline. Tap once from your home screen to open.</p><ol class="sm-steps"><li>Open this page in <strong>Safari</strong> (not Chrome or another browser).</li><li>Tap the <strong>Share</strong> button — the square with an arrow pointing up, at the top of Safari.</li><li>Scroll down and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong> in the top right. Done.</li></ol><p style="font-size:12px;background:rgba(200,151,31,.1);padding:10px;border-radius:8px;border-left:3px solid var(--gold);line-height:1.6;color:var(--tx2)">Open it from your home screen and it works offline — just like any app.</p><button class="sm-close" id="sm-close">Got it</button></div></div>
 </body>
 </html>
