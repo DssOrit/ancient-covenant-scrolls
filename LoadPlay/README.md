@@ -9,4 +9,4 @@ When the bundle arrives:
 - `icon.png` (192×192 PWA icon)
 - Asset folders
 
-Live URL once deployed: `https://dssorit.github.io/ancient-covenant-scrolls/LoadPlay/`
+Live URL once deployed: `https://acrscrolls.com/LoadPlay/`

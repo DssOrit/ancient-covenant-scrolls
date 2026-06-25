@@ -12,7 +12,7 @@ Copyright (c) 2026 LBond. All Rights Reserved.
 
 - Free. Offline after first visit. No login, no subscription, no
   server, no ads. Runs entirely on your iPad.
-- Open this URL once in Safari: `https://dssorit.github.io/ancient-covenant-scrolls/load/`
+- Open this URL once in Safari: `https://acrscrolls.com/load/`
 - Tap Safari's **Share → Add to Home Screen**. Now Load is an app
   icon on your iPad, and works with Airplane Mode on.
 - Import HTML, PDF, EPUB, or web-app ZIP files from your Files app.
@@ -26,7 +26,7 @@ Copyright (c) 2026 LBond. All Rights Reserved.
 
 ### 1. Install Load on your iPad home screen
 
-1. In Safari on iPad, open `https://dssorit.github.io/ancient-covenant-scrolls/load/`
+1. In Safari on iPad, open `https://acrscrolls.com/load/`
 2. Let the splash finish loading (first visit downloads ~2 MB of
    fonts and libraries; after that it runs offline).
 3. Tap Safari's **Share** icon (the square with an arrow).
