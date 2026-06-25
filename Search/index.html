@@ -1491,6 +1491,29 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="beliefs-list"></div>
     </div>
 
+    <!-- HEBREW ROOTS -->
+    <div id="hebrew-view" style="display:none">
+      <div class="hr-wrap">
+        <div class="hr-hdr">Hebrew Roots</div>
+        <div class="hr-sub">Search an English word to see its ancient Paleo-Hebrew script, modern Hebrew, transliteration, and meaning from DSS/Orit vocabulary.</div>
+        <div class="hr-search-wrap">
+          <i class="ri-search-line hr-search-icon"></i>
+          <input class="hr-search" id="hr-input" type="search" placeholder="Search a word (e.g. covenant, peace, fire)..." oninput="filterHebrew()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+        <div class="hr-filter-row" id="hr-filter-row">
+          <div class="hr-pill active" data-hf="all" onclick="setHRFilter('all')">All</div>
+          <div class="hr-pill" data-hf="covenant" onclick="setHRFilter('covenant')">Covenant</div>
+          <div class="hr-pill" data-hf="names" onclick="setHRFilter('names')">Names &amp; Places</div>
+          <div class="hr-pill" data-hf="creation" onclick="setHRFilter('creation')">Creation</div>
+          <div class="hr-pill" data-hf="worship" onclick="setHRFilter('worship')">Worship</div>
+          <div class="hr-pill" data-hf="dssterms" onclick="setHRFilter('dssterms')">DSS Terms</div>
+          <div class="hr-pill" data-hf="daily" onclick="setHRFilter('daily')">Daily Life</div>
+        </div>
+        <div class="hr-count" id="hr-count"></div>
+        <div class="hr-grid" id="hr-grid"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -5124,27 +5147,6 @@ window.addEventListener('load',function(){
 });
 (function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='search_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();
 </script>
-    <div id="hebrew-view" style="display:none">
-      <div class="hr-wrap">
-        <div class="hr-hdr">Hebrew Roots</div>
-        <div class="hr-sub">Search an English word to see its ancient Paleo-Hebrew script, modern Hebrew, transliteration, and meaning from DSS/Orit vocabulary.</div>
-        <div class="hr-search-wrap">
-          <i class="ri-search-line hr-search-icon"></i>
-          <input class="hr-search" id="hr-input" type="search" placeholder="Search a word (e.g. covenant, peace, fire)..." oninput="filterHebrew()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-        </div>
-        <div class="hr-filter-row" id="hr-filter-row">
-          <div class="hr-pill active" data-hf="all" onclick="setHRFilter('all')">All</div>
-          <div class="hr-pill" data-hf="covenant" onclick="setHRFilter('covenant')">Covenant</div>
-          <div class="hr-pill" data-hf="names" onclick="setHRFilter('names')">Names &amp; Places</div>
-          <div class="hr-pill" data-hf="creation" onclick="setHRFilter('creation')">Creation</div>
-          <div class="hr-pill" data-hf="worship" onclick="setHRFilter('worship')">Worship</div>
-          <div class="hr-pill" data-hf="dssterms" onclick="setHRFilter('dssterms')">DSS Terms</div>
-          <div class="hr-pill" data-hf="daily" onclick="setHRFilter('daily')">Daily Life</div>
-        </div>
-        <div class="hr-count" id="hr-count"></div>
-        <div class="hr-grid" id="hr-grid"></div>
-      </div>
-    </div>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
 <div id="save-modal"><div class="sm-box"><h3>Save to your home screen</h3><p>No App Store. Works offline. Tap once from your home screen to open.</p><ol class="sm-steps"><li>Open this page in <strong>Safari</strong> (not Chrome or another browser).</li><li>Tap the <strong>Share</strong> button — the square with an arrow pointing up, at the top of Safari.</li><li>Scroll down and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong> in the top right. Done.</li></ol><p style="font-size:12px;background:rgba(200,151,31,.1);padding:10px;border-radius:8px;border-left:3px solid var(--gold);line-height:1.6;color:var(--tx2)">Open it from your home screen and it works offline — just like any app.</p><button class="sm-close" id="sm-close">Got it</button></div></div>
 </body>
