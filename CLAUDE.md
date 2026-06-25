@@ -9,6 +9,30 @@ short steps, never overpromise.
 
 These have been re-locked on 2026-05-04 after repeated violations.
 
+0. **NO WESTERN OR EUROPEAN BIAS — LOCKED 2026-06-25.** Any content
+   touching ancient Hebrew identity, African Hebrew communities, genetics,
+   DNA research, history, or scripture must be presented on its own terms
+   with no Western or European framing, standards, or influence. Specific
+   prohibitions:
+   - Do NOT use Western academic papers as the authority that grants
+     legitimacy to African Hebrew identity. African oral tradition,
+     community knowledge, and African scholarship carry equal weight.
+   - Do NOT frame African evidence in relation to European or Ashkenazi
+     claims. European claims have no place in content about ancient
+     African Hebrew identity.
+   - Do NOT use "Jewish" to mean ancient Hebrew people. "Hebrew" is the
+     correct term. "Jewish" is only used when specifically referencing
+     post-exile Rabbinic or European institutional identity.
+   - Do NOT include European or Ashkenazi DNA, history, or identity claims
+     in any feature about ancient Hebrew or African Hebrew research.
+   - Do NOT default to Western academic framing, language, or methodology
+     as the reference point for anything related to ancient Hebrew identity.
+   - The ancient Hebrews were an African people. This is stated as fact,
+     not as one perspective among many.
+   If there is ANY doubt about whether content carries Western or European
+   bias, STOP and ask the user before writing or shipping it. Do not
+   self-correct after the fact — prevent it in the first place.
+
 1. **NO NARRATION DURING A BUILD.** When the user requests a multi-step
    build, do NOT send any text between tool calls. No "starting on X",
    no "now doing Y", no "almost done", no "about to push". Build
