@@ -2908,7 +2908,7 @@ window.LoadAudioFix = {
  headers: {
  'Content-Type': 'application/json',
  'Authorization': 'Bearer ' + key,
- 'HTTP-Referer': 'https://dssorit.github.io/ancient-covenant-scrolls/load/',
+ 'HTTP-Referer': 'https://acrscrolls.com/load/',
  'X-Title': 'Load (ACR)'
  },
  body: JSON.stringify(body)

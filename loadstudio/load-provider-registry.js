@@ -3441,7 +3441,7 @@ var LoadProviderRegistry = {
     if (_cr && key) {
       var crBase = (s.endpoint && s.endpoint.length > 4) ? s.endpoint : _cr.base;
       var crHeaders = {'Content-Type':'application/json','Authorization':'Bearer '+key};
-      if (providerId === 'openrouter') crHeaders['HTTP-Referer'] = 'https://dssorit.github.io/ancient-covenant-scrolls/';
+      if (providerId === 'openrouter') crHeaders['HTTP-Referer'] = 'https://acrscrolls.com/';
       var crMsgs = Array.isArray(request.messages) ? request.messages : [{role:'user',content:request.prompt||''}];
       return fetch(crBase+'/chat/completions', {
         method:'POST', headers:crHeaders,
