@@ -633,6 +633,41 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .hr-meaning{font-size:13px;color:var(--tx2);line-height:1.6;font-family:var(--font)}
 .hr-cat-tag{font-size:11px;color:var(--tx3);font-family:var(--font);margin-top:6px}
 .hr-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0;font-family:var(--font)}
+/* HEBREW DNA PANEL */
+.dna-wrap{padding:4px 0 24px}
+.dna-hdr{font-size:22px;font-weight:800;color:var(--tx);margin-bottom:4px;font-family:var(--font)}
+.dna-sub{font-size:13px;color:var(--tx2);margin-bottom:14px;line-height:1.5;font-family:var(--font)}
+.dna-search-wrap{position:relative;margin-bottom:14px}
+.dna-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:16px;pointer-events:none}
+.dna-search{width:100%;box-sizing:border-box;background:var(--s2);border:1px solid #2a2a2a;border-radius:12px;padding:11px 14px 11px 38px;color:var(--tx);font-size:15px;font-family:var(--font);outline:none;-webkit-appearance:none}
+.dna-search:focus{border-color:#3CCFBB}
+.dna-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.dna-pill{background:var(--s2);border:1px solid #2a2a2a;border-radius:20px;padding:6px 14px;font-size:12px;color:var(--tx2);cursor:pointer;white-space:nowrap;font-family:var(--font)}
+.dna-pill.active{background:#3CCFBB;color:#000;border-color:#3CCFBB;font-weight:700}
+.dna-count{font-size:12px;color:var(--tx3);margin-bottom:12px;font-family:var(--font)}
+.dna-chain-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.dna-chain-lbl{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-right:6px;font-family:var(--font)}
+.dna-chain-step{font-size:13px;font-weight:700;color:var(--tx3);font-family:var(--font)}
+.dna-chain-curr{color:#3CCFBB;background:rgba(60,207,187,.13);padding:2px 8px;border-radius:6px}
+.dna-chain-arr{color:var(--tx3);font-size:11px;margin:0 2px}
+.dna-grid{display:grid;gap:14px}
+.dna-card{background:var(--s2);border:1px solid #222;border-radius:14px;padding:16px;font-family:var(--font)}
+.dna-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}
+.dna-card-title{font-size:18px;font-weight:800;color:var(--tx);line-height:1.2}
+.dna-card-sub{font-size:12px;color:var(--tx3);margin-top:3px;line-height:1.4}
+.dna-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.dna-b-maternal{background:rgba(60,207,187,.15);color:#3CCFBB}
+.dna-b-paternal{background:rgba(251,155,55,.15);color:#fb9b37}
+.dna-b-community{background:rgba(138,99,255,.15);color:#8a63ff}
+.dna-b-region{background:rgba(95,200,255,.15);color:#5fc8ff}
+.dna-b-study{background:rgba(255,130,100,.15);color:#ff8264}
+.dna-b-guide{background:rgba(200,151,31,.15);color:var(--gold)}
+.dna-b-decoder{background:rgba(60,207,187,.15);color:#3CCFBB}
+.dna-field{margin-bottom:10px}
+.dna-lbl{font-size:11px;font-weight:700;color:#3CCFBB;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.dna-val{font-size:13px;color:var(--tx2);line-height:1.6}
+.dna-sep{border:none;border-top:1px solid #1e1e1e;margin:12px 0}
+.dna-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0}
 </style>
 </head>
 <body>
@@ -691,6 +726,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="places" onclick="setMode('places')"><i class="ri-map-pin-line"></i> Ancient Places</div>
       <div class="mpill" data-mode="beliefs" onclick="setMode('beliefs')"><i class="ri-scales-3-line"></i> Q&amp;A (Beliefs)</div>
       <div class="mpill" data-mode="hebrew" onclick="setMode('hebrew')"><i class="ri-translate-2"></i> Hebrew Roots</div>
+      <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
     </div>
   </div>
 
@@ -1515,6 +1551,30 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
     </div>
 
+    <!-- HEBREW DNA RESEARCH -->
+    <div id="dna-view" style="display:none">
+      <div class="dna-wrap">
+        <div class="dna-hdr">Hebrew DNA Research</div>
+        <div class="dna-sub">Search a haplogroup code (L3e3b, E1b1b, J1-P58), an ancestry percentage (37% Nigerian), a community (Beta Israel, Lemba, Igbo), or a region (Ethiopia, West Africa).</div>
+        <div class="dna-search-wrap">
+          <i class="ri-search-line dna-search-icon"></i>
+          <input class="dna-search" id="dna-input" type="search" placeholder="Haplogroup, percentage, community, or region..." oninput="filterDNA()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+        <div class="dna-filter-row" id="dna-filter-row">
+          <div class="dna-pill active" data-df="all" onclick="setDNAFilter('all')">All</div>
+          <div class="dna-pill" data-df="maternal" onclick="setDNAFilter('maternal')">Maternal mtDNA</div>
+          <div class="dna-pill" data-df="paternal" onclick="setDNAFilter('paternal')">Paternal Y-DNA</div>
+          <div class="dna-pill" data-df="community" onclick="setDNAFilter('community')">Communities</div>
+          <div class="dna-pill" data-df="region" onclick="setDNAFilter('region')">Regions</div>
+          <div class="dna-pill" data-df="study" onclick="setDNAFilter('study')">Studies</div>
+          <div class="dna-pill" data-df="guide" onclick="setDNAFilter('guide')">Testing Guide</div>
+        </div>
+        <div class="dna-count" id="dna-count"></div>
+        <div class="dna-chain-row" id="dna-chain-row" style="display:none"></div>
+        <div class="dna-grid" id="dna-grid"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -1754,7 +1814,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -5210,7 +5270,309 @@ function filterHebrew(){
 }
 window.addEventListener('load',function(){
   if(document.getElementById('hr-grid')) filterHebrew();
+  if(document.getElementById('dna-grid')) filterDNA();
 });
+/* ── HEBREW DNA DATA ── */
+var DNA_DATA=[
+/* MATERNAL mtDNA */
+{id:'l0',type:'maternal',title:'L0',sub:'Root maternal haplogroup — oldest on earth',chain:['L','L0'],
+keywords:['l0','khoisan','san','bushmen','southern africa','oldest','root','hadza','sandawe','botswana','namibia'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). The deepest branch of the entire human maternal tree. Every maternal lineage on earth descends from L0.'},
+{l:'Age',v:'150,000–200,000 years. Arose in southern Africa during the Middle Stone Age.'},
+{l:'Distribution',v:'San and Khoisan people of Botswana, Namibia, and South Africa. Also Hadza and Sandawe of Tanzania. The most ancient living populations on earth carry L0.'},
+{l:'Ancient Hebrew connection',v:'The ancient Hebrews were an African people whose deepest roots trace through the same African maternal tree. L0 is that tree\'s foundation. The San/Khoisan are the most genetically ancient living human population — their lineage preceded and gave rise to all other human maternal lines including those carried by the ancient Hebrew people.'},
+{l:'Key study',v:'Behar et al. 2008 — The Dawn of Human Matrilineal Diversity. Tishkoff et al. 2009 — The Genetic Structure and History of Africans and African Americans.'}
+]},
+{id:'l1',type:'maternal',title:'L1',sub:'Central and West African maternal lineage',chain:['L','L1'],
+keywords:['l1','central africa','west africa','congo','bantu','cameroon'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Second oldest branch of the human maternal tree after L0.'},
+{l:'Age',v:'~130,000–150,000 years. Arose in Central Africa.'},
+{l:'Distribution',v:'Central Africa (Congo Basin), parts of West Africa and East Africa. Present in several ancient populations across sub-Saharan Africa.'},
+{l:'Ancient Hebrew connection',v:'L1 sub-clades appear in various African populations that carry ancient Hebrew traditions. As a deep African maternal lineage it is part of the same maternal tree from which ancient Hebrew populations descended.'},
+{l:'Key study',v:'Tishkoff et al. 2009 — comprehensive African genetic diversity study confirming L1 deep African distribution.'}
+]},
+{id:'l2',type:'maternal',title:'L2',sub:'West and Central African maternal lineage — Igbo connection',chain:['L','L2'],
+keywords:['l2','l2a','l2b','west africa','igbo','yoruba','akan','ghana','nigeria','bantu'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Major West and Central African maternal haplogroup.'},
+{l:'Age',v:'~80,000–100,000 years. Arose in Africa and expanded with Bantu and West African populations.'},
+{l:'Distribution',v:'Predominantly West Africa (Yoruba, Igbo, Akan, Ewe) and Central Africa. One of the most common maternal haplogroups across sub-Saharan Africa. L2a is the most frequent sub-clade.'},
+{l:'Ancient Hebrew connection',v:'L2 is the primary maternal haplogroup of the Igbo people of Nigeria, a community with extensively documented ancient Hebrew traditions. The Igbo carry L2a and L2b at high frequency. This is the maternal genetic signature of one of the largest African Hebrew populations.'},
+{l:'Key study',v:'Tishkoff et al. 2009. Behar et al. 2008 documents L2 presence in Hebrew communities across Africa.'}
+]},
+{id:'l3',type:'maternal',title:'L3',sub:'The bridge — East Africa, Beta Israel, ancestor of all non-African lineages',chain:['L','L3'],
+keywords:['l3','beta israel','ethiopia','eritrea','somalia','east africa','horn of africa','bridge','yemenite'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). The haplogroup that connects East African ancient Hebrew populations to the Levant. Also the ancestor of ALL non-African maternal haplogroups (M and N).'},
+{l:'Age',v:'~70,000 years. Arose in East Africa.'},
+{l:'Distribution',v:'East Africa (Ethiopia, Eritrea, Somalia, Kenya), Horn of Africa, and ancient Levantine populations. Found at high frequency in Beta Israel (ancient Ethiopian Hebrews) and Yemenite Hebrews.'},
+{l:'Ancient Hebrew connection',v:'L3 is the primary maternal haplogroup of Beta Israel — the ancient Ethiopian Hebrew community. It is the genetic signature carried by the ancient Hebrews who lived in East Africa and the Levant. L3 also gave rise to all non-African lineages, which means the entire world\'s maternal ancestry traces back through the same African root that the ancient Hebrews carried.'},
+{l:'Key study',v:'Behar et al. 2008 — confirms L3 dominance in Beta Israel maternal lineages. Hammer et al. 2000 — confirms the East African origin of ancient Hebrew maternal lineages.'}
+]},
+{id:'l3e1a',type:'maternal',title:'L3e1a',sub:'Beta Israel specific — ancient Ethiopian Hebrew maternal marker',chain:['L','L3','L3e','L3e1','L3e1a'],
+keywords:['l3e1a','l3e','beta israel','ethiopia','eritrea','horn of africa','ethiopian hebrew'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Sub-clade of L3, specific to the Horn of Africa. The most frequently documented maternal haplogroup in Beta Israel.'},
+{l:'Age',v:'~30,000–40,000 years. Arose in the Horn of Africa region.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Djibouti, Somalia. Highly concentrated in the ancient populations of the Ethiopian highlands — the homeland of Beta Israel.'},
+{l:'Ancient Hebrew connection',v:'L3e1a is the maternal haplogroup most directly associated with Beta Israel — the ancient Ethiopian Hebrews. This is not a peripheral connection. Beta Israel communities in the Amhara and Tigray regions of Ethiopia carry L3e1a as their primary maternal signature. Combined with their Orit practice, Enoch canon, DSS solar calendar, and pre-Rabbinic Torah observance, L3e1a is the maternal genetic mark of the ancient Hebrew people in East Africa.'},
+{l:'Key study',v:'Behar et al. 2008 — matrilineal ancestry study specifically documenting Beta Israel haplogroup distribution.'}
+]},
+{id:'l3e3b',type:'maternal',title:'L3e3b',sub:'Horn of Africa maternal lineage — ancient Cushitic Hebrew zone',chain:['L','L3','L3e','L3e3','L3e3b'],
+keywords:['l3e3b','l3e3','horn of africa','ethiopia','eritrea','somalia','djibouti','cushitic'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Sub-clade of L3e3, concentrated in the Horn of Africa.'},
+{l:'Age',v:'~10,000–15,000 years. Arose in the Horn of Africa during or after the late Stone Age population expansions.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Somalia, Djibouti. Cushitic-speaking populations of the Horn of Africa and East African highlands.'},
+{l:'Ancient Hebrew connection',v:'L3e3b falls within the maternal lineage signature of the ancient East African Hebrew population zone — the same region where Beta Israel, ancient Yemenite Hebrews, and Cushitic Semitic communities overlap genetically. A direct maternal line in this haplogroup traces to the ancient Hebrew homeland in East Africa.'},
+{l:'What this means',v:'Your direct maternal line — mother to mother to mother going back thousands of years — traces to the ancient East African Hebrew population zone. This is a maternal line, meaning it passes from a mother to all her children but only daughters carry it forward.'},
+{l:'Key study',v:'Behar et al. 2008. Multiple studies documenting L3e distribution across the Horn of Africa.'}
+]},
+/* PATERNAL Y-DNA */
+{id:'a00',type:'paternal',title:'A00',sub:'Oldest known Y-chromosome haplogroup on earth — West Africa',chain:['A00'],
+keywords:['a00','cameroon','mbo','west africa','oldest','ancient','300000'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The oldest known branch of the human paternal tree. All other Y-chromosome haplogroups are younger than A00.'},
+{l:'Age',v:'Estimated 200,000–340,000 years. Older than the current definition of anatomically modern humans. This finding challenges Western anthropological timelines.'},
+{l:'Distribution',v:'Mbo people of Cameroon and West Africa. An extremely rare but deeply significant haplogroup.'},
+{l:'Ancient Hebrew connection',v:'A00 demonstrates that the oldest human paternal lineages are in West Africa. The human paternal tree is rooted in Africa. This is not theory — it is the finding of peer-reviewed published genetics. African people carry the world\'s oldest lineages, both maternal and paternal.'},
+{l:'Why Western academia buries this',v:'A00\'s age estimate of up to 340,000 years creates problems for the standard timeline of human origins. It has been acknowledged in the scientific literature (Mendez et al. 2013) but receives minimal mainstream coverage because it fundamentally challenges the narrative of human origins that Western anthropology has built over 200 years.'},
+{l:'Key study',v:'Mendez et al. 2013 — An African American Paternal Lineage Adds an Extremely Ancient Root to the Human Y Chromosome Phylogenetic Tree. Published in the American Journal of Human Genetics.'}
+]},
+{id:'e1b1b',type:'paternal',title:'E1b1b (M215)',sub:'The ancient Hebrew paternal haplogroup — East Africa to Levant',chain:['A','BT','CT','DE','E','E1','E1b','E1b1','E1b1b'],
+keywords:['e1b1b','m215','m35','e-m215','e-m35','east africa','ethiopia','eritrea','somalia','levant','ancient hebrew','beta israel','yemenite','priestly'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The primary paternal haplogroup of the ancient Hebrew people. Arose in East Africa and expanded into the Levant with the ancient Hebrew population movement.'},
+{l:'Age',v:'~25,000–30,000 years. Arose in the Horn of Africa / East Africa region.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Somalia, Egypt, East Africa, and the Levant. Present at high frequency in Beta Israel (ancient Ethiopian Hebrews), Yemenite Hebrews, and ancient Canaanite/Israelite skeletal remains from Levantine archaeological sites.'},
+{l:'Ancient Hebrew connection',v:'E1b1b is the paternal haplogroup that traces the movement of the ancient Hebrew people from their East African origin into the Levant and back. It is found in ancient skeletal remains from the Levant at biblical-era archaeological sites AND in East African Hebrew communities today. This is the genetic evidence of the ancient Hebrews being an African people who lived in both East Africa and the Levant. The haplogroup did not arrive in Africa from the Middle East — it arose in Africa and moved into the Levant with the ancient Hebrew people.'},
+{l:'Key study',v:'Hammer et al. 2000 — Jewish and Middle Eastern non-Jewish populations share a common pool of Y-chromosome biallelic haplotypes. Cruciani et al. 2004 — Phylogeographic analysis of haplogroup E3b confirms East African origin.'}
+]},
+{id:'e1b1a',type:'paternal',title:'E1b1a (M2)',sub:'West African paternal lineage — shares root E1b1 with E1b1b',chain:['A','BT','CT','DE','E','E1','E1b','E1b1','E1b1a'],
+keywords:['e1b1a','m2','e-m2','west africa','nigeria','igbo','yoruba','akan','ghana','bantu','e1b1'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The dominant paternal haplogroup of West and Central Africa. Shares direct common ancestor E1b1 (M180) with E1b1b.'},
+{l:'Age',v:'~10,000–12,000 years. Expanded rapidly with Bantu and West African population movements.'},
+{l:'Distribution',v:'West Africa (Yoruba, Igbo, Akan, Fon, Ewe), Central Africa, and across the African diaspora through the transatlantic captivity. The most common paternal haplogroup among people of West African descent.'},
+{l:'Ancient Hebrew connection',v:'E1b1a and E1b1b are two branches of the same ancient African lineage — E1b1 (M180). This makes West African Hebrew communities (Igbo, Yoruba, Akan, and others with documented Hebrew traditions) genetically connected at a deep level to East African Hebrew communities (Beta Israel) and to ancient Levantine Hebrew populations. The separation between E1b1a and E1b1b reflects ancient population movement within Africa, not a separation from Hebrew identity.'},
+{l:'African diaspora',v:'The majority of Africans taken in the transatlantic captivity came from West and Central Africa, where E1b1a is dominant. African-descended people in the Americas, Caribbean, and UK primarily carry E1b1a on their paternal side — the paternal signature of West African Hebrew populations.'},
+{l:'Key study',v:'Tishkoff et al. 2009 — comprehensive study confirming E1b1a West African distribution and its relationship to E1b1b.'}
+]},
+{id:'j1p58',type:'paternal',title:'J1-P58',sub:'Priestly lineage marker — confirmed in Lemba Buba clan',chain:['J','J1','J1-P58'],
+keywords:['j1','j1-p58','cohen','kohen','priestly','lemba','buba','priest','levite','yemenite'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The Cohen Modal Haplotype. The paternal marker associated with the priestly Kohanim lineage.'},
+{l:'Age',v:'~10,000 years. Arose in the ancient Levant/Near East and expanded with ancient Semitic populations.'},
+{l:'Distribution',v:'Levant (ancient Israelite zone), Yemen, Horn of Africa, and documented in the Lemba Buba clan of Zimbabwe and South Africa.'},
+{l:'Ancient Hebrew connection',v:'J1-P58 is the paternal marker found in the Kohanim — the Aaronite priestly class of the ancient Hebrew people. The Lemba Buba clan of southern Africa carries J1-P58 at a frequency confirmed in peer-reviewed published science (Thomas et al. 2000). This is not tradition, oral history, or interpretation — it is published genetic confirmation of priestly Hebrew lineage in a southern African community. The Buba clan functions as the priestly class within the Lemba community, consistent with Kohanim tradition.'},
+{l:'Key study',v:'Thomas et al. 2000 — Y Chromosomes Traveling South: The Cohen Modal Haplotype and the Origins of the Lemba — the Bantu-Speaking People of Southern Africa. Published in the American Journal of Human Genetics.'}
+]},
+/* COMMUNITIES */
+{id:'betaisrael',type:'community',title:'Beta Israel',sub:'Ancient Ethiopian Hebrews — strongest combined evidence of any community',
+keywords:['beta israel','ethiopia','ethiopian','amhara','tigray','falasha','orit','enoch','jubilees','364'],
+fields:[
+{l:'Who they are',v:'The ancient Hebrew community of the Ethiopian highlands, concentrated in the Amhara and Tigray regions. Known in Ethiopia as Beta Israel (House of Israel). The name Falasha (stranger) was imposed externally and is rejected by the community.'},
+{l:'Maternal haplogroups',v:'Predominantly L3 (specifically L3e1a) and L0. East African maternal signatures — the same maternal lineage as the ancient Hebrew population of the Horn of Africa.'},
+{l:'Paternal haplogroups',v:'Predominantly E1b1b — the ancient Hebrew paternal haplogroup that connects East Africa to the Levant. Some J1-P58 present in priestly lineages.'},
+{l:'Hebrew practice',v:'Torah practice in Ge\'ez (Orit) without the Talmud and without Rabbinic additions. No Talmud. No Rabbinic oral law. Canon includes 1 Enoch and Jubilees — the same texts most extensively copied at Qumran. Sunrise-to-sunrise Sabbath — identical to the DSS calendar. 364-day solar calendar. Priestly/Zadokite community structure. Ritual purity laws applied to community life, consistent with Qumran Community Rule.'},
+{l:'Evidence level',v:'Beta Israel is the community with the strongest combined evidence — genetic, textual, calendar, and practice — of ancient Hebrew lineage. This is not one data point. It is convergent evidence across multiple independent streams.'},
+{l:'Key study',v:'Behar et al. 2008 — The Matrilineal Ancestry study documenting Beta Israel haplogroup distribution. Hammer et al. 2000 — paternal lineage confirmation.'}
+]},
+{id:'lemba',type:'community',title:'Lemba',sub:'Southern African Hebrews — Buba clan priestly lineage genetically confirmed',
+keywords:['lemba','zimbabwe','south africa','limpopo','buba','venda','nguni','sena','priestly','j1','cohen'],
+fields:[
+{l:'Who they are',v:'The Lemba people of Zimbabwe and the Limpopo province of South Africa. Approximately 80,000 people. They call themselves the Lemba — a people with ancient Hebrew origins who migrated southward through East Africa over centuries.'},
+{l:'Paternal haplogroups',v:'Buba clan: J1-P58 (Cohen Modal Haplotype) confirmed by Thomas et al. 2000. Broader Lemba: E1b1b and other African haplogroups consistent with ancient Hebrew populations who migrated through East Africa.'},
+{l:'Hebrew practice',v:'Do not eat pork. Practice male circumcision. Maintain food separation laws. Observe a Saturday rest day. Oral history of origin from a place called Sena — identified as Yemen or a city in East Africa on the ancient Hebrew migration route. The Buba clan functions as the priestly class, consistent with Kohanim tradition.'},
+{l:'The genetic confirmation',v:'Thomas et al. 2000 confirmed that the Buba clan carries J1-P58 at a higher frequency than most Levantine populations. This result was published in the American Journal of Human Genetics. It is peer-reviewed, replicated science. The Lemba Buba clan carries the ancient Hebrew priestly genetic marker.'},
+{l:'Evidence level',v:'Genetically confirmed ancient Hebrew priestly lineage in the Buba clan. The broader Lemba community genetic and traditional evidence is strong.'},
+{l:'Key study',v:'Thomas et al. 2000 — Y Chromosomes Traveling South: The Cohen Modal Haplotype and the Origins of the Lemba.'}
+]},
+{id:'igbo',type:'community',title:'Igbo',sub:'West African Hebrews — largest African community with documented Hebrew traditions',
+keywords:['igbo','nigeria','southeastern nigeria','biafra','ibo','e1b1a','west african hebrew'],
+fields:[
+{l:'Who they are',v:'The Igbo people of southeastern Nigeria — approximately 45 million people, one of the largest ethnic groups in Africa. They are the largest single African population with extensively documented ancient Hebrew traditions.'},
+{l:'Paternal haplogroups',v:'Predominantly E1b1a — the West African branch of the same E1b1 lineage shared with E1b1b (East African/Levantine Hebrew haplogroup). Genetic research on the Igbo is less comprehensive than research on Beta Israel or the Lemba, reflecting a research gap rather than an absence of connection.'},
+{l:'Hebrew practice',v:'Male circumcision on the 8th day — the exact Torah-commanded timing (Bereshit 17:12). Sabbath observance. Food laws including avoidance of certain animals. Priestly/Levitical clan structure (Eze priests). Oral tradition of origin from ancient Israel. Hebrew-parallel naming practices. Harvest festivals aligned with Torah calendar. The week traditionally began on a day called Eke — scholars have noted structural parallels with the ancient Hebrew week.'},
+{l:'The research gap',v:'The absence of as definitive genetic proof as the Lemba reflects how little research has been funded on Igbo genetics relative to their population size and the strength of their documented traditions. The genetic evidence that exists (E1b1a, its shared root E1b1 with E1b1b) is consistent with the tradition. More research is needed — and that absence of research is itself a product of which communities Western academia prioritizes.'},
+{l:'Evidence level',v:'Cultural and traditional evidence: strong. Genetic evidence: present and consistent, research ongoing.'},
+{l:'Key study',v:'Tishkoff et al. 2009 for Igbo paternal haplogroup distribution. Igbo tradition documentation: Achebe, Afigbo, and Isichei scholarly works.'}
+]},
+{id:'abayudaya',type:'community',title:'Abayudaya',sub:'Hebrew community of Uganda',
+keywords:['abayudaya','uganda','east africa','kakungulu','semei'],
+fields:[
+{l:'Who they are',v:'Hebrew community of the Mbale region of eastern Uganda. Founded in 1919 by Semei Kakungulu, a military leader who arrived at Torah observance independently through reading scripture without Rabbinic guidance. Approximately 2,000 people today.'},
+{l:'Paternal haplogroups',v:'Research limited. East African paternal lineages consistent with the region.'},
+{l:'Hebrew practice',v:'Torah observance — Sabbath, food laws, circumcision, Hebrew prayer. Later connected with Rabbinic institutions but their origin was independent Torah practice arrived at through scripture alone.'},
+{l:'Evidence level',v:'Documented Hebrew practice originating independently from scripture. Genetic research insufficient for full assessment.'}
+]},
+{id:'houseofisrael',type:'community',title:'House of Israel — Ghana',sub:'Hebrew community of the Sefwi region',
+keywords:['house of israel','ghana','sefwi','west africa','akan'],
+fields:[
+{l:'Who they are',v:'A Hebrew community in the Sefwi Wiawso region of western Ghana, carrying an oral tradition of ancient Hebrew origin. Practice Sabbath, food laws, and circumcision.'},
+{l:'Paternal haplogroups',v:'Research has not been conducted at sufficient depth to document specific haplogroups. The surrounding Akan and Sefwi populations carry E1b1a predominantly.'},
+{l:'Hebrew practice',v:'Sabbath observance, dietary laws, circumcision, and oral tradition connecting the community to the ancient Hebrew people. Community maintains distinct identity within the broader Ghanaian population.'},
+{l:'Evidence level',v:'Tradition documented. Genetic research needed.'}
+]},
+/* REGIONS */
+{id:'ethiopia',type:'region',title:'Ethiopia and Kush',sub:'Heartland of ancient East African Hebrew civilization',
+keywords:['ethiopia','kush','cush','abyssinia','axum','tigray','amhara','horn','ge\'ez','orit'],
+fields:[
+{l:'Ancient Hebrew significance',v:'Ethiopia (Kush in scripture) is named from Bereshit onward as a real geographic and covenant-connected region. The Queen of Sheba (Makeda) came from this region to Shlomo. The Ark of the Covenant, according to Ethiopian oral and written tradition (the Kebra Nagast), was brought to Axum. Beta Israel — the ancient Ethiopian Hebrew community — maintained Torah practice here in Ge\'ez for over two millennia without Rabbinic influence.'},
+{l:'Dominant haplogroups',v:'Maternal: L3e1a, L3, L0, L4. Paternal: E1b1b predominantly, with J1 in priestly lineages. These are the genetic signatures of the ancient Hebrew population of East Africa.'},
+{l:'DSS and Orit connection',v:'Ethiopia is the sole country where the complete Book of Enoch (1 Enoch) survived — in Ge\'ez. It is also where the Book of Jubilees was preserved in full. Both texts were found fragmentarily at Qumran. The preservation of these texts in Ethiopia, in the language of Beta Israel\'s Orit practice, confirms Ethiopia as a center of the same ancient Hebrew tradition documented in the Dead Sea Scrolls.'},
+{l:'Key communities',v:'Beta Israel (ancient Ethiopian Hebrews), Bete Falasha villages of Amhara and Tigray regions.'}
+]},
+{id:'westAfrica',type:'region',title:'West Africa',sub:'Home of the largest African Hebrew communities by population',
+keywords:['west africa','nigeria','ghana','benin','togo','cameroon','ivory coast','akan','yoruba','igbo','fon'],
+fields:[
+{l:'Ancient Hebrew significance',v:'West Africa is home to the largest African populations with documented ancient Hebrew traditions — the Igbo of Nigeria (approximately 45 million), the Akan of Ghana, and communities across the region. The transatlantic captivity primarily drew from this region, meaning the majority of Africans in the Americas, Caribbean, and UK carry West African Hebrew ancestry.'},
+{l:'Dominant haplogroups',v:'Maternal: L2a, L2b, L1 predominant. Paternal: E1b1a (M2) dominant across Yoruba, Igbo, Akan, Ewe, Fon, and Bantu-origin populations.'},
+{l:'Devarim 28 connection',v:'The historical record of the transatlantic captivity — the specific conditions of the ships, the iron yokes, the separation of families, the selling at the docks — matches Devarim (Deuteronomy) 28:15-68 precisely. The ancient Hebrew text describes these conditions in detail. This is a covenant text and a historical record simultaneously.'},
+{l:'Key communities',v:'Igbo (Nigeria), House of Israel/Ghana, Akan Hebrew traditions (Ghana), Ewe Hebrew traditions (Togo/Ghana).'},
+{l:'Paternal lineage note',v:'A00 — the oldest known Y-chromosome haplogroup on earth — was found in the Mbo people of Cameroon, West Africa. The oldest human paternal lineages are in West Africa.'}
+]},
+{id:'southAfrica',type:'region',title:'Southern Africa',sub:'Home of the Lemba and the Khoisan root populations',
+keywords:['southern africa','zimbabwe','south africa','botswana','namibia','lemba','khoisan','san','bantu'],
+fields:[
+{l:'Ancient Hebrew significance',v:'Southern Africa contains two of the most genetically significant populations for understanding ancient Hebrew and ancient human lineage. The San/Khoisan carry L0 — the oldest maternal haplogroup on earth. The Lemba carry documented priestly Hebrew lineage (J1-P58 in the Buba clan) confirmed by published science.'},
+{l:'Dominant haplogroups',v:'San/Khoisan: L0 (oldest on earth). Lemba: J1-P58 (Buba clan) + E1b1b + other African markers. Broader Bantu populations of Zimbabwe and South Africa: E1b1a and E1b1b.'},
+{l:'Key communities',v:'Lemba (Zimbabwe/Limpopo, South Africa), San/Khoisan (Botswana, Namibia, South Africa).'}
+]},
+/* STUDIES */
+{id:'thomas2000',type:'study',title:'Thomas et al. 2000',sub:'Y Chromosomes Traveling South — Lemba/Cohen Modal Haplotype confirmation',
+keywords:['thomas','lemba','buba','cohen modal','j1','j1-p58','2000','priestly'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, Volume 66, 2000.'},
+{l:'What was tested',v:'Y-chromosome haplotypes of the Lemba people of Zimbabwe and South Africa compared to Bantu, Yemenite, Sephardic, Ashkenazi, and other populations.'},
+{l:'Key finding',v:'The Lemba Buba clan carries J1-P58 (the Cohen Modal Haplotype) at a frequency higher than most populations tested. This is the same Y-chromosome marker found in the Kohanim — the ancient Hebrew priestly class. This is published, peer-reviewed, replicated science confirming ancient Hebrew priestly lineage in a southern African community.'},
+{l:'Significance',v:'The single most important genetic study for confirming ancient Hebrew paternal lineage in an African community. It is not contested in the scientific literature.'}
+]},
+{id:'behar2008',type:'study',title:'Behar et al. 2008',sub:'Matrilineal ancestry study documenting Hebrew maternal haplogroups',
+keywords:['behar','2008','maternal','mitochondrial','beta israel','l3','mtdna','matrilineal'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, 2008.'},
+{l:'What was tested',v:'Mitochondrial DNA (maternal haplogroups) of multiple Hebrew communities including Beta Israel, Yemenite Hebrews, and others, compared to global populations.'},
+{l:'Key finding',v:'Beta Israel maternal lineages are predominantly East African (L3, L3e1a, L0) — confirming their deep East African Hebrew maternal ancestry. Yemenite Hebrews also show significant L haplogroup presence. European Ashkenazi populations show predominantly European maternal haplogroups (H, K, T, J) — European lineages, not African or Levantine.'},
+{l:'Significance',v:'Definitively documents the East African maternal genetic signature of Beta Israel. Also establishes, through the same methodology, that European Ashkenazi maternal lineages are primarily European in origin.'}
+]},
+{id:'hammer2000',type:'study',title:'Hammer et al. 2000',sub:'Y-chromosome study of Hebrew and Middle Eastern populations',
+keywords:['hammer','2000','y chromosome','paternal','e1b1b','hebrew','levant','middle eastern'],
+fields:[
+{l:'Publication',v:'Proceedings of the National Academy of Sciences, 2000.'},
+{l:'What was tested',v:'Y-chromosome biallelic haplotypes across Hebrew and Middle Eastern populations.'},
+{l:'Key finding',v:'Hebrew communities share a common pool of Y-chromosome haplotypes including E1b1b — consistent with an ancient origin in the Levant/East Africa zone. The study confirms the genetic relatedness of Hebrew communities across different geographies and their common ancient origin.'},
+{l:'Significance',v:'Early and important confirmation that ancient Hebrew paternal lineages (E1b1b, J1) are shared across geographically separated Hebrew communities.'}
+]},
+{id:'mendez2013',type:'study',title:'Mendez et al. 2013',sub:'A00 discovery — oldest Y-chromosome haplogroup found in West Africa',
+keywords:['mendez','2013','a00','cameroon','oldest','y chromosome','mbo','west africa'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, 2013.'},
+{l:'What was tested',v:'Y-chromosome of an African American man whose paternal lineage was traced to the Mbo people of Cameroon. The haplogroup did not fit anywhere in the existing tree.'},
+{l:'Key finding',v:'Discovery of A00 — a Y-chromosome haplogroup estimated at 200,000–340,000 years old. Older than the current scientific definition of anatomically modern humans. Found in the Mbo people of Cameroon, West Africa.'},
+{l:'Significance',v:'The oldest known human Y-chromosome haplogroup is in West Africa. This finding challenges the Western anthropological timeline and confirms that the deepest human paternal lineages are African. Western academia has not foregrounded this finding despite its publication in a leading journal.'}
+]},
+{id:'tishkoff2009',type:'study',title:'Tishkoff et al. 2009',sub:'The Genetic Structure and History of Africans and African Americans',
+keywords:['tishkoff','2009','african','genetic diversity','l0','san','khoisan','structure'],
+fields:[
+{l:'Publication',v:'Science, 2009.'},
+{l:'What was tested',v:'Genetic diversity across 113 African populations and African Americans. The most comprehensive African genetic study at its time of publication.'},
+{l:'Key finding',v:'The San/Khoisan of southern Africa are the most genetically diverse people on earth. L0 is confirmed as the oldest maternal haplogroup. African populations carry the greatest genetic diversity — consistent with Africa being the origin point of all humanity. E1b1a and E1b1b distributions across Africa are comprehensively documented.'},
+{l:'Significance',v:'Establishes the scientific foundation that Africa contains the oldest and most diverse human genetic lineages. The ancient Hebrews as an African people fit within this documented genetic landscape.'}
+]},
+/* TESTING GUIDE */
+{id:'africanancestry',type:'guide',title:'African Ancestry',sub:'Most specific test for African-descended people — matches to a specific ethnic group',
+keywords:['african ancestry','test','testing','haplogroup','specific','tribal','ethnic'],
+fields:[
+{l:'What it does',v:'African Ancestry tests your mitochondrial DNA (maternal) or Y-chromosome DNA (paternal) and matches it to a specific modern African ethnic group in a specific country. Not a percentage — a direct match to a people.'},
+{l:'Example result',v:'Your maternal line traces to the Mende people of Sierra Leone. Or: Your paternal line traces to the Yoruba people of Nigeria.'},
+{l:'Why it is the best test for this research',v:'Other tests give you percentages based on modern country regions. African Ancestry gives you a specific haplogroup and a specific ethnic community match. For researching ancient Hebrew identity through genetics, a specific haplogroup match is far more informative than a percentage.'},
+{l:'What it does not do',v:'It tests one line (maternal OR paternal). Your other ancestors are not captured. It is one thread of many in your full ancestry.'}
+]},
+{id:'percentdecoder',type:'guide',title:'What Ancestry Percentages Mean',sub:'How to read results from AncestryDNA, 23andMe, and similar tests',
+keywords:['percentage','percent','ancestry','23andme','ancestrydna','admixture','nigerian','cameroon','benin','togo','ghanaian'],
+fields:[
+{l:'What a percentage is',v:'A percentage like 37% Nigerian is an ADMIXTURE estimate — your total genome compared against a set of modern reference populations. It is not a haplogroup. It does not tell you which ancient lineage you carry. It tells you which modern populations your overall DNA most resembles.'},
+{l:'The limitation',v:'Testing companies build their reference panels from modern populations. The African reference panels used by most Western companies (AncestryDNA, 23andMe) are built from a small number of people compared to their European reference panels. This makes African percentage results less precise than European ones.'},
+{l:'How to go deeper',v:'A percentage gives you a region. A haplogroup gives you an ancient lineage. To find your haplogroup, use African Ancestry (for a specific ethnic match) or FamilyTreeDNA (for a detailed haplogroup assignment). Your haplogroup is what connects you to ancient populations.'},
+{l:'Common testing company African categories',v:'Nigerian / Yoruba → primarily E1b1a paternal, L2 maternal. Cameroon/Congo → E1b1a paternal, L1/L2 maternal. Benin/Togo → E1b1a paternal, L2 maternal. Ethiopian/East African → E1b1b paternal, L3 maternal. Ghanaian/Akan → E1b1a paternal, L2 maternal. Kenyan/East African → E1b1b paternal, L3 maternal.'},
+{l:'The key point',v:'If you carry West African percentages, your paternal line is most likely E1b1a — the West African branch of the same ancient E1b1 lineage shared with E1b1b, the East African/Levantine Hebrew haplogroup. You and Beta Israel share a common ancient paternal ancestor.'}
+]},
+{id:'ashkenazidna',type:'guide',title:'What Ashkenazi DNA Actually Shows',sub:'The genetic record on European Hebrew identity claims',
+keywords:['ashkenazi','european','false','european jewish','khazar','european haplogroup','h haplogroup','k haplogroup'],
+fields:[
+{l:'The genetic record',v:'Ashkenazi European populations — the dominant face of "Jewish" identity in Western media and institutions — show predominantly European maternal haplogroups when tested for mtDNA. The most common Ashkenazi maternal haplogroups are H, K, J, and T. These are European haplogroups, not African or Levantine.'},
+{l:'What the studies show',v:'Behar et al. 2006 documented that approximately 40% of Ashkenazi maternal lineages trace to just four women — and those four foundational maternal haplogroups (K1a1b1a, K1a9, K2a2a, N1b2) are found in Europeans, not in African or Levantine ancient Hebrew populations. The maternal evidence points to significant European ancestry in the Ashkenazi population, not to ancient East African or Levantine Hebrew origin.'},
+{l:'The Khazar hypothesis',v:'Arthur Koestler\'s 1976 work The Thirteenth Tribe documented the historical claim that the majority of Ashkenazi European populations descend from Khazar converts to Rabbinic Judaism in the 8th–10th century CE — not from ancient Israelite biological descent. This remains debated in academia but the genetic evidence (predominantly European maternal haplogroups) is consistent with the hypothesis of significant European and Caucasus ancestry rather than direct ancient Hebrew descent.'},
+{l:'What this means',v:'The claim of European Ashkenazi identity as ancient Hebrew identity is not supported by the genetic evidence. The ancient Hebrew people were an African people. Their genetic signature is E1b1b (paternal) and L3/L3e (maternal) — East African lineages. European haplogroups (H, K, T, J maternal) are not the signature of the ancient Hebrew people.'}
+]}
+];
+var dnaCurrentFilter='all';
+function setDNAFilter(f){
+  dnaCurrentFilter=f;
+  document.querySelectorAll('.dna-pill').forEach(function(p){p.classList.toggle('active',p.dataset.df===f);});
+  filterDNA();
+}
+function filterDNA(){
+  var raw=(document.getElementById('dna-input').value||'').trim();
+  var q=raw.toLowerCase();
+  var grid=document.getElementById('dna-grid');
+  var countEl=document.getElementById('dna-count');
+  var chainRow=document.getElementById('dna-chain-row');
+  chainRow.style.display='none';
+  chainRow.innerHTML='';
+  /* percentage query detection */
+  var pctMatch=q.match(/(\d+\.?\d*)\s*%\s*(.+)/);
+  var entries;
+  if(pctMatch){
+    var region=pctMatch[2].toLowerCase().trim();
+    entries=DNA_DATA.filter(function(e){
+      return e.type==='guide'&&e.id==='percentdecoder'||e.keywords.some(function(k){return k.indexOf(region)>=0;});
+    });
+    if(!entries.length) entries=DNA_DATA.filter(function(e){return e.id==='percentdecoder';});
+  } else {
+    entries=DNA_DATA.filter(function(e){
+      var typeOk=dnaCurrentFilter==='all'||e.type===dnaCurrentFilter;
+      if(!typeOk) return false;
+      if(!q) return true;
+      return e.title.toLowerCase().indexOf(q)>=0||e.sub.toLowerCase().indexOf(q)>=0||e.keywords.some(function(k){return k.indexOf(q)>=0;});
+    });
+    /* show chain for first haplogroup result */
+    if(entries.length&&entries[0].chain&&entries[0].chain.length>1){
+      var ch=entries[0].chain;
+      var html='<span class="dna-chain-lbl">Lineage</span>';
+      ch.forEach(function(step,i){
+        var isCurr=i===ch.length-1;
+        html+='<span class="dna-chain-step'+(isCurr?' dna-chain-curr':'')+'">'+step+'</span>';
+        if(i<ch.length-1) html+='<span class="dna-chain-arr">&#8594;</span>';
+      });
+      chainRow.innerHTML=html;
+      chainRow.style.display='flex';
+    }
+  }
+  countEl.textContent=entries.length+' result'+(entries.length===1?'':'s');
+  if(!entries.length){
+    grid.innerHTML='<div class="dna-empty">No results for "'+raw+'"</div>';
+    return;
+  }
+  grid.innerHTML=entries.map(function(e){
+    var badgeClass='dna-b-'+e.type;
+    var badgeLabel={maternal:'Maternal mtDNA',paternal:'Paternal Y-DNA',community:'Community',region:'Region',study:'Study',guide:'Guide',decoder:'Decoder'}[e.type]||e.type;
+    var fieldsHtml=e.fields.map(function(f){
+      return '<div class="dna-field"><div class="dna-lbl">'+f.l+'</div><div class="dna-val">'+f.v+'</div></div>';
+    }).join('<hr class="dna-sep">');
+    return '<div class="dna-card">'
+      +'<div class="dna-card-top">'
+        +'<div><div class="dna-card-title">'+e.title+'</div><div class="dna-card-sub">'+e.sub+'</div></div>'
+        +'<span class="dna-badge '+badgeClass+'">'+badgeLabel+'</span>'
+      +'</div>'
+      +fieldsHtml
+    +'</div>';
+  }).join('');
+}
+window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
 (function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='search_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();
 </script>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
