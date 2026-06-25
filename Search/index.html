@@ -633,6 +633,41 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .hr-meaning{font-size:13px;color:var(--tx2);line-height:1.6;font-family:var(--font)}
 .hr-cat-tag{font-size:11px;color:var(--tx3);font-family:var(--font);margin-top:6px}
 .hr-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0;font-family:var(--font)}
+/* HEBREW DNA PANEL */
+.dna-wrap{padding:4px 0 24px}
+.dna-hdr{font-size:22px;font-weight:800;color:var(--tx);margin-bottom:4px;font-family:var(--font)}
+.dna-sub{font-size:13px;color:var(--tx2);margin-bottom:14px;line-height:1.5;font-family:var(--font)}
+.dna-search-wrap{position:relative;margin-bottom:14px}
+.dna-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:16px;pointer-events:none}
+.dna-search{width:100%;box-sizing:border-box;background:var(--s2);border:1px solid #2a2a2a;border-radius:12px;padding:11px 14px 11px 38px;color:var(--tx);font-size:15px;font-family:var(--font);outline:none;-webkit-appearance:none}
+.dna-search:focus{border-color:#3CCFBB}
+.dna-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.dna-pill{background:var(--s2);border:1px solid #2a2a2a;border-radius:20px;padding:6px 14px;font-size:12px;color:var(--tx2);cursor:pointer;white-space:nowrap;font-family:var(--font)}
+.dna-pill.active{background:#3CCFBB;color:#000;border-color:#3CCFBB;font-weight:700}
+.dna-count{font-size:12px;color:var(--tx3);margin-bottom:12px;font-family:var(--font)}
+.dna-chain-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.dna-chain-lbl{font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-right:6px;font-family:var(--font)}
+.dna-chain-step{font-size:13px;font-weight:700;color:var(--tx3);font-family:var(--font)}
+.dna-chain-curr{color:#3CCFBB;background:rgba(60,207,187,.13);padding:2px 8px;border-radius:6px}
+.dna-chain-arr{color:var(--tx3);font-size:11px;margin:0 2px}
+.dna-grid{display:grid;gap:14px}
+.dna-card{background:var(--s2);border:1px solid #222;border-radius:14px;padding:16px;font-family:var(--font)}
+.dna-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}
+.dna-card-title{font-size:18px;font-weight:800;color:var(--tx);line-height:1.2}
+.dna-card-sub{font-size:12px;color:var(--tx3);margin-top:3px;line-height:1.4}
+.dna-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.dna-b-maternal{background:rgba(60,207,187,.15);color:#3CCFBB}
+.dna-b-paternal{background:rgba(251,155,55,.15);color:#fb9b37}
+.dna-b-community{background:rgba(138,99,255,.15);color:#8a63ff}
+.dna-b-region{background:rgba(95,200,255,.15);color:#5fc8ff}
+.dna-b-study{background:rgba(255,130,100,.15);color:#ff8264}
+.dna-b-guide{background:rgba(200,151,31,.15);color:var(--gold)}
+.dna-b-decoder{background:rgba(60,207,187,.15);color:#3CCFBB}
+.dna-field{margin-bottom:10px}
+.dna-lbl{font-size:11px;font-weight:700;color:#3CCFBB;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.dna-val{font-size:13px;color:var(--tx2);line-height:1.6}
+.dna-sep{border:none;border-top:1px solid #1e1e1e;margin:12px 0}
+.dna-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0}
 </style>
 </head>
 <body>
@@ -691,6 +726,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="places" onclick="setMode('places')"><i class="ri-map-pin-line"></i> Ancient Places</div>
       <div class="mpill" data-mode="beliefs" onclick="setMode('beliefs')"><i class="ri-scales-3-line"></i> Q&amp;A (Beliefs)</div>
       <div class="mpill" data-mode="hebrew" onclick="setMode('hebrew')"><i class="ri-translate-2"></i> Hebrew Roots</div>
+      <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
     </div>
   </div>
 
@@ -1515,6 +1551,34 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
     </div>
 
+    <!-- HEBREW DNA RESEARCH -->
+    <div id="dna-view" style="display:none">
+      <div class="dna-wrap">
+        <div class="dna-hdr">Hebrew DNA Research</div>
+        <div class="dna-sub">Search a haplogroup code (L3e3b, E1b1b, J1-P58), an ancestry percentage (37% Nigerian), a community (Beta Israel, Lemba, Igbo), or a region (Ethiopia, West Africa).</div>
+        <div class="dna-search-wrap">
+          <i class="ri-search-line dna-search-icon"></i>
+          <input class="dna-search" id="dna-input" type="search" placeholder="Haplogroup, percentage, community, or region..." oninput="filterDNA()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        </div>
+        <div class="dna-filter-row" id="dna-filter-row">
+          <div class="dna-pill active" data-df="all" onclick="setDNAFilter('all')">All</div>
+          <div class="dna-pill" data-df="maternal" onclick="setDNAFilter('maternal')">Maternal mtDNA</div>
+          <div class="dna-pill" data-df="paternal" onclick="setDNAFilter('paternal')">Paternal Y-DNA</div>
+          <div class="dna-pill" data-df="community" onclick="setDNAFilter('community')">Communities</div>
+          <div class="dna-pill" data-df="region" onclick="setDNAFilter('region')">Regions</div>
+          <div class="dna-pill" data-df="study" onclick="setDNAFilter('study')">Studies</div>
+          <div class="dna-pill" data-df="tribe" onclick="setDNAFilter('tribe')">Tribes</div>
+          <div class="dna-pill" data-df="captivity" onclick="setDNAFilter('captivity')">Captivity</div>
+          <div class="dna-pill" data-df="figure" onclick="setDNAFilter('figure')">Figures</div>
+          <div class="dna-pill" data-df="truth" onclick="setDNAFilter('truth')">Hidden Truths</div>
+          <div class="dna-pill" data-df="guide" onclick="setDNAFilter('guide')">Testing Guide</div>
+        </div>
+        <div class="dna-count" id="dna-count"></div>
+        <div class="dna-chain-row" id="dna-chain-row" style="display:none"></div>
+        <div class="dna-grid" id="dna-grid"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -1754,7 +1818,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -5210,7 +5274,757 @@ function filterHebrew(){
 }
 window.addEventListener('load',function(){
   if(document.getElementById('hr-grid')) filterHebrew();
+  if(document.getElementById('dna-grid')) filterDNA();
 });
+/* ── HEBREW DNA DATA ── */
+var DNA_DATA=[
+/* MATERNAL mtDNA */
+{id:'l0',type:'maternal',title:'L0',sub:'Root maternal haplogroup — oldest on earth',chain:['L','L0'],
+keywords:['l0','khoisan','san','bushmen','southern africa','oldest','root','hadza','sandawe','botswana','namibia'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). The deepest branch of the entire human maternal tree. Every maternal lineage on earth descends from L0.'},
+{l:'Age',v:'150,000–200,000 years. Arose in southern Africa during the Middle Stone Age.'},
+{l:'Distribution',v:'San and Khoisan people of Botswana, Namibia, and South Africa. Also Hadza and Sandawe of Tanzania. The most ancient living populations on earth carry L0.'},
+{l:'Ancient Hebrew connection',v:'The ancient Hebrews were an African people whose deepest roots trace through the same African maternal tree. L0 is that tree\'s foundation. The San/Khoisan are the most genetically ancient living human population — their lineage preceded and gave rise to all other human maternal lines including those carried by the ancient Hebrew people.'},
+{l:'Supporting record',v:'Behar et al. 2008 — The Dawn of Human Matrilineal Diversity. Tishkoff et al. 2009 — The Genetic Structure and History of Africans and African Americans.'}
+]},
+{id:'l1',type:'maternal',title:'L1',sub:'Central and West African maternal lineage',chain:['L','L1'],
+keywords:['l1','central africa','west africa','congo','bantu','cameroon'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Second oldest branch of the human maternal tree after L0.'},
+{l:'Age',v:'~130,000–150,000 years. Arose in Central Africa.'},
+{l:'Distribution',v:'Central Africa (Congo Basin), parts of West Africa and East Africa. Present in several ancient populations across sub-Saharan Africa.'},
+{l:'Ancient Hebrew connection',v:'L1 sub-clades appear in various African populations that carry ancient Hebrew traditions. As a deep African maternal lineage it is part of the same maternal tree from which ancient Hebrew populations descended.'},
+{l:'Supporting record',v:'Tishkoff et al. 2009 — comprehensive African genetic diversity study documenting L1 deep African distribution.'}
+]},
+{id:'l2',type:'maternal',title:'L2',sub:'West and Central African maternal lineage — Igbo connection',chain:['L','L2'],
+keywords:['l2','l2a','l2b','west africa','igbo','yoruba','akan','ghana','nigeria','bantu'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Major West and Central African maternal haplogroup.'},
+{l:'Age',v:'~80,000–100,000 years. Arose in Africa and expanded with Bantu and West African populations.'},
+{l:'Distribution',v:'Predominantly West Africa (Yoruba, Igbo, Akan, Ewe) and Central Africa. One of the most common maternal haplogroups across sub-Saharan Africa. L2a is the most frequent sub-clade.'},
+{l:'Ancient Hebrew connection',v:'L2 is the primary maternal haplogroup of the Igbo people of Nigeria, a community with extensively documented ancient Hebrew traditions. The Igbo carry L2a and L2b at high frequency. This is the maternal genetic signature of one of the largest African Hebrew populations.'},
+{l:'Supporting record',v:'Tishkoff et al. 2009. Behar et al. 2008 documents L2 presence in Hebrew communities across Africa.'}
+]},
+{id:'l3',type:'maternal',title:'L3',sub:'The bridge — East Africa, Beta Israel, ancestor of all non-African lineages',chain:['L','L3'],
+keywords:['l3','beta israel','ethiopia','eritrea','somalia','east africa','horn of africa','bridge','yemenite'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). The haplogroup that connects East African ancient Hebrew populations to the Levant. Also the ancestor of ALL non-African maternal haplogroups (M and N).'},
+{l:'Age',v:'~70,000 years. Arose in East Africa.'},
+{l:'Distribution',v:'East Africa (Ethiopia, Eritrea, Somalia, Kenya), Horn of Africa, and ancient Levantine populations. Found at high frequency in Beta Israel (ancient Ethiopian Hebrews) and Yemenite Hebrews.'},
+{l:'Ancient Hebrew connection',v:'L3 is the primary maternal haplogroup of Beta Israel — the ancient Ethiopian Hebrew community. It is the genetic signature carried by the ancient Hebrews who lived in East Africa and the Levant. L3 also gave rise to all non-African lineages, which means the entire world\'s maternal ancestry traces back through the same African root that the ancient Hebrews carried.'},
+{l:'Supporting record',v:'Behar et al. 2008 — confirms L3 dominance in Beta Israel maternal lineages. Hammer et al. 2000 — documents the East African origin of ancient Hebrew maternal lineages.'}
+]},
+{id:'l3e1a',type:'maternal',title:'L3e1a',sub:'Beta Israel specific — ancient Ethiopian Hebrew maternal marker',chain:['L','L3','L3e','L3e1','L3e1a'],
+keywords:['l3e1a','l3e','beta israel','ethiopia','eritrea','horn of africa','ethiopian hebrew'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Sub-clade of L3, specific to the Horn of Africa. The most frequently documented maternal haplogroup in Beta Israel.'},
+{l:'Age',v:'~30,000–40,000 years. Arose in the Horn of Africa region.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Djibouti, Somalia. Highly concentrated in the ancient populations of the Ethiopian highlands — the homeland of Beta Israel.'},
+{l:'Ancient Hebrew connection',v:'L3e1a is the maternal haplogroup most directly associated with Beta Israel — the ancient Ethiopian Hebrews. This is not a peripheral connection. Beta Israel communities in the Amhara and Tigray regions of Ethiopia carry L3e1a as their primary maternal signature. Combined with their Orit practice, Enoch canon, DSS solar calendar, and pre-Rabbinic Torah observance, L3e1a is the maternal genetic mark of the ancient Hebrew people in East Africa.'},
+{l:'Supporting record',v:'Behar et al. 2008 — matrilineal ancestry study specifically documenting Beta Israel haplogroup distribution.'}
+]},
+{id:'l3e3b',type:'maternal',title:'L3e3b',sub:'Horn of Africa maternal lineage — ancient Cushitic Hebrew zone',chain:['L','L3','L3e','L3e3','L3e3b'],
+keywords:['l3e3b','l3e3','horn of africa','ethiopia','eritrea','somalia','djibouti','cushitic'],
+fields:[
+{l:'Classification',v:'Mitochondrial DNA (maternal). Sub-clade of L3e3, concentrated in the Horn of Africa.'},
+{l:'Age',v:'~10,000–15,000 years. Arose in the Horn of Africa during or after the late Stone Age population expansions.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Somalia, Djibouti. Cushitic-speaking populations of the Horn of Africa and East African highlands.'},
+{l:'Ancient Hebrew connection',v:'L3e3b falls within the maternal lineage signature of the ancient East African Hebrew population zone — the same region where Beta Israel, ancient Yemenite Hebrews, and Cushitic Semitic communities overlap genetically. A direct maternal line in this haplogroup traces to the ancient Hebrew homeland in East Africa.'},
+{l:'What this means',v:'Your direct maternal line — mother to mother to mother going back thousands of years — traces to the ancient East African Hebrew population zone. This is a maternal line, meaning it passes from a mother to all her children but only daughters carry it forward.'},
+{l:'Supporting record',v:'Behar et al. 2008. Multiple studies documenting L3e distribution across the Horn of Africa.'}
+]},
+/* PATERNAL Y-DNA */
+{id:'a00',type:'paternal',title:'A00',sub:'Oldest known Y-chromosome haplogroup on earth — West Africa',chain:['A00'],
+keywords:['a00','cameroon','mbo','west africa','oldest','ancient','300000'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The oldest known branch of the human paternal tree. All other Y-chromosome haplogroups are younger than A00.'},
+{l:'Age',v:'Estimated 200,000–340,000 years. The oldest known human Y-chromosome haplogroup on earth. Found in the Mbo people of Cameroon, West Africa.'},
+{l:'Distribution',v:'Mbo people of Cameroon and West Africa. An extremely rare but deeply significant haplogroup.'},
+{l:'Ancient Hebrew connection',v:'A00 demonstrates that the oldest human paternal lineages are rooted in Africa. The human paternal tree begins in Africa. African people carry the world\'s oldest lineages, both maternal and paternal. This is the record as it stands.'},
+{l:'What the record shows',v:'The paternal tree of all humanity is rooted in West Africa. The Mbo people of Cameroon carry a lineage that predates all other human paternal haplogroups. This is documented in Mendez et al. 2013 and has not been overturned.'},
+{l:'Supporting record',v:'Mendez et al. 2013 — An African American Paternal Lineage Adds an Extremely Ancient Root to the Human Y Chromosome Phylogenetic Tree. Published in the American Journal of Human Genetics.'}
+]},
+{id:'e1b1b',type:'paternal',title:'E1b1b (M215)',sub:'The ancient Hebrew paternal haplogroup — East Africa to Levant',chain:['A','BT','CT','DE','E','E1','E1b','E1b1','E1b1b'],
+keywords:['e1b1b','m215','m35','e-m215','e-m35','east africa','ethiopia','eritrea','somalia','levant','ancient hebrew','beta israel','yemenite','priestly'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The primary paternal haplogroup of the ancient Hebrew people. Arose in East Africa and expanded into the Levant with the ancient Hebrew population movement.'},
+{l:'Age',v:'~25,000–30,000 years. Arose in the Horn of Africa / East Africa region.'},
+{l:'Distribution',v:'Ethiopia, Eritrea, Somalia, Egypt, East Africa, and the Levant. Present at high frequency in Beta Israel (ancient Ethiopian Hebrews), Yemenite Hebrews, and ancient skeletal remains from Levantine archaeological sites.'},
+{l:'Ancient Hebrew connection',v:'E1b1b is the paternal haplogroup that traces the movement of the ancient Hebrew people from their East African origin into the Levant and back. It is found in ancient skeletal remains from the Levant at biblical-era archaeological sites AND in East African Hebrew communities today. The haplogroup did not arrive in Africa from the Middle East — it arose in Africa and moved into the Levant with the ancient Hebrew people.'},
+{l:'Supporting record',v:'Hammer et al. 2000 — Y-chromosome study documenting E1b1b as the shared paternal haplogroup across ancient Hebrew communities. Cruciani et al. 2004 — Phylogeographic analysis documenting East African origin of E1b1b.'}
+]},
+{id:'e1b1a',type:'paternal',title:'E1b1a (M2)',sub:'West African paternal lineage — shares root E1b1 with E1b1b',chain:['A','BT','CT','DE','E','E1','E1b','E1b1','E1b1a'],
+keywords:['e1b1a','m2','e-m2','west africa','nigeria','igbo','yoruba','akan','ghana','bantu','e1b1'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The dominant paternal haplogroup of West and Central Africa. Shares direct common ancestor E1b1 (M180) with E1b1b.'},
+{l:'Age',v:'~10,000–12,000 years. Expanded rapidly with Bantu and West African population movements.'},
+{l:'Distribution',v:'West Africa (Yoruba, Igbo, Akan, Fon, Ewe), Central Africa, and across the African diaspora through the transatlantic captivity. The most common paternal haplogroup among people of West African descent.'},
+{l:'Ancient Hebrew connection',v:'E1b1a and E1b1b are two branches of the same ancient African lineage — E1b1 (M180). This makes West African Hebrew communities (Igbo, Yoruba, Akan, and others with documented Hebrew traditions) genetically connected at a deep level to East African Hebrew communities (Beta Israel) and to ancient Levantine Hebrew populations. The separation between E1b1a and E1b1b reflects ancient population movement within Africa, not a separation from Hebrew identity.'},
+{l:'African diaspora',v:'The majority of Africans taken in the transatlantic captivity came from West and Central Africa, where E1b1a is dominant. African-descended people in the Americas, Caribbean, and UK primarily carry E1b1a on their paternal side — the paternal signature of West African Hebrew populations.'},
+{l:'Supporting record',v:'Tishkoff et al. 2009 — comprehensive study documenting E1b1a West African distribution and its relationship to E1b1b.'}
+]},
+{id:'j1p58',type:'paternal',title:'J1-P58',sub:'Priestly lineage marker — documented in Lemba Buba clan',chain:['J','J1','J1-P58'],
+keywords:['j1','j1-p58','cohen','kohen','priestly','lemba','buba','priest','levite','yemenite'],
+fields:[
+{l:'Classification',v:'Y-chromosome (paternal). The Cohen Modal Haplotype. The paternal marker associated with the priestly Kohanim lineage.'},
+{l:'Age',v:'~10,000 years. Arose in the ancient Levant/Near East and expanded with ancient Semitic populations.'},
+{l:'Distribution',v:'Levant (ancient Israelite zone), Yemen, Horn of Africa, and documented in the Lemba Buba clan of Zimbabwe and South Africa.'},
+{l:'Ancient Hebrew connection',v:'J1-P58 is the paternal marker found in the Kohanim — the Aaronite priestly class of the ancient Hebrew people. The Lemba Buba clan of southern Africa carries J1-P58. The Buba clan functions as the priestly class within the Lemba community, consistent with Kohanim tradition. This priestly lineage is alive in southern Africa.'},
+{l:'Supporting record',v:'Thomas et al. 2000 — Y Chromosomes Traveling South: The Cohen Modal Haplotype and the Origins of the Lemba. Published in the American Journal of Human Genetics.'}
+]},
+/* COMMUNITIES */
+{id:'betaisrael',type:'community',title:'Beta Israel',sub:'Ancient Ethiopian Hebrews — convergent genetic, textual, and calendar record',
+keywords:['beta israel','ethiopia','ethiopian','amhara','tigray','falasha','orit','enoch','jubilees','364'],
+fields:[
+{l:'Who they are',v:'The ancient Hebrew community of the Ethiopian highlands, concentrated in the Amhara and Tigray regions. Known in Ethiopia as Beta Israel (House of Israel). The name Falasha (stranger) was imposed externally and is rejected by the community.'},
+{l:'Maternal haplogroups',v:'Predominantly L3 (specifically L3e1a) and L0. East African maternal signatures — the same maternal lineage as the ancient Hebrew population of the Horn of Africa.'},
+{l:'Paternal haplogroups',v:'Predominantly E1b1b — the ancient Hebrew paternal haplogroup that connects East Africa to the Levant. Some J1-P58 present in priestly lineages.'},
+{l:'Hebrew practice',v:'Torah practice in Ge\'ez (Orit) without the Talmud and without Rabbinic additions. No Talmud. No Rabbinic oral law. Canon includes 1 Enoch and Jubilees — the same texts most extensively copied at Qumran. Sunrise-to-sunrise Sabbath — identical to the DSS calendar. 364-day solar calendar. Priestly/Zadokite community structure. Ritual purity laws applied to community life, consistent with Qumran Community Rule.'},
+{l:'The record',v:'Beta Israel carries convergent evidence across genetics, text, calendar, and practice. The maternal haplogroups are East African Hebrew signatures. The paternal haplogroups connect East Africa to the Levant. The canon matches Qumran. The calendar matches the DSS. The practice predates Rabbinic addition. Each stream of evidence is independent. All point to the same community.'},
+{l:'Supporting record',v:'Behar et al. 2008 — The Matrilineal Ancestry study documenting Beta Israel haplogroup distribution. Hammer et al. 2000 — paternal lineage documentation.'}
+]},
+{id:'lemba',type:'community',title:'Lemba',sub:'Southern African Hebrews — Buba clan carries the ancient priestly paternal marker',
+keywords:['lemba','zimbabwe','south africa','limpopo','buba','venda','nguni','sena','priestly','j1','cohen'],
+fields:[
+{l:'Who they are',v:'The Lemba people of Zimbabwe and the Limpopo province of South Africa. Approximately 80,000 people. They call themselves the Lemba — a people with ancient Hebrew origins who migrated southward through East Africa over centuries.'},
+{l:'Paternal haplogroups',v:'Buba clan: J1-P58 (Cohen Modal Haplotype) documented by Thomas et al. 2000. Broader Lemba: E1b1b and other African haplogroups consistent with ancient Hebrew populations who migrated through East Africa.'},
+{l:'Hebrew practice',v:'Do not eat pork. Practice male circumcision. Maintain food separation laws. Observe a Saturday rest day. Oral history of origin from a place called Sena — identified as Yemen or a city in East Africa on the ancient Hebrew migration route. The Buba clan functions as the priestly class, consistent with Kohanim tradition.'},
+{l:'The priestly lineage',v:'The Lemba Buba clan carries J1-P58 — the ancient Hebrew priestly paternal marker. This was documented by Thomas et al. 2000. The Buba clan carries the Kohanim lineage. The Lemba oral tradition identifying themselves as a priestly Hebrew people is consistent with what the genetic record shows.'},
+{l:'Evidence level',v:'Ancient Hebrew priestly lineage documented in the Buba clan. Oral tradition and practice of the broader Lemba community align with the genetic record.'},
+{l:'Supporting record',v:'Thomas et al. 2000 — Y Chromosomes Traveling South: The Cohen Modal Haplotype and the Origins of the Lemba.'}
+]},
+{id:'igbo',type:'community',title:'Igbo',sub:'West African Hebrews — largest African community with documented Hebrew traditions',
+keywords:['igbo','nigeria','southeastern nigeria','biafra','ibo','e1b1a','west african hebrew'],
+fields:[
+{l:'Who they are',v:'The Igbo people of southeastern Nigeria — approximately 45 million people, one of the largest ethnic groups in Africa. They are the largest single African population with extensively documented ancient Hebrew traditions.'},
+{l:'Paternal haplogroups',v:'Predominantly E1b1a — the West African branch of the same E1b1 lineage shared with E1b1b (East African/Levantine Hebrew haplogroup). E1b1a and E1b1b share common ancestor E1b1 — the same ancient African lineage that connects West and East African Hebrew communities.'},
+{l:'Hebrew practice',v:'Male circumcision on the 8th day — the exact Torah-commanded timing (Bereshit 17:12). Sabbath observance. Food laws including avoidance of certain animals. Priestly/Levitical clan structure (Eze priests). Oral tradition of origin from ancient Israel. Hebrew-parallel naming practices. Harvest festivals aligned with Torah calendar. The week traditionally began on a day called Eke — scholars have noted structural parallels with the ancient Hebrew week.'},
+{l:'The record',v:'The Igbo tradition of ancient Hebrew origin is documented and specific. The oral tradition is old and detailed. The practice parallels are extensive. The paternal lineage (E1b1a) connects to the same ancient African root (E1b1) as the East African Hebrew haplogroup (E1b1b). The evidence is consistent across tradition, practice, and genetics.'},
+{l:'Evidence level',v:'Cultural, traditional, and oral record: strong. Genetic record: present and consistent with ancient Hebrew West African lineage.'},
+{l:'Supporting record',v:'Tishkoff et al. 2009 for Igbo paternal haplogroup distribution. Igbo tradition documentation: Achebe, Afigbo, and Isichei scholarly works.'}
+]},
+{id:'abayudaya',type:'community',title:'Abayudaya',sub:'Hebrew community of Uganda',
+keywords:['abayudaya','uganda','east africa','kakungulu','semei'],
+fields:[
+{l:'Who they are',v:'Hebrew community of the Mbale region of eastern Uganda. Founded in 1919 by Semei Kakungulu, a military leader who arrived at Torah observance independently through reading scripture without Rabbinic guidance. Approximately 2,000 people today.'},
+{l:'Paternal haplogroups',v:'Research limited. East African paternal lineages consistent with the region.'},
+{l:'Hebrew practice',v:'Torah observance — Sabbath, food laws, circumcision, Hebrew prayer. Later connected with Rabbinic institutions but their origin was independent Torah practice arrived at through scripture alone.'},
+{l:'Evidence level',v:'Documented Hebrew practice originating independently from scripture. Genetic research insufficient for full assessment.'}
+]},
+{id:'houseofisrael',type:'community',title:'House of Israel — Ghana',sub:'Hebrew community of the Sefwi region',
+keywords:['house of israel','ghana','sefwi','west africa','akan'],
+fields:[
+{l:'Who they are',v:'A Hebrew community in the Sefwi Wiawso region of western Ghana, carrying an oral tradition of ancient Hebrew origin. Practice Sabbath, food laws, and circumcision.'},
+{l:'Paternal haplogroups',v:'Research has not been conducted at sufficient depth to document specific haplogroups. The surrounding Akan and Sefwi populations carry E1b1a predominantly.'},
+{l:'Hebrew practice',v:'Sabbath observance, dietary laws, circumcision, and oral tradition connecting the community to the ancient Hebrew people. Community maintains distinct identity within the broader Ghanaian population.'},
+{l:'Evidence level',v:'Tradition documented. Genetic research needed.'}
+]},
+/* REGIONS */
+{id:'ethiopia',type:'region',title:'Ethiopia and Kush',sub:'Heartland of ancient East African Hebrew civilization',
+keywords:['ethiopia','kush','cush','abyssinia','axum','tigray','amhara','horn','ge\'ez','orit'],
+fields:[
+{l:'Ancient Hebrew significance',v:'Ethiopia (Kush in scripture) is named from Bereshit onward as a real geographic and covenant-connected region. The Queen of Sheba (Makeda) came from this region to Shlomo. The Ark of the Covenant, according to Ethiopian oral and written tradition (the Kebra Nagast), was brought to Axum. Beta Israel — the ancient Ethiopian Hebrew community — maintained Torah practice here in Ge\'ez for over two millennia without Rabbinic influence.'},
+{l:'Dominant haplogroups',v:'Maternal: L3e1a, L3, L0, L4. Paternal: E1b1b predominantly, with J1 in priestly lineages. These are the genetic signatures of the ancient Hebrew population of East Africa.'},
+{l:'DSS and Orit connection',v:'Ethiopia is the sole country where the complete Book of Enoch (1 Enoch) survived — in Ge\'ez. It is also where the Book of Jubilees was preserved in full. Both texts were found fragmentarily at Qumran. The preservation of these texts in Ethiopia, in the language of Beta Israel\'s Orit practice, confirms Ethiopia as a center of the same ancient Hebrew tradition documented in the Dead Sea Scrolls.'},
+{l:'Key communities',v:'Beta Israel (ancient Ethiopian Hebrews), Bete Falasha villages of Amhara and Tigray regions.'}
+]},
+{id:'westAfrica',type:'region',title:'West Africa',sub:'Home of the largest African Hebrew communities by population',
+keywords:['west africa','nigeria','ghana','benin','togo','cameroon','ivory coast','akan','yoruba','igbo','fon'],
+fields:[
+{l:'Ancient Hebrew significance',v:'West Africa is home to the largest African populations with documented ancient Hebrew traditions — the Igbo of Nigeria (approximately 45 million), the Akan of Ghana, and communities across the region. The transatlantic captivity primarily drew from this region, meaning the majority of Africans in the Americas, Caribbean, and UK carry West African Hebrew ancestry.'},
+{l:'Dominant haplogroups',v:'Maternal: L2a, L2b, L1 predominant. Paternal: E1b1a (M2) dominant across Yoruba, Igbo, Akan, Ewe, Fon, and Bantu-origin populations.'},
+{l:'Devarim 28 connection',v:'The historical record of the transatlantic captivity — the specific conditions of the ships, the iron yokes, the separation of families, the selling at the docks — matches Devarim (Deuteronomy) 28:15-68 precisely. The ancient Hebrew text describes these conditions in detail. This is a covenant text and a historical record simultaneously.'},
+{l:'Key communities',v:'Igbo (Nigeria), House of Israel/Ghana, Akan Hebrew traditions (Ghana), Ewe Hebrew traditions (Togo/Ghana).'},
+{l:'Paternal lineage note',v:'A00 — the oldest known Y-chromosome haplogroup on earth — was found in the Mbo people of Cameroon, West Africa. The oldest human paternal lineages are in West Africa.'}
+]},
+{id:'southAfrica',type:'region',title:'Southern Africa',sub:'Home of the Lemba and the Khoisan root populations',
+keywords:['southern africa','zimbabwe','south africa','botswana','namibia','lemba','khoisan','san','bantu'],
+fields:[
+{l:'Ancient Hebrew significance',v:'Southern Africa contains two of the most genetically significant populations for understanding ancient Hebrew and ancient human lineage. The San/Khoisan carry L0 — the oldest maternal haplogroup on earth. The Lemba carry documented priestly Hebrew lineage (J1-P58 in the Buba clan).'},
+{l:'Dominant haplogroups',v:'San/Khoisan: L0 (oldest on earth). Lemba: J1-P58 (Buba clan) + E1b1b + other African markers. Broader Bantu populations of Zimbabwe and South Africa: E1b1a and E1b1b.'},
+{l:'Key communities',v:'Lemba (Zimbabwe/Limpopo, South Africa), San/Khoisan (Botswana, Namibia, South Africa).'}
+]},
+/* STUDIES */
+{id:'thomas2000',type:'study',title:'Thomas et al. 2000',sub:'Y Chromosomes Traveling South — Lemba/Cohen Modal Haplotype documentation',
+keywords:['thomas','lemba','buba','cohen modal','j1','j1-p58','2000','priestly'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, Volume 66, 2000.'},
+{l:'What was tested',v:'Y-chromosome haplotypes of the Lemba people of Zimbabwe and South Africa across multiple African and Middle Eastern populations.'},
+{l:'Key finding',v:'The Lemba Buba clan carries J1-P58 (the Cohen Modal Haplotype) at high frequency — among the highest of any population tested. The Buba clan\'s oral tradition identifying themselves as the priestly class of the Lemba is consistent with what the genetic record shows.'},
+{l:'Significance',v:'Documents ancient Hebrew priestly lineage (J1-P58) in the Lemba Buba clan of southern Africa. The oral tradition and the genetic record align.'}
+]},
+{id:'behar2008',type:'study',title:'Behar et al. 2008',sub:'Matrilineal ancestry study documenting Hebrew maternal haplogroups',
+keywords:['behar','2008','maternal','mitochondrial','beta israel','l3','mtdna','matrilineal'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, 2008.'},
+{l:'What was tested',v:'Mitochondrial DNA (maternal haplogroups) of multiple Hebrew communities including Beta Israel, Yemenite Hebrews, and others.'},
+{l:'Key finding',v:'Beta Israel maternal lineages are predominantly East African (L3, L3e1a, L0) — consistent with deep East African Hebrew maternal ancestry. Yemenite Hebrews also carry significant East African L haplogroup presence, consistent with an ancient Hebrew population rooted in East Africa.'},
+{l:'Significance',v:'Documents the East African maternal genetic signature of ancient Hebrew communities. The maternal haplogroups of Beta Israel and Yemenite Hebrews trace directly to the East African Hebrew homeland.'}
+]},
+{id:'hammer2000',type:'study',title:'Hammer et al. 2000',sub:'Y-chromosome study of ancient Hebrew and surrounding populations',
+keywords:['hammer','2000','y chromosome','paternal','e1b1b','hebrew','levant','middle eastern'],
+fields:[
+{l:'Publication',v:'Proceedings of the National Academy of Sciences, 2000.'},
+{l:'What was tested',v:'Y-chromosome biallelic haplotypes across ancient Hebrew and surrounding populations.'},
+{l:'Key finding',v:'Ancient Hebrew communities share a common pool of Y-chromosome haplotypes including E1b1b — consistent with an origin in the Levant/East Africa zone. The study documents the genetic relatedness of Hebrew communities across different geographies and their common ancient origin.'},
+{l:'Significance',v:'Documents that ancient Hebrew paternal lineages (E1b1b, J1) are shared across geographically separated Hebrew communities, consistent with a common African origin.'}
+]},
+{id:'mendez2013',type:'study',title:'Mendez et al. 2013',sub:'A00 discovery — oldest Y-chromosome haplogroup found in West Africa',
+keywords:['mendez','2013','a00','cameroon','oldest','y chromosome','mbo','west africa'],
+fields:[
+{l:'Publication',v:'American Journal of Human Genetics, 2013.'},
+{l:'What was tested',v:'Y-chromosome of an African American man whose paternal lineage was traced to the Mbo people of Cameroon. The haplogroup did not fit anywhere in the existing tree.'},
+{l:'Key finding',v:'Discovery of A00 — a Y-chromosome haplogroup estimated at 200,000–340,000 years old. Found in the Mbo people of Cameroon, West Africa. The oldest known human Y-chromosome haplogroup is in West Africa.'},
+{l:'Significance',v:'The deepest human paternal lineages are rooted in West Africa. The human paternal tree begins in Africa. This is the record as documented.'}
+]},
+{id:'tishkoff2009',type:'study',title:'Tishkoff et al. 2009',sub:'The Genetic Structure and History of Africans and African Americans',
+keywords:['tishkoff','2009','african','genetic diversity','l0','san','khoisan','structure'],
+fields:[
+{l:'Publication',v:'Science, 2009.'},
+{l:'What was tested',v:'Genetic diversity across 113 African populations and African Americans. The most comprehensive African genetic study at its time of publication.'},
+{l:'Key finding',v:'The San/Khoisan of southern Africa are the most genetically diverse people on earth. L0 is the oldest maternal haplogroup. African populations carry the greatest genetic diversity — consistent with Africa being the origin point of all humanity. E1b1a and E1b1b distributions across Africa are comprehensively documented.'},
+{l:'Significance',v:'Africa contains the oldest and most genetically diverse human lineages on earth. The ancient Hebrews as an African people are documented within this genetic landscape.'}
+]},
+/* TESTING GUIDE */
+{id:'africanancestry',type:'guide',title:'African Ancestry',sub:'Most specific test for African-descended people — matches to a specific ethnic group',
+keywords:['african ancestry','test','testing','haplogroup','specific','tribal','ethnic'],
+fields:[
+{l:'What it does',v:'African Ancestry tests your mitochondrial DNA (maternal) or Y-chromosome DNA (paternal) and matches it to a specific modern African ethnic group in a specific country. Not a percentage — a direct match to a people.'},
+{l:'Example result',v:'Your maternal line traces to the Mende people of Sierra Leone. Or: Your paternal line traces to the Yoruba people of Nigeria.'},
+{l:'Why it is the best test for this research',v:'Other tests give you percentages based on modern country regions. African Ancestry gives you a specific haplogroup and a specific ethnic community match. For researching ancient Hebrew identity through genetics, a specific haplogroup match is far more informative than a percentage.'},
+{l:'What it does not do',v:'It tests one line (maternal OR paternal). Your other ancestors are not captured. It is one thread of many in your full ancestry.'}
+]},
+{id:'percentdecoder',type:'guide',title:'What Ancestry Percentages Mean',sub:'How to read results from AncestryDNA, 23andMe, and similar tests',
+keywords:['percentage','percent','ancestry','23andme','ancestrydna','admixture','nigerian','cameroon','benin','togo','ghanaian'],
+fields:[
+{l:'What a percentage is',v:'A percentage like 37% Nigerian is an ADMIXTURE estimate — your total genome compared against a set of modern reference populations. It is not a haplogroup. It does not tell you which ancient lineage you carry. It tells you which modern populations your overall DNA most resembles.'},
+{l:'The limitation',v:'These tests build their reference panels from populations they have chosen to sample. African populations are underrepresented relative to their actual genetic diversity. This means African percentage results carry less precision than they should — a gap in the data, not a gap in African ancestry.'},
+{l:'How to go deeper',v:'A percentage gives you a region. A haplogroup gives you an ancient lineage. To find your haplogroup, use African Ancestry (for a specific ethnic match) or FamilyTreeDNA (for a detailed haplogroup assignment). Your haplogroup is what connects you to ancient populations.'},
+{l:'Reading your results',v:'Nigerian / Yoruba → primarily E1b1a paternal, L2 maternal. Cameroon/Congo → E1b1a paternal, L1/L2 maternal. Benin/Togo → E1b1a paternal, L2 maternal. Ethiopian/East African → E1b1b paternal, L3 maternal. Ghanaian/Akan → E1b1a paternal, L2 maternal. Kenyan/East African → E1b1b paternal, L3 maternal.'},
+{l:'The key point',v:'If you carry West African percentages, your paternal line is most likely E1b1a — the West African branch of the same ancient E1b1 lineage shared with E1b1b, the East African/Levantine Hebrew haplogroup. You and Beta Israel share a common ancient paternal ancestor.'}
+]},
+/* FIGURES — ANCIENT AFRICAN HEBREW PEOPLE FROM THE COVENANT RECORD */
+{id:'figure-moshe',type:'figure',title:'Moshe (Moses)',sub:'African Hebrew — born of Levite parents, identified as Egyptian by sight',
+keywords:['moses','moshe','egypt','kemet','levite','hebrew','exodus','pharaoh','zipporah','cushite','midian','sinai','african hebrew','yocheved','amram','egyptian man'],
+fields:[
+{l:'Who he was',v:'Moshe was an African Hebrew man — born of Yocheved (Levite Hebrew mother) and Amram (Levite Hebrew father). Both parents were from the tribe of Levi. Moshe was Hebrew by full lineage — not adopted into Hebrew identity, not partially Hebrew, not Hebrew by culture alone. He was born fully Hebrew to two Hebrew parents in the land of Kemet (northeast Africa).'},
+{l:'He was African Hebrew — not just raised by them',v:'Moshe was not an Egyptian who became Hebrew. He was not a Hebrew who passed as Egyptian. He was an African Hebrew man whose people — the ancient Hebrews — were the same African people as the Egyptians. When Jethro\'s daughters returned from the well and told their father "an Egyptian man delivered us" (Exodus 2:19), they were not mistaken. They were seeing an African Hebrew man and identifying him correctly as African. The ancient Hebrews and ancient Egyptians were the same African people. Moshe could blend in because he was them.'},
+{l:'His parents',v:'Yocheved — his mother — was a daughter of Levi, the tribe that became the priestly tribe of the ancient Hebrew people. Amram — his father — was also Levite. Moshe was born into the most covenant-central lineage of the ancient Hebrew people. His sister was Miriam the prophetess. His brother was Aharon, the first High Priest. This entire family was African Hebrew.'},
+{l:'His wives',v:'Moshe\'s wife was Zipporah — daughter of Jethro (Reuel), a priest of Midian in the Sinai/African land corridor. An African woman. Numbers 12:1 documents that Moshe also married a Cushite woman — a Nubian African woman from Kush, directly south of Kemet on the Nile. Miriam and Aharon spoke against this marriage. The Almighty rebuked them. Moshe\'s African Hebrew life was surrounded by African women from the African world.'},
+{l:'He never left Africa',v:'Moshe was born in Kemet (northeast Africa). He fled to Midian (Sinai peninsula — African land). He received the Torah on Mount Sinai (African territory). He led the nation through the Sinai toward Canaan (African land bridge). He saw the land from Mount Nebo and died in Moab (Levantine African corridor). Every day of Moshe\'s life was lived on African and African-connected soil. The entire Mosaic record is an African story.'},
+{l:'The Torah he wrote',v:'Moshe wrote the first five books of the covenant record — Bereshit, Shemot, Vayikra, Bamidbar, Devarim. An African Hebrew man wrote the foundational text of the covenant. That text was written on African land, in an African language (Afro-Asiatic/Paleo-Hebrew), about African people, for African people.'}
+]},
+{id:'figure-miriam',type:'figure',title:'Miriam',sub:'African Hebrew prophetess — sister of Moshe and Aharon',
+keywords:['miriam','prophetess','levite','hebrew','exodus','timbrel','song','african hebrew','moshe','aaron','aharon','nile'],
+fields:[
+{l:'Who she was',v:'Miriam was the daughter of Yocheved and Amram — a Levite Hebrew woman of Kemet (Africa). The oldest sibling of Moshe and Aharon. She is called a prophetess in the Torah (Exodus 15:20) — one of the seven women prophets named in the Hebrew covenant record. An African Hebrew woman named as a prophet.'},
+{l:'On the bank of the Nile',v:'When Yocheved placed the infant Moshe in a basket on the Nile River, Miriam stood at a distance to watch what would happen (Exodus 2:4). This was a young African Hebrew girl standing on the bank of the Nile in Africa, watching over her baby brother in a basket on an African river. When Pharaoh\'s daughter found Moshe, Miriam stepped forward and arranged for Yocheved — Moshe\'s own mother — to be brought as nurse. A child\'s quick thinking preserved the man who would deliver the nation.'},
+{l:'The Song of Miriam',v:'Exodus 15:20-21 — after the crossing of the sea, Miriam took a timbrel in her hand and all the women went out after her with timbrels and dancing. Miriam sang: "Sing to the LORD, for He has triumphed gloriously; the horse and his rider He has thrown into the sea." This is one of the oldest documented songs in the Hebrew record — sung by an African Hebrew woman leading African Hebrew women in song and dance after their deliverance from captivity.'},
+{l:'Identity',v:'Miriam was an African Hebrew prophetess. She was the oldest child of Yocheved and Amram. She was a leader. She stood watch over the infant who would write the Torah. She led the women of an entire nation in song after their freedom. The covenant record names her and documents her acts specifically.'}
+]},
+{id:'figure-aharon',type:'figure',title:'Aharon (Aaron)',sub:'African Hebrew — first High Priest of the ancient Hebrew people',
+keywords:['aaron','aharon','high priest','kohen','levite','hebrew','exodus','african hebrew','moshe','miriam','kohanim','priestly'],
+fields:[
+{l:'Who he was',v:'Aharon was the son of Yocheved and Amram — a Levite Hebrew man of Kemet (Africa). Older brother of Moshe, older brother of Miriam. He became the first Kohen Gadol (High Priest) of the ancient Hebrew people — the beginning of the Aaronite priestly lineage (Kohanim). An African Hebrew man established the priesthood that his descendants carried across three thousand years.'},
+{l:'Before Pharaoh',v:'When Moshe said he was not a man of words, the Almighty designated Aharon to be his spokesman. Aharon stood in the courts of Pharaoh — the most powerful ruler in Africa — and delivered the covenant demand on behalf of the Almighty and the Hebrew people. An African Hebrew man, in an African palace, demanding freedom for his African Hebrew people.'},
+{l:'The priestly lineage in Africa today',v:'The Aaronite priestly lineage (J1-P58, the Cohen Modal Haplotype) is documented today in the Lemba Buba clan of Zimbabwe and South Africa. The Buba clan functions as the priestly class of the Lemba people — consistent with the Kohanim tradition. The priestly lineage that began with Aharon in Kemet lives today in southern Africa. The line from Aharon to the Lemba Buba clan is an African Hebrew priestly lineage three thousand years long.'},
+{l:'Identity',v:'Aharon was an African Hebrew man — born in Kemet, first High Priest of the ancient Hebrew people, ancestor of the Kohanim whose lineage is documented in Africa from Ethiopia to Zimbabwe to Yemen today.'}
+]},
+{id:'figure-yocheved',type:'figure',title:'Yocheved',sub:'African Hebrew mother — preserved the deliverer of her people',
+keywords:['yocheved','jochebed','moshe','miriam','aaron','aharon','levite','kemet','nile','basket','african hebrew woman','mother'],
+fields:[
+{l:'Who she was',v:'Yocheved was a daughter of Levi — of the tribe of Levi — and the mother of Miriam, Aharon, and Moshe. She was an African Hebrew woman living in Kemet. When Pharaoh commanded that all Hebrew male infants be thrown into the Nile, Yocheved hid her son for three months (Exodus 2:2). Then she made a decision that changed history.'},
+{l:'What she did',v:'Yocheved built a basket of bulrushes, covered it with pitch and tar, placed her infant son inside it, and put it among the reeds on the bank of the Nile River — in Africa, on an African river. She trusted the Almighty with the life of her child. When Pharaoh\'s daughter found Moshe and called for a Hebrew nurse, Yocheved was brought to nurse her own son inside Pharaoh\'s palace. She nursed him until he was weaned and then brought him to Pharaoh\'s daughter to raise. She watched her son grow into the man who would receive the Torah and deliver her people.'},
+{l:'Identity',v:'Yocheved was an African Hebrew woman. She lived in Kemet. She bore the deliverer of the ancient Hebrew people — and preserved him on an African river. The covenant record documents her act. Without Yocheved\'s decision on the bank of the Nile, there is no Moshe, no Exodus, no Torah. She is the beginning of the delivery.'}
+]},
+{id:'figure-zipporah',type:'figure',title:'Zipporah',sub:'Wife of Moshe — African woman who preserved the covenant of circumcision',
+keywords:['zipporah','tzipporah','midian','jethro','reuel','moshe','circumcision','sinai','african','covenant','midianite'],
+fields:[
+{l:'Who she was',v:'Zipporah was the daughter of Jethro (also called Reuel) — the priest of Midian. Midian is in the Sinai peninsula and northwestern Arabian Peninsula — African territory and African-adjacent land in the same corridor as Kemet and Canaan. She was an African woman who became the wife of Moshe after he fled Kemet and found shelter with her father.'},
+{l:'She preserved the covenant',v:'Exodus 4:24-26 — on the journey back to Kemet, the Almighty sought to kill Moshe because the covenant of circumcision had not been performed on their son. Zipporah took a flint, circumcised her son herself, and touched Moshe\'s feet, saying "You are a bridegroom of blood to me." This African woman from Midian performed the covenant act of circumcision to preserve her husband\'s life and the covenant itself. She acted where Moshe had not. The covenant was preserved by an African woman.'},
+{l:'Her father Jethro',v:'Jethro (Reuel), Zipporah\'s father, was a priest of Midian — an African man with deep spiritual knowledge in the Sinai zone. After the Exodus, Jethro came to Moshe in the wilderness and advised him on governance: appoint capable men as judges over thousands, hundreds, fifties, and tens. This governance structure — proposed by an African man from Midian — became the organizational foundation of the ancient Hebrew nation in the wilderness (Exodus 18).'},
+{l:'Identity',v:'Zipporah was an African woman of Midian. She preserved the covenant of circumcision at the moment it was most endangered. Her father designed the governance structure of the ancient Hebrew nation. The ancient Hebrew covenant was sustained by African people at every critical moment.'}
+]},
+{id:'figure-makeda',type:'figure',title:'Makeda — Queen of Sheba',sub:'African Hebrew queen — from the Ethiopian and Red Sea zone to Shlomo',
+keywords:['queen of sheba','makeda','sheba','ethiopia','yemen','shlomo','solomon','kebra nagast','axum','menelik','african hebrew queen','solomonic'],
+fields:[
+{l:'Who she was',v:'Makeda is the name given in Ethiopian tradition (the Kebra Nagast — Glory of Kings) to the Queen of Sheba — the African Hebrew queen who traveled to Shlomo in Jerusalem. She ruled a kingdom spanning the Horn of Africa (Ethiopia) and the Red Sea corridor into Yemen. She is named in the covenant record: 1 Kings 10 and in the words of the Messiah-figure reference in Matthew 12:42 as "the Queen of the South."'},
+{l:'Her journey',v:'1 Kings 10:1-3 — "When the Queen of Sheba heard of the fame of Solomon concerning the name of the LORD, she came to prove him with hard questions. And she came to Jerusalem with a very great train, with camels that bore spices, and very much gold, and precious stones." She brought the wealth of African civilization — gold, spices, precious stones. She came to test the wisdom of Shlomo and found it greater than reported. She was not a visitor from a foreign world. She was an African Hebrew queen meeting an African Hebrew king.'},
+{l:'Menelik and the Solomonic dynasty',v:'The Kebra Nagast documents that Makeda and Shlomo had a son: Menelik I. As a young man, Menelik traveled to Jerusalem to meet his father. He returned to Ethiopia — and according to Ethiopian oral and written tradition, he brought the Ark of the Covenant to Axum. Menelik I founded the Solomonic dynasty of Ethiopia — a dynasty documented to have ruled Ethiopia until 1974 CE. The last ruler, Emperor Haile Selassie I, traced his lineage to Menelik I, Makeda, and Shlomo.'},
+{l:'Song of Songs 1:5',v:'"I am black and beautiful, O daughters of Jerusalem, like the tents of Kedar, like the curtains of Solomon." Ethiopian tradition identifies this voice with Makeda — an African queen describing herself as black-skinned and beautiful in the covenant text. Whether this identification is traditional or textual, the words themselves are in the covenant record: an ancient Hebrew voice, describing themselves as black.'},
+{l:'Identity',v:'Makeda was an African Hebrew queen. Her kingdom was in East Africa and the Red Sea corridor. Her son founded a dynasty lasting nearly three thousand years. The Ark of the Covenant, according to Ethiopian tradition, is in Axum — the city she came from. This is African Hebrew history at its most ancient and most documented.'}
+]},
+{id:'figure-shlomo',type:'figure',title:'Shlomo (Solomon)',sub:'African Hebrew king — Temple builder, Red Sea fleet, wisdom covenant',
+keywords:['solomon','shlomo','temple','wisdom','song of songs','ships','ezion-geber','ophir','red sea','african hebrew king','makeda','first temple'],
+fields:[
+{l:'Who he was',v:'Shlomo was the son of Dawid (David) and Bat-Sheva — an African Hebrew king who ruled from Jerusalem on the Levantine African corridor. He built the first Temple. He built the Red Sea fleet at Ezion-geber. He received Makeda the Queen of Sheba from Ethiopia. The covenant record attributes to him the books of Proverbs, Ecclesiastes, and the Song of Songs.'},
+{l:'Song of Songs 1:5',v:'"I am black and beautiful, O daughters of Jerusalem, like the tents of Kedar, like the curtains of Solomon." These words are in the covenant text. The people in the Song of Songs — which tradition attributes to Shlomo — describe themselves as black-skinned. The word used (shachar) means dark/black. This is an ancient African Hebrew text with ancient African Hebrew people describing what they look like.'},
+{l:'The Red Sea fleet',v:'1 Kings 9:26 — Shlomo built a fleet of ships at Ezion-geber on the Red Sea. The fleet sailed to Ophir — a land associated with East Africa, Yemen, and the Red Sea trade zone. All African or African-adjacent. The ancient Hebrews were a maritime people on African waters. Devarim 28:68 predicted captivity by ship — a detail that makes sense for a people who had their own ships and knew the sea.'},
+{l:'His connection to Ethiopia',v:'Shlomo\'s son Menelik I — from the union with Makeda the Queen of Sheba — founded the Solomonic dynasty of Ethiopia. The Ark of the Covenant is in Axum according to Ethiopian tradition. Shlomo\'s lineage is in Africa. His covenant runs through Ethiopia.'},
+{l:'Identity',v:'Shlomo was an African Hebrew king. His Temple was on African-connected land. His fleet was on African waters. His son founded the oldest living African Hebrew dynasty. The covenant record he contributed to was written in Africa by African people about African civilization.'}
+]},
+{id:'figure-dawid',type:'figure',title:'Dawid (David)',sub:'African Hebrew shepherd king — Psalms, covenant of the tribe of Yehuda',
+keywords:['david','dawid','shepherd','king','psalms','tehillim','bethlehem','judah','yehuda','hebrew','african hebrew','ruth','moab','goliath'],
+fields:[
+{l:'Who he was',v:'Dawid was born in Bethlehem (Canaan, African land corridor) — the youngest son of Yishai (Jesse) of the tribe of Yehuda. He was a shepherd anointed king. He wrote 73 of the 150 Tehillim (Psalms) according to the covenant record. He is the ancestor of Shlomo and of the Solomonic dynasty of Ethiopia through his son Shlomo and Makeda\'s son Menelik.'},
+{l:'His ancestry — Ruth',v:'Dawid\'s great-grandmother was Ruth — a Moabite woman from the land of Moab (present-day Jordan, Levantine corridor). Ruth left her own people to follow Naomi and declared: "Where you go I will go. Where you stay I will stay. Your people will be my people and your God my God" (Ruth 1:16). Ruth — an African-adjacent woman of Moab — became the great-grandmother of the king who wrote the Psalms. The covenant embraced her fully.'},
+{l:'The Psalms',v:'The Tehillim written by Dawid are the ancient Hebrew poetry of an African Hebrew shepherd king. Psalms of grief (Psalm 22 — "My God, my God, why have You forsaken me?"). Psalms of trust (Psalm 23 — "The LORD is my shepherd"). Psalms of praise (Psalm 150). These words — written by an African Hebrew man on African-connected land — are among the most widely known ancient texts in the world.'},
+{l:'Identity',v:'Dawid was an African Hebrew man — born in Bethlehem, raised as a shepherd, anointed king, author of the Psalms, ancestor of the Ethiopian Solomonic dynasty. The covenant record he contributed to was written on African-connected land by African people.'}
+]},
+{id:'figure-avraham',type:'figure',title:'Avraham (Abraham)',sub:'Ancient Hebrew patriarch — from the ancient Semitic world into Kemet and the covenant land',
+keywords:['abraham','avraham','patriarch','ur','canaan','kemet','egypt','covenant','sarah','hagar','ishmael','isaac','circumcision','african'],
+fields:[
+{l:'Who he was',v:'Avraham is the founding patriarch of the ancient Hebrew covenant — the man called by the Almighty to leave his land and go to a land that would be shown to him. He is the father of the covenant people. He was an ancient Semitic man from the ancient Semitic world — a world rooted in Africa and African-adjacent territory.'},
+{l:'Into Kemet',v:'Bereshit 12 — when famine struck Canaan, Avraham and Sarai went to Kemet (Egypt/northeast Africa). This is the ancient Hebrew patriarch traveling to Africa. Not as a stranger to an alien world — as a person moving within the same African world. He left Canaan (African land corridor) and entered Kemet (northeast Africa) because these were connected territories of the same African world.'},
+{l:'Hagar',v:'Sarai\'s handmaiden Hagar was Egyptian — an African woman from Kemet. Hagar bore Yishmael, the first son of Avraham. The ancient Arabic and Ishmaelite lineage traces through an African Egyptian woman. From the very beginning of the covenant family, African women were part of its story.'},
+{l:'The covenant of circumcision',v:'The covenant of circumcision given to Avraham in Bereshit 17 is the same covenant maintained by Beta Israel in Ethiopia, by the Igbo in Nigeria (on the 8th day — the exact timing commanded), by the Lemba in Zimbabwe, by the Akan in Ghana. Ancient African Hebrew communities across the continent maintain the covenant of Avraham not because it was introduced to them from outside but because they are the people it was given to.'},
+{l:'Identity',v:'Avraham was an ancient Semitic patriarch whose story is set entirely in Africa and African-connected territory. His covenant is the covenant of an African people. His family included African women from Kemet from the first generation.'}
+]},
+/* HIDDEN TRUTHS — SUPPRESSED RECORD */
+{id:'truth-ychreve',type:'truth',title:'Y-chromosomal Adam and Mitochondrial Eve',sub:'Both traced to Africa — all humanity descends from African people',
+keywords:['y-chromosomal adam','mitochondrial eve','origin','africa','all humanity','a00','l0','khoisan','cameroon','oldest','root'],
+fields:[
+{l:'What the genetic record shows',v:'The most recent common paternal ancestor of all living human males (Y-chromosomal Adam) and the most recent common maternal ancestor of all living humans (Mitochondrial Eve) have both been placed in Africa by the genetic record. Every human being on earth — regardless of where they live today — descends from African people. This is not one study\'s claim. It is the finding of multiple independent lines of genetic research across decades.'},
+{l:'Mitochondrial Eve',v:'Mitochondrial Eve traces to the L0 haplogroup — the San/Khoisan people of southern Africa. Every maternal lineage on earth leads back to an African woman. The San/Khoisan are the most genetically ancient living human population on earth. L0 is the oldest maternal haplogroup — the root of the entire human maternal tree. Every mother\'s mother\'s mother, traced back far enough, is a San/Khoisan woman of southern Africa.'},
+{l:'Y-chromosomal Adam',v:'The deepest known branch of the human paternal tree is A00 — found in the Mbo people of Cameroon, West Africa, estimated at 200,000–340,000 years old. Every paternal lineage on earth traces back to Africa. The oldest known paternal lineage on earth is in West Africa. Y-chromosomal Adam is in Africa.'},
+{l:'The ancient Hebrews in this context',v:'The ancient Hebrews were an African people descended from African ancestors going back to the beginning of human life on earth. Their lineage — E1b1b (paternal), L3 and sub-clades (maternal) — is part of the African human family whose roots go back to the San/Khoisan and the Mbo of Cameroon. The ancient Hebrew people are not a special creation separate from African humanity. They are African humanity — a covenant people among the African family of peoples.'},
+{l:'What is suppressed',v:'The standard curriculum — in most countries — does not teach that all humanity descends from African people. The depiction of ancient people as non-African in popular media, textbooks, and religious imagery contradicts the genetic record. The genetic record is clear: humanity began in Africa, the ancient Hebrews were African, and every human being on earth carries African ancestry.'}
+]},
+{id:'truth-elephantine',type:'truth',title:'The Elephantine Hebrew Colony',sub:'5th century BCE — a Hebrew temple on the Nile in ancient Kush',
+keywords:['elephantine','aswan','nile','egypt','kush','sudan','temple','yah','yahweh','african hebrew','papyri','aramaic','5th century'],
+fields:[
+{l:'What this is',v:'Elephantine (called Yeb in ancient Egyptian) is an island in the Nile River at Aswan — at the ancient border zone between Kemet (Egypt) and Kush (Nubia/Sudan). In the 5th century BCE, a Hebrew military colony lived on this island. They built a temple to Yah (written YHW in their documents) — a Hebrew temple built on African soil, in Kush, on the Nile River.'},
+{l:'The Elephantine Papyri',v:'The Elephantine Papyri are ancient documents written in Aramaic, discovered on the island. They include personal letters, legal contracts, property records, and community correspondence — real documents from a real African Hebrew community living on the Nile in the 5th century BCE. These documents are preserved and translated. They are not theory. They are the actual words of African Hebrew people living in Africa.'},
+{l:'Their temple',v:'The Elephantine community built a temple to Yah on the island. This temple existed at the same time as the Temple in Jerusalem. When the local Egyptian priests destroyed the temple, the Elephantine Hebrew community wrote letters to Jerusalem and to the governor of Yehud (Judah) asking for permission and support to rebuild. They received a response. These letters are preserved in the Elephantine Papyri.'},
+{l:'What this proves',v:'The ancient Hebrew people built a temple to Yah in Africa — on the Nile River, on the border of ancient Kush, in the 5th century BCE. Ancient Hebrew civilization was not confined to the Levant. It was African. Hebrew people lived as themselves in Africa — not in exile, not as visitors — as a community with a temple, families, property, and correspondence with Jerusalem.'},
+{l:'Location today',v:'Elephantine Island is in present-day Aswan, Egypt, near the border with Sudan. The Nile flows around it. The ancient Hebrew temple site has been documented by archaeological excavation. This is a confirmed historical site, not a theory.'}
+]},
+{id:'truth-twelvetribes',type:'truth',title:'The Twelve Tribes in Africa',sub:'African oral tradition maps specific tribes to specific peoples',
+keywords:['twelve tribes','tribal identity','igbo','lemba','akan','fulani','gad','zebulon','levi','reuben','asher','judah','tribe','scatter','devarim'],
+fields:[
+{l:'What this is',v:'Multiple African Hebrew communities maintain oral traditions that identify them with specific tribes of ancient Israel. These identifications come from within the communities themselves — from African oral tradition, community memory, and ancestral record. They are not external assignments made by outsiders. They are the communities\' own account of who they are.'},
+{l:'Documented tribal identifications',v:'Igbo oral tradition (Nigeria): identifies the Igbo with the tribe of Gad, and in some traditions, Zebulon. The naming conventions, practices, and oral record are specific. Lemba oral tradition (Zimbabwe/South Africa): identifies the Lemba with the priestly lineage — consistent with the Buba clan\'s documented J1-P58 Kohanim marker (Levi/priestly). Akan oral tradition (Ghana): traditions in some Akan communities identify specific lineages with northern tribal heritage. Fulani oral tradition: identifies the Fulani with Reuben in certain community accounts. Beta Israel: identifies themselves as the tribe of Dan in some traditions.'},
+{l:'The scattering is documented',v:'Devarim 28:64 — "And the LORD shall scatter thee among all people, from the one end of the earth even unto the other." The genetic record shows that E1b1b (East African Hebrew paternal haplogroup) and E1b1a (West African Hebrew paternal haplogroup) — two branches of the same E1b1 ancient lineage — are found across Africa and throughout the African diaspora. A people scattered from one origin to the ends of the earth, now documented by genetics.'},
+{l:'Oral tradition as primary record',v:'The African oral tradition of tribal identity is not a modern invention. These communities maintained their tribal identification across centuries of colonial disruption, forced conversion, and displacement. Oral tradition is a primary record. African oral tradition specifically — preserved by Griots, elders, and community memory systems — is among the most disciplined oral record-keeping traditions on earth.'},
+{l:'What this means',v:'The twelve tribes of ancient Israel did not disappear. They scattered — as the covenant text said they would. They are in Africa. They are in the diaspora. They carried their identity in oral tradition, in practice, in genetics, and in community memory across thousands of years.'}
+]},
+{id:'truth-solomonfleet',type:'truth',title:'Solomon\'s Red Sea Fleet — Ezion-geber',sub:'Ancient Hebrew maritime civilization on African waters',
+keywords:['solomon','shlomo','ezion-geber','red sea','fleet','ships','ophir','gold','maritime','african hebrew','navy','devarim 28'],
+fields:[
+{l:'The record',v:'1 Kings 9:26 — "And King Solomon made a navy of ships in Ezion-geber, which is beside Eloth, on the shore of the Red Sea, in the land of Edom." Ezion-geber is on the African side of the Red Sea — at the northern tip of the Gulf of Aqaba, adjacent to present-day Eilat and Aqaba. This is Sinai/African corridor territory. The ancient Hebrew people built a fleet of ships on African waters.'},
+{l:'Where the fleet sailed',v:'The fleet of Shlomo sailed to Ophir — returning with gold (420 talents), almug wood, and precious stones (1 Kings 9:28, 10:11). Ophir is identified in various traditions as East Africa (Somalia, Ethiopia, Tanzania), southern Arabia (Yemen), or a combination of Red Sea and East African coastal territories. All of these are African or African-adjacent destinations. The ancient Hebrew fleet was a Red Sea African maritime operation.'},
+{l:'The Queen of Sheba connection',v:'Makeda, the Queen of Sheba, came to Shlomo from the Ethiopian/Yemenite zone — the same Red Sea corridor that Shlomo\'s fleet sailed. The commercial and diplomatic relationship between Shlomo and Makeda was between two African Hebrew powers connected by the Red Sea. When Shlomo gave Makeda "all her desire, whatsoever she asked" (1 Kings 10:13), the exchange was between African Hebrew rulers on the African maritime trade network.'},
+{l:'Ships in Devarim 28',v:'Devarim 28:68 predicted captivity by ship: "And the LORD shall bring thee into Egypt again with ships." The ancient Hebrews were a maritime people who built and sailed ships. The covenant text predicted that their captivity would come by the same mechanism. The transatlantic slave trade was carried out entirely by ship. The ancient Hebrew people who knew ships — because they built them at Ezion-geber — were taken captive by ships, as the covenant text said.'},
+{l:'What this proves',v:'The ancient Hebrews were not a landlocked people who had no knowledge of the sea. They built a fleet. They sailed African waters. They traded across the Red Sea. They were a maritime African civilization. The ships in Devarim 28 are not metaphor — they are the covenant text speaking to a people who knew exactly what ships were.'}
+]},
+{id:'truth-moors1492',type:'truth',title:'The Moors and 1492',sub:'African Semitic civilization expelled from Europe — the same year the colonial period began',
+keywords:['moors','moorish','1492','spain','iberia','andalusia','columbus','expulsion','semitic','african','al-andalus','granada','timbuktu'],
+fields:[
+{l:'Who the Moors were',v:'The Moors were an African and Afro-Semitic civilization that ruled the Iberian Peninsula (present-day Spain and Portugal) from 711–1492 CE — 781 years. They were African Berbers, Arab-Africans, and Afro-Semitic people from North Africa, the Levant, and the Saharan zone. Their civilization — Al-Andalus — was the most advanced in Europe during that period. Universities, libraries, hospitals, astronomical observatories, agricultural systems, and mathematical knowledge that the rest of Europe did not possess.'},
+{l:'The year 1492',v:'January 1492 — the Moorish ruler Muhammad XII (Boabdil) surrendered Granada, the last Moorish stronghold in Spain, to Ferdinand and Isabella. African Semitic civilization was expelled from Europe. October 1492 — Columbus sailed west, funded by the same Spanish crown that had just expelled the Moors. The expulsion of African Semitic people from Europe and the beginning of the transatlantic colonial expansion happened in the same year.'},
+{l:'The connection to the captivity',v:'The wealth and institutional power of Moorish civilization — accumulated over 781 years — was transferred into the Spanish colonial enterprise. The navigation knowledge, mathematics, and astronomy that made European sea voyages possible were built on African and Afro-Semitic scholarship. African Semitic people were expelled from Europe in 1492 and African Hebrew people began being systematically taken from Africa for the transatlantic captivity within the same generation.'},
+{l:'Timbuktu and African scholarship',v:'The university of Sankore in Timbuktu (Mali) — part of the same Moorish/Saharan African scholarly tradition — housed hundreds of thousands of manuscripts and tens of thousands of students at its peak. African scholarship on mathematics, astronomy, theology, medicine, and law was documented and preserved in African languages in African institutions. When the Moroccan invasion of 1591 CE disrupted the Timbuktu scholarly complex, centuries of African knowledge were put at risk — knowledge that had no equivalent in Europe at the time.'},
+{l:'Identity',v:'The Moors were an African Semitic civilization. Their 781 years in Europe were not an anomaly — they were the continuation of the African intellectual and civilizational tradition that the ancient Hebrews were part of. 1492 is the year that transition becomes irreversible: African Semitic civilization exits Europe, and the machinery of the captivity begins.'}
+]},
+{id:'truth-afroasiatic',type:'truth',title:'Hebrew is an African Language',sub:'The Afro-Asiatic language family originated in Africa',
+keywords:['afro-asiatic','hebrew language','amharic','ge\'ez','somali','hausa','arabic','aramaic','ancient egyptian','language family','africa','paleo-hebrew'],
+fields:[
+{l:'What is Afro-Asiatic',v:'Afro-Asiatic is one of the world\'s major language families. It includes ancient Hebrew, Aramaic, Amharic (Ethiopia), Ge\'ez (the language of the Orit — the Beta Israel Torah), Tigrinya (Eritrea/Ethiopia), Somali, Oromo (Ethiopia/Kenya), Hausa (Nigeria/Niger), ancient Egyptian (Kemet), Tamazight/Berber (North Africa), and Arabic. All of these languages descend from a common ancestor language.'},
+{l:'Where Afro-Asiatic originated',v:'The genetic and linguistic evidence places the origin of the Afro-Asiatic language family in the Horn of Africa — the same geographic zone as the ancient Hebrew E1b1b paternal haplogroup. The oldest and most diverse branches of Afro-Asiatic are in East Africa and the Horn. The language family moved from Africa outward — not from the Middle East into Africa. Hebrew did not come from outside Africa. It came from within Africa.'},
+{l:'Hebrew is an African language',v:'Ancient Hebrew is an Afro-Asiatic language. It came from the same African linguistic root as Amharic, Ge\'ez, Somali, and Hausa. When the ancient Hebrews spoke, they spoke an African language. When Beta Israel recite the Orit in Ge\'ez, they recite a related African language. When a Hausa speaker in Nigeria speaks, they speak a language in the same family as ancient Hebrew. These languages are connected — because the people who spoke them were connected.'},
+{l:'The Torah in an African language',v:'Every word of the Torah, every scroll from Qumran, every prophecy in the covenant record, every Psalm of Dawid, every word of Devarim 28 — all were written in an Afro-Asiatic language. In an African language. By African people. About African people. In Africa. The covenant record is an African document, in an African language, from an African people.'},
+{l:'Paleo-Hebrew',v:'Paleo-Hebrew — the oldest form of the Hebrew script — is written in characters that are part of the ancient Semitic writing tradition that emerged in the African and African-adjacent world. The Dead Sea Scrolls contain texts in Paleo-Hebrew. The ancient Hebrew script is an African script.'}
+]},
+{id:'truth-beneisrael',type:'truth',title:'Bene Israel — Ancient Hebrew Community of India',sub:'African Hebrew maritime people on the Indian Ocean trade route',
+keywords:['bene israel','india','maharashtra','mumbai','bombay','cochin','kerala','indian ocean','ancient hebrew','oil pressing','saturday','shabbat','sea route'],
+fields:[
+{l:'Who they are',v:'The Bene Israel are an ancient Hebrew community of Maharashtra, western India — centered historically around Mumbai (Bombay). Approximately 5,000–6,000 people today. They have lived in India for over two thousand years. For most of that time, they maintained ancient Hebrew practice without Rabbinic contact or external Hebrew community connection.'},
+{l:'How they got there',v:'Bene Israel oral tradition states that their ancestors arrived by ship — survivors of a shipwreck on the Konkan coast of Maharashtra. The Indian Ocean trade route connecting East Africa, the Arabian Peninsula, the Levant, and India was one of the oldest maritime corridors in the ancient world. The ancient Hebrew communities of Yemen (Yemenite Hebrews) and the Horn of Africa (Beta Israel) were positioned along this same trade route. The Bene Israel are the eastern terminus of the ancient African Hebrew maritime network.'},
+{l:'What they preserved without Rabbinic contact',v:'Without access to Rabbinic texts or institutions, the Bene Israel maintained for over a thousand years: Shabbat rest on Saturday (they were known locally as Shanwar Teli — "Saturday oil pressers"). Shema recitation twice daily. Male circumcision. Dietary practices. The Hebrew calendar structure for holy days. These practices were not taught by Rabbinic missionaries. They were carried by the community from their origin and preserved in India for over a thousand years.'},
+{l:'What this means',v:'The ancient Hebrew people traveled the Indian Ocean by ship and built a community in India that maintained covenant practice for over a thousand years without external support. This is what ancient Hebrew maritime civilization looked like — not confined to the Levant, not dependent on Rabbinic institutions, but alive on the Indian Ocean coast of India. The Bene Israel are living evidence that ancient Hebrew civilization was a maritime, globally-connected African civilization.'},
+{l:'The Cochin Hebrews',v:'A separate ancient Hebrew community — the Cochin (Malabar) Hebrews — also lived in Kerala on the southwestern Indian coast. Their presence in India is documented from the 10th century CE and possibly earlier, with a copper plate grant from an Indian king preserved as evidence. Two ancient Hebrew communities, on opposite coasts of southern India, both arriving by sea.'}
+]},
+{id:'truth-precolumbian',type:'truth',title:'African Presence in the Americas — Before Columbus',sub:'Evidence of African civilization in the Americas predating European contact',
+keywords:['olmec','pre-columbian','africa','americas','van sertima','colossal heads','mexico','african features','columbus','before columbus','mesoamerica'],
+fields:[
+{l:'The Olmec civilization',v:'The Olmec are the oldest major civilization in Mesoamerica (present-day Mexico) — dated to approximately 1500–400 BCE. The Olmec produced 17 known Colossal Heads — massive stone sculptures carved from basalt, the largest weighing 28 tons. These heads display distinctly African facial features: broad noses, full lips, and facial structures consistent with West African people. These are not interpretation. The African features of the Olmec Colossal Heads have been documented since their excavation by multiple independent researchers.'},
+{l:'Ivan Van Sertima\'s documentation',v:'Ivan Van Sertima — Guyanese-born scholar and linguist — published "They Came Before Columbus" (1976), documenting evidence of pre-Columbian African presence in the Americas. Van Sertima compiled linguistic parallels, botanical evidence (the African bottle gourd present in pre-Columbian America), artistic evidence (the Olmec Colossal Heads), and documented accounts of African contact in the ancient Indian Ocean and Atlantic corridors. The core documentation of African features in the Olmec record and African botanical presence in the Americas remains significant.'},
+{l:'The ancient African maritime capacity',v:'The ancient Phoenicians (Afro-Semitic, Levantine corridor) circumnavigated Africa by ship. Shlomo\'s fleet sailed the Red Sea. Ancient African mariners navigated the Indian Ocean for thousands of years before European contact. The idea that African people could not have crossed the Atlantic is not supported by the documented African maritime tradition. The Atlantic narrows significantly between West Africa (Senegal/Gambia) and Brazil — a crossing within the range of ancient maritime technology.'},
+{l:'What this means for ancient Hebrew history',v:'If the Olmec — the civilization that preceded all other Mesoamerican civilizations (Aztec, Maya) — had African origin or connection, this places African civilization at the foundation of the ancient American world. If African Hebrew maritime people were part of the ancient Atlantic trade corridor, then the scope of ancient Hebrew civilization extends to the Western Hemisphere — not beginning with Columbus, but beginning thousands of years before European contact.'},
+{l:'The significance',v:'The transatlantic captivity brought African Hebrew people to the Americas against their will beginning in the 15th century CE. But the evidence of African presence in the Americas before Columbus suggests that African people — potentially including ancient Hebrew maritime people — may have arrived voluntarily, as explorers and traders, thousands of years before the captivity began.'}
+]},
+/* TESTING GUIDE */
+{id:'africanancestry2',type:'guide',title:'African Ancestry — Testing Options',sub:'Which test to choose and what each tells you',
+keywords:['african ancestry','test','testing','haplogroup','specific','tribal','ethnic','which test','familytreedna'],
+fields:[
+{l:'What it does',v:'African Ancestry tests your mitochondrial DNA (maternal) or Y-chromosome DNA (paternal) and matches it to a specific modern African ethnic group in a specific country. Not a percentage — a direct match to a people.'},
+{l:'Example result',v:'Your maternal line traces to the Mende people of Sierra Leone. Or: Your paternal line traces to the Yoruba people of Nigeria.'},
+{l:'Why it is the best test for this research',v:'Other tests give you percentages based on modern country regions. African Ancestry gives you a specific haplogroup and a specific ethnic community match. For researching ancient Hebrew lineage, a specific haplogroup match is far more informative than a percentage.'},
+{l:'What it does not capture',v:'It tests one line — maternal OR paternal. Your other ancestral lines are not captured in a single test. It is one thread of many in your full ancestry.'}
+]},
+/* TRIBES — WEST AFRICA */
+{id:'tribe-yoruba',type:'tribe',title:'Yoruba',sub:'West African Hebrews — Nigeria and Benin',
+keywords:['yoruba','nigeria','benin','oyo','ife','ile-ife','ogun','yorubaland','e1b1a','l2','west africa'],
+fields:[
+{l:'Who they are',v:'The Yoruba people of southwestern Nigeria and Benin — one of the largest African ethnic groups, approximately 50 million people. Ancient centers in Ile-Ife (regarded as the origin city), Oyo, Benin, and Lagos zones. Ile-Ife is one of the oldest continuously inhabited cities in Africa.'},
+{l:'Haplogroups',v:'Paternal: E1b1a (M2) dominant. Maternal: L2a, L2b primary. These are the same haplogroup signatures found across West African Hebrew populations.'},
+{l:'Ancient Hebrew connections',v:'The Yoruba calendar contained a four-day week with a rest day — structurally parallel to the Hebrew week before Babylonian influence. Ritual purification practices, food prohibitions, and circumcision are documented in Yoruba tradition. Oral tradition in some Yoruba communities traces lineage to the ancient Levant. The Ife bronze heads depict a people whose physical heritage is unambiguously African.'},
+{l:'Captivity connection',v:'Yoruba were taken primarily through Bight of Benin ports — Ouidah and Lagos zones. They are heavily represented in Cuba (Lucumi/Santeria preserves Yoruba language and tradition), Brazil (Candomble), Haiti, Trinidad, and across the Caribbean. Yoruba language survived the captivity in religious practice in ways no other African language did in the Americas.'},
+{l:'Identity',v:'The Yoruba are an ancient African Hebrew people. Their oral tradition, practice parallels, and paternal haplogroup (E1b1a, shared root E1b1 with the East African Hebrew haplogroup E1b1b) place them within the same ancient African Hebrew lineage.'}
+]},
+{id:'tribe-akan',type:'tribe',title:'Akan',sub:'Gold Coast Hebrews — Ghana and Ivory Coast',
+keywords:['akan','ashanti','asante','fante','ghana','ivory coast','gold coast','twi','e1b1a','l2'],
+fields:[
+{l:'Who they are',v:'The Akan people of Ghana and Ivory Coast — including the Ashanti, Fante, Akyem, Bono, and other sub-groups. Approximately 20 million people. The Ashanti Kingdom was one of the most powerful in West Africa. The Akan homeland is in what was called the Gold Coast during the transatlantic captivity.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant. Maternal: L2a primary. Consistent with the broader West African Hebrew haplogroup signature.'},
+{l:'Ancient Hebrew connections',v:'The Akan practice of naming children after the day of the week on which they were born is a structured calendar practice — a seven-day week was preserved in Akan culture. Akan oral tradition includes origin stories that place ancestors in the East (Levantine direction). Purification practices, food laws, and a priestly class structure parallel ancient Hebrew community organization. The Akans maintained a matrilineal inheritance system — inheritance and lineage traced through the mother — consistent with certain ancient Hebrew practices.'},
+{l:'Captivity connection',v:'Akan people were taken through Cape Coast Castle and Elmina Castle — two of the largest slave fortresses on the Gold Coast. They are represented across Jamaica, Barbados, and South Carolina. The Maroon communities of Jamaica — which maintained armed resistance to enslavement — were significantly Akan (Ashanti and Fante) in composition.'},
+{l:'Identity',v:'The Akan are an ancient African Hebrew people. The Gold Coast was named for African gold — wealth that existed in Africa long before European contact. The Akan are one of the oldest established peoples of West Africa with documented ancient practice parallels to the Hebrew record.'}
+]},
+{id:'tribe-ewe',type:'tribe',title:'Ewe',sub:'Ghana and Togo — Bight of Benin Hebrew people',
+keywords:['ewe','ghana','togo','volta','anlo','eweland','ho','bight of benin','e1b1a','l2'],
+fields:[
+{l:'Who they are',v:'The Ewe people of southeastern Ghana, southern Togo, and Benin. Approximately 6 million people. The Anlo-Ewe are the largest sub-group. Eweland sits along the Bight of Benin coast — one of the primary captivity zones.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant. Maternal: L2a, L2b. Consistent West African Hebrew haplogroup pattern.'},
+{l:'Ancient Hebrew connections',v:'The Ewe maintain oral traditions of migration from the east — specifically from a city called Notsie (Notse) in present-day Togo, which oral history places at the end of a longer journey from the ancient Levantine direction. Ewe traditional religion maintains concepts of a supreme creator distinct from lesser spiritual forces — structural parallels to the Hebrew monotheistic framework. Purification laws and food restrictions are present in traditional Ewe practice.'},
+{l:'Captivity connection',v:'Ewe were taken through Ouidah and other Bight of Benin ports. Present in Trinidad, Cuba, Brazil, and throughout the Caribbean. The Ewe language group (including Fon) was one of the sources of Haitian Vodou — a tradition that retained the names and attributes of African spiritual figures through the captivity.'},
+{l:'Identity',v:'The Ewe are an ancient African Hebrew people carrying the West African branch of the ancient Hebrew haplogroup lineage and oral traditions of eastern origin.'}
+]},
+{id:'tribe-fon',type:'tribe',title:'Fon / Dahomey',sub:'Benin — Bight of Benin Hebrew people',
+keywords:['fon','dahomey','benin','ouidah','abomey','bight of benin','e1b1a','l2','vodun'],
+fields:[
+{l:'Who they are',v:'The Fon people of present-day Benin (formerly Dahomey). Approximately 3 million people. The Fon Kingdom of Dahomey was a powerful pre-colonial African state centered in Abomey. The Bight of Benin coast — the Fon/Ewe/Yoruba zone — was called the Slave Coast by European raiders, reflecting the scale of captivity from this region.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant. Maternal: L2a, L2b.'},
+{l:'Ancient Hebrew connections',v:'Fon cosmology includes a supreme creator (Mawu-Lisa) and a structured spiritual hierarchy — parallels to the Hebrew understanding of a creator above all other forces. Fon traditional practice includes purification ceremonies and food distinctions. The oral tradition of origin traces the Fon to migrations from the ancient east.'},
+{l:'Captivity connection',v:'The Fon and Dahomey region was a primary captivity zone. Ouidah (in present-day Benin) was one of the largest slave ports in history — an estimated 1 million people were taken from this single port zone. The Fon are heavily represented in Haiti (where Haitian Creole preserves Fon/Ewe vocabulary) and Brazil.'},
+{l:'Identity',v:'The Fon are an ancient African Hebrew people. The Slave Coast designation given by European raiders names what was done to this people — it does not define them. Their identity predates that designation by thousands of years.'}
+]},
+{id:'tribe-mandinka',type:'tribe',title:'Mandinka / Mandé',sub:'Senegambia — ancient West African travelers',
+keywords:['mandinka','mande','gambia','senegal','guinea','mali','senegambia','e1b1a','l1','l2'],
+fields:[
+{l:'Who they are',v:'The Mandinka (or Mandingo) people of Gambia, Senegal, and Guinea — part of the broader Mandé language family stretching from Senegambia to Mali. The Mali Empire (1235–1600 CE) was one of the largest and wealthiest empires in African history, centered in Mandé-speaking territory. Mansa Musa — whose pilgrimage in 1324 CE carried so much gold it disrupted the price of gold across the Mediterranean — was from this lineage.'},
+{l:'Haplogroups',v:'Paternal: E1b1a and related West African haplogroups. Maternal: L1, L2 lineages.'},
+{l:'Ancient Hebrew connections',v:'Mandinka oral tradition includes the Griot tradition — oral historians who preserved lineage records across centuries, a practice directly parallel to the Hebrew tradition of maintaining genealogical records. The Mandinka have documented ancient monotheistic elements predating Islamic contact. Circumcision, food restrictions, and structured community law are ancient Mandinka practices.'},
+{l:'Captivity connection',v:'Mandinka were heavily taken through Senegambia — the Gorée Island and Saint-Louis zones of Senegal and the Gambia. They are represented in South Carolina (the Gullah community preserves Senegambian cultural memory), Virginia, the Chesapeake region, and throughout the Caribbean.'},
+{l:'Identity',v:'The Mandinka and broader Mandé peoples are ancient African Hebrew people. The Mali Empire demonstrated the sophistication of African Hebrew civilization at its peak — in the same centuries that Europe was in its medieval period.'}
+]},
+{id:'tribe-wolof',type:'tribe',title:'Wolof',sub:'Senegambia — ancient West African community',
+keywords:['wolof','senegal','gambia','senegambia','dakar','e1b1a','l1','l2'],
+fields:[
+{l:'Who they are',v:'The Wolof people of Senegal and Gambia — the dominant ethnic group of Senegal, approximately 5 million people. The Jolof Empire (13th–16th century CE) unified the Wolof states. The Wolof Kingdom was among the first African peoples encountered by European raiders on the Senegambian coast.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant. Maternal: L1, L2 lineages.'},
+{l:'Ancient Hebrew connections',v:'The Wolof maintained a highly structured social hierarchy with hereditary priestly and ruling classes — a caste system parallel to the ancient Hebrew distinction between Kohanim, Levites, and the broader congregation. The Wolof griots preserved oral records of lineage across centuries. Food practices and purity customs in ancient Wolof tradition parallel Hebrew practices.'},
+{l:'Captivity connection',v:'Wolof were among the first taken from the African coast in the early phase of the transatlantic captivity — 15th and 16th centuries. They are present throughout the Caribbean and in early colonial Virginia and South Carolina. The Senegambia region was the source of the skilled rice farmers who were specifically sought for South Carolina plantation work.'},
+{l:'Identity',v:'The Wolof are an ancient African Hebrew people of the Senegambian coast — one of the oldest documented West African civilizations.'}
+]},
+{id:'tribe-hausa',type:'tribe',title:'Hausa',sub:'Northern Nigeria and Niger — ancient Semitic African lineage',
+keywords:['hausa','nigeria','niger','kano','zaria','katsina','sahel','e1b1a','ancient semitic'],
+fields:[
+{l:'Who they are',v:'The Hausa people of northern Nigeria and Niger — one of the largest ethnic groups in Africa, approximately 80 million people. The Hausa city-states (Kano, Katsina, Zaria, and others) were ancient centers of trade and scholarship on the trans-Saharan route. The Hausa language is one of the most widely spoken on the African continent.'},
+{l:'Haplogroups',v:'Paternal: E1b1a and E1b1b subclades. The Hausa sit at the zone where West African and East African Hebrew haplogroups overlap.'},
+{l:'Ancient Hebrew connections',v:'The Hausa language belongs to the Afro-Asiatic language family — the same family as ancient Hebrew, Aramaic, Amharic, and ancient Egyptian. This is a linguistic connection that places the Hausa within the same ancient linguistic network as the ancient Hebrew people. The Hausa maintained ancient food laws, circumcision, and purification practices predating external religious contact. The ancient Kano Chronicle documents Hausa history back into deep antiquity.'},
+{l:'Identity',v:'The Hausa are an ancient African Hebrew people. Their Afro-Asiatic linguistic connection places them within the same ancient language family as the ancient Hebrews — a family that originated in Africa and expanded through East Africa and the Levant.'}
+]},
+{id:'tribe-fulani',type:'tribe',title:'Fulani / Fula',sub:'Trans-African pastoralists — ancient Hebrew pastoral parallel',
+keywords:['fulani','fula','peul','fulbe','senegal','guinea','nigeria','cameroon','mali','sudan','pastoral','e1b1a'],
+fields:[
+{l:'Who they are',v:'The Fulani (also Fula or Peul) are a trans-African pastoral people spread across West, Central, and East Africa — from Senegal to Sudan. Approximately 40 million people. The Fulani are among the most widely distributed ethnic groups on the African continent. They are historically a pastoral people — herders who moved with their cattle across vast territories.'},
+{l:'Haplogroups',v:'Paternal: E1b1a and related haplogroups, with some regional variation across their wide distribution. Maternal: L1, L2 lineages.'},
+{l:'Ancient Hebrew connections',v:'The Fulani pastoral tradition — herding, moving with livestock, maintaining herd-based wealth — is a direct parallel to the ancient Hebrew pastoral pattern documented from Abraham through the tribal period. The ancient Hebrews were a pastoral people who herded cattle, sheep, and goats across the African and Levantine landscape. The Fulani maintain oral genealogical records across generations — consistent with the ancient Hebrew practice of lineage record-keeping.'},
+{l:'Identity',v:'The Fulani are an ancient African Hebrew people. Their pastoral lifestyle is the oldest continuously practiced form of the ancient Hebrew way of life — the same way of life as the patriarchs.'}
+]},
+/* TRIBES — EAST AFRICA */
+{id:'tribe-somali',type:'tribe',title:'Somali',sub:'Horn of Africa — Cushitic Hebrews',
+keywords:['somali','somalia','somalia','cushitic','horn of africa','e1b1b','l3','siad','ogaden'],
+fields:[
+{l:'Who they are',v:'The Somali people of Somalia, eastern Ethiopia (Ogaden region), Djibouti, and northeastern Kenya. Approximately 25 million people. The Somali people are a Cushitic-speaking people of the Horn of Africa — one of the most genetically ancient zones of Hebrew presence.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant — the ancient Hebrew paternal haplogroup that connects East Africa to the Levant. Maternal: L3 and sub-clades. The Somali carry the primary ancient Hebrew haplogroup signature.'},
+{l:'Ancient Hebrew connections',v:'The Somali are a Cushitic people — descendants of the ancient Cushites named in scripture from Bereshit. The ancient Hebrews and Cushites were geographically adjacent and genealogically connected (Kush is the son of Ham in the genealogical record). Somali oral tradition maintains genealogical records across centuries. The Horn of Africa was the crossing point between the African Hebrew homeland and the Levant.'},
+{l:'Identity',v:'The Somali are an ancient Cushitic African people carrying E1b1b — the primary ancient Hebrew paternal haplogroup. They inhabit the ancient East African Hebrew homeland zone.'}
+]},
+{id:'tribe-oromo',type:'tribe',title:'Oromo',sub:'Ethiopia — largest Ethiopian ethnic group, ancient African Hebrew zone',
+keywords:['oromo','ethiopia','oromia','kenya','cushitic','e1b1b','l3','horn of africa'],
+fields:[
+{l:'Who they are',v:'The Oromo people of Ethiopia and northern Kenya — the largest ethnic group in Ethiopia, approximately 40 million people. The Oromo occupy a vast territory across central and southern Ethiopia (Oromia region) into northern Kenya. They are a Cushitic-speaking people with ancient roots in the Horn of Africa.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant. Maternal: L3 and sub-clades. Ancient Hebrew haplogroup pattern consistent with the Horn of Africa population zone.'},
+{l:'Ancient Hebrew connections',v:'The Oromo maintain the Gadaa system — one of the oldest documented democratic governance systems on earth. Gadaa is a generational age-grade system that regulates political, economic, social, and ritual life. Ancient Hebrew tribal governance operated on similar structured council principles before the monarchy period. The Oromo creator concept (Waaqa — a single supreme creator) predates external religious contact and parallels ancient Hebrew monotheism. Oromo territory overlaps with ancient Cushite Hebrew population zones.'},
+{l:'Identity',v:'The Oromo are an ancient Cushitic African people of the East African Hebrew homeland zone, carrying E1b1b and an ancient governance and creator tradition that parallels the ancient Hebrew record.'}
+]},
+{id:'tribe-amhara',type:'tribe',title:'Amhara',sub:'Ethiopia — Beta Israel homeland people',
+keywords:['amhara','ethiopia','amhara region','beta israel','ge\'ez','orit','e1b1b','l3e1a'],
+fields:[
+{l:'Who they are',v:'The Amhara people of the Ethiopian highlands — approximately 25 million people. The Amhara region is the primary homeland of Beta Israel, the ancient Ethiopian Hebrew community. Amhara is one of the two regions (along with Tigray) where Beta Israel communities were concentrated for over two millennia.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant. Maternal: L3e1a, L3 — the primary Beta Israel maternal signatures. The Amhara carry the core ancient Hebrew haplogroup signature of East Africa.'},
+{l:'Ancient Hebrew connections',v:'The Amhara people are the primary ethnic context of Beta Israel — the ancient Ethiopian Hebrews. Amharic is a Semitic language descended from Ge\'ez, the language of the Orit. The Amhara highlands are the geographic center of Ethiopia\'s ancient Hebrew civilization, where Torah practice, the Orit canon, 1 Enoch, Jubilees, and the 364-day solar calendar were preserved for over two thousand years without Rabbinic influence.'},
+{l:'Identity',v:'The Amhara are an ancient African Hebrew people. The Ethiopian highlands they inhabit are the heartland of the oldest continuously practiced Hebrew tradition on earth.'}
+]},
+{id:'tribe-tigrinya',type:'tribe',title:'Tigrinya / Tigray',sub:'Ethiopia and Eritrea — Beta Israel core zone',
+keywords:['tigrinya','tigray','eritrea','tigre','ethiopia','beta israel','axum','ge\'ez','e1b1b','l3e1a'],
+fields:[
+{l:'Who they are',v:'The Tigrinya-speaking people of Tigray (northern Ethiopia) and Eritrea — approximately 10 million people. Tigray is the other primary Beta Israel homeland region alongside Amhara. The ancient Axumite Empire — one of the four great empires of the ancient world — was centered in this region.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant. Maternal: L3e1a, L3. Core ancient Hebrew haplogroup signature.'},
+{l:'Ancient Hebrew connections',v:'The Axumite Empire (1st–7th century CE) was the civilization that produced the Kebra Nagast, maintained the ancient Hebrew covenant texts in Ge\'ez, and according to Ethiopian oral and written tradition received the Ark of the Covenant. Axum was one of the first civilizations to formally adopt Torah-derived law as state practice. The Tigrinya people are the direct descendants of this civilization. Beta Israel communities in Tigray maintained Orit practice and the full Enoch/Jubilees canon independently for over two thousand years.'},
+{l:'Identity',v:'The Tigrinya people are an ancient African Hebrew people. The Axumite Empire they built is one of the great ancient Hebrew civilizations of the African continent.'}
+]},
+{id:'tribe-afar',type:'tribe',title:'Afar',sub:'Horn of Africa — Cushitic people of the Danakil',
+keywords:['afar','djibouti','eritrea','ethiopia','danakil','afar triangle','cushitic','e1b1b','horn of africa'],
+fields:[
+{l:'Who they are',v:'The Afar people of the Afar Triangle — the region where Ethiopia, Eritrea, and Djibouti meet. Approximately 2 million people. The Afar live in one of the harshest environments on earth — the Danakil Depression — and have maintained their ancient pastoral and community traditions intact across millennia.'},
+{l:'Haplogroups',v:'Paternal: E1b1b. Maternal: L3 sub-clades. The ancient East African Hebrew haplogroup zone.'},
+{l:'Ancient Hebrew connections',v:'The Afar are a Cushitic-speaking people of the exact geographic zone where the ancient East African Hebrew population was concentrated — the Horn of Africa. The Afar Triangle is also significant as one of the locations where the oldest human skeletal remains have been found, confirming this region as an ancient center of human life. The Afar have maintained ancient pastoral customs, community law, and oral genealogical tradition.'},
+{l:'Identity',v:'The Afar are an ancient Cushitic African people of the East African Hebrew homeland — one of the oldest continuously inhabited regions of the African continent.'}
+]},
+/* TRIBES — NILE VALLEY */
+{id:'tribe-nubian',type:'tribe',title:'Nubian / Kush',sub:'Sudan and Egypt border — ancient Kush, direct covenant connection',
+keywords:['nubian','nubia','kush','cush','sudan','egypt','nile','dongola','meroe','napata','e1b1b','l3'],
+fields:[
+{l:'Who they are',v:'The Nubian people of the Nile Valley — stretching from the border of Egypt (Aswan) south into Sudan. Approximately 3 million people. The Nubian homeland is ancient Kush — the land named from Bereshit as a son of Ham, a direct covenant lineage. The Nubian Kingdom of Kush conquered Egypt in the 8th century BCE (the 25th Dynasty, the Kushite Pharaohs) — ancient African power at its height.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant, with A haplogroup lineages among the oldest Nubian populations. Maternal: L3, L0 and ancient Nile Valley sub-clades. The Nile Valley sits at the intersection of East African and Northeast African ancient Hebrew haplogroups.'},
+{l:'Ancient Hebrew connections',v:'Kush is named in scripture from the beginning. The Mosaic record states that Moses married a Kushite (Cushite) woman — a Nubian African woman. The Queen of Sheba (Makeda) traveled the Nile Valley route from Ethiopia through Nubia to reach Shlomo. The ancient Nubian temple complexes — including those at Meroe and Napata — document one of the oldest African civilizations on the Nile, contemporaneous with and related to ancient Egyptian and ancient Hebrew civilization. Nubia and the ancient Hebrew covenant record are directly and specifically connected.'},
+{l:'The Nile Valley as African territory',v:'The Nile Valley — from Uganda to the Mediterranean — is African territory. It is a single continuous African geographic corridor. Egypt (Kemet) is the northeast corner of Africa. The Levant is the continuation of that African corridor across the Sinai land bridge. This was not a border between worlds — it was one continuous African zone.'},
+{l:'Identity',v:'The Nubians are an ancient African Hebrew people of the Kushite lineage — directly named in the covenant record. Their history is one of the most documented in the ancient world.'}
+]},
+{id:'tribe-kemet',type:'tribe',title:'Kemet — Ancient Egypt',sub:'Northeast Africa — the Nile Valley civilization',
+keywords:['kemet','egypt','ancient egypt','nile','pharaoh','black egypt','african egypt','northeast africa','e1b1b','l3','ham'],
+fields:[
+{l:'Who they are',v:'The ancient people of Kemet (Egypt) — the Nile Valley civilization of northeast Africa. Ancient Kemet was not a Middle Eastern civilization. It was an African civilization in the northeast corner of the African continent, on the Nile River. The Nile runs from Uganda and Ethiopia northward through Sudan (Nubia/Kush) into Kemet and to the Mediterranean. The ancient Egyptians were African people.'},
+{l:'Haplogroups',v:'Ancient Egyptian skeletal and mummy DNA studies document E1b1b, L haplogroups, and African sub-Saharan markers in ancient Egyptian remains — consistent with a northeast African population. The ancient Egyptians were biologically continuous with the Nubian and East African populations to their south.'},
+{l:'Ancient Hebrew connection',v:'The ancient Hebrews lived in Kemet. The Mosaic record begins with the family of Yaaqov (Jacob) migrating to Kemet during the famine. The ancient Hebrews spent generations in the Nile Valley. Moshe was born African Hebrew — son of Yocheved and Amram, both of the tribe of Levi. He was not adopted into Hebrew identity. He was not raised by Egyptians and made to appear Hebrew. He was born fully Hebrew, placed in the Nile, pulled out by Pharaoh\'s daughter, and raised in the palace — and when Jethro\'s daughters encountered him at the well in Midian, they described him to their father as "an Egyptian man" (Exodus 2:19). Not as a disguised Hebrew. Not as a foreigner. An Egyptian man — because the ancient Hebrews and the ancient Egyptians were the same African people. Moshe could only blend in because he was them. The Exodus was an African Hebrew people leaving Africa through an African land corridor.'},,
+{l:'The Sinai corridor',v:'The Sinai Peninsula is the land bridge connecting northeast Africa to the Levant. It was and is African territory until the Suez Canal — a man-made cut constructed in 1869 CE. Before 1869, there was no water separating Africa from the Levant. The ancient Hebrew journey from Kemet to Canaan was entirely on African and African-adjacent land.'},
+{l:'Identity',v:'Kemet is African. The ancient Hebrews lived in Africa, left Africa through an African land corridor, and settled in land that is geographically African. This is the record.'}
+]},
+/* TRIBES — LEVANTINE AFRICAN ZONE */
+{id:'tribe-canaan',type:'tribe',title:'Ancient Canaan / Levant',sub:'Northeast African territory — the Hebrew homeland in the Levant',
+keywords:['canaan','levant','canaanite','israel','palestine','jordan','lebanon','syria','e1b1b','african territory','sinai'],
+fields:[
+{l:'Geography',v:'The Levant — present-day land of Israel/Palestine, Jordan, Lebanon, and Syria — is the northeastern extension of the African continent. It is connected to Africa by the Sinai land bridge. The Suez Canal (opened 1869 CE) is a man-made waterway that cut this land connection. Before 1869, Africa and the Levant were a single continuous land mass. The ancient Hebrews never left the African continent.'},
+{l:'Who the Canaanites were',v:'The ancient Canaanites were an African-origin Semitic people. The genetic record documents E1b1b in ancient Canaanite skeletal remains from Levantine archaeological sites — the same haplogroup found in East African Hebrew communities today. The Canaanites and ancient Hebrews share deep genetic roots. They were not separate peoples from separate continents — they were related peoples of the same African Semitic root.'},
+{l:'Haplogroups',v:'Ancient Levantine remains (pre-3rd century BCE): E1b1b dominant, J1, and other Afro-Asiatic lineages consistent with African-origin Semitic populations. This is the genetic record of the Levant before the multiple invasions that followed.'},
+{l:'The renaming',v:'The term "Middle East" was coined in the 20th century CE — a geographic category created after colonialism reorganized the world. The ancient world did not have a Middle East. The region was Africa (Kemet, Kush), the Levant (Canaan), and Arabia (the Horn of Africa\'s eastern extension across the Red Sea). The renaming of African territory as "Middle East" was part of the erasure of African civilization from world history.'},
+{l:'Identity',v:'The ancient Hebrew homeland in Canaan was African territory. The ancient Hebrews were an African people living on African-connected land. The modern borders drawn across this region by European colonial powers do not change the ancient geography.'}
+]},
+{id:'tribe-yemenite',type:'tribe',title:'Yemenite Hebrew',sub:'Southern Arabian Peninsula — Red Sea African Hebrew connection',
+keywords:['yemenite','yemen','yemeni','southern arabia','red sea','e1b1b','l3','horn of africa','ancient hebrew','mizrahi'],
+fields:[
+{l:'Who they are',v:'The ancient Hebrew community of Yemen — one of the oldest continuously documented Hebrew communities outside of East Africa. Present in Yemen for over two thousand years before any European religious influence reached the Arabian Peninsula. The Yemenite Hebrews maintained a distinct Torah practice in Arabic (the Yemenite tradition) independent of Rabbinic development for centuries.'},
+{l:'Haplogroups',v:'Paternal: E1b1b dominant — the same ancient Hebrew paternal haplogroup found in Beta Israel and ancient Levantine sites. Maternal: L3 sub-clades — consistent with East African Hebrew maternal lineages. The Yemenite Hebrews carry the same haplogroup signature as Beta Israel.'},
+{l:'The Red Sea corridor',v:'Yemen sits across the Red Sea from the Horn of Africa — the two coasts are visible from each other at the Bab-el-Mandeb strait. This crossing was made by ancient African people for thousands of years before recorded history. The ancient Yemenite Hebrews and the Beta Israel community of Ethiopia are genetically nearly identical — they are the same people separated by the Red Sea crossing. The land connection between Africa and Arabia existed before the Red Sea was fully formed.'},
+{l:'Ancient Hebrew connection',v:'The Queen of Sheba (Makeda) came from a kingdom spanning the Horn of Africa and Yemen. The ancient Sabaean civilization of Yemen was an African-root Semitic civilization. Ancient Hebrew communities in Yemen maintained the Orit-parallel tradition without Talmud for centuries longer than most other communities.'},
+{l:'Identity',v:'The Yemenite Hebrews are an ancient African Hebrew people. Yemen is across a narrow sea from the Horn of Africa — the ancestral connection is documented in their haplogroups, their practice, and their history.'}
+]},
+{id:'tribe-zulu',type:'tribe',title:'Zulu',sub:'Southern Africa — ancient Nguni people',
+keywords:['zulu','south africa','kwazulu-natal','zulu kingdom','nguni','shaka','e1b1a','l1','l2'],
+fields:[
+{l:'Who they are',v:'The Zulu people of KwaZulu-Natal, South Africa — approximately 12 million people, the largest ethnic group in South Africa. The Zulu Kingdom under Shaka kaSenzangakhona (early 19th century CE) was one of the most militarily powerful states in African history, successfully resisting British colonial forces at the Battle of Isandlwana (1879) — the largest defeat of the British army by an African force.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant with some B2 lineages (among the oldest southern African Nguni haplogroups). Maternal: L1, L2 sub-clades. Southern African Nguni haplogroup pattern.'},
+{l:'Ancient Hebrew connections',v:'The Zulu and broader Nguni cultural complex maintains ancient pastoral traditions, cattle-based wealth and ceremony, circumcision (historically practiced in some Nguni groups), and a complex system of clan identity and lineage preservation. The Zulu ukuhlambulula (purification) ceremonies maintain ancient purity practice parallels. The Zulu lived in proximity to the Lemba — who carry documented ancient Hebrew priestly lineage — and share the southern African ancient population zone.'},
+{l:'Identity',v:'The Zulu are an ancient African people of the southern African zone that also produced the Lemba and the San/Khoisan — two of the most genetically significant Hebrew-connected populations on earth.'}
+]},
+{id:'tribe-xhosa',type:'tribe',title:'Xhosa',sub:'Southern Africa — ancient Cape Nguni people',
+keywords:['xhosa','south africa','eastern cape','nguni','xhosaland','nelson mandela','e1b1a','l0','l1'],
+fields:[
+{l:'Who they are',v:'The Xhosa people of the Eastern Cape of South Africa — approximately 9 million people. The Xhosa are part of the Nguni language group and have occupied the Eastern Cape coast for over a thousand years. Nelson Mandela was Xhosa — from the Thembu clan of the Xhosa people.'},
+{l:'Haplogroups',v:'Paternal: E1b1a, with B haplogroup lineages among some eastern Xhosa populations indicating ancient San/Khoisan admixture. Maternal: L0, L1, L2 — the Xhosa carry some of the oldest maternal haplogroups on earth through their San/Khoisan ancestry.'},
+{l:'Ancient Hebrew connections',v:'The Xhosa initiation tradition — Ulwaluko — is one of the most thoroughly documented and strictly maintained circumcision initiation traditions in the world. Male circumcision at the transition to adulthood is practiced with the same gravity as any ancient Hebrew circumcision tradition. The Xhosa maintain strict clan-based identity and lineage memory across generations. The click consonant languages of the Xhosa carry San/Khoisan linguistic influence — connecting them to the most ancient human population on earth.'},
+{l:'Identity',v:'The Xhosa are an ancient African people carrying some of the oldest maternal haplogroups on earth (L0 through San/Khoisan ancestry) and maintaining ancient circumcision and lineage traditions.'}
+]},
+{id:'tribe-venda',type:'tribe',title:'Venda',sub:'Limpopo — neighbors and relatives of the Lemba',
+keywords:['venda','limpopo','south africa','zimbabwe','vhavenda','lemba','tshivenda','e1b1a','e1b1b'],
+fields:[
+{l:'Who they are',v:'The Venda people of the Limpopo province of South Africa and southern Zimbabwe — approximately 1.2 million people. The Venda homeland is the Soutpansberg mountain range and the Limpopo River valley — the same zone where the Lemba people live. The Venda and Lemba share territory, intermarriage history, and are closely related communities.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant, with E1b1b present — reflecting proximity to East African Hebrew haplogroup populations. Maternal: L1, L2 sub-clades.'},
+{l:'Ancient Hebrew connections',v:'The Venda are close neighbors of the Lemba, who carry documented ancient Hebrew priestly lineage (J1-P58 Buba clan). The two communities have interacted across centuries. The Venda maintain the Domba — a coming-of-age ceremony that involves structured community participation, ancient musical tradition (the mbila/marimba), and lineage preservation practices. The Lake Funduzi — a sacred lake in Venda territory — has maintained taboo status as a protected sacred site across centuries.'},
+{l:'Identity',v:'The Venda are an ancient African people who share territory and heritage with the Lemba — one of the most genetically documented ancient Hebrew communities on the continent.'}
+]},
+{id:'tribe-shona',type:'tribe',title:'Shona',sub:'Zimbabwe — builders of Great Zimbabwe',
+keywords:['shona','zimbabwe','great zimbabwe','karanga','rozvi','zezuru','e1b1a','e1b1b'],
+fields:[
+{l:'Who they are',v:'The Shona people of Zimbabwe — approximately 12 million people, the largest ethnic group in Zimbabwe. The Shona are the builders of Great Zimbabwe — one of the largest ancient stone structures in sub-Saharan Africa, a city that housed an estimated 18,000 people at its peak (11th–15th century CE). Great Zimbabwe was a center of the trans-Indian Ocean gold trade.'},
+{l:'Haplogroups',v:'Paternal: E1b1a dominant, with E1b1b present in some Shona sub-groups. Maternal: L1, L2 sub-clades.'},
+{l:'Ancient Hebrew connections',v:'Great Zimbabwe demonstrates that the ancient Shona built a sophisticated stone city civilization without external instruction — African architectural and organizational genius. The Shona live in proximity to the Lemba, who carry documented ancient Hebrew priestly lineage and whose oral tradition places their origin in the ancient Hebrew migration route through East Africa. Some researchers have proposed that Great Zimbabwe\'s construction is linked to Lemba ancestry.'},
+{l:'Identity',v:'The Shona are an ancient African people, builders of one of the greatest ancient African cities. Great Zimbabwe stood long before European colonial contact and is entirely African in origin, design, and construction.'}
+]},
+/* CAPTIVITY — TRANSATLANTIC */
+{id:'cap-devarim',type:'captivity',title:'Devarim 28 — The Covenant Warning',sub:'The ancient Hebrew text that describes the transatlantic captivity by name',
+keywords:['devarim','deuteronomy','28','captivity','slave trade','ships','yoke','iron','curse','covenant','prophecy'],
+fields:[
+{l:'What this is',v:'Devarim (Deuteronomy) 28:15-68 is the covenant warning given to the ancient Hebrew people before they entered the land. It describes in precise detail what would happen if the Hebrew people violated the covenant. The text was written thousands of years before the transatlantic captivity occurred. It describes that captivity with specificity.'},
+{l:'The specific language',v:'Verse 68: "And the LORD shall bring thee into Egypt again with ships, by the way whereof I spake unto thee, Thou shalt see it no more again: and there ye shall be sold unto your enemies for bondmen and bondwomen, and no man shall buy you." Ships. Egypt as a symbolic name for captivity. Sold to enemies. These are not general statements — they describe the specific mechanics of the transatlantic slave trade.'},
+{l:'Iron yoke and conditions',v:'Verse 48: "...and he shall put a yoke of iron upon thy neck, until he have destroyed thee." The iron neck collar and iron yoke were literal instruments used in the transatlantic slave trade. Verse 41: "Thou shalt beget sons and daughters, but thou shalt not enjoy them; for they shall go into captivity." Family separation was a defining feature of the transatlantic slave trade.'},
+{l:'The ships',v:'Verse 68 specifically names ships as the mechanism of return to "Egypt" — the symbolic Egypt of covenant captivity. The transatlantic slave trade operated entirely by ship. No other captivity in ancient Hebrew history matches this detail.'},
+{l:'What this means',v:'The people taken in the transatlantic slave trade are the ancient Hebrew people described in Devarim 28. The text matches the history. The haplogroups of the people taken (E1b1a — the West African branch of the ancient Hebrew E1b1 lineage) match the genetic record. This is not one piece of evidence. It is the covenant text matching the historical record matching the genetic record.'}
+]},
+{id:'cap-senegambia',type:'captivity',title:'Senegambia',sub:'Wolof, Mandinka, Fula — South Carolina, Chesapeake, Caribbean',
+keywords:['senegambia','senegal','gambia','wolof','mandinka','fula','goree','saint-louis','south carolina','chesapeake','rice','e1b1a'],
+fields:[
+{l:'Zone',v:'The Senegambian coast — present-day Senegal and Gambia. One of the earliest zones hit by the transatlantic captivity, beginning in the 15th century CE.'},
+{l:'People taken',v:'Wolof, Mandinka (Mandingo), Fula (Fulani), Serer, and related West African Hebrew peoples of the Senegambian zone. E1b1a paternal lineage dominant.'},
+{l:'Departure points',v:'Gorée Island (Senegal) — the most documented departure point of the Senegambian zone. The House of Slaves on Gorée Island contains the "Door of No Return" through which hundreds of thousands passed. Saint-Louis (Senegal) — northern Senegambian coast departure point.'},
+{l:'Destinations',v:'South Carolina and Georgia — Senegambian people were specifically sought for South Carolina rice plantations because of their expert knowledge of rice cultivation. Senegambia is a major rice-growing region. Virginia and the Chesapeake Bay region. Jamaica and the Caribbean. The Gullah/Geechee people of the South Carolina and Georgia Sea Islands are primarily of Senegambian descent and preserved the most intact African cultural memory on the North American mainland.'},
+{l:'Haplogroup in the diaspora',v:'African Americans of Senegambian descent carry E1b1a paternal lineage and L1/L2 maternal lineages — the haplogroups of the Wolof, Mandinka, and Fula West African Hebrew peoples.'}
+]},
+{id:'cap-goldcoast',type:'captivity',title:'Gold Coast',sub:'Akan, Ashanti, Fante — Jamaica, Virginia, South Carolina',
+keywords:['gold coast','ghana','akan','ashanti','fante','akyem','elmina','cape coast','jamaica','virginia','carolinas','e1b1a','l2'],
+fields:[
+{l:'Zone',v:'The Gold Coast — present-day Ghana. The coast was named for the gold that the African people there produced. Two of the largest slave fortresses in history were built on this coast: Elmina Castle and Cape Coast Castle.'},
+{l:'People taken',v:'Akan people — Ashanti, Fante, Akyem, Bono, Akuapem. The Akan are a West African Hebrew people (E1b1a paternal, L2 maternal) with documented ancient practice parallels to the Hebrew record.'},
+{l:'Departure points',v:'Elmina Castle (built 1482 CE) — the oldest European building in sub-Saharan Africa, built by Portuguese on the Gold Coast. Estimated 30,000 people per year passed through Elmina at its peak. Cape Coast Castle — the British headquarters of the Gold Coast slave trade, directly adjacent to Elmina. Both castles contain dungeons where captives were held below the chapel where European captors worshipped.'},
+{l:'Destinations',v:'Jamaica received a very high proportion of Akan/Gold Coast captives — the Maroon communities of Jamaica (Accompong in the west, Nanny Town in the east) were significantly Akan in composition and maintained armed resistance to enslavement. Virginia, South Carolina, and Chesapeake region. Barbados. The Coromantee (a term derived from Koromantin, a town on the Gold Coast) is a historical name for Akan captives in Jamaica.'},
+{l:'Haplogroup in the diaspora',v:'African Americans and Jamaicans of Gold Coast descent carry E1b1a paternal lineage and L2 maternal lineages — the haplogroups of the Akan West African Hebrew peoples.'}
+]},
+{id:'cap-biafra',type:'captivity',title:'Bight of Biafra',sub:'Igbo, Efik, Ibibio — Jamaica, Virginia, Maryland',
+keywords:['bight of biafra','igbo','efik','ibibio','calabar','bonny','nigeria','jamaica','virginia','maryland','e1b1a','l2'],
+fields:[
+{l:'Zone',v:'The Bight of Biafra — the Niger Delta and southeastern Nigerian coast. Present-day southeastern Nigeria. This was the primary zone from which the Igbo people — the largest African population with documented ancient Hebrew traditions — were taken.'},
+{l:'People taken',v:'Igbo, Efik, Ibibio, and related southeastern Nigerian peoples. The Igbo are a West African Hebrew people (E1b1a paternal, L2 maternal) who practice 8th-day circumcision, Sabbath, food laws, and maintain oral tradition of Hebrew origin. Approximately 45 million Igbo people are alive today.'},
+{l:'Departure points',v:'Bonny (in present-day Rivers State, Nigeria) — one of the highest-volume departure ports of the entire transatlantic captivity. Calabar (Cross River State, Nigeria) — second major Biafra zone departure point. The Efik slave traders of Calabar were intermediaries between the European ships and the inland communities.'},
+{l:'Destinations',v:'Jamaica — Igbo are one of the most documented groups in Jamaican captivity records. The Eboe (Igbo) are specifically named in Jamaican colonial records. Virginia and Maryland — Igbo are documented in Virginia colonial records, where they were known as "Ebo." The Igbo Landing incident (1803 CE, St. Simons Island, Georgia) — a group of Igbo captives who had seized their ship walked into the water en masse rather than submit to enslavement. This event is documented in historical record.'},
+{l:'Haplogroup in the diaspora',v:'African Americans of Biafra descent carry E1b1a paternal lineage and L2 maternal lineages — the haplogroups of the Igbo West African Hebrew people. When African Americans receive "Nigerian" results from admixture tests, significant Igbo ancestry is among the most probable sources.'}
+]},
+{id:'cap-benin',type:'captivity',title:'Bight of Benin',sub:'Yoruba, Ewe, Fon — Brazil, Haiti, Cuba, Caribbean',
+keywords:['bight of benin','yoruba','ewe','fon','dahomey','ouidah','slave coast','brazil','haiti','cuba','trinidad','e1b1a','l2'],
+fields:[
+{l:'Zone',v:'The Bight of Benin — the coast of present-day Benin, Togo, and western Nigeria. This was historically called the Slave Coast by European raiders, naming it for what they did there. It was the Yoruba, Ewe, and Fon Hebrew peoples who were taken from this coast.'},
+{l:'People taken',v:'Yoruba, Ewe, Fon, Aja, and related West African Hebrew peoples. The Yoruba are one of the largest African ethnic groups with documented ancient Hebrew parallels. E1b1a paternal, L2 maternal.'},
+{l:'Departure points',v:'Ouidah (present-day Benin) — an estimated 1 million people were taken from this single port, making it one of the highest-volume departure points in the history of the transatlantic captivity. Badagry (present-day Nigeria, Lagos zone) — another Bight of Benin departure point.'},
+{l:'Destinations',v:'Brazil — the Bight of Benin was the primary source of captives to Bahia, Brazil, where Candomble (a practice preserving Yoruba spiritual tradition and language) survives today. Haiti — the Fon and Ewe are the primary source community for Haitian Vodou, which preserved the names and attributes of African spiritual figures through the captivity. Cuba — Yoruba tradition survived as Lucumi/Santeria in Cuba, where Yoruba language is preserved in ceremonial practice. Trinidad and the broader Caribbean.'},
+{l:'Haplogroup in the diaspora',v:'African Americans, Brazilians, Haitians, and Cubans of Bight of Benin descent carry E1b1a paternal and L2 maternal lineages — the haplogroups of Yoruba, Ewe, and Fon West African Hebrew peoples.'}
+]},
+{id:'cap-angola',type:'captivity',title:'Angola / Kongo',sub:'Bakongo, Mbundu, Kimbundu — Brazil, Virginia, Caribbean',
+keywords:['angola','kongo','congo','bakongo','mbundu','kimbundu','luanda','loango','brazil','virginia','e1b1a','l1'],
+fields:[
+{l:'Zone',v:'The Angolan and Congo coast — present-day Angola and the Republic of Congo. This was the highest-volume captivity zone over the entire period of the transatlantic slave trade. More people were taken from this region than from any other zone.'},
+{l:'People taken',v:'Bakongo, Mbundu (Kimbundu-speaking), Ovimbundu, and related Central African peoples. E1b1a paternal dominant. Maternal: L1 sub-clades prevalent in Central Africa.'},
+{l:'Departure points',v:'Luanda (present-day capital of Angola) — the single largest departure point for the transatlantic captivity. An estimated 2–4 million people were taken through Luanda across the full period of the trade. Loango — northern Kongo coast departure point.'},
+{l:'Destinations',v:'Brazil — the Angola/Kongo zone was the dominant source for Brazil, which received more captives than any other destination in the transatlantic slave trade (estimated 4–5 million total). Virginia and the Chesapeake Bay — Angola/Kongo captives are documented in the earliest Virginia colonial records. The Caribbean broadly. Kongo cultural and linguistic traces survive in African American culture across the southeastern United States.'},
+{l:'Haplogroup in the diaspora',v:'African Americans of Angola/Kongo descent carry E1b1a paternal and L1 maternal lineages — the haplogroups of the Bakongo and Mbundu Central African peoples.'}
+]},
+{id:'cap-elmina',type:'captivity',title:'Elmina Castle',sub:'Ghana — the oldest slave fort in sub-Saharan Africa',
+keywords:['elmina','ghana','slave castle','gold coast','portuguese','british','castle','e1b1a','akan','ashanti'],
+fields:[
+{l:'Location',v:'Cape Coast, Ghana (formerly the Gold Coast). Built 1482 CE by the Portuguese — making it the oldest European building in sub-Saharan Africa.'},
+{l:'Function',v:'Elmina Castle was a slave dungeon and departure point. The castle contained male and female dungeons below the level of the ocean, where captives were held in darkness, disease, and starvation before being loaded onto ships. The governor\'s quarters and Christian chapel were built directly above the female dungeon.'},
+{l:'People taken through Elmina',v:'Primarily Akan people — Ashanti, Fante, and related Gold Coast West African Hebrew peoples. E1b1a paternal, L2 maternal. The Akan carry West African ancient Hebrew haplogroups and extensive Hebrew practice parallels.'},
+{l:'Scale',v:'Elmina processed an estimated 30,000 people per year at its peak. Across its operational period (1482–1814 CE), hundreds of thousands of African Hebrew people passed through its dungeons to the ships.'},
+{l:'Today',v:'Elmina Castle stands today as a UNESCO World Heritage Site. The Door of No Return — through which captives walked to the ships — still stands. African diaspora people from across the world travel to Elmina to walk that same ground.'}
+]},
+{id:'cap-goree',type:'captivity',title:'Gorée Island',sub:'Senegal — House of Slaves departure point',
+keywords:['goree','gorée','senegal','dakar','house of slaves','senegambia','wolof','mandinka','door of no return','e1b1a'],
+fields:[
+{l:'Location',v:'Gorée Island, off the coast of Dakar, Senegal. The island sits at the westernmost point of the African continent — the last land an African Hebrew person would see before the Atlantic crossing.'},
+{l:'Function',v:'Gorée Island was a slave-holding and departure point for the Senegambian captivity zone. The Maison des Esclaves (House of Slaves) on Gorée Island contains the most documented "Door of No Return" in the history of the transatlantic captivity — the doorway through which captives stepped onto ships.'},
+{l:'People taken through Gorée',v:'Wolof, Mandinka, Fula, Serer — West African Hebrew peoples of the Senegambian zone. E1b1a paternal, L1/L2 maternal.'},
+{l:'Today',v:'Gorée Island is a UNESCO World Heritage Site. Multiple heads of state and diaspora leaders have stood at the Door of No Return. The House of Slaves is the most visited historical site in Senegal.'}
+]},
+{id:'cap-ouidah',type:'captivity',title:'Ouidah',sub:'Benin — highest-volume departure point of the Slave Coast',
+keywords:['ouidah','benin','dahomey','fon','yoruba','ewe','slave coast','brazil','haiti','e1b1a','l2'],
+fields:[
+{l:'Location',v:'Ouidah, present-day Benin (formerly Dahomey). On the Bight of Benin coast, historically called the Slave Coast.'},
+{l:'Function',v:'Ouidah was the primary departure point for the Fon, Ewe, and Yoruba West African Hebrew peoples. The Dahomey Kingdom controlled the trade through Ouidah and was coerced and incentivized by European powers to supply captives from the interior. An estimated 1 million people left through Ouidah alone.'},
+{l:'People taken through Ouidah',v:'Fon, Ewe, Yoruba, Aja — the West African Hebrew peoples of the Bight of Benin zone. E1b1a paternal, L2 maternal.'},
+{l:'Route of No Return',v:'Ouidah has a documented 3-kilometer "Route of No Return" — the road captives walked from the holding point to the beach where ships waited. At the end of the route stands the Gate of No Return, marking the final point of departure.'},
+{l:'Today',v:'The Route of No Return is a historical memorial in Ouidah. Brazil — whose population of African descent is the largest outside Africa — traces significant ancestry to the Ouidah departure zone.'}
+]},
+{id:'cap-jamaica',type:'captivity',title:'Jamaica',sub:'Primary destination — Igbo, Akan, Bight of Benin',
+keywords:['jamaica','caribbean','igbo','akan','coromantee','eboe','bight of biafra','gold coast','e1b1a','l2','maroon'],
+fields:[
+{l:'Primary source regions',v:'Bight of Biafra (Igbo/Efik) and Gold Coast (Akan/Ashanti/Fante) were the two dominant source zones for Jamaica. The Igbo are named as "Eboe" in Jamaican colonial records. The Akan are named as "Coromantee" (from the town of Koromantin on the Gold Coast).'},
+{l:'Haplogroups',v:'Jamaicans of African descent primarily carry E1b1a paternal and L2 maternal lineages — the haplogroups of Igbo and Akan West African Hebrew peoples.'},
+{l:'The Maroons',v:'The Jamaican Maroon communities — led by figures including Nanny of the Maroons (Akan/Ashanti tradition) — maintained armed independence from British colonial power in the Blue Mountains of Jamaica. The Maroons are primarily Akan in origin. Nanny Town (now Nanny\'s Town, Portland Parish) and Accompong (St. Elizabeth Parish) were Maroon strongholds. The Maroons fought and won treaty rights from the British in 1739–1740 CE.'},
+{l:'The Hebrew connection',v:'Jamaica\'s population of African descent is predominantly Igbo and Akan — two of the largest African Hebrew peoples. The Igbo practiced 8th-day circumcision, Sabbath, and food laws. The Akan practiced structured community law and preserved ancient calendar tradition. The African Hebrew people taken to Jamaica brought their identity with them.'}
+]},
+{id:'cap-brazil',type:'captivity',title:'Brazil',sub:'Largest diaspora destination — Angola/Kongo and Bight of Benin dominant',
+keywords:['brazil','bahia','rio','angola','kongo','yoruba','candomble','e1b1a','l1','l2','portuguese'],
+fields:[
+{l:'Primary source regions',v:'Angola/Kongo zone (largest single source) and Bight of Benin (Yoruba, Fon, Ewe). Brazil received an estimated 4–5 million African people across the period of the transatlantic captivity — more than any other destination.'},
+{l:'Haplogroups',v:'Afro-Brazilians carry E1b1a paternal dominant (with L1 maternal from Angola/Kongo zone and L2 maternal from Bight of Benin/Yoruba zone). The largest African genetic population outside Africa carries West African Hebrew haplogroups.'},
+{l:'Cultural preservation',v:'Candomble — the Yoruba-derived spiritual practice of Bahia — preserves Yoruba language in ceremonial context and maintains the identities of Yoruba spiritual figures (Orishas) under names continuous with the Yoruba oral tradition. This is among the most intact African cultural preservation in the entire diaspora. The Quilombo communities of Brazil — autonomous African communities that fought for and maintained independence — the most famous being Quilombo dos Palmares (late 17th century CE), which housed an estimated 30,000 people at its peak.'},
+{l:'The Hebrew connection',v:'Brazil\'s African population descends primarily from Angola/Kongo and Yoruba West African Hebrew peoples — carrying E1b1a, the West African branch of the ancient Hebrew paternal lineage, and community traditions with documented ancient Hebrew parallels.'}
+]},
+{id:'cap-haiti',type:'captivity',title:'Haiti',sub:'Fon and Ewe — Bight of Benin dominant, Haitian Revolution',
+keywords:['haiti','saint domingue','fon','ewe','vodou','bight of benin','haitian revolution','e1b1a','l2'],
+fields:[
+{l:'Primary source regions',v:'Bight of Benin dominant — Fon, Ewe, and Yoruba peoples. Also Kongo and other Central African peoples. Haiti (then Saint-Domingue) was the wealthiest colony in the Caribbean before the Haitian Revolution.'},
+{l:'Haplogroups',v:'Haitians of African descent carry E1b1a paternal and L2 maternal lineages dominant — the haplogroups of Fon, Ewe, and Yoruba West African Hebrew peoples.'},
+{l:'The Haitian Revolution',v:'The Haitian Revolution (1791–1804 CE) was the only successful large-scale slave revolt in history that resulted in the founding of a new nation. The revolution was initiated at the Bois Caiman ceremony (August 1791 CE) — led by Dutty Boukman and Cecile Fatiman. The revolution produced the first Black republic in the world and the first nation in the Western Hemisphere to permanently abolish slavery. The people who carried out this revolution were West African Hebrew peoples — primarily Fon and Ewe from the Bight of Benin zone.'},
+{l:'Cultural preservation',v:'Haitian Vodou preserves Fon and Ewe spiritual names, ceremonial structures, and community organization through the captivity. It is a living record of the West African Hebrew community knowledge of the Fon and Ewe people.'},
+{l:'The Hebrew connection',v:'The people who defeated Napoleon\'s army and established the first Black republic were West African Hebrew people carrying E1b1a — the ancient Hebrew West African paternal lineage.'}
+]},
+{id:'cap-southcarolina',type:'captivity',title:'South Carolina and Georgia',sub:'Senegambia and Bight of Biafra — Gullah/Geechee people',
+keywords:['south carolina','georgia','gullah','geechee','senegambia','igbo','sea islands','rice','charleston','e1b1a','l2','l1'],
+fields:[
+{l:'Primary source regions',v:'Senegambia dominant (for the rice coast of South Carolina/Georgia) and Bight of Biafra (Igbo/Efik). Charleston, South Carolina was the largest point of entry for African captives in North America.'},
+{l:'Haplogroups',v:'African Americans of the South Carolina/Georgia lowcountry carry E1b1a paternal and L1/L2 maternal lineages — consistent with Senegambian (Wolof, Mandinka, Fula) and Biafran (Igbo) West African Hebrew peoples.'},
+{l:'The Gullah/Geechee people',v:'The Gullah (South Carolina Sea Islands) and Geechee (Georgia Sea Islands) people preserved the most intact African cultural and linguistic tradition on the North American mainland. Gullah preserves Senegambian vocabulary, naming traditions, basket weaving techniques (the coiled sweetgrass basket is directly descended from Senegambian tradition), rice cultivation knowledge, and community organization patterns. The Gullah language is a creole that retains recognizable West African phonology and vocabulary.'},
+{l:'Igbo Landing (1803 CE)',v:'On St. Simons Island, Georgia, a group of Igbo captives who had seized control of their transport vessel walked into the water of Dunbar Creek rather than submit to enslavement. This event — Igbo Landing — is documented in historical record and is among the most significant acts of resistance in the history of the transatlantic captivity. The Igbo people who walked into that water were an ancient African Hebrew people.'},
+{l:'The Hebrew connection',v:'The Gullah/Geechee people are the most culturally continuous African diaspora community on the North American mainland — descended from Senegambian and Igbo West African Hebrew peoples.'}
+]}
+];
+var dnaCurrentFilter='all';
+function setDNAFilter(f){
+  dnaCurrentFilter=f;
+  document.querySelectorAll('.dna-pill').forEach(function(p){p.classList.toggle('active',p.dataset.df===f);});
+  filterDNA();
+}
+function filterDNA(){
+  var raw=(document.getElementById('dna-input').value||'').trim();
+  var q=raw.toLowerCase();
+  var grid=document.getElementById('dna-grid');
+  var countEl=document.getElementById('dna-count');
+  var chainRow=document.getElementById('dna-chain-row');
+  chainRow.style.display='none';
+  chainRow.innerHTML='';
+  /* percentage query detection */
+  var pctMatch=q.match(/(\d+\.?\d*)\s*%\s*(.+)/);
+  var entries;
+  if(pctMatch){
+    var region=pctMatch[2].toLowerCase().trim();
+    entries=DNA_DATA.filter(function(e){
+      return e.type==='guide'&&e.id==='percentdecoder'||e.keywords.some(function(k){return k.indexOf(region)>=0;});
+    });
+    if(!entries.length) entries=DNA_DATA.filter(function(e){return e.id==='percentdecoder';});
+  } else {
+    entries=DNA_DATA.filter(function(e){
+      var typeOk=dnaCurrentFilter==='all'||e.type===dnaCurrentFilter;
+      if(!typeOk) return false;
+      if(!q) return true;
+      return e.title.toLowerCase().indexOf(q)>=0||e.sub.toLowerCase().indexOf(q)>=0||e.keywords.some(function(k){return k.indexOf(q)>=0;});
+    });
+    /* show chain for first haplogroup result */
+    if(entries.length&&entries[0].chain&&entries[0].chain.length>1){
+      var ch=entries[0].chain;
+      var html='<span class="dna-chain-lbl">Lineage</span>';
+      ch.forEach(function(step,i){
+        var isCurr=i===ch.length-1;
+        html+='<span class="dna-chain-step'+(isCurr?' dna-chain-curr':'')+'">'+step+'</span>';
+        if(i<ch.length-1) html+='<span class="dna-chain-arr">&#8594;</span>';
+      });
+      chainRow.innerHTML=html;
+      chainRow.style.display='flex';
+    }
+  }
+  countEl.textContent=entries.length+' result'+(entries.length===1?'':'s');
+  if(!entries.length){
+    grid.innerHTML='<div class="dna-empty">No results for "'+raw+'"</div>';
+    return;
+  }
+  grid.innerHTML=entries.map(function(e){
+    var badgeClass='dna-b-'+e.type;
+    var badgeLabel={maternal:'Maternal mtDNA',paternal:'Paternal Y-DNA',community:'Community',region:'Region',study:'Study',guide:'Guide',decoder:'Decoder'}[e.type]||e.type;
+    var fieldsHtml=e.fields.map(function(f){
+      return '<div class="dna-field"><div class="dna-lbl">'+f.l+'</div><div class="dna-val">'+f.v+'</div></div>';
+    }).join('<hr class="dna-sep">');
+    return '<div class="dna-card">'
+      +'<div class="dna-card-top">'
+        +'<div><div class="dna-card-title">'+e.title+'</div><div class="dna-card-sub">'+e.sub+'</div></div>'
+        +'<span class="dna-badge '+badgeClass+'">'+badgeLabel+'</span>'
+      +'</div>'
+      +fieldsHtml
+    +'</div>';
+  }).join('');
+}
+window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
 (function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='search_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();
 </script>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
