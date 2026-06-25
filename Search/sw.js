@@ -1,4 +1,4 @@
-var CACHE = 'acr-search-v91';
+var CACHE = 'acr-search-v92';
 var FILES = [
   './',
   './index.html',
