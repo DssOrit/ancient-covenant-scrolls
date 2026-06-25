@@ -1176,18 +1176,18 @@ select.form-input option { background: var(--surface2); }
 // The year 2025: Solar Year starts approx March 20 (spring equinox)
 
 var SOLAR_MONTHS = [
-  {num:1, name:'Aviv', season:'Spring', days:30},
-  {num:2, name:'Ziv', season:'Spring', days:30},
-  {num:3, name:'Sivan', season:'Spring', days:31},
-  {num:4, name:'Tammuz', season:'Summer', days:30},
-  {num:5, name:'Av', season:'Summer', days:30},
-  {num:6, name:'Elul', season:'Summer', days:31},
-  {num:7, name:'Ethanim', season:'Autumn', days:30},
-  {num:8, name:'Bul', season:'Autumn', days:30},
-  {num:9, name:'Kislev', season:'Autumn', days:31},
-  {num:10, name:'Tevet', season:'Winter', days:30},
-  {num:11, name:'Shevat', season:'Winter', days:30},
-  {num:12, name:'Adar', season:'Winter', days:31}
+  {num:1,  name:'Aviv',     abbr:'Avi', season:'Spring', days:30},
+  {num:2,  name:'Ziv',      abbr:'Ziv', season:'Spring', days:30},
+  {num:3,  name:'Third',    abbr:'3rd', season:'Spring', days:31},
+  {num:4,  name:'Fourth',   abbr:'4th', season:'Summer', days:30},
+  {num:5,  name:'Fifth',    abbr:'5th', season:'Summer', days:30},
+  {num:6,  name:'Sixth',    abbr:'6th', season:'Summer', days:31},
+  {num:7,  name:'Ethanim',  abbr:'Eth', season:'Autumn', days:30},
+  {num:8,  name:'Bul',      abbr:'Bul', season:'Autumn', days:30},
+  {num:9,  name:'Ninth',    abbr:'9th', season:'Autumn', days:31},
+  {num:10, name:'Tenth',    abbr:'10th', season:'Winter', days:30},
+  {num:11, name:'Eleventh', abbr:'11th', season:'Winter', days:30},
+  {num:12, name:'Twelfth',  abbr:'12th', season:'Winter', days:31}
 ];
 
 var SEASON_COLORS = {
@@ -1200,6 +1200,10 @@ function getSolarYearStart(year) {
   // Spring equinox is approx March 20-21
   // For precision, use March 20 as the anchor
   return new Date(year, 2, 20); // March 20
+}
+
+function getHebrewSolarYear(solarYear) {
+  return solarYear + 3760;
 }
 
 // Convert Gregorian date to solar calendar date
@@ -1370,8 +1374,12 @@ function renderMonth() {
 
   // Solar month sub
   var solarM = gregorianToSolar(new Date(viewDate.getFullYear(), viewDate.getMonth(), 15));
+  var solarMEntry = SOLAR_MONTHS[solarM.month-1];
+  var namedMonths = [1,2,7,8];
+  var solarMFullName = namedMonths.indexOf(solarMEntry.num) !== -1
+    ? solarMEntry.name : solarMEntry.name + ' Month';
   document.getElementById('solar-month-sub').textContent =
-    'Solar Month ' + solarM.month + ' — ' + SOLAR_MONTHS[solarM.month-1].name + ' (' + season + ')';
+    'Month ' + solarM.month + ' — ' + solarMFullName + ' — Hebrew Year ' + getHebrewSolarYear(solarM.year);
 
   // Season dot
   document.getElementById('season-dot').style.background = seasonColor;
@@ -1379,7 +1387,7 @@ function renderMonth() {
   // Solar info
   var solToday = gregorianToSolar(today);
   document.getElementById('sol-name-text').textContent =
-    season + ' — Solar Year ' + solToday.year + ' — Day ' + solToday.dayOfYear + ' of 364';
+    season + ' — Year ' + getHebrewSolarYear(solToday.year) + ' — Day ' + solToday.dayOfYear + ' of 364';
   document.getElementById('sol-day-count').textContent = solToday.dayOfYear;
 
   // Build grid
@@ -1630,7 +1638,7 @@ function renderAgenda() {
       item.innerHTML =
         '<div class="agenda-date" style="' + (isToday ? 'color:' + evt.color : '') + '">' +
           '<div class="ad-day">' + evt.day + '</div>' +
-          '<div class="ad-dow">' + mInfo.name.substring(0,3) + '</div>' +
+          '<div class="ad-dow">' + (mInfo.abbr || mInfo.name.substring(0,3)) + '</div>' +
         '</div>' +
         '<div class="agenda-dot" style="background:' + evt.color + ';min-height:48px;"></div>' +
         '<div class="agenda-info">' +
@@ -1822,7 +1830,7 @@ function renderUpcomingEves() {
 
 function renderYear() {
   var year = viewDate.getFullYear();
-  document.getElementById('year-title').textContent = year;
+  document.getElementById('year-title').textContent = year + '  —  Hebrew Year ' + (year + 3760);
 
   var grid = document.getElementById('year-grid');
   grid.innerHTML = '';
