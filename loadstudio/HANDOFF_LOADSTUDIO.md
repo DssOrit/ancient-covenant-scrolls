@@ -161,7 +161,7 @@ Pattern ported from Load Main:
 | LS-4 | **Help & Guided Tour content** | Drawer item exists, splash tour exists, per-section walkthroughs are empty. |
 | LS-5 | **Editor extraction** | `lseditor.js` is a wholesale copy of `load/load.js` (~870 KB). Long-term: extract just the openVideoEditor subgraph to a smaller module. Not blocking. |
 | LS-6 | **Cover button on editor track rail** | Has SVG icon now but its click handler in `load.js` (~line 13377) navigates to a Load Main cover-designer screen that doesn't exist in LoadStudio. Either implement a LoadStudio cover designer or hide the button when `body.ls-host`. |
-| LS-7 | **Save draft / IndexedDB schema** | The editor's "Save draft" writes to Load Main's IDB schema. In LoadStudio context this creates a new IDB at `dssorit.github.io` origin scope per-PWA. Drafts don't sync between Load Main and LoadStudio (each lives in its own IDB). |
+| LS-7 | **Save draft / IndexedDB schema** | The editor's "Save draft" writes to Load Main's IDB schema. In LoadStudio context this creates a new IDB at `acrscrolls.com` origin scope per-PWA. Drafts don't sync between Load Main and LoadStudio (each lives in its own IDB). |
 
 ---
 
