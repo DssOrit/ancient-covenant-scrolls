@@ -480,6 +480,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .guide-sec-title{font-size:13px;font-weight:700;color:#fff;flex:1}
 .guide-speak-btn{background:none;border:1px solid #2a2a2a;border-radius:7px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--tx2);font-size:16px;cursor:pointer;flex-shrink:0;transition:all 0.15s}
 .guide-speak-btn:hover,.guide-speak-btn.speaking{border-color:var(--gold);color:var(--gold)}
+.hr-speak-btn{background:none;border:1px solid #2a2a2a;border-radius:6px;padding:4px 7px;cursor:pointer;color:var(--tx2);font-size:13px;display:flex;align-items:center;gap:4px;margin-top:6px;transition:all 0.15s;line-height:1}
+.hr-speak-btn:active,.hr-speak-btn.speaking{border-color:var(--gold);color:var(--gold)}
 .guide-sec-body{display:none;padding:0 13px 14px}
 .guide-step{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
 .guide-step-num{width:24px;height:24px;border-radius:50%;background:rgba(200,151,31,0.15);border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
@@ -1137,6 +1139,46 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">The search runs instantly across the full 21,000-passage corpus and all Covenant Record passages simultaneously. No network required, works completely offline.</div></div>
           <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Covenant Record matches show with fulfillment status badges and an <b>Open in Record</b> button. Corpus matches show standard cards with Verse DNA access.</div></div>
           <div class="guide-tip">Tip: Use multiple keywords for precision, "ships slave trade" finds more specific matches than "ships" alone.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-translate-2"></i>
+          <div class="guide-sec-title">Hebrew Roots, Word-Level Reference</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'hebrewroots')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-hebrewroots">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Hebrew Roots</b> in the top navigation. This is a living reference of ancient Hebrew root words with their paleo-Hebrew script, modern Hebrew script, transliteration, and English meaning.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Use the <b>filter pills</b> at the top to narrow by category: All, Identity, Creation, Covenant, Judgment, Time, Land, Nation, Body, Spirit. Tap a pill to show only words in that group.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Each word card shows the root in <b>paleo-Hebrew script</b> on the left and the modern Hebrew form beside it. The transliteration and English meaning are on the right. A meaning note below the line explains the full semantic range of that root.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Tap the <b>Hear</b> button on any card to hear the word pronounced aloud. It uses the same Samantha voice used across all ACR sites. The reading follows the ancient spoken form, not a modern academic pronunciation.</div></div>
+          <div class="guide-tip">Tip: When a root appears in a Verse DNA card, tap the root chip there to see full etymology and run a corpus search. Hebrew Roots is the standalone reference for browsing the full lexicon by category.</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-git-branch-line"></i>
+          <div class="guide-sec-title">Hebrew DNA, Lineage Research Panel</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'hebrewdna')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-hebrewdna">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Tap <b>Hebrew DNA</b> in the navigation. This panel brings together maternal lineage, paternal lineage, genetic studies, community profiles, regional records, tribal identifications, captivity accounts, historical figures, and hidden truths into one searchable reference.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Use the <b>keyword search box</b> at the top to filter by any word, haplogroup name, community, or region. The search runs across all tabs at once.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><b>Maternal mtDNA tab</b>, Haplogroup lineages carried through the maternal line, with population frequencies and geographic distribution among African Hebrew communities.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><b>Paternal Y-DNA tab</b>, Haplogroup lineages carried through the paternal line, including marker frequencies among covenant-bearing populations in West Africa, East Africa, and the diaspora.</div></div>
+          <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><b>Communities tab</b>, Documented ancient Hebrew communities: Beta Israel, Igbo, Lemba, Fula, Mande, and others. Each entry includes primary source and oral tradition evidence.</div></div>
+          <div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text"><b>Regions tab</b>, Geographic zones of ancient Hebrew settlement and diaspora dispersal, with manuscript and cartographic evidence linking each region to the covenant people.</div></div>
+          <div class="guide-step"><div class="guide-step-num">7</div><div class="guide-step-text"><b>Studies tab</b>, Genetic research findings relevant to African Hebrew lineage. Presented on their own terms, no Western academic framing, no European claims used as the reference point.</div></div>
+          <div class="guide-step"><div class="guide-step-num">8</div><div class="guide-step-text"><b>Tribes tab</b>, The twelve tribal groupings and their documented descendants, based on covenant text and community oral tradition, not later institutional assignments.</div></div>
+          <div class="guide-step"><div class="guide-step-num">9</div><div class="guide-step-text"><b>Captivity tab</b>, Ship manifests, court records, and first-person accounts documenting captivity events connected to Devarim 28 and Yirmiyahu 19:9. Includes documented instances of consumption of Hebrew people by their captors, exactly as the covenant curses describe.</div></div>
+          <div class="guide-step"><div class="guide-step-num">10</div><div class="guide-step-text"><b>Figures tab</b>, Historical Hebrew figures whose accounts were buried or reframed by later traditions. Names, records, and covenant connections restored from primary sources.</div></div>
+          <div class="guide-step"><div class="guide-step-num">11</div><div class="guide-step-text"><b>Hidden Truths tab</b>, Documented practices kept out of mainstream record: the Mummia trade (African and enslaved bodies ground and sold as European medicine), blood drinking at public executions, the Pope Innocent VIII 1492 blood transfusion record, and what these confirm about Devarim 28:37 and Yirmiyahu 19:9. Nothing is softened here.</div></div>
+          <div class="guide-step"><div class="guide-step-num">12</div><div class="guide-step-text"><b>Testing Guide tab</b>, Practical guidance for personal genetic testing: what type of test to order, what haplogroups to look for, and how to interpret results in the context of this lineage research.</div></div>
+          <div class="guide-tip">Tip: The keyword search at the top filters all tabs simultaneously. You do not need to switch tabs to find a haplogroup, community name, or captivity record.</div>
         </div>
       </div>
     </div>
@@ -3777,6 +3819,7 @@ function toggleAccordion(header) {
 // ── AUDIO / TTS ───────────────────────────────────────────────────────────────
 var samanthaVoice = null;
 var audioSpeaking = false;
+var HR_VISIBLE = [];
 
 function loadVoices() {
   var voices = window.speechSynthesis.getVoices();
@@ -3863,7 +3906,9 @@ var GUIDE_TEXTS = {
   journal: 'Research Journal, Saving Your Work. On any search result or Verse DNA card, tap Save. The passage is stored in your journal on this device only. Nothing leaves your device. Open the Journal from the navigation bar. Each saved passage has a notes field where you can write your own observations or citations. Tap Export to download all saved passages and notes as a plain text file you can keep, print, or share. Tip: your journal survives app restarts and is available offline.',
   conceptmap: 'Concept Map, Visual Research Web. Every search you run adds a node to the Concept Map. Open it from the navigation bar to see your research session as a visual web. Nodes that share the same thread are connected by lines. Colors match the five threads: green for Foundational, blue for Temporal, gold for Moral, purple for Historical, red for Eschatological. Tap any node to re-run that search. Drag nodes to rearrange the map. Long-press a node to delete it. Tap Export to save the map as an image.',
   audio: 'Audio, Reading Passages Aloud. The speaker button in the top right of the header reads the current view aloud using the Samantha voice. Each section in this guide also has its own speaker button so you can listen to one topic at a time. A playback bar appears at the bottom of the screen while audio is playing. Tap Stop to end playback at any time. Tip: for best results ensure your device is not on silent. The Samantha voice is the built-in iOS English voice and requires no download.',
-  volumebrowser: 'Volume Browser, Browse Without Searching. Tap Volumes in the top navigation. This opens a grid showing all 48 volumes in the corpus with a passage count for each. Tap any volume card to browse its passages. The top 50 passages ranked by witness count are shown. From the browse view you can open Verse DNA or Save any passage directly without needing a search. Tip: use Volume Browser when you want to explore a specific scroll or document rather than searching for a concept. It is a structural view of the corpus, not a keyword view.'
+  volumebrowser: 'Volume Browser, Browse Without Searching. Tap Volumes in the top navigation. This opens a grid showing all 48 volumes in the corpus with a passage count for each. Tap any volume card to browse its passages. The top 50 passages ranked by witness count are shown. From the browse view you can open Verse DNA or Save any passage directly without needing a search. Tip: use Volume Browser when you want to explore a specific scroll or document rather than searching for a concept. It is a structural view of the corpus, not a keyword view.',
+  hebrewroots: 'Hebrew Roots, Word-Level Reference. This is a living reference of ancient Hebrew root words with their paleo-Hebrew script, modern Hebrew script, transliteration, and English meaning. Use the filter pills at the top to narrow by category: All, Identity, Creation, Covenant, Judgment, Time, Land, Nation, Body, Spirit. Each word card shows the root in paleo-Hebrew script on the left and the modern Hebrew form beside it. The transliteration and English meaning are on the right. A meaning note below the line explains the full semantic range of the root. Tap the Hear button on any card to hear the word pronounced aloud. It uses the same Samantha voice used across all ACR sites. The reading follows the ancient spoken form, not a modern academic pronunciation. Tip: when a root appears in a Verse DNA card, tap the root chip there to see full etymology and run a corpus search. Hebrew Roots is the standalone reference for browsing the full lexicon by category.',
+  hebrewdna: 'Hebrew DNA, Lineage Research Panel. This panel brings together maternal lineage, paternal lineage, genetic studies, community profiles, regional records, tribal identifications, captivity accounts, historical figures, and hidden truths into one searchable reference. Use the keyword search box at the top to filter by any word, haplogroup name, community, or region. The search runs across all tabs at once. Maternal mtDNA tab: haplogroup lineages carried through the maternal line, with population frequencies and geographic distribution among African Hebrew communities. Paternal Y-DNA tab: haplogroup lineages carried through the paternal line, including marker frequencies among covenant-bearing populations in West Africa, East Africa, and the diaspora. Communities tab: documented ancient Hebrew communities including Beta Israel, Igbo, Lemba, Fula, Mande, and others, each with primary source and oral tradition evidence. Regions tab: geographic zones of ancient Hebrew settlement and diaspora dispersal with manuscript and cartographic evidence. Studies tab: genetic research findings relevant to African Hebrew lineage, presented on their own terms with no Western academic framing. Tribes tab: the twelve tribal groupings based on covenant text and community oral tradition, not later institutional assignments. Captivity tab: ship manifests, court records, and first-person accounts documenting captivity events connected to Devarim 28 and Yirmiyahu 19 verse 9, including documented instances of consumption of Hebrew people by their captors. Figures tab: historical Hebrew figures whose accounts were buried or reframed by later traditions, restored from primary sources. Hidden Truths tab: documented practices kept out of mainstream record including the Mummia trade, the consumption of African and enslaved bodies as European medicine, blood drinking at public executions, and what these confirm about Devarim 28:37 and Yirmiyahu 19 verse 9. Nothing is softened. Testing Guide tab: practical guidance for personal genetic testing, what to order, what haplogroups to look for, and how to interpret results. Tip: the keyword search at the top filters all tabs simultaneously, you do not need to switch tabs to find a haplogroup, community name, or captivity record.'
 };
 
 function speakGuideSection(btn, key) {
@@ -5254,7 +5299,8 @@ function filterHebrew(){
     grid.innerHTML='<div class="hr-empty">No results for "'+q+'"</div>';
     return;
   }
-  grid.innerHTML = filtered.map(function(w){
+  HR_VISIBLE = filtered;
+  grid.innerHTML = filtered.map(function(w, i){
     return '<div class="hr-card">'
       +'<div class="hr-card-top">'
         +'<div class="hr-scripts">'
@@ -5265,12 +5311,27 @@ function filterHebrew(){
           +'<div class="hr-english">'+w.en+'</div>'
           +'<div class="hr-translit">'+w.translit+'</div>'
           +'<div class="hr-root-tag">Root: '+w.root+'</div>'
+          +'<button class="hr-speak-btn" onclick="speakHR(event,'+i+')" title="Hear pronunciation"><i class="ri-volume-up-line"></i> Hear</button>'
         +'</div>'
       +'</div>'
       +'<hr class="hr-divider">'
       +'<div class="hr-meaning">'+w.meaning+'</div>'
     +'</div>';
   }).join('');
+}
+function speakHR(e, idx) {
+  e.stopPropagation();
+  var w = HR_VISIBLE[idx];
+  if (!w || !window.speechSynthesis) return;
+  document.querySelectorAll('.hr-speak-btn').forEach(function(b){ b.classList.remove('speaking'); });
+  e.currentTarget.classList.add('speaking');
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(w.translit);
+  if (samanthaVoice) u.voice = samanthaVoice;
+  u.lang = 'en-US';
+  u.rate = 0.82;
+  u.onend = function(){ e.currentTarget && e.currentTarget.classList && e.currentTarget.classList.remove('speaking'); };
+  window.speechSynthesis.speak(u);
 }
 window.addEventListener('load',function(){
   if(document.getElementById('hr-grid')) filterHebrew();
