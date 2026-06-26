@@ -699,7 +699,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="tb-name">ACR Search</div>
         <div class="tb-sub">The Covenant Concordance</div>
       </div>
-      <button class="tb-audio-btn" id="tb-audio-btn" onclick="speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
+      <button class="tb-audio-btn" id="tb-audio-btn" onclick="audioSpeaking?stopAudio():speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
       <button class="tb-journal-btn" onclick="setMode('journal')" title="Research Journal"><i class="ri-book-2-line"></i></button>
     </div>
     <div class="search-wrap">
@@ -3928,6 +3928,7 @@ var GUIDE_TEXTS = {
 };
 
 function speakGuideSection(btn, key) {
+  if (btn.classList.contains('speaking')) { stopAudio(); return; }
   document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
   btn.classList.add('speaking');
   speakText(GUIDE_TEXTS[key] || '', 'Guide: ' + key);
