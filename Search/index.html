@@ -65,6 +65,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .si-btn{background:none;border:none;color:var(--tx2);font-size:17px;cursor:pointer;padding:5px;display:flex;align-items:center;justify-content:center}
 .si-btn:hover{color:var(--gold)}
 .si-btn.root-active{color:var(--gold)}
+.si-btn.voice-active{color:var(--gold);animation:voice-pulse 0.8s ease-in-out infinite alternate}
+@keyframes voice-pulse{from{opacity:1}to{opacity:0.4}}
 .mode-pills{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
 .mode-pills::-webkit-scrollbar{display:none}
 .mpill{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background 0.15s,border-color 0.15s,color 0.15s;display:flex;align-items:center;gap:5px;position:relative}
@@ -697,7 +699,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="tb-name">ACR Search</div>
         <div class="tb-sub">The Covenant Concordance</div>
       </div>
-      <button class="tb-audio-btn" id="tb-audio-btn" onclick="speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
+      <button class="tb-audio-btn" id="tb-audio-btn" onclick="audioSpeaking?stopAudio():speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
       <button class="tb-journal-btn" onclick="setMode('journal')" title="Research Journal"><i class="ri-book-2-line"></i></button>
     </div>
     <div class="search-wrap">
@@ -3780,18 +3782,32 @@ function clearConceptMap() {
 // ── VOICE SEARCH ──────────────────────────────────────────────────────────────
 function startVoice() {
   if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-    alert('Voice search not supported on this device.');
+    alert('Voice search is not available in this browser. Type your search instead.');
     return;
   }
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   var r = new SR();
   r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 1;
+  var btn = document.querySelector('.si-btn[onclick*="startVoice"]');
+  r.onstart = function() { if (btn) btn.classList.add('voice-active'); };
+  r.onend   = function() { if (btn) btn.classList.remove('voice-active'); };
   r.onresult = function(e) {
     var t = e.results[0][0].transcript;
     document.getElementById('search-input').value = t;
     doSearch(t);
   };
-  r.start();
+  r.onerror = function(ev) {
+    if (btn) btn.classList.remove('voice-active');
+    if (ev.error === 'not-allowed') {
+      alert('Microphone access was denied. On iPad go to Settings > Safari > Microphone and allow this site, then try again.');
+    } else if (ev.error !== 'no-speech') {
+      alert('Voice search error: ' + ev.error + '. Try typing your search instead.');
+    }
+  };
+  try { r.start(); } catch(ex) {
+    if (btn) btn.classList.remove('voice-active');
+    alert('Could not start voice search: ' + ex.message + '. Try typing your search instead.');
+  }
 }
 
 // ── OVERLAYS ──────────────────────────────────────────────────────────────────
@@ -3912,6 +3928,7 @@ var GUIDE_TEXTS = {
 };
 
 function speakGuideSection(btn, key) {
+  if (btn.classList.contains('speaking')) { stopAudio(); return; }
   document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
   btn.classList.add('speaking');
   speakText(GUIDE_TEXTS[key] || '', 'Guide: ' + key);
