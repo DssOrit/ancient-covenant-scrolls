@@ -699,7 +699,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="tb-name">ACR Search</div>
         <div class="tb-sub">The Covenant Concordance</div>
       </div>
-      <button class="tb-audio-btn" id="tb-audio-btn" onclick="audioSpeaking?stopAudio():speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
+      <button class="tb-audio-btn" id="tb-audio-btn" onclick="this.classList.contains('speaking')?stopAudio():speakCurrentView()" title="Read aloud"><i class="ri-volume-up-line"></i></button>
       <button class="tb-journal-btn" onclick="setMode('journal')" title="Research Journal"><i class="ri-book-2-line"></i></button>
     </div>
     <div class="search-wrap">
@@ -3874,11 +3874,16 @@ function speakText(text, label) {
 }
 
 function stopAudio() {
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  if (window.speechSynthesis) {
+    window.speechSynthesis.pause();
+    window.speechSynthesis.cancel();
+    setTimeout(function() { window.speechSynthesis.cancel(); }, 50);
+  }
   audioSpeaking = false;
   document.getElementById('audio-bar').classList.remove('show');
   document.getElementById('tb-audio-btn').classList.remove('speaking');
   document.querySelectorAll('.guide-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
+  document.querySelectorAll('.hr-speak-btn').forEach(function(b) { b.classList.remove('speaking'); });
 }
 
 function speakCurrentView() {
