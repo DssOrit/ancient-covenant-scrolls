@@ -26,6 +26,14 @@
 </head>
 <body>
 
+<div id="study-auth">
+  <div class="sa-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="sa-title">ACR Study</div>
+  <div class="sa-sub">Spaced Repetition for The Ancient Covenant Record<br>Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez</div>
+  <div class="sa-note">The primary ancient text sources, gathered digitally, in their original form.</div>
+  <button class="sa-btn" onclick="doStudyAuth()">Enter</button>
+</div>
+
 <div id="topnav" role="navigation" aria-label="Main navigation">
   <button id="b-sb" title="Toggle sidebar" aria-label="Toggle sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   <button id="b-home" title="Home" aria-label="Go to home screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></button>
@@ -50,18 +58,17 @@
 <div id="main" role="main">
   <div id="content" aria-live="polite" aria-atomic="false">
     <div id="home">
-      <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:64px;height:64px"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M7 4v13"/><path d="M11 8h4M11 12h4"/></svg></div>
+      <div class="home-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
       <h1>ACR STUDY</h1>
       <p class="tag">
-        Spaced repetition study companion<br>
-        for The Ancient Covenant Record
+        Spaced Repetition for The Ancient Covenant Record<br>
+        Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez
       </p>
       <div class="btns">
-        <button id="b-begin" style="display:inline-flex;align-items:center;gap:8px">Begin with Bereshit <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:14px;height:14px"><polygon points="6 4 20 12 6 20"/></svg></button>
+        <button id="b-begin">Begin with Bereshit</button>
         <button id="b-resume" style="display:none">Resume where I left off</button>
       </div>
       <p class="small">
-        Phase 1 &middot; Shell + voice + notes<br>
         Data shared with the <a href="../">ACR Reader</a> on this device<br>
         Add to Home Screen from Safari for offline access
       </p>
@@ -110,6 +117,7 @@
 
 <script src="lib-attain-quality.js"></script>
 <script src="study.js"></script>
+<script>function doStudyAuth(){document.getElementById('study-auth').classList.add('hidden');}</script>
 
 </body>
 </html>
