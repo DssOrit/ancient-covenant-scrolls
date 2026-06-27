@@ -82,7 +82,25 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .home-paleo{text-align:center;font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:48px;color:var(--gold);margin:12px 0 6px;line-height:1}
 .home-title{text-align:center;font-size:18px;font-weight:800;color:#fff;margin-bottom:3px}
 .home-sub{text-align:center;font-size:11px;color:var(--tx2);margin-bottom:3px}
-.home-tagline{text-align:center;font-size:11px;color:var(--tx3);font-style:italic;margin-bottom:20px}.manip-timeline{display:flex;flex-direction:column;gap:0}.mt-item{display:flex;gap:12px;padding:12px 14px;border-left:2px solid var(--gold);margin-left:14px;position:relative}.mt-item::before{content:"";position:absolute;left:-5px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--gold)}.mt-year{font-size:11px;font-weight:700;color:var(--gold);min-width:72px;padding-top:2px;flex-shrink:0}.mt-event{font-size:12px;color:var(--tx1);line-height:1.55}
+.home-tagline{text-align:center;font-size:11px;color:var(--tx3);font-style:italic;margin-bottom:10px}
+.home-welcome{text-align:center;font-size:11px;color:var(--tx2);line-height:1.7;margin:0 0 8px;padding:0 12px}
+.home-start-link{background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;display:block;margin:0 auto 18px;text-decoration:underline;text-underline-offset:3px;padding:0;font-family:inherit}
+.guide-intro-welcome{font-size:11px;color:var(--tx2);line-height:1.7;margin-top:8px;text-align:center;padding:0 4px}
+.cn-view-hdr{padding:14px 16px 0}
+.cn-view-title{font-size:17px;font-weight:800;color:#fff;margin-bottom:4px}
+.cn-view-sub{font-size:11px;color:var(--tx3);line-height:1.6;margin-bottom:16px}
+.cn-verse-card{background:var(--s1);border:1px solid #1e1e1e;border-left:3px solid var(--gold);border-radius:var(--r);padding:13px;margin-bottom:8px}
+.cn-verse-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em}
+.cn-verse-src{font-size:9px;color:var(--tx3);margin-bottom:6px}
+.cn-verse-text{font-size:12px;color:var(--tx1);line-height:1.65;font-style:italic;margin-bottom:6px}
+.cn-verse-note{font-size:11px;color:var(--tx2);line-height:1.6}
+.cn-person-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px;margin-bottom:7px}
+.cn-person-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.cn-person-origin{font-size:10px;color:var(--gold);margin-bottom:5px;font-weight:600}
+.cn-person-body{font-size:11px;color:var(--tx2);line-height:1.6}
+.cn-community-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px;margin-bottom:7px}
+.cn-community-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.cn-community-body{font-size:11px;color:var(--tx2);line-height:1.6}.manip-timeline{display:flex;flex-direction:column;gap:0}.mt-item{display:flex;gap:12px;padding:12px 14px;border-left:2px solid var(--gold);margin-left:14px;position:relative}.mt-item::before{content:"";position:absolute;left:-5px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--gold)}.mt-year{font-size:11px;font-weight:700;color:var(--gold);min-width:72px;padding-top:2px;flex-shrink:0}.mt-event{font-size:12px;color:var(--tx1);line-height:1.55}
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .feat-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;cursor:pointer;transition:background 0.15s;border-left:3px solid var(--gold)}
 .feat-card:active{background:var(--s2)}
@@ -740,6 +758,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="home-title">ACR Search, The Covenant Concordance</div>
       <div class="home-sub">Dead Sea Scrolls &amp; The Orit Ge&#x2019;ez, Digitally Compiled</div>
       <div class="home-tagline">A primary source research tool with a concordance component, the ancient texts, their documented history, and what was changed and why.</div>
+      <div class="home-welcome">These primary sources belong to no institution, no denomination, and no people exclusively. They were preserved to be found. Anyone who seeks them is welcome here.</div>
+      <button class="home-start-link" onclick="setMode('guide')">New to the texts? Start in How To Use</button>
       <div class="feat-grid">
         <div class="feat-card" onclick="document.getElementById('search-input').focus()">
           <div class="fc-icon"><i class="ri-search-line"></i></div>
@@ -780,6 +800,11 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="fc-icon"><i class="ri-book-2-line"></i></div>
           <div class="fc-title">Research Journal</div>
           <div class="fc-desc">Save passages locally. Add notes. Export your research. Everything stored on-device.</div>
+        </div>
+        <div class="feat-card" onclick="setMode('covenant-nations')">
+          <div class="fc-icon"><i class="ri-earth-line"></i></div>
+          <div class="fc-title">Covenant for All Nations</div>
+          <div class="fc-desc">DSS and Orit primary source texts on YHWH receiving all who obey. Biblical figures and communities from every background used in the covenant record.</div>
         </div>
       </div>
     </div>
@@ -919,6 +944,23 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="guide-intro-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
         <div class="guide-intro-title">How to Use ACR Search</div>
         <div class="guide-intro-text">This is a research tool built on the primary ancient texts, the Dead Sea Scrolls and the Orit Ge'ez. Every result traces back to physical manuscript evidence. Use the sections below to learn each feature. Tap the speaker button on any section to hear it read aloud.</div>
+        <div class="guide-intro-welcome">People arrive here from every background and tradition. These texts are not the property of any institution or lineage. They were written for those with eyes to find them. Wherever you are starting from, you are welcome at the primary source.</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+          <i class="guide-sec-icon ri-map-pin-line"></i>
+          <div class="guide-sec-title">Start Here, New to the Texts</div>
+          <button class="guide-speak-btn" onclick="event.stopPropagation();speakGuideSection(this,'starthere')" title="Listen"><i class="ri-volume-up-line"></i></button>
+          <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+        </div>
+        <div class="guide-sec-body" id="guide-starthere">
+          <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">If you are new to the Dead Sea Scrolls and the Orit Ge'ez, begin with the search bar. Type a word you already know — <b>covenant</b>, <b>light</b>, <b>justice</b>, <b>spirit</b>. Let the primary source show you what those words meant before centuries of institutional translation.</div></div>
+          <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Tap <b>Study Path</b> and type <b>covenant</b>. This gives you a guided sequence of 12 primary source passages — foundational first, then deeper. It is the fastest way to orient yourself in the corpus without needing prior knowledge.</div></div>
+          <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Tap <b>Verse DNA</b> on any result that interests you. This opens the manuscript record — where it was physically found, how old it is, how many independent scrolls confirm it, and what the original root words say. The physical evidence is the foundation.</div></div>
+          <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">When you are ready to go deeper, use <b>NT Lookup</b> to compare any passage from the tradition you came from against what the primary source actually says. Tap <b>Covenant for All Nations</b> on the home screen to read what the primary source record says about who the covenant includes.</div></div>
+          <div class="guide-tip">Tip: No prior knowledge of Hebrew, Aramaic, or Ge'ez is needed. Every result shows English text with manuscript evidence. Start with what you know and let the primary source take you further.</div>
+        </div>
       </div>
 
       <div class="guide-section">
@@ -1181,6 +1223,148 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="guide-step"><div class="guide-step-num">12</div><div class="guide-step-text"><b>Testing Guide tab</b>, Practical guidance for personal genetic testing: what type of test to order, what haplogroups to look for, and how to interpret results in the context of this lineage research.</div></div>
           <div class="guide-tip">Tip: The keyword search at the top filters all tabs simultaneously. You do not need to switch tabs to find a haplogroup, community name, or captivity record.</div>
         </div>
+      </div>
+    </div>
+
+    <div id="covenant-nations-view" style="display:none">
+      <div class="cn-view-hdr">
+        <div class="cn-view-title">Covenant for All Nations</div>
+        <div class="cn-view-sub">The primary source record on YHWH receiving all peoples who obey and observe. The covenant was never lineage alone. The DSS, the Orit Ge'ez, and the Torah all say so directly.</div>
+      </div>
+      <div style="padding:0 16px 24px">
+
+        <div class="guide-section">
+          <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+            <i class="guide-sec-icon ri-book-open-line"></i>
+            <div class="guide-sec-title">The Foundational Texts, DSS and Orit</div>
+            <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+          </div>
+          <div class="guide-sec-body">
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">Yeshayahu 56:1-7</div>
+              <div class="cn-verse-src">1QIsa-a, Great Isaiah Scroll, Cave 1, Qumran — 125-100 BCE</div>
+              <div class="cn-verse-text">"The foreigners who join themselves to YHWH, to minister to him, to love the name of YHWH, and to be his servants — everyone who keeps the Sabbath and does not profane it, and holds fast my covenant — these I will bring to my holy mountain and make them joyful in my house of prayer. Their burnt offerings and their sacrifices will be accepted on my altar. For my house shall be called a house of prayer for all peoples."</div>
+              <div class="cn-verse-note">YHWH names Sabbath observance and covenant-keeping as the entry point for all peoples. Not lineage. Observance. The Great Isaiah Scroll is one of the oldest biblical manuscripts ever found and confirms this text in its original form.</div>
+            </div>
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">Bamidbar 15:15-16</div>
+              <div class="cn-verse-src">4QNumb, DSS attested</div>
+              <div class="cn-verse-text">"For the assembly, there shall be one statute for you and for the stranger who sojourns with you, a statute forever throughout your generations. You and the sojourner shall be alike before YHWH. One law and one rule shall be for you and for the stranger who sojourns with you."</div>
+              <div class="cn-verse-note">One law. No separate category. The sojourner who obeys stands equal in covenant standing before YHWH.</div>
+            </div>
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">Shemot 12:48-49</div>
+              <div class="cn-verse-src">DSS attested</div>
+              <div class="cn-verse-text">"There shall be one law for the native and for the stranger who sojourns among you."</div>
+              <div class="cn-verse-note">A stranger who keeps the Passover and joins the covenant is as a native of the land. The primary source does not create a lesser category for the one who comes from outside the lineage and chooses to obey.</div>
+            </div>
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">Devarim 10:17-19</div>
+              <div class="cn-verse-src">DSS attested</div>
+              <div class="cn-verse-text">"YHWH your God is God of gods and Lord of lords, the great, the mighty, and the awesome God, who is not partial and takes no bribe. He executes justice for the fatherless and the widow, and loves the sojourner, giving him food and clothing. Love the sojourner, therefore, for you were sojourners in the land of Egypt."</div>
+              <div class="cn-verse-note">YHWH's own character is described here as loving the sojourner. The covenant people are commanded to mirror that love because they know what it is to be the stranger.</div>
+            </div>
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">1 Enoch 10:21</div>
+              <div class="cn-verse-src">Orit Ge'ez, Ethiopian Canon</div>
+              <div class="cn-verse-text">"And all the children of men shall become righteous, and all nations shall offer adoration and shall praise Me."</div>
+              <div class="cn-verse-note">The Orit explicitly extends the covenant hope to all nations. This is not a secondary note — it is stated as the declared end of the covenant arc.</div>
+            </div>
+            <div class="cn-verse-card">
+              <div class="cn-verse-ref">Bamidbar 11:24-29</div>
+              <div class="cn-verse-src">DSS attested</div>
+              <div class="cn-verse-text">Two men, Eldad and Medad, were not among the seventy elders appointed to prophesy. YHWH placed His Spirit on them anyway and they prophesied in the camp. When Joshua asked Moses to stop them, Moses replied: "Would that all YHWH's people were prophets, that YHWH would put his Spirit on them."</div>
+              <div class="cn-verse-note">YHWH's Spirit moves where YHWH chooses. Formal lineage or appointment does not limit it. Moses' response makes this explicit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+            <i class="guide-sec-icon ri-user-heart-line"></i>
+            <div class="guide-sec-title">People of All Nations Used by YHWH</div>
+            <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+          </div>
+          <div class="guide-sec-body">
+            <div class="cn-person-card">
+              <div class="cn-person-name">Ruth</div>
+              <div class="cn-person-origin">Moabite</div>
+              <div class="cn-person-body">"Your people shall be my people, and your God my God" (Ruth 1:16). Her faithfulness was the covenant act, not her birth. She entered the lineage directly through obedience and love. The primary source records her as an ancestor in the covenant line.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Rahab</div>
+              <div class="cn-person-origin">Canaanite</div>
+              <div class="cn-person-body">Declared "YHWH your God, he is God in the heavens above and on the earth beneath" (Yehoshua 2:11). She protected YHWH's servants at personal risk. She and her entire household were received into the covenant community. The primary source records her among the righteous.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Yitro / Jethro</div>
+              <div class="cn-person-origin">Midianite priest, father-in-law of Moshe</div>
+              <div class="cn-person-body">After hearing what YHWH did in Egypt he declared "Now I know that YHWH is greater than all gods" and brought an offering (Shemot 18:10-12). His wisdom shaped the governance structure of the entire covenant community. Moshe's own father-in-law was a Midianite who acknowledged YHWH.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Zipporah</div>
+              <div class="cn-person-origin">Midianite / Cushite, wife of Moshe</div>
+              <div class="cn-person-body">Bamidbar 12:1 calls her a Cushite woman. When Moshe could not perform the circumcision covenant act on their son, Zipporah performed it herself (Shemot 4:24-26). A Cushite African woman fulfilled the covenant requirement that Moshe himself failed to carry out. The covenant was preserved through her action.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Naaman</div>
+              <div class="cn-person-origin">Syrian / Aramean commander</div>
+              <div class="cn-person-body">Healed of leprosy by Elisha. His response: "There is no God in all the earth but in Israel" (2 Kings 5:15). YHWH healed him before he made any covenant declaration. The healing came first. He asked to take Israelite earth back to Syria to worship YHWH upon it and was granted this.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">The Erev Rav</div>
+              <div class="cn-person-origin">Mixed Multitude — African peoples of various lineages</div>
+              <div class="cn-person-body">Shemot 12:38 records explicitly that a mixed multitude left Egypt alongside the Hebrew people — Egyptians, Cushites, and other African peoples of various lineages. They stood at Sinai. They received the covenant. The primary source never categorizes them as lesser or as a separate covenant class.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Caleb</div>
+              <div class="cn-person-origin">Kenizzite</div>
+              <div class="cn-person-body">Bamidbar 32:12 identifies Caleb as a Kenizzite, not Hebrew by birth. Of his entire generation, only he and Yehoshua entered the promised land. Faithfulness, not lineage, was the covenant basis. YHWH spoke of him: "my servant Caleb, because he has a different spirit and has followed me fully."</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">Uriah the Hittite</div>
+              <div class="cn-person-origin">Hittite</div>
+              <div class="cn-person-body">One of David's thirty mighty men. A Hittite by birth. His name means "YHWH is my light." In the events of 2 Samuel 11, the primary source records him as more righteous in his conduct than David, the covenant king, himself.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">The Queen of Sheba / Makeda</div>
+              <div class="cn-person-origin">Ethiopian queen</div>
+              <div class="cn-person-body">In the Orit Ge'ez and the Kebra Nagast tradition, the Ethiopian queen sought out the wisdom of YHWH directly, received it, and carried it back to Africa. The Orit holds that the Ark of the Covenant passed into Ethiopia through her lineage. An African queen, not born Hebrew, became the vessel for the covenant's preservation on the continent.</div>
+            </div>
+            <div class="cn-person-card">
+              <div class="cn-person-name">The Ninevites</div>
+              <div class="cn-person-origin">Assyrian people</div>
+              <div class="cn-person-body">Yonah was sent to a foreign Assyrian city. When the entire city of Nineveh repented, YHWH relented from the judgment (Yonah 3:10). YHWH's full response to genuine repentance from a completely foreign people is documented in the primary source. He did not require lineage. He required repentance.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-sec-hdr" onclick="toggleGuideSection(this)">
+            <i class="guide-sec-icon ri-community-line"></i>
+            <div class="guide-sec-title">Communities of All Backgrounds Who Kept the Covenant</div>
+            <i class="ri-arrow-down-s-line" style="color:var(--tx3);flex-shrink:0"></i>
+          </div>
+          <div class="guide-sec-body">
+            <div class="cn-community-card">
+              <div class="cn-community-name">Cushitic peoples of the Horn of Africa</div>
+              <div class="cn-community-body">Maintained YHWH monotheism for over 2,000 years. Many entered the covenant through practice and community, exactly as Yeshayahu 56 describes — through keeping the Sabbath and holding fast to the covenant, not through birth alone.</div>
+            </div>
+            <div class="cn-community-card">
+              <div class="cn-community-name">Gambia River basin communities</div>
+              <div class="cn-community-body">Documented by Richard Jobson in 1623. Mosaic law, dietary restrictions, and new moon observance among Mandinka and Fula peoples, some of whom were not Hebrew by direct descent but maintained covenant practice across generations through community transmission and oral tradition.</div>
+            </div>
+            <div class="cn-community-card">
+              <div class="cn-community-name">The Lemba of Zimbabwe and South Africa</div>
+              <div class="cn-community-body">Oral tradition and genetic evidence show ancient Semitic contact. The broader Lemba community includes Bantu peoples who maintained Hebraic practices — Sabbath observance, dietary law, circumcision — across generations through community covenant, not only through direct Hebrew descent.</div>
+            </div>
+            <div class="cn-community-card">
+              <div class="cn-community-name">The Erev Rav descendants</div>
+              <div class="cn-community-body">The mixed peoples who left Egypt at the Exodus and received Torah at Sinai were the ancestors of a wide range of peoples who carried covenant knowledge forward. Their descendants exist across Africa and the diaspora. They received the covenant at the same mountain, at the same moment, under the same conditions as the Hebrew people.</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1861,7 +2045,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna','covenant-nations'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -3927,6 +4111,7 @@ var GUIDE_TEXTS = {
   conceptmap: 'Concept Map, Visual Research Web. Every search you run adds a node to the Concept Map. Open it from the navigation bar to see your research session as a visual web. Nodes that share the same thread are connected by lines. Colors match the five threads: green for Foundational, blue for Temporal, gold for Moral, purple for Historical, red for Eschatological. Tap any node to re-run that search. Drag nodes to rearrange the map. Long-press a node to delete it. Tap Export to save the map as an image.',
   audio: 'Audio, Reading Passages Aloud. The speaker button in the top right of the header reads the current view aloud using the Samantha voice. Each section in this guide also has its own speaker button so you can listen to one topic at a time. A playback bar appears at the bottom of the screen while audio is playing. Tap Stop to end playback at any time. Tip: for best results ensure your device is not on silent. The Samantha voice is the built-in iOS English voice and requires no download.',
   volumebrowser: 'Volume Browser, Browse Without Searching. Tap Volumes in the top navigation. This opens a grid showing all 48 volumes in the corpus with a passage count for each. Tap any volume card to browse its passages. The top 50 passages ranked by witness count are shown. From the browse view you can open Verse DNA or Save any passage directly without needing a search. Tip: use Volume Browser when you want to explore a specific scroll or document rather than searching for a concept. It is a structural view of the corpus, not a keyword view.',
+  starthere: 'Start Here, New to the Texts. If you are new to the Dead Sea Scrolls and the Orit Ge\'ez, begin with the search bar. Type a word you already know — covenant, light, justice, spirit. Let the primary source show you what those words meant before centuries of institutional translation. Next, tap Study Path and type covenant. This gives you a guided sequence of 12 primary source passages, foundational first, then deeper. It is the fastest way to orient yourself without prior knowledge. Then tap Verse DNA on any result. This opens the manuscript record: where it was found, how old it is, how many scrolls confirm it, and what the original root words say. When you are ready to go deeper, use NT Lookup to compare any passage from the tradition you came from against the primary source. Tap Covenant for All Nations on the home screen to read what the primary source says about who the covenant includes. No prior knowledge of Hebrew, Aramaic, or Ge\'ez is needed.',
   hebrewroots: 'Hebrew Roots, Word-Level Reference. This is a living reference of ancient Hebrew root words with their paleo-Hebrew script, modern Hebrew script, transliteration, and English meaning. Use the filter pills at the top to narrow by category: All, Identity, Creation, Covenant, Judgment, Time, Land, Nation, Body, Spirit. Each word card shows the root in paleo-Hebrew script on the left and the modern Hebrew form beside it. The transliteration and English meaning are on the right. A meaning note below the line explains the full semantic range of the root. Tap the Hear button on any card to hear the word pronounced aloud. It uses the same Samantha voice used across all ACR sites. The reading follows the ancient spoken form, not a modern academic pronunciation. Tip: when a root appears in a Verse DNA card, tap the root chip there to see full etymology and run a corpus search. Hebrew Roots is the standalone reference for browsing the full lexicon by category.',
   hebrewdna: 'Hebrew DNA, Lineage Research Panel. This panel brings together maternal lineage, paternal lineage, genetic studies, community profiles, regional records, tribal identifications, captivity accounts, historical figures, and hidden truths into one searchable reference. Use the keyword search box at the top to filter by any word, haplogroup name, community, or region. The search runs across all tabs at once. Maternal mtDNA tab: haplogroup lineages carried through the maternal line, with population frequencies and geographic distribution among African Hebrew communities. Paternal Y-DNA tab: haplogroup lineages carried through the paternal line, including marker frequencies among covenant-bearing populations in West Africa, East Africa, and the diaspora. Communities tab: documented ancient Hebrew communities including Beta Israel, Igbo, Lemba, Fula, Mande, and others, each with primary source and oral tradition evidence. Regions tab: geographic zones of ancient Hebrew settlement and diaspora dispersal with manuscript and cartographic evidence. Studies tab: genetic research findings relevant to African Hebrew lineage, presented on their own terms with no Western academic framing. Tribes tab: the twelve tribal groupings based on covenant text and community oral tradition, not later institutional assignments. Captivity tab: ship manifests, court records, and first-person accounts documenting captivity events connected to Devarim 28 and Yirmiyahu 19 verse 9, including documented instances of consumption of Hebrew people by their captors. Figures tab: historical Hebrew figures whose accounts were buried or reframed by later traditions, restored from primary sources. Hidden Truths tab: documented practices kept out of mainstream record including the Mummia trade, the consumption of African and enslaved bodies as European medicine, blood drinking at public executions, and what these confirm about Devarim 28:37 and Yirmiyahu 19 verse 9. Nothing is softened. Testing Guide tab: practical guidance for personal genetic testing, what to order, what haplogroups to look for, and how to interpret results. Tip: the keyword search at the top filters all tabs simultaneously, you do not need to switch tabs to find a haplogroup, community name, or captivity record.'
 };
