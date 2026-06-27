@@ -290,10 +290,10 @@ function getVolForFid(fid) {
 }
 
 function volBanner(volId) {
-  var c = VOL_COLORS[volId] || ['#333','#111'];
+  var c = VOL_COLORS[volId] || ['#2563eb','#1e40af'];
   var name = VOL_NAMES[volId] || '';
-  return '<div class="vol-banner" style="background:linear-gradient(135deg,' + c[0] + ',' + c[1] + ')">' +
-    '<div class="vol-banner-name">' + name + '</div>' +
+  return '<div class="vol-banner" style="background:linear-gradient(135deg,#1a1a2e 0%,#2a2a4e 100%);border-left:4px solid ' + c[0] + '">' +
+    '<div class="vol-banner-name" style="color:' + c[0] + '">' + name + '</div>' +
     '</div>';
 }
 
@@ -1218,9 +1218,9 @@ function showCovenantTrial(volId) {
 }
 
 function actCard(icon, label, color, mode, fid) {
-  return '<div class="act-card" data-mode="' + mode + '" style="border-left:3px solid ' + color + '" role="button" tabindex="0" aria-label="' + label + ' activity">' +
+  return '<div class="act-card" data-mode="' + mode + '" style="border:2px solid ' + color + '" role="button" tabindex="0" aria-label="' + label + ' activity">' +
     '<div class="act-icon" aria-hidden="true" style="color:' + color + '">' + icon + '</div>' +
-    '<div class="act-label">' + label + '</div>' +
+    '<div class="act-label" style="color:' + color + '">' + label + '</div>' +
     '</div>';
 }
 
@@ -1787,6 +1787,7 @@ function showFillBlank(fid, audioMode) {
     });
 
     function renderQ() {
+      if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (_) {} }
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       var correct = q.answer;
@@ -1879,7 +1880,7 @@ function showFillBlank(fid, audioMode) {
       document.getElementById('content').innerHTML = h;
       document.getElementById('b-cloze-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-cloze-hear').addEventListener('click', function () {
-        speakText(q.source_quote || q.prompt.replace('______', correct));
+        speakText(q.prompt.replace('______', 'blank'));
       });
       if (audioMode) {
         // Auto-play the passage with "blank" spoken at the missing word
@@ -2008,6 +2009,7 @@ function showMC(fid) {
     var OPTLBLS = ['A', 'B', 'C', 'D'];
 
     function renderQ() {
+      if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (_) {} }
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       mcFirstAttempt = true;
@@ -2481,7 +2483,7 @@ function showListenLearn(fid) {
     h += '<button class="ll-btn ll-next" id="b-ll-next">Next </button>';
     h += '</div>';
     h += '<div class="ll-auto">';
-    h += '<label><input type="checkbox" id="ll-autoplay" checked> Auto-advance to next verse</label>';
+    h += '<label><input type="checkbox" id="ll-autoplay"> Auto-advance to next verse</label>';
     h += '</div>';
     h += '<button class="study-btn" id="b-ll-back" style="margin-top:20px">Back to activities</button>';
     h += '</div>';
@@ -3260,6 +3262,7 @@ function showWhoSaidIt(fid) {
     var OPTLBLS = ['A', 'B', 'C', 'D'];
 
     function renderQ() {
+      if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (_) {} }
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       firstAttempt = true;
@@ -3432,6 +3435,7 @@ function showTrueFalse(fid) {
     var qi = 0, score = 0, points = 0, firstAttempt = true;
 
     function renderQ() {
+      if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (_) {} }
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       firstAttempt = true;
