@@ -527,10 +527,10 @@ function getAllDueCards() {
 
 // ---- XP, Streak & Level system ----
 var LEVELS = [
-  { name: 'Seeker', icon: '', xp: 0 },
-  { name: 'Scholar', icon: '', xp: 600 },
-  { name: 'Guardian', icon: '', xp: 3000 },
-  { name: 'Keeper of the Scroll', icon: '', xp: 12000 }
+  { name: 'Seeker',               icon: 'target', xp: 0 },
+  { name: 'Scholar',              icon: 'book',   xp: 600 },
+  { name: 'Guardian',             icon: 'shield', xp: 3000 },
+  { name: 'Keeper of the Scroll', icon: 'scroll', xp: 12000 }
 ];
 
 function getStats() {
@@ -702,6 +702,7 @@ function addXP(amount) {
 
 function recordSession(fid, mode, score, total) {
   var s = getStats();
+  var oldLevelName = getLevel(s.xp || 0).current.name;
   if (!s.sessions) s.sessions = [];
   s.sessions.push({
     fid: fid, mode: mode, score: score, total: total,
@@ -713,6 +714,8 @@ function recordSession(fid, mode, score, total) {
   s.totalAnswered = (s.totalAnswered || 0) + (total || 0);
   s.totalCorrect = (s.totalCorrect || 0) + (score || 0);
   updateStreak(s);
+  var newLevelName = getLevel(s.xp).current.name;
+  if (newLevelName !== oldLevelName) s.pendingLevelUp = newLevelName;
   saveStats(s);
   return xpEarned;
 }
@@ -829,6 +832,18 @@ function go(fid) {
       ' questions mastered (' + secMastery.pct + '%)</div>' +
       '<div class="prog-bar-wrap"><div class="prog-bar" style="width:' + secMastery.pct + '%"></div></div></div>';
   }
+  var volForTrial = getVolForFid(fid);
+  var trialUnlocked = TRIAL_QUESTIONS[volForTrial] && (isVolumeMastered(volForTrial) || getVolumeSessionCount(volForTrial) >= 10);
+  if (trialUnlocked) {
+    var trialStats = getTrialStats();
+    var trialDone = trialStats.completed && trialStats.completed[volForTrial];
+    var trialBest = trialStats.best && trialStats.best[volForTrial];
+    h += '<div class="act-card" data-mode="trial" style="background:linear-gradient(135deg,#92400e,#78350f);border:2px solid #b8860b" role="button" tabindex="0" aria-label="Covenant Trial">' +
+      '<div class="act-icon" aria-hidden="true">' + lbIcon('trophy', 32) + '</div>' +
+      '<div class="act-label">Covenant Trial' +
+      (trialDone ? '<br><span style="font-size:11px;opacity:.85">Best: ' + (trialBest || 0) + '%</span>' : '<br><span style="font-size:11px;opacity:.85">Double XP — No hints</span>') +
+      '</div></div>';
+  }
   h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;padding:8px 0 4px">START HERE</div>';
   h += '<div class="activity-grid" style="margin-bottom:4px">';
   h += actCard(lbIcon('puzzle',        32), 'Fill in the Blank', '#059669', 'filblank', fid);
@@ -860,17 +875,6 @@ function go(fid) {
   h += actCard(lbIcon('puzzle',        32), 'Verse Builder', '#e91e90', 'versebuild', fid);
   h += actCard(lbIcon('puzzle',        32), 'Word Match', '#6d28d9', 'wordmatch', fid);
   h += actCard(lbIcon('shield',        32), 'Challenge', '#b91c1c', 'challenge', fid);
-  var volForTrial = getVolForFid(fid);
-  if (TRIAL_QUESTIONS[volForTrial] && (isVolumeMastered(volForTrial) || getVolumeSessionCount(volForTrial) >= 10)) {
-    var trialStats = getTrialStats();
-    var trialDone = trialStats.completed && trialStats.completed[volForTrial];
-    var trialBest = trialStats.best && trialStats.best[volForTrial];
-    h += '<div class="act-card" data-mode="trial" style="background:linear-gradient(135deg,#92400e,#78350f);border:2px solid #b8860b" role="button" tabindex="0" aria-label="Covenant Trial">' +
-      '<div class="act-icon" aria-hidden="true">' + lbIcon('trophy', 32) + '</div>' +
-      '<div class="act-label">Covenant Trial' +
-      (trialDone ? '<br><span style="font-size:11px;opacity:.85">Best: ' + (trialBest || 0) + '%</span>' : '<br><span style="font-size:11px;opacity:.85">Double XP — No hints</span>') +
-      '</div></div>';
-  }
   var remixN = getRemixCount(fid);
   if (remixN > 0) {
     h += '<div class="act-card act-card-remix" data-mode="remix" role="button" tabindex="0" aria-label="Remix Round activity, ' + remixN + ' due">' +
@@ -882,6 +886,15 @@ function go(fid) {
 
   document.getElementById('content').innerHTML = h;
   document.getElementById('tb').textContent = LBL[i];
+  var todayStr = new Date().toISOString().slice(0, 10);
+  var todayModes = {};
+  (getStats().sessions || []).forEach(function (ses) {
+    if (ses.fid === fid && ses.date === todayStr) todayModes[ses.mode] = true;
+  });
+  var actCards = document.querySelectorAll('.act-card[data-mode]');
+  for (var ac = 0; ac < actCards.length; ac++) {
+    if (todayModes[actCards[ac].dataset.mode]) actCards[ac].classList.add('act-card-done');
+  }
   var secs = document.querySelectorAll('.sec');
   for (var j = 0; j < secs.length; j++) {
     secs[j].classList.toggle('on', secs[j].getAttribute('data-id') === fid);
@@ -1828,7 +1841,7 @@ function showFillBlank(fid, audioMode) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       if (mastery.badge) h += '<div class="cr-mastery">' + mastery.badge + ' ' + mastery.mastered + '/' + mastery.total + ' questions mastered</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
-      h += '<div class="cr-level">' + lvl.current.icon + ' ' + lvl.current.name +
+      h += '<div class="cr-level">' + lbIcon(lvl.current.icon, 14) + ' ' + lvl.current.name +
         ' \u2014 ' + (stats.xp || 0) + ' XP total</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
@@ -1996,7 +2009,7 @@ function showMC(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       if (mastery.badge) h += '<div class="cr-mastery">' + mastery.badge + ' ' + mastery.mastered + '/' + mastery.total + ' questions mastered</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
-      h += '<div class="cr-level">' + lvl.current.icon + ' ' + lvl.current.name +
+      h += '<div class="cr-level">' + lbIcon(lvl.current.icon, 14) + ' ' + lvl.current.name +
         ' \u2014 ' + (stats.xp || 0) + ' XP total</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
@@ -2485,13 +2498,13 @@ function showProgress(fid) {
     (lvl.current.name === 'Keeper of the Scroll' ? '#b8860b' :
      lvl.current.name === 'Guardian' ? '#7c3aed' :
      lvl.current.name === 'Scholar' ? '#2563eb' : '#6b7280') + '">';
-  h += '<div class="prog-level-icon">' + lvl.current.icon + '</div>';
+  h += '<div class="prog-level-icon">' + lbIcon(lvl.current.icon, 56) + '</div>';
   h += '<div class="prog-level-name">' + lvl.current.name + '</div>';
   h += '<div class="prog-xp">' + xp + ' XP</div>';
   if (lvl.next) {
     var pct = Math.min(100, Math.round((xp - lvl.current.xp) / (lvl.next.xp - lvl.current.xp) * 100));
     h += '<div class="prog-bar-wrap"><div class="prog-bar" style="width:' + pct + '%"></div></div>';
-    h += '<div class="prog-next">' + (lvl.next.xp - xp) + ' XP to ' + lvl.next.icon + ' ' + lvl.next.name + '</div>';
+    h += '<div class="prog-next">' + (lvl.next.xp - xp) + ' XP to ' + lbIcon(lvl.next.icon, 14) + ' ' + lvl.next.name + '</div>';
   } else {
     h += '<div class="prog-next">Maximum level reached!</div>';
   }
@@ -2515,7 +2528,7 @@ function showProgress(fid) {
     var l = LEVELS[i];
     var reached = xp >= l.xp;
     h += '<div class="prog-road ' + (reached ? 'prog-reached' : '') + '">';
-    h += '<span class="prog-road-icon">' + l.icon + '</span> ';
+    h += '<span class="prog-road-icon">' + lbIcon(l.icon, 18) + '</span> ';
     h += '<span class="prog-road-name">' + l.name + '</span>';
     h += '<span class="prog-road-xp">' + l.xp + ' XP</span>';
     if (reached) h += ' <span class="prog-road-check">\u2714</span>';
@@ -5077,6 +5090,27 @@ function showDailyScroll() {
   }
 }
 
+function showLevelUpScreen(levelName, cb) {
+  var lvlObj = null;
+  for (var i = 0; i < LEVELS.length; i++) {
+    if (LEVELS[i].name === levelName) { lvlObj = LEVELS[i]; break; }
+  }
+  var iconSvg = lvlObj ? lbIcon(lvlObj.icon, 80) : '';
+  var accentColor = levelName === 'Keeper of the Scroll' ? '#b8860b' :
+    levelName === 'Guardian' ? '#7c3aed' :
+    levelName === 'Scholar' ? '#2563eb' : '#4db84d';
+  var h = '<div class="level-up-screen">';
+  h += '<div class="lu-burst" style="color:' + accentColor + '">' + iconSvg + '</div>';
+  h += '<div class="lu-label">LEVEL UP</div>';
+  h += '<div class="lu-name" style="color:' + accentColor + '">' + levelName + '</div>';
+  h += '<div class="lu-msg">Keep going. The scroll is being revealed.</div>';
+  h += '<button class="study-btn sb-pri" id="b-lu-ok">Continue</button>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('tb').textContent = 'Level Up';
+  document.getElementById('b-lu-ok').addEventListener('click', function () { cb(); });
+}
+
 function showHowToPlay() {
   function row(label, text) {
     return '<div style="margin-bottom:14px"><div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:4px">' + label + '</div>' +
@@ -5141,51 +5175,122 @@ function showHowToPlay() {
 }
 
 function goHome() {
+  var stats = getStats();
+
+  // Show level-up celebration if one is pending
+  if (stats.pendingLevelUp) {
+    var levelName = stats.pendingLevelUp;
+    stats.pendingLevelUp = null;
+    saveStats(stats);
+    showLevelUpScreen(levelName, function () { goHome(); });
+    return;
+  }
+
   var lastFid = localStorage.getItem('acr_study_last');
   var hasResume = lastFid && IDS.indexOf(lastFid) >= 0;
   var totalDue = getAllDueCount();
-  var stats = getStats();
   var lvl = getLevel(stats.xp || 0);
   var streak = stats.streak || 0;
+  var xp = stats.xp || 0;
+
+  var accentColor = lvl.current.name === 'Keeper of the Scroll' ? '#b8860b' :
+    lvl.current.name === 'Guardian' ? '#7c3aed' :
+    lvl.current.name === 'Scholar' ? '#2563eb' : '#4db84d';
+
   var html = '<div id="home">' +
     '<div class="home-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>' +
     '<h1>ACR STUDY</h1>' +
     '<p class="tag">Spaced Repetition for The Ancient Covenant Record<br>Dead Sea Scrolls &amp; The Orit Ge\u2019ez</p>';
-  if (totalDue > 0 || streak > 0 || (stats.xp || 0) > 0) {
+
+  // Stats pills
+  if (totalDue > 0 || streak > 0 || xp > 0) {
     html += '<div class="home-stats">';
     if (totalDue > 0) html += '<div class="home-stat home-due">' + totalDue + ' cards due</div>';
     if (streak > 0) html += '<div class="home-stat home-streak">' + streak + ' day streak</div>';
-    html += '<div class="home-stat home-level">' + lvl.current.name + ' \u00B7 ' + (stats.xp || 0) + ' XP</div>';
-    if ((stats.freezeTokens || 0) > 0) html += '<div class="home-stat" style="background:#4c1d95;color:#c4b5fd">' + stats.freezeTokens + ' streak freeze' + (stats.freezeTokens > 1 ? 's' : '') + '</div>';
+    html += '<div class="home-stat home-level" style="background:' + accentColor + '30;border:1px solid ' + accentColor + '60">' +
+      lbIcon(lvl.current.icon, 13) + ' ' + lvl.current.name + ' \u00B7 ' + xp + ' XP</div>';
+    if ((stats.freezeTokens || 0) > 0) {
+      html += '<div class="home-stat" style="background:#4c1d95;color:#c4b5fd">' +
+        stats.freezeTokens + ' streak freeze' + (stats.freezeTokens > 1 ? 's' : '') + '</div>';
+    }
     html += '</div>';
   }
-  // Daily Scroll widget
-  var dailyStatus = getDailyStatus();
-  html += '<div id="daily-scroll-widget" style="background:#0a1a0a;border:1.5px solid #166534;border-radius:10px;padding:14px;margin:12px 0;text-align:left">';
-  html += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:6px">DAILY SCROLL</div>';
-  if (dailyStatus.completedToday) {
-    html += '<div style="color:#86efac;font-size:14px;font-weight:700">Completed today</div>';
-    html += '<div style="color:#4ade80;font-size:12px;margin-top:4px">Daily streak: ' + dailyStatus.streak + ' day' + (dailyStatus.streak !== 1 ? 's' : '') + ' &nbsp;|&nbsp; Total: ' + dailyStatus.completed + '</div>';
-  } else {
-    html += '<div style="color:#d4d4d4;font-size:13px;margin-bottom:8px">One fill-in-the-blank question per day. Correct answers earn 25 bonus XP.</div>';
-    html += '<button id="b-daily" style="background:#166534;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer">Start Daily Scroll</button>';
-    if (dailyStatus.streak > 0) html += '<span style="color:#4ade80;font-size:12px;margin-left:10px">' + dailyStatus.streak + '-day streak</span>';
+
+  // XP progress bar
+  if (lvl.next) {
+    var xpPct = Math.min(100, Math.round((xp - lvl.current.xp) / (lvl.next.xp - lvl.current.xp) * 100));
+    html += '<div style="width:100%;max-width:320px;margin:0 auto 18px">';
+    html += '<div style="display:flex;justify-content:space-between;font-size:11px;color:#555;margin-bottom:5px;font-weight:700">';
+    html += '<span>' + lvl.current.name + '</span><span>' + (lvl.next.xp - xp) + ' XP to ' + lvl.next.name + '</span>';
+    html += '</div>';
+    html += '<div style="background:#1a1a1a;border-radius:6px;height:8px;overflow:hidden">';
+    html += '<div style="width:' + xpPct + '%;height:100%;background:linear-gradient(90deg,' + accentColor + ',#4db84d);border-radius:6px"></div>';
+    html += '</div></div>';
+  }
+
+  // 7-day streak calendar
+  var studyDays = {};
+  (stats.sessions || []).forEach(function (ses) { if (ses.date) studyDays[ses.date] = true; });
+  html += '<div style="display:flex;gap:5px;justify-content:center;margin:0 0 20px;align-items:center">';
+  for (var d = 6; d >= 0; d--) {
+    var dt = new Date();
+    dt.setUTCDate(dt.getUTCDate() - d);
+    var ds = dt.toISOString().slice(0, 10);
+    var studied = !!studyDays[ds];
+    html += '<div style="width:28px;height:28px;border-radius:50%;border:2px solid ' +
+      (studied ? accentColor : '#2a2a2a') + ';background:' +
+      (studied ? accentColor + '40' : 'transparent') +
+      ';display:flex;align-items:center;justify-content:center">';
+    html += '<div style="width:8px;height:8px;border-radius:50%;background:' +
+      (studied ? accentColor : '#2a2a2a') + '"></div></div>';
   }
   html += '</div>';
 
+  // Seal count badge
+  var seals = getSeals();
+  var sealCount = Object.keys(seals).length;
+  if (sealCount > 0) {
+    html += '<div style="font-size:12px;color:#b8860b;font-weight:700;margin:0 0 16px;letter-spacing:.04em">' +
+      lbIcon('medal', 13) + ' ' + sealCount + ' of ' + COVENANT_SEALS.length + ' Covenant Seals earned</div>';
+  }
+
+  // Daily Scroll widget
+  var dailyStatus = getDailyStatus();
+  html += '<div id="daily-scroll-widget" style="background:linear-gradient(135deg,#0a1a0a,#0d240d);border:1.5px solid ' +
+    (dailyStatus.completedToday ? '#4ade80' : '#166534') +
+    ';border-radius:12px;padding:16px;margin:8px 0 16px;text-align:left">';
+  html += '<div style="font-size:10px;color:#4ade80;font-weight:700;letter-spacing:1.5px;margin-bottom:10px">DAILY SCROLL</div>';
+  if (dailyStatus.completedToday) {
+    html += '<div style="display:flex;align-items:center;gap:12px">';
+    html += '<div style="width:36px;height:36px;border-radius:50%;background:#166534;border:2px solid #4ade80;flex-shrink:0;display:flex;align-items:center;justify-content:center">';
+    html += '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></div>';
+    html += '<div><div style="color:#86efac;font-size:15px;font-weight:700">Done for today</div>';
+    html += '<div style="color:#4ade80;font-size:12px;margin-top:3px">' + dailyStatus.streak + '-day streak &nbsp;&middot;&nbsp; ' + dailyStatus.completed + ' total</div></div></div>';
+  } else {
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">';
+    html += '<div style="flex:1"><div style="color:#d4d4d4;font-size:13px;line-height:1.6">One question per day.<br>Correct = 25 bonus XP.</div>';
+    if (dailyStatus.streak > 0) html += '<div style="color:#4ade80;font-size:12px;margin-top:4px;font-weight:700">' + dailyStatus.streak + '-day streak</div>';
+    html += '</div>';
+    html += '<button id="b-daily" style="background:#166534;color:#fff;border:none;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0;min-height:44px">Start</button>';
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Main action buttons
   html += '<div class="btns">';
   if (totalDue > 0) html += '<button id="b-review">Review All Due (' + totalDue + ' cards)</button>';
   html += '<button id="b-begin">Begin with Bereshit</button>' +
     (hasResume ? '<button id="b-resume">Resume where I left off</button>' : '') +
     '</div>' +
     '<div style="text-align:center;margin:10px 0">' +
-    '<button id="b-howtoplay" style="background:none;border:none;color:#666;font-size:13px;cursor:pointer;text-decoration:underline">How to play</button>' +
+    '<button id="b-howtoplay" style="background:none;border:none;color:#555;font-size:13px;cursor:pointer;text-decoration:underline">How to play</button>' +
     '</div>' +
     '<p class="small">' +
     'Data shared with the <a href="../">ACR Reader</a> on this device<br>' +
     'Add to Home Screen from Safari for offline access' +
     '</p>' +
     '</div>';
+
   document.getElementById('content').innerHTML = html;
   document.getElementById('tb').textContent = 'ACR Study';
   cur = -1;
