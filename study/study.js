@@ -408,6 +408,20 @@ function isVolumeMastered(volId) {
   return mastered.length >= volCards.length * 0.8; // 80% mastered
 }
 
+function getVolumeSessionCount(volId) {
+  var s = getStats();
+  if (!s.sessions) return 0;
+  var volFids = [];
+  var count = 0;
+  for (var g = 0; g < VOL_GROUPS.length; g++) {
+    for (var i = 0; i < VOL_GROUPS[g].count; i++) {
+      if (VOL_GROUPS[g].vol === volId) volFids.push(IDS[count]);
+      count++;
+    }
+  }
+  return s.sessions.filter(function(ses) { return volFids.indexOf(ses.fid) >= 0; }).length;
+}
+
 // ---- Question Mastery Tracking ----
 function getQuizMastery() {
   try { return JSON.parse(localStorage.getItem('acr_study_qmastery') || '{}'); } catch (e) { return {}; }
@@ -514,9 +528,9 @@ function getAllDueCards() {
 // ---- XP, Streak & Level system ----
 var LEVELS = [
   { name: 'Seeker', icon: '', xp: 0 },
-  { name: 'Scholar', icon: '', xp: 100 },
-  { name: 'Guardian', icon: '', xp: 500 },
-  { name: 'Keeper of the Scroll', icon: '', xp: 1500 }
+  { name: 'Scholar', icon: '', xp: 600 },
+  { name: 'Guardian', icon: '', xp: 3000 },
+  { name: 'Keeper of the Scroll', icon: '', xp: 12000 }
 ];
 
 function getStats() {
@@ -712,7 +726,17 @@ function updateStreak(s) {
     var last = new Date(s.lastStudyDate);
     var now = new Date(today);
     var diff = Math.round((now - last) / 86400000);
-    s.streak = diff === 1 ? (s.streak || 0) + 1 : 1;
+    if (diff === 1) {
+      s.streak = (s.streak || 0) + 1;
+    } else if (diff === 2 && (s.freezeTokens || 0) > 0) {
+      s.freezeTokens = s.freezeTokens - 1;
+      s.streak = (s.streak || 0) + 1;
+    } else {
+      s.streak = 1;
+    }
+    if (s.streak > 0 && s.streak % 7 === 0) {
+      s.freezeTokens = (s.freezeTokens || 0) + 1;
+    }
   }
   s.lastStudyDate = today;
   if (!s.bestStreak || s.streak > s.bestStreak) s.bestStreak = s.streak;
@@ -805,6 +829,12 @@ function go(fid) {
       ' questions mastered (' + secMastery.pct + '%)</div>' +
       '<div class="prog-bar-wrap"><div class="prog-bar" style="width:' + secMastery.pct + '%"></div></div></div>';
   }
+  h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;padding:8px 0 4px">START HERE</div>';
+  h += '<div class="activity-grid" style="margin-bottom:4px">';
+  h += actCard(lbIcon('puzzle',        32), 'Fill in the Blank', '#059669', 'filblank', fid);
+  h += actCard(lbIcon('pencil',        32), 'Multiple Choice', '#7c3aed', 'mc', fid);
+  h += '</div>';
+  h += '<div style="font-size:11px;color:#888;font-weight:700;letter-spacing:1px;padding:8px 0 4px">ALL ACTIVITIES</div>';
   h += '<div class="activity-grid">';
   h += actCard(lbIcon('book',          32), 'Chapter Summary', '#2563eb', 'summary', fid);
   h += actCard(lbIcon('puzzle',        32), 'Fill in the Blank', '#059669', 'filblank', fid);
@@ -831,7 +861,7 @@ function go(fid) {
   h += actCard(lbIcon('puzzle',        32), 'Word Match', '#6d28d9', 'wordmatch', fid);
   h += actCard(lbIcon('shield',        32), 'Challenge', '#b91c1c', 'challenge', fid);
   var volForTrial = getVolForFid(fid);
-  if (TRIAL_QUESTIONS[volForTrial] && isVolumeMastered(volForTrial)) {
+  if (TRIAL_QUESTIONS[volForTrial] && (isVolumeMastered(volForTrial) || getVolumeSessionCount(volForTrial) >= 10)) {
     var trialStats = getTrialStats();
     var trialDone = trialStats.completed && trialStats.completed[volForTrial];
     var trialBest = trialStats.best && trialStats.best[volForTrial];
@@ -973,22 +1003,23 @@ function getDailyStatus() {
   var today = new Date().toISOString().slice(0,10);
   return { completedToday: d.lastDate === today, completed: d.completed || 0, streak: d.dailyStreak || 0 };
 }
+function getDailySeed() {
+  var today = new Date().toISOString().slice(0,10);
+  return today.replace(/-/g,'').split('').reduce(function(a,c){return a*31+c.charCodeAt(0);},0);
+}
 function getDailyQuestion() {
   var pool = [];
-  var curated = ['file_1','file_2','file_3','file_4','file_5','file_6','file_7','file_8',
-                 'file_9','file_10','file_11','file_12','file_13','file_14','file_15','file_94'];
   var cc = CONTENT_CACHE || {};
-  for (var fi = 0; fi < curated.length; fi++) {
-    var fdata = cc[curated[fi]];
-    if (fdata && fdata.fill_blank) {
+  for (var fi = 0; fi < IDS.length; fi++) {
+    var fdata = cc[IDS[fi]];
+    if (fdata && fdata.fill_blank && fdata.fill_blank.length) {
       for (var qi = 0; qi < fdata.fill_blank.length; qi++) {
-        pool.push({ fid: curated[fi], q: fdata.fill_blank[qi] });
+        pool.push({ fid: IDS[fi], q: fdata.fill_blank[qi] });
       }
     }
   }
   if (!pool.length) return null;
-  var today = new Date().toISOString().slice(0,10);
-  var seed = today.replace(/-/g,'').split('').reduce(function(a,c){return a*31+c.charCodeAt(0);},0);
+  var seed = getDailySeed();
   return pool[Math.abs(seed) % pool.length];
 }
 function completeDailyScroll(correct) {
@@ -2125,12 +2156,14 @@ function showFlashcards(fid) {
 
     function showSummary() {
       var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
+      var xpEarned = recordSession(fid, 'flash', Math.ceil(avg), cards.length);
       var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
       var msg = avg >= 4 ? 'You know this well!' : avg >= 3 ? 'Getting there!' : 'Keep practicing!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
       h += '<div class="cr-pct">Average confidence: ' + avg.toFixed(1) + ' / 5</div>';
+      h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
       h += '<button class="study-btn sb-pri" id="b-fc-retry">Again</button>';
@@ -2255,10 +2288,12 @@ function showMemoryMatch(fid) {
     }
 
     function showWin() {
+      var xpEarned = recordSession(fid, 'memory', terms.length, terms.length);
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">Outstanding</div>';
       h += '<div class="cr-score">All ' + terms.length + ' pairs matched!</div>';
       h += '<div class="cr-pct">in ' + attempts + ' attempts</div>';
+      h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + (attempts <= terms.length + 2 ? 'Amazing memory!' :
         attempts <= terms.length * 2 ? 'Well done!' : 'Keep practicing!') + '</div>';
       h += '<div class="cr-btns">';
@@ -2362,7 +2397,9 @@ function showListenLearn(fid) {
       this.textContent = '\u25A0 Stopped';
     });
     document.getElementById('b-ll-back').addEventListener('click', function () {
-      stopSpeech(); go(fid);
+      stopSpeech();
+      recordSession(fid, 'listen', 1, 1);
+      go(fid);
     });
   }
 
@@ -4405,7 +4442,7 @@ function showMindMap(fid) {
       }
     }
     render();
-    recordSession(fid, 'mindmap', 0.3, 1);
+    recordSession(fid, 'mindmap', 1, 1);
   });
 }
 
@@ -4539,7 +4576,7 @@ function showConceptWeb(fid) {
       }
     }
     render();
-    recordSession(fid, 'conceptweb', 0.3, 1);
+    recordSession(fid, 'conceptweb', 1, 1);
   });
 }
 
@@ -4648,7 +4685,7 @@ function showChapterTimeline(fid) {
       });
     }
     render();
-    recordSession(fid, 'timeline', 0.3, 1);
+    recordSession(fid, 'timeline', 1, 1);
   });
 }
 
@@ -4972,52 +5009,72 @@ function showDailyScroll() {
   if (status.completedToday) { goHome(); return; }
 
   var picked = getDailyQuestion();
-  if (!picked) {
-    document.getElementById('content').innerHTML = '<div class="prog-view"><div class="prog-card"><h3>No daily question available yet — study a section first.</h3><button class="study-btn" id="b-ds-back">Back</button></div></div>';
-    document.getElementById('b-ds-back').addEventListener('click', function () { goHome(); });
+  if (picked) {
+    renderDailyQ(picked.q);
     return;
   }
 
-  var q = picked.q;
-  var answered = false;
-
-  function render() {
-    var h = '<div class="prog-view"><div class="prog-card" style="border-left:4px solid #166534">';
-    h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:8px">DAILY SCROLL</div>';
-    h += '<div style="font-size:15px;font-weight:700;margin-bottom:12px">' + (q.prompt || q.question || '') + '</div>';
-    h += '<input id="ds-input" type="text" placeholder="Your answer..." style="width:100%;box-sizing:border-box;padding:10px;border-radius:6px;border:1.5px solid #444;background:#111;color:#fff;font-size:15px;margin-bottom:10px">';
-    h += '<button class="study-btn" id="ds-submit" style="background:#166534">Submit</button>';
-    h += '<div id="ds-fb" style="min-height:36px;margin-top:10px"></div>';
-    h += '</div></div>';
-    document.getElementById('content').innerHTML = h;
-
-    var inp = document.getElementById('ds-input');
-    var btn = document.getElementById('ds-submit');
-    var fb = document.getElementById('ds-fb');
-    if (inp) inp.focus();
-
-    function submit() {
-      if (answered) return;
-      answered = true;
-      btn.disabled = true;
-      var val = (inp ? inp.value : '').trim().toLowerCase();
-      var ans = String(q.answer || '').trim().toLowerCase();
-      var correct = val === ans || (ans.split('/').some(function(a){ return a.trim() === val; }));
-      completeDailyScroll(correct);
-      if (fb) {
-        fb.innerHTML = (correct
-          ? '<div style="color:#4ade80;font-weight:700">Correct! +25 XP</div>'
-          : '<div style="color:#f87171;font-weight:700">The answer was: ' + q.answer + '</div>') +
-          (q.source_quote ? '<div style="color:#aaa;font-size:12px;margin-top:6px">' + q.source_quote + '</div>' : '');
-      }
-      setTimeout(function () { goHome(); }, 2800);
+  // Not cached yet — async-load the seeded section then pick from it
+  var seed = getDailySeed();
+  var fid = IDS[Math.abs(seed) % IDS.length];
+  loadContent(fid).then(function(data) {
+    if (data && data.fill_blank && data.fill_blank.length) {
+      renderDailyQ(data.fill_blank[Math.abs(seed) % data.fill_blank.length]);
+    } else {
+      return loadContent('file_1').then(function(d2) {
+        if (d2 && d2.fill_blank && d2.fill_blank.length) {
+          renderDailyQ(d2.fill_blank[0]);
+        } else {
+          showNoDailyQ();
+        }
+      });
     }
+  }).catch(showNoDailyQ);
 
-    if (btn) btn.addEventListener('click', submit);
-    if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+  function showNoDailyQ() {
+    document.getElementById('content').innerHTML = '<div class="prog-view"><div class="prog-card"><h3>No daily question available yet — study a section first.</h3><button class="study-btn" id="b-ds-back">Back</button></div></div>';
+    document.getElementById('b-ds-back').addEventListener('click', function () { goHome(); });
   }
 
-  render();
+  function renderDailyQ(q) {
+    var answered = false;
+    function render() {
+      var h = '<div class="prog-view"><div class="prog-card" style="border-left:4px solid #166534">';
+      h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:8px">DAILY SCROLL</div>';
+      h += '<div style="font-size:15px;font-weight:700;margin-bottom:12px">' + (q.prompt || q.question || '') + '</div>';
+      h += '<input id="ds-input" type="text" placeholder="Your answer..." style="width:100%;box-sizing:border-box;padding:10px;border-radius:6px;border:1.5px solid #444;background:#111;color:#fff;font-size:15px;margin-bottom:10px">';
+      h += '<button class="study-btn" id="ds-submit" style="background:#166534">Submit</button>';
+      h += '<div id="ds-fb" style="min-height:36px;margin-top:10px"></div>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+
+      var inp = document.getElementById('ds-input');
+      var btn = document.getElementById('ds-submit');
+      var fb = document.getElementById('ds-fb');
+      if (inp) inp.focus();
+
+      function submit() {
+        if (answered) return;
+        answered = true;
+        btn.disabled = true;
+        var val = (inp ? inp.value : '').trim().toLowerCase();
+        var ans = String(q.answer || '').trim().toLowerCase();
+        var correct = val === ans || (ans.split('/').some(function(a){ return a.trim() === val; }));
+        completeDailyScroll(correct);
+        if (fb) {
+          fb.innerHTML = (correct
+            ? '<div style="color:#4ade80;font-weight:700">Correct! +25 XP</div>'
+            : '<div style="color:#f87171;font-weight:700">The answer was: ' + q.answer + '</div>') +
+            (q.source_quote ? '<div style="color:#aaa;font-size:12px;margin-top:6px">' + q.source_quote + '</div>' : '');
+        }
+        setTimeout(function () { goHome(); }, 2800);
+      }
+
+      if (btn) btn.addEventListener('click', submit);
+      if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+    }
+    render();
+  }
 }
 
 function goHome() {
@@ -5036,6 +5093,7 @@ function goHome() {
     if (totalDue > 0) html += '<div class="home-stat home-due">' + totalDue + ' cards due</div>';
     if (streak > 0) html += '<div class="home-stat home-streak">' + streak + ' day streak</div>';
     html += '<div class="home-stat home-level">' + lvl.current.name + ' \u00B7 ' + (stats.xp || 0) + ' XP</div>';
+    if ((stats.freezeTokens || 0) > 0) html += '<div class="home-stat" style="background:#4c1d95;color:#c4b5fd">' + stats.freezeTokens + ' streak freeze' + (stats.freezeTokens > 1 ? 's' : '') + '</div>';
     html += '</div>';
   }
   // Daily Scroll widget
