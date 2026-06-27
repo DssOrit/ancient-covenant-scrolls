@@ -48,8 +48,9 @@ function lbIcon(name, sizePx) {
 }
 try { window.lbIcon = lbIcon; } catch (e) {}
 
-// All 46 volumes / 111 sections matching the ACR reader
+// All 46 volumes / 111 sections matching the ACR reader, plus SR reference
 var IDS=[];for(var _i=1;_i<=111;_i++)IDS.push('file_'+_i);
+IDS.push('file_200');
 
 var LBL = [
 'Bereshit (Genesis) \u2014 Part 1 \u2014 Ch 1\u201311',
@@ -162,7 +163,8 @@ var LBL = [
 '11QMelchizedek (Melchizedek Scroll) \u2014 Complete',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 1 \u2014 Col 1\u201322',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 2 \u2014 Col 23\u201344',
-'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366'
+'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366',
+'ACR Search Reference \u2014 Hebrew Roots, History & Research'
 ];
 
 var VOL_GROUPS = [
@@ -211,7 +213,8 @@ var VOL_GROUPS = [
 {title:'Vol 43 \u2014 Songs of Sabbath Sacrifice',eng:'',count:1,vol:'43'},
 {title:'Vol 44 \u2014 Genesis Apocryphon',eng:'1QapGen',count:1,vol:'44'},
 {title:'Vol 45 \u2014 11QMelchizedek',eng:'',count:1,vol:'45'},
-{title:'Vol 46 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'46'}
+{title:'Vol 46 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'46'},
+{title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
 var lh = parseFloat(localStorage.getItem('acr_study_lh') || '1.65');
@@ -260,18 +263,19 @@ if (lineFocusOn) document.body.classList.add('linefocus-on');
 // ---- Volume banner graphics (inline SVG, no external dependency) ----
 var VOL_ICONS = {
   '1': 'BR', '2': 'SH', '3': 'VY', '4': 'NM',
-  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'WR'
+  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'WR', 'SR': 'SR'
 };
 var VOL_COLORS = {
   '1': ['#2563eb','#1e40af'], '2': ['#dc2626','#991b1b'], '3': ['#059669','#065f46'],
   '4': ['#d97706','#92400e'], '5': ['#7c3aed','#5b21b6'], '6': ['#0891b2','#155e75'],
-  '7': ['#ea580c','#9a3412'], '8': ['#b8860b','#78350f']
+  '7': ['#ea580c','#9a3412'], '8': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d']
 };
 var VOL_NAMES = {
   '1': 'Bereshit \u00B7 Genesis', '2': 'Shemot \u00B7 Exodus',
   '3': 'Vayikra \u00B7 Leviticus', '4': 'Bamidbar \u00B7 Numbers',
   '5': 'Devarim \u00B7 Deuteronomy', '6': 'Chanokh \u00B7 Book of Chanokh',
-  '7': 'Yovelim \u00B7 Book of Jubilees', '8': 'War Scroll 1QM'
+  '7': 'Yovelim \u00B7 Book of Jubilees', '8': 'War Scroll 1QM',
+  'SR': 'ACR Search Reference'
 };
 
 function getVolForFid(fid) {
@@ -692,6 +696,8 @@ function recordSession(fid, mode, score, total) {
   if (s.sessions.length > 100) s.sessions = s.sessions.slice(-100);
   var xpEarned = Math.round(score * 10);
   s.xp = (s.xp || 0) + xpEarned;
+  s.totalAnswered = (s.totalAnswered || 0) + (total || 0);
+  s.totalCorrect = (s.totalCorrect || 0) + (score || 0);
   updateStreak(s);
   saveStats(s);
   return xpEarned;
@@ -824,6 +830,17 @@ function go(fid) {
   h += actCard(lbIcon('puzzle',        32), 'Verse Builder', '#e91e90', 'versebuild', fid);
   h += actCard(lbIcon('puzzle',        32), 'Word Match', '#6d28d9', 'wordmatch', fid);
   h += actCard(lbIcon('shield',        32), 'Challenge', '#b91c1c', 'challenge', fid);
+  var volForTrial = getVolForFid(fid);
+  if (TRIAL_QUESTIONS[volForTrial] && isVolumeMastered(volForTrial)) {
+    var trialStats = getTrialStats();
+    var trialDone = trialStats.completed && trialStats.completed[volForTrial];
+    var trialBest = trialStats.best && trialStats.best[volForTrial];
+    h += '<div class="act-card" data-mode="trial" style="background:linear-gradient(135deg,#92400e,#78350f);border:2px solid #b8860b" role="button" tabindex="0" aria-label="Covenant Trial">' +
+      '<div class="act-icon" aria-hidden="true">' + lbIcon('trophy', 32) + '</div>' +
+      '<div class="act-label">Covenant Trial' +
+      (trialDone ? '<br><span style="font-size:11px;opacity:.85">Best: ' + (trialBest || 0) + '%</span>' : '<br><span style="font-size:11px;opacity:.85">Double XP — No hints</span>') +
+      '</div></div>';
+  }
   var remixN = getRemixCount(fid);
   if (remixN > 0) {
     h += '<div class="act-card act-card-remix" data-mode="remix" role="button" tabindex="0" aria-label="Remix Round activity, ' + remixN + ' due">' +
@@ -858,6 +875,304 @@ function go(fid) {
 
 var CHAPTER_CACHE = {};
 
+// ---- Covenant Seals ----
+var SEALS = [
+  {id:'first_light',     title:'First Light',              desc:'Answer your first question correctly'},
+  {id:'first_session',   title:'The First Day',            desc:'Complete a full study session'},
+  {id:'ten_words',       title:'The Ten Words',            desc:'Answer 10 questions correctly'},
+  {id:'seventy_souls',   title:'Seventy Souls',            desc:'Answer 70 questions in total'},
+  {id:'hundred_years',   title:'A Hundred Years',          desc:'Answer 100 questions correctly'},
+  {id:'five_hundred',    title:'Five Hundred',             desc:'Answer 500 questions in total'},
+  {id:'bereshit_seal',   title:'Bereshit Sealed',          desc:'Reach 80% mastery in Bereshit', vol:'1'},
+  {id:'shemot_seal',     title:'Shemot Sealed',            desc:'Reach 80% mastery in Shemot', vol:'2'},
+  {id:'vayikra_seal',    title:'Vayikra Sealed',           desc:'Reach 80% mastery in Vayikra', vol:'3'},
+  {id:'bamidbar_seal',   title:'Bamidbar Sealed',          desc:'Reach 80% mastery in Bamidbar', vol:'4'},
+  {id:'devarim_seal',    title:'Devarim Sealed',           desc:'Reach 80% mastery in Devarim', vol:'5'},
+  {id:'chanokh_seal',    title:'Chanokh Sealed',           desc:'Reach 80% mastery in Chanokh', vol:'6'},
+  {id:'yovelim_seal',    title:'Yovelim Sealed',           desc:'Reach 80% mastery in Yovelim', vol:'7'},
+  {id:'war_scroll_seal', title:'War Scroll Sealed',        desc:'Reach 80% mastery in the War Scroll', vol:'8'},
+  {id:'covenant_keeper', title:'Covenant Keeper',          desc:'7-day study streak'},
+  {id:'faithful_witness',title:'Faithful Witness',         desc:'14-day study streak'},
+  {id:'walking_creator', title:'Walking with The Creator', desc:'30-day study streak'},
+  {id:'scholars_path',   title:"Scholar's Path",           desc:'Reach Scholar level (100 XP)'},
+  {id:'guardians_shield',title:"Guardian's Shield",        desc:'Reach Guardian level (500 XP)'},
+  {id:'keeper_of_scroll',title:'Keeper of the Scroll',     desc:'Reach maximum level (1500 XP)'},
+  {id:'daily_seeker',    title:'Daily Seeker',             desc:'Complete your first Daily Scroll'},
+  {id:'daily_faithful',  title:'Daily Faithful',           desc:'Complete 7 Daily Scrolls'},
+  {id:'first_trial',     title:'First Trial',              desc:'Complete your first Covenant Trial'},
+  {id:'torah_complete',  title:'Torah Complete',           desc:'Complete Covenant Trials for all five Torah volumes'},
+  {id:'ancient_seals',   title:'Ancient Seals',            desc:'Complete all eight Covenant Trials'}
+];
+
+function getSeals() {
+  try { return JSON.parse(localStorage.getItem('acr_study_seals') || '{}'); } catch (e) { return {}; }
+}
+function saveSeals(s) {
+  try { localStorage.setItem('acr_study_seals', JSON.stringify(s)); } catch (e) {}
+}
+
+function checkAndAwardSeals() {
+  var earned = getSeals();
+  var stats = getStats();
+  var xp = stats.xp || 0;
+  var streak = stats.streak || 0;
+  var totalAnswered = stats.totalAnswered || 0;
+  var totalCorrect = stats.totalCorrect || 0;
+  var sessions = stats.sessions || [];
+  var trialStats = getTrialStats();
+  var dailyStats = getDailyStats();
+  var newlyEarned = [];
+
+  function award(id) {
+    if (!earned[id]) { earned[id] = new Date().toISOString().slice(0,10); newlyEarned.push(id); }
+  }
+
+  if (totalCorrect >= 1) award('first_light');
+  if (sessions.length >= 1) award('first_session');
+  if (totalCorrect >= 10) award('ten_words');
+  if (totalAnswered >= 70) award('seventy_souls');
+  if (totalCorrect >= 100) award('hundred_years');
+  if (totalAnswered >= 500) award('five_hundred');
+  if (streak >= 7) award('covenant_keeper');
+  if (streak >= 14) award('faithful_witness');
+  if (streak >= 30) award('walking_creator');
+  if (xp >= 100) award('scholars_path');
+  if (xp >= 500) award('guardians_shield');
+  if (xp >= 1500) award('keeper_of_scroll');
+  if ((dailyStats.completed || 0) >= 1) award('daily_seeker');
+  if ((dailyStats.completed || 0) >= 7) award('daily_faithful');
+
+  var trialVols = Object.keys(trialStats.completed || {});
+  if (trialVols.length >= 1) award('first_trial');
+  var torahTrials = ['1','2','3','4','5'].filter(function(v){ return trialStats.completed && trialStats.completed[v]; });
+  if (torahTrials.length >= 5) award('torah_complete');
+  var allTrials = ['1','2','3','4','5','6','7','8'].filter(function(v){ return trialStats.completed && trialStats.completed[v]; });
+  if (allTrials.length >= 8) award('ancient_seals');
+
+  var volSealMap = {
+    'bereshit_seal':'1','shemot_seal':'2','vayikra_seal':'3','bamidbar_seal':'4',
+    'devarim_seal':'5','chanokh_seal':'6','yovelim_seal':'7','war_scroll_seal':'8'
+  };
+  for (var sid in volSealMap) {
+    if (isVolumeMastered(volSealMap[sid])) award(sid);
+  }
+
+  if (newlyEarned.length > 0) saveSeals(earned);
+  return newlyEarned;
+}
+
+// ---- Daily Scroll ----
+function getDailyStats() {
+  try { return JSON.parse(localStorage.getItem('acr_study_daily') || '{}'); } catch (e) { return {}; }
+}
+function saveDailyStats(d) {
+  try { localStorage.setItem('acr_study_daily', JSON.stringify(d)); } catch (e) {}
+}
+function getDailyStatus() {
+  var d = getDailyStats();
+  var today = new Date().toISOString().slice(0,10);
+  return { completedToday: d.lastDate === today, completed: d.completed || 0, streak: d.dailyStreak || 0 };
+}
+function getDailyQuestion() {
+  var pool = [];
+  var curated = ['file_1','file_2','file_3','file_4','file_5','file_6','file_7','file_8',
+                 'file_9','file_10','file_11','file_12','file_13','file_14','file_15','file_94'];
+  var cc = CONTENT_CACHE || {};
+  for (var fi = 0; fi < curated.length; fi++) {
+    var fdata = cc[curated[fi]];
+    if (fdata && fdata.fill_blank) {
+      for (var qi = 0; qi < fdata.fill_blank.length; qi++) {
+        pool.push({ fid: curated[fi], q: fdata.fill_blank[qi] });
+      }
+    }
+  }
+  if (!pool.length) return null;
+  var today = new Date().toISOString().slice(0,10);
+  var seed = today.replace(/-/g,'').split('').reduce(function(a,c){return a*31+c.charCodeAt(0);},0);
+  return pool[Math.abs(seed) % pool.length];
+}
+function completeDailyScroll(correct) {
+  var d = getDailyStats();
+  var today = new Date().toISOString().slice(0,10);
+  if (d.lastDate === today) return;
+  d.lastDate = today;
+  d.completed = (d.completed || 0) + 1;
+  var last = d.lastDailyDate;
+  if (last) {
+    var diff = Math.round((new Date(today) - new Date(last)) / 86400000);
+    d.dailyStreak = diff === 1 ? (d.dailyStreak || 0) + 1 : 1;
+  } else {
+    d.dailyStreak = 1;
+  }
+  d.lastDailyDate = today;
+  saveDailyStats(d);
+  if (correct) {
+    var s = getStats();
+    s.xp = (s.xp || 0) + 25;
+    s.totalAnswered = (s.totalAnswered || 0) + 1;
+    s.totalCorrect = (s.totalCorrect || 0) + 1;
+    updateStreak(s);
+    saveStats(s);
+  }
+  checkAndAwardSeals();
+}
+
+// ---- Covenant Trial ----
+var TRIAL_QUESTIONS = {
+  '1': [
+    {question:'Avraham is renamed from his original name Avram. What was the original name of his wife Sarah before YHWH changed it?',options:['Sarai','Hagar','Milcah','Keturah'],correct:0,source_quote:'As for Sarai your wife, you shall not call her name Sarai, but Sarah shall be her name. — Bereshit 17:15'},
+    {question:'At the Aqedah, YHWH told Avraham to offer his son on one of the mountains in the land of Moriah. What did Avraham name that place?',options:['El Shaddai','YHWH Yireh','El Elyon','YHWH Nissi'],correct:1,source_quote:'So Avraham called the name of that place, "YHWH will provide." — Bereshit 22:14'},
+    {question:'Yosef told his brothers that their selling him was not driven by their decision alone. What greater purpose did he identify?',options:['To punish them for jealousy','To preserve life through famine','To fulfill a dream about the sun','To test the faithfulness of Yaakov'],correct:1,source_quote:'And now do not be distressed or angry with yourselves because you sold me here, for The Creator sent me before you to preserve life. — Bereshit 45:5'},
+    {question:'Yaakov blessed Yosef\'s two sons and crossed his hands. Which son received the greater blessing that Yosef tried to correct?',options:['Manasseh, the firstborn','Ephraim, the younger','Reuben, the eldest','Binyamin, the youngest'],correct:1,source_quote:'He put Ephraim before Manasseh. — Bereshit 48:20'},
+    {question:'When Yaakov died in Egypt, what did he command Yosef regarding his burial?',options:['Bury him beside Rachel in Bethlehem','Build him a tomb in Egypt','Carry him back to Canaan to the cave of Machpelah','Cast his ashes into the Nile'],correct:2,source_quote:'Bury me with my fathers in the cave that is in the field of Ephron the Hittite. — Bereshit 49:29'}
+  ],
+  '2': [
+    {question:'At the burning bush, YHWH told Moshe His name. What exact phrase did YHWH use to describe His own name?',options:['I Am YHWH your Creator','Ehyeh Asher Ehyeh — I Will Be What I Will Be','El Shaddai — The Almighty','The Creator of Avraham'],correct:1,source_quote:'The Creator said to Moses, "I AM WHO I AM." And He said, "Say this to the people of Israel: I AM has sent me to you." — Shemot 3:14'},
+    {question:'After crossing the sea, Miriam led the women in song and dance. What instrument did she use?',options:['Kinnor (lyre)','Nevel (harp)','Tof (timbrel)','Hazotzra (trumpet)'],correct:2,source_quote:'Then Miriam the prophetess, the sister of Aaron, took a timbrel in her hand, and all the women went out after her with timbrels and dancing. — Shemot 15:20'},
+    {question:'At Sinai, YHWH told the people they would be to Him a kingdom of priests and a holy nation — but only on what condition?',options:['If they build the Mishkan correctly','If they keep all the commandments without fault','If they truly obey His voice and keep His covenant','If they defeat the nations of Canaan'],correct:2,source_quote:'If you will indeed obey my voice and keep my covenant, you shall be my treasured possession among all peoples. — Shemot 19:5'},
+    {question:'After the golden calf, Moshe broke the first tablets. How were the second tablets different from the first?',options:['YHWH wrote them again exactly as before','Moshe carved them and YHWH wrote the words','YHWH carved them but Moshe wrote the words','The second tablets had fewer commandments'],correct:1,source_quote:'Carve two tablets of stone like the first, and I will write on the tablets the words that were on the first tablets. — Shemot 34:1'},
+    {question:'The Ten Words (Aseret HaDibrot) open with a declaration before any commandment. What does YHWH state first?',options:['You shall have no other mighty ones before Me','I am YHWH your Creator who brought you out of Egypt, out of the house of slavery','Honor your father and your mother','Remember the Sabbath day to keep it holy'],correct:1,source_quote:'I am YHWH your Creator, who brought you out of the land of Egypt, out of the house of slavery. — Shemot 20:2'}
+  ],
+  '3': [
+    {question:'Vayikra repeatedly uses a phrase to mark the ending of an instruction from YHWH to Moshe. What phrase appears most often?',options:['Thus says YHWH','I am YHWH','Hear O Yisrael','This is the law'],correct:1,source_quote:'I am YHWH. — Vayikra (recurring closing formula throughout the book)'},
+    {question:'On Yom Kippur, the high priest enters the Holy of Holies. What specific garments does he wear for this entry?',options:['The golden vestments with the breastplate','Plain white linen garments only','The blue robe with pomegranates','The priestly crown and ephod'],correct:1,source_quote:'He shall put on the holy linen coat and shall have the linen undergarment on his body, and he shall tie the linen sash around his waist, and wear the linen turban; these are the holy garments. — Vayikra 16:4'},
+    {question:'Shemitah (the seventh-year rest) benefits the land. What is Yovel (the fiftieth year) specifically about beyond the land?',options:['A second Shemitah with double rest','The release of enslaved Hebrews and return of ancestral lands','A time for the high priest to enter the Holy of Holies','The national counting of all the people'],correct:1,source_quote:'You shall consecrate the fiftieth year, and proclaim liberty throughout the land to all its inhabitants. — Vayikra 25:10'},
+    {question:'YHWH commands the people to be holy. What reason does He give for this command in Vayikra?',options:['Because holiness brings long life','Because the nations are watching you','Because I YHWH your Creator am holy','Because the Mishkan must be kept pure'],correct:2,source_quote:'You shall be holy, for I YHWH your Creator am holy. — Vayikra 19:2'},
+    {question:'YHWH promises that despite disobedience He will not utterly destroy the covenant. What specific reason does He give?',options:['Because of the faithfulness of the priests','Because He remembers the covenant with the ancestors','Because the people will eventually repent','Because the land itself cries out to Him'],correct:1,source_quote:'Yet for all that, when they are in the land of their enemies, I will not spurn them, neither will I abhor them so as to destroy them utterly and break my covenant with them, for I am YHWH their Creator. But I will for their sake remember the covenant with their forefathers. — Vayikra 26:44-45'}
+  ],
+  '4': [
+    {question:'The spirit of prophecy fell on seventy elders in the camp, but two remained in the camp and also prophesied. What were their names?',options:['Datan and Aviram','Korah and On','Eldad and Medad','Caleb and Yehoshua'],correct:2,source_quote:'But two men remained in the camp, one named Eldad, and the other named Medad, and the spirit rested on them. — Bamidbar 11:26'},
+    {question:'YHWH spoke to all prophets through visions and dreams. How did He speak specifically to Moshe?',options:['Through fire and thunder on the mountain','Through the Urim and Thummim','Mouth to mouth, clearly and not in riddles','Through the voice of the angel of YHWH'],correct:2,source_quote:'With him I speak mouth to mouth, clearly, and not in riddles, and he beholds the form of YHWH. — Bamidbar 12:8'},
+    {question:'Calev was the only one among the twelve spies (besides Yehoshua) with a different spirit. What was the specific quality attributed to him?',options:['He trusted in the size of the armies','He had followed YHWH fully','He was the most experienced warrior','He had no fear of any human being'],correct:1,source_quote:'But my servant Caleb, because he has a different spirit and has followed me fully, I will bring into the land into which he went. — Bamidbar 14:24'},
+    {question:'At Merivah, Moshe struck the rock twice instead of speaking to it. What consequence did YHWH give specifically to Moshe and Aharon?',options:['They would wander an extra forty years','They would not enter the land He was giving to Yisrael','They lost the privilege of the priesthood','They were required to make an offering of atonement'],correct:1,source_quote:'Because you did not believe in me, to uphold me as holy in the eyes of the people of Israel, therefore you shall not bring this assembly into the land that I have given them. — Bamidbar 20:12'},
+    {question:'The Aaronic Blessing has three parts and ends with a specific word. What is the final word of the blessing?',options:['shalom','tzedek','hesed','emet'],correct:0,source_quote:'YHWH lift up his countenance upon you and give you shalom. — Bamidbar 6:26'}
+  ],
+  '5': [
+    {question:'Moshe speaks all the words of Devarim in a specific place and time. Where was he standing when he began?',options:['On Mount Horeb before the burning bush','In the Mishkan at Shiloh','On the other side of the Yarden in the wilderness','On the peak of Mount Nebo'],correct:2,source_quote:'These are the words that Moses spoke to all Israel beyond the Jordan in the wilderness. — Devarim 1:1'},
+    {question:'The Shema has two major parts. The first is "YHWH our Creator YHWH is one." What does the second part command?',options:['You shall not have other mighty ones before Me','You shall love YHWH your Creator with all your heart and all your soul and all your might','Remember the Sabbath day to keep it holy','You shall teach your children all these statutes'],correct:1,source_quote:'You shall love YHWH your Creator with all your heart and with all your soul and with all your might. — Devarim 6:5'},
+    {question:'A prophet arises who performs signs and wonders but leads the people away from YHWH. What is the test for whether to follow him?',options:['Whether the signs he performs come true','Whether the elders of the city confirm his words','Whether he speaks in the name of YHWH alone','Whether his words call the people to serve other mighty ones'],correct:3,source_quote:'If a prophet or a dreamer of dreams arises among you and gives you a sign or a wonder, and the sign or wonder that he tells you comes to pass, and if he says, "Let us go after other gods"... you shall not listen. — Devarim 13:1-3'},
+    {question:'What specific condition does YHWH give for the promised restoration after exile and return?',options:['Building the Temple before returning','Defeating all surrounding nations','Returning to YHWH with all your heart and soul','Offering a burnt offering for every tribe'],correct:2,source_quote:'And when you return to YHWH your Creator and obey his voice in all that I command you today, with all your heart and with all your soul, then YHWH your Creator will restore your fortunes. — Devarim 30:2-3'},
+    {question:'Moshe\'s final song calls the heavens and earth to listen. What does he call the sky and ground at the opening of the song?',options:['Witnesses against Yisrael forever','The thrones of YHWH\'s judgment','His teachers and guides','The record of His covenant with the ancestors'],correct:0,source_quote:'Give ear, O heavens, and I will speak, and let the earth hear the words of my mouth. — Devarim 32:1'}
+  ],
+  '6': [
+    {question:'Chanokh sees the final judgment. Who are the first targets named for destruction in that judgment scene?',options:['The fallen Watchers only','The kings, the mighty, and those who possess the earth','The sinners who denied YHWH\'s name','The Nephilim and their offspring'],correct:1,source_quote:'On the day of their anguish and affliction they shall not be able to save themselves. And I will give them into the hands of My elect. — Chanokh 48:9'},
+    {question:'The Watchers numbered two hundred when they descended on Mount Hermon. How many named leaders does the text list?',options:['Seven','Twelve','Twenty','Seventy'],correct:2,source_quote:'And these are the names of their leaders: Semyaza... And all the others together with them took unto themselves wives, and each chose for himself one, and they began to go in unto them. — Chanokh 6:7'},
+    {question:'In the Dream Visions, Chanokh sees a burning house. What does the house represent in the vision\'s symbolic system?',options:['The land of Egypt','The first Temple of Yisrael','The dwelling place of the fallen Watchers','The city of the Nephilim'],correct:1,source_quote:'And I saw till a throne was erected in the pleasant land, and the Lord of the sheep sat Himself thereon. — Chanokh 90:20'},
+    {question:'YHWH commands Rafa\'el to bind a specific fallen Watcher. Who is it, and where is he cast?',options:['Semyaza, cast into the sea','Azazel, cast into darkness in the desert of Duda\'el','Penemue, cast beneath the foundations of the earth','Baraqijal, bound under the mountains'],correct:1,source_quote:'And the Lord said to Raphael: Bind Azazel hand and foot, and cast him into the darkness: and make an opening in the desert, which is in Duda\'el. — Chanokh 10:4'},
+    {question:'After the flood, the spirits of the Nephilim continue to afflict humanity. What specifically are they called in Chanokh?',options:['The watchers of the second heaven','Evil spirits who proceed from their bodies','The children of the Satans','Messengers of Belial'],correct:1,source_quote:'And the spirits of the giants afflict, oppress, destroy, attack, do battle, and work destruction on the earth... For they have proceeded from them. — Chanokh 15:11-12'}
+  ],
+  '7': [
+    {question:'In Yovelim, who dictated the text to Moshe on Mount Sinai?',options:['YHWH speaking directly','The Angel of Presence','Michael the great prince','The seventy angels of the nations'],correct:1,source_quote:'For the Angel of the Presence spoke to Moses according to the word of the Lord, saying... — Yovelim 1:27'},
+    {question:'Yovelim uses a specific calendar structure. How many days are in its sacred year?',options:['354 days (lunar)','360 days (prophetic)','364 days (solar-sacred)','365 days (solar-civil)'],correct:2,source_quote:'...and the year is completed in three hundred and sixty-four days. — Yovelim 6:32'},
+    {question:'After the flood, Noakh gives his sons specific laws. One key prohibition concerns blood. What does Noakh say about consuming blood?',options:['Blood must be poured on the altar before eating','Do not eat flesh with its life, that is its blood','Blood of animals is permitted but not blood of humans','Eat no blood at any season, for the soul is therein'],correct:3,source_quote:'Eat no blood at any season in all your generations. — Yovelim 6:14'},
+    {question:'Yovelim records Avraham\'s age when he was circumcised, differing in presentation from Bereshit. At what age was Avraham circumcised according to Yovelim?',options:['85 years','90 years','99 years','100 years'],correct:2,source_quote:'And Abraham took Ishmael his son, and all that were born in his house, and all that were bought with his money, every male in his house, and circumcised the flesh of their foreskin on the very same day as God said unto him. And Abraham was ninety-nine years old when he was circumcised. — Yovelim 15:23'},
+    {question:'Yovelim connects Shavuot to a specific covenant renewal. Which covenant does it say was renewed at that time?',options:['The covenant of circumcision with Avraham','The covenant of the rainbow with Noakh','The covenant of Sinai with Moshe','The covenant of salt with Aharon'],correct:1,source_quote:'For this reason it is ordained and written on the heavenly tablets, that they should celebrate the feast of weeks in this month once a year, to renew the covenant every year. — Yovelim 6:17'}
+  ],
+  '8': [
+    {question:'The War Scroll opens by naming the enemies of the Sons of Light. Who are the chief adversaries listed first?',options:['The Egyptians and Philistines','The Kittim of Assyria and the violators of the covenant','The Edomites and Moabites','The fallen Watchers and their human allies'],correct:1,source_quote:'The first attack of the Sons of Light shall be undertaken against the forces of the Sons of Darkness, the army of Belial, the troops of Edom, Moab, the sons of Ammon... and of the Kittim of Assyria. — 1QM 1:1-2'},
+    {question:'The trumpets in the War Scroll carry specific inscriptions. What is written on the trumpets of the ambush?',options:['The power of The Creator in battle','The mysteries of The Creator to destroy wickedness','People of The Creator — chosen for eternal covenant','The Creator has summoned His holy ones'],correct:1,source_quote:'On the trumpets of ambush they shall write: The mysteries of The Creator to destroy wickedness. — 1QM 3:9'},
+    {question:'The high priest plays a specific role in the Covenant Trial battle. What does he do before the battle begins?',options:['He blows the first trumpet of advance','He places the tablets of the lots in the hand of the chief commander','He stands at the head of the battle line and calls out','He offers a burnt offering for the entire congregation'],correct:1,source_quote:'In the hand of the chief priest they shall place the tablets of the lots for the holy war. — 1QM 6:9'},
+    {question:'The War Scroll describes a forty-year conflict. How are these forty years structured across sabbatical cycles?',options:['Eight wars of five years each','Seven sabbatical years with fighting interspersed between resting years','Ten battles of four years each, in pairs','Forty consecutive years with no rest periods'],correct:1,source_quote:'...after the sabbath they will return from battle to go into the camp. And during the remaining thirty-three years of the war... — 1QM 2:6'},
+    {question:'The great banner of the whole congregation carries a specific inscription. What does it say?',options:['People of The Creator — soldiers of His justice','The Power of The Creator','Called of The Creator, Princes of His holy ones','The Creator is mighty in battle and triumphant'],correct:0,source_quote:'On the great standard at the head of all the people they shall write: People of The Creator. — 1QM 4:10'}
+  ]
+};
+
+function getTrialStats() {
+  try { return JSON.parse(localStorage.getItem('acr_study_trials') || '{}'); } catch (e) { return {}; }
+}
+function saveTrialStats(t) {
+  try { localStorage.setItem('acr_study_trials', JSON.stringify(t)); } catch (e) {}
+}
+
+function showCovenantTrial(volId) {
+  var qs = TRIAL_QUESTIONS[volId];
+  if (!qs || !qs.length) {
+    document.getElementById('content').innerHTML = '<div class="prog-view"><div class="prog-card"><h3>No trial available for this volume yet.</h3><button class="study-btn" id="b-trial-back">Back</button></div></div>';
+    document.getElementById('b-trial-back').addEventListener('click', function () { goHome(); });
+    return;
+  }
+
+  var idx = 0;
+  var score = 0;
+  var answers = [];
+
+  function renderQ() {
+    var q = qs[idx];
+    var h = '<div class="prog-view">';
+    h += '<div class="prog-card" style="border-left:4px solid #b8860b">';
+    h += '<div style="font-size:12px;color:#b8860b;font-weight:700;letter-spacing:1px;margin-bottom:8px">COVENANT TRIAL — Vol ' + volId + ' — Question ' + (idx+1) + ' of ' + qs.length + '</div>';
+    h += '<div style="font-size:15px;font-weight:700;margin-bottom:16px">' + q.question + '</div>';
+    h += '<div id="trial-opts">';
+    for (var oi = 0; oi < q.options.length; oi++) {
+      h += '<button class="study-btn trial-opt" data-idx="' + oi + '" style="background:#1a1a1a;border:1.5px solid #444;margin-bottom:8px;text-align:left;width:100%">' + q.options[oi] + '</button>';
+    }
+    h += '</div>';
+    h += '<div id="trial-fb" style="min-height:40px;margin-top:8px"></div>';
+    h += '</div></div>';
+    document.getElementById('content').innerHTML = h;
+
+    var opts = document.querySelectorAll('.trial-opt');
+    for (var bi = 0; bi < opts.length; bi++) {
+      opts[bi].addEventListener('click', (function (btn, qItem, chosen) {
+        return function () {
+          var allOpts = document.querySelectorAll('.trial-opt');
+          for (var k = 0; k < allOpts.length; k++) allOpts[k].disabled = true;
+          var correct = chosen === qItem.correct;
+          if (correct) score++;
+          btn.style.background = correct ? '#059669' : '#dc2626';
+          if (!correct) {
+            var rightBtn = allOpts[qItem.correct];
+            if (rightBtn) rightBtn.style.background = '#059669';
+          }
+          answers.push(correct);
+          var fb = document.getElementById('trial-fb');
+          if (fb) {
+            fb.innerHTML = (correct ? '<span style="color:#4ade80;font-weight:700">Correct.</span>' : '<span style="color:#f87171;font-weight:700">Incorrect.</span>') +
+              ' <span style="color:#aaa;font-size:13px">' + qItem.source_quote + '</span>';
+          }
+          setTimeout(function () {
+            idx++;
+            if (idx < qs.length) renderQ();
+            else showTrialResult();
+          }, 2200);
+        };
+      })(opts[bi], q, parseInt(opts[bi].getAttribute('data-idx'), 10)));
+    }
+  }
+
+  function showTrialResult() {
+    var pct = Math.round(score / qs.length * 100);
+    var xpEarned = score * 20;
+    var s = getStats();
+    s.xp = (s.xp || 0) + xpEarned;
+    s.totalAnswered = (s.totalAnswered || 0) + qs.length;
+    s.totalCorrect = (s.totalCorrect || 0) + score;
+    updateStreak(s);
+    saveStats(s);
+    var t = getTrialStats();
+    if (!t.completed) t.completed = {};
+    t.completed[volId] = new Date().toISOString().slice(0,10);
+    if (!t.best) t.best = {};
+    t.best[volId] = Math.max(t.best[volId] || 0, pct);
+    saveTrialStats(t);
+    checkAndAwardSeals();
+
+    var h = '<div class="prog-view"><div class="prog-card" style="border-left:4px solid #b8860b;text-align:center">';
+    h += '<div style="font-size:12px;color:#b8860b;font-weight:700;letter-spacing:1px;margin-bottom:8px">COVENANT TRIAL COMPLETE</div>';
+    h += '<div style="font-size:36px;font-weight:900;margin:12px 0">' + score + '/' + qs.length + '</div>';
+    h += '<div style="font-size:18px;margin-bottom:8px">' + pct + '% — ';
+    h += pct >= 80 ? 'Mastery achieved' : pct >= 60 ? 'Solid knowledge' : 'Keep studying';
+    h += '</div>';
+    h += '<div style="color:#b8860b;font-weight:700;font-size:15px;margin-bottom:16px">+' + xpEarned + ' XP earned (double XP)</div>';
+    h += '<button class="study-btn" id="b-trial-home" style="background:#b8860b">Back to Home</button>';
+    h += '</div></div>';
+    document.getElementById('content').innerHTML = h;
+    document.getElementById('b-trial-home').addEventListener('click', function () { goHome(); });
+  }
+
+  renderQ();
+}
+
 function actCard(icon, label, color, mode, fid) {
   return '<div class="act-card" data-mode="' + mode + '" style="background:' + color + '" role="button" tabindex="0" aria-label="' + label + ' activity">' +
     '<div class="act-icon" aria-hidden="true">' + icon + '</div>' +
@@ -879,6 +1194,7 @@ function openActivity(mode, fid) {
   if (mode === 'versebuild') { showVerseBuild(fid); return; }
   if (mode === 'wordmatch') { showWordMatch(fid); return; }
   if (mode === 'challenge') { showChallenge(fid); return; }
+  if (mode === 'trial') { showCovenantTrial(getVolForFid(fid)); return; }
   if (mode === 'whosaidit') { showWhoSaidIt(fid); return; }
   if (mode === 'truefalse') { showTrueFalse(fid); return; }
   if (mode === 'sequence') { showStorySequence(fid); return; }
@@ -2202,6 +2518,21 @@ function showProgress(fid) {
   h += '<button class="study-btn" id="b-prog-quality" style="background:#7c3aed">Run Learning Quality Audit</button>';
   h += '<div id="prog-quality-out" style="margin-top:10px;font-size:13px"></div>';
   h += '</div>';
+
+  // Covenant Seals
+  var earnedSeals = getSeals();
+  h += '<div class="prog-card"><h3 class="prog-h3">Covenant Seals</h3>';
+  h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px">';
+  for (var si = 0; si < SEALS.length; si++) {
+    var seal = SEALS[si];
+    var hasIt = !!earnedSeals[seal.id];
+    h += '<div style="background:' + (hasIt ? 'linear-gradient(135deg,#92400e,#78350f)' : '#1a1a1a') + ';border:1.5px solid ' + (hasIt ? '#b8860b' : '#333') + ';border-radius:8px;padding:10px;text-align:center">';
+    h += '<div style="font-size:11px;font-weight:800;color:' + (hasIt ? '#fde68a' : '#666') + ';letter-spacing:.5px">' + seal.title + '</div>';
+    h += '<div style="font-size:10px;color:' + (hasIt ? '#d4a96a' : '#444') + ';margin-top:4px">' + seal.desc + '</div>';
+    if (hasIt) h += '<div style="font-size:9px;color:#b8860b;margin-top:4px">' + earnedSeals[seal.id] + '</div>';
+    h += '</div>';
+  }
+  h += '</div></div>';
 
   h += '<button class="study-btn" id="b-prog-back" style="margin-top:16px">Back to activities</button>';
   h += '</div>';
@@ -4636,6 +4967,59 @@ function showCrossReview() {
   renderCard();
 }
 
+function showDailyScroll() {
+  var status = getDailyStatus();
+  if (status.completedToday) { goHome(); return; }
+
+  var picked = getDailyQuestion();
+  if (!picked) {
+    document.getElementById('content').innerHTML = '<div class="prog-view"><div class="prog-card"><h3>No daily question available yet — study a section first.</h3><button class="study-btn" id="b-ds-back">Back</button></div></div>';
+    document.getElementById('b-ds-back').addEventListener('click', function () { goHome(); });
+    return;
+  }
+
+  var q = picked.q;
+  var answered = false;
+
+  function render() {
+    var h = '<div class="prog-view"><div class="prog-card" style="border-left:4px solid #166534">';
+    h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:8px">DAILY SCROLL</div>';
+    h += '<div style="font-size:15px;font-weight:700;margin-bottom:12px">' + (q.prompt || q.question || '') + '</div>';
+    h += '<input id="ds-input" type="text" placeholder="Your answer..." style="width:100%;box-sizing:border-box;padding:10px;border-radius:6px;border:1.5px solid #444;background:#111;color:#fff;font-size:15px;margin-bottom:10px">';
+    h += '<button class="study-btn" id="ds-submit" style="background:#166534">Submit</button>';
+    h += '<div id="ds-fb" style="min-height:36px;margin-top:10px"></div>';
+    h += '</div></div>';
+    document.getElementById('content').innerHTML = h;
+
+    var inp = document.getElementById('ds-input');
+    var btn = document.getElementById('ds-submit');
+    var fb = document.getElementById('ds-fb');
+    if (inp) inp.focus();
+
+    function submit() {
+      if (answered) return;
+      answered = true;
+      btn.disabled = true;
+      var val = (inp ? inp.value : '').trim().toLowerCase();
+      var ans = String(q.answer || '').trim().toLowerCase();
+      var correct = val === ans || (ans.split('/').some(function(a){ return a.trim() === val; }));
+      completeDailyScroll(correct);
+      if (fb) {
+        fb.innerHTML = (correct
+          ? '<div style="color:#4ade80;font-weight:700">Correct! +25 XP</div>'
+          : '<div style="color:#f87171;font-weight:700">The answer was: ' + q.answer + '</div>') +
+          (q.source_quote ? '<div style="color:#aaa;font-size:12px;margin-top:6px">' + q.source_quote + '</div>' : '');
+      }
+      setTimeout(function () { goHome(); }, 2800);
+    }
+
+    if (btn) btn.addEventListener('click', submit);
+    if (inp) inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+  }
+
+  render();
+}
+
 function goHome() {
   var lastFid = localStorage.getItem('acr_study_last');
   var hasResume = lastFid && IDS.indexOf(lastFid) >= 0;
@@ -4654,6 +5038,20 @@ function goHome() {
     html += '<div class="home-stat home-level">' + lvl.current.name + ' \u00B7 ' + (stats.xp || 0) + ' XP</div>';
     html += '</div>';
   }
+  // Daily Scroll widget
+  var dailyStatus = getDailyStatus();
+  html += '<div id="daily-scroll-widget" style="background:#0a1a0a;border:1.5px solid #166534;border-radius:10px;padding:14px;margin:12px 0;text-align:left">';
+  html += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:6px">DAILY SCROLL</div>';
+  if (dailyStatus.completedToday) {
+    html += '<div style="color:#86efac;font-size:14px;font-weight:700">Completed today</div>';
+    html += '<div style="color:#4ade80;font-size:12px;margin-top:4px">Daily streak: ' + dailyStatus.streak + ' day' + (dailyStatus.streak !== 1 ? 's' : '') + ' &nbsp;|&nbsp; Total: ' + dailyStatus.completed + '</div>';
+  } else {
+    html += '<div style="color:#d4d4d4;font-size:13px;margin-bottom:8px">One fill-in-the-blank question per day. Correct answers earn 25 bonus XP.</div>';
+    html += '<button id="b-daily" style="background:#166534;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer">Start Daily Scroll</button>';
+    if (dailyStatus.streak > 0) html += '<span style="color:#4ade80;font-size:12px;margin-left:10px">' + dailyStatus.streak + '-day streak</span>';
+  }
+  html += '</div>';
+
   html += '<div class="btns">';
   if (totalDue > 0) html += '<button id="b-review">Review All Due (' + totalDue + ' cards)</button>';
   html += '<button id="b-begin">Begin with Bereshit</button>' +
@@ -4680,6 +5078,8 @@ function goHome() {
       if (f && IDS.indexOf(f) >= 0) go(f);
     });
   }
+  var bDaily = document.getElementById('b-daily');
+  if (bDaily) bDaily.addEventListener('click', function () { showDailyScroll(); });
   window.scrollTo(0, 0);
 }
 
