@@ -5077,6 +5077,69 @@ function showDailyScroll() {
   }
 }
 
+function showHowToPlay() {
+  function row(label, text) {
+    return '<div style="margin-bottom:14px"><div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:4px">' + label + '</div>' +
+      '<div style="font-size:14px;color:#d4d4d4;line-height:1.6">' + text + '</div></div>';
+  }
+  var h = '<div class="prog-view">';
+  h += '<div class="prog-card" style="border-left:4px solid #4ade80;text-align:left">';
+  h += '<div style="font-size:17px;font-weight:900;margin-bottom:18px;color:#fff">How to Play</div>';
+
+  h += row('DAILY SCROLL',
+    'One fill-in-the-blank question appears every day. Correct answers earn 25 bonus XP. ' +
+    'Tap "Start Daily Scroll" on the home screen. Takes about 30 seconds.');
+
+  h += row('START EACH SECTION',
+    'Pick a volume from the left panel, then tap a section name. ' +
+    'The activity screen opens. The <strong>Start Here</strong> row at the top shows the two best modes to begin with.');
+
+  h += row('BEST MODES TO LEARN',
+    '<strong>Fill in the Blank</strong> — type the missing word. Best for deep recall.<br>' +
+    '<strong>Multiple Choice</strong> — pick the right answer. Good for testing what you know.<br>' +
+    'Both earn 10 XP per correct answer.');
+
+  h += row('SPACED REVIEW (FLASHCARDS)',
+    'Rate each card 1–5 for how well you knew it. Low-rated cards come back sooner. ' +
+    'Cards that are due show as a badge on the home screen. ' +
+    'Use <strong>Review All Due</strong> to work through them across all sections at once.');
+
+  h += row('OTHER ACTIVITIES',
+    '<strong>Key Terms</strong> — definitions and pronunciation.<br>' +
+    '<strong>Memory Match</strong> — flip pairs to match terms with meanings (earns XP).<br>' +
+    '<strong>Listen &amp; Learn</strong> — the app reads each verse aloud with word-by-word highlight.<br>' +
+    '<strong>FAQ</strong> — key questions and answers for each section.<br>' +
+    '<strong>Mind Map / Concept Web / Timeline</strong> — visual tools showing how terms connect.<br>' +
+    '<strong>Challenge, True or False, Who Said It, Story Sequence, Cause &amp; Effect</strong> — extra practice modes.');
+
+  h += row('COVENANT TRIAL',
+    'Unlocks after 10 study sessions in a volume (or full Flashcard mastery). ' +
+    'Five synthesis questions, no hints, double XP. Your best score is saved per volume. ' +
+    'Shows as a gold card at the bottom of the activity screen once unlocked.');
+
+  h += row('XP AND LEVELS',
+    'Seeker: starting level (0 XP)<br>' +
+    'Scholar: 600 XP<br>' +
+    'Guardian: 3,000 XP<br>' +
+    'Keeper of the Scroll: 12,000 XP<br>' +
+    'Fill in the Blank / Multiple Choice: 10 XP per correct answer<br>' +
+    'Daily Scroll correct: 25 XP<br>' +
+    'Covenant Trial: double XP');
+
+  h += row('STREAK AND FREEZE',
+    'Study at least once per day to keep your streak going. ' +
+    'Every 7-day milestone earns 1 streak freeze token. ' +
+    'If you miss exactly one day, the token auto-applies and your streak continues. ' +
+    'Freeze token count shows on the home screen stats.');
+
+  h += '<button class="study-btn" id="b-htp-back" style="margin-top:8px">Back to Home</button>';
+  h += '</div></div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('tb').textContent = 'How to Play';
+  document.getElementById('b-htp-back').addEventListener('click', function () { goHome(); });
+  window.scrollTo(0, 0);
+}
+
 function goHome() {
   var lastFid = localStorage.getItem('acr_study_last');
   var hasResume = lastFid && IDS.indexOf(lastFid) >= 0;
@@ -5115,6 +5178,9 @@ function goHome() {
   html += '<button id="b-begin">Begin with Bereshit</button>' +
     (hasResume ? '<button id="b-resume">Resume where I left off</button>' : '') +
     '</div>' +
+    '<div style="text-align:center;margin:10px 0">' +
+    '<button id="b-howtoplay" style="background:none;border:none;color:#666;font-size:13px;cursor:pointer;text-decoration:underline">How to play</button>' +
+    '</div>' +
     '<p class="small">' +
     'Data shared with the <a href="../">ACR Reader</a> on this device<br>' +
     'Add to Home Screen from Safari for offline access' +
@@ -5138,6 +5204,8 @@ function goHome() {
   }
   var bDaily = document.getElementById('b-daily');
   if (bDaily) bDaily.addEventListener('click', function () { showDailyScroll(); });
+  var bHtp = document.getElementById('b-howtoplay');
+  if (bHtp) bHtp.addEventListener('click', function () { showHowToPlay(); });
   window.scrollTo(0, 0);
 }
 
