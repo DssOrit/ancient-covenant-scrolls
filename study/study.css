@@ -1410,10 +1410,10 @@ body.beeline-on .ch-question{
    Uses the same navy-indigo palette as the top bar and index
    ============================================================ */
 :root{
-  --lib-bg:#12121e;
-  --lib-surface:#1a1a2e;
-  --lib-card:#20203c;
-  --lib-border:#2e2e50;
+  --lib-bg:#1a1a2e;
+  --lib-surface:#20203c;
+  --lib-card:#252548;
+  --lib-border:#2e2e54;
   --lib-gold:#c9a84c;
   --lib-gold-dim:#8a6e30;
   --lib-text:#d8d0f0;
@@ -1463,7 +1463,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   box-shadow:none!important
 }
 .act-card:hover,.act-card:focus{
-  background:#28285a!important;
+  background:#2e2e60!important;
   box-shadow:0 2px 14px rgba(201,168,76,.22)!important
 }
 .act-label{color:var(--lib-text)!important;font-size:11px;font-weight:600;letter-spacing:.04em}
@@ -1518,7 +1518,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   transition:border-color .15s,background .15s
 }
 .cloze-opt:hover,.mc-opt:hover{
-  background:#28285a!important;
+  background:#2e2e60!important;
   border-color:var(--lib-gold)!important
 }
 
@@ -1561,7 +1561,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
 }
 .cloze-audio:hover,.hint-btn:hover{
   border-color:var(--lib-gold)!important;
-  background:#28285a!important
+  background:#2e2e60!important
 }
 .hint-display{color:var(--lib-gold-dim)!important;font-style:italic}
 
@@ -1672,7 +1672,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   border-radius:4px!important
 }
 .mm-card.mm-flipped,.mm-card.mm-matched{
-  background:#28285a!important;
+  background:#2e2e60!important;
   border-color:var(--lib-gold)!important
 }
 
