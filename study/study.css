@@ -1547,10 +1547,6 @@ body.beeline-on .ch-question{
   box-shadow:0 4px 20px rgba(0,0,0,0.45)!important;
   transform:translateY(-2px)!important
 }
-.act-label{
-  color:inherit!important;
-  text-shadow:none!important
-}
 
 /* Covenant trial card keeps its own gradient */
 .act-card[data-mode="trial"]{
