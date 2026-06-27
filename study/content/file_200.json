@@ -1,0 +1,272 @@
+{
+  "_copyright": "ACR Study — educational fair use",
+  "_license": "Educational use only",
+  "_rights": "All scripture rights reserved",
+  "id": "file_200",
+  "label": "ACR Search Reference — Hebrew Roots, History and Research",
+  "volume": "SR",
+  "content_version": 1,
+  "summary_plain": "Key Hebrew root words and their meanings, plus historical events that altered the original texts.",
+  "summary_scholarly": "Etymology of core Hebrew roots from the ACR Search ROOT_ETYM dataset, paired with a chronology of documented textual and institutional changes affecting the transmission of ancient African Hebrew scripture.",
+  "key_terms": [
+    {
+      "term": "Raz",
+      "definition": "Mystery or secret; used in Daniel and Dead Sea Scrolls for hidden divine knowledge"
+    },
+    {
+      "term": "Mo'ed",
+      "definition": "Appointed time or divine appointment; the set times of YHWH (Leviticus 23)"
+    },
+    {
+      "term": "Ruach",
+      "definition": "Spirit, wind, breath; the life-force of The Creator in Bereshit 1:2"
+    },
+    {
+      "term": "Brit",
+      "definition": "Covenant; the binding agreement between YHWH and the Hebrew people"
+    },
+    {
+      "term": "Da'at",
+      "definition": "Knowledge; intimate, relational knowledge, not merely intellectual"
+    },
+    {
+      "term": "Almah",
+      "definition": "Young woman of marriageable age; the Hebrew word in Yeshayahu 7:14"
+    },
+    {
+      "term": "Betulah",
+      "definition": "Virgo, a technical term for an unmarried virgin in Hebrew law"
+    },
+    {
+      "term": "Mashiach",
+      "definition": "Anointed one; a title for kings and priests, not a personal name"
+    },
+    {
+      "term": "Chesed",
+      "definition": "Covenant loyalty and steadfast love; untranslatable in a single English word"
+    },
+    {
+      "term": "Tzedek",
+      "definition": "Righteousness and justice as a unified concept"
+    },
+    {
+      "term": "Emet",
+      "definition": "Truth; the seal of YHWH according to the sages"
+    },
+    {
+      "term": "Mishpat",
+      "definition": "Justice, judgment, legal right; paired with tzedek throughout the prophets"
+    },
+    {
+      "term": "Moreh ha-Tzedek",
+      "definition": "Teacher of Righteousness; the leader figure in the Dead Sea Scrolls community"
+    },
+    {
+      "term": "Or and Choshekh",
+      "definition": "Light (or) and darkness (choshekh); the first division in Bereshit 1"
+    },
+    {
+      "term": "Shemesh",
+      "definition": "Sun; used in Bereshit 1:16 as the greater luminary"
+    }
+  ],
+  "fill_blank": [
+    {
+      "ref": "ROOT: almah",
+      "prompt": "The Hebrew word almah in Yeshayahu 7:14 means young woman of marriageable age, not a technical term for ___",
+      "answer": "sexual status",
+      "source_quote": "Almah — Young woman of marriageable age. NOT a technical term for sexual status."
+    },
+    {
+      "ref": "HIST: Septuagint",
+      "prompt": "The Septuagint (LXX) translated the Hebrew almah as ___ in Greek, shifting the meaning",
+      "answer": "parthenos",
+      "source_quote": "The Septuagint (LXX) translated almah as parthenos (Greek: virgin), which became the basis for NT nativity claims."
+    },
+    {
+      "ref": "HIST: YHWH",
+      "prompt": "The name YHWH appears ___ times in the Hebrew scriptures but was replaced by titles in many translations",
+      "answer": "6,828",
+      "source_quote": "YHWH appears 6,828 times in the Hebrew scriptures. Replaced by 'LORD' or 'God' in most translations."
+    },
+    {
+      "ref": "HIST: Nicaea",
+      "prompt": "At the Council of Nicaea in ___ CE, Roman Emperor Constantine shaped early church doctrine",
+      "answer": "325",
+      "source_quote": "Council of Nicaea — 325 CE. Roman Emperor Constantine convened bishops to standardize doctrine."
+    },
+    {
+      "ref": "ROOT: brit",
+      "prompt": "The Hebrew word brit means ___, the binding agreement between YHWH and the Hebrew people",
+      "answer": "covenant",
+      "source_quote": "Brit — Covenant; the binding agreement between YHWH and the Hebrew people."
+    },
+    {
+      "ref": "ROOT: chesed",
+      "prompt": "The Hebrew word chesed describes covenant ___ and steadfast love, untranslatable in a single English word",
+      "answer": "loyalty",
+      "source_quote": "Chesed — Covenant loyalty and steadfast love; untranslatable in a single English word."
+    },
+    {
+      "ref": "DSS: manuscripts",
+      "prompt": "The Dead Sea Scrolls, discovered beginning in 1947, consist of ___ manuscripts across multiple document types",
+      "answer": "972",
+      "source_quote": "DSS — 972 manuscripts discovered beginning 1947. Includes scripture, commentary, and community rule texts."
+    },
+    {
+      "ref": "ROOT: mashiach",
+      "prompt": "The Hebrew title mashiach means ___ one, applied to kings and priests — it is not a personal name",
+      "answer": "anointed",
+      "source_quote": "Mashiach — Anointed one; a title for kings and priests, not a personal name."
+    },
+    {
+      "ref": "ROOT: mo'ed",
+      "prompt": "The Hebrew word mo'ed refers to YHWH's ___ times, the set appointments in Vayikra 23",
+      "answer": "appointed",
+      "source_quote": "Mo'ed — Appointed time or divine appointment; the set times of YHWH (Leviticus 23)."
+    },
+    {
+      "ref": "ROOT: da'at",
+      "prompt": "The Hebrew da'at describes ___ knowledge — intimate and relational, not merely intellectual",
+      "answer": "intimate",
+      "source_quote": "Da'at — Knowledge; intimate, relational knowledge, not merely intellectual."
+    },
+    {
+      "ref": "ROOT: emet",
+      "prompt": "According to the sages, emet (truth) is the ___ of YHWH",
+      "answer": "seal",
+      "source_quote": "Emet — Truth; the seal of YHWH according to the sages."
+    },
+    {
+      "ref": "ROOT: ruach",
+      "prompt": "In Bereshit 1:2, the ruach of The Creator moved upon the face of the waters; ruach means spirit, wind, or ___",
+      "answer": "breath",
+      "source_quote": "Ruach — Spirit, wind, breath; the life-force of The Creator in Bereshit 1:2."
+    },
+    {
+      "ref": "HIST: brit hadashah",
+      "prompt": "The DSS community at Qumran called themselves the brit ___, meaning new covenant community",
+      "answer": "hadashah",
+      "source_quote": "Brit hadashah community — The DSS Qumran community referred to themselves as the new covenant community."
+    },
+    {
+      "ref": "ROOT: tzedek",
+      "prompt": "In Hebrew thought, tzedek unifies righteousness and ___ as a single inseparable concept",
+      "answer": "justice",
+      "source_quote": "Tzedek — Righteousness and justice as a unified concept."
+    },
+    {
+      "ref": "ROOT: raz",
+      "prompt": "The Hebrew word raz means ___ or secret; it appears in Daniel and the Dead Sea Scrolls for hidden divine knowledge",
+      "answer": "mystery",
+      "source_quote": "Raz — Mystery or secret; used in Daniel and Dead Sea Scrolls for hidden divine knowledge."
+    }
+  ],
+  "multiple_choice": [
+    {
+      "ref": "HIST: Septuagint",
+      "question": "Which Greek word did the Septuagint use to translate the Hebrew almah in Yeshayahu 7:14?",
+      "options": ["gynē", "neanis", "betulah", "parthenos"],
+      "correct": 3,
+      "source_quote": "The Septuagint (LXX) translated almah as parthenos (Greek: virgin), which became the basis for NT nativity claims."
+    },
+    {
+      "ref": "ROOT: betulah vs almah",
+      "question": "Which Hebrew word is a technical legal term specifically for an unmarried virgin?",
+      "options": ["almah", "ruach", "betulah", "emet"],
+      "correct": 2,
+      "source_quote": "Betulah — Virgo, a technical term for an unmarried virgin in Hebrew law."
+    },
+    {
+      "ref": "HIST: YHWH count",
+      "question": "How many times does the name YHWH appear in the original Hebrew scriptures?",
+      "options": ["3,218", "5,410", "6,828", "7,957"],
+      "correct": 2,
+      "source_quote": "YHWH appears 6,828 times in the Hebrew scriptures."
+    },
+    {
+      "ref": "HIST: Nicaea",
+      "question": "Who convened the Council of Nicaea in 325 CE?",
+      "options": ["Pope Clement I", "Emperor Diocletian", "Emperor Constantine", "Bishop Eusebius"],
+      "correct": 2,
+      "source_quote": "Council of Nicaea — 325 CE. Roman Emperor Constantine convened bishops to standardize doctrine."
+    },
+    {
+      "ref": "DSS: discovery",
+      "question": "In what year were the first Dead Sea Scrolls discovered?",
+      "options": ["1935", "1941", "1947", "1953"],
+      "correct": 2,
+      "source_quote": "DSS — 972 manuscripts discovered beginning 1947."
+    },
+    {
+      "ref": "ROOT: mo'ed",
+      "question": "The Hebrew word mo'ed refers primarily to what?",
+      "options": ["a sacred place", "an anointed person", "an appointed time", "a divine messenger"],
+      "correct": 2,
+      "source_quote": "Mo'ed — Appointed time or divine appointment; the set times of YHWH."
+    },
+    {
+      "ref": "ROOT: chesed",
+      "question": "Which Hebrew concept is best described as covenant loyalty that cannot be captured in a single English word?",
+      "options": ["tzedek", "chesed", "emet", "mishpat"],
+      "correct": 1,
+      "source_quote": "Chesed — Covenant loyalty and steadfast love; untranslatable in a single English word."
+    },
+    {
+      "ref": "ROOT: mashiach",
+      "question": "In the Hebrew scriptures, the title mashiach was applied to which groups?",
+      "options": ["prophets only", "kings and priests", "priests and Levites", "scribes and elders"],
+      "correct": 1,
+      "source_quote": "Mashiach — Anointed one; a title for kings and priests, not a personal name."
+    },
+    {
+      "ref": "ROOT: raz",
+      "question": "In which two bodies of literature does the Hebrew word raz (mystery) most prominently appear?",
+      "options": ["Torah and Psalms", "Daniel and the Dead Sea Scrolls", "Proverbs and Chronicles", "Shemot and Vayikra"],
+      "correct": 1,
+      "source_quote": "Raz — Mystery or secret; used in Daniel and Dead Sea Scrolls for hidden divine knowledge."
+    },
+    {
+      "ref": "ROOT: tzedek vs mishpat",
+      "question": "The Hebrew prophets consistently pair tzedek with which other word to describe the complete expression of divine justice?",
+      "options": ["chesed", "emet", "mishpat", "brit"],
+      "correct": 2,
+      "source_quote": "Mishpat — Justice, judgment, legal right; paired with tzedek throughout the prophets."
+    },
+    {
+      "ref": "DSS: Teacher",
+      "question": "What title is given to the revered leader figure in the Dead Sea Scrolls community?",
+      "options": ["Rosh ha-Kahal", "Melekh ha-Tzedek", "Moreh ha-Tzedek", "Cohen ha-Gadol"],
+      "correct": 2,
+      "source_quote": "Moreh ha-Tzedek — Teacher of Righteousness; the leader figure in the Dead Sea Scrolls community."
+    },
+    {
+      "ref": "ROOT: da'at",
+      "question": "The Hebrew da'at describes a type of knowledge that is best characterized as what?",
+      "options": ["academic and theoretical", "positional and hierarchical", "intimate and relational", "prophetic and visionary"],
+      "correct": 2,
+      "source_quote": "Da'at — Knowledge; intimate, relational knowledge, not merely intellectual."
+    },
+    {
+      "ref": "ROOT: emet",
+      "question": "According to the sages, emet (truth) holds what role in relation to YHWH?",
+      "options": ["the throne of YHWH", "the seal of YHWH", "the name of YHWH", "the house of YHWH"],
+      "correct": 1,
+      "source_quote": "Emet — Truth; the seal of YHWH according to the sages."
+    },
+    {
+      "ref": "ROOT: or vs choshekh",
+      "question": "In Bereshit 1, what did YHWH call the separation between or (light) and choshekh (darkness)?",
+      "options": ["the first covenant", "the beginning of mo'ed", "the first day", "the foundation of emet"],
+      "correct": 2,
+      "source_quote": "Or and Choshekh — Light (or) and darkness (choshekh); the first division in Bereshit 1."
+    },
+    {
+      "ref": "ROOT: ruach",
+      "question": "In Bereshit 1:2, over what did the ruach of The Creator move?",
+      "options": ["the dry land", "the face of the deep waters", "the mountains of the earth", "the host of heaven"],
+      "correct": 1,
+      "source_quote": "Ruach — Spirit, wind, breath; the life-force of The Creator in Bereshit 1:2. In Bereshit 1:2, the ruach of The Creator moved upon the face of the waters."
+    }
+  ]
+}
