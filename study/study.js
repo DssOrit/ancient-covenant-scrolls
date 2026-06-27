@@ -2288,7 +2288,7 @@ function showFlashcards(fid) {
 // ---- Memory Match — flip cards, find matching pairs ----
 function showMemoryMatch(fid) {
   loadContent(fid).then(function (data) {
-    if (!data || !data.key_terms || data.key_terms.length < 4) {
+    if (!data || !data.key_terms || data.key_terms.length < 2) {
       // Algorithmic fallback: match first half of verse to second half
       var verses = getVerses(fid);
       if (!verses.length) {
@@ -2298,7 +2298,7 @@ function showMemoryMatch(fid) {
       }
       var usable = verses.filter(function(v){return v.length>30&&v.length<150;});
       usable = shuffle(usable).slice(0, 6);
-      if (usable.length < 4) { showStubForMode(fid, 'memory'); return; }
+      if (usable.length < 2) { showStubForMode(fid, 'memory'); return; }
       // Create fake key_terms from verse halves
       data = { key_terms: usable.map(function(v) {
         var words = v.split(/\s+/);
@@ -2954,7 +2954,7 @@ function showWordMatch(fid) {
       }
       var us = rawV.filter(function(v){return v.length>30&&v.length<150;});
       us = shuffle(us).slice(0, 6);
-      if (us.length < 4) { showStubForMode(fid, 'wordmatch'); return; }
+      if (us.length < 2) { showStubForMode(fid, 'wordmatch'); return; }
       terms = us.map(function(v) {
         var w = v.split(/\s+/);
         var h = Math.ceil(w.length / 2);
@@ -3249,7 +3249,7 @@ function showChallenge(fid) {
 function showWhoSaidIt(fid) {
   loadContent(fid).then(function (data) {
     var quotes = extractSpeakerQuotesFromCurated(data);
-    if (quotes.length < 2) { showStubForMode(fid, 'whosaidit'); return; }
+    if (!quotes.length) { showStubForMode(fid, 'whosaidit'); return; }
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
     var speakerPool = [];
@@ -3350,7 +3350,7 @@ function showWhoSaidIt(fid) {
 // ---- True or False with Why ----
 function generateTrueFalseFromCurated(data, count) {
   count = count || 10;
-  if (!data || !data.key_terms || data.key_terms.length < 3) return [];
+  if (!data || !data.key_terms || data.key_terms.length < 1) return [];
   // Pool sources broadly — summary + faq + source_quotes. Previously we
   // only used source_quotes, so sections whose verses don't contain a
   // proper-noun key term (laws, genealogies) yielded 0 questions.
@@ -3429,7 +3429,7 @@ function generateTrueFalseFromCurated(data, count) {
 function showTrueFalse(fid) {
   loadContent(fid).then(function (data) {
     var questions = generateTrueFalseFromCurated(data, 12);
-    if (questions.length < 2) { showStubForMode(fid, 'truefalse'); return; }
+    if (!questions.length) { showStubForMode(fid, 'truefalse'); return; }
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
     var qi = 0, score = 0, points = 0, firstAttempt = true;
@@ -3540,7 +3540,7 @@ function generateSequenceFromCurated(data, count) {
     seen[k] = true;
     return true;
   });
-  if (items.length < 3) return [];
+  if (items.length < 2) return [];
   items.sort(function (a, b) {
     var ar = parseRef(a.ref), br = parseRef(b.ref);
     if (ar === null || br === null) return 0;
@@ -3566,7 +3566,7 @@ function parseRef(ref) {
 function showStorySequence(fid) {
   loadContent(fid).then(function (data) {
     var events = generateSequenceFromCurated(data, 6);
-    if (events.length < 3) { showStubForMode(fid, 'sequence'); return; }
+    if (events.length < 2) { showStubForMode(fid, 'sequence'); return; }
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
     var shuffled = shuffle(events.slice());
@@ -3711,7 +3711,7 @@ function extractCauseEffectFromCurated(data) {
 function showCauseEffect(fid) {
   loadContent(fid).then(function (data) {
     var pairs = extractCauseEffectFromCurated(data);
-    if (pairs.length < 2) { showStubForMode(fid, 'causeeffect'); return; }
+    if (!pairs.length) { showStubForMode(fid, 'causeeffect'); return; }
     pairs = shuffle(pairs.slice()).slice(0, 5);
     var effectOrder = shuffle(pairs.map(function (_, i) { return i; }));
     var idx = IDS.indexOf(fid);
@@ -3876,7 +3876,20 @@ function dictationCompareHtml(typed, target) {
 function showDictation(fid) {
   loadContent(fid).then(function (data) {
     var sentences = pickDictationFromCurated(data, 8);
-    if (sentences.length < 3) { showStubForMode(fid, 'dictation'); return; }
+    if (sentences.length < 3) {
+      // Fallback: extract dictation sentences from HTML verses
+      var verses = getVerses(fid);
+      verses.forEach(function (v) {
+        var sents = v.match(/[^.!?]+[.!?]+/g) || [v];
+        sents.forEach(function (s) {
+          var t = s.trim();
+          if (t.length >= 30 && t.length <= 160 &&
+              (t.match(/["“”]/g) || []).length <= 2 &&
+              sentences.indexOf(t) < 0) sentences.push(t);
+        });
+      });
+    }
+    if (!sentences.length) { showStubForMode(fid, 'dictation'); return; }
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
     var qi = 0, totalPoints = 0, plays = 0;
@@ -4021,7 +4034,7 @@ function showWordMorph(fid) {
   loadContent(fid).then(function (data) {
     if (!data || !data.key_terms) { showStubForMode(fid, 'morph'); return; }
     var usable = data.key_terms.filter(function (t) { return t.term && t.term.length >= 5; });
-    if (usable.length < 3) { showStubForMode(fid, 'morph'); return; }
+    if (usable.length < 2) { showStubForMode(fid, 'morph'); return; }
     var rounds = shuffle(usable.slice()).slice(0, 8);
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
@@ -4184,7 +4197,7 @@ function showSyllableTap(fid) {
   loadContent(fid).then(function (data) {
     if (!data || !data.key_terms) { showStubForMode(fid, 'syllable'); return; }
     var usable = data.key_terms.filter(function (t) { return t.term && t.term.length >= 5 && countSyllables(t.term) >= 2; });
-    if (usable.length < 3) { showStubForMode(fid, 'syllable'); return; }
+    if (usable.length < 2) { showStubForMode(fid, 'syllable'); return; }
     var rounds = shuffle(usable.slice()).slice(0, 8);
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
@@ -4334,7 +4347,7 @@ function showRhymeChain(fid) {
       if (groups[keys[k]].length >= 2) usable.push(keys[k]);
       for (var wi = 0; wi < groups[keys[k]].length; wi++) allWords.push({ word: groups[keys[k]][wi], key: keys[k] });
     }
-    if (usable.length < 3) { showStubForMode(fid, 'rhyme'); return; }
+    if (usable.length < 2) { showStubForMode(fid, 'rhyme'); return; }
     usable = shuffle(usable.slice()).slice(0, 8);
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' \u2014 ')[0] : fid;
@@ -4429,7 +4442,7 @@ function showRhymeChain(fid) {
 // ---- Mind Map Builder — force-directed graph of key-term co-occurrence ----
 function showMindMap(fid) {
   loadContent(fid).then(function (data) {
-    if (!data || !data.key_terms || data.key_terms.length < 4) { showStubForMode(fid, 'mindmap'); return; }
+    if (!data || !data.key_terms || data.key_terms.length < 2) { showStubForMode(fid, 'mindmap'); return; }
     // Cap at 10 nodes — 14 was overcrowding the mobile SVG
     var keyTerms = data.key_terms.slice(0, 10);
     // Co-occurrence pool: all source_quote strings plus faq answers
@@ -4481,7 +4494,7 @@ function showMindMap(fid) {
     var connected = {};
     edges.forEach(function (e) { connected[e.source] = true; connected[e.target] = true; });
     nodes = nodes.filter(function (n) { return connected[n.id]; });
-    if (nodes.length < 3) { showStubForMode(fid, 'mindmap'); return; }
+    if (nodes.length < 2) { showStubForMode(fid, 'mindmap'); return; }
     var idRemap = {};
     nodes.forEach(function (n, i) { idRemap[n.id] = i; n.id = i; });
     edges = edges.map(function (e) { return { source: idRemap[e.source], target: idRemap[e.target], weight: e.weight }; }).filter(function (e) { return e.source !== undefined && e.target !== undefined; });
@@ -4611,7 +4624,7 @@ function showMindMap(fid) {
 // ---- Concept Web — radial hub-and-spoke; tap a ring term to re-center ----
 function showConceptWeb(fid) {
   loadContent(fid).then(function (data) {
-    if (!data || !data.key_terms || data.key_terms.length < 4) { showStubForMode(fid, 'conceptweb'); return; }
+    if (!data || !data.key_terms || data.key_terms.length < 2) { showStubForMode(fid, 'conceptweb'); return; }
     var keyTerms = data.key_terms.slice(0, 10);
     var idx = IDS.indexOf(fid);
     var secLabel = idx >= 0 ? LBL[idx].split(' — ')[0] : fid;
@@ -4655,7 +4668,7 @@ function showConceptWeb(fid) {
 
     // Drop terms that aren't connected to anything
     keyTerms = keyTerms.filter(function (t) { return Object.keys(weights[t.term]).length > 0; });
-    if (keyTerms.length < 3) { showStubForMode(fid, 'conceptweb'); return; }
+    if (keyTerms.length < 2) { showStubForMode(fid, 'conceptweb'); return; }
 
     // Start centered on the first term (usually the highest-frequency)
     var centerIdx = 0;
@@ -4758,7 +4771,7 @@ function showChapterTimeline(fid) {
     }
     if (data.fill_blank) data.fill_blank.forEach(function (q) { addItem(q.ref, q.source_quote); });
     if (data.multiple_choice) data.multiple_choice.forEach(function (q) { addItem(q.ref, q.source_quote); });
-    if (items.length < 3) { showStubForMode(fid, 'timeline'); return; }
+    if (items.length < 2) { showStubForMode(fid, 'timeline'); return; }
     // Sort by parseable ref (chapter:verse), keeping undefined at end
     items.sort(function (a, b) {
       var ar = parseRef(a.ref), br = parseRef(b.ref);
