@@ -1642,6 +1642,35 @@ function generateSmartMC(fid, count) {
       opts = shuffle(opts);
       var placeQ = { ref: '', question: 'Which place appears in: "' + snippet + '"?', options: opts, correct: opts.indexOf(place), source_quote: usable[i], difficulty: 'medium' };
       if (passesQualityGate(placeQ)) questions.push(placeQ);
+    } else {
+      // Number-based question for genealogy / measurement sections
+      var numRe = /\b(\d+)\s+(years?|days?|cubits?|months?|men|people|years old)\b/i;
+      var numMatch = usable[i].match(numRe);
+      if (numMatch && questions.length < count) {
+        var num = numMatch[1];
+        var unit = numMatch[2].toLowerCase().replace(/\s+/g, ' ');
+        var allNums = [];
+        for (var nv = 0; nv < usable.length; nv++) {
+          var nm = usable[nv].match(/\b(\d+)\s+(?:years?|days?|cubits?|months?|men|people)\b/gi);
+          if (nm) nm.forEach(function (nx) {
+            var nd = nx.match(/\d+/);
+            if (nd && nd[0] !== num && allNums.indexOf(nd[0]) < 0) allNums.push(nd[0]);
+          });
+        }
+        if (allNums.length < 3) {
+          var nb = parseInt(num);
+          [-30, +30, -7, +7, -60, +60].forEach(function (off) {
+            var nx = String(nb + off);
+            if (parseInt(nx) > 0 && nx !== num && allNums.indexOf(nx) < 0) allNums.push(nx);
+          });
+        }
+        var ctxStart = usable[i].indexOf(numMatch[0]);
+        var ctxSnip = usable[i].slice(Math.max(0, ctxStart - 40), ctxStart + numMatch[0].length + 30);
+        if (ctxSnip.length > 90) ctxSnip = ctxSnip.slice(0, 87) + '...';
+        var nopts = shuffle([num].concat(shuffle(allNums).slice(0, 3)));
+        var numQ = { ref: '', question: 'How many ' + unit + '? “' + ctxSnip + '”', options: nopts, correct: nopts.indexOf(num), source_quote: usable[i], difficulty: 'easy' };
+        questions.push(numQ);
+      }
     }
   }
   return questions;
@@ -1728,33 +1757,81 @@ function showFillBlank(fid, audioMode) {
     questions = shuffle(questions).slice(0, tier === 'hard' ? 30 : 20);
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
 
+    // Pre-compute type-matched distractor pools once before any question renders
+    var _digitPool = [], _namePool = [], _placePool = [];
+    allAns.forEach(function (a) {
+      if (/^\d+$/.test(a)) { if (_digitPool.indexOf(a) < 0) _digitPool.push(a); }
+      else if (new RegExp(NAMES_PATTERN.source, 'i').test(a)) { if (_namePool.indexOf(a) < 0) _namePool.push(a); }
+      else if (new RegExp(PLACES_PATTERN.source, 'i').test(a)) { if (_placePool.indexOf(a) < 0) _placePool.push(a); }
+    });
+    var _sv = getVerses(fid);
+    _sv.forEach(function (v) {
+      (v.match(/\b\d+\b/g) || []).forEach(function (n) { if (_digitPool.indexOf(n) < 0) _digitPool.push(n); });
+      (v.match(new RegExp(NAMES_PATTERN.source, 'gi')) || []).forEach(function (n) { if (_namePool.indexOf(n) < 0) _namePool.push(n); });
+      (v.match(new RegExp(PLACES_PATTERN.source, 'gi')) || []).forEach(function (p) { if (_placePool.indexOf(p) < 0) _placePool.push(p); });
+    });
+
     function renderQ() {
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       var correct = q.answer;
       firstAttempt = true;
       hintsUsed = 0;
-      // Pick distractors similar to the correct answer (same length range, alphabetic proximity)
-      var candidates = allAns.filter(function (a) {
-        return a.toLowerCase() !== correct.toLowerCase();
-      });
-      candidates.sort(function (a, b) {
-        var aDiff = Math.abs(a.length - correct.length);
-        var bDiff = Math.abs(b.length - correct.length);
-        if (aDiff !== bDiff) return aDiff - bDiff;
-        return Math.abs(a.charCodeAt(0) - correct.charCodeAt(0)) -
-               Math.abs(b.charCodeAt(0) - correct.charCodeAt(0));
-      });
-      // Also add plausible words from the same verse if available
-      if (q.source_quote) {
-        var verseWords = q.source_quote.split(/\s+/).filter(function (w) {
-          return w.length > 3 && w.toLowerCase() !== correct.toLowerCase() &&
-                 w !== '______' && candidates.indexOf(w) < 0;
+
+      // Type-aware distractor selection: distractors must match the answer's category
+      var _isDigit = /^\d+$/.test(correct);
+      var _isName = new RegExp(NAMES_PATTERN.source, 'i').test(correct);
+      var _isPlace = !_isName && new RegExp(PLACES_PATTERN.source, 'i').test(correct);
+      var candidates;
+      if (_isDigit) {
+        var _dp = _digitPool.filter(function (a) { return a !== correct; });
+        if (q.source_quote) {
+          (q.source_quote.match(/\b\d+\b/g) || []).forEach(function (n) {
+            if (n !== correct && _dp.indexOf(n) < 0) _dp.push(n);
+          });
+        }
+        if (_dp.length < 3) {
+          var _base = parseInt(correct, 10);
+          [-31, +31, -62, +62, -93, +93, -7, +7].forEach(function (off) {
+            var n = String(_base + off);
+            if (parseInt(n) > 0 && n !== correct && _dp.indexOf(n) < 0) _dp.push(n);
+          });
+        }
+        candidates = shuffle(_dp);
+      } else if (_isName) {
+        candidates = shuffle(_namePool.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        }));
+      } else if (_isPlace) {
+        candidates = shuffle(_placePool.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        }));
+      } else {
+        candidates = allAns.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
         });
-        candidates = candidates.concat(shuffle(verseWords).slice(0, 3));
+        candidates.sort(function (a, b) {
+          var aDiff = Math.abs(a.length - correct.length);
+          var bDiff = Math.abs(b.length - correct.length);
+          if (aDiff !== bDiff) return aDiff - bDiff;
+          return Math.abs(a.charCodeAt(0) - correct.charCodeAt(0)) -
+                 Math.abs(b.charCodeAt(0) - correct.charCodeAt(0));
+        });
+        if (q.source_quote) {
+          var verseWords = q.source_quote.split(/\s+/).filter(function (w) {
+            return w.length > 3 && w.toLowerCase() !== correct.toLowerCase() &&
+                   w !== '______' && candidates.indexOf(w) < 0;
+          });
+          candidates = candidates.concat(shuffle(verseWords).slice(0, 3));
+        }
       }
       var others = candidates.slice(0, 3);
-      if (others.length < 3) others = shuffle(candidates).slice(0, 3);
+      if (others.length < 3) {
+        var _fb = shuffle(allAns.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase() && others.indexOf(a) < 0;
+        }));
+        others = others.concat(_fb).slice(0, 3);
+      }
       var opts = shuffle([correct].concat(others));
       var colors = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
 
@@ -3862,43 +3939,63 @@ function showDictation(fid) {
 function wordMorphVariants(word) {
   var w = String(word || '');
   if (w.length < 3) return [];
-  var isCap = w[0] === w[0].toUpperCase() && w[0] !== w[0].toLowerCase();
-  var lowers = 'abcdefghijklmnopqrstuvwxyz';
-  var body = w.slice(1).toLowerCase();
-  var firstLower = w[0].toLowerCase();
-  function restore(v) {
-    if (!v) return '';
-    return (isCap ? v[0].toUpperCase() : v[0]) + v.slice(1);
-  }
-  function randLetterNot(ch) {
-    var c = lowers[Math.floor(Math.random() * lowers.length)];
-    var g = 0;
-    while (c === ch && g < 10) { c = lowers[Math.floor(Math.random() * lowers.length)]; g++; }
-    return c;
-  }
-  var variants = [];
-  var subIdx = Math.floor(Math.random() * (body.length || 1));
-  variants.push(restore(firstLower + body.slice(0, subIdx) + randLetterNot(body[subIdx] || 'e') + body.slice(subIdx + 1)));
-  var insIdx = Math.floor(Math.random() * (body.length + 1));
-  var insLetter = lowers[Math.floor(Math.random() * lowers.length)];
-  variants.push(restore(firstLower + body.slice(0, insIdx) + insLetter + body.slice(insIdx)));
-  if (body.length >= 3) {
-    var delIdx = Math.floor(Math.random() * body.length);
-    variants.push(restore(firstLower + body.slice(0, delIdx) + body.slice(delIdx + 1)));
-  } else {
-    var altIdx = (subIdx + 1) % (body.length || 1);
-    variants.push(restore(firstLower + body.slice(0, altIdx) + randLetterNot(body[altIdx] || 'a') + body.slice(altIdx + 1)));
-  }
-  var out = [];
+  var lower = w.toLowerCase();
+  var isCap = w[0] !== w[0].toLowerCase();
+  function cap(s) { return isCap ? s[0].toUpperCase() + s.slice(1) : s; }
   var seen = {};
-  seen[w.toLowerCase()] = true;
-  for (var i = 0; i < variants.length; i++) {
-    var v = variants[i];
-    if (!v || seen[v.toLowerCase()]) continue;
-    seen[v.toLowerCase()] = true;
-    out.push(v);
+  seen[lower] = true;
+  var out = [];
+  function tryAdd(v) {
+    if (!v || v.length < 2) return;
+    var vl = v.toLowerCase();
+    if (seen[vl]) return;
+    seen[vl] = true;
+    out.push(cap(vl));
   }
-  return out;
+  // 1. Vowel substitution — most common real misspelling
+  var vmap = {a:['e','i'],e:['i','a'],i:['e','y'],o:['u','a'],u:['o','e']};
+  for (var i = 0; i < lower.length && out.length < 1; i++) {
+    if (vmap[lower[i]]) tryAdd(lower.slice(0, i) + vmap[lower[i]][0] + lower.slice(i + 1));
+  }
+  // 2. Double / unDouble a consonant ("Shabbat" vs "Shabat")
+  for (var i = 1; i < lower.length - 1 && out.length < 2; i++) {
+    var c = lower[i];
+    if (/[bcdfghjklmnprst]/.test(c)) {
+      if (lower[i + 1] === c) tryAdd(lower.slice(0, i) + lower.slice(i + 1));
+      else tryAdd(lower.slice(0, i) + c + c + lower.slice(i + 1));
+    }
+  }
+  // 3. Letter transposition — common keyboard typo
+  for (var i = 1; i < lower.length - 1 && out.length < 3; i++) {
+    if (lower[i] !== lower[i + 1]) {
+      tryAdd(lower.slice(0, i) + lower[i + 1] + lower[i] + lower.slice(i + 2));
+      break;
+    }
+  }
+  // 4. Suffix substitution — plausible alternate endings
+  var sfx = [
+    [/tion$/, 'sion'], [/sion$/, 'tion'],
+    [/ent$/, 'ant'],   [/ant$/, 'ent'],
+    [/er$/, 'ar'],     [/ar$/, 'er'],
+    [/akh$/, 'ach'],   [/ach$/, 'akh'],
+    [/ath$/, 'at'],    [/at$/, 'ath'],
+    [/ite$/, 'ight'],  [/ight$/, 'ite'],
+    [/im$/, 'em'],     [/em$/, 'im'],
+    [/it$/, 'et'],     [/et$/, 'it'],
+    [/al$/, 'el'],     [/el$/, 'al'],
+    [/ment$/, 'mant'], [/ness$/, 'niss'],
+  ];
+  for (var s = 0; s < sfx.length && out.length < 3; s++) {
+    if (sfx[s][0].test(lower)) tryAdd(lower.replace(sfx[s][0], sfx[s][1]));
+  }
+  // 5. Drop a medial vowel between two consonants ("covenant" vs "covnant")
+  for (var i = 1; i < lower.length - 2 && out.length < 3; i++) {
+    if (/[aeiou]/.test(lower[i]) && /[^aeiou]/.test(lower[i - 1]) && /[^aeiou]/.test(lower[i + 1])) {
+      tryAdd(lower.slice(0, i) + lower.slice(i + 1));
+      break;
+    }
+  }
+  return out.slice(0, 3);
 }
 
 function showWordMorph(fid) {
@@ -3991,14 +4088,44 @@ function showWordMorph(fid) {
 }
 
 // ---- Syllable Tap — how many syllables? ----
+var SYLLABLE_DICT = {
+  // Book / volume names
+  bereshit:3,shemot:2,vayikra:3,bamidbar:3,devarim:3,
+  chanokh:2,yovelim:3,
+  // Patriarch and matriarch names
+  avraham:3,avram:2,sarah:2,yitzhak:3,rivkah:2,
+  yaakov:2,esav:2,yosef:2,moshe:2,aharon:3,miryam:3,
+  noakh:1,metushelakh:4,yehoshua:4,lamekh:2,chanokh:2,
+  shem:1,yafet:2,
+  // Place names
+  mitsrayim:4,yerushalayim:6,yarden:2,sinai:3,
+  horev:2,bavel:2,kena:2,seir:2,
+  // Scriptural concepts
+  covenant:3,sanctuary:4,tabernacle:4,
+  commandment:3,commandments:4,
+  offering:3,offerings:4,
+  righteous:2,righteousness:3,
+  faithful:3,faithfulness:4,
+  everlasting:4,inheritance:4,
+  judgment:2,judgments:3,
+  prophet:2,prophets:3,
+  spirit:2,heaven:2,prayer:2,
+  glory:2,people:2,nation:2,nations:3,
+  servant:2,servants:3,
+  // Words the vowel-group heuristic often miscounts
+  being:2,given:2,taken:2,every:3,really:3,
+  created:3,spoken:2,chosen:2,written:3,
+};
 function countSyllables(word) {
-  var w = String(word || '').toLowerCase().replace(/[^a-z]/g, '');
-  if (!w) return 0;
-  var prepped = w.replace(/([aeiou])y([aeiou])/g, '$1 y$2');
+  var w = String(word || '');
+  var lw = w.toLowerCase().replace(/[^a-z]/g, '');
+  if (!lw) return 0;
+  if (SYLLABLE_DICT[lw] !== undefined) return SYLLABLE_DICT[lw];
+  var prepped = lw.replace(/([aeiou])y([aeiou])/g, '$1 y$2');
   var groups = prepped.match(/[aeiouy]+/g) || [];
   var count = groups.length;
-  var isLeEnding = /[^aeiouy]le$/.test(w);
-  if (w.length > 3 && w[w.length - 1] === 'e' && !isLeEnding && count > 1) count--;
+  var isLeEnding = /[^aeiouy]le$/.test(lw);
+  if (lw.length > 3 && lw[lw.length - 1] === 'e' && !isLeEnding && count > 1) count--;
   return Math.max(1, count);
 }
 
@@ -4150,9 +4277,12 @@ function rhymeKeyStudy(word) {
 function buildRhymeGroupsFromCurated(data) {
   if (!data) return {};
   var sources = [];
-  if (data.fill_blank) data.fill_blank.forEach(function (q) { if (q.source_quote) sources.push(q.source_quote); });
+  if (data.summary_plain) sources.push(data.summary_plain);
+  if (data.summary_scholarly) sources.push(data.summary_scholarly);
+  if (data.fill_blank) data.fill_blank.forEach(function (q) { if (q.source_quote) sources.push(q.source_quote); if (q.answer) sources.push(q.answer); });
   if (data.multiple_choice) data.multiple_choice.forEach(function (q) { if (q.source_quote) sources.push(q.source_quote); });
   if (data.faq) data.faq.forEach(function (q) { if (q.answer) sources.push(q.answer); });
+  if (data.key_terms) data.key_terms.forEach(function (kt) { if (kt.term) sources.push(kt.term); if (kt.definition) sources.push(kt.definition); });
 
   var groups = {};
   var seen = {};
