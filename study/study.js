@@ -3392,7 +3392,7 @@ function generateTrueFalseFromCurated(data, count) {
       }
     }
   }
-  if (candidates.length < 2) return [];
+  if (!candidates.length) return [];
   candidates = shuffle(candidates.slice());
 
   var questions = [];
