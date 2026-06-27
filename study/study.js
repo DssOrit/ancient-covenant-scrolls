@@ -5251,7 +5251,7 @@ function goHome() {
   var sealCount = Object.keys(seals).length;
   if (sealCount > 0) {
     html += '<div style="font-size:12px;color:#b8860b;font-weight:700;margin:0 0 16px;letter-spacing:.04em">' +
-      lbIcon('medal', 13) + ' ' + sealCount + ' of ' + COVENANT_SEALS.length + ' Covenant Seals earned</div>';
+      lbIcon('medal', 13) + ' ' + sealCount + ' of ' + SEALS.length + ' Covenant Seals earned</div>';
   }
 
   // Daily Scroll widget
