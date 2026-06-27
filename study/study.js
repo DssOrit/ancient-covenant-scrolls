@@ -1419,12 +1419,22 @@ function loadVoiceSelector() {
     else if (v.name.indexOf('Siri') >= 0) siri.push({ v: v, i: i });
     else other.push({ v: v, i: i });
   });
+  // Auto-default: Samantha (Enhanced) > Samantha > first Enhanced > first Siri
+  var autoName = null;
+  if (!saved) {
+    var _samEnh = ttsVoices.filter(function (v) { return v.name.indexOf('Samantha') >= 0 && v.name.indexOf('Enhanced') >= 0; });
+    var _samAny = ttsVoices.filter(function (v) { return v.name.indexOf('Samantha') >= 0; });
+    var _anyEnh = ttsVoices.filter(function (v) { return v.name.indexOf('Enhanced') >= 0; });
+    if (_samEnh.length) autoName = _samEnh[0].name;
+    else if (_samAny.length) autoName = _samAny[0].name;
+    else if (_anyEnh.length) autoName = _anyEnh[0].name;
+  }
   enh.concat(siri).concat(other).forEach(function (item) {
     var o = document.createElement('option');
     o.value = item.i;
     o.textContent = item.v.name.replace('(Enhanced)', ' \u2605').replace('(Compact)', '').trim();
     if (saved && item.v.name === saved) o.selected = true;
-    else if (!saved && item.v.name.indexOf('Enhanced') >= 0 && !vc.querySelector('[selected]')) o.selected = true;
+    else if (!saved && autoName && item.v.name === autoName && !vc.querySelector('[selected]')) o.selected = true;
     vc.appendChild(o);
   });
   if (!vc.value && vc.options.length) vc.options[0].selected = true;
@@ -1440,6 +1450,11 @@ function getBestVoice() {
       if (ttsVoices[i].name === saved) return ttsVoices[i];
     }
   }
+  // Default priority: Samantha (Enhanced) > Samantha > any Enhanced > Siri > first
+  var samEnh = ttsVoices.filter(function (v) { return v.name.indexOf('Samantha') >= 0 && v.name.indexOf('Enhanced') >= 0; });
+  if (samEnh.length) return samEnh[0];
+  var sam = ttsVoices.filter(function (v) { return v.name.indexOf('Samantha') >= 0; });
+  if (sam.length) return sam[0];
   var enh = ttsVoices.filter(function (v) { return v.name.indexOf('Enhanced') >= 0; });
   if (enh.length) return enh[0];
   var siri = ttsVoices.filter(function (v) { return v.name.indexOf('Siri') >= 0; });
