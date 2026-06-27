@@ -1407,45 +1407,31 @@ body.beeline-on .ch-question{
 
 /* ============================================================
    LIBRARY THEME — colorful luxury premium, ancient research
+   Uses the same navy-indigo palette as the top bar and index
    ============================================================ */
 :root{
-  --lib-bg:#0e0b07;
-  --lib-surface:#1a1510;
-  --lib-card:#231d14;
-  --lib-border:#3a3020;
+  --lib-bg:#1a1a2e;
+  --lib-surface:#20203c;
+  --lib-card:#252548;
+  --lib-border:#2e2e54;
   --lib-gold:#c9a84c;
   --lib-gold-dim:#8a6e30;
-  --lib-text:#e8d5b7;
-  --lib-muted:#8a7a65;
-  /* jewel-tone option colors */
-  --lib-a:#1e4d8c;
-  --lib-a-text:#a8ccf5;
-  --lib-b:#1a5c35;
-  --lib-b-text:#90e0b0;
-  --lib-c:#7a2020;
-  --lib-c-text:#f5a8a8;
-  --lib-d:#7a5510;
-  --lib-d-text:#f5dea0;
+  --lib-text:#d8d0f0;
+  --lib-muted:#7070a0;
+  /* jewel-tone option colors — vivid and colorful */
+  --lib-a:#1e50a8;
+  --lib-a-text:#b8d4ff;
+  --lib-b:#1a7040;
+  --lib-b-text:#90f0b8;
+  --lib-c:#922020;
+  --lib-c-text:#ffb8b8;
+  --lib-d:#9a6800;
+  --lib-d-text:#ffe8a0;
 }
 
-/* Body */
+/* Body + main wrapper — navy so no gap between top bar and content */
 body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
-
-/* Sidebar */
-#sb{background:#120f09!important;border-right:1px solid var(--lib-border)!important}
-#sb .sec{color:var(--lib-text)!important}
-#sb .sec:hover,#sb .sec.active{
-  background:#2a1f10!important;
-  border-left:2px solid var(--lib-gold)!important;
-  color:var(--lib-gold)!important
-}
-.vol-eng{color:var(--lib-muted)!important;font-size:10px}
-
-/* Toolbar */
-#tb-bar,#nv{background:#120f09!important;border-color:var(--lib-border)!important}
-#tb{color:var(--lib-text)!important}
-.tb-btn{color:var(--lib-muted)!important}
-.tb-btn:hover{color:var(--lib-gold)!important}
+#main{background:var(--lib-bg)!important}
 
 /* Content canvas */
 #content{background:var(--lib-bg)!important}
@@ -1477,8 +1463,8 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   box-shadow:none!important
 }
 .act-card:hover,.act-card:focus{
-  background:#2d2418!important;
-  box-shadow:0 2px 12px rgba(201,168,76,.18)!important
+  background:#2e2e60!important;
+  box-shadow:0 2px 14px rgba(201,168,76,.22)!important
 }
 .act-label{color:var(--lib-text)!important;font-size:11px;font-weight:600;letter-spacing:.04em}
 
@@ -1532,7 +1518,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   transition:border-color .15s,background .15s
 }
 .cloze-opt:hover,.mc-opt:hover{
-  background:#2d2418!important;
+  background:#2e2e60!important;
   border-color:var(--lib-gold)!important
 }
 
@@ -1575,7 +1561,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
 }
 .cloze-audio:hover,.hint-btn:hover{
   border-color:var(--lib-gold)!important;
-  background:#2d2418!important
+  background:#2e2e60!important
 }
 .hint-display{color:var(--lib-gold-dim)!important;font-style:italic}
 
@@ -1596,10 +1582,10 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   color:var(--lib-gold)!important;
   border-radius:4px!important
 }
-.study-btn:hover{background:var(--lib-gold)!important;color:#0e0b07!important}
+.study-btn:hover{background:var(--lib-gold)!important;color:#12121e!important}
 .study-btn.sb-pri,.study-btn.sb-gold{
   background:var(--lib-gold)!important;
-  color:#0e0b07!important;font-weight:800
+  color:#12121e!important;font-weight:800
 }
 .study-btn.sb-pri:hover,.study-btn.sb-gold:hover{background:#dbbf6a!important}
 
@@ -1686,7 +1672,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
   border-radius:4px!important
 }
 .mm-card.mm-flipped,.mm-card.mm-matched{
-  background:#2d2418!important;
+  background:#2e2e60!important;
   border-color:var(--lib-gold)!important
 }
 
@@ -1695,7 +1681,7 @@ body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
 .tl-year{color:var(--lib-gold)!important;font-weight:700}
 
 /* Modal */
-.modal-overlay{background:rgba(14,11,7,.92)!important}
+.modal-overlay{background:rgba(12,12,24,.92)!important}
 .modal-box{
   background:var(--lib-card)!important;
   border:1px solid var(--lib-border)!important;
