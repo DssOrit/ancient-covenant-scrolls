@@ -102,6 +102,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .cn-community-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
 .cn-community-body{font-size:11px;color:var(--tx2);line-height:1.6}.manip-timeline{display:flex;flex-direction:column;gap:0}.mt-item{display:flex;gap:12px;padding:12px 14px;border-left:2px solid var(--gold);margin-left:14px;position:relative}.mt-item::before{content:"";position:absolute;left:-5px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--gold)}.mt-year{font-size:11px;font-weight:700;color:var(--gold);min-width:72px;padding-top:2px;flex-shrink:0}.mt-event{font-size:12px;color:var(--tx1);line-height:1.55}
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.feat-card-wide{grid-column:1/-1}
 .feat-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:13px;cursor:pointer;transition:background 0.15s;border-left:3px solid var(--gold)}
 .feat-card:active{background:var(--s2)}
 .fc-icon{font-size:20px;color:var(--gold);margin-bottom:5px}
@@ -801,7 +802,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="fc-title">Research Journal</div>
           <div class="fc-desc">Save passages locally. Add notes. Export your research. Everything stored on-device.</div>
         </div>
-        <div class="feat-card" onclick="setMode('covenant-nations')">
+        <div class="feat-card feat-card-wide" onclick="setMode('covenant-nations')">
           <div class="fc-icon"><i class="ri-earth-line"></i></div>
           <div class="fc-title">Covenant for All Nations</div>
           <div class="fc-desc">DSS and Orit primary source texts on YHWH receiving all who obey. Biblical figures and communities from every background used in the covenant record.</div>
@@ -944,7 +945,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="guide-intro-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
         <div class="guide-intro-title">How to Use ACR Search</div>
         <div class="guide-intro-text">This is a research tool built on the primary ancient texts, the Dead Sea Scrolls and the Orit Ge'ez. Every result traces back to physical manuscript evidence. Use the sections below to learn each feature. Tap the speaker button on any section to hear it read aloud.</div>
-        <div class="guide-intro-welcome">People arrive here from every background and tradition. These texts are not the property of any institution or lineage. They were written for those with eyes to find them. Wherever you are starting from, you are welcome at the primary source.</div>
+        <div class="guide-intro-welcome">People arrive here from every background and tradition. These texts are not the property of any institution or lineage. They were written for those with eyes to find them. The search bar is the most direct path to that knowledge — type any question and the primary source answers directly, with no institutional filter between you and the text. Wherever you are starting from, you are welcome at the primary source.</div>
       </div>
 
       <div class="guide-section">
