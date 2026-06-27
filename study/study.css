@@ -323,6 +323,14 @@ body.font-dyslexic .vol-banner-name{font-family:var(--font-dyslexic)}
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   user-select:none;-webkit-user-select:none;
+  position:relative;
+}
+.act-card-done::after{
+  content:'';
+  position:absolute;top:7px;right:7px;
+  width:10px;height:10px;border-radius:50%;
+  background:#4ade80;
+  box-shadow:0 0 6px rgba(74,222,128,.7);
 }
 .act-card:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .act-card:active{transform:scale(.96)}
@@ -1126,8 +1134,8 @@ body.font-dyslexic .fc-back{font-family:var(--font-dyslexic);line-height:2.0}
 
 /* Quiz results screen */
 .cloze-results{text-align:center;padding:50px 20px}
-.cr-emoji{font-size:5em;margin-bottom:16px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
-.cr-score{font-size:2.8em;font-weight:700;color:var(--text-main)}
+.cr-emoji{margin-bottom:6px}
+.cr-score{font-size:4.2em;font-weight:900;color:var(--text-main);margin-bottom:4px}
 .cr-pct{font-size:1.6em;color:var(--vol5);font-weight:700;margin-bottom:8px}
 .cr-msg{font-size:1.3em;color:var(--text-muted);margin-bottom:28px;font-weight:700}
 .cr-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
@@ -1141,7 +1149,7 @@ body.font-dyslexic .fc-back{font-family:var(--font-dyslexic);line-height:2.0}
   padding:24px 20px;margin-bottom:16px;
 }
 .prog-level{text-align:center;border-left:6px solid #6b7280}
-.prog-level-icon{font-size:4em;margin-bottom:8px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.15))}
+.prog-level-icon{margin-bottom:12px;display:flex;justify-content:center;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2))}
 .prog-level-name{font-size:1.5em;font-weight:700;color:var(--text-main);margin-bottom:4px}
 .prog-xp{font-size:1.1em;color:var(--vol5);font-weight:700;margin-bottom:12px}
 .prog-bar-wrap{
@@ -1366,3 +1374,33 @@ body.beeline-on .ch-question{
 #sb::-webkit-scrollbar,#nv::-webkit-scrollbar{width:5px}
 #sb::-webkit-scrollbar-thumb{background:#4a4a6e;border-radius:3px}
 #nv::-webkit-scrollbar-thumb{background:#b0b0c0;border-radius:3px}
+
+/* Level-up celebration screen */
+.level-up-screen{
+  text-align:center;padding:80px 20px;
+  animation:levelUpPop .45s cubic-bezier(.2,1.4,.4,1) both;
+}
+.lu-burst{
+  margin:0 auto 20px;
+  animation:levelUpGlow 1.2s ease infinite alternate;
+}
+.lu-label{
+  font-size:12px;font-weight:900;letter-spacing:.2em;
+  color:#4ade80;margin-bottom:10px;
+}
+.lu-name{
+  font-size:2.2em;font-weight:900;margin-bottom:12px;
+  font-family:var(--font-main);letter-spacing:.02em;
+}
+.lu-msg{
+  font-size:15px;color:#666;margin-bottom:36px;line-height:1.7;
+  max-width:280px;margin-left:auto;margin-right:auto;
+}
+@keyframes levelUpPop{
+  from{opacity:0;transform:scale(.75)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes levelUpGlow{
+  from{filter:drop-shadow(0 0 6px currentColor)}
+  to{filter:drop-shadow(0 0 22px currentColor)}
+}
