@@ -34,6 +34,12 @@
   <button class="sa-btn" onclick="doStudyAuth()">Enter</button>
 </div>
 
+<div id="study-loading">
+  <div class="sl-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
+  <div class="sl-label" id="sl-label"></div>
+  <div class="sl-bar"><div class="sl-fill" id="sl-fill"></div></div>
+</div>
+
 <div id="topnav" role="navigation" aria-label="Main navigation">
   <button id="b-sb" title="Toggle sidebar" aria-label="Toggle sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   <button id="b-home" title="Home" aria-label="Go to home screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></button>
@@ -117,7 +123,28 @@
 
 <script src="lib-attain-quality.js"></script>
 <script src="study.js"></script>
-<script>function doStudyAuth(){document.getElementById('study-auth').classList.add('hidden');}</script>
+<script>
+function doStudyAuth() {
+  document.getElementById('study-auth').classList.add('hidden');
+  var loading = document.getElementById('study-loading');
+  var fill = document.getElementById('sl-fill');
+  var label = document.getElementById('sl-label');
+  loading.classList.add('show');
+  var msgs = ['Opening the Scrolls...', 'Loading passages...', 'Preparing study materials...', 'Ready...'];
+  var step = 0;
+  label.textContent = msgs[0];
+  fill.style.width = '0%';
+  var timer = setInterval(function() {
+    step++;
+    if (step < msgs.length) label.textContent = msgs[step];
+    fill.style.width = Math.min(100, Math.round((step / (msgs.length - 1)) * 100)) + '%';
+    if (step >= msgs.length - 1) {
+      clearInterval(timer);
+      setTimeout(function() { loading.classList.remove('show'); }, 350);
+    }
+  }, 420);
+}
+</script>
 
 </body>
 </html>

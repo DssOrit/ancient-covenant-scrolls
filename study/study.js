@@ -259,8 +259,8 @@ if (lineFocusOn) document.body.classList.add('linefocus-on');
 
 // ---- Volume banner graphics (inline SVG, no external dependency) ----
 var VOL_ICONS = {
-  '1': '\u{1F30D}', '2': '\u{1F525}', '3': '\u{1F54E}', '4': '\u{1F3DC}',
-  '5': '\u{1F4DC}', '6': '\u{1F47C}', '7': '\u{1F4C5}', '8': '\u2694\uFE0F'
+  '1': 'BR', '2': 'SH', '3': 'VY', '4': 'NM',
+  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'WR'
 };
 var VOL_COLORS = {
   '1': ['#2563eb','#1e40af'], '2': ['#dc2626','#991b1b'], '3': ['#059669','#065f46'],
@@ -479,7 +479,7 @@ function getSectionMastery(fid) {
   }
   if (total === 0) return { total: 0, mastered: 0, pct: 0, badge: '' };
   var pct = Math.round(mastered / total * 100);
-  var badge = pct >= 100 ? '\u{1F947}' : pct >= 80 ? '\u{1F948}' : pct >= 50 ? '\u{1F949}' : '';
+  var badge = pct >= 100 ? 'Mastered' : pct >= 80 ? 'Advanced' : pct >= 50 ? 'In Progress' : '';
   return { total: total, mastered: mastered, pct: pct, badge: badge };
 }
 function getUnmasteredQuestions(fid, mode, questions) {
@@ -509,10 +509,10 @@ function getAllDueCards() {
 
 // ---- XP, Streak & Level system ----
 var LEVELS = [
-  { name: 'Seeker', icon: '\u{1F50D}', xp: 0 },
-  { name: 'Scholar', icon: '\u{1F4DC}', xp: 100 },
-  { name: 'Guardian', icon: '\u{1F6E1}\uFE0F', xp: 500 },
-  { name: 'Keeper of the Scroll', icon: '\u{1F3C6}', xp: 1500 }
+  { name: 'Seeker', icon: '', xp: 0 },
+  { name: 'Scholar', icon: '', xp: 100 },
+  { name: 'Guardian', icon: '', xp: 500 },
+  { name: 'Keeper of the Scroll', icon: '', xp: 1500 }
 ];
 
 function getStats() {
@@ -544,9 +544,9 @@ function buildHintLadder(answer, passage) {
   var lenLabel = wordCount > 1
     ? (wordCount + ' words, starts with "' + a.charAt(0).toUpperCase() + '"')
     : ('Starts with "' + a.charAt(0).toUpperCase() + '", ' + a.length + ' letters');
-  var stage1 = '\u{1F4A1} ' + lenLabel;
-  var stage2 = passage ? '\u{1F4D6} "' + String(passage).trim() + '"' : '\u{1F4D6} No passage available for this question.';
-  var stage3 = '\u{1F521} ' + blankedReveal(a);
+  var stage1 = lenLabel;
+  var stage2 = passage ? '"' + String(passage).trim() + '"' : 'No passage available for this question.';
+  var stage3 = blankedReveal(a);
   return [stage1, stage2, stage3];
 }
 
@@ -566,7 +566,7 @@ function wireHintLadder(btnId, displayId, answer, passage, onUse) {
   var disp = document.getElementById(displayId);
   if (!btn || !disp) return;
   var stages = buildHintLadder(answer, passage);
-  var labels = ['\u{1F4A1} Hint', '\u{1F4D6} Show passage', '\u{1F521} Reveal pattern'];
+  var labels = ['Hint', 'Show passage', 'Reveal pattern'];
   var used = 0;
   btn.addEventListener('click', function () {
     if (used >= 3) return;
@@ -795,7 +795,7 @@ function go(fid) {
   var secMastery = getSectionMastery(fid);
   if (secMastery.total > 0) {
     h += '<div class="mastery-bar"><div class="mastery-label">' +
-      (secMastery.badge || '\u{1F4CA}') + ' ' + secMastery.mastered + '/' + secMastery.total +
+      (secMastery.badge ? secMastery.badge + ' ' : '') + secMastery.mastered + '/' + secMastery.total +
       ' questions mastered (' + secMastery.pct + '%)</div>' +
       '<div class="prog-bar-wrap"><div class="prog-bar" style="width:' + secMastery.pct + '%"></div></div></div>';
   }
@@ -951,8 +951,7 @@ function showStubForMode(fid, mode) {
   var reason = modeReasons[mode] || 'does not have enough content in this section yet.';
   document.getElementById('content').innerHTML =
     '<div class="study-view"><div class="sv-sec stub-view">' +
-    '<div class="stub-emoji" aria-hidden="true">\u{1F4ED}</div>' +
-    '<h3>' + friendly + '</h3>' +
+        '<h3>' + friendly + '</h3>' +
     '<p class="study-na">This activity ' + reason + '</p>' +
     '<p class="stub-hint">Try a different section, or pick another activity in this one.</p>' +
     '<button class="study-btn sb-pri" id="b-back-grid">Back to activities</button>' +
@@ -1408,12 +1407,12 @@ function showFillBlank(fid, audioMode) {
       var clozeLabel = clozeIdx >= 0 ? LBL[clozeIdx].split(' \u2014 ')[0] : fid;
       h += '<div class="cloze-ref">' + clozeLabel + (q.ref ? ' ' + q.ref : '') + '</div>';
       if (audioMode) {
-        h += '<div class="audio-gap-banner">\u{1F50A} Listen and tap the missing word</div>';
+        h += '<div class="audio-gap-banner">Listen and tap the missing word</div>';
       }
       h += '<div class="cloze-prompt">' +
         q.prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
-      h += '<button class="cloze-audio" id="b-cloze-hear">\u{1F50A} Listen</button>';
-      h += '<button class="hint-btn" id="b-cloze-hint" aria-label="Get a hint">\u{1F4A1} Hint</button>';
+      h += '<button class="cloze-audio" id="b-cloze-hear">Listen</button>';
+      h += '<button class="hint-btn" id="b-cloze-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="cloze-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="cloze-opts">';
       for (var o = 0; o < opts.length; o++) {
@@ -1474,7 +1473,7 @@ function showFillBlank(fid, audioMode) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -1486,12 +1485,12 @@ function showFillBlank(fid, audioMode) {
         ' \u2014 ' + (stats.xp || 0) + ' XP total</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-cloze-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-cloze-retry">Try Again</button>';
       var nextFid = pct >= 80 ? getNextSectionFid(fid) : null;
       if (nextFid) {
         var nextIdx = IDS.indexOf(nextFid);
         var nextLabel = nextIdx >= 0 ? LBL[nextIdx].split(' \u2014 ')[0] : '';
-        h += '<button class="study-btn sb-pri" id="b-cloze-next">\u25B6 Next: ' + nextLabel + '</button>';
+        h += '<button class="study-btn sb-pri" id="b-cloze-next">Next: ' + nextLabel + '</button>';
       }
       h += '<button class="study-btn" id="b-cloze-back">Back to activities</button>';
       h += '</div></div>';
@@ -1571,8 +1570,8 @@ function showMC(fid) {
       var mcLabel = mcIdx >= 0 ? LBL[mcIdx].split(' \u2014 ')[0] : fid;
       h += '<div class="mc-ref">' + mcLabel + (q.ref ? ' ' + q.ref : '') + '</div>';
       h += '<div class="mc-question">' + q.question + '</div>';
-      h += '<button class="cloze-audio" id="b-mc-hear">\u{1F50A} Listen</button>';
-      h += '<button class="hint-btn" id="b-mc-hint" aria-label="Get a hint">\u{1F4A1} Hint</button>';
+      h += '<button class="cloze-audio" id="b-mc-hear">Listen</button>';
+      h += '<button class="hint-btn" id="b-mc-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="mc-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="mc-opts">';
       // Child mode: show only 3 options (correct + 2 distractors)
@@ -1611,7 +1610,7 @@ function showMC(fid) {
           var correctIdx = (q._childCorrect !== undefined) ? q._childCorrect : q.correct;
           if (idx === correctIdx) {
             this.classList.add('mc-correct');
-            fb.innerHTML = '<span class="fb-correct">' + (childMode ? '\u{1F31F} Great job!' : '\u2714 Correct!') + '</span>' +
+            fb.innerHTML = '<span class="fb-correct">' + (childMode ? 'Great job!' : '\u2714 Correct!') + '</span>' +
               '<div class="cloze-source">' + (q.source_quote || '') + '</div>';
             if (mcFirstAttempt) { score++; points += hintMultiplier(mcHintsUsed); }
             recordQuestionResult(fid, 'mc', qi, mcFirstAttempt);
@@ -1642,7 +1641,7 @@ function showMC(fid) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -1654,12 +1653,12 @@ function showMC(fid) {
         ' \u2014 ' + (stats.xp || 0) + ' XP total</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-mc-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-mc-retry">Try Again</button>';
       var nextFid = pct >= 80 ? getNextSectionFid(fid) : null;
       if (nextFid) {
         var nextIdx = IDS.indexOf(nextFid);
         var nextLabel = nextIdx >= 0 ? LBL[nextIdx].split(' \u2014 ')[0] : '';
-        h += '<button class="study-btn sb-pri" id="b-mc-next">\u25B6 Next: ' + nextLabel + '</button>';
+        h += '<button class="study-btn sb-pri" id="b-mc-next">Next: ' + nextLabel + '</button>';
       }
       h += '<button class="study-btn" id="b-mc-back">Back to activities</button>';
       h += '</div></div>';
@@ -1748,9 +1747,9 @@ function showFlashcards(fid) {
       h += '<div class="fc-front" id="fc-front">' + c.front + '</div>';
       h += '<div class="fc-back" id="fc-back" style="display:none">' + c.back + '</div>';
       h += '</div>';
-      h += '<button class="cloze-audio" id="b-fc-hear">\u{1F50A} Listen</button>';
+      h += '<button class="cloze-audio" id="b-fc-hear">Listen</button>';
       h += '<div class="fc-action" id="fc-action">';
-      h += '<button class="study-btn sb-pri" id="b-fc-flip">\u{1F504} Flip to reveal</button>';
+      h += '<button class="study-btn sb-pri" id="b-fc-flip">Flip to reveal</button>';
       h += '</div>';
       h += '<div class="fc-rate" id="fc-rate" style="display:none">';
       h += '<div class="fc-rate-label">How well did you know this?</div>';
@@ -1810,7 +1809,7 @@ function showFlashcards(fid) {
 
     function showSummary() {
       var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
-      var emoji = avg >= 4 ? '\u{1F3C6}' : avg >= 3 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
       var msg = avg >= 4 ? 'You know this well!' : avg >= 3 ? 'Getting there!' : 'Keep practicing!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -1818,7 +1817,7 @@ function showFlashcards(fid) {
       h += '<div class="cr-pct">Average confidence: ' + avg.toFixed(1) + ' / 5</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-fc-retry">\u{1F504} Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-fc-retry">Again</button>';
       h += '<button class="study-btn" id="b-fc-back">Back to activities</button>';
       h += '</div></div>';
       document.getElementById('content').innerHTML = h;
@@ -1941,13 +1940,13 @@ function showMemoryMatch(fid) {
 
     function showWin() {
       var h = '<div class="cloze-results">';
-      h += '<div class="cr-emoji">\u{1F3C6}</div>';
+      h += '<div class="cr-emoji">Outstanding</div>';
       h += '<div class="cr-score">All ' + terms.length + ' pairs matched!</div>';
       h += '<div class="cr-pct">in ' + attempts + ' attempts</div>';
       h += '<div class="cr-msg">' + (attempts <= terms.length + 2 ? 'Amazing memory!' :
         attempts <= terms.length * 2 ? 'Well done!' : 'Keep practicing!') + '</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-mm-retry">\u{1F504} Play Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-mm-retry">Play Again</button>';
       h += '<button class="study-btn" id="b-mm-done">Back to activities</button>';
       h += '</div></div>';
       document.getElementById('content').innerHTML = h;
@@ -2021,9 +2020,9 @@ function showListenLearn(fid) {
     h += '<div class="ll-progress">' + (vi + 1) + ' of ' + verses.length + '</div>';
     h += '<div class="ll-controls">';
     h += '<button class="ll-btn ll-prev" id="b-ll-prev">\u25C0 Prev</button>';
-    h += '<button class="ll-btn ll-play" id="b-ll-play">\u25B6 Play</button>';
+    h += '<button class="ll-btn ll-play" id="b-ll-play">Play</button>';
     h += '<button class="ll-btn ll-stop" id="b-ll-stop">\u25A0 Stop</button>';
-    h += '<button class="ll-btn ll-next" id="b-ll-next">Next \u25B6</button>';
+    h += '<button class="ll-btn ll-next" id="b-ll-next">Next </button>';
     h += '</div>';
     h += '<div class="ll-auto">';
     h += '<label><input type="checkbox" id="ll-autoplay" checked> Auto-advance to next verse</label>';
@@ -2062,7 +2061,7 @@ function showListenLearn(fid) {
     var card = document.getElementById('ll-card');
     if (card) card.classList.add('ll-speaking');
     var btn = document.getElementById('b-ll-play');
-    if (btn) btn.textContent = '\u{1F50A} Reading...';
+    if (btn) btn.textContent = 'Reading...';
 
     var ttsText = prepTTS(verses[vi]);
     utterance = new SpeechSynthesisUtterance(ttsText);
@@ -2092,7 +2091,7 @@ function showListenLearn(fid) {
         wordSpans[lastHighlight].classList.remove('ll-word-active');
       }
       if (card) card.classList.remove('ll-speaking');
-      if (btn) btn.textContent = '\u25B6 Play';
+      if (btn) btn.textContent = 'Play';
       var auto = document.getElementById('ll-autoplay');
       if (auto && auto.checked && vi < verses.length - 1) {
         vi++;
@@ -2102,7 +2101,7 @@ function showListenLearn(fid) {
     };
     utterance.onerror = function (ev) {
       if (card) card.classList.remove('ll-speaking');
-      if (btn) btn.textContent = '\u25B6 Play';
+      if (btn) btn.textContent = 'Play';
     };
     setTimeout(function () { try { ss.speak(utterance); } catch (_) {} }, 0);
   }
@@ -2148,7 +2147,7 @@ function showProgress(fid) {
   // Stats row
   h += '<div class="prog-stats">';
   h += '<div class="prog-stat" style="background:#ef4444"><div class="ps-val">' +
-    (streak > 0 ? '\u{1F525}' : '') + ' ' + streak + '</div><div class="ps-label">Day Streak</div></div>';
+    streak + '</div><div class="ps-label">Day Streak</div></div>';
   h += '<div class="prog-stat" style="background:#2563eb"><div class="ps-val">' +
     best + '</div><div class="ps-label">Best Streak</div></div>';
   h += '<div class="prog-stat" style="background:#059669"><div class="ps-val">' +
@@ -2190,8 +2189,8 @@ function showProgress(fid) {
 
   h += '<div class="prog-card"><h3 class="prog-h3">Backup &amp; Restore</h3>';
   h += '<div style="display:flex;gap:10px;flex-wrap:wrap">';
-  h += '<button class="study-btn" id="b-prog-export" style="background:#059669" aria-label="Export progress to file">\u{1F4E5} Export Progress</button>';
-  h += '<button class="study-btn" id="b-prog-import" style="background:#2563eb" aria-label="Import progress from file">\u{1F4E4} Import Progress</button>';
+  h += '<button class="study-btn" id="b-prog-export" style="background:#059669" aria-label="Export progress to file">Export Progress</button>';
+  h += '<button class="study-btn" id="b-prog-import" style="background:#2563eb" aria-label="Import progress from file">Import Progress</button>';
   h += '</div>';
   h += '<input type="file" id="prog-file" accept=".json" style="display:none">';
   h += '<div id="prog-io-msg" role="status" aria-live="polite" style="margin-top:8px;font-size:13px;color:var(--text-muted);font-weight:700"></div>';
@@ -2282,7 +2281,7 @@ function showProgress(fid) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    document.getElementById('prog-io-msg').textContent = '\u2705 Progress exported successfully';
+    document.getElementById('prog-io-msg').textContent = 'Done: Progress exported successfully';
   });
 
   document.getElementById('b-prog-import').addEventListener('click', function () {
@@ -2334,7 +2333,7 @@ function showProgress(fid) {
           }
           try { localStorage.setItem('acr_study_notes', JSON.stringify(currentNotes)); } catch (e) {}
         }
-        document.getElementById('prog-io-msg').textContent = '\u2705 Progress imported — merging with existing data';
+        document.getElementById('prog-io-msg').textContent = 'Done: Progress imported — merging with existing data';
         setTimeout(function () { showProgress(fid); }, 1500);
       } catch (err) {
         document.getElementById('prog-io-msg').textContent = '\u274C Error reading file: ' + err.message;
@@ -2396,7 +2395,7 @@ function showVerseBuild(fid) {
         h += '</div>';
         h += '<div class="vb-btns">';
         h += '<button class="study-btn" id="b-vb-undo" style="background:#6b7280">\u21A9 Undo</button>';
-        h += '<button class="cloze-audio" id="b-vb-hear">\u{1F50A} Listen</button>';
+        h += '<button class="cloze-audio" id="b-vb-hear">Listen</button>';
         h += '</div>';
         h += '<div id="vb-fb" class="cloze-feedback"></div>';
         h += '<button class="study-btn" id="b-vb-quit" style="margin-top:18px">Back to activities</button>';
@@ -2446,13 +2445,13 @@ function showVerseBuild(fid) {
 
     function showResults() {
       var pct = Math.round(score / Math.min(verses.length, 5) * 100);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var xpEarned = recordSession(fid, 'versebuild', score, Math.min(verses.length, 5));
       var h = '<div class="cloze-results"><div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + Math.min(verses.length, 5) + '</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-vb-retry">\u{1F504} Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-vb-retry">Again</button>';
       h += '<button class="study-btn" id="b-vb-back">Back to activities</button>';
       h += '</div></div>';
       document.getElementById('content').innerHTML = h;
@@ -2537,7 +2536,7 @@ function showWordMatch(fid) {
             matched++;
             if (matched === terms.length) {
               var xp = recordSession(fid, 'wordmatch', matched, terms.length);
-              document.getElementById('wm-fb').innerHTML = '<span class="fb-correct">\u{1F3C6} All matched! +' + xp + ' XP</span>';
+              document.getElementById('wm-fb').innerHTML = '<span class="fb-correct">All matched! +' + xp + ' XP</span>';
               setTimeout(function () { go(fid); }, 2000);
             } else {
               selectedTerm = null;
@@ -2565,7 +2564,7 @@ function showChallenge(fid) {
 
   function setupScreen() {
     var h = '<div class="ch-setup">';
-    h += '<div class="ch-title">\u2694\uFE0F CHALLENGE</div>';
+    h += '<div class="ch-title">CHALLENGE</div>';
     h += '<div class="ch-subtitle">' + secLabel + '</div>';
     h += '<div class="ch-player-count"><label>Players:</label>';
     for (var n = 2; n <= 6; n++) {
@@ -2577,7 +2576,7 @@ function showChallenge(fid) {
       h += '<div class="ch-player-input"><label>Player ' + p + '</label><input id="ch-p' + p + '" type="text" value="Player ' + p + '" maxlength="12" class="ch-name"></div>';
     }
     h += '</div>';
-    h += '<button class="study-btn sb-pri" id="b-ch-start">Start Challenge \u25B6</button>';
+    h += '<button class="study-btn sb-pri" id="b-ch-start">Start Challenge </button>';
     h += '<button class="study-btn" id="b-ch-back">Back to activities</button>';
     h += '</div>';
     document.getElementById('content').innerHTML = h;
@@ -2743,7 +2742,7 @@ function showChallenge(fid) {
       var winnerText = winners.length > 1 ? 'Tie: ' + winners.join(' & ') : winners[0] + ' wins!';
       var xpEarned = recordSession(fid, 'challenge', maxScore, questions.length * 100);
       var h = '<div class="ch-results">';
-      h += '<div class="cr-emoji">\u{1F3C6}</div>';
+      h += '<div class="cr-emoji">Outstanding</div>';
       h += '<div class="ch-winner">' + winnerText + '</div>';
       h += '<div class="ch-final-scores">';
       var sorted = [];
@@ -2757,7 +2756,7 @@ function showChallenge(fid) {
       h += '</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP</div>';
       h += '<div class="cr-btns">';
-      h += '<button class="study-btn sb-pri" id="b-ch-again">\u{1F504} Rematch</button>';
+      h += '<button class="study-btn sb-pri" id="b-ch-again">Rematch</button>';
       h += '<button class="study-btn" id="b-ch-done">Back to activities</button>';
       h += '</div></div>';
       document.getElementById('content').innerHTML = h;
@@ -2798,11 +2797,11 @@ function showWhoSaidIt(fid) {
       var correctIdx = opts.indexOf(q.speaker);
 
       var h = '<div class="mc-view">';
-      h += '<div class="whosaidit-banner">\u{1F4AC} Who Said It</div>';
+      h += '<div class="whosaidit-banner">Who Said It</div>';
       h += '<div class="mc-ref">' + secLabel + '</div>';
       h += '<div class="mc-question">Who said: <em>"' + q.quote + '"</em></div>';
-      h += '<button class="cloze-audio" id="b-ws-hear">\u{1F50A} Listen</button>';
-      h += '<button class="hint-btn" id="b-ws-hint" aria-label="Get a hint">\u{1F4A1} Hint</button>';
+      h += '<button class="cloze-audio" id="b-ws-hear">Listen</button>';
+      h += '<button class="hint-btn" id="b-ws-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="ws-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="mc-opts">';
       for (var o = 0; o < opts.length; o++) {
@@ -2852,7 +2851,7 @@ function showWhoSaidIt(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'whosaidit', points, questions.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Listen closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -2860,7 +2859,7 @@ function showWhoSaidIt(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-ws-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-ws-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-ws-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -2965,10 +2964,10 @@ function showTrueFalse(fid) {
       firstAttempt = true;
 
       var h = '<div class="mc-view">';
-      h += '<div class="tf-banner">\u2696\uFE0F True or False with Why \u2014 ' + (qi + 1) + ' of ' + questions.length + '</div>';
+      h += '<div class="tf-banner">True or False with Why \u2014 ' + (qi + 1) + ' of ' + questions.length + '</div>';
       h += '<div class="mc-ref">' + secLabel + '</div>';
       h += '<div class="tf-statement">' + q.statement + '</div>';
-      h += '<button class="cloze-audio" id="b-tf-hear">\u{1F50A} Listen</button>';
+      h += '<button class="cloze-audio" id="b-tf-hear">Listen</button>';
       h += '<div class="tf-opts">';
       h += '<button class="tf-opt tf-true" data-val="true">\u2714 True</button>';
       h += '<button class="tf-opt tf-false" data-val="false">\u2718 False</button>';
@@ -3019,7 +3018,7 @@ function showTrueFalse(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'truefalse', points, questions.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Read closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -3027,7 +3026,7 @@ function showTrueFalse(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-tf-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-tf-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-tf-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -3099,7 +3098,7 @@ function showStorySequence(fid) {
 
     function render() {
       var h = '<div class="cloze-view">';
-      h += '<div class="seq-banner">\u{1F501} Story Sequence \u2014 tap events in the order they happen</div>';
+      h += '<div class="seq-banner">Story Sequence \u2014 tap events in the order they happen</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="seq-slots">';
       for (var i = 0; i < events.length; i++) {
@@ -3156,7 +3155,7 @@ function showStorySequence(fid) {
             finished = true;
             var pts = attempts === 1 ? 1.0 : attempts === 2 ? 0.7 : 0.4;
             var xpEarned = recordSession(fid, 'sequence', pts, 1);
-            fb.innerHTML = '<div class="fb-correct">\u{1F389} Perfect order! (+' + Math.round(pts * 10) + ' XP)</div>';
+            fb.innerHTML = '<div class="fb-correct">Perfect order! (+' + Math.round(pts * 10) + ' XP)</div>';
             setTimeout(function () { go(fid); }, 2800);
           } else {
             if (attempts === 1) {
@@ -3246,7 +3245,7 @@ function showCauseEffect(fid) {
 
     function render() {
       var h = '<div class="cloze-view">';
-      h += '<div class="ce-banner">\u21AA Cause and Effect \u2014 tap a cause, then tap its effect</div>';
+      h += '<div class="ce-banner">Cause and Effect \u2014 tap a cause, then tap its effect</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="ce-grid">';
       h += '<div class="ce-col"><div class="ce-col-label">Causes</div>';
@@ -3316,11 +3315,11 @@ function showCauseEffect(fid) {
       var points = attempts <= pairs.length ? pairs.length : Math.max(1, pairs.length * 2 - attempts);
       var xpEarned = recordSession(fid, 'causeeffect', points, pairs.length);
       var h = '<div class="cloze-results">';
-      h += '<div class="cr-emoji">\u21AA</div>';
+      h += '<div class="cr-emoji"></div>';
       h += '<div class="cr-score">' + matched + ' / ' + pairs.length + ' matched</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + (attempts <= pairs.length ? 'Clean sweep!' : 'All matched \u2014 took ' + attempts + ' tries.') + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-ce-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-ce-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-ce-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -3411,10 +3410,10 @@ function showDictation(fid) {
       plays = 0;
 
       var h = '<div class="cloze-view">';
-      h += '<div class="dict-banner">\u{1F3A7} Dictation \u2014 listen, then type what you heard</div>';
+      h += '<div class="dict-banner">Dictation \u2014 listen, then type what you heard</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="dict-progress">' + (qi + 1) + ' of ' + sentences.length + '</div>';
-      h += '<button class="cloze-audio dict-play" id="b-dict-play">\u{1F50A} Play sentence</button>';
+      h += '<button class="cloze-audio dict-play" id="b-dict-play">Play sentence</button>';
       h += '<textarea class="dict-input" id="dict-input" placeholder="Type what you heard..." aria-label="Dictation answer" autocomplete="off" autocapitalize="sentences"></textarea>';
       h += '<div class="dict-actions">';
       h += '<button class="study-btn sb-pri" id="b-dict-check">\u2714 Check</button>';
@@ -3437,7 +3436,7 @@ function showDictation(fid) {
         var points = Math.max(0, score - penalty);
         totalPoints += points;
         var fb = document.getElementById('dict-fb');
-        var emoji = score >= 0.95 ? '\u{1F3C6}' : score >= 0.75 ? '\u2714' : score >= 0.4 ? '\u{1F4AA}' : '\u{1F914}';
+        var emoji = score >= 0.95 ? 'Outstanding' : score >= 0.75 ? '\u2714' : score >= 0.4 ? '' : '';
         var label = score >= 0.95 ? 'Perfect!' : score >= 0.75 ? 'Very close' : score >= 0.4 ? 'Partial' : 'Keep listening';
         fb.innerHTML =
           '<div class="dict-score">' + emoji + ' ' + label + ' \u2014 ' + Math.round(score * 100) + '%</div>' +
@@ -3459,14 +3458,14 @@ function showDictation(fid) {
     function showResults() {
       var pct = Math.round((totalPoints / sentences.length) * 100);
       var xpEarned = recordSession(fid, 'dictation', totalPoints, sentences.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Try more listens next time.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + pct + '% accuracy</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-dict-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-dict-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-dict-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -3542,7 +3541,7 @@ function showWordMorph(fid) {
       var morphColors = ['#4338ca', '#0891b2', '#be185d', '#ea580c'];
 
       var h = '<div class="mc-view">';
-      h += '<div class="morph-banner">\u{1F500} Word Morph \u2014 which spelling is real?</div>';
+      h += '<div class="morph-banner">Word Morph \u2014 which spelling is real?</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="dict-progress">' + (qi + 1) + ' of ' + rounds.length + '</div>';
       h += '<div class="morph-grid">';
@@ -3590,7 +3589,7 @@ function showWordMorph(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'morph', points, rounds.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Notice the letter shapes.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -3598,7 +3597,7 @@ function showWordMorph(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-morph-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-morph-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-morph-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -3676,11 +3675,11 @@ function showSyllableTap(fid) {
       var firstAttempt = true;
 
       var h = '<div class="mc-view">';
-      h += '<div class="syll-banner">\u{1F441}\uFE0F\u200D\u{1F5E8}\uFE0F Syllable Tap \u2014 how many syllables?</div>';
+      h += '<div class="syll-banner">Syllable Tap \u2014 how many syllables?</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="dict-progress">' + (qi + 1) + ' of ' + rounds.length + '</div>';
       h += '<div class="syll-word">' + kt.term + '</div>';
-      h += '<button class="cloze-audio" id="b-syll-hear">\u{1F50A} Listen</button>';
+      h += '<button class="cloze-audio" id="b-syll-hear">Listen</button>';
       h += '<div class="syll-opts">';
       for (var o = 0; o < opts.length; o++) {
         h += '<button class="syll-opt" data-idx="' + o + '">' + opts[o] + '</button>';
@@ -3733,7 +3732,7 @@ function showSyllableTap(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'syllable', points, rounds.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -3741,7 +3740,7 @@ function showSyllableTap(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-syll-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-syll-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-syll-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -3827,11 +3826,11 @@ function showRhymeChain(fid) {
       var rhymeColors = ['#0891b2', '#059669', '#7c3aed', '#d97706'];
 
       var h = '<div class="mc-view">';
-      h += '<div class="rhyme-banner">\u{1F3B6} Rhyme Chain \u2014 which word rhymes?</div>';
+      h += '<div class="rhyme-banner">Rhyme Chain \u2014 which word rhymes?</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="dict-progress">' + (qi + 1) + ' of ' + usable.length + '</div>';
       h += '<div class="rhyme-seed">' + seed + '</div>';
-      h += '<button class="cloze-audio" id="b-rhy-hear">\u{1F50A} Listen</button>';
+      h += '<button class="cloze-audio" id="b-rhy-hear">Listen</button>';
       h += '<div class="mc-opts">';
       for (var o = 0; o < opts.length; o++) {
         h += '<button class="mc-opt rhyme-opt" data-idx="' + o + '" style="background:' + rhymeColors[o % 4] + '">' + opts[o] + '</button>';
@@ -3877,7 +3876,7 @@ function showRhymeChain(fid) {
     function showResults() {
       var pct = Math.round(score / usable.length * 100);
       var xpEarned = recordSession(fid, 'rhyme', points, usable.length);
-      var emoji = pct >= 80 ? '\u{1F3C6}' : pct >= 60 ? '\u{1F31F}' : '\u{1F4AA}';
+      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
       var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
@@ -3885,7 +3884,7 @@ function showRhymeChain(fid) {
       h += '<div class="cr-pct">' + pct + '%</div>';
       h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
       h += '<div class="cr-msg">' + msg + '</div>';
-      h += '<button class="study-btn sb-pri" id="b-rhy-retry">\u{1F504} Try Again</button>';
+      h += '<button class="study-btn sb-pri" id="b-rhy-retry">Try Again</button>';
       h += '<button class="study-btn" id="b-rhy-back">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
@@ -4018,7 +4017,7 @@ function showMindMap(fid) {
 
     function render() {
       var h = '<div class="cloze-view">';
-      h += '<div class="mind-banner">\u{1F9E0} Mind Map \u2014 tap a term to see its context</div>';
+      h += '<div class="mind-banner">Mind Map \u2014 tap a term to see its context</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="mind-wrap">';
       h += '<svg viewBox="0 0 ' + W + ' ' + H + '" class="mind-svg" role="img" aria-label="Concept mind map">';
@@ -4148,7 +4147,7 @@ function showConceptWeb(fid) {
       var ringR = 200;
 
       var h = '<div class="cloze-view">';
-      h += '<div class="cweb-banner">\u{1F578}️ Concept Web — tap a term to make it the centre</div>';
+      h += '<div class="cweb-banner">Concept Web — tap a term to make it the centre</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="cweb-wrap">';
       h += '<svg viewBox="0 0 ' + W + ' ' + H + '" class="cweb-svg" role="img" aria-label="Concept Web">';
@@ -4261,7 +4260,7 @@ function showChapterTimeline(fid) {
 
     function render() {
       var h = '<div class="cloze-view">';
-      h += '<div class="tl-banner">\u{1F4C5} Chapter Timeline — tap a dot to see the passage</div>';
+      h += '<div class="tl-banner">Chapter Timeline — tap a dot to see the passage</div>';
       h += '<div class="cloze-ref">' + secLabel + '</div>';
       h += '<div class="tl-wrap">';
       h += '<svg viewBox="0 0 ' + W + ' ' + H + '" class="tl-svg" role="img" aria-label="Chapter timeline">';
@@ -4292,7 +4291,7 @@ function showChapterTimeline(fid) {
         h += '<div class="tl-detail-text">' + ev.preview + '</div>';
         h += '<div class="tl-detail-nav">';
         if (selectedIdx > 0) h += '<button class="study-btn" id="b-tl-prev">◀ Previous</button>';
-        h += '<button class="cloze-audio" id="b-tl-hear">\u{1F50A} Listen</button>';
+        h += '<button class="cloze-audio" id="b-tl-hear">Listen</button>';
         if (selectedIdx < events.length - 1) h += '<button class="study-btn" id="b-tl-next">Next ▶</button>';
         h += '</div>';
         h += '</div>';
@@ -4377,7 +4376,7 @@ function showRemix(fid) {
     var secIdx = IDS.indexOf(item.fid);
     var label = secIdx >= 0 ? LBL[secIdx].split(' \u2014 ')[0] : item.fid;
     var h = '<div class="cloze-view remix-view">';
-    h += '<div class="remix-banner">\u{1F504} Remix Round \u2014 ' + (qi + 1) + ' of ' + items.length + '</div>';
+    h += '<div class="remix-banner">Remix Round \u2014 ' + (qi + 1) + ' of ' + items.length + '</div>';
     h += '<div class="cloze-ref">' + label + (item.ref ? ' ' + item.ref : '') + '</div>';
 
     if (mode === 'mc') {
@@ -4390,8 +4389,8 @@ function showRemix(fid) {
       var correctIdx = opts.indexOf(answer);
       var question = item.prompt ? ('Which word fills the blank? ' + item.prompt) : (item.question || 'Choose the best answer.');
       h += '<div class="mc-question">' + question + '</div>';
-      h += '<button class="cloze-audio" id="b-rx-hear">\u{1F50A} Listen</button>';
-      h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">\u{1F4A1} Hint</button>';
+      h += '<button class="cloze-audio" id="b-rx-hear">Listen</button>';
+      h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="rx-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="mc-opts">';
       var mcColors = ['#dc2626', '#2563eb', '#059669', '#d97706'];
@@ -4444,8 +4443,8 @@ function showRemix(fid) {
       var opts2 = shuffle([answer2].concat(distractors2));
       var colors2 = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
       h += '<div class="cloze-prompt">' + prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
-      h += '<button class="cloze-audio" id="b-rx-hear">\u{1F50A} Listen</button>';
-      h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">\u{1F4A1} Hint</button>';
+      h += '<button class="cloze-audio" id="b-rx-hear">Listen</button>';
+      h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="rx-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="cloze-opts">';
       for (var o2 = 0; o2 < opts2.length; o2++) {
@@ -4488,7 +4487,7 @@ function showRemix(fid) {
     var front = item.question || item.prompt || 'Remember this:';
     var revealed = false;
     h += '<div class="cloze-prompt">' + front + '</div>';
-    h += '<button class="cloze-audio" id="b-rx-hear">\u{1F50A} Listen</button>';
+    h += '<button class="cloze-audio" id="b-rx-hear">Listen</button>';
     h += '<div class="remix-flash" id="rx-flash">Tap to reveal answer</div>';
     h += '<div class="mc-opts remix-confidence" id="rx-confidence" style="display:none">';
     h += '<button class="mc-opt" data-rx="yes" style="background:#059669">I knew it</button>';
@@ -4520,7 +4519,7 @@ function showRemix(fid) {
     var xpEarned = recordSession(fid, 'remix', points, items.length);
     var remainingFid = getRemixCount(fid);
     var h = '<div class="cloze-results">';
-    h += '<div class="cr-emoji">\u{1F504}</div>';
+    h += '<div class="cr-emoji"></div>';
     h += '<div class="cr-score">' + score + ' / ' + items.length + '</div>';
     h += '<div class="cr-pct">' + pct + '% remixed</div>';
     h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
@@ -4543,7 +4542,7 @@ function showCrossReview() {
   var allDue = getAllDueCards();
   if (!allDue.length) {
     document.getElementById('content').innerHTML =
-      '<div class="cloze-results"><div class="cr-emoji">\u2705</div>' +
+      '<div class="cloze-results"><div class="cr-emoji">Done</div>' +
       '<div class="cr-msg">No cards due for review!</div>' +
       '<div class="cr-btns"><button class="study-btn sb-pri" id="b-rev-home">Home</button></div></div>';
     document.getElementById('b-rev-home').addEventListener('click', function () { goHome(); });
@@ -4568,9 +4567,9 @@ function showCrossReview() {
     h += '<div class="fc-front" id="fc-front">' + c.front + '</div>';
     h += '<div class="fc-back" id="fc-back" style="display:none">' + c.back + '</div>';
     h += '</div>';
-    h += '<button class="cloze-audio" id="b-fc-hear">\u{1F50A} Listen</button>';
+    h += '<button class="cloze-audio" id="b-fc-hear">Listen</button>';
     h += '<div class="fc-action" id="fc-action">';
-    h += '<button class="study-btn sb-pri" id="b-fc-flip">\u{1F504} Flip to reveal</button>';
+    h += '<button class="study-btn sb-pri" id="b-fc-flip">Flip to reveal</button>';
     h += '</div>';
     h += '<div class="fc-rate" id="fc-rate" style="display:none">';
     h += '<div class="fc-rate-label">How well did you know this?</div>';
@@ -4617,16 +4616,16 @@ function showCrossReview() {
     var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
     var remaining = getAllDueCount();
     var xpEarned = recordSession('review', 'review', cards.length, cards.length);
-    var emoji = avg >= 4 ? '\u{1F3C6}' : avg >= 3 ? '\u{1F31F}' : '\u{1F4AA}';
+    var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
     var h = '<div class="cloze-results">';
     h += '<div class="cr-emoji">' + emoji + '</div>';
     h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
     h += '<div class="cr-pct">Average confidence: ' + avg.toFixed(1) + ' / 5</div>';
     h += '<div class="cr-xp">+' + xpEarned + ' XP earned</div>';
-    if (remaining > 0) h += '<div class="cr-mastery">\u{1F4DA} ' + remaining + ' more cards still due</div>';
-    else h += '<div class="cr-mastery">\u2705 All caught up!</div>';
+    if (remaining > 0) h += '<div class="cr-mastery">' + remaining + ' more cards still due</div>';
+    else h += '<div class="cr-mastery">Done: All caught up!</div>';
     h += '<div class="cr-btns">';
-    if (remaining > 0) h += '<button class="study-btn sb-pri" id="b-rev-more">\u{1F504} Review More</button>';
+    if (remaining > 0) h += '<button class="study-btn sb-pri" id="b-rev-more">Review More</button>';
     h += '<button class="study-btn" id="b-rev-home">Home</button>';
     h += '</div></div>';
     document.getElementById('content').innerHTML = h;
@@ -4645,19 +4644,19 @@ function goHome() {
   var lvl = getLevel(stats.xp || 0);
   var streak = stats.streak || 0;
   var html = '<div id="home">' +
-    '<div class="logo">\u{1F4D6}</div>' +
+    '<div class="home-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>' +
     '<h1>ACR STUDY</h1>' +
-    '<p class="tag">Spaced repetition study companion<br>for The Ancient Covenant Record</p>';
+    '<p class="tag">Spaced Repetition for The Ancient Covenant Record<br>Dead Sea Scrolls &amp; The Orit Ge\u2019ez</p>';
   if (totalDue > 0 || streak > 0 || (stats.xp || 0) > 0) {
     html += '<div class="home-stats">';
-    if (totalDue > 0) html += '<div class="home-stat home-due">\u{1F4DA} ' + totalDue + ' cards due</div>';
-    if (streak > 0) html += '<div class="home-stat home-streak">\u{1F525} ' + streak + ' day streak</div>';
-    html += '<div class="home-stat home-level">' + lvl.current.icon + ' ' + lvl.current.name + ' \u00B7 ' + (stats.xp || 0) + ' XP</div>';
+    if (totalDue > 0) html += '<div class="home-stat home-due">' + totalDue + ' cards due</div>';
+    if (streak > 0) html += '<div class="home-stat home-streak">' + streak + ' day streak</div>';
+    html += '<div class="home-stat home-level">' + lvl.current.name + ' \u00B7 ' + (stats.xp || 0) + ' XP</div>';
     html += '</div>';
   }
   html += '<div class="btns">';
-  if (totalDue > 0) html += '<button id="b-review">\u{1F4DA} Review All Due (' + totalDue + ' cards)</button>';
-  html += '<button id="b-begin">Begin with Bereshit \u25B6</button>' +
+  if (totalDue > 0) html += '<button id="b-review">Review All Due (' + totalDue + ' cards)</button>';
+  html += '<button id="b-begin">Begin with Bereshit</button>' +
     (hasResume ? '<button id="b-resume">Resume where I left off</button>' : '') +
     '</div>' +
     '<p class="small">' +
