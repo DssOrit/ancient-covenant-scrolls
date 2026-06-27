@@ -1404,3 +1404,346 @@ body.beeline-on .ch-question{
   from{filter:drop-shadow(0 0 6px currentColor)}
   to{filter:drop-shadow(0 0 22px currentColor)}
 }
+
+/* ============================================================
+   LIBRARY THEME — colorful luxury premium, ancient research
+   ============================================================ */
+:root{
+  --lib-bg:#0e0b07;
+  --lib-surface:#1a1510;
+  --lib-card:#231d14;
+  --lib-border:#3a3020;
+  --lib-gold:#c9a84c;
+  --lib-gold-dim:#8a6e30;
+  --lib-text:#e8d5b7;
+  --lib-muted:#8a7a65;
+  /* jewel-tone option colors */
+  --lib-a:#1e4d8c;
+  --lib-a-text:#a8ccf5;
+  --lib-b:#1a5c35;
+  --lib-b-text:#90e0b0;
+  --lib-c:#7a2020;
+  --lib-c-text:#f5a8a8;
+  --lib-d:#7a5510;
+  --lib-d-text:#f5dea0;
+}
+
+/* Body */
+body{background:var(--lib-bg)!important;color:var(--lib-text)!important}
+
+/* Sidebar */
+#sb{background:#120f09!important;border-right:1px solid var(--lib-border)!important}
+#sb .sec{color:var(--lib-text)!important}
+#sb .sec:hover,#sb .sec.active{
+  background:#2a1f10!important;
+  border-left:2px solid var(--lib-gold)!important;
+  color:var(--lib-gold)!important
+}
+.vol-eng{color:var(--lib-muted)!important;font-size:10px}
+
+/* Toolbar */
+#tb-bar,#nv{background:#120f09!important;border-color:var(--lib-border)!important}
+#tb{color:var(--lib-text)!important}
+.tb-btn{color:var(--lib-muted)!important}
+.tb-btn:hover{color:var(--lib-gold)!important}
+
+/* Content canvas */
+#content{background:var(--lib-bg)!important}
+
+/* Home */
+#home h1{color:var(--lib-gold)!important;letter-spacing:.14em}
+#home .tag{color:var(--lib-muted)!important}
+.home-paleo{color:var(--lib-gold)!important;opacity:.65}
+.home-stat{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  color:var(--lib-text)!important;
+  border-radius:4px!important
+}
+.home-due{border-color:var(--lib-gold)!important;color:var(--lib-gold)!important}
+.home-streak{border-color:var(--lib-gold-dim)!important}
+.home-level{
+  background:rgba(201,168,76,.13)!important;
+  border-color:rgba(201,168,76,.45)!important;
+  color:var(--lib-gold)!important
+}
+
+/* Activity cards — dark with jewel-tone left border */
+.act-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important;
+  color:var(--lib-text)!important;
+  box-shadow:none!important
+}
+.act-card:hover,.act-card:focus{
+  background:#2d2418!important;
+  box-shadow:0 2px 12px rgba(201,168,76,.18)!important
+}
+.act-label{color:var(--lib-text)!important;font-size:11px;font-weight:600;letter-spacing:.04em}
+
+/* Game views */
+.cloze-view,.mc-view{background:var(--lib-bg)!important}
+
+/* Progress / ref */
+.cloze-progress,.mc-progress{color:var(--lib-muted)!important;font-size:12px}
+.cloze-ref,.mc-ref{
+  color:var(--lib-gold)!important;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border-bottom:1px solid var(--lib-border);padding-bottom:6px;margin-bottom:10px
+}
+
+/* Question card */
+.cloze-prompt,.mc-question{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important;
+  color:var(--lib-text)!important;
+  line-height:1.8
+}
+.cloze-blank{
+  background:transparent!important;
+  border:none!important;
+  border-bottom:2px solid var(--lib-gold)!important;
+  border-radius:0!important;
+  color:var(--lib-gold)!important;
+  padding:0 4px!important
+}
+
+/* Answer options — single column, dark cards */
+.cloze-opts{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important
+}
+.mc-opts{display:flex!important;flex-direction:column!important;gap:10px!important}
+
+.cloze-opt,.mc-opt{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:5px!important;
+  color:var(--lib-text)!important;
+  padding:13px 16px!important;
+  text-align:left!important;
+  font-size:15px;
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  transition:border-color .15s,background .15s
+}
+.cloze-opt:hover,.mc-opt:hover{
+  background:#2d2418!important;
+  border-color:var(--lib-gold)!important
+}
+
+/* A/B/C/D letter badge */
+.opt-letter{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;height:26px;
+  border-radius:3px;
+  font-weight:800;font-size:12px;
+  flex-shrink:0;letter-spacing:0
+}
+.opt-a .opt-letter{background:var(--lib-a);color:var(--lib-a-text)}
+.opt-b .opt-letter{background:var(--lib-b);color:var(--lib-b-text)}
+.opt-c .opt-letter{background:var(--lib-c);color:var(--lib-c-text)}
+.opt-d .opt-letter{background:var(--lib-d);color:var(--lib-d-text)}
+
+/* Correct / wrong states */
+.mc-correct,.cloze-correct{
+  background:#192e21!important;
+  border-color:#3a7a52!important;
+  color:#90d0a8!important
+}
+.mc-wrong,.cloze-wrong{
+  background:#2a1010!important;
+  border-color:#8b3a2a!important;
+  color:#e09080!important
+}
+
+/* Feedback */
+.mc-feedback,.cloze-feedback{color:var(--lib-text)!important}
+
+/* Hint / audio buttons */
+.cloze-audio,.hint-btn{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  color:var(--lib-gold)!important;
+  border-radius:4px!important
+}
+.cloze-audio:hover,.hint-btn:hover{
+  border-color:var(--lib-gold)!important;
+  background:#2d2418!important
+}
+.hint-display{color:var(--lib-gold-dim)!important;font-style:italic}
+
+/* Mode banners */
+.whosaidit-banner,.audio-gap-banner{
+  background:var(--lib-card)!important;
+  color:var(--lib-gold)!important;
+  border-left:3px solid var(--lib-gold)!important;
+  border-radius:0 4px 4px 0!important;
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 14px!important
+}
+
+/* Primary / secondary buttons */
+.study-btn{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-gold)!important;
+  color:var(--lib-gold)!important;
+  border-radius:4px!important
+}
+.study-btn:hover{background:var(--lib-gold)!important;color:#0e0b07!important}
+.study-btn.sb-pri,.study-btn.sb-gold{
+  background:var(--lib-gold)!important;
+  color:#0e0b07!important;font-weight:800
+}
+.study-btn.sb-pri:hover,.study-btn.sb-gold:hover{background:#dbbf6a!important}
+
+/* Vol banner */
+.vol-banner{background:var(--lib-card)!important;border-bottom:1px solid var(--lib-border)!important}
+.vol-banner-name{color:var(--lib-gold)!important;font-weight:800;letter-spacing:.06em}
+
+/* Prog cards */
+.prog-view{background:var(--lib-bg)!important}
+.prog-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important;
+  color:var(--lib-text)!important
+}
+.prog-card h3,.prog-card h4{color:var(--lib-gold)!important}
+
+/* Summary */
+.sv-text,.sv-verse{color:var(--lib-text)!important}
+.sv-td{border-bottom:1px solid var(--lib-border)!important;color:var(--lib-text)!important}
+.sv-fa{color:var(--lib-muted)!important}
+
+/* Flashcard */
+.fc-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important
+}
+.fc-front,.fc-back{color:var(--lib-text)!important}
+.fc-front{border-bottom:1px solid var(--lib-border)!important}
+.fc-conf-btn{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  color:var(--lib-text)!important;
+  border-radius:4px!important
+}
+.fc-conf-btn:hover{border-color:var(--lib-gold)!important}
+
+/* Results */
+.results-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important;
+  color:var(--lib-text)!important
+}
+.results-score{color:var(--lib-gold)!important}
+
+/* Level-up screen */
+.level-up-screen{background:var(--lib-bg)!important}
+.lu-label{color:var(--lib-gold)!important}
+.lu-name{color:var(--lib-gold)!important}
+.lu-msg{color:var(--lib-muted)!important}
+
+/* Remix confidence */
+.mc-opt[data-rx="yes"]{
+  background:#192e21!important;
+  border-color:#3a7a52!important;
+  color:#90d0a8!important
+}
+.mc-opt[data-rx="no"]{
+  background:#2a1010!important;
+  border-color:#8b3a2a!important;
+  color:#e09080!important
+}
+
+/* Key terms */
+.kt-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  border-radius:6px!important;
+  color:var(--lib-text)!important
+}
+.kt-term{color:var(--lib-gold)!important;font-weight:700}
+
+/* FAQ */
+.faq-q{color:var(--lib-gold)!important;font-weight:700}
+.faq-a{color:var(--lib-text)!important}
+
+/* Memory match */
+.mm-card{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  color:var(--lib-text)!important;
+  border-radius:4px!important
+}
+.mm-card.mm-flipped,.mm-card.mm-matched{
+  background:#2d2418!important;
+  border-color:var(--lib-gold)!important
+}
+
+/* Timeline */
+.tl-event{border-left:2px solid var(--lib-gold)!important;color:var(--lib-text)!important}
+.tl-year{color:var(--lib-gold)!important;font-weight:700}
+
+/* Modal */
+.modal-overlay{background:rgba(14,11,7,.92)!important}
+.modal-box{
+  background:var(--lib-card)!important;
+  border:1px solid var(--lib-border)!important;
+  color:var(--lib-text)!important;
+  border-radius:6px!important
+}
+
+/* Scrollbars */
+#sb::-webkit-scrollbar-thumb{background:var(--lib-border)!important}
+#content::-webkit-scrollbar-thumb{background:var(--lib-border)!important}
+
+/* How to Play */
+.htp-view{
+  padding:24px 20px;
+  max-width:640px;
+  margin:0 auto
+}
+.htp-title{
+  font-size:11px;font-weight:800;letter-spacing:.2em;
+  color:var(--lib-gold);
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--lib-border)
+}
+.htp-section{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px 0;
+  border-bottom:1px solid var(--lib-border)
+}
+.htp-icon{
+  color:var(--lib-gold);flex-shrink:0;
+  width:30px;padding-top:2px;
+  display:flex;align-items:flex-start;justify-content:center
+}
+.htp-head{
+  font-size:10px;font-weight:800;letter-spacing:.14em;
+  color:var(--lib-gold);margin-bottom:4px
+}
+.htp-text{font-size:14px;color:var(--lib-muted);line-height:1.6}
+.htp-back-btn{margin-top:20px!important}
+
+/* Start-here cards gold accent */
+.act-card.start-here{
+  border-color:var(--lib-gold)!important;
+  background:rgba(201,168,76,.07)!important
+}
+
+/* Covenant trial card gold */
+.act-card[data-mode="trial"]{
+  border-color:var(--lib-gold)!important;
+  background:rgba(201,168,76,.1)!important
+}

@@ -168,50 +168,50 @@ var LBL = [
 ];
 
 var VOL_GROUPS = [
-{title:'Vol 1 \u2014 Bereshit',eng:'Genesis',count:4,vol:'1'},
-{title:'Vol 2 \u2014 Shemot',eng:'Exodus',count:2,vol:'2'},
-{title:'Vol 3 \u2014 Vayikra',eng:'Leviticus',count:2,vol:'3'},
-{title:'Vol 4 \u2014 Bamidbar',eng:'Numbers',count:2,vol:'4'},
-{title:'Vol 5 \u2014 Devarim',eng:'Deuteronomy',count:2,vol:'5'},
-{title:'Vol 6 \u2014 Chanokh',eng:'Book of Chanokh',count:3,vol:'6'},
-{title:'Vol 7 \u2014 Yovelim',eng:'Book of Jubilees',count:2,vol:'7'},
+{title:'Vol 1 \u2014 Bereshit (Genesis)',eng:'',count:4,vol:'1'},
+{title:'Vol 2 \u2014 Shemot (Exodus)',eng:'',count:2,vol:'2'},
+{title:'Vol 3 \u2014 Vayikra (Leviticus)',eng:'',count:2,vol:'3'},
+{title:'Vol 4 \u2014 Bamidbar (Numbers)',eng:'',count:2,vol:'4'},
+{title:'Vol 5 \u2014 Devarim (Deuteronomy)',eng:'',count:2,vol:'5'},
+{title:'Vol 6 \u2014 Chanokh (1 Enoch)',eng:'DSS Attested Ch 1\u201373',count:3,vol:'6'},
+{title:'Vol 7 \u2014 Yovelim (Jubilees)',eng:'All 50 Chapters',count:2,vol:'7'},
 {title:'Vol 8 \u2014 Book of Giants',eng:'DSS Attested',count:1,vol:'8'},
-{title:'Vol 9 \u2014 Visions of Amram',eng:'4QAmram',count:1,vol:'9'},
-{title:'Vol 10 \u2014 Yehoshua',eng:'Joshua',count:3,vol:'10'},
-{title:'Vol 11 \u2014 Shofetim',eng:'Judges',count:3,vol:'11'},
-{title:"Vol 12 \u2014 Shemu\'el Aleph",eng:'1 Samuel',count:4,vol:'12'},
-{title:"Vol 13 \u2014 Shemu\'el Bet",eng:'2 Samuel',count:4,vol:'13'},
-{title:'Vol 14 \u2014 Melakhim Aleph',eng:'1 Kings',count:4,vol:'14'},
-{title:'Vol 15 \u2014 Melakhim Bet',eng:'2 Kings',count:4,vol:'15'},
-{title:"Vol 16 \u2014 Yesha\'yahu",eng:'Isaiah \u2014 1QIsa-a',count:5,vol:'16'},
-{title:'Vol 17 \u2014 Yirmeyahu',eng:'Jeremiah',count:7,vol:'17'},
-{title:'Vol 18 \u2014 Yehezkel',eng:'Ezekiel',count:6,vol:'18'},
+{title:'Vol 9 \u2014 Visions of Amram (4QAmram)',eng:'',count:1,vol:'9'},
+{title:'Vol 10 \u2014 Yehoshua (Joshua)',eng:'',count:3,vol:'10'},
+{title:'Vol 11 \u2014 Shofetim (Judges)',eng:'',count:3,vol:'11'},
+{title:"Vol 12 \u2014 Shemu\'el Aleph (1 Samuel)",eng:'',count:4,vol:'12'},
+{title:"Vol 13 \u2014 Shemu\'el Bet (2 Samuel)",eng:'',count:4,vol:'13'},
+{title:'Vol 14 \u2014 Melakhim Aleph (1 Kings)',eng:'',count:4,vol:'14'},
+{title:'Vol 15 \u2014 Melakhim Bet (2 Kings)',eng:'',count:4,vol:'15'},
+{title:"Vol 16 \u2014 Yesha\'yahu (Isaiah)",eng:'1QIsa-a',count:5,vol:'16'},
+{title:'Vol 17 \u2014 Yirmeyahu (Jeremiah)',eng:'DSS Primary',count:7,vol:'17'},
+{title:'Vol 18 \u2014 Yehezkel (Ezekiel)',eng:'4QEzek',count:6,vol:'18'},
 {title:'Vol 19 \u2014 The Twelve',eng:'Minor Prophets',count:5,vol:'19'},
-{title:'Vol 20 \u2014 Tehillim',eng:'Psalms incl 151, 154, 155',count:9,vol:'20'},
-{title:'Vol 21 \u2014 Mishlei',eng:'Proverbs',count:3,vol:'21'},
-{title:'Vol 22 \u2014 Iyov',eng:'Job',count:3,vol:'22'},
-{title:'Vol 23 \u2014 Shir HaShirim',eng:'Song of Songs',count:1,vol:'23'},
+{title:'Vol 20 \u2014 Tehillim (Psalms)',eng:'Incl. Ps 151, 154, 155',count:9,vol:'20'},
+{title:'Vol 21 \u2014 Mishlei (Proverbs)',eng:'',count:3,vol:'21'},
+{title:'Vol 22 \u2014 Iyov (Job)',eng:'',count:3,vol:'22'},
+{title:'Vol 23 \u2014 Shir HaShirim (Song of Songs)',eng:'',count:1,vol:'23'},
 {title:'Vol 24 \u2014 Ruth',eng:'',count:1,vol:'24'},
-{title:'Vol 25 \u2014 Eikha',eng:'Lamentations',count:1,vol:'25'},
-{title:'Vol 26 \u2014 Kohelet',eng:'Ecclesiastes',count:1,vol:'26'},
+{title:'Vol 25 \u2014 Eikha (Lamentations)',eng:'',count:1,vol:'25'},
+{title:'Vol 26 \u2014 Kohelet (Ecclesiastes)',eng:'',count:1,vol:'26'},
 {title:'Vol 27 \u2014 Esther',eng:"Orit Ge\'ez Primary",count:1,vol:'27'},
-{title:'Vol 28 \u2014 Daniyel',eng:'Daniel',count:2,vol:'28'},
-{title:'Vol 29 \u2014 Ezra-Nekhemyah',eng:'Ezra & Nehemiah',count:2,vol:'29'},
-{title:'Vol 30 \u2014 Divrei HaYamim Aleph',eng:'1 Chronicles',count:2,vol:'30'},
-{title:'Vol 31 \u2014 Divrei HaYamim Bet',eng:'2 Chronicles',count:2,vol:'31'},
+{title:'Vol 28 \u2014 Daniyel (Daniel)',eng:'8 DSS Manuscripts',count:2,vol:'28'},
+{title:'Vol 29 \u2014 Ezra-Nekhemyah',eng:'Ezra & Nekhemyah',count:2,vol:'29'},
+{title:'Vol 30 \u2014 Divrei HaYamim Aleph (1 Chronicles)',eng:'',count:2,vol:'30'},
+{title:'Vol 31 \u2014 Divrei HaYamim Bet (2 Chronicles)',eng:'',count:2,vol:'31'},
 {title:'Vol 32 \u2014 4Q246',eng:'Aramaic Apocalypse',count:1,vol:'32'},
 {title:'Vol 33 \u2014 War Scroll 1QM',eng:'Sons of Light vs Darkness',count:1,vol:'33'},
-{title:'Vol 34 \u2014 4QMMT',eng:'Works of the Torah',count:1,vol:'34'},
+{title:'Vol 34 \u2014 4QMMT',eng:'Some Works of the Torah',count:1,vol:'34'},
 {title:'Vol 35 \u2014 Damascus Document',eng:'',count:2,vol:'35'},
 {title:'Vol 36 \u2014 Community Rule 1QS',eng:'',count:1,vol:'36'},
-{title:'Vol 37 \u2014 Rule of the Congregation',eng:'1QSa',count:1,vol:'37'},
-{title:'Vol 38 \u2014 Rule of Blessings',eng:'1QSb',count:1,vol:'38'},
-{title:'Vol 39 \u2014 Words of the Luminaries',eng:'4QDibHam',count:1,vol:'39'},
-{title:'Vol 40 \u2014 Pesher Nahum',eng:'4QpNah',count:1,vol:'40'},
-{title:'Vol 41 \u2014 Hodayot',eng:'Thanksgiving Hymns',count:2,vol:'41'},
-{title:'Vol 42 \u2014 Pesher Habakkuk',eng:'1QpHab',count:1,vol:'42'},
+{title:'Vol 37 \u2014 Rule of the Congregation 1QSa',eng:'',count:1,vol:'37'},
+{title:'Vol 38 \u2014 Rule of Blessings 1QSb',eng:'',count:1,vol:'38'},
+{title:'Vol 39 \u2014 Words of the Luminaries 4QDibHam',eng:'',count:1,vol:'39'},
+{title:'Vol 40 \u2014 Pesher Nahum 4QpNah',eng:'',count:1,vol:'40'},
+{title:'Vol 41 \u2014 Hodayot',eng:'Thanksgiving Hymns 1QH',count:2,vol:'41'},
+{title:'Vol 42 \u2014 Pesher Habakkuk 1QpHab',eng:'',count:1,vol:'42'},
 {title:'Vol 43 \u2014 Songs of Sabbath Sacrifice',eng:'',count:1,vol:'43'},
-{title:'Vol 44 \u2014 Genesis Apocryphon',eng:'1QapGen',count:1,vol:'44'},
+{title:'Vol 44 \u2014 Genesis Apocryphon 1QapGen',eng:'',count:1,vol:'44'},
 {title:'Vol 45 \u2014 11QMelchizedek',eng:'',count:1,vol:'45'},
 {title:'Vol 46 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'46'},
 {title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'}
@@ -1218,8 +1218,8 @@ function showCovenantTrial(volId) {
 }
 
 function actCard(icon, label, color, mode, fid) {
-  return '<div class="act-card" data-mode="' + mode + '" style="background:' + color + '" role="button" tabindex="0" aria-label="' + label + ' activity">' +
-    '<div class="act-icon" aria-hidden="true">' + icon + '</div>' +
+  return '<div class="act-card" data-mode="' + mode + '" style="border-left:3px solid ' + color + '" role="button" tabindex="0" aria-label="' + label + ' activity">' +
+    '<div class="act-icon" aria-hidden="true" style="color:' + color + '">' + icon + '</div>' +
     '<div class="act-label">' + label + '</div>' +
     '</div>';
 }
@@ -1833,13 +1833,13 @@ function showFillBlank(fid, audioMode) {
         others = others.concat(_fb).slice(0, 3);
       }
       var opts = shuffle([correct].concat(others));
-      var colors = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
+      var OPTLBLS = ['A', 'B', 'C', 'D'];
 
       var h = '<div class="cloze-view">';
       var tierNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-      var tierColors = { easy: '#059669', medium: '#d97706', hard: '#dc2626' };
+      var tierColors = { easy: '#6abf8a', medium: '#c9a84c', hard: '#d97070' };
       h += '<div class="cloze-progress">' + (qi + 1) + ' of ' + questions.length +
-        ' <span style="color:' + (tierColors[tier] || '#059669') + ';font-size:.85em">\u25CF ' + (tierNames[tier] || 'Easy') + '</span></div>';
+        ' <span style="color:' + (tierColors[tier] || '#6abf8a') + ';font-size:.85em">\u25CF ' + (tierNames[tier] || 'Easy') + '</span></div>';
       var clozeIdx = IDS.indexOf(fid);
       var clozeLabel = clozeIdx >= 0 ? LBL[clozeIdx].split(' \u2014 ')[0] : fid;
       h += '<div class="cloze-ref">' + clozeLabel + (q.ref ? ' ' + q.ref : '') + '</div>';
@@ -1853,8 +1853,8 @@ function showFillBlank(fid, audioMode) {
       h += '<div class="hint-display" id="cloze-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="cloze-opts">';
       for (var o = 0; o < opts.length; o++) {
-        h += '<button class="cloze-opt" data-val="' + opts[o] +
-          '" style="background:' + colors[o % 4] + '" aria-label="Answer option: ' + opts[o] + '">' + opts[o] + '</button>';
+        h += '<button class="cloze-opt opt-' + OPTLBLS[o % 4].toLowerCase() + '" data-val="' + opts[o] +
+          '" aria-label="Answer option ' + OPTLBLS[o % 4] + ': ' + opts[o] + '"><span class="opt-letter">' + OPTLBLS[o % 4] + '</span>' + opts[o] + '</button>';
       }
       h += '</div>';
       h += '<div class="cloze-feedback" id="cloze-fb" role="status" aria-live="polite"></div>';
@@ -1990,7 +1990,7 @@ function showMC(fid) {
     if (!questions.length) { showStubForMode(fid, 'mc'); return; }
     questions = shuffle(questions).slice(0, tier === 'hard' ? 30 : 20);
     var qi = 0, score = 0, points = 0, mcFirstAttempt = true, mcHintsUsed = 0;
-    var mcColors = ['#dc2626', '#2563eb', '#059669', '#d97706'];
+    var OPTLBLS = ['A', 'B', 'C', 'D'];
 
     function renderQ() {
       if (qi >= questions.length) { showResults(); return; }
@@ -2000,7 +2000,7 @@ function showMC(fid) {
 
       var h = '<div class="mc-view">';
       var tierNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-      var tierColors = { easy: '#059669', medium: '#d97706', hard: '#dc2626' };
+      var tierColors = { easy: '#6abf8a', medium: '#c9a84c', hard: '#d97070' };
       h += '<div class="mc-progress">' + (qi + 1) + ' of ' + questions.length +
         ' <span style="color:' + (tierColors[tier] || '#059669') + ';font-size:.85em">\u25CF ' + (tierNames[tier] || 'Easy') + '</span></div>';
       var mcIdx = IDS.indexOf(fid);
@@ -2022,8 +2022,8 @@ function showMC(fid) {
         q._childCorrect = mcOpts.indexOf(correctOpt);
       }
       for (var o = 0; o < mcOpts.length; o++) {
-        h += '<button class="mc-opt" data-idx="' + o +
-          '" style="background:' + mcColors[o % 4] + '" aria-label="Option ' + (o + 1) + ': ' + mcOpts[o] + '">' +
+        h += '<button class="mc-opt opt-' + OPTLBLS[o % 4].toLowerCase() + '" data-idx="' + o +
+          '" aria-label="Option ' + OPTLBLS[o % 4] + ': ' + mcOpts[o] + '"><span class="opt-letter">' + OPTLBLS[o % 4] + '</span>' +
           mcOpts[o] + '</button>';
       }
       h += '</div>';
@@ -3242,7 +3242,7 @@ function showWhoSaidIt(fid) {
 
     var questions = shuffle(quotes.slice()).slice(0, 15);
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
-    var mcColors = ['#dc2626', '#2563eb', '#059669', '#d97706'];
+    var OPTLBLS = ['A', 'B', 'C', 'D'];
 
     function renderQ() {
       if (qi >= questions.length) { showResults(); return; }
@@ -3263,7 +3263,7 @@ function showWhoSaidIt(fid) {
       h += '<div class="hint-display" id="ws-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="mc-opts">';
       for (var o = 0; o < opts.length; o++) {
-        h += '<button class="mc-opt" data-idx="' + o + '" style="background:' + mcColors[o % 4] + '" aria-label="Option ' + (o + 1) + ': ' + opts[o] + '">' + opts[o] + '</button>';
+        h += '<button class="mc-opt opt-' + OPTLBLS[o % 4].toLowerCase() + '" data-idx="' + o + '" aria-label="Option ' + OPTLBLS[o % 4] + ': ' + opts[o] + '"><span class="opt-letter">' + OPTLBLS[o % 4] + '</span>' + opts[o] + '</button>';
       }
       h += '</div>';
       h += '<div class="mc-feedback" id="ws-fb" role="status" aria-live="polite"></div>';
@@ -4904,9 +4904,9 @@ function showRemix(fid) {
       h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="rx-hint-display" role="status" aria-live="polite"></div>';
       h += '<div class="mc-opts">';
-      var mcColors = ['#dc2626', '#2563eb', '#059669', '#d97706'];
+      var OPTLBLS_RX = ['A', 'B', 'C', 'D'];
       for (var o = 0; o < opts.length; o++) {
-        h += '<button class="mc-opt" data-idx="' + o + '" style="background:' + mcColors[o % 4] + '" aria-label="Option ' + (o + 1) + ': ' + opts[o] + '">' + opts[o] + '</button>';
+        h += '<button class="mc-opt opt-' + OPTLBLS_RX[o % 4].toLowerCase() + '" data-idx="' + o + '" aria-label="Option ' + OPTLBLS_RX[o % 4] + ': ' + opts[o] + '"><span class="opt-letter">' + OPTLBLS_RX[o % 4] + '</span>' + opts[o] + '</button>';
       }
       h += '</div>';
       h += '<div class="mc-feedback" id="rx-fb" role="status" aria-live="polite"></div>';
@@ -5226,9 +5226,7 @@ function showLevelUpScreen(levelName, cb) {
     if (LEVELS[i].name === levelName) { lvlObj = LEVELS[i]; break; }
   }
   var iconSvg = lvlObj ? lbIcon(lvlObj.icon, 80) : '';
-  var accentColor = levelName === 'Keeper of the Scroll' ? '#b8860b' :
-    levelName === 'Guardian' ? '#7c3aed' :
-    levelName === 'Scholar' ? '#2563eb' : '#4db84d';
+  var accentColor = '#c9a84c';
   var h = '<div class="level-up-screen">';
   h += '<div class="lu-burst" style="color:' + accentColor + '">' + iconSvg + '</div>';
   h += '<div class="lu-label">LEVEL UP</div>';
@@ -5242,64 +5240,47 @@ function showLevelUpScreen(levelName, cb) {
 }
 
 function showHowToPlay() {
-  function row(label, text) {
-    return '<div style="margin-bottom:14px"><div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;margin-bottom:4px">' + label + '</div>' +
-      '<div style="font-size:14px;color:#d4d4d4;line-height:1.6">' + text + '</div></div>';
+  function htpRow(icon, head, body) {
+    return '<div class="htp-section">' +
+      '<div class="htp-icon">' + icon + '</div>' +
+      '<div class="htp-body"><div class="htp-head">' + head + '</div>' +
+      '<div class="htp-text">' + body + '</div></div>' +
+      '</div>';
   }
-  var h = '<div class="prog-view">';
-  h += '<div class="prog-card" style="border-left:4px solid #4ade80;text-align:left">';
-  h += '<div style="font-size:17px;font-weight:900;margin-bottom:18px;color:#fff">How to Play</div>';
+  var h = '<div class="htp-view">';
+  h += '<div class="htp-title">HOW TO STUDY</div>';
 
-  h += row('DAILY SCROLL',
-    'One fill-in-the-blank question appears every day. Correct answers earn 25 bonus XP. ' +
-    'Tap "Start Daily Scroll" on the home screen. Takes about 30 seconds.');
+  h += htpRow(lbIcon('scroll', 22), 'DAILY SCROLL',
+    'One question each day. Correct answer earns 25 bonus XP. Tap Start Daily Scroll on the home screen.');
 
-  h += row('START EACH SECTION',
-    'Pick a volume from the left panel, then tap a section name. ' +
-    'The activity screen opens. The <strong>Start Here</strong> row at the top shows the two best modes to begin with.');
+  h += htpRow(lbIcon('book', 22), 'OPEN A SECTION',
+    'Pick a volume from the index, then tap a section name. The activity screen shows all available study modes.');
 
-  h += row('BEST MODES TO LEARN',
-    '<strong>Fill in the Blank</strong> — type the missing word. Best for deep recall.<br>' +
-    '<strong>Multiple Choice</strong> — pick the right answer. Good for testing what you know.<br>' +
-    'Both earn 10 XP per correct answer.');
+  h += htpRow(lbIcon('pencil', 22), 'FILL IN THE BLANK',
+    'Four options labeled A through D. Select the word that completes the verse. Earns 10 XP per correct answer.');
 
-  h += row('SPACED REVIEW (FLASHCARDS)',
-    'Rate each card 1–5 for how well you knew it. Low-rated cards come back sooner. ' +
-    'Cards that are due show as a badge on the home screen. ' +
-    'Use <strong>Review All Due</strong> to work through them across all sections at once.');
+  h += htpRow(lbIcon('target', 22), 'MULTIPLE CHOICE',
+    'Four options. Select the correct answer. Same XP as Fill in the Blank. Good for testing recognition.');
 
-  h += row('OTHER ACTIVITIES',
-    '<strong>Key Terms</strong> — definitions and pronunciation.<br>' +
-    '<strong>Memory Match</strong> — flip pairs to match terms with meanings (earns XP).<br>' +
-    '<strong>Listen &amp; Learn</strong> — the app reads each verse aloud with word-by-word highlight.<br>' +
-    '<strong>FAQ</strong> — key questions and answers for each section.<br>' +
-    '<strong>Mind Map / Concept Web / Timeline</strong> — visual tools showing how terms connect.<br>' +
-    '<strong>Challenge, True or False, Who Said It, Story Sequence, Cause &amp; Effect</strong> — extra practice modes.');
+  h += htpRow(lbIcon('cards', 22), 'FLASHCARDS',
+    'Rate each card 1 through 5. Low-rated cards return sooner. Due cards show as a badge on the home screen. Use Review All Due to work across all sections.');
 
-  h += row('COVENANT TRIAL',
-    'Unlocks after 10 study sessions in a volume (or full Flashcard mastery). ' +
-    'Five synthesis questions, no hints, double XP. Your best score is saved per volume. ' +
-    'Shows as a gold card at the bottom of the activity screen once unlocked.');
+  h += htpRow(lbIcon('trophy', 22), 'COVENANT TRIAL',
+    'Unlocks after 10 study sessions or full flashcard mastery. Five synthesis questions, no hints, double XP. Best score saved per volume.');
 
-  h += row('XP AND LEVELS',
-    'Seeker: starting level (0 XP)<br>' +
-    'Scholar: 600 XP<br>' +
-    'Guardian: 3,000 XP<br>' +
-    'Keeper of the Scroll: 12,000 XP<br>' +
-    'Fill in the Blank / Multiple Choice: 10 XP per correct answer<br>' +
-    'Daily Scroll correct: 25 XP<br>' +
-    'Covenant Trial: double XP');
+  h += htpRow(lbIcon('puzzle', 22), 'OTHER MODES',
+    'Key Terms, Memory Match, Listen &amp; Learn, FAQ, Mind Map, Concept Web, Timeline, Who Said It, True or False, Cause &amp; Effect, Story Sequence.');
 
-  h += row('STREAK AND FREEZE',
-    'Study at least once per day to keep your streak going. ' +
-    'Every 7-day milestone earns 1 streak freeze token. ' +
-    'If you miss exactly one day, the token auto-applies and your streak continues. ' +
-    'Freeze token count shows on the home screen stats.');
+  h += htpRow(lbIcon('sparkle', 22), 'XP AND LEVELS',
+    'Seeker 0 XP &mdash; Scholar 600 XP &mdash; Guardian 3,000 XP &mdash; Keeper of the Scroll 12,000 XP. Covenant Trial earns double XP.');
 
-  h += '<button class="study-btn" id="b-htp-back" style="margin-top:8px">Back to Home</button>';
-  h += '</div></div>';
+  h += htpRow(lbIcon('flame', 22), 'STREAK',
+    'Study at least once per day. Every 7-day milestone earns a freeze token. One missed day is covered automatically if you have a token.');
+
+  h += '<button class="study-btn htp-back-btn" id="b-htp-back">Back to Home</button>';
+  h += '</div>';
   document.getElementById('content').innerHTML = h;
-  document.getElementById('tb').textContent = 'How to Play';
+  document.getElementById('tb').textContent = 'How to Study';
   document.getElementById('b-htp-back').addEventListener('click', function () { goHome(); });
   window.scrollTo(0, 0);
 }
