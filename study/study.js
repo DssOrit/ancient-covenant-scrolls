@@ -1728,33 +1728,81 @@ function showFillBlank(fid, audioMode) {
     questions = shuffle(questions).slice(0, tier === 'hard' ? 30 : 20);
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
 
+    // Pre-compute type-matched distractor pools once before any question renders
+    var _digitPool = [], _namePool = [], _placePool = [];
+    allAns.forEach(function (a) {
+      if (/^\d+$/.test(a)) { if (_digitPool.indexOf(a) < 0) _digitPool.push(a); }
+      else if (new RegExp(NAMES_PATTERN.source, 'i').test(a)) { if (_namePool.indexOf(a) < 0) _namePool.push(a); }
+      else if (new RegExp(PLACES_PATTERN.source, 'i').test(a)) { if (_placePool.indexOf(a) < 0) _placePool.push(a); }
+    });
+    var _sv = getVerses(fid);
+    _sv.forEach(function (v) {
+      (v.match(/\b\d+\b/g) || []).forEach(function (n) { if (_digitPool.indexOf(n) < 0) _digitPool.push(n); });
+      (v.match(new RegExp(NAMES_PATTERN.source, 'gi')) || []).forEach(function (n) { if (_namePool.indexOf(n) < 0) _namePool.push(n); });
+      (v.match(new RegExp(PLACES_PATTERN.source, 'gi')) || []).forEach(function (p) { if (_placePool.indexOf(p) < 0) _placePool.push(p); });
+    });
+
     function renderQ() {
       if (qi >= questions.length) { showResults(); return; }
       var q = questions[qi];
       var correct = q.answer;
       firstAttempt = true;
       hintsUsed = 0;
-      // Pick distractors similar to the correct answer (same length range, alphabetic proximity)
-      var candidates = allAns.filter(function (a) {
-        return a.toLowerCase() !== correct.toLowerCase();
-      });
-      candidates.sort(function (a, b) {
-        var aDiff = Math.abs(a.length - correct.length);
-        var bDiff = Math.abs(b.length - correct.length);
-        if (aDiff !== bDiff) return aDiff - bDiff;
-        return Math.abs(a.charCodeAt(0) - correct.charCodeAt(0)) -
-               Math.abs(b.charCodeAt(0) - correct.charCodeAt(0));
-      });
-      // Also add plausible words from the same verse if available
-      if (q.source_quote) {
-        var verseWords = q.source_quote.split(/\s+/).filter(function (w) {
-          return w.length > 3 && w.toLowerCase() !== correct.toLowerCase() &&
-                 w !== '______' && candidates.indexOf(w) < 0;
+
+      // Type-aware distractor selection: distractors must match the answer's category
+      var _isDigit = /^\d+$/.test(correct);
+      var _isName = new RegExp(NAMES_PATTERN.source, 'i').test(correct);
+      var _isPlace = !_isName && new RegExp(PLACES_PATTERN.source, 'i').test(correct);
+      var candidates;
+      if (_isDigit) {
+        var _dp = _digitPool.filter(function (a) { return a !== correct; });
+        if (q.source_quote) {
+          (q.source_quote.match(/\b\d+\b/g) || []).forEach(function (n) {
+            if (n !== correct && _dp.indexOf(n) < 0) _dp.push(n);
+          });
+        }
+        if (_dp.length < 3) {
+          var _base = parseInt(correct, 10);
+          [-31, +31, -62, +62, -93, +93, -7, +7].forEach(function (off) {
+            var n = String(_base + off);
+            if (parseInt(n) > 0 && n !== correct && _dp.indexOf(n) < 0) _dp.push(n);
+          });
+        }
+        candidates = shuffle(_dp);
+      } else if (_isName) {
+        candidates = shuffle(_namePool.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        }));
+      } else if (_isPlace) {
+        candidates = shuffle(_placePool.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        }));
+      } else {
+        candidates = allAns.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
         });
-        candidates = candidates.concat(shuffle(verseWords).slice(0, 3));
+        candidates.sort(function (a, b) {
+          var aDiff = Math.abs(a.length - correct.length);
+          var bDiff = Math.abs(b.length - correct.length);
+          if (aDiff !== bDiff) return aDiff - bDiff;
+          return Math.abs(a.charCodeAt(0) - correct.charCodeAt(0)) -
+                 Math.abs(b.charCodeAt(0) - correct.charCodeAt(0));
+        });
+        if (q.source_quote) {
+          var verseWords = q.source_quote.split(/\s+/).filter(function (w) {
+            return w.length > 3 && w.toLowerCase() !== correct.toLowerCase() &&
+                   w !== '______' && candidates.indexOf(w) < 0;
+          });
+          candidates = candidates.concat(shuffle(verseWords).slice(0, 3));
+        }
       }
       var others = candidates.slice(0, 3);
-      if (others.length < 3) others = shuffle(candidates).slice(0, 3);
+      if (others.length < 3) {
+        var _fb = shuffle(allAns.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase() && others.indexOf(a) < 0;
+        }));
+        others = others.concat(_fb).slice(0, 3);
+      }
       var opts = shuffle([correct].concat(others));
       var colors = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
 
