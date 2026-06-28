@@ -3426,6 +3426,7 @@ function generateTrueFalseFromCurated(data, count) {
     for (var s = 0; s < sentences.length; s++) {
       var sent = sentences[s].trim();
       if (sent.length < 20 || sent.length > 260) continue;
+      if (/^(Because|Since|Although|Though|While|When|Where|As |So |And |But |Or |For |Yet |Then |Thus |Therefore |However |Moreover |Furthermore |Additionally |Instead |Otherwise )/i.test(sent)) continue;
       for (var k = 0; k < terms.length; k++) {
         var tterm = terms[k].term;
         var re = new RegExp('\\b' + tterm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
