@@ -3426,7 +3426,9 @@ function generateTrueFalseFromCurated(data, count) {
     for (var s = 0; s < sentences.length; s++) {
       var sent = sentences[s].trim();
       if (sent.length < 20 || sent.length > 260) continue;
-      if (/^(Because|Since|Although|Though|While|When|Where|As |So |And |But |Or |For |Yet |Then |Thus |Therefore |However |Moreover |Furthermore |Additionally |Instead |Otherwise )/i.test(sent)) continue;
+      if (/^(Because|Since|Although|Though|While|When|Where|As |So |And |But |Or |For |Yet |Then |Thus |Therefore |However |Moreover |Furthermore |Additionally |Instead |Otherwise |He |She |They |It |His |Her |Their |This |That |These |Those )/i.test(sent)) continue;
+      // Reject sentences where their/they/them refers to an unnamed external group
+      if (/\b(their|they|them)\b/i.test(sent) && !/\b(people|community|group|nation|tribe|sons|children|priests?|members?|followers?|assembly|congregation|Levites?|Israelites?|Hebrews?|disciples?|servants?|prophets?|kings?|elders?|rulers?|leaders?|armies|warriors?|soldiers?|family|families|ancestors?|descendants?|generation)\b/i.test(sent)) continue;
       for (var k = 0; k < terms.length; k++) {
         var tterm = terms[k].term;
         var re = new RegExp('\\b' + tterm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
