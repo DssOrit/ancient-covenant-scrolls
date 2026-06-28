@@ -1554,11 +1554,11 @@ function speakText(text) {
 // ---- Smart Algorithmic Question Generator ----
 var IMPORTANT_WORDS = /\b(YHWH|Creator|covenant|Torah|Yisra.EL|holy|righteous|judgment|Sinai|Tziyon|Yerushalayim|temple|priest|prophet|angel|heaven|earth|glory|blessing|curse|commandment|Shabbat|Pesach|altar|offering|blood|fire|spirit|kingdom|throne|servant|nations|wilderness|promise|faithfulness|iniquity|transgression|sin|mercy|steadfast|everlasting|forever|inheritance|firstborn|circumcision|Pesach|jubilee|Sabbath|anointed|tabernacle|ark|sword|shield|trumpet|banner|pillar|cloud|lamp|bread|wine|oil|water|stone|mountain|river|garden|vineyard|sheep|shepherd|flock|seed|grain|harvest|tithe|vow|dream|vision|sign|wonder|plague|deliver|redeem|gather|scatter|exile|return|restore|remember|forget|forsake|seek|find|call|answer|hear|speak|write|teach|learn|obey|rebel|repent|forgive|heal|save|destroy|build|rest|rise|fall|live|die)\b/gi;
 
-var NAMES_PATTERN = /\b(Adam|Chavah|Qayin|Hevel|Chanokh|Noakh|Avram|Avraham|Sarah|Yitzhak|Rivkah|Yaakov|Esav|Yosef|Moshe|Aharon|Miryam|Yehoshua|Dawid|Shelomoh|Eliyahu|Elisha|Yesha.yahu|Yirmeyahu|Yehezkel|Daniyel|Shem|Ham|Yafet|Levi|Yehudah|Binyamin|Reuven|Shim.on|Dan|Naftali|Gad|Asher|Yissakhar|Zevulun|Efrayim|Menasheh|Sha.ul|Bat.Sheva|Devorah|Gid.on|Shimshon|Ruth|Na.omi|Bo.az|Chanah|Shemu.el|Yonatan|Rachav|Kalev|Tzipporah|Yitro|Pharaoh|Nevukhadnetzar|Koresh)\b/g;
+var NAMES_PATTERN = /\b(Adam|Chavah|Qayin|Hevel|Chanokh|Noakh|Avram|Avraham|Sarah|Sarai|Yitzhak|Rivkah|Yaakov|Esav|Yosef|Moshe|Aharon|Miryam|Yehoshua|Dawid|Shelomoh|Eliyahu|Elisha|Yesha.yahu|Yirmeyahu|Yehezkel|Daniyel|Shem|Ham|Yafet|Yefet|Levi|Yehudah|Binyamin|Reuven|Shim.on|Dan|Naftali|Gad|Asher|Yissakhar|Zevulun|Efrayim|Menasheh|Sha.ul|Bat.Sheva|Devorah|Gid.on|Shimshon|Ruth|Na.omi|Bo.az|Chanah|Shemu.el|Yonatan|Rachav|Kalev|Tzipporah|Yitro|Pharaoh|Nevukhadnetzar|Koresh|Shet|Enosh|Qeynan|Mahalalel|Yered|Metushelach|Lemekh|Irad|Mehuyael|Metushael|Naamah|Nimrod|Lot|Hagar|Malkhi.Tzedek|Bilhah|Zilpah|Potiphar|Dinah|Tamar|Pinchas|Yitro|Balaam|Balaq|Yiftach|Avigayil|Tzofar|Elifaz|Bildad|Iyov|Koresh|Haman|Mordekhai|Esther|Ezra|Nechemyah|Malakhi|Zekharyah|Chaggai|Tzefanyah|Nachum|Chavakuk|Ovadyah|Yonah|Amos|Hoshea|Yoel|Mikah|Belshatzar|Daryavesh|Artahshasta)\b/g;
 
 var NUMBERS_PATTERN = /\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|hundred|thousand|first|second|third|fourth|fifth|sixth|seventh|tenth|twelfth|fortieth|fiftieth)\b/gi;
 
-var PLACES_PATTERN = /\b(Egypt|Mitsrayim|Babylon|Bavel|Sinai|Horev|Yerushalayim|Tziyon|Shekhem|Hevron|Beit.El|Gilgal|Yericho|Shiloh|Midyan|Negev|Yarden|Kedar|Lebanon|Karmel|Seir|Edom|Mo.av|Ammon|Aram|Asshur|Kena.an|En.Gedi|Ophir|Beersheva|Ramah|Giv.on|Ai|Nevo|Pisgah)\b/g;
+var PLACES_PATTERN = /\b(Egypt|Mitsrayim|Babylon|Bavel|Sinai|Horev|Yerushalayim|Tziyon|Shekhem|Hevron|Beit.El|Gilgal|Yericho|Shiloh|Midyan|Negev|Yarden|Kedar|Lebanon|Karmel|Seir|Edom|Mo.av|Ammon|Aram|Asshur|Kena.an|En.Gedi|Ophir|Beersheva|Ramah|Giv.on|Ai|Nevo|Pisgah|Ararat|Nod|Havilah|Eden|Gihon|Pishon|Tigris|Hiddekel|Euphrates|Shinar|Nineveh|Akkad|Erech|Resen|Goshen|Marah|Elim|Rephidim|Taberah|Kadesh|Meribah|Qumran|Babel|Ur|Paddan.Aram|Penuel|Peniel|Sukkot|Mahanaim|Dothan|Pithom|Rameses|Tzin|Paran|Tzova|Dammesek|Gerar|Tzor|Tzidon|Ashkelon|Gaza|Ekron|Ashdod|Azekah|Lakhish|Khevron|Timna|Adulam|Yavesh|Gilead|Bashan|Hermon|Tabor|Yizre.el|Karmiel|Akko|Tsarfat|Yaffa|Asher|Zevulun|Naftali)\b/g;
 
 function smartBlank(verse) {
   var words = verse.split(/\s+/);
@@ -1573,17 +1573,9 @@ function smartBlank(verse) {
     if (NUMBERS_PATTERN.test(w)) { score += 7; NUMBERS_PATTERN.lastIndex = 0; }
     if (IMPORTANT_WORDS.test(w)) { score += 5; IMPORTANT_WORDS.lastIndex = 0; }
     if (w.length >= 5) score += 2;
-    if (score > 0) targets.push({ idx: i, word: w, score: score });
+    if (score >= 3) targets.push({ idx: i, word: w, score: score });
   }
-  if (!targets.length) {
-    var eligible = [];
-    for (var i = 1; i < words.length - 1; i++) {
-      var w = words[i].replace(/[.,;:!?"'()]/g, '');
-      if (w.length >= 4) eligible.push({ idx: i, word: w, score: 1 });
-    }
-    if (!eligible.length) return null;
-    targets = eligible;
-  }
+  if (!targets.length) return null;
   targets.sort(function (a, b) { return b.score - a.score; });
   var pick = targets[Math.floor(Math.random() * Math.min(3, targets.length))];
   var prompt = verse.replace(new RegExp('\\b' + pick.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b'), '______');
@@ -1773,17 +1765,23 @@ function showFillBlank(fid, audioMode) {
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
 
     // Pre-compute type-matched distractor pools once before any question renders
-    var _digitPool = [], _namePool = [], _placePool = [];
+    var _digitPool = [], _namePool = [], _placePool = [], _importantPool = [];
     allAns.forEach(function (a) {
       if (/^\d+$/.test(a)) { if (_digitPool.indexOf(a) < 0) _digitPool.push(a); }
-      else if (new RegExp(NAMES_PATTERN.source, 'i').test(a)) { if (_namePool.indexOf(a) < 0) _namePool.push(a); }
-      else if (new RegExp(PLACES_PATTERN.source, 'i').test(a)) { if (_placePool.indexOf(a) < 0) _placePool.push(a); }
+      else if (new RegExp(NAMES_PATTERN.source, 'i').test(a)) { if (_namePool.indexOf(a) < 0) _namePool.push(a); NAMES_PATTERN.lastIndex = 0; }
+      else if (new RegExp(PLACES_PATTERN.source, 'i').test(a)) { if (_placePool.indexOf(a) < 0) _placePool.push(a); PLACES_PATTERN.lastIndex = 0; }
+      else if (!/^[A-Z]/.test(a)) {
+        var _iw = new RegExp(IMPORTANT_WORDS.source, 'i').test(a); IMPORTANT_WORDS.lastIndex = 0;
+        if (_iw && _importantPool.indexOf(a.toLowerCase()) < 0) _importantPool.push(a.toLowerCase());
+      }
     });
     var _sv = getVerses(fid);
     _sv.forEach(function (v) {
       (v.match(/\b\d+\b/g) || []).forEach(function (n) { if (_digitPool.indexOf(n) < 0) _digitPool.push(n); });
-      (v.match(new RegExp(NAMES_PATTERN.source, 'gi')) || []).forEach(function (n) { if (_namePool.indexOf(n) < 0) _namePool.push(n); });
-      (v.match(new RegExp(PLACES_PATTERN.source, 'gi')) || []).forEach(function (p) { if (_placePool.indexOf(p) < 0) _placePool.push(p); });
+      (v.match(new RegExp(NAMES_PATTERN.source, 'gi')) || []).forEach(function (n) { NAMES_PATTERN.lastIndex = 0; if (_namePool.indexOf(n) < 0) _namePool.push(n); });
+      (v.match(new RegExp(PLACES_PATTERN.source, 'gi')) || []).forEach(function (p) { PLACES_PATTERN.lastIndex = 0; if (_placePool.indexOf(p) < 0) _placePool.push(p); });
+      var _im = v.match(new RegExp(IMPORTANT_WORDS.source, 'gi')); IMPORTANT_WORDS.lastIndex = 0;
+      if (_im) _im.forEach(function (iw) { var lw = iw.toLowerCase(); if (_importantPool.indexOf(lw) < 0) _importantPool.push(lw); });
     });
 
     function renderQ() {
@@ -1796,8 +1794,12 @@ function showFillBlank(fid, audioMode) {
 
       // Type-aware distractor selection: distractors must match the answer's category
       var _isDigit = /^\d+$/.test(correct);
-      var _isName = new RegExp(NAMES_PATTERN.source, 'i').test(correct);
-      var _isPlace = !_isName && new RegExp(PLACES_PATTERN.source, 'i').test(correct);
+      var _isName = new RegExp(NAMES_PATTERN.source, 'i').test(correct); NAMES_PATTERN.lastIndex = 0;
+      var _isPlace = !_isName && (new RegExp(PLACES_PATTERN.source, 'i').test(correct)); PLACES_PATTERN.lastIndex = 0;
+      var _isProper = !_isDigit && !_isName && !_isPlace && /^[A-Z]/.test(correct);
+      var _isImportant = !_isDigit && !_isName && !_isPlace && !_isProper && (function () {
+        var t = new RegExp(IMPORTANT_WORDS.source, 'i').test(correct); IMPORTANT_WORDS.lastIndex = 0; return t;
+      })();
       var candidates;
       if (_isDigit) {
         var _dp = _digitPool.filter(function (a) { return a !== correct; });
@@ -1822,8 +1824,25 @@ function showFillBlank(fid, audioMode) {
         candidates = shuffle(_placePool.filter(function (a) {
           return a.toLowerCase() !== correct.toLowerCase();
         }));
+      } else if (_isProper) {
+        // Proper noun not in explicit patterns: all distractors must also be proper nouns
+        var _pp = _namePool.concat(_placePool).filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        });
+        allAns.forEach(function (a) {
+          if (/^[A-Z]/.test(a) && a.toLowerCase() !== correct.toLowerCase() && _pp.indexOf(a) < 0) _pp.push(a);
+        });
+        candidates = shuffle(_pp);
+      } else if (_isImportant) {
+        // Theological / thematic word: use other important words as distractors
+        candidates = shuffle(_importantPool.filter(function (a) {
+          return a.toLowerCase() !== correct.toLowerCase();
+        }));
       } else {
+        // Common word: exclude digits and proper nouns so distractors are plausible
         candidates = allAns.filter(function (a) {
+          if (/^\d+$/.test(a)) return false;
+          if (/^[A-Z]/.test(a)) return false;
           return a.toLowerCase() !== correct.toLowerCase();
         });
         candidates.sort(function (a, b) {
@@ -1833,20 +1852,17 @@ function showFillBlank(fid, audioMode) {
           return Math.abs(a.charCodeAt(0) - correct.charCodeAt(0)) -
                  Math.abs(b.charCodeAt(0) - correct.charCodeAt(0));
         });
-        if (q.source_quote) {
-          var verseWords = q.source_quote.split(/\s+/).filter(function (w) {
-            return w.length > 3 && w.toLowerCase() !== correct.toLowerCase() &&
-                   w !== '______' && candidates.indexOf(w) < 0;
-          });
-          candidates = candidates.concat(shuffle(verseWords).slice(0, 3));
-        }
       }
       var others = candidates.slice(0, 3);
       if (others.length < 3) {
-        var _fb = shuffle(allAns.filter(function (a) {
-          return a.toLowerCase() !== correct.toLowerCase() && others.indexOf(a) < 0;
-        }));
-        others = others.concat(_fb).slice(0, 3);
+        var _fbPool = allAns.filter(function (a) {
+          if (a.toLowerCase() === correct.toLowerCase()) return false;
+          if (others.indexOf(a) >= 0) return false;
+          if (_isDigit) return /^\d+$/.test(a);
+          if (_isName || _isPlace || _isProper) return /^[A-Z]/.test(a);
+          return !/^\d+$/.test(a) && !/^[A-Z]/.test(a);
+        });
+        others = others.concat(shuffle(_fbPool)).slice(0, 3);
       }
       var opts = shuffle([correct].concat(others));
       var OPTLBLS = ['A', 'B', 'C', 'D'];
