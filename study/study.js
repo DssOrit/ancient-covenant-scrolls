@@ -3272,6 +3272,15 @@ function showWhoSaidIt(fid) {
     quotes.forEach(function (q) {
       if (speakerPool.indexOf(q.speaker) === -1) speakerPool.push(q.speaker);
     });
+    // Supplement speaker pool with names from section text so we always
+    // have at least 4 plausible wrong speakers rather than falling back to dashes
+    if (speakerPool.length < 4) {
+      var _sv2 = getVerses(fid);
+      _sv2.forEach(function (v) {
+        var m = v.match(new RegExp(NAMES_PATTERN.source, 'gi')); NAMES_PATTERN.lastIndex = 0;
+        if (m) m.forEach(function (n) { if (speakerPool.indexOf(n) < 0) speakerPool.push(n); });
+      });
+    }
 
     var questions = shuffle(quotes.slice()).slice(0, 15);
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
@@ -3284,7 +3293,6 @@ function showWhoSaidIt(fid) {
       firstAttempt = true;
       hintsUsed = 0;
       var distractors = shuffle(speakerPool.filter(function (s) { return s !== q.speaker; })).slice(0, 3);
-      while (distractors.length < 3) distractors.push('\u2014');
       var opts = shuffle([q.speaker].concat(distractors));
       var correctIdx = opts.indexOf(q.speaker);
 
@@ -4926,6 +4934,50 @@ function showRemix(fid) {
     return pool;
   }
 
+  // Type-matched distractor pool for the Remix Round.
+  // Detects whether the answer is a digit, proper noun (name/place),
+  // or common word and filters rawPool accordingly so distractors are
+  // always plausible alternatives rather than random mixed types.
+  function typeMatchedDistractors(answer, rawPool) {
+    var ans = String(answer);
+    var _dig = /^\d+$/.test(ans);
+    var _nm  = new RegExp(NAMES_PATTERN.source, 'i').test(ans);  NAMES_PATTERN.lastIndex = 0;
+    var _pl  = !_nm && new RegExp(PLACES_PATTERN.source, 'i').test(ans); PLACES_PATTERN.lastIndex = 0;
+    var _cap = !_dig && !_nm && !_pl && /^[A-Z]/.test(ans);
+    var filtered;
+    if (_dig) {
+      filtered = rawPool.filter(function (a) { return /^\d+$/.test(a) && a !== ans; });
+      if (filtered.length < 3) {
+        var base = parseInt(ans, 10);
+        [-31,+31,-62,+62,-7,+7,-93,+93].forEach(function (off) {
+          var n = String(base + off);
+          if (parseInt(n) > 0 && n !== ans && filtered.indexOf(n) < 0) filtered.push(n);
+        });
+      }
+    } else if (_nm || _pl || _cap) {
+      // All proper-noun answers: distractors must also be proper nouns
+      filtered = rawPool.filter(function (a) {
+        return /^[A-Z]/.test(a) && !/^\d+$/.test(a) && a.toLowerCase() !== ans.toLowerCase();
+      });
+      // Supplement from NAMES_PATTERN if thin
+      if (filtered.length < 3) {
+        var _extras = (NAMES_PATTERN.source.match(/\(([^)]+)\)/)||['',''])[1].split('|');
+        NAMES_PATTERN.lastIndex = 0;
+        _extras.forEach(function (n) {
+          if (n && n.toLowerCase() !== ans.toLowerCase() && filtered.indexOf(n) < 0) filtered.push(n);
+        });
+      }
+    } else {
+      // Common word: exclude digits and proper nouns
+      filtered = rawPool.filter(function (a) {
+        if (/^\d+$/.test(a)) return false;
+        if (/^[A-Z]/.test(a)) return false;
+        return a.toLowerCase() !== ans.toLowerCase();
+      });
+    }
+    return shuffle(filtered);
+  }
+
   function renderNext() {
     if (qi >= items.length) { showRemixResults(); return; }
     var item = items[qi];
@@ -4941,9 +4993,8 @@ function showRemix(fid) {
     if (mode === 'mc') {
       // Missed in filblank, present as MC with derived question
       var answer = item.answer || (item.options && item.options[item.correct]);
-      var otherAns = otherAnswerPool().filter(function (a) { return a && a.toLowerCase() !== String(answer).toLowerCase(); });
-      var distractors = shuffle(otherAns).slice(0, 3);
-      while (distractors.length < 3) distractors.push('—');
+      var distractors = typeMatchedDistractors(answer, otherAnswerPool()).slice(0, 3);
+      while (distractors.length < 3) distractors.push(distractors[0] || '—');
       var opts = shuffle([answer].concat(distractors));
       var correctIdx = opts.indexOf(answer);
       var question = item.prompt ? ('Which word fills the blank? ' + item.prompt) : (item.question || 'Choose the best answer.');
@@ -4996,9 +5047,8 @@ function showRemix(fid) {
       var re = new RegExp('\\b' + String(answer2).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&') + '\\b', 'i');
       var prompt = quote.replace(re, '______');
       if (prompt === quote) { prompt = quote + ' \u2014 what word is missing?'; }
-      var otherAns2 = otherAnswerPool().filter(function (a) { return a && a.toLowerCase() !== String(answer2).toLowerCase(); });
-      var distractors2 = shuffle(otherAns2).slice(0, 3);
-      while (distractors2.length < 3) distractors2.push('—');
+      var distractors2 = typeMatchedDistractors(answer2, otherAnswerPool()).slice(0, 3);
+      while (distractors2.length < 3) distractors2.push(distractors2[0] || '—');
       var opts2 = shuffle([answer2].concat(distractors2));
       var colors2 = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
       h += '<div class="cloze-prompt">' + prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
