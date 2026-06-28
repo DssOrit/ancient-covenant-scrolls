@@ -353,6 +353,14 @@ body.font-dyslexic .act-label{font-family:var(--font-dyslexic)}
 /* =========================================================================
    Study mode buttons (shared)
    ========================================================================= */
+.g-back{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:none;color:var(--text-muted);
+  font-size:13px;font-weight:600;font-family:var(--font-main);
+  cursor:pointer;padding:6px 4px;margin-bottom:4px;
+  transition:color .15s;
+}
+.g-back:hover{color:var(--vol1)}
 .study-btn{
   background:linear-gradient(135deg,#3a3a5e 0%,#4a4a7e 100%);
   color:#fff;border:none;

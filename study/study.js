@@ -575,6 +575,17 @@ function hintMultiplier(hintsUsed) {
   return 0.1;
 }
 
+function injectGameBack(fid) {
+  var first = document.getElementById('content').firstElementChild;
+  if (!first) return;
+  var btn = document.createElement('button');
+  btn.className = 'g-back';
+  btn.setAttribute('aria-label', 'Back to activities');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:-2px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 18 5 12 11 6"/></svg> Activities';
+  btn.addEventListener('click', function () { go(fid); });
+  first.insertBefore(btn, first.firstChild);
+}
+
 // Wires up a hint button + display element already present in the DOM.
 // Caller provides element IDs, the answer, the passage, and a callback
 // invoked each time a hint is consumed (to increment its hintsUsed
@@ -1894,6 +1905,7 @@ function showFillBlank(fid, audioMode) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-cloze-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-cloze-hear').addEventListener('click', function () {
         speakText(q.prompt.replace('______', 'blank'));
@@ -2065,6 +2077,7 @@ function showMC(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-mc-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-mc-hear').addEventListener('click', function () {
         speakText(q.question);
@@ -2236,6 +2249,7 @@ function showFlashcards(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       document.getElementById('b-fc-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-fc-hear').addEventListener('click', function () {
@@ -2355,6 +2369,7 @@ function showMemoryMatch(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-mm-back').addEventListener('click', function () { go(fid); });
 
       var tileEls = document.querySelectorAll('.mm-tile');
@@ -2505,6 +2520,7 @@ function showListenLearn(fid) {
     h += '</div>';
 
     document.getElementById('content').innerHTML = h;
+    injectGameBack(fid);
 
     document.getElementById('b-ll-prev').addEventListener('click', function () {
       stopSpeech(); vi = Math.max(0, vi - 1); renderVerse();
@@ -2892,6 +2908,7 @@ function showVerseBuild(fid) {
         h += '<button class="study-btn" id="b-vb-quit" style="margin-top:18px">Back to activities</button>';
         h += '</div>';
         document.getElementById('content').innerHTML = h;
+        injectGameBack(fid);
 
         document.getElementById('b-vb-quit').addEventListener('click', function () { go(fid); });
         document.getElementById('b-vb-hear').addEventListener('click', function () { speakText(v.text); });
@@ -3001,6 +3018,7 @@ function showWordMatch(fid) {
       h += '<button class="study-btn" id="b-wm-back" style="margin-top:16px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-wm-back').addEventListener('click', function () { go(fid); });
 
       var termBtns = document.querySelectorAll('.wm-term:not(.wm-done)');
@@ -3179,6 +3197,7 @@ function showChallenge(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-ch-quit').addEventListener('click', function () { clearInterval(timer); go(fid); });
 
       var timerEl = document.getElementById('ch-timer');
@@ -3313,6 +3332,7 @@ function showWhoSaidIt(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-ws-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-ws-hear').addEventListener('click', function () { speakText(q.quote); });
       wireHintLadder('b-ws-hint', 'ws-hint-display', q.speaker, q.quote, function (n) { hintsUsed = n; });
@@ -3478,6 +3498,7 @@ function showTrueFalse(fid) {
       h += '</div>';
 
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-tf-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-tf-hear').addEventListener('click', function () { speakText(q.statement); });
 
@@ -3628,6 +3649,7 @@ function showStorySequence(fid) {
       h += '<div class="mc-feedback" id="seq-fb" role="status" aria-live="polite"></div>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       document.getElementById('b-seq-quit').addEventListener('click', function () { go(fid); });
       var poolBtns = document.querySelectorAll('.seq-pool-item');
@@ -3767,6 +3789,7 @@ function showCauseEffect(fid) {
       h += '<button class="study-btn" id="b-ce-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       document.getElementById('b-ce-quit').addEventListener('click', function () { go(fid); });
       var causeBtns = document.querySelectorAll('.ce-cause');
@@ -3937,6 +3960,7 @@ function showDictation(fid) {
       h += '<button class="study-btn" id="b-dict-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       setTimeout(function () { speakText(target); plays++; }, 350);
 
@@ -4087,6 +4111,7 @@ function showWordMorph(fid) {
       h += '<button class="study-btn" id="b-morph-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-morph-quit').addEventListener('click', function () { go(fid); });
       var firstAttempt = true;
       var btns = document.querySelectorAll('.morph-opt');
@@ -4253,6 +4278,7 @@ function showSyllableTap(fid) {
       h += '<button class="study-btn" id="b-syll-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       document.getElementById('b-syll-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-syll-hear').addEventListener('click', function () { speakText(kt.term); });
@@ -4407,6 +4433,7 @@ function showRhymeChain(fid) {
       h += '<button class="study-btn" id="b-rhy-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
 
       document.getElementById('b-rhy-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-rhy-hear').addEventListener('click', function () { speakText(seed); });
@@ -4631,6 +4658,7 @@ function showMindMap(fid) {
       h += '<button class="study-btn" id="b-mind-quit" style="margin-top:14px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-mind-quit').addEventListener('click', function () { go(fid); });
       var nodeEls = document.querySelectorAll('.mind-node');
       for (var ni = 0; ni < nodeEls.length; ni++) {
@@ -4765,6 +4793,7 @@ function showConceptWeb(fid) {
       h += '<button class="study-btn" id="b-cweb-quit" style="margin-top:14px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-cweb-quit').addEventListener('click', function () { go(fid); });
       var nodeEls = document.querySelectorAll('.cweb-node');
       for (var ne = 0; ne < nodeEls.length; ne++) {
@@ -4866,6 +4895,7 @@ function showChapterTimeline(fid) {
       h += '<button class="study-btn" id="b-tl-quit" style="margin-top:14px">Back to activities</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-tl-quit').addEventListener('click', function () { go(fid); });
       var dots = document.querySelectorAll('.tl-dot');
       for (var d = 0; d < dots.length; d++) {
@@ -5012,6 +5042,7 @@ function showRemix(fid) {
       h += '<button class="study-btn" id="b-rx-quit" style="margin-top:18px">Leave remix round</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-rx-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-rx-hear').addEventListener('click', function () { speakText(question); });
       wireHintLadder('b-rx-hint', 'rx-hint-display', answer, item.source_quote, function (n) { hintsUsed = n; });
@@ -5064,6 +5095,7 @@ function showRemix(fid) {
       h += '<button class="study-btn" id="b-rx-quit" style="margin-top:18px">Leave remix round</button>';
       h += '</div>';
       document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
       document.getElementById('b-rx-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-rx-hear').addEventListener('click', function () { speakText(quote); });
       wireHintLadder('b-rx-hint', 'rx-hint-display', answer2, quote, function (n) { hintsUsed = n; });
