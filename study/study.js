@@ -3426,9 +3426,19 @@ function generateTrueFalseFromCurated(data, count) {
     for (var s = 0; s < sentences.length; s++) {
       var sent = sentences[s].trim();
       if (sent.length < 20 || sent.length > 260) continue;
+      // Reject dependent clauses, pronoun-first sentences, connectives
       if (/^(Because|Since|Although|Though|While|When|Where|As |So |And |But |Or |For |Yet |Then |Thus |Therefore |However |Moreover |Furthermore |Additionally |Instead |Otherwise |He |She |They |It |His |Her |Their |This |That |These |Those )/i.test(sent)) continue;
-      // Reject sentences where their/they/them refers to an unnamed external group
+      // Reject their/they/them with no group noun antecedent in the sentence
       if (/\b(their|they|them)\b/i.test(sent) && !/\b(people|community|group|nation|tribe|sons|children|priests?|members?|followers?|assembly|congregation|Levites?|Israelites?|Hebrews?|disciples?|servants?|prophets?|kings?|elders?|rulers?|leaders?|armies|warriors?|soldiers?|family|families|ancestors?|descendants?|generation)\b/i.test(sent)) continue;
+      // Reject questions and incomplete sentences
+      if (sent.trim().slice(-1) === '?') continue;
+      if (/\.{2,}\s*$/.test(sent) || /—\s*$/.test(sent)) continue;
+      // Reject verse/chapter citations (confusing out of context)
+      if (/\b\d+:\d+\b/.test(sent) || /\bchapter \d+\b/i.test(sent)) continue;
+      // Reject ACR editorial metadata
+      if (/\bACR Volume\b/i.test(sent)) continue;
+      // Reject sentences with long parentheticals (often sigla or editorial notes)
+      if (/\([^)]{10,}\)/.test(sent)) continue;
       for (var k = 0; k < terms.length; k++) {
         var tterm = terms[k].term;
         var re = new RegExp('\\b' + tterm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
@@ -3459,6 +3469,8 @@ function generateTrueFalseFromCurated(data, count) {
       var origIsCap = cand.term[0] === cand.term[0].toUpperCase() && cand.term[0] !== cand.term[0].toLowerCase();
       var others = data.key_terms.filter(function (kt) {
         if (!kt.term || kt.term.toLowerCase() === cand.term.toLowerCase()) return false;
+        if (kt.term.length > 30) return false;       // no long compound titles
+        if (/\d|\(/.test(kt.term)) return false;     // no sigla like 1QM or 4QEn
         var kc = kt.term[0] === kt.term[0].toUpperCase() && kt.term[0] !== kt.term[0].toLowerCase();
         return kc === origIsCap;
       });
