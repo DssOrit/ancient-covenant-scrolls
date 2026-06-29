@@ -10,7 +10,7 @@
 (function () {
   "use strict";
 
-  var VERSION = "load-ai-chat-v8m";
+  var VERSION = "load-ai-chat-v8n";
 
   var KEYS = {
     apiKey: "loadai_openrouter_key",
@@ -152,6 +152,39 @@
     root.setAttribute("data-textsize", get(KEYS.textSize, "medium"));
   }
 
+  var SIZE_ORDER = ["small", "medium", "large", "xlarge"];
+  var THEME_ORDER = ["dark", "light", "sepia"];
+  function cycleTextSize(dir) {
+    var cur = get(KEYS.textSize, "medium");
+    var i = SIZE_ORDER.indexOf(cur); if (i < 0) i = 1;
+    i = Math.max(0, Math.min(SIZE_ORDER.length - 1, i + dir));
+    set(KEYS.textSize, SIZE_ORDER[i]);
+    applyAppearance();
+  }
+  function cycleTheme() {
+    var cur = get(KEYS.theme, "dark");
+    var i = THEME_ORDER.indexOf(cur); if (i < 0) i = 0;
+    set(KEYS.theme, THEME_ORDER[(i + 1) % THEME_ORDER.length]);
+    applyAppearance();
+  }
+  function hardRefresh() {
+    var reload = function () { location.reload(); };
+    try {
+      var tasks = [];
+      if (window.caches && caches.keys) {
+        tasks.push(caches.keys().then(function (ks) {
+          return Promise.all(ks.map(function (k) { return caches.delete(k); }));
+        }));
+      }
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        tasks.push(navigator.serviceWorker.getRegistrations().then(function (rs) {
+          return Promise.all(rs.map(function (r) { return r.unregister(); }));
+        }));
+      }
+      Promise.all(tasks).then(reload, reload);
+    } catch (e) { reload(); }
+  }
+
   // ── screen routing ────────────────────────────────────────────
   var SCREENS = ["home", "chat", "voice", "settings"];
   function showScreen(name) {
@@ -281,13 +314,28 @@
       });
     }
 
-    // Bottom navigation.
+    // Top navigation strip.
     var navBtns = document.querySelectorAll(".bottom-nav .nav-item");
     for (var j = 0; j < navBtns.length; j++) {
       navBtns[j].addEventListener("click", function () {
         showScreen(this.getAttribute("data-screen"));
       });
     }
+
+    // Top bar: back-to-home, refresh, text size, theme, settings.
+    var topbar = document.querySelector(".ai-topbar");
+    if (topbar) topbar.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-action]");
+      if (!b) return;
+      switch (b.getAttribute("data-action")) {
+        case "home": showScreen("home"); break;
+        case "settings": showScreen("settings"); break;
+        case "refresh": hardRefresh(); break;
+        case "text-smaller": cycleTextSize(-1); break;
+        case "text-larger": cycleTextSize(1); break;
+        case "theme": cycleTheme(); break;
+      }
+    });
 
     // Enter the app: the "Get Started" hotspot over the printed button,
     // plus the whole splash artwork as a forgiving fallback so a tap can
