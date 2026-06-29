@@ -1,125 +1,313 @@
+/*
+ * Load AI — core controller.
+ * Routing, intro, splash/Enter, appearance, offline banner, the Home
+ * screen, and the shared Groq API call used by every screen.
+ *
+ * The Load AI Constitution (constitution.js) is injected as the system
+ * message in 100% of API calls via LoadAI.callGroq(). It is never
+ * omitted and never shortened.
+ */
+(function () {
+  "use strict";
 
-const BUILD = "LOAD_AI_BUILD_v7_0_0_COMPLETE_LOCAL";
-const KEY = "load.ai.director.v7";
-const VAULT = "load.ai.keys.v7";
-const featureMatrix = [{"feature": "Standalone GitHub Pages PWA", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Splash screen", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Orange black Load UI", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Large image monitor", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Large video monitor", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Chat-style directing console", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Direct/Image/Video/Scene/Edit/Sound/Handoff modes", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Midjourney-style image workflow", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "MagicLight-style script-to-video workflow", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Script paste and scene split", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Scene continuation", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Reference image upload", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Image/video/audio upload with persistent DataURL", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Asset library", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Negative prompt", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Aspect ratio controls", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Camera motion controls", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Subject motion controls", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Shot duration", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Storyboard timeline", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Move scenes up/down", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Character lock engine", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Character bible", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Style bible", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Sound direction", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Browser TTS", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Proof ledger", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Provider status hub", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Pollinations image connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Pollinations text connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Ollama local connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "ComfyUI local connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Automatic1111 connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "AI Horde connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Hugging Face connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "OpenAI connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "ElevenLabs connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Generic video endpoint connector", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "API key vault", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "No key export", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Import project JSON", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export project JSON", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export CinePWA plan", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export provider registry", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export handoff", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export HTML report", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export real ZIP package", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Export feature matrix", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Local verification tests", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Service worker", "status": "Built", "notes": "Included in app code and verification matrix"}, {"feature": "Manifest", "status": "Built", "notes": "Included in app code and verification matrix"}];
-const providerRegistry = {"rules": ["Provider status changes only after a browser call, local endpoint test, uploaded file, DataURL, URL, blob, or provider response.", "Keys are stored only in localStorage.", "Keys are never exported.", "Generated media is verified only when a file, DataURL, URL, blob, or provider response exists."], "providers": [{"id": "upload", "name": "User Uploads", "status": "built", "type": "image/video/audio"}, {"id": "browser-tts", "name": "Browser Speech", "status": "built", "type": "voice preview"}, {"id": "pollinations-image", "name": "Pollinations Image", "status": "built", "type": "image URL"}, {"id": "pollinations-text", "name": "Pollinations Text", "status": "built", "type": "text"}, {"id": "ollama", "name": "Ollama Local", "status": "built", "type": "local text"}, {"id": "comfyui", "name": "ComfyUI Local", "status": "built", "type": "local workflow test"}, {"id": "a1111", "name": "Automatic1111 Local", "status": "built", "type": "local image test"}, {"id": "aihorde", "name": "AI Horde", "status": "built", "type": "image API"}, {"id": "huggingface", "name": "Hugging Face", "status": "built", "type": "model endpoint"}, {"id": "openai", "name": "OpenAI", "status": "built", "type": "text API"}, {"id": "elevenlabs", "name": "ElevenLabs", "status": "built", "type": "TTS API"}, {"id": "generic-video", "name": "Generic Video Provider or Proxy", "status": "built", "type": "user endpoint JSON POST"}]};
-const defaults = () => ({ projectType:"loadai.director", version:"7.0.0", title:"Untitled Load AI Director Project", mode:"direct", messages:[], drafts:[], assets:[], scenes:[], characters:[], proofLedger:[], providerEvents:[], styleBible:{visualStyle:"cinematic realism", colorPalette:"black, orange, gold", negativeStyle:"no identity drift, no warped hands, no distorted faces"}, rights:{owner:"",license:"user-owned",notes:"Creator confirms rights before distribution."} });
-let state = defaults();
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-function save(){ localStorage.setItem(KEY, JSON.stringify(state)); const t=$("#projectTitleMini"); if(t)t.textContent=state.title||"Untitled"; }
-function load(){ try{ state = Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY)||"{}")); }catch(e){ state=defaults(); } }
-function download(name, content, type="text/plain"){ const blob = content instanceof Blob ? content : new Blob([content],{type}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 1000); }
-function addMsg(role,text){ state.messages.push({role,text,mode:state.mode,at:new Date().toISOString()}); save(); renderStream(); }
-function proof(source,status,detail,real=false){ const item={id:"proof_"+Date.now(),source,status,detail,real,at:new Date().toISOString()}; state.providerEvents.push(item); if(real)state.proofLedger.push(item); save(); renderProof(); renderProviders(); return item; }
-function renderStream(){ const s=$("#directorStream"); if(!s)return; s.innerHTML=""; if(!state.messages.length){ s.innerHTML='<div class="message system">Ready. Direct scenes, upload assets, connect providers, export packages, and track proof. Media is verified only after real file, DataURL, URL, blob, or provider response.</div>'; return; } state.messages.forEach(m=>{ const d=document.createElement("div"); d.className="message "+(m.role==="user"?"user":"system"); d.textContent=m.text; s.appendChild(d); }); s.scrollTop=s.scrollHeight; }
-function switchPanel(id){ $$(".panel").forEach(p=>p.classList.remove("active-panel")); $$(".nav-chip").forEach(c=>c.classList.remove("active")); $("#"+id)?.classList.add("active-panel"); document.querySelector(`[data-panel="${id}"]`)?.classList.add("active"); }
-function updateMode(){ $$(".mode-pill").forEach(b=>b.classList.toggle("active", b.dataset.mode===state.mode)); const l=$("#activeModeLabel"); if(l)l.textContent=state.mode[0].toUpperCase()+state.mode.slice(1); save(); }
-function template(){ const t={direct:"Direct this as a cinematic scene with subject, location, camera, light, motion, sound, continuity locks, and negative prompt.",image:"Create a premium cinematic image prompt with subject clarity, lens, lighting, composition, color palette, reference image use, and negative prompt.",video:"Create a video direction plan with camera movement, subject motion, environment motion, pacing, duration, aspect ratio, audio, and scene continuation rules.",scene:"Create a complete scene card with title, location, mood, characters, camera, lighting, motion, sound, continuity notes, and export status.",edit:"Create an edit request. Preserve identity, face, wardrobe, pose, and style unless explicitly changed. Change only the requested element.",sound:"Create layered sound direction: ambience, SFX, music cue, silence beat, voice mood, environment, and export status.",handoff:"Create a developer handoff with goal, files changed, UI behavior, tests, PASS/FAIL, rollback, and no false positives."}; $("#directorInput").value=t[state.mode]||t.direct; }
-function continueScene(){ $("#directorInput").value="Continue the previous scene with the same character identity, same wardrobe, same location logic, same lighting direction, same emotional tone, and only change the action. Add camera movement, environmental motion, sound direction, duration, and negative prompt against identity drift."; state.mode="video"; updateMode(); }
-function structuredPrompt(text){ return `DIRECTOR PROMPT
+  var VERSION = "load-ai-chat-v8a";
 
-Mode: ${state.mode}
+  var KEYS = {
+    apiKey: "loadai_groq_key",
+    history: "loadai_history",
+    model: "loadai_model",
+    font: "loadai_font",
+    theme: "loadai_theme",
+    textSize: "loadai_textsize",
+    lang: "loadai_lang"
+  };
 
-Core request:
-${text}
+  // Groq chat models. All of these are available on Groq's free tier.
+  // Default is a current, working model (the originally-specified
+  // llama-3.1-70b-versatile was decommissioned by Groq).
+  var MODELS = [
+    { id: "llama-3.3-70b-versatile", label: "Llama 3.3 70B Versatile (free)" },
+    { id: "llama-3.1-8b-instant", label: "Llama 3.1 8B Instant (free, fast)" },
+    { id: "llama3-70b-8192", label: "Llama 3 70B (free)" },
+    { id: "llama3-8b-8192", label: "Llama 3 8B (free, fast)" },
+    { id: "gemma2-9b-it", label: "Gemma 2 9B (free)" }
+  ];
+  var DEFAULT_MODEL = "llama-3.3-70b-versatile";
 
-Image controls:
-Subject, action, setting, mood, lens, lighting, color palette, composition, reference image use, negative prompt.
+  // Shared language list (Voice screen + Settings). bcp47 drives both
+  // SpeechRecognition and SpeechSynthesis.
+  var LANGS = [
+    { code: "en", label: "English", bcp47: "en-US" },
+    { code: "es", label: "Spanish", bcp47: "es-ES" },
+    { code: "fr", label: "French", bcp47: "fr-FR" },
+    { code: "ar", label: "Arabic", bcp47: "ar-SA" },
+    { code: "am", label: "Amharic", bcp47: "am-ET" },
+    { code: "yo", label: "Yoruba", bcp47: "yo-NG" },
+    { code: "ha", label: "Hausa", bcp47: "ha-NG" },
+    { code: "sw", label: "Swahili", bcp47: "sw-KE" },
+    { code: "hi", label: "Hindi", bcp47: "hi-IN" },
+    { code: "ht", label: "Creole", bcp47: "ht-HT" },
+    { code: "pt", label: "Portuguese", bcp47: "pt-BR" }
+  ];
 
-Negative prompt:
-${$("#negativePromptInput")?.value || "no identity drift, no warped hands, no distorted faces, no unreadable text"}
+  var ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 
-Video controls:
-Camera motion: ${$("#cameraMotion")?.value || "not set"}
-Subject motion: ${$("#subjectMotion")?.value || "not set"}
-Duration: ${$("#shotDuration")?.value || "not set"}
-Aspect ratio: ${$("#aspectRatio")?.value || "not set"}
+  // ── storage helpers ───────────────────────────────────────────
+  function get(key, fallback) {
+    try {
+      var v = localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) {
+      return fallback;
+    }
+  }
+  function set(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
+  function remove(key) {
+    try { localStorage.removeItem(key); } catch (e) {}
+  }
 
-Continuity locks:
-Face: ${$("#faceLock")?.checked ? "locked" : "open"}
-Hair: ${$("#hairLock")?.checked ? "locked" : "open"}
-Wardrobe: ${$("#wardrobeLock")?.checked ? "locked" : "open"}
-Age: ${$("#ageLock")?.checked ? "locked" : "open"}
-Body: ${$("#bodyLock")?.checked ? "locked" : "open"}
-Location: ${$("#locationLock")?.checked ? "locked" : "open"}
+  function getHistory() {
+    try {
+      var raw = localStorage.getItem(KEYS.history);
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function setHistory(arr) {
+    try { localStorage.setItem(KEYS.history, JSON.stringify(arr || [])); } catch (e) {}
+  }
+  function pushTurn(role, content) {
+    var h = getHistory();
+    h.push({ role: role, content: content, t: Date.now() });
+    setHistory(h);
+    return h;
+  }
 
-Sound direction:
-${$("#soundPromptInput")?.value || "No sound direction yet."}
+  function getApiKey() { return get(KEYS.apiKey, ""); }
+  function getModel() { return get(KEYS.model, DEFAULT_MODEL); }
+  function getLang() {
+    var code = get(KEYS.lang, "en");
+    for (var i = 0; i < LANGS.length; i++) { if (LANGS[i].code === code) return LANGS[i]; }
+    return LANGS[0];
+  }
 
-Proof rule:
-Draft only until a real file, DataURL, URL, blob, or provider response exists.`; }
-function updateMonitors(text){ if($("#imagePromptText"))$("#imagePromptText").textContent=text||"Image prompt preview appears here."; if($("#videoPromptText"))$("#videoPromptText").textContent=text||"Video prompt preview appears here."; if($("#imagePromptStatus"))$("#imagePromptStatus").textContent=text?"Ready for review":"Draft"; }
-function readFile(file,kind){ return new Promise((resolve,reject)=>{ const r=new FileReader(); r.onerror=()=>reject(r.error); r.onload=()=>resolve({id:"asset_"+Date.now(),name:file.name,type:file.type,size:file.size,kind,dataUrl:r.result,proof:"real uploaded file DataURL"}); r.readAsDataURL(file); }); }
-async function handleUpload(file,kind){ if(!file)return; const asset=await readFile(file,kind); state.assets.push(asset); proof("User Uploads","Real file returned",file.name,true); if(kind==="image"){ $("#referenceStatus").textContent=file.name; $("#imageProofStatus").textContent="Uploaded file verified"; $("#imageStage").innerHTML=`<img class="generated-preview" src="${asset.dataUrl}" alt=""><p>${$("#directorInput").value||"Reference image uploaded."}</p>`; } save(); renderAssets(); addMsg("system",`${kind} uploaded and saved: ${file.name}`); }
-function renderAssets(){ const w=$("#assetLibrary"); if(!w)return; w.innerHTML=""; if(!state.assets.length){ w.innerHTML='<article class="asset-card"><strong>No assets uploaded yet.</strong><p>Use Upload Image, Upload Video, or Upload Audio.</p></article>'; return; } state.assets.forEach(a=>{ const el=document.createElement("article"); el.className="asset-card"; const src=a.dataUrl||a.url||""; let media=""; if((a.type||"").startsWith("image/")||a.kind==="image")media=`<img class="asset-thumb" src="${src}" alt="">`; if((a.type||"").startsWith("video/")||a.kind==="video")media=`<video class="asset-thumb" src="${src}" controls></video>`; if((a.type||"").startsWith("audio/")||a.kind==="audio")media=`<audio src="${src}" controls></audio>`; el.innerHTML=`<strong>${a.name}</strong>${media}<p>${a.type||"remote"} · ${a.proof}</p>`; w.appendChild(el); }); }
-function addScene(kind="Scene"){ const text=$("#directorInput").value.trim()||"New scene direction draft."; const scene={id:"scene_"+String(state.scenes.length+1).padStart(3,"0"),type:kind,title:`${kind} ${state.scenes.length+1}`,prompt:text,duration:$("#shotDuration")?.value||"8 seconds",status:"draft",proof:"Draft only"}; state.scenes.push(scene); save(); renderTimeline(); }
-function renderTimeline(){ const w=$("#timelineList"); if(!w)return; w.innerHTML=""; if(!state.scenes.length){ w.innerHTML='<article class="timeline-card"><strong>No scenes yet.</strong><p>Add a scene or shot to begin.</p></article>'; return; } state.scenes.forEach((s,i)=>{ const el=document.createElement("article"); el.className="timeline-card"; el.innerHTML=`<strong>${s.title}</strong><p>${s.prompt}</p><small>${s.duration} · ${s.status}</small><br><button class="mini-button" data-up="${i}">Move Up</button> <button class="mini-button" data-down="${i}">Move Down</button>`; w.appendChild(el); }); }
-function breakScript(){ const raw=$("#scriptInput").value.trim(); if(!raw)return; const chunks=raw.split(/\n\s*\n|(?<=\.)\s+(?=[A-Z])/).filter(Boolean).slice(0,12); chunks.forEach((c,i)=>state.scenes.push({id:"scene_"+String(state.scenes.length+1).padStart(3,"0"),type:"Scene",title:"Script Scene "+(i+1),prompt:`${$("#scriptStyle").value}: ${c.trim()}`,duration:$("#scriptLength").value,status:"draft",proof:"Draft only"})); save(); renderTimeline(); switchPanel("timelinePanel"); }
-function scriptToPrompt(){ const raw=$("#scriptInput").value.trim(); if(!raw)return; $("#directorInput").value=`Turn this script into a cinematic video sequence with scene continuity, camera movement, character consistency, sound direction, and export-ready shot cards:\n\n${raw}`; switchPanel("directorPanel"); }
-function renderProviders(){ const w=$("#providerStatusList"); if(!w)return; w.innerHTML=""; providerRegistry.providers.forEach(p=>{ const last=[...state.providerEvents].reverse().find(e=>e.source===p.name||e.source===p.id); const el=document.createElement("article"); el.className="provider-card"; el.innerHTML=`<strong>${p.name}</strong><p>${p.type}</p><p>Status: ${last?last.status:p.status}</p><small>${last?last.detail:"No test run yet"}</small>`; w.appendChild(el); }); }
-function renderProof(){ const w=$("#proofList"); if(!w)return; w.innerHTML=""; if(!state.proofLedger.length){ w.innerHTML='<article class="proof-card"><strong>Draft only.</strong><p>No verified media or provider output yet.</p></article>'; return; } state.proofLedger.forEach(p=>{ const el=document.createElement("article"); el.className="proof-card"; el.innerHTML=`<strong>${p.status}</strong><p>${p.source}: ${p.detail}</p><small>${p.at}</small>`; w.appendChild(el); }); }
-function renderMatrix(){ const w=$("#matrixList"); if(!w)return; w.innerHTML=""; featureMatrix.forEach(m=>{ const el=document.createElement("article"); el.className="matrix-card"; el.innerHTML=`<strong>${m.feature}</strong><p>${m.status}</p><small>${m.notes}</small>`; w.appendChild(el); }); }
-function speak(text){ if(!("speechSynthesis" in window)){ proof("Browser Speech","Failed","Speech unavailable",false); return; } speechSynthesis.speak(new SpeechSynthesisUtterance(text||$("#directorInput").value||"Load AI Director Studio")); proof("Browser Speech","Provider attempted","Speech started",true); }
-async function runPollinationsImage(){ const prompt=($("#directorInput").value||"cinematic orange black AI director studio").trim(); const url=`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=576&nologo=true&safe=true&seed=${Date.now()}`; state.assets.push({id:"asset_"+Date.now(),name:"Pollinations image URL",type:"image/url",kind:"image",url,proof:"real remote image URL"}); $("#imageStage").innerHTML=`<img class="generated-preview" src="${url}" alt=""><p>${prompt}</p>`; $("#imageProofStatus").textContent="Remote image URL returned"; proof("Pollinations Image","Real URL returned",url,true); renderAssets(); switchPanel("imagePanel"); }
-async function runPollinationsText(){ try{ const prompt=($("#directorInput").value||"write a cinematic prompt").trim(); const res=await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`); if(!res.ok)throw new Error("HTTP "+res.status); const txt=await res.text(); addMsg("system","Pollinations text response:\n\n"+txt.slice(0,4000)); proof("Pollinations Text","Provider response returned","Text length "+txt.length,true); }catch(e){ addMsg("system","Pollinations text failed honestly: "+e.message); proof("Pollinations Text","Failed",e.message,false); } }
-async function testOllama(generate=false){ const base=$("#ollamaBase").value.replace(/\/$/,""); const model=$("#ollamaModel").value||"llama3.2"; try{ const res=await fetch(base+"/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model,prompt:$("#directorInput").value||"Say connected.",stream:false})}); if(!res.ok)throw new Error("HTTP "+res.status); const json=await res.json(); proof("Ollama Local",generate?"Provider response returned":"READY test succeeded",(json.response||"Connected").slice(0,300),true); if(generate)addMsg("system","Ollama response:\n\n"+(json.response||"")); }catch(e){ proof("Ollama Local","Failed",e.message,false); addMsg("system","Ollama failed honestly: "+e.message); } }
-async function testComfy(){ try{ const res=await fetch($("#comfyBase").value.replace(/\/$/,"")+"/system_stats"); if(!res.ok)throw new Error("HTTP "+res.status); await res.json(); proof("ComfyUI Local","READY test succeeded","system_stats returned",true); }catch(e){ proof("ComfyUI Local","Failed",e.message,false); addMsg("system","ComfyUI failed honestly: "+e.message); } }
-async function testA1111(){ try{ const res=await fetch($("#a1111Base").value.replace(/\/$/,"")+"/sdapi/v1/options"); if(!res.ok)throw new Error("HTTP "+res.status); await res.json(); proof("Automatic1111 Local","READY test succeeded","options returned",true); }catch(e){ proof("Automatic1111 Local","Failed",e.message,false); addMsg("system","Automatic1111 failed honestly: "+e.message); } }
-async function runAIHorde(){ try{ const body={prompt:$("#directorInput").value||"cinematic image",params:{width:512,height:512,steps:20},nsfw:false,censor_nsfw:true,models:["stable_diffusion"]}; const res=await fetch("https://stablehorde.net/api/v2/generate/async",{method:"POST",headers:{"Content-Type":"application/json","apikey":$("#aihordeKey").value||"0000000000"},body:JSON.stringify(body)}); if(!res.ok)throw new Error("HTTP "+res.status); const json=await res.json(); proof("AI Horde","Provider job submitted",JSON.stringify(json),true); addMsg("system","AI Horde job submitted:\n"+JSON.stringify(json,null,2)); }catch(e){ proof("AI Horde","Failed",e.message,false); addMsg("system","AI Horde failed honestly: "+e.message); } }
-async function runHF(){ try{ const token=$("#hfToken").value; if(!token)throw new Error("Missing Hugging Face token"); const model=$("#hfModel").value; const res=await fetch(`https://api-inference.huggingface.co/models/${model}`,{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({inputs:$("#directorInput").value||"cinematic image"})}); if(!res.ok)throw new Error("HTTP "+res.status); const blob=await res.blob(); const url=URL.createObjectURL(blob); state.assets.push({id:"asset_"+Date.now(),name:"Hugging Face response blob",type:blob.type,kind:"provider",url,proof:"real provider blob"}); proof("Hugging Face","Provider response returned",blob.type||"blob",true); renderAssets(); }catch(e){ proof("Hugging Face","Failed",e.message,false); addMsg("system","Hugging Face failed honestly: "+e.message); } }
-async function runOpenAI(){ try{ const key=$("#openaiKey").value; if(!key)throw new Error("Missing OpenAI key"); const res=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({model:$("#openaiModel").value||"gpt-4o-mini",messages:[{role:"user",content:$("#directorInput").value||"Create a director prompt."}]})}); if(!res.ok)throw new Error("HTTP "+res.status); const json=await res.json(); const txt=json.choices?.[0]?.message?.content||JSON.stringify(json); proof("OpenAI","Provider response returned","Text length "+txt.length,true); addMsg("system","OpenAI response:\n\n"+txt); }catch(e){ proof("OpenAI","Failed",e.message,false); addMsg("system","OpenAI failed honestly: "+e.message); } }
-async function runEleven(){ try{ const key=$("#elevenKey").value, voice=$("#elevenVoice").value; if(!key||!voice)throw new Error("Missing key or voice ID"); const res=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voice}`,{method:"POST",headers:{"xi-api-key":key,"Content-Type":"application/json"},body:JSON.stringify({text:$("#soundPromptInput").value||$("#directorInput").value||"Load AI Director Studio",model_id:"eleven_multilingual_v2"})}); if(!res.ok)throw new Error("HTTP "+res.status); const blob=await res.blob(); const url=URL.createObjectURL(blob); state.assets.push({id:"asset_"+Date.now(),name:"ElevenLabs audio",type:"audio/mpeg",kind:"audio",url,proof:"real provider audio blob"}); proof("ElevenLabs","Provider audio returned","audio blob",true); renderAssets(); }catch(e){ proof("ElevenLabs","Failed",e.message,false); addMsg("system","ElevenLabs failed honestly: "+e.message); } }
-async function runGenericVideo(){ try{ const endpoint=$("#videoEndpoint").value; if(!endpoint)throw new Error("Missing endpoint"); const headers={"Content-Type":"application/json"}; if($("#videoKey").value)headers["Authorization"]="Bearer "+$("#videoKey").value; const res=await fetch(endpoint,{method:"POST",headers,body:JSON.stringify({prompt:$("#directorInput").value,video:$("#videoPromptText").textContent,aspect:$("#aspectRatio").value,duration:$("#shotDuration").value})}); if(!res.ok)throw new Error("HTTP "+res.status); const txt=await res.text(); proof("Generic Video Provider","Provider response returned",txt.slice(0,300),true); addMsg("system","Generic video provider response:\n"+txt.slice(0,2000)); }catch(e){ proof("Generic Video Provider","Failed",e.message,false); addMsg("system","Generic video failed honestly: "+e.message); } }
-function saveKeys(){ const keys={aihorde:$("#aihordeKey").value,hf:$("#hfToken").value,openai:$("#openaiKey").value,eleven:$("#elevenKey").value,video:$("#videoKey").value}; localStorage.setItem("load.ai.keys.v7",JSON.stringify(keys)); proof("Key Vault","Saved locally","Keys saved in localStorage only",false); }
-function loadKeys(){ try{ const k=JSON.parse(localStorage.getItem("load.ai.keys.v7")||"{}"); if(k.aihorde)$("#aihordeKey").value=k.aihorde; if(k.hf)$("#hfToken").value=k.hf; if(k.openai)$("#openaiKey").value=k.openai; if(k.eleven)$("#elevenKey").value=k.eleven; if(k.video)$("#videoKey").value=k.video; }catch(e){} }
-function clearKeys(){ localStorage.removeItem("load.ai.keys.v7"); ["aihordeKey","hfToken","openaiKey","elevenKey","videoKey"].forEach(id=>{ if($("#"+id))$("#"+id).value=""; }); proof("Key Vault","Cleared","Local keys removed",false); }
-function cinepwa(){ return {projectType:"loadstudio.cinepwa",source:"Load AI Director Studio",title:state.title,scenes:state.scenes,characters:state.characters,rights:state.rights,styleBible:state.styleBible,assets:state.assets.map(a=>({id:a.id,name:a.name,type:a.type,kind:a.kind,proof:a.proof})),proofLedger:state.proofLedger,providerEvents:state.providerEvents}; }
-function packageData(){ return {build:BUILD,project:state,cinepwa:cinepwa(),featureMatrix,providerRegistry,exportedAt:new Date().toISOString()}; }
-function handoff(){ return `LOAD AI DIRECTOR STUDIO
+  // ── Groq API call ─────────────────────────────────────────────
+  // history: array of { role:'user'|'assistant', content:string }.
+  // The constitution is ALWAYS prepended as the system message.
+  function callGroq(history) {
+    var key = getApiKey();
+    if (!key) {
+      return Promise.reject(new Error("No API key. Open Settings and paste your Groq API key."));
+    }
+    if (typeof window.LOAD_AI_CONSTITUTION !== "string" || !window.LOAD_AI_CONSTITUTION) {
+      return Promise.reject(new Error("Constitution failed to load. Reload the app."));
+    }
+    var messages = [{ role: "system", content: window.LOAD_AI_CONSTITUTION }];
+    (history || []).forEach(function (m) {
+      if (m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string") {
+        messages.push({ role: m.role, content: m.content });
+      }
+    });
+    var body = {
+      model: getModel(),
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 2048,
+      stream: false
+    };
+    return fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + key,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.text().then(function (text) {
+        var data = null;
+        try { data = text ? JSON.parse(text) : null; } catch (e) {}
+        if (!res.ok) {
+          var msg = (data && data.error && data.error.message) ? data.error.message : ("Request failed (" + res.status + ")");
+          throw new Error(msg);
+        }
+        if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+          throw new Error("Empty response from Load AI.");
+        }
+        return data.choices[0].message.content || "";
+      });
+    });
+  }
 
-Build: ${BUILD}
+  // ── appearance (theme / font / text size) ─────────────────────
+  function applyAppearance() {
+    var root = document.documentElement;
+    root.setAttribute("data-theme", get(KEYS.theme, "dark"));
+    root.setAttribute("data-font", get(KEYS.font, "standard"));
+    root.setAttribute("data-textsize", get(KEYS.textSize, "medium"));
+  }
 
-Included:
-Every locked feature/function is implemented as working app code or a live-testable connector.
+  // ── screen routing ────────────────────────────────────────────
+  var SCREENS = ["home", "chat", "voice", "settings"];
+  function showScreen(name) {
+    if (SCREENS.indexOf(name) === -1) name = "home";
+    SCREENS.forEach(function (s) {
+      var el = document.getElementById("screen-" + s);
+      if (el) {
+        var on = (s === name);
+        el.hidden = !on;
+        el.classList.toggle("screen-active", on);
+      }
+    });
+    var navBtns = document.querySelectorAll(".bottom-nav .nav-item");
+    for (var i = 0; i < navBtns.length; i++) {
+      var active = navBtns[i].getAttribute("data-screen") === name;
+      navBtns[i].classList.toggle("active", active);
+      navBtns[i].setAttribute("aria-current", active ? "page" : "false");
+    }
+    if (name === "home" && LoadAI.home) LoadAI.home.refresh();
+    if (name === "chat" && LoadAI.chat) LoadAI.chat.onShow();
+    if (name === "voice" && LoadAI.voice) LoadAI.voice.onShow();
+    if (name === "settings" && LoadAI.settings) LoadAI.settings.onShow();
+    var shell = document.getElementById("appShell");
+    if (shell) shell.scrollTop = 0;
+  }
 
-Truth rule:
-No media is verified without a real file, DataURL, URL, blob, or provider response.
+  // ── enter the app (from splash) ───────────────────────────────
+  function enterApp() {
+    var splash = document.getElementById("splashScreen");
+    var shell = document.getElementById("appShell");
+    if (splash) splash.hidden = true;
+    if (shell) shell.hidden = false;
+    showScreen("home");
+  }
 
-Provider note:
-External providers require valid keys, account access, browser CORS permission, proxy endpoints, or local engines running.`; }
-function htmlReport(){ return `<!doctype html><html><head><meta charset="utf-8"><title>Load AI Report</title></head><body><h1>Load AI Director Studio Report</h1><pre>${JSON.stringify(packageData(),null,2).replaceAll("<","&lt;")}</pre></body></html>`; }
-function makeZip(files){ const enc=new TextEncoder(); const crcTable=Array.from({length:256},(_,n)=>{let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;return c>>>0;}); function crc32(str){let crc=-1; for(let i=0;i<str.length;i++)crc=(crc>>>8)^crcTable[(crc^str.charCodeAt(i))&255]; return (crc^(-1))>>>0;} const u16=n=>[n&255,(n>>8)&255]; const u32=n=>[n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255]; let local=[], central=[], offset=0; for(const [name,content] of Object.entries(files)){ const data=enc.encode(content); const nameBytes=enc.encode(name); const crc=crc32(content); const head=[...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(data.length),...u32(data.length),...u16(nameBytes.length),...u16(0),...nameBytes]; local.push(new Uint8Array([...head,...data])); central.push({nameBytes,crc,size:data.length,offset}); offset+=head.length+data.length; } const centralOffset=offset; let centralParts=[]; for(const c of central){ const h=[...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),...u32(c.crc),...u32(c.size),...u32(c.size),...u16(c.nameBytes.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(c.offset),...c.nameBytes]; centralParts.push(new Uint8Array(h)); offset+=h.length; } const centralSize=offset-centralOffset; const end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(central.length),...u16(central.length),...u32(centralSize),...u32(centralOffset),...u16(0)]); return new Blob([...local,...centralParts,end],{type:"application/zip"}); }
-function exportZip(){ const data=packageData(); const files={"project.json":JSON.stringify(state,null,2),"cinepwa-plan.json":JSON.stringify(cinepwa(),null,2),"feature-matrix.json":JSON.stringify(featureMatrix,null,2),"provider-registry.json":JSON.stringify(providerRegistry,null,2),"proof-ledger.json":JSON.stringify(state.proofLedger,null,2),"handoff.txt":handoff(),"report.html":htmlReport()}; download("Load_AI_Director_Studio_Package.zip",makeZip(files)); }
-function renderMatrix(){ const w=$("#matrixList"); if(!w)return; w.innerHTML=""; featureMatrix.forEach(m=>{ const el=document.createElement("article"); el.className="matrix-card"; el.innerHTML=`<strong>${m.feature}</strong><p>${m.status}</p><small>${m.notes}</small>`; w.appendChild(el); }); }
-function runTests(){ const tests=[["Director input",!!$("#directorInput")],["Provider hub",!!$("#providerPanel")],["Image monitor",!!$("#imagePanel")],["Video monitor",!!$("#videoPanel")],["Script panel",!!$("#scriptPanel")],["Upload image",!!$("#imageUpload")],["Upload video",!!$("#videoUpload")],["Upload audio",!!$("#audioUpload")],["Import JSON",!!$("#projectImport")],["Export package",!!$("#exportPackageBtn")],["Feature matrix",featureMatrix.length>=50],["Provider registry",providerRegistry.providers.length>=10],["Proof ledger",Array.isArray(state.proofLedger)],["Local storage",!!window.localStorage]]; $("#testResults").innerHTML=tests.map(t=>`<article class="test-card"><strong class="${t[1]?"pass":"fail"}">${t[1]?"PASS":"FAIL"}</strong><p>${t[0]}</p></article>`).join(""); return tests; }
-function renderAll(){ updateMode(); renderStream(); renderAssets(); renderProviders(); renderProof(); renderTimeline(); renderMatrix(); loadKeys(); runTests(); }
-function init(){
-load();
-const _dismissSplash=()=>{$("#splashScreen").style.display="none";$("#appShell").hidden=false;};$("#enterAppBtn").onclick=_dismissSplash;const _altBtn=document.getElementById("enterAppBtnAlt");if(_altBtn)_altBtn.onclick=_dismissSplash;
-$("#backToSplashBtn").onclick=()=>{$("#appShell").hidden=true;$("#splashScreen").style.display="flex";};
-$("#hardRefreshBtn").onclick=()=>location.reload();
-$$(".nav-chip").forEach(b=>b.onclick=()=>switchPanel(b.dataset.panel));
-$$(".mode-pill").forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;updateMode();});
-$("#templateBtn").onclick=template; $("#continueSceneBtn").onclick=continueScene;
-$("#copyDirectorBtn").onclick=()=>navigator.clipboard.writeText($("#directorInput").value||"");
-$("#speakBtn").onclick=()=>speak($("#directorInput").value); $("#runBrowserTtsBtn").onclick=()=>speak($("#directorInput").value); $("#previewSpeechBtn").onclick=()=>speak($("#soundPromptInput").value);
-$("#directorForm").onsubmit=e=>{e.preventDefault(); const t=$("#directorInput").value.trim(); if(!t)return; addMsg("user",t); const out=structuredPrompt(t); addMsg("system",out); updateMonitors(out); if(["scene","video"].includes(state.mode))addScene(state.mode==="video"?"Shot":"Scene");};
-$("#saveDraftBtn").onclick=()=>{const t=$("#directorInput").value.trim(); if(!t)return; state.drafts.push({mode:state.mode,text:t,at:new Date().toISOString()}); save(); addMsg("system","Draft saved.");};
-$("#saveProjectBtn").onclick=()=>{save();addMsg("system","Project saved locally.");};
-$("#newProjectBtn").onclick=()=>{state=defaults();save();renderAll();addMsg("system","New project started.");};
-$("#imageUpload").onchange=e=>handleUpload(e.target.files[0],"image"); $("#videoUpload").onchange=e=>handleUpload(e.target.files[0],"video"); $("#audioUpload").onchange=e=>handleUpload(e.target.files[0],"audio");
-$("#runPollinationsImageBtn").onclick=runPollinationsImage; $("#runPollinationsTextBtn").onclick=runPollinationsText; $("#testOllamaBtn").onclick=()=>testOllama(false); $("#runOllamaBtn").onclick=()=>testOllama(true); $("#testComfyBtn").onclick=testComfy; $("#testA1111Btn").onclick=testA1111; $("#runAIHordeBtn").onclick=runAIHorde; $("#runHFBtn").onclick=runHF; $("#runOpenAIBtn").onclick=runOpenAI; $("#runElevenBtn").onclick=runEleven; $("#runGenericVideoBtn").onclick=runGenericVideo; $("#saveKeysBtn").onclick=saveKeys; $("#clearKeysBtn").onclick=clearKeys;
-$("#applyVideoControlsBtn").onclick=()=>{const t=structuredPrompt($("#directorInput").value||"Video plan"); updateMonitors(t); addMsg("system","Video direction applied.");};
-$("#breakScriptBtn").onclick=breakScript; $("#scriptToPromptBtn").onclick=scriptToPrompt;
-$("#addCharacterBtn").onclick=()=>{state.characters.push({id:"character_"+Date.now(),bible:$("#characterBibleInput").value||"New character bible",style:$("#styleBibleInput").value||"",locks:{face:$("#faceLock").checked,hair:$("#hairLock").checked,wardrobe:$("#wardrobeLock").checked,age:$("#ageLock").checked,body:$("#bodyLock").checked,location:$("#locationLock").checked}}); save(); addMsg("system","Character lock saved.");};
-$("#addSceneBtn").onclick=()=>addScene("Scene"); $("#addShotBtn").onclick=()=>addScene("Shot");
-$("#timelineList").onclick=e=>{let up=e.target.dataset.up,down=e.target.dataset.down;if(up){let i=+up;if(i>0){[state.scenes[i-1],state.scenes[i]]=[state.scenes[i],state.scenes[i-1]];save();renderTimeline();}} if(down){let i=+down;if(i<state.scenes.length-1){[state.scenes[i+1],state.scenes[i]]=[state.scenes[i],state.scenes[i+1]];save();renderTimeline();}}};
-$("#addProofBtn").onclick=()=>{state.proofLedger.push({id:"proof_"+Date.now(),source:"Manual",status:"Draft only",detail:"Manual entry",real:false,at:new Date().toISOString()});save();renderProof();};
-$("#projectImport").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);state=Object.assign(defaults(),data.project||data);save();renderAll();addMsg("system","Project imported.");}catch(err){alert("Import failed. JSON invalid.");}};r.readAsText(f);};
-$("#exportProjectJsonBtn").onclick=()=>download("load-ai-director-project.json",JSON.stringify(state,null,2),"application/json"); $("#exportPackageBtn").onclick=exportZip; $("#exportCinePwaBtn").onclick=()=>download("load-ai-cinepwa-plan.json",JSON.stringify(cinepwa(),null,2),"application/json"); $("#exportHtmlReportBtn").onclick=()=>download("load-ai-report.html",htmlReport(),"text/html"); $("#exportHandoffBtn").onclick=()=>download("load-ai-handoff.txt",handoff()); $("#exportProvidersBtn").onclick=()=>download("load-ai-provider-registry.json",JSON.stringify(providerRegistry,null,2),"application/json"); $("#downloadMatrixBtn").onclick=()=>download("load-ai-feature-matrix.json",JSON.stringify(featureMatrix,null,2),"application/json"); $("#downloadImagePromptBtn").onclick=()=>download("load-ai-image-prompt.txt",$("#imagePromptText").textContent); $("#downloadVideoPlanBtn").onclick=()=>download("load-ai-video-plan.txt",$("#videoPromptText").textContent); $("#downloadSoundPlanBtn").onclick=()=>download("load-ai-sound-plan.txt",$("#soundPromptInput").value||""); $("#clearAssetsBtn").onclick=()=>{state.assets=[];save();renderAssets();}; $("#runTestsBtn").onclick=runTests;
-renderAll();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-}
-document.addEventListener("DOMContentLoaded", init);
+  // ── intro (auto-playing, Load Play style, Load AI colors) ─────
+  function runIntro() {
+    var intro = document.getElementById("introScreen");
+    if (!intro) return;
+    var reduce = false;
+    try { reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    var hold = reduce ? 350 : 2200;
+    window.setTimeout(function () {
+      intro.classList.add("gone");
+      window.setTimeout(function () { intro.hidden = true; }, 500);
+    }, hold);
+  }
+
+  // ── offline banner ────────────────────────────────────────────
+  function wireOffline() {
+    var banner = document.getElementById("offlineBanner");
+    if (!banner) return;
+    function sync() {
+      var off = !navigator.onLine;
+      banner.hidden = !off;
+    }
+    window.addEventListener("online", sync);
+    window.addEventListener("offline", sync);
+    sync();
+  }
+
+  // ── Home screen ───────────────────────────────────────────────
+  var Home = {
+    refresh: function () {
+      var list = document.getElementById("recentList");
+      var empty = document.getElementById("recentEmpty");
+      if (!list) return;
+      var history = getHistory();
+      // Show the most recent user turns as conversation entry points.
+      var users = history.filter(function (m) { return m.role === "user"; });
+      list.innerHTML = "";
+      if (!users.length) {
+        if (empty) empty.hidden = false;
+        return;
+      }
+      if (empty) empty.hidden = true;
+      users.slice(-6).reverse().forEach(function (m) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "recent-item";
+        var preview = (m.content || "").replace(/\s+/g, " ").trim();
+        if (preview.length > 80) preview = preview.slice(0, 80) + "…";
+        btn.textContent = preview || "Conversation";
+        btn.setAttribute("aria-label", "Open conversation: " + preview);
+        btn.addEventListener("click", function () { showScreen("chat"); });
+        list.appendChild(btn);
+      });
+    }
+  };
+
+  // ── public namespace ──────────────────────────────────────────
+  window.LoadAI = {
+    VERSION: VERSION,
+    KEYS: KEYS,
+    MODELS: MODELS,
+    DEFAULT_MODEL: DEFAULT_MODEL,
+    LANGS: LANGS,
+    get: get,
+    set: set,
+    remove: remove,
+    getHistory: getHistory,
+    setHistory: setHistory,
+    pushTurn: pushTurn,
+    getApiKey: getApiKey,
+    getModel: getModel,
+    getLang: getLang,
+    callGroq: callGroq,
+    applyAppearance: applyAppearance,
+    showScreen: showScreen,
+    home: Home
+    // .chat / .voice / .settings are attached by their own files.
+  };
+
+  // ── boot ──────────────────────────────────────────────────────
+  function boot() {
+    applyAppearance();
+    runIntro();
+    wireOffline();
+
+    // Quick-start mode buttons (Write / Research / Create / Chat).
+    var modeBtns = document.querySelectorAll(".quick-mode");
+    for (var i = 0; i < modeBtns.length; i++) {
+      modeBtns[i].addEventListener("click", function () {
+        var mode = this.getAttribute("data-mode");
+        showScreen("chat");
+        if (LoadAI.chat && LoadAI.chat.primeMode) LoadAI.chat.primeMode(mode);
+      });
+    }
+
+    // Bottom navigation.
+    var navBtns = document.querySelectorAll(".bottom-nav .nav-item");
+    for (var j = 0; j < navBtns.length; j++) {
+      navBtns[j].addEventListener("click", function () {
+        showScreen(this.getAttribute("data-screen"));
+      });
+    }
+
+    // Enter buttons on the existing splash (unchanged markup/ids).
+    ["enterAppBtn", "enterAppBtnAlt"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener("click", enterApp);
+    });
+
+    if (LoadAI.chat && LoadAI.chat.init) LoadAI.chat.init();
+    if (LoadAI.voice && LoadAI.voice.init) LoadAI.voice.init();
+    if (LoadAI.settings && LoadAI.settings.init) LoadAI.settings.init();
+
+    // Service worker (offline shell).
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
