@@ -31,6 +31,28 @@ export, and user experience.
 
 The product is **Load AI Chat Studio** + **Load Creation Engine**.
 
+### Update 2026-06-29 — Load AI / Load Studio split clarified
+
+The `LoadAI/` app (loadeco.app/LoadAI) is now the **Load AI Chat
+Studio** surface: a ChatGPT-style chat app (Home / Chat / Voice /
+Settings) behind the Enter button, with an auto intro, the equity
+Constitution injected on every call, and an OpenRouter backend
+(user-selectable free models). Shipped on branch
+`claude/load-ai-chat-app-81ll0c`.
+
+The previous `LoadAI/` build was the image/video **Director Studio**
+(per `PLAN_LOAD_AI.md`). It is NOT lost — preserved on branch
+`backup/2026-06-29-loadai-studio-v7-1-0`. Its planned image/video/
+character/provider features are the **Load Creation Engine** and remain
+owned by the existing rows below: **X-AI-CHAT-STUDIO** (chat-driven
+generation inside `/loadstudio/`), **X-STUDIO-AI** (scene builder),
+**X-VIDEO-AI**, **X-AI-AUDIO**, **X-CC** (character consistency), the
+mask painter, and output-verification items. Nothing falls off the list.
+
+Net: **Load AI = chat**; **Load Studio = AI creation engine**. The
+shared provider registry / router (`load-provider-registry.js`,
+`load-orchestrator.js`) stays the common foundation both call into.
+
 Build order (eight numbered layers):
 
 1. **Load AI Core** — shared model router, provider registry, local /

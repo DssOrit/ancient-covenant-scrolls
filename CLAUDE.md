@@ -95,6 +95,15 @@ These have been re-locked on 2026-05-04 after repeated violations.
    There are NO exceptions. Routine fixes, cache bumps, style changes —
    all require confirmation. The previous self-merge authorization is
    REVOKED. Do not merge anything until the user says to merge it.
+10. **NEVER CHANGE A URL WITHOUT ASKING FIRST — locked 2026-06-29 by user.**
+    Do NOT modify any redirect, URL, route, domain, `start_url`/`scope`,
+    canonical link, or the shared `dssorit.github.io` -> `loadeco.app`
+    redirect in ANY app's `index.html` (or anywhere else) without explicit
+    user approval in the same session. This includes "fixing" a security
+    scanner finding by altering a redirect. If a change seems to require
+    touching URL/redirect/routing behavior, STOP and ask first. The
+    GitHub->Cloudflare redirect is identical across every app and must
+    stay that way.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
