@@ -10,7 +10,7 @@
 (function () {
   "use strict";
 
-  var VERSION = "load-ai-chat-v8d";
+  var VERSION = "load-ai-chat-v8e";
 
   var KEYS = {
     apiKey: "loadai_openrouter_key",
@@ -289,11 +289,13 @@
       });
     }
 
-    // Enter buttons on the existing splash (unchanged markup/ids).
-    ["enterAppBtn", "enterAppBtnAlt"].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener("click", enterApp);
-    });
+    // Enter the app: the "Get Started" hotspot over the printed button,
+    // plus the whole splash artwork as a forgiving fallback so a tap can
+    // never feel dead.
+    var enterBtn = document.getElementById("enterAppBtn");
+    if (enterBtn) enterBtn.addEventListener("click", enterApp);
+    var splashWrap = document.querySelector("#splashScreen .splash-wrapper");
+    if (splashWrap) splashWrap.addEventListener("click", enterApp);
 
     if (LoadAI.chat && LoadAI.chat.init) LoadAI.chat.init();
     if (LoadAI.voice && LoadAI.voice.init) LoadAI.voice.init();
