@@ -36,6 +36,9 @@ html[data-textsize="medium"]{--ai-base:17px}
 html[data-textsize="large"]{--ai-base:19px}
 html[data-textsize="xlarge"]{--ai-base:22px}
 
+/* The hidden attribute must win over the explicit display values on the
+   full-screen layers (intro/splash/app shell), or screen switching fails. */
+[hidden]{display:none!important}
 /* ── INTRO (auto, Load Play style) ── */
 .intro-screen{position:fixed;inset:0;z-index:60;background:#000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
