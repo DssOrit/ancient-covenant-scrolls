@@ -2,7 +2,7 @@
  * Load AI — Chat screen.
  * Full multi-turn thread. Every send rebuilds the messages array as
  * [constitution] + [all prior turns] + [new user message] via
- * LoadAI.callGroq().
+ * LoadAI.callAI().
  */
 (function () {
   "use strict";
@@ -157,7 +157,7 @@
     scrollToEnd();
     setBusy(true);
 
-    LoadAI.callGroq(LoadAI.getHistory()).then(function (reply) {
+    LoadAI.callAI(LoadAI.getHistory()).then(function (reply) {
       pending.row.remove();
       LoadAI.pushTurn("assistant", reply);
       renderAI(reply, {});

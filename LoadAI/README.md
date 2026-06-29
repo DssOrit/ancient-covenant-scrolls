@@ -12,13 +12,12 @@ The Load AI Constitution lives in `constitution.js` as a single constant
 
 ## Backend
 
-- Provider: Groq (OpenAI-compatible chat completions).
-- Endpoint: `https://api.groq.com/openai/v1/chat/completions`.
-- Models: user-selectable in Settings, all on Groq's free tier. Default
-  `llama-3.3-70b-versatile` (the originally-specified
-  `llama-3.1-70b-versatile` was decommissioned by Groq).
+- Provider: OpenRouter (OpenAI-compatible chat completions).
+- Endpoint: `https://openrouter.ai/api/v1/chat/completions`.
+- Models: user-selectable in Settings, defaulting to free (`:free`)
+  models. Default `meta-llama/llama-3.3-70b-instruct:free`.
 - The API key is entered by the user in Settings and stored only on the
-  device under `loadai_groq_key`.
+  device under `loadai_openrouter_key`.
 - Each call sends `[constitution] + [all prior turns] + [new user message]`.
 
 ## Files
@@ -26,7 +25,7 @@ The Load AI Constitution lives in `constitution.js` as a single constant
 - `index.html` — shell, intro, splash, four screens, bottom nav.
 - `constitution.js` — the system prompt (single source of truth).
 - `app.js` — routing, intro, Enter flow, appearance, offline banner, Home,
-  and the shared `LoadAI.callGroq()`.
+  and the shared `LoadAI.callAI()`.
 - `chat.js` — chat thread, send, copy, bias-transparency note.
 - `voice.js` — Web Speech input/output, language selector, waveform.
 - `settings.js` — API key, model, font, theme, text size, language, data
@@ -36,7 +35,7 @@ The Load AI Constitution lives in `constitution.js` as a single constant
 
 ## localStorage keys
 
-`loadai_groq_key`, `loadai_history`, `loadai_model`, `loadai_font`,
+`loadai_openrouter_key`, `loadai_history`, `loadai_model`, `loadai_font`,
 `loadai_theme`, `loadai_textsize`, `loadai_lang`.
 
 ## Prior build

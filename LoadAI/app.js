@@ -1,19 +1,19 @@
 /*
  * Load AI — core controller.
  * Routing, intro, splash/Enter, appearance, offline banner, the Home
- * screen, and the shared Groq API call used by every screen.
+ * screen, and the shared OpenRouter API call used by every screen.
  *
  * The Load AI Constitution (constitution.js) is injected as the system
- * message in 100% of API calls via LoadAI.callGroq(). It is never
+ * message in 100% of API calls via LoadAI.callAI(). It is never
  * omitted and never shortened.
  */
 (function () {
   "use strict";
 
-  var VERSION = "load-ai-chat-v8a";
+  var VERSION = "load-ai-chat-v8b";
 
   var KEYS = {
-    apiKey: "loadai_groq_key",
+    apiKey: "loadai_openrouter_key",
     history: "loadai_history",
     model: "loadai_model",
     font: "loadai_font",
@@ -22,17 +22,18 @@
     lang: "loadai_lang"
   };
 
-  // Groq chat models. All of these are available on Groq's free tier.
-  // Default is a current, working model (the originally-specified
-  // llama-3.1-70b-versatile was decommissioned by Groq).
+  // OpenRouter chat models. The ":free" variants run at no cost on
+  // OpenRouter's free tier. Users can also paste any other OpenRouter
+  // model id if they have credits.
   var MODELS = [
-    { id: "llama-3.3-70b-versatile", label: "Llama 3.3 70B Versatile (free)" },
-    { id: "llama-3.1-8b-instant", label: "Llama 3.1 8B Instant (free, fast)" },
-    { id: "llama3-70b-8192", label: "Llama 3 70B (free)" },
-    { id: "llama3-8b-8192", label: "Llama 3 8B (free, fast)" },
-    { id: "gemma2-9b-it", label: "Gemma 2 9B (free)" }
+    { id: "meta-llama/llama-3.3-70b-instruct:free", label: "Llama 3.3 70B Instruct (free)" },
+    { id: "deepseek/deepseek-chat-v3-0324:free", label: "DeepSeek V3 (free)" },
+    { id: "meta-llama/llama-3.1-8b-instruct:free", label: "Llama 3.1 8B Instruct (free, fast)" },
+    { id: "qwen/qwen-2.5-72b-instruct:free", label: "Qwen 2.5 72B Instruct (free)" },
+    { id: "google/gemma-2-9b-it:free", label: "Gemma 2 9B (free)" },
+    { id: "mistralai/mistral-7b-instruct:free", label: "Mistral 7B Instruct (free)" }
   ];
-  var DEFAULT_MODEL = "llama-3.3-70b-versatile";
+  var DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free";
 
   // Shared language list (Voice screen + Settings). bcp47 drives both
   // SpeechRecognition and SpeechSynthesis.
@@ -50,7 +51,7 @@
     { code: "pt", label: "Portuguese", bcp47: "pt-BR" }
   ];
 
-  var ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
+  var ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 
   // ── storage helpers ───────────────────────────────────────────
   function get(key, fallback) {
@@ -95,13 +96,13 @@
     return LANGS[0];
   }
 
-  // ── Groq API call ─────────────────────────────────────────────
+  // ── AI API call (OpenRouter) ──────────────────────────────────
   // history: array of { role:'user'|'assistant', content:string }.
   // The constitution is ALWAYS prepended as the system message.
-  function callGroq(history) {
+  function callAI(history) {
     var key = getApiKey();
     if (!key) {
-      return Promise.reject(new Error("No API key. Open Settings and paste your Groq API key."));
+      return Promise.reject(new Error("No API key. Open Settings and paste your OpenRouter API key."));
     }
     if (typeof window.LOAD_AI_CONSTITUTION !== "string" || !window.LOAD_AI_CONSTITUTION) {
       return Promise.reject(new Error("Constitution failed to load. Reload the app."));
@@ -123,7 +124,8 @@
       method: "POST",
       headers: {
         "Authorization": "Bearer " + key,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "X-Title": "Load AI"
       },
       body: JSON.stringify(body)
     }).then(function (res) {
@@ -256,7 +258,7 @@
     getApiKey: getApiKey,
     getModel: getModel,
     getLang: getLang,
-    callGroq: callGroq,
+    callAI: callAI,
     applyAppearance: applyAppearance,
     showScreen: showScreen,
     home: Home

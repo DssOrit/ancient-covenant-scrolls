@@ -73,7 +73,7 @@
     setStatus("Load AI is thinking…");
     LoadAI.pushTurn("user", text);
 
-    LoadAI.callGroq(LoadAI.getHistory()).then(function (reply) {
+    LoadAI.callAI(LoadAI.getHistory()).then(function (reply) {
       LoadAI.pushTurn("assistant", reply);
       if (responseEl) responseEl.textContent = reply;
       setStatus("Tap the mic to speak again");
