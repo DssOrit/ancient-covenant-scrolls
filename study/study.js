@@ -1736,7 +1736,10 @@ function showFillBlank(fid, audioMode) {
 
     // Easy tier: curated questions (prioritize unmastered)
     if (data && data.fill_blank && data.fill_blank.length) {
-      var curated = data.fill_blank.slice();
+      var curated = data.fill_blank.filter(function (q) {
+        // Skip prompts with more than one blank — second blank stays empty on screen
+        return q.prompt && (q.prompt.match(/______/g) || []).length <= 1;
+      });
       var unmastered = getUnmasteredQuestions(fid, 'filblank', curated);
       if (unmastered.length > 0 && tier === 'easy') {
         questions = shuffle(unmastered.map(function (u) { return u.q; }));
@@ -2341,7 +2344,7 @@ function showMemoryMatch(fid) {
     var tiles = [];
     terms.forEach(function (t, i) {
       tiles.push({ id: i, side: 'term', text: t.term, pairId: i });
-      tiles.push({ id: i, side: 'def', text: t.definition.split('.')[0] + '.', pairId: i });
+      tiles.push({ id: i, side: 'def', text: t.definition.length > 100 ? t.definition.slice(0, 97) + '…' : t.definition, pairId: i });
     });
     tiles = shuffle(tiles);
 
@@ -2994,7 +2997,7 @@ function showWordMatch(fid) {
         return { term: w.slice(0, Math.min(4, h)).join(' ') + '...', definition: v };
       });
     }
-    var defs = shuffle(terms.map(function (t) { return { term: t.term, def: t.definition.split('.')[0] + '.' }; }));
+    var defs = shuffle(terms.map(function (t) { return { term: t.term, def: t.definition.length > 100 ? t.definition.slice(0, 97) + '…' : t.definition }; }));
     var matched = 0, selectedTerm = null;
 
     function render() {
@@ -3439,6 +3442,10 @@ function generateTrueFalseFromCurated(data, count) {
       if (/\bACR Volume\b/i.test(sent)) continue;
       // Reject sentences with long parentheticals (often sigla or editorial notes)
       if (/\([^)]{10,}\)/.test(sent)) continue;
+      // Reject vague-predicate sentences — "X is brief/important/significant" etc.
+      if (/\b(?:is|are|was|were)\s+(?:a |an |the )?(?:brief|important|significant|notable|unique|interesting|crucial|remarkable|complex|simple|small|large|lengthy|short|long|extensive|limited|major|minor|key|central|vital|essential|common|rare|different|similar|related|special|specific|general|various|many|few|much|little|more|less|great|good|bad|known|found|used|seen|given|made|said|called|named)\b/i.test(sent)) continue;
+      // Reject sentences with vague referential subjects ("the account", "the text", "the passage" etc.)
+      if (/^The (?:account|text|passage|narrative|story|section|record|description|reference|concept|idea|theme|notion|term|word|phrase|verse|chapter|book|document|scroll|source|material|content|information|detail|fact|claim|point|example|case|issue|matter|topic)\b/i.test(sent)) continue;
       for (var k = 0; k < terms.length; k++) {
         var tterm = terms[k].term;
         var re = new RegExp('\\b' + tterm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
@@ -3618,6 +3625,17 @@ function generateSequenceFromCurated(data, count) {
 
 function parseRef(ref) {
   if (!ref) return null;
+  // Roman numeral column refs: "XVII:3" -> 17000 + 3
+  var rom = ref.match(/^([IVXLCDivxlcd]+):(\d+)/);
+  if (rom) {
+    var romanMap = { I:1, V:5, X:10, L:50, C:100, D:500 };
+    var r = rom[1].toUpperCase(), rv = 0;
+    for (var ri = 0; ri < r.length; ri++) {
+      var cur = romanMap[r[ri]] || 0, nxt = romanMap[r[ri + 1]] || 0;
+      rv += cur < nxt ? -cur : cur;
+    }
+    return rv * 1000 + parseInt(rom[2]);
+  }
   var m = ref.match(/(\d+)(?::(\d+))?/);
   if (!m) return null;
   return parseInt(m[1]) * 1000 + (m[2] ? parseInt(m[2]) : 0);
@@ -4060,10 +4078,11 @@ function wordMorphVariants(word) {
       else tryAdd(lower.slice(0, i) + c + c + lower.slice(i + 1));
     }
   }
-  // 3. Letter transposition — common keyboard typo
+  // 3. Letter transposition — common keyboard typo (skip if result starts with consonant cluster)
   for (var i = 1; i < lower.length - 1 && out.length < 3; i++) {
     if (lower[i] !== lower[i + 1]) {
-      tryAdd(lower.slice(0, i) + lower[i + 1] + lower[i] + lower.slice(i + 2));
+      var transposed = lower.slice(0, i) + lower[i + 1] + lower[i] + lower.slice(i + 2);
+      if (!/^[^aeiou]{2}/i.test(transposed)) tryAdd(transposed);
       break;
     }
   }
@@ -4271,7 +4290,9 @@ function showSyllableTap(fid) {
       if (qi >= rounds.length) { showResults(); return; }
       var kt = rounds[qi];
       var correctCount = countSyllables(kt.term);
-      var candidates = [correctCount - 2, correctCount - 1, correctCount, correctCount + 1, correctCount + 2].filter(function (n) { return n >= 1 && n <= 8; });
+      var near = [correctCount - 1, correctCount + 1].filter(function (n) { return n >= 1 && n <= 8; });
+      var far = [correctCount <= 3 ? 6 : 1, correctCount <= 4 ? 7 : 2].filter(function (n) { return n >= 1 && n <= 8 && n !== correctCount; });
+      var candidates = [correctCount].concat(near).concat(far).filter(function (n, i, a) { return a.indexOf(n) === i; });
       var opts = shuffle(candidates.slice()).slice(0, 4);
       if (opts.indexOf(correctCount) === -1) opts[0] = correctCount;
       opts = shuffle(opts);
@@ -4427,6 +4448,12 @@ function showRhymeChain(fid) {
       if (!rhymer) { qi++; renderQ(); return; }
       var nonRhymers = allWords.filter(function (x) { return x.key !== key; });
       var distractors = shuffle(nonRhymers).slice(0, 3).map(function (x) { return x.word; });
+      var rhymeFallback = ['stood', 'came', 'gave', 'made', 'hand', 'keep', 'full', 'dark', 'find', 'long', 'strong', 'hard'];
+      var rfi = 0;
+      while (distractors.length < 3 && rfi < rhymeFallback.length) {
+        var rfw = rhymeFallback[rfi++];
+        if (rhymeKeyStudy(rfw) !== key && distractors.indexOf(rfw) < 0) distractors.push(rfw);
+      }
       while (distractors.length < 3) distractors.push('\u2014');
       var opts = shuffle([rhymer].concat(distractors));
       var correctIdx = opts.indexOf(rhymer);
