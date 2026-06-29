@@ -10,7 +10,7 @@
 (function () {
   "use strict";
 
-  var VERSION = "load-ai-chat-v8b";
+  var VERSION = "load-ai-chat-v8c";
 
   var KEYS = {
     apiKey: "loadai_openrouter_key",
