@@ -46,8 +46,10 @@
         <img src="assets/images/LOAD_TASKS_SPLASH_1080.jpg" alt="Load Tasks™ build validator splash screen" class="splash-art">
       </picture>
       <div class="splash-actions">
-        <a class="primary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#4a9eff,#2d7fe0);color:#04122a;font-weight:800">OCC Login</a>
-        <button class="secondary-action" data-view="dashboard" data-route>Open Dashboard</button>
+        <button class="primary-action" data-view="dashboard" data-route>Open Dashboard</button>
+        <a class="secondary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#4a9eff,#2d7fe0);color:#04122a;font-weight:800">OCC Login</a>
+        <button class="secondary-action" data-view="intake" data-route>Upload Build</button>
+        <button class="secondary-action" data-view="notes" data-route>Paste Notes</button>
       </div>
     </section>
 
@@ -262,9 +264,6 @@
         <span class="icon-mini" data-icon="refresh"></span>
       </button>
     </header>
-    <!-- Always-visible entry to the internal OCC login, so it is never hidden in the nav/rail -->
-    <a class="occ-login-float" href="occ.html" aria-label="Open OCC login"
-       style="position:fixed;right:14px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:12px 16px;background:linear-gradient(160deg,#4a9eff,#2d7fe0);border-radius:14px;color:#04122a;text-decoration:none;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.35)">OCC Login</a>
 
     <main id="main" class="main-setup area">
       <aside class="side-rail" aria-label="Build command rail">
