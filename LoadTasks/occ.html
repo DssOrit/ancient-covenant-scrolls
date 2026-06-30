@@ -346,7 +346,12 @@ var SITES = [
   {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'},
   {name:'Load AI', url:'https://loadeco.app/LoadAI/', stage:'Locked'}
 ];
-function activeSite(){return (SITES.filter(function(s){return s.stage==='Active';})[0]||SITES[0]);}
+function siteCertified(url){var a=load(K.assignments,[]).filter(function(x){return x.site===url;})[0];if(!a)return false;var vs=siteVerifyStats(url);return (a.status==='Approved'||a.status==='Paid')&&vs.total>0&&vs.ok===vs.total&&vs.approved===vs.total;}
+function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)return false;if(!siteCertified(SITES[i].url))return true;}return false;}
+function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
+function nextSite(){var a=activeSite();for(var i=0;i<SITES.length;i++){if(SITES[i].url===a.url)return SITES[i+1]||null;}return null;}
+function saveAssignment(a){var as=load(K.assignments,[]);var idx=-1;for(var i=0;i<as.length;i++){if(as[i].site===a.site){idx=i;break;}}if(idx>=0)as[idx]=a;else as.push(a);store(K.assignments,as);}
+function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Witness Bond',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
 function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
 function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
 function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length};}
@@ -411,7 +416,7 @@ function show(id){
 }
 
 /* ---------- renderers ---------- */
-function activeAssignment(){return (load(K.assignments,[])[0])||null;}
+function activeAssignment(){var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;}
 
 function checklistStats(){
   var c=load(K.checklist,{}),done=0,total=0;
@@ -429,6 +434,7 @@ function statusChip(s){
 
 function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
+  ensureSiteSetup(activeSite());
   ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
     howto:rHowTo,release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
@@ -461,7 +467,7 @@ function rDashboard(v){
     '</div>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('green','Sections Verified','<b style="font-size:1.6rem">'+(function(){var x=siteVerifyStats(activeSite().url);return x.ok+' / '+x.total;})()+'</b><div class="muted">working + evidence</div>')+
-      card('gray','Upcoming Assignment','<b>Load Studio</b><div class="muted">Locked until Load Eco is approved</div>'+statusChip('Locked'))+
+      card('gray','Upcoming Assignment',(function(){var n=nextSite();return n?('<b>'+esc(n.name)+'</b><div class="muted">Unlocks when '+esc(activeSite().name)+' is certified</div>'+statusChip('Locked')):'<b>None</b><div class="muted">Final site</div>';})())+
       card('blue','Retests Waiting','<b style="font-size:1.6rem">'+retests+'</b>')+
     '</div>'+
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
@@ -509,7 +515,7 @@ function rAssignments(v){
       var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
       if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
       if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
-      store(K.assignments,[a]);
+      saveAssignment(a);
       if(a.status!==prev)logActivity(a.status==='Approved'?'Assignment approved':(a.status==='Paid'?'Payment marked paid':'Assignment status: '+a.status),a.title);
       toast('Assignment saved');render('assignments');
     });
@@ -522,7 +528,7 @@ function rAssignments(v){
       var worksNoEv=siteSections(a.site).filter(function(s){return s.status==='Works'&&!(s.evidence&&s.evidence.trim());}).length;
       if(worksNoEv>0){toast(worksNoEv+' working section(s) need evidence before submitting.');return;}
       if(st.done<st.total){toast('Finish all verification steps first ('+st.done+'/'+st.total+').');return;}
-      a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);
+      a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);
       logActivity('Assignment submitted',a.title);
       toast('Submitted for review');render('assignments');
     });
@@ -630,7 +636,7 @@ function rReview(v){
     var st=b.dataset.rv;a.ownerNotes=$('#rvNotes',v).value;a.status=st;
     if(st==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
     if(st==='Paid'&&!a.paidDate)a.paidDate=nowISO();
-    store(K.assignments,[a]);
+    saveAssignment(a);
     logActivity(st==='Approved'?'Assignment approved':(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':(st==='Needs Retest'?'Retest requested':'Assignment returned'))),a.title);
     toast('Review saved: '+st);render('review');
   });});
@@ -814,12 +820,12 @@ function rPayment(v){
       var st=b.dataset.pst;a.bonus=Number($('#pBonus',v).value)||0;
       if(st==='Paid'){
         var chk=payAutoCheck(a);
-        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);store(K.assignments,[a]);render('payment');return;}
+        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);saveAssignment(a);render('payment');return;}
         a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();
       }
       else if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
       else{a.status='Approved';}
-      store(K.assignments,[a]);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
+      saveAssignment(a);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
     });});
   }
 }
@@ -827,7 +833,7 @@ function rPayment(v){
 function invoiceNoFor(a){return a.invoiceNo||('OCC-INV-W'+String(a.week||1).padStart(2,'0')+'-'+String(a.id||'wk1').toUpperCase());}
 function rInvoice(v){
   var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
-  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);store(K.assignments,[a]);}
+  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);saveAssignment(a);}
   var inv='INVOICE — Operations Command Center\n'+
     '====================================\n'+
     'Invoice No:  '+a.invoiceNo+'\n'+
@@ -865,7 +871,7 @@ function rInvoice(v){
              :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
       '</div>':'');
   if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
-    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();store(K.assignments,[a]);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
+    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
   });
   $('#invPrint',v).addEventListener('click',function(){window.print();});
   $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
@@ -873,7 +879,7 @@ function rInvoice(v){
   if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){
     var chk=payAutoCheck(a);
     if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+f[0]);return;}
-    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');});
+    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');});
 }
 
 var DOCS={
@@ -1065,27 +1071,26 @@ function rRelease(v){
   var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
   var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
   var retestsOpen=issues.filter(function(i){return i.status==='Needs Retest';}).length;
-  var a=activeAssignment();
-  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order.</p>';
+  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order — Load Eco → Studio → Play → AI.</p>';
+  var act=activeSite();
   SITES.forEach(function(site){
-    var active=site.stage==='Active';
+    var certified=siteCertified(site.url), locked=siteLocked(site.url), active=(site.url===act.url)&&!certified;
+    var sa=all.filter(function(x){return x.site===site.url;})[0];
+    var vs=siteVerifyStats(site.url);
     var siteIssues=issues.filter(function(i){return i.site===site.name;});
     var bugsFound=siteIssues.length;
     var bugsFixed=siteIssues.filter(function(i){return i.status==='Verified Fixed'||i.status==='Closed';}).length;
-    var retestsDone=siteIssues.filter(function(i){return i.status==='Verified Fixed';}).length;
-    var done=all.filter(function(x){return x.site===site.url && (x.status==='Approved'||x.status==='Paid');}).length;
-    var vs=siteVerifyStats(site.url);
-    var allSectionsOk=vs.total>0 && vs.ok===vs.total && vs.approved===vs.total;
-    var ownerApproved=active&&a&&(a.status==='Approved'||a.status==='Paid');
-    var ready=allSectionsOk && ownerApproved;
-    var stage=active?(ready?'Stable Verified':(vs.broken||!a||a.status==='Needs Fixes'?'Needs Fixes':(a&&a.status==='Submitted'?'In Testing':'In Testing'))):'Locked';
-    html+='<div class="card tint-'+(active?'green':'gray')+'" style="margin-bottom:12px">'+
+    var retestsOpen2=siteIssues.filter(function(i){return i.status==='Needs Retest';}).length;
+    var ownerApproved=sa&&(sa.status==='Approved'||sa.status==='Paid');
+    var stage=certified?'Stable Verified':(locked?'Locked':(vs.broken?'Needs Fixes':'In Testing'));
+    var tint=certified?'green':(active?'blue':'gray');
+    html+='<div class="card tint-'+tint+'" style="margin-bottom:12px">'+
       '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
       '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
-      (active?
-        '<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Assignments completed: <b>'+done+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen+'</b></span><span>Critical open: <b>'+crit+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
-        (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">READY FOR PUBLIC — every section verified + approved. Next site can unlock.</p>':'<p class="muted" style="margin-top:6px">Not ready: every section must be verified Working and owner-approved first.</p>')
-       : '<p class="muted" style="margin-top:8px">Locked. Unlocks only after the previous site is certified Ready for public.</p>')+
+      (locked?
+        '<p class="muted" style="margin-top:8px">Locked. Unlocks when '+esc(act.name)+' is certified Ready for public.</p>'
+       :'<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen2+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
+        (certified?'<p style="color:var(--green);font-weight:700;margin-top:6px">CERTIFIED — Ready for public. Next site is unlocked.</p>':'<p class="muted" style="margin-top:6px">Not certified yet: every section must be verified Working and owner-approved.</p>'))+
     '</div>';
   });
   v.innerHTML=html;
