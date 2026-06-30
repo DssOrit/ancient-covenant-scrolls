@@ -114,6 +114,68 @@ define the product. See **X-AI-PROVIDERS** row below.
 - **Piper TTS Stage 1 unblock + Stage 2 rollout** — see X-PIPER. Stage 1 shipped but not playing; blocked on the play() error text from the user. Resilience panel (Part 9) shipped in v17er gives an in-app diagnostic + recovery path.
 - **LOAD-ECO acceptance test pass** (Build Plan Part 13 + Load_Main_Claude_Handoff_Report Section 18). The 11 priority items from the handoff report are shipped in v17fx–v17g6 with `LOAD_MAIN_HANDOFF_FINAL_REPORT.md` listing what's auto-verified vs what still needs user verification on iPad. Parts 1, 2, 3, 14-17 of the earlier Load Main Next Build Plan shipped in v17eq. Parts 4, 7, 9 + Book-to-Video wiring shipped in v17er. Parts 5, 6, 8, 10 shipped in v17es.
 
+### QA pass — verifier report 2026-06-30 (Pending)
+
+Full QA pass on Load from the user's verifier (source: `Load_Eco.docx`
++ `Editing_words_in_webapps_on_pc.png`, received 2026-06-30). ~40 items.
+Work one at a time, verify each on the reported device before marking
+done. **No-false-positive rule applies.** Items flagged **[ACR]** route
+into ACR sites and MUST NOT be touched without explicit user approval
+(CLAUDE.md locked rule 8).
+
+Text controls (top of screen):
+- **QA-01** Aa button: switching themes changes nothing.
+- **QA-02** A- / A+ word-size buttons do nothing.
+- **QA-03** Reset word-size button does nothing.
+- **QA-04** "Ask AI about this" in library fails — says "no text available on this page to copy" when asked to build text to paste into an external AI site.
+
+Front page:
+- **QA-05** Tutorial glitchy when not opened on iPad.
+- **QA-06** Tutorial auto-speaks (jarring).
+- **QA-07** Tutorial highlight circles land over empty areas sometimes.
+- **QA-08** "Image prompt" does not work.
+- **QA-09** "Video to audio" fails when pulling from the iPad photo library.
+- **QA-10** "Handoff tools" -> error page.
+- **QA-11** "Style library" -> error page.
+- **QA-12** "Image upscaler" -> error page.
+- **QA-13** "Face Restore" -> error page.
+
+Help / FAQ:
+- **QA-14** "Help and FAQ" language is too iPad-focused.
+- **QA-15** "I pressed the wrong button" answer is now false (reset word-size is broken, see QA-03).
+- **QA-16** "Can each item have its own look" is wrong — Aa button does not change color or font size (see QA-01).
+- **QA-17** "How do I install Load as a real app on my iPad?" is redundant (already covered in an earlier help tab).
+
+Import a file:
+- **QA-18** "Import a PWA" directions only reference iPad Safari.
+- **QA-19** "Media" assumes pulling from iPad files even when on PC.
+- **QA-20** "Edit video" assumes pulling from iPad files even when on PC.
+
+Workspace:
+- **QA-21** (user opinion) Workspace should not be reachable from the import page — it is a tool-heavy popup; expose it only in library or while actively working on a file.
+- **QA-22** Under line 2, "file tree" only opens the library without size/status badges; no way to open file tree while inside a file.
+- **QA-23** Same issue as QA-22 for "live preview".
+- **QA-24** Everything under line 6 opens a "this site can't be reached" page.
+
+Create new:
+- **QA-25** PWA Reader Book template does not work.
+
+Library:
+- **QA-26** Uploaded audio and video (PC and iPad) do not function once added.
+- **QA-27** Uploaded PDF auto-named "anonymous" and formatting severely downgraded.
+- **QA-28** Uploaded images do not show.
+- **QA-29** HTML cover editing blanks out images.
+- **QA-30** PWA/Webapp uploaded on iPad stuck in forever-loading (only some webapps).
+- **QA-31** [SCREENSHOT] Editing words in webapps on PC glitches — the webapp's pinned content overlays the Load toolbar buttons. Cause located: `openProseEditor` in `load/load.js`; injected webapp content with fixed/absolute elements escapes the editor pane.
+- **QA-32** Tool button icons at the top of HTML/webapps disappear on iPad after uploading (still clickable; does not disappear on PC).
+- **QA-33** Book-check button while editing a webapp is misleading — a generic webapp with little text was rated "college level read".
+- **QA-34** EPUB books get weird formatting and the table of contents stops working once transferred on iPad.
+- **QA-35** [ACR] Clicking a TOC tab in the EPUB reader (any book) opens a non-working "ancient covenant record" and won't return to the EPUB (PC or certain books only). Touches ACR — needs explicit approval.
+- **QA-36** "Viewer frame not available" appears in the developer tab on everything uploaded.
+
+Edit video:
+- **QA-37** Speeding up / slowing down a video causes heavy lag and stutter.
+
 ### Pending — closed this session
 - **Browser mask editor (X-AI-MASK)** — shipped v17ew as `load/tools/mask-editor.html`.
 - **Character Consistency module (X-CC)** — shipped v17ex as `load/tools/character-bible.html` wrapping `load/book-video/character-bible.js`.
