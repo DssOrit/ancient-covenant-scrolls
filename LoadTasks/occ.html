@@ -784,11 +784,11 @@ function submitDay(a){
 function rAssignmentsDaily(v,owner){
   var a=activeAssignment(),days=dayAssignments(),gate=gateActive();
   var html='<h1>Daily Assignments</h1>'+
-    '<p class="muted">Each day is a <b>$60</b> task — verify the day’s area, log issues with a screenshot, the owner approves. <b>Pay is weekly</b>: the total is $60 for each day you worked and the owner approved that week (1–3 days). After <b>two days</b> of logging issues, a <b>re-verify day</b> is required before any new area unlocks.</p>';
+    '<p class="muted">Your days appear here <b>automatically</b> — no waiting on anyone. Each day is a <b>$60</b> task — verify the day’s area, log issues with a screenshot, the owner approves. <b>Pay is weekly</b>: the total is $60 for each day you worked and the owner approved that week (1–3 days). After <b>two days</b> of logging issues, a <b>re-verify day</b> opens automatically before any new area unlocks.</p>';
   if(gate){
     html+='<div class="card tint-red" style="margin:12px 0"><h3>Re-certification required</h3>'+
-      '<p class="muted">Two days of issues have been logged. New areas are locked until a re-verify day is done.</p>'+
-      (owner?'<button class="btn red" id="aAddRecert">Open a re-verify day ($60)</button>':'<p class="muted">Waiting for the owner to open a re-verify day.</p>')+'</div>';
+      '<p class="muted">Two days of issues have been logged. A <b>re-verify day opens automatically</b> — reopen this tab in a moment to see it. New areas stay locked until it is done.</p>'+
+      (owner?'<button class="btn red" id="aAddRecert">Open a re-verify day now ($60)</button>':'')+'</div>';
   }
   if(a){
     var isRecert=a.kind==='recert';
