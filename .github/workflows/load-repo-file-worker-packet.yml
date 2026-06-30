@@ -227,7 +227,7 @@ jobs:
           JOB_FILE: ${{ inputs.job_file || 'loadtasks-inbox/repo-file-job.json' }}
 
       - name: Upload packet artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: repo-file-worker-packet-${{ env.JOB_ID || 'unknown' }}
