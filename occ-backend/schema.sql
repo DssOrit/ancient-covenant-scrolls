@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS assignments (
   id             TEXT PRIMARY KEY,
   title          TEXT, site TEXT, worker TEXT, week INTEGER,
   pay            REAL, bonus REAL, goal TEXT, status TEXT,
-  submitted_date TEXT, approved_date TEXT, paid_date TEXT, owner_notes TEXT
+  submitted_date TEXT, approved_date TEXT, paid_date TEXT, owner_notes TEXT,
+  invoice_submitted INTEGER DEFAULT 0, invoice_submitted_date TEXT
 );
 
 CREATE TABLE IF NOT EXISTS checklist (

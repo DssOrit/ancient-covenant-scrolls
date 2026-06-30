@@ -31,12 +31,13 @@
       var(--bg);
     color:var(--text);
     font-family:'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
-    font-size:17px; line-height:1.55; letter-spacing:.01em;
+    font-size:16px; line-height:1.6; letter-spacing:0; font-weight:400;
     -webkit-text-size-adjust:100%;
     padding-bottom:env(safe-area-inset-bottom);
   }
-  h1,h2,h3{font-weight:700;line-height:1.25;margin:0 0 .4em}
-  h1{font-size:1.5rem} h2{font-size:1.25rem} h3{font-size:1.06rem}
+  h1,h2,h3{font-weight:600;line-height:1.3;margin:0 0 .5em}
+  b,strong{font-weight:600}
+  h1{font-size:1.25rem;font-weight:600} h2{font-size:1.08rem} h3{font-size:1rem;font-weight:600}
   p{margin:0 0 .8em} a{color:var(--blue)}
   .wrap{max-width:1080px;margin:0 auto;padding:0 16px 64px}
   .muted{color:var(--muted)}
@@ -63,11 +64,11 @@
   /* Tabs */
   .tabs{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 0 2px;max-width:1080px;margin:0 auto}
   .tabs button{
-    flex:0 0 auto;border:1px solid var(--line);background:var(--card2);color:var(--text);
-    padding:9px 14px;border-radius:12px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap;
+    flex:0 0 auto;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);color:var(--muted);
+    padding:9px 15px;border-radius:11px;font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;white-space:nowrap;
   }
-  .tabs button .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
-  .tabs button.active{border-color:transparent;box-shadow:0 0 0 1.5px currentColor inset;color:#fff}
+  .tabs button .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle;opacity:.7}
+  .tabs button.active{border-color:transparent;color:#fff;font-weight:600}
   .tabs button[data-c=blue].active{background:rgba(74,158,255,.18);color:var(--blue)}
   .tabs button[data-c=purple].active{background:rgba(155,109,255,.18);color:var(--purple)}
   .tabs button[data-c=green].active{background:rgba(62,207,142,.18);color:var(--green)}
@@ -77,15 +78,14 @@
   .tabs button[data-c=gray].active{background:rgba(107,114,128,.22);color:#c2c8d6}
 
   /* Cards */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.28)}
-  .card.tint-blue{border-left:4px solid var(--blue)}
-  .card.tint-purple{border-left:4px solid var(--purple)}
-  .card.tint-green{border-left:4px solid var(--green)}
-  .card.tint-orange{border-left:4px solid var(--orange)}
-  .card.tint-red{border-left:4px solid var(--red)}
-  .card.tint-gold{border-left:4px solid var(--gold)}
-  .card.tint-gray{border-left:4px solid var(--gray)}
+  .card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:22px;box-shadow:none}
+  .card.tint-blue{background:linear-gradient(160deg,rgba(74,158,255,.18),rgba(74,158,255,.04));border-color:rgba(74,158,255,.28)}
+  .card.tint-purple{background:linear-gradient(160deg,rgba(155,109,255,.18),rgba(155,109,255,.04));border-color:rgba(155,109,255,.28)}
+  .card.tint-green{background:linear-gradient(160deg,rgba(62,207,142,.16),rgba(62,207,142,.04));border-color:rgba(62,207,142,.26)}
+  .card.tint-orange{background:linear-gradient(160deg,rgba(255,159,67,.16),rgba(255,159,67,.04));border-color:rgba(255,159,67,.26)}
+  .card.tint-red{background:linear-gradient(160deg,rgba(255,92,92,.16),rgba(255,92,92,.04));border-color:rgba(255,92,92,.26)}
+  .card.tint-gold{background:linear-gradient(160deg,rgba(255,209,102,.16),rgba(255,209,102,.04));border-color:rgba(255,209,102,.26)}
+  .card.tint-gray{background:linear-gradient(160deg,rgba(160,170,190,.10),rgba(160,170,190,.03));border-color:rgba(160,170,190,.16)}
   .card h3{display:flex;align-items:center;gap:9px}
 
   /* Status chips */
@@ -346,13 +346,47 @@ var SITES = [
   {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'},
   {name:'Load AI', url:'https://loadeco.app/LoadAI/', stage:'Locked'}
 ];
-function activeSite(){return (SITES.filter(function(s){return s.stage==='Active';})[0]||SITES[0]);}
+function siteCertified(url){var a=load(K.assignments,[]).filter(function(x){return x.site===url;})[0];if(!a)return false;var vs=siteVerifyStats(url);return (a.status==='Approved'||a.status==='Paid')&&vs.total>0&&vs.ok===vs.total&&vs.approved===vs.total;}
+function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)return false;if(!siteCertified(SITES[i].url))return true;}return false;}
+function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
+function nextSite(){var a=activeSite();for(var i=0;i<SITES.length;i++){if(SITES[i].url===a.url)return SITES[i+1]||null;}return null;}
+function saveAssignment(a){var as=load(K.assignments,[]);var idx=-1;for(var i=0;i<as.length;i++){if(as[i].site===a.site){idx=i;break;}}if(idx>=0)as[idx]=a;else as.push(a);store(K.assignments,as);}
+function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Witness Bond',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
 function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
 function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
 function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length};}
 
 /* ---------- session / auth ---------- */
 function session(){return load(K.session,null);}
+/* ---- backend wiring (online) with offline fallback ---- */
+var API_BASE='/api/occ';
+function isOnline(){return (session()||{}).mode==='online';}
+function authToken(){return (session()||{}).token||'';}
+function api(method,path,body){
+  var o={method:method,headers:{'Content-Type':'application/json'}};
+  if(authToken())o.headers['Authorization']='Bearer '+authToken();
+  if(body)o.body=JSON.stringify(body);
+  return fetch(API_BASE+path,o).then(function(r){
+    return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}
+      if(!r.ok)throw new Error((d&&d.error)||('HTTP '+r.status));return d;});
+  });
+}
+function hydrate(){
+  return api('GET','/bootstrap').then(function(d){
+    if(d.assignments)store(K.assignments,d.assignments);
+    if(d.checklist){var c={};d.checklist.forEach(function(r){var k='day'+r.day;(c[k]=c[k]||[]);c[k][r.idx]={label:r.label,done:!!r.done,id:r.id};});store(K.checklist,c);}
+    if(d.issues)store(K.issues,d.issues);
+    if(d.evidence)store(K.evidence,d.evidence);
+    if(d.messages)store(K.messages,d.messages);
+    if(d.alerts)store(K.alerts,d.alerts);
+    if(d.sections)store(K.sections,d.sections);
+  });
+}
+/* optimistic local write already done by caller; push to server then refresh */
+function sync(apiCallFn,view){
+  if(!isOnline())return;
+  apiCallFn().then(hydrate).then(function(){if(view)render(view);}).catch(function(e){toast('Sync failed: '+(e.message||e));});
+}
 function isOwner(){var s=session();return s&&s.role==='owner';}
 /* Roles & permissions — scalable for future employees/managers/etc.
    Active now: owner, employee. Others are placeholders (not selectable yet). */
@@ -406,12 +440,13 @@ function buildTabs(){
 function show(id){
   $$('#tabs button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id);});
   $$('.view').forEach(function(v){v.classList.toggle('active',v.dataset.view===id);});
-  render(id);
+  if(isOnline()){ hydrate().then(function(){render(id);}).catch(function(){render(id);}); }
+  else render(id);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* ---------- renderers ---------- */
-function activeAssignment(){return (load(K.assignments,[])[0])||null;}
+function activeAssignment(){var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;}
 
 function checklistStats(){
   var c=load(K.checklist,{}),done=0,total=0;
@@ -429,6 +464,7 @@ function statusChip(s){
 
 function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
+  ensureSiteSetup(activeSite());
   ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
     howto:rHowTo,release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
@@ -461,7 +497,7 @@ function rDashboard(v){
     '</div>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('green','Sections Verified','<b style="font-size:1.6rem">'+(function(){var x=siteVerifyStats(activeSite().url);return x.ok+' / '+x.total;})()+'</b><div class="muted">working + evidence</div>')+
-      card('gray','Upcoming Assignment','<b>Load Studio</b><div class="muted">Locked until Load Eco is approved</div>'+statusChip('Locked'))+
+      card('gray','Upcoming Assignment',(function(){var n=nextSite();return n?('<b>'+esc(n.name)+'</b><div class="muted">Unlocks when '+esc(activeSite().name)+' is certified</div>'+statusChip('Locked')):'<b>None</b><div class="muted">Final site</div>';})())+
       card('blue','Retests Waiting','<b style="font-size:1.6rem">'+retests+'</b>')+
     '</div>'+
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
@@ -509,9 +545,9 @@ function rAssignments(v){
       var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
       if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
       if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
-      store(K.assignments,[a]);
+      saveAssignment(a);
       if(a.status!==prev)logActivity(a.status==='Approved'?'Assignment approved':(a.status==='Paid'?'Payment marked paid':'Assignment status: '+a.status),a.title);
-      toast('Assignment saved');render('assignments');
+      toast('Assignment saved');render('assignments');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'assignments');
     });
   }else{
     $('#aSubmit',v).addEventListener('click',function(){
@@ -522,9 +558,9 @@ function rAssignments(v){
       var worksNoEv=siteSections(a.site).filter(function(s){return s.status==='Works'&&!(s.evidence&&s.evidence.trim());}).length;
       if(worksNoEv>0){toast(worksNoEv+' working section(s) need evidence before submitting.');return;}
       if(st.done<st.total){toast('Finish all verification steps first ('+st.done+'/'+st.total+').');return;}
-      a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);
+      a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);
       logActivity('Assignment submitted',a.title);
-      toast('Submitted for review');render('assignments');
+      toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
     });
   }
 }
@@ -545,7 +581,7 @@ function rDaily(v){
   v.innerHTML=html;
   $$('input[type=checkbox]',v).forEach(function(cb){
     cb.addEventListener('change',function(){
-      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);
+      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);var _it=c2['day'+cb.dataset.day][cb.dataset.idx];if(_it&&_it.id)sync(function(){return api('PATCH','/checklist',{id:_it.id,done:cb.checked});},'daily');
       var st=checklistStats();
       if(cb.checked&&st.done===1)logActivity('Checklist started');
       if(st.total>0&&st.done===st.total)logActivity('Checklist completed');
@@ -590,22 +626,22 @@ function rVerify(v){
   $('#secAdd',v).addEventListener('click',function(){
     var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
     rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
-    persist(rows);toast('Section added');render('verify');
+    persist(rows);toast('Section added');render('verify');sync(function(){return api('POST','/sections',{site:site.url,name:n});},'verify');
   });
   $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
     var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
     r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
     if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
     if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
-    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');
+    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+id,{status:r.status,evidence:r.evidence,notes:r.notes});},'verify');
   });});
   $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
-    if(!confirm('Delete this section?'))return;rows=rows.filter(function(x){return x.id!==b.dataset.secdel;});persist(rows);render('verify');
+    if(!confirm('Delete this section?'))return;var _id=b.dataset.secdel;rows=rows.filter(function(x){return x.id!==_id;});persist(rows);render('verify');sync(function(){return api('DELETE','/sections/'+_id);},'verify');
   });});
   if(owner)$$('[data-secok]',v).forEach(function(b){b.addEventListener('click',function(){
     var r=rows.filter(function(x){return x.id===b.dataset.secok;})[0];if(!r)return;
     if(!r.ownerOk&&!sectionVerified(r)){toast('Section must be Works + evidence before approval.');return;}
-    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');
+    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+r.id,{ownerOk:r.ownerOk});},'verify');
   });});
 }
 
@@ -630,9 +666,9 @@ function rReview(v){
     var st=b.dataset.rv;a.ownerNotes=$('#rvNotes',v).value;a.status=st;
     if(st==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
     if(st==='Paid'&&!a.paidDate)a.paidDate=nowISO();
-    store(K.assignments,[a]);
+    saveAssignment(a);
     logActivity(st==='Approved'?'Assignment approved':(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':(st==='Needs Retest'?'Retest requested':'Assignment returned'))),a.title);
-    toast('Review saved: '+st);render('review');
+    toast('Review saved: '+st);render('review');sync(function(){return api('PATCH','/assignments/'+a.id,{status:st,owner_notes:a.ownerNotes});},'review');
   });});
 }
 
@@ -665,7 +701,7 @@ function rIssues(v){
       device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
       severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
       by:session().name,at:nowISO()};
-    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');
+    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');sync(function(){return api('POST','/issues',issue);},'issues');
   });
   $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
   $('#iPrint',v).addEventListener('click',function(){window.print();});
@@ -678,7 +714,7 @@ function rIssues(v){
     if(isOwner()){
       var sel=el('<select style="margin-top:8px"></select>');
       ['New','Under Review','Needs Retest','Verified Fixed','Closed'].forEach(function(s){var o=document.createElement('option');o.text=s;o.selected=s===i.status;sel.appendChild(o);});
-      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);toast('Issue status updated');render('issues');});
+      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);sync(function(){return api('PATCH','/issues/'+i.id,{status:i.status});},'issues');toast('Issue status updated');render('issues');});
       d.appendChild(sel);
     }
     list.appendChild(d);
@@ -699,7 +735,7 @@ function rEvidence(v){
     var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
       browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
     if(!rec.shot&&!rec.video){toast('Add a filename first');return;}
-    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');
+    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');sync(function(){return api('POST','/evidence',rec);},'evidence');
   });
   $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
   var list=$('#eList',v);
@@ -721,7 +757,7 @@ function rMessages(v){
     msgs.unshift({id:'m_'+Date.now(),sender:sess.name,senderRole:sess.role,
       recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',
       body:body,at:nowISO()});
-    store(K.messages,msgs);toast('Message sent');render('messages');
+    store(K.messages,msgs);sync(function(){return api('POST','/messages',{recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',body:body});},'messages');toast('Message sent');render('messages');
   }
   $('#mSend',v).addEventListener('click',function(){send($('#mBody',v).value,$('#mPriority',v).value);});
   $('#mHelp',v).addEventListener('click',function(){send('NEED HELP: '+($('#mBody',v).value||'Please assist.'),'urgent');});
@@ -749,7 +785,7 @@ function rEmergency(v){
     var a={id:'al_'+Date.now(),what:$('#emgWhat',v).value||'(no detail)',site:$('#emgSite',v).value,browser:$('#emgBrowser',v).value,
       device:$('#emgDevice',v).value,urgency:$('#emgUrg',v).value,shot:$('#emgShot',v).value,notes:$('#emgNotes',v).value,
       by:session().name,at:nowISO()};
-    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');
+    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');sync(function(){return api('POST','/alerts',a);},'emergency');
   }
   $('#emgFire',v).addEventListener('click',function(){$('#emgWhat',v).focus();toast('Fill the form, then Send.');});
   $('#emgSave',v).addEventListener('click',fire);
@@ -814,12 +850,12 @@ function rPayment(v){
       var st=b.dataset.pst;a.bonus=Number($('#pBonus',v).value)||0;
       if(st==='Paid'){
         var chk=payAutoCheck(a);
-        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);store(K.assignments,[a]);render('payment');return;}
+        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);saveAssignment(a);render('payment');return;}
         a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();
       }
       else if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
       else{a.status='Approved';}
-      store(K.assignments,[a]);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
+      saveAssignment(a);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'payment');
     });});
   }
 }
@@ -827,7 +863,7 @@ function rPayment(v){
 function invoiceNoFor(a){return a.invoiceNo||('OCC-INV-W'+String(a.week||1).padStart(2,'0')+'-'+String(a.id||'wk1').toUpperCase());}
 function rInvoice(v){
   var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
-  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);store(K.assignments,[a]);}
+  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);saveAssignment(a);}
   var inv='INVOICE — Operations Command Center\n'+
     '====================================\n'+
     'Invoice No:  '+a.invoiceNo+'\n'+
@@ -865,7 +901,7 @@ function rInvoice(v){
              :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
       '</div>':'');
   if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
-    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();store(K.assignments,[a]);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
+    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');sync(function(){return api('POST','/assignments/'+a.id+'/invoice');},'invoice');
   });
   $('#invPrint',v).addEventListener('click',function(){window.print();});
   $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
@@ -873,7 +909,7 @@ function rInvoice(v){
   if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){
     var chk=payAutoCheck(a);
     if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+f[0]);return;}
-    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');});
+    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');sync(function(){return api('PATCH','/assignments/'+a.id,{status:'Paid'});},'invoice');});
 }
 
 var DOCS={
@@ -1065,27 +1101,26 @@ function rRelease(v){
   var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
   var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
   var retestsOpen=issues.filter(function(i){return i.status==='Needs Retest';}).length;
-  var a=activeAssignment();
-  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order.</p>';
+  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order — Load Eco → Studio → Play → AI.</p>';
+  var act=activeSite();
   SITES.forEach(function(site){
-    var active=site.stage==='Active';
+    var certified=siteCertified(site.url), locked=siteLocked(site.url), active=(site.url===act.url)&&!certified;
+    var sa=all.filter(function(x){return x.site===site.url;})[0];
+    var vs=siteVerifyStats(site.url);
     var siteIssues=issues.filter(function(i){return i.site===site.name;});
     var bugsFound=siteIssues.length;
     var bugsFixed=siteIssues.filter(function(i){return i.status==='Verified Fixed'||i.status==='Closed';}).length;
-    var retestsDone=siteIssues.filter(function(i){return i.status==='Verified Fixed';}).length;
-    var done=all.filter(function(x){return x.site===site.url && (x.status==='Approved'||x.status==='Paid');}).length;
-    var vs=siteVerifyStats(site.url);
-    var allSectionsOk=vs.total>0 && vs.ok===vs.total && vs.approved===vs.total;
-    var ownerApproved=active&&a&&(a.status==='Approved'||a.status==='Paid');
-    var ready=allSectionsOk && ownerApproved;
-    var stage=active?(ready?'Stable Verified':(vs.broken||!a||a.status==='Needs Fixes'?'Needs Fixes':(a&&a.status==='Submitted'?'In Testing':'In Testing'))):'Locked';
-    html+='<div class="card tint-'+(active?'green':'gray')+'" style="margin-bottom:12px">'+
+    var retestsOpen2=siteIssues.filter(function(i){return i.status==='Needs Retest';}).length;
+    var ownerApproved=sa&&(sa.status==='Approved'||sa.status==='Paid');
+    var stage=certified?'Stable Verified':(locked?'Locked':(vs.broken?'Needs Fixes':'In Testing'));
+    var tint=certified?'green':(active?'blue':'gray');
+    html+='<div class="card tint-'+tint+'" style="margin-bottom:12px">'+
       '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
       '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
-      (active?
-        '<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Assignments completed: <b>'+done+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen+'</b></span><span>Critical open: <b>'+crit+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
-        (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">READY FOR PUBLIC — every section verified + approved. Next site can unlock.</p>':'<p class="muted" style="margin-top:6px">Not ready: every section must be verified Working and owner-approved first.</p>')
-       : '<p class="muted" style="margin-top:8px">Locked. Unlocks only after the previous site is certified Ready for public.</p>')+
+      (locked?
+        '<p class="muted" style="margin-top:8px">Locked. Unlocks when '+esc(act.name)+' is certified Ready for public.</p>'
+       :'<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen2+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
+        (certified?'<p style="color:var(--green);font-weight:700;margin-top:6px">CERTIFIED — Ready for public. Next site is unlocked.</p>':'<p class="muted" style="margin-top:6px">Not certified yet: every section must be verified Working and owner-approved.</p>'))+
     '</div>';
   });
   v.innerHTML=html;
@@ -1157,7 +1192,7 @@ function startApp(){
   $('#whoName').textContent=s.name;
   var rp=$('#whoRole');rp.textContent=s.role==='owner'?'Owner / Admin':'Employee / Verifier';
   rp.className='pill '+(s.role==='owner'?'s-blue':'s-purple');
-  var a=activeAssignment();$('#whoSite').textContent=a?('Site under test: '+a.site):'';
+  var a=activeAssignment();$('#whoSite').textContent=(isOnline()?'':'OFFLINE (this device only) · ')+(a?('Site under test: '+a.site):'');
   buildTabs();show('dashboard');
 }
 
@@ -1169,9 +1204,17 @@ function startApp(){
     role=b.dataset.role;$$('#roleSeg button').forEach(function(x){x.classList.toggle('on',x===b);});
   });});
   function doLogin(){
-    var ok=login($('#loginName').value,$('#loginPass').value,role);
-    if(!ok){$('#loginErr').textContent='Wrong name or password for this role.';return;}
-    $('#loginErr').textContent='';startApp();
+    var name=$('#loginName').value, pass=$('#loginPass').value;
+    $('#loginErr').textContent='Signing in...';
+    api('POST','/login',{name:name,role:role,password:pass}).then(function(res){
+      store(K.session,{name:res.user.name,role:res.user.role,title:res.user.title,token:res.token,mode:'online',at:nowISO()});
+      return hydrate().then(function(){$('#loginErr').textContent='';startApp();});
+    }).catch(function(e){
+      if(/HTTP 401|invalid/i.test(e.message||'')){$('#loginErr').textContent='Wrong name or password for this role.';return;}
+      // server unreachable -> offline fallback (placeholder local logins only)
+      if(login(name,pass,role)){var s=load(K.session,{});s.mode='offline';store(K.session,s);$('#loginErr').textContent='';startApp();}
+      else{$('#loginErr').textContent='Cannot reach the server. Check your internet, or use the offline placeholder login.';}
+    });
   }
   $('#loginBtn').addEventListener('click',doLogin);
   $('#loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});

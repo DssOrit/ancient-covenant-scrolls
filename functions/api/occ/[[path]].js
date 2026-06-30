@@ -59,22 +59,30 @@ const SEED_DAYS = [
 
 const SEED_SECTIONS = ['Homepage loads','Main navigation menu','Each menu link opens','Mobile / iPad layout','Sign-in / gate (if any)','Footer links'];
 
+const SEED_SITES = [
+  { id: 'asg_eco',    site: 'https://loadeco.app',               name: 'Load Eco' },
+  { id: 'asg_studio', site: 'https://loadeco.app/loadstudio/',   name: 'Load Studio' },
+  { id: 'asg_play',   site: 'https://loadeco.app/LoadPlay/',     name: 'Load Play' },
+  { id: 'asg_ai',     site: 'https://loadeco.app/LoadAI/',       name: 'Load AI' }
+];
 async function ensureSeed(env) {
   const c = await env.DB.prepare('SELECT COUNT(*) AS n FROM assignments').first();
   if (c && c.n > 0) return;
-  await env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind('wk1', 'Load Eco — Full Section Verification', 'https://loadeco.app', 'Witness Bond', 1, 60, 0,
-          'Verify that EVERY section, button and link of Load Eco works before it goes public. Mark each Works or Broken with evidence. You verify and report (you do not fix); broken items become Issues for the owner to fix, then you retest. The site is not ready for sale until every section is verified Working and the owner approves.',
-          'Not Started', '', '', '', '').run();
   const stmts = [];
+  SEED_SITES.forEach(s => {
+    stmts.push(env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?)')
+      .bind(s.id, s.name + ' — Full Section Verification', s.site, 'Witness Bond', 1, 60, 0,
+        'Verify that EVERY section, button and link of ' + s.name + ' works before it goes public. Mark each Works or Broken with evidence. You verify and report (you do not fix); broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',
+        'Not Started', '', '', '', '', ''));
+    SEED_SECTIONS.forEach((name, i) => {
+      stmts.push(env.DB.prepare('INSERT INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
+        .bind('sec_' + s.id + '_' + i, s.site, name, 'Untested', '', '', '', ''));
+    });
+  });
   SEED_DAYS.forEach(d => d.items.forEach((label, idx) => {
     stmts.push(env.DB.prepare('INSERT INTO checklist (id,assignment_id,day,idx,label,done) VALUES (?,?,?,?,?,0)')
-      .bind('ck_' + d.day + '_' + idx, 'wk1', d.day, idx, label));
+      .bind('ck_' + d.day + '_' + idx, 'asg_eco', d.day, idx, label));
   }));
-  SEED_SECTIONS.forEach((name, i) => {
-    stmts.push(env.DB.prepare('INSERT INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
-      .bind('sec_seed_' + i, 'https://loadeco.app', name, 'Untested', '', '', '', ''));
-  });
   await env.DB.batch(stmts);
 }
 
@@ -121,7 +129,7 @@ async function handle(req, env, origin) {
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
     await ensureSeed(env);
     const [a, c, i, e, m, al, sec] = await Promise.all([
-      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes FROM assignments').all(),
+      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate FROM assignments').all(),
       env.DB.prepare('SELECT id,day,idx,label,done FROM checklist ORDER BY day, idx').all(),
       env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
@@ -213,6 +221,11 @@ async function handle(req, env, origin) {
       await env.DB.prepare('UPDATE assignments SET status=?, submitted_date=? WHERE id=?').bind('Submitted', new Date().toISOString(), aid).run();
       return json({ ok: true }, 200, origin);
     }
+    if (method === 'POST' && last === 'invoice') { // employee submits invoice
+      const aid = seg[seg.length - 2];
+      await env.DB.prepare('UPDATE assignments SET invoice_submitted=1, invoice_submitted_date=? WHERE id=?').bind(new Date().toISOString(), aid).run();
+      return json({ ok: true }, 200, origin);
+    }
   }
 
   if (path.endsWith('/api/occ/checklist') && method === 'PATCH') {
@@ -223,12 +236,24 @@ async function handle(req, env, origin) {
   return json({ error: 'not found', path }, 404, origin);
 }
 
+let _schemaReady = false;
+/* Auto-migrate: create the sections table + add invoice columns if missing,
+   so no manual SQL is ever needed. Idempotent; runs once per worker instance. */
+async function ensureSchema(env) {
+  if (_schemaReady) return;
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS sections (id TEXT PRIMARY KEY, site TEXT, name TEXT, status TEXT DEFAULT 'Untested', evidence TEXT, notes TEXT, owner_ok INTEGER DEFAULT 0, verified_at TEXT, updated_by TEXT)").run();
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted INTEGER DEFAULT 0").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
+  _schemaReady = true;
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   const origin = request.headers.get('Origin') || '*';
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(origin) });
   try {
     if (!env.DB) return json({ error: 'database not connected', hint: 'Bind D1 as DB on the Pages project' }, 503, origin);
+    await ensureSchema(env);
     return await handle(request, env, origin);
   } catch (err) {
     return json({ error: 'server error', detail: String(err && err.message || err) }, 500, origin);
