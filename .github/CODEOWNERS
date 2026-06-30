@@ -1,0 +1,10 @@
+# Require the repo owner's review on sensitive areas.
+# (Takes effect once branch protection has "Require review from Code Owners"
+# enabled — additive and harmless until then.)
+
+/functions/        @DssOrit
+/LoadTasks/        @DssOrit
+/occ-backend/      @DssOrit
+/.github/          @DssOrit
+/_headers          @DssOrit
+/robots.txt        @DssOrit

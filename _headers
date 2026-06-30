@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers.
+# Scoped ONLY to the internal Load Tasks / OCC tooling so the public ACR
+# sites are served exactly as before (no rules match their paths).
+
+/LoadTasks/*
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+
+/api/occ/*
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
