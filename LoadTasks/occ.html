@@ -513,7 +513,60 @@ function show(id){
 }
 
 /* ---------- renderers ---------- */
-function activeAssignment(){var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;}
+/* ---------- Daily $60 assignment model (opt-in) ----------
+   Day assignments are $60/day units (kind 'verify' or 'recert'). The site
+   is verified across several days, in order. Rule B gate: after 2 verify
+   days where issues were logged, a re-certification day is required before
+   any new area unlocks. Until day assignments exist, the app behaves exactly
+   as before (whole-site assignment), so nothing live breaks. */
+var DAY_PLAN = {
+  'https://loadeco.app': [
+    {title:'Day 1 — Top bar & Front page', goal:'Verify the top bar (themes, word size, reset) and the Front page (tutorial, tool tiles). Mark each Works or Broken with a screenshot.'},
+    {title:'Day 2 — Help/FAQ & Import', goal:'Verify the Help/FAQ page and the Import a file page. Mark each Works or Broken with a screenshot.'},
+    {title:'Day 3 — Workspace & Create new', goal:'Verify the Workspace popup (file tree, live preview) and the Create new page. Mark each Works or Broken with a screenshot.'},
+    {title:'Day 4 — Library', goal:'Verify the Library page: uploads, covers, webapps. Flag any link that routes into ACR as ACR / Blocked. Mark each Works or Broken with a screenshot.'},
+    {title:'Day 5 — EPUB reader & Edit video', goal:'Verify the EPUB/webapp reader and the Edit video page. Mark each Works or Broken with a screenshot.'}
+  ]
+};
+function dayPlanFor(url){return DAY_PLAN[url]||[];}
+function dayAssignments(){return load(K.assignments,[]).filter(function(a){return a.kind==='verify'||a.kind==='recert';}).sort(function(x,y){return (x.week||0)-(y.week||0);});}
+function dailyMode(){return dayAssignments().length>0;}
+function isDayAsg(a){return !!(a&&(a.kind==='verify'||a.kind==='recert'));}
+function lastRecertWeek(){var w=0;dayAssignments().forEach(function(a){if(a.kind==='recert'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>w)w=a.week;});return w;}
+function dayHadIssues(a){return load(K.issues,[]).some(function(i){return i.assignment===a.id;});}
+function issueDaysSinceRecert(){var lr=lastRecertWeek(),n=0;dayAssignments().forEach(function(a){if(a.kind==='verify'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>lr&&dayHadIssues(a))n++;});return n;}
+function pendingRecert(){return dayAssignments().filter(function(a){return a.kind==='recert'&&a.status!=='Paid';})[0]||null;}
+function recertRequired(){return issueDaysSinceRecert()>=2;}
+function gateActive(){return dailyMode()&&recertRequired()&&!pendingRecert();}
+function nextDayWeek(){var w=0;dayAssignments().forEach(function(a){if((a.week||0)>w)w=a.week;});return w+1;}
+function activeAssignment(){
+  if(dailyMode()){
+    var pr=pendingRecert();if(pr)return pr;
+    var nextVerify=dayAssignments().filter(function(a){return a.kind==='verify'&&a.status!=='Paid';})[0];
+    return nextVerify||dayAssignments().filter(function(a){return a.status!=='Paid';})[0]||dayAssignments()[dayAssignments().length-1]||null;
+  }
+  var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;
+}
+function pctCompleteDay(a){
+  if(a.status==='Paid')return 100;
+  if(a.status==='Approved'||a.status==='Payment Due')return a.invoiceSubmitted?95:80;
+  if(a.status==='Submitted')return 60;
+  if(a.status==='In Progress')return 30;
+  return 0;
+}
+function payAutoCheckDay(a){
+  var hasProof=load(K.evidence,[]).length>0||load(K.issues,[]).length>0;
+  var checks=[
+    {label:'Owner approved this day’s work', ok:(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')},
+    {label:'Evidence or issues recorded', ok:hasProof},
+    {label:'Employee submitted an invoice', ok:!!a.invoiceSubmitted}
+  ];
+  return {checks:checks, pass:checks.every(function(c){return c.ok;})};
+}
+function canInvoice(a){
+  if(isDayAsg(a))return (a.status==='Approved'||a.status==='Payment Due')&&!a.invoiceSubmitted;
+  return (a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')&&pctComplete(a)>=100&&!a.invoiceSubmitted;
+}
 
 function checklistStats(){
   var c=load(K.checklist,{}),done=0,total=0;
@@ -548,7 +601,7 @@ function rDashboard(v){
     '<button class="card tint-green" data-go="howto" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:14px;display:block"><h3 style="margin:0 0 4px">New here? Read How to Use</h3><span class="muted">A full, plain-language guide to every section and exactly what to do. Tap to open &rarr;</span></button>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
-      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Full site verification · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
+      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">'+(isDayAsg(a)?'Daily assignment':'Full site verification')+' · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
       card('green','Site Under Test', a?('<b>'+esc(a.site)+'</b>'):'<span class="muted">—</span>')+
     '</div>'+
     '<div class="card tint-purple" style="margin-bottom:14px"><h3>Assignment Progress</h3>'+
@@ -586,8 +639,12 @@ function card(c,title,body){return '<div class="card tint-'+c+'"><h3>'+esc(title
 function quick(go,c,title){return '<button class="card tint-'+c+'" data-go="'+go+'" style="text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px"><h3 style="margin:0">'+esc(title)+'</h3><span class="muted">Open &rarr;</span></button>';}
 
 function rAssignments(v){
-  var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
   var owner=isOwner();
+  if(dailyMode())return rAssignmentsDaily(v,owner);
+  var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
+  var setupCard=owner?('<div class="card tint-blue" style="margin-bottom:14px"><h3>Switch to daily $60 assignments</h3>'+
+    '<p class="muted">Split '+esc(activeSite().name.replace(' / Main Load',''))+' into day-sized $60 assignments she works through in order. After two days of logging issues, the site routes her to a re-verify day before any new area unlocks. You can add a re-verify day anytime. This is reversible.</p>'+
+    '<button class="btn blue" id="aSetupDaily">Set up daily $60 assignments</button></div>'):'';
   var _st=checklistStats();var reqTasks=_st.total>0&&_st.done===_st.total;var reqEvidence=(load(K.issues,[]).length||load(K.evidence,[]).length)>0;
   var _vs=siteVerifyStats(a.site);var reqSections=_vs.total>0 && siteSections(a.site).filter(function(s){return s.status==='Untested'||(s.status==='Works'&&!(s.evidence&&s.evidence.trim()));}).length===0;
   var _pc=pctComplete(a);
@@ -601,7 +658,7 @@ function rAssignments(v){
     '</ul>'+
     '<div class="progress"><i style="width:'+_pc+'%"></i></div>'+
     '<p class="muted" style="margin-top:8px">Assignment '+_pc+'% complete. Pay is released only at 100% with every check passed.</p></div>';
-  v.innerHTML='<h1>Assignments Center</h1>'+ scopeCard +
+  v.innerHTML='<h1>Assignments Center</h1>'+ setupCard + scopeCard +
     '<div class="card tint-purple">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
       '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>Full site verification</b></span></div>'+
@@ -620,6 +677,7 @@ function rAssignments(v){
         '<p class="muted">Checkboxes alone are not enough — every section must be verified with evidence.</p>'+
         '<button class="btn purple" id="aSubmit">Submit for review</button>')+
     '</div>';
+  if(owner&&$('#aSetupDaily',v))$('#aSetupDaily',v).addEventListener('click',setupDailyAssignments);
   if(owner){
     $('#aSave',v).addEventListener('click',function(){
       var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
@@ -643,6 +701,81 @@ function rAssignments(v){
       toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
     });
   }
+}
+
+/* ---- Daily assignment actions + view ---- */
+function createDayAssignment(o){
+  var as=load(K.assignments,[]);
+  if(as.some(function(x){return x.id===o.id;}))return false;
+  as.push({id:o.id,title:o.title,site:o.site,worker:'Witness Bond',week:o.week,pay:60,bonus:0,goal:o.goal,status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false,kind:o.kind,scope:o.scope||''});
+  store(K.assignments,as);
+  if(isOnline())api('POST','/assignments',{id:o.id,title:o.title,site:o.site,week:o.week,pay:60,goal:o.goal,kind:o.kind,scope:o.scope||''}).catch(function(){});
+  return true;
+}
+function setupDailyAssignments(){
+  var site=activeSite(),plan=dayPlanFor(site.url);
+  if(!plan.length){toast('No day plan for this site yet.');return;}
+  var slug=site.url.replace(/[^a-z0-9]+/gi,'').slice(-8),made=0;
+  plan.forEach(function(d,i){if(createDayAssignment({id:'day_'+slug+'_'+(i+1),title:d.title,site:site.url,week:i+1,goal:d.goal,kind:'verify'}))made++;});
+  logActivity('Daily assignments set up',site.name);
+  toast(made?('Created '+made+' daily $60 assignments'):'Already set up');
+  if(isOnline())hydrate().then(function(){render('assignments');}).catch(function(){render('assignments');});else render('assignments');
+}
+function addReverifyDay(){
+  var site=activeSite(),w=nextDayWeek();
+  createDayAssignment({id:'recert_'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+w,title:'Re-certification (Day '+w+') — retest fixes',site:site.url,week:w,kind:'recert',
+    goal:'Re-verify the issues that were marked fixed. Retest each fixed item and mark it Works (with a screenshot) or still Broken. New areas stay locked until the owner approves this day.'});
+  logActivity('Re-verify day added',site.name);
+  if(isOnline())hydrate().then(function(){render('assignments');}).catch(function(){render('assignments');});else render('assignments');
+}
+function submitDay(a){
+  a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);logActivity('Day submitted for review',a.title);
+  toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
+}
+function rAssignmentsDaily(v,owner){
+  var a=activeAssignment(),days=dayAssignments(),gate=gateActive();
+  var html='<h1>Daily Assignments</h1>'+
+    '<p class="muted">Each day is a <b>$60</b> task — verify the day’s area, log issues with a screenshot, the owner approves, then you invoice. After <b>two days</b> of logging issues, a <b>re-verify day</b> is required before any new area unlocks.</p>';
+  if(gate){
+    html+='<div class="card tint-red" style="margin:12px 0"><h3>Re-certification required</h3>'+
+      '<p class="muted">Two days of issues have been logged. New areas are locked until a re-verify day is done.</p>'+
+      (owner?'<button class="btn red" id="aAddRecert">Open a re-verify day ($60)</button>':'<p class="muted">Waiting for the owner to open a re-verify day.</p>')+'</div>';
+  }
+  if(a){
+    var isRecert=a.kind==='recert';
+    html+='<div class="card tint-'+(isRecert?'orange':'purple')+'" style="margin:12px 0">'+
+      '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>'+(isRecert?'Re-certification day':'Verification day')+'</b></span></div>'+
+      '<p style="margin-top:10px"><b>Today:</b> '+esc(a.goal)+'</p>'+
+      '<div class="card tint-green" style="margin:12px 0"><h3>What this assignment covers for payment</h3>'+
+        '<p class="muted">A $60 day. To get paid: verify today’s area, log any issues with a screenshot, the owner approves your day, then submit the invoice. Pay releases after approval + invoice.</p></div>'+
+      (owner?
+        '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+['Not Started','In Progress','Submitted','Needs Retest','Approved','Paid'].map(function(s){return '<option'+(s===a.status?' selected':'')+'>'+s+'</option>';}).join('')+'</select></label>'+
+        '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes||'')+'</textarea></label>'+
+        '<button class="btn purple owner-only" id="aSaveDay">Save day</button>'
+       :
+        (gate&&!isRecert?'<p class="muted">New areas are locked until the re-verify day is done.</p>':
+         (a.status==='Submitted'?'<p class="muted">Submitted — waiting on the owner to approve your day.</p>':
+          ((a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')?'<p class="muted">Approved. Open the Invoice tab to submit your $60 invoice.</p>':
+           '<button class="btn purple" id="aSubmitDay">Submit this day for review</button>'))))+
+    '</div>';
+  }
+  html+='<div class="card"><h3>Day plan ('+days.length+')</h3>';
+  days.forEach(function(d){html+='<div class="list-item"><b>'+esc(d.title)+'</b> '+statusChip(d.status)+' <span class="chip s-gold">$'+esc(d.pay)+'</span>'+(d.kind==='recert'?' <span class="chip s-orange">re-verify</span>':'')+
+    '<div class="kvs"><span>'+(d.paidDate?('paid '+fmtDate(d.paidDate)):(d.approvedDate?('approved '+fmtDate(d.approvedDate)):(d.submittedDate?('submitted '+fmtDate(d.submittedDate)):'not started')))+'</span></div></div>';});
+  html+='</div>';
+  if(owner)html+='<div class="row" style="margin-top:12px"><button class="btn sm" id="aAddRecert2">Add a re-verify day ($60)</button></div>';
+  v.innerHTML=html;
+  if(owner&&$('#aSaveDay',v))$('#aSaveDay',v).addEventListener('click',function(){
+    var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
+    if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
+    if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
+    saveAssignment(a);if(a.status!==prev)logActivity('Day status: '+a.status,a.title);
+    toast('Day saved');render('assignments');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus||0,owner_notes:a.ownerNotes});},'assignments');
+  });
+  if($('#aSubmitDay',v))$('#aSubmitDay',v).addEventListener('click',function(){submitDay(a);});
+  if($('#aAddRecert',v))$('#aAddRecert',v).addEventListener('click',addReverifyDay);
+  if($('#aAddRecert2',v))$('#aAddRecert2',v).addEventListener('click',addReverifyDay);
 }
 
 function rDaily(v){
@@ -809,6 +942,7 @@ function rIssues(v){
     var issue={id:'iss_'+Date.now(),title:t,site:$('#iSite',v).value,page:$('#iPage',v).value,browser:$('#iBrowser',v).value,
       device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
       severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
+      assignment:(dailyMode()?((activeAssignment()||{}).id||''):''),
       by:session().name,at:nowISO()};
     issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');sync(function(){return api('POST','/issues',issue);},'issues');
   });
@@ -818,11 +952,12 @@ function rIssues(v){
     var missing=ECO_FINDINGS.filter(function(f){return have.indexOf(f.t)<0;});
     if(!missing.length){toast('All findings already added');return;}
     var ecoName=SITES[0].name, me=session().name, now=nowISO();
+    var dayId=(dailyMode()?((activeAssignment()||{}).id||''):'');
     var made=missing.map(function(f,i){
       return {id:'iss_'+Date.now()+'_'+i,title:f.t,site:ecoName,page:f.p,browser:'',device:f.d||'',
         steps:'',expected:'',actual:f.a,severity:f.s,status:'New',shot:'',
         notes:f.acr?'ACR / BLOCKED — routes into an ACR site. Off limits; needs the owner’s explicit approval. Do not fix or link.':'',
-        by:me,at:now};
+        assignment:dayId,by:me,at:now};
     });
     issues=made.concat(issues);store(K.issues,issues);
     logActivity('Loaded today’s findings',made.length+' issues');toast('Added '+made.length+' issues');
@@ -1087,6 +1222,7 @@ function rEmergency(v){
 /* Auto-check that must pass before the owner pays — protects against
    paying for incomplete or unverified work. */
 function payAutoCheck(a){
+  if(isDayAsg(a))return payAutoCheckDay(a);
   var vs=siteVerifyStats(a.site),steps=checklistStats();
   var checks=[
     {label:'Owner approved the assignment', ok:(a.status==='Approved'||a.status==='Paid')},
@@ -1099,6 +1235,7 @@ function payAutoCheck(a){
 }
 /* Percent of the $60 assignment actually completed (work done). */
 function pctComplete(a){
+  if(isDayAsg(a))return pctCompleteDay(a);
   var vs=siteVerifyStats(a.site),steps=checklistStats();
   var secPct=vs.total?vs.ok/vs.total:0;
   var stepPct=steps.total?steps.done/steps.total:0;
@@ -1123,7 +1260,7 @@ function rPayment(v){
     '<div class="card tint-gold"><h3>'+esc(a.title)+' '+statusChip(pstat)+'</h3>'+
       '<div class="kvs"><span>Assignment: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
       '<div class="kvs"><span>Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'—')+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
-      '<p class="muted" style="margin-top:8px">$60 per full assignment · optional bonus $10–$25 · paid only after this auto-check passes.</p></div>'+
+      '<p class="muted" style="margin-top:8px">$60 per assignment · optional bonus $10–$25 · paid only after this auto-check passes.</p></div>'+
     '<div class="card tint-'+(ac.pass?'green':'orange')+'" style="margin:14px 0"><h3>Auto-check before paying '+(ac.pass?'<span class="chip s-green">PASS</span>':'<span class="chip s-orange">NOT READY</span>')+'</h3>'+
       ac.checks.map(function(c){return '<div class="check" style="border:0;padding:6px 0"><span style="color:'+(c.ok?'var(--green)':'var(--red)')+';font-weight:800">'+(c.ok?'✓':'✗')+'</span><label>'+esc(c.label)+'</label></div>';}).join('')+
       (ac.pass?'<p style="color:var(--green);font-weight:700">Everything checks out — safe to pay.</p>':'<p class="muted">Pay is blocked until every line is ✓.</p>')+'</div>'+
@@ -1171,7 +1308,8 @@ function rInvoice(v){
     'Work summary: '+a.goal+'\n';
   var invPct=pctComplete(a);
   var invApproved=(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid');
-  var canSubmitInv=invApproved && invPct>=100 && !a.invoiceSubmitted;
+  var canSubmitInv=canInvoice(a);
+  var dayUnit=isDayAsg(a);
   v.innerHTML='<h1>Invoice Center</h1>'+
     '<div class="card tint-gold"><div class="doc" id="invDoc">'+esc(inv)+'</div>'+
       '<div class="row" style="margin-top:14px">'+
@@ -1181,14 +1319,19 @@ function rInvoice(v){
         (isOwner()?'<button class="btn green owner-only" id="invPaid">Mark as paid</button>':'')+
       '</div></div>'+
     (!isOwner()?
-      ((invPct>=100
+      (dayUnit?
+        ((a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')
+          ?'<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:14px;margin-top:14px;color:var(--green)"><b style="font-size:1.1rem">Day approved — ready to invoice</b></div>'
+          :'<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:14px;margin-top:14px;color:var(--red)"><b style="font-size:1.15rem">NOT READY TO INVOICE</b><div style="color:var(--text);margin-top:4px">Submit your day and wait for the owner to approve it before you invoice.</div></div>')
+       :((invPct>=100
         ?'<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:14px;margin-top:14px;color:var(--green)"><b style="font-size:1.1rem">Assignment '+invPct+'% complete</b></div>'
-        :'<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:14px;margin-top:14px;color:var(--red)"><b style="font-size:1.15rem">NOT READY TO INVOICE — '+invPct+'% complete</b><div style="color:var(--text);margin-top:4px">Verify every section (Works + evidence) and finish all steps before you can invoice.</div></div>'))+
+        :'<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:14px;margin-top:14px;color:var(--red)"><b style="font-size:1.15rem">NOT READY TO INVOICE — '+invPct+'% complete</b><div style="color:var(--text);margin-top:4px">Verify every section (Works + evidence) and finish all steps before you can invoice.</div></div>')))+
       '<div class="card tint-gold" style="margin-top:14px"><h3>Submit invoice for payment</h3>'+
         (a.invoiceSubmitted?'<p style="color:var(--green);font-weight:700">Invoice submitted '+fmtDate(a.invoiceSubmittedDate)+' — waiting on owner.</p>'
-         :(canSubmitInv?'<p class="muted">Your work is 100% verified and approved. Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
-           :(invPct<100?'<p class="muted">Finish verifying every section first — see the red flag above.</p>'
-             :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
+         :(canSubmitInv?'<p class="muted">'+(dayUnit?'Your day is approved.':'Your work is 100% verified and approved.')+' Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
+           :(dayUnit?'<p class="muted">Submit your day and wait for the owner to approve it, then you can invoice.</p>'
+             :(invPct<100?'<p class="muted">Finish verifying every section first — see the red flag above.</p>'
+               :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>'))))+
       '</div>':'');
   if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
     a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');sync(function(){return api('POST','/assignments/'+a.id+'/invoice');},'invoice');
@@ -1350,7 +1493,7 @@ var HOWTO={
 var GUIDE=[
   {tab:'dashboard',  name:'Dashboard',      what:'Your home screen. Shows your progress, open issues, payment status, and how much of the $60 assignment is done.', todo:'Glance here first each day to see where things stand.'},
   {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
-  {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
+  {tab:'assignments',name:'Assignments',   what:'Your work is split into daily $60 assignments. Each day covers one area; finish it, the owner approves, you invoice $60, then the next day unlocks. After two days of logging issues, a re-verify day is required before any new area.', todo:'Do today’s area, log issues with a screenshot, then tap Submit this day for review.'},
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
   {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works, Broken, or ACR / Blocked, with a screenshot as proof.', todo:'Test every button and link in each section. If a link routes into an ACR site, mark it ACR / Blocked and stop — do not fix or follow it. Otherwise mark Works or Broken and add the screenshot. See the Screenshots note below.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
@@ -1360,7 +1503,7 @@ var GUIDE=[
   {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
   {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
   {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
-  {tab:'invoice',    name:'Invoice',        what:'Where the employee submits an invoice after the owner approves the work.', todo:'Submit only after approval. Submitting too early gets you red-flagged.'},
+  {tab:'invoice',    name:'Invoice',        what:'Where you submit your $60 invoice after the owner approves that day’s work.', todo:'Submit once the owner approves your day. Each approved day is its own $60 invoice.'},
   {tab:'documents',  name:'Training',       what:'Your guides and workbooks to read or download.', todo:'Read these when you start a new site.'},
   {tab:'release',    name:'Certification',  what:'Tracks when each Load site is Ready for public. Sites unlock in order: Eco, then Studio, then Play, then AI.', todo:'A site is done only when every section passes and the owner approves. The next site then unlocks on its own.'},
   {tab:'history',    name:'History',        what:'Every past assignment, kept forever. Nothing disappears.', todo:'Look back at finished jobs and their pay any time.'},
@@ -1369,11 +1512,12 @@ var GUIDE=[
   {tab:'data',       name:'Data',           what:'Export, import, or reset this device’s copy of the data.', todo:'Use Export now and then to keep a backup.'}
 ];
 var PAY_RULES=[
-  'Each full assignment is worth <b>$60</b> — for the whole site verified, not per hour or per day.',
-  'The Dashboard shows the <b>percent complete</b> of the $60 assignment.',
-  'The employee can submit an invoice <b>only after the owner approves</b> the work.',
-  'The owner can mark it paid <b>only when the Auto-check passes</b>: work approved, every section verified and owner-approved, steps done, and the invoice submitted.',
-  'If the work is not complete, <b>both sides are red-flagged</b> — the owner sees DO NOT PAY, and the employee sees the missing items. Finish them to clear the flag.'
+  'Each <b>daily assignment is worth $60</b> — one day’s worth of work, not the whole site at once.',
+  'Do today’s area, then <b>Submit this day for review</b>. The owner approves, you invoice $60, and the next day unlocks.',
+  'After <b>two days of logging issues</b>, a <b>re-verify day</b> is required before any new area opens — retest the fixes first.',
+  'You can submit an invoice <b>only after the owner approves that day</b>.',
+  'The owner can mark it paid <b>only when the Auto-check passes</b>: day approved, evidence or issues recorded, and the invoice submitted.',
+  'Re-verifying after fixes is its own <b>$60 day</b>.'
 ];
 var FAQ=[
   ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
@@ -1402,6 +1546,19 @@ function rHowTo(v){
   // Quick start for the logged-in role
   html+=steps(owner?'Your first 5 minutes — Owner':'Your first 5 minutes — Employee', owner?HOWTO.owner:HOWTO.employee, owner?'blue':'purple');
 
+  // How a day works (daily $60 model)
+  html+='<div class="card tint-purple" style="margin:14px 0"><h3>How a day works</h3>'+
+    '<ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">Open <b>Assignments</b> — it shows today’s area and that it pays <b>$60</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, check that area. Mark each part Works or Broken, and add a screenshot as evidence.</li>'+
+      '<li style="margin-bottom:8px">Anything broken → log it in <b>Issues</b> (you report, you do not fix).</li>'+
+      '<li style="margin-bottom:8px">Back in <b>Assignments</b>, tap <b>Submit this day for review</b>.</li>'+
+      '<li style="margin-bottom:8px">The owner approves → open <b>Invoice</b> and submit your <b>$60</b> invoice.</li>'+
+      '<li style="margin-bottom:0">After <b>two days</b> of logging issues, the site opens a <b>re-verify day</b> ($60) — retest the fixes before any new area unlocks.</li>'+
+    '</ol></div>';
+  // Evidence in one step
+  html+='<div class="card tint-green" style="margin:14px 0"><h3>Evidence — keep it simple</h3>'+
+    '<p style="margin:0">Take a screenshot, then either <b>type its file name</b> in the section’s Evidence box in Verify Sections, or <b>upload it</b> in Evidence. That’s your proof — one step, done. Uploaded images auto-delete after 48 hours; typed names are kept.</p></div>';
   // What each section does
   html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
   GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
