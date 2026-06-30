@@ -214,6 +214,8 @@
     <section class="view" data-view="payment"></section>
     <!-- Invoice -->
     <section class="view" data-view="invoice"></section>
+    <!-- How To -->
+    <section class="view" data-view="howto"></section>
     <!-- Documents -->
     <section class="view" data-view="documents"></section>
     <!-- Release readiness -->
@@ -385,6 +387,7 @@ var TABS = [
   {id:'emergency',label:'Emergency',c:'red'},
   {id:'payment',label:'Payment',c:'gold'},
   {id:'invoice',label:'Invoice',c:'gold'},
+  {id:'howto',label:'How To',c:'gray'},
   {id:'documents',label:'Training',c:'gray'},
   {id:'release',label:'Certification',c:'green'},
   {id:'history',label:'History',c:'gray'},
@@ -428,7 +431,7 @@ function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
   ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
-    release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
+    howto:rHowTo,release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
 }
 
 function rDashboard(v){
@@ -975,6 +978,38 @@ var DOCS={
     'Add a screenshot or note for anything you mark broken or confusing.\n'+
     'No evidence = it cannot be verified.'
 };
+var HOWTO={
+  employee:['Log in as Employee with your name and password.',
+    'Open <b>Verify Sections</b>. Add every section of the site — homepage, each menu, each page/tile, the footer.',
+    'For each section, check <b>every button and link</b>. Mark it Works or Broken, and type a screenshot file name as evidence.',
+    'If something is broken, open <b>Issues</b> and log it. You report — you do NOT fix. The owner fixes it, then you retest that section.',
+    'Do the <b>Steps</b> checklist (inventory, navigation, first-time review, browser comparison, report).',
+    'When every section is verified and steps are done, open <b>Assignments</b> and tap <b>Submit for review</b>.',
+    'Wait for the owner to approve your work.',
+    'After approval, open <b>Invoice</b> and tap <b>Submit invoice for payment</b>.',
+    'Use <b>Messages</b> to talk to the owner. Use <b>Emergency</b> only for urgent blockers.'],
+  owner:['Log in as Owner with your name and password.',
+    'Check the <b>Dashboard</b> and <b>Owner Review</b> for her progress and what needs attention.',
+    'Open <b>Verify Sections</b>. Review each section and its evidence, then tap <b>Approve section</b>.',
+    'Open <b>Issues</b> to see what she reported. Fix them (or send to Claude), then set the issue to <b>Verified Fixed</b> so she retests.',
+    'Use <b>Owner Review</b> to Approve, Request retest, or Return with notes. She cannot approve her own work.',
+    'Open <b>Payment</b>. The <b>Auto-check</b> must show PASS (work approved + every section verified + approved + steps done + invoice submitted) before <b>Mark paid</b> works.',
+    'Open <b>Certification</b>. A site is Ready for public only when every section is verified Working and owner-approved. Then the next site unlocks (Load Eco → Studio → Play → AI).',
+    'Use <b>Messages</b> to reply to her.']
+};
+function rHowTo(v){
+  var owner=isOwner();
+  function block(title,steps,tint){
+    return '<div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+      steps.map(function(s){return '<li style="margin-bottom:6px">'+s+'</li>';}).join('')+'</ol></div>';
+  }
+  var mine=owner?block('How to use OCC — Owner (you)',HOWTO.owner,'blue'):block('How to use OCC — Employee (you)',HOWTO.employee,'purple');
+  var other=owner?block('What the employee does',HOWTO.employee,'gray'):block('What the owner does',HOWTO.owner,'gray');
+  v.innerHTML='<h1>How To</h1>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+(owner?'You review, fix issues, approve, and pay only after the auto-check passes.':'You verify every section with evidence and report problems — you do not fix.')+'</div>'+
+    mine+other;
+}
+
 function rDocuments(v){
   var html='<h1>Documents &amp; Training</h1>'+
     '<p class="muted">Read your guides right here — no switching to Word. Each one can also be downloaded. New weekly workbooks appear here too.</p>'+
