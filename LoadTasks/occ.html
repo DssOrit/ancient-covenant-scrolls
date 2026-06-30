@@ -358,6 +358,35 @@ function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sect
 
 /* ---------- session / auth ---------- */
 function session(){return load(K.session,null);}
+/* ---- backend wiring (online) with offline fallback ---- */
+var API_BASE='/api/occ';
+function isOnline(){return (session()||{}).mode==='online';}
+function authToken(){return (session()||{}).token||'';}
+function api(method,path,body){
+  var o={method:method,headers:{'Content-Type':'application/json'}};
+  if(authToken())o.headers['Authorization']='Bearer '+authToken();
+  if(body)o.body=JSON.stringify(body);
+  return fetch(API_BASE+path,o).then(function(r){
+    return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}
+      if(!r.ok)throw new Error((d&&d.error)||('HTTP '+r.status));return d;});
+  });
+}
+function hydrate(){
+  return api('GET','/bootstrap').then(function(d){
+    if(d.assignments)store(K.assignments,d.assignments);
+    if(d.checklist){var c={};d.checklist.forEach(function(r){var k='day'+r.day;(c[k]=c[k]||[]);c[k][r.idx]={label:r.label,done:!!r.done,id:r.id};});store(K.checklist,c);}
+    if(d.issues)store(K.issues,d.issues);
+    if(d.evidence)store(K.evidence,d.evidence);
+    if(d.messages)store(K.messages,d.messages);
+    if(d.alerts)store(K.alerts,d.alerts);
+    if(d.sections)store(K.sections,d.sections);
+  });
+}
+/* optimistic local write already done by caller; push to server then refresh */
+function sync(apiCallFn,view){
+  if(!isOnline())return;
+  apiCallFn().then(hydrate).then(function(){if(view)render(view);}).catch(function(e){toast('Sync failed: '+(e.message||e));});
+}
 function isOwner(){var s=session();return s&&s.role==='owner';}
 /* Roles & permissions — scalable for future employees/managers/etc.
    Active now: owner, employee. Others are placeholders (not selectable yet). */
@@ -411,7 +440,8 @@ function buildTabs(){
 function show(id){
   $$('#tabs button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id);});
   $$('.view').forEach(function(v){v.classList.toggle('active',v.dataset.view===id);});
-  render(id);
+  if(isOnline()){ hydrate().then(function(){render(id);}).catch(function(){render(id);}); }
+  else render(id);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -517,7 +547,7 @@ function rAssignments(v){
       if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
       saveAssignment(a);
       if(a.status!==prev)logActivity(a.status==='Approved'?'Assignment approved':(a.status==='Paid'?'Payment marked paid':'Assignment status: '+a.status),a.title);
-      toast('Assignment saved');render('assignments');
+      toast('Assignment saved');render('assignments');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'assignments');
     });
   }else{
     $('#aSubmit',v).addEventListener('click',function(){
@@ -530,7 +560,7 @@ function rAssignments(v){
       if(st.done<st.total){toast('Finish all verification steps first ('+st.done+'/'+st.total+').');return;}
       a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);
       logActivity('Assignment submitted',a.title);
-      toast('Submitted for review');render('assignments');
+      toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
     });
   }
 }
@@ -551,7 +581,7 @@ function rDaily(v){
   v.innerHTML=html;
   $$('input[type=checkbox]',v).forEach(function(cb){
     cb.addEventListener('change',function(){
-      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);
+      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);var _it=c2['day'+cb.dataset.day][cb.dataset.idx];if(_it&&_it.id)sync(function(){return api('PATCH','/checklist',{id:_it.id,done:cb.checked});},'daily');
       var st=checklistStats();
       if(cb.checked&&st.done===1)logActivity('Checklist started');
       if(st.total>0&&st.done===st.total)logActivity('Checklist completed');
@@ -596,22 +626,22 @@ function rVerify(v){
   $('#secAdd',v).addEventListener('click',function(){
     var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
     rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
-    persist(rows);toast('Section added');render('verify');
+    persist(rows);toast('Section added');render('verify');sync(function(){return api('POST','/sections',{site:site.url,name:n});},'verify');
   });
   $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
     var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
     r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
     if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
     if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
-    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');
+    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+id,{status:r.status,evidence:r.evidence,notes:r.notes});},'verify');
   });});
   $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
-    if(!confirm('Delete this section?'))return;rows=rows.filter(function(x){return x.id!==b.dataset.secdel;});persist(rows);render('verify');
+    if(!confirm('Delete this section?'))return;var _id=b.dataset.secdel;rows=rows.filter(function(x){return x.id!==_id;});persist(rows);render('verify');sync(function(){return api('DELETE','/sections/'+_id);},'verify');
   });});
   if(owner)$$('[data-secok]',v).forEach(function(b){b.addEventListener('click',function(){
     var r=rows.filter(function(x){return x.id===b.dataset.secok;})[0];if(!r)return;
     if(!r.ownerOk&&!sectionVerified(r)){toast('Section must be Works + evidence before approval.');return;}
-    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');
+    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+r.id,{ownerOk:r.ownerOk});},'verify');
   });});
 }
 
@@ -638,7 +668,7 @@ function rReview(v){
     if(st==='Paid'&&!a.paidDate)a.paidDate=nowISO();
     saveAssignment(a);
     logActivity(st==='Approved'?'Assignment approved':(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':(st==='Needs Retest'?'Retest requested':'Assignment returned'))),a.title);
-    toast('Review saved: '+st);render('review');
+    toast('Review saved: '+st);render('review');sync(function(){return api('PATCH','/assignments/'+a.id,{status:st,owner_notes:a.ownerNotes});},'review');
   });});
 }
 
@@ -671,7 +701,7 @@ function rIssues(v){
       device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
       severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
       by:session().name,at:nowISO()};
-    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');
+    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');sync(function(){return api('POST','/issues',issue);},'issues');
   });
   $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
   $('#iPrint',v).addEventListener('click',function(){window.print();});
@@ -684,7 +714,7 @@ function rIssues(v){
     if(isOwner()){
       var sel=el('<select style="margin-top:8px"></select>');
       ['New','Under Review','Needs Retest','Verified Fixed','Closed'].forEach(function(s){var o=document.createElement('option');o.text=s;o.selected=s===i.status;sel.appendChild(o);});
-      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);toast('Issue status updated');render('issues');});
+      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);sync(function(){return api('PATCH','/issues/'+i.id,{status:i.status});},'issues');toast('Issue status updated');render('issues');});
       d.appendChild(sel);
     }
     list.appendChild(d);
@@ -705,7 +735,7 @@ function rEvidence(v){
     var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
       browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
     if(!rec.shot&&!rec.video){toast('Add a filename first');return;}
-    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');
+    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');sync(function(){return api('POST','/evidence',rec);},'evidence');
   });
   $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
   var list=$('#eList',v);
@@ -727,7 +757,7 @@ function rMessages(v){
     msgs.unshift({id:'m_'+Date.now(),sender:sess.name,senderRole:sess.role,
       recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',
       body:body,at:nowISO()});
-    store(K.messages,msgs);toast('Message sent');render('messages');
+    store(K.messages,msgs);sync(function(){return api('POST','/messages',{recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',body:body});},'messages');toast('Message sent');render('messages');
   }
   $('#mSend',v).addEventListener('click',function(){send($('#mBody',v).value,$('#mPriority',v).value);});
   $('#mHelp',v).addEventListener('click',function(){send('NEED HELP: '+($('#mBody',v).value||'Please assist.'),'urgent');});
@@ -755,7 +785,7 @@ function rEmergency(v){
     var a={id:'al_'+Date.now(),what:$('#emgWhat',v).value||'(no detail)',site:$('#emgSite',v).value,browser:$('#emgBrowser',v).value,
       device:$('#emgDevice',v).value,urgency:$('#emgUrg',v).value,shot:$('#emgShot',v).value,notes:$('#emgNotes',v).value,
       by:session().name,at:nowISO()};
-    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');
+    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');sync(function(){return api('POST','/alerts',a);},'emergency');
   }
   $('#emgFire',v).addEventListener('click',function(){$('#emgWhat',v).focus();toast('Fill the form, then Send.');});
   $('#emgSave',v).addEventListener('click',fire);
@@ -825,7 +855,7 @@ function rPayment(v){
       }
       else if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
       else{a.status='Approved';}
-      saveAssignment(a);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
+      saveAssignment(a);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'payment');
     });});
   }
 }
@@ -871,7 +901,7 @@ function rInvoice(v){
              :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
       '</div>':'');
   if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
-    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
+    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');sync(function(){return api('POST','/assignments/'+a.id+'/invoice');},'invoice');
   });
   $('#invPrint',v).addEventListener('click',function(){window.print();});
   $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
@@ -879,7 +909,7 @@ function rInvoice(v){
   if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){
     var chk=payAutoCheck(a);
     if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+f[0]);return;}
-    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');});
+    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');sync(function(){return api('PATCH','/assignments/'+a.id,{status:'Paid'});},'invoice');});
 }
 
 var DOCS={
@@ -1162,7 +1192,7 @@ function startApp(){
   $('#whoName').textContent=s.name;
   var rp=$('#whoRole');rp.textContent=s.role==='owner'?'Owner / Admin':'Employee / Verifier';
   rp.className='pill '+(s.role==='owner'?'s-blue':'s-purple');
-  var a=activeAssignment();$('#whoSite').textContent=a?('Site under test: '+a.site):'';
+  var a=activeAssignment();$('#whoSite').textContent=(isOnline()?'':'OFFLINE (this device only) · ')+(a?('Site under test: '+a.site):'');
   buildTabs();show('dashboard');
 }
 
@@ -1174,9 +1204,17 @@ function startApp(){
     role=b.dataset.role;$$('#roleSeg button').forEach(function(x){x.classList.toggle('on',x===b);});
   });});
   function doLogin(){
-    var ok=login($('#loginName').value,$('#loginPass').value,role);
-    if(!ok){$('#loginErr').textContent='Wrong name or password for this role.';return;}
-    $('#loginErr').textContent='';startApp();
+    var name=$('#loginName').value, pass=$('#loginPass').value;
+    $('#loginErr').textContent='Signing in...';
+    api('POST','/login',{name:name,role:role,password:pass}).then(function(res){
+      store(K.session,{name:res.user.name,role:res.user.role,title:res.user.title,token:res.token,mode:'online',at:nowISO()});
+      return hydrate().then(function(){$('#loginErr').textContent='';startApp();});
+    }).catch(function(e){
+      if(/HTTP 401|invalid/i.test(e.message||'')){$('#loginErr').textContent='Wrong name or password for this role.';return;}
+      // server unreachable -> offline fallback (placeholder local logins only)
+      if(login(name,pass,role)){var s=load(K.session,{});s.mode='offline';store(K.session,s);$('#loginErr').textContent='';startApp();}
+      else{$('#loginErr').textContent='Cannot reach the server. Check your internet, or use the offline placeholder login.';}
+    });
   }
   $('#loginBtn').addEventListener('click',doLogin);
   $('#loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
