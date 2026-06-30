@@ -143,10 +143,12 @@ body.app-open .splash-screen { display: none; }
 @keyframes lift { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 .hero-panel, .panel, .command-card, .metric-card, .score-card {
-  border: 1px solid var(--line-soft);
-  background: linear-gradient(180deg, rgba(20,25,42,.88), rgba(7,10,19,.92));
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(160deg, rgba(58,66,112,.34), rgba(14,18,34,.30));
   border-radius: var(--radius);
-  box-shadow: 0 18px 60px rgba(0,0,0,.28);
+  box-shadow: 0 18px 60px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 .hero-panel {
   display: grid;
@@ -250,7 +252,7 @@ textarea { resize: vertical; }
   transition: .18s ease;
 }
 .primary-action { background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: #111; border-color: transparent; box-shadow: var(--shadow); }
-.secondary-action, .small-btn { background: rgba(255,255,255,.04); color: var(--text); }
+.secondary-action, .small-btn { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18); color: var(--text); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .danger-action { background: rgba(255,77,77,.12); color: #fff; border-color: rgba(255,77,77,.45); }
 .small-btn { min-height: 38px; padding: 8px 12px; font-size: .9rem; }
 .score-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
