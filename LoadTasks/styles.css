@@ -99,29 +99,40 @@ body.app-open .topbar { display: flex; }
 .brand-icon { width: 46px; height: 46px; border-radius: 14px; }
 .brand-lockup strong { display: block; font-size: 1.08rem; }
 .brand-lockup span { display: block; color: var(--muted); font-size: .78rem; }
-/* Slide-out side menu (drawer) — replaces the cluttered top scroll bar */
+/* Slide-out side menu (drawer) — opens from the left, like Load Studio */
 .topnav {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   height: 100vh;
   width: min(86vw, 360px);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 60px 14px 28px;
+  padding: 16px 14px 28px;
   overflow-y: auto;
   background: linear-gradient(165deg, rgba(22,26,50,.97), rgba(8,10,22,.98));
-  border-left: 1px solid rgba(255,255,255,.14);
-  box-shadow: -24px 0 80px rgba(0,0,0,.5);
+  border-right: 1px solid rgba(255,255,255,.14);
+  box-shadow: 24px 0 80px rgba(0,0,0,.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: transform .28s ease;
   z-index: 1200;
 }
 .topnav.open { transform: translateX(0); }
 .topnav button { width: 100%; text-align: left; flex: 0 0 auto; }
+.nav-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 44px 12px 2px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.nav-head-icon { width: 42px; height: 42px; border-radius: 12px; flex: 0 0 auto; }
+.nav-head strong { font-size: 1.2rem; font-weight: 800; letter-spacing: .01em; }
+.nav-head strong span { color: var(--gold); }
 .topnav #nav-search {
   width: 100%;
   min-height: 44px;
