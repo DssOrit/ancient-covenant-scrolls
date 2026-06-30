@@ -6849,7 +6849,11 @@ window.LoadAudioFix = {
  '<button id="pe-replace-all" style="background:#fbbf24;border:none;color:#3a2a05;padding:7px 12px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">Replace all</button>' +
  '<span id="pe-find-status" style="font-size:12px;color:#a0a0b0;"></span>' +
  '</div>' +
- '<div style="flex:1;overflow:auto;background:#fff;color:#222;">' +
+ // position:relative + transform make this pane the containing block for
+ // any position:fixed / position:absolute elements inside an imported
+ // webapp's body, so the webapp's own pinned bars/nav stay trapped in the
+ // editing area instead of floating up over the Load toolbar (QA-31).
+ '<div style="flex:1;overflow:auto;background:#fff;color:#222;position:relative;transform:translateZ(0);">' +
  '<div id="pe-area" contenteditable="true" spellcheck="true" style="' +
  'max-width:780px;margin:0 auto;padding:32px 24px 80px;' +
  'font-family:Georgia,\"Times New Roman\",serif;line-height:1.7;font-size:16px;outline:none;min-height:100%;">' +
@@ -9123,7 +9127,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g79</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7a</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +

@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7a`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -166,7 +166,7 @@ Library:
 - **QA-28** Uploaded images do not show.
 - **QA-29** HTML cover editing blanks out images.
 - **QA-30** PWA/Webapp uploaded on iPad stuck in forever-loading (only some webapps).
-- **QA-31** [SCREENSHOT] Editing words in webapps on PC glitches — the webapp's pinned content overlays the Load toolbar buttons. Cause located: `openProseEditor` in `load/load.js`; injected webapp content with fixed/absolute elements escapes the editor pane.
+- **QA-31** [SCREENSHOT] Editing words in webapps on PC glitches — the webapp's pinned content overlays the Load toolbar buttons. Cause located: `openProseEditor` in `load/load.js`; injected webapp content with fixed/absolute elements escapes the editor pane. **FIX SHIPPED v17g7a** — made the editor scroll pane a containing block (`position:relative;transform:translateZ(0)`) so the webapp's fixed/absolute bars stay trapped inside the editing area instead of overlaying the Load toolbar. Needs user verification on PC.
 - **QA-32** Tool button icons at the top of HTML/webapps disappear on iPad after uploading (still clickable; does not disappear on PC).
 - **QA-33** Book-check button while editing a webapp is misleading — a generic webapp with little text was rated "college level read".
 - **QA-34** EPUB books get weird formatting and the table of contents stops working once transferred on iPad.
