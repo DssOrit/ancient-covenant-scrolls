@@ -10,6 +10,26 @@ avoids external product names.
 
 ---
 
+## Security — parked by user 2026-06-30 (revisit when ready)
+
+- **Cloudflare Access in front of `/LoadTasks/*` (the OCC internal tool).**
+  User chose to SKIP for now (wants the simplest login), but asked to
+  remember it for later. What it does: adds an edge "front door" so only
+  approved emails can even load the internal tool; their existing
+  username/password login is unchanged and still works. To keep it easy,
+  set the Access **session to 30 days** so the email-code step is rare.
+  Does NOT touch Claude's workflow or the repo (Cloudflare dashboard only),
+  and does NOT make the repo private. Fits locked rule 10.
+  Setup: Cloudflare → Zero Trust → Access → Applications → Add (Self-hosted)
+  → domain `loadeco.app`, path `LoadTasks` → policy Allow = owner + employee
+  emails. (Emails stay private in Cloudflare, never in the repo.)
+- **Also still available (all fit rule 10):** GitHub branch protection on
+  `main` (block force-push/delete, require checks), Secret scanning + Push
+  protection, account 2FA, Cloudflare WAF rate-limit on `/api/occ/login`,
+  Turnstile on the OCC login, edge logging for `/LoadTasks/*` visibility.
+
+---
+
 ## Cross-suite (highest leverage)
 
 - **Universal voice layer.** Web Speech command bar across all six apps. "Open Bereshit." "Make this into a study deck." "Resume my last edit." iPad supports this offline.
