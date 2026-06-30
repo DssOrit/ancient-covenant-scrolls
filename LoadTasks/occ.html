@@ -196,6 +196,8 @@
     <section class="view" data-view="dashboard"></section>
     <!-- Assignments -->
     <section class="view" data-view="assignments"></section>
+    <!-- Owner Review -->
+    <section class="view" data-view="review"></section>
     <!-- Daily tasks -->
     <section class="view" data-view="daily"></section>
     <!-- Issues -->
@@ -214,6 +216,8 @@
     <section class="view" data-view="documents"></section>
     <!-- Release readiness -->
     <section class="view" data-view="release"></section>
+    <!-- Activity history -->
+    <section class="view" data-view="activity"></section>
     <!-- Confirmation -->
     <section class="view" data-view="confirm"></section>
     <!-- Data -->
@@ -261,10 +265,17 @@ function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');
 var K = {
   session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
   issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
-  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm'
+  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity'
 };
 function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
 function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
+/* Activity history (audit trail). Client-side for now; syncs to backend when wired. */
+function logActivity(action,detail){
+  var a=load(K.activity,[]);
+  a.unshift({action:action,detail:detail||'',by:(session()||{}).name||'',at:nowISO()});
+  if(a.length>200)a=a.slice(0,200);
+  store(K.activity,a);
+}
 
 /* ---------- seed data (first run only) ---------- */
 var DAILY_SEED = [
@@ -310,6 +321,7 @@ function seed(){
   if(!localStorage.getItem(K.evidence)) store(K.evidence,[]);
   if(!localStorage.getItem(K.messages)) store(K.messages,[]);
   if(!localStorage.getItem(K.alerts)) store(K.alerts,[]);
+  if(!localStorage.getItem(K.activity)) store(K.activity,[]);
 }
 
 /* Release-readiness sites: only Load Eco active; others locked future stages. */
@@ -336,6 +348,7 @@ function logout(){localStorage.removeItem(K.session);location.reload();}
 var TABS = [
   {id:'dashboard',label:'Dashboard',c:'blue'},
   {id:'assignments',label:'Assignments',c:'purple'},
+  {id:'review',label:'Owner Review',c:'blue',owner:true},
   {id:'daily',label:'Daily Tasks',c:'purple'},
   {id:'issues',label:'Issues',c:'orange'},
   {id:'evidence',label:'Evidence',c:'blue'},
@@ -345,12 +358,13 @@ var TABS = [
   {id:'invoice',label:'Invoice',c:'gold'},
   {id:'documents',label:'Training',c:'gray'},
   {id:'release',label:'Release Readiness',c:'green'},
+  {id:'activity',label:'Activity',c:'blue'},
   {id:'confirm',label:'Confirmation',c:'green'},
   {id:'data',label:'Data',c:'gray'}
 ];
 function buildTabs(){
   var t=$('#tabs');t.innerHTML='';
-  TABS.forEach(function(tab){
+  TABS.filter(function(tab){return !tab.owner || isOwner();}).forEach(function(tab){
     var b=el('<button data-tab="'+tab.id+'" data-c="'+tab.c+'"><span class="dot" style="background:var(--'+tab.c+')"></span>'+esc(tab.label)+'</button>');
     b.addEventListener('click',function(){show(tab.id);});
     t.appendChild(b);
@@ -374,7 +388,7 @@ function checklistStats(){
 
 function statusChip(s){
   var map={'Not Started':'s-gray','In Progress':'s-blue','Submitted':'s-purple','Under Review':'s-orange',
-    'Needs Retest':'s-orange','Approved':'s-green','Payment Due':'s-gold','Paid':'s-green',
+    'Needs Retest':'s-orange','Returned':'s-orange','Approved':'s-green','Payment Due':'s-gold','Paid':'s-green',
     'Not Submitted':'s-gray','Locked':'s-gray','Active':'s-green','In Testing':'s-blue',
     'Needs Fixes':'s-orange','Retest Required':'s-orange','Stable Verified':'s-green','Released':'s-green'};
   return '<span class="chip '+(map[s]||'s-gray')+'">'+esc(s)+'</span>';
@@ -382,9 +396,9 @@ function statusChip(s){
 
 function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
-  ({dashboard:rDashboard,assignments:rAssignments,daily:rDaily,issues:rIssues,evidence:rEvidence,
+  ({dashboard:rDashboard,assignments:rAssignments,review:rReview,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
-    release:rRelease,confirm:rConfirm,data:rData}[id]||function(){})(v);
+    release:rRelease,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
 }
 
 function rDashboard(v){
@@ -412,13 +426,21 @@ function rDashboard(v){
       card('gold','Payment Status', a?statusChip(a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':'Not Submitted'))):'—')+
       card('green','Release Readiness', readinessScore()+' / 100')+
     '</div>'+
+    '<div class="grid c2" style="margin-bottom:14px">'+
+      card('gray','Upcoming Assignment','<b>Load Studio</b><div class="muted">Locked — unlocks after Load Eco is approved</div>'+statusChip('Locked'))+
+      card('blue','Retests Waiting','<b style="font-size:1.6rem">'+retests+'</b>')+
+    '</div>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
     '<h3 style="margin-top:6px">Quick Cards</h3>'+
     '<div class="grid c3">'+
       quick('daily','purple','Today’s Tasks')+quick('assignments','purple','Current Assignment')+
       quick('issues','orange','Submit Issue')+quick('evidence','blue','Evidence')+
       quick('messages','blue','Messages')+quick('payment','gold','Payment / Invoice')+
-      quick('release','green','Release Readiness')+quick('emergency','red','Emergency Alert')+
+      quick('release','green','Release Readiness')+quick('activity','blue','Activity')+
     '</div>';
+  var act=load(K.activity,[]).slice(0,6),da=$('#dashAct',v);
+  if(!act.length)da.innerHTML='<p class="muted">No activity yet.</p>';
+  else act.forEach(function(e){da.appendChild(el('<div class="list-item"><b>'+esc(e.action)+'</b>'+(e.detail?' — '+esc(e.detail):'')+'<div class="kvs"><span>by '+esc(e.by||'—')+'</span><span>'+fmtDate(e.at)+'</span></div></div>'));});
   $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
 }
 function card(c,title,body){return '<div class="card tint-'+c+'"><h3>'+esc(title)+'</h3><div>'+body+'</div></div>';}
@@ -427,6 +449,7 @@ function quick(go,c,title){return '<button class="card tint-'+c+'" data-go="'+go
 function rAssignments(v){
   var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
   var owner=isOwner();
+  var _st=checklistStats();var reqTasks=_st.total>0&&_st.done===_st.total;var reqEvidence=(load(K.issues,[]).length||load(K.evidence,[]).length)>0;
   v.innerHTML='<h1>Assignments Center</h1>'+
     '<div class="card tint-purple">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
@@ -439,19 +462,29 @@ function rAssignments(v){
         '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes)+'</textarea></label>'+
         '<button class="btn purple owner-only" id="aSave">Save assignment</button>'
        :
-        '<p class="muted">Submitting marks the assignment ready for owner review.</p>'+
+        '<div class="card tint-orange" style="margin:12px 0;padding:12px 14px"><b>Before you can submit</b>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqTasks?'✓':'○')+'</span><label>All daily tasks done</label></div>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqEvidence?'✓':'○')+'</span><label>At least one issue or evidence item</label></div></div>'+
+        '<p class="muted">Checkboxes alone are not enough — real evidence is required.</p>'+
         '<button class="btn purple" id="aSubmit">Submit for review</button>')+
     '</div>';
   if(owner){
     $('#aSave',v).addEventListener('click',function(){
-      a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
+      var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
       if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
       if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
-      store(K.assignments,[a]);toast('Assignment saved');render('assignments');
+      store(K.assignments,[a]);
+      if(a.status!==prev)logActivity(a.status==='Approved'?'Assignment approved':(a.status==='Paid'?'Payment marked paid':'Assignment status: '+a.status),a.title);
+      toast('Assignment saved');render('assignments');
     });
   }else{
     $('#aSubmit',v).addEventListener('click',function(){
-      a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);toast('Submitted for review');render('assignments');
+      var st=checklistStats();
+      if(st.done<st.total){toast('Finish all daily tasks first ('+st.done+'/'+st.total+').');return;}
+      if(!(load(K.issues,[]).length||load(K.evidence,[]).length)){toast('Add at least one issue or evidence item before submitting.');return;}
+      a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);
+      logActivity('Assignment submitted',a.title);
+      toast('Submitted for review');render('assignments');
     });
   }
 }
@@ -473,9 +506,50 @@ function rDaily(v){
   $$('input[type=checkbox]',v).forEach(function(cb){
     cb.addEventListener('change',function(){
       var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);
+      var st=checklistStats();
+      if(cb.checked&&st.done===1)logActivity('Checklist started');
+      if(st.total>0&&st.done===st.total)logActivity('Checklist completed');
       render('daily');
     });
   });
+}
+
+function rReview(v){
+  if(!isOwner()){v.innerHTML='<h1>Owner Review</h1><p class="muted">Owner only.</p>';return;}
+  var a=activeAssignment();if(!a){v.innerHTML='<h1>Owner Review</h1><p class="muted">No assignment.</p>';return;}
+  var s=checklistStats(),issues=load(K.issues,[]),ev=load(K.evidence,[]);
+  v.innerHTML='<h1>Owner Review</h1>'+
+    '<div class="card tint-blue"><h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Tasks: <b>'+s.done+'/'+s.total+'</b></span><span>Issues: <b>'+issues.length+'</b></span><span>Evidence: <b>'+ev.length+'</b></span></div>'+
+      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
+      '<p class="muted" style="margin-top:8px">The employee cannot approve their own work — only you can.</p>'+
+      '<label class="fld"><span>Review notes</span><textarea id="rvNotes">'+esc(a.ownerNotes||'')+'</textarea></label>'+
+      '<div class="row">'+
+        '<button class="btn green" data-rv="Approved">Approve assignment</button>'+
+        '<button class="btn" data-rv="Needs Retest">Request retest</button>'+
+        '<button class="btn" data-rv="Returned">Return</button>'+
+        '<button class="btn gold" data-rv="Payment Due">Approve payment</button>'+
+        '<button class="btn green" data-rv="Paid">Mark paid</button>'+
+      '</div></div>';
+  $$('[data-rv]',v).forEach(function(b){b.addEventListener('click',function(){
+    var st=b.dataset.rv;a.ownerNotes=$('#rvNotes',v).value;a.status=st;
+    if(st==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
+    if(st==='Paid'&&!a.paidDate)a.paidDate=nowISO();
+    store(K.assignments,[a]);
+    logActivity(st==='Approved'?'Assignment approved':(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':(st==='Needs Retest'?'Retest requested':'Assignment returned'))),a.title);
+    toast('Review saved: '+st);render('review');
+  });});
+}
+
+function rActivity(v){
+  var a=load(K.activity,[]);
+  var html='<h1>Activity History</h1><p class="muted">Automatic record of major actions — an audit trail.</p>';
+  if(!a.length)html+='<p class="muted">No activity yet.</p>';
+  else{html+='<div class="card">';a.forEach(function(e){
+    html+='<div class="list-item"><b>'+esc(e.action)+'</b>'+(e.detail?' — '+esc(e.detail):'')+
+      '<div class="kvs"><span>by '+esc(e.by||'—')+'</span><span>'+fmtDate(e.at)+'</span></div></div>';
+  });html+='</div>';}
+  v.innerHTML=html;
 }
 
 function rIssues(v){
@@ -496,7 +570,7 @@ function rIssues(v){
       device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
       severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
       by:session().name,at:nowISO()};
-    issues.unshift(issue);store(K.issues,issues);toast('Issue saved');render('issues');
+    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');
   });
   $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
   $('#iPrint',v).addEventListener('click',function(){window.print();});
@@ -530,7 +604,7 @@ function rEvidence(v){
     var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
       browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
     if(!rec.shot&&!rec.video){toast('Add a filename first');return;}
-    ev.unshift(rec);store(K.evidence,ev);toast('Evidence added');render('evidence');
+    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');
   });
   $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
   var list=$('#eList',v);
@@ -580,7 +654,7 @@ function rEmergency(v){
     var a={id:'al_'+Date.now(),what:$('#emgWhat',v).value||'(no detail)',site:$('#emgSite',v).value,browser:$('#emgBrowser',v).value,
       device:$('#emgDevice',v).value,urgency:$('#emgUrg',v).value,shot:$('#emgShot',v).value,notes:$('#emgNotes',v).value,
       by:session().name,at:nowISO()};
-    alerts.unshift(a);store(K.alerts,alerts);toast('Emergency alert sent');render('emergency');
+    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');
   }
   $('#emgFire',v).addEventListener('click',function(){$('#emgWhat',v).focus();toast('Fill the form, then Send.');});
   $('#emgSave',v).addEventListener('click',fire);
@@ -613,7 +687,7 @@ function rPayment(v){
       if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
       else if(st==='Paid'){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();}
       else{a.status='Approved';}
-      store(K.assignments,[a]);toast('Payment updated: '+st);render('payment');
+      store(K.assignments,[a]);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
     });});
   }
 }
