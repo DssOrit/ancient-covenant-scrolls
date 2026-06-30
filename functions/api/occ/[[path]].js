@@ -65,6 +65,19 @@ const SEED_SITES = [
   { id: 'asg_play',   site: 'https://loadeco.app/LoadPlay/',     name: 'Load Play' },
   { id: 'asg_ai',     site: 'https://loadeco.app/LoadAI/',       name: 'Load AI' }
 ];
+/* Hard 48-hour auto-delete for UPLOADED screenshots only (rows with an
+   r2_key). Typed-filename evidence (no r2_key) is weightless text and is
+   kept. Runs opportunistically on bootstrap, so no cron/console is needed. */
+async function purgeExpiredEvidence(env) {
+  if (!env.EVIDENCE) return;
+  const cutoff = new Date(Date.now() - 48 * 3600 * 1000).toISOString();
+  const old = await env.DB.prepare("SELECT id, r2_key FROM evidence WHERE r2_key IS NOT NULL AND r2_key != '' AND created_at < ?").bind(cutoff).all();
+  for (const row of (old.results || [])) {
+    try { await env.EVIDENCE.delete(row.r2_key); } catch (e) {}
+    await env.DB.prepare('DELETE FROM evidence WHERE id = ?').bind(row.id).run();
+  }
+}
+
 async function ensureSeed(env) {
   const c = await env.DB.prepare('SELECT COUNT(*) AS n FROM assignments').first();
   if (c && c.n > 0) return;
@@ -126,8 +139,22 @@ async function handle(req, env, origin) {
     return json({ ok: true }, 200, origin);
   }
 
+  // Serve an uploaded screenshot from R2 (auth required; fetched as a blob
+  // by the client so the bearer token never goes in the URL).
+  if (method === 'GET' && path.endsWith('/api/occ/evidence/file')) {
+    if (!env.EVIDENCE) return json({ error: 'R2 bucket not bound' }, 501, origin);
+    const key = url.searchParams.get('key');
+    if (!key) return json({ error: 'no key' }, 400, origin);
+    const obj = await env.EVIDENCE.get(key);
+    if (!obj) return new Response('Not found', { status: 404, headers: cors(origin) });
+    const headers = { ...cors(origin), 'Cache-Control': 'private, max-age=300' };
+    headers['Content-Type'] = (obj.httpMetadata && obj.httpMetadata.contentType) || 'application/octet-stream';
+    return new Response(obj.body, { headers });
+  }
+
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
     await ensureSeed(env);
+    await purgeExpiredEvidence(env);
     const [a, c, i, e, m, al, sec] = await Promise.all([
       env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate FROM assignments').all(),
       env.DB.prepare('SELECT id,day,idx,label,done FROM checklist ORDER BY day, idx').all(),
@@ -203,7 +230,7 @@ async function handle(req, env, origin) {
     const file = form.get('file');
     if (!file) return json({ error: 'no file' }, 400, origin);
     const key = 'evidence/' + Date.now() + '_' + (file.name || 'file');
-    await env.EVIDENCE.put(key, file.stream());
+    await env.EVIDENCE.put(key, file.stream(), { httpMetadata: { contentType: file.type || 'application/octet-stream' } });
     await env.DB.prepare('INSERT INTO evidence (id,shot,video,issue,browser,device,notes,r2_key,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)')
       .bind(uid('ev'), file.name || '', '', form.get('issue') || '', form.get('browser') || '', form.get('device') || '', form.get('notes') || '', key, me.name, new Date().toISOString()).run();
     return json({ ok: true, key }, 200, origin);

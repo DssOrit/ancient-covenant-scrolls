@@ -724,16 +724,45 @@ function rIssues(v){
   });
 }
 
+/* Upload a screenshot to R2 via the API (multipart). Cannot use api()
+   because that forces JSON; we send FormData with the auth header. */
+function uploadEvidence(file,fields,cb){
+  var fd=new FormData();fd.append('file',file);
+  Object.keys(fields).forEach(function(k){fd.append(k,fields[k]||'');});
+  fetch(API_BASE+'/evidence/upload',{method:'POST',headers:{'Authorization':'Bearer '+authToken()},body:fd})
+    .then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}return {ok:r.ok,status:r.status,d:d};});})
+    .then(cb).catch(function(e){cb({ok:false,status:0,d:{error:e.message||'network'}});});
+}
 function rEvidence(v){
   var ev=load(K.evidence,[]);
   v.innerHTML='<h1>Evidence Center</h1>'+
-    '<div class="card tint-blue" style="margin-bottom:14px"><p class="muted">No cloud upload yet (MVP). Save screenshots/videos in your assigned evidence folder, then list the filenames here.</p>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a screenshot</h3>'+
+      '<p class="muted">Stored safely in separate storage, so the site stays fast. Uploaded images <b>auto-delete after 48 hours</b> — the text record (file name, date) is kept.</p>'+
+      '<label class="fld"><span>Choose an image</span><input id="evFile" type="file" accept="image/*"></label>'+
+      '<div class="grid c2">'+fld('uIssue','Related issue (optional)','text')+fld('uBrowser','Browser (optional)','text')+'</div>'+
+      '<div class="grid c2">'+fld('uDevice','Device (optional)','text')+'<div></div></div>'+
+      fldArea('uNotes','Notes (optional)')+
+      '<button class="btn green" id="evUp">Upload screenshot</button></div>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Or record a file name</h3>'+
+      '<p class="muted">No upload needed — save the file in your folder and list its name here. Text records are kept permanently.</p>'+
       '<div class="grid c2">'+fld('eShot','Screenshot filename','text')+fld('eVideo','Video filename','text')+'</div>'+
       '<div class="grid c2">'+fld('eIssue','Related issue','text')+fld('eBrowser','Browser','text')+'</div>'+
       fld('eDevice','Device','text')+fldArea('eNotes','Notes')+
       '<button class="btn blue" id="eSave">Add evidence record</button></div>'+
     '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="eExport">Export JSON</button></div>'+
     '<div class="card"><h3>Evidence Records ('+ev.length+')</h3><div id="eList"></div></div>';
+  $('#evUp',v).addEventListener('click',function(){
+    var f=$('#evFile',v).files[0];
+    if(!f){toast('Choose an image first');return;}
+    if(!isOnline()){toast('Connect online to upload images');return;}
+    var btn=this;btn.disabled=true;toast('Uploading...');
+    uploadEvidence(f,{issue:$('#uIssue',v).value,browser:$('#uBrowser',v).value,device:$('#uDevice',v).value,notes:$('#uNotes',v).value},function(res){
+      btn.disabled=false;
+      if(res.ok){logActivity('Screenshot uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
+      else if(res.status===501){toast('Image storage is off. In Cloudflare, bind the R2 bucket named occ-evidence as EVIDENCE, then try again.');}
+      else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
+    });
+  });
   $('#eSave',v).addEventListener('click',function(){
     var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
       browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
@@ -743,7 +772,22 @@ function rEvidence(v){
   $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
   var list=$('#eList',v);
   if(!ev.length)list.innerHTML='<p class="muted">No evidence yet.</p>';
-  else ev.forEach(function(r){list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video)+'</b><div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span></div>'+(r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));});
+  else ev.forEach(function(r){
+    var uploaded=!!r.r2Key;
+    list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video||'screenshot')+'</b>'+
+      (uploaded?' <span class="chip s-orange">uploaded · auto-deletes 48h</span>':'')+
+      '<div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span><span>'+fmtDate(r.at)+'</span></div>'+
+      (uploaded?'<img data-thumb="'+esc(r.r2Key)+'" alt="screenshot" style="max-width:140px;border-radius:8px;display:block;margin-top:8px">':'')+
+      (r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));
+  });
+  // Lazy-load uploaded thumbnails via authed blob fetch (keeps token out of URLs)
+  $$('[data-thumb]',v).forEach(function(img){
+    var key=img.getAttribute('data-thumb');
+    fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
+      .then(function(r){if(!r.ok)throw 0;return r.blob();})
+      .then(function(b){img.src=URL.createObjectURL(b);})
+      .catch(function(){img.alt='(image no longer available)';});
+  });
 }
 
 function rMessages(v){
@@ -1065,10 +1109,10 @@ var GUIDE=[
   {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
   {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
-  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works or Broken, with a screenshot name as proof.', todo:'Open each section and test every button and link before you mark it.'},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works or Broken, with a screenshot name as proof.', todo:'Open each section, test every button and link, then mark it and type the screenshot file name in the Evidence box. See the Screenshots note below for how.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
   {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
-  {tab:'evidence',   name:'Evidence',       what:'Your proof: screenshot and video file names for what you tested.', todo:'Add evidence for everything you verify, so the owner can check it.'},
+  {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (stored separately so the site stays fast; uploaded images auto-delete after 48 hours) or just type the file name to keep a permanent text record.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
   {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
   {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
   {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
@@ -1090,6 +1134,8 @@ var PAY_RULES=[
 var FAQ=[
   ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
   ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
+  ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (it auto-deletes after 48 hours to keep the site fast) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
+  ['Will uploads slow the site or fill it up?','No. Uploaded images are kept in separate storage, not inside the app, and they auto-delete after 48 hours. The site stays fast.'],
   ['Why is my pay not released?','Open Payment and read the Auto-check. It lists exactly what is still missing.'],
   ['When does the next site open?','On its own, once the current site is fully certified (Eco, then Studio, then Play, then AI).'],
   ['Does my work save across devices?','Yes. Once you sign in while online, your work syncs to every device.']
@@ -1118,6 +1164,23 @@ function rHowTo(v){
       '<div class="muted"><b>What to do:</b> '+g.todo+'</div>'+
       '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button>';
   });
+
+  // Screenshots — how proof works (matches the current MVP: record file names, no upload button yet)
+  html+='<div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
+    '<p style="margin:0 0 8px">You have <b>two ways</b> to add screenshot proof. Both keep a permanent text record; the difference is whether the picture itself is stored.</p>'+
+    '<p style="margin:0 0 6px"><b>Way 1 — Upload the picture (recommended).</b></p>'+
+    '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">On iPad, take the screenshot (press the top button and volume up together).</li>'+
+      '<li style="margin-bottom:8px">Open <b>Evidence</b>, tap <b>Choose an image</b>, pick the screenshot, then tap <b>Upload screenshot</b>.</li>'+
+      '<li style="margin-bottom:8px">The picture is stored separately (not inside the app), so it never slows the site. It <b>auto-deletes after 48 hours</b> to keep things light — the owner should review it within that window.</li>'+
+      '<li style="margin-bottom:0">The text record (file name, date, who) is kept even after the image clears.</li>'+
+    '</ol>'+
+    '<p style="margin:0 0 6px"><b>Way 2 — Just record the file name.</b></p>'+
+    '<ol style="margin:0;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">Save the screenshot in your own evidence folder with a clear name, like <b>eco-homepage.png</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, type that file name in the section’s <b>Evidence</b> box, then mark it Works or Broken. You can also add it under <b>Evidence</b> &rarr; Record a file name.</li>'+
+      '<li style="margin-bottom:0">Nothing is uploaded; you keep the picture yourself, forever.</li>'+
+    '</ol></div>';
 
   // Pay rules
   html+='<div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
