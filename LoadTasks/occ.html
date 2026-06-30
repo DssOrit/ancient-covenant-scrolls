@@ -343,7 +343,7 @@ var TABS = [
   {id:'emergency',label:'Emergency',c:'red'},
   {id:'payment',label:'Payment',c:'gold'},
   {id:'invoice',label:'Invoice',c:'gold'},
-  {id:'documents',label:'Documents',c:'gray'},
+  {id:'documents',label:'Training',c:'gray'},
   {id:'release',label:'Release Readiness',c:'green'},
   {id:'confirm',label:'Confirmation',c:'green'},
   {id:'data',label:'Data',c:'gray'}
@@ -649,18 +649,140 @@ function rInvoice(v){
 }
 
 var DOCS={
-  'Week 1 Assignment Instructions':'Assignment: Load Eco Week 1 Foundation Audit\nSite: https://loadeco.app\nPay: $50 (paid after owner approval)\n\nWork ONE site at a time. Do NOT test Load Studio, Load Tasks, or Load Play yet.\nComplete each day’s checklist in order. Submit findings and issues.\nFinish with a final report and a release-readiness score.',
-  'Windows Testing Guide':'1. Open https://loadeco.app in Chrome.\n2. Confirm the homepage loads fully.\n3. Click every menu item and button. Note what works/breaks.\n4. Repeat in Edge. Record any browser-only differences.\n5. Take screenshots of broken or confusing areas.',
-  'iPad Testing Guide':'1. Open https://loadeco.app in Safari.\n2. Check layout fits the screen (no cut-off, no overlap).\n3. Tap menus and buttons. Note anything hidden or hard to tap.\n4. Compare against the Windows result. Record mobile-only problems.',
-  'Issue Report Format':'Title · Site · Page/section · Browser · Device · Steps taken · Expected result · Actual result · Severity (Critical/Major/Minor) · Screenshot reference · Notes.',
-  'Payment Rules':'Standard assignment: $50. Heavy assignment: $60. Optional bonus: $10–$25.\nPayment is issued AFTER the owner approves the submitted work.\nStatus flow: Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid.',
-  'QA Rules':'Work one site at a time. Document every issue. Retest after fixes.\nNever mark a site stable without owner review. Be honest — no false positives.'
+  'Employee QA Operations Plan':
+    'WHO YOU ARE\n'+
+    'You are the Platform Quality Assurance Specialist for the Load ecosystem.\n'+
+    'Your job: test each Load site, find problems, and report them clearly.\n\n'+
+    'HOW OCC WORKS\n'+
+    '- You get one assignment at a time.\n'+
+    '- Each assignment has a daily checklist.\n'+
+    '- You log issues, add evidence, and submit when done.\n'+
+    '- The owner reviews your work and approves it.\n'+
+    '- Payment is released after approval.\n\n'+
+    'THE GOLDEN RULES\n'+
+    '1. Work ONE site at a time.\n'+
+    '2. Checkboxes are not enough — add real evidence.\n'+
+    '3. Be honest. Never mark something working if you did not test it.\n'+
+    '4. You cannot approve your own work. The owner does.\n\n'+
+    'TESTING ORDER (sites unlock in order)\n'+
+    '1. Load Eco / Main Load  (ACTIVE NOW)\n'+
+    '2. Load Studio  (locked)\n'+
+    '3. Load Tasks  (locked)\n'+
+    '4. Load Play  (locked)\n'+
+    'A site only unlocks after the one before it is approved as stable.',
+
+  'Week 1 Assignment Workbook':
+    'ASSIGNMENT: Load Eco Week 1 Foundation Audit\n'+
+    'SITE: https://loadeco.app\n'+
+    'PAY: $50 (after owner approval)\n\n'+
+    'GOAL\n'+
+    'Build a full picture of the site: what pages exist, what works, what is\n'+
+    'broken or confusing, and how ready it is to release.\n\n'+
+    'DAY 1 — Site Inventory\n'+
+    'List every menu, section, tile, and page. Screenshot the homepage.\n\n'+
+    'DAY 2 — Navigation Audit\n'+
+    'Tap every menu and button. Mark each Working / Broken / Confusing.\n\n'+
+    'DAY 3 — First-Time User Review\n'+
+    'Pretend you are brand new. Is the next step clear? Rate clarity 1–10.\n\n'+
+    'DAY 4 — Browser & Device Comparison\n'+
+    'Test Chrome, Edge, and iPad Safari. Record differences.\n\n'+
+    'DAY 5 — Final Report\n'+
+    'Submit inventory, issue list, browser comparison, top 10 improvements,\n'+
+    'and a release-readiness score. Then mark it ready for owner review.',
+
+  'Windows Setup Guide':
+    'WHAT YOU NEED\n'+
+    'A Windows computer with Google Chrome and Microsoft Edge.\n\n'+
+    'STEPS\n'+
+    '1. Open Chrome. Go to https://loadeco.app.\n'+
+    '2. Wait for the page to fully load.\n'+
+    '3. Take a screenshot (Windows key + Shift + S).\n'+
+    '4. Click every menu item and button. Note what works and what breaks.\n'+
+    '5. Now open Edge and do the same.\n'+
+    '6. Write down anything that looks different between Chrome and Edge.\n\n'+
+    'SAVING SCREENSHOTS\n'+
+    'Save them in one folder. Name them clearly, e.g. "day2-broken-menu.png".\n'+
+    'Then list the file names in the Evidence section of OCC.',
+
+  'iPad Testing Guide':
+    'WHAT YOU NEED\n'+
+    'An iPad with Safari.\n\n'+
+    'STEPS\n'+
+    '1. Open Safari. Go to https://loadeco.app.\n'+
+    '2. Check the layout fits the screen — no cut-off text, no overlap.\n'+
+    '3. Tap every menu and button. Note anything hidden or hard to tap.\n'+
+    '4. Turn the iPad sideways. Does it still look right?\n'+
+    '5. Compare against your Windows result. Record mobile-only problems.\n\n'+
+    'SCREENSHOTS ON IPAD\n'+
+    'Press the top button + volume up together. Find them in Photos.\n'+
+    'List the file names in the Evidence section of OCC.',
+
+  'Payment Structure':
+    'HOW PAY WORKS\n'+
+    'You are paid per completed and approved assignment — not by the hour.\n\n'+
+    'RATES\n'+
+    '- Standard assignment: $50\n'+
+    '- Heavy assignment: $60\n'+
+    '- Optional bonus: $10–$25 (owner’s choice for great work)\n\n'+
+    'PAYMENT STATUS FLOW\n'+
+    'Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid\n\n'+
+    'IMPORTANT\n'+
+    'Payment becomes due only AFTER the owner approves your submitted work.\n'+
+    'Every payment is recorded with dates and an invoice number.',
+
+  'Assignment Rules':
+    '1. ONE SITE AT A TIME.\n'+
+    '   Do not start another site until the current one is approved.\n\n'+
+    '2. FOLLOW THE DAYS IN ORDER.\n'+
+    '   Day 1, then Day 2, and so on.\n\n'+
+    '3. EVIDENCE IS REQUIRED.\n'+
+    '   Checking boxes is not enough. Add notes, issues, and screenshots.\n\n'+
+    '4. REPORT EVERY ISSUE.\n'+
+    '   If something is broken or confusing, log it.\n\n'+
+    '5. RETEST AFTER FIXES.\n'+
+    '   When the owner says something is fixed, test it again.\n\n'+
+    '6. BE HONEST.\n'+
+    '   Never say something works unless you actually tested it.\n\n'+
+    '7. THE OWNER APPROVES.\n'+
+    '   You submit. The owner reviews and approves. You cannot self-approve.',
+
+  'QA Reporting Guide':
+    'HOW TO WRITE A GOOD ISSUE\n'+
+    'Fill in every field in the Issues form:\n'+
+    '- Title: short and clear (e.g. "Menu button does nothing")\n'+
+    '- Site and Page/section\n'+
+    '- Browser and Device\n'+
+    '- Steps taken: what you did\n'+
+    '- Expected result: what should happen\n'+
+    '- Actual result: what really happened\n'+
+    '- Severity: Critical / Major / Minor\n'+
+    '- Screenshot reference: the file name\n\n'+
+    'SEVERITY GUIDE\n'+
+    '- Critical: site will not open, data lost, app crash, release blocker\n'+
+    '- Major: a feature is broken but the site still opens\n'+
+    '- Minor: small or cosmetic problem\n\n'+
+    'EVIDENCE\n'+
+    'Add a screenshot or note for anything you mark broken or confusing.\n'+
+    'No evidence = it cannot be verified.'
 };
 function rDocuments(v){
-  var html='<h1>Documents & Guides</h1>';
-  Object.keys(DOCS).forEach(function(k){html+='<div class="card tint-gray" style="margin-bottom:12px"><h3>'+esc(k)+'</h3><div class="doc">'+esc(DOCS[k])+'</div></div>';});
-  html+='<div class="card tint-gray"><h3>Downloadable files</h3><p class="muted">Placeholder for DOCX/PDF downloads (added when backend storage is connected).</p></div>';
+  var html='<h1>Documents &amp; Training</h1>'+
+    '<p class="muted">Read your guides right here — no switching to Word. Each one can also be downloaded. New weekly workbooks appear here too.</p>'+
+    '<div class="row" style="margin-bottom:14px"><button class="btn sm" id="docAll">Download all (.txt)</button></div>';
+  Object.keys(DOCS).forEach(function(k,idx){
+    html+='<div class="card tint-gray" style="margin-bottom:12px"><h3>'+esc(k)+'</h3>'+
+      '<div class="doc">'+esc(DOCS[k])+'</div>'+
+      '<div class="row" style="margin-top:12px"><button class="btn sm" data-docdl="'+idx+'">Download</button></div></div>';
+  });
   v.innerHTML=html;
+  var keys=Object.keys(DOCS);
+  $$('[data-docdl]',v).forEach(function(b){b.addEventListener('click',function(){
+    var k=keys[b.dataset.docdl];download('OCC - '+k.replace(/[^a-z0-9]+/gi,'-')+'.txt',k+'\n\n'+DOCS[k]);
+  });});
+  $('#docAll',v).addEventListener('click',function(){
+    var all=keys.map(function(k){return '==== '+k+' ====\n\n'+DOCS[k];}).join('\n\n\n');
+    download('OCC-All-Workbooks.txt',all);
+  });
 }
 
 function readinessScore(){
