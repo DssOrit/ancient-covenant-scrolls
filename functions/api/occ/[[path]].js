@@ -14,10 +14,11 @@
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
-/* Self-enforced safety cap so R2 can never run past the free tier and
-   bill you. We stop new uploads well under Cloudflare's 10 GB free limit. */
-const R2_SOFT_CAP_BYTES = 2 * 1024 * 1024 * 1024; // 2 GB (20% of the 10 GB free tier)
-const MAX_FILE_BYTES = 8 * 1024 * 1024;           // 8 MB per screenshot
+/* Screenshots are stored in the existing D1 database as small downscaled
+   images — no R2, no payment method needed. A self-enforced cap keeps the
+   database light; uploads stop before the cap so nothing ever bills. */
+const STORAGE_CAP_BYTES = 50 * 1024 * 1024; // 50 MB total of stored images
+const MAX_FILE_BYTES = 600 * 1024;          // 600 KB per image (after client downscale)
 
 async function evidenceBytesUsed(env) {
   const r = await env.DB.prepare("SELECT COALESCE(SUM(size),0) AS n FROM evidence WHERE r2_key IS NOT NULL AND r2_key != ''").first();
@@ -76,14 +77,14 @@ const SEED_SITES = [
   { id: 'asg_ai',     site: 'https://loadeco.app/LoadAI/',       name: 'Load AI' }
 ];
 /* Hard 48-hour auto-delete for UPLOADED screenshots only (rows with an
-   r2_key). Typed-filename evidence (no r2_key) is weightless text and is
-   kept. Runs opportunistically on bootstrap, so no cron/console is needed. */
+   r2_key, which now holds the D1 image id). Typed-filename evidence (no
+   r2_key) is weightless text and is kept. Runs opportunistically on
+   bootstrap, so no cron/console is needed. */
 async function purgeExpiredEvidence(env) {
-  if (!env.EVIDENCE) return;
   const cutoff = new Date(Date.now() - 48 * 3600 * 1000).toISOString();
   const old = await env.DB.prepare("SELECT id, r2_key FROM evidence WHERE r2_key IS NOT NULL AND r2_key != '' AND created_at < ?").bind(cutoff).all();
   for (const row of (old.results || [])) {
-    try { await env.EVIDENCE.delete(row.r2_key); } catch (e) {}
+    try { await env.DB.prepare('DELETE FROM evidence_blobs WHERE id = ?').bind(row.r2_key).run(); } catch (e) {}
     await env.DB.prepare('DELETE FROM evidence WHERE id = ?').bind(row.id).run();
   }
 }
@@ -149,17 +150,15 @@ async function handle(req, env, origin) {
     return json({ ok: true }, 200, origin);
   }
 
-  // Serve an uploaded screenshot from R2 (auth required; fetched as a blob
+  // Serve an uploaded screenshot from D1 (auth required; fetched as a blob
   // by the client so the bearer token never goes in the URL).
   if (method === 'GET' && path.endsWith('/api/occ/evidence/file')) {
-    if (!env.EVIDENCE) return json({ error: 'R2 bucket not bound' }, 501, origin);
     const key = url.searchParams.get('key');
     if (!key) return json({ error: 'no key' }, 400, origin);
-    const obj = await env.EVIDENCE.get(key);
-    if (!obj) return new Response('Not found', { status: 404, headers: cors(origin) });
-    const headers = { ...cors(origin), 'Cache-Control': 'private, max-age=300' };
-    headers['Content-Type'] = (obj.httpMetadata && obj.httpMetadata.contentType) || 'application/octet-stream';
-    return new Response(obj.body, { headers });
+    const row = await env.DB.prepare('SELECT data, content_type FROM evidence_blobs WHERE id = ?').bind(key).first();
+    if (!row) return new Response('Not found', { status: 404, headers: cors(origin) });
+    const bytes = Uint8Array.from(atob(row.data), c => c.charCodeAt(0));
+    return new Response(bytes, { headers: { ...cors(origin), 'Cache-Control': 'private, max-age=300', 'Content-Type': row.content_type || 'application/octet-stream' } });
   }
 
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
@@ -175,7 +174,7 @@ async function handle(req, env, origin) {
       env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at FROM sections').all()
     ]);
     const storageUsed = await evidenceBytesUsed(env);
-    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results, storageUsed: storageUsed, storageCap: R2_SOFT_CAP_BYTES, storageEnabled: !!env.EVIDENCE }, 200, origin);
+    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results, storageUsed: storageUsed, storageCap: STORAGE_CAP_BYTES, storageEnabled: true }, 200, origin);
   }
 
   if (path.includes('/api/occ/issues')) {
@@ -236,23 +235,26 @@ async function handle(req, env, origin) {
   }
 
   if (path.endsWith('/api/occ/evidence/upload') && method === 'POST') {
-    if (!env.EVIDENCE) return json({ error: 'R2 bucket not bound' }, 501, origin);
-    const form = await req.formData();
-    const file = form.get('file');
-    if (!file) return json({ error: 'no file' }, 400, origin);
-    const size = file.size || 0;
-    if (size > MAX_FILE_BYTES) return json({ error: 'file too big', limitMB: MAX_FILE_BYTES / 1048576 }, 413, origin);
+    // Client sends a downscaled image as a data URL (data:image/jpeg;base64,...).
+    const m = /^data:([^;]+);base64,(.*)$/.exec(body.dataUrl || '');
+    if (!m) return json({ error: 'no image' }, 400, origin);
+    const contentType = m[1];
+    const b64 = m[2];
+    const size = Math.floor(b64.length * 3 / 4); // approx decoded bytes
+    if (size > MAX_FILE_BYTES) return json({ error: 'image too big', limitKB: Math.round(MAX_FILE_BYTES / 1024) }, 413, origin);
     // Free up space first (delete anything past 48h), then enforce our own cap.
     await purgeExpiredEvidence(env);
     const used = await evidenceBytesUsed(env);
-    if (used + size > R2_SOFT_CAP_BYTES) {
-      return json({ error: 'storage cap reached', used, cap: R2_SOFT_CAP_BYTES }, 507, origin);
+    if (used + size > STORAGE_CAP_BYTES) {
+      return json({ error: 'storage cap reached', used, cap: STORAGE_CAP_BYTES }, 507, origin);
     }
-    const key = 'evidence/' + Date.now() + '_' + (file.name || 'file');
-    await env.EVIDENCE.put(key, file.stream(), { httpMetadata: { contentType: file.type || 'application/octet-stream' } });
+    const blobId = uid('blob');
+    const now = new Date().toISOString();
+    await env.DB.prepare('INSERT INTO evidence_blobs (id,data,content_type,size,created_at) VALUES (?,?,?,?,?)')
+      .bind(blobId, b64, contentType, size, now).run();
     await env.DB.prepare('INSERT INTO evidence (id,shot,video,issue,browser,device,notes,r2_key,size,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
-      .bind(uid('ev'), file.name || '', '', form.get('issue') || '', form.get('browser') || '', form.get('device') || '', form.get('notes') || '', key, size, me.name, new Date().toISOString()).run();
-    return json({ ok: true, key }, 200, origin);
+      .bind(uid('ev'), body.name || '', '', body.issue || '', body.browser || '', body.device || '', body.notes || '', blobId, size, me.name, now).run();
+    return json({ ok: true, key: blobId }, 200, origin);
   }
 
   if (path.includes('/api/occ/assignments')) {
@@ -291,6 +293,7 @@ async function ensureSchema(env) {
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted INTEGER DEFAULT 0").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS evidence_blobs (id TEXT PRIMARY KEY, data TEXT, content_type TEXT, size INTEGER DEFAULT 0, created_at TEXT)").run();
   _schemaReady = true;
 }
 
