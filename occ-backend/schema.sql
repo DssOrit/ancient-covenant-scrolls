@@ -43,7 +43,18 @@ CREATE TABLE IF NOT EXISTS issues (
 CREATE TABLE IF NOT EXISTS evidence (
   id        TEXT PRIMARY KEY,
   shot TEXT, video TEXT, issue TEXT, browser TEXT, device TEXT,
-  notes TEXT, r2_key TEXT, created_by TEXT, created_at TEXT
+  notes TEXT, r2_key TEXT, size INTEGER DEFAULT 0, created_by TEXT, created_at TEXT
+);
+
+-- Uploaded screenshots are stored here as small downscaled images
+-- (base64), so no R2/object store or payment method is needed. Rows are
+-- auto-deleted 48h after upload; evidence.r2_key holds the matching id.
+CREATE TABLE IF NOT EXISTS evidence_blobs (
+  id          TEXT PRIMARY KEY,
+  data        TEXT,
+  content_type TEXT,
+  size        INTEGER DEFAULT 0,
+  created_at  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS messages (

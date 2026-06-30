@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Load Tasks — OCC</title>
+<link rel="icon" type="image/png" href="assets/images/load-tasks-logo.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/load-tasks-icon-192x192.png">
+<link rel="apple-touch-icon" href="assets/images/load-tasks-logo.png">
 <!--
   OCC — Operations Command Center (Load Tasks internal module)
   Private employee operations / verification / payment system.
@@ -170,9 +173,8 @@
     <label class="fld"><span>Password</span><input id="loginPass" type="password" autocomplete="off" placeholder="Password"></label>
     <div class="err" id="loginErr"></div>
     <button class="btn blue" id="loginBtn" style="width:100%;justify-content:center">Sign In</button>
-    <p class="muted" style="font-size:.8rem;margin-top:14px">Placeholder logins (change in occ.html before real use):<br>
-      Employee — <b>Witness Bond</b> / <b>witness-change-me</b><br>
-      Owner — <b>L. Bond</b> / <b>owner-change-me</b></p>
+    <p class="muted" style="font-size:.8rem;margin-top:14px">Use the name and password set up for your account.<br>
+      Need to create or reset a login? Open <a href="occ-setup.html" style="color:var(--blue)">occ-setup.html</a>.</p>
   </div>
 </div>
 
@@ -272,7 +274,7 @@ var K = {
   session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
   issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
   alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity',
-  sections:'occ_sections'
+  sections:'occ_sections', storage:'occ_storage'
 };
 function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
 function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
@@ -380,6 +382,7 @@ function hydrate(){
     if(d.messages)store(K.messages,d.messages);
     if(d.alerts)store(K.alerts,d.alerts);
     if(d.sections)store(K.sections,d.sections);
+    if(d.storageUsed!=null)store(K.storage,{used:d.storageUsed,cap:d.storageCap,enabled:!!d.storageEnabled});
   });
 }
 /* optimistic local write already done by caller; push to server then refresh */
@@ -411,6 +414,7 @@ function logout(){localStorage.removeItem(K.session);location.reload();}
 /* ---------- tabs ---------- */
 var TABS = [
   {id:'dashboard',label:'Dashboard',c:'blue'},
+  {id:'howto',label:'How to Use',c:'green'},
   {id:'assignments',label:'Assignments',c:'purple'},
   {id:'review',label:'Owner Review',c:'blue',owner:true},
   {id:'verify',label:'Verify Sections',c:'green'},
@@ -421,7 +425,6 @@ var TABS = [
   {id:'emergency',label:'Emergency',c:'red'},
   {id:'payment',label:'Payment',c:'gold'},
   {id:'invoice',label:'Invoice',c:'gold'},
-  {id:'howto',label:'How To',c:'gray'},
   {id:'documents',label:'Training',c:'gray'},
   {id:'release',label:'Certification',c:'green'},
   {id:'history',label:'History',c:'gray'},
@@ -477,6 +480,7 @@ function rDashboard(v){
   var msgs=load(K.messages,[]),alerts=load(K.alerts,[]);
   v.innerHTML=
     '<h1>Dashboard</h1>'+
+    '<button class="card tint-green" data-go="howto" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:14px;display:block"><h3 style="margin:0 0 4px">New here? Read How to Use</h3><span class="muted">A full, plain-language guide to every section and exactly what to do. Tap to open &rarr;</span></button>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
       card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Full site verification · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
@@ -721,16 +725,75 @@ function rIssues(v){
   });
 }
 
+/* Shrink an image on the device BEFORE upload, so only a small thumbnail
+   is stored in the database (keeps it light, no R2, no payment needed). */
+function downscaleImage(file,maxDim,quality,cb){
+  var url=URL.createObjectURL(file),img=new Image();
+  img.onload=function(){
+    var w=img.naturalWidth,h=img.naturalHeight,scale=Math.min(1,maxDim/Math.max(w,h));
+    var cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale));
+    var c=document.createElement('canvas');c.width=cw;c.height=ch;
+    c.getContext('2d').drawImage(img,0,0,cw,ch);
+    URL.revokeObjectURL(url);
+    try{cb(c.toDataURL('image/jpeg',quality));}catch(e){cb(null);}
+  };
+  img.onerror=function(){URL.revokeObjectURL(url);cb(null);};
+  img.src=url;
+}
+/* Upload a downscaled screenshot (data URL) to the API; it is stored in D1. */
+function uploadEvidence(dataUrl,fields,cb){
+  var bodyObj={dataUrl:dataUrl,name:fields.name||'',issue:fields.issue||'',browser:fields.browser||'',device:fields.device||'',notes:fields.notes||''};
+  fetch(API_BASE+'/evidence/upload',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken()},body:JSON.stringify(bodyObj)})
+    .then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}return {ok:r.ok,status:r.status,d:d};});})
+    .then(cb).catch(function(e){cb({ok:false,status:0,d:{error:e.message||'network'}});});
+}
+/* Fetch a stored image (authed) and save/open it so the owner can send it on. */
+function saveEvidenceImage(key,name){
+  fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
+    .then(function(r){if(!r.ok)throw 0;return r.blob();})
+    .then(function(b){var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=(name||'screenshot')+'.jpg';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);})
+    .catch(function(){toast('Could not open image (it may have auto-deleted after 48h).');});
+}
+function fmtBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(0)+' KB';if(n<1073741824)return (n/1048576).toFixed(1)+' MB';return (n/1073741824).toFixed(2)+' GB';}
 function rEvidence(v){
   var ev=load(K.evidence,[]);
-  v.innerHTML='<h1>Evidence Center</h1>'+
-    '<div class="card tint-blue" style="margin-bottom:14px"><p class="muted">No cloud upload yet (MVP). Save screenshots/videos in your assigned evidence folder, then list the filenames here.</p>'+
+  var st=load(K.storage,{used:0,cap:52428800,enabled:true});
+  var pct=st.cap?Math.min(100,Math.round(st.used/st.cap*100)):0;
+  var meter='<div class="card tint-gray" style="margin-bottom:14px"><h3>Storage used</h3>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">'+fmtBytes(st.used)+' of '+fmtBytes(st.cap)+' safe limit ('+pct+'%). Stored in your own database — no paid storage, no card. We stop new uploads at this limit, and images auto-delete after 48 hours.</p></div>';
+  v.innerHTML='<h1>Evidence Center</h1>'+ meter +
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a screenshot</h3>'+
+      '<p class="muted">The picture is shrunk on your device and saved in your own database (no paid storage, no card). Uploaded images <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any image and send it on to get the problem fixed.</p>'+
+      '<label class="fld"><span>Choose an image</span><input id="evFile" type="file" accept="image/*"></label>'+
+      '<div class="grid c2">'+fld('uIssue','Related issue (optional)','text')+fld('uBrowser','Browser (optional)','text')+'</div>'+
+      '<div class="grid c2">'+fld('uDevice','Device (optional)','text')+'<div></div></div>'+
+      fldArea('uNotes','Notes (optional)')+
+      '<button class="btn green" id="evUp">Upload screenshot</button></div>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Or record a file name</h3>'+
+      '<p class="muted">No upload needed — save the file in your folder and list its name here. Text records are kept permanently.</p>'+
       '<div class="grid c2">'+fld('eShot','Screenshot filename','text')+fld('eVideo','Video filename','text')+'</div>'+
       '<div class="grid c2">'+fld('eIssue','Related issue','text')+fld('eBrowser','Browser','text')+'</div>'+
       fld('eDevice','Device','text')+fldArea('eNotes','Notes')+
       '<button class="btn blue" id="eSave">Add evidence record</button></div>'+
     '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="eExport">Export JSON</button></div>'+
     '<div class="card"><h3>Evidence Records ('+ev.length+')</h3><div id="eList"></div></div>';
+  $('#evUp',v).addEventListener('click',function(){
+    var f=$('#evFile',v).files[0];
+    if(!f){toast('Choose an image first');return;}
+    if(!isOnline()){toast('Connect online to upload images');return;}
+    var btn=this;btn.disabled=true;toast('Shrinking and uploading...');
+    downscaleImage(f,1100,0.6,function(dataUrl){
+      if(!dataUrl){btn.disabled=false;toast('Could not read that image. Try a different one.');return;}
+      uploadEvidence(dataUrl,{name:f.name,issue:$('#uIssue',v).value,browser:$('#uBrowser',v).value,device:$('#uDevice',v).value,notes:$('#uNotes',v).value},function(res){
+        btn.disabled=false;
+        if(res.ok){logActivity('Screenshot uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
+        else if(res.status===507){toast('Storage is at the safe limit, so uploads paused. Old images clear after 48h — try later, or use the file-name option below.');}
+        else if(res.status===413){toast('That image is still too large after shrinking. Take a simpler screenshot or use the file-name option.');}
+        else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
+      });
+    });
+  });
   $('#eSave',v).addEventListener('click',function(){
     var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
       browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
@@ -740,7 +803,24 @@ function rEvidence(v){
   $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
   var list=$('#eList',v);
   if(!ev.length)list.innerHTML='<p class="muted">No evidence yet.</p>';
-  else ev.forEach(function(r){list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video)+'</b><div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span></div>'+(r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));});
+  else ev.forEach(function(r){
+    var uploaded=!!r.r2Key;
+    list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video||'screenshot')+'</b>'+
+      (uploaded?' <span class="chip s-orange">uploaded · auto-deletes 48h</span>':'')+
+      '<div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span><span>'+fmtDate(r.at)+'</span></div>'+
+      (uploaded?'<img data-thumb="'+esc(r.r2Key)+'" alt="screenshot" style="max-width:160px;border-radius:8px;display:block;margin-top:8px">'+
+        '<div class="row" style="margin-top:8px"><button class="btn sm" data-saveimg="'+esc(r.r2Key)+'" data-saveimgname="'+esc(r.shot||'screenshot')+'">Save image to send</button></div>':'')+
+      (r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));
+  });
+  // Lazy-load uploaded thumbnails via authed blob fetch (keeps token out of URLs)
+  $$('[data-thumb]',v).forEach(function(img){
+    var key=img.getAttribute('data-thumb');
+    fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
+      .then(function(r){if(!r.ok)throw 0;return r.blob();})
+      .then(function(b){img.src=URL.createObjectURL(b);})
+      .catch(function(){img.alt='(image no longer available)';});
+  });
+  $$('[data-saveimg]',v).forEach(function(b){b.addEventListener('click',function(){saveEvidenceImage(b.getAttribute('data-saveimg'),b.getAttribute('data-saveimgname'));});});
 }
 
 function rMessages(v){
@@ -1056,17 +1136,102 @@ var HOWTO={
     'Open <b>Certification</b>. A site is Ready for public only when every section is verified Working and owner-approved. Then the next site unlocks (Load Eco → Studio → Play → AI).',
     'Use <b>Messages</b> to reply to her.']
 };
+/* Plain-language guide to every section. owner:true entries only show to owner. */
+var GUIDE=[
+  {tab:'dashboard',  name:'Dashboard',      what:'Your home screen. Shows your progress, open issues, payment status, and how much of the $60 assignment is done.', todo:'Glance here first each day to see where things stand.'},
+  {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
+  {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
+  {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works or Broken, with a screenshot name as proof.', todo:'Open each section, test every button and link, then mark it and type the screenshot file name in the Evidence box. See the Screenshots note below for how.'},
+  {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
+  {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
+  {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (shrunk on your device and stored in your own database — no paid storage, no card; auto-deletes after 48 hours) or just type the file name to keep a permanent text record. The owner can open any uploaded image and save it to send on for a fix.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
+  {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
+  {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
+  {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
+  {tab:'invoice',    name:'Invoice',        what:'Where the employee submits an invoice after the owner approves the work.', todo:'Submit only after approval. Submitting too early gets you red-flagged.'},
+  {tab:'documents',  name:'Training',       what:'Your guides and workbooks to read or download.', todo:'Read these when you start a new site.'},
+  {tab:'release',    name:'Certification',  what:'Tracks when each Load site is Ready for public. Sites unlock in order: Eco, then Studio, then Play, then AI.', todo:'A site is done only when every section passes and the owner approves. The next site then unlocks on its own.'},
+  {tab:'history',    name:'History',        what:'Every past assignment, kept forever. Nothing disappears.', todo:'Look back at finished jobs and their pay any time.'},
+  {tab:'activity',   name:'Activity',       what:'A running log of everything done in the app.', todo:'See who did what, and when.'},
+  {tab:'confirm',    name:'Confirmation',   what:'The build-plan checklist.', todo:'Confirm the plan items when asked.'},
+  {tab:'data',       name:'Data',           what:'Export, import, or reset this device’s copy of the data.', todo:'Use Export now and then to keep a backup.'}
+];
+var PAY_RULES=[
+  'Each full assignment is worth <b>$60</b> — for the whole site verified, not per hour or per day.',
+  'The Dashboard shows the <b>percent complete</b> of the $60 assignment.',
+  'The employee can submit an invoice <b>only after the owner approves</b> the work.',
+  'The owner can mark it paid <b>only when the Auto-check passes</b>: work approved, every section verified and owner-approved, steps done, and the invoice submitted.',
+  'If the work is not complete, <b>both sides are red-flagged</b> — the owner sees DO NOT PAY, and the employee sees the missing items. Finish them to clear the flag.'
+];
+var FAQ=[
+  ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
+  ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
+  ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (shrunk on your device, stored in your own database, auto-deletes after 48 hours) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
+  ['How do I get a screenshot to the fixer?','Open the uploaded image in Evidence and tap Save image to send. That saves the picture to your device so you can share it with the fixer (Claude). Do it within 48 hours, before the image auto-clears.'],
+  ['Will uploads slow the site or fill it up?','No. Pictures are shrunk before saving, the app keeps a small safe limit, and uploaded images auto-delete after 48 hours. It stays light.'],
+  ['Could uploads ever cost money?','No. Screenshots are stored in your own database — no paid storage and no card needed. The app stops uploads before its safe limit, and the Evidence page shows a storage-used meter. The file-name option is always free too.'],
+  ['Why is my pay not released?','Open Payment and read the Auto-check. It lists exactly what is still missing.'],
+  ['When does the next site open?','On its own, once the current site is fully certified (Eco, then Studio, then Play, then AI).'],
+  ['Does my work save across devices?','Yes. Once you sign in while online, your work syncs to every device.']
+];
 function rHowTo(v){
   var owner=isOwner();
-  function block(title,steps,tint){
+  function steps(title,arr,tint){
     return '<div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
-      steps.map(function(s){return '<li style="margin-bottom:6px">'+s+'</li>';}).join('')+'</ol></div>';
+      arr.map(function(s){return '<li style="margin-bottom:8px">'+s+'</li>';}).join('')+'</ol></div>';
   }
-  var mine=owner?block('How to use OCC — Owner (you)',HOWTO.owner,'blue'):block('How to use OCC — Employee (you)',HOWTO.employee,'purple');
-  var other=owner?block('What the employee does',HOWTO.employee,'gray'):block('What the owner does',HOWTO.owner,'gray');
-  v.innerHTML='<h1>How To</h1>'+
-    '<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+(owner?'You review, fix issues, approve, and pay only after the auto-check passes.':'You verify every section with evidence and report problems — you do not fix.')+'</div>'+
-    mine+other;
+  var html='<h1>How to Use Load Tasks — OCC</h1>';
+  html+='<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+
+    (owner?'You review the work, fix the issues she reports, approve, and pay only after the auto-check passes.'
+          :'You check every section of the site with proof and report anything broken — you do not fix it yourself.')+
+    '<p class="muted" style="margin-top:8px;margin-bottom:0">This guide is always here in the <b>How to Use</b> tab. Read it any time you are unsure.</p></div>';
+
+  // Quick start for the logged-in role
+  html+=steps(owner?'Your first 5 minutes — Owner':'Your first 5 minutes — Employee', owner?HOWTO.owner:HOWTO.employee, owner?'blue':'purple');
+
+  // What each section does
+  html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
+  GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
+    html+='<button class="card tint-gray" data-go="'+g.tab+'" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:10px;display:block">'+
+      '<h3 style="margin:0 0 4px">'+esc(g.name)+'</h3>'+
+      '<div style="margin-bottom:6px">'+g.what+'</div>'+
+      '<div class="muted"><b>What to do:</b> '+g.todo+'</div>'+
+      '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button>';
+  });
+
+  // Screenshots — how proof works (matches the current MVP: record file names, no upload button yet)
+  html+='<div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
+    '<p style="margin:0 0 8px">You have <b>two ways</b> to add screenshot proof. Both keep a permanent text record; the difference is whether the picture itself is stored.</p>'+
+    '<p style="margin:0 0 6px"><b>Way 1 — Upload the picture (recommended).</b></p>'+
+    '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">On iPad, take the screenshot (press the top button and volume up together).</li>'+
+      '<li style="margin-bottom:8px">Open <b>Evidence</b>, tap <b>Choose an image</b>, pick the screenshot, then tap <b>Upload screenshot</b>.</li>'+
+      '<li style="margin-bottom:8px">The app shrinks the picture on your device and saves it in your own database — <b>no paid storage and no card needed</b>.</li>'+
+      '<li style="margin-bottom:8px">It <b>auto-deletes after 48 hours</b> to keep the database light, and a usage meter at the top of Evidence shows how much space is used. The app also stops uploads before its safe limit, so it can never cost money.</li>'+
+      '<li style="margin-bottom:8px"><b>To get a screenshot fixed:</b> the owner opens the uploaded image, taps <b>Save image to send</b>, and shares it with the fixer (Claude) — review within the 48-hour window before it clears.</li>'+
+      '<li style="margin-bottom:0">The text record (file name, date, who) is kept even after the image clears.</li>'+
+    '</ol>'+
+    '<p style="margin:0 0 6px"><b>Way 2 — Just record the file name.</b></p>'+
+    '<ol style="margin:0;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">Save the screenshot in your own evidence folder with a clear name, like <b>eco-homepage.png</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, type that file name in the section’s <b>Evidence</b> box, then mark it Works or Broken. You can also add it under <b>Evidence</b> &rarr; Record a file name.</li>'+
+      '<li style="margin-bottom:0">Nothing is uploaded; you keep the picture yourself, forever.</li>'+
+    '</ol></div>';
+
+  // Pay rules
+  html+='<div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+    PAY_RULES.map(function(p){return '<li style="margin-bottom:8px">'+p+'</li>';}).join('')+'</ul></div>';
+
+  // FAQ
+  html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Common questions</h3>'+
+    FAQ.map(function(q){return '<div style="margin-bottom:12px"><b>'+esc(q[0])+'</b><div class="muted" style="margin-top:2px">'+esc(q[1])+'</div></div>';}).join('')+'</div>';
+
+  // The other role, for context
+  html+=steps(owner?'What the employee does':'What the owner does', owner?HOWTO.employee:HOWTO.owner, 'gray');
+
+  v.innerHTML=html;
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
 }
 
 function rDocuments(v){
