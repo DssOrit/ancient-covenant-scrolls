@@ -105,7 +105,7 @@ Repeat for both domains.
 
 ## Notes
 
-- The Cloudflare account is already created at `dash.cloudflare.com` under `vintageandmore71@gmail.com`
+- The Cloudflare account is already created at `dash.cloudflare.com` under the owner's account email (kept private — not stored in this repo)
 - GitHub is already authorized on that Cloudflare account (completed during setup session)
 - The repo is public, so no GitHub token is required for Cloudflare to read it
 - Do NOT enable "Always use HTTPS" redirect on GitHub Pages side — Cloudflare handles SSL
