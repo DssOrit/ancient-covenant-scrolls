@@ -1271,6 +1271,17 @@ window.LoadAudioFix = {
  function scanIframeRender(report) {
  try {
  var frame = $('viewer-frame');
+ var sandbox = frame ? (frame.getAttribute('sandbox') || '') : '';
+ var strictSandbox = !!sandbox && sandbox.indexOf('allow-same-origin') === -1;
+ if (frame && strictSandbox && !frame.contentDocument) {
+ // The default strict sandbox (allow-scripts, no allow-same-origin)
+ // deliberately blocks contentDocument access. This is expected and
+ // safe — not a fault — so don't flag it as a warning on every app
+ // (QA-36).
+ pushItem(report, 'ok', '', 'App is running in a secure sandbox',
+ 'This app runs in a locked-down sandbox, so Load can\'t read its internal page from here — that\'s expected and keeps the app isolated. To inspect it, open the viewer menu and turn on Trust for this app, then scan again.');
+ return;
+ }
  if (!frame || !frame.contentDocument) {
  pushItem(report, 'warn', '', 'Viewer frame not available',
  'The iframe isn\'t accessible right now — probably because you opened the console before the app finished loading. Tap Reload in the viewer and scan again.');
@@ -8021,12 +8032,21 @@ window.LoadAudioFix = {
  function manuscriptPlainText(app) {
  try {
  var doc = new DOMParser().parseFromString(app.html || '', 'text/html');
+ // Drop code and other non-prose so the reading level isn't computed
+ // from JavaScript/CSS source. Without this, a webapp's script/style
+ // text counts as "words" and a near-textless page was rated
+ // "College level" (QA-33).
+ var junk = doc.querySelectorAll('script, style, noscript, template');
+ for (var i = 0; i < junk.length; i++) junk[i].remove();
  // Drop any auto-injected book title H1 so it doesn't skew sentence counts
  var bookTitle = doc.querySelector('h1.book-title');
  if (bookTitle) bookTitle.remove();
  return (doc.body && doc.body.textContent || '').replace(/\s+/g, ' ').trim();
  } catch (e) {
- return String(app.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+ return String(app.html || '')
+ .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+ .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+ .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
  }
  }
 
@@ -9166,7 +9186,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7d</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7e</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +

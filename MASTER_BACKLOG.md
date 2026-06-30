@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7d`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7e`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -152,10 +152,10 @@ Import a file:
 - **QA-20** "Edit video" assumes pulling from iPad files even when on PC.
 
 Workspace:
-- **QA-21** (user opinion) Workspace should not be reachable from the import page — it is a tool-heavy popup; expose it only in library or while actively working on a file.
-- **QA-22** Under line 2, "file tree" only opens the library without size/status badges; no way to open file tree while inside a file.
-- **QA-23** Same issue as QA-22 for "live preview".
-- **QA-24** Everything under line 6 opens a "this site can't be reached" page.
+- **QA-21** (user opinion) Workspace should not be reachable from the import page — it is a tool-heavy popup; expose it only in library or while actively working on a file. **FIX SHIPPED v17g7e** — removed the "Workspace" card from the Import screen (`load/index.html`, 8 -> 7 type cards). The hub is still reachable from the home dashboard and the workflow banner (`openWorkspaceHub`).
+- **QA-22** Under line 2, "file tree" only opens the library without size/status badges; no way to open file tree while inside a file. **NOT DONE — needs feature work.** `handleWorkspaceAction('filetree')` requires an open app (`workspaceRequireApp`); with no active file it redirects to the library. Real fix: allow opening the File Tree (with size/status badges) while actively in a file. Larger than a low-touch fix — schedule deliberately.
+- **QA-23** Same issue as QA-22 for "live preview". **NOT DONE — see QA-22.**
+- **QA-24** Everything under line 6 opens a "this site can't be reached" page. **SAME ROOT AS QA-10/11/12/13.** The hub's last section has `<a href="./tools/style-library.html">` / `image-upscaler.html` / `face-restore.html` anchors (and a Tools button to `./tools/index.html`). Those files exist on `origin/main` and the links are correct, so this is not reproducible from the code — same live-site/`tools/` serving question as QA-10–13. Need the exact error + URL + which site.
 
 Create new:
 - **QA-25** PWA Reader Book template does not work.
@@ -168,10 +168,10 @@ Library:
 - **QA-30** PWA/Webapp uploaded on iPad stuck in forever-loading (only some webapps).
 - **QA-31** [SCREENSHOT] Editing words in webapps on PC glitches — the webapp's pinned content overlays the Load toolbar buttons. Cause located: `openProseEditor` in `load/load.js`; injected webapp content with fixed/absolute elements escapes the editor pane. **FIX SHIPPED v17g7a** — made the editor scroll pane a containing block (`position:relative;transform:translateZ(0)`) so the webapp's fixed/absolute bars stay trapped inside the editing area instead of overlaying the Load toolbar. Needs user verification on PC.
 - **QA-32** Tool button icons at the top of HTML/webapps disappear on iPad after uploading (still clickable; does not disappear on PC).
-- **QA-33** Book-check button while editing a webapp is misleading — a generic webapp with little text was rated "college level read".
+- **QA-33** Book-check button while editing a webapp is misleading — a generic webapp with little text was rated "college level read". **FIX SHIPPED v17g7e** — `manuscriptPlainText` read `textContent` including `<script>`/`<style>`, so a webapp's JavaScript/CSS source counted as "words" and inflated the Flesch-Kincaid grade. Now strips script/style/noscript/template before measuring. (A low-word-count confidence caveat could be added later if tiny pages still read oddly.)
 - **QA-34** EPUB books get weird formatting and the table of contents stops working once transferred on iPad.
 - **QA-35** [ACR] Clicking a TOC tab in the EPUB reader (any book) opens a non-working "ancient covenant record" and won't return to the EPUB (PC or certain books only). Touches ACR — needs explicit approval.
-- **QA-36** "Viewer frame not available" appears in the developer tab on everything uploaded.
+- **QA-36** "Viewer frame not available" appears in the developer tab on everything uploaded. **FIX SHIPPED v17g7e** — same strict-sandbox root cause as QA-04: `scanIframeRender` saw `contentDocument === null` (blocked by the default `allow-scripts` sandbox) and reported a misleading "not available" warning on every app. Now detects the strict sandbox and reports it as expected/safe ("App is running in a secure sandbox") with a note that turning on Trust enables inspection.
 
 Edit video:
 - **QA-37** Speeding up / slowing down a video causes heavy lag and stutter.
