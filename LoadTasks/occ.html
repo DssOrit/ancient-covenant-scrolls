@@ -216,6 +216,8 @@
     <section class="view" data-view="documents"></section>
     <!-- Release readiness -->
     <section class="view" data-view="release"></section>
+    <!-- Assignment history -->
+    <section class="view" data-view="history"></section>
     <!-- Activity history -->
     <section class="view" data-view="activity"></section>
     <!-- Confirmation -->
@@ -335,6 +337,17 @@ var SITES = [
 /* ---------- session / auth ---------- */
 function session(){return load(K.session,null);}
 function isOwner(){var s=session();return s&&s.role==='owner';}
+/* Roles & permissions — scalable for future employees/managers/etc.
+   Active now: owner, employee. Others are placeholders (not selectable yet). */
+var ROLES={
+  owner:    {label:'Owner / Admin',                can:['*']},
+  employee: {label:'Employee / Verifier',          can:['view','tasks','issues','evidence','messages','alerts','submit','payments_view']},
+  manager:  {label:'Manager (future)',             can:['view','review','approve','payments','messages']},
+  moderator:{label:'Moderator (future)',           can:['view','review','messages']},
+  developer:{label:'Developer (future)',           can:['view','issues','messages']},
+  support:  {label:'Support (future)',             can:['view','messages']}
+};
+function can(perm){var s=session();if(!s)return false;var r=ROLES[s.role];if(!r)return false;return r.can.indexOf('*')>=0||r.can.indexOf(perm)>=0;}
 
 function login(name,pass,role){
   var u=USERS.filter(function(x){return x.name.toLowerCase()===String(name).trim().toLowerCase() && x.role===role;})[0];
@@ -357,7 +370,8 @@ var TABS = [
   {id:'payment',label:'Payment',c:'gold'},
   {id:'invoice',label:'Invoice',c:'gold'},
   {id:'documents',label:'Training',c:'gray'},
-  {id:'release',label:'Release Readiness',c:'green'},
+  {id:'release',label:'Certification',c:'green'},
+  {id:'history',label:'History',c:'gray'},
   {id:'activity',label:'Activity',c:'blue'},
   {id:'confirm',label:'Confirmation',c:'green'},
   {id:'data',label:'Data',c:'gray'}
@@ -398,7 +412,7 @@ function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
   ({dashboard:rDashboard,assignments:rAssignments,review:rReview,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
-    release:rRelease,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
+    release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
 }
 
 function rDashboard(v){
@@ -692,10 +706,13 @@ function rPayment(v){
   }
 }
 
+function invoiceNoFor(a){return a.invoiceNo||('OCC-INV-W'+String(a.week||1).padStart(2,'0')+'-'+String(a.id||'wk1').toUpperCase());}
 function rInvoice(v){
   var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);store(K.assignments,[a]);}
   var inv='INVOICE — Operations Command Center\n'+
     '====================================\n'+
+    'Invoice No:  '+a.invoiceNo+'\n'+
     'Worker:      '+a.worker+'\n'+
     'Title:       Platform Quality Assurance Specialist\n'+
     'Assignment:  '+a.title+'\n'+
@@ -718,7 +735,7 @@ function rInvoice(v){
       '</div></div>';
   $('#invPrint',v).addEventListener('click',function(){window.print();});
   $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
-  $('#invJson',v).addEventListener('click',function(){download('occ-invoice.json',JSON.stringify({worker:a.worker,title:'Platform Quality Assurance Specialist',assignment:a.title,site:a.site,amount:a.pay,bonus:a.bonus||0,total:total,status:a.status,submitted:a.submittedDate,approved:a.approvedDate,paid:a.paidDate},null,2));});
+  $('#invJson',v).addEventListener('click',function(){download('occ-invoice.json',JSON.stringify({invoiceNo:a.invoiceNo,worker:a.worker,title:'Platform Quality Assurance Specialist',assignment:a.title,site:a.site,amount:a.pay,bonus:a.bonus||0,total:total,status:a.status,submitted:a.submittedDate,approved:a.approvedDate,paid:a.paidDate},null,2));});
   if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);toast('Marked paid');render('invoice');});
 }
 
@@ -867,21 +884,46 @@ function readinessScore(){
   return Math.max(0,Math.min(100,score));
 }
 function rRelease(v){
-  var issues=load(K.issues,[]);
+  var issues=load(K.issues,[]),all=load(K.assignments,[]);
   var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
   var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
-  var retests=issues.filter(function(i){return i.status==='Needs Retest';}).length;
+  var retestsOpen=issues.filter(function(i){return i.status==='Needs Retest';}).length;
   var a=activeAssignment();
-  var html='<h1>Release Readiness Center</h1>';
+  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order.</p>';
   SITES.forEach(function(site){
     var active=site.stage==='Active';
-    var stage=active?(a.status==='Approved'||a.status==='Paid'?'Stable Verified':(a.status==='Submitted'?'In Testing':'Needs Fixes')):'Locked';
+    var siteIssues=issues.filter(function(i){return i.site===site.name;});
+    var bugsFound=siteIssues.length;
+    var bugsFixed=siteIssues.filter(function(i){return i.status==='Verified Fixed'||i.status==='Closed';}).length;
+    var retestsDone=siteIssues.filter(function(i){return i.status==='Verified Fixed';}).length;
+    var done=all.filter(function(x){return x.site===site.url && (x.status==='Approved'||x.status==='Paid');}).length;
+    var stage=active?(a&&(a.status==='Approved'||a.status==='Paid')?'Stable Verified':(a&&a.status==='Submitted'?'In Testing':'Needs Fixes')):'Locked';
+    var approved=active&&a&&(a.status==='Approved'||a.status==='Paid');
     html+='<div class="card tint-'+(active?'green':'gray')+'" style="margin-bottom:12px">'+
       '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
       '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
       (active?
-        '<div class="kvs" style="margin-top:8px"><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Critical: <b>'+crit+'</b></span><span>Major: <b>'+major+'</b></span><span>Retests: <b>'+retests+'</b></span><span>Owner approval: <b>'+((a.status==='Approved'||a.status==='Paid')?'Yes':'No')+'</b></span></div>'
-       : '<p class="muted" style="margin-top:8px">Locked future stage. Opens after the previous site is marked stable/approved.</p>')+
+        '<div class="kvs" style="margin-top:8px"><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Assignments completed: <b>'+done+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Retests completed: <b>'+retestsDone+'</b></span><span>Open retests: <b>'+retestsOpen+'</b></span><span>Critical open: <b>'+crit+'</b></span><span>Major open: <b>'+major+'</b></span><span>Owner approval: <b>'+(approved?'Yes':'No')+'</b></span></div>'
+       : '<p class="muted" style="margin-top:8px">Locked future stage. Opens after the previous site is certified stable/approved.</p>')+
+    '</div>';
+  });
+  v.innerHTML=html;
+}
+
+function rHistory(v){
+  var all=load(K.assignments,[]),issues=load(K.issues,[]),ev=load(K.evidence,[]);
+  var html='<h1>Assignment History</h1><p class="muted">Every assignment is kept — nothing disappears after completion.</p>';
+  if(!all.length){v.innerHTML=html+'<p class="muted">No assignments yet.</p>';return;}
+  all.forEach(function(a){
+    var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+    var aIssues=issues.filter(function(i){return i.site===a.site;}).length||issues.length;
+    var aEv=ev.length;
+    html+='<div class="card tint-gray" style="margin-bottom:12px">'+
+      '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Invoice: <b>'+esc(invoiceNoFor(a))+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total: <b>$'+total+'</b></span></div>'+
+      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid (completed): '+fmtDate(a.paidDate)+'</span></div>'+
+      '<div class="kvs"><span>Issues reported: <b>'+aIssues+'</b></span><span>Evidence items: <b>'+aEv+'</b></span></div>'+
+      (a.ownerNotes?'<p style="margin-top:8px"><b>Review notes:</b> '+esc(a.ownerNotes)+'</p>':'')+
     '</div>';
   });
   v.innerHTML=html;
