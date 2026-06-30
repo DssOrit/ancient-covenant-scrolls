@@ -257,10 +257,14 @@
         <span class="nav-group-sep">Internal</span>
         <a class="occ-internal-link" href="occ.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(160deg,#4a9eff,#2d7fe0);border:0;border-radius:10px;color:#04122a;text-decoration:none;font-weight:800">OCC Login</a>
       </nav>
+      <a class="occ-login-header" href="occ.html" aria-label="Open OCC login" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;margin-right:8px;background:linear-gradient(160deg,#4a9eff,#2d7fe0);border-radius:10px;color:#04122a;text-decoration:none;font-weight:800;white-space:nowrap;flex:0 0 auto">OCC Login</a>
       <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
         <span class="icon-mini" data-icon="refresh"></span>
       </button>
     </header>
+    <!-- Always-visible entry to the internal OCC login, so it is never hidden in the nav/rail -->
+    <a class="occ-login-float" href="occ.html" aria-label="Open OCC login"
+       style="position:fixed;right:14px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:12px 16px;background:linear-gradient(160deg,#4a9eff,#2d7fe0);border-radius:14px;color:#04122a;text-decoration:none;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.35)">OCC Login</a>
 
     <main id="main" class="main-setup area">
       <aside class="side-rail" aria-label="Build command rail">
