@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS assignments (
   title          TEXT, site TEXT, worker TEXT, week INTEGER,
   pay            REAL, bonus REAL, goal TEXT, status TEXT,
   submitted_date TEXT, approved_date TEXT, paid_date TEXT, owner_notes TEXT,
-  invoice_submitted INTEGER DEFAULT 0, invoice_submitted_date TEXT
+  invoice_submitted INTEGER DEFAULT 0, invoice_submitted_date TEXT,
+  kind TEXT, scope TEXT   -- daily model: kind 'verify' | 'recert'; scope optional
 );
 
 CREATE TABLE IF NOT EXISTS checklist (
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS issues (
   id        TEXT PRIMARY KEY,
   title TEXT, site TEXT, page TEXT, browser TEXT, device TEXT,
   steps TEXT, expected TEXT, actual TEXT, severity TEXT, status TEXT,
-  shot TEXT, notes TEXT, created_by TEXT, created_at TEXT
+  shot TEXT, notes TEXT, assignment TEXT, created_by TEXT, created_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS evidence (

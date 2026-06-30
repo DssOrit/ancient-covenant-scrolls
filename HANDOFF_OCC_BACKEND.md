@@ -79,8 +79,8 @@ with this JSON body:
 {
   "secret": "THE_SETUP_SECRET_YOU_SET",
   "users": [
-    { "name": "L. Bond",      "role": "owner",    "title": "Owner / Admin",                         "password": "CHOOSE_OWNER_PASSWORD" },
-    { "name": "Witness Bond", "role": "employee", "title": "Platform Quality Assurance Specialist", "password": "CHOOSE_WITNESS_PASSWORD" }
+    { "name": "OWNER_NAME",    "role": "owner",    "title": "Owner / Admin",                         "password": "CHOOSE_OWNER_PASSWORD" },
+    { "name": "EMPLOYEE_NAME", "role": "employee", "title": "Platform Quality Assurance Specialist", "password": "CHOOSE_EMPLOYEE_PASSWORD" }
   ]
 }
 ```
@@ -92,7 +92,7 @@ After this works, you can rotate or remove `SETUP_SECRET`.
 
 POST to `.../api/occ/login` with:
 ```json
-{ "name": "Witness Bond", "role": "employee", "password": "CHOOSE_WITNESS_PASSWORD" }
+{ "name": "EMPLOYEE_NAME", "role": "employee", "password": "CHOOSE_EMPLOYEE_PASSWORD" }
 ```
 You should get back a `token`. If you do, the backend is live and real.
 

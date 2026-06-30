@@ -61,10 +61,10 @@ async function userFromToken(env, req) {
 }
 
 const SEED_DAYS = [
-  { day: 1, items: ['Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot','List every visible menu','List every visible section','List every visible tile/card','List every major page discovered','Record notes','Repeat basic access on iPad Safari if available'] },
+  { day: 1, items: ['Open https://loadeco.app on PC (Chrome)','Confirm homepage loads','Take homepage screenshot','List every visible menu','List every visible section','List every visible tile/card','List every major page discovered','Record notes','Repeat basic access on iPad and phone (Safari)'] },
   { day: 2, items: ['Click every visible menu item','Click every visible button','Verify destination loads','Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest','Screenshot broken or confusing areas'] },
   { day: 3, items: ['Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear','Write what is confusing','Write what instructions are missing','Write what would help a new user','Rate overall clarity 1 to 10'] },
-  { day: 4, items: ['Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences','Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences'] },
+  { day: 4, items: ['Test on PC (Chrome)','Test on PC (Opera)','Test on iPad (Safari)','Test on phone (Safari)','Test on phone (Chrome)','Record layout differences','Record browser-only issues','Record mobile/phone problems','Record desktop problems','Take screenshots of differences'] },
   { day: 5, items: ['Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions','Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review'] }
 ];
 
@@ -76,6 +76,55 @@ const SEED_SITES = [
   { id: 'asg_play',   site: 'https://loadeco.app/LoadPlay/',     name: 'Load Play' },
   { id: 'asg_ai',     site: 'https://loadeco.app/LoadAI/',       name: 'Load AI' }
 ];
+/* Daily $60 plan for Load Eco (mirrors the client). Each day = a checklist
+   of items, each tested on PC/iPad/phone across Safari/Chrome/Opera. */
+const DAY_PLAN_ECO = {
+  site: 'https://loadeco.app',
+  days: [
+    { title: 'Day 1 — Top bar & Front page', items: ['Top bar — Aa theme switcher','Top bar — A− decrease text','Top bar — A+ increase text','Top bar — Reset word size','Front page — Tutorial','Front page — Image prompt','Front page — Video to audio','Front page — Handoff tools','Front page — Style library','Front page — Image upscaler','Front page — Face Restore'] },
+    { title: 'Day 2 — Help/FAQ & Import', items: ['Help/FAQ — main page','Help/FAQ — "I pressed the wrong button"','Help/FAQ — "Can each item have its own look"','Help/FAQ — "Install Load as a real app"','Library — Ask AI about this','Import — Import a PWA','Import — Media','Import — Edit video entry'] },
+    { title: 'Day 3 — Workspace & Create new', items: ['Workspace — open from Library','Workspace — File tree','Workspace — Live preview','Workspace — line-6 tools','Create new — PWA Reader Book template','Create new — other templates','Create new — start a blank file','Workspace — access points'] },
+    { title: 'Day 4 — Library uploads', items: ['Library — upload audio','Library — upload video','Library — upload PDF','Library — upload images','Library — HTML cover editing','Library — webapp upload (iPad)','Library — editing words in webapp','Library — tool icons on HTML/webapp','Library — Book check button'] },
+    { title: 'Day 5 — Reader & Edit video', items: ['Reader — EPUB formatting','Reader — EPUB table of contents','Reader — EPUB navigation','Reader — viewer frame status','Edit video — speed up / slow down','Edit video — trim / cut','Edit video — export','Edit video — audio'] }
+  ]
+};
+/* Auto-create the daily assignments + their checklist sections if none exist,
+   so the employee never waits for the owner to hand them out. */
+async function ensureDayPlan(env) {
+  const have = await env.DB.prepare("SELECT COUNT(*) AS n FROM assignments WHERE kind = 'verify'").first();
+  if (have && have.n > 0) return;
+  const SITE = DAY_PLAN_ECO.site, stmts = [];
+  DAY_PLAN_ECO.days.forEach((d, i) => {
+    const id = 'day_loadecoapp_' + (i + 1);
+    const goal = 'Verify all ' + d.items.length + ' items on today’s checklist, on PC, iPad and phone across Safari, Chrome and Opera. Mark each Works or Broken with a screenshot. The day cannot be submitted until every item is done.';
+    stmts.push(env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+      .bind(id, d.title, SITE, 'Employee', i + 1, 60, 0, goal, 'Not Started', '', '', '', '', '', 'verify', JSON.stringify(d.items)));
+    d.items.forEach((name, j) => stmts.push(env.DB.prepare('INSERT OR IGNORE INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
+      .bind('secd_' + id + '_' + j, SITE, name, 'Untested', '', '', '', '')));
+  });
+  await env.DB.batch(stmts);
+}
+/* Rule B: after two verify days with issues logged (since the last re-cert),
+   auto-open a re-certification day. No owner action needed. */
+async function ensureRecertIfDue(env) {
+  const SITE = DAY_PLAN_ECO.site;
+  const pend = await env.DB.prepare("SELECT COUNT(*) AS n FROM assignments WHERE kind = 'recert' AND status != 'Paid'").first();
+  if (pend && pend.n > 0) return; // a re-verify day is already open
+  const lr = await env.DB.prepare("SELECT COALESCE(MAX(week),0) AS w FROM assignments WHERE kind = 'recert' AND status IN ('Approved','Paid')").first();
+  const lastW = (lr && lr.w) || 0;
+  const days = await env.DB.prepare("SELECT id FROM assignments WHERE kind = 'verify' AND status IN ('Approved','Paid') AND week > ?").bind(lastW).all();
+  let issueDays = 0;
+  for (const d of (days.results || [])) {
+    const c = await env.DB.prepare("SELECT COUNT(*) AS n FROM issues WHERE assignment = ?").bind(d.id).first();
+    if (c && c.n > 0) issueDays++;
+  }
+  if (issueDays < 2) return;
+  const mw = await env.DB.prepare("SELECT COALESCE(MAX(week),0) AS w FROM assignments WHERE kind IN ('verify','recert')").first();
+  const w = ((mw && mw.w) || 0) + 1;
+  const goal = 'Re-verify the issues that were marked fixed. Retest each fixed item on PC, iPad and phone, and mark it Works (with a screenshot) or still Broken. New areas stay locked until the owner approves this day.';
+  await env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+    .bind('recert_loadecoapp_' + w, 'Re-certification (Day ' + w + ') — retest fixes', SITE, 'Employee', w, 60, 0, goal, 'Not Started', '', '', '', '', '', 'recert', '').run();
+}
 /* Hard 48-hour auto-delete for UPLOADED screenshots only (rows with an
    r2_key, which now holds the D1 image id). Typed-filename evidence (no
    r2_key) is weightless text and is kept. Runs opportunistically on
@@ -95,7 +144,7 @@ async function ensureSeed(env) {
   const stmts = [];
   SEED_SITES.forEach(s => {
     stmts.push(env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?)')
-      .bind(s.id, s.name + ' — Full Section Verification', s.site, 'Witness Bond', 1, 60, 0,
+      .bind(s.id, s.name + ' — Full Section Verification', s.site, 'Employee', 1, 60, 0,
         'Verify that EVERY section, button and link of ' + s.name + ' works before it goes public. Mark each Works or Broken with evidence. You verify and report (you do not fix); broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',
         'Not Started', '', '', '', '', ''));
     SEED_SECTIONS.forEach((name, i) => {
@@ -163,11 +212,13 @@ async function handle(req, env, origin) {
 
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
     await ensureSeed(env);
+    await ensureDayPlan(env);
+    await ensureRecertIfDue(env);
     await purgeExpiredEvidence(env);
     const [a, c, i, e, m, al, sec] = await Promise.all([
-      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate FROM assignments').all(),
+      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate, kind, scope FROM assignments').all(),
       env.DB.prepare('SELECT id,day,idx,label,done FROM checklist ORDER BY day, idx').all(),
-      env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,assignment, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,sender, sender_role AS senderRole, recipient,priority,assignment,body, created_at AS at FROM messages ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
@@ -180,8 +231,8 @@ async function handle(req, env, origin) {
   if (path.includes('/api/occ/issues')) {
     if (method === 'POST') {
       const id = uid('iss');
-      await env.DB.prepare('INSERT INTO issues (id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-        .bind(id, body.title, body.site, body.page, body.browser, body.device, body.steps, body.expected, body.actual, body.severity, 'New', body.shot, body.notes, me.name, new Date().toISOString()).run();
+      await env.DB.prepare('INSERT INTO issues (id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,assignment,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+        .bind(id, body.title, body.site, body.page, body.browser, body.device, body.steps, body.expected, body.actual, body.severity, 'New', body.shot, body.notes, body.assignment || '', me.name, new Date().toISOString()).run();
       return json({ ok: true, id }, 200, origin);
     }
     if (method === 'PATCH') {
@@ -258,6 +309,13 @@ async function handle(req, env, origin) {
   }
 
   if (path.includes('/api/occ/assignments')) {
+    if (method === 'POST' && last === 'assignments') { // owner creates a day assignment
+      if (!owner) return json({ error: 'owner only' }, 403, origin);
+      const id = body.id || uid('asg');
+      await env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+        .bind(id, body.title || '', body.site || '', body.worker || 'Employee', body.week || 1, body.pay || 60, 0, body.goal || '', 'Not Started', '', '', '', '', '', body.kind || 'verify', body.scope || '').run();
+      return json({ ok: true, id }, 200, origin);
+    }
     if (method === 'PATCH') {
       if (!owner) return json({ error: 'owner only' }, 403, origin);
       await env.DB.prepare('UPDATE assignments SET status=?, bonus=?, owner_notes=?, approved_date=COALESCE(approved_date,?), paid_date=COALESCE(paid_date,?) WHERE id=?')
@@ -294,6 +352,11 @@ async function ensureSchema(env) {
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS evidence_blobs (id TEXT PRIMARY KEY, data TEXT, content_type TEXT, size INTEGER DEFAULT 0, created_at TEXT)").run();
+  // Daily assignment model: kind ('verify' | 'recert') marks day assignments;
+  // issues carry the day assignment they were logged under (for the gate).
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN kind TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN scope TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE issues ADD COLUMN assignment TEXT").run(); } catch (e) {}
   _schemaReady = true;
 }
 
