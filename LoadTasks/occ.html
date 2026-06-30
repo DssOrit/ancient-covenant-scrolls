@@ -198,6 +198,8 @@
     <section class="view" data-view="assignments"></section>
     <!-- Owner Review -->
     <section class="view" data-view="review"></section>
+    <!-- Verify Sections -->
+    <section class="view" data-view="verify"></section>
     <!-- Daily tasks -->
     <section class="view" data-view="daily"></section>
     <!-- Issues -->
@@ -267,7 +269,8 @@ function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');
 var K = {
   session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
   issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
-  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity'
+  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity',
+  sections:'occ_sections'
 };
 function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
 function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
@@ -308,11 +311,14 @@ var CONFIRM_SEED = [
 function seed(){
   if(!localStorage.getItem(K.assignments)){
     store(K.assignments,[{
-      id:'wk1', title:'Load Eco Week 1 Foundation Audit', site:'https://loadeco.app',
-      worker:'Witness Bond', week:1, pay:50, bonus:0,
-      goal:'Create a complete site inventory, navigation audit, browser comparison, issue report, and release-readiness baseline.',
+      id:'wk1', title:'Load Eco — Full Section Verification', site:'https://loadeco.app',
+      worker:'Witness Bond', week:1, pay:60, bonus:0,
+      goal:'Verify that EVERY section of Load Eco actually works before it goes public. List every section, test each one, mark it Works or Broken, and attach evidence (screenshot + note) for each. The site is not ready for sale until every section is verified Working and the owner approves.',
       status:'Not Started', submittedDate:'', approvedDate:'', paidDate:'', ownerNotes:''
     }]);
+  }
+  if(!localStorage.getItem(K.sections)){
+    store(K.sections, SECTION_SEED.map(function(n,i){return {id:'sec_'+i,site:'https://loadeco.app',name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''};}));
   }
   if(!localStorage.getItem(K.checklist)){
     var c={};DAILY_SEED.forEach(function(d){c['day'+d.day]=d.items.map(function(t){return {label:t,done:false};});});
@@ -324,15 +330,24 @@ function seed(){
   if(!localStorage.getItem(K.messages)) store(K.messages,[]);
   if(!localStorage.getItem(K.alerts)) store(K.alerts,[]);
   if(!localStorage.getItem(K.activity)) store(K.activity,[]);
+  if(!localStorage.getItem(K.sections)) store(K.sections,[]);
 }
 
-/* Release-readiness sites: only Load Eco active; others locked future stages. */
+/* Starter sections for the active site. The employee renames/adds the real
+   site-specific sections — these are generic verification targets to begin. */
+var SECTION_SEED = ['Homepage loads','Main navigation menu','Each menu link opens','Mobile / iPad layout','Sign-in / gate (if any)','Footer links'];
+
+/* Sites unlock in order: Eco -> Studio -> Play -> AI. Only Load Eco active. */
 var SITES = [
   {name:'Load Eco / Main Load', url:'https://loadeco.app', stage:'Active'},
   {name:'Load Studio', url:'https://loadeco.app/loadstudio/', stage:'Locked'},
-  {name:'Load Tasks', url:'https://loadeco.app/LoadTasks/', stage:'Locked'},
-  {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'}
+  {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'},
+  {name:'Load AI', url:'https://loadeco.app/LoadAI/', stage:'Locked'}
 ];
+function activeSite(){return (SITES.filter(function(s){return s.stage==='Active';})[0]||SITES[0]);}
+function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
+function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
+function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length};}
 
 /* ---------- session / auth ---------- */
 function session(){return load(K.session,null);}
@@ -362,6 +377,7 @@ var TABS = [
   {id:'dashboard',label:'Dashboard',c:'blue'},
   {id:'assignments',label:'Assignments',c:'purple'},
   {id:'review',label:'Owner Review',c:'blue',owner:true},
+  {id:'verify',label:'Verify Sections',c:'green'},
   {id:'daily',label:'Daily Tasks',c:'purple'},
   {id:'issues',label:'Issues',c:'orange'},
   {id:'evidence',label:'Evidence',c:'blue'},
@@ -410,7 +426,7 @@ function statusChip(s){
 
 function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
-  ({dashboard:rDashboard,assignments:rAssignments,review:rReview,daily:rDaily,issues:rIssues,evidence:rEvidence,
+  ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
     messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
     release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
 }
@@ -440,8 +456,9 @@ function rDashboard(v){
       card('gold','Payment Status', a?statusChip(a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':'Not Submitted'))):'—')+
       card('green','Release Readiness', readinessScore()+' / 100')+
     '</div>'+
-    '<div class="grid c2" style="margin-bottom:14px">'+
-      card('gray','Upcoming Assignment','<b>Load Studio</b><div class="muted">Locked — unlocks after Load Eco is approved</div>'+statusChip('Locked'))+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('green','Sections Verified','<b style="font-size:1.6rem">'+(function(){var x=siteVerifyStats(activeSite().url);return x.ok+' / '+x.total;})()+'</b><div class="muted">working + evidence</div>')+
+      card('gray','Upcoming Assignment','<b>Load Studio</b><div class="muted">Locked until Load Eco is approved</div>'+statusChip('Locked'))+
       card('blue','Retests Waiting','<b style="font-size:1.6rem">'+retests+'</b>')+
     '</div>'+
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
@@ -464,6 +481,7 @@ function rAssignments(v){
   var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
   var owner=isOwner();
   var _st=checklistStats();var reqTasks=_st.total>0&&_st.done===_st.total;var reqEvidence=(load(K.issues,[]).length||load(K.evidence,[]).length)>0;
+  var _vs=siteVerifyStats(a.site);var reqSections=_vs.total>0 && siteSections(a.site).filter(function(s){return s.status==='Untested'||(s.status==='Works'&&!(s.evidence&&s.evidence.trim()));}).length===0;
   v.innerHTML='<h1>Assignments Center</h1>'+
     '<div class="card tint-purple">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
@@ -477,9 +495,10 @@ function rAssignments(v){
         '<button class="btn purple owner-only" id="aSave">Save assignment</button>'
        :
         '<div class="card tint-orange" style="margin:12px 0;padding:12px 14px"><b>Before you can submit</b>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqSections?'✓':'○')+'</span><label>Every section checked + evidence ('+_vs.ok+'/'+_vs.total+' verified)</label></div>'+
           '<div class="check" style="border:0;padding:6px 0"><span>'+(reqTasks?'✓':'○')+'</span><label>All daily tasks done</label></div>'+
           '<div class="check" style="border:0;padding:6px 0"><span>'+(reqEvidence?'✓':'○')+'</span><label>At least one issue or evidence item</label></div></div>'+
-        '<p class="muted">Checkboxes alone are not enough — real evidence is required.</p>'+
+        '<p class="muted">Checkboxes alone are not enough — every section must be verified with evidence.</p>'+
         '<button class="btn purple" id="aSubmit">Submit for review</button>')+
     '</div>';
   if(owner){
@@ -493,9 +512,13 @@ function rAssignments(v){
     });
   }else{
     $('#aSubmit',v).addEventListener('click',function(){
-      var st=checklistStats();
+      var st=checklistStats(),vs=siteVerifyStats(a.site);
+      if(vs.total===0){toast('Add and check the site’s sections first (Verify Sections).');return;}
+      var untested=siteSections(a.site).filter(function(s){return s.status==='Untested';}).length;
+      if(untested>0){toast(untested+' section(s) still Untested — check every section first.');return;}
+      var worksNoEv=siteSections(a.site).filter(function(s){return s.status==='Works'&&!(s.evidence&&s.evidence.trim());}).length;
+      if(worksNoEv>0){toast(worksNoEv+' working section(s) need evidence before submitting.');return;}
       if(st.done<st.total){toast('Finish all daily tasks first ('+st.done+'/'+st.total+').');return;}
-      if(!(load(K.issues,[]).length||load(K.evidence,[]).length)){toast('Add at least one issue or evidence item before submitting.');return;}
       a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);
       logActivity('Assignment submitted',a.title);
       toast('Submitted for review');render('assignments');
@@ -526,6 +549,61 @@ function rDaily(v){
       render('daily');
     });
   });
+}
+
+function rVerify(v){
+  var site=activeSite(),owner=isOwner();
+  var rows=siteSections(site.url),st=siteVerifyStats(site.url);
+  var pct=st.total?Math.round(st.ok/st.total*100):0;
+  var ready=st.total>0 && st.ok===st.total && st.approved===st.total;
+  var html='<h1>Verify Sections</h1>'+
+    '<p class="muted">Check that <b>every section, button, and link</b> of '+esc(site.name)+' actually works before it goes public. Mark each Works or Broken and attach evidence. You <b>verify and report</b> — you do not fix. Broken ones become Issues for the owner to fix, then you retest. No evidence = not verified.</p>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.broken?'Needs Fixes':'In Testing'))+'</h3>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">Verified working: <b>'+st.ok+' / '+st.total+'</b>'+(st.broken?(' · Broken: <b>'+st.broken+'</b>'):'')+' · Owner-approved: <b>'+st.approved+' / '+st.total+'</b></p>'+
+      (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">Every section verified + approved — ready for public.</p>':'<p class="muted">Not ready for public until every section is Works + owner-approved.</p>')+
+    '</div>'+
+    '<div class="card" style="margin-bottom:14px"><h3>Add a section</h3>'+
+      '<div class="row"><input id="secNew" type="text" placeholder="Section name (e.g. Homepage, Cart, Login)"><button class="btn green" id="secAdd" style="flex:0 0 auto">Add</button></div></div>';
+  if(!rows.length) html+='<p class="muted">No sections yet. Add each section of the site above.</p>';
+  rows.forEach(function(s){
+    var stColor=s.status==='Works'?'s-green':(s.status==='Broken'?'s-red':'s-gray');
+    html+='<div class="card" style="margin-bottom:10px"><h3 style="margin-bottom:8px">'+esc(s.name)+' '+
+      '<span class="chip '+stColor+'">'+esc(sectionVerified(s)?'Verified':(s.status))+'</span>'+(s.ownerOk?' <span class="chip s-green">Owner OK</span>':'')+'</h3>'+
+      '<label class="fld"><span>Does it work?</span><select data-secstatus="'+s.id+'">'+
+        ['Untested','Works','Broken'].map(function(o){return '<option'+(o===s.status?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
+      '<label class="fld"><span>Evidence (screenshot file name) — required</span><input type="text" data-secev="'+s.id+'" value="'+esc(s.evidence||'')+'" placeholder="e.g. eco-homepage.png"></label>'+
+      '<label class="fld"><span>Notes</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'"></label>'+
+      '<div class="row"><button class="btn sm green" data-secsave="'+s.id+'">Save</button>'+
+        (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
+        '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div></div>';
+  });
+  v.innerHTML=html;
+  // replace this site's rows in the global store, keeping other sites' rows
+  function persist(updated){
+    var others=load(K.sections,[]).filter(function(x){return x.site!==site.url;});
+    store(K.sections,others.concat(updated));
+  }
+  $('#secAdd',v).addEventListener('click',function(){
+    var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
+    rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
+    persist(rows);toast('Section added');render('verify');
+  });
+  $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
+    var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
+    r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
+    if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
+    if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
+    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');
+  });});
+  $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
+    if(!confirm('Delete this section?'))return;rows=rows.filter(function(x){return x.id!==b.dataset.secdel;});persist(rows);render('verify');
+  });});
+  if(owner)$$('[data-secok]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.secok;})[0];if(!r)return;
+    if(!r.ownerOk&&!sectionVerified(r)){toast('Section must be Works + evidence before approval.');return;}
+    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');
+  });});
 }
 
 function rReview(v){
@@ -763,12 +841,15 @@ var DOCS={
     'A site only unlocks after the one before it is approved as stable.',
 
   'Week 1 Assignment Workbook':
-    'ASSIGNMENT: Load Eco Week 1 Foundation Audit\n'+
+    'ASSIGNMENT: Load Eco — Full Section Verification\n'+
     'SITE: https://loadeco.app\n'+
-    'PAY: $50 (after owner approval)\n\n'+
+    'PAY: $60 (after owner approval)\n\n'+
     'GOAL\n'+
-    'Build a full picture of the site: what pages exist, what works, what is\n'+
-    'broken or confusing, and how ready it is to release.\n\n'+
+    'Verify that EVERY section of the site works before it goes public.\n'+
+    'Use the Verify Sections tab. For each section: check every button and\n'+
+    'link, mark it Works or Broken, and attach evidence (a screenshot).\n'+
+    'You verify and report — you do not fix. Broken ones become Issues for\n'+
+    'the owner to fix; then you retest until the whole site is Working.\n\n'+
     'DAY 1 — Site Inventory\n'+
     'List every menu, section, tile, and page. Screenshot the homepage.\n\n'+
     'DAY 2 — Navigation Audit\n'+
@@ -810,10 +891,11 @@ var DOCS={
 
   'Payment Structure':
     'HOW PAY WORKS\n'+
-    'You are paid per completed and approved assignment — not by the hour.\n\n'+
-    'RATES\n'+
-    '- Standard assignment: $50\n'+
-    '- Heavy assignment: $60\n'+
+    'You are paid per FULL completed and approved assignment — not by the hour.\n'+
+    'A full assignment = every section of the site checked and verified with\n'+
+    'evidence, then approved by the owner.\n\n'+
+    'RATE\n'+
+    '- Full assignment: $60 (released after the owner approves)\n'+
     '- Optional bonus: $10–$25 (owner’s choice for great work)\n\n'+
     'PAYMENT STATUS FLOW\n'+
     'Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid\n\n'+
@@ -897,14 +979,18 @@ function rRelease(v){
     var bugsFixed=siteIssues.filter(function(i){return i.status==='Verified Fixed'||i.status==='Closed';}).length;
     var retestsDone=siteIssues.filter(function(i){return i.status==='Verified Fixed';}).length;
     var done=all.filter(function(x){return x.site===site.url && (x.status==='Approved'||x.status==='Paid');}).length;
-    var stage=active?(a&&(a.status==='Approved'||a.status==='Paid')?'Stable Verified':(a&&a.status==='Submitted'?'In Testing':'Needs Fixes')):'Locked';
-    var approved=active&&a&&(a.status==='Approved'||a.status==='Paid');
+    var vs=siteVerifyStats(site.url);
+    var allSectionsOk=vs.total>0 && vs.ok===vs.total && vs.approved===vs.total;
+    var ownerApproved=active&&a&&(a.status==='Approved'||a.status==='Paid');
+    var ready=allSectionsOk && ownerApproved;
+    var stage=active?(ready?'Stable Verified':(vs.broken||!a||a.status==='Needs Fixes'?'Needs Fixes':(a&&a.status==='Submitted'?'In Testing':'In Testing'))):'Locked';
     html+='<div class="card tint-'+(active?'green':'gray')+'" style="margin-bottom:12px">'+
       '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
       '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
       (active?
-        '<div class="kvs" style="margin-top:8px"><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Assignments completed: <b>'+done+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Retests completed: <b>'+retestsDone+'</b></span><span>Open retests: <b>'+retestsOpen+'</b></span><span>Critical open: <b>'+crit+'</b></span><span>Major open: <b>'+major+'</b></span><span>Owner approval: <b>'+(approved?'Yes':'No')+'</b></span></div>'
-       : '<p class="muted" style="margin-top:8px">Locked future stage. Opens after the previous site is certified stable/approved.</p>')+
+        '<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Assignments completed: <b>'+done+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen+'</b></span><span>Critical open: <b>'+crit+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
+        (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">READY FOR PUBLIC — every section verified + approved. Next site can unlock.</p>':'<p class="muted" style="margin-top:6px">Not ready: every section must be verified Working and owner-approved first.</p>')
+       : '<p class="muted" style="margin-top:8px">Locked. Unlocks only after the previous site is certified Ready for public.</p>')+
     '</div>';
   });
   v.innerHTML=html;
