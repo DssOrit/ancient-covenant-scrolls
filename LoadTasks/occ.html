@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Load Tasks — OCC</title>
+<link rel="icon" type="image/png" href="assets/images/load-tasks-logo.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/load-tasks-icon-192x192.png">
+<link rel="apple-touch-icon" href="assets/images/load-tasks-logo.png">
+<!--
+  OCC — Operations Command Center (Load Tasks internal module)
+  Private employee operations / verification / payment system.
+  ADDITIVE MODULE: this is a standalone page. It does not modify any
+  existing Load Tasks file other than a single nav link in index.html.
+  Data is localStorage-only for MVP. No backend, no cloud upload yet.
+  See the "Future backend" comments near the JS credential block for
+  Supabase migration notes.
+-->
+<style>
+  :root{
+    --bg:#0e1016; --bg2:#13161f; --card:rgba(30,34,46,.62); --card2:rgba(40,45,60,.5);
+    --line:rgba(150,160,190,.16); --text:#eef1f8; --muted:#9aa3b8;
+    --blue:#4a9eff; --purple:#9b6dff; --green:#3ecf8e; --orange:#ff9f43;
+    --red:#ff5c5c; --gold:#ffd166; --gray:#6b7280;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, rgba(75,110,255,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(155,109,255,.10), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    font-size:16px; line-height:1.6; letter-spacing:0; font-weight:400;
+    -webkit-text-size-adjust:100%;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  h1,h2,h3{font-weight:600;line-height:1.3;margin:0 0 .5em}
+  b,strong{font-weight:600}
+  h1{font-size:1.25rem;font-weight:600} h2{font-size:1.08rem} h3{font-size:1rem;font-weight:600}
+  p{margin:0 0 .8em} a{color:var(--blue)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px 64px}
+  .muted{color:var(--muted)}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .grid{display:grid;gap:14px}
+  @media(min-width:720px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c3{grid-template-columns:1fr 1fr 1fr}}
+
+  /* Top bar */
+  .occ-top{
+    position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg,rgba(14,16,22,.96),rgba(14,16,22,.86));
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+    padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  }
+  .occ-top .bar{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+  .logo .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-weight:800}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+  .who{margin-left:auto;text-align:right;font-size:.86rem;line-height:1.3}
+  .who b{font-weight:700}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.02em}
+
+  /* Tabs */
+  .tabs{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 0 2px;max-width:1080px;margin:0 auto}
+  .tabs button{
+    flex:0 0 auto;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);color:var(--muted);
+    padding:9px 15px;border-radius:11px;font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;white-space:nowrap;
+  }
+  .tabs button .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:middle;opacity:.7}
+  .tabs button.active{border-color:transparent;color:#fff;font-weight:600}
+  .tabs button[data-c=blue].active{background:rgba(74,158,255,.18);color:var(--blue)}
+  .tabs button[data-c=purple].active{background:rgba(155,109,255,.18);color:var(--purple)}
+  .tabs button[data-c=green].active{background:rgba(62,207,142,.18);color:var(--green)}
+  .tabs button[data-c=orange].active{background:rgba(255,159,67,.18);color:var(--orange)}
+  .tabs button[data-c=red].active{background:rgba(255,92,92,.18);color:var(--red)}
+  .tabs button[data-c=gold].active{background:rgba(255,209,102,.18);color:var(--gold)}
+  .tabs button[data-c=gray].active{background:rgba(107,114,128,.22);color:#c2c8d6}
+
+  /* Cards */
+  .card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:22px;box-shadow:none}
+  .card.tint-blue{background:linear-gradient(160deg,rgba(74,158,255,.18),rgba(74,158,255,.04));border-color:rgba(74,158,255,.28)}
+  .card.tint-purple{background:linear-gradient(160deg,rgba(155,109,255,.18),rgba(155,109,255,.04));border-color:rgba(155,109,255,.28)}
+  .card.tint-green{background:linear-gradient(160deg,rgba(62,207,142,.16),rgba(62,207,142,.04));border-color:rgba(62,207,142,.26)}
+  .card.tint-orange{background:linear-gradient(160deg,rgba(255,159,67,.16),rgba(255,159,67,.04));border-color:rgba(255,159,67,.26)}
+  .card.tint-red{background:linear-gradient(160deg,rgba(255,92,92,.16),rgba(255,92,92,.04));border-color:rgba(255,92,92,.26)}
+  .card.tint-gold{background:linear-gradient(160deg,rgba(255,209,102,.16),rgba(255,209,102,.04));border-color:rgba(255,209,102,.26)}
+  .card.tint-gray{background:linear-gradient(160deg,rgba(160,170,190,.10),rgba(160,170,190,.03));border-color:rgba(160,170,190,.16)}
+  .card h3{display:flex;align-items:center;gap:9px}
+
+  /* Status chips */
+  .chip{display:inline-block;padding:4px 11px;border-radius:999px;font-size:.78rem;font-weight:700}
+  .s-green{background:rgba(62,207,142,.16);color:var(--green)}
+  .s-orange{background:rgba(255,159,67,.16);color:var(--orange)}
+  .s-red{background:rgba(255,92,92,.16);color:var(--red)}
+  .s-blue{background:rgba(74,158,255,.16);color:var(--blue)}
+  .s-purple{background:rgba(155,109,255,.16);color:var(--purple)}
+  .s-gold{background:rgba(255,209,102,.16);color:var(--gold)}
+  .s-gray{background:rgba(107,114,128,.2);color:#c2c8d6}
+
+  /* Forms */
+  label.fld{display:block;margin:0 0 12px;font-weight:600}
+  label.fld span{display:block;margin-bottom:5px;font-size:.92rem;color:var(--muted);font-weight:600}
+  input,select,textarea{
+    width:100%;background:#10131c;border:1px solid var(--line);border-radius:11px;color:var(--text);
+    font:inherit;font-size:1rem;padding:12px 13px;
+  }
+  textarea{min-height:84px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card2);
+    color:var(--text);font:inherit;font-weight:700;padding:12px 18px;border-radius:12px;cursor:pointer}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.blue{background:var(--blue);border-color:transparent;color:#06122a}
+  .btn.purple{background:var(--purple);border-color:transparent;color:#180a33}
+  .btn.green{background:var(--green);border-color:transparent;color:#04231a}
+  .btn.gold{background:var(--gold);border-color:transparent;color:#2a2200}
+  .btn.red{background:var(--red);border-color:transparent;color:#2a0707}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:8px 13px;font-size:.86rem}
+
+  /* Checklist */
+  .check{display:flex;align-items:flex-start;gap:13px;padding:12px 4px;border-bottom:1px solid var(--line)}
+  .check:last-child{border-bottom:0}
+  .check input{width:26px;height:26px;flex:0 0 auto;margin-top:1px;accent-color:var(--green)}
+  .check label{font-weight:600;cursor:pointer}
+  .progress{height:12px;border-radius:999px;background:#10131c;overflow:hidden;border:1px solid var(--line)}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#8be3bd);width:0;transition:width .3s}
+
+  .list-item{padding:13px 0;border-bottom:1px solid var(--line)}
+  .list-item:last-child{border-bottom:0}
+  .kvs{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:.86rem;margin-top:4px}
+  .hidden{display:none!important}
+  .view{display:none}
+  .view.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* Emergency */
+  .emg-btn{width:100%;padding:22px;border-radius:18px;border:0;cursor:pointer;
+    background:linear-gradient(135deg,#ff5c5c,#c0341f);color:#fff;font-weight:800;font-size:1.25rem;letter-spacing:.03em;
+    box-shadow:0 14px 40px rgba(255,60,60,.35)}
+
+  /* Login overlay */
+  .gate{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
+    background:radial-gradient(900px 500px at 50% 0%, rgba(75,110,255,.12), transparent 60%),var(--bg)}
+  .gate .card{max-width:420px;width:100%}
+  .seg{display:flex;gap:8px;margin-bottom:14px}
+  .seg button{flex:1;padding:11px;border-radius:11px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+  .seg button.on{background:rgba(74,158,255,.18);border-color:transparent;color:var(--blue)}
+  .err{color:var(--red);font-weight:700;min-height:1.2em;font-size:.9rem}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;background:#1b2030;border:1px solid var(--line);
+    padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.show{opacity:1}
+  .doc{white-space:pre-wrap;background:#10131c;border:1px solid var(--line);border-radius:12px;padding:16px;font-size:.96rem}
+  .backlink{display:inline-block;margin:14px 0 0;color:var(--muted);font-size:.86rem}
+  @media print{.occ-top,.tabs,.btn,.backlink,.owner-only-print{display:none!important}.view{display:block!important}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div class="gate" id="gate">
+  <div class="card tint-blue">
+    <div class="logo" style="margin-bottom:14px"><img src="assets/images/load-tasks-logo.png" alt="Load Tasks" onerror="this.onerror=null;this.src='assets/icons/load-tasks-icon-96x96.png'" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 auto">
+      <div>Load Tasks &mdash; OCC<small>Operations Command Center</small></div></div>
+    <p class="muted" style="font-size:.92rem">Private employee operations system. Sign in to continue.</p>
+    <div class="seg" id="roleSeg">
+      <button data-role="employee" class="on">Employee / Verifier</button>
+      <button data-role="owner">Owner / Admin</button>
+    </div>
+    <label class="fld"><span>Name</span><input id="loginName" type="text" autocomplete="off" placeholder="Your name"></label>
+    <label class="fld"><span>Password</span><input id="loginPass" type="password" autocomplete="off" placeholder="Password"></label>
+    <div class="err" id="loginErr"></div>
+    <button class="btn blue" id="loginBtn" style="width:100%;justify-content:center">Sign In</button>
+    <p class="muted" style="font-size:.8rem;margin-top:14px">Use the name and password set up for your account.<br>
+      Need to create or reset a login? Open <a href="occ-setup.html" style="color:var(--blue)">occ-setup.html</a>.</p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+  <div class="occ-top">
+    <div class="bar">
+      <div class="logo"><img src="assets/images/load-tasks-logo.png" alt="Load Tasks" onerror="this.onerror=null;this.src='assets/icons/load-tasks-icon-96x96.png'" style="width:38px;height:38px;border-radius:10px;object-fit:cover;flex:0 0 auto">
+        <div>Load Tasks &mdash; OCC<small>Operations Command Center</small></div></div>
+      <div class="who">
+        <div><b id="whoName">—</b> · <span id="whoRole" class="pill"></span></div>
+        <div class="muted" id="whoSite">—</div>
+        <button class="btn ghost sm" id="logoutBtn" style="margin-top:6px">Log out</button>
+      </div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+
+  <div class="wrap">
+    <!-- Dashboard -->
+    <section class="view" data-view="dashboard"></section>
+    <!-- Assignments -->
+    <section class="view" data-view="assignments"></section>
+    <!-- Owner Review -->
+    <section class="view" data-view="review"></section>
+    <!-- Verify Sections -->
+    <section class="view" data-view="verify"></section>
+    <!-- Daily tasks -->
+    <section class="view" data-view="daily"></section>
+    <!-- Issues -->
+    <section class="view" data-view="issues"></section>
+    <!-- Evidence -->
+    <section class="view" data-view="evidence"></section>
+    <!-- Messages -->
+    <section class="view" data-view="messages"></section>
+    <!-- Emergency -->
+    <section class="view" data-view="emergency"></section>
+    <!-- Payment -->
+    <section class="view" data-view="payment"></section>
+    <!-- Invoice -->
+    <section class="view" data-view="invoice"></section>
+    <!-- How To -->
+    <section class="view" data-view="howto"></section>
+    <!-- Documents -->
+    <section class="view" data-view="documents"></section>
+    <!-- Release readiness -->
+    <section class="view" data-view="release"></section>
+    <!-- Assignment history -->
+    <section class="view" data-view="history"></section>
+    <!-- Activity history -->
+    <section class="view" data-view="activity"></section>
+    <!-- Confirmation -->
+    <section class="view" data-view="confirm"></section>
+    <!-- Data -->
+    <section class="view" data-view="data"></section>
+
+    <a class="backlink" href="index.html">&larr; Back to Load Tasks</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================================
+   OCC — Operations Command Center  (Load Tasks internal module)
+   MVP: localStorage only. No backend. No real cloud upload.
+
+   -------- PLACEHOLDER CREDENTIALS --------
+   Change these two passwords before real use. They are intentionally
+   obvious placeholders, NOT real secrets. For production, replace this
+   USERS array with Supabase/Firebase auth (see FUTURE BACKEND notes below).
+   ----------------------------------------- */
+var USERS = [
+  { name:'Witness Bond', role:'employee', title:'Platform Quality Assurance Specialist', pass:'witness-change-me' },
+  { name:'L. Bond',      role:'owner',    title:'Owner / Admin',                         pass:'owner-change-me' }
+];
+/* FUTURE BACKEND (do not connect yet):
+   - Auth: replace login() with Supabase auth.signInWithPassword().
+   - DB: replace store() / load() with Supabase table reads/writes.
+   - Storage: replace evidence filename list with Supabase Storage uploads.
+   - Roles: keep owner/employee; add testers, support, managers in USERS/table.
+   - Notifications: emergency alerts -> realtime channel / email webhook.
+*/
+
+/* ---------- tiny helpers ---------- */
+var $  = function(s,r){return (r||document).querySelector(s);};
+var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function nowISO(){return new Date().toISOString();}
+function fmtDate(iso){if(!iso)return '—';try{return new Date(iso).toLocaleString();}catch(e){return iso;}}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
+
+/* ---------- storage ---------- */
+var K = {
+  session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
+  issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
+  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity',
+  sections:'occ_sections', storage:'occ_storage'
+};
+function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
+function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
+/* Activity history (audit trail). Client-side for now; syncs to backend when wired. */
+function logActivity(action,detail){
+  var a=load(K.activity,[]);
+  a.unshift({action:action,detail:detail||'',by:(session()||{}).name||'',at:nowISO()});
+  if(a.length>200)a=a.slice(0,200);
+  store(K.activity,a);
+}
+
+/* ---------- seed data (first run only) ---------- */
+var DAILY_SEED = [
+  {day:1,title:'Step 1 — Site Inventory',items:[
+    'Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot',
+    'List every visible menu','List every visible section','List every visible tile/card',
+    'List every major page discovered','Record notes','Repeat basic access on iPad Safari if available']},
+  {day:2,title:'Step 2 — Navigation Audit',items:[
+    'Click every visible menu item','Click every visible button','Verify destination loads',
+    'Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest',
+    'Screenshot broken or confusing areas']},
+  {day:3,title:'Step 3 — First-Time User Review',items:[
+    'Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear',
+    'Write what is confusing','Write what instructions are missing','Write what would help a new user',
+    'Rate overall clarity 1 to 10']},
+  {day:4,title:'Step 4 — Browser & Device Comparison',items:[
+    'Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences',
+    'Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences']},
+  {day:5,title:'Step 5 — Final Report',items:[
+    'Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions',
+    'Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review']}
+];
+var CONFIRM_SEED = [
+  'I read the assignment','I understand the verification steps','I understand what site to test',
+  'I understand not to move to other sites','I understand how to report issues',
+  'I understand payment is issued after approval'];
+
+function seed(){
+  if(!localStorage.getItem(K.assignments)){
+    store(K.assignments,[{
+      id:'wk1', title:'Load Eco — Full Section Verification', site:'https://loadeco.app',
+      worker:'Witness Bond', week:1, pay:60, bonus:0,
+      goal:'Verify that EVERY section of Load Eco actually works before it goes public. List every section, test each one, mark it Works or Broken, and attach evidence (screenshot + note) for each. The site is not ready for sale until every section is verified Working and the owner approves.',
+      status:'Not Started', submittedDate:'', approvedDate:'', paidDate:'', ownerNotes:''
+    }]);
+  }
+  if(!localStorage.getItem(K.sections)){
+    store(K.sections, SECTION_SEED.map(function(n,i){return {id:'sec_'+i,site:'https://loadeco.app',name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''};}));
+  }
+  if(!localStorage.getItem(K.checklist)){
+    var c={};DAILY_SEED.forEach(function(d){c['day'+d.day]=d.items.map(function(t){return {label:t,done:false};});});
+    store(K.checklist,c);
+  }
+  if(!localStorage.getItem(K.confirm)) store(K.confirm,CONFIRM_SEED.map(function(t){return {label:t,done:false};}));
+  if(!localStorage.getItem(K.issues)) store(K.issues,[]);
+  if(!localStorage.getItem(K.evidence)) store(K.evidence,[]);
+  if(!localStorage.getItem(K.messages)) store(K.messages,[]);
+  if(!localStorage.getItem(K.alerts)) store(K.alerts,[]);
+  if(!localStorage.getItem(K.activity)) store(K.activity,[]);
+  if(!localStorage.getItem(K.sections)) store(K.sections,[]);
+}
+
+/* Starter sections for the active site. The employee renames/adds the real
+   site-specific sections — these are generic verification targets to begin. */
+var SECTION_SEED = ['Homepage loads','Main navigation menu','Each menu link opens','Mobile / iPad layout','Sign-in / gate (if any)','Footer links'];
+
+/* Sites unlock in order: Eco -> Studio -> Play -> AI. Only Load Eco active. */
+var SITES = [
+  {name:'Load Eco / Main Load', url:'https://loadeco.app', stage:'Active'},
+  {name:'Load Studio', url:'https://loadeco.app/loadstudio/', stage:'Locked'},
+  {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'},
+  {name:'Load AI', url:'https://loadeco.app/LoadAI/', stage:'Locked'}
+];
+function siteCertified(url){var a=load(K.assignments,[]).filter(function(x){return x.site===url;})[0];if(!a)return false;var vs=siteVerifyStats(url);return (a.status==='Approved'||a.status==='Paid')&&vs.total>0&&vs.ok===vs.total&&vs.approved===vs.total;}
+function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)return false;if(!siteCertified(SITES[i].url))return true;}return false;}
+function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
+function nextSite(){var a=activeSite();for(var i=0;i<SITES.length;i++){if(SITES[i].url===a.url)return SITES[i+1]||null;}return null;}
+function saveAssignment(a){var as=load(K.assignments,[]);var idx=-1;for(var i=0;i<as.length;i++){if(as[i].site===a.site){idx=i;break;}}if(idx>=0)as[idx]=a;else as.push(a);store(K.assignments,as);}
+function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Witness Bond',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
+function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
+function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
+function isACRBlocked(s){return s.status==='ACR / Blocked';}
+function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length,acr:rows.filter(isACRBlocked).length};}
+
+/* ---------- session / auth ---------- */
+function session(){return load(K.session,null);}
+/* ---- backend wiring (online) with offline fallback ---- */
+var API_BASE='/api/occ';
+function isOnline(){return (session()||{}).mode==='online';}
+function authToken(){return (session()||{}).token||'';}
+function api(method,path,body){
+  var o={method:method,headers:{'Content-Type':'application/json'}};
+  if(authToken())o.headers['Authorization']='Bearer '+authToken();
+  if(body)o.body=JSON.stringify(body);
+  return fetch(API_BASE+path,o).then(function(r){
+    return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}
+      if(!r.ok)throw new Error((d&&d.error)||('HTTP '+r.status));return d;});
+  });
+}
+function hydrate(){
+  return api('GET','/bootstrap').then(function(d){
+    if(d.assignments)store(K.assignments,d.assignments);
+    if(d.checklist){var c={};d.checklist.forEach(function(r){var k='day'+r.day;(c[k]=c[k]||[]);c[k][r.idx]={label:r.label,done:!!r.done,id:r.id};});store(K.checklist,c);}
+    if(d.issues)store(K.issues,d.issues);
+    if(d.evidence)store(K.evidence,d.evidence);
+    if(d.messages)store(K.messages,d.messages);
+    if(d.alerts)store(K.alerts,d.alerts);
+    if(d.sections)store(K.sections,d.sections);
+    if(d.storageUsed!=null)store(K.storage,{used:d.storageUsed,cap:d.storageCap,enabled:!!d.storageEnabled});
+  });
+}
+/* optimistic local write already done by caller; push to server then refresh */
+function sync(apiCallFn,view){
+  if(!isOnline())return;
+  apiCallFn().then(hydrate).then(function(){if(view)render(view);}).catch(function(e){toast('Sync failed: '+(e.message||e));});
+}
+function isOwner(){var s=session();return s&&s.role==='owner';}
+/* Roles & permissions — scalable for future employees/managers/etc.
+   Active now: owner, employee. Others are placeholders (not selectable yet). */
+var ROLES={
+  owner:    {label:'Owner / Admin',                can:['*']},
+  employee: {label:'Employee / Verifier',          can:['view','tasks','issues','evidence','messages','alerts','submit','payments_view']},
+  manager:  {label:'Manager (future)',             can:['view','review','approve','payments','messages']},
+  moderator:{label:'Moderator (future)',           can:['view','review','messages']},
+  developer:{label:'Developer (future)',           can:['view','issues','messages']},
+  support:  {label:'Support (future)',             can:['view','messages']}
+};
+function can(perm){var s=session();if(!s)return false;var r=ROLES[s.role];if(!r)return false;return r.can.indexOf('*')>=0||r.can.indexOf(perm)>=0;}
+
+function login(name,pass,role){
+  var u=USERS.filter(function(x){return x.name.toLowerCase()===String(name).trim().toLowerCase() && x.role===role;})[0];
+  if(!u || u.pass!==pass) return false;
+  store(K.session,{name:u.name,role:u.role,title:u.title,at:nowISO()});
+  return true;
+}
+function logout(){localStorage.removeItem(K.session);location.reload();}
+
+/* ---------- tabs ---------- */
+var TABS = [
+  {id:'dashboard',label:'Dashboard',c:'blue'},
+  {id:'howto',label:'How to Use',c:'green'},
+  {id:'assignments',label:'Assignments',c:'purple'},
+  {id:'review',label:'Owner Review',c:'blue',owner:true},
+  {id:'verify',label:'Verify Sections',c:'green'},
+  {id:'daily',label:'Steps',c:'purple'},
+  {id:'issues',label:'Issues',c:'orange'},
+  {id:'evidence',label:'Evidence',c:'blue'},
+  {id:'messages',label:'Messages',c:'blue'},
+  {id:'emergency',label:'Emergency',c:'red'},
+  {id:'payment',label:'Payment',c:'gold'},
+  {id:'invoice',label:'Invoice',c:'gold'},
+  {id:'documents',label:'Training',c:'gray'},
+  {id:'release',label:'Certification',c:'green'},
+  {id:'history',label:'History',c:'gray'},
+  {id:'activity',label:'Activity',c:'blue'},
+  {id:'confirm',label:'Confirmation',c:'green'},
+  {id:'data',label:'Data',c:'gray'}
+];
+function buildTabs(){
+  var t=$('#tabs');t.innerHTML='';
+  TABS.filter(function(tab){return !tab.owner || isOwner();}).forEach(function(tab){
+    var b=el('<button data-tab="'+tab.id+'" data-c="'+tab.c+'"><span class="dot" style="background:var(--'+tab.c+')"></span>'+esc(tab.label)+'</button>');
+    b.addEventListener('click',function(){show(tab.id);});
+    t.appendChild(b);
+  });
+}
+function show(id){
+  $$('#tabs button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id);});
+  $$('.view').forEach(function(v){v.classList.toggle('active',v.dataset.view===id);});
+  if(isOnline()){ hydrate().then(function(){render(id);}).catch(function(){render(id);}); }
+  else render(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- renderers ---------- */
+function activeAssignment(){var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;}
+
+function checklistStats(){
+  var c=load(K.checklist,{}),done=0,total=0;
+  Object.keys(c).forEach(function(k){c[k].forEach(function(i){total++;if(i.done)done++;});});
+  return {done:done,total:total,pct:total?Math.round(done/total*100):0};
+}
+
+function statusChip(s){
+  var map={'Not Started':'s-gray','In Progress':'s-blue','Submitted':'s-purple','Under Review':'s-orange',
+    'Needs Retest':'s-orange','Returned':'s-orange','Approved':'s-green','Payment Due':'s-gold','Paid':'s-green',
+    'Not Submitted':'s-gray','Locked':'s-gray','Active':'s-green','In Testing':'s-blue',
+    'Needs Fixes':'s-orange','Retest Required':'s-orange','Stable Verified':'s-green','Released':'s-green',
+    'ACR / Blocked':'s-red','Blocked':'s-red'};
+  return '<span class="chip '+(map[s]||'s-gray')+'">'+esc(s)+'</span>';
+}
+
+function render(id){
+  var v=$('.view[data-view="'+id+'"]');if(!v)return;
+  ensureSiteSetup(activeSite());
+  ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
+    messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
+    howto:rHowTo,release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
+}
+
+function rDashboard(v){
+  var a=activeAssignment(),s=checklistStats(),sess=session();
+  var issues=load(K.issues,[]),retests=issues.filter(function(i){return i.status==='Needs Retest';}).length;
+  var openIssues=issues.filter(function(i){return i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var msgs=load(K.messages,[]),alerts=load(K.alerts,[]);
+  v.innerHTML=
+    '<h1>Dashboard</h1>'+
+    '<button class="card tint-green" data-go="howto" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:14px;display:block"><h3 style="margin:0 0 4px">New here? Read How to Use</h3><span class="muted">A full, plain-language guide to every section and exactly what to do. Tap to open &rarr;</span></button>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
+      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Full site verification · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
+      card('green','Site Under Test', a?('<b>'+esc(a.site)+'</b>'):'<span class="muted">—</span>')+
+    '</div>'+
+    '<div class="card tint-purple" style="margin-bottom:14px"><h3>Assignment Progress</h3>'+
+      '<div class="progress"><i style="width:'+s.pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">'+s.done+' of '+s.total+' verification steps done ('+s.pct+'%)</p></div>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('orange','Open Issues',  '<b style="font-size:1.6rem">'+openIssues+'</b>')+
+      card('orange','Retests Needed','<b style="font-size:1.6rem">'+retests+'</b>')+
+      card('red','Emergency Alerts','<b style="font-size:1.6rem">'+alerts.length+'</b>')+
+    '</div>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card(a&&pctComplete(a)>=100?'green':'orange','Assignment Complete','<b style="font-size:1.6rem;color:'+(a&&pctComplete(a)>=100?'var(--green)':'var(--orange)')+'">'+(a?pctComplete(a):0)+'%</b><div class="muted">of the $'+(a?a.pay:60)+' assignment</div>')+
+      card('gold','Payment Status', a?statusChip(a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':'Not Submitted'))):'—')+
+      card('green','Release Readiness', readinessScore()+' / 100')+
+    '</div>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('green','Sections Verified','<b style="font-size:1.6rem">'+(function(){var x=siteVerifyStats(activeSite().url);return x.ok+' / '+x.total;})()+'</b><div class="muted">working + evidence</div>')+
+      card('gray','Upcoming Assignment',(function(){var n=nextSite();return n?('<b>'+esc(n.name)+'</b><div class="muted">Unlocks when '+esc(activeSite().name)+' is certified</div>'+statusChip('Locked')):'<b>None</b><div class="muted">Final site</div>';})())+
+      card('blue','Retests Waiting','<b style="font-size:1.6rem">'+retests+'</b>')+
+    '</div>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
+    '<h3 style="margin-top:6px">Quick Cards</h3>'+
+    '<div class="grid c3">'+
+      quick('daily','purple','Verification Steps')+quick('assignments','purple','Current Assignment')+
+      quick('issues','orange','Submit Issue')+quick('evidence','blue','Evidence')+
+      quick('messages','blue','Messages')+quick('payment','gold','Payment / Invoice')+
+      quick('release','green','Release Readiness')+quick('activity','blue','Activity')+
+    '</div>';
+  var act=load(K.activity,[]).slice(0,6),da=$('#dashAct',v);
+  if(!act.length)da.innerHTML='<p class="muted">No activity yet.</p>';
+  else act.forEach(function(e){da.appendChild(el('<div class="list-item"><b>'+esc(e.action)+'</b>'+(e.detail?' — '+esc(e.detail):'')+'<div class="kvs"><span>by '+esc(e.by||'—')+'</span><span>'+fmtDate(e.at)+'</span></div></div>'));});
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
+}
+function card(c,title,body){return '<div class="card tint-'+c+'"><h3>'+esc(title)+'</h3><div>'+body+'</div></div>';}
+function quick(go,c,title){return '<button class="card tint-'+c+'" data-go="'+go+'" style="text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px"><h3 style="margin:0">'+esc(title)+'</h3><span class="muted">Open &rarr;</span></button>';}
+
+function rAssignments(v){
+  var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
+  var owner=isOwner();
+  var _st=checklistStats();var reqTasks=_st.total>0&&_st.done===_st.total;var reqEvidence=(load(K.issues,[]).length||load(K.evidence,[]).length)>0;
+  var _vs=siteVerifyStats(a.site);var reqSections=_vs.total>0 && siteSections(a.site).filter(function(s){return s.status==='Untested'||(s.status==='Works'&&!(s.evidence&&s.evidence.trim()));}).length===0;
+  v.innerHTML='<h1>Assignments Center</h1>'+
+    '<div class="card tint-purple">'+
+      '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>Full site verification</b></span></div>'+
+      '<p style="margin-top:10px"><b>Goal:</b> '+esc(a.goal)+'</p>'+
+      (owner?
+        '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+
+          ['Not Started','In Progress','Submitted','Needs Retest','Approved','Paid'].map(function(s){return '<option'+(s===a.status?' selected':'')+'>'+s+'</option>';}).join('')+
+        '</select></label>'+
+        '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes)+'</textarea></label>'+
+        '<button class="btn purple owner-only" id="aSave">Save assignment</button>'
+       :
+        '<div class="card tint-orange" style="margin:12px 0;padding:12px 14px"><b>Before you can submit</b>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqSections?'✓':'○')+'</span><label>Every section checked + evidence ('+_vs.ok+'/'+_vs.total+' verified)</label></div>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqTasks?'✓':'○')+'</span><label>All verification steps done</label></div>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqEvidence?'✓':'○')+'</span><label>At least one issue or evidence item</label></div></div>'+
+        '<p class="muted">Checkboxes alone are not enough — every section must be verified with evidence.</p>'+
+        '<button class="btn purple" id="aSubmit">Submit for review</button>')+
+    '</div>';
+  if(owner){
+    $('#aSave',v).addEventListener('click',function(){
+      var prev=a.status;a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
+      if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
+      if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
+      saveAssignment(a);
+      if(a.status!==prev)logActivity(a.status==='Approved'?'Assignment approved':(a.status==='Paid'?'Payment marked paid':'Assignment status: '+a.status),a.title);
+      toast('Assignment saved');render('assignments');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'assignments');
+    });
+  }else{
+    $('#aSubmit',v).addEventListener('click',function(){
+      var st=checklistStats(),vs=siteVerifyStats(a.site);
+      if(vs.total===0){toast('Add and check the site’s sections first (Verify Sections).');return;}
+      var untested=siteSections(a.site).filter(function(s){return s.status==='Untested';}).length;
+      if(untested>0){toast(untested+' section(s) still Untested — check every section first.');return;}
+      var worksNoEv=siteSections(a.site).filter(function(s){return s.status==='Works'&&!(s.evidence&&s.evidence.trim());}).length;
+      if(worksNoEv>0){toast(worksNoEv+' working section(s) need evidence before submitting.');return;}
+      if(st.done<st.total){toast('Finish all verification steps first ('+st.done+'/'+st.total+').');return;}
+      a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);
+      logActivity('Assignment submitted',a.title);
+      toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
+    });
+  }
+}
+
+function rDaily(v){
+  var c=load(K.checklist,{});
+  var html='<h1>Verification Steps</h1>';
+  DAILY_SEED.forEach(function(d){
+    var arr=c['day'+d.day]||[];
+    var done=arr.filter(function(i){return i.done;}).length;
+    html+='<div class="card tint-purple" style="margin-bottom:14px"><h3>'+esc(d.title)+' <span class="chip s-purple">'+done+'/'+arr.length+'</span></h3>';
+    arr.forEach(function(it,idx){
+      var id='d'+d.day+'_'+idx;
+      html+='<div class="check"><input type="checkbox" id="'+id+'" data-day="'+d.day+'" data-idx="'+idx+'"'+(it.done?' checked':'')+'><label for="'+id+'">'+esc(it.label)+'</label></div>';
+    });
+    html+='</div>';
+  });
+  v.innerHTML=html;
+  $$('input[type=checkbox]',v).forEach(function(cb){
+    cb.addEventListener('change',function(){
+      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);var _it=c2['day'+cb.dataset.day][cb.dataset.idx];if(_it&&_it.id)sync(function(){return api('PATCH','/checklist',{id:_it.id,done:cb.checked});},'daily');
+      var st=checklistStats();
+      if(cb.checked&&st.done===1)logActivity('Checklist started');
+      if(st.total>0&&st.done===st.total)logActivity('Checklist completed');
+      render('daily');
+    });
+  });
+}
+
+function rVerify(v){
+  var site=activeSite(),owner=isOwner();
+  var rows=siteSections(site.url),st=siteVerifyStats(site.url);
+  var pct=st.total?Math.round(st.ok/st.total*100):0;
+  var ready=st.total>0 && st.ok===st.total && st.approved===st.total;
+  var html='<h1>Verify Sections</h1>'+
+    '<p class="muted">Check that <b>every section, button, and link</b> of '+esc(site.name)+' actually works before it goes public. Mark each Works or Broken and attach evidence. You <b>verify and report</b> — you do not fix. Broken ones become Issues for the owner to fix, then you retest. No evidence = not verified.</p>'+
+    '<div class="card tint-red" style="margin-bottom:14px"><h3>If a link routes into ACR — stop</h3>'+
+      '<p class="muted">ACR sites (ACR Reader, ACR2, ACR Solar) are <b>off limits</b>. If a button or link sends you into an ACR site, set that section to <b>ACR / Blocked</b>. Do <b>not</b> test-fix it, follow it as in-scope, or link it. It is set aside for the owner’s explicit approval. ACR / Blocked items are never counted as bugs and never auto-certify the site.</p></div>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.acr?'Blocked':(st.broken?'Needs Fixes':'In Testing')))+'</h3>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">Verified working: <b>'+st.ok+' / '+st.total+'</b>'+(st.broken?(' · Broken: <b>'+st.broken+'</b>'):'')+(st.acr?(' · ACR / blocked: <b>'+st.acr+'</b>'):'')+' · Owner-approved: <b>'+st.approved+' / '+st.total+'</b></p>'+
+      (st.acr?'<p style="color:var(--red);font-weight:700;margin-top:6px">'+st.acr+' section(s) route into ACR (off limits). Cannot be certified or auto-linked without the owner’s explicit approval.</p>':'')+
+      (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">Every section verified + approved — ready for public.</p>':'<p class="muted">Not ready for public until every section is Works + owner-approved.</p>')+
+    '</div>'+
+    '<div class="card" style="margin-bottom:14px"><h3>Add a section</h3>'+
+      '<div class="row"><input id="secNew" type="text" placeholder="Section name (e.g. Homepage, Cart, Login)"><button class="btn green" id="secAdd" style="flex:0 0 auto">Add</button></div></div>';
+  if(!rows.length) html+='<p class="muted">No sections yet. Add each section of the site above.</p>';
+  rows.forEach(function(s){
+    var stColor=s.status==='Works'?'s-green':(s.status==='Broken'?'s-red':'s-gray');
+    html+='<div class="card" style="margin-bottom:10px"><h3 style="margin-bottom:8px">'+esc(s.name)+' '+
+      '<span class="chip '+stColor+'">'+esc(sectionVerified(s)?'Verified':(s.status))+'</span>'+(s.ownerOk?' <span class="chip s-green">Owner OK</span>':'')+'</h3>'+
+      '<label class="fld"><span>Does it work?</span><select data-secstatus="'+s.id+'">'+
+        ['Untested','Works','Broken','ACR / Blocked'].map(function(o){return '<option'+(o===s.status?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
+      '<label class="fld"><span>Evidence (screenshot file name) — required</span><input type="text" data-secev="'+s.id+'" value="'+esc(s.evidence||'')+'" placeholder="e.g. eco-homepage.png"></label>'+
+      '<label class="fld"><span>Notes</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'"></label>'+
+      '<div class="row"><button class="btn sm green" data-secsave="'+s.id+'">Save</button>'+
+        (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
+        '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div></div>';
+  });
+  v.innerHTML=html;
+  // replace this site's rows in the global store, keeping other sites' rows
+  function persist(updated){
+    var others=load(K.sections,[]).filter(function(x){return x.site!==site.url;});
+    store(K.sections,others.concat(updated));
+  }
+  $('#secAdd',v).addEventListener('click',function(){
+    var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
+    rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
+    persist(rows);toast('Section added');render('verify');sync(function(){return api('POST','/sections',{site:site.url,name:n});},'verify');
+  });
+  $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
+    var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
+    r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
+    if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
+    if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
+    if(r.status==='ACR / Blocked'){toast('Flagged ACR / Blocked. ACR is off limits — left for the owner, not fixed or linked.');}
+    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+id,{status:r.status,evidence:r.evidence,notes:r.notes});},'verify');
+  });});
+  $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
+    if(!confirm('Delete this section?'))return;var _id=b.dataset.secdel;rows=rows.filter(function(x){return x.id!==_id;});persist(rows);render('verify');sync(function(){return api('DELETE','/sections/'+_id);},'verify');
+  });});
+  if(owner)$$('[data-secok]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.secok;})[0];if(!r)return;
+    if(!r.ownerOk&&!sectionVerified(r)){toast('Section must be Works + evidence before approval.');return;}
+    r.ownerOk=!r.ownerOk;persist(rows);logActivity(r.ownerOk?'Section approved':'Section approval removed',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+r.id,{ownerOk:r.ownerOk});},'verify');
+  });});
+}
+
+function rReview(v){
+  if(!isOwner()){v.innerHTML='<h1>Owner Review</h1><p class="muted">Owner only.</p>';return;}
+  var a=activeAssignment();if(!a){v.innerHTML='<h1>Owner Review</h1><p class="muted">No assignment.</p>';return;}
+  var s=checklistStats(),issues=load(K.issues,[]),ev=load(K.evidence,[]);
+  v.innerHTML='<h1>Owner Review</h1>'+
+    '<div class="card tint-blue"><h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Tasks: <b>'+s.done+'/'+s.total+'</b></span><span>Issues: <b>'+issues.length+'</b></span><span>Evidence: <b>'+ev.length+'</b></span></div>'+
+      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
+      '<p class="muted" style="margin-top:8px">The employee cannot approve their own work — only you can.</p>'+
+      '<label class="fld"><span>Review notes</span><textarea id="rvNotes">'+esc(a.ownerNotes||'')+'</textarea></label>'+
+      '<div class="row">'+
+        '<button class="btn green" data-rv="Approved">Approve assignment</button>'+
+        '<button class="btn" data-rv="Needs Retest">Request retest</button>'+
+        '<button class="btn" data-rv="Returned">Return</button>'+
+        '<button class="btn gold" data-rv="Payment Due">Approve payment</button>'+
+        '<button class="btn green" data-rv="Paid">Mark paid</button>'+
+      '</div></div>';
+  $$('[data-rv]',v).forEach(function(b){b.addEventListener('click',function(){
+    var st=b.dataset.rv;a.ownerNotes=$('#rvNotes',v).value;a.status=st;
+    if(st==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
+    if(st==='Paid'&&!a.paidDate)a.paidDate=nowISO();
+    saveAssignment(a);
+    logActivity(st==='Approved'?'Assignment approved':(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':(st==='Needs Retest'?'Retest requested':'Assignment returned'))),a.title);
+    toast('Review saved: '+st);render('review');sync(function(){return api('PATCH','/assignments/'+a.id,{status:st,owner_notes:a.ownerNotes});},'review');
+  });});
+}
+
+function rActivity(v){
+  var a=load(K.activity,[]);
+  var html='<h1>Activity History</h1><p class="muted">Automatic record of major actions — an audit trail.</p>';
+  if(!a.length)html+='<p class="muted">No activity yet.</p>';
+  else{html+='<div class="card">';a.forEach(function(e){
+    html+='<div class="list-item"><b>'+esc(e.action)+'</b>'+(e.detail?' — '+esc(e.detail):'')+
+      '<div class="kvs"><span>by '+esc(e.by||'—')+'</span><span>'+fmtDate(e.at)+'</span></div></div>';
+  });html+='</div>';}
+  v.innerHTML=html;
+}
+
+function rIssues(v){
+  var issues=load(K.issues,[]);
+  v.innerHTML='<h1>Issue Report System</h1>'+
+    '<div class="card tint-orange" style="margin-bottom:14px"><h3>New Issue</h3>'+
+      fld('iTitle','Issue title','text')+fld('iPage','Page / section','text')+
+      '<div class="grid c2">'+fldSel('iSite','Site',SITES.map(function(s){return s.name;}))+fld('iBrowser','Browser','text')+'</div>'+
+      '<div class="grid c2">'+fld('iDevice','Device','text')+fldSel('iSev','Severity',['Critical','Major','Minor'])+'</div>'+
+      fldArea('iSteps','Steps taken')+fldArea('iExp','Expected result')+fldArea('iAct','Actual result')+
+      fld('iShot','Screenshot / video reference','text')+fldArea('iNotes','Notes')+
+      '<button class="btn gold" id="iSave">Save issue</button></div>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="iExport">Export JSON</button><button class="btn sm ghost" id="iPrint">Printable report</button></div>'+
+    '<div class="card"><h3>Logged Issues ('+issues.length+')</h3><div id="iList"></div></div>';
+  $('#iSave',v).addEventListener('click',function(){
+    var t=$('#iTitle',v).value.trim();if(!t){toast('Enter an issue title');return;}
+    var issue={id:'iss_'+Date.now(),title:t,site:$('#iSite',v).value,page:$('#iPage',v).value,browser:$('#iBrowser',v).value,
+      device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
+      severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
+      by:session().name,at:nowISO()};
+    issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');sync(function(){return api('POST','/issues',issue);},'issues');
+  });
+  $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
+  $('#iPrint',v).addEventListener('click',function(){window.print();});
+  var list=$('#iList',v);
+  if(!issues.length){list.innerHTML='<p class="muted">No issues yet.</p>';}
+  else issues.forEach(function(i){
+    var sevC=i.severity==='Critical'?'s-red':(i.severity==='Major'?'s-orange':'s-blue');
+    var d=el('<div class="list-item"><b>'+esc(i.title)+'</b> <span class="chip '+sevC+'">'+esc(i.severity)+'</span> '+statusChip(i.status)+
+      '<div class="kvs"><span>'+esc(i.site)+'</span><span>'+esc(i.page||'—')+'</span><span>'+esc(i.browser||'—')+'</span><span>'+esc(i.device||'—')+'</span><span>by '+esc(i.by)+'</span></div></div>');
+    if(isOwner()){
+      var sel=el('<select style="margin-top:8px"></select>');
+      ['New','Under Review','Needs Retest','Verified Fixed','Closed'].forEach(function(s){var o=document.createElement('option');o.text=s;o.selected=s===i.status;sel.appendChild(o);});
+      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);sync(function(){return api('PATCH','/issues/'+i.id,{status:i.status});},'issues');toast('Issue status updated');render('issues');});
+      d.appendChild(sel);
+    }
+    list.appendChild(d);
+  });
+}
+
+/* Shrink an image on the device BEFORE upload, so only a small thumbnail
+   is stored in the database (keeps it light, no R2, no payment needed). */
+function downscaleImage(file,maxDim,quality,cb){
+  var url=URL.createObjectURL(file),img=new Image();
+  img.onload=function(){
+    var w=img.naturalWidth,h=img.naturalHeight,scale=Math.min(1,maxDim/Math.max(w,h));
+    var cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale));
+    var c=document.createElement('canvas');c.width=cw;c.height=ch;
+    c.getContext('2d').drawImage(img,0,0,cw,ch);
+    URL.revokeObjectURL(url);
+    try{cb(c.toDataURL('image/jpeg',quality));}catch(e){cb(null);}
+  };
+  img.onerror=function(){URL.revokeObjectURL(url);cb(null);};
+  img.src=url;
+}
+/* Upload a downscaled screenshot (data URL) to the API; it is stored in D1. */
+function uploadEvidence(dataUrl,fields,cb){
+  var bodyObj={dataUrl:dataUrl,name:fields.name||'',issue:fields.issue||'',browser:fields.browser||'',device:fields.device||'',notes:fields.notes||''};
+  fetch(API_BASE+'/evidence/upload',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken()},body:JSON.stringify(bodyObj)})
+    .then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}return {ok:r.ok,status:r.status,d:d};});})
+    .then(cb).catch(function(e){cb({ok:false,status:0,d:{error:e.message||'network'}});});
+}
+/* Fetch a stored image (authed) and save/open it so the owner can send it on. */
+function saveEvidenceImage(key,name){
+  fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
+    .then(function(r){if(!r.ok)throw 0;return r.blob();})
+    .then(function(b){var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=(name||'screenshot')+'.jpg';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);})
+    .catch(function(){toast('Could not open image (it may have auto-deleted after 48h).');});
+}
+function fmtBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(0)+' KB';if(n<1073741824)return (n/1048576).toFixed(1)+' MB';return (n/1073741824).toFixed(2)+' GB';}
+function rEvidence(v){
+  var ev=load(K.evidence,[]);
+  var st=load(K.storage,{used:0,cap:52428800,enabled:true});
+  var pct=st.cap?Math.min(100,Math.round(st.used/st.cap*100)):0;
+  var meter='<div class="card tint-gray" style="margin-bottom:14px"><h3>Storage used</h3>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">'+fmtBytes(st.used)+' of '+fmtBytes(st.cap)+' safe limit ('+pct+'%). Stored in your own database — no paid storage, no card. We stop new uploads at this limit, and images auto-delete after 48 hours.</p></div>';
+  v.innerHTML='<h1>Evidence Center</h1>'+ meter +
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a screenshot</h3>'+
+      '<p class="muted">The picture is shrunk on your device and saved in your own database (no paid storage, no card). Uploaded images <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any image and send it on to get the problem fixed.</p>'+
+      '<label class="fld"><span>Choose an image</span><input id="evFile" type="file" accept="image/*"></label>'+
+      '<div class="grid c2">'+fld('uIssue','Related issue (optional)','text')+fld('uBrowser','Browser (optional)','text')+'</div>'+
+      '<div class="grid c2">'+fld('uDevice','Device (optional)','text')+'<div></div></div>'+
+      fldArea('uNotes','Notes (optional)')+
+      '<button class="btn green" id="evUp">Upload screenshot</button></div>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Or record a file name</h3>'+
+      '<p class="muted">No upload needed — save the file in your folder and list its name here. Text records are kept permanently.</p>'+
+      '<div class="grid c2">'+fld('eShot','Screenshot filename','text')+fld('eVideo','Video filename','text')+'</div>'+
+      '<div class="grid c2">'+fld('eIssue','Related issue','text')+fld('eBrowser','Browser','text')+'</div>'+
+      fld('eDevice','Device','text')+fldArea('eNotes','Notes')+
+      '<button class="btn blue" id="eSave">Add evidence record</button></div>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="eExport">Export JSON</button></div>'+
+    '<div class="card"><h3>Evidence Records ('+ev.length+')</h3><div id="eList"></div></div>';
+  $('#evUp',v).addEventListener('click',function(){
+    var f=$('#evFile',v).files[0];
+    if(!f){toast('Choose an image first');return;}
+    if(!isOnline()){toast('Connect online to upload images');return;}
+    var btn=this;btn.disabled=true;toast('Shrinking and uploading...');
+    downscaleImage(f,1100,0.6,function(dataUrl){
+      if(!dataUrl){btn.disabled=false;toast('Could not read that image. Try a different one.');return;}
+      uploadEvidence(dataUrl,{name:f.name,issue:$('#uIssue',v).value,browser:$('#uBrowser',v).value,device:$('#uDevice',v).value,notes:$('#uNotes',v).value},function(res){
+        btn.disabled=false;
+        if(res.ok){logActivity('Screenshot uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
+        else if(res.status===507){toast('Storage is at the safe limit, so uploads paused. Old images clear after 48h — try later, or use the file-name option below.');}
+        else if(res.status===413){toast('That image is still too large after shrinking. Take a simpler screenshot or use the file-name option.');}
+        else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
+      });
+    });
+  });
+  $('#eSave',v).addEventListener('click',function(){
+    var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
+      browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
+    if(!rec.shot&&!rec.video){toast('Add a filename first');return;}
+    ev.unshift(rec);store(K.evidence,ev);logActivity('Evidence added',rec.shot||rec.video);toast('Evidence added');render('evidence');sync(function(){return api('POST','/evidence',rec);},'evidence');
+  });
+  $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
+  var list=$('#eList',v);
+  if(!ev.length)list.innerHTML='<p class="muted">No evidence yet.</p>';
+  else ev.forEach(function(r){
+    var uploaded=!!r.r2Key;
+    list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video||'screenshot')+'</b>'+
+      (uploaded?' <span class="chip s-orange">uploaded · auto-deletes 48h</span>':'')+
+      '<div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span><span>'+fmtDate(r.at)+'</span></div>'+
+      (uploaded?'<img data-thumb="'+esc(r.r2Key)+'" alt="screenshot" style="max-width:160px;border-radius:8px;display:block;margin-top:8px">'+
+        '<div class="row" style="margin-top:8px"><button class="btn sm" data-saveimg="'+esc(r.r2Key)+'" data-saveimgname="'+esc(r.shot||'screenshot')+'">Save image to send</button></div>':'')+
+      (r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));
+  });
+  // Lazy-load uploaded thumbnails via authed blob fetch (keeps token out of URLs)
+  $$('[data-thumb]',v).forEach(function(img){
+    var key=img.getAttribute('data-thumb');
+    fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
+      .then(function(r){if(!r.ok)throw 0;return r.blob();})
+      .then(function(b){img.src=URL.createObjectURL(b);})
+      .catch(function(){img.alt='(image no longer available)';});
+  });
+  $$('[data-saveimg]',v).forEach(function(b){b.addEventListener('click',function(){saveEvidenceImage(b.getAttribute('data-saveimg'),b.getAttribute('data-saveimgname'));});});
+}
+
+function rMessages(v){
+  var msgs=load(K.messages,[]),sess=session(),owner=isOwner();
+  v.innerHTML='<h1>Communication Center</h1>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Send Message</h3>'+
+      '<p class="muted">To: <b>'+(owner?'Witness Bond (Employee)':'L. Bond (Owner)')+'</b></p>'+
+      fldSel('mPriority','Priority',['normal','important','urgent'])+
+      fldArea('mBody','Message')+
+      '<div class="row"><button class="btn blue" id="mSend">Send</button><button class="btn red" id="mHelp">Need Help</button></div></div>'+
+    '<div class="card"><h3>Thread ('+msgs.length+')</h3><div id="mList"></div></div>';
+  function send(body,priority){
+    if(!body.trim()){toast('Type a message');return;}
+    msgs.unshift({id:'m_'+Date.now(),sender:sess.name,senderRole:sess.role,
+      recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',
+      body:body,at:nowISO()});
+    store(K.messages,msgs);sync(function(){return api('POST','/messages',{recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',body:body});},'messages');toast('Message sent');render('messages');
+  }
+  $('#mSend',v).addEventListener('click',function(){send($('#mBody',v).value,$('#mPriority',v).value);});
+  $('#mHelp',v).addEventListener('click',function(){send('NEED HELP: '+($('#mBody',v).value||'Please assist.'),'urgent');});
+  var list=$('#mList',v);
+  if(!msgs.length)list.innerHTML='<p class="muted">No messages yet.</p>';
+  else msgs.forEach(function(m){
+    var pc=m.priority==='urgent'?'s-red':(m.priority==='important'?'s-orange':'s-blue');
+    list.appendChild(el('<div class="list-item"><b>'+esc(m.sender)+'</b> &rarr; '+esc(m.recipient)+' <span class="chip '+pc+'">'+esc(m.priority)+'</span><div class="muted" style="font-size:.8rem">'+fmtDate(m.at)+'</div><div>'+esc(m.body)+'</div></div>'));
+  });
+}
+
+function rEmergency(v){
+  var alerts=load(K.alerts,[]);
+  v.innerHTML='<h1>Emergency Alert</h1>'+
+    '<button class="emg-btn" id="emgFire" style="margin-bottom:16px">CRITICAL ISSUE ALERT</button>'+
+    '<div class="card tint-red"><h3>Report a Blocker</h3>'+
+      '<p class="muted">Use for: site will not open, homepage broken, app crash, data loss, payment/invoice issue, unable to continue, release blocker.</p>'+
+      fldArea('emgWhat','What happened?')+
+      '<div class="grid c2">'+fldSel('emgSite','Site',SITES.map(function(s){return s.name;}))+fld('emgBrowser','Browser','text')+'</div>'+
+      '<div class="grid c2">'+fld('emgDevice','Device','text')+fldSel('emgUrg','Urgency',['High','Critical','Release Blocker'])+'</div>'+
+      fld('emgShot','Screenshot / video reference','text')+fldArea('emgNotes','Notes')+
+      '<button class="btn red" id="emgSave">Send emergency alert</button></div>'+
+    '<div class="card" style="margin-top:14px"><h3>Recent Alerts ('+alerts.length+')</h3><div id="emgList"></div></div>';
+  function fire(){
+    var a={id:'al_'+Date.now(),what:$('#emgWhat',v).value||'(no detail)',site:$('#emgSite',v).value,browser:$('#emgBrowser',v).value,
+      device:$('#emgDevice',v).value,urgency:$('#emgUrg',v).value,shot:$('#emgShot',v).value,notes:$('#emgNotes',v).value,
+      by:session().name,at:nowISO()};
+    alerts.unshift(a);store(K.alerts,alerts);logActivity('Emergency alert sent',a.what);toast('Emergency alert sent');render('emergency');sync(function(){return api('POST','/alerts',a);},'emergency');
+  }
+  $('#emgFire',v).addEventListener('click',function(){$('#emgWhat',v).focus();toast('Fill the form, then Send.');});
+  $('#emgSave',v).addEventListener('click',fire);
+  var list=$('#emgList',v);
+  if(!alerts.length)list.innerHTML='<p class="muted">No alerts.</p>';
+  else alerts.forEach(function(a){list.appendChild(el('<div class="list-item"><b>'+esc(a.what)+'</b> <span class="chip s-red">'+esc(a.urgency)+'</span><div class="kvs"><span>'+esc(a.site)+'</span><span>'+esc(a.browser||'')+' '+esc(a.device||'')+'</span><span>by '+esc(a.by)+'</span><span>'+fmtDate(a.at)+'</span></div></div>'));});
+}
+
+/* Auto-check that must pass before the owner pays — protects against
+   paying for incomplete or unverified work. */
+function payAutoCheck(a){
+  var vs=siteVerifyStats(a.site),steps=checklistStats();
+  var checks=[
+    {label:'Owner approved the assignment', ok:(a.status==='Approved'||a.status==='Paid')},
+    {label:'Every section verified Working (with evidence)', ok:vs.total>0&&vs.ok===vs.total},
+    {label:'Every section owner-approved', ok:vs.total>0&&vs.approved===vs.total},
+    {label:'All verification steps done', ok:steps.total>0&&steps.done===steps.total},
+    {label:'Employee submitted an invoice', ok:!!a.invoiceSubmitted}
+  ];
+  return {checks:checks, pass:checks.every(function(c){return c.ok;})};
+}
+/* Percent of the $60 assignment actually completed (work done). */
+function pctComplete(a){
+  var vs=siteVerifyStats(a.site),steps=checklistStats();
+  var secPct=vs.total?vs.ok/vs.total:0;
+  var stepPct=steps.total?steps.done/steps.total:0;
+  var apprPct=vs.total?vs.approved/vs.total:0;
+  return Math.round((secPct*0.6 + stepPct*0.3 + apprPct*0.1)*100);
+}
+function payFlag(a){
+  var ac=payAutoCheck(a),pct=pctComplete(a);
+  if(a.status==='Paid') return '<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--green)"><b style="font-size:1.15rem">PAID · 100% complete</b></div>';
+  if(ac.pass && pct>=100) return '<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--green)"><b style="font-size:1.15rem">SAFE TO PAY — assignment '+pct+'% complete</b><div style="color:var(--text);margin-top:4px">All checks passed.</div></div>';
+  var miss=ac.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});
+  return '<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--red)">'+
+    '<b style="font-size:1.25rem">DO NOT PAY — assignment '+pct+'% complete</b>'+
+    '<div style="color:var(--text);margin-top:6px">Still missing: '+esc(miss.join(' · ')||'final approval')+'</div></div>';
+}
+function rPayment(v){
+  var a=activeAssignment(),owner=isOwner();
+  var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+  var pstat = a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':(a.status==='Not Started'?'Not Submitted':'Submitted')));
+  var ac=payAutoCheck(a);
+  v.innerHTML='<h1>Payment Tracker</h1>'+payFlag(a)+
+    '<div class="card tint-gold"><h3>'+esc(a.title)+' '+statusChip(pstat)+'</h3>'+
+      '<div class="kvs"><span>Assignment: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
+      '<div class="kvs"><span>Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'—')+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
+      '<p class="muted" style="margin-top:8px">$60 per full assignment · optional bonus $10–$25 · paid only after this auto-check passes.</p></div>'+
+    '<div class="card tint-'+(ac.pass?'green':'orange')+'" style="margin:14px 0"><h3>Auto-check before paying '+(ac.pass?'<span class="chip s-green">PASS</span>':'<span class="chip s-orange">NOT READY</span>')+'</h3>'+
+      ac.checks.map(function(c){return '<div class="check" style="border:0;padding:6px 0"><span style="color:'+(c.ok?'var(--green)':'var(--red)')+';font-weight:800">'+(c.ok?'✓':'✗')+'</span><label>'+esc(c.label)+'</label></div>';}).join('')+
+      (ac.pass?'<p style="color:var(--green);font-weight:700">Everything checks out — safe to pay.</p>':'<p class="muted">Pay is blocked until every line is ✓.</p>')+'</div>'+
+    (owner?
+      '<div class="card owner-only"><label class="fld"><span>Bonus amount ($)</span><input id="pBonus" type="number" value="'+(a.bonus||0)+'"></label>'+
+        '<div class="row">'+
+          '<button class="btn gold" data-pst="Approved">Approve work</button>'+
+          '<button class="btn gold" data-pst="Payment Due">Mark payment due</button>'+
+          '<button class="btn '+(ac.pass?'green':'')+'" data-pst="Paid">Mark paid</button>'+
+        '</div></div>'
+     : '<div class="card"><p class="muted">'+(a.status==='Approved'&&!a.invoiceSubmitted?'Your work is approved — go to the Invoice tab and submit your invoice for payment.':'Payment is released by the owner after the auto-check passes.')+'</p></div>');
+  if(owner){
+    $$('[data-pst]',v).forEach(function(b){b.addEventListener('click',function(){
+      var st=b.dataset.pst;a.bonus=Number($('#pBonus',v).value)||0;
+      if(st==='Paid'){
+        var chk=payAutoCheck(a);
+        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);saveAssignment(a);render('payment');return;}
+        a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();
+      }
+      else if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
+      else{a.status='Approved';}
+      saveAssignment(a);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');sync(function(){return api('PATCH','/assignments/'+a.id,{status:a.status,bonus:a.bonus,owner_notes:a.ownerNotes});},'payment');
+    });});
+  }
+}
+
+function invoiceNoFor(a){return a.invoiceNo||('OCC-INV-W'+String(a.week||1).padStart(2,'0')+'-'+String(a.id||'wk1').toUpperCase());}
+function rInvoice(v){
+  var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+  if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);saveAssignment(a);}
+  var inv='INVOICE — Operations Command Center\n'+
+    '====================================\n'+
+    'Invoice No:  '+a.invoiceNo+'\n'+
+    'Worker:      '+a.worker+'\n'+
+    'Title:       Platform Quality Assurance Specialist\n'+
+    'Assignment:  '+a.title+'\n'+
+    'Site:        '+a.site+'\n'+
+    'Amount:      $'+a.pay+'\n'+
+    'Bonus:       $'+(a.bonus||0)+'\n'+
+    'Total due:   $'+total+'\n'+
+    'Status:      '+a.status+'\n'+
+    'Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'not yet')+'\n'+
+    'Approved:    '+(a.approvedDate?fmtDate(a.approvedDate):'—')+'\n'+
+    'Paid:        '+(a.paidDate?fmtDate(a.paidDate):'—')+'\n'+
+    'Work summary: '+a.goal+'\n';
+  var invPct=pctComplete(a);
+  var invApproved=(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid');
+  var canSubmitInv=invApproved && invPct>=100 && !a.invoiceSubmitted;
+  v.innerHTML='<h1>Invoice Center</h1>'+
+    '<div class="card tint-gold"><div class="doc" id="invDoc">'+esc(inv)+'</div>'+
+      '<div class="row" style="margin-top:14px">'+
+        '<button class="btn gold" id="invPrint">Print invoice</button>'+
+        '<button class="btn sm" id="invTxt">Export .txt</button>'+
+        '<button class="btn sm" id="invJson">Export JSON</button>'+
+        (isOwner()?'<button class="btn green owner-only" id="invPaid">Mark as paid</button>':'')+
+      '</div></div>'+
+    (!isOwner()?
+      ((invPct>=100
+        ?'<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:14px;margin-top:14px;color:var(--green)"><b style="font-size:1.1rem">Assignment '+invPct+'% complete</b></div>'
+        :'<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:14px;margin-top:14px;color:var(--red)"><b style="font-size:1.15rem">NOT READY TO INVOICE — '+invPct+'% complete</b><div style="color:var(--text);margin-top:4px">Verify every section (Works + evidence) and finish all steps before you can invoice.</div></div>'))+
+      '<div class="card tint-gold" style="margin-top:14px"><h3>Submit invoice for payment</h3>'+
+        (a.invoiceSubmitted?'<p style="color:var(--green);font-weight:700">Invoice submitted '+fmtDate(a.invoiceSubmittedDate)+' — waiting on owner.</p>'
+         :(canSubmitInv?'<p class="muted">Your work is 100% verified and approved. Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
+           :(invPct<100?'<p class="muted">Finish verifying every section first — see the red flag above.</p>'
+             :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
+      '</div>':'');
+  if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
+    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');sync(function(){return api('POST','/assignments/'+a.id+'/invoice');},'invoice');
+  });
+  $('#invPrint',v).addEventListener('click',function(){window.print();});
+  $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
+  $('#invJson',v).addEventListener('click',function(){download('occ-invoice.json',JSON.stringify({invoiceNo:a.invoiceNo,worker:a.worker,title:'Platform Quality Assurance Specialist',assignment:a.title,site:a.site,amount:a.pay,bonus:a.bonus||0,total:total,status:a.status,submitted:a.submittedDate,approved:a.approvedDate,paid:a.paidDate},null,2));});
+  if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){
+    var chk=payAutoCheck(a);
+    if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+f[0]);return;}
+    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');sync(function(){return api('PATCH','/assignments/'+a.id,{status:'Paid'});},'invoice');});
+}
+
+var DOCS={
+  'Employee QA Operations Plan':
+    'WHO YOU ARE\n'+
+    'You are the Platform Quality Assurance Specialist for the Load ecosystem.\n'+
+    'Your job: test each Load site, find problems, and report them clearly.\n\n'+
+    'HOW OCC WORKS\n'+
+    '- You get one assignment at a time.\n'+
+    '- Each assignment has a daily checklist.\n'+
+    '- You log issues, add evidence, and submit when done.\n'+
+    '- The owner reviews your work and approves it.\n'+
+    '- Payment is released after approval.\n\n'+
+    'THE GOLDEN RULES\n'+
+    '1. Work ONE site at a time.\n'+
+    '2. Checkboxes are not enough — add real evidence.\n'+
+    '3. Be honest. Never mark something working if you did not test it.\n'+
+    '4. You cannot approve your own work. The owner does.\n\n'+
+    'TESTING ORDER (sites unlock in order)\n'+
+    '1. Load Eco / Main Load  (ACTIVE NOW)\n'+
+    '2. Load Studio  (locked)\n'+
+    '3. Load Tasks  (locked)\n'+
+    '4. Load Play  (locked)\n'+
+    'A site only unlocks after the one before it is approved as stable.',
+
+  'Assignment Workbook (Load Eco)':
+    'ASSIGNMENT: Load Eco — Full Section Verification\n'+
+    'SITE: https://loadeco.app\n'+
+    'PAY: $60 (after owner approval)\n\n'+
+    'GOAL\n'+
+    'Verify that EVERY section of the site works before it goes public.\n'+
+    'Use the Verify Sections tab. For each section: check every button and\n'+
+    'link, mark it Works or Broken, and attach evidence (a screenshot).\n'+
+    'You verify and report — you do not fix. Broken ones become Issues for\n'+
+    'the owner to fix; then you retest until the whole site is Working.\n\n'+
+    'DAY 1 — Site Inventory\n'+
+    'List every menu, section, tile, and page. Screenshot the homepage.\n\n'+
+    'DAY 2 — Navigation Audit\n'+
+    'Tap every menu and button. Mark each Working / Broken / Confusing.\n\n'+
+    'DAY 3 — First-Time User Review\n'+
+    'Pretend you are brand new. Is the next step clear? Rate clarity 1–10.\n\n'+
+    'DAY 4 — Browser & Device Comparison\n'+
+    'Test Chrome, Edge, and iPad Safari. Record differences.\n\n'+
+    'DAY 5 — Final Report\n'+
+    'Submit inventory, issue list, browser comparison, top 10 improvements,\n'+
+    'and a release-readiness score. Then mark it ready for owner review.',
+
+  'Windows Setup Guide':
+    'WHAT YOU NEED\n'+
+    'A Windows computer with Google Chrome and Microsoft Edge.\n\n'+
+    'STEPS\n'+
+    '1. Open Chrome. Go to https://loadeco.app.\n'+
+    '2. Wait for the page to fully load.\n'+
+    '3. Take a screenshot (Windows key + Shift + S).\n'+
+    '4. Click every menu item and button. Note what works and what breaks.\n'+
+    '5. Now open Edge and do the same.\n'+
+    '6. Write down anything that looks different between Chrome and Edge.\n\n'+
+    'SAVING SCREENSHOTS\n'+
+    'Save them in one folder. Name them clearly, e.g. "day2-broken-menu.png".\n'+
+    'Then list the file names in the Evidence section of OCC.',
+
+  'iPad Testing Guide':
+    'WHAT YOU NEED\n'+
+    'An iPad with Safari.\n\n'+
+    'STEPS\n'+
+    '1. Open Safari. Go to https://loadeco.app.\n'+
+    '2. Check the layout fits the screen — no cut-off text, no overlap.\n'+
+    '3. Tap every menu and button. Note anything hidden or hard to tap.\n'+
+    '4. Turn the iPad sideways. Does it still look right?\n'+
+    '5. Compare against your Windows result. Record mobile-only problems.\n\n'+
+    'SCREENSHOTS ON IPAD\n'+
+    'Press the top button + volume up together. Find them in Photos.\n'+
+    'List the file names in the Evidence section of OCC.',
+
+  'Payment Structure':
+    'HOW PAY WORKS\n'+
+    'You are paid per FULL completed and approved assignment — not by the hour.\n'+
+    'A full assignment = every section of the site checked and verified with\n'+
+    'evidence, then approved by the owner.\n\n'+
+    'RATE\n'+
+    '- Full assignment: $60 (released after the owner approves)\n'+
+    '- Optional bonus: $10–$25 (owner’s choice for great work)\n\n'+
+    'COST-EFFECTIVE\n'+
+    'One flat fee per fully verified site — not per hour and not per day.\n'+
+    'The owner pays for proven, evidence-backed results, only after every\n'+
+    'section is verified working and approved.\n\n'+
+    'PAYMENT STATUS FLOW\n'+
+    'Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid\n\n'+
+    'IMPORTANT\n'+
+    'Payment becomes due only AFTER the owner approves your submitted work.\n'+
+    'Every payment is recorded with dates and an invoice number.',
+
+  'Assignment Rules':
+    '1. ONE SITE AT A TIME.\n'+
+    '   Do not start another site until the current one is approved.\n\n'+
+    '2. FOLLOW THE DAYS IN ORDER.\n'+
+    '   Day 1, then Day 2, and so on.\n\n'+
+    '3. EVIDENCE IS REQUIRED.\n'+
+    '   Checking boxes is not enough. Add notes, issues, and screenshots.\n\n'+
+    '4. REPORT EVERY ISSUE.\n'+
+    '   If something is broken or confusing, log it.\n\n'+
+    '5. RETEST AFTER FIXES.\n'+
+    '   When the owner says something is fixed, test it again.\n\n'+
+    '6. BE HONEST.\n'+
+    '   Never say something works unless you actually tested it.\n\n'+
+    '7. THE OWNER APPROVES.\n'+
+    '   You submit. The owner reviews and approves. You cannot self-approve.',
+
+  'QA Reporting Guide':
+    'HOW TO WRITE A GOOD ISSUE\n'+
+    'Fill in every field in the Issues form:\n'+
+    '- Title: short and clear (e.g. "Menu button does nothing")\n'+
+    '- Site and Page/section\n'+
+    '- Browser and Device\n'+
+    '- Steps taken: what you did\n'+
+    '- Expected result: what should happen\n'+
+    '- Actual result: what really happened\n'+
+    '- Severity: Critical / Major / Minor\n'+
+    '- Screenshot reference: the file name\n\n'+
+    'SEVERITY GUIDE\n'+
+    '- Critical: site will not open, data lost, app crash, release blocker\n'+
+    '- Major: a feature is broken but the site still opens\n'+
+    '- Minor: small or cosmetic problem\n\n'+
+    'EVIDENCE\n'+
+    'Add a screenshot or note for anything you mark broken or confusing.\n'+
+    'No evidence = it cannot be verified.'
+};
+var HOWTO={
+  employee:['Log in as Employee with your name and password.',
+    'Open <b>Verify Sections</b>. Add every section of the site — homepage, each menu, each page/tile, the footer.',
+    'For each section, check <b>every button and link</b>. Mark it Works or Broken, and type a screenshot file name as evidence.',
+    'If something is broken, open <b>Issues</b> and log it. You report — you do NOT fix. The owner fixes it, then you retest that section.',
+    'Do the <b>Steps</b> checklist (inventory, navigation, first-time review, browser comparison, report).',
+    'When every section is verified and steps are done, open <b>Assignments</b> and tap <b>Submit for review</b>.',
+    'Wait for the owner to approve your work.',
+    'After approval, open <b>Invoice</b> and tap <b>Submit invoice for payment</b>.',
+    'Use <b>Messages</b> to talk to the owner. Use <b>Emergency</b> only for urgent blockers.'],
+  owner:['Log in as Owner with your name and password.',
+    'Check the <b>Dashboard</b> and <b>Owner Review</b> for her progress and what needs attention.',
+    'Open <b>Verify Sections</b>. Review each section and its evidence, then tap <b>Approve section</b>.',
+    'Open <b>Issues</b> to see what she reported. Fix them (or send to Claude), then set the issue to <b>Verified Fixed</b> so she retests.',
+    'Use <b>Owner Review</b> to Approve, Request retest, or Return with notes. She cannot approve her own work.',
+    'Open <b>Payment</b>. The <b>Auto-check</b> must show PASS (work approved + every section verified + approved + steps done + invoice submitted) before <b>Mark paid</b> works.',
+    'Open <b>Certification</b>. A site is Ready for public only when every section is verified Working and owner-approved. Then the next site unlocks (Load Eco → Studio → Play → AI).',
+    'Use <b>Messages</b> to reply to her.']
+};
+/* Plain-language guide to every section. owner:true entries only show to owner. */
+var GUIDE=[
+  {tab:'dashboard',  name:'Dashboard',      what:'Your home screen. Shows your progress, open issues, payment status, and how much of the $60 assignment is done.', todo:'Glance here first each day to see where things stand.'},
+  {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
+  {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
+  {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works, Broken, or ACR / Blocked, with a screenshot as proof.', todo:'Test every button and link in each section. If a link routes into an ACR site, mark it ACR / Blocked and stop — do not fix or follow it. Otherwise mark Works or Broken and add the screenshot. See the Screenshots note below.'},
+  {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
+  {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
+  {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (shrunk on your device and stored in your own database — no paid storage, no card; auto-deletes after 48 hours) or just type the file name to keep a permanent text record. The owner can open any uploaded image and save it to send on for a fix.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
+  {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
+  {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
+  {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
+  {tab:'invoice',    name:'Invoice',        what:'Where the employee submits an invoice after the owner approves the work.', todo:'Submit only after approval. Submitting too early gets you red-flagged.'},
+  {tab:'documents',  name:'Training',       what:'Your guides and workbooks to read or download.', todo:'Read these when you start a new site.'},
+  {tab:'release',    name:'Certification',  what:'Tracks when each Load site is Ready for public. Sites unlock in order: Eco, then Studio, then Play, then AI.', todo:'A site is done only when every section passes and the owner approves. The next site then unlocks on its own.'},
+  {tab:'history',    name:'History',        what:'Every past assignment, kept forever. Nothing disappears.', todo:'Look back at finished jobs and their pay any time.'},
+  {tab:'activity',   name:'Activity',       what:'A running log of everything done in the app.', todo:'See who did what, and when.'},
+  {tab:'confirm',    name:'Confirmation',   what:'The build-plan checklist.', todo:'Confirm the plan items when asked.'},
+  {tab:'data',       name:'Data',           what:'Export, import, or reset this device’s copy of the data.', todo:'Use Export now and then to keep a backup.'}
+];
+var PAY_RULES=[
+  'Each full assignment is worth <b>$60</b> — for the whole site verified, not per hour or per day.',
+  'The Dashboard shows the <b>percent complete</b> of the $60 assignment.',
+  'The employee can submit an invoice <b>only after the owner approves</b> the work.',
+  'The owner can mark it paid <b>only when the Auto-check passes</b>: work approved, every section verified and owner-approved, steps done, and the invoice submitted.',
+  'If the work is not complete, <b>both sides are red-flagged</b> — the owner sees DO NOT PAY, and the employee sees the missing items. Finish them to clear the flag.'
+];
+var FAQ=[
+  ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
+  ['What if a link goes into an ACR site?','Stop and mark that section ACR / Blocked. ACR sites are off limits — do not test-fix, follow, or link them. They are set aside for the owner’s explicit approval and never block-counted as bugs.'],
+  ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
+  ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (shrunk on your device, stored in your own database, auto-deletes after 48 hours) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
+  ['How do I get a screenshot to the fixer?','Open the uploaded image in Evidence and tap Save image to send. That saves the picture to your device so you can share it with the fixer (Claude). Do it within 48 hours, before the image auto-clears.'],
+  ['Will uploads slow the site or fill it up?','No. Pictures are shrunk before saving, the app keeps a small safe limit, and uploaded images auto-delete after 48 hours. It stays light.'],
+  ['Could uploads ever cost money?','No. Screenshots are stored in your own database — no paid storage and no card needed. The app stops uploads before its safe limit, and the Evidence page shows a storage-used meter. The file-name option is always free too.'],
+  ['Why is my pay not released?','Open Payment and read the Auto-check. It lists exactly what is still missing.'],
+  ['When does the next site open?','On its own, once the current site is fully certified (Eco, then Studio, then Play, then AI).'],
+  ['Does my work save across devices?','Yes. Once you sign in while online, your work syncs to every device.']
+];
+function rHowTo(v){
+  var owner=isOwner();
+  function steps(title,arr,tint){
+    return '<div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+      arr.map(function(s){return '<li style="margin-bottom:8px">'+s+'</li>';}).join('')+'</ol></div>';
+  }
+  var html='<h1>How to Use Load Tasks — OCC</h1>';
+  html+='<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+
+    (owner?'You review the work, fix the issues she reports, approve, and pay only after the auto-check passes.'
+          :'You check every section of the site with proof and report anything broken — you do not fix it yourself.')+
+    '<p class="muted" style="margin-top:8px;margin-bottom:0">This guide is always here in the <b>How to Use</b> tab. Read it any time you are unsure.</p></div>';
+
+  // Quick start for the logged-in role
+  html+=steps(owner?'Your first 5 minutes — Owner':'Your first 5 minutes — Employee', owner?HOWTO.owner:HOWTO.employee, owner?'blue':'purple');
+
+  // What each section does
+  html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
+  GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
+    html+='<button class="card tint-gray" data-go="'+g.tab+'" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:10px;display:block">'+
+      '<h3 style="margin:0 0 4px">'+esc(g.name)+'</h3>'+
+      '<div style="margin-bottom:6px">'+g.what+'</div>'+
+      '<div class="muted"><b>What to do:</b> '+g.todo+'</div>'+
+      '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button>';
+  });
+
+  // Screenshots — how proof works (matches the current MVP: record file names, no upload button yet)
+  html+='<div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
+    '<p style="margin:0 0 8px">You have <b>two ways</b> to add screenshot proof. Both keep a permanent text record; the difference is whether the picture itself is stored.</p>'+
+    '<p style="margin:0 0 6px"><b>Way 1 — Upload the picture (recommended).</b></p>'+
+    '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">On iPad, take the screenshot (press the top button and volume up together).</li>'+
+      '<li style="margin-bottom:8px">Open <b>Evidence</b>, tap <b>Choose an image</b>, pick the screenshot, then tap <b>Upload screenshot</b>.</li>'+
+      '<li style="margin-bottom:8px">The app shrinks the picture on your device and saves it in your own database — <b>no paid storage and no card needed</b>.</li>'+
+      '<li style="margin-bottom:8px">It <b>auto-deletes after 48 hours</b> to keep the database light, and a usage meter at the top of Evidence shows how much space is used. The app also stops uploads before its safe limit, so it can never cost money.</li>'+
+      '<li style="margin-bottom:8px"><b>To get a screenshot fixed:</b> the owner opens the uploaded image, taps <b>Save image to send</b>, and shares it with the fixer (Claude) — review within the 48-hour window before it clears.</li>'+
+      '<li style="margin-bottom:0">The text record (file name, date, who) is kept even after the image clears.</li>'+
+    '</ol>'+
+    '<p style="margin:0 0 6px"><b>Way 2 — Just record the file name.</b></p>'+
+    '<ol style="margin:0;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:8px">Save the screenshot in your own evidence folder with a clear name, like <b>eco-homepage.png</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, type that file name in the section’s <b>Evidence</b> box, then mark it Works or Broken. You can also add it under <b>Evidence</b> &rarr; Record a file name.</li>'+
+      '<li style="margin-bottom:0">Nothing is uploaded; you keep the picture yourself, forever.</li>'+
+    '</ol></div>';
+
+  // Pay rules
+  html+='<div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+    PAY_RULES.map(function(p){return '<li style="margin-bottom:8px">'+p+'</li>';}).join('')+'</ul></div>';
+
+  // FAQ
+  html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Common questions</h3>'+
+    FAQ.map(function(q){return '<div style="margin-bottom:12px"><b>'+esc(q[0])+'</b><div class="muted" style="margin-top:2px">'+esc(q[1])+'</div></div>';}).join('')+'</div>';
+
+  // The other role, for context
+  html+=steps(owner?'What the employee does':'What the owner does', owner?HOWTO.employee:HOWTO.owner, 'gray');
+
+  v.innerHTML=html;
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
+}
+
+function rDocuments(v){
+  var html='<h1>Documents &amp; Training</h1>'+
+    '<p class="muted">Read your guides right here — no switching to Word. Each one can also be downloaded. New weekly workbooks appear here too.</p>'+
+    '<div class="row" style="margin-bottom:14px"><button class="btn sm" id="docAll">Download all (.txt)</button></div>';
+  Object.keys(DOCS).forEach(function(k,idx){
+    html+='<div class="card tint-gray" style="margin-bottom:12px"><h3>'+esc(k)+'</h3>'+
+      '<div class="doc">'+esc(DOCS[k])+'</div>'+
+      '<div class="row" style="margin-top:12px"><button class="btn sm" data-docdl="'+idx+'">Download</button></div></div>';
+  });
+  v.innerHTML=html;
+  var keys=Object.keys(DOCS);
+  $$('[data-docdl]',v).forEach(function(b){b.addEventListener('click',function(){
+    var k=keys[b.dataset.docdl];download('OCC - '+k.replace(/[^a-z0-9]+/gi,'-')+'.txt',k+'\n\n'+DOCS[k]);
+  });});
+  $('#docAll',v).addEventListener('click',function(){
+    var all=keys.map(function(k){return '==== '+k+' ====\n\n'+DOCS[k];}).join('\n\n\n');
+    download('OCC-All-Workbooks.txt',all);
+  });
+}
+
+function readinessScore(){
+  var issues=load(K.issues,[]),s=checklistStats();
+  var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var score=Math.round(s.pct*0.7) + 30 - crit*15 - major*5;
+  return Math.max(0,Math.min(100,score));
+}
+function rRelease(v){
+  var issues=load(K.issues,[]),all=load(K.assignments,[]);
+  var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
+  var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
+  var retestsOpen=issues.filter(function(i){return i.status==='Needs Retest';}).length;
+  var html='<h1>Release Certification</h1><p class="muted">Each Load site earns a certification record. Sites unlock in order — Load Eco → Studio → Play → AI.</p>';
+  var act=activeSite();
+  SITES.forEach(function(site){
+    var certified=siteCertified(site.url), locked=siteLocked(site.url), active=(site.url===act.url)&&!certified;
+    var sa=all.filter(function(x){return x.site===site.url;})[0];
+    var vs=siteVerifyStats(site.url);
+    var siteIssues=issues.filter(function(i){return i.site===site.name;});
+    var bugsFound=siteIssues.length;
+    var bugsFixed=siteIssues.filter(function(i){return i.status==='Verified Fixed'||i.status==='Closed';}).length;
+    var retestsOpen2=siteIssues.filter(function(i){return i.status==='Needs Retest';}).length;
+    var ownerApproved=sa&&(sa.status==='Approved'||sa.status==='Paid');
+    var stage=certified?'Stable Verified':(locked?'Locked':(vs.broken?'Needs Fixes':'In Testing'));
+    var tint=certified?'green':(active?'blue':'gray');
+    html+='<div class="card tint-'+tint+'" style="margin-bottom:12px">'+
+      '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
+      '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
+      (locked?
+        '<p class="muted" style="margin-top:8px">Locked. Unlocks when '+esc(act.name)+' is certified Ready for public.</p>'
+       :'<div class="kvs" style="margin-top:8px"><span>Sections verified: <b>'+vs.ok+' / '+vs.total+'</b></span><span>Sections owner-approved: <b>'+vs.approved+' / '+vs.total+'</b></span><span>Bugs found: <b>'+bugsFound+'</b></span><span>Bugs fixed: <b>'+bugsFixed+'</b></span><span>Open retests: <b>'+retestsOpen2+'</b></span><span>Owner approval: <b>'+(ownerApproved?'Yes':'No')+'</b></span></div>'+
+        (certified?'<p style="color:var(--green);font-weight:700;margin-top:6px">CERTIFIED — Ready for public. Next site is unlocked.</p>':'<p class="muted" style="margin-top:6px">Not certified yet: every section must be verified Working and owner-approved.</p>'))+
+    '</div>';
+  });
+  v.innerHTML=html;
+}
+
+function rHistory(v){
+  var all=load(K.assignments,[]),issues=load(K.issues,[]),ev=load(K.evidence,[]);
+  var html='<h1>Assignment History</h1><p class="muted">Every assignment is kept — nothing disappears after completion.</p>';
+  if(!all.length){v.innerHTML=html+'<p class="muted">No assignments yet.</p>';return;}
+  all.forEach(function(a){
+    var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+    var aIssues=issues.filter(function(i){return i.site===a.site;}).length||issues.length;
+    var aEv=ev.length;
+    html+='<div class="card tint-gray" style="margin-bottom:12px">'+
+      '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Invoice: <b>'+esc(invoiceNoFor(a))+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total: <b>$'+total+'</b></span></div>'+
+      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid (completed): '+fmtDate(a.paidDate)+'</span></div>'+
+      '<div class="kvs"><span>Issues reported: <b>'+aIssues+'</b></span><span>Evidence items: <b>'+aEv+'</b></span></div>'+
+      (a.ownerNotes?'<p style="margin-top:8px"><b>Review notes:</b> '+esc(a.ownerNotes)+'</p>':'')+
+    '</div>';
+  });
+  v.innerHTML=html;
+}
+
+function rConfirm(v){
+  var items=load(K.confirm,[]);
+  var html='<h1>Build Plan Confirmation</h1><div class="card tint-green">';
+  items.forEach(function(it,idx){html+='<div class="check"><input type="checkbox" id="cf'+idx+'" data-idx="'+idx+'"'+(it.done?' checked':'')+'><label for="cf'+idx+'">'+esc(it.label)+'</label></div>';});
+  html+='</div>';v.innerHTML=html;
+  $$('input[type=checkbox]',v).forEach(function(cb){cb.addEventListener('change',function(){var i=load(K.confirm,[]);i[cb.dataset.idx].done=cb.checked;store(K.confirm,i);toast('Saved');});});
+}
+
+function rData(v){
+  v.innerHTML='<h1>OCC Data</h1>'+
+    '<div class="card tint-gray"><p class="muted">All OCC data is stored only in this browser (localStorage). It is not synced to any server.</p>'+
+      '<div class="row"><button class="btn" id="dExport">Export OCC Data</button><button class="btn" id="dImport">Import OCC Data</button><button class="btn red ghost" id="dReset">Reset Demo Data</button></div>'+
+      '<input type="file" id="dFile" accept="application/json" class="hidden"></div>';
+  $('#dExport',v).addEventListener('click',function(){
+    var dump={};Object.keys(K).forEach(function(k){if(k!=='session')dump[k]=load(K[k],null);});
+    download('occ-data-backup.json',JSON.stringify(dump,null,2));
+  });
+  $('#dImport',v).addEventListener('click',function(){$('#dFile',v).click();});
+  $('#dFile',v).addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){try{var o=JSON.parse(r.result);Object.keys(o).forEach(function(k){if(K[k]&&k!=='session')store(K[k],o[k]);});toast('Data imported');render('data');}catch(err){toast('Invalid file');}};
+    r.readAsText(f);
+  });
+  $('#dReset',v).addEventListener('click',function(){
+    if(!confirm('Reset OCC demo data? This clears assignments, issues, evidence, messages, payments and checklists in this browser.'))return;
+    Object.keys(K).forEach(function(k){if(k!=='session')localStorage.removeItem(K[k]);});seed();toast('Demo data reset');render('data');
+  });
+}
+
+/* form builders */
+function fld(id,label,type){return '<label class="fld"><span>'+esc(label)+'</span><input id="'+id+'" type="'+(type||'text')+'"></label>';}
+function fldArea(id,label){return '<label class="fld"><span>'+esc(label)+'</span><textarea id="'+id+'"></textarea></label>';}
+function fldSel(id,label,opts){return '<label class="fld"><span>'+esc(label)+'</span><select id="'+id+'">'+opts.map(function(o){return '<option>'+esc(o)+'</option>';}).join('')+'</select></label>';}
+function download(name,text){var a=document.createElement('a');a.href='data:application/octet-stream,'+encodeURIComponent(text);a.download=name;a.click();}
+
+/* ---------- boot ---------- */
+function applyRoleVisibility(){
+  var owner=isOwner();
+  $$('.owner-only').forEach(function(e){e.classList.toggle('hidden',!owner);});
+}
+function startApp(){
+  var s=session();if(!s)return;
+  $('#gate').classList.add('hidden');
+  $('#app').classList.remove('hidden');
+  $('#whoName').textContent=s.name;
+  var rp=$('#whoRole');rp.textContent=s.role==='owner'?'Owner / Admin':'Employee / Verifier';
+  rp.className='pill '+(s.role==='owner'?'s-blue':'s-purple');
+  var a=activeAssignment();$('#whoSite').textContent=(isOnline()?'':'OFFLINE (this device only) · ')+(a?('Site under test: '+a.site):'');
+  buildTabs();show('dashboard');
+}
+
+(function init(){
+  seed();
+  // login gate wiring
+  var role='employee';
+  $$('#roleSeg button').forEach(function(b){b.addEventListener('click',function(){
+    role=b.dataset.role;$$('#roleSeg button').forEach(function(x){x.classList.toggle('on',x===b);});
+  });});
+  function doLogin(){
+    var name=$('#loginName').value, pass=$('#loginPass').value;
+    $('#loginErr').textContent='Signing in...';
+    api('POST','/login',{name:name,role:role,password:pass}).then(function(res){
+      store(K.session,{name:res.user.name,role:res.user.role,title:res.user.title,token:res.token,mode:'online',at:nowISO()});
+      return hydrate().then(function(){$('#loginErr').textContent='';startApp();});
+    }).catch(function(e){
+      if(/HTTP 401|invalid/i.test(e.message||'')){$('#loginErr').textContent='Wrong name or password for this role.';return;}
+      // server unreachable -> offline fallback (placeholder local logins only)
+      if(login(name,pass,role)){var s=load(K.session,{});s.mode='offline';store(K.session,s);$('#loginErr').textContent='';startApp();}
+      else{$('#loginErr').textContent='Cannot reach the server. Check your internet, or use the offline placeholder login.';}
+    });
+  }
+  $('#loginBtn').addEventListener('click',doLogin);
+  $('#loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+  $('#logoutBtn').addEventListener('click',logout);
+  if(session())startApp();
+})();
+</script>
+</body>
+</html>
