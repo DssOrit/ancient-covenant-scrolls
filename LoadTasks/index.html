@@ -46,10 +46,8 @@
         <img src="assets/images/LOAD_TASKS_SPLASH_1080.jpg" alt="Load Tasks™ build validator splash screen" class="splash-art">
       </picture>
       <div class="splash-actions">
-        <button class="primary-action" data-view="dashboard" data-route>Open Dashboard</button>
-        <a class="secondary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#4a9eff,#2d7fe0);color:#04122a;font-weight:800">OCC Login</a>
-        <button class="secondary-action" data-view="intake" data-route>Upload Build</button>
-        <button class="secondary-action" data-view="notes" data-route>Paste Notes</button>
+        <a class="primary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#4a9eff,#2d7fe0);color:#04122a;font-weight:800">OCC Login</a>
+        <button class="secondary-action" data-view="dashboard" data-route>Open Dashboard</button>
       </div>
     </section>
 
@@ -64,7 +62,8 @@
           <span>Build Validator. Repair Tracker. Project Memory.</span>
         </div>
       </div>
-      <nav class="topnav" aria-label="Primary navigation">
+      <button id="menuToggle" type="button" aria-label="Show all tools" onclick="var n=document.querySelector('.topnav'); n.style.display=(n.style.display==='none')?'':'none';" style="flex:0 0 auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:inherit;border-radius:10px;font:inherit;font-weight:700;padding:8px 14px;white-space:nowrap;cursor:pointer">Menu &#9662;</button>
+      <nav class="topnav" aria-label="Primary navigation" style="display:none">
         <input id="nav-search" type="search" placeholder="Find tool..." autocomplete="off" aria-label="Filter navigation">
         <button data-view="dashboard" data-route>Dashboard</button>
         <button data-view="agentlab" data-route>Agent Lab</button>
