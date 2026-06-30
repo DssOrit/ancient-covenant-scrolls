@@ -535,14 +535,21 @@ function isDayAsg(a){return !!(a&&(a.kind==='verify'||a.kind==='recert'));}
 function lastRecertWeek(){var w=0;dayAssignments().forEach(function(a){if(a.kind==='recert'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>w)w=a.week;});return w;}
 function dayHadIssues(a){return load(K.issues,[]).some(function(i){return i.assignment===a.id;});}
 function issueDaysSinceRecert(){var lr=lastRecertWeek(),n=0;dayAssignments().forEach(function(a){if(a.kind==='verify'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>lr&&dayHadIssues(a))n++;});return n;}
-function pendingRecert(){return dayAssignments().filter(function(a){return a.kind==='recert'&&a.status!=='Paid';})[0]||null;}
+function dayApproved(a){return !!(a&&(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid'));}
+function pendingRecert(){return dayAssignments().filter(function(a){return a.kind==='recert'&&!dayApproved(a);})[0]||null;}
 function recertRequired(){return issueDaysSinceRecert()>=2;}
 function gateActive(){return dailyMode()&&recertRequired()&&!pendingRecert();}
 function nextDayWeek(){var w=0;dayAssignments().forEach(function(a){if((a.week||0)>w)w=a.week;});return w+1;}
+/* Payment is weekly: the week's invoice batches every approved day that
+   hasn't been paid yet. Total = $60 x days worked that week (+ any bonus). */
+function approvedUnpaidDays(){return dayAssignments().filter(function(a){return dayApproved(a)&&a.status!=='Paid';});}
+function weeklyTotal(){return approvedUnpaidDays().reduce(function(s,a){return s+(Number(a.pay)||60)+(Number(a.bonus)||0);},0);}
+function weeklyInvoiceReady(){return approvedUnpaidDays().some(function(a){return !a.invoiceSubmitted;});}
+function weeklyInvoiceSubmitted(){var d=approvedUnpaidDays();return d.length>0&&d.every(function(a){return a.invoiceSubmitted;});}
 function activeAssignment(){
   if(dailyMode()){
     var pr=pendingRecert();if(pr)return pr;
-    var nextVerify=dayAssignments().filter(function(a){return a.kind==='verify'&&a.status!=='Paid';})[0];
+    var nextVerify=dayAssignments().filter(function(a){return a.kind==='verify'&&!dayApproved(a);})[0];
     return nextVerify||dayAssignments().filter(function(a){return a.status!=='Paid';})[0]||dayAssignments()[dayAssignments().length-1]||null;
   }
   var site=activeSite();ensureSiteSetup(site);return load(K.assignments,[]).filter(function(x){return x.site===site.url;})[0]||null;
@@ -735,7 +742,7 @@ function submitDay(a){
 function rAssignmentsDaily(v,owner){
   var a=activeAssignment(),days=dayAssignments(),gate=gateActive();
   var html='<h1>Daily Assignments</h1>'+
-    '<p class="muted">Each day is a <b>$60</b> task — verify the day’s area, log issues with a screenshot, the owner approves, then you invoice. After <b>two days</b> of logging issues, a <b>re-verify day</b> is required before any new area unlocks.</p>';
+    '<p class="muted">Each day is a <b>$60</b> task — verify the day’s area, log issues with a screenshot, the owner approves. <b>Pay is weekly</b>: the total is $60 for each day you worked and the owner approved that week (1–3 days). After <b>two days</b> of logging issues, a <b>re-verify day</b> is required before any new area unlocks.</p>';
   if(gate){
     html+='<div class="card tint-red" style="margin:12px 0"><h3>Re-certification required</h3>'+
       '<p class="muted">Two days of issues have been logged. New areas are locked until a re-verify day is done.</p>'+
@@ -748,7 +755,7 @@ function rAssignmentsDaily(v,owner){
       '<div class="kvs"><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>'+(isRecert?'Re-certification day':'Verification day')+'</b></span></div>'+
       '<p style="margin-top:10px"><b>Today:</b> '+esc(a.goal)+'</p>'+
       '<div class="card tint-green" style="margin:12px 0"><h3>What this assignment covers for payment</h3>'+
-        '<p class="muted">A $60 day. To get paid: verify today’s area, log any issues with a screenshot, the owner approves your day, then submit the invoice. Pay releases after approval + invoice.</p></div>'+
+        '<p class="muted">A $60 day. Verify today’s area and log any issues with a screenshot. The owner approves the day only after reviewing your verification — so only verified work is billed. Approved days add to the weekly total, paid at the end of the week.</p></div>'+
       (owner?
         '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+['Not Started','In Progress','Submitted','Needs Retest','Approved','Paid'].map(function(s){return '<option'+(s===a.status?' selected':'')+'>'+s+'</option>';}).join('')+'</select></label>'+
         '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes||'')+'</textarea></label>'+
@@ -756,7 +763,7 @@ function rAssignmentsDaily(v,owner){
        :
         (gate&&!isRecert?'<p class="muted">New areas are locked until the re-verify day is done.</p>':
          (a.status==='Submitted'?'<p class="muted">Submitted — waiting on the owner to approve your day.</p>':
-          ((a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')?'<p class="muted">Approved. Open the Invoice tab to submit your $60 invoice.</p>':
+          ((a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')?'<p class="muted">Approved — this day counts toward this week’s pay. Submit the weekly invoice at the end of the week (Invoice tab).</p>':
            '<button class="btn purple" id="aSubmitDay">Submit this day for review</button>'))))+
     '</div>';
   }
@@ -1251,7 +1258,80 @@ function payFlag(a){
     '<b style="font-size:1.25rem">DO NOT PAY — assignment '+pct+'% complete</b>'+
     '<div style="color:var(--text);margin-top:6px">Still missing: '+esc(miss.join(' · ')||'final approval')+'</div></div>';
 }
+/* ---- Weekly pay (daily mode): batch every owner-approved, unpaid day ---- */
+function weeklyAutoCheck(){
+  var days=approvedUnpaidDays();
+  var evCount=load(K.evidence,[]).length, issCount=load(K.issues,[]).length;
+  var checks=[
+    {label:'Every billed day is owner-approved', ok:days.length>0&&days.every(dayApproved)},
+    {label:'Verification proof recorded (evidence or issues)', ok:(evCount+issCount)>0},
+    {label:'Weekly invoice submitted by the employee', ok:weeklyInvoiceSubmitted()}
+  ];
+  return {checks:checks, pass:days.length>0&&checks.every(function(c){return c.ok;})};
+}
+function submitWeeklyInvoice(){
+  var days=approvedUnpaidDays().filter(function(a){return !a.invoiceSubmitted;});
+  if(!days.length){toast('No approved days to invoice yet.');return;}
+  days.forEach(function(a){a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();saveAssignment(a);});
+  logActivity('Weekly invoice submitted',days.length+' day(s)');
+  toast('Weekly invoice submitted');
+  if(isOnline())Promise.all(days.map(function(a){return api('POST','/assignments/'+a.id+'/invoice');})).then(function(){return hydrate();}).then(function(){render('invoice');}).catch(function(){render('invoice');});
+  else render('invoice');
+}
+function markWeekPaid(){
+  var chk=weeklyAutoCheck();
+  if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — '+f[0]);return;}
+  var days=approvedUnpaidDays();
+  days.forEach(function(a){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();saveAssignment(a);});
+  logActivity('Weekly pay marked paid','$'+weeklyTotalPaid(days)+' · '+days.length+' day(s)');
+  toast('Week marked paid');
+  if(isOnline())Promise.all(days.map(function(a){return api('PATCH','/assignments/'+a.id,{status:'Paid',bonus:a.bonus||0,owner_notes:a.ownerNotes||''});})).then(function(){return hydrate();}).then(function(){render('payment');}).catch(function(){render('payment');});
+  else render('payment');
+}
+function weeklyTotalPaid(days){return days.reduce(function(s,a){return s+(Number(a.pay)||60)+(Number(a.bonus)||0);},0);}
+function rPaymentWeekly(v,owner){
+  var days=approvedUnpaidDays(),total=weeklyTotal(),chk=weeklyAutoCheck();
+  var paidDays=dayAssignments().filter(function(a){return a.status==='Paid';});
+  var html='<h1>Weekly Payment</h1>'+
+    '<div class="card tint-gold"><h3>This week’s total '+statusChip(weeklyInvoiceSubmitted()?'Under Review':'Not Submitted')+'</h3>'+
+      '<div class="kvs"><span>Approved days this week: <b>'+days.length+'</b></span><span>Rate: <b>$60 / day</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
+      '<p class="muted" style="margin-top:8px">Paid weekly. The total is $60 for each day she worked and you approved this week (it can be 1, 2, or 3 days). Days you did not approve are not billed.</p></div>';
+  html+='<div class="card" style="margin:14px 0"><h3>Days in this week’s invoice</h3>';
+  if(!days.length)html+='<p class="muted">No approved days yet. Approve each day in Assignments after reviewing her verification — only approved days are billed.</p>';
+  days.forEach(function(a){html+='<div class="list-item"><b>'+esc(a.title)+'</b> '+statusChip(a.status)+' <span class="chip s-gold">$'+esc(a.pay)+'</span>'+(a.invoiceSubmitted?' <span class="chip s-blue">invoiced</span>':'')+'</div>';});
+  html+='</div>';
+  html+='<div class="card tint-'+(chk.pass?'green':'orange')+'" style="margin:14px 0"><h3>Before you pay '+(chk.pass?'<span class="chip s-green">PASS</span>':'<span class="chip s-orange">NOT READY</span>')+'</h3>'+
+    chk.checks.map(function(c){return '<div class="check" style="border:0;padding:6px 0"><span style="color:'+(c.ok?'var(--green)':'var(--red)')+';font-weight:800">'+(c.ok?'✓':'✗')+'</span><label>'+esc(c.label)+'</label></div>';}).join('')+
+    '<p class="muted">You only pay for days you approved — work you did not verify-approve is never billed.</p></div>';
+  if(owner)html+='<div class="row"><button class="btn '+(chk.pass?'green':'')+'" id="payWeek">Mark week paid ($'+total+')</button></div>';
+  else html+='<div class="card"><p class="muted">'+(weeklyInvoiceSubmitted()?'Weekly invoice submitted — waiting on the owner.':'Submit your weekly invoice (Invoice tab) at the end of the week.')+'</p></div>';
+  if(paidDays.length)html+='<div class="card" style="margin-top:14px"><h3>Already paid</h3>'+paidDays.map(function(a){return '<div class="list-item"><b>'+esc(a.title)+'</b> '+statusChip('Paid')+' <span class="muted">'+fmtDate(a.paidDate)+'</span></div>';}).join('')+'</div>';
+  v.innerHTML=html;
+  if(owner&&$('#payWeek',v))$('#payWeek',v).addEventListener('click',markWeekPaid);
+}
+function rInvoiceWeekly(v,owner){
+  var days=approvedUnpaidDays(),total=weeklyTotal(),sess=session();
+  var lines=['WEEKLY INVOICE — Operations Command Center','====================================',
+    'Worker:      '+(sess?sess.name:''),'Title:       Platform Quality Assurance Specialist',
+    'Rate:        $60 per approved day','Approved days this week: '+days.length,'Total due:   $'+total,''];
+  days.forEach(function(a){lines.push('- '+a.title+'   $'+a.pay+(a.invoiceSubmitted?'  (invoiced)':''));});
+  var inv=lines.join('\n');
+  var html='<h1>Weekly Invoice</h1>'+
+    '<div class="card tint-gold"><div class="kvs"><span>Approved days: <b>'+days.length+'</b></span><span>Rate: <b>$60/day</b></span><span>Total: <b>$'+total+'</b></span></div>'+
+      '<div class="doc" style="margin-top:12px">'+esc(inv)+'</div>'+
+      '<div class="row" style="margin-top:12px"><button class="btn sm" id="invTxt">Export .txt</button><button class="btn sm ghost" id="invPrint">Print</button></div></div>';
+  if(!owner){
+    if(!days.length)html+='<div class="card"><p class="muted">No approved days yet. Finish your days and get them approved — only approved days are billed. Invoice at the end of the week.</p></div>';
+    else if(weeklyInvoiceSubmitted())html+='<div class="card tint-gold"><p style="color:var(--green);font-weight:700">Weekly invoice submitted — waiting on the owner.</p></div>';
+    else html+='<div class="card tint-gold"><h3>Submit weekly invoice</h3><p class="muted">End of week: submit one invoice for all '+days.length+' approved day(s) — $'+total+' total.</p><button class="btn gold" id="invSubmitWeek">Submit weekly invoice ($'+total+')</button></div>';
+  }
+  v.innerHTML=html;
+  $('#invTxt',v).addEventListener('click',function(){download('occ-weekly-invoice.txt',inv);});
+  $('#invPrint',v).addEventListener('click',function(){window.print();});
+  if($('#invSubmitWeek',v))$('#invSubmitWeek',v).addEventListener('click',submitWeeklyInvoice);
+}
 function rPayment(v){
+  if(dailyMode())return rPaymentWeekly(v,isOwner());
   var a=activeAssignment(),owner=isOwner();
   var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
   var pstat = a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':(a.status==='Not Started'?'Not Submitted':'Submitted')));
@@ -1289,6 +1369,7 @@ function rPayment(v){
 
 function invoiceNoFor(a){return a.invoiceNo||('OCC-INV-W'+String(a.week||1).padStart(2,'0')+'-'+String(a.id||'wk1').toUpperCase());}
 function rInvoice(v){
+  if(dailyMode())return rInvoiceWeekly(v,isOwner());
   var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
   if(!a.invoiceNo){a.invoiceNo=invoiceNoFor(a);saveAssignment(a);}
   var inv='INVOICE — Operations Command Center\n'+
@@ -1502,8 +1583,8 @@ var GUIDE=[
   {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (shrunk on your device and stored in your own database — no paid storage, no card; auto-deletes after 48 hours) or just type the file name to keep a permanent text record. The owner can open any uploaded image and save it to send on for a fix.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
   {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
   {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
-  {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
-  {tab:'invoice',    name:'Invoice',        what:'Where you submit your $60 invoice after the owner approves that day’s work.', todo:'Submit once the owner approves your day. Each approved day is its own $60 invoice.'},
+  {tab:'payment',    name:'Payment',        what:'Weekly payment. Shows this week’s total ($60 per approved day) and the auto-check. The owner pays the week here — only approved days are billed.', todo:'You can see exactly why pay is or is not released, and that unverified days are never billed.'},
+  {tab:'invoice',    name:'Invoice',        what:'Your weekly invoice. At the end of the week it totals every day the owner approved ($60 each) into one amount.', todo:'At end of week, submit the weekly invoice for all approved days. Only approved days are billed.'},
   {tab:'documents',  name:'Training',       what:'Your guides and workbooks to read or download.', todo:'Read these when you start a new site.'},
   {tab:'release',    name:'Certification',  what:'Tracks when each Load site is Ready for public. Sites unlock in order: Eco, then Studio, then Play, then AI.', todo:'A site is done only when every section passes and the owner approves. The next site then unlocks on its own.'},
   {tab:'history',    name:'History',        what:'Every past assignment, kept forever. Nothing disappears.', todo:'Look back at finished jobs and their pay any time.'},
@@ -1513,10 +1594,11 @@ var GUIDE=[
 ];
 var PAY_RULES=[
   'Each <b>daily assignment is worth $60</b> — one day’s worth of work, not the whole site at once.',
-  'Do today’s area, then <b>Submit this day for review</b>. The owner approves, you invoice $60, and the next day unlocks.',
+  'Do today’s area, then <b>Submit this day for review</b>. The owner approves it after reviewing your verification, and the next day unlocks.',
+  '<b>You are paid weekly.</b> The week’s total is $60 for each day you worked and the owner approved (it can be 1, 2, or 3 days).',
+  'A day is billed <b>only after the owner approves it</b> — you are never paid for work that was not verified-approved.',
+  'At the <b>end of the week</b>, submit one <b>weekly invoice</b> for all approved days; the owner pays the total after the auto-check passes.',
   'After <b>two days of logging issues</b>, a <b>re-verify day</b> is required before any new area opens — retest the fixes first.',
-  'You can submit an invoice <b>only after the owner approves that day</b>.',
-  'The owner can mark it paid <b>only when the Auto-check passes</b>: day approved, evidence or issues recorded, and the invoice submitted.',
   'Re-verifying after fixes is its own <b>$60 day</b>.'
 ];
 var FAQ=[
@@ -1553,7 +1635,7 @@ function rHowTo(v){
       '<li style="margin-bottom:8px">In <b>Verify Sections</b>, check that area. Mark each part Works or Broken, and add a screenshot as evidence.</li>'+
       '<li style="margin-bottom:8px">Anything broken → log it in <b>Issues</b> (you report, you do not fix).</li>'+
       '<li style="margin-bottom:8px">Back in <b>Assignments</b>, tap <b>Submit this day for review</b>.</li>'+
-      '<li style="margin-bottom:8px">The owner approves → open <b>Invoice</b> and submit your <b>$60</b> invoice.</li>'+
+      '<li style="margin-bottom:8px">The owner approves your day. At the <b>end of the week</b>, open <b>Invoice</b> and submit one <b>weekly invoice</b> for all approved days — the owner pays the total.</li>'+
       '<li style="margin-bottom:0">After <b>two days</b> of logging issues, the site opens a <b>re-verify day</b> ($60) — retest the fixes before any new area unlocks.</li>'+
     '</ol></div>';
   // Evidence in one step
