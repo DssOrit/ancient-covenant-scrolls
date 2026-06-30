@@ -455,7 +455,7 @@ function rDashboard(v){
       card('red','Emergency Alerts','<b style="font-size:1.6rem">'+alerts.length+'</b>')+
     '</div>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
-      card('blue','Messages','<b style="font-size:1.6rem">'+msgs.length+'</b>')+
+      card(a&&pctComplete(a)>=100?'green':'orange','Assignment Complete','<b style="font-size:1.6rem;color:'+(a&&pctComplete(a)>=100?'var(--green)':'var(--orange)')+'">'+(a?pctComplete(a):0)+'%</b><div class="muted">of the $'+(a?a.pay:60)+' assignment</div>')+
       card('gold','Payment Status', a?statusChip(a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':'Not Submitted'))):'—')+
       card('green','Release Readiness', readinessScore()+' / 100')+
     '</div>'+
@@ -771,12 +771,29 @@ function payAutoCheck(a){
   ];
   return {checks:checks, pass:checks.every(function(c){return c.ok;})};
 }
+/* Percent of the $60 assignment actually completed (work done). */
+function pctComplete(a){
+  var vs=siteVerifyStats(a.site),steps=checklistStats();
+  var secPct=vs.total?vs.ok/vs.total:0;
+  var stepPct=steps.total?steps.done/steps.total:0;
+  var apprPct=vs.total?vs.approved/vs.total:0;
+  return Math.round((secPct*0.6 + stepPct*0.3 + apprPct*0.1)*100);
+}
+function payFlag(a){
+  var ac=payAutoCheck(a),pct=pctComplete(a);
+  if(a.status==='Paid') return '<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--green)"><b style="font-size:1.15rem">PAID · 100% complete</b></div>';
+  if(ac.pass && pct>=100) return '<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--green)"><b style="font-size:1.15rem">SAFE TO PAY — assignment '+pct+'% complete</b><div style="color:var(--text);margin-top:4px">All checks passed.</div></div>';
+  var miss=ac.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});
+  return '<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:16px;margin-bottom:14px;color:var(--red)">'+
+    '<b style="font-size:1.25rem">DO NOT PAY — assignment '+pct+'% complete</b>'+
+    '<div style="color:var(--text);margin-top:6px">Still missing: '+esc(miss.join(' · ')||'final approval')+'</div></div>';
+}
 function rPayment(v){
   var a=activeAssignment(),owner=isOwner();
   var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
   var pstat = a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':(a.status==='Not Started'?'Not Submitted':'Submitted')));
   var ac=payAutoCheck(a);
-  v.innerHTML='<h1>Payment Tracker</h1>'+
+  v.innerHTML='<h1>Payment Tracker</h1>'+payFlag(a)+
     '<div class="card tint-gold"><h3>'+esc(a.title)+' '+statusChip(pstat)+'</h3>'+
       '<div class="kvs"><span>Assignment: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
       '<div class="kvs"><span>Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'—')+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
@@ -826,7 +843,9 @@ function rInvoice(v){
     'Approved:    '+(a.approvedDate?fmtDate(a.approvedDate):'—')+'\n'+
     'Paid:        '+(a.paidDate?fmtDate(a.paidDate):'—')+'\n'+
     'Work summary: '+a.goal+'\n';
-  var canSubmitInv=(a.status==='Approved'||a.status==='Payment Due')&&!a.invoiceSubmitted;
+  var invPct=pctComplete(a);
+  var invApproved=(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid');
+  var canSubmitInv=invApproved && invPct>=100 && !a.invoiceSubmitted;
   v.innerHTML='<h1>Invoice Center</h1>'+
     '<div class="card tint-gold"><div class="doc" id="invDoc">'+esc(inv)+'</div>'+
       '<div class="row" style="margin-top:14px">'+
@@ -836,10 +855,14 @@ function rInvoice(v){
         (isOwner()?'<button class="btn green owner-only" id="invPaid">Mark as paid</button>':'')+
       '</div></div>'+
     (!isOwner()?
+      ((invPct>=100
+        ?'<div style="background:rgba(62,207,142,.16);border:1px solid var(--green);border-radius:14px;padding:14px;margin-top:14px;color:var(--green)"><b style="font-size:1.1rem">Assignment '+invPct+'% complete</b></div>'
+        :'<div style="background:rgba(255,92,92,.16);border:1px solid var(--red);border-radius:14px;padding:14px;margin-top:14px;color:var(--red)"><b style="font-size:1.15rem">NOT READY TO INVOICE — '+invPct+'% complete</b><div style="color:var(--text);margin-top:4px">Verify every section (Works + evidence) and finish all steps before you can invoice.</div></div>'))+
       '<div class="card tint-gold" style="margin-top:14px"><h3>Submit invoice for payment</h3>'+
         (a.invoiceSubmitted?'<p style="color:var(--green);font-weight:700">Invoice submitted '+fmtDate(a.invoiceSubmittedDate)+' — waiting on owner.</p>'
-         :(canSubmitInv?'<p class="muted">Your work is approved. Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
-           :'<p class="muted">You can submit your invoice once the owner approves your verified work.</p>'))+
+         :(canSubmitInv?'<p class="muted">Your work is 100% verified and approved. Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
+           :(invPct<100?'<p class="muted">Finish verifying every section first — see the red flag above.</p>'
+             :'<p class="muted">100% done. You can submit your invoice once the owner approves your verified work.</p>')))+
       '</div>':'');
   if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
     a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();store(K.assignments,[a]);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
