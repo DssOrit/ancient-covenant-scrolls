@@ -251,8 +251,8 @@
    USERS array with Supabase/Firebase auth (see FUTURE BACKEND notes below).
    ----------------------------------------- */
 var USERS = [
-  { name:'Witness Bond', role:'employee', title:'Platform Quality Assurance Specialist', pass:'witness-change-me' },
-  { name:'L. Bond',      role:'owner',    title:'Owner / Admin',                         pass:'owner-change-me' }
+  { name:'Employee', role:'employee', title:'Platform Quality Assurance Specialist', pass:'employee-change-me' },
+  { name:'Owner',    role:'owner',    title:'Owner / Admin',                         pass:'owner-change-me' }
 ];
 /* FUTURE BACKEND (do not connect yet):
    - Auth: replace login() with Supabase auth.signInWithPassword().
@@ -291,9 +291,9 @@ function logActivity(action,detail){
 /* ---------- seed data (first run only) ---------- */
 var DAILY_SEED = [
   {day:1,title:'Step 1 — Site Inventory',items:[
-    'Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot',
+    'Open https://loadeco.app on PC (Chrome)','Confirm homepage loads','Take homepage screenshot',
     'List every visible menu','List every visible section','List every visible tile/card',
-    'List every major page discovered','Record notes','Repeat basic access on iPad Safari if available']},
+    'List every major page discovered','Record notes','Repeat basic access on iPad and phone (Safari)']},
   {day:2,title:'Step 2 — Navigation Audit',items:[
     'Click every visible menu item','Click every visible button','Verify destination loads',
     'Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest',
@@ -303,8 +303,8 @@ var DAILY_SEED = [
     'Write what is confusing','Write what instructions are missing','Write what would help a new user',
     'Rate overall clarity 1 to 10']},
   {day:4,title:'Step 4 — Browser & Device Comparison',items:[
-    'Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences',
-    'Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences']},
+    'Test on PC (Chrome)','Test on PC (Opera)','Test on iPad (Safari)','Test on phone (Safari)','Test on phone (Chrome)',
+    'Record layout differences','Record browser-only issues','Record mobile/phone problems','Record desktop problems','Take screenshots of differences']},
   {day:5,title:'Step 5 — Final Report',items:[
     'Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions',
     'Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review']}
@@ -318,7 +318,7 @@ function seed(){
   if(!localStorage.getItem(K.assignments)){
     store(K.assignments,[{
       id:'wk1', title:'Load Eco — Full Section Verification', site:'https://loadeco.app',
-      worker:'Witness Bond', week:1, pay:60, bonus:0,
+      worker:'Employee', week:1, pay:60, bonus:0,
       goal:'Verify that EVERY section of Load Eco actually works before it goes public. List every section, test each one, mark it Works or Broken, and attach evidence (screenshot + note) for each. The site is not ready for sale until every section is verified Working and the owner approves.',
       status:'Not Started', submittedDate:'', approvedDate:'', paidDate:'', ownerNotes:''
     }]);
@@ -415,7 +415,7 @@ function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)r
 function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
 function nextSite(){var a=activeSite();for(var i=0;i<SITES.length;i++){if(SITES[i].url===a.url)return SITES[i+1]||null;}return null;}
 function saveAssignment(a){var as=load(K.assignments,[]);var idx=-1;for(var i=0;i<as.length;i++){if(as[i].site===a.site){idx=i;break;}}if(idx>=0)as[idx]=a;else as.push(a);store(K.assignments,as);}
-function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Witness Bond',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
+function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Employee',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
 function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
 function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
 function isACRBlocked(s){return s.status==='ACR / Blocked';}
@@ -519,13 +519,27 @@ function show(id){
    days where issues were logged, a re-certification day is required before
    any new area unlocks. Until day assignments exist, the app behaves exactly
    as before (whole-site assignment), so nothing live breaks. */
+/* Each day = a balanced checklist (~8-10 items). The day cannot be submitted
+   until every item is verified with evidence, so the workload truly equals
+   a full day's pay. Each item is tested on PC and iPad. */
 var DAY_PLAN = {
   'https://loadeco.app': [
-    {title:'Day 1 — Top bar & Front page', goal:'Verify the top bar (themes, word size, reset) and the Front page (tutorial, tool tiles). Mark each Works or Broken with a screenshot.'},
-    {title:'Day 2 — Help/FAQ & Import', goal:'Verify the Help/FAQ page and the Import a file page. Mark each Works or Broken with a screenshot.'},
-    {title:'Day 3 — Workspace & Create new', goal:'Verify the Workspace popup (file tree, live preview) and the Create new page. Mark each Works or Broken with a screenshot.'},
-    {title:'Day 4 — Library', goal:'Verify the Library page: uploads, covers, webapps. Flag any link that routes into ACR as ACR / Blocked. Mark each Works or Broken with a screenshot.'},
-    {title:'Day 5 — EPUB reader & Edit video', goal:'Verify the EPUB/webapp reader and the Edit video page. Mark each Works or Broken with a screenshot.'}
+    {title:'Day 1 — Top bar & Front page', items:[
+      'Top bar — Aa theme switcher','Top bar — A− decrease text','Top bar — A+ increase text','Top bar — Reset word size',
+      'Front page — Tutorial','Front page — Image prompt','Front page — Video to audio','Front page — Handoff tools',
+      'Front page — Style library','Front page — Image upscaler','Front page — Face Restore']},
+    {title:'Day 2 — Help/FAQ & Import', items:[
+      'Help/FAQ — main page','Help/FAQ — "I pressed the wrong button"','Help/FAQ — "Can each item have its own look"','Help/FAQ — "Install Load as a real app"',
+      'Library — Ask AI about this','Import — Import a PWA','Import — Media','Import — Edit video entry']},
+    {title:'Day 3 — Workspace & Create new', items:[
+      'Workspace — open from Library','Workspace — File tree','Workspace — Live preview','Workspace — line-6 tools',
+      'Create new — PWA Reader Book template','Create new — other templates','Create new — start a blank file','Workspace — access points']},
+    {title:'Day 4 — Library uploads', items:[
+      'Library — upload audio','Library — upload video','Library — upload PDF','Library — upload images',
+      'Library — HTML cover editing','Library — webapp upload (iPad)','Library — editing words in webapp','Library — tool icons on HTML/webapp','Library — Book check button']},
+    {title:'Day 5 — Reader & Edit video', items:[
+      'Reader — EPUB formatting','Reader — EPUB table of contents','Reader — EPUB navigation','Reader — viewer frame status',
+      'Edit video — speed up / slow down','Edit video — trim / cut','Edit video — export','Edit video — audio']}
   ]
 };
 function dayPlanFor(url){return DAY_PLAN[url]||[];}
@@ -535,6 +549,13 @@ function isDayAsg(a){return !!(a&&(a.kind==='verify'||a.kind==='recert'));}
 function lastRecertWeek(){var w=0;dayAssignments().forEach(function(a){if(a.kind==='recert'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>w)w=a.week;});return w;}
 function dayHadIssues(a){return load(K.issues,[]).some(function(i){return i.assignment===a.id;});}
 function issueDaysSinceRecert(){var lr=lastRecertWeek(),n=0;dayAssignments().forEach(function(a){if(a.kind==='verify'&&(a.status==='Approved'||a.status==='Paid')&&(a.week||0)>lr&&dayHadIssues(a))n++;});return n;}
+/* Workload sizing: each checklist item is tested on PC, iPad and phone
+   across Safari, Chrome and Opera, with screenshots and write-up — about
+   45 minutes. So 8 items ~= 6 hrs and 10 items ~= 7.5 hrs for the $60 day. */
+var MIN_PER_ITEM=45;
+var TEST_DEVICES='PC, iPad and phone';
+var TEST_BROWSERS='Safari, Chrome and Opera';
+function fmtHours(mins){return (Math.round((mins/60)*10)/10)+' hrs';}
 function dayApproved(a){return !!(a&&(a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid'));}
 function pendingRecert(){return dayAssignments().filter(function(a){return a.kind==='recert'&&!dayApproved(a);})[0]||null;}
 function recertRequired(){return issueDaysSinceRecert()>=2;}
@@ -714,20 +735,37 @@ function rAssignments(v){
 function createDayAssignment(o){
   var as=load(K.assignments,[]);
   if(as.some(function(x){return x.id===o.id;}))return false;
-  as.push({id:o.id,title:o.title,site:o.site,worker:'Witness Bond',week:o.week,pay:60,bonus:0,goal:o.goal,status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false,kind:o.kind,scope:o.scope||''});
+  as.push({id:o.id,title:o.title,site:o.site,worker:'Employee',week:o.week,pay:60,bonus:0,goal:o.goal,status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false,kind:o.kind,scope:o.scope||''});
   store(K.assignments,as);
   if(isOnline())api('POST','/assignments',{id:o.id,title:o.title,site:o.site,week:o.week,pay:60,goal:o.goal,kind:o.kind,scope:o.scope||''}).catch(function(){});
   return true;
+}
+function createDaySections(siteUrl,items){
+  var secs=load(K.sections,[]);
+  var existing=secs.filter(function(s){return s.site===siteUrl;}).map(function(s){return s.name;});
+  var add=items.filter(function(n){return existing.indexOf(n)<0;});
+  add.forEach(function(n,i){secs.push({id:'sec_d'+Date.now()+'_'+(secs.length+i),site:siteUrl,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});
+  store(K.sections,secs);
+  if(isOnline())add.forEach(function(n){api('POST','/sections',{site:siteUrl,name:n}).catch(function(){});});
 }
 function setupDailyAssignments(){
   var site=activeSite(),plan=dayPlanFor(site.url);
   if(!plan.length){toast('No day plan for this site yet.');return;}
   var slug=site.url.replace(/[^a-z0-9]+/gi,'').slice(-8),made=0;
-  plan.forEach(function(d,i){if(createDayAssignment({id:'day_'+slug+'_'+(i+1),title:d.title,site:site.url,week:i+1,goal:d.goal,kind:'verify'}))made++;});
+  plan.forEach(function(d,i){
+    var items=d.items||[];
+    var goal='Verify all '+items.length+' items on today’s checklist, on PC and iPad. Mark each Works or Broken with a screenshot. The day cannot be submitted until every item is done.';
+    if(createDayAssignment({id:'day_'+slug+'_'+(i+1),title:d.title,site:site.url,week:i+1,goal:goal,kind:'verify',scope:JSON.stringify(items)}))made++;
+    createDaySections(site.url,items);
+  });
   logActivity('Daily assignments set up',site.name);
   toast(made?('Created '+made+' daily $60 assignments'):'Already set up');
   if(isOnline())hydrate().then(function(){render('assignments');}).catch(function(){render('assignments');});else render('assignments');
 }
+function asgScope(a){try{return a&&a.scope?JSON.parse(a.scope):[];}catch(e){return [];}}
+function daySections(a){var sc=asgScope(a);if(!sc.length)return siteSections(a.site);return siteSections(a.site).filter(function(s){return sc.indexOf(s.name)>=0;});}
+function dayItemStatus(a){var rows=daySections(a);var done=rows.filter(function(s){return s.status==='Broken'||s.status==='ACR / Blocked'||sectionVerified(s);}).length;return {done:done,total:rows.length};}
+function dayComplete(a){var st=dayItemStatus(a);return st.total>0&&st.done===st.total;}
 function addReverifyDay(){
   var site=activeSite(),w=nextDayWeek();
   createDayAssignment({id:'recert_'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+w,title:'Re-certification (Day '+w+') — retest fixes',site:site.url,week:w,kind:'recert',
@@ -736,6 +774,10 @@ function addReverifyDay(){
   if(isOnline())hydrate().then(function(){render('assignments');}).catch(function(){render('assignments');});else render('assignments');
 }
 function submitDay(a){
+  if(a.kind==='verify'){
+    var st=dayItemStatus(a);
+    if(st.total>0&&st.done<st.total){toast((st.total-st.done)+' of '+st.total+' checklist items still need verifying with evidence — finish the full day before submitting.');return;}
+  }
   a.status='Submitted';a.submittedDate=nowISO();saveAssignment(a);logActivity('Day submitted for review',a.title);
   toast('Submitted for review');render('assignments');sync(function(){return api('POST','/assignments/'+a.id+'/submit');},'assignments');
 }
@@ -750,12 +792,17 @@ function rAssignmentsDaily(v,owner){
   }
   if(a){
     var isRecert=a.kind==='recert';
+    var ds=dayItemStatus(a);
     html+='<div class="card tint-'+(isRecert?'orange':'purple')+'" style="margin:12px 0">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
-      '<div class="kvs"><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>'+(isRecert?'Re-certification day':'Verification day')+'</b></span></div>'+
+      '<div class="kvs"><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>'+(isRecert?'Re-certification day':'Verification day')+'</b></span><span>Checklist: <b>'+ds.done+' / '+ds.total+'</b> items</span></div>'+
       '<p style="margin-top:10px"><b>Today:</b> '+esc(a.goal)+'</p>'+
+      '<div class="card tint-blue" style="margin:12px 0"><h3>Today’s checklist — '+ds.done+' / '+ds.total+' verified</h3>'+
+        '<div class="progress"><i style="width:'+(ds.total?Math.round(ds.done/ds.total*100):0)+'%"></i></div>'+
+        '<p class="muted" style="margin-top:8px">A full day = verifying every item on this list (Works or Broken, each with a screenshot). You cannot submit the day until all '+ds.total+' are done — so the workload always matches the $60.</p>'+
+        '<button class="card tint-purple" data-go="verify" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-top:8px;display:block"><b>Open Verify Sections &rarr;</b></button></div>'+
       '<div class="card tint-green" style="margin:12px 0"><h3>What this assignment covers for payment</h3>'+
-        '<p class="muted">A $60 day. Verify today’s area and log any issues with a screenshot. The owner approves the day only after reviewing your verification — so only verified work is billed. Approved days add to the weekly total, paid at the end of the week.</p></div>'+
+        '<p class="muted">A $60 day = all '+ds.total+' checklist items verified with evidence. The owner approves only after reviewing them — so only verified work is billed. Approved days add to the weekly total, paid at the end of the week.</p></div>'+
       (owner?
         '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+['Not Started','In Progress','Submitted','Needs Retest','Approved','Paid'].map(function(s){return '<option'+(s===a.status?' selected':'')+'>'+s+'</option>';}).join('')+'</select></label>'+
         '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes||'')+'</textarea></label>'+
@@ -764,7 +811,7 @@ function rAssignmentsDaily(v,owner){
         (gate&&!isRecert?'<p class="muted">New areas are locked until the re-verify day is done.</p>':
          (a.status==='Submitted'?'<p class="muted">Submitted — waiting on the owner to approve your day.</p>':
           ((a.status==='Approved'||a.status==='Payment Due'||a.status==='Paid')?'<p class="muted">Approved — this day counts toward this week’s pay. Submit the weekly invoice at the end of the week (Invoice tab).</p>':
-           '<button class="btn purple" id="aSubmitDay">Submit this day for review</button>'))))+
+           ('<button class="btn purple" id="aSubmitDay">Submit this day for review</button>'+(ds.total&&ds.done<ds.total?'<p class="muted" style="margin-top:6px">'+(ds.total-ds.done)+' of '+ds.total+' items still to verify.</p>':''))))))+
     '</div>';
   }
   html+='<div class="card"><h3>Day plan ('+days.length+')</h3>';
@@ -783,6 +830,7 @@ function rAssignmentsDaily(v,owner){
   if($('#aSubmitDay',v))$('#aSubmitDay',v).addEventListener('click',function(){submitDay(a);});
   if($('#aAddRecert',v))$('#aAddRecert',v).addEventListener('click',addReverifyDay);
   if($('#aAddRecert2',v))$('#aAddRecert2',v).addEventListener('click',addReverifyDay);
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
 }
 
 function rDaily(v){
@@ -812,14 +860,21 @@ function rDaily(v){
 
 function rVerify(v){
   var site=activeSite(),owner=isOwner();
-  var rows=siteSections(site.url),st=siteVerifyStats(site.url);
+  var dm=dailyMode(), dayA=dm?activeAssignment():null;
+  var rows=(dm&&dayA)?daySections(dayA):siteSections(site.url),st=siteVerifyStats(site.url);
   var pct=st.total?Math.round(st.ok/st.total*100):0;
   var ready=st.total>0 && st.ok===st.total && st.approved===st.total;
   var html='<h1>Verify Sections</h1>'+
-    '<p class="muted">Check that <b>every section, button, and link</b> of '+esc(site.name)+' actually works before it goes public. Mark each Works or Broken and attach evidence. You <b>verify and report</b> — you do not fix. Broken ones become Issues for the owner to fix, then you retest. No evidence = not verified.</p>'+
+    '<p class="muted">Test <b>every item</b> on this list on <b>'+TEST_DEVICES+'</b>, across <b>'+TEST_BROWSERS+'</b>. Mark each Works or Broken and attach a screenshot. You <b>verify and report</b> — you do not fix. Broken ones become Issues for the owner. No evidence = not verified.</p>'+
     '<div class="card tint-red" style="margin-bottom:14px"><h3>If a link routes into ACR — stop</h3>'+
-      '<p class="muted">ACR sites (ACR Reader, ACR2, ACR Solar) are <b>off limits</b>. If a button or link sends you into an ACR site, set that section to <b>ACR / Blocked</b>. Do <b>not</b> test-fix it, follow it as in-scope, or link it. It is set aside for the owner’s explicit approval. ACR / Blocked items are never counted as bugs and never auto-certify the site.</p></div>'+
-    '<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.acr?'Blocked':(st.broken?'Needs Fixes':'In Testing')))+'</h3>'+
+      '<p class="muted">ACR sites (ACR Reader, ACR2, ACR Solar) are <b>off limits</b>. If a button or link sends you into an ACR site, set that section to <b>ACR / Blocked</b>. Do <b>not</b> test-fix it, follow it as in-scope, or link it. It is set aside for the owner’s explicit approval. ACR / Blocked items are never counted as bugs and never auto-certify the site.</p></div>';
+  if(dm&&dayA){
+    var ds=dayItemStatus(dayA), mins=ds.total*MIN_PER_ITEM;
+    html+='<div class="card tint-purple" style="margin-bottom:14px"><h3>'+esc(dayA.title)+' — '+ds.done+' / '+ds.total+' verified</h3>'+
+      '<div class="progress"><i style="width:'+(ds.total?Math.round(ds.done/ds.total*100):0)+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">Verify every item below on <b>'+TEST_DEVICES+'</b> across <b>'+TEST_BROWSERS+'</b> — about '+MIN_PER_ITEM+' min each, roughly <b>'+fmtHours(mins)+'</b> for this $60 day. You cannot submit the day until all '+ds.total+' are done.</p></div>';
+  } else {
+    html+='<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.acr?'Blocked':(st.broken?'Needs Fixes':'In Testing')))+'</h3>'+
       '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
       '<p class="muted" style="margin-top:8px">Verified working: <b>'+st.ok+' / '+st.total+'</b>'+(st.broken?(' · Broken: <b>'+st.broken+'</b>'):'')+(st.acr?(' · ACR / blocked: <b>'+st.acr+'</b>'):'')+' · Owner-approved: <b>'+st.approved+' / '+st.total+'</b></p>'+
       (st.acr?'<p style="color:var(--red);font-weight:700;margin-top:6px">'+st.acr+' section(s) route into ACR (off limits). Cannot be certified or auto-linked without the owner’s explicit approval.</p>':'')+
@@ -827,14 +882,15 @@ function rVerify(v){
     '</div>'+
     '<div class="card" style="margin-bottom:14px"><h3>Add a section</h3>'+
       '<div class="row"><input id="secNew" type="text" placeholder="Section name (e.g. Homepage, Cart, Login)"><button class="btn green" id="secAdd" style="flex:0 0 auto">Add</button></div></div>';
-  var siteLabel=site.name.replace(' / Main Load','');
-  var starterMissing=starterSectionsFor(site.url).filter(function(n){return rows.map(function(r){return r.name;}).indexOf(n)<0;});
-  if(starterMissing.length){
-    html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Quick setup for '+esc(siteLabel)+'</h3>'+
-      '<p class="muted">Add the main areas of '+esc(siteLabel)+' in one tap so you can verify each one. ('+starterMissing.length+' to add.) You can still add or delete sections after.</p>'+
-      '<button class="btn blue" id="secStarter">Add '+esc(siteLabel)+' starter sections</button></div>';
+    var siteLabel=site.name.replace(' / Main Load','');
+    var starterMissing=starterSectionsFor(site.url).filter(function(n){return rows.map(function(r){return r.name;}).indexOf(n)<0;});
+    if(starterMissing.length){
+      html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Quick setup for '+esc(siteLabel)+'</h3>'+
+        '<p class="muted">Add the main areas of '+esc(siteLabel)+' in one tap so you can verify each one. ('+starterMissing.length+' to add.) You can still add or delete sections after.</p>'+
+        '<button class="btn blue" id="secStarter">Add '+esc(siteLabel)+' starter sections</button></div>';
+    }
   }
-  if(!rows.length) html+='<p class="muted">No sections yet. Add each section of the site above.</p>';
+  if(!rows.length) html+='<p class="muted">No items yet.</p>';
   rows.forEach(function(s){
     var stColor=s.status==='Works'?'s-green':(s.status==='Broken'?'s-red':'s-gray');
     html+='<div class="card" style="margin-bottom:10px"><h3 style="margin-bottom:8px">'+esc(s.name)+' '+
@@ -848,12 +904,14 @@ function rVerify(v){
         '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div></div>';
   });
   v.innerHTML=html;
-  // replace this site's rows in the global store, keeping other sites' rows
+  // merge updated rows by id into the global store (safe when rows is a day subset)
   function persist(updated){
-    var others=load(K.sections,[]).filter(function(x){return x.site!==site.url;});
-    store(K.sections,others.concat(updated));
+    var all=load(K.sections,[]);var map={};updated.forEach(function(u){map[u.id]=u;});
+    var merged=all.map(function(s){return map[s.id]||s;});
+    updated.forEach(function(u){if(!all.some(function(s){return s.id===u.id;}))merged.push(u);});
+    store(K.sections,merged);
   }
-  $('#secAdd',v).addEventListener('click',function(){
+  if($('#secAdd',v))$('#secAdd',v).addEventListener('click',function(){
     var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
     rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
     persist(rows);toast('Section added');render('verify');sync(function(){return api('POST','/sections',{site:site.url,name:n});},'verify');
@@ -929,8 +987,8 @@ function rIssues(v){
   v.innerHTML='<h1>Issue Report System</h1>'+
     '<div class="card tint-orange" style="margin-bottom:14px"><h3>New Issue</h3>'+
       fld('iTitle','Issue title','text')+fld('iPage','Page / section','text')+
-      '<div class="grid c2">'+fldSel('iSite','Site',SITES.map(function(s){return s.name;}))+fld('iBrowser','Browser','text')+'</div>'+
-      '<div class="grid c2">'+fld('iDevice','Device','text')+fldSel('iSev','Severity',['Critical','Major','Minor'])+'</div>'+
+      '<div class="grid c2">'+fldSel('iSite','Site',SITES.map(function(s){return s.name;}))+fldSel('iBrowser','Browser',['Safari','Chrome','Opera'])+'</div>'+
+      '<div class="grid c2">'+fldSel('iDevice','Device',['PC','iPad','Phone'])+fldSel('iSev','Severity',['Critical','Major','Minor'])+'</div>'+
       fldArea('iSteps','Steps taken')+fldArea('iExp','Expected result')+fldArea('iAct','Actual result')+
       fld('iShot','Screenshot / video reference','text')+fldArea('iNotes','Notes')+
       '<button class="btn gold" id="iSave">Save issue</button></div>'+
@@ -1179,7 +1237,7 @@ function rMessages(v){
   var msgs=load(K.messages,[]),sess=session(),owner=isOwner();
   v.innerHTML='<h1>Communication Center</h1>'+
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Send Message</h3>'+
-      '<p class="muted">To: <b>'+(owner?'Witness Bond (Employee)':'L. Bond (Owner)')+'</b></p>'+
+      '<p class="muted">To: <b>'+(owner?'Employee / Verifier':'Owner / Admin')+'</b></p>'+
       fldSel('mPriority','Priority',['normal','important','urgent'])+
       fldArea('mBody','Message')+
       '<div class="row"><button class="btn blue" id="mSend">Send</button><button class="btn red" id="mHelp">Need Help</button></div></div>'+
@@ -1187,9 +1245,9 @@ function rMessages(v){
   function send(body,priority){
     if(!body.trim()){toast('Type a message');return;}
     msgs.unshift({id:'m_'+Date.now(),sender:sess.name,senderRole:sess.role,
-      recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',
+      recipient:owner?'employee':'owner',priority:priority,assignment:(activeAssignment()||{}).title||'',
       body:body,at:nowISO()});
-    store(K.messages,msgs);sync(function(){return api('POST','/messages',{recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',body:body});},'messages');toast('Message sent');render('messages');
+    store(K.messages,msgs);sync(function(){return api('POST','/messages',{recipient:owner?'employee':'owner',priority:priority,assignment:(activeAssignment()||{}).title||'',body:body});},'messages');toast('Message sent');render('messages');
   }
   $('#mSend',v).addEventListener('click',function(){send($('#mBody',v).value,$('#mPriority',v).value);});
   $('#mHelp',v).addEventListener('click',function(){send('NEED HELP: '+($('#mBody',v).value||'Please assist.'),'urgent');});
@@ -1466,21 +1524,21 @@ var DOCS={
     'DAY 3 — First-Time User Review\n'+
     'Pretend you are brand new. Is the next step clear? Rate clarity 1–10.\n\n'+
     'DAY 4 — Browser & Device Comparison\n'+
-    'Test Chrome, Edge, and iPad Safari. Record differences.\n\n'+
+    'Test on PC, iPad, and phone, across Safari, Chrome, and Opera. Record differences.\n\n'+
     'DAY 5 — Final Report\n'+
     'Submit inventory, issue list, browser comparison, top 10 improvements,\n'+
     'and a release-readiness score. Then mark it ready for owner review.',
 
-  'Windows Setup Guide':
+  'Computer Setup Guide':
     'WHAT YOU NEED\n'+
-    'A Windows computer with Google Chrome and Microsoft Edge.\n\n'+
+    'A computer with Google Chrome and Opera.\n\n'+
     'STEPS\n'+
     '1. Open Chrome. Go to https://loadeco.app.\n'+
     '2. Wait for the page to fully load.\n'+
-    '3. Take a screenshot (Windows key + Shift + S).\n'+
+    '3. Take a screenshot.\n'+
     '4. Click every menu item and button. Note what works and what breaks.\n'+
-    '5. Now open Edge and do the same.\n'+
-    '6. Write down anything that looks different between Chrome and Edge.\n\n'+
+    '5. Now open Opera and do the same.\n'+
+    '6. Write down anything that looks different between Chrome and Opera.\n\n'+
     'SAVING SCREENSHOTS\n'+
     'Save them in one folder. Name them clearly, e.g. "day2-broken-menu.png".\n'+
     'Then list the file names in the Evidence section of OCC.',
@@ -1630,9 +1688,10 @@ function rHowTo(v){
 
   // How a day works (daily $60 model)
   html+='<div class="card tint-purple" style="margin:14px 0"><h3>How a day works</h3>'+
+    '<p class="muted" style="margin:0 0 8px">A day is a checklist of about 8–10 items. Each item is tested on <b>PC, iPad and phone</b> across <b>Safari, Chrome and Opera</b>, with screenshots — about <b>45 minutes each</b>, so a day is roughly <b>6–7 hours</b> for the $60.</p>'+
     '<ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
-      '<li style="margin-bottom:8px">Open <b>Assignments</b> — it shows today’s area and that it pays <b>$60</b>.</li>'+
-      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, check that area. Mark each part Works or Broken, and add a screenshot as evidence.</li>'+
+      '<li style="margin-bottom:8px">Open <b>Assignments</b> — it shows today’s checklist, the estimated hours, and that it pays <b>$60</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, work the checklist. For each item, test PC + iPad + phone across Safari, Chrome and Opera, mark it Works or Broken, and add a screenshot. You cannot submit until every item is done.</li>'+
       '<li style="margin-bottom:8px">Anything broken → log it in <b>Issues</b> (you report, you do not fix).</li>'+
       '<li style="margin-bottom:8px">Back in <b>Assignments</b>, tap <b>Submit this day for review</b>.</li>'+
       '<li style="margin-bottom:8px">The owner approves your day. At the <b>end of the week</b>, open <b>Invoice</b> and submit one <b>weekly invoice</b> for all approved days — the owner pays the total.</li>'+
