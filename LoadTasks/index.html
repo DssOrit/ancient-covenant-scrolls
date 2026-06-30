@@ -64,8 +64,9 @@
           <span>Build Validator. Repair Tracker. Project Memory.</span>
         </div>
       </div>
-      <button id="menuToggle" type="button" aria-label="Show all tools" onclick="var n=document.querySelector('.topnav'); n.style.display=(n.style.display==='none')?'':'none';" style="flex:0 0 auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:inherit;border-radius:10px;font:inherit;font-weight:700;padding:8px 14px;white-space:nowrap;cursor:pointer">Menu &#9662;</button>
-      <nav class="topnav" aria-label="Primary navigation" style="display:none">
+      <button id="menuToggle" type="button" aria-label="Open menu" onclick="document.querySelector('.topnav').classList.add('open');document.getElementById('navBackdrop').classList.add('open');" style="flex:0 0 auto;white-space:nowrap;cursor:pointer">Menu &#9776;</button>
+      <nav class="topnav" aria-label="Primary navigation">
+        <button type="button" class="nav-close" aria-label="Close menu" onclick="document.querySelector('.topnav').classList.remove('open');document.getElementById('navBackdrop').classList.remove('open');">&times;</button>
         <input id="nav-search" type="search" placeholder="Find tool..." autocomplete="off" aria-label="Filter navigation">
         <button data-view="dashboard" data-route>Dashboard</button>
         <button data-view="agentlab" data-route>Agent Lab</button>
@@ -259,6 +260,18 @@
         <span class="nav-group-sep">Internal</span>
         <a class="occ-internal-link" href="occ.html" style="display:inline-block;padding:8px 16px;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);border-radius:10px;color:#ffe07a;text-decoration:none;font-weight:800">OCC Login</a>
       </nav>
+      <div id="navBackdrop" class="nav-backdrop" aria-hidden="true"></div>
+      <script>
+        (function(){
+          var nav=document.querySelector('.topnav');
+          var bd=document.getElementById('navBackdrop');
+          if(!nav||!bd)return;
+          function close(){nav.classList.remove('open');bd.classList.remove('open');}
+          bd.addEventListener('click',close);
+          nav.addEventListener('click',function(e){if(e.target.closest('[data-route]'))close();});
+          document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+        })();
+      </script>
       <a class="occ-login-header" href="occ.html" aria-label="Open OCC login" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;margin-right:8px;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);border-radius:10px;color:#ffe07a;text-decoration:none;font-weight:800;white-space:nowrap;flex:0 0 auto">OCC Login</a>
       <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
         <span class="icon-mini" data-icon="refresh"></span>
