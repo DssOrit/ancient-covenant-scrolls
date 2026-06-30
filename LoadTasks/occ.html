@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>OCC — Operations Command Center</title>
+<!--
+  OCC — Operations Command Center (Load Tasks internal module)
+  Private employee operations / verification / payment system.
+  ADDITIVE MODULE: this is a standalone page. It does not modify any
+  existing Load Tasks file other than a single nav link in index.html.
+  Data is localStorage-only for MVP. No backend, no cloud upload yet.
+  See the "Future backend" comments near the JS credential block for
+  Supabase migration notes.
+-->
+<style>
+  :root{
+    --bg:#0e1016; --bg2:#13161f; --card:rgba(30,34,46,.62); --card2:rgba(40,45,60,.5);
+    --line:rgba(150,160,190,.16); --text:#eef1f8; --muted:#9aa3b8;
+    --blue:#4a9eff; --purple:#9b6dff; --green:#3ecf8e; --orange:#ff9f43;
+    --red:#ff5c5c; --gold:#ffd166; --gray:#6b7280;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, rgba(75,110,255,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(155,109,255,.10), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    font-size:17px; line-height:1.55; letter-spacing:.01em;
+    -webkit-text-size-adjust:100%;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  h1,h2,h3{font-weight:700;line-height:1.25;margin:0 0 .4em}
+  h1{font-size:1.5rem} h2{font-size:1.25rem} h3{font-size:1.06rem}
+  p{margin:0 0 .8em} a{color:var(--blue)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px 64px}
+  .muted{color:var(--muted)}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .grid{display:grid;gap:14px}
+  @media(min-width:720px){.grid.c2{grid-template-columns:1fr 1fr}.grid.c3{grid-template-columns:1fr 1fr 1fr}}
+
+  /* Top bar */
+  .occ-top{
+    position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg,rgba(14,16,22,.96),rgba(14,16,22,.86));
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+    padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  }
+  .occ-top .bar{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+  .logo .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-weight:800}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+  .who{margin-left:auto;text-align:right;font-size:.86rem;line-height:1.3}
+  .who b{font-weight:700}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.02em}
+
+  /* Tabs */
+  .tabs{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 0 2px;max-width:1080px;margin:0 auto}
+  .tabs button{
+    flex:0 0 auto;border:1px solid var(--line);background:var(--card2);color:var(--text);
+    padding:9px 14px;border-radius:12px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap;
+  }
+  .tabs button .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+  .tabs button.active{border-color:transparent;box-shadow:0 0 0 1.5px currentColor inset;color:#fff}
+  .tabs button[data-c=blue].active{background:rgba(74,158,255,.18);color:var(--blue)}
+  .tabs button[data-c=purple].active{background:rgba(155,109,255,.18);color:var(--purple)}
+  .tabs button[data-c=green].active{background:rgba(62,207,142,.18);color:var(--green)}
+  .tabs button[data-c=orange].active{background:rgba(255,159,67,.18);color:var(--orange)}
+  .tabs button[data-c=red].active{background:rgba(255,92,92,.18);color:var(--red)}
+  .tabs button[data-c=gold].active{background:rgba(255,209,102,.18);color:var(--gold)}
+  .tabs button[data-c=gray].active{background:rgba(107,114,128,.22);color:#c2c8d6}
+
+  /* Cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.28)}
+  .card.tint-blue{border-left:4px solid var(--blue)}
+  .card.tint-purple{border-left:4px solid var(--purple)}
+  .card.tint-green{border-left:4px solid var(--green)}
+  .card.tint-orange{border-left:4px solid var(--orange)}
+  .card.tint-red{border-left:4px solid var(--red)}
+  .card.tint-gold{border-left:4px solid var(--gold)}
+  .card.tint-gray{border-left:4px solid var(--gray)}
+  .card h3{display:flex;align-items:center;gap:9px}
+
+  /* Status chips */
+  .chip{display:inline-block;padding:4px 11px;border-radius:999px;font-size:.78rem;font-weight:700}
+  .s-green{background:rgba(62,207,142,.16);color:var(--green)}
+  .s-orange{background:rgba(255,159,67,.16);color:var(--orange)}
+  .s-red{background:rgba(255,92,92,.16);color:var(--red)}
+  .s-blue{background:rgba(74,158,255,.16);color:var(--blue)}
+  .s-purple{background:rgba(155,109,255,.16);color:var(--purple)}
+  .s-gold{background:rgba(255,209,102,.16);color:var(--gold)}
+  .s-gray{background:rgba(107,114,128,.2);color:#c2c8d6}
+
+  /* Forms */
+  label.fld{display:block;margin:0 0 12px;font-weight:600}
+  label.fld span{display:block;margin-bottom:5px;font-size:.92rem;color:var(--muted);font-weight:600}
+  input,select,textarea{
+    width:100%;background:#10131c;border:1px solid var(--line);border-radius:11px;color:var(--text);
+    font:inherit;font-size:1rem;padding:12px 13px;
+  }
+  textarea{min-height:84px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card2);
+    color:var(--text);font:inherit;font-weight:700;padding:12px 18px;border-radius:12px;cursor:pointer}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.blue{background:var(--blue);border-color:transparent;color:#06122a}
+  .btn.purple{background:var(--purple);border-color:transparent;color:#180a33}
+  .btn.green{background:var(--green);border-color:transparent;color:#04231a}
+  .btn.gold{background:var(--gold);border-color:transparent;color:#2a2200}
+  .btn.red{background:var(--red);border-color:transparent;color:#2a0707}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:8px 13px;font-size:.86rem}
+
+  /* Checklist */
+  .check{display:flex;align-items:flex-start;gap:13px;padding:12px 4px;border-bottom:1px solid var(--line)}
+  .check:last-child{border-bottom:0}
+  .check input{width:26px;height:26px;flex:0 0 auto;margin-top:1px;accent-color:var(--green)}
+  .check label{font-weight:600;cursor:pointer}
+  .progress{height:12px;border-radius:999px;background:#10131c;overflow:hidden;border:1px solid var(--line)}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#8be3bd);width:0;transition:width .3s}
+
+  .list-item{padding:13px 0;border-bottom:1px solid var(--line)}
+  .list-item:last-child{border-bottom:0}
+  .kvs{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:.86rem;margin-top:4px}
+  .hidden{display:none!important}
+  .view{display:none}
+  .view.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* Emergency */
+  .emg-btn{width:100%;padding:22px;border-radius:18px;border:0;cursor:pointer;
+    background:linear-gradient(135deg,#ff5c5c,#c0341f);color:#fff;font-weight:800;font-size:1.25rem;letter-spacing:.03em;
+    box-shadow:0 14px 40px rgba(255,60,60,.35)}
+
+  /* Login overlay */
+  .gate{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;
+    background:radial-gradient(900px 500px at 50% 0%, rgba(75,110,255,.12), transparent 60%),var(--bg)}
+  .gate .card{max-width:420px;width:100%}
+  .seg{display:flex;gap:8px;margin-bottom:14px}
+  .seg button{flex:1;padding:11px;border-radius:11px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+  .seg button.on{background:rgba(74,158,255,.18);border-color:transparent;color:var(--blue)}
+  .err{color:var(--red);font-weight:700;min-height:1.2em;font-size:.9rem}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;background:#1b2030;border:1px solid var(--line);
+    padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.show{opacity:1}
+  .doc{white-space:pre-wrap;background:#10131c;border:1px solid var(--line);border-radius:12px;padding:16px;font-size:.96rem}
+  .backlink{display:inline-block;margin:14px 0 0;color:var(--muted);font-size:.86rem}
+  @media print{.occ-top,.tabs,.btn,.backlink,.owner-only-print{display:none!important}.view{display:block!important}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div class="gate" id="gate">
+  <div class="card tint-blue">
+    <div class="logo" style="margin-bottom:14px"><span class="mark">OCC</span>
+      <div>Operations Command Center<small>Load Ecosystem · Internal</small></div></div>
+    <p class="muted" style="font-size:.92rem">Private employee operations system. Sign in to continue.</p>
+    <div class="seg" id="roleSeg">
+      <button data-role="employee" class="on">Employee / Verifier</button>
+      <button data-role="owner">Owner / Admin</button>
+    </div>
+    <label class="fld"><span>Name</span><input id="loginName" type="text" autocomplete="off" placeholder="Your name"></label>
+    <label class="fld"><span>Password</span><input id="loginPass" type="password" autocomplete="off" placeholder="Password"></label>
+    <div class="err" id="loginErr"></div>
+    <button class="btn blue" id="loginBtn" style="width:100%;justify-content:center">Sign In</button>
+    <p class="muted" style="font-size:.8rem;margin-top:14px">Placeholder logins (change in occ.html before real use):<br>
+      Employee — <b>Witness Bond</b> / <b>witness-change-me</b><br>
+      Owner — <b>L. Bond</b> / <b>owner-change-me</b></p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+  <div class="occ-top">
+    <div class="bar">
+      <div class="logo"><span class="mark">OCC</span>
+        <div>Operations Command Center<small>Load Ecosystem · Internal</small></div></div>
+      <div class="who">
+        <div><b id="whoName">—</b> · <span id="whoRole" class="pill"></span></div>
+        <div class="muted" id="whoSite">—</div>
+        <button class="btn ghost sm" id="logoutBtn" style="margin-top:6px">Log out</button>
+      </div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+
+  <div class="wrap">
+    <!-- Dashboard -->
+    <section class="view" data-view="dashboard"></section>
+    <!-- Assignments -->
+    <section class="view" data-view="assignments"></section>
+    <!-- Daily tasks -->
+    <section class="view" data-view="daily"></section>
+    <!-- Issues -->
+    <section class="view" data-view="issues"></section>
+    <!-- Evidence -->
+    <section class="view" data-view="evidence"></section>
+    <!-- Messages -->
+    <section class="view" data-view="messages"></section>
+    <!-- Emergency -->
+    <section class="view" data-view="emergency"></section>
+    <!-- Payment -->
+    <section class="view" data-view="payment"></section>
+    <!-- Invoice -->
+    <section class="view" data-view="invoice"></section>
+    <!-- Documents -->
+    <section class="view" data-view="documents"></section>
+    <!-- Release readiness -->
+    <section class="view" data-view="release"></section>
+    <!-- Confirmation -->
+    <section class="view" data-view="confirm"></section>
+    <!-- Data -->
+    <section class="view" data-view="data"></section>
+
+    <a class="backlink" href="index.html">&larr; Back to Load Tasks</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================================
+   OCC — Operations Command Center  (Load Tasks internal module)
+   MVP: localStorage only. No backend. No real cloud upload.
+
+   -------- PLACEHOLDER CREDENTIALS --------
+   Change these two passwords before real use. They are intentionally
+   obvious placeholders, NOT real secrets. For production, replace this
+   USERS array with Supabase/Firebase auth (see FUTURE BACKEND notes below).
+   ----------------------------------------- */
+var USERS = [
+  { name:'Witness Bond', role:'employee', title:'Platform Quality Assurance Specialist', pass:'witness-change-me' },
+  { name:'L. Bond',      role:'owner',    title:'Owner / Admin',                         pass:'owner-change-me' }
+];
+/* FUTURE BACKEND (do not connect yet):
+   - Auth: replace login() with Supabase auth.signInWithPassword().
+   - DB: replace store() / load() with Supabase table reads/writes.
+   - Storage: replace evidence filename list with Supabase Storage uploads.
+   - Roles: keep owner/employee; add testers, support, managers in USERS/table.
+   - Notifications: emergency alerts -> realtime channel / email webhook.
+*/
+
+/* ---------- tiny helpers ---------- */
+var $  = function(s,r){return (r||document).querySelector(s);};
+var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+function el(html){var d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function nowISO(){return new Date().toISOString();}
+function fmtDate(iso){if(!iso)return '—';try{return new Date(iso).toLocaleString();}catch(e){return iso;}}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
+
+/* ---------- storage ---------- */
+var K = {
+  session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
+  issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
+  alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm'
+};
+function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
+function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
+
+/* ---------- seed data (first run only) ---------- */
+var DAILY_SEED = [
+  {day:1,title:'Day 1 — Site Inventory',items:[
+    'Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot',
+    'List every visible menu','List every visible section','List every visible tile/card',
+    'List every major page discovered','Record notes','Repeat basic access on iPad Safari if available']},
+  {day:2,title:'Day 2 — Navigation Audit',items:[
+    'Click every visible menu item','Click every visible button','Verify destination loads',
+    'Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest',
+    'Screenshot broken or confusing areas']},
+  {day:3,title:'Day 3 — First-Time User Review',items:[
+    'Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear',
+    'Write what is confusing','Write what instructions are missing','Write what would help a new user',
+    'Rate overall clarity 1 to 10']},
+  {day:4,title:'Day 4 — Browser & Device Comparison',items:[
+    'Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences',
+    'Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences']},
+  {day:5,title:'Day 5 — Final Report',items:[
+    'Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions',
+    'Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review']}
+];
+var CONFIRM_SEED = [
+  'I read the assignment','I understand today’s tasks','I understand what site to test',
+  'I understand not to move to other sites','I understand how to report issues',
+  'I understand payment is issued after approval'];
+
+function seed(){
+  if(!localStorage.getItem(K.assignments)){
+    store(K.assignments,[{
+      id:'wk1', title:'Load Eco Week 1 Foundation Audit', site:'https://loadeco.app',
+      worker:'Witness Bond', week:1, pay:50, bonus:0,
+      goal:'Create a complete site inventory, navigation audit, browser comparison, issue report, and release-readiness baseline.',
+      status:'Not Started', submittedDate:'', approvedDate:'', paidDate:'', ownerNotes:''
+    }]);
+  }
+  if(!localStorage.getItem(K.checklist)){
+    var c={};DAILY_SEED.forEach(function(d){c['day'+d.day]=d.items.map(function(t){return {label:t,done:false};});});
+    store(K.checklist,c);
+  }
+  if(!localStorage.getItem(K.confirm)) store(K.confirm,CONFIRM_SEED.map(function(t){return {label:t,done:false};}));
+  if(!localStorage.getItem(K.issues)) store(K.issues,[]);
+  if(!localStorage.getItem(K.evidence)) store(K.evidence,[]);
+  if(!localStorage.getItem(K.messages)) store(K.messages,[]);
+  if(!localStorage.getItem(K.alerts)) store(K.alerts,[]);
+}
+
+/* Release-readiness sites: only Load Eco active; others locked future stages. */
+var SITES = [
+  {name:'Load Eco / Main Load', url:'https://loadeco.app', stage:'Active'},
+  {name:'Load Studio', url:'https://loadeco.app/loadstudio/', stage:'Locked'},
+  {name:'Load Tasks', url:'https://loadeco.app/LoadTasks/', stage:'Locked'},
+  {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'}
+];
+
+/* ---------- session / auth ---------- */
+function session(){return load(K.session,null);}
+function isOwner(){var s=session();return s&&s.role==='owner';}
+
+function login(name,pass,role){
+  var u=USERS.filter(function(x){return x.name.toLowerCase()===String(name).trim().toLowerCase() && x.role===role;})[0];
+  if(!u || u.pass!==pass) return false;
+  store(K.session,{name:u.name,role:u.role,title:u.title,at:nowISO()});
+  return true;
+}
+function logout(){localStorage.removeItem(K.session);location.reload();}
+
+/* ---------- tabs ---------- */
+var TABS = [
+  {id:'dashboard',label:'Dashboard',c:'blue'},
+  {id:'assignments',label:'Assignments',c:'purple'},
+  {id:'daily',label:'Daily Tasks',c:'purple'},
+  {id:'issues',label:'Issues',c:'orange'},
+  {id:'evidence',label:'Evidence',c:'blue'},
+  {id:'messages',label:'Messages',c:'blue'},
+  {id:'emergency',label:'Emergency',c:'red'},
+  {id:'payment',label:'Payment',c:'gold'},
+  {id:'invoice',label:'Invoice',c:'gold'},
+  {id:'documents',label:'Documents',c:'gray'},
+  {id:'release',label:'Release Readiness',c:'green'},
+  {id:'confirm',label:'Confirmation',c:'green'},
+  {id:'data',label:'Data',c:'gray'}
+];
+function buildTabs(){
+  var t=$('#tabs');t.innerHTML='';
+  TABS.forEach(function(tab){
+    var b=el('<button data-tab="'+tab.id+'" data-c="'+tab.c+'"><span class="dot" style="background:var(--'+tab.c+')"></span>'+esc(tab.label)+'</button>');
+    b.addEventListener('click',function(){show(tab.id);});
+    t.appendChild(b);
+  });
+}
+function show(id){
+  $$('#tabs button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id);});
+  $$('.view').forEach(function(v){v.classList.toggle('active',v.dataset.view===id);});
+  render(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- renderers ---------- */
+function activeAssignment(){return (load(K.assignments,[])[0])||null;}
+
+function checklistStats(){
+  var c=load(K.checklist,{}),done=0,total=0;
+  Object.keys(c).forEach(function(k){c[k].forEach(function(i){total++;if(i.done)done++;});});
+  return {done:done,total:total,pct:total?Math.round(done/total*100):0};
+}
+
+function statusChip(s){
+  var map={'Not Started':'s-gray','In Progress':'s-blue','Submitted':'s-purple','Under Review':'s-orange',
+    'Needs Retest':'s-orange','Approved':'s-green','Payment Due':'s-gold','Paid':'s-green',
+    'Not Submitted':'s-gray','Locked':'s-gray','Active':'s-green','In Testing':'s-blue',
+    'Needs Fixes':'s-orange','Retest Required':'s-orange','Stable Verified':'s-green','Released':'s-green'};
+  return '<span class="chip '+(map[s]||'s-gray')+'">'+esc(s)+'</span>';
+}
+
+function render(id){
+  var v=$('.view[data-view="'+id+'"]');if(!v)return;
+  ({dashboard:rDashboard,assignments:rAssignments,daily:rDaily,issues:rIssues,evidence:rEvidence,
+    messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
+    release:rRelease,confirm:rConfirm,data:rData}[id]||function(){})(v);
+}
+
+function rDashboard(v){
+  var a=activeAssignment(),s=checklistStats(),sess=session();
+  var issues=load(K.issues,[]),retests=issues.filter(function(i){return i.status==='Needs Retest';}).length;
+  var openIssues=issues.filter(function(i){return i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var msgs=load(K.messages,[]),alerts=load(K.alerts,[]);
+  v.innerHTML=
+    '<h1>Dashboard</h1>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
+      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Week '+esc(a.week)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
+      card('green','Site Under Test', a?('<b>'+esc(a.site)+'</b>'):'<span class="muted">—</span>')+
+    '</div>'+
+    '<div class="card tint-purple" style="margin-bottom:14px"><h3>Assignment Progress</h3>'+
+      '<div class="progress"><i style="width:'+s.pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">'+s.done+' of '+s.total+' daily tasks done ('+s.pct+'%)</p></div>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('orange','Open Issues',  '<b style="font-size:1.6rem">'+openIssues+'</b>')+
+      card('orange','Retests Needed','<b style="font-size:1.6rem">'+retests+'</b>')+
+      card('red','Emergency Alerts','<b style="font-size:1.6rem">'+alerts.length+'</b>')+
+    '</div>'+
+    '<div class="grid c3" style="margin-bottom:14px">'+
+      card('blue','Messages','<b style="font-size:1.6rem">'+msgs.length+'</b>')+
+      card('gold','Payment Status', a?statusChip(a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':'Not Submitted'))):'—')+
+      card('green','Release Readiness', readinessScore()+' / 100')+
+    '</div>'+
+    '<h3 style="margin-top:6px">Quick Cards</h3>'+
+    '<div class="grid c3">'+
+      quick('daily','purple','Today’s Tasks')+quick('assignments','purple','Current Assignment')+
+      quick('issues','orange','Submit Issue')+quick('evidence','blue','Evidence')+
+      quick('messages','blue','Messages')+quick('payment','gold','Payment / Invoice')+
+      quick('release','green','Release Readiness')+quick('emergency','red','Emergency Alert')+
+    '</div>';
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
+}
+function card(c,title,body){return '<div class="card tint-'+c+'"><h3>'+esc(title)+'</h3><div>'+body+'</div></div>';}
+function quick(go,c,title){return '<button class="card tint-'+c+'" data-go="'+go+'" style="text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px"><h3 style="margin:0">'+esc(title)+'</h3><span class="muted">Open &rarr;</span></button>';}
+
+function rAssignments(v){
+  var a=activeAssignment();if(!a){v.innerHTML='<h1>Assignments</h1><p class="muted">No assignment.</p>';return;}
+  var owner=isOwner();
+  v.innerHTML='<h1>Assignments Center</h1>'+
+    '<div class="card tint-purple">'+
+      '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
+      '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Week: <b>'+esc(a.week)+'</b></span></div>'+
+      '<p style="margin-top:10px"><b>Goal:</b> '+esc(a.goal)+'</p>'+
+      (owner?
+        '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+
+          ['Not Started','In Progress','Submitted','Needs Retest','Approved','Paid'].map(function(s){return '<option'+(s===a.status?' selected':'')+'>'+s+'</option>';}).join('')+
+        '</select></label>'+
+        '<label class="fld owner-only"><span>Owner notes</span><textarea id="aNotes">'+esc(a.ownerNotes)+'</textarea></label>'+
+        '<button class="btn purple owner-only" id="aSave">Save assignment</button>'
+       :
+        '<p class="muted">Submitting marks the assignment ready for owner review.</p>'+
+        '<button class="btn purple" id="aSubmit">Submit for review</button>')+
+    '</div>';
+  if(owner){
+    $('#aSave',v).addEventListener('click',function(){
+      a.status=$('#aStatus',v).value;a.ownerNotes=$('#aNotes',v).value;
+      if(a.status==='Approved'&&!a.approvedDate)a.approvedDate=nowISO();
+      if(a.status==='Paid'&&!a.paidDate)a.paidDate=nowISO();
+      store(K.assignments,[a]);toast('Assignment saved');render('assignments');
+    });
+  }else{
+    $('#aSubmit',v).addEventListener('click',function(){
+      a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);toast('Submitted for review');render('assignments');
+    });
+  }
+}
+
+function rDaily(v){
+  var c=load(K.checklist,{});
+  var html='<h1>Daily Task Checklist</h1>';
+  DAILY_SEED.forEach(function(d){
+    var arr=c['day'+d.day]||[];
+    var done=arr.filter(function(i){return i.done;}).length;
+    html+='<div class="card tint-purple" style="margin-bottom:14px"><h3>'+esc(d.title)+' <span class="chip s-purple">'+done+'/'+arr.length+'</span></h3>';
+    arr.forEach(function(it,idx){
+      var id='d'+d.day+'_'+idx;
+      html+='<div class="check"><input type="checkbox" id="'+id+'" data-day="'+d.day+'" data-idx="'+idx+'"'+(it.done?' checked':'')+'><label for="'+id+'">'+esc(it.label)+'</label></div>';
+    });
+    html+='</div>';
+  });
+  v.innerHTML=html;
+  $$('input[type=checkbox]',v).forEach(function(cb){
+    cb.addEventListener('change',function(){
+      var c2=load(K.checklist,{});c2['day'+cb.dataset.day][cb.dataset.idx].done=cb.checked;store(K.checklist,c2);
+      render('daily');
+    });
+  });
+}
+
+function rIssues(v){
+  var issues=load(K.issues,[]);
+  v.innerHTML='<h1>Issue Report System</h1>'+
+    '<div class="card tint-orange" style="margin-bottom:14px"><h3>New Issue</h3>'+
+      fld('iTitle','Issue title','text')+fld('iPage','Page / section','text')+
+      '<div class="grid c2">'+fldSel('iSite','Site',SITES.map(function(s){return s.name;}))+fld('iBrowser','Browser','text')+'</div>'+
+      '<div class="grid c2">'+fld('iDevice','Device','text')+fldSel('iSev','Severity',['Critical','Major','Minor'])+'</div>'+
+      fldArea('iSteps','Steps taken')+fldArea('iExp','Expected result')+fldArea('iAct','Actual result')+
+      fld('iShot','Screenshot / video reference','text')+fldArea('iNotes','Notes')+
+      '<button class="btn gold" id="iSave">Save issue</button></div>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="iExport">Export JSON</button><button class="btn sm ghost" id="iPrint">Printable report</button></div>'+
+    '<div class="card"><h3>Logged Issues ('+issues.length+')</h3><div id="iList"></div></div>';
+  $('#iSave',v).addEventListener('click',function(){
+    var t=$('#iTitle',v).value.trim();if(!t){toast('Enter an issue title');return;}
+    var issue={id:'iss_'+Date.now(),title:t,site:$('#iSite',v).value,page:$('#iPage',v).value,browser:$('#iBrowser',v).value,
+      device:$('#iDevice',v).value,steps:$('#iSteps',v).value,expected:$('#iExp',v).value,actual:$('#iAct',v).value,
+      severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
+      by:session().name,at:nowISO()};
+    issues.unshift(issue);store(K.issues,issues);toast('Issue saved');render('issues');
+  });
+  $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
+  $('#iPrint',v).addEventListener('click',function(){window.print();});
+  var list=$('#iList',v);
+  if(!issues.length){list.innerHTML='<p class="muted">No issues yet.</p>';}
+  else issues.forEach(function(i){
+    var sevC=i.severity==='Critical'?'s-red':(i.severity==='Major'?'s-orange':'s-blue');
+    var d=el('<div class="list-item"><b>'+esc(i.title)+'</b> <span class="chip '+sevC+'">'+esc(i.severity)+'</span> '+statusChip(i.status)+
+      '<div class="kvs"><span>'+esc(i.site)+'</span><span>'+esc(i.page||'—')+'</span><span>'+esc(i.browser||'—')+'</span><span>'+esc(i.device||'—')+'</span><span>by '+esc(i.by)+'</span></div></div>');
+    if(isOwner()){
+      var sel=el('<select style="margin-top:8px"></select>');
+      ['New','Under Review','Needs Retest','Verified Fixed','Closed'].forEach(function(s){var o=document.createElement('option');o.text=s;o.selected=s===i.status;sel.appendChild(o);});
+      sel.addEventListener('change',function(){i.status=sel.value;store(K.issues,issues);toast('Issue status updated');render('issues');});
+      d.appendChild(sel);
+    }
+    list.appendChild(d);
+  });
+}
+
+function rEvidence(v){
+  var ev=load(K.evidence,[]);
+  v.innerHTML='<h1>Evidence Center</h1>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><p class="muted">No cloud upload yet (MVP). Save screenshots/videos in your assigned evidence folder, then list the filenames here.</p>'+
+      '<div class="grid c2">'+fld('eShot','Screenshot filename','text')+fld('eVideo','Video filename','text')+'</div>'+
+      '<div class="grid c2">'+fld('eIssue','Related issue','text')+fld('eBrowser','Browser','text')+'</div>'+
+      fld('eDevice','Device','text')+fldArea('eNotes','Notes')+
+      '<button class="btn blue" id="eSave">Add evidence record</button></div>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="eExport">Export JSON</button></div>'+
+    '<div class="card"><h3>Evidence Records ('+ev.length+')</h3><div id="eList"></div></div>';
+  $('#eSave',v).addEventListener('click',function(){
+    var rec={id:'ev_'+Date.now(),shot:$('#eShot',v).value,video:$('#eVideo',v).value,issue:$('#eIssue',v).value,
+      browser:$('#eBrowser',v).value,device:$('#eDevice',v).value,notes:$('#eNotes',v).value,by:session().name,at:nowISO()};
+    if(!rec.shot&&!rec.video){toast('Add a filename first');return;}
+    ev.unshift(rec);store(K.evidence,ev);toast('Evidence added');render('evidence');
+  });
+  $('#eExport',v).addEventListener('click',function(){download('occ-evidence.json',JSON.stringify(ev,null,2));});
+  var list=$('#eList',v);
+  if(!ev.length)list.innerHTML='<p class="muted">No evidence yet.</p>';
+  else ev.forEach(function(r){list.appendChild(el('<div class="list-item"><b>'+esc(r.shot||r.video)+'</b><div class="kvs"><span>'+esc(r.video?('video: '+r.video):'')+'</span><span>'+esc(r.issue||'')+'</span><span>'+esc(r.browser||'')+' '+esc(r.device||'')+'</span><span>by '+esc(r.by)+'</span></div>'+(r.notes?'<div class="muted">'+esc(r.notes)+'</div>':'')+'</div>'));});
+}
+
+function rMessages(v){
+  var msgs=load(K.messages,[]),sess=session(),owner=isOwner();
+  v.innerHTML='<h1>Communication Center</h1>'+
+    '<div class="card tint-blue" style="margin-bottom:14px"><h3>Send Message</h3>'+
+      '<p class="muted">To: <b>'+(owner?'Witness Bond (Employee)':'L. Bond (Owner)')+'</b></p>'+
+      fldSel('mPriority','Priority',['normal','important','urgent'])+
+      fldArea('mBody','Message')+
+      '<div class="row"><button class="btn blue" id="mSend">Send</button><button class="btn red" id="mHelp">Need Help</button></div></div>'+
+    '<div class="card"><h3>Thread ('+msgs.length+')</h3><div id="mList"></div></div>';
+  function send(body,priority){
+    if(!body.trim()){toast('Type a message');return;}
+    msgs.unshift({id:'m_'+Date.now(),sender:sess.name,senderRole:sess.role,
+      recipient:owner?'Witness Bond':'L. Bond',priority:priority,assignment:(activeAssignment()||{}).title||'',
+      body:body,at:nowISO()});
+    store(K.messages,msgs);toast('Message sent');render('messages');
+  }
+  $('#mSend',v).addEventListener('click',function(){send($('#mBody',v).value,$('#mPriority',v).value);});
+  $('#mHelp',v).addEventListener('click',function(){send('NEED HELP: '+($('#mBody',v).value||'Please assist.'),'urgent');});
+  var list=$('#mList',v);
+  if(!msgs.length)list.innerHTML='<p class="muted">No messages yet.</p>';
+  else msgs.forEach(function(m){
+    var pc=m.priority==='urgent'?'s-red':(m.priority==='important'?'s-orange':'s-blue');
+    list.appendChild(el('<div class="list-item"><b>'+esc(m.sender)+'</b> &rarr; '+esc(m.recipient)+' <span class="chip '+pc+'">'+esc(m.priority)+'</span><div class="muted" style="font-size:.8rem">'+fmtDate(m.at)+'</div><div>'+esc(m.body)+'</div></div>'));
+  });
+}
+
+function rEmergency(v){
+  var alerts=load(K.alerts,[]);
+  v.innerHTML='<h1>Emergency Alert</h1>'+
+    '<button class="emg-btn" id="emgFire" style="margin-bottom:16px">CRITICAL ISSUE ALERT</button>'+
+    '<div class="card tint-red"><h3>Report a Blocker</h3>'+
+      '<p class="muted">Use for: site will not open, homepage broken, app crash, data loss, payment/invoice issue, unable to continue, release blocker.</p>'+
+      fldArea('emgWhat','What happened?')+
+      '<div class="grid c2">'+fldSel('emgSite','Site',SITES.map(function(s){return s.name;}))+fld('emgBrowser','Browser','text')+'</div>'+
+      '<div class="grid c2">'+fld('emgDevice','Device','text')+fldSel('emgUrg','Urgency',['High','Critical','Release Blocker'])+'</div>'+
+      fld('emgShot','Screenshot / video reference','text')+fldArea('emgNotes','Notes')+
+      '<button class="btn red" id="emgSave">Send emergency alert</button></div>'+
+    '<div class="card" style="margin-top:14px"><h3>Recent Alerts ('+alerts.length+')</h3><div id="emgList"></div></div>';
+  function fire(){
+    var a={id:'al_'+Date.now(),what:$('#emgWhat',v).value||'(no detail)',site:$('#emgSite',v).value,browser:$('#emgBrowser',v).value,
+      device:$('#emgDevice',v).value,urgency:$('#emgUrg',v).value,shot:$('#emgShot',v).value,notes:$('#emgNotes',v).value,
+      by:session().name,at:nowISO()};
+    alerts.unshift(a);store(K.alerts,alerts);toast('Emergency alert sent');render('emergency');
+  }
+  $('#emgFire',v).addEventListener('click',function(){$('#emgWhat',v).focus();toast('Fill the form, then Send.');});
+  $('#emgSave',v).addEventListener('click',fire);
+  var list=$('#emgList',v);
+  if(!alerts.length)list.innerHTML='<p class="muted">No alerts.</p>';
+  else alerts.forEach(function(a){list.appendChild(el('<div class="list-item"><b>'+esc(a.what)+'</b> <span class="chip s-red">'+esc(a.urgency)+'</span><div class="kvs"><span>'+esc(a.site)+'</span><span>'+esc(a.browser||'')+' '+esc(a.device||'')+'</span><span>by '+esc(a.by)+'</span><span>'+fmtDate(a.at)+'</span></div></div>'));});
+}
+
+function rPayment(v){
+  var a=activeAssignment(),owner=isOwner();
+  var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+  var pstat = a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':(a.status==='Not Started'?'Not Submitted':'Submitted')));
+  v.innerHTML='<h1>Payment Tracker</h1>'+
+    '<div class="card tint-gold"><h3>'+esc(a.title)+' '+statusChip(pstat)+'</h3>'+
+      '<div class="kvs"><span>Assignment: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
+      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
+      '<p class="muted" style="margin-top:8px">Pay structure: standard $50 · heavy $60 · optional bonus $10–$25.</p>'+
+      (owner?
+        '<label class="fld owner-only"><span>Bonus amount ($)</span><input id="pBonus" type="number" value="'+(a.bonus||0)+'"></label>'+
+        '<div class="row owner-only">'+
+          '<button class="btn gold" data-pst="Approved">Approve</button>'+
+          '<button class="btn gold" data-pst="Payment Due">Mark payment due</button>'+
+          '<button class="btn green" data-pst="Paid">Mark paid</button>'+
+        '</div>'
+       : '<p class="muted">Payment is set by the owner after approval.</p>')+
+    '</div>';
+  if(owner){
+    $$('[data-pst]',v).forEach(function(b){b.addEventListener('click',function(){
+      var st=b.dataset.pst;a.bonus=Number($('#pBonus',v).value)||0;
+      if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
+      else if(st==='Paid'){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();}
+      else{a.status='Approved';}
+      store(K.assignments,[a]);toast('Payment updated: '+st);render('payment');
+    });});
+  }
+}
+
+function rInvoice(v){
+  var a=activeAssignment(),s=session(),total=(Number(a.pay)||0)+(Number(a.bonus)||0);
+  var inv='INVOICE — Operations Command Center\n'+
+    '====================================\n'+
+    'Worker:      '+a.worker+'\n'+
+    'Title:       Platform Quality Assurance Specialist\n'+
+    'Assignment:  '+a.title+'\n'+
+    'Site:        '+a.site+'\n'+
+    'Amount:      $'+a.pay+'\n'+
+    'Bonus:       $'+(a.bonus||0)+'\n'+
+    'Total due:   $'+total+'\n'+
+    'Status:      '+a.status+'\n'+
+    'Submitted:   '+(a.submittedDate?fmtDate(a.submittedDate):'—')+'\n'+
+    'Approved:    '+(a.approvedDate?fmtDate(a.approvedDate):'—')+'\n'+
+    'Paid:        '+(a.paidDate?fmtDate(a.paidDate):'—')+'\n'+
+    'Work summary: '+a.goal+'\n';
+  v.innerHTML='<h1>Invoice Center</h1>'+
+    '<div class="card tint-gold"><div class="doc" id="invDoc">'+esc(inv)+'</div>'+
+      '<div class="row" style="margin-top:14px">'+
+        '<button class="btn gold" id="invPrint">Print invoice</button>'+
+        '<button class="btn sm" id="invTxt">Export .txt</button>'+
+        '<button class="btn sm" id="invJson">Export JSON</button>'+
+        (isOwner()?'<button class="btn green owner-only" id="invPaid">Mark as paid</button>':'')+
+      '</div></div>';
+  $('#invPrint',v).addEventListener('click',function(){window.print();});
+  $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
+  $('#invJson',v).addEventListener('click',function(){download('occ-invoice.json',JSON.stringify({worker:a.worker,title:'Platform Quality Assurance Specialist',assignment:a.title,site:a.site,amount:a.pay,bonus:a.bonus||0,total:total,status:a.status,submitted:a.submittedDate,approved:a.approvedDate,paid:a.paidDate},null,2));});
+  if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);toast('Marked paid');render('invoice');});
+}
+
+var DOCS={
+  'Week 1 Assignment Instructions':'Assignment: Load Eco Week 1 Foundation Audit\nSite: https://loadeco.app\nPay: $50 (paid after owner approval)\n\nWork ONE site at a time. Do NOT test Load Studio, Load Tasks, or Load Play yet.\nComplete each day’s checklist in order. Submit findings and issues.\nFinish with a final report and a release-readiness score.',
+  'Windows Testing Guide':'1. Open https://loadeco.app in Chrome.\n2. Confirm the homepage loads fully.\n3. Click every menu item and button. Note what works/breaks.\n4. Repeat in Edge. Record any browser-only differences.\n5. Take screenshots of broken or confusing areas.',
+  'iPad Testing Guide':'1. Open https://loadeco.app in Safari.\n2. Check layout fits the screen (no cut-off, no overlap).\n3. Tap menus and buttons. Note anything hidden or hard to tap.\n4. Compare against the Windows result. Record mobile-only problems.',
+  'Issue Report Format':'Title · Site · Page/section · Browser · Device · Steps taken · Expected result · Actual result · Severity (Critical/Major/Minor) · Screenshot reference · Notes.',
+  'Payment Rules':'Standard assignment: $50. Heavy assignment: $60. Optional bonus: $10–$25.\nPayment is issued AFTER the owner approves the submitted work.\nStatus flow: Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid.',
+  'QA Rules':'Work one site at a time. Document every issue. Retest after fixes.\nNever mark a site stable without owner review. Be honest — no false positives.'
+};
+function rDocuments(v){
+  var html='<h1>Documents & Guides</h1>';
+  Object.keys(DOCS).forEach(function(k){html+='<div class="card tint-gray" style="margin-bottom:12px"><h3>'+esc(k)+'</h3><div class="doc">'+esc(DOCS[k])+'</div></div>';});
+  html+='<div class="card tint-gray"><h3>Downloadable files</h3><p class="muted">Placeholder for DOCX/PDF downloads (added when backend storage is connected).</p></div>';
+  v.innerHTML=html;
+}
+
+function readinessScore(){
+  var issues=load(K.issues,[]),s=checklistStats();
+  var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Verified Fixed'&&i.status!=='Closed';}).length;
+  var score=Math.round(s.pct*0.7) + 30 - crit*15 - major*5;
+  return Math.max(0,Math.min(100,score));
+}
+function rRelease(v){
+  var issues=load(K.issues,[]);
+  var crit=issues.filter(function(i){return i.severity==='Critical'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
+  var major=issues.filter(function(i){return i.severity==='Major'&&i.status!=='Closed'&&i.status!=='Verified Fixed';}).length;
+  var retests=issues.filter(function(i){return i.status==='Needs Retest';}).length;
+  var a=activeAssignment();
+  var html='<h1>Release Readiness Center</h1>';
+  SITES.forEach(function(site){
+    var active=site.stage==='Active';
+    var stage=active?(a.status==='Approved'||a.status==='Paid'?'Stable Verified':(a.status==='Submitted'?'In Testing':'Needs Fixes')):'Locked';
+    html+='<div class="card tint-'+(active?'green':'gray')+'" style="margin-bottom:12px">'+
+      '<h3>'+esc(site.name)+' '+statusChip(stage)+'</h3>'+
+      '<div class="muted" style="font-size:.85rem">'+esc(site.url)+'</div>'+
+      (active?
+        '<div class="kvs" style="margin-top:8px"><span>Readiness: <b>'+readinessScore()+'/100</b></span><span>Critical: <b>'+crit+'</b></span><span>Major: <b>'+major+'</b></span><span>Retests: <b>'+retests+'</b></span><span>Owner approval: <b>'+((a.status==='Approved'||a.status==='Paid')?'Yes':'No')+'</b></span></div>'
+       : '<p class="muted" style="margin-top:8px">Locked future stage. Opens after the previous site is marked stable/approved.</p>')+
+    '</div>';
+  });
+  v.innerHTML=html;
+}
+
+function rConfirm(v){
+  var items=load(K.confirm,[]);
+  var html='<h1>Build Plan Confirmation</h1><div class="card tint-green">';
+  items.forEach(function(it,idx){html+='<div class="check"><input type="checkbox" id="cf'+idx+'" data-idx="'+idx+'"'+(it.done?' checked':'')+'><label for="cf'+idx+'">'+esc(it.label)+'</label></div>';});
+  html+='</div>';v.innerHTML=html;
+  $$('input[type=checkbox]',v).forEach(function(cb){cb.addEventListener('change',function(){var i=load(K.confirm,[]);i[cb.dataset.idx].done=cb.checked;store(K.confirm,i);toast('Saved');});});
+}
+
+function rData(v){
+  v.innerHTML='<h1>OCC Data</h1>'+
+    '<div class="card tint-gray"><p class="muted">All OCC data is stored only in this browser (localStorage). It is not synced to any server.</p>'+
+      '<div class="row"><button class="btn" id="dExport">Export OCC Data</button><button class="btn" id="dImport">Import OCC Data</button><button class="btn red ghost" id="dReset">Reset Demo Data</button></div>'+
+      '<input type="file" id="dFile" accept="application/json" class="hidden"></div>';
+  $('#dExport',v).addEventListener('click',function(){
+    var dump={};Object.keys(K).forEach(function(k){if(k!=='session')dump[k]=load(K[k],null);});
+    download('occ-data-backup.json',JSON.stringify(dump,null,2));
+  });
+  $('#dImport',v).addEventListener('click',function(){$('#dFile',v).click();});
+  $('#dFile',v).addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){try{var o=JSON.parse(r.result);Object.keys(o).forEach(function(k){if(K[k]&&k!=='session')store(K[k],o[k]);});toast('Data imported');render('data');}catch(err){toast('Invalid file');}};
+    r.readAsText(f);
+  });
+  $('#dReset',v).addEventListener('click',function(){
+    if(!confirm('Reset OCC demo data? This clears assignments, issues, evidence, messages, payments and checklists in this browser.'))return;
+    Object.keys(K).forEach(function(k){if(k!=='session')localStorage.removeItem(K[k]);});seed();toast('Demo data reset');render('data');
+  });
+}
+
+/* form builders */
+function fld(id,label,type){return '<label class="fld"><span>'+esc(label)+'</span><input id="'+id+'" type="'+(type||'text')+'"></label>';}
+function fldArea(id,label){return '<label class="fld"><span>'+esc(label)+'</span><textarea id="'+id+'"></textarea></label>';}
+function fldSel(id,label,opts){return '<label class="fld"><span>'+esc(label)+'</span><select id="'+id+'">'+opts.map(function(o){return '<option>'+esc(o)+'</option>';}).join('')+'</select></label>';}
+function download(name,text){var a=document.createElement('a');a.href='data:application/octet-stream,'+encodeURIComponent(text);a.download=name;a.click();}
+
+/* ---------- boot ---------- */
+function applyRoleVisibility(){
+  var owner=isOwner();
+  $$('.owner-only').forEach(function(e){e.classList.toggle('hidden',!owner);});
+}
+function startApp(){
+  var s=session();if(!s)return;
+  $('#gate').classList.add('hidden');
+  $('#app').classList.remove('hidden');
+  $('#whoName').textContent=s.name;
+  var rp=$('#whoRole');rp.textContent=s.role==='owner'?'Owner / Admin':'Employee / Verifier';
+  rp.className='pill '+(s.role==='owner'?'s-blue':'s-purple');
+  var a=activeAssignment();$('#whoSite').textContent=a?('Site under test: '+a.site):'';
+  buildTabs();show('dashboard');
+}
+
+(function init(){
+  seed();
+  // login gate wiring
+  var role='employee';
+  $$('#roleSeg button').forEach(function(b){b.addEventListener('click',function(){
+    role=b.dataset.role;$$('#roleSeg button').forEach(function(x){x.classList.toggle('on',x===b);});
+  });});
+  function doLogin(){
+    var ok=login($('#loginName').value,$('#loginPass').value,role);
+    if(!ok){$('#loginErr').textContent='Wrong name or password for this role.';return;}
+    $('#loginErr').textContent='';startApp();
+  }
+  $('#loginBtn').addEventListener('click',doLogin);
+  $('#loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+  $('#logoutBtn').addEventListener('click',logout);
+  if(session())startApp();
+})();
+</script>
+</body>
+</html>
