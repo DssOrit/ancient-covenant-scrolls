@@ -96,6 +96,27 @@ These have been re-locked on 2026-05-04 after repeated violations.
    all require confirmation. The previous self-merge authorization is
    REVOKED. Do not merge anything until the user says to merge it.
 
+10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
+    2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
+    so it must stay public and stay one repo. When suggesting or adding
+    any security/protection, Claude must NEVER propose or do anything that:
+    - makes the repo private,
+    - creates a new/second repo,
+    - moves code out of this repo (e.g., the OCC API to a standalone
+      Worker), or otherwise prevents Claude from continuing to work on the
+      repo and sites the normal way (edit → branch → PR → merge →
+      Cloudflare auto-deploys),
+    - or risks breaking any live site.
+    Only suggest protections that keep ALL code in this one public repo,
+    leave Claude's workflow intact, and add security WITHOUT breaking the
+    sites. Acceptable hardening = Cloudflare edge settings (Access, WAF,
+    rate-limit, headers, logging), GitHub settings (secret scanning, push
+    protection, branch protection, 2FA), and additive in-repo files
+    (headers, robots, gitleaks, CODEOWNERS, CSP report-only, canary
+    tripwire). The "move the API to a standalone Worker" idea is OFF the
+    table. Secrets and user data stay out of the repo (Cloudflare env +
+    private D1); the repo itself stays public and fully editable by Claude.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
