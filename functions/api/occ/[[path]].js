@@ -49,6 +49,29 @@ async function userFromToken(env, req) {
     .bind(token, new Date().toISOString()).first();
 }
 
+const SEED_DAYS = [
+  { day: 1, items: ['Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot','List every visible menu','List every visible section','List every visible tile/card','List every major page discovered','Record notes','Repeat basic access on iPad Safari if available'] },
+  { day: 2, items: ['Click every visible menu item','Click every visible button','Verify destination loads','Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest','Screenshot broken or confusing areas'] },
+  { day: 3, items: ['Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear','Write what is confusing','Write what instructions are missing','Write what would help a new user','Rate overall clarity 1 to 10'] },
+  { day: 4, items: ['Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences','Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences'] },
+  { day: 5, items: ['Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions','Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review'] }
+];
+
+async function ensureSeed(env) {
+  const c = await env.DB.prepare('SELECT COUNT(*) AS n FROM assignments').first();
+  if (c && c.n > 0) return;
+  await env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind('wk1', 'Load Eco Week 1 Foundation Audit', 'https://loadeco.app', 'Witness Bond', 1, 50, 0,
+          'Create a complete site inventory, navigation audit, browser comparison, issue report, and release-readiness baseline.',
+          'Not Started', '', '', '', '').run();
+  const stmts = [];
+  SEED_DAYS.forEach(d => d.items.forEach((label, idx) => {
+    stmts.push(env.DB.prepare('INSERT INTO checklist (id,assignment_id,day,idx,label,done) VALUES (?,?,?,?,?,0)')
+      .bind('ck_' + d.day + '_' + idx, 'wk1', d.day, idx, label));
+  }));
+  await env.DB.batch(stmts);
+}
+
 async function handle(req, env, origin) {
   const url = new URL(req.url);
   const path = url.pathname.replace(/\/+$/, '');
@@ -90,6 +113,7 @@ async function handle(req, env, origin) {
   }
 
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
+    await ensureSeed(env);
     const [a, c, i, e, m, al] = await Promise.all([
       env.DB.prepare('SELECT * FROM assignments').all(),
       env.DB.prepare('SELECT * FROM checklist ORDER BY day, idx').all(),
