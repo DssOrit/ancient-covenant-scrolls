@@ -57,6 +57,15 @@ CREATE TABLE IF NOT EXISTS alerts (
   shot TEXT, notes TEXT, created_by TEXT, created_at TEXT
 );
 
+-- Section-by-section verification (the core proof-of-work table)
+CREATE TABLE IF NOT EXISTS sections (
+  id         TEXT PRIMARY KEY,
+  site TEXT, name TEXT, status TEXT DEFAULT 'Untested',
+  evidence TEXT, notes TEXT, owner_ok INTEGER DEFAULT 0,
+  verified_at TEXT, updated_by TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_sections_site    ON sections(site);
 CREATE INDEX IF NOT EXISTS idx_issues_created   ON issues(created_at);
 CREATE INDEX IF NOT EXISTS idx_messages_created ON messages(created_at);
 CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);

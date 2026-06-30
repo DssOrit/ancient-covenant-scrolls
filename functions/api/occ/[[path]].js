@@ -57,18 +57,24 @@ const SEED_DAYS = [
   { day: 5, items: ['Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions','Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review'] }
 ];
 
+const SEED_SECTIONS = ['Homepage loads','Main navigation menu','Each menu link opens','Mobile / iPad layout','Sign-in / gate (if any)','Footer links'];
+
 async function ensureSeed(env) {
   const c = await env.DB.prepare('SELECT COUNT(*) AS n FROM assignments').first();
   if (c && c.n > 0) return;
   await env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
-    .bind('wk1', 'Load Eco Week 1 Foundation Audit', 'https://loadeco.app', 'Witness Bond', 1, 50, 0,
-          'Create a complete site inventory, navigation audit, browser comparison, issue report, and release-readiness baseline.',
+    .bind('wk1', 'Load Eco — Full Section Verification', 'https://loadeco.app', 'Witness Bond', 1, 60, 0,
+          'Verify that EVERY section, button and link of Load Eco works before it goes public. Mark each Works or Broken with evidence. You verify and report (you do not fix); broken items become Issues for the owner to fix, then you retest. The site is not ready for sale until every section is verified Working and the owner approves.',
           'Not Started', '', '', '', '').run();
   const stmts = [];
   SEED_DAYS.forEach(d => d.items.forEach((label, idx) => {
     stmts.push(env.DB.prepare('INSERT INTO checklist (id,assignment_id,day,idx,label,done) VALUES (?,?,?,?,?,0)')
       .bind('ck_' + d.day + '_' + idx, 'wk1', d.day, idx, label));
   }));
+  SEED_SECTIONS.forEach((name, i) => {
+    stmts.push(env.DB.prepare('INSERT INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
+      .bind('sec_seed_' + i, 'https://loadeco.app', name, 'Untested', '', '', '', ''));
+  });
   await env.DB.batch(stmts);
 }
 
@@ -114,15 +120,16 @@ async function handle(req, env, origin) {
 
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
     await ensureSeed(env);
-    const [a, c, i, e, m, al] = await Promise.all([
-      env.DB.prepare('SELECT * FROM assignments').all(),
-      env.DB.prepare('SELECT * FROM checklist ORDER BY day, idx').all(),
-      env.DB.prepare('SELECT * FROM issues ORDER BY created_at DESC').all(),
-      env.DB.prepare('SELECT * FROM evidence ORDER BY created_at DESC').all(),
-      env.DB.prepare('SELECT * FROM messages ORDER BY created_at DESC').all(),
-      env.DB.prepare('SELECT * FROM alerts ORDER BY created_at DESC').all()
+    const [a, c, i, e, m, al, sec] = await Promise.all([
+      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes FROM assignments').all(),
+      env.DB.prepare('SELECT id,day,idx,label,done FROM checklist ORDER BY day, idx').all(),
+      env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,sender, sender_role AS senderRole, recipient,priority,assignment,body, created_at AS at FROM messages ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at FROM sections').all()
     ]);
-    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results }, 200, origin);
+    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results }, 200, origin);
   }
 
   if (path.includes('/api/occ/issues')) {
@@ -135,6 +142,31 @@ async function handle(req, env, origin) {
     if (method === 'PATCH') {
       if (!owner) return json({ error: 'owner only' }, 403, origin);
       await env.DB.prepare('UPDATE issues SET status = ? WHERE id = ?').bind(body.status, last).run();
+      return json({ ok: true }, 200, origin);
+    }
+  }
+
+  if (path.includes('/api/occ/sections')) {
+    if (method === 'POST') { // add a section
+      const id = uid('sec');
+      await env.DB.prepare('INSERT INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
+        .bind(id, body.site, body.name, 'Untested', '', '', '', me.name).run();
+      return json({ ok: true, id }, 200, origin);
+    }
+    if (method === 'PATCH') { // update a section (employee: status/evidence/notes; owner: ownerOk)
+      const row = await env.DB.prepare('SELECT * FROM sections WHERE id = ?').bind(last).first();
+      if (!row) return json({ error: 'not found' }, 404, origin);
+      const status = body.status != null ? body.status : row.status;
+      const evidence = body.evidence != null ? body.evidence : row.evidence;
+      const notes = body.notes != null ? body.notes : row.notes;
+      let ownerOk = row.owner_ok;
+      if (body.ownerOk != null) { if (!owner) return json({ error: 'owner only' }, 403, origin); ownerOk = body.ownerOk ? 1 : 0; }
+      await env.DB.prepare('UPDATE sections SET status=?, evidence=?, notes=?, owner_ok=?, verified_at=?, updated_by=? WHERE id=?')
+        .bind(status, evidence, notes, ownerOk, new Date().toISOString(), me.name, last).run();
+      return json({ ok: true }, 200, origin);
+    }
+    if (method === 'DELETE') {
+      await env.DB.prepare('DELETE FROM sections WHERE id = ?').bind(last).run();
       return json({ ok: true }, 200, origin);
     }
   }
