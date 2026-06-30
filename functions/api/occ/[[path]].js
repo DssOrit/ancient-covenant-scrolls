@@ -61,10 +61,10 @@ async function userFromToken(env, req) {
 }
 
 const SEED_DAYS = [
-  { day: 1, items: ['Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot','List every visible menu','List every visible section','List every visible tile/card','List every major page discovered','Record notes','Repeat basic access on iPad Safari if available'] },
+  { day: 1, items: ['Open https://loadeco.app on PC (Chrome)','Confirm homepage loads','Take homepage screenshot','List every visible menu','List every visible section','List every visible tile/card','List every major page discovered','Record notes','Repeat basic access on iPad and phone (Safari)'] },
   { day: 2, items: ['Click every visible menu item','Click every visible button','Verify destination loads','Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest','Screenshot broken or confusing areas'] },
   { day: 3, items: ['Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear','Write what is confusing','Write what instructions are missing','Write what would help a new user','Rate overall clarity 1 to 10'] },
-  { day: 4, items: ['Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences','Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences'] },
+  { day: 4, items: ['Test on PC (Chrome)','Test on PC (Opera)','Test on iPad (Safari)','Test on phone (Safari)','Test on phone (Chrome)','Record layout differences','Record browser-only issues','Record mobile/phone problems','Record desktop problems','Take screenshots of differences'] },
   { day: 5, items: ['Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions','Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review'] }
 ];
 
@@ -95,7 +95,7 @@ async function ensureSeed(env) {
   const stmts = [];
   SEED_SITES.forEach(s => {
     stmts.push(env.DB.prepare('INSERT INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?)')
-      .bind(s.id, s.name + ' — Full Section Verification', s.site, 'Witness Bond', 1, 60, 0,
+      .bind(s.id, s.name + ' — Full Section Verification', s.site, 'Employee', 1, 60, 0,
         'Verify that EVERY section, button and link of ' + s.name + ' works before it goes public. Mark each Works or Broken with evidence. You verify and report (you do not fix); broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',
         'Not Started', '', '', '', '', ''));
     SEED_SECTIONS.forEach((name, i) => {
@@ -165,9 +165,9 @@ async function handle(req, env, origin) {
     await ensureSeed(env);
     await purgeExpiredEvidence(env);
     const [a, c, i, e, m, al, sec] = await Promise.all([
-      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate FROM assignments').all(),
+      env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate, kind, scope FROM assignments').all(),
       env.DB.prepare('SELECT id,day,idx,label,done FROM checklist ORDER BY day, idx').all(),
-      env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
+      env.DB.prepare('SELECT id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,assignment, created_by AS by, created_at AS at FROM issues ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,sender, sender_role AS senderRole, recipient,priority,assignment,body, created_at AS at FROM messages ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
@@ -180,8 +180,8 @@ async function handle(req, env, origin) {
   if (path.includes('/api/occ/issues')) {
     if (method === 'POST') {
       const id = uid('iss');
-      await env.DB.prepare('INSERT INTO issues (id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
-        .bind(id, body.title, body.site, body.page, body.browser, body.device, body.steps, body.expected, body.actual, body.severity, 'New', body.shot, body.notes, me.name, new Date().toISOString()).run();
+      await env.DB.prepare('INSERT INTO issues (id,title,site,page,browser,device,steps,expected,actual,severity,status,shot,notes,assignment,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+        .bind(id, body.title, body.site, body.page, body.browser, body.device, body.steps, body.expected, body.actual, body.severity, 'New', body.shot, body.notes, body.assignment || '', me.name, new Date().toISOString()).run();
       return json({ ok: true, id }, 200, origin);
     }
     if (method === 'PATCH') {
@@ -258,6 +258,13 @@ async function handle(req, env, origin) {
   }
 
   if (path.includes('/api/occ/assignments')) {
+    if (method === 'POST' && last === 'assignments') { // owner creates a day assignment
+      if (!owner) return json({ error: 'owner only' }, 403, origin);
+      const id = body.id || uid('asg');
+      await env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+        .bind(id, body.title || '', body.site || '', body.worker || 'Employee', body.week || 1, body.pay || 60, 0, body.goal || '', 'Not Started', '', '', '', '', '', body.kind || 'verify', body.scope || '').run();
+      return json({ ok: true, id }, 200, origin);
+    }
     if (method === 'PATCH') {
       if (!owner) return json({ error: 'owner only' }, 403, origin);
       await env.DB.prepare('UPDATE assignments SET status=?, bonus=?, owner_notes=?, approved_date=COALESCE(approved_date,?), paid_date=COALESCE(paid_date,?) WHERE id=?')
@@ -294,6 +301,11 @@ async function ensureSchema(env) {
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS evidence_blobs (id TEXT PRIMARY KEY, data TEXT, content_type TEXT, size INTEGER DEFAULT 0, created_at TEXT)").run();
+  // Daily assignment model: kind ('verify' | 'recert') marks day assignments;
+  // issues carry the day assignment they were logged under (for the gate).
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN kind TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN scope TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE issues ADD COLUMN assignment TEXT").run(); } catch (e) {}
   _schemaReady = true;
 }
 
