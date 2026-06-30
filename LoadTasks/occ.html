@@ -413,6 +413,7 @@ function logout(){localStorage.removeItem(K.session);location.reload();}
 /* ---------- tabs ---------- */
 var TABS = [
   {id:'dashboard',label:'Dashboard',c:'blue'},
+  {id:'howto',label:'How to Use',c:'green'},
   {id:'assignments',label:'Assignments',c:'purple'},
   {id:'review',label:'Owner Review',c:'blue',owner:true},
   {id:'verify',label:'Verify Sections',c:'green'},
@@ -423,7 +424,6 @@ var TABS = [
   {id:'emergency',label:'Emergency',c:'red'},
   {id:'payment',label:'Payment',c:'gold'},
   {id:'invoice',label:'Invoice',c:'gold'},
-  {id:'howto',label:'How To',c:'gray'},
   {id:'documents',label:'Training',c:'gray'},
   {id:'release',label:'Certification',c:'green'},
   {id:'history',label:'History',c:'gray'},
@@ -479,6 +479,7 @@ function rDashboard(v){
   var msgs=load(K.messages,[]),alerts=load(K.alerts,[]);
   v.innerHTML=
     '<h1>Dashboard</h1>'+
+    '<button class="card tint-green" data-go="howto" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:14px;display:block"><h3 style="margin:0 0 4px">New here? Read How to Use</h3><span class="muted">A full, plain-language guide to every section and exactly what to do. Tap to open &rarr;</span></button>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
       card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Full site verification · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
@@ -1058,17 +1059,79 @@ var HOWTO={
     'Open <b>Certification</b>. A site is Ready for public only when every section is verified Working and owner-approved. Then the next site unlocks (Load Eco → Studio → Play → AI).',
     'Use <b>Messages</b> to reply to her.']
 };
+/* Plain-language guide to every section. owner:true entries only show to owner. */
+var GUIDE=[
+  {tab:'dashboard',  name:'Dashboard',      what:'Your home screen. Shows your progress, open issues, payment status, and how much of the $60 assignment is done.', todo:'Glance here first each day to see where things stand.'},
+  {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
+  {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
+  {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works or Broken, with a screenshot name as proof.', todo:'Open each section and test every button and link before you mark it.'},
+  {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
+  {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
+  {tab:'evidence',   name:'Evidence',       what:'Your proof: screenshot and video file names for what you tested.', todo:'Add evidence for everything you verify, so the owner can check it.'},
+  {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
+  {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
+  {tab:'payment',    name:'Payment',        what:'Shows the pay, the percent complete, and the auto-check. The owner marks paid here.', todo:'You can see exactly why pay is or is not released yet.'},
+  {tab:'invoice',    name:'Invoice',        what:'Where the employee submits an invoice after the owner approves the work.', todo:'Submit only after approval. Submitting too early gets you red-flagged.'},
+  {tab:'documents',  name:'Training',       what:'Your guides and workbooks to read or download.', todo:'Read these when you start a new site.'},
+  {tab:'release',    name:'Certification',  what:'Tracks when each Load site is Ready for public. Sites unlock in order: Eco, then Studio, then Play, then AI.', todo:'A site is done only when every section passes and the owner approves. The next site then unlocks on its own.'},
+  {tab:'history',    name:'History',        what:'Every past assignment, kept forever. Nothing disappears.', todo:'Look back at finished jobs and their pay any time.'},
+  {tab:'activity',   name:'Activity',       what:'A running log of everything done in the app.', todo:'See who did what, and when.'},
+  {tab:'confirm',    name:'Confirmation',   what:'The build-plan checklist.', todo:'Confirm the plan items when asked.'},
+  {tab:'data',       name:'Data',           what:'Export, import, or reset this device’s copy of the data.', todo:'Use Export now and then to keep a backup.'}
+];
+var PAY_RULES=[
+  'Each full assignment is worth <b>$60</b> — for the whole site verified, not per hour or per day.',
+  'The Dashboard shows the <b>percent complete</b> of the $60 assignment.',
+  'The employee can submit an invoice <b>only after the owner approves</b> the work.',
+  'The owner can mark it paid <b>only when the Auto-check passes</b>: work approved, every section verified and owner-approved, steps done, and the invoice submitted.',
+  'If the work is not complete, <b>both sides are red-flagged</b> — the owner sees DO NOT PAY, and the employee sees the missing items. Finish them to clear the flag.'
+];
+var FAQ=[
+  ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
+  ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
+  ['Why is my pay not released?','Open Payment and read the Auto-check. It lists exactly what is still missing.'],
+  ['When does the next site open?','On its own, once the current site is fully certified (Eco, then Studio, then Play, then AI).'],
+  ['Does my work save across devices?','Yes. Once you sign in while online, your work syncs to every device.']
+];
 function rHowTo(v){
   var owner=isOwner();
-  function block(title,steps,tint){
+  function steps(title,arr,tint){
     return '<div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
-      steps.map(function(s){return '<li style="margin-bottom:6px">'+s+'</li>';}).join('')+'</ol></div>';
+      arr.map(function(s){return '<li style="margin-bottom:8px">'+s+'</li>';}).join('')+'</ol></div>';
   }
-  var mine=owner?block('How to use OCC — Owner (you)',HOWTO.owner,'blue'):block('How to use OCC — Employee (you)',HOWTO.employee,'purple');
-  var other=owner?block('What the employee does',HOWTO.employee,'gray'):block('What the owner does',HOWTO.owner,'gray');
-  v.innerHTML='<h1>How To</h1>'+
-    '<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+(owner?'You review, fix issues, approve, and pay only after the auto-check passes.':'You verify every section with evidence and report problems — you do not fix.')+'</div>'+
-    mine+other;
+  var html='<h1>How to Use Load Tasks — OCC</h1>';
+  html+='<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+
+    (owner?'You review the work, fix the issues she reports, approve, and pay only after the auto-check passes.'
+          :'You check every section of the site with proof and report anything broken — you do not fix it yourself.')+
+    '<p class="muted" style="margin-top:8px;margin-bottom:0">This guide is always here in the <b>How to Use</b> tab. Read it any time you are unsure.</p></div>';
+
+  // Quick start for the logged-in role
+  html+=steps(owner?'Your first 5 minutes — Owner':'Your first 5 minutes — Employee', owner?HOWTO.owner:HOWTO.employee, owner?'blue':'purple');
+
+  // What each section does
+  html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
+  GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
+    html+='<button class="card tint-gray" data-go="'+g.tab+'" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:10px;display:block">'+
+      '<h3 style="margin:0 0 4px">'+esc(g.name)+'</h3>'+
+      '<div style="margin-bottom:6px">'+g.what+'</div>'+
+      '<div class="muted"><b>What to do:</b> '+g.todo+'</div>'+
+      '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button>';
+  });
+
+  // Pay rules
+  html+='<div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+    PAY_RULES.map(function(p){return '<li style="margin-bottom:8px">'+p+'</li>';}).join('')+'</ul></div>';
+
+  // FAQ
+  html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Common questions</h3>'+
+    FAQ.map(function(q){return '<div style="margin-bottom:12px"><b>'+esc(q[0])+'</b><div class="muted" style="margin-top:2px">'+esc(q[1])+'</div></div>';}).join('')+'</div>';
+
+  // The other role, for context
+  html+=steps(owner?'What the employee does':'What the owner does', owner?HOWTO.employee:HOWTO.owner, 'gray');
+
+  v.innerHTML=html;
+  $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
 }
 
 function rDocuments(v){
