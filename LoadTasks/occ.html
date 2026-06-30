@@ -365,6 +365,49 @@ var STARTER_SECTIONS = {
   ]
 };
 function starterSectionsFor(url){return STARTER_SECTIONS[url]||[];}
+/* Today's Load Eco findings (from the manual QA pass), so they can be
+   pre-loaded as Issues in one tap. The epub item routes into ACR and is
+   flagged ACR / Blocked — reported, never fixed or linked without the
+   owner's explicit approval. {p:page, t:title, s:severity, a:actual, d:device, acr:true?} */
+var ECO_FINDINGS = [
+  {p:'Top of screen', t:'Aa theme button does nothing', s:'Major', a:'Clicking different themes changes nothing.', d:''},
+  {p:'Top of screen', t:'A- / A+ word size buttons do not work', s:'Major', a:'Pressing A- or A+ does not change word size.', d:''},
+  {p:'Top of screen', t:'Reset word size button does not work', s:'Major', a:'The reset button for word sizes does nothing.', d:''},
+  {p:'Library', t:'Ask AI about this returns no text', s:'Major', a:'"Ask AI about this" says "no text available on this page to copy" when asked to create text to copy to an AI site.', d:''},
+  {p:'Front page', t:'Tutorial glitchy off iPad', s:'Minor', a:'Tutorial is glitchy when not opened on iPad.', d:'PC'},
+  {p:'Front page', t:'Tutorial auto-speaks (jarring)', s:'Minor', a:'Tutorial automatically speaks, which is jarring.', d:''},
+  {p:'Front page', t:'Tutorial circles empty areas', s:'Minor', a:'Tutorial sometimes circles over areas with nothing there.', d:''},
+  {p:'Front page', t:'Image prompt does not work', s:'Major', a:'"Image prompt" does not work.', d:''},
+  {p:'Front page', t:'Video to audio fails from iPad library', s:'Major', a:'"Video to audio" does not work when pulling from the iPad photo library.', d:'iPad'},
+  {p:'Front page', t:'Handoff tools opens error page', s:'Major', a:'"Handoff tools" takes you to an error page.', d:''},
+  {p:'Front page', t:'Style library opens error page', s:'Major', a:'"Style library" takes you to an error page.', d:''},
+  {p:'Front page', t:'Image upscaler opens error page', s:'Major', a:'"Image upscaler" takes you to an error page.', d:''},
+  {p:'Front page', t:'Face Restore opens error page', s:'Major', a:'"Face Restore" takes you to an error page.', d:''},
+  {p:'Help / FAQ', t:'Help & FAQ too iPad-focused', s:'Minor', a:'"Help and FAQ" has a lot of language focused only on iPads.', d:''},
+  {p:'Help / FAQ', t:'"I pressed the wrong button" tab is false', s:'Minor', a:'That tab is false — the reset word-size button does not work right now.', d:''},
+  {p:'Help / FAQ', t:'"Can each item have its own look" is wrong', s:'Minor', a:'Wrong — the Aa button does not actually change color or font size.', d:''},
+  {p:'Help / FAQ', t:'"Install Load as a real app" tab redundant', s:'Minor', a:'Unneeded — these steps were already covered in a previous help tab.', d:''},
+  {p:'Import a file', t:'Import a PWA only references iPad Safari', s:'Minor', a:'Directions only refer to iPad Safari.', d:''},
+  {p:'Import a file', t:'Media assumes iPad files on PC', s:'Minor', a:'Media assumes you are pulling from iPad files, even on PC.', d:'PC'},
+  {p:'Import a file', t:'Edit video assumes iPad files on PC', s:'Minor', a:'Edit video assumes you are pulling from iPad files, even on PC.', d:'PC'},
+  {p:'Workspace', t:'Workspace opens from Import (should not)', s:'Minor', a:'Tool-heavy popup; should only open in Library or while actively working on a file, not from the import page.', d:''},
+  {p:'Workspace', t:'File tree shows no size/status badges', s:'Major', a:'"File tree" only opens the Library without size/status badges; no way to open it while in the file.', d:''},
+  {p:'Workspace', t:'Live preview same issue as file tree', s:'Major', a:'"Live preview" has the same problem as file tree.', d:''},
+  {p:'Workspace', t:'Workspace line 6 items unreachable', s:'Major', a:'Everything under line 6 opens a "this site can’t be reached" page.', d:''},
+  {p:'Create new', t:'PWA Reader Book template broken', s:'Major', a:'The PWA Reader Book template does not work.', d:''},
+  {p:'Library', t:'Uploaded audio/video do not work', s:'Major', a:'Uploaded audio and videos do not function once added.', d:'PC + iPad'},
+  {p:'Library', t:'Uploaded PDF named anonymous, formatting lost', s:'Major', a:'Uploaded PDF is auto-named "anonymous" and formatting is severely downgraded.', d:''},
+  {p:'Library', t:'Uploaded images do not show', s:'Major', a:'Uploaded images do not show.', d:''},
+  {p:'Library', t:'HTML cover editing blanks images', s:'Major', a:'HTML cover editing blanks out images.', d:''},
+  {p:'Library', t:'Some webapps stuck loading on iPad', s:'Major', a:'A PWA/Webapp uploaded on iPad is stuck forever-loading, but only for some webapps.', d:'iPad'},
+  {p:'Library', t:'Editing webapp words on PC overlays buttons', s:'Major', a:'Editing words in webapps on PC glitches, making the webapp overlay the Load buttons.', d:'PC'},
+  {p:'Library', t:'Tool icons vanish on iPad after upload', s:'Minor', a:'Tool icons at top of HTML/webapps disappear on iPad after uploading (still clickable; fine on PC).', d:'iPad'},
+  {p:'Library', t:'Book check button misleading', s:'Minor', a:'"Book check" rated a near-empty generic webapp as a college-level read.', d:''},
+  {p:'Library', t:'EPUB formatting & TOC broken on iPad', s:'Major', a:'EPUB books have weird formatting and the table of contents does not work once transferred over on iPad.', d:'iPad'},
+  {p:'Library', t:'[ACR / BLOCKED] EPUB table of contents routes into ACR', s:'Minor', a:'Clicking a table-of-contents tab in the epub reader opens a non-working version of the "ancient covenant record" and will not return to the epub (PC or certain books). ROUTES INTO ACR — off limits; do not fix or link without the owner’s explicit approval.', d:'', acr:true},
+  {p:'Library', t:'"Viewer frame not available" in dev tab', s:'Minor', a:'"Viewer frame not available" shows in the developer tab for everything uploaded.', d:''},
+  {p:'Edit video', t:'Speed change lags/stutters video', s:'Major', a:'Speeding up or slowing down a video makes it lag and stutter a lot.', d:''}
+];
 function siteCertified(url){var a=load(K.assignments,[]).filter(function(x){return x.site===url;})[0];if(!a)return false;var vs=siteVerifyStats(url);return (a.status==='Approved'||a.status==='Paid')&&vs.total>0&&vs.ok===vs.total&&vs.approved===vs.total;}
 function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)return false;if(!siteCertified(SITES[i].url))return true;}return false;}
 function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
@@ -748,6 +791,14 @@ function rIssues(v){
       fldArea('iSteps','Steps taken')+fldArea('iExp','Expected result')+fldArea('iAct','Actual result')+
       fld('iShot','Screenshot / video reference','text')+fldArea('iNotes','Notes')+
       '<button class="btn gold" id="iSave">Save issue</button></div>'+
+    (function(){
+      var have=issues.map(function(x){return x.title;});
+      var missing=ECO_FINDINGS.filter(function(f){return have.indexOf(f.t)<0;});
+      if(!missing.length)return '';
+      return '<div class="card tint-blue" style="margin-bottom:14px"><h3>Load today’s Load Eco findings</h3>'+
+        '<p class="muted">Add the '+missing.length+' issues from today’s manual check in one tap, so you can retest them instead of starting from scratch. The epub item that routes into ACR is added as <b>ACR / Blocked</b> — reported only, not fixed.</p>'+
+        '<button class="btn blue" id="iLoadFindings">Add today’s findings as issues</button></div>';
+    })()+
     '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="iExport">Export JSON</button><button class="btn sm ghost" id="iPrint">Printable report</button></div>'+
     '<div class="card"><h3>Logged Issues ('+issues.length+')</h3><div id="iList"></div></div>';
   $('#iSave',v).addEventListener('click',function(){
@@ -757,6 +808,23 @@ function rIssues(v){
       severity:$('#iSev',v).value,status:'New',shot:$('#iShot',v).value,notes:$('#iNotes',v).value,
       by:session().name,at:nowISO()};
     issues.unshift(issue);store(K.issues,issues);logActivity('Issue created',t);toast('Issue saved');render('issues');sync(function(){return api('POST','/issues',issue);},'issues');
+  });
+  var loadBtn=$('#iLoadFindings',v);
+  if(loadBtn)loadBtn.addEventListener('click',function(){
+    var have=issues.map(function(x){return x.title;});
+    var missing=ECO_FINDINGS.filter(function(f){return have.indexOf(f.t)<0;});
+    if(!missing.length){toast('All findings already added');return;}
+    var ecoName=SITES[0].name, me=session().name, now=nowISO();
+    var made=missing.map(function(f,i){
+      return {id:'iss_'+Date.now()+'_'+i,title:f.t,site:ecoName,page:f.p,browser:'',device:f.d||'',
+        steps:'',expected:'',actual:f.a,severity:f.s,status:'New',shot:'',
+        notes:f.acr?'ACR / BLOCKED — routes into an ACR site. Off limits; needs the owner’s explicit approval. Do not fix or link.':'',
+        by:me,at:now};
+    });
+    issues=made.concat(issues);store(K.issues,issues);
+    logActivity('Loaded today’s findings',made.length+' issues');toast('Added '+made.length+' issues');
+    if(isOnline()){Promise.all(made.map(function(iss){return api('POST','/issues',iss);})).then(function(){return hydrate();}).then(function(){render('issues');}).catch(function(){render('issues');});}
+    else render('issues');
   });
   $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
   $('#iPrint',v).addEventListener('click',function(){window.print();});
