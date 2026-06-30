@@ -76,6 +76,55 @@ const SEED_SITES = [
   { id: 'asg_play',   site: 'https://loadeco.app/LoadPlay/',     name: 'Load Play' },
   { id: 'asg_ai',     site: 'https://loadeco.app/LoadAI/',       name: 'Load AI' }
 ];
+/* Daily $60 plan for Load Eco (mirrors the client). Each day = a checklist
+   of items, each tested on PC/iPad/phone across Safari/Chrome/Opera. */
+const DAY_PLAN_ECO = {
+  site: 'https://loadeco.app',
+  days: [
+    { title: 'Day 1 — Top bar & Front page', items: ['Top bar — Aa theme switcher','Top bar — A− decrease text','Top bar — A+ increase text','Top bar — Reset word size','Front page — Tutorial','Front page — Image prompt','Front page — Video to audio','Front page — Handoff tools','Front page — Style library','Front page — Image upscaler','Front page — Face Restore'] },
+    { title: 'Day 2 — Help/FAQ & Import', items: ['Help/FAQ — main page','Help/FAQ — "I pressed the wrong button"','Help/FAQ — "Can each item have its own look"','Help/FAQ — "Install Load as a real app"','Library — Ask AI about this','Import — Import a PWA','Import — Media','Import — Edit video entry'] },
+    { title: 'Day 3 — Workspace & Create new', items: ['Workspace — open from Library','Workspace — File tree','Workspace — Live preview','Workspace — line-6 tools','Create new — PWA Reader Book template','Create new — other templates','Create new — start a blank file','Workspace — access points'] },
+    { title: 'Day 4 — Library uploads', items: ['Library — upload audio','Library — upload video','Library — upload PDF','Library — upload images','Library — HTML cover editing','Library — webapp upload (iPad)','Library — editing words in webapp','Library — tool icons on HTML/webapp','Library — Book check button'] },
+    { title: 'Day 5 — Reader & Edit video', items: ['Reader — EPUB formatting','Reader — EPUB table of contents','Reader — EPUB navigation','Reader — viewer frame status','Edit video — speed up / slow down','Edit video — trim / cut','Edit video — export','Edit video — audio'] }
+  ]
+};
+/* Auto-create the daily assignments + their checklist sections if none exist,
+   so the employee never waits for the owner to hand them out. */
+async function ensureDayPlan(env) {
+  const have = await env.DB.prepare("SELECT COUNT(*) AS n FROM assignments WHERE kind = 'verify'").first();
+  if (have && have.n > 0) return;
+  const SITE = DAY_PLAN_ECO.site, stmts = [];
+  DAY_PLAN_ECO.days.forEach((d, i) => {
+    const id = 'day_loadecoapp_' + (i + 1);
+    const goal = 'Verify all ' + d.items.length + ' items on today’s checklist, on PC, iPad and phone across Safari, Chrome and Opera. Mark each Works or Broken with a screenshot. The day cannot be submitted until every item is done.';
+    stmts.push(env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+      .bind(id, d.title, SITE, 'Employee', i + 1, 60, 0, goal, 'Not Started', '', '', '', '', '', 'verify', JSON.stringify(d.items)));
+    d.items.forEach((name, j) => stmts.push(env.DB.prepare('INSERT OR IGNORE INTO sections (id,site,name,status,evidence,notes,owner_ok,verified_at,updated_by) VALUES (?,?,?,?,?,?,0,?,?)')
+      .bind('secd_' + id + '_' + j, SITE, name, 'Untested', '', '', '', '')));
+  });
+  await env.DB.batch(stmts);
+}
+/* Rule B: after two verify days with issues logged (since the last re-cert),
+   auto-open a re-certification day. No owner action needed. */
+async function ensureRecertIfDue(env) {
+  const SITE = DAY_PLAN_ECO.site;
+  const pend = await env.DB.prepare("SELECT COUNT(*) AS n FROM assignments WHERE kind = 'recert' AND status != 'Paid'").first();
+  if (pend && pend.n > 0) return; // a re-verify day is already open
+  const lr = await env.DB.prepare("SELECT COALESCE(MAX(week),0) AS w FROM assignments WHERE kind = 'recert' AND status IN ('Approved','Paid')").first();
+  const lastW = (lr && lr.w) || 0;
+  const days = await env.DB.prepare("SELECT id FROM assignments WHERE kind = 'verify' AND status IN ('Approved','Paid') AND week > ?").bind(lastW).all();
+  let issueDays = 0;
+  for (const d of (days.results || [])) {
+    const c = await env.DB.prepare("SELECT COUNT(*) AS n FROM issues WHERE assignment = ?").bind(d.id).first();
+    if (c && c.n > 0) issueDays++;
+  }
+  if (issueDays < 2) return;
+  const mw = await env.DB.prepare("SELECT COALESCE(MAX(week),0) AS w FROM assignments WHERE kind IN ('verify','recert')").first();
+  const w = ((mw && mw.w) || 0) + 1;
+  const goal = 'Re-verify the issues that were marked fixed. Retest each fixed item on PC, iPad and phone, and mark it Works (with a screenshot) or still Broken. New areas stay locked until the owner approves this day.';
+  await env.DB.prepare('INSERT OR IGNORE INTO assignments (id,title,site,worker,week,pay,bonus,goal,status,submitted_date,approved_date,paid_date,owner_notes,invoice_submitted,invoice_submitted_date,kind,scope) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?)')
+    .bind('recert_loadecoapp_' + w, 'Re-certification (Day ' + w + ') — retest fixes', SITE, 'Employee', w, 60, 0, goal, 'Not Started', '', '', '', '', '', 'recert', '').run();
+}
 /* Hard 48-hour auto-delete for UPLOADED screenshots only (rows with an
    r2_key, which now holds the D1 image id). Typed-filename evidence (no
    r2_key) is weightless text and is kept. Runs opportunistically on
@@ -163,6 +212,8 @@ async function handle(req, env, origin) {
 
   if (method === 'GET' && path.endsWith('/api/occ/bootstrap')) {
     await ensureSeed(env);
+    await ensureDayPlan(env);
+    await ensureRecertIfDue(env);
     await purgeExpiredEvidence(env);
     const [a, c, i, e, m, al, sec] = await Promise.all([
       env.DB.prepare('SELECT id,title,site,worker,week,pay,bonus,goal,status, submitted_date AS submittedDate, approved_date AS approvedDate, paid_date AS paidDate, owner_notes AS ownerNotes, invoice_submitted AS invoiceSubmitted, invoice_submitted_date AS invoiceSubmittedDate, kind, scope FROM assignments').all(),
