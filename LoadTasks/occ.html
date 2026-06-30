@@ -544,7 +544,18 @@ function rAssignments(v){
   var owner=isOwner();
   var _st=checklistStats();var reqTasks=_st.total>0&&_st.done===_st.total;var reqEvidence=(load(K.issues,[]).length||load(K.evidence,[]).length)>0;
   var _vs=siteVerifyStats(a.site);var reqSections=_vs.total>0 && siteSections(a.site).filter(function(s){return s.status==='Untested'||(s.status==='Works'&&!(s.evidence&&s.evidence.trim()));}).length===0;
-  v.innerHTML='<h1>Assignments Center</h1>'+
+  var _pc=pctComplete(a);
+  var scopeCard='<div class="card tint-green" style="margin-bottom:14px"><h3>What the pay covers</h3>'+
+    '<p class="muted">One flat fee per fully verified site — released only after the work is proven complete and approved. That includes:</p>'+
+    '<ul style="margin:6px 0 10px;padding-left:20px;line-height:1.7">'+
+      '<li>Verify <b>every section</b> of the site ('+_vs.ok+' / '+_vs.total+' done) — testing every button and link in each.</li>'+
+      '<li>Attach <b>screenshot evidence</b> for each section.</li>'+
+      '<li>Complete <b>all verification steps</b> ('+_st.done+' / '+_st.total+' done) — inventory, click-through, first-time review, browser comparison, report.</li>'+
+      '<li><b>Log every issue</b> found, with <b>owner approval</b> on each section.</li>'+
+    '</ul>'+
+    '<div class="progress"><i style="width:'+_pc+'%"></i></div>'+
+    '<p class="muted" style="margin-top:8px">Assignment '+_pc+'% complete. Pay is released only at 100% with every check passed.</p></div>';
+  v.innerHTML='<h1>Assignments Center</h1>'+ scopeCard +
     '<div class="card tint-purple">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
       '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>Full site verification</b></span></div>'+
