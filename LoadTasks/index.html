@@ -47,6 +47,7 @@
       </picture>
       <div class="splash-actions">
         <button class="primary-action" data-view="dashboard" data-route>Open Dashboard</button>
+        <button type="button" class="secondary-action occ-splash-menu" aria-label="Open menu" onclick="document.querySelector('.topnav').classList.add('open');document.getElementById('navBackdrop').classList.add('open');">Menu</button>
         <a class="secondary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);color:#ffe07a;font-weight:800;backdrop-filter:blur(8px)">OCC Login</a>
         <button class="secondary-action" data-view="intake" data-route>Upload Build</button>
         <button class="secondary-action" data-view="notes" data-route>Paste Notes</button>
@@ -65,6 +66,11 @@
         </div>
       </div>
       <button id="menuToggle" type="button" aria-label="Open menu" onclick="document.querySelector('.topnav').classList.add('open');document.getElementById('navBackdrop').classList.add('open');" style="flex:0 0 auto;white-space:nowrap;cursor:pointer">Menu &#9776;</button>
+      <a class="occ-login-header" href="occ.html" aria-label="Open OCC login" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;margin-right:8px;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);border-radius:10px;color:#ffe07a;text-decoration:none;font-weight:800;white-space:nowrap;flex:0 0 auto">OCC Login</a>
+      <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
+        <span class="icon-mini" data-icon="refresh"></span>
+      </button>
+    </header>
       <nav class="topnav" aria-label="Primary navigation">
         <div class="nav-head">
           <img src="assets/icons/load-tasks-icon-96x96.png" alt="" class="nav-head-icon">
@@ -283,11 +289,6 @@
           document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
         })();
       </script>
-      <a class="occ-login-header" href="occ.html" aria-label="Open OCC login" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;margin-right:8px;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);border-radius:10px;color:#ffe07a;text-decoration:none;font-weight:800;white-space:nowrap;flex:0 0 auto">OCC Login</a>
-      <button class="icon-button" id="hardRefresh" aria-label="Hard refresh app state">
-        <span class="icon-mini" data-icon="refresh"></span>
-      </button>
-    </header>
 
     <main id="main" class="main-setup area">
       <aside class="side-rail" aria-label="Build command rail">
