@@ -247,7 +247,11 @@ body.app-open .topbar { display: flex; }
 }
 body.app-open .main-setup area { display: grid; }
 body.app-open .splash-screen { display: none; }
-.side-rail {
+/* Navigation now lives in the slide-out Menu drawer; retire the duplicate
+   side rail (it became a messy horizontal scroll strip on iPad). */
+.main-setup area { grid-template-columns: 1fr; }
+.side-rail { display: none !important; }
+.side-rail--legacy {
   position: sticky;
   top: 92px;
   height: calc(100vh - 110px);
