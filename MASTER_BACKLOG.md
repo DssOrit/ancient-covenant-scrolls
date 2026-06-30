@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7e`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7f`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -158,13 +158,13 @@ Workspace:
 - **QA-24** Everything under line 6 opens a "this site can't be reached" page. **SAME ROOT AS QA-10/11/12/13.** The hub's last section has `<a href="./tools/style-library.html">` / `image-upscaler.html` / `face-restore.html` anchors (and a Tools button to `./tools/index.html`). Those files exist on `origin/main` and the links are correct, so this is not reproducible from the code — same live-site/`tools/` serving question as QA-10–13. Need the exact error + URL + which site.
 
 Create new:
-- **QA-25** PWA Reader Book template does not work.
+- **QA-25** PWA Reader Book template does not work. **FIX SHIPPED v17g7f** — `buildAcrTemplate` referenced `opts.reader-friendly` in four places, which JS parses as `opts.reader - friendly` and threw `ReferenceError: friendly is not defined`, aborting the whole template build every time. Changed all four to `opts['reader-friendly']` (the actual option key, per the `keys` list).
 
 Library:
-- **QA-26** Uploaded audio and video (PC and iPad) do not function once added.
-- **QA-27** Uploaded PDF auto-named "anonymous" and formatting severely downgraded.
-- **QA-28** Uploaded images do not show.
-- **QA-29** HTML cover editing blanks out images.
+- **QA-26** Uploaded audio and video (PC and iPad) do not function once added. **LIKELY FIXED v17g7f (verify on device).** Same root cause as QA-28: the media wrapper's `<video>/<audio src="blob:…">` couldn't read the parent-origin blob under the strict sandbox. The new media sandbox (`allow-same-origin`) lets the blob load. Audio/video may still hit codec-specific limits on iPad, so confirm on device.
+- **QA-27** Uploaded PDF auto-named "anonymous" and formatting severely downgraded. **NAMING FIXED v17g7f** — `handlePdf` adopted `meta.info.Title` even when it was junk like "Anonymous"/"Untitled", overriding the file the user picked; now it ignores those junk titles and keeps the file name. **Formatting part NOT fixed (by design):** PDFs are imported via text extraction (pdf.js `getTextContent`), which drops layout/fonts/images — a known tradeoff. Preserving layout would need a render-to-image/page-canvas mode (a feature decision, not a bug fix).
+- **QA-28** Uploaded images do not show. **FIX SHIPPED v17g7f** — the image wrapper (`<img src="blob:…">`) loaded into a strict-sandbox frame (opaque origin), which can't read the parent-origin blob URL, so the image silently failed. Added a media-only sandbox (`allow-same-origin`, no scripts — the wrapper has none) in `applyViewerSandbox` so the blob loads.
+- **QA-29** HTML cover editing blanks out images. **NEEDS CLARIFICATION/REPRO** — ambiguous: does the cover's own image render blank (likely a canvas/CORS taint when drawing an image into the cover canvas), or does editing the cover blank out the book's body images? `openCoverDesigner` draws manuscript images to a canvas; a tainted canvas would export blank. Need: which "blank" is meant + a sample to reproduce before touching it.
 - **QA-30** PWA/Webapp uploaded on iPad stuck in forever-loading (only some webapps).
 - **QA-31** [SCREENSHOT] Editing words in webapps on PC glitches — the webapp's pinned content overlays the Load toolbar buttons. Cause located: `openProseEditor` in `load/load.js`; injected webapp content with fixed/absolute elements escapes the editor pane. **FIX SHIPPED v17g7a** — made the editor scroll pane a containing block (`position:relative;transform:translateZ(0)`) so the webapp's fixed/absolute bars stay trapped inside the editing area instead of overlaying the Load toolbar. Needs user verification on PC.
 - **QA-32** Tool button icons at the top of HTML/webapps disappear on iPad after uploading (still clickable; does not disappear on PC).

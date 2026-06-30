@@ -700,11 +700,11 @@ window.LoadAudioFix = {
  '</nav>'
  : '';
 
- var hasControls = !!(opts.search || opts['font-controls'] || opts.reader-friendly || opts.tts);
+ var hasControls = !!(opts.search || opts['font-controls'] || opts['reader-friendly'] || opts.tts);
  var controlsHtml = hasControls ? '<div class="controls">' +
  (opts.search ? '<input type="search" id="acr-q" placeholder="Search in this book…" aria-label="Search">' : '') +
  (opts['font-controls'] ? '<button id="acr-font-down" aria-label="Smaller text">A−</button><button id="acr-font-up" aria-label="Larger text">A+</button><button id="acr-theme" aria-label="Theme">◐</button>' : '') +
- (opts.reader-friendly ? '<button id="acr-reader-friendly" aria-label="Reading support font"> Readability</button>' : '') +
+ (opts['reader-friendly'] ? '<button id="acr-reader-friendly" aria-label="Reading support font"> Readability</button>' : '') +
  (opts.tts ? '<button id="acr-tts" aria-label="Read aloud"> Read</button>' : '') +
  '</div>' : '';
 
@@ -723,12 +723,12 @@ window.LoadAudioFix = {
  '(function(){',
  (opts['font-controls'] ? 'var step=parseFloat(localStorage.getItem("acr_font")||"0");document.body.style.fontSize=(17+step*1.5)+"px";' : ''),
  (opts['font-controls'] ? 'var themes=["","theme-cream","theme-sepia","theme-light"];var ti=parseInt(localStorage.getItem("acr_theme")||"0",10);document.body.classList.add(themes[ti]);' : ''),
- (opts.reader-friendly ? 'if(localStorage.getItem("acr_dys")==="1")document.body.classList.add("reader-friendly");' : ''),
+ (opts['reader-friendly'] ? 'if(localStorage.getItem("acr_dys")==="1")document.body.classList.add("reader-friendly");' : ''),
  hasControls ? 'document.body.classList.add("has-controls");' : '',
  (opts['font-controls'] ? 'var fu=document.getElementById("acr-font-up");if(fu)fu.onclick=function(){step=Math.min(6,step+1);localStorage.setItem("acr_font",step);document.body.style.fontSize=(17+step*1.5)+"px";};' : ''),
  (opts['font-controls'] ? 'var fd=document.getElementById("acr-font-down");if(fd)fd.onclick=function(){step=Math.max(-2,step-1);localStorage.setItem("acr_font",step);document.body.style.fontSize=(17+step*1.5)+"px";};' : ''),
  (opts['font-controls'] ? 'var th=document.getElementById("acr-theme");if(th)th.onclick=function(){document.body.classList.remove(themes[ti]);ti=(ti+1)%themes.length;document.body.classList.add(themes[ti]);localStorage.setItem("acr_theme",ti);};' : ''),
- (opts.reader-friendly ? 'var dy=document.getElementById("acr-reader-friendly");if(dy)dy.onclick=function(){document.body.classList.toggle("reader-friendly");localStorage.setItem("acr_dys",document.body.classList.contains("reader-friendly")?"1":"0");};' : ''),
+ (opts['reader-friendly'] ? 'var dy=document.getElementById("acr-reader-friendly");if(dy)dy.onclick=function(){document.body.classList.toggle("reader-friendly");localStorage.setItem("acr_dys",document.body.classList.contains("reader-friendly")?"1":"0");};' : ''),
  (opts.search ? 'var q=document.getElementById("acr-q");if(q)q.addEventListener("input",function(e){var needle=e.target.value.trim().toLowerCase();document.querySelectorAll("section.chapter").forEach(function(s){s.querySelectorAll("mark").forEach(function(m){m.replaceWith(document.createTextNode(m.textContent));});s.normalize();if(!needle){s.style.display="";return;}var text=s.textContent.toLowerCase();if(text.indexOf(needle)<0){s.style.display="none";return;}s.style.display="";s.querySelectorAll("p").forEach(function(p){var idx=p.textContent.toLowerCase().indexOf(needle);if(idx<0)return;var t=p.textContent;p.innerHTML="";var before=document.createTextNode(t.slice(0,idx));var hit=document.createElement("mark");hit.textContent=t.slice(idx,idx+needle.length);var after=document.createTextNode(t.slice(idx+needle.length));p.appendChild(before);p.appendChild(hit);p.appendChild(after);});});});' : ''),
  (opts.tts ? 'var tts=document.getElementById("acr-tts");var utter=null;if(tts)tts.onclick=function(){if(speechSynthesis.speaking){speechSynthesis.cancel();tts.textContent=" Read";return;}var vis=Array.from(document.querySelectorAll("section.chapter")).filter(function(s){return s.style.display!=="none";});var text=vis.map(function(s){return s.textContent;}).join("\\n\\n");utter=new SpeechSynthesisUtterance(text);utter.rate=1;speechSynthesis.speak(utter);tts.textContent=" Stop";utter.onend=function(){tts.textContent=" Read";};};' : ''),
  (opts.bookmarks ? 'var saved=JSON.parse(localStorage.getItem("acr_bm")||"[]");document.querySelectorAll(".bm-btn").forEach(function(b){var ch=b.getAttribute("data-ch");if(saved.indexOf(ch)>=0)b.classList.add("on");b.onclick=function(){b.classList.toggle("on");var list=JSON.parse(localStorage.getItem("acr_bm")||"[]");if(b.classList.contains("on")){if(list.indexOf(ch)<0)list.push(ch);}else{list=list.filter(function(x){return x!==ch;});}localStorage.setItem("acr_bm",JSON.stringify(list));};});' : ''),
@@ -9186,7 +9186,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7e</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7f</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -16324,7 +16324,11 @@ window.LoadAudioFix = {
  var metaName = baseName;
  try {
  var meta = await pdf.getMetadata();
- if (meta && meta.info && meta.info.Title) metaName = meta.info.Title.trim();
+ var t = meta && meta.info && meta.info.Title ? String(meta.info.Title).trim() : '';
+ // Ignore junk embedded titles (e.g. "Anonymous", "Untitled", a temp
+ // document name) so they don't override the file the user picked. Many
+ // PDFs carry a generic /Title that was overwriting the real name (QA-27).
+ if (t && !/^(anonymous|untitled|untitled document|document\s*\d*|microsoft word.*)$/i.test(t)) metaName = t;
  } catch (e) {}
 
  var pagesHtml = [];
@@ -17526,6 +17530,13 @@ window.LoadAudioFix = {
  var TRUST_KEY = 'load_trust_apps_v1';
  var STRICT_SANDBOX = 'allow-scripts';
  var TRUSTED_SANDBOX = 'allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-storage-access-by-user-activation';
+ // Media items render through Load's own generated wrapper (just an
+ // <img>/<video>/<audio> tag pointing at a blob: URL). The strict sandbox
+ // gives that wrapper an opaque origin, so it can't read the parent-origin
+ // blob and the media never displays (QA-28 images, QA-26 audio/video).
+ // The wrapper contains NO user script, so 'allow-same-origin' alone (no
+ // allow-scripts) is enough to load the blob and is the safest option.
+ var MEDIA_SANDBOX = 'allow-same-origin';
  function getTrust(id) {
    if (!id) return false;
    try { return !!(JSON.parse(localStorage.getItem(TRUST_KEY) || '{}')[id]); }
@@ -17542,7 +17553,10 @@ window.LoadAudioFix = {
  function applyViewerSandbox(app) {
    var frame = $('viewer-frame'); if (!frame) return;
    var trusted = app && getTrust(app.id);
-   frame.setAttribute('sandbox', trusted ? TRUSTED_SANDBOX : STRICT_SANDBOX);
+   var sandbox;
+   if (app && app.kind === 'media') sandbox = MEDIA_SANDBOX;
+   else sandbox = trusted ? TRUSTED_SANDBOX : STRICT_SANDBOX;
+   frame.setAttribute('sandbox', sandbox);
    try { frame.referrerPolicy = 'no-referrer'; } catch (e) {}
  }
  function refreshTrustButton(app) {
