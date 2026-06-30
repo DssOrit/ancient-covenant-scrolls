@@ -14,6 +14,16 @@
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
+/* Self-enforced safety cap so R2 can never run past the free tier and
+   bill you. We stop new uploads well under Cloudflare's 10 GB free limit. */
+const R2_SOFT_CAP_BYTES = 2 * 1024 * 1024 * 1024; // 2 GB (20% of the 10 GB free tier)
+const MAX_FILE_BYTES = 8 * 1024 * 1024;           // 8 MB per screenshot
+
+async function evidenceBytesUsed(env) {
+  const r = await env.DB.prepare("SELECT COALESCE(SUM(size),0) AS n FROM evidence WHERE r2_key IS NOT NULL AND r2_key != ''").first();
+  return (r && r.n) || 0;
+}
+
 function cors(origin) {
   return {
     'Access-Control-Allow-Origin': origin || '*',
@@ -164,7 +174,8 @@ async function handle(req, env, origin) {
       env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at FROM sections').all()
     ]);
-    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results }, 200, origin);
+    const storageUsed = await evidenceBytesUsed(env);
+    return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results, storageUsed: storageUsed, storageCap: R2_SOFT_CAP_BYTES, storageEnabled: !!env.EVIDENCE }, 200, origin);
   }
 
   if (path.includes('/api/occ/issues')) {
@@ -229,10 +240,18 @@ async function handle(req, env, origin) {
     const form = await req.formData();
     const file = form.get('file');
     if (!file) return json({ error: 'no file' }, 400, origin);
+    const size = file.size || 0;
+    if (size > MAX_FILE_BYTES) return json({ error: 'file too big', limitMB: MAX_FILE_BYTES / 1048576 }, 413, origin);
+    // Free up space first (delete anything past 48h), then enforce our own cap.
+    await purgeExpiredEvidence(env);
+    const used = await evidenceBytesUsed(env);
+    if (used + size > R2_SOFT_CAP_BYTES) {
+      return json({ error: 'storage cap reached', used, cap: R2_SOFT_CAP_BYTES }, 507, origin);
+    }
     const key = 'evidence/' + Date.now() + '_' + (file.name || 'file');
     await env.EVIDENCE.put(key, file.stream(), { httpMetadata: { contentType: file.type || 'application/octet-stream' } });
-    await env.DB.prepare('INSERT INTO evidence (id,shot,video,issue,browser,device,notes,r2_key,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?)')
-      .bind(uid('ev'), file.name || '', '', form.get('issue') || '', form.get('browser') || '', form.get('device') || '', form.get('notes') || '', key, me.name, new Date().toISOString()).run();
+    await env.DB.prepare('INSERT INTO evidence (id,shot,video,issue,browser,device,notes,r2_key,size,created_by,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(uid('ev'), file.name || '', '', form.get('issue') || '', form.get('browser') || '', form.get('device') || '', form.get('notes') || '', key, size, me.name, new Date().toISOString()).run();
     return json({ ok: true, key }, 200, origin);
   }
 
@@ -271,6 +290,7 @@ async function ensureSchema(env) {
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS sections (id TEXT PRIMARY KEY, site TEXT, name TEXT, status TEXT DEFAULT 'Untested', evidence TEXT, notes TEXT, owner_ok INTEGER DEFAULT 0, verified_at TEXT, updated_by TEXT)").run();
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted INTEGER DEFAULT 0").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
   _schemaReady = true;
 }
 

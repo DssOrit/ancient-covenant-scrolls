@@ -274,7 +274,7 @@ var K = {
   session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
   issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
   alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity',
-  sections:'occ_sections'
+  sections:'occ_sections', storage:'occ_storage'
 };
 function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
 function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
@@ -382,6 +382,7 @@ function hydrate(){
     if(d.messages)store(K.messages,d.messages);
     if(d.alerts)store(K.alerts,d.alerts);
     if(d.sections)store(K.sections,d.sections);
+    if(d.storageUsed!=null)store(K.storage,{used:d.storageUsed,cap:d.storageCap,enabled:!!d.storageEnabled});
   });
 }
 /* optimistic local write already done by caller; push to server then refresh */
@@ -733,9 +734,15 @@ function uploadEvidence(file,fields,cb){
     .then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}return {ok:r.ok,status:r.status,d:d};});})
     .then(cb).catch(function(e){cb({ok:false,status:0,d:{error:e.message||'network'}});});
 }
+function fmtBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(0)+' KB';if(n<1073741824)return (n/1048576).toFixed(1)+' MB';return (n/1073741824).toFixed(2)+' GB';}
 function rEvidence(v){
   var ev=load(K.evidence,[]);
-  v.innerHTML='<h1>Evidence Center</h1>'+
+  var st=load(K.storage,{used:0,cap:2147483648,enabled:false});
+  var pct=st.cap?Math.min(100,Math.round(st.used/st.cap*100)):0;
+  var meter='<div class="card tint-gray" style="margin-bottom:14px"><h3>Storage used</h3>'+
+      '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
+      '<p class="muted" style="margin-top:8px">'+fmtBytes(st.used)+' of '+fmtBytes(st.cap)+' safe limit ('+pct+'%). We stop new uploads at this limit so you are never billed. Images also auto-delete after 48 hours.</p></div>';
+  v.innerHTML='<h1>Evidence Center</h1>'+ meter +
     '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a screenshot</h3>'+
       '<p class="muted">Stored safely in separate storage, so the site stays fast. Uploaded images <b>auto-delete after 48 hours</b> — the text record (file name, date) is kept.</p>'+
       '<label class="fld"><span>Choose an image</span><input id="evFile" type="file" accept="image/*"></label>'+
@@ -760,6 +767,8 @@ function rEvidence(v){
       btn.disabled=false;
       if(res.ok){logActivity('Screenshot uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
       else if(res.status===501){toast('Image storage is off. In Cloudflare, bind the R2 bucket named occ-evidence as EVIDENCE, then try again.');}
+      else if(res.status===507){toast('Storage is at the safe limit, so uploads paused to keep you from being billed. Old images clear after 48h — try later, or use the file-name option below.');}
+      else if(res.status===413){toast('That image is too big (max 8 MB). Take a smaller screenshot or use the file-name option.');}
       else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
     });
   });
@@ -1136,6 +1145,7 @@ var FAQ=[
   ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
   ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (it auto-deletes after 48 hours to keep the site fast) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
   ['Will uploads slow the site or fill it up?','No. Uploaded images are kept in separate storage, not inside the app, and they auto-delete after 48 hours. The site stays fast.'],
+  ['Could uploads ever cost money?','No. The app sets its own safe storage limit well under the free tier and stops new uploads before it is reached, so you are never billed. The Evidence page shows a storage-used meter. The file-name option is always free too.'],
   ['Why is my pay not released?','Open Payment and read the Auto-check. It lists exactly what is still missing.'],
   ['When does the next site open?','On its own, once the current site is fully certified (Eco, then Studio, then Play, then AI).'],
   ['Does my work save across devices?','Yes. Once you sign in while online, your work syncs to every device.']

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS issues (
 CREATE TABLE IF NOT EXISTS evidence (
   id        TEXT PRIMARY KEY,
   shot TEXT, video TEXT, issue TEXT, browser TEXT, device TEXT,
-  notes TEXT, r2_key TEXT, created_by TEXT, created_at TEXT
+  notes TEXT, r2_key TEXT, size INTEGER DEFAULT 0, created_by TEXT, created_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS messages (
