@@ -356,7 +356,8 @@ function saveAssignment(a){var as=load(K.assignments,[]);var idx=-1;for(var i=0;
 function ensureSiteSetup(site){var as=load(K.assignments,[]);if(!as.filter(function(x){return x.site===site.url;}).length){as.push({id:'asg'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-10),title:site.name.replace(' / Main Load','')+' — Full Section Verification',site:site.url,worker:'Witness Bond',week:1,pay:60,bonus:0,goal:'Verify that EVERY section, button and link of '+site.name+' works before it goes public. Mark each Works or Broken with evidence. You verify and report; broken items become Issues for the owner to fix, then you retest. Not ready for sale until every section is verified Working and the owner approves.',status:'Not Started',submittedDate:'',approvedDate:'',paidDate:'',ownerNotes:'',invoiceSubmitted:false});store(K.assignments,as);}var secs=load(K.sections,[]);if(!secs.filter(function(x){return x.site===site.url;}).length){SECTION_SEED.forEach(function(n,i){secs.push({id:'sec'+site.url.replace(/[^a-z0-9]+/gi,'').slice(-6)+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});store(K.sections,secs);}}
 function siteSections(url){return load(K.sections,[]).filter(function(s){return s.site===url;});}
 function sectionVerified(s){return s.status==='Works' && !!(s.evidence&&s.evidence.trim());}
-function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length};}
+function isACRBlocked(s){return s.status==='ACR / Blocked';}
+function siteVerifyStats(url){var rows=siteSections(url);var ok=rows.filter(sectionVerified).length;return {ok:ok,total:rows.length,broken:rows.filter(function(s){return s.status==='Broken';}).length,approved:rows.filter(function(s){return s.ownerOk;}).length,acr:rows.filter(isACRBlocked).length};}
 
 /* ---------- session / auth ---------- */
 function session(){return load(K.session,null);}
@@ -461,7 +462,8 @@ function statusChip(s){
   var map={'Not Started':'s-gray','In Progress':'s-blue','Submitted':'s-purple','Under Review':'s-orange',
     'Needs Retest':'s-orange','Returned':'s-orange','Approved':'s-green','Payment Due':'s-gold','Paid':'s-green',
     'Not Submitted':'s-gray','Locked':'s-gray','Active':'s-green','In Testing':'s-blue',
-    'Needs Fixes':'s-orange','Retest Required':'s-orange','Stable Verified':'s-green','Released':'s-green'};
+    'Needs Fixes':'s-orange','Retest Required':'s-orange','Stable Verified':'s-green','Released':'s-green',
+    'ACR / Blocked':'s-red','Blocked':'s-red'};
   return '<span class="chip '+(map[s]||'s-gray')+'">'+esc(s)+'</span>';
 }
 
@@ -601,9 +603,12 @@ function rVerify(v){
   var ready=st.total>0 && st.ok===st.total && st.approved===st.total;
   var html='<h1>Verify Sections</h1>'+
     '<p class="muted">Check that <b>every section, button, and link</b> of '+esc(site.name)+' actually works before it goes public. Mark each Works or Broken and attach evidence. You <b>verify and report</b> — you do not fix. Broken ones become Issues for the owner to fix, then you retest. No evidence = not verified.</p>'+
-    '<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.broken?'Needs Fixes':'In Testing'))+'</h3>'+
+    '<div class="card tint-red" style="margin-bottom:14px"><h3>If a link routes into ACR — stop</h3>'+
+      '<p class="muted">ACR sites (ACR Reader, ACR2, ACR Solar) are <b>off limits</b>. If a button or link sends you into an ACR site, set that section to <b>ACR / Blocked</b>. Do <b>not</b> test-fix it, follow it as in-scope, or link it. It is set aside for the owner’s explicit approval. ACR / Blocked items are never counted as bugs and never auto-certify the site.</p></div>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>'+esc(site.name)+' '+statusChip(ready?'Stable Verified':(st.acr?'Blocked':(st.broken?'Needs Fixes':'In Testing')))+'</h3>'+
       '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
-      '<p class="muted" style="margin-top:8px">Verified working: <b>'+st.ok+' / '+st.total+'</b>'+(st.broken?(' · Broken: <b>'+st.broken+'</b>'):'')+' · Owner-approved: <b>'+st.approved+' / '+st.total+'</b></p>'+
+      '<p class="muted" style="margin-top:8px">Verified working: <b>'+st.ok+' / '+st.total+'</b>'+(st.broken?(' · Broken: <b>'+st.broken+'</b>'):'')+(st.acr?(' · ACR / blocked: <b>'+st.acr+'</b>'):'')+' · Owner-approved: <b>'+st.approved+' / '+st.total+'</b></p>'+
+      (st.acr?'<p style="color:var(--red);font-weight:700;margin-top:6px">'+st.acr+' section(s) route into ACR (off limits). Cannot be certified or auto-linked without the owner’s explicit approval.</p>':'')+
       (ready?'<p style="color:var(--green);font-weight:700;margin-top:6px">Every section verified + approved — ready for public.</p>':'<p class="muted">Not ready for public until every section is Works + owner-approved.</p>')+
     '</div>'+
     '<div class="card" style="margin-bottom:14px"><h3>Add a section</h3>'+
@@ -614,7 +619,7 @@ function rVerify(v){
     html+='<div class="card" style="margin-bottom:10px"><h3 style="margin-bottom:8px">'+esc(s.name)+' '+
       '<span class="chip '+stColor+'">'+esc(sectionVerified(s)?'Verified':(s.status))+'</span>'+(s.ownerOk?' <span class="chip s-green">Owner OK</span>':'')+'</h3>'+
       '<label class="fld"><span>Does it work?</span><select data-secstatus="'+s.id+'">'+
-        ['Untested','Works','Broken'].map(function(o){return '<option'+(o===s.status?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
+        ['Untested','Works','Broken','ACR / Blocked'].map(function(o){return '<option'+(o===s.status?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
       '<label class="fld"><span>Evidence (screenshot file name) — required</span><input type="text" data-secev="'+s.id+'" value="'+esc(s.evidence||'')+'" placeholder="e.g. eco-homepage.png"></label>'+
       '<label class="fld"><span>Notes</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'"></label>'+
       '<div class="row"><button class="btn sm green" data-secsave="'+s.id+'">Save</button>'+
@@ -637,6 +642,7 @@ function rVerify(v){
     r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
     if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
     if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
+    if(r.status==='ACR / Blocked'){toast('Flagged ACR / Blocked. ACR is off limits — left for the owner, not fixed or linked.');}
     persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+id,{status:r.status,evidence:r.evidence,notes:r.notes});},'verify');
   });});
   $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
@@ -1142,7 +1148,7 @@ var GUIDE=[
   {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
   {tab:'assignments',name:'Assignments',   what:'The current $60 job and its goal. Where the employee submits finished work.', todo:'Read the goal. Submit only when every section is verified and the steps are done.'},
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
-  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works or Broken, with a screenshot name as proof.', todo:'Open each section, test every button and link, then mark it and type the screenshot file name in the Evidence box. See the Screenshots note below for how.'},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works, Broken, or ACR / Blocked, with a screenshot as proof.', todo:'Test every button and link in each section. If a link routes into an ACR site, mark it ACR / Blocked and stop — do not fix or follow it. Otherwise mark Works or Broken and add the screenshot. See the Screenshots note below.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
   {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
   {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (shrunk on your device and stored in your own database — no paid storage, no card; auto-deletes after 48 hours) or just type the file name to keep a permanent text record. The owner can open any uploaded image and save it to send on for a fix.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
@@ -1166,6 +1172,7 @@ var PAY_RULES=[
 ];
 var FAQ=[
   ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
+  ['What if a link goes into an ACR site?','Stop and mark that section ACR / Blocked. ACR sites are off limits — do not test-fix, follow, or link them. They are set aside for the owner’s explicit approval and never block-counted as bugs.'],
   ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
   ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (shrunk on your device, stored in your own database, auto-deletes after 48 hours) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
   ['How do I get a screenshot to the fixer?','Open the uploaded image in Evidence and tap Save image to send. That saves the picture to your device so you can share it with the fixer (Claude). Do it within 48 hours, before the image auto-clears.'],
