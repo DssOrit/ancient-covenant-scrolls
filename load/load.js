@@ -4435,8 +4435,9 @@ window.LoadAudioFix = {
  var voiceOn = (function () {
  var raw = null;
  try { raw = localStorage.getItem(LS_TOUR_VOICE); } catch (_) {}
- // Default voice ON for first-run, OFF if user previously turned it off.
- return raw === null ? true : raw === '1';
+ // Default voice OFF — auto-speaking every step on first run was jarring
+ // (QA-06). Voice is opt-in via the Voice button and remembered after.
+ return raw === '1';
  })();
 
  var root = document.createElement('div');
@@ -4572,21 +4573,28 @@ window.LoadAudioFix = {
  backBtn.disabled = idx === 0;
  nextBtn.textContent = idx === STEPS.length - 1 ? 'Done' : 'Next';
  renderDots();
- // Find and highlight the anchor (might fail if user is on a
- // different screen — that's fine, we just centre the card).
- var rect = null;
- if (step.anchor) {
+ // Find the anchor (might be missing if the user is on a different
+ // screen — that's fine, we just centre the card with no ring).
  var el = null;
+ if (step.anchor) {
  try { el = document.querySelector(step.anchor); } catch (_) {}
- if (el) {
- try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (_) {}
- rect = el.getBoundingClientRect();
- if (rect.width === 0 && rect.height === 0) rect = null;
  }
+ // Use an INSTANT scroll, then measure on the next frame. A smooth
+ // scroll left the old code measuring the pre-scroll position, so the
+ // ring landed over empty space while the page was still moving (QA-07).
+ if (el) { try { el.scrollIntoView({ behavior: 'auto', block: 'center' }); } catch (_) {} }
+ requestAnimationFrame(function () {
+ var rect = null;
+ if (el) {
+ rect = el.getBoundingClientRect();
+ // No size, or scrolled fully off-screen — don't ring nothing.
+ var off = rect.bottom < 0 || rect.top > window.innerHeight ||
+ rect.right < 0 || rect.left > window.innerWidth;
+ if ((rect.width === 0 && rect.height === 0) || off) rect = null;
  }
  placeRing(rect);
- // Wait one frame so card has a real size before placing it.
- requestAnimationFrame(function () { placeCard(rect); });
+ placeCard(rect);
+ });
  speak(step.title + '. ' + step.body);
  }
  function endTour(seen) {
@@ -9158,7 +9166,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7b</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7c</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +

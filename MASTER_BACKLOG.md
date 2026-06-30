@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7b`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7c`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -130,15 +130,15 @@ Text controls (top of screen):
 - **QA-04** "Ask AI about this" in library fails — says "no text available on this page to copy" when asked to build text to paste into an external AI site. **FIX SHIPPED v17g7b** — root cause was the viewer frame's default strict sandbox (`allow-scripts`, no `allow-same-origin`), so reading the live page text threw and returned empty. `extractFrameText` now falls back to the app's stored HTML (scripts/styles stripped, block boundaries kept) when the live frame is inaccessible. Needs user verification.
 
 Front page:
-- **QA-05** Tutorial glitchy when not opened on iPad.
-- **QA-06** Tutorial auto-speaks (jarring).
-- **QA-07** Tutorial highlight circles land over empty areas sometimes.
-- **QA-08** "Image prompt" does not work.
-- **QA-09** "Video to audio" fails when pulling from the iPad photo library.
-- **QA-10** "Handoff tools" -> error page.
-- **QA-11** "Style library" -> error page.
-- **QA-12** "Image upscaler" -> error page.
-- **QA-13** "Face Restore" -> error page.
+- **QA-05** Tutorial glitchy when not opened on iPad. **PARTLY ADDRESSED v17g7c** — the guided-tour positioning was rebuilt (see QA-07), which removes the main visible glitch (ring/card jumping) on desktop. "Glitchy" is vague; needs a concrete desktop repro to confirm fully fixed.
+- **QA-06** Tutorial auto-speaks (jarring). **FIX SHIPPED v17g7c** — tour voice now defaults OFF (opt-in via the Voice button, remembered after). No more unprompted speech on first run.
+- **QA-07** Tutorial highlight circles land over empty areas sometimes. **FIX SHIPPED v17g7c** — `startGuidedTour`/`renderStep` measured the anchor immediately after a smooth scroll, so the ring landed on the pre-scroll position. Now uses an instant scroll, re-measures on the next frame, and hides the ring when the anchor has no size or is scrolled off-screen.
+- **QA-08** "Image prompt" does not work. **NEEDS REPRO** — the button opens the existing Image Prompt PWA (`load/image-prompt/index.html`) in an iframe overlay; the file is present and wired. "Does not work" is unspecific (likely image generation needing a provider/key, or an issue inside that PWA). Need: what happens exactly (blank? error? no result?) and on which device.
+- **QA-09** "Video to audio" fails when pulling from the iPad photo library. **NEEDS DEVICE REPRO** — iPad photo-picker / codec specific; can't reproduce off-device. Need the exact failure (no file? silent? error text?).
+- **QA-10** "Handoff tools" -> error page. **NOT REPRODUCIBLE FROM CODE** — `load/tools/handoff-tools.html` exists, is on `origin/main` (added 2026-06-21), the front-page link is a correct relative `<a href="./tools/handoff-tools.html">`, and the SW serves tool HTML network-first. Need the exact error text + URL bar value + which site (github.io vs loadeco.app/acrscrolls.com). Likely a stale device cache or a host/deploy issue, not a code bug. Possible real sub-gap: tool pages are not in the SW offline pre-cache, so opening them while offline returns the Load home page instead.
+- **QA-11** "Style library" -> error page. **NOT REPRODUCIBLE FROM CODE** — same as QA-10 (`style-library.html` exists, on main, correct link).
+- **QA-12** "Image upscaler" -> error page. **NOT REPRODUCIBLE FROM CODE** — same as QA-10 (`image-upscaler.html` exists, on main, correct link).
+- **QA-13** "Face Restore" -> error page. **NOT REPRODUCIBLE FROM CODE** — same as QA-10 (`face-restore.html` exists, on main, correct link).
 
 Help / FAQ:
 - **QA-14** "Help and FAQ" language is too iPad-focused.
