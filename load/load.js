@@ -814,11 +814,42 @@ window.LoadAudioFix = {
  }
  return 'https://chat.openai.com/';
  }
+ function htmlToText(html) {
+ if (!html) return '';
+ // Strip scripts/styles so their source code never lands in the text.
+ var cleaned = String(html)
+ .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+ .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+ .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ');
+ // Convert block boundaries to newlines so paragraphs and list items
+ // don't run together once we read textContent.
+ cleaned = cleaned
+ .replace(/<\/(p|div|h[1-6]|li|tr|header|footer|section|article|blockquote|pre)>/gi, '\n')
+ .replace(/<br\s*\/?>/gi, '\n');
+ var t = '';
+ try {
+ var d = new DOMParser().parseFromString(cleaned, 'text/html');
+ if (d && d.body) t = d.body.textContent || '';
+ } catch (e) { t = ''; }
+ return t.replace(/[ \t]+/g, ' ').replace(/\n[ \t]+/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+ }
  function extractFrameText() {
+ // 1) Prefer the live rendered frame — it reflects the current state.
+ // This only works when the app is Trusted (its sandbox grants
+ // allow-same-origin). Default strict-sandbox apps throw on
+ // contentDocument access, so we fall through to the stored HTML.
  try {
  var doc = $('viewer-frame') && $('viewer-frame').contentDocument;
- if (doc && doc.body) return String(doc.body.innerText || doc.body.textContent || '').trim();
- } catch (e) {}
+ if (doc && doc.body) {
+ var live = String(doc.body.innerText || doc.body.textContent || '').trim();
+ if (live) return live;
+ }
+ } catch (e) { /* sandboxed / cross-origin — fall through */ }
+ // 2) Fall back to the stored app HTML so Ask AI still works for the
+ // default strict-sandbox case (QA-04).
+ try {
+ if (currentApp && currentApp.html) return htmlToText(currentApp.html);
+ } catch (e2) {}
  return '';
  }
  function copyToClipboard(text) {
@@ -9127,7 +9158,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7a</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g7b</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +

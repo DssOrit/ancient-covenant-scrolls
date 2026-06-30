@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7a`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7b`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -124,10 +124,10 @@ into ACR sites and MUST NOT be touched without explicit user approval
 (CLAUDE.md locked rule 8).
 
 Text controls (top of screen):
-- **QA-01** Aa button: switching themes changes nothing.
-- **QA-02** A- / A+ word-size buttons do nothing.
-- **QA-03** Reset word-size button does nothing.
-- **QA-04** "Ask AI about this" in library fails — says "no text available on this page to copy" when asked to build text to paste into an external AI site.
+- **QA-01** Aa button: switching themes changes nothing. **DEFERRED 2026-06-30 — awaiting user decision.** Root cause: webapps render inside a sandboxed frame; Aa themes/sizing apply to Load's shell, not into the frame. Real fix (forcing styles into each webapp) can break webapp layouts, so it needs a decision: scope controls to manuscripts only (safe) vs. push into webapps (powerful, needs iPad re-verification).
+- **QA-02** A- / A+ word-size buttons do nothing. **DEFERRED — see QA-01** (same iframe-boundary root cause).
+- **QA-03** Reset word-size button does nothing. **DEFERRED — see QA-01** (same iframe-boundary root cause).
+- **QA-04** "Ask AI about this" in library fails — says "no text available on this page to copy" when asked to build text to paste into an external AI site. **FIX SHIPPED v17g7b** — root cause was the viewer frame's default strict sandbox (`allow-scripts`, no `allow-same-origin`), so reading the live page text threw and returned empty. `extractFrameText` now falls back to the app's stored HTML (scripts/styles stripped, block boundaries kept) when the live frame is inaccessible. Needs user verification.
 
 Front page:
 - **QA-05** Tutorial glitchy when not opened on iPad.
