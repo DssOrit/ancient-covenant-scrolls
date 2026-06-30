@@ -348,6 +348,23 @@ var SITES = [
   {name:'Load Play', url:'https://loadeco.app/LoadPlay/', stage:'Locked'},
   {name:'Load AI', url:'https://loadeco.app/LoadAI/', stage:'Locked'}
 ];
+/* Real page-level areas per site, so the verifier can be set up in one tap.
+   Load Eco's list mirrors the actual pages of the site. Add more sites here
+   as they unlock. */
+var STARTER_SECTIONS = {
+  'https://loadeco.app': [
+    'Top bar — themes, word size, reset',
+    'Front page — tutorial & tool tiles',
+    'Help / FAQ page',
+    'Import a file page',
+    'Workspace popup (file tree, live preview)',
+    'Create new page (templates)',
+    'Library page (uploads, covers, webapps)',
+    'EPUB / webapp reader & viewer',
+    'Edit video page'
+  ]
+};
+function starterSectionsFor(url){return STARTER_SECTIONS[url]||[];}
 function siteCertified(url){var a=load(K.assignments,[]).filter(function(x){return x.site===url;})[0];if(!a)return false;var vs=siteVerifyStats(url);return (a.status==='Approved'||a.status==='Paid')&&vs.total>0&&vs.ok===vs.total&&vs.approved===vs.total;}
 function siteLocked(url){for(var i=0;i<SITES.length;i++){if(SITES[i].url===url)return false;if(!siteCertified(SITES[i].url))return true;}return false;}
 function activeSite(){for(var i=0;i<SITES.length;i++){if(!siteCertified(SITES[i].url))return SITES[i];}return SITES[SITES.length-1];}
@@ -613,6 +630,13 @@ function rVerify(v){
     '</div>'+
     '<div class="card" style="margin-bottom:14px"><h3>Add a section</h3>'+
       '<div class="row"><input id="secNew" type="text" placeholder="Section name (e.g. Homepage, Cart, Login)"><button class="btn green" id="secAdd" style="flex:0 0 auto">Add</button></div></div>';
+  var siteLabel=site.name.replace(' / Main Load','');
+  var starterMissing=starterSectionsFor(site.url).filter(function(n){return rows.map(function(r){return r.name;}).indexOf(n)<0;});
+  if(starterMissing.length){
+    html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Quick setup for '+esc(siteLabel)+'</h3>'+
+      '<p class="muted">Add the main areas of '+esc(siteLabel)+' in one tap so you can verify each one. ('+starterMissing.length+' to add.) You can still add or delete sections after.</p>'+
+      '<button class="btn blue" id="secStarter">Add '+esc(siteLabel)+' starter sections</button></div>';
+  }
   if(!rows.length) html+='<p class="muted">No sections yet. Add each section of the site above.</p>';
   rows.forEach(function(s){
     var stColor=s.status==='Works'?'s-green':(s.status==='Broken'?'s-red':'s-gray');
@@ -636,6 +660,16 @@ function rVerify(v){
     var n=$('#secNew',v).value.trim();if(!n){toast('Type a section name');return;}
     rows.push({id:'sec_'+Date.now(),site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});
     persist(rows);toast('Section added');render('verify');sync(function(){return api('POST','/sections',{site:site.url,name:n});},'verify');
+  });
+  var starterBtn=$('#secStarter',v);
+  if(starterBtn)starterBtn.addEventListener('click',function(){
+    var existing=rows.map(function(r){return r.name;});
+    var toAdd=starterSectionsFor(site.url).filter(function(n){return existing.indexOf(n)<0;});
+    if(!toAdd.length){toast('All starter sections already added');return;}
+    toAdd.forEach(function(n,i){rows.push({id:'sec_'+Date.now()+'_'+i,site:site.url,name:n,status:'Untested',evidence:'',notes:'',ownerOk:false,at:''});});
+    persist(rows);logActivity('Starter sections added',siteLabel);toast('Added '+toAdd.length+' sections');
+    if(isOnline()){Promise.all(toAdd.map(function(n){return api('POST','/sections',{site:site.url,name:n});})).then(function(){return hydrate();}).then(function(){render('verify');}).catch(function(){render('verify');});}
+    else render('verify');
   });
   $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
     var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
