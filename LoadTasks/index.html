@@ -69,8 +69,8 @@
         <div class="nav-head">
           <img src="assets/icons/load-tasks-icon-96x96.png" alt="" class="nav-head-icon">
           <strong>Load <span>Tasks</span></strong>
+          <button type="button" class="nav-close" aria-label="Close menu" onclick="document.querySelector('.topnav').classList.remove('open');document.getElementById('navBackdrop').classList.remove('open');">&times;</button>
         </div>
-        <button type="button" class="nav-close" aria-label="Close menu" onclick="document.querySelector('.topnav').classList.remove('open');document.getElementById('navBackdrop').classList.remove('open');">&times;</button>
         <input id="nav-search" type="search" placeholder="Find tool..." autocomplete="off" aria-label="Filter navigation">
         <button data-view="dashboard" data-route>Dashboard</button>
         <button data-view="agentlab" data-route>Agent Lab</button>
