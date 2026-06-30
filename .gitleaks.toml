@@ -1,0 +1,24 @@
+# gitleaks config — extends the default rules and allowlists known
+# false positives (base64 image data, vendored/minified libs, content JSON)
+# so real secrets are still caught but CI is not tripped by non-secrets.
+title = "ancient-covenant-scrolls gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated / vendored / content files and base64 image data are not secrets"
+paths = [
+  '''Load-Standalone\.html''',
+  '''.*\.min\.js$''',
+  '''^data/.*\.json$''',
+  '''^study/content/.*\.json$''',
+  '''^load/lib-pdf.*''',
+]
+regexes = [
+  # base64 data URIs (splash images etc.) commonly contain key-like substrings
+  '''data:image/[a-zA-Z.+-]+;base64,[A-Za-z0-9+/=\s]+''',
+  # the splash image happens to contain a long 'AIza...' substring; real
+  # Google API keys are 39 chars (AIza + 35), so allow only longer matches
+  '''AIza[0-9A-Za-z_-]{50,}''',
+]
