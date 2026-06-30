@@ -109,12 +109,12 @@ body.app-open .topbar { display: flex; }
   width: min(86vw, 360px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
   padding: 16px 14px 40px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  background: linear-gradient(165deg, rgba(22,26,50,.97), rgba(8,10,22,.98));
+  background: linear-gradient(165deg, rgb(20,23,44), rgb(10,12,24));
   border-right: 1px solid rgba(255,255,255,.14);
   box-shadow: 24px 0 80px rgba(0,0,0,.5);
   backdrop-filter: blur(18px);
@@ -134,13 +134,49 @@ body.app-open .topbar { display: flex; }
   gap: 10px;
   margin: -16px -14px 6px;
   padding: 16px 14px 12px;
-  background: linear-gradient(180deg, rgba(18,22,42,.99), rgba(16,20,38,.96));
+  background: rgb(20,23,44);
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
 .nav-head-icon { width: 42px; height: 42px; border-radius: 12px; flex: 0 0 auto; }
 .nav-head strong { font-size: 1.2rem; font-weight: 800; letter-spacing: .01em; }
 .nav-head strong span { color: var(--gold); }
 .nav-head .nav-close { position: static; margin-left: auto; }
+/* Drawer items read as a grouped subject list (bullet rows), one consistent accent — not boxed buttons */
+.topnav button:not(.nav-close) {
+  background: none;
+  border: 0;
+  border-radius: 10px;
+  min-height: 0;
+  padding: 11px 10px 11px 24px;
+  font-weight: 600;
+  font-size: 1.04rem;
+  color: #eaedf7;
+  position: relative;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.topnav button:not(.nav-close)::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: .8;
+}
+.topnav button:not(.nav-close):hover,
+.topnav button:not(.nav-close):focus-visible { background: rgba(255,255,255,.06); color: #fff; }
+.topnav button:not(.nav-close).active {
+  color: var(--gold);
+  border: 0;
+  box-shadow: none;
+  background: rgba(255,212,0,.08);
+}
+.topnav .nav-group-sep:first-of-type { margin-top: 2px; }
+.topnav .occ-internal-link { margin-top: 8px; text-align: left; }
 .topnav #nav-search {
   width: 100%;
   min-height: 44px;
