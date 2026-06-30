@@ -206,6 +206,8 @@
     <section class="view" data-view="daily"></section>
     <!-- Issues -->
     <section class="view" data-view="issues"></section>
+    <!-- Fix handoff (owner) -->
+    <section class="view" data-view="handoff"></section>
     <!-- Evidence -->
     <section class="view" data-view="evidence"></section>
     <!-- Messages -->
@@ -481,6 +483,7 @@ var TABS = [
   {id:'verify',label:'Verify Sections',c:'green'},
   {id:'daily',label:'Steps',c:'purple'},
   {id:'issues',label:'Issues',c:'orange'},
+  {id:'handoff',label:'Fix Handoff',c:'orange',owner:true},
   {id:'evidence',label:'Evidence',c:'blue'},
   {id:'messages',label:'Messages',c:'blue'},
   {id:'emergency',label:'Emergency',c:'red'},
@@ -531,7 +534,7 @@ function render(id){
   var v=$('.view[data-view="'+id+'"]');if(!v)return;
   ensureSiteSetup(activeSite());
   ({dashboard:rDashboard,assignments:rAssignments,review:rReview,verify:rVerify,daily:rDaily,issues:rIssues,evidence:rEvidence,
-    messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,
+    messages:rMessages,emergency:rEmergency,payment:rPayment,invoice:rInvoice,documents:rDocuments,handoff:rHandoff,
     howto:rHowTo,release:rRelease,history:rHistory,activity:rActivity,confirm:rConfirm,data:rData}[id]||function(){})(v);
 }
 
@@ -799,7 +802,7 @@ function rIssues(v){
         '<p class="muted">Add the '+missing.length+' issues from today’s manual check in one tap, so you can retest them instead of starting from scratch. The epub item that routes into ACR is added as <b>ACR / Blocked</b> — reported only, not fixed.</p>'+
         '<button class="btn blue" id="iLoadFindings">Add today’s findings as issues</button></div>';
     })()+
-    '<div class="row" style="margin-bottom:10px"><button class="btn sm" id="iExport">Export JSON</button><button class="btn sm ghost" id="iPrint">Printable report</button></div>'+
+    '<div class="row" style="margin-bottom:10px"><button class="btn sm blue" id="iDaily">End-of-day report</button><button class="btn sm" id="iExport">Export JSON</button><button class="btn sm ghost" id="iPrint">Printable report</button></div>'+
     '<div class="card"><h3>Logged Issues ('+issues.length+')</h3><div id="iList"></div></div>';
   $('#iSave',v).addEventListener('click',function(){
     var t=$('#iTitle',v).value.trim();if(!t){toast('Enter an issue title');return;}
@@ -828,6 +831,11 @@ function rIssues(v){
   });
   $('#iExport',v).addEventListener('click',function(){download('occ-issues.json',JSON.stringify(issues,null,2));});
   $('#iPrint',v).addEventListener('click',function(){window.print();});
+  $('#iDaily',v).addEventListener('click',function(){
+    var report=buildFindingsReport();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(report).then(function(){toast('Report copied. Also downloading a copy.');}).catch(function(){});}
+    download('load-eco-daily-report.md',report);
+  });
   var list=$('#iList',v);
   if(!issues.length){list.innerHTML='<p class="muted">No issues yet.</p>';}
   else issues.forEach(function(i){
@@ -844,6 +852,89 @@ function rIssues(v){
   });
 }
 
+/* Employee end-of-day report: a readable summary of everything she found
+   and verified today, to download or copy. */
+function buildFindingsReport(){
+  var issues=load(K.issues,[]),sess=session(),site=activeSite();
+  var vs=siteVerifyStats(site.url),steps=checklistStats();
+  var L=[];
+  L.push('# Load Eco — Daily Findings Report');
+  L.push('');
+  L.push('By: '+(sess?sess.name:'')+'   (Verifier — reports and verifies, does not fix)');
+  L.push('Site under test: '+site.name);
+  L.push('');
+  L.push('## Summary');
+  L.push('- Sections verified working: '+vs.ok+' / '+vs.total);
+  L.push('- Sections owner-approved: '+vs.approved+' / '+vs.total);
+  if(vs.broken)L.push('- Sections marked broken: '+vs.broken);
+  if(vs.acr)L.push('- ACR / blocked sections (off limits): '+vs.acr);
+  L.push('- Verification steps done: '+steps.done+' / '+steps.total);
+  L.push('- Issues logged: '+issues.length);
+  L.push('- Release readiness: '+readinessScore()+' / 100');
+  L.push('');
+  L.push('## Issues found ('+issues.length+')');
+  if(!issues.length)L.push('None logged yet.');
+  var byPage={};
+  issues.forEach(function(i){(byPage[i.page||'Other']=byPage[i.page||'Other']||[]).push(i);});
+  Object.keys(byPage).forEach(function(pg){
+    L.push('');
+    L.push('### '+pg);
+    byPage[pg].forEach(function(i){
+      L.push('- ['+(i.severity||'')+'] '+i.title+' — '+(i.status||'New')+(i.device?(' ('+i.device+')'):''));
+      if(i.actual)L.push('  - '+i.actual);
+    });
+  });
+  return L.join('\n');
+}
+/* Owner-only Daily Fix Handoff: one place to collect the open issues she
+   reported and hand them to Claude. ACR items are listed separately and are
+   never fixed without the owner's explicit approval. */
+function rHandoff(v){
+  if(!isOwner()){v.innerHTML='<h1>Fix Handoff</h1><p class="muted">Owner only.</p>';return;}
+  var issues=load(K.issues,[]);
+  function isOpen(i){return i.status!=='Verified Fixed'&&i.status!=='Closed';}
+  function isACR(i){return /\[ACR/i.test(i.title||'')||/ACR\s*\/\s*BLOCKED/i.test(i.notes||'');}
+  var open=issues.filter(isOpen);
+  var fixable=open.filter(function(i){return !isACR(i);});
+  var blocked=open.filter(isACR);
+  var lines=[];
+  lines.push('# Load Eco — Fix Handoff');
+  lines.push('');
+  lines.push('Open issues reported and verified by the employee, for Claude to fix. The owner approves fixes; the employee then retests. ACR items are listed separately and must NOT be touched without the owner’s explicit approval.');
+  lines.push('');
+  lines.push('Issues to fix: '+fixable.length+'  |  ACR / blocked (do not fix): '+blocked.length);
+  lines.push('');
+  var byPage={};
+  fixable.forEach(function(i){(byPage[i.page||'Other']=byPage[i.page||'Other']||[]).push(i);});
+  Object.keys(byPage).forEach(function(pg){
+    lines.push('## '+pg);
+    byPage[pg].forEach(function(i){
+      lines.push('- ['+(i.severity||'')+'] '+i.title+(i.device?(' ('+i.device+')'):''));
+      if(i.actual)lines.push('  - What happens: '+i.actual);
+      if(i.shot)lines.push('  - Screenshot: '+i.shot);
+      lines.push('  - Status: '+(i.status||'New'));
+    });
+    lines.push('');
+  });
+  if(blocked.length){
+    lines.push('## ACR / BLOCKED — DO NOT FIX without owner approval');
+    blocked.forEach(function(i){lines.push('- '+i.title+(i.actual?(' — '+i.actual):''));});
+    lines.push('');
+  }
+  var report=lines.join('\n');
+  v.innerHTML='<h1>Fix Handoff</h1>'+
+    '<div class="card tint-orange" style="margin-bottom:14px"><h3>Today’s fixes for Claude</h3>'+
+      '<p class="muted">A clean list of the open issues she reported, ready to hand to me. ACR items are listed separately and never fixed without your approval. For screenshots, open <b>Evidence</b> and tap <b>Save image to send</b> on the ones you want me to see.</p>'+
+      '<div class="kvs"><span>To fix: <b>'+fixable.length+'</b></span><span>ACR / blocked: <b>'+blocked.length+'</b></span></div>'+
+      '<div class="row" style="margin:12px 0"><button class="btn blue" id="hCopy">Copy report</button><button class="btn sm" id="hDownload">Download .md</button></div>'+
+      '<textarea id="hReport" readonly style="width:100%;min-height:300px;font-family:monospace;font-size:.85rem">'+esc(report)+'</textarea></div>';
+  $('#hCopy',v).addEventListener('click',function(){
+    var ta=$('#hReport',v);
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(report).then(function(){toast('Report copied — paste it to Claude');}).catch(function(){ta.focus();ta.select();toast('Select all, then copy');});}
+    else{ta.focus();ta.select();toast('Select all, then copy');}
+  });
+  $('#hDownload',v).addEventListener('click',function(){download('load-eco-fix-handoff.md',report);});
+}
 /* Shrink an image on the device BEFORE upload, so only a small thumbnail
    is stored in the database (keeps it light, no R2, no payment needed). */
 function downscaleImage(file,maxDim,quality,cb){
@@ -1263,7 +1354,8 @@ var GUIDE=[
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
   {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works, Broken, or ACR / Blocked, with a screenshot as proof.', todo:'Test every button and link in each section. If a link routes into an ACR site, mark it ACR / Blocked and stop — do not fix or follow it. Otherwise mark Works or Broken and add the screenshot. See the Screenshots note below.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
-  {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner fixes.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix.'},
+  {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner brings them to the fixer. At day’s end, tap End-of-day report for a clean summary to download or copy.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix. Generate the End-of-day report before you sign off.'},
+  {tab:'handoff',    name:'Fix Handoff',    what:'Owner tool. Collects the open issues she reported into one report to hand to the fixer (Claude). ACR items are listed separately and never fixed without your approval.', todo:'Owner: tap Copy report and send it to the fixer. Screenshots come from Evidence (Save image to send).', owner:true},
   {tab:'evidence',   name:'Evidence',       what:'Your proof. You can upload the screenshot (shrunk on your device and stored in your own database — no paid storage, no card; auto-deletes after 48 hours) or just type the file name to keep a permanent text record. The owner can open any uploaded image and save it to send on for a fix.', todo:'Upload the picture, or type its file name. See the Screenshots note below.'},
   {tab:'messages',   name:'Messages',       what:'Private chat between you and the owner. Works across devices once you are signed in.', todo:'Use it for normal questions and updates.'},
   {tab:'emergency',  name:'Emergency',      what:'For urgent blockers only — the site is down or you truly cannot continue.', todo:'Do not use this for normal questions. Use Messages for those.'},
