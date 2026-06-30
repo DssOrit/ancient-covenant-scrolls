@@ -98,7 +98,7 @@ define the product. See **X-AI-PROVIDERS** row below.
 
 ## Load main (`/load/`)
 
-**Cache:** `load-v17g7c`. **Tip status spec:** `PLAN_LOAD_AI.md`,
+**Cache:** `load-v17g7d`. **Tip status spec:** `PLAN_LOAD_AI.md`,
 `PLAN_IMAGE_PROMPT_v3.md`, `PLAN_BOOK_TO_VIDEO.md`,
 `MEDIA_MODULE_SPEC.md`, `LOAD_FEATURES.md`, `LOAD_MARKETING.md`.
 
@@ -141,10 +141,10 @@ Front page:
 - **QA-13** "Face Restore" -> error page. **NOT REPRODUCIBLE FROM CODE** — same as QA-10 (`face-restore.html` exists, on main, correct link).
 
 Help / FAQ:
-- **QA-14** "Help and FAQ" language is too iPad-focused.
-- **QA-15** "I pressed the wrong button" answer is now false (reset word-size is broken, see QA-03).
-- **QA-16** "Can each item have its own look" is wrong — Aa button does not change color or font size (see QA-01).
-- **QA-17** "How do I install Load as a real app on my iPad?" is redundant (already covered in an earlier help tab).
+- **QA-14** "Help and FAQ" language is too iPad-focused. **NOT DONE — needs a deliberate copy pass.** The in-app FAQ (`<details>` entries in `load/index.html`) and `LOAD_KB` answers in `load/load.js` say "iPad / Safari / Add to Home Screen" throughout. Making it device-neutral is a broad rewrite (many entries) and partly subjective — schedule as its own focused task rather than piecemeal.
+- **QA-15** "I pressed the wrong button" answer is now false (reset word-size is broken, see QA-03). **DEFERRED — tied to QA-01/02/03 decision.** Whether this FAQ should say reset works depends on whether we fix the reset/word-size controls. Word it once that decision is made; editing now would just be redone.
+- **QA-16** "Can each item have its own look" is wrong — Aa button does not change color or font size (see QA-01). **DEFERRED — tied to QA-01/02/03 decision** (same reason as QA-15).
+- **QA-17** "How do I install Load as a real app on my iPad?" is redundant (already covered in an earlier help tab). **FIX SHIPPED v17g7d** — removed the duplicate `<details>` tab in `load/index.html`; the "How do I add Load to my iPad home screen?" tab already covers the same Add-to-Home-Screen steps. FAQ tab count 47 -> 46.
 
 Import a file:
 - **QA-18** "Import a PWA" directions only reference iPad Safari.
