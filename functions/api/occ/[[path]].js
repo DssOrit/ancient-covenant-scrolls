@@ -236,12 +236,24 @@ async function handle(req, env, origin) {
   return json({ error: 'not found', path }, 404, origin);
 }
 
+let _schemaReady = false;
+/* Auto-migrate: create the sections table + add invoice columns if missing,
+   so no manual SQL is ever needed. Idempotent; runs once per worker instance. */
+async function ensureSchema(env) {
+  if (_schemaReady) return;
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS sections (id TEXT PRIMARY KEY, site TEXT, name TEXT, status TEXT DEFAULT 'Untested', evidence TEXT, notes TEXT, owner_ok INTEGER DEFAULT 0, verified_at TEXT, updated_by TEXT)").run();
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted INTEGER DEFAULT 0").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
+  _schemaReady = true;
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   const origin = request.headers.get('Origin') || '*';
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(origin) });
   try {
     if (!env.DB) return json({ error: 'database not connected', hint: 'Bind D1 as DB on the Pages project' }, 503, origin);
+    await ensureSchema(env);
     return await handle(request, env, origin);
   } catch (err) {
     return json({ error: 'server error', detail: String(err && err.message || err) }, 500, origin);
