@@ -755,29 +755,49 @@ function rEmergency(v){
   else alerts.forEach(function(a){list.appendChild(el('<div class="list-item"><b>'+esc(a.what)+'</b> <span class="chip s-red">'+esc(a.urgency)+'</span><div class="kvs"><span>'+esc(a.site)+'</span><span>'+esc(a.browser||'')+' '+esc(a.device||'')+'</span><span>by '+esc(a.by)+'</span><span>'+fmtDate(a.at)+'</span></div></div>'));});
 }
 
+/* Auto-check that must pass before the owner pays — protects against
+   paying for incomplete or unverified work. */
+function payAutoCheck(a){
+  var vs=siteVerifyStats(a.site),steps=checklistStats();
+  var checks=[
+    {label:'Owner approved the assignment', ok:(a.status==='Approved'||a.status==='Paid')},
+    {label:'Every section verified Working (with evidence)', ok:vs.total>0&&vs.ok===vs.total},
+    {label:'Every section owner-approved', ok:vs.total>0&&vs.approved===vs.total},
+    {label:'All verification steps done', ok:steps.total>0&&steps.done===steps.total},
+    {label:'Employee submitted an invoice', ok:!!a.invoiceSubmitted}
+  ];
+  return {checks:checks, pass:checks.every(function(c){return c.ok;})};
+}
 function rPayment(v){
   var a=activeAssignment(),owner=isOwner();
   var total=(Number(a.pay)||0)+(Number(a.bonus)||0);
   var pstat = a.status==='Paid'?'Paid':(a.status==='Approved'?'Payment Due':(a.status==='Submitted'?'Under Review':(a.status==='Not Started'?'Not Submitted':'Submitted')));
+  var ac=payAutoCheck(a);
   v.innerHTML='<h1>Payment Tracker</h1>'+
     '<div class="card tint-gold"><h3>'+esc(a.title)+' '+statusChip(pstat)+'</h3>'+
       '<div class="kvs"><span>Assignment: <b>$'+esc(a.pay)+'</b></span><span>Bonus: <b>$'+esc(a.bonus||0)+'</b></span><span>Total due: <b>$'+total+'</b></span></div>'+
-      '<div class="kvs"><span>Submitted: '+fmtDate(a.submittedDate)+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
-      '<p class="muted" style="margin-top:8px">Pay structure: standard $50 · heavy $60 · optional bonus $10–$25.</p>'+
-      (owner?
-        '<label class="fld owner-only"><span>Bonus amount ($)</span><input id="pBonus" type="number" value="'+(a.bonus||0)+'"></label>'+
-        '<div class="row owner-only">'+
-          '<button class="btn gold" data-pst="Approved">Approve</button>'+
+      '<div class="kvs"><span>Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'—')+'</span><span>Approved: '+fmtDate(a.approvedDate)+'</span><span>Paid: '+fmtDate(a.paidDate)+'</span></div>'+
+      '<p class="muted" style="margin-top:8px">$60 per full assignment · optional bonus $10–$25 · paid only after this auto-check passes.</p></div>'+
+    '<div class="card tint-'+(ac.pass?'green':'orange')+'" style="margin:14px 0"><h3>Auto-check before paying '+(ac.pass?'<span class="chip s-green">PASS</span>':'<span class="chip s-orange">NOT READY</span>')+'</h3>'+
+      ac.checks.map(function(c){return '<div class="check" style="border:0;padding:6px 0"><span style="color:'+(c.ok?'var(--green)':'var(--red)')+';font-weight:800">'+(c.ok?'✓':'✗')+'</span><label>'+esc(c.label)+'</label></div>';}).join('')+
+      (ac.pass?'<p style="color:var(--green);font-weight:700">Everything checks out — safe to pay.</p>':'<p class="muted">Pay is blocked until every line is ✓.</p>')+'</div>'+
+    (owner?
+      '<div class="card owner-only"><label class="fld"><span>Bonus amount ($)</span><input id="pBonus" type="number" value="'+(a.bonus||0)+'"></label>'+
+        '<div class="row">'+
+          '<button class="btn gold" data-pst="Approved">Approve work</button>'+
           '<button class="btn gold" data-pst="Payment Due">Mark payment due</button>'+
-          '<button class="btn green" data-pst="Paid">Mark paid</button>'+
-        '</div>'
-       : '<p class="muted">Payment is set by the owner after approval.</p>')+
-    '</div>';
+          '<button class="btn '+(ac.pass?'green':'')+'" data-pst="Paid">Mark paid</button>'+
+        '</div></div>'
+     : '<div class="card"><p class="muted">'+(a.status==='Approved'&&!a.invoiceSubmitted?'Your work is approved — go to the Invoice tab and submit your invoice for payment.':'Payment is released by the owner after the auto-check passes.')+'</p></div>');
   if(owner){
     $$('[data-pst]',v).forEach(function(b){b.addEventListener('click',function(){
       var st=b.dataset.pst;a.bonus=Number($('#pBonus',v).value)||0;
-      if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
-      else if(st==='Paid'){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();}
+      if(st==='Paid'){
+        var chk=payAutoCheck(a);
+        if(!chk.pass){var fails=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+fails[0]);store(K.assignments,[a]);render('payment');return;}
+        a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();
+      }
+      else if(st==='Approved'){a.status='Approved';if(!a.approvedDate)a.approvedDate=nowISO();}
       else{a.status='Approved';}
       store(K.assignments,[a]);logActivity(st==='Paid'?'Payment marked paid':(st==='Payment Due'?'Payment marked due':'Assignment approved'),a.title);toast('Payment updated: '+st);render('payment');
     });});
@@ -799,10 +819,11 @@ function rInvoice(v){
     'Bonus:       $'+(a.bonus||0)+'\n'+
     'Total due:   $'+total+'\n'+
     'Status:      '+a.status+'\n'+
-    'Submitted:   '+(a.submittedDate?fmtDate(a.submittedDate):'—')+'\n'+
+    'Invoice submitted: '+(a.invoiceSubmitted?fmtDate(a.invoiceSubmittedDate):'not yet')+'\n'+
     'Approved:    '+(a.approvedDate?fmtDate(a.approvedDate):'—')+'\n'+
     'Paid:        '+(a.paidDate?fmtDate(a.paidDate):'—')+'\n'+
     'Work summary: '+a.goal+'\n';
+  var canSubmitInv=(a.status==='Approved'||a.status==='Payment Due')&&!a.invoiceSubmitted;
   v.innerHTML='<h1>Invoice Center</h1>'+
     '<div class="card tint-gold"><div class="doc" id="invDoc">'+esc(inv)+'</div>'+
       '<div class="row" style="margin-top:14px">'+
@@ -810,11 +831,23 @@ function rInvoice(v){
         '<button class="btn sm" id="invTxt">Export .txt</button>'+
         '<button class="btn sm" id="invJson">Export JSON</button>'+
         (isOwner()?'<button class="btn green owner-only" id="invPaid">Mark as paid</button>':'')+
-      '</div></div>';
+      '</div></div>'+
+    (!isOwner()?
+      '<div class="card tint-gold" style="margin-top:14px"><h3>Submit invoice for payment</h3>'+
+        (a.invoiceSubmitted?'<p style="color:var(--green);font-weight:700">Invoice submitted '+fmtDate(a.invoiceSubmittedDate)+' — waiting on owner.</p>'
+         :(canSubmitInv?'<p class="muted">Your work is approved. Submit your invoice to request the $'+total+' payment.</p><button class="btn gold" id="invSubmit">Submit invoice for payment</button>'
+           :'<p class="muted">You can submit your invoice once the owner approves your verified work.</p>'))+
+      '</div>':'');
+  if($('#invSubmit',v))$('#invSubmit',v).addEventListener('click',function(){
+    a.invoiceSubmitted=true;a.invoiceSubmittedDate=nowISO();store(K.assignments,[a]);logActivity('Invoice submitted',a.invoiceNo);toast('Invoice submitted for payment');render('invoice');
+  });
   $('#invPrint',v).addEventListener('click',function(){window.print();});
   $('#invTxt',v).addEventListener('click',function(){download('occ-invoice.txt',inv);});
   $('#invJson',v).addEventListener('click',function(){download('occ-invoice.json',JSON.stringify({invoiceNo:a.invoiceNo,worker:a.worker,title:'Platform Quality Assurance Specialist',assignment:a.title,site:a.site,amount:a.pay,bonus:a.bonus||0,total:total,status:a.status,submitted:a.submittedDate,approved:a.approvedDate,paid:a.paidDate},null,2));});
-  if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);toast('Marked paid');render('invoice');});
+  if(isOwner()&&$('#invPaid',v))$('#invPaid',v).addEventListener('click',function(){
+    var chk=payAutoCheck(a);
+    if(!chk.pass){var f=chk.checks.filter(function(c){return !c.ok;}).map(function(c){return c.label;});toast('Cannot pay — auto-check failed: '+f[0]);return;}
+    a.status='Paid';if(!a.paidDate)a.paidDate=nowISO();store(K.assignments,[a]);logActivity('Payment marked paid',a.invoiceNo);toast('Marked paid');render('invoice');});
 }
 
 var DOCS={
