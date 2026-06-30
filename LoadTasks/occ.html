@@ -284,27 +284,27 @@ function logActivity(action,detail){
 
 /* ---------- seed data (first run only) ---------- */
 var DAILY_SEED = [
-  {day:1,title:'Day 1 — Site Inventory',items:[
+  {day:1,title:'Step 1 — Site Inventory',items:[
     'Open https://loadeco.app on Windows Chrome','Confirm homepage loads','Take homepage screenshot',
     'List every visible menu','List every visible section','List every visible tile/card',
     'List every major page discovered','Record notes','Repeat basic access on iPad Safari if available']},
-  {day:2,title:'Day 2 — Navigation Audit',items:[
+  {day:2,title:'Step 2 — Navigation Audit',items:[
     'Click every visible menu item','Click every visible button','Verify destination loads',
     'Record broken links','Record dead buttons','Mark each item Working, Broken, Confusing, or Needs Retest',
     'Screenshot broken or confusing areas']},
-  {day:3,title:'Day 3 — First-Time User Review',items:[
+  {day:3,title:'Step 3 — First-Time User Review',items:[
     'Pretend you are a brand-new visitor','Write what the site appears to be','Write whether the next step is clear',
     'Write what is confusing','Write what instructions are missing','Write what would help a new user',
     'Rate overall clarity 1 to 10']},
-  {day:4,title:'Day 4 — Browser & Device Comparison',items:[
+  {day:4,title:'Step 4 — Browser & Device Comparison',items:[
     'Test in Windows Chrome','Test in Windows Edge','Test on iPad Safari','Record layout differences',
     'Record browser-only issues','Record mobile problems','Record desktop problems','Take screenshots of differences']},
-  {day:5,title:'Day 5 — Final Report',items:[
+  {day:5,title:'Step 5 — Final Report',items:[
     'Submit site inventory','Submit issue list','Submit browser comparison','Submit top 10 improvement suggestions',
     'Submit release-readiness score','Submit screenshot/video evidence list','Mark assignment ready for owner review']}
 ];
 var CONFIRM_SEED = [
-  'I read the assignment','I understand today’s tasks','I understand what site to test',
+  'I read the assignment','I understand the verification steps','I understand what site to test',
   'I understand not to move to other sites','I understand how to report issues',
   'I understand payment is issued after approval'];
 
@@ -378,7 +378,7 @@ var TABS = [
   {id:'assignments',label:'Assignments',c:'purple'},
   {id:'review',label:'Owner Review',c:'blue',owner:true},
   {id:'verify',label:'Verify Sections',c:'green'},
-  {id:'daily',label:'Daily Tasks',c:'purple'},
+  {id:'daily',label:'Steps',c:'purple'},
   {id:'issues',label:'Issues',c:'orange'},
   {id:'evidence',label:'Evidence',c:'blue'},
   {id:'messages',label:'Messages',c:'blue'},
@@ -440,12 +440,12 @@ function rDashboard(v){
     '<h1>Dashboard</h1>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('blue','Employee', '<b>'+esc(sess.name)+'</b><div class="muted">'+esc(sess.title||'')+'</div>')+
-      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Week '+esc(a.week)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
+      card('purple','Active Assignment', a?('<b>'+esc(a.title)+'</b><div class="muted">Full site verification · $'+esc(a.pay)+'</div>'+statusChip(a.status)):'<span class="muted">None</span>')+
       card('green','Site Under Test', a?('<b>'+esc(a.site)+'</b>'):'<span class="muted">—</span>')+
     '</div>'+
     '<div class="card tint-purple" style="margin-bottom:14px"><h3>Assignment Progress</h3>'+
       '<div class="progress"><i style="width:'+s.pct+'%"></i></div>'+
-      '<p class="muted" style="margin-top:8px">'+s.done+' of '+s.total+' daily tasks done ('+s.pct+'%)</p></div>'+
+      '<p class="muted" style="margin-top:8px">'+s.done+' of '+s.total+' verification steps done ('+s.pct+'%)</p></div>'+
     '<div class="grid c3" style="margin-bottom:14px">'+
       card('orange','Open Issues',  '<b style="font-size:1.6rem">'+openIssues+'</b>')+
       card('orange','Retests Needed','<b style="font-size:1.6rem">'+retests+'</b>')+
@@ -464,7 +464,7 @@ function rDashboard(v){
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Recent Activity</h3><div id="dashAct"></div></div>'+
     '<h3 style="margin-top:6px">Quick Cards</h3>'+
     '<div class="grid c3">'+
-      quick('daily','purple','Today’s Tasks')+quick('assignments','purple','Current Assignment')+
+      quick('daily','purple','Verification Steps')+quick('assignments','purple','Current Assignment')+
       quick('issues','orange','Submit Issue')+quick('evidence','blue','Evidence')+
       quick('messages','blue','Messages')+quick('payment','gold','Payment / Invoice')+
       quick('release','green','Release Readiness')+quick('activity','blue','Activity')+
@@ -485,7 +485,7 @@ function rAssignments(v){
   v.innerHTML='<h1>Assignments Center</h1>'+
     '<div class="card tint-purple">'+
       '<h3>'+esc(a.title)+' '+statusChip(a.status)+'</h3>'+
-      '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Week: <b>'+esc(a.week)+'</b></span></div>'+
+      '<div class="kvs"><span>Site: <b>'+esc(a.site)+'</b></span><span>Worker: <b>'+esc(a.worker)+'</b></span><span>Pay: <b>$'+esc(a.pay)+'</b></span><span>Type: <b>Full site verification</b></span></div>'+
       '<p style="margin-top:10px"><b>Goal:</b> '+esc(a.goal)+'</p>'+
       (owner?
         '<label class="fld owner-only"><span>Status (owner)</span><select id="aStatus">'+
@@ -496,7 +496,7 @@ function rAssignments(v){
        :
         '<div class="card tint-orange" style="margin:12px 0;padding:12px 14px"><b>Before you can submit</b>'+
           '<div class="check" style="border:0;padding:6px 0"><span>'+(reqSections?'✓':'○')+'</span><label>Every section checked + evidence ('+_vs.ok+'/'+_vs.total+' verified)</label></div>'+
-          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqTasks?'✓':'○')+'</span><label>All daily tasks done</label></div>'+
+          '<div class="check" style="border:0;padding:6px 0"><span>'+(reqTasks?'✓':'○')+'</span><label>All verification steps done</label></div>'+
           '<div class="check" style="border:0;padding:6px 0"><span>'+(reqEvidence?'✓':'○')+'</span><label>At least one issue or evidence item</label></div></div>'+
         '<p class="muted">Checkboxes alone are not enough — every section must be verified with evidence.</p>'+
         '<button class="btn purple" id="aSubmit">Submit for review</button>')+
@@ -518,7 +518,7 @@ function rAssignments(v){
       if(untested>0){toast(untested+' section(s) still Untested — check every section first.');return;}
       var worksNoEv=siteSections(a.site).filter(function(s){return s.status==='Works'&&!(s.evidence&&s.evidence.trim());}).length;
       if(worksNoEv>0){toast(worksNoEv+' working section(s) need evidence before submitting.');return;}
-      if(st.done<st.total){toast('Finish all daily tasks first ('+st.done+'/'+st.total+').');return;}
+      if(st.done<st.total){toast('Finish all verification steps first ('+st.done+'/'+st.total+').');return;}
       a.status='Submitted';a.submittedDate=nowISO();store(K.assignments,[a]);
       logActivity('Assignment submitted',a.title);
       toast('Submitted for review');render('assignments');
@@ -528,7 +528,7 @@ function rAssignments(v){
 
 function rDaily(v){
   var c=load(K.checklist,{});
-  var html='<h1>Daily Task Checklist</h1>';
+  var html='<h1>Verification Steps</h1>';
   DAILY_SEED.forEach(function(d){
     var arr=c['day'+d.day]||[];
     var done=arr.filter(function(i){return i.done;}).length;
@@ -840,7 +840,7 @@ var DOCS={
     '4. Load Play  (locked)\n'+
     'A site only unlocks after the one before it is approved as stable.',
 
-  'Week 1 Assignment Workbook':
+  'Assignment Workbook (Load Eco)':
     'ASSIGNMENT: Load Eco — Full Section Verification\n'+
     'SITE: https://loadeco.app\n'+
     'PAY: $60 (after owner approval)\n\n'+
@@ -897,6 +897,10 @@ var DOCS={
     'RATE\n'+
     '- Full assignment: $60 (released after the owner approves)\n'+
     '- Optional bonus: $10–$25 (owner’s choice for great work)\n\n'+
+    'COST-EFFECTIVE\n'+
+    'One flat fee per fully verified site — not per hour and not per day.\n'+
+    'The owner pays for proven, evidence-backed results, only after every\n'+
+    'section is verified working and approved.\n\n'+
     'PAYMENT STATUS FLOW\n'+
     'Not Submitted → Submitted → Under Review → Approved → Payment Due → Paid\n\n'+
     'IMPORTANT\n'+
