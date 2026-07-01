@@ -910,9 +910,10 @@ function rVerify(v){
         '<button data-secset="'+s.id+'" data-val="Broken" class="'+(s.status==='Broken'?'on-broken':'')+'">Broken</button>'+
         '<button data-secset="'+s.id+'" data-val="ACR / Blocked" class="'+(s.status==='ACR / Blocked'?'on-blocked':'')+'">Blocked</button>'+
       '</div>'+
-      '<div class="secshot" data-secshot="'+s.id+'">'+(hasShot?('<span class="ok">Photo attached'+(s.evidence?': '+esc(s.evidence):'')+'</span>'):'<span>No photo yet — Works needs a photo</span>')+'</div>'+
+      '<div class="secshot" data-secshot="'+s.id+'">'+(hasShot?('<span class="ok">'+(/^https?:\/\//i.test(s.evidence||'')?'Link attached':'Photo attached')+(s.evidence?': '+esc(s.evidence):'')+'</span>'):'<span>No photo yet — Works needs a photo or link</span>')+'</div>'+
       '<input type="file" data-secfile="'+s.id+'" accept="image/*,application/pdf,.doc,.docx,.txt,.rtf,.pages,.csv,.md,.xls,.xlsx,.ppt,.pptx,.odt" style="display:none">'+
       '<div class="row"><button class="btn sm green" data-secadd="'+s.id+'">Add photo / file</button>'+
+        '<button class="btn sm" data-seclink="'+s.id+'">Add link</button>'+
         (owner&&s.evKey?'<button class="btn sm" data-secsend="'+esc(s.evKey)+'|'+esc(s.evidence||'file')+'">Save image to send</button>':'')+
         (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
         '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div>'+
@@ -948,7 +949,7 @@ function rVerify(v){
   $$('[data-secset]',v).forEach(function(b){b.addEventListener('click',function(){
     var id=b.dataset.secset,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
     var val=b.dataset.val;
-    if(val==='Works'&&!(r.evidence&&r.evidence.trim())){toast('Add a photo first, then mark it Works.');return;}
+    if(val==='Works'&&!(r.evidence&&r.evidence.trim())){toast('Add a photo or link first, then mark it Works.');return;}
     r.status=val;
     if(val==='Broken')toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');
     if(val==='ACR / Blocked')toast('Flagged ACR / Blocked. ACR is off limits — left for the owner.');
@@ -957,6 +958,15 @@ function rVerify(v){
   // Add photo / file to a section — uploads and attaches as its evidence.
   $$('[data-secadd]',v).forEach(function(b){b.addEventListener('click',function(){
     var fi=$('[data-secfile="'+b.dataset.secadd+'"]',v);if(fi)fi.click();
+  });});
+  // Add link — paste a Google Doc (or any) share link as the evidence.
+  $$('[data-seclink]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.seclink;})[0];if(!r)return;
+    var cur=(r.evidence&&/^https?:\/\//i.test(r.evidence))?r.evidence:'https://';
+    var u=prompt('Paste a link (Google Doc, Drive, or any web address):',cur);
+    if(u==null)return;u=u.trim();
+    if(!/^https?:\/\//i.test(u)){toast('Paste a full link that starts with http.');return;}
+    r.evidence=u;r.evKey='';toast('Link attached.');saveSec(r,true);
   });});
   $$('[data-secfile]',v).forEach(function(fi){fi.addEventListener('change',function(){
     var r=rows.filter(function(x){return x.id===fi.dataset.secfile;})[0];if(!r)return;
@@ -1735,7 +1745,7 @@ var FAQ=[
   ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
   ['What if a link goes into an ACR site?','Stop and mark that section ACR / Blocked. ACR sites are off limits — do not test-fix, follow, or link them. They are set aside for the owner’s explicit approval and never block-counted as bugs.'],
   ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
-  ['Can I upload photos and files?','Yes. On each section tap <b>Add photo / file</b>, or use the <b>Evidence</b> tab. Photos and small files (PDF, doc) work, not videos. Non-photo files must be under 1.4 MB. They are stored in your own database and auto-delete after 48 hours. For anything bigger, just record the file name — that is kept permanently.'],
+  ['Can I upload photos and files?','Yes. On each section tap <b>Add photo / file</b>, or use the <b>Evidence</b> tab. Photos and small files (PDF, doc) work, not videos. Non-photo files must be under 1.4 MB. They are stored in your own database and auto-delete after 48 hours. For a Google Doc, tap Add link on the section and paste the share link. For anything bigger, just record the file name — that is kept permanently.'],
   ['How do I get a screenshot to the fixer?','Open the uploaded image in Evidence and tap Save image to send. That saves the picture to your device so you can share it with the fixer (Claude). Do it within 48 hours, before the image auto-clears.'],
   ['Will uploads slow the site or fill it up?','No. Pictures are shrunk before saving, the app keeps a small safe limit, and uploaded images auto-delete after 48 hours. It stays light.'],
   ['Could uploads ever cost money?','No. Screenshots are stored in your own database — no paid storage and no card needed. The app stops uploads before its safe limit, and the Evidence page shows a storage-used meter. The file-name option is always free too.'],
