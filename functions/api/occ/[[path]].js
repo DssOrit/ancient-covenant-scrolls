@@ -222,7 +222,7 @@ async function handle(req, env, origin) {
       env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,sender, sender_role AS senderRole, recipient,priority,assignment,body, created_at AS at FROM messages ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
-      env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at FROM sections').all()
+      env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at, ev_key AS evKey FROM sections').all()
     ]);
     const storageUsed = await evidenceBytesUsed(env);
     return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results, storageUsed: storageUsed, storageCap: STORAGE_CAP_BYTES, storageEnabled: true }, 200, origin);
@@ -255,10 +255,11 @@ async function handle(req, env, origin) {
       const status = body.status != null ? body.status : row.status;
       const evidence = body.evidence != null ? body.evidence : row.evidence;
       const notes = body.notes != null ? body.notes : row.notes;
+      const evKey = body.evKey != null ? body.evKey : row.ev_key;
       let ownerOk = row.owner_ok;
       if (body.ownerOk != null) { if (!owner) return json({ error: 'owner only' }, 403, origin); ownerOk = body.ownerOk ? 1 : 0; }
-      await env.DB.prepare('UPDATE sections SET status=?, evidence=?, notes=?, owner_ok=?, verified_at=?, updated_by=? WHERE id=?')
-        .bind(status, evidence, notes, ownerOk, new Date().toISOString(), me.name, last).run();
+      await env.DB.prepare('UPDATE sections SET status=?, evidence=?, notes=?, owner_ok=?, verified_at=?, updated_by=?, ev_key=? WHERE id=?')
+        .bind(status, evidence, notes, ownerOk, new Date().toISOString(), me.name, evKey, last).run();
       return json({ ok: true }, 200, origin);
     }
     if (method === 'DELETE') {
@@ -286,13 +287,19 @@ async function handle(req, env, origin) {
   }
 
   if (path.endsWith('/api/occ/evidence/upload') && method === 'POST') {
-    // Client sends a downscaled image as a data URL (data:image/jpeg;base64,...).
+    // Client sends a file as a data URL (data:<mime>;base64,...). Images are
+    // downscaled first; any other file (PDF, doc, short video) is stored as-is,
+    // as long as it fits under D1's 2 MB per-row limit.
     const m = /^data:([^;]+);base64,(.*)$/.exec(body.dataUrl || '');
-    if (!m) return json({ error: 'no image' }, 400, origin);
+    if (!m) return json({ error: 'no file' }, 400, origin);
     const contentType = m[1];
     const b64 = m[2];
     const size = Math.floor(b64.length * 3 / 4); // approx decoded bytes
-    if (size > MAX_FILE_BYTES) return json({ error: 'image too big', limitKB: Math.round(MAX_FILE_BYTES / 1024) }, 413, origin);
+    const isImg = contentType.indexOf('image/') === 0;
+    const fileCap = isImg ? MAX_FILE_BYTES : 1400 * 1024; // 1.4 MB raw keeps base64 under D1's 2 MB row limit
+    if (size > fileCap || b64.length > 1900000) {
+      return json({ error: isImg ? 'image too big' : 'file too big', limitKB: Math.round(fileCap / 1024) }, 413, origin);
+    }
     // Free up space first (delete anything past 48h), then enforce our own cap.
     await purgeExpiredEvidence(env);
     const used = await evidenceBytesUsed(env);
@@ -351,6 +358,7 @@ async function ensureSchema(env) {
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted INTEGER DEFAULT 0").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE sections ADD COLUMN ev_key TEXT").run(); } catch (e) {}
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS evidence_blobs (id TEXT PRIMARY KEY, data TEXT, content_type TEXT, size INTEGER DEFAULT 0, created_at TEXT)").run();
   // Daily assignment model: kind ('verify' | 'recert') marks day assignments;
   // issues carry the day assignment they were logged under (for the gate).
