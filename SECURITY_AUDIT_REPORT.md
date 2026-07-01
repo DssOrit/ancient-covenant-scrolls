@@ -85,21 +85,23 @@ All wired to `.github/`. CodeQL runs on push to main, on PRs to main, and weekly
 
 ## Manual steps (only the user can do these)
 
-### 🔧 Branch protection — enable on GitHub.com
+### ✅ Branch protection — ENABLED & CONFIRMED 2026-07-02
 
-Go to **Settings → Branches** in the GitHub web UI for the repo, click **Add branch protection rule** for `main`, and enable:
+A branch **ruleset** named `protect-main` is **Active**, targeting the default
+branch (`main`), bypass list empty. Enabled rules:
 
-- [ ] **Require a pull request before merging**
-- [ ] **Require approvals** — minimum 1
-- [ ] **Require status checks to pass before merging**
-  - Add: `Analyze (javascript-typescript)` (the CodeQL job)
-- [ ] **Require conversation resolution before merging**
-- [ ] **Do not allow bypassing the above settings** (applies to admins)
-- [ ] **Restrict who can push to matching branches** — limit to maintainers
-- [ ] **Block force pushes**
-- [ ] **Block deletions**
+- [x] **Block force pushes** — no history rewriting on `main`
+- [x] **Restrict deletions** — the `main` branch cannot be deleted
 
-⚠ **Caveat for current workflow:** during build, Claude has been pushing directly to `main` after fast-forwarding from the dev branch. If branch protection blocks direct pushes, future builds will need to PR through. That's slower but safer for a public repo. **Recommend enabling once Image Prompt build is stable** (so Claude can keep iterating quickly during build).
+Verified in the GitHub UI (Settings → Rules → Rulesets → protect-main): badge
+shows **Active**, "Applies to 1 target: main". This is the minimal set that
+blocks history tampering without touching normal work — PR merges and
+Cloudflare auto-deploys are unaffected (a merge is not a force push; feature
+branches are not `main`).
+
+Not enabled (optional, would add review/merge friction): require pull request,
+require approvals, require CodeQL status check, require conversation resolution,
+restrict who can push. Can be added later if desired.
 
 ### 🔧 Enable Dependabot security updates
 
@@ -158,7 +160,7 @@ trufflehog filesystem . --only-verified
 | PR template | ✅ Added |
 | Dependabot config | ✅ Added |
 | CodeQL workflow | ✅ Added |
-| Branch protection | 🔧 **MANUAL — user enables in GitHub Settings** |
+| Branch protection | ✅ **ENABLED — ruleset `protect-main` (block force pushes + restrict deletions on `main`), confirmed 2026-07-02** |
 | Secret scanning + push protection | 🔧 **MANUAL — user enables in GitHub Settings** |
 | Private vulnerability reporting | 🔧 **MANUAL — user enables in GitHub Settings** |
 
