@@ -158,6 +158,16 @@
   .secshot{display:flex;align-items:center;gap:10px;margin:2px 0 10px;color:var(--muted);font-size:.9rem}
   .secshot img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
   .secshot .ok{color:var(--green);font-weight:700}
+  /* Tap-to-note: quick problem chips, saved phrases, 1-5 rating */
+  .mini-label{color:var(--muted);font-size:.8rem;font-weight:700;margin:8px 0 3px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
+  .chips button{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+  .chips button.on{background:rgba(255,92,92,.2);border-color:transparent;color:var(--red)}
+  .chips.phrases button.on{background:rgba(74,158,255,.18);color:var(--blue)}
+  .chips button.ghost{background:transparent;color:var(--muted)}
+  .rate{display:flex;gap:6px;margin:2px 0 4px}
+  .rate button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-weight:800;font-size:1rem;cursor:pointer}
+  .rate button.on{background:var(--green);border-color:transparent;color:#04231a}
   .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;background:#1b2030;border:1px solid var(--line);
     padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:opacity .25s;pointer-events:none}
   .toast.show{opacity:1}
@@ -285,8 +295,14 @@ var K = {
   session:'occ_session', assignments:'occ_assignments', checklist:'occ_checklist',
   issues:'occ_issues', evidence:'occ_evidence', messages:'occ_messages',
   alerts:'occ_alerts', payment:'occ_payment', confirm:'occ_confirm', activity:'occ_activity',
-  sections:'occ_sections', storage:'occ_storage'
+  sections:'occ_sections', storage:'occ_storage', phrases:'occ_phrases'
 };
+/* Tap-to-note helpers (so she rarely types): preset problem chips, reusable
+   saved phrases, and a 1-5 rating. Stored per section (tags + rating + notes). */
+var PROBLEM_TAGS=["Won't open","Wrong page","Button dead","Looks off","Too slow","Hard to read","Overlapping","Goes nowhere","Confusing","Not on phone","Not on iPad"];
+var DEFAULT_PHRASES=["Same as yesterday","Fixed - retested OK","Broken on iPad only","Broken on phone only","Works but confusing","Needs a second look"];
+function tagList(s){return String((s&&s.tags)||'').split('|').map(function(x){return x.trim();}).filter(Boolean);}
+function savedPhrases(){var p=load(K.phrases,null);return (p&&p.length)?p:DEFAULT_PHRASES.slice();}
 function load(key,def){try{var v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
 function store(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
 /* Activity history (audit trail). Client-side for now; syncs to backend when wired. */
@@ -910,6 +926,10 @@ function rVerify(v){
         '<button data-secset="'+s.id+'" data-val="Broken" class="'+(s.status==='Broken'?'on-broken':'')+'">Broken</button>'+
         '<button data-secset="'+s.id+'" data-val="ACR / Blocked" class="'+(s.status==='ACR / Blocked'?'on-blocked':'')+'">Blocked</button>'+
       '</div>'+
+      '<div class="mini-label">How well it works (1 low &ndash; 5 high)</div>'+
+      '<div class="rate">'+[1,2,3,4,5].map(function(n){return '<button data-secrate="'+s.id+'" data-n="'+n+'" class="'+(Number(s.rating)===n?'on':'')+'">'+n+'</button>';}).join('')+'</div>'+
+      '<div class="mini-label">Quick note &mdash; tap what is wrong (no typing)</div>'+
+      '<div class="chips">'+PROBLEM_TAGS.map(function(t){var on=tagList(s).indexOf(t)>=0;return '<button data-sectag="'+s.id+'" data-t="'+esc(t)+'" class="'+(on?'on':'')+'">'+esc(t)+'</button>';}).join('')+'</div>'+
       '<div class="secshot" data-secshot="'+s.id+'">'+(hasShot?('<span class="ok">'+(/^https?:\/\//i.test(s.evidence||'')?'Link attached':'Photo attached')+(s.evidence?': '+esc(s.evidence):'')+'</span>'):'<span>No photo yet — Works needs a photo or link</span>')+'</div>'+
       '<input type="file" data-secfile="'+s.id+'" accept="image/*,application/pdf,.doc,.docx,.txt,.rtf,.pages,.csv,.md,.xls,.xlsx,.ppt,.pptx,.odt" style="display:none">'+
       '<div class="row"><button class="btn sm green" data-secadd="'+s.id+'">Add photo / file</button>'+
@@ -917,7 +937,9 @@ function rVerify(v){
         (owner&&s.evKey?'<button class="btn sm" data-secsend="'+esc(s.evKey)+'|'+esc(s.evidence||'file')+'">Save image to send</button>':'')+
         (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
         '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div>'+
-      '<label class="fld" style="margin-top:8px"><span>Notes (optional)</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'" placeholder="Anything to add"></label></div>';
+      '<div class="mini-label">Saved phrases &mdash; tap to add to notes</div>'+
+      '<div class="chips phrases">'+savedPhrases().map(function(ph,i){return '<button data-secphrase="'+s.id+'" data-i="'+i+'">'+esc(ph)+'</button>';}).join('')+'<button class="ghost" data-addphrase="1">+ Add phrase</button></div>'+
+      '<label class="fld" style="margin-top:6px"><span>Notes (optional)</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'" placeholder="Or type anything to add"></label></div>';
   });
   v.innerHTML=html;
   // merge updated rows by id into the global store (safe when rows is a day subset)
@@ -944,7 +966,29 @@ function rVerify(v){
   });
   function saveSec(r,rerender){r.at=nowISO();persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);
     if(rerender)render('verify');
-    sync(function(){return api('PATCH','/sections/'+r.id,{status:r.status,evidence:r.evidence,notes:r.notes,evKey:r.evKey||''});},rerender?'verify':null);}
+    sync(function(){return api('PATCH','/sections/'+r.id,{status:r.status,evidence:r.evidence,notes:r.notes,evKey:r.evKey||'',tags:r.tags||'',rating:r.rating||0});},rerender?'verify':null);}
+  // 1-5 rating (tap again to clear).
+  $$('[data-secrate]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.secrate;})[0];if(!r)return;
+    var n=Number(b.dataset.n);r.rating=(Number(r.rating)===n?0:n);saveSec(r,true);
+  });});
+  // Quick problem chips (tap to toggle) — build the note without typing.
+  $$('[data-sectag]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.sectag;})[0];if(!r)return;
+    var t=b.dataset.t,list=tagList(r),i=list.indexOf(t);
+    if(i>=0)list.splice(i,1);else list.push(t);
+    r.tags=list.join('|');saveSec(r,true);
+  });});
+  // Saved phrases — tap to append to notes; + Add phrase to save a new one.
+  $$('[data-secphrase]',v).forEach(function(b){b.addEventListener('click',function(){
+    var r=rows.filter(function(x){return x.id===b.dataset.secphrase;})[0];if(!r)return;
+    var ph=savedPhrases()[Number(b.dataset.i)];if(!ph)return;
+    r.notes=(r.notes&&r.notes.trim())?(r.notes.replace(/\s*$/,'')+'; '+ph):ph;saveSec(r,true);
+  });});
+  $$('[data-addphrase]',v).forEach(function(b){b.addEventListener('click',function(){
+    var ph=prompt('Add a phrase you reuse often:');if(ph==null)return;ph=ph.trim();if(!ph)return;
+    var list=savedPhrases().slice();list.push(ph);store(K.phrases,list);toast('Phrase saved.');render('verify');
+  });});
   // Big Works / Broken / Blocked buttons — one tap, auto-saves.
   $$('[data-secset]',v).forEach(function(b){b.addEventListener('click',function(){
     var id=b.dataset.secset,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
@@ -1694,7 +1738,8 @@ var DOCS={
 var HOWTO={
   employee:['Log in as Employee with your name and password.',
     'Open <b>Verify Sections</b>. Add every section of the site — homepage, each menu, each page/tile, the footer.',
-    'For each section, check <b>every button and link</b>. Tap the big <b>Works</b>, <b>Broken</b> or <b>Blocked</b> button, and tap <b>Add photo / file</b> to attach your screenshot as proof. It saves by itself — no Save button.',
+    'For each section, check <b>every button and link</b>. Tap the big <b>Works</b>, <b>Broken</b> or <b>Blocked</b> button, and tap <b>Add photo / file</b> (or <b>Add link</b>) to attach your proof. It saves by itself — no Save button.',
+    'You almost never need to type. Tap a <b>1&ndash;5 rating</b>, tap the <b>quick problem chips</b> (Won’t open, Wrong page, Button dead&hellip;), or tap a <b>saved phrase</b> to fill the note. Only type if you want to add something extra.',
     'If something is broken, open <b>Issues</b> and log it. You report — you do NOT fix. The owner fixes it, then you retest that section.',
     'Do the <b>Steps</b> checklist (inventory, navigation, first-time review, browser comparison, report).',
     'When every section is verified and steps are done, open <b>Assignments</b> and tap <b>Submit for review</b>.',
@@ -1716,7 +1761,7 @@ var GUIDE=[
   {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
   {tab:'assignments',name:'Assignments',   what:'Your work is split into daily $60 assignments. Each day covers one area; finish it, the owner approves, you invoice $60, then the next day unlocks. After two days of logging issues, a re-verify day is required before any new area.', todo:'Do today’s area, log issues with a screenshot, then tap Submit this day for review.'},
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
-  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. Each section is one card with big Works / Broken / Blocked buttons and an Add photo / file button. One tap saves it — no Save button.', todo:'Test every button and link. Tap Add photo / file to attach proof, then tap Works, Broken, or Blocked. Works needs a photo first. If a link routes into an ACR site, tap Blocked and stop. The bar at the top shows how many are done.'},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. Each section is one card with big Works / Broken / Blocked buttons and an Add photo / file button. One tap saves it — no Save button.', todo:'Test every button and link. Tap Add photo / file (or Add link) to attach proof, then tap Works, Broken, or Blocked. To leave a note without typing, tap a 1-5 rating, tap the quick problem chips, or tap a saved phrase. Works needs a photo first. ACR link? Tap Blocked and stop. The bar at the top shows how many are done.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
   {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner brings them to the fixer. At day’s end, tap End-of-day report for a clean summary to download or copy.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix. Generate the End-of-day report before you sign off.'},
   {tab:'handoff',    name:'Fix Handoff',    what:'Owner tool. Collects the open issues she reported into one report to hand to the fixer (Claude). ACR items are listed separately and never fixed without your approval.', todo:'Owner: tap Copy report and send it to the fixer. Screenshots come from Evidence (Save image to send).', owner:true},
@@ -1781,7 +1826,16 @@ function rHowTo(v){
     '</ol></div>';
   // Evidence in one step
   html+='<div class="card tint-green" style="margin:14px 0"><h3>Evidence — keep it simple</h3>'+
-    '<p style="margin:0">Take a screenshot, then either <b>type its file name</b> in the section’s Evidence box in Verify Sections, or <b>upload it</b> in Evidence. That’s your proof — one step, done. Uploaded images auto-delete after 48 hours; typed names are kept.</p></div>';
+    '<p style="margin:0">Take a screenshot, then tap <b>Add photo / file</b> on that section (or <b>Add link</b> to paste a Google Doc). That’s your proof — one tap, done. Uploaded files auto-delete after 48 hours.</p></div>';
+  // Notes made easy — tap instead of type
+  html+='<div class="card tint-blue" style="margin:14px 0"><h3>Notes without typing</h3>'+
+    '<p style="margin:0 0 6px">On every section you can leave feedback with taps only:</p>'+
+    '<ul style="margin:0;padding-left:20px;line-height:1.7">'+
+      '<li style="margin-bottom:6px"><b>1&ndash;5 rating</b> &mdash; tap a number for how well it works (tap again to clear).</li>'+
+      '<li style="margin-bottom:6px"><b>Quick problem chips</b> &mdash; tap what is wrong (Won’t open, Wrong page, Button dead&hellip;). Tap again to remove.</li>'+
+      '<li style="margin-bottom:0"><b>Saved phrases</b> &mdash; tap a phrase you reuse to drop it into the note. <b>+ Add phrase</b> saves a new one for next time.</li>'+
+    '</ul>'+
+    '<p class="muted" style="margin:8px 0 0">Typing is always optional &mdash; the Notes box is only for anything extra.</p></div>';
   // What each section does
   html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
   GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
