@@ -911,7 +911,7 @@ function rVerify(v){
         '<button data-secset="'+s.id+'" data-val="ACR / Blocked" class="'+(s.status==='ACR / Blocked'?'on-blocked':'')+'">Blocked</button>'+
       '</div>'+
       '<div class="secshot" data-secshot="'+s.id+'">'+(hasShot?('<span class="ok">Photo attached'+(s.evidence?': '+esc(s.evidence):'')+'</span>'):'<span>No photo yet — Works needs a photo</span>')+'</div>'+
-      '<input type="file" data-secfile="'+s.id+'" accept="image/*,application/pdf,.doc,.docx,.txt" style="display:none">'+
+      '<input type="file" data-secfile="'+s.id+'" accept="image/*,application/pdf,.doc,.docx,.txt,.rtf,.pages,.csv,.md,.xls,.xlsx,.ppt,.pptx,.odt" style="display:none">'+
       '<div class="row"><button class="btn sm green" data-secadd="'+s.id+'">Add photo / file</button>'+
         (owner&&s.evKey?'<button class="btn sm" data-secsend="'+esc(s.evKey)+'|'+esc(s.evidence||'file')+'">Save image to send</button>':'')+
         (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
@@ -1249,8 +1249,8 @@ function rEvidence(v){
       '<p class="muted" style="margin-top:8px">'+fmtBytes(st.used)+' of '+fmtBytes(st.cap)+' safe limit ('+pct+'%). Stored in your own database — no paid storage, no card. We stop new uploads at this limit, and images auto-delete after 48 hours.</p></div>';
   v.innerHTML='<h1>Evidence Center</h1>'+ meter +
     '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a file</h3>'+
-      '<p class="muted">Photo or PDF/doc (no videos). Photos are shrunk on your device; all files are saved in your own database (no paid storage, no card) and <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any file and send it on to get the problem fixed. Non-photo files must be under 1.4 MB; for anything bigger, record the file name below.</p>'+
-      '<label class="fld"><span>Choose a file (photo or PDF/doc)</span><input id="evFile" type="file" accept="image/*,application/pdf,.doc,.docx,.txt"></label>'+
+      '<p class="muted">Photo, PDF, or document (no videos). Photos are shrunk on your device; all files are saved in your own database (no paid storage, no card) and <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any file and send it on to get the problem fixed. Non-photo files must be under 1.4 MB; for anything bigger, record the file name below.</p>'+
+      '<label class="fld"><span>Choose a file (photo, PDF, or document)</span><input id="evFile" type="file" accept="image/*,application/pdf,.doc,.docx,.txt,.rtf,.pages,.csv,.md,.xls,.xlsx,.ppt,.pptx,.odt"></label>'+
       '<div class="grid c2">'+fld('uIssue','Related issue (optional)','text')+fld('uBrowser','Browser (optional)','text')+'</div>'+
       '<div class="grid c2">'+fld('uDevice','Device (optional)','text')+'<div></div></div>'+
       fldArea('uNotes','Notes (optional)')+
