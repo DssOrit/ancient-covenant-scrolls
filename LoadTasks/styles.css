@@ -148,9 +148,9 @@ body.app-open .topbar { display: flex; }
   border-radius: 10px;
   min-height: 0;
   padding: 11px 10px 11px 24px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.04rem;
-  color: #eaedf7;
+  color: #d7dbe8;
   position: relative;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -190,12 +190,12 @@ body.app-open .topbar { display: flex; }
 .nav-group-sep {
   display: block;
   width: 100%;
-  margin: 12px 2px 2px;
+  margin: 16px 2px 4px;
   color: var(--gold);
-  font-size: .72rem;
+  font-size: .82rem;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  font-weight: 800;
+  letter-spacing: .09em;
+  font-weight: 900;
 }
 .nav-close {
   position: absolute;

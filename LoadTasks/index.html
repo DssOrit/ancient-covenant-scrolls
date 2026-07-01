@@ -47,7 +47,6 @@
       </picture>
       <div class="splash-actions">
         <button class="primary-action" data-view="dashboard" data-route>Open Dashboard</button>
-        <button type="button" class="secondary-action occ-splash-menu" aria-label="Open menu" onclick="document.querySelector('.topnav').classList.add('open');document.getElementById('navBackdrop').classList.add('open');">Menu</button>
         <a class="secondary-action occ-splash-login" href="occ.html" aria-label="Open OCC login" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.6);color:#ffe07a;font-weight:800;backdrop-filter:blur(8px)">OCC Login</a>
         <button class="secondary-action" data-view="intake" data-route>Upload Build</button>
         <button class="secondary-action" data-view="notes" data-route>Paste Notes</button>
@@ -497,6 +496,7 @@
           <!-- Dashboard mode controls -->
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
             <span class="eyebrow" style="margin:0;">View:</span>
+            <button type="button" class="small-btn nav-open-btn" aria-label="Open menu" onclick="document.querySelector('.topnav').classList.add('open');document.getElementById('navBackdrop').classList.add('open');" style="font-weight:800;border-color:rgba(255,212,0,.6);color:#ffe07a;background:rgba(255,212,0,.12);">Menu</button>
             <button id="dash-beg-btn" class="small-btn" onclick="setDashMode('beginner')" style="font-weight:700;">Step-by-Step</button>
             <button id="dash-exp-btn" class="small-btn" onclick="setDashMode('expert')" style="opacity:0.55;">All Tools</button>
             <button class="small-btn" onclick="dashExpandAll()" style="margin-left:auto;opacity:0.7;">Expand All Groups</button>
