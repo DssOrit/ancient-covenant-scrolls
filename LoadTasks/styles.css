@@ -147,9 +147,9 @@ body.app-open .topbar { display: flex; }
   border: 0;
   border-radius: 10px;
   min-height: 0;
-  padding: 11px 10px 11px 24px;
+  padding: 10px 10px 10px 24px;
   font-weight: 400;
-  font-size: 1.04rem;
+  font-size: .9rem;
   color: #d7dbe8;
   position: relative;
   backdrop-filter: none;
@@ -192,7 +192,7 @@ body.app-open .topbar { display: flex; }
   width: 100%;
   margin: 16px 2px 4px;
   color: var(--gold);
-  font-size: .82rem;
+  font-size: .98rem;
   text-transform: uppercase;
   letter-spacing: .09em;
   font-weight: 900;
