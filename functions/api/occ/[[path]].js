@@ -222,7 +222,7 @@ async function handle(req, env, origin) {
       env.DB.prepare('SELECT id,shot,video,issue,browser,device,notes, r2_key AS r2Key, created_by AS by, created_at AS at FROM evidence ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,sender, sender_role AS senderRole, recipient,priority,assignment,body, created_at AS at FROM messages ORDER BY created_at DESC').all(),
       env.DB.prepare('SELECT id,what,site,browser,device,urgency,shot,notes, created_by AS by, created_at AS at FROM alerts ORDER BY created_at DESC').all(),
-      env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at, ev_key AS evKey FROM sections').all()
+      env.DB.prepare('SELECT id,site,name,status,evidence,notes, owner_ok AS ownerOk, verified_at AS at, ev_key AS evKey, tags, rating FROM sections').all()
     ]);
     const storageUsed = await evidenceBytesUsed(env);
     return json({ me: { name: me.name, role: me.role, title: me.title }, assignments: a.results, checklist: c.results, issues: i.results, evidence: e.results, messages: m.results, alerts: al.results, sections: sec.results, storageUsed: storageUsed, storageCap: STORAGE_CAP_BYTES, storageEnabled: true }, 200, origin);
@@ -256,10 +256,12 @@ async function handle(req, env, origin) {
       const evidence = body.evidence != null ? body.evidence : row.evidence;
       const notes = body.notes != null ? body.notes : row.notes;
       const evKey = body.evKey != null ? body.evKey : row.ev_key;
+      const tags = body.tags != null ? body.tags : row.tags;
+      const rating = body.rating != null ? (parseInt(body.rating, 10) || 0) : row.rating;
       let ownerOk = row.owner_ok;
       if (body.ownerOk != null) { if (!owner) return json({ error: 'owner only' }, 403, origin); ownerOk = body.ownerOk ? 1 : 0; }
-      await env.DB.prepare('UPDATE sections SET status=?, evidence=?, notes=?, owner_ok=?, verified_at=?, updated_by=?, ev_key=? WHERE id=?')
-        .bind(status, evidence, notes, ownerOk, new Date().toISOString(), me.name, evKey, last).run();
+      await env.DB.prepare('UPDATE sections SET status=?, evidence=?, notes=?, owner_ok=?, verified_at=?, updated_by=?, ev_key=?, tags=?, rating=? WHERE id=?')
+        .bind(status, evidence, notes, ownerOk, new Date().toISOString(), me.name, evKey, tags, rating, last).run();
       return json({ ok: true }, 200, origin);
     }
     if (method === 'DELETE') {
@@ -359,6 +361,8 @@ async function ensureSchema(env) {
   try { await env.DB.prepare("ALTER TABLE assignments ADD COLUMN invoice_submitted_date TEXT").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE evidence ADD COLUMN size INTEGER DEFAULT 0").run(); } catch (e) {}
   try { await env.DB.prepare("ALTER TABLE sections ADD COLUMN ev_key TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE sections ADD COLUMN tags TEXT").run(); } catch (e) {}
+  try { await env.DB.prepare("ALTER TABLE sections ADD COLUMN rating INTEGER DEFAULT 0").run(); } catch (e) {}
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS evidence_blobs (id TEXT PRIMARY KEY, data TEXT, content_type TEXT, size INTEGER DEFAULT 0, created_at TEXT)").run();
   // Daily assignment model: kind ('verify' | 'recert') marks day assignments;
   // issues carry the day assignment they were logged under (for the gate).
