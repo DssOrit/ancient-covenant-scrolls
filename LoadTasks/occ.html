@@ -149,6 +149,15 @@
   .seg button{flex:1;padding:11px;border-radius:11px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-weight:700;cursor:pointer}
   .seg button.on{background:rgba(74,158,255,.18);border-color:transparent;color:var(--blue)}
   .err{color:var(--red);font-weight:700;min-height:1.2em;font-size:.9rem}
+  /* Big tap-friendly Works/Broken/Blocked buttons for each verification */
+  .seg3{display:flex;gap:8px;margin:4px 0 12px}
+  .seg3 button{flex:1;min-height:54px;border-radius:13px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-weight:800;font-size:1rem;cursor:pointer}
+  .seg3 button.on-works{background:var(--green);border-color:transparent;color:#04231a}
+  .seg3 button.on-broken{background:var(--red);border-color:transparent;color:#2a0707}
+  .seg3 button.on-blocked{background:var(--gray);border-color:transparent;color:#0a0d14}
+  .secshot{display:flex;align-items:center;gap:10px;margin:2px 0 10px;color:var(--muted);font-size:.9rem}
+  .secshot img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+  .secshot .ok{color:var(--green);font-weight:700}
   .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;background:#1b2030;border:1px solid var(--line);
     padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,.4);opacity:0;transition:opacity .25s;pointer-events:none}
   .toast.show{opacity:1}
@@ -893,15 +902,21 @@ function rVerify(v){
   if(!rows.length) html+='<p class="muted">No items yet.</p>';
   rows.forEach(function(s){
     var stColor=s.status==='Works'?'s-green':(s.status==='Broken'?'s-red':'s-gray');
+    var hasShot=!!(s.evKey||(s.evidence&&s.evidence.trim()));
     html+='<div class="card" style="margin-bottom:10px"><h3 style="margin-bottom:8px">'+esc(s.name)+' '+
       '<span class="chip '+stColor+'">'+esc(sectionVerified(s)?'Verified':(s.status))+'</span>'+(s.ownerOk?' <span class="chip s-green">Owner OK</span>':'')+'</h3>'+
-      '<label class="fld"><span>Does it work?</span><select data-secstatus="'+s.id+'">'+
-        ['Untested','Works','Broken','ACR / Blocked'].map(function(o){return '<option'+(o===s.status?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
-      '<label class="fld"><span>Evidence (screenshot file name) — required</span><input type="text" data-secev="'+s.id+'" value="'+esc(s.evidence||'')+'" placeholder="e.g. eco-homepage.png"></label>'+
-      '<label class="fld"><span>Notes</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'"></label>'+
-      '<div class="row"><button class="btn sm green" data-secsave="'+s.id+'">Save</button>'+
+      '<div class="seg3">'+
+        '<button data-secset="'+s.id+'" data-val="Works" class="'+(s.status==='Works'?'on-works':'')+'">Works</button>'+
+        '<button data-secset="'+s.id+'" data-val="Broken" class="'+(s.status==='Broken'?'on-broken':'')+'">Broken</button>'+
+        '<button data-secset="'+s.id+'" data-val="ACR / Blocked" class="'+(s.status==='ACR / Blocked'?'on-blocked':'')+'">Blocked</button>'+
+      '</div>'+
+      '<div class="secshot" data-secshot="'+s.id+'">'+(hasShot?('<span class="ok">Photo attached'+(s.evidence?': '+esc(s.evidence):'')+'</span>'):'<span>No photo yet — Works needs a photo</span>')+'</div>'+
+      '<input type="file" data-secfile="'+s.id+'" accept="image/*,application/pdf,video/*,.doc,.docx,.txt" style="display:none">'+
+      '<div class="row"><button class="btn sm green" data-secadd="'+s.id+'">Add photo / file</button>'+
+        (owner&&s.evKey?'<button class="btn sm" data-secsend="'+esc(s.evKey)+'|'+esc(s.evidence||'file')+'">Save image to send</button>':'')+
         (owner?'<button class="btn sm" data-secok="'+s.id+'">'+(s.ownerOk?'Un-approve':'Approve section')+'</button>':'')+
-        '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div></div>';
+        '<button class="btn sm ghost" data-secdel="'+s.id+'">Delete</button></div>'+
+      '<label class="fld" style="margin-top:8px"><span>Notes (optional)</span><input type="text" data-secnotes="'+s.id+'" value="'+esc(s.notes||'')+'" placeholder="Anything to add"></label></div>';
   });
   v.innerHTML=html;
   // merge updated rows by id into the global store (safe when rows is a day subset)
@@ -926,14 +941,54 @@ function rVerify(v){
     if(isOnline()){Promise.all(toAdd.map(function(n){return api('POST','/sections',{site:site.url,name:n});})).then(function(){return hydrate();}).then(function(){render('verify');}).catch(function(){render('verify');});}
     else render('verify');
   });
-  $$('[data-secsave]',v).forEach(function(b){b.addEventListener('click',function(){
-    var id=b.dataset.secsave,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
-    r.status=$('[data-secstatus="'+id+'"]',v).value;r.evidence=$('[data-secev="'+id+'"]',v).value;r.notes=$('[data-secnotes="'+id+'"]',v).value;r.at=nowISO();
-    if(r.status==='Works'&&!r.evidence.trim()){toast('Add evidence to verify a working section.');}
-    if(r.status==='Broken'){toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');}
-    if(r.status==='ACR / Blocked'){toast('Flagged ACR / Blocked. ACR is off limits — left for the owner, not fixed or linked.');}
-    persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);render('verify');sync(function(){return api('PATCH','/sections/'+id,{status:r.status,evidence:r.evidence,notes:r.notes});},'verify');
+  function saveSec(r,rerender){r.at=nowISO();persist(rows);if(sectionVerified(r))logActivity('Section verified',r.name);
+    if(rerender)render('verify');
+    sync(function(){return api('PATCH','/sections/'+r.id,{status:r.status,evidence:r.evidence,notes:r.notes,evKey:r.evKey||''});},rerender?'verify':null);}
+  // Big Works / Broken / Blocked buttons — one tap, auto-saves.
+  $$('[data-secset]',v).forEach(function(b){b.addEventListener('click',function(){
+    var id=b.dataset.secset,r=rows.filter(function(x){return x.id===id;})[0];if(!r)return;
+    var val=b.dataset.val;
+    if(val==='Works'&&!(r.evidence&&r.evidence.trim())){toast('Add a photo first, then mark it Works.');return;}
+    r.status=val;
+    if(val==='Broken')toast('Marked Broken — log it in Issues so the owner can fix it, then retest.');
+    if(val==='ACR / Blocked')toast('Flagged ACR / Blocked. ACR is off limits — left for the owner.');
+    saveSec(r,true);
   });});
+  // Add photo / file to a section — uploads and attaches as its evidence.
+  $$('[data-secadd]',v).forEach(function(b){b.addEventListener('click',function(){
+    var fi=$('[data-secfile="'+b.dataset.secadd+'"]',v);if(fi)fi.click();
+  });});
+  $$('[data-secfile]',v).forEach(function(fi){fi.addEventListener('change',function(){
+    var r=rows.filter(function(x){return x.id===fi.dataset.secfile;})[0];if(!r)return;
+    var f=fi.files[0];if(!f)return;
+    if(!isOnline()){toast('Connect online to attach a photo. You can still mark Broken or Blocked offline.');return;}
+    toast('Uploading photo...');
+    uploadFileEvidence(f,{name:f.name,notes:'Section: '+r.name},function(res){
+      if(res.ok){r.evidence=f.name;r.evKey=res.d.key||'';toast('Photo attached. Auto-deletes in 48h.');saveSec(r,true);}
+      else if(res.status===507){toast('Storage at the safe limit — old files clear after 48h. Try later, or record the name in Evidence.');}
+      else if(res.status===413){toast('File too big to store (keep under 1.4 MB). Use a screenshot, or record the name in Evidence.');}
+      else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
+    });
+  });});
+  // Notes auto-save on leaving the field (no Save button to remember).
+  $$('[data-secnotes]',v).forEach(function(inp){inp.addEventListener('change',function(){
+    var r=rows.filter(function(x){return x.id===inp.dataset.secnotes;})[0];if(!r)return;
+    r.notes=inp.value;saveSec(r,false);
+  });});
+  // Owner: save an attached image to send on to the fixer.
+  $$('[data-secsend]',v).forEach(function(b){b.addEventListener('click',function(){
+    var p=b.dataset.secsend.split('|');saveEvidenceImage(p[0],p[1]);
+  });});
+  // Load a thumbnail for any section whose attached evidence is an image.
+  $$('[data-secshot]',v).forEach(function(box){
+    var r=rows.filter(function(x){return x.id===box.dataset.secshot;})[0];
+    if(r&&r.evKey&&isImageName(r.evidence)&&isOnline()){
+      fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(r.evKey),{headers:{'Authorization':'Bearer '+authToken()}})
+        .then(function(rr){if(!rr.ok)throw 0;return rr.blob();})
+        .then(function(bl){var u=URL.createObjectURL(bl);box.innerHTML='<img src="'+u+'" alt=""><span class="ok">Photo attached: '+esc(r.evidence)+'</span>';})
+        .catch(function(){});
+    }
+  });
   $$('[data-secdel]',v).forEach(function(b){b.addEventListener('click',function(){
     if(!confirm('Delete this section?'))return;var _id=b.dataset.secdel;rows=rows.filter(function(x){return x.id!==_id;});persist(rows);render('verify');sync(function(){return api('DELETE','/sections/'+_id);},'verify');
   });});
@@ -1157,11 +1212,31 @@ function uploadEvidence(dataUrl,fields,cb){
     .then(function(r){return r.text().then(function(t){var d;try{d=JSON.parse(t);}catch(e){d={};}return {ok:r.ok,status:r.status,d:d};});})
     .then(cb).catch(function(e){cb({ok:false,status:0,d:{error:e.message||'network'}});});
 }
+/* Upload ANY file as evidence. Images are shrunk first; other files (PDF, doc,
+   short video) are sent as-is, as long as they fit under the safe size limit. */
+var MAX_OTHER_FILE=1400*1024; // 1.4 MB — keeps it under the database row limit
+function uploadFileEvidence(file,fields,cb){
+  if(!file){cb({ok:false,status:0,d:{error:'no file'}});return;}
+  fields=fields||{};if(!fields.name)fields.name=file.name;
+  if((file.type||'').indexOf('image/')===0){
+    downscaleImage(file,1100,0.6,function(dataUrl){
+      if(!dataUrl){cb({ok:false,status:0,d:{error:'could not read image'}});return;}
+      uploadEvidence(dataUrl,fields,cb);
+    });
+    return;
+  }
+  if(file.size>MAX_OTHER_FILE){cb({ok:false,status:0,d:{error:'file too big — keep it under 1.4 MB, or record its name instead'}});return;}
+  var rd=new FileReader();
+  rd.onload=function(){uploadEvidence(String(rd.result),fields,cb);};
+  rd.onerror=function(){cb({ok:false,status:0,d:{error:'could not read file'}});};
+  rd.readAsDataURL(file);
+}
+function isImageName(n){return /\.(png|jpe?g|gif|webp|heic|bmp)$/i.test(String(n||''));}
 /* Fetch a stored image (authed) and save/open it so the owner can send it on. */
 function saveEvidenceImage(key,name){
   fetch(API_BASE+'/evidence/file?key='+encodeURIComponent(key),{headers:{'Authorization':'Bearer '+authToken()}})
     .then(function(r){if(!r.ok)throw 0;return r.blob();})
-    .then(function(b){var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=(name||'screenshot')+'.jpg';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);})
+    .then(function(b){var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=(/\.[a-z0-9]+$/i.test(name||'')?name:((name||'screenshot')+'.jpg'));document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);})
     .catch(function(){toast('Could not open image (it may have auto-deleted after 48h).');});
 }
 function fmtBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(0)+' KB';if(n<1073741824)return (n/1048576).toFixed(1)+' MB';return (n/1073741824).toFixed(2)+' GB';}
@@ -1173,13 +1248,13 @@ function rEvidence(v){
       '<div class="progress"><i style="width:'+pct+'%"></i></div>'+
       '<p class="muted" style="margin-top:8px">'+fmtBytes(st.used)+' of '+fmtBytes(st.cap)+' safe limit ('+pct+'%). Stored in your own database — no paid storage, no card. We stop new uploads at this limit, and images auto-delete after 48 hours.</p></div>';
   v.innerHTML='<h1>Evidence Center</h1>'+ meter +
-    '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a screenshot</h3>'+
-      '<p class="muted">The picture is shrunk on your device and saved in your own database (no paid storage, no card). Uploaded images <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any image and send it on to get the problem fixed.</p>'+
-      '<label class="fld"><span>Choose an image</span><input id="evFile" type="file" accept="image/*"></label>'+
+    '<div class="card tint-green" style="margin-bottom:14px"><h3>Upload a file</h3>'+
+      '<p class="muted">Photo, PDF, or short video. Photos are shrunk on your device; all files are saved in your own database (no paid storage, no card) and <b>auto-delete after 48 hours</b> — the text record is kept. The owner can open any file and send it on to get the problem fixed. Non-photo files must be under 1.4 MB; for anything bigger, record the file name below.</p>'+
+      '<label class="fld"><span>Choose a file (photo, PDF, or video)</span><input id="evFile" type="file" accept="image/*,application/pdf,video/*,.doc,.docx,.txt"></label>'+
       '<div class="grid c2">'+fld('uIssue','Related issue (optional)','text')+fld('uBrowser','Browser (optional)','text')+'</div>'+
       '<div class="grid c2">'+fld('uDevice','Device (optional)','text')+'<div></div></div>'+
       fldArea('uNotes','Notes (optional)')+
-      '<button class="btn green" id="evUp">Upload screenshot</button></div>'+
+      '<button class="btn green" id="evUp">Upload file</button></div>'+
     '<div class="card tint-blue" style="margin-bottom:14px"><h3>Or record a file name</h3>'+
       '<p class="muted">No upload needed — save the file in your folder and list its name here. Text records are kept permanently.</p>'+
       '<div class="grid c2">'+fld('eShot','Screenshot filename','text')+fld('eVideo','Video filename','text')+'</div>'+
@@ -1190,18 +1265,15 @@ function rEvidence(v){
     '<div class="card"><h3>Evidence Records ('+ev.length+')</h3><div id="eList"></div></div>';
   $('#evUp',v).addEventListener('click',function(){
     var f=$('#evFile',v).files[0];
-    if(!f){toast('Choose an image first');return;}
-    if(!isOnline()){toast('Connect online to upload images');return;}
-    var btn=this;btn.disabled=true;toast('Shrinking and uploading...');
-    downscaleImage(f,1100,0.6,function(dataUrl){
-      if(!dataUrl){btn.disabled=false;toast('Could not read that image. Try a different one.');return;}
-      uploadEvidence(dataUrl,{name:f.name,issue:$('#uIssue',v).value,browser:$('#uBrowser',v).value,device:$('#uDevice',v).value,notes:$('#uNotes',v).value},function(res){
-        btn.disabled=false;
-        if(res.ok){logActivity('Screenshot uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
-        else if(res.status===507){toast('Storage is at the safe limit, so uploads paused. Old images clear after 48h — try later, or use the file-name option below.');}
-        else if(res.status===413){toast('That image is still too large after shrinking. Take a simpler screenshot or use the file-name option.');}
-        else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
-      });
+    if(!f){toast('Choose a file first');return;}
+    if(!isOnline()){toast('Connect online to upload files');return;}
+    var btn=this;btn.disabled=true;toast('Preparing and uploading...');
+    uploadFileEvidence(f,{name:f.name,issue:$('#uIssue',v).value,browser:$('#uBrowser',v).value,device:$('#uDevice',v).value,notes:$('#uNotes',v).value},function(res){
+      btn.disabled=false;
+      if(res.ok){logActivity('File uploaded',f.name);toast('Uploaded. Auto-deletes in 48 hours.');hydrate().then(function(){render('evidence');}).catch(function(){render('evidence');});}
+      else if(res.status===507){toast('Storage is at the safe limit, so uploads paused. Old files clear after 48h — try later, or use the file-name option below.');}
+      else if(res.status===413){toast('That file is too big to store. Keep it under 1.4 MB, or record its name below.');}
+      else{toast('Upload failed: '+(res.d.error||('HTTP '+res.status)));}
     });
   });
   $('#eSave',v).addEventListener('click',function(){
@@ -1612,7 +1684,7 @@ var DOCS={
 var HOWTO={
   employee:['Log in as Employee with your name and password.',
     'Open <b>Verify Sections</b>. Add every section of the site — homepage, each menu, each page/tile, the footer.',
-    'For each section, check <b>every button and link</b>. Mark it Works or Broken, and type a screenshot file name as evidence.',
+    'For each section, check <b>every button and link</b>. Tap the big <b>Works</b>, <b>Broken</b> or <b>Blocked</b> button, and tap <b>Add photo / file</b> to attach your screenshot as proof. It saves by itself — no Save button.',
     'If something is broken, open <b>Issues</b> and log it. You report — you do NOT fix. The owner fixes it, then you retest that section.',
     'Do the <b>Steps</b> checklist (inventory, navigation, first-time review, browser comparison, report).',
     'When every section is verified and steps are done, open <b>Assignments</b> and tap <b>Submit for review</b>.',
@@ -1634,7 +1706,7 @@ var GUIDE=[
   {tab:'howto',      name:'How to Use',     what:'This guide. Plain steps for everything in the app.', todo:'Come back here any time you are unsure what to do.'},
   {tab:'assignments',name:'Assignments',   what:'Your work is split into daily $60 assignments. Each day covers one area; finish it, the owner approves, you invoice $60, then the next day unlocks. After two days of logging issues, a re-verify day is required before any new area.', todo:'Do today’s area, log issues with a screenshot, then tap Submit this day for review.'},
   {tab:'review',     name:'Owner Review',   what:'Where the owner approves work, returns it with notes, or asks for a retest.', todo:'Owner decides on submitted work here. The employee cannot approve her own work.', owner:true},
-  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. List every section of the site and mark each one Works, Broken, or ACR / Blocked, with a screenshot as proof.', todo:'Test every button and link in each section. If a link routes into an ACR site, mark it ACR / Blocked and stop — do not fix or follow it. Otherwise mark Works or Broken and add the screenshot. See the Screenshots note below.'},
+  {tab:'verify',     name:'Verify Sections',what:'The heart of the job. Each section is one card with big Works / Broken / Blocked buttons and an Add photo / file button. One tap saves it — no Save button.', todo:'Test every button and link. Tap Add photo / file to attach proof, then tap Works, Broken, or Blocked. Works needs a photo first. If a link routes into an ACR site, tap Blocked and stop. The bar at the top shows how many are done.'},
   {tab:'daily',      name:'Steps',          what:'A guided checklist: inventory the site, click everything, do a first-time-visitor review, compare browsers, then report.', todo:'Work through it in order. Tick each step as you finish it.'},
   {tab:'issues',     name:'Issues',         what:'Where broken things are logged. The employee reports; the owner brings them to the fixer. At day’s end, tap End-of-day report for a clean summary to download or copy.', todo:'Log one issue per broken thing, with a screenshot. You report — you do not fix. Generate the End-of-day report before you sign off.'},
   {tab:'handoff',    name:'Fix Handoff',    what:'Owner tool. Collects the open issues she reported into one report to hand to the fixer (Claude). ACR items are listed separately and never fixed without your approval.', todo:'Owner: tap Copy report and send it to the fixer. Screenshots come from Evidence (Save image to send).', owner:true},
@@ -1663,7 +1735,7 @@ var FAQ=[
   ['Do I fix the bugs?','No. You verify and report. The owner (or Claude) fixes them, then you retest that section.'],
   ['What if a link goes into an ACR site?','Stop and mark that section ACR / Blocked. ACR sites are off limits — do not test-fix, follow, or link them. They are set aside for the owner’s explicit approval and never block-counted as bugs.'],
   ['What counts as done?','Every section marked Works with a screenshot name, every step checked, and the owner approved.'],
-  ['Can I upload screenshots, or only file names?','Both. In Evidence you can upload the picture (shrunk on your device, stored in your own database, auto-deletes after 48 hours) or just type the file name to keep a permanent text record. See the Screenshots note above.'],
+  ['Can I upload photos, PDFs, or videos?','Yes. On each section tap <b>Add photo / file</b>, or use the <b>Evidence</b> tab. Photos, PDFs and short videos all work (non-photo files under 1.4 MB). They are stored in your own database and auto-delete after 48 hours. For anything bigger, just record the file name — that is kept permanently.'],
   ['How do I get a screenshot to the fixer?','Open the uploaded image in Evidence and tap Save image to send. That saves the picture to your device so you can share it with the fixer (Claude). Do it within 48 hours, before the image auto-clears.'],
   ['Will uploads slow the site or fill it up?','No. Pictures are shrunk before saving, the app keeps a small safe limit, and uploaded images auto-delete after 48 hours. It stays light.'],
   ['Could uploads ever cost money?','No. Screenshots are stored in your own database — no paid storage and no card needed. The app stops uploads before its safe limit, and the Evidence page shows a storage-used meter. The file-name option is always free too.'],
@@ -1713,11 +1785,11 @@ function rHowTo(v){
   // Screenshots — how proof works (matches the current MVP: record file names, no upload button yet)
   html+='<div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
     '<p style="margin:0 0 8px">You have <b>two ways</b> to add screenshot proof. Both keep a permanent text record; the difference is whether the picture itself is stored.</p>'+
-    '<p style="margin:0 0 6px"><b>Way 1 — Upload the picture (recommended).</b></p>'+
+    '<p style="margin:0 0 6px"><b>Way 1 — Attach the file right on the section (recommended).</b></p>'+
     '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.7">'+
       '<li style="margin-bottom:8px">On iPad, take the screenshot (press the top button and volume up together).</li>'+
-      '<li style="margin-bottom:8px">Open <b>Evidence</b>, tap <b>Choose an image</b>, pick the screenshot, then tap <b>Upload screenshot</b>.</li>'+
-      '<li style="margin-bottom:8px">The app shrinks the picture on your device and saves it in your own database — <b>no paid storage and no card needed</b>.</li>'+
+      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, on that section tap <b>Add photo / file</b> and pick the screenshot (or a PDF / short video). It attaches to that exact section. You can also upload from the <b>Evidence</b> tab.</li>'+
+      '<li style="margin-bottom:8px">The app shrinks photos on your device and saves the file in your own database — <b>no paid storage and no card needed</b>.</li>'+
       '<li style="margin-bottom:8px">It <b>auto-deletes after 48 hours</b> to keep the database light, and a usage meter at the top of Evidence shows how much space is used. The app also stops uploads before its safe limit, so it can never cost money.</li>'+
       '<li style="margin-bottom:8px"><b>To get a screenshot fixed:</b> the owner opens the uploaded image, taps <b>Save image to send</b>, and shares it with the fixer (Claude) — review within the 48-hour window before it clears.</li>'+
       '<li style="margin-bottom:0">The text record (file name, date, who) is kept even after the image clears.</li>'+
@@ -1725,7 +1797,7 @@ function rHowTo(v){
     '<p style="margin:0 0 6px"><b>Way 2 — Just record the file name.</b></p>'+
     '<ol style="margin:0;padding-left:20px;line-height:1.7">'+
       '<li style="margin-bottom:8px">Save the screenshot in your own evidence folder with a clear name, like <b>eco-homepage.png</b>.</li>'+
-      '<li style="margin-bottom:8px">In <b>Verify Sections</b>, type that file name in the section’s <b>Evidence</b> box, then mark it Works or Broken. You can also add it under <b>Evidence</b> &rarr; Record a file name.</li>'+
+      '<li style="margin-bottom:8px">Open the <b>Evidence</b> tab &rarr; <b>Or record a file name</b>, type the name, and tap <b>Add evidence record</b>. (Attaching the photo on the section is the simpler way.)</li>'+
       '<li style="margin-bottom:0">Nothing is uploaded; you keep the picture yourself, forever.</li>'+
     '</ol></div>';
 
