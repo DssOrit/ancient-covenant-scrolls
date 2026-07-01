@@ -149,7 +149,7 @@ body.app-open .topbar { display: flex; }
   min-height: 0;
   padding: 10px 10px 10px 24px;
   font-weight: 400;
-  font-size: .9rem;
+  font-size: .86rem;
   color: #d7dbe8;
   position: relative;
   backdrop-filter: none;
@@ -187,15 +187,18 @@ body.app-open .topbar { display: flex; }
   color: var(--text);
   margin-bottom: 4px;
 }
-.nav-group-sep {
+.topnav .nav-group-sep {
   display: block;
   width: 100%;
-  margin: 16px 2px 4px;
+  margin: 18px 2px 6px;
+  padding: 0 2px;
+  border: 0;
   color: var(--gold);
-  font-size: .98rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
-  letter-spacing: .09em;
+  letter-spacing: .03em;
   font-weight: 900;
+  white-space: normal;
 }
 .nav-close {
   position: absolute;
