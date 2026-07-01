@@ -19,21 +19,21 @@
 -->
 <style>
   :root{
-    --bg:#0e1016; --bg2:#13161f; --card:rgba(30,34,46,.62); --card2:rgba(40,45,60,.5);
-    --line:rgba(150,160,190,.16); --text:#eef1f8; --muted:#9aa3b8;
-    --blue:#4a9eff; --purple:#9b6dff; --green:#3ecf8e; --orange:#ff9f43;
-    --red:#ff5c5c; --gold:#ffd166; --gray:#6b7280;
-    --radius:16px;
+    --bg:#040611; --bg2:#080c19; --card:rgba(11,16,30,.82); --card2:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.12); --text:#f7f7f4; --muted:#c8c9ce;
+    --blue:#66b6ff; --purple:#9b6dff; --green:#43dd87; --orange:#ff9f43;
+    --red:#ff4d4d; --gold:#ffd400; --gold-2:#ffb700; --gray:#6b7280;
+    --radius:22px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     background:
-      radial-gradient(1100px 600px at 80% -10%, rgba(75,110,255,.10), transparent 60%),
-      radial-gradient(900px 500px at -10% 110%, rgba(155,109,255,.10), transparent 60%),
-      var(--bg);
+      radial-gradient(circle at 50% 6%, rgba(255,212,0,.16), transparent 30%),
+      radial-gradient(circle at 86% 38%, rgba(255,183,0,.10), transparent 24%),
+      linear-gradient(180deg,#03050d 0%,#050711 50%,#02030a 100%);
     color:var(--text);
-    font-family:'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
     font-size:16px; line-height:1.6; letter-spacing:0; font-weight:400;
     -webkit-text-size-adjust:100%;
     padding-bottom:env(safe-area-inset-bottom);
@@ -81,7 +81,7 @@
   .tabs button[data-c=gray].active{background:rgba(107,114,128,.22);color:#c2c8d6}
 
   /* Cards */
-  .card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:22px;box-shadow:none}
+  .card{background:linear-gradient(160deg,rgba(58,66,112,.34),rgba(14,18,34,.30));border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:22px;box-shadow:0 18px 60px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .card.tint-blue{background:linear-gradient(160deg,rgba(74,158,255,.18),rgba(74,158,255,.04));border-color:rgba(74,158,255,.28)}
   .card.tint-purple{background:linear-gradient(160deg,rgba(155,109,255,.18),rgba(155,109,255,.04));border-color:rgba(155,109,255,.28)}
   .card.tint-green{background:linear-gradient(160deg,rgba(62,207,142,.16),rgba(62,207,142,.04));border-color:rgba(62,207,142,.26)}
@@ -115,7 +115,7 @@
   .btn.blue{background:var(--blue);border-color:transparent;color:#06122a}
   .btn.purple{background:var(--purple);border-color:transparent;color:#180a33}
   .btn.green{background:var(--green);border-color:transparent;color:#04231a}
-  .btn.gold{background:var(--gold);border-color:transparent;color:#2a2200}
+  .btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-2));border-color:transparent;color:#111;box-shadow:0 0 42px rgba(255,212,0,.18)}
   .btn.red{background:var(--red);border-color:transparent;color:#2a0707}
   .btn.ghost{background:transparent}
   .btn.sm{padding:8px 13px;font-size:.86rem}
@@ -126,7 +126,7 @@
   .check input{width:26px;height:26px;flex:0 0 auto;margin-top:1px;accent-color:var(--green)}
   .check label{font-weight:600;cursor:pointer}
   .progress{height:12px;border-radius:999px;background:#10131c;overflow:hidden;border:1px solid var(--line)}
-  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#8be3bd);width:0;transition:width .3s}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));width:0;transition:width .3s}
 
   .list-item{padding:13px 0;border-bottom:1px solid var(--line)}
   .list-item:last-child{border-bottom:0}
@@ -191,7 +191,7 @@
     <label class="fld"><span>Name</span><input id="loginName" type="text" autocomplete="off" placeholder="Your name"></label>
     <label class="fld"><span>Password</span><input id="loginPass" type="password" autocomplete="off" placeholder="Password"></label>
     <div class="err" id="loginErr"></div>
-    <button class="btn blue" id="loginBtn" style="width:100%;justify-content:center">Sign In</button>
+    <button class="btn gold" id="loginBtn" style="width:100%;justify-content:center">Sign In</button>
     <p class="muted" style="font-size:.8rem;margin-top:14px">Use the name and password set up for your account.<br>
       Need to create or reset a login? Open <a href="occ-setup.html" style="color:var(--blue)">occ-setup.html</a>.</p>
   </div>
