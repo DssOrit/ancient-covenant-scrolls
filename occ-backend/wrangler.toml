@@ -1,0 +1,33 @@
+# ===========================================================================
+# OCC Worker — Cloudflare config
+# Fill in the IDs after you create the D1 database and R2 bucket
+# (see HANDOFF_OCC_BACKEND.md). You only need this file if you deploy with
+# the `wrangler` CLI. If you use the Cloudflare dashboard, set the same
+# bindings + secret there instead.
+# ===========================================================================
+
+name = "occ-api"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# D1 database binding (the API reads/writes here)
+[[d1_databases]]
+binding = "DB"
+database_name = "occ"
+database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"
+
+# R2 bucket binding for evidence file uploads (optional)
+[[r2_buckets]]
+binding = "EVIDENCE"
+bucket_name = "occ-evidence"
+
+# SETUP_SECRET is a SECRET, not put here. Set it with:
+#   wrangler secret put SETUP_SECRET
+# (or in the dashboard: Worker > Settings > Variables > Add secret)
+
+# Recommended: serve the API same-origin so the front-end needs no CORS,
+# e.g. route loadeco.app/api/occ/*  ->  this worker. Add the route in the
+# dashboard (Worker > Triggers > Routes) or uncomment below and set zone.
+# [[routes]]
+# pattern = "loadeco.app/api/occ/*"
+# zone_name = "loadeco.app"

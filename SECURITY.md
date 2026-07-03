@@ -73,15 +73,21 @@ npm audit
 
 ## Branch protection
 
-Maintainers should enable branch protection on `main` via repo
-Settings → Branches:
+**Status: ENABLED & CONFIRMED 2026-07-02.** A branch ruleset named
+`protect-main` is Active, targeting the default branch (`main`), with an
+empty bypass list. It enforces:
 
-- Require pull request before merge
-- Require at least one review
-- Require status checks (CodeQL) to pass
-- Require conversation resolution
-- Block force pushes
-- Block branch deletion
+- Block force pushes (no history rewriting on `main`)
+- Restrict deletions (the `main` branch cannot be deleted)
+
+This blocks history tampering while leaving normal work untouched: file
+edits, new commits, pull-request merges, and Cloudflare auto-deploys all
+continue to work (a merge is not a force push, and feature branches are
+not `main`). The owner can pause the ruleset or add a bypass at any time.
+
+Optional stricter rules (not enabled, would add review/merge friction):
+require pull request before merge, require review, require CodeQL to pass,
+require conversation resolution.
 
 ## Public-repo posture
 

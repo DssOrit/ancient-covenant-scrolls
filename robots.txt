@@ -1,0 +1,5 @@
+# Public content (ACR / scrolls sites) stays crawlable.
+# The internal Load Tasks / OCC tooling must NOT be indexed.
+User-agent: *
+Disallow: /LoadTasks/
+Disallow: /api/occ/
