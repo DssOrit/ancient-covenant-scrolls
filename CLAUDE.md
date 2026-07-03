@@ -117,6 +117,33 @@ These have been re-locked on 2026-05-04 after repeated violations.
     table. Secrets and user data stay out of the repo (Cloudflare env +
     private D1); the repo itself stays public and fully editable by Claude.
 
+11. **FIND FIRST, FIX SECOND — APPROVAL REQUIRED — locked 2026-07-03
+    by user.** Before making ANY fix or change, especially to ACR sites
+    or data files:
+    a. Run the scan / find the issues first.
+    b. Report every finding to the user in full — file name, what it
+       says now, what it would become.
+    c. Wait for explicit user approval before writing a single character.
+    d. Only then apply the approved changes, exactly as described.
+    There are NO exceptions. A change that seems obviously correct still
+    requires approval before it is made. "I found X, fixing now" is a
+    violation. The correct pattern is always: find → report → wait →
+    fix only what was approved.
+
+12. **SESSION NOTES ARE LIVE DOCUMENTS — locked 2026-07-03 by user.**
+    Session notes must be updated continuously, not only at session end.
+    Mandatory update triggers:
+    a. After every merged PR — add it to "Built today" immediately.
+    b. After any scan or audit that produces findings — log the findings
+       and their status (pending approval / approved / fixed).
+    c. After any user approval or direction — log exactly what was
+       approved and what the scope is.
+    d. Whenever direction changes mid-session — log what changed and why.
+    The session notes file for today (`SESSION_NOTES_<YYYY-MM-DD>.md`)
+    must always reflect the real current state of the work so that the
+    next session can read it and continue without losing track of
+    anything. Commit and push the notes update after each trigger above.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
