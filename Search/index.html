@@ -582,6 +582,22 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .pw-go-btn{padding:10px 16px;background:var(--gold);border:none;border-radius:8px;color:#111;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0}
 .pw-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--tx3);padding:10px 0 5px;border-top:1px solid #1e1e1e;margin-top:6px}
 .pw-section-label:first-child{border-top:none;margin-top:0;padding-top:0}
+/* ALPHABET */
+.ab-wrap{padding:16px}
+.ab-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
+.ab-sub{font-size:11px;color:var(--tx3);margin-bottom:10px;line-height:1.5}
+.ab-full-row{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;margin-bottom:14px;text-align:center;cursor:pointer;transition:border-color 0.15s}
+.ab-full-row:active{border-color:var(--gold)}
+.ab-full-glyphs{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:26px;color:var(--gold);letter-spacing:3px;line-height:1.5;word-break:break-all}
+.ab-full-label{font-size:10px;color:var(--tx3);margin-top:5px}
+.ab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px}
+.ab-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px 8px;text-align:center;cursor:pointer;transition:border-color 0.15s,background 0.15s}
+.ab-card:active{background:var(--s2);border-color:var(--gold)}
+.ab-card.copied{border-color:var(--gold)}
+.ab-glyph{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:34px;color:var(--gold);line-height:1;margin-bottom:5px}
+.ab-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
+.ab-translit{font-size:10px;color:var(--tx3)}
+
 /* ACR SITES STRIP */
 .acr-sites-strip{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:16px 0 80px;border-top:1px solid #1e1e1e;margin-top:24px}
 .acr-site-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);white-space:nowrap;flex-shrink:0}
@@ -762,6 +778,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="places" onclick="setMode('places')"><i class="ri-map-pin-line"></i> Ancient Places</div>
       <div class="mpill" data-mode="beliefs" onclick="setMode('beliefs')"><i class="ri-scales-3-line"></i> Q&amp;A (Beliefs)</div>
       <div class="mpill" data-mode="hebrew" onclick="setMode('hebrew')"><i class="ri-translate-2"></i> Hebrew Roots</div>
+      <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
     </div>
   </div>
@@ -1900,6 +1917,19 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
     </div>
 
+    <!-- PALEO ALPHABET -->
+    <div id="alphabet-view" style="display:none">
+      <div class="ab-wrap">
+        <div class="ab-hdr">Paleo-Hebrew Alphabet</div>
+        <div class="ab-sub">All 22 letters of the ancient script. Tap any letter to copy it. Tap the full row to copy all 22.</div>
+        <div class="ab-full-row" onclick="copyAlphabetFull(this)">
+          <div class="ab-full-glyphs">&#x10900;&#x10901;&#x10902;&#x10903;&#x10904;&#x10905;&#x10906;&#x10907;&#x10908;&#x10909;&#x1090A;&#x1090B;&#x1090C;&#x1090D;&#x1090E;&#x1090F;&#x10910;&#x10911;&#x10912;&#x10913;&#x10914;&#x10915;</div>
+          <div class="ab-full-label">Tap to copy all 22</div>
+        </div>
+        <div class="ab-grid" id="ab-grid"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -2139,7 +2169,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna','covenant-nations'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -4659,83 +4689,82 @@ function renderVolumeGrid() {
 }
 var CHRON_ORDER = [
   {era:'Creation to the Flood', items:[
-    {vols:[1,2], label:'Bereshit (Genesis) Parts 1–2', sub:'Creation · Noakh'},
-    {vols:[13,14,15], label:'Chanokh (1 Enoch) Parts 1–3', sub:'Pre-flood world'},
-    {vols:[18], label:'Book of Giants', sub:'Pre-flood'},
-    {vols:[16,17], label:'Yovelim (Jubilees) Parts 1–2', sub:'Retells Creation through Moshe'}
+    {vols:[1], label:'Bereshit (Genesis) Parts 1–2', sub:'Creation · Noakh'},
+    {vols:[6], label:'Chanokh (1 Enoch) Parts 1–3', sub:'Pre-flood world'},
+    {vols:[8], label:'Book of Giants', sub:'Pre-flood'},
+    {vols:[7], label:'Yovelim (Jubilees) Parts 1–2', sub:'Retells Creation through Moshe'}
   ]},
   {era:'The Patriarchs', items:[
-    {vols:[2,3,4], label:'Bereshit (Genesis) Parts 2–4', sub:'Avraham · Yaakov · Yosef'},
-    {vols:[19], label:'Visions of Amram (4QAmram)', sub:'Moshe\'s father'}
+    {vols:[1], label:'Bereshit (Genesis) Parts 2–4', sub:'Avraham · Yaakov · Yosef'},
+    {vols:[9], label:'Visions of Amram (4QAmram)', sub:'Moshe\'s father'}
   ]},
   {era:'Egypt and the Wilderness', items:[
-    {vols:[5,6], label:'Shemot (Exodus) Parts 1–2', sub:''},
-    {vols:[7,8], label:'Vayikra (Leviticus) Parts 1–2', sub:''},
-    {vols:[9,10], label:'Bamidbar (Numbers) Parts 1–2', sub:''},
-    {vols:[11,12], label:'Devarim (Deuteronomy) Parts 1–2', sub:''}
+    {vols:[1], label:'Shemot (Exodus) Parts 1–2', sub:''},
+    {vols:[1], label:'Vayikra (Leviticus) Parts 1–2', sub:''},
+    {vols:[1], label:'Bamidbar (Numbers) Parts 1–2', sub:''},
+    {vols:[1], label:'Devarim (Deuteronomy) Parts 1–2', sub:''}
   ]},
   {era:'Entering the Land', items:[
-    {vols:[20,21,22], label:'Yehoshua (Joshua) Parts 1–3', sub:''}
+    {vols:[10], label:'Yehoshua (Joshua) Parts 1–3', sub:''}
   ]},
   {era:'The Judges Period', items:[
-    {vols:[23,24,25], label:'Shofetim (Judges) Parts 1–3', sub:''},
-    {vols:[84], label:'Ruth', sub:'Set in Judges period'}
+    {vols:[11], label:'Shofetim (Judges) Parts 1–3', sub:''},
+    {vols:[24], label:'Ruth', sub:'Set in Judges period'}
   ]},
   {era:'The United Kingdom', items:[
-    {vols:[26,27,28,29], label:'Shemu\'el Aleph (1 Samuel) Parts 1–4', sub:'Shaul · Dawid'},
-    {vols:[30,31,32,33], label:'Shemu\'el Bet (2 Samuel) Parts 1–4', sub:'Dawid\'s reign'},
-    {vols:[34,35], label:'Melakhim Aleph (1 Kings) Parts 1–2', sub:'Shelomoh'},
-    {vols:[90,91], label:'Divrei HaYamim Aleph Parts 1–2', sub:'Same period, different angle'},
-    {vols:[92], label:'Divrei HaYamim Bet Part 1', sub:''},
-    {vols:[83], label:'Shir HaShirim (Song of Songs)', sub:'Shelomoh\'s era'},
-    {vols:[71,72,73], label:'Mishlei (Proverbs) Parts 1–3', sub:'Shelomoh\'s era'},
-    {vols:[86], label:'Kohelet (Ecclesiastes)', sub:'Shelomoh\'s era'}
+    {vols:[12], label:'Shemu\'el Aleph (1 Samuel) Parts 1–4', sub:'Shaul · Dawid'},
+    {vols:[13], label:'Shemu\'el Bet (2 Samuel) Parts 1–4', sub:'Dawid\'s reign'},
+    {vols:[14], label:'Melakhim Aleph (1 Kings) Parts 1–2', sub:'Shelomoh'},
+    {vols:[30], label:'Divrei HaYamim Aleph Parts 1–2', sub:'Same period, different angle'},
+    {vols:[31], label:'Divrei HaYamim Bet Part 1', sub:''},
+    {vols:[23], label:'Shir HaShirim (Song of Songs)', sub:'Shelomoh\'s era'},
+    {vols:[21], label:'Mishlei (Proverbs) Parts 1–3', sub:'Shelomoh\'s era'},
+    {vols:[26], label:'Kohelet (Ecclesiastes)', sub:'Shelomoh\'s era'}
   ]},
   {era:'The Divided Kingdom', items:[
-    {vols:[36,37], label:'Melakhim Aleph (1 Kings) Parts 3–4', sub:''},
-    {vols:[38,39,40,41], label:'Melakhim Bet (2 Kings) Parts 1–4', sub:''},
-    {vols:[59,60], label:'Amos · Hoshea', sub:'Northern kingdom prophets'},
-    {vols:[42,43,44], label:'Yesha\'yahu (Isaiah) Parts 1–3', sub:'Chapters 1–41'},
-    {vols:[61], label:'Mikhah', sub:''}
+    {vols:[14], label:'Melakhim Aleph (1 Kings) Parts 3–4', sub:''},
+    {vols:[15], label:'Melakhim Bet (2 Kings) Parts 1–4', sub:''},
+    {vols:[19], label:'Amos · Hoshea', sub:'Northern kingdom prophets'},
+    {vols:[16], label:'Yesha\'yahu (Isaiah) Parts 1–3', sub:'Chapters 1–41'},
+    {vols:[19], label:'Mikhah', sub:''}
   ]},
   {era:'Babylonian Exile', items:[
-    {vols:[47,48,49,50,51,52,53], label:'Yirmeyahu (Jeremiah) Parts 1–7', sub:''},
-    {vols:[85], label:'Eikha (Lamentations)', sub:'Written at Jerusalem\'s fall'},
-    {vols:[54,55,56,57,58,59], label:'Yehezkel (Ezekiel) Parts 1–6', sub:'Prophet in Babylon'},
-    {vols:[61], label:'Ovadyah', sub:'Edom\'s judgment'},
-    {vols:[62], label:'Havakuk · Tzefanyah', sub:''},
-    {vols:[85,86], label:'Daniyel Parts 1–2', sub:'Exile period'},
-    {vols:[87], label:'Esther', sub:'Exile period'}
+    {vols:[17], label:'Yirmeyahu (Jeremiah) Parts 1–7', sub:''},
+    {vols:[25], label:'Eikha (Lamentations)', sub:'Written at Jerusalem\'s fall'},
+    {vols:[18], label:'Yehezkel (Ezekiel) Parts 1–6', sub:'Prophet in Babylon'},
+    {vols:[19], label:'Ovadyah · Havakuk · Tzefanyah', sub:''},
+    {vols:[28], label:'Daniyel Parts 1–2', sub:'Exile period'},
+    {vols:[27], label:'Esther', sub:'Exile period'}
   ]},
   {era:'Restoration — Return from Exile', items:[
-    {vols:[44,45,46], label:'Yesha\'yahu (Isaiah) Parts 4–5', sub:'Chapters 42–66'},
-    {vols:[62,63], label:'Khagai · Zekhariyahu · Malakhi', sub:''},
-    {vols:[88,89], label:'Ezra-Nekhemyah Parts 1–2', sub:''},
-    {vols:[93], label:'Divrei HaYamim Bet Part 2', sub:''}
+    {vols:[16], label:'Yesha\'yahu (Isaiah) Parts 4–5', sub:'Chapters 42–66'},
+    {vols:[19], label:'Khagai · Zekhariyahu · Malakhi', sub:''},
+    {vols:[29], label:'Ezra-Nekhemyah Parts 1–2', sub:''},
+    {vols:[31], label:'Divrei HaYamim Bet Part 2', sub:''}
   ]},
   {era:'Poetry and Wisdom (spans all eras)', items:[
-    {vols:[74,75,76], label:'Iyov (Job) Parts 1–3', sub:'Pre-Moshe setting'},
-    {vols:[65,66,67,68,69,70,71,72,73], label:'Tehillim (Psalms) Parts 1–9', sub:'Dawid through exile'},
-    {vols:[84], label:'Ruth', sub:'Judges era setting'}
+    {vols:[22], label:'Iyov (Job) Parts 1–3', sub:'Pre-Moshe setting'},
+    {vols:[20], label:'Tehillim (Psalms) Parts 1–9', sub:'Dawid through exile'},
+    {vols:[24], label:'Ruth', sub:'Judges era setting'}
   ]},
   {era:'Dead Sea Scrolls — Second Temple Period (~200 BCE–68 CE)', items:[
-    {vols:[94], label:'4Q246 — Aramaic Apocalypse', sub:''},
-    {vols:[95], label:'War Scroll 1QM', sub:''},
-    {vols:[96], label:'4QMMT — Some Works of the Torah', sub:''},
-    {vols:[97,98], label:'Damascus Document Parts 1–2', sub:''},
-    {vols:[99], label:'Community Rule 1QS', sub:''},
-    {vols:[100], label:'Rule of the Congregation 1QSa', sub:''},
-    {vols:[101], label:'Rule of Blessings 1QSb', sub:''},
-    {vols:[102], label:'Words of the Luminaries 4QDibHam', sub:''},
-    {vols:[103], label:'Pesher Nahum 4QpNah', sub:''},
-    {vols:[104,105], label:'Hodayot (Thanksgiving Hymns) Parts 1–2', sub:''},
-    {vols:[106], label:'Pesher Habakkuk 1QpHab', sub:''},
-    {vols:[107], label:'Songs of Sabbath Sacrifice', sub:''},
-    {vols:[108], label:'Genesis Apocryphon 1QapGen', sub:''},
-    {vols:[109], label:'11QMelchizedek', sub:''},
-    {vols:[110,111,112], label:'Temple Scroll 11Q19 Parts 1–3', sub:''},
-    {vols:[113], label:'Book of Mysteries', sub:''},
-    {vols:[114], label:'Raz Nihyeh: Mystery of Existence', sub:''}
+    {vols:[32], label:'4Q246 — Aramaic Apocalypse', sub:''},
+    {vols:[33], label:'War Scroll 1QM', sub:''},
+    {vols:[34], label:'4QMMT — Some Works of the Torah', sub:''},
+    {vols:[35], label:'Damascus Document Parts 1–2', sub:''},
+    {vols:[36], label:'Community Rule 1QS', sub:''},
+    {vols:[37], label:'Rule of the Congregation 1QSa', sub:''},
+    {vols:[38], label:'Rule of Blessings 1QSb', sub:''},
+    {vols:[39], label:'Words of the Luminaries 4QDibHam', sub:''},
+    {vols:[40], label:'Pesher Nahum 4QpNah', sub:''},
+    {vols:[41], label:'Hodayot (Thanksgiving Hymns) Parts 1–2', sub:''},
+    {vols:[42], label:'Pesher Habakkuk 1QpHab', sub:''},
+    {vols:[43], label:'Songs of Sabbath Sacrifice', sub:''},
+    {vols:[44], label:'Genesis Apocryphon 1QapGen', sub:''},
+    {vols:[45], label:'11QMelchizedek', sub:''},
+    {vols:[46], label:'Temple Scroll 11Q19 Parts 1–3', sub:''},
+    {vols:[47], label:'Book of Mysteries', sub:''},
+    {vols:[48], label:'Raz Nihyeh: Mystery of Existence', sub:''}
   ]}
 ];
 function toggleChronOrder(pill) {
@@ -5748,7 +5777,58 @@ function speakHR(e, idx) {
 window.addEventListener('load',function(){
   if(document.getElementById('hr-grid')) filterHebrew();
   if(document.getElementById('dna-grid')) filterDNA();
+  buildAlphabet();
 });
+
+// ── PALEO ALPHABET ─────────────────────────────────────────────────────────────
+var PALEO_ALPHA = [
+  {g:'\u{10900}',name:'Aleph',t:'ʾ'},
+  {g:'\u{10901}',name:'Bet',t:'B'},
+  {g:'\u{10902}',name:'Gimel',t:'G'},
+  {g:'\u{10903}',name:'Dalet',t:'D'},
+  {g:'\u{10904}',name:'He',t:'H'},
+  {g:'\u{10905}',name:'Waw',t:'W'},
+  {g:'\u{10906}',name:'Zayin',t:'Z'},
+  {g:'\u{10907}',name:'Het',t:'Kh'},
+  {g:'\u{10908}',name:'Tet',t:'T'},
+  {g:'\u{10909}',name:'Yod',t:'Y'},
+  {g:'\u{1090A}',name:'Kaph',t:'K'},
+  {g:'\u{1090B}',name:'Lamed',t:'L'},
+  {g:'\u{1090C}',name:'Mem',t:'M'},
+  {g:'\u{1090D}',name:'Nun',t:'N'},
+  {g:'\u{1090E}',name:'Samekh',t:'S'},
+  {g:'\u{1090F}',name:'Ayin',t:'ʿ'},
+  {g:'\u{10910}',name:'Pe',t:'P'},
+  {g:'\u{10911}',name:'Tsade',t:'Ts'},
+  {g:'\u{10912}',name:'Qoph',t:'Q'},
+  {g:'\u{10913}',name:'Resh',t:'R'},
+  {g:'\u{10914}',name:'Shin',t:'Sh'},
+  {g:'\u{10915}',name:'Taw',t:'T'}
+];
+function buildAlphabet(){
+  var grid = document.getElementById('ab-grid');
+  if(!grid) return;
+  grid.innerHTML = PALEO_ALPHA.map(function(l,i){
+    return '<div class="ab-card" onclick="copyAlphabetLetter(this,\''+l.g+'\')">'
+      +'<div class="ab-glyph">'+l.g+'</div>'
+      +'<div class="ab-name">'+l.name+'</div>'
+      +'<div class="ab-translit">'+l.t+'</div>'
+      +'</div>';
+  }).join('');
+}
+function copyAlphabetLetter(el,g){
+  navigator.clipboard.writeText(g).then(function(){
+    el.classList.add('copied');
+    setTimeout(function(){el.classList.remove('copied');},800);
+  });
+}
+function copyAlphabetFull(el){
+  var all = PALEO_ALPHA.map(function(l){return l.g;}).join('');
+  navigator.clipboard.writeText(all).then(function(){
+    el.style.borderColor='var(--gold)';
+    setTimeout(function(){el.style.borderColor='';},900);
+  });
+}
 /* ── HEBREW DNA DATA ── */
 var DNA_DATA=[
 /* MATERNAL mtDNA */
