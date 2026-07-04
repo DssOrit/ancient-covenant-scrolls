@@ -582,6 +582,22 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .pw-go-btn{padding:10px 16px;background:var(--gold);border:none;border-radius:8px;color:#111;font-weight:700;font-size:13px;cursor:pointer;flex-shrink:0}
 .pw-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--tx3);padding:10px 0 5px;border-top:1px solid #1e1e1e;margin-top:6px}
 .pw-section-label:first-child{border-top:none;margin-top:0;padding-top:0}
+/* ALPHABET */
+.ab-wrap{padding:16px}
+.ab-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
+.ab-sub{font-size:11px;color:var(--tx3);margin-bottom:10px;line-height:1.5}
+.ab-full-row{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;margin-bottom:14px;text-align:center;cursor:pointer;transition:border-color 0.15s}
+.ab-full-row:active{border-color:var(--gold)}
+.ab-full-glyphs{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:26px;color:var(--gold);letter-spacing:3px;line-height:1.5;word-break:break-all}
+.ab-full-label{font-size:10px;color:var(--tx3);margin-top:5px}
+.ab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px}
+.ab-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px 8px;text-align:center;cursor:pointer;transition:border-color 0.15s,background 0.15s}
+.ab-card:active{background:var(--s2);border-color:var(--gold)}
+.ab-card.copied{border-color:var(--gold)}
+.ab-glyph{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:34px;color:var(--gold);line-height:1;margin-bottom:5px}
+.ab-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
+.ab-translit{font-size:10px;color:var(--tx3)}
+
 /* ACR SITES STRIP */
 .acr-sites-strip{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:16px 0 80px;border-top:1px solid #1e1e1e;margin-top:24px}
 .acr-site-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);white-space:nowrap;flex-shrink:0}
@@ -762,6 +778,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="places" onclick="setMode('places')"><i class="ri-map-pin-line"></i> Ancient Places</div>
       <div class="mpill" data-mode="beliefs" onclick="setMode('beliefs')"><i class="ri-scales-3-line"></i> Q&amp;A (Beliefs)</div>
       <div class="mpill" data-mode="hebrew" onclick="setMode('hebrew')"><i class="ri-translate-2"></i> Hebrew Roots</div>
+      <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
     </div>
   </div>
@@ -1900,6 +1917,19 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
     </div>
 
+    <!-- PALEO ALPHABET -->
+    <div id="alphabet-view" style="display:none">
+      <div class="ab-wrap">
+        <div class="ab-hdr">Paleo-Hebrew Alphabet</div>
+        <div class="ab-sub">All 22 letters of the ancient script. Tap any letter to copy it. Tap the full row to copy all 22.</div>
+        <div class="ab-full-row" onclick="copyAlphabetFull(this)">
+          <div class="ab-full-glyphs">&#x10900;&#x10901;&#x10902;&#x10903;&#x10904;&#x10905;&#x10906;&#x10907;&#x10908;&#x10909;&#x1090A;&#x1090B;&#x1090C;&#x1090D;&#x1090E;&#x1090F;&#x10910;&#x10911;&#x10912;&#x10913;&#x10914;&#x10915;</div>
+          <div class="ab-full-label">Tap to copy all 22</div>
+        </div>
+        <div class="ab-grid" id="ab-grid"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -2139,7 +2169,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','dna','covenant-nations'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -5747,7 +5777,58 @@ function speakHR(e, idx) {
 window.addEventListener('load',function(){
   if(document.getElementById('hr-grid')) filterHebrew();
   if(document.getElementById('dna-grid')) filterDNA();
+  buildAlphabet();
 });
+
+// ── PALEO ALPHABET ─────────────────────────────────────────────────────────────
+var PALEO_ALPHA = [
+  {g:'\u{10900}',name:'Aleph',t:'ʾ'},
+  {g:'\u{10901}',name:'Bet',t:'B'},
+  {g:'\u{10902}',name:'Gimel',t:'G'},
+  {g:'\u{10903}',name:'Dalet',t:'D'},
+  {g:'\u{10904}',name:'He',t:'H'},
+  {g:'\u{10905}',name:'Waw',t:'W'},
+  {g:'\u{10906}',name:'Zayin',t:'Z'},
+  {g:'\u{10907}',name:'Het',t:'Kh'},
+  {g:'\u{10908}',name:'Tet',t:'T'},
+  {g:'\u{10909}',name:'Yod',t:'Y'},
+  {g:'\u{1090A}',name:'Kaph',t:'K'},
+  {g:'\u{1090B}',name:'Lamed',t:'L'},
+  {g:'\u{1090C}',name:'Mem',t:'M'},
+  {g:'\u{1090D}',name:'Nun',t:'N'},
+  {g:'\u{1090E}',name:'Samekh',t:'S'},
+  {g:'\u{1090F}',name:'Ayin',t:'ʿ'},
+  {g:'\u{10910}',name:'Pe',t:'P'},
+  {g:'\u{10911}',name:'Tsade',t:'Ts'},
+  {g:'\u{10912}',name:'Qoph',t:'Q'},
+  {g:'\u{10913}',name:'Resh',t:'R'},
+  {g:'\u{10914}',name:'Shin',t:'Sh'},
+  {g:'\u{10915}',name:'Taw',t:'T'}
+];
+function buildAlphabet(){
+  var grid = document.getElementById('ab-grid');
+  if(!grid) return;
+  grid.innerHTML = PALEO_ALPHA.map(function(l,i){
+    return '<div class="ab-card" onclick="copyAlphabetLetter(this,\''+l.g+'\')">'
+      +'<div class="ab-glyph">'+l.g+'</div>'
+      +'<div class="ab-name">'+l.name+'</div>'
+      +'<div class="ab-translit">'+l.t+'</div>'
+      +'</div>';
+  }).join('');
+}
+function copyAlphabetLetter(el,g){
+  navigator.clipboard.writeText(g).then(function(){
+    el.classList.add('copied');
+    setTimeout(function(){el.classList.remove('copied');},800);
+  });
+}
+function copyAlphabetFull(el){
+  var all = PALEO_ALPHA.map(function(l){return l.g;}).join('');
+  navigator.clipboard.writeText(all).then(function(){
+    el.style.borderColor='var(--gold)';
+    setTimeout(function(){el.style.borderColor='';},900);
+  });
+}
 /* ── HEBREW DNA DATA ── */
 var DNA_DATA=[
 /* MATERNAL mtDNA */
