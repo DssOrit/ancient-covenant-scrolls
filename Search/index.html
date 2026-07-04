@@ -530,6 +530,20 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .vb-vol-num.acr2{color:var(--red)}
 .vb-vol-count{font-size:10px;color:var(--tx3)}
 .vb-section-header{grid-column:1/-1;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.08em;padding:14px 2px 5px;border-top:1px solid #1e1e1e;margin-top:4px}
+/* CHRONOLOGICAL ORDER */
+.vb-chron-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,31,0.08);border:1px solid rgba(200,151,31,0.35);border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;margin-bottom:12px;transition:background 0.15s,border-color 0.15s;letter-spacing:0.03em}
+.vb-chron-pill:active{background:rgba(200,151,31,0.18)}
+.vb-chron-pill i{font-size:13px}
+.vb-chron-panel{display:none;background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;margin-bottom:16px}
+.vb-chron-panel.open{display:block}
+.vb-chron-era{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #1e1e1e}
+.vb-chron-era:first-child{margin-top:0}
+.vb-chron-item{display:flex;align-items:baseline;gap:8px;padding:4px 0;border-bottom:1px solid #111;cursor:pointer}
+.vb-chron-item:last-child{border-bottom:none}
+.vb-chron-item:active{opacity:0.7}
+.vb-chron-num{font-size:10px;font-weight:700;color:var(--gold);min-width:32px;flex-shrink:0}
+.vb-chron-name{font-size:12px;color:var(--tx);line-height:1.4}
+.vb-chron-sub{font-size:10px;color:var(--tx3);margin-left:auto;flex-shrink:0}
 /* COVENANT RECORD */
 .cr-arc{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;padding:8px 0 14px;-webkit-overflow-scrolling:touch}
 .cr-arc-node{display:flex;flex-direction:column;align-items:center;flex-shrink:0;cursor:pointer;gap:4px}
@@ -1460,6 +1474,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     <div id="volumebrowser-view" style="display:none">
       <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Volume Browser</div>
       <div class="vb-intro">48 primary volumes (gold) and 13 secondary scrolls from ACR2 (red). Tap any card to browse passages.</div>
+      <div class="vb-chron-pill" onclick="toggleChronOrder(this)"><i class="ri-sort-asc"></i> Chronological Reading Order</div>
+      <div class="vb-chron-panel" id="vb-chron-panel"></div>
       <div id="vb-grid" class="vb-grid"></div>
     </div>
 
@@ -4640,6 +4656,113 @@ function renderVolumeGrid() {
       '</div>';
   }).join('');
   grid.innerHTML = main + acr2Header + acr2;
+}
+var CHRON_ORDER = [
+  {era:'Creation to the Flood', items:[
+    {vols:[1,2], label:'Bereshit (Genesis) Parts 1–2', sub:'Creation · Noakh'},
+    {vols:[13,14,15], label:'Chanokh (1 Enoch) Parts 1–3', sub:'Pre-flood world'},
+    {vols:[18], label:'Book of Giants', sub:'Pre-flood'},
+    {vols:[16,17], label:'Yovelim (Jubilees) Parts 1–2', sub:'Retells Creation through Moshe'}
+  ]},
+  {era:'The Patriarchs', items:[
+    {vols:[2,3,4], label:'Bereshit (Genesis) Parts 2–4', sub:'Avraham · Yaakov · Yosef'},
+    {vols:[19], label:'Visions of Amram (4QAmram)', sub:'Moshe\'s father'}
+  ]},
+  {era:'Egypt and the Wilderness', items:[
+    {vols:[5,6], label:'Shemot (Exodus) Parts 1–2', sub:''},
+    {vols:[7,8], label:'Vayikra (Leviticus) Parts 1–2', sub:''},
+    {vols:[9,10], label:'Bamidbar (Numbers) Parts 1–2', sub:''},
+    {vols:[11,12], label:'Devarim (Deuteronomy) Parts 1–2', sub:''}
+  ]},
+  {era:'Entering the Land', items:[
+    {vols:[20,21,22], label:'Yehoshua (Joshua) Parts 1–3', sub:''}
+  ]},
+  {era:'The Judges Period', items:[
+    {vols:[23,24,25], label:'Shofetim (Judges) Parts 1–3', sub:''},
+    {vols:[84], label:'Ruth', sub:'Set in Judges period'}
+  ]},
+  {era:'The United Kingdom', items:[
+    {vols:[26,27,28,29], label:'Shemu\'el Aleph (1 Samuel) Parts 1–4', sub:'Shaul · Dawid'},
+    {vols:[30,31,32,33], label:'Shemu\'el Bet (2 Samuel) Parts 1–4', sub:'Dawid\'s reign'},
+    {vols:[34,35], label:'Melakhim Aleph (1 Kings) Parts 1–2', sub:'Shelomoh'},
+    {vols:[90,91], label:'Divrei HaYamim Aleph Parts 1–2', sub:'Same period, different angle'},
+    {vols:[92], label:'Divrei HaYamim Bet Part 1', sub:''},
+    {vols:[83], label:'Shir HaShirim (Song of Songs)', sub:'Shelomoh\'s era'},
+    {vols:[71,72,73], label:'Mishlei (Proverbs) Parts 1–3', sub:'Shelomoh\'s era'},
+    {vols:[86], label:'Kohelet (Ecclesiastes)', sub:'Shelomoh\'s era'}
+  ]},
+  {era:'The Divided Kingdom', items:[
+    {vols:[36,37], label:'Melakhim Aleph (1 Kings) Parts 3–4', sub:''},
+    {vols:[38,39,40,41], label:'Melakhim Bet (2 Kings) Parts 1–4', sub:''},
+    {vols:[59,60], label:'Amos · Hoshea', sub:'Northern kingdom prophets'},
+    {vols:[42,43,44], label:'Yesha\'yahu (Isaiah) Parts 1–3', sub:'Chapters 1–41'},
+    {vols:[61], label:'Mikhah', sub:''}
+  ]},
+  {era:'Babylonian Exile', items:[
+    {vols:[47,48,49,50,51,52,53], label:'Yirmeyahu (Jeremiah) Parts 1–7', sub:''},
+    {vols:[85], label:'Eikha (Lamentations)', sub:'Written at Jerusalem\'s fall'},
+    {vols:[54,55,56,57,58,59], label:'Yehezkel (Ezekiel) Parts 1–6', sub:'Prophet in Babylon'},
+    {vols:[61], label:'Ovadyah', sub:'Edom\'s judgment'},
+    {vols:[62], label:'Havakuk · Tzefanyah', sub:''},
+    {vols:[85,86], label:'Daniyel Parts 1–2', sub:'Exile period'},
+    {vols:[87], label:'Esther', sub:'Exile period'}
+  ]},
+  {era:'Restoration — Return from Exile', items:[
+    {vols:[44,45,46], label:'Yesha\'yahu (Isaiah) Parts 4–5', sub:'Chapters 42–66'},
+    {vols:[62,63], label:'Khagai · Zekhariyahu · Malakhi', sub:''},
+    {vols:[88,89], label:'Ezra-Nekhemyah Parts 1–2', sub:''},
+    {vols:[93], label:'Divrei HaYamim Bet Part 2', sub:''}
+  ]},
+  {era:'Poetry and Wisdom (spans all eras)', items:[
+    {vols:[74,75,76], label:'Iyov (Job) Parts 1–3', sub:'Pre-Moshe setting'},
+    {vols:[65,66,67,68,69,70,71,72,73], label:'Tehillim (Psalms) Parts 1–9', sub:'Dawid through exile'},
+    {vols:[84], label:'Ruth', sub:'Judges era setting'}
+  ]},
+  {era:'Dead Sea Scrolls — Second Temple Period (~200 BCE–68 CE)', items:[
+    {vols:[94], label:'4Q246 — Aramaic Apocalypse', sub:''},
+    {vols:[95], label:'War Scroll 1QM', sub:''},
+    {vols:[96], label:'4QMMT — Some Works of the Torah', sub:''},
+    {vols:[97,98], label:'Damascus Document Parts 1–2', sub:''},
+    {vols:[99], label:'Community Rule 1QS', sub:''},
+    {vols:[100], label:'Rule of the Congregation 1QSa', sub:''},
+    {vols:[101], label:'Rule of Blessings 1QSb', sub:''},
+    {vols:[102], label:'Words of the Luminaries 4QDibHam', sub:''},
+    {vols:[103], label:'Pesher Nahum 4QpNah', sub:''},
+    {vols:[104,105], label:'Hodayot (Thanksgiving Hymns) Parts 1–2', sub:''},
+    {vols:[106], label:'Pesher Habakkuk 1QpHab', sub:''},
+    {vols:[107], label:'Songs of Sabbath Sacrifice', sub:''},
+    {vols:[108], label:'Genesis Apocryphon 1QapGen', sub:''},
+    {vols:[109], label:'11QMelchizedek', sub:''},
+    {vols:[110,111,112], label:'Temple Scroll 11Q19 Parts 1–3', sub:''},
+    {vols:[113], label:'Book of Mysteries', sub:''},
+    {vols:[114], label:'Raz Nihyeh: Mystery of Existence', sub:''}
+  ]}
+];
+function toggleChronOrder(pill) {
+  var panel = document.getElementById('vb-chron-panel');
+  var open = panel.classList.contains('open');
+  if (open) {
+    panel.classList.remove('open');
+    pill.innerHTML = '<i class="ri-sort-asc"></i> Chronological Reading Order';
+  } else {
+    if (!panel.innerHTML) {
+      var html = '';
+      CHRON_ORDER.forEach(function(era) {
+        html += '<div class="vb-chron-era">' + era.era + '</div>';
+        era.items.forEach(function(item) {
+          var volNum = item.vols[0];
+          html += '<div class="vb-chron-item" onclick="openVolume(' + volNum + ');toggleChronOrder(document.querySelector(\'.vb-chron-pill\'))">' +
+            '<span class="vb-chron-num">Vol ' + volNum + '</span>' +
+            '<span class="vb-chron-name">' + item.label + '</span>' +
+            (item.sub ? '<span class="vb-chron-sub">' + item.sub + '</span>' : '') +
+            '</div>';
+        });
+      });
+      panel.innerHTML = html;
+    }
+    panel.classList.add('open');
+    pill.innerHTML = '<i class="ri-sort-asc"></i> Hide Reading Order';
+  }
 }
 function openVolume(volNum) {
   if (!CONCORDANCE) return;
