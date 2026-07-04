@@ -3,7 +3,7 @@
 ## Current state
 
 - Branch: `claude/acr-search-content-checklist-ZgUAQ` (synced to `origin/main`)
-- Latest main commit: `4f32a47` — Reader: replace Lord with YHWH or Creator in verse text — 11 files
+- Latest main commit: `e82f488` — rules: find-first approval + live session notes (locked 2026-07-03)
 - Working tree: clean
 
 ## Built today
@@ -85,10 +85,16 @@ Exceptions left in place (not changed):
 ## Today's commit log (on main)
 
 ```
+e82f488 rules: find-first approval + live session notes (locked 2026-07-03)
 4f32a47 Reader: replace Lord with YHWH or Creator in verse text — 11 files
 c3e1565 Reader: replace capital-G God with YHWH or Creator — word-level fixes only
 93c26c0 Reader: remove all Lord/Adonai/Elohim substitutions — YHWH and Creator only
 ```
+
+### PR #550 — merged (SHA e82f488)
+- `CLAUDE.md` — two new locked rules added:
+  - Rule 11: Find first, report findings, wait for approval, then fix only what was approved
+  - Rule 12: Session notes are live documents — update after every PR, scan, approval, and direction change
 
 ## Backups
 
