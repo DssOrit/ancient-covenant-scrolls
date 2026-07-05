@@ -3,8 +3,7 @@
 ## Current state
 
 - Branch: `claude/acr-search-content-checklist-ZgUAQ`
-- Latest branch commit: `7979f41` — Search: add 4 reference images for DNA and Suppressed sections
-- Latest on main (via PR merges): `92ec382` — Useful Tools hub + Rule 13
+- Latest main commit: `9f514a5` — Search: update How to Use guide (acr-search-v109) — PR #555 merged
 - Working tree: clean
 
 ## Built today (and late 2026-07-04 continuation)
@@ -60,6 +59,16 @@ Sections covered:
 16. The Conclusion (88-90)
 
 All Hebrew/Israelite figures depicted as dark-skinned Africans. No video — images only.
+Also delivered as plain text file (`acr-documentary-prompts.txt`) for direct use on iPad.
+
+### PR #555 — merged (SHA 9f514a5)
+How to Use guide updated — three features from last week had no guide coverage.
+
+- **Volume Browser section** — added step 4 documenting the Chronological Reading Order gold pill: era-grouped panel, tap to jump to a volume directly. Audio text also updated.
+- **Paleo Alphabet** — new guide section added (after Hebrew Roots): 4 steps covering the 22-letter script, full-row copy strip, individual letter cards, font details, and a note on why DSS scribes used paleo script for the divine name even in square-script documents.
+- **Useful Tools** — new guide section added (before ACR Suite): 6 steps covering all 5 sub-tools — Covenant Promises, Hebrew Names, Lineage Explorer, Mo'edim, Event Timeline.
+- All three sections have working speaker/audio text.
+- `Search/sw.js` — cache bumped to acr-search-v109
 
 ## Outstanding / blocking
 
@@ -83,14 +92,14 @@ All Hebrew/Israelite figures depicted as dark-skinned Africans. No video — ima
 ## Today's commit log
 
 ```
+9f514a5 Search: update How to Use guide — Paleo Alphabet, Useful Tools, Chron Order (acr-search-v109) [PR #555]
+49952e6 docs: session notes 2026-07-05
 7979f41 Search: add 4 reference images for DNA and Suppressed sections
 9576aa4 Search: create images folder
-cb03ca0 Merge remote-tracking branch 'origin/main' into claude/acr-search-content-checklist-ZgUAQ
 3b5cea4 docs: record Cloudflare as permanent infrastructure layer
-92ec382 Search: Useful Tools hub — 5 new tools + Rule 13 source integrity (acr-search-v108)
+92ec382 Search: Useful Tools hub — 5 new tools + Rule 13 source integrity (acr-search-v108) [PR #553]
 0715d34 Prophetic Watch brief 2026-07-05
-0e60751 docs: session notes 2026-07-04
-30b11a4 Search: fix chron order vol numbers + add Paleo-Hebrew Alphabet (acr-search-v107)
+30b11a4 Search: fix chron order vol numbers + add Paleo-Hebrew Alphabet (acr-search-v107) [PR #552]
 ```
 
 ## Backups
