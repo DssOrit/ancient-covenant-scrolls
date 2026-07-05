@@ -598,6 +598,83 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .ab-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
 .ab-translit{font-size:10px;color:var(--tx3)}
 
+/* USEFUL TOOLS HUB */
+.ut-wrap{padding:16px}
+.ut-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
+.ut-sub{font-size:11px;color:var(--tx3);margin-bottom:16px;line-height:1.5}
+.ut-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ut-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color 0.15s,background 0.15s}
+.ut-card:active{background:var(--s2);border-color:var(--gold)}
+.ut-card-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
+.ut-card-desc{font-size:10px;color:var(--tx3);line-height:1.5}
+.tool-back{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--tx2);font-size:11px;font-family:var(--font);cursor:pointer;padding:0 0 14px;letter-spacing:0.02em}
+.tool-back:active{color:var(--gold)}
+.tool-view-wrap{padding:16px}
+.tool-view-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
+.tool-view-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.5}
+/* COVENANT PROMISES */
+.cp-filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;margin-bottom:10px}
+.cp-filter-row::-webkit-scrollbar{display:none}
+.cp-pill{background:var(--s2);border:1px solid #2a2a2a;border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background 0.15s,border-color 0.15s,color 0.15s}
+.cp-pill.active{background:rgba(200,151,31,0.15);border-color:var(--gold);color:var(--gold)}
+.cp-count{font-size:10px;color:var(--tx3);margin-bottom:10px}
+.cp-card{background:var(--s1);border:1px solid #1e1e1e;border-left:3px solid var(--gold);border-radius:var(--r);padding:12px;margin-bottom:8px}
+.cp-ref{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em}
+.cp-to{font-size:10px;color:var(--tx3);margin-bottom:5px}
+.cp-text{font-size:12px;color:var(--tx);line-height:1.65;font-style:italic;margin-bottom:7px}
+.cp-tags{margin-bottom:5px}
+.cp-tag{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;padding:2px 7px;border-radius:100px;margin-right:4px}
+.cp-tag-land{background:rgba(26,82,118,0.3);color:#5dade2}
+.cp-tag-seed{background:rgba(30,132,73,0.2);color:#58d68d}
+.cp-tag-covenant{background:rgba(200,151,31,0.15);color:var(--gold)}
+.cp-tag-protection{background:rgba(125,102,8,0.2);color:#f0b429}
+.cp-tag-judgment{background:rgba(192,57,43,0.2);color:#e74c3c}
+.cp-tag-restoration{background:rgba(110,47,138,0.2);color:#bb8fce}
+.cp-search-btn{background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:var(--font);padding:0;text-decoration:underline;text-underline-offset:2px}
+/* HEBREW NAMES */
+.hn-search-wrap{margin-bottom:12px}
+.hn-search{width:100%;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:10px 14px;color:#fff;font-size:14px;font-family:var(--font)}
+.hn-search:focus{outline:none;border-color:var(--gold)}
+.hn-count{font-size:10px;color:var(--tx3);margin-bottom:10px}
+.hn-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.hn-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px;cursor:pointer;transition:border-color 0.15s}
+.hn-card:active{border-color:var(--gold)}
+.hn-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:1px}
+.hn-translit{font-size:10px;color:var(--tx3);margin-bottom:5px;font-style:italic}
+.hn-meaning{font-size:11px;color:var(--tx2);line-height:1.5}
+/* LINEAGE */
+.lin-branch{margin-bottom:18px}
+.lin-branch-title{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1e1e1e}
+.lin-chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-bottom:8px}
+.lin-name{background:var(--s1);border:1px solid #1e1e1e;border-radius:8px;padding:5px 10px;font-size:12px;color:#fff;cursor:pointer;transition:border-color 0.15s,color 0.15s;white-space:nowrap}
+.lin-name:active{border-color:var(--gold);color:var(--gold)}
+.lin-sep{color:var(--tx3);font-size:11px;flex-shrink:0}
+.lin-tribes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.lin-tribe{background:var(--s1);border:1px solid #1e1e1e;border-radius:8px;padding:7px 6px;font-size:11px;color:#fff;cursor:pointer;text-align:center;transition:border-color 0.15s}
+.lin-tribe:active{border-color:var(--gold);color:var(--gold)}
+/* MO'EDIM */
+.mo-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.mo-card-hdr{padding:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mo-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.mo-timing{font-size:10px;color:var(--gold);font-weight:600}
+.mo-chevron{color:var(--tx3);font-size:16px;transition:transform 0.2s;flex-shrink:0}
+.mo-card.open .mo-chevron{transform:rotate(180deg)}
+.mo-body{display:none;padding:0 13px 13px;border-top:1px solid #1e1e1e}
+.mo-card.open .mo-body{display:block}
+.mo-desc{font-size:12px;color:var(--tx2);line-height:1.7;margin-top:10px;margin-bottom:8px}
+.mo-refs{display:flex;flex-wrap:wrap;gap:5px}
+.mo-ref-chip{background:rgba(200,151,31,0.1);border:1px solid rgba(200,151,31,0.3);border-radius:6px;padding:3px 8px;font-size:10px;color:var(--gold);cursor:pointer;font-weight:600}
+.mo-ref-chip:active{background:rgba(200,151,31,0.2)}
+/* TIMELINE */
+.tl-era{margin-bottom:20px}
+.tl-era-title{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.tl-era-line{flex:1;height:1px;background:#1e1e1e}
+.tl-event{display:flex;gap:10px;margin-bottom:10px;padding-left:10px;border-left:2px solid #1e1e1e;position:relative}
+.tl-dot{position:absolute;left:-5px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--s2);border:1.5px solid #333;flex-shrink:0}
+.tl-event-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px}
+.tl-event-desc{font-size:11px;color:var(--tx2);line-height:1.6;margin-bottom:4px}
+.tl-event-ref{font-size:10px;color:var(--gold);cursor:pointer;background:none;border:none;font-family:var(--font);padding:0;text-decoration:underline;text-underline-offset:2px}
+
 /* ACR SITES STRIP */
 .acr-sites-strip{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:16px 0 80px;border-top:1px solid #1e1e1e;margin-top:24px}
 .acr-site-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--tx3);white-space:nowrap;flex-shrink:0}
@@ -780,6 +857,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="hebrew" onclick="setMode('hebrew')"><i class="ri-translate-2"></i> Hebrew Roots</div>
       <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
+      <div class="mpill" data-mode="tools" onclick="setMode('tools')"><i class="ri-tools-line"></i> Useful Tools</div>
     </div>
   </div>
 
@@ -1930,6 +2008,100 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       </div>
     </div>
 
+    <!-- USEFUL TOOLS HUB -->
+    <div id="tools-view" style="display:none">
+      <div class="ut-wrap">
+        <div class="ut-hdr">Useful Tools</div>
+        <div class="ut-sub">Reference tools drawn exclusively from DSS and Ge'ez Orit primary sources.</div>
+        <div class="ut-grid">
+          <div class="ut-card" onclick="setMode('promises')">
+            <div class="ut-card-name">Covenant Promises</div>
+            <div class="ut-card-desc">Every specific promise YHWH made — to whom, the condition, and the covenant category.</div>
+          </div>
+          <div class="ut-card" onclick="setMode('names')">
+            <div class="ut-card-name">Hebrew Names</div>
+            <div class="ut-card-desc">Root meanings of covenant names from the scrolls. Tap any name to search the corpus.</div>
+          </div>
+          <div class="ut-card" onclick="setMode('lineage')">
+            <div class="ut-card-name">Lineage Explorer</div>
+            <div class="ut-card-desc">The covenant bloodline from Adam through the twelve tribes. Tap any name to search.</div>
+          </div>
+          <div class="ut-card" onclick="setMode('moedim')">
+            <div class="ut-card-name">Mo'edim</div>
+            <div class="ut-card-desc">The seven appointed times as defined in the ancient texts — timing, meaning, and sources.</div>
+          </div>
+          <div class="ut-card" onclick="setMode('timeline')">
+            <div class="ut-card-name">Event Timeline</div>
+            <div class="ut-card-desc">Key events from Creation through the DSS period in narrative order.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COVENANT PROMISES -->
+    <div id="promises-view" style="display:none">
+      <div class="tool-view-wrap">
+        <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
+        <div class="tool-view-hdr">Covenant Promises</div>
+        <div class="tool-view-sub">Promises YHWH made across the primary texts — land, seed, protection, judgment, restoration. Tap any reference to search the corpus.</div>
+        <div class="cp-filter-row">
+          <div class="cp-pill active" data-cpf="all" onclick="setCPFilter('all')">All</div>
+          <div class="cp-pill" data-cpf="land" onclick="setCPFilter('land')">Land</div>
+          <div class="cp-pill" data-cpf="seed" onclick="setCPFilter('seed')">Seed</div>
+          <div class="cp-pill" data-cpf="covenant" onclick="setCPFilter('covenant')">Covenant</div>
+          <div class="cp-pill" data-cpf="protection" onclick="setCPFilter('protection')">Protection</div>
+          <div class="cp-pill" data-cpf="restoration" onclick="setCPFilter('restoration')">Restoration</div>
+          <div class="cp-pill" data-cpf="judgment" onclick="setCPFilter('judgment')">Judgment</div>
+        </div>
+        <div class="cp-count" id="cp-count"></div>
+        <div id="cp-list"></div>
+      </div>
+    </div>
+
+    <!-- HEBREW NAMES -->
+    <div id="names-view" style="display:none">
+      <div class="tool-view-wrap">
+        <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
+        <div class="tool-view-hdr">Hebrew Names</div>
+        <div class="tool-view-sub">Root meanings of covenant names from the DSS and Orit. Tap any card to search the corpus for that name.</div>
+        <div class="hn-search-wrap">
+          <input class="hn-search" id="hn-input" type="search" placeholder="Search a name or meaning..." oninput="filterHNNames()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="hn-count" id="hn-count"></div>
+        <div class="hn-grid" id="hn-grid"></div>
+      </div>
+    </div>
+
+    <!-- LINEAGE EXPLORER -->
+    <div id="lineage-view" style="display:none">
+      <div class="tool-view-wrap">
+        <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
+        <div class="tool-view-hdr">Lineage Explorer</div>
+        <div class="tool-view-sub">The covenant bloodline from Adam through the twelve tribes, drawn from Bereshit and Yovelim. Tap any name to search the corpus.</div>
+        <div id="lin-container"></div>
+      </div>
+    </div>
+
+    <!-- MO'EDIM -->
+    <div id="moedim-view" style="display:none">
+      <div class="tool-view-wrap">
+        <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
+        <div class="tool-view-hdr">Mo'edim — Appointed Times</div>
+        <div class="tool-view-sub">The seven appointed times as established in the primary texts — no Rabbinic calendar, no later additions. Tap any reference chip to search the corpus.</div>
+        <div id="mo-list"></div>
+      </div>
+    </div>
+
+    <!-- EVENT TIMELINE -->
+    <div id="timeline-view" style="display:none">
+      <div class="tool-view-wrap">
+        <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
+        <div class="tool-view-hdr">Event Timeline</div>
+        <div class="tool-view-sub">Key events from Creation through the DSS period in narrative sequence. Tap any reference to search the corpus.</div>
+        <div id="tl-container"></div>
+      </div>
+    </div>
+
     <!-- ACR SITES STRIP -->
     <div class="acr-sites-strip">
       <span class="acr-site-label">Other ACR apps</span>
@@ -2169,7 +2341,7 @@ function initApp() {
 // ── MODE ──────────────────────────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations'];
+  var views = ['home','results','nt','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -5829,6 +6001,306 @@ function copyAlphabetFull(el){
     setTimeout(function(){el.style.borderColor='';},900);
   });
 }
+// ── USEFUL TOOLS ──────────────────────────────────────────────────────────────
+// COVENANT PROMISES
+var CP_FILTER = 'all';
+var PROMISES = [
+  {ref:'Bereshit 1:28',to:'Adam and Khawwah',cats:['covenant','land'],
+   text:'Be fruitful and multiply, fill the earth and subdue it. Have dominion over the fish of the sea, over the birds of the air, and over every living thing that moves on the earth.'},
+  {ref:'Bereshit 6:18',to:'Noakh',cats:['covenant','protection'],
+   text:'I will establish my covenant with you, and you shall come into the ark — you, your sons, your wife, and your sons\' wives with you.'},
+  {ref:'Bereshit 9:9-11',to:'Noakh and all future generations',cats:['covenant','protection'],
+   text:'I establish my covenant with you and with your descendants after you — never again shall all flesh be cut off by the waters of a flood; never again shall there be a flood to destroy the earth.'},
+  {ref:'Bereshit 12:1-3',to:'Avraham',cats:['land','seed','covenant'],
+   text:'I will make you a great nation, I will bless you and make your name great; and you shall be a blessing. I will bless those who bless you, and I will curse those who curse you; and in you all the families of the earth shall be blessed.'},
+  {ref:'Bereshit 13:15-16',to:'Avraham',cats:['land','seed'],
+   text:'All the land which you see I give to you and your descendants forever. And I will make your descendants as the dust of the earth, so that if a man could number the dust of the earth, then your descendants also could be numbered.'},
+  {ref:'Bereshit 15:18-21',to:'Avraham',cats:['land'],
+   text:'To your descendants I have given this land, from the river of Egypt to the great river, the River Euphrates — the land of the Kenites, the Kenezzites, the Kadmonites, the Hittites, the Perizzites, the Rephaim, the Amorites, the Canaanites, the Girgashites, and the Jebusites.'},
+  {ref:'Bereshit 17:4-8',to:'Avraham',cats:['seed','covenant','land'],
+   text:'You shall be a father of many nations. I will make you exceedingly fruitful, and I will make nations of you, and kings shall come from you. And I will establish my covenant between me and you and your descendants after you throughout their generations, for an everlasting covenant.'},
+  {ref:'Bereshit 22:17-18',to:'Avraham (after Aqedah)',cats:['seed','land'],
+   text:'Blessing I will bless you, and multiplying I will multiply your descendants as the stars of the heaven and as the sand which is on the seashore; and your descendants shall possess the gate of their enemies.'},
+  {ref:'Bereshit 26:3-4',to:'Yitshaq',cats:['land','seed'],
+   text:'Dwell in this land, and I will be with you and bless you; for to you and your descendants I give all these lands, and I will perform the oath which I swore to Avraham your father.'},
+  {ref:'Bereshit 28:13-15',to:'Ya\'aqov',cats:['land','seed','covenant'],
+   text:'The land on which you lie I will give to you and your descendants. Also your descendants shall be as the dust of the earth. In you and in your seed all the families of the earth shall be blessed. I am with you and will keep you wherever you go, and will bring you back to this land.'},
+  {ref:'Devarim 30:1-5',to:'Yisra\'EL (after scattering)',cats:['restoration','land'],
+   text:'When you return to YHWH your Sovereign and obey his voice according to all I command you today, then YHWH your Sovereign will restore your captivity and have compassion on you, and will gather you again from all the peoples where YHWH your Sovereign has scattered you.'},
+  {ref:'Yeshayahu 49:15-16',to:'Zion / Yisra\'EL',cats:['restoration','covenant'],
+   text:'Can a woman forget her nursing child, and not have compassion on the son of her womb? Surely they may forget, yet I will not forget you. See, I have inscribed you on the palms of my hands; your walls are continually before me.'},
+  {ref:'Yeshayahu 60:1-3',to:'Yisra\'EL',cats:['restoration'],
+   text:'Arise, shine, for your light has come! And the glory of YHWH is risen upon you. For behold, the darkness shall cover the earth, and deep darkness the people; but YHWH will arise over you, and his glory will be seen upon you. The nations shall come to your light, and kings to the brightness of your rising.'},
+  {ref:'Yirmeyahu 31:31-33',to:'House of Yisra\'EL and House of Yehudah',cats:['covenant','restoration'],
+   text:'I will make a new covenant with the house of Yisra\'EL and with the house of Yehudah — I will put my Torah in their minds and write it on their hearts; and I will be their Sovereign, and they shall be my people.'},
+  {ref:'Yehezkel 37:21-22',to:'Yisra\'EL',cats:['restoration','land'],
+   text:'I will take the children of Yisra\'EL from among the nations, wherever they have gone, and will gather them from every side and bring them into their own land; and I will make them one nation in the land, on the mountains of Yisra\'EL.'},
+  {ref:'Yovelim 15:9-10',to:'Avraham\'s descendants',cats:['covenant'],
+   text:'Every male among you shall be circumcised. It shall be an everlasting covenant in your flesh, a sign of the covenant between me and you throughout your generations.'},
+  {ref:'Chanokh 93:1-2',to:'The Elect and Righteous',cats:['restoration','covenant'],
+   text:'I was born the seventh in the first week, while judgment and righteousness still endured. After me there shall arise in the second week great wickedness, and deceit shall have sprung up; and in it there shall be the first end. In it a man shall be saved.'},
+  {ref:'Devarim 28:1-2',to:'Yisra\'EL (obedience)',cats:['covenant','protection'],
+   text:'If you diligently obey the voice of YHWH your Sovereign, to observe carefully all his commandments which I command you today, YHWH your Sovereign will set you high above all nations of the earth. And all these blessings shall come upon you and overtake you.'}
+];
+function setCPFilter(f){
+  CP_FILTER=f;
+  document.querySelectorAll('.cp-pill').forEach(function(p){p.classList.toggle('active',p.dataset.cpf===f);});
+  renderPromises();
+}
+function renderPromises(){
+  var list=document.getElementById('cp-list');
+  var count=document.getElementById('cp-count');
+  if(!list) return;
+  var filtered=PROMISES.filter(function(p){return CP_FILTER==='all'||p.cats.indexOf(CP_FILTER)>=0;});
+  count.textContent=filtered.length+' promise'+(filtered.length===1?'':'s');
+  list.innerHTML=filtered.map(function(p){
+    var tags=p.cats.map(function(c){return '<span class="cp-tag cp-tag-'+c+'">'+c+'</span>';}).join('');
+    return '<div class="cp-card">'
+      +'<div class="cp-ref">'+p.ref+'</div>'
+      +'<div class="cp-to">To: '+p.to+'</div>'
+      +'<div class="cp-text">'+p.text+'</div>'
+      +'<div class="cp-tags">'+tags+'</div>'
+      +'<button class="cp-search-btn" onclick="searchFromTool(\''+p.ref.split(' ')[0]+'\')">Search in corpus</button>'
+      +'</div>';
+  }).join('');
+}
+
+// HEBREW NAMES
+var HN_NAMES = [
+  {name:'Adam',translit:'Adam',meaning:'Man; earth; red soil. The name connects humanity to the ground from which it was formed.'},
+  {name:'Khawwah',translit:'Khawwah (Eve)',meaning:'Living; life-giver. Root: khayah — to live.'},
+  {name:'Qayin',translit:'Qayin (Cain)',meaning:'Acquired; spear. Root: qanah — to acquire or possess.'},
+  {name:'Hevel',translit:'Hevel (Abel)',meaning:'Breath; vapor; transience. His name foreshadows his brief life.'},
+  {name:'Sheth',translit:'Sheth (Seth)',meaning:'Appointed; placed. Root: shith — to set or appoint.'},
+  {name:'Chanokh',translit:'Chanokh (Enoch)',meaning:'Dedicated; initiated. Root: khanak — to dedicate or train.'},
+  {name:'Noakh',translit:'Noakh (Noah)',meaning:'Rest; comfort. Root: nuwakh — to rest or settle.'},
+  {name:'Avraham',translit:'Avraham (Abraham)',meaning:'Father of a multitude. Expanded from Avram — exalted father.'},
+  {name:'Sarah',translit:'Sarah',meaning:'Princess; noblewoman; one who rules. Root: sarar — to rule.'},
+  {name:'Yitshaq',translit:'Yitshaq (Isaac)',meaning:'He laughs; he will laugh. Root: tsakhaq — to laugh.'},
+  {name:'Rivqah',translit:'Rivqah (Rebekah)',meaning:'To bind; to tie. Suggests a captivating or snaring beauty.'},
+  {name:'Ya\'aqov',translit:'Ya\'aqov (Jacob)',meaning:'Heel-grabber; one who follows at the heel. Root: aqev — heel.'},
+  {name:'Yisra\'EL',translit:'Yisra\'EL (Israel)',meaning:'One who wrestles with EL; EL prevails. Root: sarah — to contend, to persist.'},
+  {name:'Yosef',translit:'Yosef (Joseph)',meaning:'He adds; he increases. Root: yasaph — to add or repeat.'},
+  {name:'Moshe',translit:'Moshe (Moses)',meaning:'Drawn from the water. From Egyptian msy — born of, and Hebrew mashah — to draw out.'},
+  {name:'Miryam',translit:'Miryam (Miriam)',meaning:'Beloved; strong waters; bitterness overcome. Root debated; likely from marar and yam.'},
+  {name:'Aharon',translit:'Aharon (Aaron)',meaning:'Mountain of strength; exalted. Root uncertain; possibly from har — mountain.'},
+  {name:'Yehoshua',translit:'Yehoshua (Joshua)',meaning:'YHWH saves; YHWH delivers. Root: yasha — to save or rescue.'},
+  {name:'Devorah',translit:'Devorah (Deborah)',meaning:'Bee; spoken word. Root: davar — to speak. The bee was associated with ordered community and the spoken decree.'},
+  {name:'Ruth',translit:'Ruth',meaning:'Companion; friend; one who refreshes. Root possibly from re\'ut — friendship.'},
+  {name:'Shemu\'el',translit:'Shemu\'el (Samuel)',meaning:'Heard by EL; name of EL. Root: shama — to hear, and EL.'},
+  {name:'Dawid',translit:'Dawid (David)',meaning:'Beloved; dear one. Root: dwd — to love.'},
+  {name:'Shlomo',translit:'Shlomo (Solomon)',meaning:'Peaceful; his peace. Root: shalom — peace, wholeness.'},
+  {name:'Eliyahu',translit:'Eliyahu (Elijah)',meaning:'My EL is YHWH. A declaration embedded in the name.'},
+  {name:'Elisha',translit:'Elisha',meaning:'My EL saves; EL is salvation. Root: yasha — to save.'},
+  {name:'Yeshayahu',translit:'Yeshayahu (Isaiah)',meaning:'YHWH saves; YHWH is salvation. Root: yasha and YHWH.'},
+  {name:'Yirmeyahu',translit:'Yirmeyahu (Jeremiah)',meaning:'YHWH will uplift; YHWH establishes. Root: rum — to raise, and YHWH.'},
+  {name:'Yehezkel',translit:'Yehezkel (Ezekiel)',meaning:'EL strengthens; EL makes firm. Root: khazaq — to be strong.'},
+  {name:'Daniyel',translit:'Daniyel (Daniel)',meaning:'EL is my judge. Root: din — to judge, and EL.'},
+  {name:'Ezra',translit:'Ezra',meaning:'Help; helper. Root: azar — to help or support.'},
+  {name:'Nekhemyah',translit:'Nekhemyah (Nehemiah)',meaning:'YHWH comforts; YHWH has consoled. Root: nakham — to comfort.'}
+];
+function filterHNNames(){
+  var q=(document.getElementById('hn-input').value||'').toLowerCase().trim();
+  var grid=document.getElementById('hn-grid');
+  var count=document.getElementById('hn-count');
+  if(!grid) return;
+  var filtered=HN_NAMES.filter(function(n){
+    if(!q) return true;
+    return n.name.toLowerCase().indexOf(q)>=0||n.translit.toLowerCase().indexOf(q)>=0||n.meaning.toLowerCase().indexOf(q)>=0;
+  });
+  count.textContent=filtered.length+' name'+(filtered.length===1?'':'s');
+  grid.innerHTML=filtered.map(function(n){
+    var searchTerm=n.name.split('\'').join('');
+    return '<div class="hn-card" onclick="searchFromTool(\''+searchTerm+'\')">'
+      +'<div class="hn-name">'+n.name+'</div>'
+      +'<div class="hn-translit">'+n.translit+'</div>'
+      +'<div class="hn-meaning">'+n.meaning+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+// LINEAGE EXPLORER
+var LINEAGE = [
+  {title:'Before the Flood — Adam to Noakh (Bereshit 5, Yovelim 4)',
+   chain:['Adam','Sheth','Enosh','Qeynan','Mahalal\'el','Yered','Chanokh','Metushelakh','Lamekh','Noakh'],
+   note:''},
+  {title:'Noakh to Avraham (Bereshit 11, Yovelim 8)',
+   chain:['Noakh','Shem','Arpakhshad','Shelakh','Ever','Peleg','Re\'u','Serug','Nakhor','Terakh','Avraham'],
+   note:''},
+  {title:'The Covenant Line — Avraham to the Twelve Tribes',
+   chain:['Avraham','Yitshaq','Ya\'aqov (Yisra\'EL)'],
+   note:'Ya\'aqov\'s twelve sons became the twelve tribes:',
+   tribes:['Re\'uven','Shim\'on','Lewi','Yehudah','Yissaskhar','Zevulun','Dan','Naphtali','Gad','Asher','Yosef','Binyamin']}
+];
+function buildLineage(){
+  var container=document.getElementById('lin-container');
+  if(!container) return;
+  container.innerHTML=LINEAGE.map(function(branch){
+    var chainHTML=branch.chain.map(function(name,i){
+      var clean=name.replace(/['"()]/g,'').split(' ')[0];
+      return (i>0?'<span class="lin-sep">&#8594;</span>':'')
+        +'<span class="lin-name" onclick="searchFromTool(\''+clean+'\')">'+name+'</span>';
+    }).join('');
+    var tribesHTML='';
+    if(branch.tribes){
+      tribesHTML='<div style="font-size:11px;color:var(--tx3);margin:10px 0 6px">'+branch.note+'</div>'
+        +'<div class="lin-tribes">'+branch.tribes.map(function(t){
+          return '<div class="lin-tribe" onclick="searchFromTool(\''+t.replace(/[\']/g,'').split(' ')[0]+'\')">'+t+'</div>';
+        }).join('')+'</div>';
+    }
+    return '<div class="lin-branch">'
+      +'<div class="lin-branch-title">'+branch.title+'</div>'
+      +'<div class="lin-chain">'+chainHTML+'</div>'
+      +tribesHTML
+      +'</div>';
+  }).join('');
+}
+
+// MO'EDIM
+var MOEDIM = [
+  {name:'Shabbat',timing:'Every 7th day',
+   desc:'The seventh day of rest established at Creation. YHWH rested on the seventh day and set it apart. Shabbat is the foundational appointed time — the covenant sign woven into the fabric of creation itself, not an institutional invention.',
+   refs:['Bereshit 2:2-3','Shemot 20:8-11','Yovelim 2:17-20']},
+  {name:'Pesakh',timing:'14th of the 1st month, at twilight',
+   desc:'The memorial of the night YHWH passed over the houses of Yisra\'EL in Egypt. A lamb without blemish, its blood applied to the doorposts, eaten in haste. Yovelim sets Pesakh in the 1st month on a fixed 14th day, independent of the later Rabbinic lunar calendar system.',
+   refs:['Shemot 12:1-14','Yovelim 49:1-6']},
+  {name:'Chag HaMatzot',timing:'15th–21st of the 1st month (7 days)',
+   desc:'The Feast of Unleavened Bread, beginning the day after Pesakh and lasting seven days. No leaven found in any dwelling. A solemn assembly on the first and seventh days. Commemorates the haste of departure from Mitsrayim.',
+   refs:['Shemot 12:15-20','Vayikra 23:6-8']},
+  {name:'Bikkurim (Firstfruits)',timing:'Day after the Shabbat within Chag HaMatzot',
+   desc:'The offering of the first sheaf of the harvest — the firstfruits — brought before YHWH. No grain from the new harvest is eaten until this is done. The counting of the omer begins here, leading to Shavuot fifty days later.',
+   refs:['Vayikra 23:9-14']},
+  {name:'Shavuot',timing:'50 days after Bikkurim (day after 7th Shabbat)',
+   desc:'The Feast of Weeks — fifty days counted from Bikkurim. A harvest festival and, according to Yovelim, the anniversary of the covenant at Sinai. The ancient calendar in Yovelim places Shavuot always on the 15th of the 3rd month, a Sunday by its reckoning.',
+   refs:['Vayikra 23:15-21','Yovelim 1:1','Yovelim 6:17']},
+  {name:'Yom Teruah',timing:'1st of the 7th month',
+   desc:'The Day of Trumpets — a day of rest and a memorial of blowing. The texts give no name beyond "a holy convocation" and "a memorial of blowing." Later traditions added meanings not found in the ancient corpus. The ancient text simply commands: rest and blow.',
+   refs:['Vayikra 23:23-25','Bamidbar 29:1']},
+  {name:'Yom Kippur',timing:'10th of the 7th month',
+   desc:'The Day of Atonement — the most solemn of the appointed times. A complete rest, a day of affliction of the soul. The high priest entered the most set-apart place. The scapegoat ritual sent the sins of the people into the wilderness on Azazel. Described in detail in Vayikra 16.',
+   refs:['Vayikra 23:26-32','Vayikra 16:1-34']},
+  {name:'Sukkot',timing:'15th–21st of the 7th month (7 days)',
+   desc:'The Feast of Tabernacles — seven days of dwelling in booths to remember that Yisra\'EL dwelt in booths when brought out of Mitsrayim. The most joyful of the appointed times. A great assembly on the 8th day (Shemini Atzeret) follows the seven days.',
+   refs:['Vayikra 23:33-43','Devarim 16:13-17']}
+];
+function buildMoedim(){
+  var list=document.getElementById('mo-list');
+  if(!list) return;
+  list.innerHTML=MOEDIM.map(function(m,i){
+    var refs=m.refs.map(function(r){
+      var q=r.split(' ')[0];
+      return '<span class="mo-ref-chip" onclick="searchFromTool(\''+q+'\')">'+r+'</span>';
+    }).join('');
+    return '<div class="mo-card" id="mo-card-'+i+'">'
+      +'<div class="mo-card-hdr" onclick="toggleMoCard('+i+')">'
+      +'<div><div class="mo-name">'+m.name+'</div><div class="mo-timing">'+m.timing+'</div></div>'
+      +'<i class="ri-arrow-down-s-line mo-chevron"></i>'
+      +'</div>'
+      +'<div class="mo-body"><div class="mo-desc">'+m.desc+'</div><div class="mo-refs">'+refs+'</div></div>'
+      +'</div>';
+  }).join('');
+}
+function toggleMoCard(i){
+  var card=document.getElementById('mo-card-'+i);
+  if(card) card.classList.toggle('open');
+}
+
+// TIMELINE
+var TIMELINE = [
+  {era:'Creation',events:[
+    {name:'Creation of heaven and earth',desc:'YHWH creates the world in six days; the seventh day is set apart as Shabbat.',ref:'Bereshit 1–2'},
+    {name:'Adam and Khawwah',desc:'The first man formed from the earth, the first woman from his side. Placed in the Garden of Eden.',ref:'Bereshit 2'},
+    {name:'The Fall',desc:'Transgression in the garden; expulsion. The ground is cursed. Death enters.',ref:'Bereshit 3'},
+    {name:'Qayin and Hevel',desc:'The first murder. Qayin driven out eastward. The line of Sheth established as the covenant line.',ref:'Bereshit 4'}
+  ]},
+  {era:'Pre-Flood World',events:[
+    {name:'The Watchers descend',desc:'200 Watchers led by Shemyaza swear an oath on Mount Hermon and take human wives, corrupting the earth.',ref:'Chanokh 6'},
+    {name:'The Nephilim and corruption',desc:'Giants and corruption spread across the earth. YHWH observes that every intent of humanity is only evil continually.',ref:'Chanokh 7; Bereshit 6:5'},
+    {name:'Chanokh translated',desc:'Chanokh walks with YHWH 365 years and is taken — he does not die. He receives the heavenly visions recorded in the Book of Chanokh.',ref:'Bereshit 5:21-24; Chanokh 1'}
+  ]},
+  {era:'The Flood and Covenant with Noakh',events:[
+    {name:'The Flood',desc:'YHWH instructs Noakh to build the ark. The flood covers the earth for forty days. All corrupt flesh is destroyed.',ref:'Bereshit 6–8; Yovelim 5'},
+    {name:'Rainbow covenant',desc:'YHWH establishes an eternal covenant with Noakh and all living creatures: never again shall a flood destroy the earth.',ref:'Bereshit 9:9-17'},
+    {name:'The Table of Nations',desc:'The seventy nations descend from Noakh\'s three sons — Shem, Kham, and Yephet — and spread across the earth.',ref:'Bereshit 10; Yovelim 8'}
+  ]},
+  {era:'The Patriarchs',events:[
+    {name:'Call of Avraham',desc:'YHWH calls Avram out of Ur of the Chaldeans. The covenant of land, seed, and blessing is first given.',ref:'Bereshit 12'},
+    {name:'Covenant between the parts',desc:'YHWH makes a formal covenant with Avraham, predicting 400 years of oppression before deliverance.',ref:'Bereshit 15'},
+    {name:'Covenant of circumcision',desc:'The covenant sign given to Avraham. His name changed from Avram to Avraham.',ref:'Bereshit 17; Yovelim 15'},
+    {name:'Ya\'aqov becomes Yisra\'EL',desc:'Ya\'aqov wrestles through the night and prevails. His name is changed to Yisra\'EL — one who contends with EL.',ref:'Bereshit 32:28'},
+    {name:'Descent into Mitsrayim',desc:'Ya\'aqov and his seventy descendants go down to Egypt in the time of Yosef. The 430 years of sojourn begin.',ref:'Bereshit 46; Shemot 12:40'}
+  ]},
+  {era:'Mitsrayim and the Exodus',events:[
+    {name:'Moshe called at the burning bush',desc:'YHWH appears to Moshe at Horev and commissions him to bring Yisra\'EL out of Mitsrayim.',ref:'Shemot 3'},
+    {name:'The ten plagues',desc:'YHWH sends ten plagues upon Mitsrayim. Pharaoh\'s heart is hardened. The final plague takes every firstborn of Egypt.',ref:'Shemot 7–12'},
+    {name:'The Exodus',desc:'Yisra\'EL departs Mitsrayim with great wealth. Approximately 600,000 men on foot, plus women, children, and a mixed multitude.',ref:'Shemot 12:37'},
+    {name:'Crossing the Sea of Reeds',desc:'YHWH parts the sea. Yisra\'EL crosses on dry ground. Pharaoh\'s army is drowned.',ref:'Shemot 14'}
+  ]},
+  {era:'Sinai and the Wilderness',events:[
+    {name:'Torah given at Sinai',desc:'YHWH descends on Mount Sinai in fire. The Ten Words and the full Torah are given to Moshe. Yovelim records this as also the anniversary of Shavuot.',ref:'Shemot 19–20; Yovelim 1'},
+    {name:'The golden calf',desc:'While Moshe is on the mountain, the people build a golden calf. 3,000 fall by the sword of the Levites.',ref:'Shemot 32'},
+    {name:'Forty years in the wilderness',desc:'Due to the faithlessness of the spies, the generation that left Egypt wanders forty years. None of that generation enters the land except Yehoshua and Kalev.',ref:'Bamidbar 14'}
+  ]},
+  {era:'Conquest and the Judges',events:[
+    {name:'Crossing the Yarden',desc:'Under Yehoshua, Yisra\'EL crosses the Yarden River and enters the land of Kena\'an.',ref:'Yehoshua 3'},
+    {name:'Yeriho falls',desc:'The walls of Yeriho fall after seven days of marching and the blowing of the shofar.',ref:'Yehoshua 6'},
+    {name:'The cycles of the Judges',desc:'Yisra\'EL repeatedly turns from the covenant, is oppressed by enemies, cries out, and is delivered by a judge. Devorah, Gid\'on, Shimshon, and others arise.',ref:'Shofetim 2–16'}
+  ]},
+  {era:'The Kingdom',events:[
+    {name:'Sha\'ul anointed as first king',desc:'The people demand a king. Shemu\'el anoints Sha\'ul of the tribe of Binyamin as first king of Yisra\'EL.',ref:'Shemu\'el Aleph 10'},
+    {name:'Dawid anointed',desc:'YHWH rejects Sha\'ul and anoints Dawid of Yehudah. The covenant of the eternal throne is given to Dawid\'s line.',ref:'Shemu\'el Aleph 16; Shemu\'el Bet 7'},
+    {name:'Shlomo and the first temple',desc:'Shlomo builds the temple in Yerushalayim. At its dedication, the cloud of YHWH fills the house.',ref:'Melakhim Aleph 6–8'},
+    {name:'The kingdom divides',desc:'After Shlomo, the kingdom splits into Yisra\'EL (north, 10 tribes) and Yehudah (south, 2 tribes).',ref:'Melakhim Aleph 12'}
+  ]},
+  {era:'Prophets and Captivity',events:[
+    {name:'Eliyahu and the prophets of Ba\'al',desc:'Eliyahu challenges 450 prophets of Ba\'al on Mount Karmel. Fire falls. The covenant is demonstrated.',ref:'Melakhim Aleph 18'},
+    {name:'Assyrian captivity of the North',desc:'The northern kingdom of Yisra\'EL is taken captive by Assyria. The ten tribes are scattered.',ref:'Melakhim Bet 17'},
+    {name:'Yeshayahu\'s vision',desc:'Yeshayahu receives visions spanning the captivity and the ultimate restoration of Yisra\'EL. The Servant Songs speak of the covenant people.',ref:'Yeshayahu 1; 40; 49; 60'},
+    {name:'Babylonian captivity of Yehudah',desc:'Nevukhadnetzar destroys Yerushalayim and the temple. Yehudah is taken to Babylon.',ref:'Melakhim Bet 25; Yirmeyahu 39'},
+    {name:'Yehezkel\'s vision of the valley of dry bones',desc:'YHWH shows Yehezkel the scattered house of Yisra\'EL restored — bone to bone, flesh returning, breath entering.',ref:'Yehezkel 37'}
+  ]},
+  {era:'Return and the Dead Sea Scrolls Period (~530 BCE–68 CE)',events:[
+    {name:'Return from Babylon',desc:'A remnant returns to Yerushalayim under Ezra and Nekhemyah. The second temple is built.',ref:'Ezra 1–3; Nekhemyah 1'},
+    {name:'DSS community established',desc:'A covenant community withdraws to the Yehudean wilderness near the Dead Sea, preserving ancient texts outside the emerging Rabbinic and Hellenistic control of the temple.',ref:'Dead Sea Scrolls — Community Rule (1QS)'},
+    {name:'DSS texts composed and preserved',desc:'The community preserves, copies, and composes texts including 4Q246, Melkhitsedeq scroll, Temple Scroll, War Scroll, and many others between approximately 250 BCE and 68 CE.',ref:'DSS corpus — Qumran Caves 1–11'},
+    {name:'Roman destruction of Qumran (68 CE)',desc:'Roman forces destroy the DSS community during the Jewish-Roman War. Scrolls are hidden in the caves. They remain there until their discovery in 1946–1947.',ref:'Historical record; Cave discoveries 1946'}
+  ]}
+];
+function buildTimeline(){
+  var container=document.getElementById('tl-container');
+  if(!container) return;
+  container.innerHTML=TIMELINE.map(function(era){
+    var events=era.events.map(function(ev){
+      var q=ev.ref.split(' ')[0].split(';')[0].trim();
+      return '<div class="tl-event">'
+        +'<div class="tl-dot"></div>'
+        +'<div>'
+        +'<div class="tl-event-name">'+ev.name+'</div>'
+        +'<div class="tl-event-desc">'+ev.desc+'</div>'
+        +'<button class="tl-event-ref" onclick="searchFromTool(\''+q+'\')">'+ev.ref+'</button>'
+        +'</div>'
+        +'</div>';
+    }).join('');
+    return '<div class="tl-era">'
+      +'<div class="tl-era-title">'+era.era+'<div class="tl-era-line"></div></div>'
+      +events
+      +'</div>';
+  }).join('');
+}
+
+function searchFromTool(query){
+  document.getElementById('search-input').value=query;
+  onSearch(query);
+}
+
+window.addEventListener('load',function(){
+  renderPromises();
+  filterHNNames();
+  buildLineage();
+  buildMoedim();
+  buildTimeline();
+});
+
 /* ── HEBREW DNA DATA ── */
 var DNA_DATA=[
 /* MATERNAL mtDNA */
