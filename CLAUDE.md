@@ -169,6 +169,23 @@ These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
 
+## Infrastructure — Cloudflare (permanent)
+
+All ACR sites (acrscrolls.com and subpaths) are served through Cloudflare.
+Every asset in the repo — HTML, JS, CSS, images, video, audio — is delivered
+via Cloudflare's CDN from the nearest edge node. This means:
+
+- Images and short video clips stored in the repo load fast globally with no
+  special handling needed. Treat them as CDN-delivered assets, not raw GitHub
+  files.
+- For a documentary or long-form video, use Cloudflare Stream (hosted on
+  Cloudflare's infrastructure, not the repo) and embed the player in the app.
+- The offline-first service worker still handles the core app (HTML, JS, JSON
+  concordance data). Rich media (video, large images) is Cloudflare-delivered
+  and reasonably expects a connection.
+- Never treat Cloudflare as optional or as a future consideration — it is the
+  live production layer right now, always.
+
 ## Preferred shipping workflow
 
 This is the default shipping flow. Follow it unless the user explicitly
