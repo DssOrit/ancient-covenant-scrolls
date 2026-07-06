@@ -175,6 +175,33 @@ opens view, Bamidbar 12 / Curse of Ham / Ebed-Melekh present. `node --check` OK.
 Rules kept: 0 (no Western-authority framing, African identity as fact), 13 (DSS/Orit/Torah
 only), 14 (n/a here), divine name (YHWH/Creator only).
 
+### PR #560 — MERGED (SHA 14aa5e7, acr-search-v117). Backup: `backup/2026-07-06-v117`.
+
+### AI racial bias section added to Racism pill (acr-search-v118) — branch, pending PR
+
+User: add the racist biases of AI and how hard it is to get factual evidence from AI
+platforms due to pushed Western standards; "build in full honest details honest."
+NOTE: user referenced prior-session research I did not have in context; I did NOT
+reconstruct from memory. Researched fresh via WebSearch and VERIFIED every claim before
+writing. New section "The Bias Did Not Stop, Western Standards Now Run Through the
+Algorithm" appended to renderRacismPanel (5 entries):
+- Facial recognition: Gender Shades (Buolamwini & Gebru, MIT, 2018) darker women up to
+  34.7% error vs 0.8% lighter men (IBM/Microsoft/Face++); NIST IR 8280 FRVT Part 3 (Dec
+  2019), 100+ systems, West/East African + East Asian faces 10-100x more false matches
+  than Eastern European.
+- Language AI flags African American English as toxic ~46% vs ~9% white-aligned (Sap et
+  al. 2019).
+- Common Crawl ~42% English, US-skewed -> machine treats Western consensus as fact,
+  African/non-Western framings as fringe.
+- "Safety" guidelines = Western institutional standards; Obermeyer et al. 2019 (Science)
+  health algorithm rated Black patients less sick, halving extra-care access.
+- Through-line: Slave Bible -> recoloring/Curse of Ham -> the algorithm; defense is the
+  primary sources, which do not run on Western training data.
+Guide: added step 5 to the Racism guide section. `Search/sw.js` cache v117 -> v118.
+VERIFIED headless Chromium: 16 td-items render, all sourced claims present. node --check OK.
+Sources verified: Gender Shades (PMLR v81), NISTIR 8280, Sap 2019 (arXiv 1905.12516),
+Obermeyer 2019 (science.org/doi/10.1126/science.aax2342), Common Crawl language share.
+
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
