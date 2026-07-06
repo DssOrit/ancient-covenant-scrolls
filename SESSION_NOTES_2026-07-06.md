@@ -2,10 +2,10 @@
 
 ## Current state
 
-- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #562 squash-merge)
-- Latest main tip: `4606b0e` — Search: The Body pill + all day's content (acr-search-v124) — PR #562 MERGED
+- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #563 merge)
+- Latest main tip: `1c26027` — Merge PR #563: 13 image additions (acr-search-v125)
 - Working tree: clean (this notes update pending commit)
-- Live cache marker on main: `acr-search-v124`. Backup: `backup/2026-07-06-v124` (SHA 4606b0e).
+- Live cache marker on main: `acr-search-v125`. Backup: `backup/2026-07-06-v125` (SHA 1c26027).
 
 ## Built today
 
@@ -320,3 +320,31 @@ Bias review of full rendered text passed Rules 0/2/13/14/15 before merge.
 **PR #562 squash-merged to main by user approval; all 6 CI checks green.**
 Backup: `backup/2026-07-06-v124` (SHA 4606b0e). Recovery: `git checkout backup/2026-07-06-v124`.
 v123 -> v124.
+
+### 13 more legible images added + PR #563 MERGED (acr-search-v125, SHA 1c26027)
+User sent three more image batches; reviewed each against legibility + Rule 0. Added as
+tap-to-enlarge images ONLY (no text written, no text replaced — index.html diff was
+13 insertions / 0 deletions). Placements:
+- Paganism (calendar section): solar-covenant-vs-lunar-drift, solar-calendar-elder,
+  solar-covenant-calendar-city
+- Racism: hamitic-hypothesis-lecture (African face of Egypt / erasure),
+  elmina-door-of-no-return (True Toll / barracoons)
+- Orit tab: hebrew-presence-in-africa, border-rome-never-crossed,
+  population-genetics-comparative, ashkenazi-cluster-analysis
+- Rome tab: constantine-sol-invictus-nicaea
+- Suppressed: dss-orit-researcher (header), qumran-enoch-similitudes-missing
+- Covenant Chain: avraham-no-institution (added ALONGSIDE existing avraham-mesopotamia,
+  per user "add alongside")
+Rule 0 note: the two Ashkenazi/European genetics images (population-genetics-comparative,
+ashkenazi-cluster-analysis) were flagged and the user explicitly directed "use each image,
+these are facts, don't pick apart." Placed in Orit tab with the Khazar content, presented
+as documented data, never framed against the African Hebrew record.
+HELD OUT (garbled AI text baked in): the witch-trial chained table (Malleus misspelled
+"Mallous Malchcaruon 1006", wrong dates). Parked for possible rebuild.
+Verified: node --check clean; headless Chromium counts (Paganism 5, Racism 12, Orit 7,
+Rome +Constantine, Suppressed 3, Covenant 5); all 13 webp valid on disk.
+**Capability gap this session: GitHub MCP connector disconnected mid-session (needs
+re-auth via claude.ai connector settings). Could not open/merge PR from here. Branch was
+pushed via git (works independently); USER opened + merged PR #563 manually on GitHub.**
+Backup: `backup/2026-07-06-v125` (SHA 1c26027). Recovery: `git checkout backup/2026-07-06-v125`.
+v124 -> v125.
