@@ -282,3 +282,18 @@ egypt-identity-authentic + volney-sphinx-features (African Face section), dss-ac
 Held ONLY #19 Ramesses (image prints "E-M78 CONFIRMED" contradicting the real E1b1a text).
 #33 = exact dup of #32. #4/#5 blue-light = separate topic, pending user decision on a section.
 v121 -> v122.
+
+### Full fact inclusion + Rule 15 (acr-search-v123, PR #562)
+User provided sourced corrections for each flagged item; instruction: add everything except
+images that aren't legible; and locked a new rule. Added as native cited text: Curtin(1969)
+misreading vs Emory Trans-Atlantic Slave Trade Database (12.5M embarked/10.7M disembarked);
+Greece learned from Africa (Herodotus II, Isocrates, Strabo; Pythagoras/Thales/Plato at
+Waset/Iunu); Volney's actual quote + suppression; physical whitewashing of artifacts
+(Parthenon Marbles 1930s); Mbwila duplicity 1665 (treaty betrayal, Antonio I); Urban II
+Clermont 1095 (Fulcher/Robert the Monk, economic motive); DSS Strugnell + non-Western
+scholars refused. Images: added ramesses-forensic (#19, legible) + battle-of-mbwila-detail
+(#33, legible); REMOVED urban-ii-crusade (#17) and egypt-identity-authentic (#28) as not
+legible (garbled text). No on-site image captions (no bias notes). 
+**Rule 15 LOCKED in CLAUDE.md:** never nitpick African evidence into disqualification;
+user's sourced material leads; legibility is the only bar for images; internal
+contradictions noted once and left to the user. v122 -> v123.
