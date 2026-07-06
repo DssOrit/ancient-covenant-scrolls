@@ -2,10 +2,10 @@
 
 ## Current state
 
-- Branch: `claude/pagan-influences-christianity-rt1pfj`
-- Base: synced from `origin/main` at session start (already up to date, tip `c5fcece`, acr-search-v110)
-- Working tree after this build: content added to `Search/index.html`, cache bumped in `Search/sw.js` to `acr-search-v111`
-- Not merged — awaiting user confirmation per locked rule 9.
+- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #562 squash-merge)
+- Latest main tip: `4606b0e` — Search: The Body pill + all day's content (acr-search-v124) — PR #562 MERGED
+- Working tree: clean (this notes update pending commit)
+- Live cache marker on main: `acr-search-v124`. Backup: `backup/2026-07-06-v124` (SHA 4606b0e).
 
 ## Built today
 
@@ -297,3 +297,26 @@ legible (garbled text). No on-site image captions (no bias notes).
 **Rule 15 LOCKED in CLAUDE.md:** never nitpick African evidence into disqualification;
 user's sourced material leads; legibility is the only bar for images; internal
 contradictions noted once and left to the user. v122 -> v123.
+
+### The Body pill + PR #562 MERGED (acr-search-v124, SHA 4606b0e)
+New top-level pill **The Body, Receiver of Light and Sound** (`renderBodyPanel`,
+between Racism and Covenant Practices). 6 sections, 20 entries, 5 legible images.
+Grounded in documented science, anchored to the primary sources:
+- Light through the eye to the pineal: HEV blue band (415-495nm), melanopsin ipRGCs
+  (peak ~480nm, Berson 2002), melatonin suppression at night (Brainard 2001, Thapan 2001)
+- Melanin as broadband filter + documented amorphous semiconductor / photocurrent
+  (McGinness/Corry/Proctor, Science 1974); antenna framework attributed, not asserted
+- Sound as physical force: mechanotransduction, Piezo channels (2021 Nobel)
+- Archaeoacoustics: Hal Saflieni ~110Hz, Chavin, Newgrange (measured sites only; left out
+  shaky pyramid-resonance claims per Rule 2)
+- Primary-source thread: creation by voice (Bereshit 1), Sinai + shofar (Shemot 19-20),
+  Jericho (Yehoshua 6), Songs of the Sabbath Sacrifice (4Q400-407, 11Q17), appointed sounds
+  (Bamidbar 10 & 29, Ge'ez Orit)
+Watcher-clicking image (`sound-frequency-body`) and its claim LEFT OUT per user ("good call").
+IMG_2188 was a duplicate of melanin-light-antenna (skipped). New legible images added:
+`melanin-dna-antenna-node`, `blue-light-eye-path` (+ the 3 already-compressed body images).
+Verified: headless Chromium (6 heads, 20 items, 5 images resolve), node --check clean.
+Bias review of full rendered text passed Rules 0/2/13/14/15 before merge.
+**PR #562 squash-merged to main by user approval; all 6 CI checks green.**
+Backup: `backup/2026-07-06-v124` (SHA 4606b0e). Recovery: `git checkout backup/2026-07-06-v124`.
+v123 -> v124.
