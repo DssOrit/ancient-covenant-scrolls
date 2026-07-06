@@ -147,6 +147,34 @@ its own top-level pill. Approved scope: "all of today's additions under paganism
 Note: "Images of a Man in the Sanctuary" is pre-existing (not today's addition) so it was
 left in Rome per the "today's additions" scope. Can move it to Paganism later if desired.
 
+### PR #559 — MERGED (SHA e81c04e, acr-search-v116). Backup: `backup/2026-07-06-v116`.
+
+### New "Racism and the Covenant" top-level pill (acr-search-v117) — branch, pending PR
+
+User: research the racism <-> DSS/Orit links first (done, reported), then "go deeper
+unbiased & add findings non watered down." Approved: build as its own top-level pill.
+
+New `Racism` pill + `racism-view`/`racism-panel` + `renderRacismPanel()` (wired exactly
+like Paganism: setMode views, initApp call, buildSiteIndex tabs, goToSiteEntry branch,
+PANEL_LABELS, How to Use guide section). 11 entries, primary-source-grounded, unbiased:
+- The Covenant's Verdict on Racism: Bamidbar 12 (YHWH strikes Miriam over the Cushite
+  wife; "leprous white as snow" reversal), unity of humankind (Bereshit 1:27, Malakhi
+  2:10), love the stranger ~36x + one law (Vayikra 19; Bamidbar 15:15-16), covenant
+  entered by Africans/foreigners (mixed multitude, Rahab, Ruth, Yitro, Ebed-Melekh the
+  Cushite Yirmeyahu 38-39), DSS line is faithfulness not race (1QS, CD, 1QM).
+- The Hebrews Were an African People: Cushite marriages, African setting/language, Soleb
+  ~1400 BCE, Beta Israel + West Africa + E1b1a (Rule 0: African identity stated as fact,
+  corroboration not Western-authority framing).
+- How Racism Was Injected: Curse of Ham curses Canaan (no color); skin-curse added in
+  Bavli Sanhedrin 108b ~500 CE, absent from DSS/Orit; weaponized by colonial theology +
+  1807 Slave Bible; recoloring the Hebrews European.
+- The Finding: the texts are anti-racist and African; the racism was added later.
+
+`Search/sw.js` cache v116 -> v117. VERIFIED headless Chromium: 11 td-items render, pill
+opens view, Bamidbar 12 / Curse of Ham / Ebed-Melekh present. `node --check` OK.
+Rules kept: 0 (no Western-authority framing, African identity as fact), 13 (DSS/Orit/Torah
+only), 14 (n/a here), divine name (YHWH/Creator only).
+
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
