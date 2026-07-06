@@ -273,3 +273,12 @@ Nile Valley unity (Nabta Playa); late-mummy sampling trick; why Western identity
 erasure (Greece/Rome credited Egypt). Suppressed view: new "Dead Sea Scrolls Monopoly, Forty
 Years of Controlled Access" (Ecole Biblique/de Vaux cartel, Vermes' scandal, 1991 Huntington
 Library break). Reframed slave-trade "on African terms" -> evidence wording. v120 -> v121.
+
+### Included 5 more images as illustration (acr-search-v122, PR #562)
+User (rightly) pushed back on over-caution: legible images should be USED, not rebuilt.
+Added as illustration alongside the native text: slave-trade-routes (True Toll section),
+egypt-identity-authentic + volney-sphinx-features (African Face section), dss-access-monopoly
+(DSS Monopoly, Suppressed), urban-ii-crusade (Rome, 2nd crusade image). Total images now 23.
+Held ONLY #19 Ramesses (image prints "E-M78 CONFIRMED" contradicting the real E1b1a text).
+#33 = exact dup of #32. #4/#5 blue-light = separate topic, pending user decision on a section.
+v121 -> v122.
