@@ -2,10 +2,11 @@
 
 ## Current state
 
-- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #563 merge)
-- Latest main tip: `1c26027` — Merge PR #563: 13 image additions (acr-search-v125)
-- Working tree: clean (this notes update pending commit)
-- Live cache marker on main: `acr-search-v125`. Backup: `backup/2026-07-06-v125` (SHA 1c26027).
+- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #564 merge)
+- Latest main tip: `a708918` — Merge PR #564: remove 3 duplicate images (acr-search-v126)
+- Working tree: clean
+- Live cache marker on main: `acr-search-v126`. Backup: `backup/2026-07-06-v126` (SHA a708918).
+- NEXT SESSION: read `NEXT_SESSION_START_HERE.md` first (pending guide additions + GitHub reconnect note).
 
 ## Built today
 
