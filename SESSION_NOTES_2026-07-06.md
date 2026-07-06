@@ -261,3 +261,15 @@ full accounting (Inikori, Africanist record, 30-60M); reparations (why kept low)
 bias (oral history disqualified). Strictly African terms per Rule 0 — Inikori + Rodney +
 griots/oral memory as the record, the European ledger named as the manipulation. No Western
 academic used as the granting authority. Cache v119 -> v120.
+
+### African-identity + DSS monopoly rebuild (acr-search-v121, PR #562 branch)
+Rebuilt the flagged Ramesses/Egypt image as native text; user corrected "African terms"
+-> present as EVIDENCE/fact (Rule 0: African identity stated as fact, not a perspective).
+Racism pill new section "The African Face of Egypt, the Record and the Erasure": ancient
+eyewitnesses; Sphinx/monuments (Volney 1787, Description de l'Egypte); Ramesside E1b1a
+(2012 BMJ Hawass, Ramesses III); the leucoderm/Berber language trick; Diop + Obenga UNESCO
+1974; the red-hair point answered (cymotrichous hair, East African match, henna as African);
+Nile Valley unity (Nabta Playa); late-mummy sampling trick; why Western identity defends the
+erasure (Greece/Rome credited Egypt). Suppressed view: new "Dead Sea Scrolls Monopoly, Forty
+Years of Controlled Access" (Ecole Biblique/de Vaux cartel, Vermes' scandal, 1991 Huntington
+Library break). Reframed slave-trade "on African terms" -> evidence wording. v120 -> v121.
