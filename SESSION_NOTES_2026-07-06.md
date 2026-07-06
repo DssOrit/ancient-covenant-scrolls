@@ -206,14 +206,24 @@ Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
 
-- User to confirm on device, then PR can be merged (rule 9 — no merge without confirmation).
+- **PENDING (approved, waiting on GitHub reconnect): How to Use guide additions.**
+  User approved both, told me to "keep & add when reconnected" so I open/merge the PR
+  instead of them merging manually. Build once the GitHub MCP connector is re-authorized:
+  1. New "The Body" guide section (guide-body, ri-pulse-line icon, placed after Racism):
+     5 steps — receive light / melanin filter+antenna / sound as force + temple acoustics /
+     frequency in primary sources; searchable tip (melatonin, melanin, resonance, shofar).
+  2. One line in "Start Here": images throughout can be tapped to enlarge full-screen,
+     tap again to close.
+  This is a JS/HTML edit -> bump cache to acr-search-v126, verify, PR into main, rule-9 merge.
 - Optional follow-ups the user did not request yet: mirror the tongues/Holy-Spirit points
   as searchable Big Questions cards (needs 4-tradition treatment).
 
 ## Capability gaps this session
 
 - `dssorit.github.io` blocked — verify via `raw.githubusercontent.com`.
-- GitHub MCP briefly disconnected/reconnected mid-session; PR tools available again.
+- GitHub MCP connector disconnected later in the session and did NOT come back (needs
+  re-auth via claude.ai connector settings). User merged PR #563 manually on GitHub.
+  Guide additions above are parked until it reconnects.
 
 ## Divine name rule (kept)
 
