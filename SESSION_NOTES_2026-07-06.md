@@ -102,13 +102,25 @@ and Judaism. Approved and built:
   two new cards named.
 - `Search/sw.js` cache v113 -> v114.
 
-### STILL TODO this session (user-approved):
-- **Full Rule-14 sweep of older/pre-existing content** — reframe every place the invented
-  figure is presented as real across the whole Search app (Christmas "Yeshua's birth" is
-  now fixed in the new copy; communion "body and blood of Christ", and other pre-existing
-  "Yeshua"/"Jesus" framings across NT Lookup remain). ~45 "Yeshua" + ~59 "Jesus" tokens
-  total; reframe the ones that assert existence, leave the ones that name the invented
-  figure. To be done as a separate pass/commit.
+### Rule-14 sweep of older content — DONE (acr-search-v115)
+
+Ran a rigorous read-only scan (subagent) over every "Yeshua"/"Jesus" occurrence in
+`Search/index.html`. Result: the pre-existing content is already Rule-14 compliant by
+design — existence claims are attributed ("the NT claims", "Paul writes", inside
+`claim:'...'` doctrine fields, `christian:{pos:...}` view fields) or are critique/denial
+("the invented figure", "the Jesus figure", "never served Yeshua", "cited as confirmation
+of Yeshua's existence" then refuted, "if he existed").
+
+Exactly ONE genuine own-voice violation found and fixed:
+- `Search/index.html` glossary entry (salvation/yeshuah): "the personal name of the
+  1st-century teacher" (asserts he was a real teacher) → "the personal name the NT assigns
+  to its invented figure."
+
+Communion "body and blood of Christ" and the Theotokos/transubstantiation lines were
+reviewed and left as-is: they are inside attributed doctrine/`claim` descriptions that the
+site then refutes, which is the correct Rule-14 pattern (state the claim, expose it).
+
+`Search/sw.js` cache v114 -> v115.
 
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
