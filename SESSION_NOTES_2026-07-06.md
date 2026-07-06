@@ -249,3 +249,15 @@ held as dramatized. Offered to rebuild accurate versions.
 
 VERIFIED headless Chromium: 18 wraps across panels, image loads (naturalWidth>0), lightbox
 opens. node --check OK. `Search/sw.js` v118 -> v119.
+
+### Un-Eurocentric slave-trade section (acr-search-v120, folded into PR #562 branch)
+
+User supplied the corrected, un-Eurocentric framing (rebuild of the flagged #16 slave-map).
+Built as a NATIVE section in the Racism pill (before the AI-bias section): "The True Toll
+of the Trade, What the Master's Ledger Erases" — 9 entries: ledger counts only ships;
+interior march (>= voyage mortality); barracoons (deaths before manifest); wars engineered
+to capture; gun-slave cycle (coerced, Rodney); chattel slavery as European imposition;
+full accounting (Inikori, Africanist record, 30-60M); reparations (why kept low); paper
+bias (oral history disqualified). Strictly African terms per Rule 0 — Inikori + Rodney +
+griots/oral memory as the record, the European ledger named as the manipulation. No Western
+academic used as the granting authority. Cache v119 -> v120.
