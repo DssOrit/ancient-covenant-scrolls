@@ -3,10 +3,10 @@
 ## Current state
 
 - Branch: `claude/session-continuation-setup-2zkame` (session feature branch; reused for each shipping unit, force-with-lease after each squash merge)
-- Latest main tip: `0877009` — Merge PR #569: Folly of Idolatry image (acr-search-v128)
+- Latest main tip: `acfdc4e` — Merge PR #571: replace solar-lunar-calendar image (acr-search-v129)
 - Working tree: clean
-- Live cache marker on main: `acr-search-v128`. Backup: `backup/2026-07-06-v128` (SHA 0877009).
-- v127 confirmed live on device by user. GitHub MCP reconnected this session — PRs opened and merged hands-off (with user confirmation per Rule 9).
+- Live cache marker on main: `acr-search-v129`. Backup: `backup/2026-07-06-v129` (SHA acfdc4e).
+- v127, v128, and v129 all confirmed live on device by user. GitHub MCP reconnected this session — PRs opened and merged hands-off (with user confirmation per Rule 9).
 
 ## Built today
 
@@ -429,3 +429,32 @@ as the idol Yesha'yahu (Isaiah) 44:9-11,13 condemns. Processed per the saved wor
 - `Search/sw.js` cache v127 -> v128. PR #569 squash-merged with user confirmation.
 Backup: `backup/2026-07-06-v128` (SHA 0877009). Recovery: `git checkout backup/2026-07-06-v128`.
 v127 -> v128.
+
+### Replaced solar-lunar-calendar image + PR #571 MERGED (acr-search-v129, SHA acfdc4e)
+User supplied a fuller-text version (IMG_3355) of the existing Pagan Calendar solar-vs-lunar
+image (same elder-with-scroll composition, now with the full 364-day quarters table,
+lunar-drift year breakdown, and feast-day comparison). Replaced the OLD `solar-lunar-calendar.webp`
+in place (same filename -> existing acrImg('solar-lunar-calendar') reference unchanged, no
+index.html edit). Identified the target as the "man holding calendar" image per user ("the
+exact image just fewer texts"); the other two calendar images (solar-covenant-vs-lunar-drift,
+solar-covenant-calendar-city) were left as-is.
+Image processing (per VERIFY_AND_IMAGE_WORKFLOW), all three issues caught and fixed:
+- **Matthew (NT) proof-text line** baked into the bottom ("...heavens and earth... shall not
+  pass away..." Matthew 24:35) -> CROPPED OFF. Flagged to the user first per Rule 13/14; user:
+  "remove bottom line ... never allow something like this." NT is never an authority here.
+- **iOS screenshot scan button** in the bottom-right corner -> removed via per-row background
+  match (pure-black fill left a visible patch; fixed by sampling the box's own bg color per row).
+- **White border** baked into the ORIGINAL screenshot's top (2px) and left (~6px) edges, blended
+  diagonally at the top-left corner -> cropped off (left 9, top 9). This was the "white outline"
+  the user saw; verified all 4 edges/corners dark (left-edge brightness y164-205 is the sun, kept).
+- Compressed WebP q90 (1850x1198, ~361 KB); legibility verified on the compressed file each pass.
+- Verified: vm syntax check clean; headless Chromium (Paganism panel references the file, on-disk
+  webp decodes 1850x1198, panel image count 5 unchanged). Sent processed image to user via
+  SendUserFile before shipping; user approved ("Perfect").
+- `Search/sw.js` cache v128 -> v129. PR #571 squash-merged with user confirmation. Confirmed live
+  on device by user.
+Backup: `backup/2026-07-06-v129` (SHA acfdc4e). Recovery: `git checkout backup/2026-07-06-v129`.
+v128 -> v129.
+
+Process note (locked behavior reinforced): NT-as-authority content (Rule 13/14) must be caught
+and held/removed before shipping; never allow it. Applies to images too, not just written text.
