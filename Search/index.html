@@ -850,6 +850,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="nt" onclick="setMode('nt')"><i class="ri-arrow-left-right-line"></i> NT Lookup</div>
       <div class="mpill" data-mode="paganism" onclick="setMode('paganism')"><i class="ri-fire-line"></i> Paganism</div>
       <div class="mpill" data-mode="racism" onclick="setMode('racism')"><i class="ri-scales-3-line"></i> Racism</div>
+      <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1041,7 +1042,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="racism-panel"></div>
     </div>
 
-
+    <!-- THE BODY -->
+    <div id="body-view" style="display:none">
+      <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
+      <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
+      <div id="body-panel"></div>
+    </div>
 
     <!-- ROOT SEARCH -->
     <div id="root-search-view" style="display:none">
@@ -2441,6 +2447,7 @@ function initApp() {
   renderRomePanel();
   renderPaganismPanel();
   renderRacismPanel();
+  renderBodyPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2469,7 +2476,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2495,6 +2502,7 @@ var PANEL_LABELS = {
   rome:'Rome & Canon Record',
   paganism:'Paganism',
   racism:'Racism and the Covenant',
+  body:'The Body',
   origins:'Origins Record',
   orit:'Orit Record',
   covenant:'Covenant Record',
@@ -2505,7 +2513,7 @@ var PANEL_LABELS = {
 function buildSiteIndex() {
   if (SITE_INDEX) return;
   SITE_INDEX = [];
-  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism'];
+  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body'];
   tabs.forEach(function(tab) {
     var panel = document.getElementById(tab + '-panel');
     if (!panel) return;
@@ -2528,6 +2536,8 @@ function goToSiteEntry(tab, topic) {
     setMode('paganism');
   } else if (tab === 'racism') {
     setMode('racism');
+  } else if (tab === 'body') {
+    setMode('body');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -3337,6 +3347,49 @@ function renderRacismPanel() {
   '<div class="td-item"><div class="td-topic">The Data Is Western, So the Machine\'s "Consensus" Is Western</div><div class="td-text">The largest single source of text used to train major AI systems, the Common Crawl, is roughly 42 percent English and heavily weighted toward United States content, with every other language far behind. A system built almost entirely on Western, English-language sources will treat the Western academic consensus as "fact" and treat African oral tradition, African scholarship, and non-Western historical framings as fringe, unverified, or "controversial." That is precisely the difficulty in getting straight evidence on ancient African Hebrew identity from most AI platforms: the machine was fed a library that had already erased it, so it returns the erasure as if it were neutral truth.</div></div>' +
   '<div class="td-item"><div class="td-topic">"Safety" Guidelines Are Western Institutional Standards</div><div class="td-text">Beyond the data, AI systems are tuned by written human guidelines that reflect the standards of the Western institutions that build them. The topics most likely to be softened, hedged, "both-sided," or refused are exactly the ones that challenge those institutions: the African identity of the ancient Hebrews, the New Testament figure as an invention, and the documented manipulation of the texts. The bias is not always deliberate. A widely used US health algorithm was found in 2019 (Obermeyer and colleagues, in the journal Science) to systematically rate Black patients as less sick than equally ill white patients, cutting their access to extra care by more than half, not because anyone coded racism on purpose, but because the system was trained on a biased proxy. Built into the data and built into the rules produces the same result as intent.</div></div>' +
   '<div class="td-item"><div class="td-topic">The Same Pattern, a New Tool, and the Same Defense</div><div class="td-text">Line it up. The 1807 Slave Bible removed the Exodus so the enslaved could not read their deliverance. The colonial church recolored the Hebrews and injected the Curse of Ham. The modern algorithm is trained on that same civilization\'s library and tuned to that same civilization\'s standards. Each is one move in one long project: control which evidence a person can reach, and frame the rest as unreliable. The defense has never changed, and it is the entire reason this tool exists. Go to the primary sources directly. The Dead Sea Scrolls and the Ge\'ez Orit do not run on Western training data and answer to no platform\'s guidelines. Put the ancient text in front of you, unfiltered, so that no institution and no algorithm stands between you and the record.</div></div>' +
+  '';
+}
+
+function renderBodyPanel() {
+  var panel = document.getElementById('body-panel');
+  if (!panel) return;
+  panel.innerHTML =
+  '<div class="hr-sec-head">The Body Was Made to Receive Light</div>' +
+  '<div class="hr-sec-sub">Light is not only for seeing. A second pathway runs from the eye to the body\'s inner clock and the pineal gland, and it is tuned to the blue band. Modern screens flood that band at the wrong hour of the night.</div>' +
+  acrImg('blue-light-eye-path') +
+  acrImg('blue-light-exposure') +
+  acrImg('pineal-melatonin') +
+  '<div class="td-item"><div class="td-topic">The Path of Light Into the Eye</div><div class="td-text">High-energy visible light, the blue band running roughly 415 to 495 nanometres, passes through the cornea and the lens and reaches the retina at the back of the eye. In a young eye the lens filters very little of it, so it arrives at the retina at close to full strength. This is the shortest, highest-energy band of visible light, and it carries the most energy into the tissue it strikes. The eye was built to take in light; it was not built for a bright blue screen held close to the face after dark.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Second Pathway, Eye to Pineal</div><div class="td-text">Beyond the rods and cones used for sight, the retina holds a separate set of cells, the intrinsically photosensitive retinal ganglion cells, that carry a pigment called melanopsin. Their peak sensitivity sits near 480 nanometres, deep in the blue. They do not form images. They report the presence of light along the retinohypothalamic tract to the suprachiasmatic nucleus, the body\'s master clock, which in turn governs the pineal gland. This is the body\'s inner light sensor, discovered in the retina in 2002 (Berson and colleagues), and it is built for blue.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Blue Light at Night Suppresses Melatonin</div><div class="td-text">In darkness the pineal makes melatonin, the signal for sleep, overnight repair, and antioxidant defence. Blue light striking the eye at night shuts that production down. Controlled studies measured it directly: melatonin is most strongly suppressed by light in the blue band, near 446 to 477 nanometres (Brainard and colleagues, 2001; Thapan and colleagues, 2001). A screen at midnight tells the pineal it is daytime, and the repair cycle does not run.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Why It Matters, the Repair Cycle</div><div class="td-text">Melatonin is not only a sleep hormone. It is one of the body\'s regulators of overnight repair and a documented antioxidant. When blue light at night holds it down, night after night, the cost shows up as disrupted circadian rhythm, poorer sleep, and the downstream strain the research ties to chronic short sleep. The design is sound. It is the modern light environment, blue light at the wrong hour, that breaks it.</div></div>' +
+  '<div class="hr-sec-head">Melanin, the Filter and the Antenna</div>' +
+  '<div class="hr-sec-sub">Melanin is not only colour. It is one of the most light-active substances in the body, an absorber across the whole visible spectrum and, in the laboratory, a semiconductor that turns light into electrical charge.</div>' +
+  acrImg('melanin-light-antenna') +
+  acrImg('melanin-dna-antenna-node') +
+  '<div class="td-item"><div class="td-topic">The Broadband Filter</div><div class="td-text">Melanin absorbs light across the entire visible range and up into the ultraviolet, which is why it is the body\'s own shield against radiation damage. Darker skin carries more of it and absorbs more. This protective absorption is long-established photobiology, and it is the reason melanin-rich people are naturally shielded against the harm of intense light. The pigment that the record calls the mark of an African people is, in plain physics, a superior light filter.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Melanin Is a Semiconductor</div><div class="td-text">In 1974, researchers publishing in the journal Science (McGinness, Corry, and Proctor) showed that melanin behaves as an amorphous semiconductor. It conducts, it shows threshold switching, and it converts absorbed light into electrical current, a photocurrent. Melanin is not an inert pigment. It is an electrically active material that responds to light, a fact established in the laboratory half a century ago.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Antenna Framework</div><div class="td-text">Building on that established behaviour, the research and the diagrams gathered here describe melanin as a biological antenna: a light-active lattice that couples the energy it absorbs into the body\'s electrical and cellular signalling, seated close to the DNA it may help regulate. This is the frame the material sets out, and it stands on two documented footings, that melanin absorbs light broadly and that it converts that light into charge. The body carries, in its most abundant pigment, a receiver for light.</div></div>' +
+  '<div class="td-item"><div class="td-topic">What Chronic Blue Light Does to the System</div><div class="td-text">The concern the material raises is that constant, unnatural blue-light exposure over-drives this light-active system. Over time it is tied to degradation of the antenna\'s response and to calcification, mineral deposits forming where the tissue should stay responsive. The calcification of the pineal gland with age is well-documented anatomy; this material carries that finding forward and names chronic artificial blue light as an accelerant of it. The through-line is direct: light was meant to reach these tissues on a natural cycle, and the modern flood of blue light works against them.</div></div>' +
+  '<div class="hr-sec-head">The Body Receives Sound as Physical Force</div>' +
+  '<div class="hr-sec-sub">Sound is not only heard. It is vibration, a physical pressure wave, and the body is built to register it in the cells, not only in the ears.</div>' +
+  '<div class="td-item"><div class="td-topic">Cells Feel Force, Mechanotransduction</div><div class="td-text">The body converts mechanical force, including the pressure of a sound wave, into biological signals through a process called mechanotransduction. In 2021 the Nobel Prize in Physiology or Medicine was awarded for the discovery of the Piezo ion channels, the proteins that let cells sense pressure and vibration and respond to them. Sound reaching the body is not only an experience. It is a physical input that living cells detect and act on.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Vibration Reaches the Whole Body</div><div class="td-text">Low-frequency sound travels through tissue and bone, not only through the eardrum. The body, largely water and dense tissue, carries vibration through itself, which is why a deep tone can be felt in the chest before it is understood as a note. Sound is a force that moves through the whole organism, and the tissue it passes through responds to that force. The ear is one receiver among many; the body is the larger one.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Frequency and the Cell</div><div class="td-text">Work in bioacoustics and mechanobiology continues to document that cells respond to specific mechanical frequencies, shifting their behaviour under vibration. The fuller claims, that particular frequencies tune the expression of DNA, are an active frontier still being mapped rather than a closed case. What is already established is the foundation those claims rest on: the body is a physical receiver of sound, wired to turn vibration into biological signal.</div></div>' +
+  '<div class="hr-sec-head">The Ancients Built for Resonance</div>' +
+  '<div class="hr-sec-sub">If the body receives frequency, then the spaces built for the Creator would be tuned to it. The measured acoustics of ancient sacred sites say they were, cut into stone long before any theory of sound existed.</div>' +
+  '<div class="td-item"><div class="td-topic">The Hypogeum of Hal Saflieni</div><div class="td-text">The underground temple-complex at Hal Saflieni in Malta, cut from solid rock more than five thousand years ago, holds a chamber that resonates strongly at around 110 hertz. A voice or a drum at that pitch fills the whole structure and is felt in the body as much as heard. Acoustic engineers have measured it directly. The builders shaped stone to a specific frequency millennia before the physics of sound was written down.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Chavin, Newgrange, and the Pattern</div><div class="td-text">The same is found across separated cultures. The stone galleries of Chavin de Huantar in the Andes were built to channel and transform sound, with ducts that carry it through the structure. The passage tomb at Newgrange in Ireland resonates in the same low range. Ancient sacred architecture, raised by peoples with no contact between them, was tuned to resonant frequency. They treated sound as a real, physical, sacred force, and built accordingly.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Low Resonance and the Body</div><div class="td-text">Studies of these sites report that the low resonance, clustering near 110 hertz, sits in a range that measurably affects human physiology and brain activity. The ancients had no instrument to name the number, yet they built spaces that produce it, consistently, on three continents. The architecture is the record: they knew the body answers to frequency, and they engineered for it.</div></div>' +
+  '<div class="hr-sec-head">Frequency Runs Through the Primary Sources</div>' +
+  '<div class="hr-sec-sub">This is not read into the texts. The primary sources open with sound, mark the covenant with sound, and record a heaven ordered by it.</div>' +
+  '<div class="td-item"><div class="td-topic">Creation Begins With a Voice</div><div class="td-text">The first act of creation is spoken. Bereshit (Genesis) 1: "And YHWH said, Let there be light, and there was light." Reality is called into being by utterance, by voice, by sound. Before anything is formed, there is a spoken frequency. The oldest primary source frames the whole created order as founded on sound.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Sinai, the Mountain Sounded</div><div class="td-text">At Sinai the covenant is given inside sound. Shemot (Exodus) 19 to 20: thunder, the thick cloud, and "the voice of the shofar exceeding loud," growing louder and louder until the whole mountain trembled and the people felt it in their bodies. The meeting with YHWH is marked by an overwhelming, sustained tone. Sound is the medium in which the covenant is delivered.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Jericho Fell to Sound</div><div class="td-text">Yehoshua (Joshua) 6: the walls of Jericho come down not by ram or siege engine but by the sustained blast of the shofars and the shout of the people, on the seventh circuit of the seventh day. Whatever the mechanism, the primary source records physical structure falling to concentrated sound. The text treats frequency as a real force with a real, physical effect.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Songs of the Sabbath Sacrifice</div><div class="td-text">Among the Dead Sea Scrolls, the Songs of the Sabbath Sacrifice (4Q400 through 4Q407, and 11Q17 from Qumran) describe the heavenly sanctuary as a place of ordered praise and sound, the very structure of the holy place bound up with song and utterance. The Qumran community preserved a vision of heaven itself ordered by sound, kept in the primary record and untouched by later institutional editing.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Shofar, the Levites, and the Set Times</div><div class="td-text">Sound is woven through covenant practice as command, not decoration. The shofar marks the new moon, the day of the blast (Yom Teruah), and the Yovel; the Levites are appointed to sound the trumpets and to song in the sanctuary. Bamidbar (Numbers) 10 and 29 set the sounds to the appointed times, and the Ge\'ez Orit preserves the same. Frequency is one of the covenant\'s own instruments, commanded and kept.</div></div>' +
+  '<div class="hr-sec-head">The Finding, Stated Plainly</div>' +
+  '<div class="td-item"><div class="td-topic">The Through-Line</div><div class="td-text">The body is a receiver of frequency by design. Light enters the eye and sets the inner clock and the pineal, tuned to the blue band; melanin absorbs light across the spectrum and, in the laboratory, turns it into electrical charge; the whole body converts the force of sound into cellular signal. The primary sources knew the register even without the instruments, creation by voice, the covenant given in sound at Sinai, walls falling to the shofar, heaven ordered by song, and the ancients cutting stone to a resonant pitch on three continents. The modern world floods the body with the wrong light at the wrong hour and calls it normal. The measured body and the primary sources say the same thing: frequency is real, it is sacred, and it was built into us from the start.</div></div>' +
   '';
 }
 
