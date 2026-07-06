@@ -221,3 +221,31 @@ Only YHWH and Creator. New content uses YHWH throughout; lowercase god only for 
 claims. Avoided Lord/Adonai/Elohim/capital-G God as divine name in new text.
 </content>
 </invoke>
+
+### PR #562 (pending) — image integration, 18 images (acr-search-v119)
+
+User sent ~35 images across the session; approved "add everything" clean/legible ones,
+"B" = one clean pass after last image, with legibility verified per image.
+
+Added a reusable lightbox: `acrImg(name)` builds an `<img>` header with a gold "Tap to
+enlarge" pill; `openImgLB()` opens a full-screen overlay; `prependPanelImg()` for
+post-render panels. CSS `.acr-img*`/`.acr-lb*`. Images in `Search/images/*.webp`
+(WebP, legibility-tuned q88 text / q82 photo, ~300KB avg, verified each by eye).
+
+18 images placed:
+- Racism pill: bnei-zadok (hero), three-witnesses + sphinx-description + middle-east-1902
+  (African people), dum-diversas + battle-of-mbwila-1665 (injected).
+- Paganism pill: baal-cycle (top), solar-lunar-calendar (Pagan Calendar).
+- Orit tab: beta-israel-orit, african-hebrew-scribe, khazar-khaganate.
+- Covenant Chain tab: avraham-mesopotamia, four-hundred-year-promise, tumbeiro-slave-ship,
+  kongo-crown-plunder.
+- Rome tab: deus-vult-crusades. Rabbinic tab: yhwh-name-substitution. Suppressed:
+  qumran-similitudes.
+
+HELD (fabricated/garbled text baked in, flagged to user, NOT added): melanin-DNA-antenna
+(#3), Watcher-clicking (#8), slave-trade-wrong-number (#16), Ramesses-II-forensic (#19),
+Mbwila-duplicate (#33), and garbled-text ones (#12,#14,#17,#28,#29). #35 (DSS access)
+held as dramatized. Offered to rebuild accurate versions.
+
+VERIFIED headless Chromium: 18 wraps across panels, image loads (naturalWidth>0), lightbox
+opens. node --check OK. `Search/sw.js` v118 -> v119.
