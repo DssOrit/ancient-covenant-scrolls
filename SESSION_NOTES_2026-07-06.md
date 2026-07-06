@@ -2,11 +2,11 @@
 
 ## Current state
 
-- Branch: `claude/pagan-influences-christianity-rt1pfj` (restarted from `origin/main` after PR #564 merge)
-- Latest main tip: `a708918` — Merge PR #564: remove 3 duplicate images (acr-search-v126)
+- Branch: `claude/session-continuation-setup-2zkame` (feature branch for the v127 guide additions; merged to main via PR #566)
+- Latest main tip: `0ca6f5b` — Merge PR #566: How to Use guide, The Body section + tap-to-enlarge tip (acr-search-v127)
 - Working tree: clean
-- Live cache marker on main: `acr-search-v126`. Backup: `backup/2026-07-06-v126` (SHA a708918).
-- NEXT SESSION: read `NEXT_SESSION_START_HERE.md` first (pending guide additions + GitHub reconnect note).
+- Live cache marker on main: `acr-search-v127`. Backup: `backup/2026-07-06-v127` (SHA 0ca6f5b).
+- GitHub MCP reconnected this session — PRs opened and merged hands-off (with user confirmation per Rule 9).
 
 ## Built today
 
@@ -207,24 +207,28 @@ Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
 
-- **PENDING (approved, waiting on GitHub reconnect): How to Use guide additions.**
-  User approved both, told me to "keep & add when reconnected" so I open/merge the PR
-  instead of them merging manually. Build once the GitHub MCP connector is re-authorized:
-  1. New "The Body" guide section (guide-body, ri-pulse-line icon, placed after Racism):
-     5 steps — receive light / melanin filter+antenna / sound as force + temple acoustics /
-     frequency in primary sources; searchable tip (melatonin, melanin, resonance, shofar).
-  2. One line in "Start Here": images throughout can be tapped to enlarge full-screen,
-     tap again to close.
-  This is a JS/HTML edit -> bump cache to acr-search-v126, verify, PR into main, rule-9 merge.
+- **DONE (v127, PR #566 merged): How to Use guide additions.** Built and shipped this
+  session once GitHub reconnected. (1) New "The Body, Receiver of Light and Sound" guide
+  section (guide-body, ri-pulse-line, after the Racism guide section, matching the
+  guide-paganism/guide-racism format): 5 steps + searchable tip (melatonin, melanin,
+  resonance, shofar). (2) One tip added to "Start Here": images can be tapped to enlarge
+  full-screen, tap again to close. Cache v126 -> v127. Verified node --check + headless
+  Chromium (5 steps render, correct title/icon/tip, Start Here enlarge tip, setMode('body')
+  works). No content-panel or image changes.
+- **Witch-trial "chained table" image: LEFT OUT (user decision this session).** The AI baked
+  in garbled text (Malleus Maleficarum misspelled, wrong dates) — fails the legibility bar
+  (Rule 15). Confirmed it was never committed to the repo, so nothing to delete. The existing
+  witchcraft *text* content in the Rome tab (false accusations, King James / Witchcraft Act,
+  Spanish Inquisition) stays untouched per user.
 - Optional follow-ups the user did not request yet: mirror the tongues/Holy-Spirit points
   as searchable Big Questions cards (needs 4-tradition treatment).
 
 ## Capability gaps this session
 
 - `dssorit.github.io` blocked — verify via `raw.githubusercontent.com`.
-- GitHub MCP connector disconnected later in the session and did NOT come back (needs
-  re-auth via claude.ai connector settings). User merged PR #563 manually on GitHub.
-  Guide additions above are parked until it reconnects.
+- GitHub MCP connector disconnected during the earlier part of today (user merged PR #563
+  and #564 manually). It RECONNECTED on session resume — PRs #565 and #566 were opened and
+  merged hands-off from here (with user confirmation per Rule 9). Normal flow restored.
 
 ## Divine name rule (kept)
 
@@ -359,3 +363,37 @@ re-auth via claude.ai connector settings). Could not open/merge PR from here. Br
 pushed via git (works independently); USER opened + merged PR #563 manually on GitHub.**
 Backup: `backup/2026-07-06-v125` (SHA 1c26027). Recovery: `git checkout backup/2026-07-06-v125`.
 v124 -> v125.
+
+### Session resume (GitHub reconnected) — stranded handoff merged, PR #565
+
+On resume the GitHub MCP connector was back. First fixed a stranded commit: last session's
+handoff docs (`NEXT_SESSION_START_HERE.md` new + this notes file bumped to v126) had been
+committed to `claude/pagan-influences-christianity-rt1pfj` (533dff2) but never merged.
+Opened PR #565 (docs only, 2 files, no code) and merged it (squash, SHA 17c4e1d). Both
+handoff docs now on main.
+
+### How to Use guide additions + PR #566 MERGED (acr-search-v127, SHA 0ca6f5b)
+
+Built the approved guide additions (see Outstanding section — now DONE):
+- New **"The Body, Receiver of Light and Sound"** guide section (id `guide-body`,
+  `ri-pulse-line`), inserted right after the Racism guide section, matching the
+  guide-paganism/guide-racism format. 5 steps: light through the eye, melanin as filter
+  and antenna, sound as a physical force, frequency in the primary sources; searchable tip
+  (melatonin, melanin, resonance, shofar). Confirmed 'body' is in the searchable tabs array
+  and all four tip keywords return hits.
+- One tip added to the **Start Here** section: images can be tapped to enlarge full-screen,
+  tap again to close.
+- `Search/sw.js` cache v126 -> v127. No content-panel or image changes (only `index.html`
+  guide text + `sw.js` cache).
+- Verified: node --check on all inline scripts OK; headless Chromium (guide-body renders 5
+  steps, correct title/icon/searchable tip; Start Here shows the enlarge tip; setMode('body')
+  works). The one file:// page error is pre-existing on main (confirmed vs pristine copy).
+- PR #566 (`claude/session-continuation-setup-2zkame` -> main) squash-merged with user
+  confirmation (Rule 9: file list shown first).
+Backup: `backup/2026-07-06-v127` (SHA 0ca6f5b). Recovery: `git checkout backup/2026-07-06-v127`.
+v126 -> v127.
+
+### Witch-trial image — decision: LEFT OUT
+User confirmed leave out the witch-trial "chained table" image (garbled baked-in text,
+fails the Rule 15 legibility bar). Verified it was never committed to the repo, so there was
+nothing to delete. Existing witchcraft *text* content in the Rome tab stays untouched.
