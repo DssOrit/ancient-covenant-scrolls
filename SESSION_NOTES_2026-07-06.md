@@ -47,6 +47,42 @@ Files:
 - `Search/index.html` — new `td-item` entries in the Rome panel string
 - `Search/sw.js` — cache `acr-search-v110` → `acr-search-v111`
 
+### PR #557 — MERGED (SHA bcd3632). Backup of pre-change site: `backup/2026-07-06-v110` (SHA a1c2721). Recovery: `git checkout backup/2026-07-06-v110`.
+
+### PR #558 (branch, open) — Big Questions cards + REWRITE + Rule 14 (acr-search-v113)
+
+Two searchable Big Questions cards (`BELIEFS_QA`): "Speaking in Tongues" (prophecy)
+and "The Holy Spirit vs the Spirit of YHWH" (spiritual). Searchable via bq-search
+(matches full card text) — keywords tongues/glossolalia/holy spirit/ruach.
+
+**User feedback that triggered a rewrite (logged):** the pagan content was too
+watered-down and, in places, framed the invented Yeshua/Jesus figure as if he existed
+(halo entry named "Yeshua"; Holy Spirit card said "the Father and the Son"). User: no
+framing him as real; evidence points to invention; it felt biased. Approved: full-depth
+rewrite + lock the rule.
+
+**Rewrite done (approved):**
+- Reframed all my additions to the invented-figure voice (never present the figure as
+  real; Christian claims marked as claims around the invented figure).
+- Deepened every entry with specifics: ruach usages (Shoftim 9:23, Yeshayahu 29:10,
+  Zekharyah 12:10, Bamidbar 5:14), Ahab's 400 + Mikhayahu, Delphi/Bacchic/Cybelene +
+  Montanism + 1 Cor 14 restraint + glossolalia linguistics, Constantinople 381 politics
+  (Edict of Thessalonica 380, Pneumatomachi, filioque/1054), Tertullian for sign of the
+  cross, Heliopolis obelisk at St. Peter's, japa/Buddhist bead origin, etc.
+- Halo entry: "Yeshua" → "the invented Christ figure."
+
+**Rule 14 LOCKED in CLAUDE.md (2026-07-06):** NT/Yeshua figure is documented as invented,
+never framed as real; Christian claims marked as claims, never confirmation.
+
+Files: `Search/index.html` (Rome td-items rewritten + 2 BQ cards reframed/deepened),
+`Search/sw.js` (v112 → v113), `CLAUDE.md` (Rule 14), this notes file.
+
+**Pending (needs approval — OUT of this scope):** pre-existing content still frames the
+figure as real in places — e.g. the Christmas entry ("Yeshua's birth", ~line 3262) and
+"body and blood of Christ" (communion, ~line 3238). ~45 "Yeshua" + ~59 "Jesus" tokens
+across the whole Search app; many are legitimate (naming the invented figure) but some
+frame him as real. Offered a full Rule-14 sweep of pre-existing content pending user OK.
+
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
