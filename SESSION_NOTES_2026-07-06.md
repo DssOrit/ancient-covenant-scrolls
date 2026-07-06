@@ -77,11 +77,38 @@ never framed as real; Christian claims marked as claims, never confirmation.
 Files: `Search/index.html` (Rome td-items rewritten + 2 BQ cards reframed/deepened),
 `Search/sw.js` (v112 → v113), `CLAUDE.md` (Rule 14), this notes file.
 
-**Pending (needs approval — OUT of this scope):** pre-existing content still frames the
-figure as real in places — e.g. the Christmas entry ("Yeshua's birth", ~line 3262) and
-"body and blood of Christ" (communion, ~line 3238). ~45 "Yeshua" + ~59 "Jesus" tokens
-across the whole Search app; many are legitimate (naming the invented figure) but some
-frame him as real. Offered a full Rule-14 sweep of pre-existing content pending user OK.
+### PR #558 continued — statues + "all of Christianity" + Christmas depth (acr-search-v114)
+
+User directive: make clear it is Christianity as a whole, not just Catholics; deepen the
+pagan Christmas (tree + other rituals); add pagan meaning of statues (Statue of Liberty,
+Virgin Mary, the cross in churches, images/statues of the invented Yeshua/Jesus figure).
+No watering down, no neutrality — the site is against the lies of Christianity, Islam,
+and Judaism. Approved and built:
+
+- **"This Is Not Just Catholicism — It Is Christianity Itself"** entry: Protestantism is
+  Rome minus the Pope; every denomination kept Sunday, Trinity, Christmas, Easter, cross,
+  Roman canon, and the invented figure.
+- **Christmas deepened**: Sol Invictus 274 CE, Saturnalia, Yule log, mistletoe (Druidic),
+  holly/wreath, and the tree named in Yirmeyahu 10:2-4; kept across all of Christianity.
+- **New sub-section "Graven Images, Statues, and the Symbols the Nations Carved":**
+  - Statues/images of the invented Yeshua/Jesus figure — modeled on Zeus/Serapis; Shemot
+    20:4; Devarim 4:15-16.
+  - Virgin Mary statue — Isis nursing Horus + the Queen of Heaven YHWH condemns
+    (Yirmeyahu 7:18; 44:17-25).
+  - The cross in churches — Tammuz's tau, not used until Constantine's labarum (312 CE).
+  - The Statue of Liberty — the goddess Libertas + solar crown (Helios/Sol/Colossus of
+    Rhodes), Bartholdi's Suez precursor; Shemot 20:4 + Devarim 4:19.
+- **How to Use updated**: Rome tab step expanded; Q&A (Beliefs) count 22 -> 24 with the
+  two new cards named.
+- `Search/sw.js` cache v113 -> v114.
+
+### STILL TODO this session (user-approved):
+- **Full Rule-14 sweep of older/pre-existing content** — reframe every place the invented
+  figure is presented as real across the whole Search app (Christmas "Yeshua's birth" is
+  now fixed in the new copy; communion "body and blood of Christ", and other pre-existing
+  "Yeshua"/"Jesus" framings across NT Lookup remain). ~45 "Yeshua" + ~59 "Jesus" tokens
+  total; reframe the ones that assert existence, leave the ones that name the invented
+  figure. To be done as a separate pass/commit.
 
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
