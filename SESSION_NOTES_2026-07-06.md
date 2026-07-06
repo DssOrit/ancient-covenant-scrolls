@@ -122,6 +122,31 @@ site then refutes, which is the correct Rule-14 pattern (state the claim, expose
 
 `Search/sw.js` cache v114 -> v115.
 
+### Restructure — new top-level "Paganism" pill (acr-search-v116) — branch, pending PR
+
+User: the paganism material was hard to find buried under NT Lookup > Rome. Moved it to
+its own top-level pill. Approved scope: "all of today's additions under paganism."
+
+- New nav pill **Paganism** (data-mode="paganism", after NT Lookup).
+- New `paganism-view` + `paganism-panel`; new `renderPaganismPanel()` called in initApp
+  right after renderRomePanel.
+- The entire **"Traditions of Men"** section (intro, Not Just Catholicism, Communion, Lent,
+  Way/Truth/Life, Laying on of Hands, the Holy Spirit sub-section, Ritual Forms, Graven
+  Images/Statues, and the Pagan Calendar) was MOVED out of `renderRomePanel` into the new
+  Paganism panel (done via script to move the 36-line block cleanly).
+- Rome keeps its doctrines, DSS suppression, crusades, Size, Images of a Man, Institutional
+  Crimes, Who Built the Bibles, False Accusations.
+- Searchable: added `paganism` to `buildSiteIndex` tabs, `goToSiteEntry` branch, and
+  `PANEL_LABELS`. setMode `views` array includes `paganism`.
+- How to Use: trimmed the Rome step; added a new **"Paganism, Traditions of Men"** guide
+  section (6 steps).
+- `Search/sw.js` cache v115 -> v116.
+- VERIFIED in headless Chromium: Paganism panel renders 29 td-items incl. Statue of Liberty,
+  setMode('paganism') shows the view, Rome no longer has the Traditions block, pill present.
+
+Note: "Images of a Man in the Sanctuary" is pre-existing (not today's addition) so it was
+left in Rome per the "today's additions" scope. Can move it to Paganism later if desired.
+
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
