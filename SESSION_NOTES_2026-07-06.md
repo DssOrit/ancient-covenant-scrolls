@@ -2,11 +2,11 @@
 
 ## Current state
 
-- Branch: `claude/session-continuation-setup-2zkame` (feature branch for the v127 guide additions; merged to main via PR #566)
-- Latest main tip: `0ca6f5b` — Merge PR #566: How to Use guide, The Body section + tap-to-enlarge tip (acr-search-v127)
+- Branch: `claude/session-continuation-setup-2zkame` (session feature branch; reused for each shipping unit, force-with-lease after each squash merge)
+- Latest main tip: `0877009` — Merge PR #569: Folly of Idolatry image (acr-search-v128)
 - Working tree: clean
-- Live cache marker on main: `acr-search-v127`. Backup: `backup/2026-07-06-v127` (SHA 0ca6f5b).
-- GitHub MCP reconnected this session — PRs opened and merged hands-off (with user confirmation per Rule 9).
+- Live cache marker on main: `acr-search-v128`. Backup: `backup/2026-07-06-v128` (SHA 0877009).
+- v127 confirmed live on device by user. GitHub MCP reconnected this session — PRs opened and merged hands-off (with user confirmation per Rule 9).
 
 ## Built today
 
@@ -397,3 +397,35 @@ v126 -> v127.
 User confirmed leave out the witch-trial "chained table" image (garbled baked-in text,
 fails the Rule 15 legibility bar). Verified it was never committed to the repo, so there was
 nothing to delete. Existing witchcraft *text* content in the Rome tab stays untouched.
+
+### Reference docs saved (PR #567, #568)
+- `VERIFY_AND_IMAGE_WORKFLOW.md` (new, PR #567) — how to verify the deployed state
+  (main / raw / GitHub MCP + headless Chromium + on-device sw.js check) and how to compress
+  images to WebP and verify legibility (Rule 15) + md5 dup check.
+- PR #568 appended the **page-verification harness** setup to that file so a fresh session
+  can recreate it after a cutoff: `cd $SCRATCHPAD && npm install playwright-core`; Chromium
+  binary at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`; run (a) inline-script vm
+  syntax check and (b) headless render with non-file: requests aborted.
+
+### Folly of Idolatry image + PR #569 MERGED (acr-search-v128, SHA 0877009)
+User-supplied image (IMG_3353): "The Folly of Idolatry" — the European "Jesus" image shown
+as the idol Yesha'yahu (Isaiah) 44:9-11,13 condemns. Processed per the saved workflow:
+- md5 dup-checked (not a duplicate); source text legible and accurate (Isaiah 44, Hebrew
+  name Yesha'yahu) — no garbled baked-in text.
+- Cropped out the iOS screenshot "scan" icon from the bottom-right corner (isolated to a
+  1214-1266px box, 247px clear of any text, blacked out over the pure-black corner).
+- Compressed to WebP with Pillow (quality 90, method 6, 1300x1948, ~196 KB, no upscale);
+  re-read the compressed file to confirm all text still legible.
+- Placed with `acrImg('folly-of-idolatry-isaiah44')` right after the section header in TWO
+  sections (per user "both sections"), matching the existing image-placement pattern:
+  Paganism -> "Graven Images, Statues, and the Symbols the Nations Carved", and
+  Rome -> "Images of a Man in the Sanctuary". One file referenced in both. No text changed.
+  Images are not precached in sw.js (Cloudflare-delivered) — matched that pattern.
+- Rules: 14 (image is the idol condemned, figure never framed as real), 13 (Isaiah 44 /
+  Great Isaiah Scroll 1QIsa-a), 0 (white figure = the idol, not the real Hebrew).
+- Verified: inline-script vm syntax check clean; headless Chromium (folly image present once
+  in each panel; Paganism 4->5 acr-img, Rome 1->2; file on disk and decodes). file://
+  addEventListener error pre-existing on main.
+- `Search/sw.js` cache v127 -> v128. PR #569 squash-merged with user confirmation.
+Backup: `backup/2026-07-06-v128` (SHA 0877009). Recovery: `git checkout backup/2026-07-06-v128`.
+v127 -> v128.
