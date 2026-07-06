@@ -165,6 +165,29 @@ These have been re-locked on 2026-05-04 after repeated violations.
     explicitly permitted and valuable. The rule applies to sourcing only:
     never use those traditions as a foundation for anything built here.
 
+14. **THE NT/YESHUA FIGURE IS DOCUMENTED AS INVENTED — NEVER FRAME HIM
+    AS REAL — locked 2026-07-06 by user.** In all ACR content, the New
+    Testament "Jesus"/"Yeshua" figure is treated as a Roman-era literary
+    and theological invention, consistent with the evidence and with the
+    site's established voice ("the NT's invented figure"). Specific
+    prohibitions:
+    - Do NOT write anything that presents his historical existence as fact
+      or assumes it in passing — no "Yeshua's birth," no "on the heads of
+      Yeshua," no neutral "Jesus said/did," no phrasing that treats the
+      figure as a real person who existed.
+    - Do NOT frame Christian doctrine in a way that grants the figure
+      legitimacy. When describing what Christianity claims, mark it as a
+      claim built around the invented figure — never as history, never in
+      a neutral voice that reads as confirmation.
+    - Use invented-figure language: "the invented figure," "the Roman
+      literary construct," "the manufactured deity," "the character the NT
+      constructed," "the invented Son figure."
+    - The primary sources (DSS, Orit) are the authority and document the
+      invention. The figure is exposed, never affirmed.
+    This applies to every ACR site and feature. If there is ANY doubt
+    whether a phrasing frames the figure as real, STOP and reword before
+    shipping.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.

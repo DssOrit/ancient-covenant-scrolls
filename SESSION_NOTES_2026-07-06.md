@@ -47,6 +47,81 @@ Files:
 - `Search/index.html` — new `td-item` entries in the Rome panel string
 - `Search/sw.js` — cache `acr-search-v110` → `acr-search-v111`
 
+### PR #557 — MERGED (SHA bcd3632). Backup of pre-change site: `backup/2026-07-06-v110` (SHA a1c2721). Recovery: `git checkout backup/2026-07-06-v110`.
+
+### PR #558 (branch, open) — Big Questions cards + REWRITE + Rule 14 (acr-search-v113)
+
+Two searchable Big Questions cards (`BELIEFS_QA`): "Speaking in Tongues" (prophecy)
+and "The Holy Spirit vs the Spirit of YHWH" (spiritual). Searchable via bq-search
+(matches full card text) — keywords tongues/glossolalia/holy spirit/ruach.
+
+**User feedback that triggered a rewrite (logged):** the pagan content was too
+watered-down and, in places, framed the invented Yeshua/Jesus figure as if he existed
+(halo entry named "Yeshua"; Holy Spirit card said "the Father and the Son"). User: no
+framing him as real; evidence points to invention; it felt biased. Approved: full-depth
+rewrite + lock the rule.
+
+**Rewrite done (approved):**
+- Reframed all my additions to the invented-figure voice (never present the figure as
+  real; Christian claims marked as claims around the invented figure).
+- Deepened every entry with specifics: ruach usages (Shoftim 9:23, Yeshayahu 29:10,
+  Zekharyah 12:10, Bamidbar 5:14), Ahab's 400 + Mikhayahu, Delphi/Bacchic/Cybelene +
+  Montanism + 1 Cor 14 restraint + glossolalia linguistics, Constantinople 381 politics
+  (Edict of Thessalonica 380, Pneumatomachi, filioque/1054), Tertullian for sign of the
+  cross, Heliopolis obelisk at St. Peter's, japa/Buddhist bead origin, etc.
+- Halo entry: "Yeshua" → "the invented Christ figure."
+
+**Rule 14 LOCKED in CLAUDE.md (2026-07-06):** NT/Yeshua figure is documented as invented,
+never framed as real; Christian claims marked as claims, never confirmation.
+
+Files: `Search/index.html` (Rome td-items rewritten + 2 BQ cards reframed/deepened),
+`Search/sw.js` (v112 → v113), `CLAUDE.md` (Rule 14), this notes file.
+
+### PR #558 continued — statues + "all of Christianity" + Christmas depth (acr-search-v114)
+
+User directive: make clear it is Christianity as a whole, not just Catholics; deepen the
+pagan Christmas (tree + other rituals); add pagan meaning of statues (Statue of Liberty,
+Virgin Mary, the cross in churches, images/statues of the invented Yeshua/Jesus figure).
+No watering down, no neutrality — the site is against the lies of Christianity, Islam,
+and Judaism. Approved and built:
+
+- **"This Is Not Just Catholicism — It Is Christianity Itself"** entry: Protestantism is
+  Rome minus the Pope; every denomination kept Sunday, Trinity, Christmas, Easter, cross,
+  Roman canon, and the invented figure.
+- **Christmas deepened**: Sol Invictus 274 CE, Saturnalia, Yule log, mistletoe (Druidic),
+  holly/wreath, and the tree named in Yirmeyahu 10:2-4; kept across all of Christianity.
+- **New sub-section "Graven Images, Statues, and the Symbols the Nations Carved":**
+  - Statues/images of the invented Yeshua/Jesus figure — modeled on Zeus/Serapis; Shemot
+    20:4; Devarim 4:15-16.
+  - Virgin Mary statue — Isis nursing Horus + the Queen of Heaven YHWH condemns
+    (Yirmeyahu 7:18; 44:17-25).
+  - The cross in churches — Tammuz's tau, not used until Constantine's labarum (312 CE).
+  - The Statue of Liberty — the goddess Libertas + solar crown (Helios/Sol/Colossus of
+    Rhodes), Bartholdi's Suez precursor; Shemot 20:4 + Devarim 4:19.
+- **How to Use updated**: Rome tab step expanded; Q&A (Beliefs) count 22 -> 24 with the
+  two new cards named.
+- `Search/sw.js` cache v113 -> v114.
+
+### Rule-14 sweep of older content — DONE (acr-search-v115)
+
+Ran a rigorous read-only scan (subagent) over every "Yeshua"/"Jesus" occurrence in
+`Search/index.html`. Result: the pre-existing content is already Rule-14 compliant by
+design — existence claims are attributed ("the NT claims", "Paul writes", inside
+`claim:'...'` doctrine fields, `christian:{pos:...}` view fields) or are critique/denial
+("the invented figure", "the Jesus figure", "never served Yeshua", "cited as confirmation
+of Yeshua's existence" then refuted, "if he existed").
+
+Exactly ONE genuine own-voice violation found and fixed:
+- `Search/index.html` glossary entry (salvation/yeshuah): "the personal name of the
+  1st-century teacher" (asserts he was a real teacher) → "the personal name the NT assigns
+  to its invented figure."
+
+Communion "body and blood of Christ" and the Theotokos/transubstantiation lines were
+reviewed and left as-is: they are inside attributed doctrine/`claim` descriptions that the
+site then refutes, which is the correct Rule-14 pattern (state the claim, expose it).
+
+`Search/sw.js` cache v114 -> v115.
+
 Validation: extracted inline scripts and ran `node --check` — SYNTAX OK.
 
 ## Outstanding / blocking
