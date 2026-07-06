@@ -221,3 +221,79 @@ Only YHWH and Creator. New content uses YHWH throughout; lowercase god only for 
 claims. Avoided Lord/Adonai/Elohim/capital-G God as divine name in new text.
 </content>
 </invoke>
+
+### PR #562 (pending) — image integration, 18 images (acr-search-v119)
+
+User sent ~35 images across the session; approved "add everything" clean/legible ones,
+"B" = one clean pass after last image, with legibility verified per image.
+
+Added a reusable lightbox: `acrImg(name)` builds an `<img>` header with a gold "Tap to
+enlarge" pill; `openImgLB()` opens a full-screen overlay; `prependPanelImg()` for
+post-render panels. CSS `.acr-img*`/`.acr-lb*`. Images in `Search/images/*.webp`
+(WebP, legibility-tuned q88 text / q82 photo, ~300KB avg, verified each by eye).
+
+18 images placed:
+- Racism pill: bnei-zadok (hero), three-witnesses + sphinx-description + middle-east-1902
+  (African people), dum-diversas + battle-of-mbwila-1665 (injected).
+- Paganism pill: baal-cycle (top), solar-lunar-calendar (Pagan Calendar).
+- Orit tab: beta-israel-orit, african-hebrew-scribe, khazar-khaganate.
+- Covenant Chain tab: avraham-mesopotamia, four-hundred-year-promise, tumbeiro-slave-ship,
+  kongo-crown-plunder.
+- Rome tab: deus-vult-crusades. Rabbinic tab: yhwh-name-substitution. Suppressed:
+  qumran-similitudes.
+
+HELD (fabricated/garbled text baked in, flagged to user, NOT added): melanin-DNA-antenna
+(#3), Watcher-clicking (#8), slave-trade-wrong-number (#16), Ramesses-II-forensic (#19),
+Mbwila-duplicate (#33), and garbled-text ones (#12,#14,#17,#28,#29). #35 (DSS access)
+held as dramatized. Offered to rebuild accurate versions.
+
+VERIFIED headless Chromium: 18 wraps across panels, image loads (naturalWidth>0), lightbox
+opens. node --check OK. `Search/sw.js` v118 -> v119.
+
+### Un-Eurocentric slave-trade section (acr-search-v120, folded into PR #562 branch)
+
+User supplied the corrected, un-Eurocentric framing (rebuild of the flagged #16 slave-map).
+Built as a NATIVE section in the Racism pill (before the AI-bias section): "The True Toll
+of the Trade, What the Master's Ledger Erases" — 9 entries: ledger counts only ships;
+interior march (>= voyage mortality); barracoons (deaths before manifest); wars engineered
+to capture; gun-slave cycle (coerced, Rodney); chattel slavery as European imposition;
+full accounting (Inikori, Africanist record, 30-60M); reparations (why kept low); paper
+bias (oral history disqualified). Strictly African terms per Rule 0 — Inikori + Rodney +
+griots/oral memory as the record, the European ledger named as the manipulation. No Western
+academic used as the granting authority. Cache v119 -> v120.
+
+### African-identity + DSS monopoly rebuild (acr-search-v121, PR #562 branch)
+Rebuilt the flagged Ramesses/Egypt image as native text; user corrected "African terms"
+-> present as EVIDENCE/fact (Rule 0: African identity stated as fact, not a perspective).
+Racism pill new section "The African Face of Egypt, the Record and the Erasure": ancient
+eyewitnesses; Sphinx/monuments (Volney 1787, Description de l'Egypte); Ramesside E1b1a
+(2012 BMJ Hawass, Ramesses III); the leucoderm/Berber language trick; Diop + Obenga UNESCO
+1974; the red-hair point answered (cymotrichous hair, East African match, henna as African);
+Nile Valley unity (Nabta Playa); late-mummy sampling trick; why Western identity defends the
+erasure (Greece/Rome credited Egypt). Suppressed view: new "Dead Sea Scrolls Monopoly, Forty
+Years of Controlled Access" (Ecole Biblique/de Vaux cartel, Vermes' scandal, 1991 Huntington
+Library break). Reframed slave-trade "on African terms" -> evidence wording. v120 -> v121.
+
+### Included 5 more images as illustration (acr-search-v122, PR #562)
+User (rightly) pushed back on over-caution: legible images should be USED, not rebuilt.
+Added as illustration alongside the native text: slave-trade-routes (True Toll section),
+egypt-identity-authentic + volney-sphinx-features (African Face section), dss-access-monopoly
+(DSS Monopoly, Suppressed), urban-ii-crusade (Rome, 2nd crusade image). Total images now 23.
+Held ONLY #19 Ramesses (image prints "E-M78 CONFIRMED" contradicting the real E1b1a text).
+#33 = exact dup of #32. #4/#5 blue-light = separate topic, pending user decision on a section.
+v121 -> v122.
+
+### Full fact inclusion + Rule 15 (acr-search-v123, PR #562)
+User provided sourced corrections for each flagged item; instruction: add everything except
+images that aren't legible; and locked a new rule. Added as native cited text: Curtin(1969)
+misreading vs Emory Trans-Atlantic Slave Trade Database (12.5M embarked/10.7M disembarked);
+Greece learned from Africa (Herodotus II, Isocrates, Strabo; Pythagoras/Thales/Plato at
+Waset/Iunu); Volney's actual quote + suppression; physical whitewashing of artifacts
+(Parthenon Marbles 1930s); Mbwila duplicity 1665 (treaty betrayal, Antonio I); Urban II
+Clermont 1095 (Fulcher/Robert the Monk, economic motive); DSS Strugnell + non-Western
+scholars refused. Images: added ramesses-forensic (#19, legible) + battle-of-mbwila-detail
+(#33, legible); REMOVED urban-ii-crusade (#17) and egypt-identity-authentic (#28) as not
+legible (garbled text). No on-site image captions (no bias notes). 
+**Rule 15 LOCKED in CLAUDE.md:** never nitpick African evidence into disqualification;
+user's sourced material leads; legibility is the only bar for images; internal
+contradictions noted once and left to the user. v122 -> v123.

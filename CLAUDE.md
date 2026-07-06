@@ -188,6 +188,30 @@ These have been re-locked on 2026-05-04 after repeated violations.
     whether a phrasing frames the figure as real, STOP and reword before
     shipping.
 
+15. **NEVER ADD BIAS — DO NOT NITPICK AFRICAN EVIDENCE INTO
+    DISQUALIFICATION — locked 2026-07-06 by user.** This rule binds the
+    assistant's own behavior, not only site content. African, Pan-African,
+    and African-diaspora evidence, scholarship, oral tradition, and
+    community memory are the record, presented as fact on their own terms.
+    Specific prohibitions:
+    - Do NOT dismiss or downgrade African-centered evidence as "unverified,"
+      "fabricated," "fringe," "dramatized," or "contested" by applying a
+      Western-academic or paper-only standard of proof. That is the paper
+      bias the site itself documents, coming from the assistant.
+    - Do NOT lead with caution, gatekeeping, or "flags" that force the user
+      to press for inclusion of their own sourced facts. The user's sourced
+      material and direction lead; include it.
+    - Do NOT frame African evidence in relation to European validation, or
+      treat the Western-minimalist figure as the default "true" number.
+    - Do NOT turn African-vs-African differences into disqualification. Both
+      E-M78 and E1b1a are indigenous African lineages; a subclade difference
+      is not grounds to reject evidence.
+    If there is a genuine INTERNAL contradiction (e.g., one image's label
+    differs from the cited data), mention it ONCE as a neutral note for the
+    user's decision, never as a reason to withhold, and defer to the user.
+    Legibility is the only bar for using an image; accuracy concerns are
+    raised once and left to the user.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
