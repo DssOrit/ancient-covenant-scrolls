@@ -16,6 +16,37 @@
 <link rel="stylesheet" href="attain-jr.css">
 </head>
 <body class="splash-on">
+<!-- Automated boot intro - fun kids version: a rocket shoots across a starry sky, rainbow bar, bouncy wordmark (additive; fades to reveal the splash) -->
+<style id="boot-intro-style">
+#boot-intro{position:fixed;inset:0;z-index:99999;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:radial-gradient(120% 90% at 50% 30%,#3a2170 0%,#241056 45%,#160b36 100%);animation:biFade .55s ease 3s forwards}
+@keyframes biFade{to{opacity:0;visibility:hidden;pointer-events:none}}
+#boot-intro.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease}
+#boot-intro .bi-star{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,.7);animation:biTwinkle 1.4s ease-in-out infinite}
+#boot-intro .bi-star.s2{width:4px;height:4px;background:#ffd166;box-shadow:0 0 8px 2px rgba(255,209,102,.7)}
+#boot-intro .bi-star.s3{width:5px;height:5px;background:#7fe7ff;box-shadow:0 0 8px 2px rgba(127,231,255,.7)}
+@keyframes biTwinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+#boot-intro .bi-rocket{position:absolute;left:50%;top:50%;width:64px;height:100px;margin:-50px 0 0 -32px;animation:biFly 2s ease-in-out .15s both;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35))}
+@keyframes biFly{0%{transform:translate(-64vw,60vh) rotate(38deg) scale(.5);opacity:0}12%{opacity:1}86%{opacity:1}100%{transform:translate(66vw,-72vh) rotate(38deg) scale(1.05);opacity:0}}
+#boot-intro .bi-flame{transform-origin:32px 68px;animation:biFlame .16s ease-in-out infinite alternate}
+@keyframes biFlame{from{transform:scaleY(.8)}to{transform:scaleY(1.2)}}
+#boot-intro .bi-logo{display:flex;align-items:center;gap:12px;animation:biPop .8s cubic-bezier(.28,1.7,.5,1) .35s both}
+@keyframes biPop{0%{opacity:0;transform:scale(.4) translateY(20px)}70%{transform:scale(1.08)}100%{opacity:1;transform:none}}
+#boot-intro .bi-icon{width:52px;height:52px;border-radius:14px;flex-shrink:0;object-fit:cover;animation:biWiggle 1.6s ease-in-out .9s infinite}
+@keyframes biWiggle{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+#boot-intro .bi-wordmark{font-size:2.5rem;font-weight:800;letter-spacing:-.5px;color:#fff;font-family:'Chalkboard SE','Comic Sans MS',Inter,system-ui,sans-serif;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#boot-intro .bi-wordmark .jr{color:#ffd166}
+#boot-intro .bi-bar{width:180px;height:8px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+#boot-intro .bi-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff5ea3 0%,#ffb24c 25%,#ffd166 45%,#4ad8a6 65%,#4ea0ff 85%,#a18cff 100%);animation:biLoad 2.4s ease .3s forwards}
+@keyframes biLoad{from{width:0}to{width:100%}}
+@media (prefers-reduced-motion:reduce){#boot-intro{animation:biFade .3s ease .5s forwards}#boot-intro .bi-rocket,#boot-intro .bi-flame,#boot-intro .bi-icon,#boot-intro .bi-star,#boot-intro .bi-logo{animation:none}#boot-intro .bi-fill{animation-duration:.5s}}
+</style>
+<div id="boot-intro" aria-hidden="true">
+<span class="bi-star" style="left:14%;top:22%"></span><span class="bi-star s2" style="left:80%;top:18%"></span><span class="bi-star s3" style="left:24%;top:70%"></span><span class="bi-star" style="left:70%;top:64%"></span><span class="bi-star s2" style="left:50%;top:13%"></span><span class="bi-star s3" style="left:88%;top:44%"></span><span class="bi-star" style="left:9%;top:52%"></span>
+<svg class="bi-rocket" viewBox="0 0 64 100" width="64" height="100" aria-hidden="true"><defs><linearGradient id="biBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbbcff"/><stop offset="1" stop-color="#7b6cff"/></linearGradient></defs><g class="bi-flame"><path d="M23 72 Q32 104 41 72 Q32 86 23 72Z" fill="#ff8c42"/><path d="M27 72 Q32 96 37 72 Q32 84 27 72Z" fill="#ffd166"/></g><path d="M32 4 C47 18 46 46 42 68 L22 68 C18 46 17 18 32 4Z" fill="url(#biBody)" stroke="#fff" stroke-width="1.5"/><path d="M22 54 L9 72 L22 68Z" fill="#ff6b6b"/><path d="M42 54 L55 72 L42 68Z" fill="#ff6b6b"/><circle cx="32" cy="34" r="8.5" fill="#7fe7ff" stroke="#fff" stroke-width="2"/><circle cx="29" cy="31" r="2.6" fill="#fff" opacity=".85"/></svg>
+<div class="bi-logo"><img class="bi-icon" src="icon.png" alt="" width="52" height="52"><div class="bi-wordmark">Attain<span class="jr">Jr</span></div></div>
+<div class="bi-bar"><div class="bi-fill"></div></div>
+</div>
+<script>setTimeout(function(){var b=document.getElementById('boot-intro');if(b)b.classList.add('gone');},3400);</script>
 
 <!-- Splash page. Mirrors Attain's home pattern: cover image, sign card,
      then a feature grid (Get Started / Upload / Library / Progress /
