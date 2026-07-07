@@ -173,9 +173,17 @@ details[open]>summary .chev{transform:rotate(90deg)}
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.06);text-shadow:0 0 22px var(--acc)}100%{transform:scale(1)}}
 .restored.glow{animation:pop .6s ease}
 @media (prefers-reduced-motion:reduce){.restored.glow{animation:none}}
+/* splash (first-open cover, no password) */
+#splash{position:fixed;inset:0;z-index:9999;background:#080704;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;transition:opacity .55s ease;cursor:pointer}
+#splash.gone{opacity:0;pointer-events:none}
+#splash>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+#splash .sg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,.2) 45%,rgba(0,0,0,.75) 72%,rgba(0,0,0,.96))}
+#splash .sh{position:relative;z-index:2;margin-bottom:54px;font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E8B83F;animation:spulse 1.8s infinite}
+@keyframes spulse{0%,100%{opacity:.4}50%{opacity:1}}
 </style>
 </head>
 <body data-acc="orange">
+<div id="splash" onclick="dismissSplash()"><img src="cover.png" alt="The Great Eraser"><div class="sg"></div><div class="sh">Tap to enter</div></div>
 <div id="topbar"><div class="tb-row">
   <div class="mark" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#FFD9BE" stroke-width="2.2"/><line x1="16" y1="16" x2="21" y2="21" stroke="#FFD9BE" stroke-width="2.2" stroke-linecap="round"/></svg></div>
   <div class="tb-titles"><div class="tb-name">The Great Eraser</div><div class="tb-sub" id="subc"></div></div>
@@ -321,6 +329,8 @@ function openImgLB(w){var s=w.querySelector('img').getAttribute('src');var lb=do
  if(!lb){lb=document.createElement('div');lb.id='acr-lb';lb.className='acr-lb';lb.innerHTML='<div class="acr-lb-x">&times;</div><img alt="">';lb.onclick=function(){lb.classList.remove('open')};document.body.appendChild(lb);}
  lb.querySelector('img').src=s;lb.classList.add('open');}
 
+function dismissSplash(){var s=document.getElementById('splash');if(!s||s.classList.contains('gone'))return;s.classList.add('gone');setTimeout(function(){if(s.parentNode)s.style.display='none';},600);}
+setTimeout(dismissSplash,2000);
 render();
 </script>
 </body>
