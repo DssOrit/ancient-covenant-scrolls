@@ -390,7 +390,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 #lesson-panel{position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;background:var(--navy)}
 #lesson-panel.open{display:flex}
 
-.ic{width:1em;height:1em;stroke-width:2;vertical-align:-.14em;flex-shrink:0}.ge-refresh{position:absolute;top:14px;right:16px;z-index:6;width:38px;height:38px;border-radius:11px;border:1px solid rgba(200,151,31,.32);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold)}.ge-refresh .ic{width:19px;height:19px}</style>
+.ic{width:1em;height:1em;stroke-width:2;vertical-align:-.14em;flex-shrink:0}.ge-refresh{position:absolute;top:14px;right:16px;z-index:6;width:38px;height:38px;border-radius:11px;border:1px solid rgba(200,151,31,.32);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold)}.ge-refresh .ic{width:19px;height:19px}.home-btn{background:none;border:none;color:var(--text2);cursor:pointer;padding:4px 8px;border-radius:8px;display:inline-flex;align-items:center}.home-btn .ic{width:1.15rem;height:1.15rem}</style>
 </head>
 <body>
 
@@ -499,7 +499,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- STUDY -->
 <div class="screen" id="study">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Great Eraser Study</div>
     <button class="settings-btn" onclick="App.toggleVoice()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a4.5 4.5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg></button>
   </div>
@@ -528,7 +528,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- MEMORY CARDS -->
 <div class="screen" id="cards">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Memory Cards</div>
     <span id="cards-count" style="font-size:.8rem;color:var(--text3)"></span>
   </div>
@@ -538,7 +538,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- QUIZ -->
 <div class="screen" id="quiz">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Quiz Mode</div>
     <span id="quiz-score" style="font-size:.8rem;color:var(--gold)"></span>
   </div>
@@ -548,7 +548,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- TIMELINE -->
 <div class="screen" id="timeline">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Timeline</div>
   </div>
   <div style="padding:12px 16px 0;flex-shrink:0">
@@ -564,7 +564,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- COMPARE -->
 <div class="screen" id="compare">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">DSS vs Orit Compare</div>
   </div>
   <div class="screen-body" id="compare-body"></div>
@@ -573,7 +573,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- HARD LIST -->
 <div class="screen" id="hard-list">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Still Hard For Me</div>
     <button class="settings-btn" onclick="App.clearHardList()">Clear All</button>
   </div>
@@ -583,7 +583,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- SETTINGS -->
 <div class="screen" id="settings">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Reading & Display</div>
   </div>
   <div class="screen-body">
@@ -638,7 +638,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- LESSON PANEL -->
 <div id="lesson-panel">
   <div class="lesson-header" style="border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
-    <button class="back-btn" onclick="Lesson.close()">←</button>
+    <button class="back-btn" onclick="Lesson.close()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div style="flex:1">
       <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold)" id="lp-title">Lesson</div>
       <div style="font-size:.72rem;color:var(--text3)" id="lp-subtitle"></div>
@@ -662,7 +662,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- LESSON SCREEN (menu) -->
 <div class="screen" id="lesson">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Lesson Mode</div>
   </div>
   <div class="screen-body" id="lesson-body"></div>
@@ -760,7 +760,11 @@ const App = {
     document.getElementById('daily-pct').textContent = pct+'%';
   },
 
-  showScreen(id){
+  navHistory:[],
+  back(){const p=this.navHistory.pop()||'home';this.showScreen(p,true);},
+  goHome(){this.navHistory=[];this.showScreen('home',true);},
+  showScreen(id,skipHistory){
+    if(!skipHistory && State.currentScreen && State.currentScreen!==id){this.navHistory.push(State.currentScreen);}
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     State.currentScreen = id;
