@@ -355,6 +355,27 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .place-map-btn:active{background:rgba(200,151,31,0.22)}
 .sv-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
 .sv-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6}
+/* UNCOVER */
+.uncover-passage{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #1e1e1e}
+.uncover-passage:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.uncover-ref{font-size:12px;font-weight:800;color:var(--gold);margin-bottom:3px;line-height:1.4}
+.uncover-subject{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.5;font-style:italic}
+.uncover-layer{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px}
+.uncover-layer.type-manipulation{border-left:3px solid #c0392b}
+.uncover-layer.type-change{border-left:3px solid #e67e22}
+.uncover-layer.type-original{border-left:3px solid var(--gold)}
+.uncover-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-bottom:8px}
+.uncover-badge.type-manipulation{background:rgba(192,57,43,.18);color:#e74c3c}
+.uncover-badge.type-change{background:rgba(230,126,34,.18);color:#e67e22}
+.uncover-badge.type-original{background:rgba(200,151,31,.18);color:var(--gold)}
+.uncover-lbl{font-size:11px;font-weight:700;color:#fff;margin-bottom:8px}
+.uncover-text{font-size:13px;color:#fff;line-height:1.7;font-weight:600;margin-bottom:8px;font-style:italic}
+.uncover-note{font-size:11px;color:var(--tx3);line-height:1.6;margin-bottom:6px}
+.uncover-date{font-size:10px;color:var(--gold);font-weight:700}
+.uncover-controls{display:flex;align-items:center;gap:12px;margin-top:12px}
+.uncover-prog{font-size:10px;color:var(--tx3);flex:1}
+.uncover-btn{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.4);color:var(--gold);font-size:12px;font-weight:700;padding:8px 18px;border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.uncover-btn:active{background:rgba(200,151,31,.25)}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
 .supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
 .supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
@@ -851,6 +872,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="paganism" onclick="setMode('paganism')"><i class="ri-fire-line"></i> Paganism</div>
       <div class="mpill" data-mode="racism" onclick="setMode('racism')"><i class="ri-scales-3-line"></i> Racism</div>
       <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
+      <div class="mpill" data-mode="uncover" onclick="setMode('uncover')"><i class="ri-layers-line"></i> Uncover</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1048,6 +1070,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- UNCOVER -->
+    <div id="uncover-view" style="display:none">
+      <div class="sv-hdr">Uncover the Text</div>
+      <div class="sv-sub">Peel back the layers. Each passage starts with what the received text says, then shows what changed and when, then reaches the primary sources — the Dead Sea Scrolls and the Ge'ez Orit. The manipulations are datable, named, and specific.</div>
+      <div id="uncover-panel"></div>
     </div>
 
     <!-- ROOT SEARCH -->
@@ -2466,6 +2495,7 @@ function initApp() {
   renderPaganismPanel();
   renderRacismPanel();
   renderBodyPanel();
+  renderUncoverPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2494,7 +2524,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2525,7 +2555,8 @@ var PANEL_LABELS = {
   orit:'Orit Record',
   covenant:'Covenant Record',
   histdocs:'Historical Documents',
-  practices:'Covenant Practices'
+  practices:'Covenant Practices',
+  uncover:'Uncover the Text'
 };
 
 function buildSiteIndex() {
@@ -2556,6 +2587,8 @@ function goToSiteEntry(tab, topic) {
     setMode('racism');
   } else if (tab === 'body') {
     setMode('body');
+  } else if (tab === 'uncover') {
+    setMode('uncover');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -3368,6 +3401,156 @@ function renderRacismPanel() {
   '<div class="td-item"><div class="td-topic">"Safety" Guidelines Are Western Institutional Standards</div><div class="td-text">Beyond the data, AI systems are tuned by written human guidelines that reflect the standards of the Western institutions that build them. The topics most likely to be softened, hedged, "both-sided," or refused are exactly the ones that challenge those institutions: the African identity of the ancient Hebrews, the New Testament figure as an invention, and the documented manipulation of the texts. The bias is not always deliberate. A widely used US health algorithm was found in 2019 (Obermeyer and colleagues, in the journal Science) to systematically rate Black patients as less sick than equally ill white patients, cutting their access to extra care by more than half, not because anyone coded racism on purpose, but because the system was trained on a biased proxy. Built into the data and built into the rules produces the same result as intent.</div></div>' +
   '<div class="td-item"><div class="td-topic">The Same Pattern, a New Tool, and the Same Defense</div><div class="td-text">Line it up. The 1807 Slave Bible removed the Exodus so the enslaved could not read their deliverance. The colonial church recolored the Hebrews and injected the Curse of Ham. The modern algorithm is trained on that same civilization\'s library and tuned to that same civilization\'s standards. Each is one move in one long project: control which evidence a person can reach, and frame the rest as unreliable. The defense has never changed, and it is the entire reason this tool exists. Go to the primary sources directly. The Dead Sea Scrolls and the Ge\'ez Orit do not run on Western training data and answer to no platform\'s guidelines. Put the ancient text in front of you, unfiltered, so that no institution and no algorithm stands between you and the record.</div></div>' +
   '';
+}
+
+var ucState = {};
+function ucBadgeLabel(t) {
+  if (t === 'manipulation') return 'ADDED LATER';
+  if (t === 'change') return 'THE CHANGE';
+  return 'PRIMARY SOURCE';
+}
+function ucNext(pi, total) {
+  var curr = ucState[pi] !== undefined ? ucState[pi] : 0;
+  var next = curr + 1;
+  if (next >= total) return;
+  var currEl = document.getElementById('ucl-' + pi + '-' + curr);
+  currEl.style.transition = 'opacity .3s,transform .3s';
+  currEl.style.opacity = '0';
+  currEl.style.transform = 'translateY(-16px)';
+  setTimeout(function() {
+    currEl.style.display = 'none';
+    currEl.style.transition = '';
+    currEl.style.opacity = '';
+    currEl.style.transform = '';
+    var nextEl = document.getElementById('ucl-' + pi + '-' + next);
+    nextEl.style.opacity = '0';
+    nextEl.style.transform = 'translateY(16px)';
+    nextEl.style.display = 'block';
+    setTimeout(function() {
+      nextEl.style.transition = 'opacity .3s,transform .3s';
+      nextEl.style.opacity = '1';
+      nextEl.style.transform = 'translateY(0)';
+      setTimeout(function() { nextEl.style.transition = ''; }, 350);
+    }, 20);
+    ucState[pi] = next;
+    document.getElementById('ucp-' + pi).textContent = 'Layer ' + (next + 1) + ' of ' + total;
+    var btn = document.getElementById('ucb-' + pi);
+    if (next + 1 >= total) {
+      btn.textContent = 'Start Over';
+      btn.setAttribute('onclick', 'ucReset(' + pi + ',' + total + ')');
+    }
+  }, 320);
+}
+function ucReset(pi, total) {
+  for (var i = 0; i < total; i++) {
+    var el = document.getElementById('ucl-' + pi + '-' + i);
+    el.style.display = i === 0 ? 'block' : 'none';
+    el.style.opacity = ''; el.style.transform = ''; el.style.transition = '';
+  }
+  ucState[pi] = 0;
+  document.getElementById('ucp-' + pi).textContent = 'Layer 1 of ' + total;
+  var btn = document.getElementById('ucb-' + pi);
+  btn.textContent = 'Peel Back';
+  btn.setAttribute('onclick', 'ucNext(' + pi + ',' + total + ')');
+}
+function renderUncoverPanel() {
+  var panel = document.getElementById('uncover-panel');
+  if (!panel) return;
+  var P = [
+    {
+      ref: 'Tehillim (Psalm) 22:16 — 4QPsc + Nahal Hever Greek vs. Masoretic Text',
+      subject: 'One letter separates a verb from a noun. The letter determines whether hands and feet are pierced or compared to a lion.',
+      layers: [
+        { type:'manipulation', label:'Masoretic Text — Ben Asher Tradition (~600–900 CE)',
+          text:'"...ka\'ari — like a lion, my hands and my feet."',
+          note:'The Tiberian vocalization system, Ben Asher family, Tiberias. Codified in the Aleppo Codex (~920 CE, Shrine of the Book, Israel Museum) and the Leningrad Codex (~1008 CE, Russian National Library, St. Petersburg, Firkovitch B 19A). The word rendered here is ka\'ari — a noun phrase meaning "like a lion."',
+          date:'~600–900 CE' },
+        { type:'change', label:'The Substitution — One Consonant',
+          text:'Aleph (א) replaced vav (ו). Ka\'aru became ka\'ari.',
+          note:'Ka\'aru is a verb: "they dug" or "they pierced." Ka\'ari is a noun comparison: "like a lion." One consonant converts an active verb describing what was done to hands and feet into an incomplete simile with no grammatical object. The lion comparison in the Masoretic reading is syntactically broken.',
+          date:'Single consonant substitution' },
+        { type:'original', label:'Primary Source — 4QPsc (Cave 4, Qumran) + Nahal Hever Greek (5/6HevPs)',
+          text:'"...ka\'aru — they pierced my hands and my feet."',
+          note:'4QPsc (Dead Sea Scrolls, Cave 4, Qumran, ~100 BCE–100 CE) preserves ka\'aru. The Nahal Hever Greek manuscript (5/6HevPs, Judean Desert) renders kōruxan — "they dug / they pierced." Two independent manuscript traditions, separated by geography and language, agree with each other and disagree with the Masoretic text.',
+          date:'~100 BCE – 100 CE' }
+      ]
+    },
+    {
+      ref: 'Devarim (Deuteronomy) 32:8 — 4QDeut-j + LXX vs. Masoretic Text',
+      subject: 'A single word replacement removes the divine council structure from the text entirely.',
+      layers: [
+        { type:'manipulation', label:'Masoretic Text',
+          text:'"When the Most High divided the nations...he set the boundaries of the peoples according to the number of the sons of Israel (beni Yisrael)."',
+          note:'In this reading YHWH divides the nations according to Israel\'s numerical count. The verse becomes a statement about Israel\'s centrality.',
+          date:'~600–900 CE' },
+        { type:'change', label:'The Substitution — One Word',
+          text:'"Sons of Israel" (beni Yisrael) replaced "sons of El" or "sons of God" (beni Elohim).',
+          note:'The original describes a divine council — a governing assembly to whom nations are assigned. "Sons of El" are the members of that council. The replacement eliminates this structure and centers Israel numerically instead. The cosmological framework of the verse collapses into a nationalist reading.',
+          date:'Single word substitution' },
+        { type:'original', label:'Primary Source — 4QDeut-j (Cave 4, Qumran) + Septuagint (LXX)',
+          text:'"...he set the boundaries of the peoples according to the number of the sons of El (beni Elohim)."',
+          note:'4QDeut-j (Cave 4, Qumran) reads beni Elohim. The Septuagint (LXX, translated ~3rd century BCE, Alexandria) renders angelōn theou — angels of God. Both witnesses pre-date the Masoretic text by centuries and agree with each other. Neither agrees with the Masoretic substitution.',
+          date:'~3rd century BCE (LXX) / ~100 BCE (4QDeut-j)' }
+      ]
+    },
+    {
+      ref: 'Yeshayahu (Isaiah) 7:14 — 1QIsa-a vs. Greek Septuagint Translation',
+      subject: 'A translation decision, not the Hebrew text, produced the virgin birth claim. The Hebrew word almah means young woman.',
+      layers: [
+        { type:'manipulation', label:'Greek Septuagint (LXX) + Latin Vulgate',
+          text:'The LXX renders almah as parthenos — the Greek word for virgin. Jerome\'s Latin Vulgate (~380–420 CE) carried this forward as virgo.',
+          note:'The claim built around the NT\'s invented figure was constructed on the LXX Greek word parthenos, not on the Hebrew text. The LXX translation decision is the source of the claim. Jerome\'s commission from Pope Damasus I is documented in Epistle 20.',
+          date:'~3rd century BCE (LXX) / ~380–420 CE (Vulgate)' },
+        { type:'change', label:'What Almah Actually Means',
+          text:'Almah (עַלְמָה) means young woman of marriageable age. The Hebrew word for sexual virginity is betulah (בְּתוּלָה).',
+          note:'Almah appears nine times in the Hebrew corpus. None of the nine uses require or imply a virgin birth reading. The verse in Yeshayahu 7:14 is addressed directly to King Ahaz as a sign relevant to his immediate political crisis. The sign is fulfilled within years — before the child grows old enough to distinguish good from evil (7:16). It is not a centuries-forward promise in the Hebrew text.',
+          date:'Nine uses of almah in the Hebrew corpus — none support the virgin reading' },
+        { type:'original', label:'Primary Source — 1QIsa-a (Great Isaiah Scroll, Cave 1, Qumran)',
+          text:'"Therefore YHWH himself will give you a sign: Behold, the almah (young woman) is with child and will bear a son, and she will call his name Immanu-El."',
+          note:'1QIsa-a (Great Isaiah Scroll, Cave 1, Qumran, ~125–100 BCE; Shrine of the Book, Israel Museum, Accession 19901) reads almah. The verse is a political sign to Ahaz in his generation. The internal context — the child must grow old enough to distinguish good from evil, and before that point the threatened kings will be gone (7:15-16) — identifies this as a near-term sign, not a distant messianic promise. That context was removed when the LXX word parthenos was used as the foundation for an unrelated claim.',
+          date:'1QIsa-a, Cave 1, Qumran, ~125–100 BCE' }
+      ]
+    },
+    {
+      ref: 'Bereshit (Genesis) 9 — The Curse — Bavli Sanhedrin 108b vs. DSS + Ge\'ez Orit',
+      subject: 'A skin-color curse added in the Babylonian Talmud (~500 CE) has no basis in any primary-source text. The primary sources curse Canaan — not Ham\'s skin.',
+      layers: [
+        { type:'manipulation', label:'Babylonian Talmud — Bavli Sanhedrin 108b (~500 CE)',
+          text:'The Bavli adds that Ham was cursed with dark skin as punishment for his actions on the ark. This became the textual anchor for colonial racial slavery theology and the 1807 Slave Bible (British Library, shelf mark 3040.b.32).',
+          note:'The Babylonian Talmud was compiled ~400–600 CE. No manuscript predates the 9th century. The skin-color addition appears in the Bavli with no parallel in any earlier text. It was deployed to provide scriptural justification for the Trans-Atlantic slave trade and appears in colonial legal codes and sermons across the 16th–19th centuries.',
+          date:'Bavli Sanhedrin 108b, ~500 CE. No manuscript earlier than 9th century.' },
+        { type:'change', label:'What the Hebrew Text Actually Says',
+          text:'Bereshit 9:20–27 curses Canaan — one son of Ham — with servitude. No skin color is named. No racial category is applied.',
+          note:'Four sons of Ham are named in Bereshit 10:6: Cush, Mitsrayim, Put, and Canaan. Cush and Mitsrayim are the progenitors of African peoples. The curse falls only on Canaan. The Bavli\'s extension of a skin-color curse to all of Ham\'s descendants — and specifically to Cush — is an addition with no textual basis in any primary source.',
+          date:'Bereshit 9:20–27 — the text names Canaan only' },
+        { type:'original', label:'Primary Source — Dead Sea Scrolls + Ge\'ez Orit',
+          text:'The DSS and the Ge\'ez Orit contain no skin-color curse in the Bereshit narrative.',
+          note:'The Book of Jubilees (4Q216–4Q224, Cave 4, Qumran; complete in the Ge\'ez Orit) retells the Bereshit narrative through this period with no racial element. The Genesis Apocryphon (1QapGen, Cave 1) covers adjacent narrative without a racial addition. Both primary-source traditions are silent on the racial element the Bavli introduces. The insertion is a ~500 CE Talmudic addition absent from every text that predates it.',
+          date:'4Q216–4Q224, 1QapGen — no racial addition present in any DSS text' }
+      ]
+    }
+  ];
+  var html = '';
+  P.forEach(function(p, pi) {
+    html += '<div class="uncover-passage">';
+    html += '<div class="uncover-ref">' + p.ref + '</div>';
+    html += '<div class="uncover-subject">' + p.subject + '</div>';
+    p.layers.forEach(function(layer, li) {
+      var hid = li > 0 ? ' style="display:none"' : '';
+      html += '<div class="uncover-layer type-' + layer.type + '" id="ucl-' + pi + '-' + li + '"' + hid + '>';
+      html += '<span class="uncover-badge type-' + layer.type + '">' + ucBadgeLabel(layer.type) + '</span>';
+      html += '<div class="uncover-lbl">' + layer.label + '</div>';
+      html += '<div class="uncover-text">' + layer.text + '</div>';
+      html += '<div class="uncover-note">' + layer.note + '</div>';
+      html += '<div class="uncover-date">' + layer.date + '</div>';
+      html += '</div>';
+    });
+    html += '<div class="uncover-controls">';
+    html += '<span class="uncover-prog" id="ucp-' + pi + '">Layer 1 of ' + p.layers.length + '</span>';
+    html += '<button class="uncover-btn" id="ucb-' + pi + '" onclick="ucNext(' + pi + ',' + p.layers.length + ')">Peel Back</button>';
+    html += '</div></div>';
+  });
+  panel.innerHTML = html;
 }
 
 function renderBodyPanel() {
