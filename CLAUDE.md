@@ -252,6 +252,26 @@ These have been re-locked on 2026-05-04 after repeated violations.
     instead. Read `CONTENT_STANDARD.md` before writing or editing any ACR
     historical content.
 
+18. **DIVINE NAME — ONLY YHWH AND CREATOR — LOCKED 2026-07-08 by user.** In all
+    ACR content and features, the divine name of the covenant deity is written
+    only as **YHWH** or **Creator** / **the Creator**. Never use "Lord", "LORD",
+    "Adonai", "Elohim", or capital-G "God" AS the divine name. Specific rules:
+    - Where any of those words are used to name or refer to the covenant deity,
+      replace them: "Lord"/"LORD"/"Adonai" -> YHWH; "Elohim" -> YHWH (or the
+      Creator where it reads better); capital-G "God" -> YHWH when it fills the
+      name slot, or "the Creator" for a generic maker reference.
+    - This applies to every ACR app, explicitly including Great Eraser (`/GreatE`)
+      and Great Eraser Study (`/GESTUDY`).
+    - KEEP unchanged (the word is being documented, not used as the Name):
+      text that documents the substitution/translation of the Name ("YHWH was
+      replaced with 'Lord'", "Adonai vowels", "Kyrios/Dominus/LORD", "the title
+      Lord means Baal"); pagan or other deities ("Sun God", "the god of death",
+      lowercase "god"/"gods", "Baal", "Helios", "benei Elohim / sons of God" as a
+      named phrase); book/article titles and citations; and the standalone term
+      "El".
+    If there is ANY doubt whether a use is the divine name or documentation,
+    default to leaving documentation intact and only changing clear name uses.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
