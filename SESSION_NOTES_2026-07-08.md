@@ -120,6 +120,28 @@ Files changed: `GESTUDY/data/app_data.json`, `GESTUDY/sw.js`. Shipped via PR
 (feature branch `claude/wsa-acr-design-alignment-ji5poy`). NOT merged; awaiting
 user confirmation per rule 9.
 
-## Divine name rule (kept)
+## Divine name rule (kept) + full sweep across Great Eraser AND Study
 
-Only YHWH and Creator. No Lord, Adonai, Elohim, capital-G God as divine name. Applied to all new content this session.
+Only YHWH and Creator / the Creator. No Lord, Adonai, Elohim, or capital-G God as
+the divine name. Now LOCKED in CLAUDE.md as rule 18 (was only a session note).
+
+Applied the rule across BOTH apps this session (user directive: apply to both):
+- Great Eraser (`GreatE/index.html`) and Great Eraser Study
+  (`GESTUDY/data/app_data.json`).
+- Authored via subagents, then merged + audited. Divine-name-as-Name uses changed
+  to YHWH or the Creator; documentation of the substitution, pagan/other deities,
+  the "sons of God"/benei Elohim council phrase, DSS title-phrases ("Son of God"
+  4Q246), Christian constructs named as constructs ("God-man", "Lamb of God",
+  "Lord's Day"), and book titles were KEPT (that keep-list is now part of rule 18).
+- Scripture appositive decision (user): swap the title word in place ->
+  "YHWH your Creator", "YHWH Creator finished", the Shema "YHWH is our Creator,
+  YHWH alone", "the Creator of Abraham/Isaac/Jacob".
+- Reconciled two praise-exclamation lines so both apps read identically.
+- Removed a stray emoji from Great Eraser's Sharks content (rule 3).
+- Great Eraser cache bumped great-eraser-v13 -> v14. Study stays gestudy-v11
+  (v11 not yet deployed, so the extra edits ride under it).
+- Verified: Study loads clean (0 page errors, 183/183 chapters), quiz integrity
+  intact, 0 emojis in either app.
+
+Files changed this pass: `CLAUDE.md` (rule 18), `GESTUDY/data/app_data.json`,
+`GreatE/index.html`, `GreatE/sw.js`. All on PR #594; NOT merged (rule 9).
