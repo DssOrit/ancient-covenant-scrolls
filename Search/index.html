@@ -473,6 +473,46 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .dis-dest-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .dis-dest-detail{padding:0 12px 10px;font-size:11px;color:var(--tx3);line-height:1.65;display:none}
 .dis-dest-detail.open{display:block;padding-top:6px;border-top:1px solid #1e1e1e;margin-top:-1px}
+/* COURTROOM */
+#courtroom-view{padding:14px}
+.ct-case-select{margin-bottom:16px}
+.ct-cs-hdr{font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--tx3);text-transform:uppercase;margin-bottom:8px}
+.ct-case-btn{width:100%;text-align:left;background:var(--s1);border:1px solid #2a2a2a;border-radius:var(--r);padding:11px 14px;margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .15s}
+.ct-case-btn:active{border-color:rgba(200,151,31,.4)}
+.ct-case-claim{font-size:12px;font-weight:700;color:#fff;line-height:1.4}
+.ct-case-tag{font-size:10px;color:var(--tx3);margin-top:3px}
+.ct-trial{display:none}
+.ct-trial.active{display:block}
+.ct-gavel{text-align:center;padding:18px 14px 14px;border-bottom:1px solid #1a1a1a;margin-bottom:14px}
+.ct-g-label{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.ct-g-claim{font-size:14px;font-weight:800;color:#fff;line-height:1.45;margin-bottom:8px}
+.ct-g-sub{font-size:11px;color:var(--tx3);line-height:1.5;margin-bottom:14px}
+.ct-start-btn{display:inline-block;padding:10px 22px;border-radius:var(--r);background:var(--gold);color:#000;font-size:13px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ct-start-btn:active{opacity:.8}
+.ct-evidence{display:none}
+.ct-evidence.active{display:block}
+.ct-ev-progress{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.ct-ev-label{font-size:10px;color:var(--tx3);white-space:nowrap}
+.ct-ev-dots{display:flex;gap:4px;flex:1}
+.ct-ev-dot{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.1);transition:background .3s}
+.ct-ev-dot.done{background:rgba(200,151,31,.5)}
+.ct-ev-dot.active{background:var(--gold)}
+.ct-ev-card{background:var(--s1);border:1px solid #2a2a2a;border-radius:var(--r);padding:14px;margin-bottom:14px;border-left:3px solid var(--gold);animation:libSlide .2s ease}
+.ct-exhibit{font-size:9px;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.ct-ev-source{font-size:10px;font-weight:700;color:rgba(200,151,31,.7);margin-bottom:8px}
+.ct-ev-finding{font-size:12px;color:#fff;line-height:1.65;margin-bottom:8px}
+.ct-ev-detail{font-size:11px;color:var(--tx3);line-height:1.65}
+.ct-ev-nav{display:flex;gap:8px;margin-top:2px}
+.ct-ev-btn{flex:1;padding:10px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:13px;font-weight:700;color:var(--tx3);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.ct-ev-btn.next{border-color:rgba(200,151,31,.4);color:var(--gold)}
+.ct-verdict{display:none;padding:16px 0 4px;border-top:1px solid #1a1a1a}
+.ct-verdict.active{display:block}
+.ct-vd-icon{font-size:28px;text-align:center;margin-bottom:8px;line-height:1}
+.ct-vd-ruling{font-size:16px;font-weight:800;text-align:center;margin-bottom:6px}
+.ct-vd-ruling.confirmed{color:#4caf50}
+.ct-vd-ruling.unsupported{color:#cc5544}
+.ct-vd-summary{font-size:12px;color:var(--tx3);line-height:1.7;margin-bottom:14px}
+.ct-vd-back{width:100%;padding:10px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:13px;font-weight:700;color:var(--tx3);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
 @keyframes scatterFan{from{opacity:0;stroke-dashoffset:320}to{opacity:1;stroke-dashoffset:0}}
 .dis-sline{stroke-dasharray:320;stroke-dashoffset:320;opacity:0;animation:scatterFan .9s ease forwards}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
@@ -976,6 +1016,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="solarcal" onclick="setMode('solarcal')"><i class="ri-calendar-line"></i> Calendar</div>
       <div class="mpill" data-mode="exodus" onclick="setMode('exodus')"><i class="ri-map-2-line"></i> Exodus Journey</div>
       <div class="mpill" data-mode="diaspora" onclick="setMode('diaspora')"><i class="ri-global-line"></i> Diaspora</div>
+      <div class="mpill" data-mode="courtroom" onclick="setMode('courtroom')"><i class="ri-scales-line"></i> Courtroom</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1173,6 +1214,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- COURTROOM -->
+    <div id="courtroom-view" style="display:none">
+      <div class="sv-hdr">The Courtroom</div>
+      <div class="sv-sub">Six claims placed before the evidence. Each exhibit is a named primary source — manuscript, inscription, papyrus, or genetic study. Select a case to begin.</div>
+      <div id="courtroom-panel"></div>
     </div>
 
     <!-- DIASPORA SCATTER -->
@@ -2631,6 +2679,7 @@ function initApp() {
   renderSolarCalPanel();
   renderExodusPanel();
   renderDiasporaPanel();
+  renderCourtroomPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2659,7 +2708,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','exodus','diaspora','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2695,7 +2744,8 @@ var PANEL_LABELS = {
   library:'The Scroll Library',
   solarcal:'The 364-Day Solar Calendar',
   exodus:'The Exodus Journey',
-  diaspora:'The Diaspora Scatter'
+  diaspora:'The Diaspora Scatter',
+  courtroom:'The Courtroom'
 };
 
 function buildSiteIndex() {
@@ -2736,6 +2786,8 @@ function goToSiteEntry(tab, topic) {
     setMode('exodus');
   } else if (tab === 'diaspora') {
     setMode('diaspora');
+  } else if (tab === 'courtroom') {
+    setMode('courtroom');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -8286,6 +8338,328 @@ function renderExodusPanel() {
   panel.innerHTML = svgStr + progressStr + detailStr;
   renderExoDots(0);
   highlightExoWaypoint(0);
+}
+
+// ── COURTROOM ────────────────────────────────────────────────────────────────
+var CT_CASES = [
+  {
+    id:'ct1',
+    claim:'The NT is the continuation of the Hebrew scriptures',
+    tag:'NT Canon — Source Manipulation',
+    sub:'Five exhibits from manuscript evidence and Roman ecclesiastical records.',
+    verdict:'CLAIM UNSUPPORTED',
+    verdictClass:'unsupported',
+    verdictIcon:'&#9878;',
+    verdictSummary:'The NT was not a continuation — it was a Roman-era construction built on top of Hebrew texts it had already altered. The manuscript evidence establishes that: (1) the Greek NT quotes Hebrew texts that differ from the DSS originals in ways that serve a theological agenda; (2) the canon was selected by Roman ecclesiastical councils, not by the Hebrew communities whose texts they appropriated; (3) the NT writers composed documents that reframed Hebrew covenant promises as universalized religious doctrine, detaching them from the specific people and covenant they addressed.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:'DSS 1QIsa-a (Cave 1, Qumran, c.125 BCE) vs MT / LXX',
+        finding:'Yeshayahu 7:14 in 1QIsa-a reads almah — young woman of marriageable age. The Greek Septuagint (LXX) translates it as parthenos — virgin. The NT quotes the LXX version, not the Hebrew. The change from almah to parthenos was the textual basis for the virgin-birth doctrine. The DSS manuscript, pre-dating the LXX translation politics, uses the unambiguous almah.',
+        detail:'1QIsa-a is held at the Shrine of the Book, Israel Museum, Jerusalem. The word almah appears in nine other places in the Tanakh where it always means a young woman, never specifically a virgin (which is betulah). The NT quotation of Isaiah 7:14 depends on a Greek mistranslation of a Hebrew word to construct a doctrinal claim the original Hebrew does not support.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:"Letter of Aristeas (2nd century BCE) — re: LXX translation politics",
+        finding:'The Letter of Aristeas documents the political context of the Septuagint translation: 72 Hebrew elders were commissioned by Ptolemy II to produce a Greek translation of the Torah for the Library of Alexandria. The letter itself acknowledges the translation was produced under royal patronage for non-Hebrew audiences. The NT\'s systematic use of the LXX over the Hebrew text reflects its orientation toward a Greek-speaking Roman audience, not a Hebrew source community.',
+        detail:'The Letter of Aristeas survives in Greek manuscripts. Multiple textual variants exist, suggesting the letter itself was edited over time. The LXX it describes became the Bible of the early church — not because it was more accurate but because it was in Greek, the language of the Roman Empire. This is a political, not a textual, choice.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:"Paul\'s epistles (c.50–60 CE) predate the Gospels (c.70–100 CE)",
+        finding:'The earliest NT documents are Paul\'s letters, written approximately 50–60 CE. The Gospels were written 70–100 CE, after the destruction of Yerushalayim. Paul had not met the historical figure he writes about; the Gospels were written by communities, not eyewitnesses, decades after the events they claim to record. The NT was a document assembled in reverse — theology first, narrative second.',
+        detail:'Scholarly dating of the NT documents is consistent across the mainstream of historical-critical scholarship: Paul\'s undisputed epistles (Galatians, Romans, 1–2 Corinthians, Philippians, Philemon, 1 Thessalonians) date to approximately 50–58 CE. Mark (earliest Gospel) is dated to approximately 70 CE. The sequence means Paul\'s theology of the invented figure preceded the narrative accounts of that figure by 20–50 years.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'Council of Nicea, 325 CE — Eusebius, Ecclesiastical History',
+        finding:'The New Testament canon was formally shaped through Roman imperial councils — principally Nicea (325 CE) under Emperor Constantine. Eusebius of Caesarea, the court historian who documented the council, records Constantine\'s direct role in unifying Christian doctrine to serve imperial cohesion. The NT canon — which texts were included and which were excluded — was a Roman political decision, not a Hebrew scriptural process.',
+        detail:'Eusebius, Ecclesiastical History (Historia Ecclesiastica), Book X, documents Constantine\'s patronage of the Christian church and his role in calling the council. Constantine himself declared the Nicene Creed binding for the empire. Texts excluded from the canon at this period include the Gospel of Thomas, the Gospel of Mary, and numerous other early Christian documents — excluded not for age but for doctrinal incompatibility with the emerging Roman church position.'
+      },
+      {
+        label:'EXHIBIT E',
+        source:"DSS 4QMMT (4Q394–399, Cave 4, Qumran) — halakhic letter, c.150 BCE",
+        finding:'4QMMT (Miqsat Ma\'ase ha-Torah — Some Works of the Torah) is a halakhic letter from the Qumran community addressed to a Jerusalem priestly authority. It documents a Hebrew covenant community operating with full halakhic precision that has no connection to NT theology. The DSS communities were the living Hebrew covenant tradition at the time the NT was being constructed. They were not waiting for any new covenant — they were actively practicing the original one.',
+        detail:'4QMMT is held at the Israel Antiquities Authority, Jerusalem. The document covers 22 legal rulings where the Qumran community disagrees with Jerusalem Temple practice — all within the framework of the existing Torah covenant. No NT concepts appear anywhere in the DSS corpus. The DSS communities were destroyed by Rome in 68–70 CE, the same Roman force that produced the political environment in which the NT was assembled.'
+      }
+    ]
+  },
+  {
+    id:'ct2',
+    claim:'Mosheh was not an African — he was a Middle Eastern figure',
+    tag:'Hebrew Identity — Textual and Physical Evidence',
+    sub:'Four exhibits from the Ge\'ez Orit and Egyptian documentary records.',
+    verdict:'CLAIM UNSUPPORTED',
+    verdictClass:'unsupported',
+    verdictIcon:'&#9878;',
+    verdictSummary:'The textual evidence establishes that Mosheh was raised as an Egyptian royal, passed as Egyptian without detection, and was described by his own people as an Egyptian in Shemot 2:19. The Israelites in Egypt were indistinguishable in appearance from the Egyptians — who are documented in their own records and in Herodotus as African people. The claim of a Middle Eastern or non-African Mosheh depends on ignoring the primary sources.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:"Ge'ez Orit — Shemot 2:5–6 (rescue from the Nile)",
+        finding:'Pharaoh\'s daughter found the infant in the Nile and immediately identified him as a Hebrew child (Shemot 2:6). She did not say this because he appeared different from Egyptians — she identified him because he was in a basket in the Nile, in the context of the Hebrew infant decree. He was then raised as her son in the Egyptian royal household with no notation of any visible distinction from his Egyptian surroundings.',
+        detail:'Shemot 2:6: "She opened it and saw the child, and behold, the boy was crying. She had compassion on him and said, This is one of the Hebrews\' children." The identification was contextual — location and circumstance — not physical difference. He was then placed back with his biological mother as wet nurse, grew up, and was brought to Pharaoh\'s daughter "and he became her son." An infant who appeared distinctly different from the Egyptian royal court would not have been seamlessly integrated into it.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:"Ge'ez Orit — Shemot 2:19 (the daughters of Reuel)",
+        finding:'When Mosheh intervened at the well in Midian to help Reuel\'s daughters, they returned home and described him to their father as "an Egyptian man." They had just met him. He looked Egyptian to them without any introduction or context. This is a direct primary-source identification of Mosheh\'s physical appearance by people who had no reason to misidentify him.',
+        detail:'Shemot 2:19: "They said, An Egyptian man delivered us from the hand of the shepherds." The daughters had seen him, interacted with him, and formed an immediate identification. They called him Egyptian. Egypt in the ancient world was an African nation — documented in Egyptian records as Kemet (the Black Land) and in Herodotus as populated by dark-skinned, woolly-haired people (Histories 2.104). If he appeared Egyptian to the daughters of Midian, he appeared African.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:'Herodotus, Histories Book II, c.440 BCE — on Egyptian appearance',
+        finding:'Herodotus, the Greek historian writing in the 5th century BCE, describes the Egyptians and Ethiopians as dark-skinned people with woolly hair. He uses them as his reference point for African physical characteristics. He specifically notes (Histories 2.104) that the Colchians were believed to be Egyptians because they had the same dark skin and woolly hair. Egypt\'s African identity is documented by an external observer with no stake in the question.',
+        detail:'Herodotus Histories 2.104 states that the Colchians, Egyptians, and Ethiopians are the only peoples who practice circumcision and that the Colchians "have black skin and woolly hair" — which he gives as the evidence that they came from Egypt. This is a 5th-century BCE Greek historian describing ancient Egyptians as dark-skinned and woolly-haired. This is not African-centered scholarship — it is a hostile witness confirming what African oral tradition and Egyptian self-documentation have always stated.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'Beni Hassan tomb paintings (c.1900 BCE, Beni Hassan, Egypt)',
+        finding:'The Beni Hassan tomb paintings in Middle Egypt depict a group of Semitic people — identified by inscription as Aamu from the east — entering Egypt. They are painted with dark brown skin tones consistent with Egyptian artistic conventions for African and Semitic populations. These paintings document the physical appearance of Semitic-speaking peoples in the Egyptian record of the era, predating the Exodus account by several centuries.',
+        detail:'The Beni Hassan tomb paintings are in Tomb 3 of Khnumhotep II, Middle Egypt, dated to approximately 1900 BCE (12th Dynasty). The paintings show a group of 37 Semitic people arriving in Egypt with their animals and possessions. They are rendered in the same dark-toned pigments used for Egyptian figures. The paintings are in situ at the site and documented extensively in Egyptian archaeological literature (Newberry, Beni Hasan, 1893; subsequent studies by the Oriental Institute, Chicago).'
+      }
+    ]
+  },
+  {
+    id:'ct3',
+    claim:'The ancient Hebrews were not African',
+    tag:'African Hebrew Identity — Genetic and Documentary Evidence',
+    sub:'Five exhibits from the Ge\'ez Orit, Egyptian records, genetics, and classical sources.',
+    verdict:'CLAIM UNSUPPORTED',
+    verdictClass:'unsupported',
+    verdictIcon:'&#9878;',
+    verdictSummary:'The Ge\'ez Orit places the ancestors of Yisra\'el in the lineage of Ham — Africa. Canaan was an Egyptian province for centuries, making it geographically part of Africa. The Hebrews in Egypt were indistinguishable from Egyptians. Y-chromosome haplogroup studies document the prevalence of African lineage markers in Hebrew-origin communities across Africa. The claim of a non-African Hebrew identity has no primary-source foundation.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:"Ge'ez Orit — Bereshit 10 (Table of Nations)",
+        finding:'Bereshit 10 places Kena\'an (Canaan) as a son of Ham, alongside Mitzrayim (Egypt), Cush (Ethiopia/Sudan), and Put (Libya). Ham\'s sons are the peoples of Africa. The Hebrews entered a Kena\'anic land — a Ham-lineage territory — and their own genealogies in Bereshit connect them to this African geographic family through Avraham\'s origins in Ur and through the patriarchs\' repeated intermarriages within the region.',
+        detail:'Bereshit 10:6 names Ham\'s sons: Cush, Mitzrayim, Put, and Kena\'an. Verse 10:15–18 names Kena\'an\'s sons — the peoples who inhabited the land before Yisra\'el\'s entry. The land that became Yisra\'el was Ham-lineage territory. The language of Kena\'an (Phoenician / ancient Hebrew) is a Semitic language, but Semitic-speaking peoples of the ancient Near East are not synonymous with European or modern Middle Eastern populations — the region was demographically African.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:'Egyptian administrative records — Canaan as an Egyptian province (c.1550–1200 BCE)',
+        finding:'During the New Kingdom period (c.1550–1070 BCE), Canaan was an Egyptian administrative province. Egyptian records document governors, garrisons, and tribute systems operating in Canaan under Pharaonic authority. The Amarna Letters (c.1350 BCE, British Museum and Egyptian Museum Cairo) are diplomatic correspondence between Egyptian pharaohs and Canaanite city-states — demonstrating that the peoples of Canaan operated under Egyptian administrative jurisdiction. To be Canaanite was, in this period, to be part of the Egyptian imperial system.',
+        detail:'The Amarna Letters (EA tablets) are cuneiform tablets from Tell el-Amarna, Egypt, now primarily at the British Museum (London) and the Egyptian Museum (Cairo). They document the Canaanite city-kings writing to Pharaoh as vassals — addressing him as "my lord, my sun." The correspondence confirms that Canaan was not a separate Middle Eastern entity but a province of the African empire of Egypt during the biblical period.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:'Herodotus, Histories 2.104 — Colchians, Egyptians, Ethiopians',
+        finding:'Herodotus documents that Egyptians and Ethiopians shared the same physical characteristics: dark skin and woolly hair. The ancient Hebrew population, who lived in Egypt for centuries and were indistinguishable from Egyptians (Shemot 2:19), shared these characteristics. Herodotus is not a friendly witness to African identity — he is a Greek who simply records what he observed. His testimony is primary external documentation of Egyptian (and by extension, Hebrew-in-Egypt) appearance.',
+        detail:'Herodotus Histories 2.104: the dark skin and woolly hair of the Egyptians is used by Herodotus as a diagnostic identifier of Egyptian origin. The Hebrew people spent generations in Egypt. Mosheh passed as Egyptian (Shemot 2:19). The physical continuity between the Hebrew population and the Egyptian population they lived among is the expected result — and what the primary sources document.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'Y-chromosome haplogroup E1b1a — Sub-Saharan African lineage marker',
+        finding:'Y-chromosome haplogroup E1b1a is the predominant Y-lineage in Sub-Saharan African populations, particularly in West and Central Africa — the geographic region of the documented African Hebrew diaspora. Studies of the Lemba people of Zimbabwe and South Africa found the Cohen Modal Haplotype in the priestly Buba clan (Thomas et al., American Journal of Human Genetics, 2000) — indicating a priestly lineage consistent with Israelite descent persisting in an African population over centuries.',
+        detail:'The Lemba study (Mark Thomas, Tudor Parfitt, et al., 2000, American Journal of Human Genetics 66:674–686) found that the Lemba Buba clan carries Y-chromosome markers consistent with a Semitic priestly lineage at a higher frequency than the general Lemba population — consistent with the Buba clan\'s own oral tradition of priestly Hebrew descent. This study used the same genetic methodology applied to Jewish populations globally. The Lemba are an African people maintaining a covenant tradition independently of European religious institutions.'
+      },
+      {
+        label:'EXHIBIT E',
+        source:"Ge'ez Orit — Devarim 28:68 and the Atlantic slave trade",
+        finding:'Devarim 28:68 states that YHWH would return the people to Egypt in ships by a route they would never see again. The Atlantic slave trade (1500–1900 CE) transported approximately 12–15 million people from West and Central Africa — the same geographic corridor where post-70 CE Hebrew-origin communities are documented in the Timbuktu manuscripts — to the Americas. The shipping route to the Americas was one-way for those enslaved. This is the prophesied return "in ships" to bondage.',
+        detail:'Devarim 28:68: "YHWH will bring you back to Egypt in ships, by the route I told you that you would never see again; and there you will offer yourselves for sale to your enemies as male and female slaves, but there will be no buyer." The Trans-Atlantic Slave Trade Database (slavevoyages.org) documents the volume and geography of the trade. The Tarikh al-Sudan and Tarikh al-Fattash (Ahmad Baba Institute, Timbuktu) document Hebrew-origin communities in precisely the region from which the enslaved were taken. These are primary sources, not inferences.'
+      }
+    ]
+  },
+  {
+    id:'ct4',
+    claim:'The Dead Sea Scrolls confirm the modern Bible',
+    tag:'DSS vs Masoretic Text — Textual Divergence',
+    sub:'Four exhibits from named DSS manuscripts demonstrating divergence from the received text.',
+    verdict:'CLAIM UNSUPPORTED',
+    verdictClass:'unsupported',
+    verdictIcon:'&#9878;',
+    verdictSummary:'The Dead Sea Scrolls do not confirm the modern Bible — they predate it and diverge from it in thousands of places. The Masoretic Text (the basis of modern Bibles) was finalized by Rabbinic scholars in the 7th–10th centuries CE. The DSS are 1,000 years older. Where they differ, the DSS represent the earlier witness. The differences are not minor scribal errors — several are theologically significant substitutions that alter meaning.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:'1QIsa-a (Cave 1, Qumran, c.125 BCE) — Yeshayahu 53:11',
+        finding:'1QIsa-a (the Great Isaiah Scroll) contains over 2,600 differences from the Masoretic Text of Isaiah alone. In Yeshayahu 53:11, 1QIsa-a adds the word "light" ("he shall see light") — a phrase absent from the MT. This reading is supported by the LXX, meaning the MT removed or lost a word that was present in the older manuscript tradition. The Isaiah Scroll is the most complete ancient biblical manuscript in existence, predating the MT by approximately 1,000 years.',
+        detail:'1QIsa-a is held at the Shrine of the Book, Israel Museum, Jerusalem. The full scroll contains all 66 chapters of Isaiah. The 2,600+ variants from the MT range from spelling differences to word substitutions to additions. Some variants support the LXX against the MT, suggesting the MT was a later editorial tradition, not the preservation of the most ancient text.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:'DSS 4Q37 (4QDeut-j, Cave 4) — Devarim 32:8',
+        finding:'Devarim 32:8 in the MT reads "according to the number of the sons of Yisra\'el." In the DSS (4Q37 / 4QDeut-j) and the LXX it reads "according to the number of the sons of Elohim" — meaning divine beings / heavenly council. The MT substituted "sons of Yisra\'el" for "sons of Elohim," removing a reference to a divine council and replacing it with a human-oriented reading. This is not a scribal error — it is a theological substitution that changes the meaning of the verse.',
+        detail:'4Q37 (4QDeut-j) is held at the Israel Antiquities Authority, Jerusalem. The substitution of "sons of Yisra\'el" for "sons of Elohim" corresponds to a broader Masoretic tendency to remove or neutralize references to a divine council (the heavenly assembly of Elohim) that appear in earlier text traditions. The LXX independently preserves the "sons of Elohim" reading, confirming it was the pre-Masoretic original.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:'DSS 4Q365 (Reworked Pentateuch, Cave 4) — Shemot 15',
+        finding:'4Q365 preserves an expanded version of the Song of the Sea (Shemot 15) containing additional lines not present in the MT. The MT version of the Song of the Sea is shorter than the version preserved in the DSS. This demonstrates that the Masoretic Text represents an abridged, not a complete, version of the ancient text. Material was removed; what remains in modern Bibles is not the whole of what was originally written.',
+        detail:'4Q365 is held at the Israel Antiquities Authority, Jerusalem. The additional lines in the Song of the Sea fragment represent a longer poetic tradition that the MT either truncated or did not preserve. The DSS preserving a longer version than the MT is significant: it inverts the common assumption that the MT is the complete text and the DSS are fragments. In this case the fragment is more complete than the canonical version.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'11Q5 (11QPs-a, Cave 11, Qumran) — Tehillim / Psalms',
+        finding:'11Q5 (the Great Psalms Scroll from Cave 11) contains 41 canonical psalms, 8 non-canonical compositions, and arranges the canonical psalms in a different order from the MT. The non-canonical compositions include texts not in the MT Psalms collection but present in this pre-Masoretic scroll. The MT Psalms canon excluded material that was part of the Hebrew liturgical tradition at Qumran. The modern Psalms collection is an edited selection, not the complete ancient corpus.',
+        detail:'11Q5 is held at the Israel Antiquities Authority, Jerusalem. The non-canonical compositions include the "Apostrophe to Zion," the "Hymn to the Creator," and "David\'s Compositions" — a colophon claiming David wrote 4,050 songs and poems, far more than the 150 in the MT Psalter. The different order of the psalms suggests the final arrangement of Tehillim in the MT was an editorial decision made after the Qumran period, not the preservation of an original fixed sequence.'
+      }
+    ]
+  },
+  {
+    id:'ct5',
+    claim:'The Rabbis preserved the original Hebrew tradition',
+    tag:'Rabbinic vs Pre-Rabbinic Sources — Chronological Evidence',
+    sub:'Four exhibits establishing the late date and editorial nature of Rabbinic tradition.',
+    verdict:'CLAIM UNSUPPORTED',
+    verdictClass:'unsupported',
+    verdictIcon:'&#9878;',
+    verdictSummary:'The Rabbinic tradition was codified between 200 and 600 CE — 700 to 1,100 years after the Dead Sea Scrolls were written, and centuries after the destruction of the Second Temple. The Masoretic vowel-pointing system was added to Hebrew texts in the 7th–10th centuries CE. The DSS represent a Hebrew textual tradition that predates Rabbinic Judaism by centuries. Where they diverge — and they diverge in over 6,000 places — the DSS are the older witness.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:'Masoretic Text — vowel-pointing system (7th–10th centuries CE)',
+        finding:'The Hebrew Bible used in modern Judaism and in translations of the Old Testament is the Masoretic Text, finalized by the Masoretes (a group of Jewish scholars) between approximately 600 and 1000 CE. They added vowel-pointing (nikud) — a system of diacritical marks — to the previously consonant-only Hebrew text. Before the Masoretes, the vowels were not written, and the vocalization was transmitted orally. The Masoretes\' vowel choices are editorial decisions, not ancient originals.',
+        detail:'The most authoritative Masoretic manuscript is the Aleppo Codex (c.920 CE, now at the Ben-Zvi Institute, Jerusalem) and the Leningrad Codex (1008 CE, Russian National Library, St. Petersburg). These are the manuscripts underlying modern Bible translations. They postdate the DSS by approximately 1,000 years. Any place where the Masoretes\' vowel-pointing changes the meaning of a consonantal text is an editorial intervention in the received tradition, not the preservation of an original.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:'Mishnah (codified c.200 CE) and Babylonian Talmud (c.200–500 CE)',
+        finding:'The Oral Torah — the body of Rabbinic interpretation that Judaism treats as co-authoritative with the written Torah — was not written down until approximately 200 CE (the Mishnah, compiled by Rabbi Yehuda ha-Nasi). The Babylonian Talmud was compiled and redacted between approximately 200 and 500 CE and finalized in the 6th–7th centuries CE. These documents postdate the destruction of the Second Temple (70 CE) and the scattering of the Israelite people. They are a reconstruction, not a preservation.',
+        detail:'The Babylonian Talmud exists in numerous manuscript traditions, none of them pre-dating the medieval period. The earliest complete Talmud manuscript is the Munich Talmud (1342 CE, Bavarian State Library). The Rabbinic claim of an unbroken oral tradition going back to Sinai cannot be corroborated by any pre-Rabbinic document — including the DSS, which show no awareness of the oral Torah framework the Rabbis claim predates them.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:'Bavli Sanhedrin 108b — Addition to Bereshit / Noah narrative',
+        finding:'Bavli Sanhedrin 108b adds to the Bereshit narrative a claim that Cham (Ham) was cursed with black skin because he engaged in sexual misconduct on the ark — a claim that does not appear anywhere in the Ge\'ez Orit, the DSS, or any pre-Rabbinic source. This addition to the text was used for centuries to justify the enslavement of African people. It is a Rabbinic-era invention with no ancient textual foundation, inserted into the interpretation of a text it does not exist in.',
+        detail:'The DSS Genesis fragments (4Q252, Cave 4 — held at the Israel Antiquities Authority) contain the Noakh narrative without any reference to Ham being cursed with dark skin. The Ge\'ez Orit Bereshit 9 contains the curse on Kena\'an — not a skin-color curse on Ham. The Bavli Sanhedrin addition is a Talmudic-era theological construction used to create a scriptural-seeming basis for racial hierarchy. It has no pre-Rabbinic textual support anywhere in the manuscript record.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'DSS vs MT — 6,000+ textual variants (documented by Tov, Textual Criticism of the Hebrew Bible)',
+        finding:'Emanuel Tov\'s Textual Criticism of the Hebrew Bible (Fortress Press, 1992; 3rd ed. 2012) documents more than 6,000 places where the DSS texts diverge from the Masoretic Text. These are not spelling variations — they include word substitutions, additions, omissions, and rearrangements. The DSS represent a pre-Rabbinic, pre-Masoretic Hebrew textual tradition. The Rabbinic tradition did not preserve this older text — it worked from a different manuscript tradition and imposed its own vowel-pointing and editorial decisions on top of it.',
+        detail:'Tov\'s analysis, the most comprehensive scholarly treatment of DSS-MT divergence, establishes that approximately 60% of DSS manuscripts align with the Proto-Masoretic text tradition, 5% align with the Samaritan Pentateuch, 5% align with the LXX Vorlage, and approximately 30% are distinctly different from all known textual families (what Tov calls "independent texts"). The 30% independent texts represent a textual tradition that the Rabbinic canon did not preserve and that no modern Bible includes.'
+      }
+    ]
+  },
+  {
+    id:'ct6',
+    claim:'The Exodus is myth — there is no archaeological evidence',
+    tag:'Exodus — Archaeological and Egyptian Documentary Evidence',
+    sub:'Five exhibits from named Egyptian monuments, papyri, and excavation records.',
+    verdict:'EVIDENCE CONFIRMS HISTORICAL CONTEXT',
+    verdictClass:'confirmed',
+    verdictIcon:'&#9877;',
+    verdictSummary:'The claim that there is no evidence for the Exodus depends on a narrow standard: looking for a Hebrew-labeled event in Egyptian records that Egyptians would have documented as a national catastrophe. Egyptians did not record their defeats. What the archaeological record does show is: a large Semitic population in the eastern Delta consistent with the Goshen account, Egyptian records of Semitic slave labor in that region, a stele naming Yisra\'el as a defeated people (proving they existed as a recognizable group), and Egyptian administrative texts documenting escaping laborers. The absence of a pharaonic confession is not evidence of absence.',
+    exhibits:[
+      {
+        label:'EXHIBIT A',
+        source:'Merneptah Stele (c.1208 BCE, Egyptian Museum, Cairo, JE 31408)',
+        finding:'The Merneptah Stele is an Egyptian victory inscription by Pharaoh Merneptah, dating to approximately 1208 BCE. It contains the earliest known extra-biblical reference to Yisra\'el: "Yisra\'el is laid waste; its seed is no more." The Egyptian record names Yisra\'el as a people group significant enough to claim victory over. A people do not appear in an enemy\'s victory inscription without existing. The Merneptah Stele proves the existence of Yisra\'el as a recognized population in the Levant by the 13th century BCE.',
+        detail:'The Merneptah Stele is held at the Egyptian Museum, Cairo. The determinative used for Yisra\'el in the inscription is the people determinative (not the city or land determinative), indicating that at the time of Merneptah, Yisra\'el was understood as a people group, not yet a settled nation with a fixed territory. This is consistent with a recently settled population following the Exodus account timeline.'
+      },
+      {
+        label:'EXHIBIT B',
+        source:'Ipuwer Papyrus (c.1800–1650 BCE, Leiden Museum, Netherlands, AMS 344)',
+        finding:'The Ipuwer Papyrus (also known as the Admonitions of Ipuwer) is an Egyptian literary text describing a period of catastrophe: the Nile turned to something that could not be drunk, plagues afflicted the land, social order collapsed, foreigners were in the land. The parallels to the Exodus plague narrative have been noted since the 19th century. The papyrus is not a direct record of the Exodus — it is an Egyptian literary text describing a period of upheaval that, in its details, overlaps with the conditions the Exodus account describes.',
+        detail:'The Ipuwer Papyrus is held at the Leiden Museum, Netherlands (AMS 344). The dating of the original composition is contested; the surviving copy dates to the 13th century BCE. The parallel content includes: the river as blood, no fruit or herbs, fire throughout the land, darkness. The papyrus is a hostile Egyptian witness to catastrophic conditions that Egyptian records otherwise would not document, consistent with the pattern that Egyptian records avoided recording national defeats or disasters.'
+      },
+      {
+        label:'EXHIBIT C',
+        source:'Avaris / Tell el-Dab\'a excavations (Manfred Bietak, Austrian Archaeological Institute, 1966–present)',
+        finding:'Excavations at Tell el-Dab\'a in the eastern Nile Delta have uncovered a large Semitic-speaking population settlement dating to approximately 1800–1550 BCE — the Second Intermediate Period. The material culture shows Canaanite / Semitic features within an Egyptian administrative context. This is the geographic and temporal location consistent with the Goshen narrative: a large Semitic population in the eastern Delta during the period that precedes the Exodus account. The population disappears from the archaeological record abruptly at approximately 1550 BCE.',
+        detail:'Bietak\'s excavations have continued for over 50 years, documenting the largest Semitic-speaking settlement in ancient Egypt. The site shows Semitic housing styles, Canaanite pottery, and Egyptian administrative features coexisting. The abrupt end of the Semitic occupation layer at Tell el-Dab\'a around 1550 BCE coincides with the expulsion of the Hyksos (a Semitic-speaking ruling group) from Egypt — a period of major population displacement consistent with the Exodus account framework.'
+      },
+      {
+        label:'EXHIBIT D',
+        source:'Papyrus Leiden 348 (c.1250 BCE, Leiden Museum) — Semitic labor records',
+        finding:'Papyrus Leiden 348 is an Egyptian administrative document from the reign of Ramesses II recording the distribution of grain rations to "the Apiru who are dragging stone for the great pylon of the city of Ramesses." Apiru is the Egyptian term for a class of displaced laborers or outcasts — widely associated in Egyptological literature with the Hebrew (Ivri) population. The document places Semitic-speaking laborers building the city of Ramesses — the same city named in Shemot 1:11.',
+        detail:'Papyrus Leiden 348 is held at the Leiden Museum, Netherlands. The Apiru designation appears in multiple Egyptian and Mesopotamian documents from the 2nd millennium BCE, referring to a population of displaced, stateless laborers. The association of Apiru with Hebrew (Ivri) is contested in some scholarship but well-supported by comparative linguistic and historical evidence. The key point: Egyptian records document Semitic-speaking laborers building the specific city named in the Exodus account.'
+      },
+      {
+        label:'EXHIBIT E',
+        source:'Papyrus Anastasi V (c.1220 BCE, British Museum, London)',
+        finding:'Papyrus Anastasi V is an Egyptian border official\'s report documenting the pursuit of two escaped slaves who fled from Egypt eastward through the border fortress of Tjeku (biblical Succoth). The report describes the official\'s mission to track and recapture the fugitives. This is an Egyptian administrative record of the exact phenomenon the Exodus account describes: people escaping from Egypt eastward through the border region. The document is not about Hebrews specifically — it is about the administrative reality of people fleeing Egyptian labor.',
+        detail:'Papyrus Anastasi V is held at the British Museum, London. The border fortress of Tjeku corresponds to the biblical Succoth, the first stop named in the Exodus route (Shemot 12:37). The papyrus demonstrates that the geographical details of the Exodus account — the eastern border region, the specific fortress, the pattern of eastward flight — are consistent with documented Egyptian administrative geography and practice of the relevant period.'
+      }
+    ]
+  }
+];
+
+var ctActiveCase = -1;
+var ctActiveExhibit = 0;
+var ctPhase = 'select'; // 'select' | 'gavel' | 'evidence' | 'verdict'
+
+function ctShowPhase(caseIdx, phase, exhibitIdx) {
+  ctActiveCase = caseIdx;
+  ctActiveExhibit = exhibitIdx || 0;
+  ctPhase = phase;
+  var panel = document.getElementById('courtroom-panel');
+  if (!panel) return;
+
+  if (phase === 'select') {
+    panel.innerHTML = buildCTSelect();
+    return;
+  }
+
+  var cs = CT_CASES[caseIdx];
+
+  if (phase === 'gavel') {
+    panel.innerHTML = '<div class="ct-gavel">'
+      +'<div class="ct-g-label">The Claim</div>'
+      +'<div class="ct-g-claim">&ldquo;' + cs.claim + '&rdquo;</div>'
+      +'<div class="ct-g-sub">' + cs.sub + '</div>'
+      +'<div class="ct-start-btn" onclick="ctShowPhase(' + caseIdx + ',\'evidence\',0)">Hear the Evidence</div>'
+      +'</div>';
+    return;
+  }
+
+  if (phase === 'evidence') {
+    var ex = cs.exhibits[exhibitIdx];
+    var total = cs.exhibits.length;
+    var dots = cs.exhibits.map(function(_,i){
+      var cls = i < exhibitIdx ? 'done' : (i===exhibitIdx ? 'active' : '');
+      return '<div class="ct-ev-dot ' + cls + '"></div>';
+    }).join('');
+    var prevBtn = exhibitIdx > 0
+      ? '<div class="ct-ev-btn" onclick="ctShowPhase(' + caseIdx + ',\'evidence\',' + (exhibitIdx-1) + ')">Prev</div>'
+      : '<div class="ct-ev-btn" style="opacity:.25;pointer-events:none">Prev</div>';
+    var nextBtn = exhibitIdx < total-1
+      ? '<div class="ct-ev-btn next" onclick="ctShowPhase(' + caseIdx + ',\'evidence\',' + (exhibitIdx+1) + ')">Next Exhibit</div>'
+      : '<div class="ct-ev-btn next" onclick="ctShowPhase(' + caseIdx + ',\'verdict\',0)">Render Verdict</div>';
+
+    panel.innerHTML = '<div class="ct-ev-progress">'
+      +'<div class="ct-ev-label">Exhibit ' + (exhibitIdx+1) + ' of ' + total + '</div>'
+      +'<div class="ct-ev-dots">' + dots + '</div>'
+      +'</div>'
+      +'<div class="ct-ev-card">'
+      +'<div class="ct-exhibit">' + ex.label + '</div>'
+      +'<div class="ct-ev-source">' + ex.source + '</div>'
+      +'<div class="ct-ev-finding">' + ex.finding + '</div>'
+      +'<div class="ct-ev-detail">' + ex.detail + '</div>'
+      +'</div>'
+      +'<div class="ct-ev-nav">' + prevBtn + nextBtn + '</div>';
+    return;
+  }
+
+  if (phase === 'verdict') {
+    panel.innerHTML = '<div class="ct-verdict active">'
+      +'<div class="ct-vd-icon">' + cs.verdictIcon + '</div>'
+      +'<div class="ct-vd-ruling ' + cs.verdictClass + '">' + cs.verdict + '</div>'
+      +'<div class="ct-vd-summary">' + cs.verdictSummary + '</div>'
+      +'<div class="ct-vd-back" onclick="ctShowPhase(-1,\'select\',0)">Back to Cases</div>'
+      +'</div>';
+    return;
+  }
+}
+
+function buildCTSelect() {
+  var cards = CT_CASES.map(function(cs, i) {
+    return '<div class="ct-case-btn" onclick="ctShowPhase(' + i + ',\'gavel\',0)">'
+      +'<div class="ct-case-claim">&ldquo;' + cs.claim + '&rdquo;</div>'
+      +'<div class="ct-case-tag">' + cs.tag + ' &mdash; ' + cs.exhibits.length + ' exhibits</div>'
+      +'</div>';
+  }).join('');
+  return '<div class="ct-case-select"><div class="ct-cs-hdr">Select a case</div>' + cards + '</div>';
+}
+
+function renderCourtroomPanel() {
+  var panel = document.getElementById('courtroom-panel');
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = '1';
+  panel.innerHTML = buildCTSelect();
 }
 
 // ── DIASPORA SCATTER ─────────────────────────────────────────────────────────
