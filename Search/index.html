@@ -484,6 +484,28 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .explore-card-desc{font-size:10px;color:var(--tx3);line-height:1.5}
 .explore-card-tag{font-size:9px;color:rgba(200,151,31,.55);font-weight:700;margin-top:7px;letter-spacing:.04em;text-transform:uppercase}
 .explore-card.ex-soon .explore-card-tag{color:rgba(255,255,255,.25)}
+/* QUMRAN CAVE EXPLORER */
+#qumran-view{padding:0}
+.qm-scene{width:100%;background:#0a0a0c;position:relative;overflow:hidden;min-height:200px}
+.qm-scene svg{display:block;width:100%;height:auto}
+.qm-cave-btn{position:absolute;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.qm-cave-dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(200,151,31,.6);background:rgba(200,151,31,.15);transition:all .2s;box-sizing:border-box}
+.qm-cave-dot.found{border-color:#c8971f;background:rgba(200,151,31,.4)}
+.qm-cave-dot.active{border-color:#fff;background:rgba(200,151,31,.7);box-shadow:0 0 8px rgba(200,151,31,.5)}
+.qm-cave-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8px;font-weight:800;color:rgba(255,255,255,.8);line-height:1;pointer-events:none}
+.qm-hud{padding:10px 14px 0;display:flex;align-items:center;gap:10px}
+.qm-found{font-size:11px;color:var(--tx3)}
+.qm-found strong{color:var(--gold)}
+.qm-cave-dots-row{display:flex;gap:3px;flex:1;justify-content:flex-end}
+.qm-mini-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.12);transition:background .3s}
+.qm-mini-dot.found{background:var(--gold)}
+.qm-detail{padding:12px 14px;min-height:60px}
+.qm-tap-hint{font-size:11px;color:rgba(255,255,255,.25);text-align:center;padding:18px 0;font-style:italic}
+.qm-cave-hdr{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}
+.qm-cave-src{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px}
+.qm-cave-body{font-size:12px;color:var(--tx3);line-height:1.68;margin-bottom:8px}
+.qm-cave-find{font-size:11px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
+.qm-back-btn{display:inline-block;margin-top:10px;font-size:11px;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;padding:6px 0}
 /* COURTROOM */
 #courtroom-view{padding:14px}
 .ct-case-select{margin-bottom:16px}
@@ -1220,6 +1242,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- QUMRAN CAVE EXPLORER -->
+    <div id="qumran-view" style="display:none">
+      <div class="sv-hdr">Qumran Cave Explorer</div>
+      <div class="sv-sub">Eleven caves cut into the cliffs above the Dead Sea. Between 1947 and 1956 they yielded over 900 manuscripts hidden for 2,000 years. Tap each cave to read what was found inside.</div>
+      <div id="qumran-panel"></div>
     </div>
 
     <!-- EXPLORE HUB -->
@@ -2694,6 +2723,7 @@ function initApp() {
   renderDiasporaPanel();
   renderCourtroomPanel();
   renderExplorePanel();
+  renderQumranPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2722,7 +2752,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','explore','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','explore','qumran','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2733,7 +2763,7 @@ function setMode(mode) {
     setTimeout(initConceptMapCanvas, 50);
   }
   if (mode === 'news') { markBriefSeen(); }
-  var EXPLORE_SUB = ['uncover','library','solarcal','exodus','diaspora','courtroom'];
+  var EXPLORE_SUB = ['uncover','library','solarcal','exodus','diaspora','courtroom','qumran','citywalker'];
   document.querySelectorAll('.mpill').forEach(function(p) {
     var isActive = p.dataset.mode === mode || (p.dataset.mode === 'explore' && EXPLORE_SUB.indexOf(mode) !== -1);
     p.classList.toggle('active', isActive);
@@ -2762,7 +2792,8 @@ var PANEL_LABELS = {
   exodus:'The Exodus Journey',
   diaspora:'The Diaspora Scatter',
   courtroom:'The Courtroom',
-  explore:'Explore'
+  explore:'Explore',
+  qumran:'Qumran Cave Explorer'
 };
 
 function buildSiteIndex() {
@@ -2807,6 +2838,8 @@ function goToSiteEntry(tab, topic) {
     setMode('courtroom');
   } else if (tab === 'explore') {
     setMode('explore');
+  } else if (tab === 'qumran') {
+    setMode('qumran');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -8359,6 +8392,159 @@ function renderExodusPanel() {
   highlightExoWaypoint(0);
 }
 
+// ── QUMRAN CAVE EXPLORER ─────────────────────────────────────────────────────
+var QM_CAVES = [
+  {
+    num:1, x:52, y:88,
+    name:'Cave 1 — The Great Scrolls',
+    src:'Discovered 1947 by Bedouin shepherd Muhammad edh-Dhib. Excavated 1949 (de Vaux, Ecole Biblique, Jerusalem)',
+    body:'The first cave yielded seven major scrolls including 1QIsa-a (the Great Isaiah Scroll — the oldest complete book of the Hebrew Bible in existence), 1QS (the Community Rule), 1QM (the War Scroll), 1QH (the Thanksgiving Hymns), and 1QpHab (the Habakkuk Commentary). The discovery of Cave 1 opened the entire DSS era. The scrolls date to approximately 250–100 BCE.',
+    find:'Primary scrolls from Cave 1 are held at the Shrine of the Book, Israel Museum, Jerusalem. 1QIsa-a (c.125 BCE) is the museum\'s centerpiece. The cave itself is in the cliffs 1.2km north of Khirbet Qumran.'
+  },
+  {
+    num:2, x:90, y:72,
+    name:'Cave 2 — The Psalms and the Scroll of Ruth',
+    src:'Discovered 1952 (de Vaux / Jordan Department of Antiquities)',
+    body:'Cave 2 yielded approximately 33 manuscript fragments. The cave contained fragments of Tehillim (Psalms), Shemot (Exodus), Bamidbar (Numbers), and the Book of Ruth. A fragment of Jubilees was also found — confirming Jubilees was part of the Qumran library. The fragments were in poor condition due to the cave\'s exposure.',
+    find:'Fragments from Cave 2 are held at the Jordan Archaeological Museum, Amman, and the Israel Antiquities Authority, Jerusalem. The Jubilees fragment (2Q19–20) is significant as it places Jubilees in active use at Qumran, confirming its authority within the pre-Rabbinic Hebrew community.'
+  },
+  {
+    num:3, x:130, y:60,
+    name:'Cave 3 — The Copper Scroll',
+    src:'Discovered 1952 (de Vaux). Copper Scroll deciphered by J.T. Milik, 1955–1956',
+    body:'Cave 3 contained the Copper Scroll (3Q15) — a unique document engraved on copper rather than written on parchment, listing 64 locations where massive quantities of gold, silver, and vessels were allegedly hidden. Unlike the literary and scriptural scrolls found elsewhere, the Copper Scroll appears to be an inventory of real valuables, possibly Temple treasure hidden before the Roman destruction. Its locations have never been found.',
+    find:'The Copper Scroll (3Q15) is held at the Jordan Archaeological Museum, Amman. It lists quantities that, if real, represent hundreds of tons of gold and silver. Whether the inventory is literal or symbolic remains one of the DSS\'s unresolved questions. The scroll is currently on display in Amman.'
+  },
+  {
+    num:4, x:170, y:75,
+    name:'Cave 4 — The Great Library',
+    src:'Discovered 1952 by Bedouin. Excavated 1952 (de Vaux). Approximately 15,000 fragments recovered',
+    body:'Cave 4 is the most significant of all the Qumran caves. It contained roughly 40% of all DSS material — approximately 900 manuscripts represented by 15,000 fragments. The cave yielded 4QDeut-j (with the "sons of Elohim" reading replacing MT\'s "sons of Israel"), 4QMMT (the halakhic letter), 4Q365 (Reworked Pentateuch with the extended Song of the Sea), the Similitudes of Enoch, the Book of Giants, and hundreds of additional biblical and sectarian texts. The cave was cut into the marl terrace adjacent to the settlement.',
+    find:'Cave 4 fragments are distributed across the Israel Antiquities Authority (Jerusalem), the Jordan Archaeological Museum (Amman), and various institutions that purchased fragments before the 1967 war. The cave is visible from the Qumran site — a rectangular opening cut directly into the cliff face immediately east of the ruins.'
+  },
+  {
+    num:5, x:205, y:88,
+    name:'Cave 5 — Community Documents',
+    src:'Discovered 1952 (de Vaux). Excavated alongside Cave 6',
+    body:'Cave 5 yielded approximately 25 manuscripts, primarily fragments of the Community Rule (5Q11), the Damascus Document (5Q12), and biblical books. The cave\'s proximity to Cave 4 suggests it was a secondary storage location. The Community Rule fragments from Cave 5 overlap with but differ from those in Caves 1 and 4, indicating multiple manuscript traditions of the same sectarian text.',
+    find:'Fragments from Cave 5 are held at the Israel Antiquities Authority, Jerusalem. The presence of the Damascus Document in multiple caves (4, 5, 6) confirms its central importance to the Qumran community. The Damascus Document predates Qumran — copies were also found in the Cairo Geniza (discovered 1896, Cambridge University Library), indicating the text circulated beyond Qumran.'
+  },
+  {
+    num:6, x:232, y:105,
+    name:'Cave 6 — The Damascus Document',
+    src:'Discovered 1952 (de Vaux). Primarily papyrus fragments',
+    body:'Cave 6 contained approximately 31 manuscripts, notably on papyrus rather than parchment — unusual among the Qumran caves. It yielded fragments of the Damascus Document (6Q15), the Book of Giants (6Q8), and biblical texts. The Damascus Document is one of the most important sectarian texts, describing the community\'s origin, its laws, and its covenant with YHWH outside the Jerusalem Temple establishment.',
+    find:'Cave 6 fragments are held at the Israel Antiquities Authority, Jerusalem. The Damascus Document was first known from the Cairo Geniza (1896) before Cave 6 and Cave 4 copies confirmed it was a Qumran-community text. The Cave 6 papyrus copies are among the most fragile DSS materials.'
+  },
+  {
+    num:7, x:250, y:130,
+    name:'Cave 7 — The Greek Fragments',
+    src:'Discovered 1955 (de Vaux). All fragments in Greek',
+    body:'Cave 7 is unique: every fragment found there is in Greek, not Hebrew or Aramaic. The cave yielded 19 fragments, all from Greek texts. Two fragments (7Q4 and 7Q5) have been the subject of significant scholarly debate — some researchers proposed they were fragments of NT texts (specifically Mark 6:52–53 and 1 Timothy 3:16), which would make them the earliest NT manuscripts in existence. The identification remains contested and unproven.',
+    find:'Cave 7 fragments are held at the Museo Arqueologico Nacional, Madrid. The proposed NT identifications (by Jose O\'Callaghan, 1972) sparked major controversy. The consensus position is that the fragments are too small for definitive identification. What is certain is that Cave 7 stored only Greek texts — indicating a distinct collection separated from the Semitic-language manuscripts.'
+  },
+  {
+    num:8, x:255, y:165,
+    name:'Cave 8 — Mezuzot and Phylacteries',
+    src:'Discovered 1955 (de Vaux). Contains liturgical objects',
+    body:'Cave 8 yielded fragments of Genesis, Psalms, a mezuzah, and phylacteries (tefillin). The presence of mezuzot and phylacteries alongside scriptural fragments confirms that the Qumran community\'s ritual practices were rooted in the same Torah traditions found in the manuscripts. The phylactery boxes are among the oldest examples of this practice found in an archaeological context.',
+    find:'Cave 8 materials are held at the Israel Antiquities Authority, Jerusalem. The phylacteries (tefillin) from Cave 8 are significant because they show that the texts inside them diverge from the later Rabbinic specification of which passages to include — another example of pre-Rabbinic practice differing from the Rabbinic standardization.'
+  },
+  {
+    num:9, x:240, y:198,
+    name:'Cave 9 — A Single Fragment',
+    src:'Discovered 1955 (de Vaux). Minimal remains',
+    body:'Cave 9 yielded only a single papyrus fragment — the smallest cave discovery in the Qumran corpus. The cave may have been largely emptied in antiquity, or its contents may have deteriorated beyond recovery. Its existence in the sequence of numbered caves is documented but its contribution to the DSS corpus is negligible.',
+    find:'The single fragment from Cave 9 is held at the Israel Antiquities Authority, Jerusalem. The cave\'s minimal yield contrasts sharply with the adjacent caves, suggesting it may have served a different purpose or was disturbed before the 1947–1956 survey period.'
+  },
+  {
+    num:10, x:210, y:220,
+    name:'Cave 10 — An Ostracon',
+    src:'Discovered 1955 (de Vaux). One inscribed pottery shard',
+    body:'Cave 10 yielded a single ostracon (inscribed pottery shard) with two letters of the Hebrew alphabet — possibly a scribal practice piece or a marker. Like Cave 9, Cave 10\'s contribution to the manuscript corpus is minimal. The ostracon is notable primarily as evidence of writing activity near the cave system beyond the manuscript deposits.',
+    find:'The Cave 10 ostracon is held at the Israel Antiquities Authority, Jerusalem. The presence of even minimal writing evidence in Cave 10 confirms the broader scribal activity surrounding Qumran, even in caves that did not serve as major manuscript repositories.'
+  },
+  {
+    num:11, x:165, y:232,
+    name:'Cave 11 — The Temple Scroll and the Psalms',
+    src:'Discovered 1956 by Bedouin. Purchased by Yigael Yadin, 1967. Excavated by van der Ploeg',
+    body:'Cave 11 yielded some of the most important DSS material outside Cave 1 and Cave 4. It contained 11QT (the Temple Scroll) — the longest of all the Dead Sea Scrolls at 8.15 meters — describing a hypothetical Temple complex and its laws in the first person as if dictated by YHWH directly. It also contained 11Q5 (the Great Psalms Scroll), which includes eight non-canonical compositions not in the Masoretic Psalter and arranges the canonical psalms in a different order, and 11QTgJob (the Targum of Job), a pre-Rabbinic Aramaic translation of the book.',
+    find:'The Temple Scroll (11QT) is held at the Shrine of the Book, Israel Museum, Jerusalem. Yigael Yadin purchased it during the Six-Day War (1967) for $130,000. 11Q5 (Great Psalms Scroll) is also at the Shrine of the Book. The non-canonical psalms in 11Q5 — compositions the Masoretic canon excluded — are among the most significant evidence that the Hebrew liturgical tradition was broader than what the Rabbinic canon preserved.'
+  }
+];
+
+var qmFoundCaves = {};
+var qmActiveCave = null;
+
+function buildQumranScene() {
+  var dots = QM_CAVES.map(function(c, i) {
+    var found = qmFoundCaves[i] ? ' found' : '';
+    var active = qmActiveCave === i ? ' active' : '';
+    return '<div class="qm-cave-btn" style="left:' + (c.x - 9) + 'px;top:' + (c.y - 9) + 'px" onclick="qmSelectCave(' + i + ')">'
+      + '<div class="qm-cave-dot' + found + active + '"></div>'
+      + '<div class="qm-cave-num">' + c.num + '</div>'
+      + '</div>';
+  }).join('');
+  return '<div class="qm-scene" style="height:290px">'
+    + '<svg viewBox="0 0 320 290" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;width:100%;height:100%">'
+    + '<rect width="320" height="290" fill="#0a0a0c"/>'
+    + '<rect x="0" y="0" width="320" height="290" fill="url(#cliffGrad)"/>'
+    + '<defs><linearGradient id="cliffGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#12100e"/><stop offset="100%" stop-color="#1a1510"/></linearGradient></defs>'
+    + '<polygon points="0,290 0,140 30,120 60,105 95,82 130,65 165,72 200,88 230,110 255,135 270,160 290,185 320,200 320,290" fill="#1e1a14"/>'
+    + '<polygon points="0,290 0,160 20,145 45,130 70,118 100,105 130,95 160,98 190,110 218,128 242,148 262,168 282,190 320,210 320,290" fill="#271f16"/>'
+    + '<polygon points="0,290 0,220 40,210 80,205 120,208 160,215 200,222 240,228 280,230 320,232 320,290" fill="#0c1a26" opacity="0.9"/>'
+    + '<text x="160" y="268" font-size="8" fill="rgba(13,90,170,.5)" font-weight="700" letter-spacing="1" text-anchor="middle">DEAD SEA</text>'
+    + '<text x="100" y="48" font-size="7" fill="rgba(255,255,255,.18)" font-weight="700" letter-spacing="1">QUMRAN CLIFFS</text>'
+    + '</svg>'
+    + dots
+    + '</div>';
+}
+
+function qmSelectCave(idx) {
+  qmActiveCave = idx;
+  qmFoundCaves[idx] = true;
+  var cave = QM_CAVES[idx];
+  var foundCount = Object.keys(qmFoundCaves).length;
+  // rebuild HUD dots
+  var hudDots = QM_CAVES.map(function(_, i) {
+    return '<div class="qm-mini-dot' + (qmFoundCaves[i] ? ' found' : '') + '"></div>';
+  }).join('');
+  document.getElementById('qm-found-count').textContent = foundCount;
+  document.getElementById('qm-hud-dots').innerHTML = hudDots;
+  // rebuild scene dots (update active/found state)
+  var sceneEl = document.getElementById('qm-scene-wrap');
+  if (sceneEl) sceneEl.innerHTML = buildQumranScene();
+  // show detail
+  var det = document.getElementById('qm-detail');
+  if (det) {
+    det.innerHTML = '<div class="qm-cave-hdr">Cave ' + cave.num + ' — ' + cave.name.split('—')[1].trim() + '</div>'
+      + '<div class="qm-cave-src">' + cave.src + '</div>'
+      + '<div class="qm-cave-body">' + cave.body + '</div>'
+      + '<div class="qm-cave-find">' + cave.find + '</div>'
+      + '<div class="qm-back-btn" onclick="qmCloseDetail()">Back to map</div>';
+  }
+}
+
+function qmCloseDetail() {
+  qmActiveCave = null;
+  var sceneEl = document.getElementById('qm-scene-wrap');
+  if (sceneEl) sceneEl.innerHTML = buildQumranScene();
+  var det = document.getElementById('qm-detail');
+  if (det) det.innerHTML = '<div class="qm-tap-hint">Tap any cave to open it</div>';
+}
+
+function renderQumranPanel() {
+  var panel = document.getElementById('qumran-panel');
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = '1';
+  qmFoundCaves = {};
+  qmActiveCave = null;
+  var miniDots = QM_CAVES.map(function() { return '<div class="qm-mini-dot"></div>'; }).join('');
+  panel.innerHTML = '<div id="qm-scene-wrap">' + buildQumranScene() + '</div>'
+    + '<div class="qm-hud"><div class="qm-found"><strong id="qm-found-count">0</strong> / ' + QM_CAVES.length + ' caves explored</div><div class="qm-cave-dots-row" id="qm-hud-dots">' + miniDots + '</div></div>'
+    + '<div class="qm-detail" id="qm-detail"><div class="qm-tap-hint">Tap any cave to open it</div></div>';
+}
+
 // ── EXPLORE HUB ──────────────────────────────────────────────────────────────
 var EXPLORE_TILES = [
   {mode:'uncover', icon:'ri-layers-line', title:'Uncover the Text', desc:'Peel back the layers on 4 manipulated passages — from received text to primary source.', tag:'6 manipulation layers'},
@@ -8367,7 +8553,7 @@ var EXPLORE_TILES = [
   {mode:'exodus', icon:'ri-map-2-line', title:'Exodus Journey', desc:'10 waypoints from Kemet to the Plains of Moab. Every event sourced from the Ge\'ez Orit and DSS.', tag:'Interactive SVG map'},
   {mode:'diaspora', icon:'ri-global-line', title:'Diaspora Scatter', desc:'Three documented dispersions across Africa and into the world. Switch events to see the scatter.', tag:'722 BCE · 586 BCE · 70 CE'},
   {mode:'courtroom', icon:'ri-scales-line', title:'The Courtroom', desc:'Six claims tested against primary-source evidence. Exhibits dealt one by one. Verdict rendered.', tag:'6 cases · 27 exhibits'},
-  {mode:'qumran', icon:'ri-treasure-map-line', title:'Qumran Cave Explorer', desc:'Navigate the 11 caves. Find the scrolls. Read what was hidden for 2,000 years.', tag:'Coming soon', soon:true},
+  {mode:'qumran', icon:'ri-treasure-map-line', title:'Qumran Cave Explorer', desc:'Navigate the 11 caves. Find the scrolls. Read what was hidden for 2,000 years.', tag:'11 caves · 900+ manuscripts'},
   {mode:'citywalker', icon:'ri-building-line', title:'Ancient City Walker', desc:'Walk the streets of Yerushalayim, Waset, and Babylon as they existed in the ancient world.', tag:'Coming soon', soon:true}
 ];
 
