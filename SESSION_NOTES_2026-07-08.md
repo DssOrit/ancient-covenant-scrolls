@@ -144,4 +144,12 @@ Applied the rule across BOTH apps this session (user directive: apply to both):
   intact, 0 emojis in either app.
 
 Files changed this pass: `CLAUDE.md` (rule 18), `GESTUDY/data/app_data.json`,
-`GreatE/index.html`, `GreatE/sw.js`. All on PR #594; NOT merged (rule 9).
+`GreatE/index.html`, `GreatE/sw.js`. Shipped via PR #594, MERGED (squash) at
+`1631c3f` with user approval.
+
+## Backups
+
+- `backup/2026-07-08-ge-v14` at `1631c3f` (main HEAD after PR #594 merge:
+  Study verses/quizzes + Sharks fix + divine-name rule across both apps).
+  Recovery: `git checkout backup/2026-07-08-ge-v14`.
+- Prior: `backup/2026-07-06-v129` at `acfdc4e`.
