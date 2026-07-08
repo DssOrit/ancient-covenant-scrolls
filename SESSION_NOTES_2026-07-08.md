@@ -88,6 +88,38 @@ d60021c Search: The Courtroom — 6 cases, evidence exhibits, verdict screens (a
 (Uncover the Text v130 — pre-session)
 ```
 
+## Great Eraser Study, modules/quizzes pass (gestudy-v11)
+
+Architecture found: the live Study app loads ONLY `data/app_data.json`. Each
+chapter's Connected Verses + quiz come from `verse_map[chapter-id]`. The
+`connections.json` "modules" file is orphaned dead code (never fetched); left
+untouched.
+
+Coverage before: 140/183 chapters had verses (Vols 1-4,10 complete; Vol 5
+partial; Vols 6,7,8 empty; Vol 9 falsely "covered" via id collisions).
+
+Built this pass (all grounded in each chapter's own named primary sources, no
+fabrication per rule 17; authored by 11 parallel subagents then merged +
+validated):
+- Filled every gap: Vol 5 (+4), Vol 6 (+7), Vol 7 (+10), Vol 8 (+34) with
+  primary-source verses + auto-quizzes matching the Vol 1 standard.
+- BUG FIX: Vol 9 (Sharks) 52 chapters reused Vol 1-4 ids (ch1, ch2, ch4...),
+  so they displayed the WRONG verses (e.g. "The Emperor's New Groove" showed
+  Vol 1 cartography). Re-keyed all Vol 9 chapters to a unique `v9_` namespace
+  and authored Sharks-specific verses/quizzes for all 52.
+- Coverage after: 183/183 chapters. 434 verses, 200 quiz items total.
+- Rule cleanup in the shipped data file: removed 1 emoji (in a Vol 9 chapter
+  body) and normalized 658 em/en dashes to plain punctuation across the older
+  study data (verse_map, timelines, memory_cards). New content had none.
+- Cache bumped `gestudy-v10` -> `gestudy-v11`. No on-screen version badge in
+  GESTUDY. No INLINE_DATA constant is defined; app relies on the fetched file.
+- Verified in headless Chromium: DATA loads, 10 volumes, 184 verse_map entries,
+  all volumes 100% covered, Sharks now shows its own verses, Vol 1-4 unchanged.
+
+Files changed: `GESTUDY/data/app_data.json`, `GESTUDY/sw.js`. Shipped via PR
+(feature branch `claude/wsa-acr-design-alignment-ji5poy`). NOT merged; awaiting
+user confirmation per rule 9.
+
 ## Divine name rule (kept)
 
 Only YHWH and Creator. No Lord, Adonai, Elohim, capital-G God as divine name. Applied to all new content this session.
