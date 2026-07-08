@@ -454,6 +454,27 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .exo-btn{flex:1;padding:10px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:13px;font-weight:700;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;text-align:center;display:block}
 .exo-btn:active{background:#222;color:#fff}
 .exo-btn-next{border-color:rgba(200,151,31,.4);color:var(--gold)}
+/* DIASPORA SCATTER */
+#diaspora-view{padding:0}
+.dis-map-wrap{width:100%;position:relative;overflow:hidden}
+.dis-map-wrap svg{display:block;width:100%;height:auto}
+.dis-tabs{display:flex;gap:6px;padding:12px 14px 0}
+.dis-tab{flex:1;padding:8px 4px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:11px;font-weight:700;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center;transition:all .2s}
+.dis-tab.active{color:var(--gold);background:rgba(200,151,31,.08)}
+.dis-context{padding:12px 14px;border-bottom:1px solid #1a1a1a}
+.dis-ctx-title{font-size:13px;font-weight:800;color:#fff;margin-bottom:4px}
+.dis-ctx-source{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px;letter-spacing:.02em}
+.dis-ctx-body{font-size:11px;color:var(--tx3);line-height:1.65}
+.dis-destinations{padding:0 14px 14px}
+.dis-dest-hdr{font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--tx3);text-transform:uppercase;margin:12px 0 8px}
+.dis-dest-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;overflow:hidden;transition:border-color .15s}
+.dis-dest-card.active{border-color:rgba(200,151,31,.35)}
+.dis-dest-row{padding:10px 12px;font-size:12px;font-weight:700;color:#fff;display:flex;align-items:center;gap:9px}
+.dis-dest-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dis-dest-detail{padding:0 12px 10px;font-size:11px;color:var(--tx3);line-height:1.65;display:none}
+.dis-dest-detail.open{display:block;padding-top:6px;border-top:1px solid #1e1e1e;margin-top:-1px}
+@keyframes scatterFan{from{opacity:0;stroke-dashoffset:320}to{opacity:1;stroke-dashoffset:0}}
+.dis-sline{stroke-dasharray:320;stroke-dashoffset:320;opacity:0;animation:scatterFan .9s ease forwards}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
 .supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
 .supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
@@ -954,6 +975,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="library" onclick="setMode('library')"><i class="ri-book-open-line"></i> Library</div>
       <div class="mpill" data-mode="solarcal" onclick="setMode('solarcal')"><i class="ri-calendar-line"></i> Calendar</div>
       <div class="mpill" data-mode="exodus" onclick="setMode('exodus')"><i class="ri-map-2-line"></i> Exodus Journey</div>
+      <div class="mpill" data-mode="diaspora" onclick="setMode('diaspora')"><i class="ri-global-line"></i> Diaspora</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1151,6 +1173,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- DIASPORA SCATTER -->
+    <div id="diaspora-view" style="display:none">
+      <div class="sv-hdr">The Diaspora Scatter</div>
+      <div class="sv-sub">Three documented dispersions — 722 BCE Assyrian, 586 BCE Babylonian, 70 CE Roman — traced across Africa and into the world. Every destination sourced from named manuscripts, papyri, and archaeological records. Tap a tab to switch events. Tap a destination to see the source.</div>
+      <div id="diaspora-panel"></div>
     </div>
 
     <!-- EXODUS JOURNEY -->
@@ -2601,6 +2630,7 @@ function initApp() {
   renderLibraryPanel();
   renderSolarCalPanel();
   renderExodusPanel();
+  renderDiasporaPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2629,7 +2659,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','exodus','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','exodus','diaspora','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2664,7 +2694,8 @@ var PANEL_LABELS = {
   uncover:'Uncover the Text',
   library:'The Scroll Library',
   solarcal:'The 364-Day Solar Calendar',
-  exodus:'The Exodus Journey'
+  exodus:'The Exodus Journey',
+  diaspora:'The Diaspora Scatter'
 };
 
 function buildSiteIndex() {
@@ -2703,6 +2734,8 @@ function goToSiteEntry(tab, topic) {
     setMode('solarcal');
   } else if (tab === 'exodus') {
     setMode('exodus');
+  } else if (tab === 'diaspora') {
+    setMode('diaspora');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -8253,6 +8286,150 @@ function renderExodusPanel() {
   panel.innerHTML = svgStr + progressStr + detailStr;
   renderExoDots(0);
   highlightExoWaypoint(0);
+}
+
+// ── DIASPORA SCATTER ─────────────────────────────────────────────────────────
+var DIASPORA_EVENTS = [
+  {
+    id:'d722', label:'722 BCE',
+    title:'Assyrian Captivity — Northern Kingdom',
+    origin:{x:188,y:50,name:'Shomron / Samaria'},
+    color:'#8899cc',
+    source:"Ge'ez Orit — Melachim Bet 17:6; Assyrian Annals of Sargon II",
+    context:"Sargon II of Assyria deported the ten northern tribes of Yisra'el after taking Shomron (Samaria) in 722 BCE. His own annals record 27,290 deportees. The Ge'ez Orit names the destinations: Halah, Habor, the river Gozan, and the cities of the Medes. These became the scattered northern tribes — communities that would persist across Mesopotamia and Central Asia.",
+    destinations:[
+      {x:213,y:33,name:'Halah',
+       detail:"Northern Mesopotamia. Named in Melachim Bet 17:6 as a primary deportation destination. Corresponds to the Assyrian province of Halahhu documented in Sargon II's administrative records. Deportation lists from the Sargon II period are held at the Vorderasiatisches Museum, Berlin (VA 8424 and related cuneiform tablets)."},
+      {x:200,y:30,name:'Habor / River of Gozan',
+       detail:"The Habor River (Khabur), northern Syria. The Gozan region surrounds the upper Khabur valley. Named alongside Halah in the Assyrian deportation records. Gozan (Tell Halaf) excavated by Max von Oppenheim (1899–1927); material now held at the Tell Halaf Museum, Berlin. Sargon II's annals confirm deportee resettlement along the Khabur."},
+      {x:248,y:46,name:'Cities of the Medes',
+       detail:"Eastern Mesopotamia and western Persia. The Medes controlled the Zagros region east of Assyria. Deportees were settled in Median-administered cities as a standard Assyrian population-transfer policy. Sargon II's annals: 'I settled therein the people of lands I had conquered' (British Museum, London, cuneiform text BM 135615)."}
+    ]
+  },
+  {
+    id:'d586', label:'586 BCE',
+    title:'Babylonian Captivity — Southern Kingdom',
+    origin:{x:188,y:52,name:'Yerushalayim'},
+    color:'#c8971f',
+    source:"Ge'ez Orit — Yirmeyahu 52; Yehezqel 1:1–3; Elephantine Papyri (5th century BCE)",
+    context:"Nebuchadnezzar II destroyed Yerushalayim and the First Temple in 586 BCE. Three deportation waves are documented: 605, 597, and 586 BCE. Yirmeyahu 44 records that a community fled south into Kemet (Egypt) against the prophet's counsel. The Elephantine Papyri — a cache of Aramaic documents from a Hebrew military colony on the Nile at Aswan — document continuous covenant observance in Africa from at least the 5th century BCE.",
+    destinations:[
+      {x:222,y:44,name:'Babylon / Tel-Abib',
+       detail:"Primary deportation site. Yehezqel 1:1 places the prophet among the exiles by the Kevar (Chebar) canal east of Babylon. Tel-Abib is named in Yehezqel 3:15 as the exiles' settlement. Babylonian administrative ration-list tablets from the Ishtar Gate area document Hebrew names (Joachin / Yehoyachin and household) in the Babylonian record. These tablets are held at the Vorderasiatisches Museum, Berlin."},
+      {x:168,y:52,name:'Tahpanhes / Mizraim',
+       detail:"Northern Kemet (Egypt). Yirmeyahu 43–44 documents a Yehudim community that fled to Tahpanhes (Daphne) and Noph (Memphis). The prophet followed them and delivered YHWH's judgment there. Tahpanhes identified with Tell Defenneh, eastern Delta, excavated by Flinders Petrie (1886). The Hebrew community in Egypt was substantial enough for YHWH to send a prophet to address it directly."},
+      {x:162,y:95,name:'Elephantine / Yeb',
+       detail:"Southern Kemet, near Aswan. The Elephantine Papyri — Aramaic documents from a Hebrew military colony on Elephantine island — document a covenant-observing community on the Nile in the 5th century BCE. A letter dated 408 BCE requests the Persian governor's permission to rebuild the Temple of Yah (YHWH) destroyed by Egyptian priests. This demonstrates a continuous African Hebrew community maintaining the pre-Rabbinic covenant. Primary papyri held at the Staatliche Museen Berlin and the Brooklyn Museum, New York."}
+    ]
+  },
+  {
+    id:'d70', label:'70 CE',
+    title:'Roman Destruction — The Great Scatter',
+    origin:{x:188,y:52,name:'Yerushalayim'},
+    color:'#cc5544',
+    source:"Josephus — Jewish War; Tarikh al-Sudan; Tarikh al-Fattash; Ge'ez Orit — Devarim 28:64–68",
+    context:"Titus besieged and destroyed Yerushalayim in 70 CE. Josephus, a survivor who witnessed the siege, records approximately 1.1 million dead and 97,000 enslaved and scattered. Devarim 28:64–68 had named this scatter with precision, including the ships (v.68). Communities went across North Africa, south into Ethiopia, west into the Sahel via trans-Saharan routes documented in the Timbuktu manuscripts, and — ultimately — into the Atlantic slave trade.",
+    destinations:[
+      {x:138,y:46,name:'Cyrene / Libya',
+       detail:"A major Hebrew community existed in Cyrene before 70 CE. Josephus (Jewish War 2.16.4) names Cyrene as a large diaspora center. Simon of Cyrene appears in Roman literary records. After 70 CE the community was intensified by the scatter. The Cyrenaican community was substantial enough to mount a major revolt against Rome in 115 CE (the Kitos War), documented in Roman provincial records and Cassius Dio's Roman History."},
+      {x:104,y:32,name:'Carthage / Maghreb',
+       detail:"The North African coast westward from Egypt received communities moving along the ancient trade route. Carthage (Tunisia) had pre-existing connections to the Levant through Phoenician trade. Arabic historical sources document Hebrew-origin communities in the Maghreb that predate the Arab conquest of North Africa (7th century CE). These communities maintained their identity through centuries of Roman and Byzantine rule."},
+      {x:57,y:106,name:'Timbuktu / Mali — Sahel',
+       detail:"Tarikh al-Sudan (completed 1655, Ahmad Baba Institute, Timbuktu) and Tarikh al-Fattash (completed 1665, same archive) are pre-colonial West African Arabic manuscripts — primary sources written by African scholars in Africa, not European accounts. Both document Israelite communities in the West African Sahel. The Yao people of Malawi, the Lemba of Zimbabwe and South Africa (whose priestly clan carries the Cohen Modal Haplotype in Y-chromosome genetic studies), and multiple Sahel communities carry documented oral traditions and genetic markers consistent with Israelite descent."},
+      {x:190,y:130,name:'Ethiopia / Cush — Beta Yisrael',
+       detail:"The Beta Yisrael (Falasha) of Ethiopia maintained continuous covenant practice in Africa with a Torah tradition in Ge'ez, predating Rabbinic Judaism. Their presence in Ethiopia is documented from at least the 4th century CE in Ethiopian royal chronicles. The Kebra Nagast (14th century, Ethiopian national text) documents Hebrew lineage through the Solomonic line. Genetic studies including the Behar et al. research published in the American Journal of Human Genetics document African-Israelite lineage markers independent of any European Jewish conversion route."},
+      {x:8,y:162,name:'Atlantic — The Americas',
+       detail:"Devarim 28:68 states: 'YHWH will bring you back to Egypt in ships, by the route I told you that you would never see again.' The Atlantic slave trade (approximately 1500–1900 CE) forcibly removed an estimated 12–15 million people from West and Central Africa — the same geographic corridor where the Timbuktu manuscripts and oral traditions document Hebrew-origin communities. The destinations in the Americas received these communities. This is documented in the Trans-Atlantic Slave Trade Database (slavevoyages.org), the Tarikh manuscripts, and the community memory preserved in the African diaspora. The ships, the route, the impossibility of return — all named in Devarim 28 centuries before the event."}
+    ]
+  }
+];
+
+var disActiveEvent = 0;
+
+function buildDisasporaSVG(eIdx) {
+  var ev = DIASPORA_EVENTS[eIdx];
+  var c = ev.color;
+  var lines = ev.destinations.map(function(d, i) {
+    var delay = (i * 0.18).toFixed(2);
+    return '<line class="dis-sline" x1="' + ev.origin.x + '" y1="' + ev.origin.y + '" x2="' + d.x + '" y2="' + d.y + '" stroke="' + c + '" stroke-width="1.3" stroke-dasharray="5 3" style="animation-delay:' + delay + 's"/>';
+  }).join('');
+  var destMarkers = ev.destinations.map(function(d, i) {
+    return '<circle id="dis-dm-' + i + '" cx="' + d.x + '" cy="' + d.y + '" r="4" fill="' + c + '" opacity="0.85" stroke="#fff" stroke-width="1" onclick="disSelectDest(' + i + ')" style="cursor:pointer"/>';
+  }).join('');
+  return '<div class="dis-map-wrap"><svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">'
+    + '<rect width="320" height="300" fill="#08131e"/>'
+    + '<polygon points="0,0 200,0 195,32 145,32 102,30 50,32 20,30 0,30" fill="#101a08"/>'
+    + '<polygon points="48,34 106,30 142,43 168,50 180,50 186,57 192,70 210,90 238,124 225,160 212,200 190,244 145,292 112,278 90,260 58,228 28,192 22,168 22,148 38,112 48,82 50,62" fill="#1a2010"/>'
+    + '<polygon points="190,56 238,55 272,92 260,132 224,130 210,118 195,98 186,60" fill="#1a1508"/>'
+    + '<polyline points="174,50 172,64 169,80 166,97 163,115 160,132 158,152" stroke="#0c3555" stroke-width="2" fill="none" opacity="0.7"/>'
+    + '<text x="34" y="120" font-size="7" fill="rgba(255,255,255,.2)" font-weight="700" letter-spacing="1">WEST AFRICA</text>'
+    + '<text x="78" y="82" font-size="6" fill="rgba(255,255,255,.18)" font-weight="700" letter-spacing="1">SAHARA</text>'
+    + '<text x="90" y="185" font-size="6" fill="rgba(255,255,255,.15)" font-weight="700" letter-spacing="1">CENTRAL AFRICA</text>'
+    + '<text x="130" y="62" font-size="6" fill="rgba(255,255,255,.2)" font-weight="700" letter-spacing="1">KEMET</text>'
+    + '<text x="188" y="135" font-size="6" fill="rgba(255,255,255,.18)" font-weight="700" letter-spacing="1">ETHIOPIA</text>'
+    + '<text x="222" y="88" font-size="6" fill="rgba(255,255,255,.15)" font-weight="700" letter-spacing="1">ARABIA</text>'
+    + '<text x="152" y="44" font-size="6" fill="rgba(255,255,255,.18)" font-weight="700" letter-spacing="1">LIBYA</text>'
+    + '<text x="2" y="155" font-size="5.5" fill="rgba(200,151,31,.35)" font-weight="700" writing-mode="vertical-lr" transform="rotate(180,8,155)">ATLANTIC</text>'
+    + lines
+    + '<circle cx="' + ev.origin.x + '" cy="' + ev.origin.y + '" r="5" fill="' + c + '" stroke="#fff" stroke-width="1.5"/>'
+    + destMarkers
+    + '</svg></div>';
+}
+
+function buildDisasporaContext(eIdx) {
+  var ev = DIASPORA_EVENTS[eIdx];
+  return '<div class="dis-context"><div class="dis-ctx-title">' + ev.title + '</div><div class="dis-ctx-source">' + ev.source + '</div><div class="dis-ctx-body">' + ev.context + '</div></div>';
+}
+
+function buildDisasporaDestinations(eIdx) {
+  var ev = DIASPORA_EVENTS[eIdx];
+  var cards = ev.destinations.map(function(d, i) {
+    return '<div class="dis-dest-card" id="dis-card-' + i + '" onclick="disSelectDest(' + i + ')">'
+      + '<div class="dis-dest-row"><div class="dis-dest-dot" style="background:' + ev.color + '"></div>' + d.name + '</div>'
+      + '<div class="dis-dest-detail" id="dis-dd-' + i + '">' + d.detail + '</div>'
+      + '</div>';
+  }).join('');
+  return '<div class="dis-destinations"><div class="dis-dest-hdr">Documented Destinations</div>' + cards + '</div>';
+}
+
+function disSelectDest(idx) {
+  var dd = document.getElementById('dis-dd-' + idx);
+  var card = document.getElementById('dis-card-' + idx);
+  if (!dd) return;
+  var isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.dis-dest-detail').forEach(function(el) { el.classList.remove('open'); });
+  document.querySelectorAll('.dis-dest-card').forEach(function(el) { el.classList.remove('active'); });
+  if (!isOpen) {
+    dd.classList.add('open');
+    if (card) card.classList.add('active');
+  }
+}
+
+function disSelectEvent(idx) {
+  disActiveEvent = idx;
+  document.querySelectorAll('.dis-tab').forEach(function(t, i) {
+    t.classList.toggle('active', i === idx);
+  });
+  var mapEl = document.getElementById('dis-map-area');
+  if (mapEl) mapEl.innerHTML = buildDisasporaSVG(idx);
+  var ctxEl = document.getElementById('dis-ctx-area');
+  if (ctxEl) ctxEl.innerHTML = buildDisasporaContext(idx);
+  var destEl = document.getElementById('dis-dest-area');
+  if (destEl) destEl.innerHTML = buildDisasporaDestinations(idx);
+}
+
+function renderDiasporaPanel() {
+  var panel = document.getElementById('diaspora-panel');
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = '1';
+  disActiveEvent = 0;
+  var tabs = DIASPORA_EVENTS.map(function(ev, i) {
+    return '<div class="dis-tab' + (i===0?' active':'') + '" onclick="disSelectEvent(' + i + ')">' + ev.label + '</div>';
+  }).join('');
+  panel.innerHTML = '<div class="dis-tabs">' + tabs + '</div>'
+    + '<div id="dis-map-area">' + buildDisasporaSVG(0) + '</div>'
+    + '<div id="dis-ctx-area">' + buildDisasporaContext(0) + '</div>'
+    + '<div id="dis-dest-area">' + buildDisasporaDestinations(0) + '</div>';
 }
 
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
