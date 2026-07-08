@@ -48,6 +48,25 @@ before I do anything.**
    User is cautious after the text scare — they asked to see **Chapter 1 as a proof first**.
    Offer a viewable/preview of the original before shipping the full swap.
 
+### ALTERNATIVE the user proposed (discuss BEFORE deciding tomorrow)
+Instead of replacing the rewrite with the original, **merge/union** them:
+- Scan the original text against the new text; find the original passages that are
+  **missing** from the new edition (recall: only ~10% of the original's exact wording is
+  in the new edition, so ~90% is "missing").
+- **Add only the missing original text to the site without deleting the new text.**
+  Result = a superset: the reworked edition PLUS the user's original passages restored.
+
+Points to work through with the user tomorrow (do not assume):
+- **Placement**: original and new have different chapter structures — where do the missing
+  original passages go (own chapters? appended per-topic? a separate "Original" section or
+  edition toggle?).
+- **Duplication risk**: many topics exist in BOTH (original wording + rewritten wording),
+  so a naive union repeats content in two voices. Need a rule for that.
+- **Definition of "missing"**: verbatim phrase-level vs topic/paragraph-level. Verbatim
+  (~90% missing) will pull in almost the whole original; topic-level needs judgment.
+- Compare against the simpler option (full swap to original). Let the user choose.
+- Tooling ready: `_restore_original/` has the original data + build pipeline to do either.
+
 ## Current state
 - Live: **Great Eraser** cache `great-eraser-v10`; **GESTUDY** cache `gestudy-v9`.
 - Branch `claude/wsa-acr-design-alignment-ji5poy` = `origin/main` + this notes/preserve commit.
