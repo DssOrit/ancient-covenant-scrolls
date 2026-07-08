@@ -355,6 +355,51 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .place-map-btn:active{background:rgba(200,151,31,0.22)}
 .sv-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
 .sv-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.6}
+/* UNCOVER */
+.uncover-passage{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid #1e1e1e}
+.uncover-passage:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.uncover-ref{font-size:12px;font-weight:800;color:var(--gold);margin-bottom:3px;line-height:1.4}
+.uncover-subject{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.5;font-style:italic}
+.uncover-layer{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px}
+.uncover-layer.type-manipulation{border-left:3px solid #c0392b}
+.uncover-layer.type-change{border-left:3px solid #e67e22}
+.uncover-layer.type-original{border-left:3px solid var(--gold)}
+.uncover-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-bottom:8px}
+.uncover-badge.type-manipulation{background:rgba(192,57,43,.18);color:#e74c3c}
+.uncover-badge.type-change{background:rgba(230,126,34,.18);color:#e67e22}
+.uncover-badge.type-original{background:rgba(200,151,31,.18);color:var(--gold)}
+.uncover-lbl{font-size:11px;font-weight:700;color:#fff;margin-bottom:8px}
+.uncover-text{font-size:13px;color:#fff;line-height:1.7;font-weight:600;margin-bottom:8px;font-style:italic}
+.uncover-note{font-size:11px;color:var(--tx3);line-height:1.6;margin-bottom:6px}
+.uncover-date{font-size:10px;color:var(--gold);font-weight:700}
+.uncover-controls{display:flex;align-items:center;gap:12px;margin-top:12px}
+.uncover-prog{font-size:10px;color:var(--tx3);flex:1}
+.uncover-btn{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.4);color:var(--gold);font-size:12px;font-weight:700;padding:8px 18px;border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.uncover-btn:active{background:rgba(200,151,31,.25)}
+/* SCROLL LIBRARY */
+#library-view{padding:14px}
+.lib-shelf-section{margin-bottom:22px}
+.lib-shelf-lbl{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--tx3);text-transform:uppercase;margin-bottom:8px;padding-left:2px}
+.lib-shelf{background:linear-gradient(180deg,#1a1205 0%,#120e04 100%);border-radius:6px;padding:12px 10px;border-top:4px solid #5a3e1a;border-bottom:3px solid #3a2a0a;display:flex;flex-wrap:wrap;gap:8px}
+.lib-scroll{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:4px 2px;border-radius:6px;transition:background .15s;-webkit-tap-highlight-color:transparent;min-width:52px}
+.lib-scroll:active,.lib-scroll.lib-active{background:rgba(200,151,31,.12)}
+.lib-rod{width:46px;height:8px;background:linear-gradient(180deg,#8b6232,#5a3e1a);border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,.6)}
+.lib-body{width:40px;height:68px;background:linear-gradient(135deg,#f0d090 0%,#d9b86a 35%,#c4a050 70%,#b08830 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.lib-body-txt{font-size:7px;font-weight:800;color:#5a3610;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);line-height:1.2;text-align:center;padding:2px;max-height:62px;overflow:hidden}
+.lib-scroll-name{font-size:8px;color:var(--tx3);margin-top:5px;text-align:center;max-width:58px;line-height:1.3}
+.lib-scroll.lib-suppressed .lib-rod{background:linear-gradient(180deg,#3a3030,#251818)}
+.lib-scroll.lib-suppressed .lib-body{background:linear-gradient(135deg,#2c2020,#1a1212)}
+.lib-scroll.lib-suppressed .lib-body-txt{color:#666}
+.lib-scroll.lib-suppressed .lib-scroll-name{color:#c0392b}
+.lib-detail{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:16px;margin-top:10px;border-left:3px solid var(--gold);animation:libSlide .25s ease}
+.lib-detail.lib-suppressed-detail{border-left-color:#c0392b}
+@keyframes libSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.lib-d-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:3px}
+.lib-d-ref{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:3px}
+.lib-d-loc{font-size:10px;color:var(--tx3);margin-bottom:10px}
+.lib-d-body{font-size:12px;color:var(--tx3);line-height:1.7;margin-bottom:10px}
+.lib-d-find{font-size:12px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
+.lib-d-find.lib-suppressed-find{background:rgba(192,57,43,.07);border-left-color:#c0392b}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
 .supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
 .supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
@@ -851,6 +896,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="paganism" onclick="setMode('paganism')"><i class="ri-fire-line"></i> Paganism</div>
       <div class="mpill" data-mode="racism" onclick="setMode('racism')"><i class="ri-scales-3-line"></i> Racism</div>
       <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
+      <div class="mpill" data-mode="uncover" onclick="setMode('uncover')"><i class="ri-layers-line"></i> Uncover</div>
+      <div class="mpill" data-mode="library" onclick="setMode('library')"><i class="ri-book-open-line"></i> Library</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1048,6 +1095,20 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- SCROLL LIBRARY -->
+    <div id="library-view" style="display:none">
+      <div class="sv-hdr">The Scroll Library</div>
+      <div class="sv-sub">The primary-source archive — the Dead Sea Scrolls, the Ge'ez Orit canon, and the texts that were suppressed. Tap any scroll to open it.</div>
+      <div id="library-panel"></div>
+    </div>
+
+    <!-- UNCOVER -->
+    <div id="uncover-view" style="display:none">
+      <div class="sv-hdr">Uncover the Text</div>
+      <div class="sv-sub">Peel back the layers. Each passage starts with what the received text says, then shows what changed and when, then reaches the primary sources — the Dead Sea Scrolls and the Ge'ez Orit. The manipulations are datable, named, and specific.</div>
+      <div id="uncover-panel"></div>
     </div>
 
     <!-- ROOT SEARCH -->
@@ -2466,6 +2527,8 @@ function initApp() {
   renderPaganismPanel();
   renderRacismPanel();
   renderBodyPanel();
+  renderUncoverPanel();
+  renderLibraryPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2494,7 +2557,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','library','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2525,7 +2588,9 @@ var PANEL_LABELS = {
   orit:'Orit Record',
   covenant:'Covenant Record',
   histdocs:'Historical Documents',
-  practices:'Covenant Practices'
+  practices:'Covenant Practices',
+  uncover:'Uncover the Text',
+  library:'The Scroll Library'
 };
 
 function buildSiteIndex() {
@@ -2556,6 +2621,10 @@ function goToSiteEntry(tab, topic) {
     setMode('racism');
   } else if (tab === 'body') {
     setMode('body');
+  } else if (tab === 'uncover') {
+    setMode('uncover');
+  } else if (tab === 'library') {
+    setMode('library');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -3368,6 +3437,291 @@ function renderRacismPanel() {
   '<div class="td-item"><div class="td-topic">"Safety" Guidelines Are Western Institutional Standards</div><div class="td-text">Beyond the data, AI systems are tuned by written human guidelines that reflect the standards of the Western institutions that build them. The topics most likely to be softened, hedged, "both-sided," or refused are exactly the ones that challenge those institutions: the African identity of the ancient Hebrews, the New Testament figure as an invention, and the documented manipulation of the texts. The bias is not always deliberate. A widely used US health algorithm was found in 2019 (Obermeyer and colleagues, in the journal Science) to systematically rate Black patients as less sick than equally ill white patients, cutting their access to extra care by more than half, not because anyone coded racism on purpose, but because the system was trained on a biased proxy. Built into the data and built into the rules produces the same result as intent.</div></div>' +
   '<div class="td-item"><div class="td-topic">The Same Pattern, a New Tool, and the Same Defense</div><div class="td-text">Line it up. The 1807 Slave Bible removed the Exodus so the enslaved could not read their deliverance. The colonial church recolored the Hebrews and injected the Curse of Ham. The modern algorithm is trained on that same civilization\'s library and tuned to that same civilization\'s standards. Each is one move in one long project: control which evidence a person can reach, and frame the rest as unreliable. The defense has never changed, and it is the entire reason this tool exists. Go to the primary sources directly. The Dead Sea Scrolls and the Ge\'ez Orit do not run on Western training data and answer to no platform\'s guidelines. Put the ancient text in front of you, unfiltered, so that no institution and no algorithm stands between you and the record.</div></div>' +
   '';
+}
+
+var libActiveId = null;
+function libOpen(id) {
+  var shelves = ['lib-s1','lib-s2','lib-s3','lib-s4'];
+  shelves.forEach(function(s) {
+    var d = document.getElementById(s + '-detail');
+    if (d) { d.style.display = 'none'; d.innerHTML = ''; }
+  });
+  document.querySelectorAll('.lib-scroll').forEach(function(el) { el.classList.remove('lib-active'); });
+  if (libActiveId === id) { libActiveId = null; return; }
+  libActiveId = id;
+  var sc = LIB_SCROLLS.find(function(s) { return s.id === id; });
+  if (!sc) return;
+  var el = document.getElementById('lib-sc-' + id);
+  if (el) el.classList.add('lib-active');
+  var det = document.getElementById('lib-s' + sc.shelf + '-detail');
+  if (!det) return;
+  var suppCls = sc.type === 'suppressed' ? ' lib-suppressed-detail' : '';
+  var findCls = sc.type === 'suppressed' ? ' lib-suppressed-find' : '';
+  det.innerHTML = '<div class="lib-d-title">' + sc.title + '</div>'
+    + '<div class="lib-d-ref">' + sc.ref + '</div>'
+    + '<div class="lib-d-loc">' + sc.loc + '</div>'
+    + '<div class="lib-d-body">' + sc.body + '</div>'
+    + '<div class="lib-d-find' + findCls + '">' + sc.finding + '</div>';
+  det.className = 'lib-detail' + suppCls;
+  det.style.display = 'block';
+}
+var LIB_SCROLLS = [
+  { id:1, shelf:1, type:'dss', short:'Isaiah', ref:'1QIsa-a', title:'The Great Isaiah Scroll',
+    loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem. Accession 19901.',
+    body:'The most complete ancient manuscript of the book of Yeshayahu (Isaiah) — 54 columns covering all 66 chapters. Written on 17 sheets of parchment sewn together, 7.34 meters long. Copied ~125–100 BCE.',
+    finding:'1QIsa-a reads almah (young woman) in Yeshayahu 7:14 — confirming that the LXX mistranslation of almah as parthenos (virgin) is a translation decision, not what the Hebrew text says. The scroll also shows ka\'aru in the related Psalms passage, consistent with the DSS reading.'
+  },
+  { id:2, shelf:1, type:'dss', short:'Community Rule', ref:'1QS', title:'The Community Rule',
+    loc:'Cave 1, Qumran, 1947. Israel Antiquities Authority collection.',
+    body:'10 columns governing entry into the Qumran community, conduct, penalties, and theological framework. Describes a dualistic worldview: the Prince of Light and the Angel of Darkness govern two opposing human natures. Copied ~100–75 BCE.',
+    finding:'The Rule describes a covenant community that rejected the Jerusalem temple priesthood as corrupt. It uses the divine name in paleo-Hebrew script even within the square-Aramaic text — a deliberate decision to preserve the older script for YHWH\'s name when the rest of the community\'s writing had moved on.'
+  },
+  { id:3, shelf:1, type:'dss', short:'War Scroll', ref:'1QM', title:'The War Scroll',
+    loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem.',
+    body:'19 columns describing a 40-year eschatological war between the Sons of Light and the Sons of Darkness. Detailed battle formations, weapons, trumpets, and priestly duties during combat. Copied ~1st century BCE.',
+    finding:'The scroll documents a military theology entirely absent from the received canon. The war is cosmic and human simultaneously — YHWH\'s army fights alongside the covenant community. The 40-year duration mirrors the wilderness period. Seven nations are named as enemies: Edom, Moab, Ammon, Philistia, Kittim (Rome), and the violators of the covenant.'
+  },
+  { id:4, shelf:1, type:'dss', short:'Pesher Habakkuk', ref:'1QpHab', title:'Pesher Habakkuk',
+    loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem.',
+    body:'13 columns of running commentary on the book of Habakkuk. The method — pesher — applies every verse of Habakkuk as a coded reference to the Qumran community\'s own era: the Teacher of Righteousness, the Wicked Priest, and the Kittim (Rome). Copied ~1st century BCE.',
+    finding:'The Wicked Priest is described as a Jerusalem high priest who initially walked in truth then turned corrupt — most likely a Hasmonean priest. The Teacher of Righteousness led the community in opposition. This conflict is entirely absent from the received canon — the community kept its own historical record in code.'
+  },
+  { id:5, shelf:1, type:'dss', short:'Thanksgiving Hymns', ref:'1QH', title:'Thanksgiving Hymns',
+    loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem.',
+    body:'28+ hymns — poetry attributed largely to the Teacher of Righteousness. Language of suffering, election, and gratitude for deliverance from enemies. Copied ~1st century BCE to 1st century CE.',
+    finding:'The hymns document a prophetic self-understanding: the Teacher speaks as one whom YHWH has made "a wellspring of living water" and "a sure foundation." The community understood itself as the remnant faithful to the original covenant. Their poetry does not appear in any received canon.'
+  },
+  { id:6, shelf:2, type:'dss', short:'Devarim 32', ref:'4QDeut-j', title:'Devarim Fragments — 4QDeut-j',
+    loc:'Cave 4, Qumran, 1952. Israel Antiquities Authority. Published in DJD XIV (Oxford, 1995).',
+    body:'A fragment of Devarim (Deuteronomy) chapter 32. Cave 4 yielded more manuscript fragments than any other cave — approximately 15,000 fragments from over 200 manuscripts.',
+    finding:'4QDeut-j reads beni Elohim (sons of God) in Devarim 32:8 — confirming a divine council structure that the Masoretic text replaced with beni Yisrael (sons of Israel). The Septuagint (LXX), independently translated ~3rd century BCE, also reads "sons of God." Two witnesses, separated by geography and language, preserve what the Masoretes removed.'
+  },
+  { id:7, shelf:2, type:'dss', short:'4QMMT', ref:'4QMMT', title:'Miqsat Ma\'ase ha-Torah',
+    loc:'Cave 4, Qumran, 1952. 6 fragmentary copies (4Q394–4Q399). Ecole Biblique, Jerusalem. Published by Qimron and Strugnell, 1994.',
+    body:'A legal letter — "Some of the Works of the Torah" — addressed to the Jerusalem leadership. Lists 22 points of legal dispute between the Qumran community and the Jerusalem establishment. Covers purity law, priestly regulations, temple protocol, and calendar.',
+    finding:'The letter documents that the Qumran community followed a 364-day solar calendar — not the lunar calendar adopted by the Jerusalem establishment. This calendar dispute was theological, not administrative. The Enochic tradition (1 Enoch 72–82, Jubilees 6) grounds the 364-day calendar in the created order. Adopting the lunar calendar was understood as abandoning the covenant structure of time.'
+  },
+  { id:8, shelf:2, type:'dss', short:'Temple Scroll', ref:'11QT', title:'The Temple Scroll',
+    loc:'Cave 11, Qumran, 1956. Shrine of the Book, Israel Museum, Jerusalem. The longest of all the DSS — 8.75 meters.',
+    body:'66 columns. A detailed architectural blueprint for an ideal temple, plus an extensive law code. Written in first person as if spoken directly by YHWH to Moshe. The text rewrites and expands Devarim, Shemot, and Vayikra.',
+    finding:'The Temple Scroll describes a temple substantially different from the Second Temple standing in Jerusalem at the time of the community — larger, more elaborate, and governed by purity laws the community believed Jerusalem had abandoned. Its existence documents that the Qumran community had their own temple theology and expected its physical realization.'
+  },
+  { id:9, shelf:2, type:'dss', short:'Psalms Scroll', ref:'11Q5', title:'The Psalms Scroll',
+    loc:'Cave 11, Qumran, 1956. Shrine of the Book, Israel Museum, Jerusalem. Published by James A. Sanders, DJD IV, 1965.',
+    body:'Contains 41 of the 150 canonical psalms — but in a different order than the Masoretic Psalter. Also contains 7 additional compositions not in the received canon, including the Hymn to the Creator and a prose note on David\'s compositions attributing 4,050 songs to him.',
+    finding:'The different order of canonical psalms confirms that the Psalter was not yet a fixed, closed collection in the 1st century BCE. "The Book of Psalms" as received today is a later editorial arrangement. The additional compositions the scroll contains were not included in the Masoretic collection — not because they were considered less authoritative by the Qumran community, but because later editors drew a line the community did not.'
+  },
+  { id:10, shelf:3, type:'orit', short:'1 Enoch', ref:'Henok — Ge\'ez Orit', title:'The Book of Enoch (1 Enoch)',
+    loc:'Complete only in Ge\'ez (ancient Ethiopian). Cambridge University Library, Or.1880 collection. Fragments at Qumran: Caves 1, 2, 4, 6 — Books 1–5. Cave 4 fragments: 4Q201–4Q202, 4Q204–4Q207. No Similitudes fragments anywhere.',
+    body:'Five books: the Book of the Watchers (ch. 1–36), the Similitudes (ch. 37–71), the Astronomical Book (ch. 72–82), the Book of Dreams (ch. 83–90), the Epistle of Enoch (ch. 91–108). The Ge\'ez canon of the Ethiopian Orthodox Tewahedo Church is the only tradition that preserved all five books intact.',
+    finding:'The Astronomical Book (1 Enoch 72–82) documents the 364-day solar calendar in precise detail — four seasons of 91 days each, with appointed times falling on the same day of the week every year. This is the calendar the Qumran community followed. Jubilees 6:17–38 cites it as the divinely mandated structure of time. The Rabbinic lunar calendar and the Gregorian calendar both diverge from this structure.'
+  },
+  { id:11, shelf:3, type:'orit', short:'Jubilees', ref:'Kufale — Ge\'ez Orit', title:'The Book of Jubilees',
+    loc:'Complete only in Ge\'ez. Fragments at Qumran in Caves 1, 2, 3, 4, and 11 — more copies than many books in the received canon. Cambridge University Library holds Ge\'ez manuscripts.',
+    body:'A retelling of Bereshit through the giving of the Torah at Sinai, organized into 49 periods of 7 years each (jubilees). Written as YHWH\'s direct dictation to Moshe via an angel of the presence. Dated ~2nd century BCE in its present form.',
+    finding:'Jubilees 6:29–30 states explicitly that the 364-day solar calendar was designed so the appointed times would always fall on the same day of the week — never on a Shabbat, never shifted by lunar drift. It also records that Canaan (not Ham and not Ham\'s other sons) is the cursed one in Bereshit 9 — corroborating the primary-source reading against the Bavli Sanhedrin 108b skin-color addition.'
+  },
+  { id:12, shelf:3, type:'orit', short:'Ge\'ez Orit', ref:'Orit — Ethiopian Torah', title:'The Ge\'ez Orit',
+    loc:'The five books of Moshe in Ge\'ez, the classical Ethiopic language. Ethiopian Orthodox Tewahedo Church canon. Manuscripts held at the Institut français d\'archéologie orientale (IFAO), Cairo, and in monastery libraries across Ethiopia.',
+    body:'The Torah in Ge\'ez — Bereshit, Shemot, Vayikra, Bamidbar, Devarim — part of the Ethiopian biblical canon that also includes Jubilees, 1 Enoch, and other texts excluded from the Western canon. Preserved in a continuous textual tradition outside the Masoretic and Rabbinic transmission lines.',
+    finding:'The Ge\'ez Orit represents a pre-Rabbinic textual tradition that was never subject to the Masoretic vocalization decisions, the Rabbinic canonical selections, or the later European theological overlay. It carries 1 Enoch and Jubilees as canonical — books the Qumran community treated as authoritative (multiple copies in multiple caves) but which Rabbinic Judaism and Protestant Christianity excluded.'
+  },
+  { id:13, shelf:4, type:'suppressed', short:'Similitudes', ref:'1 Enoch 37–71', title:'The Similitudes of Enoch — The Missing Section',
+    loc:'Complete in Ge\'ez only. ABSENT from all Qumran caves. Every other section of 1 Enoch is represented at Qumran. The Similitudes are not. No satisfactory explanation has been produced.',
+    body:'Three parables (similitudes) describing the Son of Man figure, the judgment of the Watchers and the kings of the earth, and the final state. The Son of Man in the Similitudes is a pre-existent heavenly figure who sits on the throne of glory and judges the powerful of the earth. This is the most theologically significant figure in any pre-Christian Jewish text.',
+    finding:'The Similitudes contain the most developed pre-Christian "Son of Man" theology in existence. They are absent from Qumran — the site that preserved every other section of 1 Enoch in multiple copies. The absence is not explained by date or discovery conditions. What the Similitudes contain — a heavenly judge figure, pre-existence, cosmic authority — is the precise theological territory that later became contested between Judaism, Christianity, and the primary-source tradition. The Ge\'ez Orit preserved it. The Dead Sea Scrolls archive did not.'
+  },
+  { id:14, shelf:4, type:'suppressed', short:'Book of Giants', ref:'4QEnGiants', title:'The Book of Giants',
+    loc:'Cave 4, Qumran. Fragments: 4Q203, 4Q530–532, 4Q556. Published in DJD XXXI. Also: Manichaean version preserved in Central Asian manuscripts (Turfan collection, Berlin).',
+    body:'Expands the Watcher narrative of 1 Enoch 6–16: the giants born from the union of the Watchers with human women. Names the giants — Ohya, Hahya, Gilgamesh — and describes their violence and destruction before the flood. The giants have prophetic dreams about their coming judgment.',
+    finding:'The Book of Giants was excluded from both Jewish and Christian canons but preserved at Qumran in multiple fragments and in the Manichaean tradition transmitted through Central Asia. Gilgamesh appears by name — placing the giants in the same narrative world as Mesopotamian tradition. The book documents that the pre-flood Watcher tradition was widely known and considered authoritative in the Second Temple period before canonical selection excluded it.'
+  },
+  { id:15, shelf:4, type:'suppressed', short:'Extra Psalms', ref:'11Q5 Additional Compositions', title:'The Non-Canonical Psalms of 11Q5',
+    loc:'Cave 11, Qumran, 1956. The Psalms Scroll (11Q5) contains seven compositions not in the Masoretic Psalter. Shrine of the Book, Israel Museum.',
+    body:'The additional compositions include: the Hymn to the Creator, the Apostrophe to Zion, the Apostrophe to Judah, Psalm 151 (known in the LXX), Psalm 154–155 (known in Syriac), and a prose account of David\'s compositions. These texts show every formal feature of a canonical psalm.',
+    finding:'The presence of these compositions in the Psalms Scroll alongside canonical psalms — without any indication that they were considered secondary — confirms that the Masoretic Psalter\'s 150-psalm boundary was a later editorial decision, not the state of the collection in the 1st century BCE. The Qumran community\'s psalm collection was larger. Who drew the line at 150, when, and why, is not documented in the primary sources.'
+  }
+];
+function renderLibraryPanel() {
+  var panel = document.getElementById('library-panel');
+  if (!panel) return;
+  var shelves = [
+    { id:1, label:'Dead Sea Scrolls — Cave 1, Qumran' },
+    { id:2, label:'Dead Sea Scrolls — Caves 4 and 11, Qumran' },
+    { id:3, label:'Ge\'ez Orit — Ethiopian Canon' },
+    { id:4, label:'Suppressed — Excluded from Received Canons' }
+  ];
+  var html = '';
+  shelves.forEach(function(shelf) {
+    var scrolls = LIB_SCROLLS.filter(function(s) { return s.shelf === shelf.id; });
+    var suppCls = shelf.id === 4 ? ' lib-suppressed' : '';
+    html += '<div class="lib-shelf-section">';
+    html += '<div class="lib-shelf-lbl">' + shelf.label + '</div>';
+    html += '<div class="lib-shelf">';
+    scrolls.forEach(function(sc) {
+      var scSuppCls = sc.type === 'suppressed' ? ' lib-suppressed' : '';
+      html += '<div class="lib-scroll' + scSuppCls + '" id="lib-sc-' + sc.id + '" onclick="libOpen(' + sc.id + ')">';
+      html += '<div class="lib-rod"></div>';
+      html += '<div class="lib-body"><span class="lib-body-txt">' + sc.short + '</span></div>';
+      html += '<div class="lib-rod"></div>';
+      html += '<span class="lib-scroll-name">' + sc.ref + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<div id="lib-s' + shelf.id + '-detail" class="lib-detail" style="display:none"></div>';
+    html += '</div>';
+  });
+  panel.innerHTML = html;
+}
+
+var ucState = {};
+function ucBadgeLabel(t) {
+  if (t === 'manipulation') return 'ADDED LATER';
+  if (t === 'change') return 'THE CHANGE';
+  return 'PRIMARY SOURCE';
+}
+function ucNext(pi, total) {
+  var curr = ucState[pi] !== undefined ? ucState[pi] : 0;
+  var next = curr + 1;
+  if (next >= total) return;
+  var currEl = document.getElementById('ucl-' + pi + '-' + curr);
+  currEl.style.transition = 'opacity .3s,transform .3s';
+  currEl.style.opacity = '0';
+  currEl.style.transform = 'translateY(-16px)';
+  setTimeout(function() {
+    currEl.style.display = 'none';
+    currEl.style.transition = '';
+    currEl.style.opacity = '';
+    currEl.style.transform = '';
+    var nextEl = document.getElementById('ucl-' + pi + '-' + next);
+    nextEl.style.opacity = '0';
+    nextEl.style.transform = 'translateY(16px)';
+    nextEl.style.display = 'block';
+    setTimeout(function() {
+      nextEl.style.transition = 'opacity .3s,transform .3s';
+      nextEl.style.opacity = '1';
+      nextEl.style.transform = 'translateY(0)';
+      setTimeout(function() { nextEl.style.transition = ''; }, 350);
+    }, 20);
+    ucState[pi] = next;
+    document.getElementById('ucp-' + pi).textContent = 'Layer ' + (next + 1) + ' of ' + total;
+    var btn = document.getElementById('ucb-' + pi);
+    if (next + 1 >= total) {
+      btn.textContent = 'Start Over';
+      btn.setAttribute('onclick', 'ucReset(' + pi + ',' + total + ')');
+    }
+  }, 320);
+}
+function ucReset(pi, total) {
+  for (var i = 0; i < total; i++) {
+    var el = document.getElementById('ucl-' + pi + '-' + i);
+    el.style.display = i === 0 ? 'block' : 'none';
+    el.style.opacity = ''; el.style.transform = ''; el.style.transition = '';
+  }
+  ucState[pi] = 0;
+  document.getElementById('ucp-' + pi).textContent = 'Layer 1 of ' + total;
+  var btn = document.getElementById('ucb-' + pi);
+  btn.textContent = 'Peel Back';
+  btn.setAttribute('onclick', 'ucNext(' + pi + ',' + total + ')');
+}
+function renderUncoverPanel() {
+  var panel = document.getElementById('uncover-panel');
+  if (!panel) return;
+  var P = [
+    {
+      ref: 'Tehillim (Psalm) 22:16 — 4QPsc + Nahal Hever Greek vs. Masoretic Text',
+      subject: 'One letter separates a verb from a noun. The letter determines whether hands and feet are pierced or compared to a lion.',
+      layers: [
+        { type:'manipulation', label:'Masoretic Text — Ben Asher Tradition (~600–900 CE)',
+          text:'"...ka\'ari — like a lion, my hands and my feet."',
+          note:'The Tiberian vocalization system, Ben Asher family, Tiberias. Codified in the Aleppo Codex (~920 CE, Shrine of the Book, Israel Museum) and the Leningrad Codex (~1008 CE, Russian National Library, St. Petersburg, Firkovitch B 19A). The word rendered here is ka\'ari — a noun phrase meaning "like a lion."',
+          date:'~600–900 CE' },
+        { type:'change', label:'The Substitution — One Consonant',
+          text:'Aleph (א) replaced vav (ו). Ka\'aru became ka\'ari.',
+          note:'Ka\'aru is a verb: "they dug" or "they pierced." Ka\'ari is a noun comparison: "like a lion." One consonant converts an active verb describing what was done to hands and feet into an incomplete simile with no grammatical object. The lion comparison in the Masoretic reading is syntactically broken.',
+          date:'Single consonant substitution' },
+        { type:'original', label:'Primary Source — 4QPsc (Cave 4, Qumran) + Nahal Hever Greek (5/6HevPs)',
+          text:'"...ka\'aru — they pierced my hands and my feet."',
+          note:'4QPsc (Dead Sea Scrolls, Cave 4, Qumran, ~100 BCE–100 CE) preserves ka\'aru. The Nahal Hever Greek manuscript (5/6HevPs, Judean Desert) renders kōruxan — "they dug / they pierced." Two independent manuscript traditions, separated by geography and language, agree with each other and disagree with the Masoretic text.',
+          date:'~100 BCE – 100 CE' }
+      ]
+    },
+    {
+      ref: 'Devarim (Deuteronomy) 32:8 — 4QDeut-j + LXX vs. Masoretic Text',
+      subject: 'A single word replacement removes the divine council structure from the text entirely.',
+      layers: [
+        { type:'manipulation', label:'Masoretic Text',
+          text:'"When the Most High divided the nations...he set the boundaries of the peoples according to the number of the sons of Israel (beni Yisrael)."',
+          note:'In this reading YHWH divides the nations according to Israel\'s numerical count. The verse becomes a statement about Israel\'s centrality.',
+          date:'~600–900 CE' },
+        { type:'change', label:'The Substitution — One Word',
+          text:'"Sons of Israel" (beni Yisrael) replaced "sons of El" or "sons of God" (beni Elohim).',
+          note:'The original describes a divine council — a governing assembly to whom nations are assigned. "Sons of El" are the members of that council. The replacement eliminates this structure and centers Israel numerically instead. The cosmological framework of the verse collapses into a nationalist reading.',
+          date:'Single word substitution' },
+        { type:'original', label:'Primary Source — 4QDeut-j (Cave 4, Qumran) + Septuagint (LXX)',
+          text:'"...he set the boundaries of the peoples according to the number of the sons of El (beni Elohim)."',
+          note:'4QDeut-j (Cave 4, Qumran) reads beni Elohim. The Septuagint (LXX, translated ~3rd century BCE, Alexandria) renders angelōn theou — angels of God. Both witnesses pre-date the Masoretic text by centuries and agree with each other. Neither agrees with the Masoretic substitution.',
+          date:'~3rd century BCE (LXX) / ~100 BCE (4QDeut-j)' }
+      ]
+    },
+    {
+      ref: 'Yeshayahu (Isaiah) 7:14 — 1QIsa-a vs. Greek Septuagint Translation',
+      subject: 'A translation decision, not the Hebrew text, produced the virgin birth claim. The Hebrew word almah means young woman.',
+      layers: [
+        { type:'manipulation', label:'Greek Septuagint (LXX) + Latin Vulgate',
+          text:'The LXX renders almah as parthenos — the Greek word for virgin. Jerome\'s Latin Vulgate (~380–420 CE) carried this forward as virgo.',
+          note:'The claim built around the NT\'s invented figure was constructed on the LXX Greek word parthenos, not on the Hebrew text. The LXX translation decision is the source of the claim. Jerome\'s commission from Pope Damasus I is documented in Epistle 20.',
+          date:'~3rd century BCE (LXX) / ~380–420 CE (Vulgate)' },
+        { type:'change', label:'What Almah Actually Means',
+          text:'Almah (עַלְמָה) means young woman of marriageable age. The Hebrew word for sexual virginity is betulah (בְּתוּלָה).',
+          note:'Almah appears nine times in the Hebrew corpus. None of the nine uses require or imply a virgin birth reading. The verse in Yeshayahu 7:14 is addressed directly to King Ahaz as a sign relevant to his immediate political crisis. The sign is fulfilled within years — before the child grows old enough to distinguish good from evil (7:16). It is not a centuries-forward promise in the Hebrew text.',
+          date:'Nine uses of almah in the Hebrew corpus — none support the virgin reading' },
+        { type:'original', label:'Primary Source — 1QIsa-a (Great Isaiah Scroll, Cave 1, Qumran)',
+          text:'"Therefore YHWH himself will give you a sign: Behold, the almah (young woman) is with child and will bear a son, and she will call his name Immanu-El."',
+          note:'1QIsa-a (Great Isaiah Scroll, Cave 1, Qumran, ~125–100 BCE; Shrine of the Book, Israel Museum, Accession 19901) reads almah. The verse is a political sign to Ahaz in his generation. The internal context — the child must grow old enough to distinguish good from evil, and before that point the threatened kings will be gone (7:15-16) — identifies this as a near-term sign, not a distant messianic promise. That context was removed when the LXX word parthenos was used as the foundation for an unrelated claim.',
+          date:'1QIsa-a, Cave 1, Qumran, ~125–100 BCE' }
+      ]
+    },
+    {
+      ref: 'Bereshit (Genesis) 9 — The Curse — Bavli Sanhedrin 108b vs. DSS + Ge\'ez Orit',
+      subject: 'A skin-color curse added in the Babylonian Talmud (~500 CE) has no basis in any primary-source text. The primary sources curse Canaan — not Ham\'s skin.',
+      layers: [
+        { type:'manipulation', label:'Babylonian Talmud — Bavli Sanhedrin 108b (~500 CE)',
+          text:'The Bavli adds that Ham was cursed with dark skin as punishment for his actions on the ark. This became the textual anchor for colonial racial slavery theology and the 1807 Slave Bible (British Library, shelf mark 3040.b.32).',
+          note:'The Babylonian Talmud was compiled ~400–600 CE. No manuscript predates the 9th century. The skin-color addition appears in the Bavli with no parallel in any earlier text. It was deployed to provide scriptural justification for the Trans-Atlantic slave trade and appears in colonial legal codes and sermons across the 16th–19th centuries.',
+          date:'Bavli Sanhedrin 108b, ~500 CE. No manuscript earlier than 9th century.' },
+        { type:'change', label:'What the Hebrew Text Actually Says',
+          text:'Bereshit 9:20–27 curses Canaan — one son of Ham — with servitude. No skin color is named. No racial category is applied.',
+          note:'Four sons of Ham are named in Bereshit 10:6: Cush, Mitsrayim, Put, and Canaan. Cush and Mitsrayim are the progenitors of African peoples. The curse falls only on Canaan. The Bavli\'s extension of a skin-color curse to all of Ham\'s descendants — and specifically to Cush — is an addition with no textual basis in any primary source.',
+          date:'Bereshit 9:20–27 — the text names Canaan only' },
+        { type:'original', label:'Primary Source — Dead Sea Scrolls + Ge\'ez Orit',
+          text:'The DSS and the Ge\'ez Orit contain no skin-color curse in the Bereshit narrative.',
+          note:'The Book of Jubilees (4Q216–4Q224, Cave 4, Qumran; complete in the Ge\'ez Orit) retells the Bereshit narrative through this period with no racial element. The Genesis Apocryphon (1QapGen, Cave 1) covers adjacent narrative without a racial addition. Both primary-source traditions are silent on the racial element the Bavli introduces. The insertion is a ~500 CE Talmudic addition absent from every text that predates it.',
+          date:'4Q216–4Q224, 1QapGen — no racial addition present in any DSS text' }
+      ]
+    }
+  ];
+  var html = '';
+  P.forEach(function(p, pi) {
+    html += '<div class="uncover-passage">';
+    html += '<div class="uncover-ref">' + p.ref + '</div>';
+    html += '<div class="uncover-subject">' + p.subject + '</div>';
+    p.layers.forEach(function(layer, li) {
+      var hid = li > 0 ? ' style="display:none"' : '';
+      html += '<div class="uncover-layer type-' + layer.type + '" id="ucl-' + pi + '-' + li + '"' + hid + '>';
+      html += '<span class="uncover-badge type-' + layer.type + '">' + ucBadgeLabel(layer.type) + '</span>';
+      html += '<div class="uncover-lbl">' + layer.label + '</div>';
+      html += '<div class="uncover-text">' + layer.text + '</div>';
+      html += '<div class="uncover-note">' + layer.note + '</div>';
+      html += '<div class="uncover-date">' + layer.date + '</div>';
+      html += '</div>';
+    });
+    html += '<div class="uncover-controls">';
+    html += '<span class="uncover-prog" id="ucp-' + pi + '">Layer 1 of ' + p.layers.length + '</span>';
+    html += '<button class="uncover-btn" id="ucb-' + pi + '" onclick="ucNext(' + pi + ',' + p.layers.length + ')">Peel Back</button>';
+    html += '</div></div>';
+  });
+  panel.innerHTML = html;
 }
 
 function renderBodyPanel() {
