@@ -711,7 +711,7 @@ const Store = {
 // ── APP ───────────────────────────────────────────────────────────────────────
 const App = {
   async init(){
-    // Load data — use inline data immediately for offline/HtmlQ support
+    // Load data, use inline data immediately for offline/HtmlQ support
     DATA = (typeof INLINE_DATA !== 'undefined') ? INLINE_DATA : null;
     // Try to fetch updated data if online
     try{
@@ -719,7 +719,7 @@ const App = {
       const fetched = await r.json();
       if(fetched) DATA = fetched;
     }catch(e){
-      // Offline or HtmlQ — use inline data
+      // Offline or HtmlQ, use inline data
     }
     // Update streak
     this.updateStreak();
@@ -817,7 +817,7 @@ const App = {
     }
     const h = new Date().getHours();
     let greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
-    document.getElementById('home-greeting').textContent = greet + ' — ready to recall?';
+    document.getElementById('home-greeting').textContent = greet + ', ready to recall?';
   },
 
   // ── STUDY MODE ──
@@ -1255,7 +1255,7 @@ const App = {
       <div class="session-complete">
         <span class="sc-icon">${pct>=80?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg>':pct>=60?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l2.3 5.2 5.7.5-4.3 3.8 1.3 5.5L12 21l-5 3.3 1.3-5.5L4 9.7l5.7-.5z"/></svg>':'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg>'}</span>
         <div class="sc-title">${pct>=80?'Outstanding':'Good work'}</div>
-        <div class="sc-sub">${pct>=80?'Your recall is strong. The evidence is anchoring.':pct>=60?'Solid recall. Keep reviewing the harder passages.':'Keep going — deep learning takes repeated exposure.'}</div>
+        <div class="sc-sub">${pct>=80?'Your recall is strong. The evidence is anchoring.':pct>=60?'Solid recall. Keep reviewing the harder passages.':'Keep going, deep learning takes repeated exposure.'}</div>
         <div class="sc-stats">
           <div class="sc-stat"><div class="sc-num">${State.quizScore}</div><div class="sc-label">Correct</div></div>
           <div class="sc-stat"><div class="sc-num">${State.quizTotal}</div><div class="sc-label">Total</div></div>
@@ -1304,21 +1304,21 @@ const App = {
   renderCompare(){
     const pairs = [
       {
-        ref:'Bereshit 15:13 — The 400-Year Covenant',
+        ref:'Bereshit 15:13, The 400-Year Covenant',
         source:'DSS (4QGen-Exoda) vs Ge\'ez Orit (Jubilees 14:18)',
-        dss:{label:'DSS — 4QGen-Exoda, Cave 4', text:'Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.', plain:'A binding legal decree: four centuries of bondage for the covenant people in a foreign land.'},
-        orit:{label:'Ge\'ez Orit — Jubilees 14:18', text:'And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.', plain:'The Orit confirms the covenant countdown — four generations equals the 400-year term. Return is guaranteed after the full term.'},
+        dss:{label:'DSS, 4QGen-Exoda, Cave 4', text:'Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.', plain:'A binding legal decree: four centuries of bondage for the covenant people in a foreign land.'},
+        orit:{label:'Ge\'ez Orit, Jubilees 14:18', text:'And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.', plain:'The Orit confirms the covenant countdown, four generations equals the 400-year term. Return is guaranteed after the full term.'},
         consistent:'Both texts confirm the 400-year bondage period as a binding legal covenant term, not a prediction.',
         changed:'The DSS gives the specific number (400 years) while the Orit specifies the mechanism (four generations), providing complementary precision.',
         prompt:'What does the consistency between these two independent sources prove about the authority of this covenant claim?'
       },
       {
-        ref:'The Solar Calendar — 364 Days',
+        ref:'The Solar Calendar, 364 Days',
         source:'DSS (4Q317) vs Ge\'ez Orit (Jubilees 6:36-38)',
-        dss:{label:'DSS — 4Q317 Mishmarot Fragments', text:'The 364-day solar calendar documented in the Mishmarot fragments: 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.', plain:'The Qumran community maintained a precise solar calendar where festivals never shifted — every year the same weekday.'},
-        orit:{label:'Ge\'ez Orit — Jubilees 6:36-38', text:'For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.', plain:'Jubilees explicitly warns that lunar observation is a deliberate corruption that causes the covenant people to miss their appointed times with YHWH.'},
+        dss:{label:'DSS, 4Q317 Mishmarot Fragments', text:'The 364-day solar calendar documented in the Mishmarot fragments: 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.', plain:'The Qumran community maintained a precise solar calendar where festivals never shifted, every year the same weekday.'},
+        orit:{label:'Ge\'ez Orit, Jubilees 6:36-38', text:'For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.', plain:'Jubilees explicitly warns that lunar observation is a deliberate corruption that causes the covenant people to miss their appointed times with YHWH.'},
         consistent:'Both sources confirm the 364-day solar calendar as the only valid covenant calendar and treat the lunar system as a corruption.',
-        changed:'The DSS gives the mathematical structure; the Orit gives the prophetic warning — together they provide both the system and the consequence of deviation.',
+        changed:'The DSS gives the mathematical structure; the Orit gives the prophetic warning, together they provide both the system and the consequence of deviation.',
         prompt:'Why would both texts preserved independently in two different communities agree on condemning the lunar calendar?'
       }
     ];
@@ -1497,25 +1497,25 @@ const CONCEPTS = [
   {id:'covenant',   label:'Covenant',      icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg>', color:'#C8971F',
    mem:'Legal contract. 400 years. Defined terms.',
    chapters:['ch40','ch41','ch52','chI','chII'],
-   teach:'YHWH made a binding legal covenant with Abraham — not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
+   teach:'YHWH made a binding legal covenant with Abraham, not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
    why:'Without the covenant framework, the historical evidence has no legal context. With it, every piece of evidence becomes a clause in a contract.',
    question:'What three elements does the 400-year covenant declare?',
    answer:'400 years of bondage → Judgment of the enslaving nation → Liberation with possessions',
    options:['400 years bondage → Judgment → Liberation','Ships → Slavery → No buyer','Calendar → Language → Territory']},
 
   {id:'dss',        label:'DSS',           icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg>', color:'#5DADE2',
-   mem:'972 scrolls. 11 caves. 50 BCE – 68 CE.',
+   mem:'972 scrolls. 11 caves. 50 BCE - 68 CE.',
    chapters:['ch17','ch18','ch20','ch28'],
-   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947–1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT — all contradicting later institutional religious claims.',
+   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947-1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT, all contradicting later institutional religious claims.',
    why:'The DSS are the oldest surviving Hebrew manuscript tradition. Any claim about ancient Hebrew religion must answer to these texts first.',
    question:'How many years older are the DSS than the Masoretic Text?',
-   answer:'Approximately 1,200 years older — DSS c. 100 BCE vs Masoretic Text c. 950 CE',
+   answer:'Approximately 1,200 years older, DSS c. 100 BCE vs Masoretic Text c. 950 CE',
    options:['1,200 years older','100 years older','500 years older','They are the same age']},
 
   {id:'orit',       label:'Ge\'ez Orit',   icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg>', color:'#58D68D',
    mem:'Ethiopia. Beta Israel. 1 Enoch + Jubilees complete.',
    chapters:['ch19','ch29','ch31'],
-   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters) — texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
+   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters), texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
    why:'The Orit preserved the most complete surviving covenant textual tradition. The double exclusion of 1 Enoch and Jubilees by two competing institutions is itself evidence of coordinated suppression.',
    question:'Which two institutions simultaneously excluded 1 Enoch and Jubilees?',
    answer:'Council of Yavneh (90 CE) and Council of Nicaea (325 CE)',
@@ -1524,7 +1524,7 @@ const CONCEPTS = [
   {id:'ships',      label:'Ships',         icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v11M12 4L6 14h6zM13 6l5 8h-5M4 17h16l-2 3H6z"/></svg>', color:'#E8735A',
    mem:'Devarim 28:68. Ships. Sold. No buyer.',
    chapters:['ch14','ch32','ch45'],
-   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific — not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
+   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific, not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
    why:'The ships element is the most specific and historically verifiable element of the covenant curse. It rules out every other mass displacement event in history and points to one.',
    question:'What three specific elements does Devarim 28:68 declare?',
    answer:'Ships + Sold as slaves + No man shall buy you (no mass redemption)',
@@ -1533,37 +1533,37 @@ const CONCEPTS = [
   {id:'400_years',  label:'400 Years',     icon:'⏳', color:'#C8971F',
    mem:'1619 + 400 = 2019. Legal expiration.',
    chapters:['ch40','ch41','chII','chVIII'],
-   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619 — the documented arrival of Africans at Point Comfort, Virginia — is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
-   why:'The 400-year calculation is not speculation — it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
+   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619, the documented arrival of Africans at Point Comfort, Virginia, is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
+   why:'The 400-year calculation is not speculation, it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
    question:'When does the 400-year covenant bondage term expire according to the 1619 start date?',
-   answer:'2019 CE — 1619 + 400 = 2019',
+   answer:'2019 CE, 1619 + 400 = 2019',
    options:['2019 CE','1865 CE','2000 CE','1965 CE']},
 
   {id:'kingdom_juda', label:'Kingdom of JUDA', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>', color:'#1A9B9B',
    mem:'Bowen 1747. Library of Congress. West Africa.',
    chapters:['ch36','ch37'],
-   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map — produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
+   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map, produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
    why:'The cartographic evidence is physical proof in a named archive. It predates the Berlin Conference (1884-1885) which erased all Hebrew territorial identifications from Africa.',
    question:'Where is Bowen\'s 1747 map permanently archived?',
-   answer:'Library of Congress — Geography and Map Division',
-   options:['Library of Congress — Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
+   answer:'Library of Congress, Geography and Map Division',
+   options:['Library of Congress, Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
 
   {id:'erased',     label:'What Was Erased', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>', color:'#E84040',
    mem:'Calendar. Name. Territory. Identity.',
    chapters:['ch22','ch16','chXVII'],
    teach:'The erasure operated on four levels simultaneously: (1) The divine name YHWH replaced by "Lord" 7,000+ times in the textual tradition, (2) The 364-day solar calendar replaced by lunar systems disconnecting covenant timing, (3) African territorial identity erased by the Berlin Conference 1884-1885, (4) The identity of the covenant people replaced by Eurocentric framing.',
-   why:'The erasure was systematic and multi-institutional — Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
+   why:'The erasure was systematic and multi-institutional, Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
    question:'How many times was the divine name YHWH replaced by "Lord" in the standard textual tradition?',
-   answer:'Over 7,000 times — confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
+   answer:'Over 7,000 times, confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
    options:['Over 7,000 times','Fewer than 100 times','Once in translation','It was never replaced']},
 
   {id:'restored',   label:'Restored Evidence', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>', color:'#2ECC71',
    mem:'DSS 1947. Genetics 2000-2012. Maps. Archives.',
    chapters:['ch21','ch33','ch34'],
-   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts — Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics — Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography — Bowen 1747 map in Library of Congress, (4) Epigraphy — Soleb Temple inscription 1400 BCE in Sudan National Museum.',
-   why:'The convergence of four independent fields — manuscript, genetic, cartographic, and epigraphic — all pointing to the same conclusion is the Three-Witness method applied at scale.',
+   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts, Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics, Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography, Bowen 1747 map in Library of Congress, (4) Epigraphy, Soleb Temple inscription 1400 BCE in Sudan National Museum.',
+   why:'The convergence of four independent fields, manuscript, genetic, cartographic, and epigraphic, all pointing to the same conclusion is the Three-Witness method applied at scale.',
    question:'In what year were the Dead Sea Scrolls discovered?',
-   answer:'1947 — Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
+   answer:'1947, Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
    options:['1947','1920','1967','2000']},
 ];
 
@@ -1616,7 +1616,7 @@ const Lesson = {
 
   markDone(){
     if(this.current) Mastery.increment(this.current.id);
-    App.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Lesson complete — mastery updated');
+    App.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Lesson complete, mastery updated');
   },
 
   render(){
@@ -1661,7 +1661,7 @@ const Lesson = {
           <div class="ma-icon">${c.icon}</div>
           <div>
             <div class="ma-phrase">"${c.mem}"</div>
-            <div class="ma-source">Memory phrase — repeat this to lock it in</div>
+            <div class="ma-source">Memory phrase, repeat this to lock it in</div>
           </div>
         </div>`;
     }
@@ -1695,10 +1695,10 @@ const Lesson = {
         </div>
       </div>`;
     }
-    else if(step===3){ // PRACTICE — active recall
+    else if(step===3){ // PRACTICE, active recall
       const opts = (c.options||[c.answer,'Wrong answer A','Wrong answer B']).sort(()=>Math.random()-0.5);
       html = `<div class="recall-card">
-        <div class="rc-prompt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l1-4 10-10 3 3-10 10z"/><path d="M14 7l3 3"/></svg> Active Recall — Before we show you — what do you remember?</div>
+        <div class="rc-prompt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l1-4 10-10 3 3-10 10z"/><path d="M14 7l3 3"/></svg> Active Recall, Before we show you, what do you remember?</div>
         <div class="rc-question">${c.question}</div>
         <div class="rc-options" id="rc-opts">
           ${opts.map(o=>`<button class="rc-opt" onclick="Lesson.checkAnswer(this,'${this.esc(o)}','${this.esc(c.answer)}')">${o}</button>`).join('')}
@@ -1743,7 +1743,7 @@ const Lesson = {
     });
     const isCorrect = selected===correct;
     if(isCorrect){ Mastery.increment(this.current.id); App.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Correct!'); }
-    else { Mastery.decrement(this.current.id); App.toast('Not quite — review the answer'); }
+    else { Mastery.decrement(this.current.id); App.toast('Not quite, review the answer'); }
     document.getElementById('rc-explanation').style.display='block';
   },
 
