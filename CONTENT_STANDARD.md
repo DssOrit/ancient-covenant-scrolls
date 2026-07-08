@@ -22,6 +22,11 @@ present the primary source first, name the overlay second.
 - **Do NOT fabricate sources.** Where a claim has no real named source, flag it for
   the user. Never invent an archive, document, study, or citation to satisfy this
   standard — fabrication discredits the record.
+- **Settled natural science is stated plainly, no citation needed.** Established
+  physical science — plate tectonics, basic geology, astronomy, physics — is stated
+  as fact and does not require a named source. The named-source requirement applies
+  to the contested *historical* record (documents, monuments, manuscripts, genetics
+  studies, cartographic records, archaeology), not to universal natural science.
 
 ## No conciliation framing
 Do not pre-load evidence with statements about how it may be received by any
