@@ -506,6 +506,27 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .qm-cave-body{font-size:12px;color:var(--tx3);line-height:1.68;margin-bottom:8px}
 .qm-cave-find{font-size:11px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
 .qm-back-btn{display:inline-block;margin-top:10px;font-size:11px;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;padding:6px 0}
+/* ANCIENT CITY WALKER */
+#citywalker-view{padding:14px}
+.cw-city-tabs{display:flex;gap:6px;margin-bottom:14px}
+.cw-city-tab{flex:1;padding:9px 4px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:11px;font-weight:700;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center;transition:all .2s}
+.cw-city-tab.active{border-color:rgba(200,151,31,.5);color:var(--gold);background:rgba(200,151,31,.08)}
+.cw-map-wrap{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:12px;position:relative}
+.cw-map-wrap svg{display:block;width:100%;height:auto}
+.cw-location-dot{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cw-location-dot circle{transition:all .2s}
+.cw-location-dot.cw-active circle{filter:drop-shadow(0 0 5px rgba(200,151,31,.8))}
+.cw-district-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:4px}
+.cw-district-card{background:var(--s1);border:1px solid #2a2a2a;border-radius:var(--r);padding:10px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .15s}
+.cw-district-card:active,.cw-district-card.cw-dc-active{border-color:rgba(200,151,31,.4)}
+.cw-dc-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px}
+.cw-dc-era{font-size:9px;color:var(--tx3)}
+.cw-district-detail{background:var(--s1);border:1px solid rgba(200,151,31,.25);border-left:3px solid var(--gold);border-radius:var(--r);padding:14px;margin-top:6px;animation:libSlide .2s ease;display:none}
+.cw-district-detail.open{display:block}
+.cw-dd-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:3px}
+.cw-dd-era{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px}
+.cw-dd-body{font-size:12px;color:var(--tx3);line-height:1.68;margin-bottom:8px}
+.cw-dd-src{font-size:11px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
 /* COURTROOM */
 #courtroom-view{padding:14px}
 .ct-case-select{margin-bottom:16px}
@@ -1242,6 +1263,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- ANCIENT CITY WALKER -->
+    <div id="citywalker-view" style="display:none">
+      <div class="sv-hdr">Ancient City Walker</div>
+      <div class="sv-sub">Three cities that shaped the covenant story — Yerushalayim, Waset (Luxor/Thebes), and Babylon. Each city shown as a schematic district map at its peak period. Tap any district to read what stood there and what the primary sources record about it.</div>
+      <div id="citywalker-panel"></div>
     </div>
 
     <!-- QUMRAN CAVE EXPLORER -->
@@ -2724,6 +2752,7 @@ function initApp() {
   renderCourtroomPanel();
   renderExplorePanel();
   renderQumranPanel();
+  renderCityWalkerPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2752,7 +2781,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','explore','qumran','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2793,7 +2822,8 @@ var PANEL_LABELS = {
   diaspora:'The Diaspora Scatter',
   courtroom:'The Courtroom',
   explore:'Explore',
-  qumran:'Qumran Cave Explorer'
+  qumran:'Qumran Cave Explorer',
+  citywalker:'Ancient City Walker'
 };
 
 function buildSiteIndex() {
@@ -2840,6 +2870,8 @@ function goToSiteEntry(tab, topic) {
     setMode('explore');
   } else if (tab === 'qumran') {
     setMode('qumran');
+  } else if (tab === 'citywalker') {
+    setMode('citywalker');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -8392,6 +8424,192 @@ function renderExodusPanel() {
   highlightExoWaypoint(0);
 }
 
+// ── ANCIENT CITY WALKER ──────────────────────────────────────────────────────
+var CW_CITIES = [
+  {
+    id:'yerushalayim', label:'Yerushalayim', era:'c.1000 BCE — 70 CE',
+    mapFill:'#1a1408', waterFill:'#0c1f2e',
+    desc:"The city of David through the Second Temple period. Shown at its peak extent under the Hasmoneans and Herodian period (c.100 BCE–70 CE), immediately before Rome's destruction.",
+    districts:[
+      {id:'temple-mount', x:175, y:110, name:'Har ha-Bayit — Temple Mount',
+       era:'First Temple c.957 BCE; Second Temple c.516 BCE–70 CE',
+       body:'The heart of the covenant. The First Temple (Beit ha-Mikdash Rishon) was built by Shelomoh on the threshing floor of Aravnah the Yebusite (Divrei ha-Yamim Bet 3:1) and destroyed by Nebuchadnezzar in 586 BCE. The Second Temple was rebuilt after the Babylonian return (c.516 BCE) and expanded by Herod the Great c.20 BCE into the largest sanctuary complex in the ancient world. Josephus records it as one of the most magnificent structures in the Roman world.',
+       src:"Ge'ez Orit Melachim Alef 6 — detailed construction of the First Temple. Josephus, Jewish War 5.5 — description of the Herodian Temple complex. Archaeological evidence: remains of Herodian stonework still visible on the Western Wall (Kotel) platform; documented by Charles Warren (Palestine Exploration Fund, 1867–70) and ongoing excavation by the Israel Antiquities Authority."},
+      {id:'city-of-david', x:158, y:138, name:'City of David',
+       era:'c.1000 BCE — founding period',
+       body:"The original settlement of Yerushalayim, occupied before David captured it from the Yebusites (Shemuel Bet 5:6–9). The city sat on the Ophel ridge south of the Temple Mount, above the Gihon Spring — the only reliable water source in the area. Hezekiah's Tunnel, a 533-meter water channel cut through the rock c.701 BCE to bring water inside the city walls before the Assyrian siege, is still intact.",
+       src:"Shemuel Bet 5:7: 'David captured the stronghold of Zion; that is the City of David.' Hezekiah's Tunnel: Siloam Inscription discovered 1880 (now at Istanbul Archaeological Museum) — a first-person account of the tunnel workers meeting in the middle. Warren's Shaft (City of David excavations, Reich and Shukron, Israel Antiquities Authority, 1995–2008) documented the Canaanite water system David's forces may have used."},
+      {id:'upper-city', x:148, y:150, name:"Upper City — The Wealthy Quarter",
+       era:'Hasmonean–Herodian period c.140 BCE–70 CE',
+       body:'The Upper City occupied the southwestern hill of Yerushalayim, west of the Tyropoeon Valley. It was the residential area of the priestly aristocracy and wealthy classes. Josephus describes its palatial mansions and its destruction by Rome in 70 CE. Archaeological excavations have recovered burned remains consistent with the Roman destruction, including charred furniture and Roman arrowheads.',
+       src:"Josephus, Jewish War 2.16.3 — description of the Upper City as distinct from the Lower City. Nahman Avigad's excavations in the Jewish Quarter (Hebrew University, 1969–1982) uncovered the Burned House — a priestly family home destroyed in the 70 CE fire with a stone weight bearing the name Bar-Kathros, a priestly family named in the Talmud as corrupt. Now at the Wohl Archaeological Museum, Jerusalem."},
+      {id:'lower-city', x:165, y:145, name:'Lower City — The Marketplace',
+       era:'Second Temple period',
+       body:'The Lower City occupied the area between the Temple Mount and the Upper City. It was the commercial and working-class district, home to the markets, craftsmen, and the bulk of the city\'s population. Josephus records the Lower City as densely populated at the time of the siege. The Tyropoeon Valley (Valley of the Cheesemakers) ran through this area, separating the two main residential zones.',
+       src:"Josephus, Jewish War 5.4.1 — topographical description of Yerushalayim's three hills and the valleys between them. Excavations along the Pilgrimage Road (Israel Antiquities Authority, 2017–ongoing) recovered a 2,000-year-old Roman-era road with shops, mikva'ot, and a blocked drainage channel containing coins, stone vessels, and artifacts from the period just before 70 CE."},
+      {id:'gihon', x:170, y:160, name:'Gihon Spring',
+       era:'Pre-Davidic through First Temple period',
+       body:"The Gihon Spring was Yerushalayim's only natural water source and the reason the city was founded at this location. Shelomoh was anointed king at the Gihon (Melachim Alef 1:33–34). Hezekiah cut his famous tunnel to the spring c.701 BCE to ensure water supply during the Assyrian siege by Sennacherib. The spring still flows today.",
+       src:"Melachim Alef 1:33: 'Bring him down to Gihon and have Tzadok the priest and Natan the prophet anoint him there as king over Yisra'el.' Sennacherib's own annals (Oriental Prism, British Museum, London, BM 91032) confirm the siege of Yerushalayim: 'I shut up Hezekiah like a bird in a cage.' The tunnel and spring are accessible at the City of David archaeological park, Jerusalem."}
+    ]
+  },
+  {
+    id:'waset', label:'Waset / Luxor', era:'c.2000–1070 BCE (New Kingdom peak)',
+    mapFill:'#1a1208', waterFill:'#0c2030',
+    desc:"Waset (known to Greeks as Thebes, modern Luxor) was the capital of Kemet during the New Kingdom — the Egypt of Mosheh, Ramesses II, and the Exodus period. Shown at its New Kingdom peak c.1350–1200 BCE.",
+    districts:[
+      {id:'karnak', x:165, y:88, name:'Ipet-Isut — Karnak Temple Complex',
+       era:'c.2055–30 BCE (New Kingdom expansion c.1550–1070 BCE)',
+       body:"The largest religious complex ever built. Karnak (ancient name Ipet-Isut — 'Most Select of Places') covers 100 hectares and was under continuous construction for over 2,000 years. Its Hypostyle Hall (begun under Seti I, completed Ramesses II) contains 134 massive columns up to 24 meters high, arranged in 16 rows. The complex documents the names and campaigns of every New Kingdom pharaoh — including the Merneptah Stele in the Karnak precinct that contains the first known mention of Yisra'el.",
+       src:"The Merneptah Stele (c.1208 BCE) was found in Merneptah's mortuary temple in western Waset but a version exists at Karnak. The primary stele is at the Egyptian Museum, Cairo (JE 31408). The Karnak site is administered by the Egyptian Ministry of Tourism and Antiquities. The hieroglyphic inscriptions at Karnak are documented in the Epigraphic Survey records (Oriental Institute, Chicago, ongoing since 1924)."},
+      {id:'luxor-temple', x:148, y:115, name:'Ipet-Resyt — Luxor Temple',
+       era:'c.1390–1279 BCE (Amenhotep III and Ramesses II)',
+       body:'Luxor Temple (ancient name Ipet-Resyt — Southern Sanctuary) was the southern complement to Karnak, connected by a 3-kilometer Avenue of Sphinxes. It was primarily built by Amenhotep III and Ramesses II. The Avenue of Sphinxes was excavated and restored between 2004 and 2021, revealing its full extent. The temple\'s inner sanctuary was later converted to a Roman chapel and then a mosque, layering multiple epochs over the original structure.',
+       src:"Ramesses II inscriptions at Luxor Temple document his regnal years and military campaigns, including the Battle of Kadesh (c.1274 BCE) — the first documented peace treaty in history, between Egypt and the Hittites, surviving in both Egyptian and Hittite versions (Egyptian version at Karnak and Ramesseum; Hittite version at Hattusa, Turkey; copies at the United Nations, New York)."},
+      {id:'valley-kings', x:118, y:105, name:"Biban el-Muluk — Valley of the Kings",
+       era:'c.1539–1075 BCE (New Kingdom royal burials)',
+       body:"The Valley of the Kings on the west bank of the Nile opposite Waset served as the burial ground for New Kingdom pharaohs for approximately 500 years. Sixty-three tombs have been documented, including those of Tutankhamun (discovered 1922, Howard Carter), Ramesses II (KV7), Seti I (KV17), and Thutmose III (KV34). The valley's tombs are covered in hieroglyphic texts — the Book of the Dead, the Amduat, and the Book of Gates — documenting ancient Kemetic theology of the afterlife.",
+       src:"Howard Carter's excavation journals and records of the Tutankhamun discovery (1922) are held at the Griffith Institute, Oxford. The Epigraphic Survey (Oriental Institute, Chicago) has documented tomb inscriptions since 1924. The Valley of the Kings is administered by the Egyptian Ministry of Tourism and Antiquities, Luxor."},
+      {id:'deir-el-medina', x:105, y:125, name:'Deir el-Medina — The Workers Village',
+       era:'c.1550–1080 BCE',
+       body:"Deir el-Medina was the village of the craftsmen and artisans who built and decorated the royal tombs in the Valley of the Kings. It is the best-documented working-class community in the ancient world. Thousands of ostraca (inscribed pottery shards) and papyri from the site record daily life, work schedules, wages, legal disputes, and personal correspondence. The workers were state employees who lived in a sealed community to protect tomb locations.",
+       src:"Ostraca and papyri from Deir el-Medina are distributed across major museums: the Deir el-Medina collection at the Museo Egizio, Turin (the largest outside Egypt); the British Museum, London; and the Institut Français d'Archéologie Orientale (IFAO), Cairo. The Turin Strike Papyrus (c.1170 BCE, Museo Egizio, Turin) documents the first recorded workers' strike in history — Deir el-Medina workers stopping work due to unpaid rations."},
+      {id:'medinet-habu', x:105, y:148, name:'Medinet Habu — Mortuary Temple of Ramesses III',
+       era:'c.1184–1153 BCE',
+       body:"Medinet Habu is the mortuary temple of Ramesses III, the last great pharaoh of the New Kingdom. Its walls document the campaigns of Ramesses III against the Sea Peoples — a confederation of migrating groups who attacked Egypt and the Levant c.1200 BCE. The Sea Peoples inscriptions are one of the primary sources for the collapse of the Late Bronze Age civilizations. The temple is one of the best-preserved structures in Egypt.",
+       src:"Medinet Habu inscriptions are documented in the Epigraphic Survey's Medinet Habu volumes (Oriental Institute, Chicago, 8 volumes, 1930–1970). The Sea Peoples reliefs document the naval battle in the Nile Delta and the land battle in the Levant — primary evidence for the 12th century BCE population movements that reshaped the ancient Near East."}
+    ]
+  },
+  {
+    id:'babylon', label:'Babylon', era:'c.626–539 BCE (Neo-Babylonian peak)',
+    mapFill:'#120e06', waterFill:'#0c1a24',
+    desc:"Babylon at the peak of the Neo-Babylonian Empire under Nebuchadnezzar II (c.605–562 BCE) — the city where the Hebrew exiles of 586 BCE were brought. The Euphrates ran through its center.",
+    districts:[
+      {id:'ishtar-gate', x:160, y:80, name:"Bab Ishtar — Ishtar Gate",
+       era:'c.575 BCE (Nebuchadnezzar II)',
+       body:"The Ishtar Gate was the northern entrance to Babylon, built by Nebuchadnezzar II c.575 BCE. It stood approximately 14 meters high and was faced with brilliant blue-glazed bricks and reliefs of dragons (sirrush) and bulls. The gate led into the Processional Way — a 180-meter colonnaded avenue lined with lion reliefs — which ran to the Esagila temple complex. The Ishtar Gate is one of the most important surviving examples of Neo-Babylonian architecture.",
+       src:"The reconstructed Ishtar Gate is in the Pergamon Museum, Berlin (excavated by Robert Koldewey, Deutsche Orient-Gesellschaft, 1899–1917). The remaining original glazed bricks are distributed across the Pergamon Museum and the Vorderasiatisches Museum, Berlin. Koldewey's excavation records document the gate's dimensions and original context."},
+      {id:'esagila', x:152, y:115, name:"Esagila — Temple of Marduk",
+       era:'Pre-1900 BCE, major expansion under Nebuchadnezzar II',
+       body:"Esagila ('House Whose Head is High') was the great temple of Marduk, the chief deity of Babylon, located south of the Processional Way. Nebuchadnezzar II rebuilt and expanded it massively. The temple complex included the ziggurat Etemenanki ('House of the Foundation of Heaven and Earth') — the massive stepped tower that Biblical tradition records as the Tower of Babel (Bavel / Bereshit 11:1–9). Herodotus visited Babylon c.450 BCE and described the ziggurat as eight stories high.",
+       src:"Bereshit 11:9: 'Therefore its name was called Babel, because there YHWH confused the language of all the earth.' Herodotus, Histories 1.181, describes the Esagila ziggurat. The Esagila Tablet (c.229 BCE, Louvre, Paris) provides precise dimensions of the Esagila complex. Robert Koldewey's excavations (1899–1917) identified the Esagila foundations; his records are at the Vorderasiatisches Museum, Berlin."},
+      {id:'nebuchadnezzar-palace', x:162, y:100, name:"Southern Palace of Nebuchadnezzar II",
+       era:'c.605–562 BCE',
+       body:"The Southern Palace was Nebuchadnezzar II's primary royal residence, a vast complex of courtyards, audience halls, and administrative chambers. The palace's vaulted substructures have been associated by some scholars with the Hanging Gardens of Babylon — one of the Seven Wonders of the ancient world, though their precise location (if they existed as described) remains unconfirmed. Babylonian administrative tablets from the palace archive document ration allocations to foreign captives, including Hebrew names.",
+       src:"The Babylonian ration tablets (c.595–570 BCE, Vorderasiatisches Museum, Berlin) record rations for 'Ia-u-kinu, king of the land of Ia-a-hu-du' — identified as Yehoyachin (Jehoiachin), king of Yehudah, one of the Hebrews deported in 597 BCE. This is direct Babylonian administrative confirmation of the biblical deportation account. Koldewey's excavation of the Southern Palace is documented in Die Wiedererstandene Babylon (1913)."},
+      {id:'tel-abib', x:182, y:128, name:"Tel Abib — The Hebrew Exile Settlement",
+       era:'c.597–538 BCE',
+       body:"Tel Abib (Tell Abub) was the settlement on the Kevar (Chebar) canal where the Hebrew exiles from Yehudah were settled by the Babylonians. Yehezqel (Ezekiel) received his prophetic visions at Tel Abib: 'I came to the exiles at Tel Abib, who were living by the Kevar River' (Yehezqel 3:15). The community maintained covenant practice in exile, copied scriptures, and produced much of what became the Tanakh canon during this period. The editing and compilation of the Hebrew scriptures in exile is the scholarly consensus explanation for the Tanakh's literary coherence.",
+       src:"Yehezqel 1:1–3 — 'by the Kevar River in the land of the Kasdim, the word of YHWH came expressly to Yehezqel the priest.' The Kevar canal is identified with the Kabaru canal in Neo-Babylonian administrative documents. The exile community's scribal activity during this period is documented in the Dead Sea Scrolls' multiple textual traditions — the exile period is when much of the textual diversity visible in the DSS began."},
+      {id:'hanging-gardens', x:145, y:98, name:"The Hanging Gardens",
+       era:'c.600 BCE (attributed to Nebuchadnezzar II)',
+       body:"The Hanging Gardens of Babylon are described by Greek and Roman writers (Diodorus Siculus, Strabo, Quintus Curtius Rufus) as a series of tiered terraces planted with trees and flowers, irrigated by a system that lifted water from the Euphrates. They were attributed to Nebuchadnezzar II, built for his wife Amytis who missed the green hills of Media. No Babylonian source mentions them, and their precise location has not been confirmed archaeologically. Some scholars (Stephanie Dalley, Oxford) have proposed the Gardens were actually in Nineveh.",
+       src:"Diodorus Siculus 2.10 describes the gardens in detail — multiple tiers, irrigated gardens, trees of every kind. Strabo, Geography 16.1.5, also describes them. The absence of the Hanging Gardens from Babylonian records while they appear in multiple Greek accounts remains one of ancient history's unresolved questions. Stephanie Dalley, The Mystery of the Hanging Garden of Babylon (Oxford University Press, 2013) proposes a Nineveh location."}
+    ]
+  }
+];
+
+var cwActiveCity = 0;
+var cwActiveDistrict = null;
+
+function buildCWMapSVG(cityIdx) {
+  var city = CW_CITIES[cityIdx];
+  var ds = city.districts;
+  var dots = ds.map(function(d, i) {
+    var active = cwActiveDistrict === i ? ' cw-active' : '';
+    return '<g class="cw-location-dot' + active + '" onclick="cwSelectDistrict(' + i + ')" style="cursor:pointer">'
+      + '<circle cx="' + d.x + '" cy="' + d.y + '" r="7" fill="rgba(200,151,31,' + (cwActiveDistrict===i?'0.9':'0.25') + ')" stroke="' + (cwActiveDistrict===i?'#fff':'rgba(200,151,31,.6)') + '" stroke-width="1.5"/>'
+      + '<circle cx="' + d.x + '" cy="' + d.y + '" r="2.5" fill="' + (cwActiveDistrict===i?'#fff':'rgba(200,151,31,.8)') + '"/>'
+      + '</g>';
+  }).join('');
+
+  var svgContent = '';
+  if (cityIdx === 0) {
+    // Yerushalayim — hills + valleys layout
+    svgContent = '<rect width="320" height="210" fill="' + city.waterFill + '"/>'
+      + '<polygon points="60,210 60,155 80,130 110,100 140,80 160,75 180,80 205,95 215,115 210,140 190,165 170,185 140,205 60,210" fill="' + city.mapFill + '"/>'
+      + '<polygon points="80,210 80,170 100,150 130,130 155,120 175,125 195,135 200,155 185,178 160,200 80,210" fill="#1e1808"/>'
+      + '<line x1="145" y1="75" x2="145" y2="210" stroke="rgba(12,31,46,.6)" stroke-width="3"/>'
+      + '<text x="90" y="98" font-size="7" fill="rgba(255,255,255,.2)" font-weight="700">UPPER CITY</text>'
+      + '<text x="168" y="98" font-size="7" fill="rgba(255,255,255,.2)" font-weight="700">LOWER CITY</text>'
+      + '<text x="148" y="200" font-size="6" fill="rgba(13,90,170,.45)" font-weight="700" text-anchor="middle">KIDRON VALLEY</text>'
+      + '<text x="143" y="142" font-size="5.5" fill="rgba(255,255,255,.15)" font-weight="600" transform="rotate(-75,143,142)">TYROPOEON</text>';
+  } else if (cityIdx === 1) {
+    // Waset — Nile runs vertically
+    svgContent = '<rect width="320" height="210" fill="' + city.waterFill + '"/>'
+      + '<rect x="138" y="0" width="44" height="210" fill="#0c2a40" opacity="0.9"/>'
+      + '<polygon points="0,210 0,0 138,0 138,210" fill="' + city.mapFill + '"/>'
+      + '<polygon points="182,210 182,0 320,0 320,210" fill="#1a1508"/>'
+      + '<text x="69" y="195" font-size="7" fill="rgba(255,255,255,.18)" font-weight="700" text-anchor="middle">WEST BANK</text>'
+      + '<text x="251" y="195" font-size="7" fill="rgba(255,255,255,.18)" font-weight="700" text-anchor="middle">EAST BANK</text>'
+      + '<text x="160" y="108" font-size="6" fill="rgba(13,90,170,.5)" font-weight="700" text-anchor="middle" transform="rotate(-90,160,108)">NILE / ITERU</text>';
+  } else {
+    // Babylon — Euphrates runs through center
+    svgContent = '<rect width="320" height="210" fill="' + city.waterFill + '"/>'
+      + '<polygon points="0,210 0,0 320,0 320,210" fill="' + city.mapFill + '"/>'
+      + '<polygon points="140,210 140,0 180,0 180,210" fill="#0c1e2e" opacity="0.85"/>'
+      + '<text x="160" y="108" font-size="6" fill="rgba(13,90,170,.45)" font-weight="700" text-anchor="middle" transform="rotate(-90,160,108)">EUPHRATES</text>'
+      + '<text x="70" y="195" font-size="7" fill="rgba(255,255,255,.15)" font-weight="700" text-anchor="middle">WEST BABYLON</text>'
+      + '<text x="250" y="195" font-size="7" fill="rgba(255,255,255,.15)" font-weight="700" text-anchor="middle">EAST BABYLON</text>';
+  }
+
+  return '<div class="cw-map-wrap"><svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg">'
+    + svgContent + dots + '</svg></div>';
+}
+
+function cwSelectDistrict(idx) {
+  cwActiveDistrict = idx;
+  var city = CW_CITIES[cwActiveCity];
+  var d = city.districts[idx];
+  // rebuild map
+  document.getElementById('cw-map-area').innerHTML = buildCWMapSVG(cwActiveCity);
+  // close all details, open this one
+  document.querySelectorAll('.cw-district-card').forEach(function(el, i) {
+    el.classList.toggle('cw-dc-active', i === idx);
+  });
+  document.querySelectorAll('.cw-district-detail').forEach(function(el) { el.classList.remove('open'); });
+  var det = document.getElementById('cw-dd-' + idx);
+  if (det) det.classList.add('open');
+  det.innerHTML = '<div class="cw-dd-name">' + d.name + '</div>'
+    + '<div class="cw-dd-era">' + d.era + '</div>'
+    + '<div class="cw-dd-body">' + d.body + '</div>'
+    + '<div class="cw-dd-src">' + d.src + '</div>';
+}
+
+function cwSelectCity(idx) {
+  cwActiveCity = idx;
+  cwActiveDistrict = null;
+  document.querySelectorAll('.cw-city-tab').forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+  document.getElementById('cw-map-area').innerHTML = buildCWMapSVG(idx);
+  document.getElementById('cw-districts-area').innerHTML = buildCWDistricts(idx);
+}
+
+function buildCWDistricts(cityIdx) {
+  var city = CW_CITIES[cityIdx];
+  var cards = city.districts.map(function(d, i) {
+    return '<div class="cw-district-card" id="cw-dc-' + i + '" onclick="cwSelectDistrict(' + i + ')">'
+      + '<div class="cw-dc-name">' + d.name + '</div>'
+      + '<div class="cw-dc-era">' + d.era + '</div>'
+      + '</div>'
+      + '<div class="cw-district-detail" id="cw-dd-' + i + '"></div>';
+  }).join('');
+  return '<div class="cw-district-list">' + cards + '</div>';
+}
+
+function renderCityWalkerPanel() {
+  var panel = document.getElementById('citywalker-panel');
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = '1';
+  cwActiveCity = 0;
+  cwActiveDistrict = null;
+  var tabs = CW_CITIES.map(function(c, i) {
+    return '<div class="cw-city-tab' + (i===0?' active':'') + '" onclick="cwSelectCity(' + i + ')">' + c.label + '</div>';
+  }).join('');
+  panel.innerHTML = '<div class="cw-city-tabs">' + tabs + '</div>'
+    + '<div id="cw-map-area">' + buildCWMapSVG(0) + '</div>'
+    + '<div id="cw-districts-area">' + buildCWDistricts(0) + '</div>';
+}
+
 // ── QUMRAN CAVE EXPLORER ─────────────────────────────────────────────────────
 var QM_CAVES = [
   {
@@ -8554,7 +8772,7 @@ var EXPLORE_TILES = [
   {mode:'diaspora', icon:'ri-global-line', title:'Diaspora Scatter', desc:'Three documented dispersions across Africa and into the world. Switch events to see the scatter.', tag:'722 BCE · 586 BCE · 70 CE'},
   {mode:'courtroom', icon:'ri-scales-line', title:'The Courtroom', desc:'Six claims tested against primary-source evidence. Exhibits dealt one by one. Verdict rendered.', tag:'6 cases · 27 exhibits'},
   {mode:'qumran', icon:'ri-treasure-map-line', title:'Qumran Cave Explorer', desc:'Navigate the 11 caves. Find the scrolls. Read what was hidden for 2,000 years.', tag:'11 caves · 900+ manuscripts'},
-  {mode:'citywalker', icon:'ri-building-line', title:'Ancient City Walker', desc:'Walk the streets of Yerushalayim, Waset, and Babylon as they existed in the ancient world.', tag:'Coming soon', soon:true}
+  {mode:'citywalker', icon:'ri-building-line', title:'Ancient City Walker', desc:'Walk the districts of Yerushalayim, Waset, and Babylon at their peak. Tap any district for primary-source records.', tag:'3 cities · 15 districts'}
 ];
 
 function renderExplorePanel() {
