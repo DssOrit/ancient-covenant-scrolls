@@ -435,6 +435,25 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .cal-cmp-col.solar .cal-cmp-lbl{color:var(--gold)}
 .cal-cmp-col.lunar .cal-cmp-lbl{color:#8888aa}
 .cal-cmp-txt{font-size:11px;color:var(--tx3);line-height:1.6}
+/* EXODUS JOURNEY */
+#exodus-view{padding:0}
+.exo-map-wrap{width:100%;background:#0a1822;position:relative;overflow:hidden}
+.exo-map-wrap svg{display:block;width:100%;height:auto}
+.exo-progress{display:flex;align-items:center;gap:10px;padding:12px 14px 4px}
+.exo-step{font-size:11px;color:var(--tx3);white-space:nowrap}
+.exo-dots{display:flex;gap:4px;flex:1}
+.exo-dot{flex:1;height:3px;background:rgba(255,255,255,.1);border-radius:2px;transition:background .3s}
+.exo-dot.done{background:rgba(200,151,31,.5)}
+.exo-dot.active{background:var(--gold)}
+.exo-detail{padding:14px;border-top:1px solid #1a1a1a}
+.exo-wp-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px}
+.exo-source{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:10px;letter-spacing:.02em}
+.exo-body{font-size:12px;color:var(--tx3);line-height:1.7;margin-bottom:10px}
+.exo-find{font-size:11px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold);margin-bottom:12px}
+.exo-nav{display:flex;gap:8px}
+.exo-btn{flex:1;padding:10px;border-radius:var(--r);border:1px solid #2a2a2a;background:var(--s1);font-size:13px;font-weight:700;color:var(--tx3);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;text-align:center;display:block}
+.exo-btn:active{background:#222;color:#fff}
+.exo-btn-next{border-color:rgba(200,151,31,.4);color:var(--gold)}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
 .supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
 .supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
@@ -934,6 +953,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="uncover" onclick="setMode('uncover')"><i class="ri-layers-line"></i> Uncover</div>
       <div class="mpill" data-mode="library" onclick="setMode('library')"><i class="ri-book-open-line"></i> Library</div>
       <div class="mpill" data-mode="solarcal" onclick="setMode('solarcal')"><i class="ri-calendar-line"></i> Calendar</div>
+      <div class="mpill" data-mode="exodus" onclick="setMode('exodus')"><i class="ri-map-2-line"></i> Exodus Journey</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1131,6 +1151,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- EXODUS JOURNEY -->
+    <div id="exodus-view" style="display:none">
+      <div class="sv-hdr">The Exodus Journey</div>
+      <div class="sv-sub">Ten waypoints from Kemet to the Plains of Moab. Every event sourced from the Ge'ez Orit, the Dead Sea Scrolls, and named archaeological records. Tap a waypoint on the map or step through in order.</div>
+      <div id="exodus-panel"></div>
     </div>
 
     <!-- SOLAR CALENDAR -->
@@ -2573,6 +2600,7 @@ function initApp() {
   renderUncoverPanel();
   renderLibraryPanel();
   renderSolarCalPanel();
+  renderExodusPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2601,7 +2629,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','exodus','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2635,7 +2663,8 @@ var PANEL_LABELS = {
   practices:'Covenant Practices',
   uncover:'Uncover the Text',
   library:'The Scroll Library',
-  solarcal:'The 364-Day Solar Calendar'
+  solarcal:'The 364-Day Solar Calendar',
+  exodus:'The Exodus Journey'
 };
 
 function buildSiteIndex() {
@@ -2672,6 +2701,8 @@ function goToSiteEntry(tab, topic) {
     setMode('library');
   } else if (tab === 'solarcal') {
     setMode('solarcal');
+  } else if (tab === 'exodus') {
+    setMode('exodus');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -8059,6 +8090,171 @@ function filterDNA(){
     +'</div>';
   }).join('');
 }
+// ── EXODUS JOURNEY ───────────────────────────────────────────────────────────
+var EXODUS_WAYPOINTS = [
+  {
+    id:'goshen', num:1, name:'Goshen — Per-Ramesses', x:52, y:62,
+    source:"Ge'ez Orit — Shemot 1:11; 12:37",
+    body:"The people of Yisra'el lived and labored in Goshen in the eastern Nile Delta. Shemot 12:37 names Ramesses as the departure point — Pi-Ramesses in the eastern Delta, a major Egyptian administrative city. The labor built the store-cities Pithom and Ramesses. Egyptian records of the 19th Dynasty document large corvee labor projects in this region.",
+    find:"Ge'ez Orit Shemot 1:11: 'they built for Pharaoh store-cities: Pithom and Ramesses.' Pi-Ramesses ruins excavated at Qantir, eastern Delta (Manfred Bietak, Austrian Archaeological Institute, excavations 1966 to present). Avaris stratigraphy documents a large Semitic-speaking population in the eastern Delta from the Second Intermediate Period."
+  },
+  {
+    id:'pi-hahiroth', num:2, name:'Pi-hahiroth', x:82, y:90,
+    source:"Ge'ez Orit — Shemot 14:2, 9",
+    body:"The people encamped at Pi-hahiroth, between Migdol and the sea, before Baal-zephon. Pharaoh's forces pursued and caught up with them at the water's edge. The text's precision — naming Migdol, Baal-zephon, and the sea simultaneously — places this at the northern approach to the Gulf of Suez where Egyptian military outposts are documented.",
+    find:"Ge'ez Orit Shemot 14:2: 'Speak to the sons of Yisra'el that they turn back and encamp before Pi-hahiroth, between Migdol and the sea.' Migdol appears in Egyptian records as a border fortress on the northeastern frontier (Papyrus Anastasi V, 13th century BCE, now in the British Museum, London). Baal-zephon is documented as an Egyptian cult site on the eastern frontier."
+  },
+  {
+    id:'yam-suph', num:3, name:"Yam Suph — The Crossing", x:96, y:110,
+    source:"Ge'ez Orit — Shemot 14:21–31; Shemot 15 (Song of the Sea); DSS 4Q365",
+    body:"YHWH drove back the sea with a strong east wind all night and made it dry land. The sons of Yisra'el crossed on dry ground with water as a wall on their right and left. The Egyptian army pursued and was consumed when the waters returned. Shemot 15 — the Song of Maryam and Mosheh — records this as the defining act of YHWH's power. Yam Suph means Sea of Reeds.",
+    find:"Ge'ez Orit Shemot 14:21–22. 4Q365 (Reworked Pentateuch, Cave 4, Qumran, discovered 1952, now Israel Antiquities Authority) preserves the Song of the Sea with additions not present in the Masoretic text — demonstrating that the Masoretic version was abridged from an earlier, longer form."
+  },
+  {
+    id:'marah', num:4, name:'Marah — The Bitter Waters', x:103, y:132,
+    source:"Ge'ez Orit — Shemot 15:23–25",
+    body:"Three days into the wilderness without water. When they found water at Marah it was too bitter to drink. YHWH showed Mosheh a tree; he threw it into the water, and the water became sweet. Here the first statutes and ordinances were given and the people were tested. Marah means bitter.",
+    find:"Ge'ez Orit Shemot 15:23: 'They could not drink the water of Marah, for it was bitter; therefore it was named Marah.' Identified with Ain Hawarah on the western Sinai coast — a naturally bitter spring documented in Western Sinai surveys. Edward Robinson, Biblical Researches in Palestine (1841), recorded bitter water at this location consistent with the ancient text."
+  },
+  {
+    id:'elim', num:5, name:'Elim — Twelve Springs', x:110, y:155,
+    source:"Ge'ez Orit — Shemot 15:27",
+    body:"After Marah they came to Elim, where twelve springs of water and seventy palm trees stood. The people camped by the water. The specificity of the count in the text — twelve springs, seventy palms — is characteristic of the pre-Masoretic record's precision. The twelve springs mirror the twelve tribes.",
+    find:"Ge'ez Orit Shemot 15:27: 'They came to Elim, where there were twelve springs of water and seventy palm trees, and they encamped there by the water.' Site identified with Wadi Gharandel, western Sinai — one of the few reliable oases on the coastal route south, with palm trees and fresh water springs, documented in Sinai survey records."
+  },
+  {
+    id:'wilderness-sin', num:6, name:'Wilderness of Sin', x:125, y:174,
+    source:"Ge'ez Orit — Shemot 16:1–36",
+    body:"The congregation grumbled. YHWH gave quail in the evening and manna in the morning. The manna is described precisely: fine, flake-like, like coriander seed, white, tasting like wafers with honey. The people gathered it six days and rested the seventh — the Sabbath established before Sinai, embedded in the manna cycle.",
+    find:"Ge'ez Orit Shemot 16:14–15: 'When the dew evaporated, behold, on the face of the wilderness there was a fine flake-like thing... the sons of Yisra'el said: What is it? Mosheh said: It is the bread which YHWH has given you.' Wilderness of Sin corresponds to the coastal plain west of Sinai's interior. The pre-Sinai Sabbath reference in this passage confirms that Sabbath observance predates the Sinai covenant event."
+  },
+  {
+    id:'rephidim', num:7, name:'Rephidim', x:145, y:192,
+    source:"Ge'ez Orit — Shemot 17:1–16",
+    body:"No water at Rephidim. The people quarreled — the place was named Massah and Meribah: Testing and Quarreling. YHWH told Mosheh to strike the rock at Horeb; water came out of the rock. Afterward Amalek attacked. Yehoshua led the fighting; when Mosheh's hands fell, Amalek prevailed. Aharon and Hur held Mosheh's arms until the battle was won.",
+    find:"Ge'ez Orit Shemot 17:6: 'Behold, I will stand before you there on the rock at Horeb; you shall strike the rock, and water will come out of it.' Rephidim located in the Wadi Feiran region, central-western Sinai — the largest oasis in Sinai, with a major palm grove and fresh water source, documented in Sinai surveys as an ancient stopping point."
+  },
+  {
+    id:'sinai-horeb', num:8, name:'Sinai — Har Horeb', x:158, y:210,
+    source:"Ge'ez Orit — Shemot 19–20; Jubilees 1:1–4; DSS 4Q175",
+    body:"YHWH descended on Har Sinai in fire; the whole mountain shook. Mosheh went up into the thick darkness. The Ten Commandments were spoken directly to the people and then given written on two stone tablets inscribed by YHWH. Jubilees 1:1 opens the book at this event: 'In the first year of the Exodus from Egypt, in the third month on the sixteenth day, YHWH spoke to Mosheh.' DSS 4Q175 (Testimonia) cites Devarim 18:18 — YHWH's promise of a prophet like Mosheh — linking the Sinai covenant directly to prophetic continuity.",
+    find:"Jubilees 1:1 (Ge'ez Orit) establishes Sinai as the calendar anchor of the covenant. 4Q175 (Testimonia, Cave 4, Qumran, discovered 1952, Israel Antiquities Authority) — one of the earliest DSS composite texts, citing Shemot 20, Bamidbar 24, and Devarim 18 in sequence. Jabal Musa (2,285m, southern Sinai) carries the ancient designation as Har Horeb."
+  },
+  {
+    id:'kadesh-barnea', num:9, name:"Kadesh-barnea", x:170, y:108,
+    source:"Ge'ez Orit — Bamidbar 13–14; Devarim 1:19–46",
+    body:"After the wilderness journey north from Sinai, the people reached Kadesh-barnea at the southern edge of Kena'an. Twelve spies were sent in — one from each tribe. They returned with a cluster of grapes so large two men carried it on a pole, with pomegranates and figs. Ten spies said the people of the land were too powerful. Calev and Yehoshua said the land could be taken. The congregation believed the ten. YHWH decreed forty years of wilderness wandering — one year for each day of the spy mission. The Exodus generation would not enter.",
+    find:"Ge'ez Orit Bamidbar 13:23: 'They cut down a branch with a single cluster of grapes, and two of them carried it on a pole.' Kadesh-barnea identified with Ain el-Qudeirat, northeastern Sinai — the largest oasis in northern Sinai, excavated by Moshe Dothan (1956) and Rudolph Cohen (1976–1982, Israel Department of Antiquities), yielding stratified occupation evidence across multiple periods."
+  },
+  {
+    id:'plains-moab', num:10, name:"Plains of Moab — Beyond the Yarden", x:245, y:78,
+    source:"Ge'ez Orit — Bamidbar 36:13; Devarim 34:1–5",
+    body:"After forty years and the deaths of the Exodus generation, Yisra'el stood on the plains of Moab across the Yarden from Yericho. Mosheh ascended Har Nevo. YHWH showed him all the land: from Gil'ad to Dan, Naphtali, Ephraim, Yehudah, the Western Sea, the Negev, and the valley of Yericho. Mosheh died on the mountain. YHWH buried him in the valley of Moab and no man has known his burial place to this day.",
+    find:"Ge'ez Orit Devarim 34:1–5: 'YHWH showed him all the land... and YHWH said: This is the land which I swore to Avraham, Yitzhak, and Ya'akov... I have let you see it with your eyes, but you shall not cross over there.' Har Nevo / Mount Nebo, Moab (modern Jordan), carries the ancient designation. The Yarden valley and Dead Sea visible from the summit — consistent with the text's vantage point description."
+  }
+];
+
+var exoActiveIdx = 0;
+
+function buildExodusSVG() {
+  var pts = EXODUS_WAYPOINTS;
+  var d = pts.map(function(p,i){return (i===0?'M ':'L ')+p.x+','+p.y;}).join(' ');
+  var circles = pts.map(function(p,i){
+    return '<circle id="exo-wp-'+i+'" cx="'+p.x+'" cy="'+p.y+'" r="5" fill="#1e1e1e" stroke="#444" stroke-width="1.5" onclick="exoSelect('+i+')" style="cursor:pointer"/>';
+  }).join('');
+  return '<div class="exo-map-wrap">'
+    +'<svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">'
+    +'<rect width="320" height="260" fill="#0a1822"/>'
+    +'<polygon points="0,0 88,0 90,42 88,70 82,100 75,128 66,158 0,158" fill="#2d1f0a"/>'
+    +'<polyline points="28,0 30,32 27,60 32,100 28,158" stroke="#0c3555" stroke-width="2.5" fill="none" opacity="0.7"/>'
+    +'<polygon points="88,0 100,0 96,100 82,100 88,70 90,42" fill="#0a1822"/>'
+    +'<polygon points="100,0 185,0 188,44 184,88 175,126 162,164 148,198 140,212 128,198 114,164 102,126 95,88 92,44" fill="#1a1208"/>'
+    +'<polygon points="185,0 200,0 196,88 184,88 188,44" fill="#0a1822"/>'
+    +'<polygon points="200,0 320,0 320,260 196,260 194,88" fill="#0e1a08"/>'
+    +'<polyline points="222,30 220,60 217,90 213,120 210,150 207,180" stroke="#0c3555" stroke-width="1.5" fill="none" opacity="0.6"/>'
+    +'<ellipse cx="218" cy="105" rx="6" ry="14" fill="#0a1822" opacity="0.9"/>'
+    +'<polygon points="92,225 140,250 192,225 185,260 0,260 0,225" fill="#0a1822"/>'
+    +'<text x="34" y="108" font-size="7" fill="rgba(255,255,255,.22)" font-weight="700" letter-spacing="1">KEMET</text>'
+    +'<text x="140" y="86" font-size="7" fill="rgba(255,255,255,.2)" font-weight="700" letter-spacing="1" text-anchor="middle">SINAI</text>'
+    +'<text x="252" y="42" font-size="7" fill="rgba(255,255,255,.18)" font-weight="700" letter-spacing="1" text-anchor="middle">KENA\'AN</text>'
+    +'<text x="255" y="148" font-size="7" fill="rgba(255,255,255,.15)" font-weight="700" letter-spacing="1" text-anchor="middle">MOAB</text>'
+    +'<path id="exo-route" d="'+d+'" stroke="#c8971f" stroke-width="1.5" stroke-dasharray="5 3" fill="none" opacity="0.75"/>'
+    +circles
+    +'</svg></div>';
+}
+
+function buildExodusDetail(idx) {
+  var wp = EXODUS_WAYPOINTS[idx];
+  var total = EXODUS_WAYPOINTS.length;
+  var prev = idx > 0 ? '<span class="exo-btn" onclick="exoSelect('+(idx-1)+')">Prev</span>' : '<span class="exo-btn" style="opacity:.25;pointer-events:none">Prev</span>';
+  var next = idx < total-1 ? '<span class="exo-btn exo-btn-next" onclick="exoSelect('+(idx+1)+')">Next</span>' : '<span class="exo-btn" style="opacity:.25;pointer-events:none">Done</span>';
+  return '<div class="exo-wp-name">'+wp.num+'. '+wp.name+'</div>'
+    +'<div class="exo-source">'+wp.source+'</div>'
+    +'<div class="exo-body">'+wp.body+'</div>'
+    +'<div class="exo-find">'+wp.find+'</div>'
+    +'<div class="exo-nav">'+prev+next+'</div>';
+}
+
+function renderExoDots(idx) {
+  var el = document.getElementById('exo-dots');
+  if (!el) return;
+  el.innerHTML = EXODUS_WAYPOINTS.map(function(_,i){
+    var c = i < idx ? 'done' : (i === idx ? 'active' : '');
+    return '<div class="exo-dot '+c+'"></div>';
+  }).join('');
+}
+
+function highlightExoWaypoint(idx) {
+  EXODUS_WAYPOINTS.forEach(function(_,i){
+    var c = document.getElementById('exo-wp-'+i);
+    if (!c) return;
+    if (i < idx) {
+      c.setAttribute('fill','rgba(200,151,31,.45)');
+      c.setAttribute('stroke','rgba(200,151,31,.7)');
+      c.setAttribute('stroke-width','1.5');
+      c.setAttribute('r','5');
+    } else if (i === idx) {
+      c.setAttribute('fill','#c8971f');
+      c.setAttribute('stroke','#fff');
+      c.setAttribute('stroke-width','2');
+      c.setAttribute('r','7');
+    } else {
+      c.setAttribute('fill','#1e1e1e');
+      c.setAttribute('stroke','#444');
+      c.setAttribute('stroke-width','1.5');
+      c.setAttribute('r','5');
+    }
+  });
+}
+
+function exoSelect(idx) {
+  exoActiveIdx = idx;
+  var stepEl = document.getElementById('exo-step');
+  if (stepEl) stepEl.textContent = (idx+1)+' / '+EXODUS_WAYPOINTS.length;
+  renderExoDots(idx);
+  highlightExoWaypoint(idx);
+  var det = document.getElementById('exo-detail');
+  if (det) det.innerHTML = buildExodusDetail(idx);
+  var detWrap = document.getElementById('exodus-panel');
+  if (detWrap) {
+    var stepRow = detWrap.querySelector('.exo-progress');
+    if (stepRow) stepRow.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+}
+
+function renderExodusPanel() {
+  var panel = document.getElementById('exodus-panel');
+  if (!panel || panel.dataset.built) return;
+  panel.dataset.built = '1';
+  exoActiveIdx = 0;
+  var svgStr = buildExodusSVG();
+  var progressStr = '<div class="exo-progress"><div class="exo-step" id="exo-step">1 / '+EXODUS_WAYPOINTS.length+'</div><div class="exo-dots" id="exo-dots"></div></div>';
+  var detailStr = '<div class="exo-detail" id="exo-detail">'+buildExodusDetail(0)+'</div>';
+  panel.innerHTML = svgStr + progressStr + detailStr;
+  renderExoDots(0);
+  highlightExoWaypoint(0);
+}
+
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
 (function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='search_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();
 </script>
