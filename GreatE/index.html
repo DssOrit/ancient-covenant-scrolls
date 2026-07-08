@@ -181,6 +181,12 @@ details[open]>summary .chev{transform:rotate(90deg)}
 #splash .sh{position:relative;z-index:2;margin-bottom:54px;font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E8B83F;animation:spulse 1.8s infinite}
 @keyframes spulse{0%,100%{opacity:.4}50%{opacity:1}}
 
+/* accordion chapter rows */
+.cchev{width:15px;height:15px;margin-left:auto;flex-shrink:0;stroke:var(--tx3);fill:none}
+.vollist{padding-left:6px}
+.vollist .ccard{margin-bottom:8px}
+.vol .vcard{margin-bottom:8px}
+.vol[open] .vcard{margin-bottom:5px}
 /* reading controls: size + spacing (both themes) */
 .para{font-size:var(--fs,18px);line-height:var(--lh,1.92)}
 .bullet-item{font-size:var(--fs,17px)}
@@ -218,7 +224,9 @@ body[data-theme="light"] .tbl td:first-child{color:#111}
 body[data-theme="light"] .tbl th{border-bottom-color:#e0dccf}
 body[data-theme="light"] .tbl td{border-bottom-color:#efece2}
 body[data-theme="light"] .rule-div{background:#dcd8cb}
+body[data-theme="light"] .tool-card{background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 12%,#fff),#fff);border-color:#E2DED2}
 body[data-theme="light"] .tool-t{color:#1a1a1a}
+body[data-theme="light"] .tool-d{color:#4A4740}
 body[data-theme="light"] .rseg button{background:#fff;border-color:#D9D5C8;color:#4A4740}
 body[data-theme="light"] .rseg{border-color:#D9D5C8}
 body[data-theme="light"] .rseg button.on{background:#B07D1A;color:#fff}
@@ -239,9 +247,9 @@ body[data-theme="light"] .fact-box .para{color:#8A5A12}
   <div class="mark" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#FFD9BE" stroke-width="2.2"/><line x1="16" y1="16" x2="21" y2="21" stroke="#FFD9BE" stroke-width="2.2" stroke-linecap="round"/></svg></div>
   <div class="tb-titles"><div class="tb-name">The Great Eraser</div><div class="tb-sub" id="subc"></div></div>
   <div class="refresh" onclick="location.reload(true)" title="Refresh"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6" stroke-width="1.8"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3" stroke-width="1.8"/></svg></div>
+  <div class="ibtn" onclick="toggleTheme()" aria-label="Theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></div>
   <div class="ibtn" onclick="togglePop2(event)" aria-label="Reading"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19l5-13 5 13M6 14h6" stroke-width="1.7"/><path d="M15 19l3-8 3 8M16.2 16h3.6" stroke-width="1.5"/></svg>
     <div class="pop pop2" id="pop2" onclick="event.stopPropagation()">
-      <div class="rcg"><span class="rcl">Theme</span><span class="rseg"><button data-th="dark" class="on" onclick="setTheme('dark')">Dark</button><button data-th="light" onclick="setTheme('light')">Light</button></span></div>
       <div class="rcg"><span class="rcl">Text</span><span class="rseg"><button data-fs="16" onclick="setFS(16)">A</button><button data-fs="18" class="on" onclick="setFS(18)">A</button><button data-fs="21" onclick="setFS(21)">A</button><button data-fs="24" onclick="setFS(24)">A</button></span></div>
       <div class="rcg"><span class="rcl">Space</span><span class="rseg"><button data-sp="1.6" onclick="setSP(1.6)">1</button><button data-sp="1.92" class="on" onclick="setSP(1.92)">2</button><button data-sp="2.25" onclick="setSP(2.25)">3</button></span></div>
     </div>
@@ -332,7 +340,7 @@ function render(){
     p.innerHTML=
       '<div class="tool-card" onclick="openRestore()"><div class="tool-ic"><svg viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6" stroke-width="1.7"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3" stroke-width="1.7"/></svg></div><div><div class="tool-t">Restore the Name</div><div class="tool-d">See what was erased, then put it back</div></div></div>'+
       '<div class="seclabel">Library, '+DATA.length+' volumes</div>'+
-      DATA.map(function(v,i){return '<div class="vcard" style="--vc:'+v.color+'" onclick="openVol('+i+')"><span class="vnum">VOL '+v.vol+'</span><span class="vmeta"><span class="vname">'+esc(v.name)+'</span><span class="vdesc">'+esc(v.desc)+'</span></span><span class="vcount">'+v.chapters.length+' ch</span></div>'}).join('');
+      DATA.map(function(v,i){return '<details class="vol" style="--vc:'+v.color+'"><summary class="vcard"><span class="vnum">VOL '+v.vol+'</span><span class="vmeta"><span class="vname">'+esc(v.name)+'</span><span class="vdesc">'+esc(v.desc)+'</span></span><span class="vcount">'+v.chapters.length+' ch</span><svg class="chev" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke-width="2"/></svg></summary><div class="vollist">'+v.chapters.map(function(c,ci){return '<div class="ccard" onclick="openCh('+i+','+ci+')"><span class="ccn" style="color:'+v.color+'">'+esc(c.num)+'</span><span class="cct">'+esc(c.title)+'</span><svg class="cchev" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke-width="2"/></svg></div>'}).join('')+'</div></details>'}).join('');
   } else if(state.view==='volume'){
     var v=DATA[state.vi];
     p.innerHTML='<div class="crumbrow"><button class="back" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke-width="2"/></svg>Library</button></div>'+
@@ -394,6 +402,7 @@ function togglePop2(e){e.stopPropagation();var p=document.getElementById('pop2')
 document.addEventListener('click',function(){var p=document.getElementById('pop2');if(p)p.classList.remove('open');});
 function _mark(attr,val){document.querySelectorAll('.rseg button['+attr+']').forEach(function(b){b.classList.toggle('on',b.getAttribute(attr)===String(val));});}
 function setTheme(t){document.body.setAttribute('data-theme',t);try{localStorage.setItem('ge_theme',t)}catch(x){}_mark('data-th',t);}
+function toggleTheme(){setTheme(document.body.getAttribute('data-theme')==='light'?'dark':'light');}
 function setFS(px){document.body.style.setProperty('--fs',px+'px');try{localStorage.setItem('ge_fs',px)}catch(x){}_mark('data-fs',px);}
 function setSP(lh){document.body.style.setProperty('--lh',lh);try{localStorage.setItem('ge_sp',lh)}catch(x){}_mark('data-sp',lh);}
 (function(){try{setTheme(localStorage.getItem('ge_theme')||'dark');var f=localStorage.getItem('ge_fs');if(f)setFS(+f);var s=localStorage.getItem('ge_sp');if(s)setSP(+s);}catch(x){}})();
