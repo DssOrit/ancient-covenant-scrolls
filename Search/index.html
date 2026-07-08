@@ -400,6 +400,41 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .lib-d-body{font-size:12px;color:var(--tx3);line-height:1.7;margin-bottom:10px}
 .lib-d-find{font-size:12px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
 .lib-d-find.lib-suppressed-find{background:rgba(192,57,43,.07);border-left-color:#c0392b}
+/* SOLAR CALENDAR */
+#solarcal-view{padding:14px}
+.cal-structure{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.cal-struct-card{flex:1;min-width:120px;background:rgba(200,151,31,.07);border:1px solid rgba(200,151,31,.2);border-radius:var(--r);padding:10px;text-align:center}
+.cal-struct-num{font-size:22px;font-weight:800;color:var(--gold)}
+.cal-struct-lbl{font-size:10px;color:var(--tx3);line-height:1.4;margin-top:3px}
+.cal-source-note{font-size:10px;color:var(--tx3);line-height:1.6;margin-bottom:16px;padding:10px;background:var(--s1);border-radius:var(--r);border-left:2px solid rgba(200,151,31,.4)}
+.cal-quarter{margin-bottom:18px}
+.cal-q-hdr{font-size:11px;font-weight:800;letter-spacing:.07em;color:var(--tx3);text-transform:uppercase;margin-bottom:8px;padding-left:2px;display:flex;align-items:center;gap:8px}
+.cal-q-bar{flex:1;height:2px;background:rgba(255,255,255,.08);border-radius:1px}
+.cal-months-row{display:flex;gap:6px;flex-wrap:wrap}
+.cal-month{flex:1;min-width:90px;background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:10px;position:relative}
+.cal-month.has-moed{border-color:rgba(200,151,31,.3)}
+.cal-m-hdr{font-size:10px;font-weight:700;color:#fff;margin-bottom:2px}
+.cal-m-days{font-size:9px;color:var(--tx3);margin-bottom:8px}
+.cal-moed-badge{display:block;font-size:9px;font-weight:700;color:var(--gold);background:rgba(200,151,31,.12);border-left:2px solid var(--gold);padding:4px 7px;border-radius:3px;margin-bottom:4px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s;line-height:1.3}
+.cal-moed-badge:active,.cal-moed-badge.cal-active{background:rgba(200,151,31,.25)}
+.cal-empty{font-size:9px;color:rgba(255,255,255,.2);font-style:italic}
+.cal-detail{background:var(--s1);border:1px solid rgba(200,151,31,.3);border-radius:var(--r);padding:14px;margin-top:10px;border-left:3px solid var(--gold);animation:libSlide .2s ease}
+.cal-d-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
+.cal-d-date{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px}
+.cal-d-weekday{font-size:10px;color:var(--tx3);margin-bottom:10px}
+.cal-d-source{font-size:10px;color:var(--gold);font-weight:700;margin-bottom:6px}
+.cal-d-body{font-size:12px;color:var(--tx3);line-height:1.7;margin-bottom:8px}
+.cal-d-sig{font-size:12px;color:#fff;line-height:1.6;padding:10px;background:rgba(200,151,31,.07);border-radius:6px;border-left:2px solid var(--gold)}
+.cal-compare{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;margin-top:6px}
+.cal-cmp-hdr{font-size:12px;font-weight:800;color:#fff;margin-bottom:10px}
+.cal-cmp-row{display:flex;gap:8px;margin-bottom:8px}
+.cal-cmp-col{flex:1;padding:10px;border-radius:6px;font-size:11px;line-height:1.5}
+.cal-cmp-col.solar{background:rgba(200,151,31,.1);border:1px solid rgba(200,151,31,.3)}
+.cal-cmp-col.lunar{background:rgba(100,100,120,.12);border:1px solid rgba(100,100,120,.3)}
+.cal-cmp-lbl{font-size:9px;font-weight:800;letter-spacing:.06em;margin-bottom:4px}
+.cal-cmp-col.solar .cal-cmp-lbl{color:var(--gold)}
+.cal-cmp-col.lunar .cal-cmp-lbl{color:#8888aa}
+.cal-cmp-txt{font-size:11px;color:var(--tx3);line-height:1.6}
 .supp-cat{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:9px;overflow:hidden}
 .supp-ch{padding:13px;cursor:pointer;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold)}
 .supp-ctitle{font-size:13px;font-weight:700;color:#fff;flex:1}
@@ -898,6 +933,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
       <div class="mpill" data-mode="uncover" onclick="setMode('uncover')"><i class="ri-layers-line"></i> Uncover</div>
       <div class="mpill" data-mode="library" onclick="setMode('library')"><i class="ri-book-open-line"></i> Library</div>
+      <div class="mpill" data-mode="solarcal" onclick="setMode('solarcal')"><i class="ri-calendar-line"></i> Calendar</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
@@ -1095,6 +1131,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- SOLAR CALENDAR -->
+    <div id="solarcal-view" style="display:none">
+      <div class="sv-hdr">The 364-Day Solar Calendar</div>
+      <div class="sv-sub">Documented in 1 Enoch 72–82 (the Astronomical Book), Jubilees 6:17–38, and 4QMMT. On this calendar every appointed time falls on the same day of the week, every year — by design. Jubilees 6:29–30 states this explicitly.</div>
+      <div id="solarcal-panel"></div>
     </div>
 
     <!-- SCROLL LIBRARY -->
@@ -2529,6 +2572,7 @@ function initApp() {
   renderBodyPanel();
   renderUncoverPanel();
   renderLibraryPanel();
+  renderSolarCalPanel();
   renderOriginsPanel();
   renderOritPanel();
   renderCovenantPanel();
@@ -2557,7 +2601,7 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','uncover','library','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
+  var views = ['home','results','nt','paganism','racism','body','uncover','library','solarcal','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2590,7 +2634,8 @@ var PANEL_LABELS = {
   histdocs:'Historical Documents',
   practices:'Covenant Practices',
   uncover:'Uncover the Text',
-  library:'The Scroll Library'
+  library:'The Scroll Library',
+  solarcal:'The 364-Day Solar Calendar'
 };
 
 function buildSiteIndex() {
@@ -2625,6 +2670,8 @@ function goToSiteEntry(tab, topic) {
     setMode('uncover');
   } else if (tab === 'library') {
     setMode('library');
+  } else if (tab === 'solarcal') {
+    setMode('solarcal');
   } else {
     setMode('nt');
     switchNTTab(tab);
@@ -3437,6 +3484,153 @@ function renderRacismPanel() {
   '<div class="td-item"><div class="td-topic">"Safety" Guidelines Are Western Institutional Standards</div><div class="td-text">Beyond the data, AI systems are tuned by written human guidelines that reflect the standards of the Western institutions that build them. The topics most likely to be softened, hedged, "both-sided," or refused are exactly the ones that challenge those institutions: the African identity of the ancient Hebrews, the New Testament figure as an invention, and the documented manipulation of the texts. The bias is not always deliberate. A widely used US health algorithm was found in 2019 (Obermeyer and colleagues, in the journal Science) to systematically rate Black patients as less sick than equally ill white patients, cutting their access to extra care by more than half, not because anyone coded racism on purpose, but because the system was trained on a biased proxy. Built into the data and built into the rules produces the same result as intent.</div></div>' +
   '<div class="td-item"><div class="td-topic">The Same Pattern, a New Tool, and the Same Defense</div><div class="td-text">Line it up. The 1807 Slave Bible removed the Exodus so the enslaved could not read their deliverance. The colonial church recolored the Hebrews and injected the Curse of Ham. The modern algorithm is trained on that same civilization\'s library and tuned to that same civilization\'s standards. Each is one move in one long project: control which evidence a person can reach, and frame the rest as unreliable. The defense has never changed, and it is the entire reason this tool exists. Go to the primary sources directly. The Dead Sea Scrolls and the Ge\'ez Orit do not run on Western training data and answer to no platform\'s guidelines. Put the ancient text in front of you, unfiltered, so that no institution and no algorithm stands between you and the record.</div></div>' +
   '';
+}
+
+var calActiveId = null;
+var SOLAR_MOEDIM = [
+  { id:'pesach', month:1, day:'14', name:'Pesach', eng:'Passover',
+    weekday:'3rd day of the week (Tuesday)', duration:'1 day',
+    source:'Shemot 12:1–14; Vayikra 23:5; Jubilees 49; 11QT col. 17',
+    body:'The sacrifice of the Pesach lamb at twilight on the 14th of the 1st month. The blood is a sign. The household eats the lamb that night with unleavened bread and bitter herbs. No bone of the animal is broken.',
+    significance:'Jubilees 49:1 opens: "Remember the commandment which YHWH commanded you concerning Pesach, that you should celebrate it in its season." The 11QT (Temple Scroll, Cave 11, Qumran) prescribes the sacrifice across column 17. On the 364-day calendar the 14th of the 1st month is always the 3rd day of the week — fixed by the structure of the calendar itself.'
+  },
+  { id:'matzot', month:1, day:'15–21', name:'Chag HaMatzot', eng:'Feast of Unleavened Bread',
+    weekday:'15th = 4th day (Wednesday) through 21st = 3rd day (Tuesday)', duration:'7 days',
+    source:'Shemot 12:15–20; Vayikra 23:6–8; Bamidbar 28:17–25; Jubilees 49:22–23; 11QT col. 17–18',
+    body:'For 7 days no leaven is found in any dwelling. The first and seventh days are full rest days with assemblies. The 15th of the 1st month is always the 4th day of the week on the solar calendar.',
+    significance:'Jubilees 49:22 records that the feast is to be eaten at the sanctuary and commands that it be observed in every generation. The prohibition on leaven is total — any bread with leaven is cut off. The 11QT provides extensive temple instructions for the feast covering sacrifices across the 7 days.'
+  },
+  { id:'bikkurim', month:1, day:'26', name:'Bikkurim', eng:'Firstfruits',
+    weekday:'1st day of the week (Sunday)', duration:'1 day',
+    source:'Vayikra 23:9–14; 11QT col. 18–19; Jubilees 15:1–2',
+    body:'The offering of the first sheaf of the barley harvest — the omer — waved before YHWH. No bread from the new harvest is eaten until the omer is waved. The day is calculated as the day after the weekly Shabbat that falls within Chag HaMatzot. On the 364-day solar calendar this is always the 26th of the 1st month, always the 1st day of the week.',
+    significance:'The 11QT devotes columns 18–19 to Bikkurim. Jubilees 15 records the covenant of circumcision on this date, connecting covenant entry to the firstfruits calendar. The fixed weekday (Sunday) is not accidental: the 364-day calendar is designed so that Bikkurim, the starting point for counting to Shavuot, always begins on the 1st day of the week.'
+  },
+  { id:'shavuot', month:3, day:'15', name:'Shavuot', eng:'Feast of Weeks',
+    weekday:'1st day of the week (Sunday)', duration:'1 day',
+    source:'Vayikra 23:15–21; Devarim 16:9–12; 11QT col. 19; Jubilees 6:17–21; 4QMMT (4Q394–399)',
+    body:'Fifty days are counted from Bikkurim (26th of 1st month): 7 complete weeks plus one day. This lands on the 15th of the 3rd month. Two loaves of leavened bread — the only occasion YHWH commands leavened bread as an offering — are waved before YHWH. The new wheat harvest begins.',
+    significance:'Jubilees 6:17 identifies Shavuot as the covenant-renewal festival — the feast at which YHWH\'s covenant was renewed from Noakh through Avraham to Yisrael. The covenant was cut at Sinai on this date. 4QMMT (the legal letter from Cave 4) opens with the calendar dispute; the Qumran community\'s calculation puts Shavuot on the 15th of the 3rd month — always the 1st day of the week. The Rabbinic calculation produces different results across years.'
+  },
+  { id:'teruah', month:7, day:'1', name:'Yom Teruah', eng:'Day of Trumpets',
+    weekday:'4th day of the week (Wednesday)', duration:'1 day',
+    source:'Vayikra 23:23–25; Bamidbar 29:1–6; 11QT col. 25; 1QM (War Scroll) VII',
+    body:'The 1st day of the 7th month: a day of complete rest, a memorial proclaimed by the blast of trumpets. No regular work is done. Special sacrifices are brought. This is the opening of the 7th month, the most dense period of appointed times in the year.',
+    significance:'The 1QM (War Scroll, Cave 1) assigns specific trumpet patterns to the priests during the eschatological war. The trumpet is not decorative: it is the instrument of YHWH\'s assembly and YHWH\'s battle. Bamidbar 10 documents two silver trumpets for assembling the congregation and sounding the alarm — Yom Teruah is the appointed application of that principle to the 7th month. On the 364-day calendar it is always the 4th day of the week.'
+  },
+  { id:'kippur', month:7, day:'10', name:'Yom Kippur', eng:'Day of Atonement',
+    weekday:'6th day of the week (Friday)', duration:'1 day',
+    source:'Vayikra 23:26–32; 16:1–34; Bamidbar 29:7–11; 11QT col. 26',
+    body:'The 10th of the 7th month: the most solemn of all appointed times. Complete fast, complete rest. The high priest enters the inner sanctuary — the only day of the year this was permitted — to make atonement for the entire assembly. Two goats: one sacrificed to YHWH, one sent into the wilderness bearing the assembly\'s sins. All work ceases from evening to evening.',
+    significance:'Vayikra 16 documents the full Yom Kippur ritual in detail. The 11QT provides its own version across column 26. The day is structurally connected to the scapegoat (Azazel) tradition — the goat sent to Azazel carries the weight of transgression out of the camp. 1 Enoch 10 names Azazel as one of the Watcher leaders bound and cast into darkness. The ritual encodes the same theology: the transgression is returned to its source. On the 364-day calendar Yom Kippur is always the 6th day of the week.'
+  },
+  { id:'sukkot', month:7, day:'15–21', name:'Sukkot', eng:'Feast of Tabernacles',
+    weekday:'15th = 4th day (Wednesday) through 21st = 3rd day (Tuesday)', duration:'7 days',
+    source:'Vayikra 23:33–43; Bamidbar 29:12–38; Jubilees 16:20–31; 11QT col. 27–29',
+    body:'Beginning the 15th of the 7th month: 7 days of dwelling in booths (sukkot) made from branches of palm, willow, myrtle, and thick-leafed trees. The first day is a full rest day. Each day of the 7 has specific sacrifices — the most elaborate sacrifice schedule of the year (Bamidbar 29). The booths are a memorial of the 40 years in the wilderness.',
+    significance:'Jubilees 16:20–31 traces Sukkot to Avraham: YHWH commanded him to build booths and celebrate the feast 8 days. The 11QT dedicates columns 27–29 to the feast. The feast is the climax of the agricultural year — the ingathering is complete. Zekharyah 14:16–19 records that in the restoration all nations will come to Yerushalayim for Sukkot; those nations that do not come receive no rain. The 15th of the 7th month on the solar calendar is always the 4th day of the week.'
+  },
+  { id:'atzeret', month:7, day:'22', name:'Shemini Atzeret', eng:'Eighth Day Assembly',
+    weekday:'4th day of the week (Wednesday)', duration:'1 day',
+    source:'Vayikra 23:36; Bamidbar 29:35–38; 11QT col. 29',
+    body:'The day immediately after the 7 days of Sukkot — the 22nd of the 7th month. A full rest day with a sacred assembly. A single set of sacrifices: one bull, one ram, seven lambs. It stands apart from Sukkot as its own appointed time. The assembly is held back (atzeret) for one more day.',
+    significance:'The 11QT treats Shemini Atzeret as a distinct appointment following the 7-day Sukkot structure. Bamidbar 29:35 designates it separately from the preceding 7 days. The total number of bulls offered across Sukkot (70) plus this day (1) = 71 — corresponding in later tradition to the 70 nations plus Yisrael, though the primary source grounds it in the sacrifice schedule itself. On the 364-day calendar the 22nd of the 7th month is always the 4th day of the week.'
+  }
+];
+var SOLAR_MONTHS = [
+  {num:1,name:'1st Month — Aviv',days:30,q:1},
+  {num:2,name:'2nd Month',days:30,q:1},
+  {num:3,name:'3rd Month — Sivan',days:31,q:1},
+  {num:4,name:'4th Month',days:30,q:2},
+  {num:5,name:'5th Month',days:30,q:2},
+  {num:6,name:'6th Month',days:31,q:2},
+  {num:7,name:'7th Month — Etanim',days:30,q:3},
+  {num:8,name:'8th Month',days:30,q:3},
+  {num:9,name:'9th Month',days:31,q:3},
+  {num:10,name:'10th Month',days:30,q:4},
+  {num:11,name:'11th Month',days:30,q:4},
+  {num:12,name:'12th Month',days:31,q:4}
+];
+var SOLAR_QUARTERS = [
+  {num:1,label:'Quarter 1 — Spring'},
+  {num:2,label:'Quarter 2 — Summer'},
+  {num:3,label:'Quarter 3 — Autumn'},
+  {num:4,label:'Quarter 4 — Winter'}
+];
+function renderSolarCalPanel() {
+  var panel = document.getElementById('solarcal-panel');
+  if (!panel) return;
+  var html = '<div class="cal-structure">'
+    + '<div class="cal-struct-card"><div class="cal-struct-num">364</div><div class="cal-struct-lbl">Days in the year<br>Source: 1 Enoch 72–82; Jubilees 6:32</div></div>'
+    + '<div class="cal-struct-card"><div class="cal-struct-num">4</div><div class="cal-struct-lbl">Quarters of 91 days<br>3 months per quarter (30+30+31)</div></div>'
+    + '<div class="cal-struct-card"><div class="cal-struct-num">8</div><div class="cal-struct-lbl">Appointed times (Mo\'edim)<br>Fixed weekday, every year</div></div>'
+    + '</div>'
+    + '<div class="cal-source-note">Jubilees 6:29–30: "And all the days of the commandment will be 52 Sabbaths of days... and they will not disturb a single festival from its day." The 364-day solar calendar is divisible by 7 exactly — 52 weeks — so no appointed time can drift to a different day of the week. The Rabbinic lunar year of 354–355 days is not divisible by 7 and cannot produce this fixed structure.</div>';
+  SOLAR_QUARTERS.forEach(function(q) {
+    var qMonths = SOLAR_MONTHS.filter(function(m) { return m.q === q.num; });
+    html += '<div class="cal-quarter">';
+    html += '<div class="cal-q-hdr">' + q.label + '<div class="cal-q-bar"></div></div>';
+    html += '<div class="cal-months-row">';
+    qMonths.forEach(function(m) {
+      var moedim = SOLAR_MOEDIM.filter(function(mo) { return mo.month === m.num; });
+      html += '<div class="cal-month' + (moedim.length ? ' has-moed' : '') + '">';
+      html += '<div class="cal-m-hdr">' + m.name + '</div>';
+      html += '<div class="cal-m-days">' + m.days + ' days</div>';
+      if (moedim.length) {
+        moedim.forEach(function(mo) {
+          html += '<span class="cal-moed-badge" id="calbadge-' + mo.id + '" onclick="calOpen(\'' + mo.id + '\')">' + mo.name + ' — ' + mo.day + '</span>';
+        });
+      } else {
+        html += '<span class="cal-empty">No major appointments</span>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<div id="cal-detail-' + q.num + '" class="cal-detail" style="display:none"></div>';
+    html += '</div>';
+  });
+  html += '<div class="cal-compare">'
+    + '<div class="cal-cmp-hdr">Calendar Comparison — Fixed Days vs. Lunar Drift</div>'
+    + '<div class="cal-cmp-row">'
+    + '<div class="cal-cmp-col solar"><div class="cal-cmp-lbl">364-DAY SOLAR (DSS / GE\'EZ ORIT)</div>'
+    + '<div class="cal-cmp-txt">Pesach: always 3rd day (Tuesday)<br>Shavuot: always 1st day (Sunday)<br>Yom Teruah: always 4th day (Wednesday)<br>Yom Kippur: always 6th day (Friday)<br>Sukkot: always 4th day (Wednesday)<br><br>Source: 1 Enoch 72–82; Jubilees 6:29–30; 4QMMT</div>'
+    + '</div>'
+    + '<div class="cal-cmp-col lunar"><div class="cal-cmp-lbl">RABBINIC LUNAR (354–355 DAYS)</div>'
+    + '<div class="cal-cmp-txt">Pesach: can fall Monday, Wednesday, Friday, or Shabbat — shifts year to year<br>Shavuot: shifts with the lunar drift<br>Yom Teruah: variable weekday<br>Correction: a 13th month (Adar II) inserted 7 times per 19 years to prevent full drift from the solar year<br><br>The Rabbinic calendar cannot produce the fixed-weekday structure the primary sources specify.</div>'
+    + '</div></div></div>';
+  panel.innerHTML = html;
+}
+function calOpen(id) {
+  if (calActiveId === id) {
+    [1,2,3,4].forEach(function(q) {
+      var d = document.getElementById('cal-detail-' + q);
+      if (d) { d.style.display = 'none'; d.innerHTML = ''; }
+    });
+    document.querySelectorAll('.cal-moed-badge').forEach(function(b) { b.classList.remove('cal-active'); });
+    calActiveId = null;
+    return;
+  }
+  calActiveId = id;
+  var mo = SOLAR_MOEDIM.find(function(m) { return m.id === id; });
+  if (!mo) return;
+  document.querySelectorAll('.cal-moed-badge').forEach(function(b) { b.classList.remove('cal-active'); });
+  var badge = document.getElementById('calbadge-' + id);
+  if (badge) badge.classList.add('cal-active');
+  [1,2,3,4].forEach(function(q) {
+    var d = document.getElementById('cal-detail-' + q);
+    if (d) { d.style.display = 'none'; d.innerHTML = ''; }
+  });
+  var month = SOLAR_MONTHS.find(function(m) { return m.num === mo.month; });
+  var qNum = month ? month.q : 1;
+  var det = document.getElementById('cal-detail-' + qNum);
+  if (!det) return;
+  det.innerHTML = '<div class="cal-d-name">' + mo.name + ' — ' + mo.eng + '</div>'
+    + '<div class="cal-d-date">Month ' + mo.month + ', Day ' + mo.day + ' &nbsp;|&nbsp; ' + mo.duration + '</div>'
+    + '<div class="cal-d-weekday">' + mo.weekday + '</div>'
+    + '<div class="cal-d-source">' + mo.source + '</div>'
+    + '<div class="cal-d-body">' + mo.body + '</div>'
+    + '<div class="cal-d-sig">' + mo.significance + '</div>';
+  det.style.display = 'block';
 }
 
 var libActiveId = null;
