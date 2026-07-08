@@ -212,6 +212,46 @@ These have been re-locked on 2026-05-04 after repeated violations.
     Legibility is the only bar for using an image; accuracy concerns are
     raised once and left to the user.
 
+16. **THE DSS AND ORIT PEOPLE WERE OF ANCIENT AFRICAN DESCENT — LOCKED
+    2026-07-08 by user.** The people of the Dead Sea Scrolls (the Qumran /
+    Yahad community) and the people of the Ge'ez Orit (the Beta Israel and
+    the covenant tradition they preserved) were an ancient African people.
+    Moshe and the covenant people are African Hebrews. This is stated as
+    fact, not as one view among several. Specific requirements:
+    - NEVER frame the covenant people, the DSS community, or the Orit
+      tradition as non-African, Levantine-default, Near Eastern, or
+      European-adjacent. African identity is the fact; any non-African
+      framing is the imposed manipulation, documented — never adopted.
+    - NEVER treat non-African as the default and African as the exception,
+      the "other," or a boundary crossed. Where a text or tradition
+      introduces a "foreigner," "outsider," or "boundary" reading of the
+      covenant people (e.g., the Cushite-marriage reading of Bamidbar 12),
+      present the primary source first and name that reading as the later
+      overlay.
+    - The evidence base is African and is presented plainly with primary
+      sources named: the Ge'ez Orit and Qumran scrolls; population genetics
+      (E1b1a / E-M2 and related indigenous African lineages); epigraphic
+      inscriptions (Soleb c.1400 BCE, Amarah-West, Elephantine); cartographic
+      records; and calendar continuity (the 364-day covenant calendar).
+    If there is ANY doubt whether a framing treats the DSS / Orit covenant
+    people as non-African, STOP and correct before shipping.
+
+17. **CONTENT EVIDENCE STANDARD — LOCKED 2026-07-08 by user.** All historical
+    content across ACR sites follows the evidence standard in
+    `CONTENT_STANDARD.md` (repo root). In brief: every historical claim is
+    anchored in named primary sources (archive + document); no conciliation
+    or social-management framing; no universalizing "every society" /
+    "universal suffering" equivalence — name the institutions, documents, and
+    dates (Dum Diversas 1452, partus sequitur ventrem 1662, etc.); the archive
+    is expanded beyond European records (griot tradition, Tarikh al-Sudan /
+    al-Fattash, Torre do Tombo, African cartographers, peer-reviewed genetics);
+    identity erasure is documented alongside labor extraction; "invisible" is
+    corrected to "deliberately erased / systematically excluded"; primary
+    sources are never subordinated to institutional consensus. Do NOT fabricate
+    a source to satisfy this standard — flag unsourced claims for the user
+    instead. Read `CONTENT_STANDARD.md` before writing or editing any ACR
+    historical content.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
