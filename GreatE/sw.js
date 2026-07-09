@@ -1,4 +1,4 @@
-const CACHE = 'great-eraser-v14';
+const CACHE = 'great-eraser-v15';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -22,22 +22,37 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
+// iOS Safari refuses a service-worker response that carries a redirect for a
+// page navigation ("Response served by service worker has redirections").
+// The site's _redirects file 301-normalises bare paths, so rebuild any
+// redirected response as a plain one before returning or caching it.
+function clean(res){
+  if (!res || !res.redirected) return Promise.resolve(res);
+  return res.blob().then(b => new Response(b, { status: res.status, statusText: res.statusText, headers: res.headers }));
+}
+
 self.addEventListener('fetch', e => {
-  // Network-first for data files, cache-first for shell
-  const url = new URL(e.request.url);
-  if (url.pathname.includes('/data/')) {
+  const req = e.request;
+  let url;
+  try { url = new URL(req.url); } catch (_) { return; }
+  // Network-first for data files and the shell (navigations, index.html, sw.js)
+  // so updates land and a stale redirect can never stick; cache is the fallback.
+  const isShell = req.mode === 'navigate' || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/sw.js');
+  if (url.pathname.includes('/data/') || isShell) {
     e.respondWith(
-      fetch(e.request)
-        .then(r => {
-          const clone = r.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-          return r;
-        })
-        .catch(() => caches.match(e.request))
+      fetch(req)
+        .then(r => clean(r).then(c => {
+          if (c && c.ok) { const cl = c.clone(); caches.open(CACHE).then(cache => cache.put(req, cl)).catch(() => {}); }
+          return c;
+        }))
+        .catch(() => caches.match(req).then(r => r || caches.match('/index.html')))
     );
   } else {
     e.respondWith(
-      caches.match(e.request).then(r => r || fetch(e.request))
+      caches.match(req).then(r => r || fetch(req).then(res => clean(res).then(c => {
+        if (c && c.ok) { const cl = c.clone(); caches.open(CACHE).then(cache => cache.put(req, cl)).catch(() => {}); }
+        return c;
+      })))
     );
   }
 });
