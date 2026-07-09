@@ -599,8 +599,8 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
     <div class="mode-grid">
       <button class="mode-card mc-gamenight" style="grid-column:1 / -1" onclick="App.openGameNight()">
         <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg></span>
-        <span class="mc-title">ACR Game Night</span>
-        <span class="mc-sub">Family Feud · Deal or No Deal · teams · cast to TV</span>
+        <span class="mc-title">Truth Uncovered</span>
+        <span class="mc-sub">Two team game shows · hold the truth · cast to TV</span>
       </button>
       <button class="mode-card mc-study" onclick="App.showScreen('study')">
         <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg></span>
@@ -762,7 +762,7 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
 <div class="screen" id="gamenight">
   <div class="top-bar">
     <button class="back-btn" onclick="App.gnBack()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
-    <div class="top-bar-title" id="gn-title">ACR Game Night</div>
+    <div class="top-bar-title" id="gn-title">Truth Uncovered</div>
     <button class="tv-toggle" onclick="App.gnToggleStage()" aria-label="TV mode"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
   </div>
   <div class="screen-body" id="gn-body"></div>
@@ -2206,7 +2206,7 @@ Object.assign(App, {
     const ch=this._chap(), vol=this._vol(), L=this._gameList();
     const card=g=>`<button class="game-card ${g.cls}" onclick="App.startGame('${g.key}')"><span class="gc-ic">${g.icon}</span><span class="gc-t">${g.label}</span><span class="gc-s">${g.sub}</span></button>`;
     let h=`<div class="games-intro"><div class="gi-t">Vol.${vol.vol} · Ch.${ch.num}</div><div class="gi-s">${this.highlightClaim(this._short(ch.title,90))}</div></div>`;
-    h+=`<button class="game-card gc-feud" onclick="App.startGame('feud')"><span class="gc-ic">${GICON.trophy}</span><span class="gc-t">Evidence Board</span><span class="gc-s">Family Feud style: name the top answers before three strikes.</span></button>`;
+    h+=`<button class="game-card gc-feud" onclick="App.startGame('feud')"><span class="gc-ic">${GICON.trophy}</span><span class="gc-t">Evidence Board</span><span class="gc-s">Name the top answers before three strikes.</span></button>`;
     const chg=L.filter(g=>g.grp==='ch'), vg=L.filter(g=>g.grp==='vol');
     if(chg.length) h+='<div class="games-sec">This chapter</div><div class="game-grid">'+chg.map(card).join('')+'</div>';
     if(vg.length) h+='<div class="games-sec">Across this volume</div><div class="game-grid">'+vg.map(card).join('')+'</div>';
@@ -2285,7 +2285,7 @@ Object.assign(App, {
   _boardGuess(pi){ const g=this._g; if(g.revealed) return; if(!g.usedPool) g.usedPool={}; if(g.usedPool[pi]) return; g.usedPool[pi]=true; const guess=g.pool[pi]; const ai=g.answers.indexOf(guess); if(ai>=0 && !g.found[ai]){ g.found[ai]=true; g.score+=100; this._bumpDaily(); } else { g.strikes++; } if(g.strikes>=3 || Object.keys(g.found).length===g.answers.length){ g.revealed=true; } this._rBoard(); }
 });
 
-// ── GAME NIGHT (Family Feud + Deal or No Deal, teams, TV stage) ───────────────
+// ── TRUTH UNCOVERED (two team game shows, teams, TV stage) ──────────
 const GN_COLORS=['#C8971F','#1A9B9B','#E8735A','#8B7EC8'];
 const DOND_VALUES=[5,10,25,50,75,100,150,250,400,600,900,1400];
 const DOND_FACTS=[
@@ -2309,13 +2309,13 @@ Object.assign(App, {
   gnToggleStage(){ const on=document.body.classList.toggle('stage-mode'); document.querySelector('.tv-toggle').classList.toggle('on',on); },
   _gnTeamCount(n){ const gn=this._gn; const cur=gn.teams; const next=[]; for(let i=0;i<n;i++){ next.push(cur[i]||{name:'Team '+(i+1),score:0,color:GN_COLORS[i]}); } gn.teams=next; this.renderGameNight(); },
   _gnName(i,v){ this._gn.teams[i].name=v; },
-  renderGameNight(){ const gn=this._gn; if(!gn){ this.showScreen('home'); return; } document.getElementById('gn-title').textContent = gn.view==='feud'?'Evidence Board':gn.view==='dond'?"The Eraser's Offer":gn.view==='score'?'Final Scores':'ACR Game Night'; const v={setup:'_gnSetup',feud:'_gnFeud',dond:'_gnDond',score:'_gnScoreboard'}[gn.view]; this[v](); },
-  _gnSetup(){ const gn=this._gn; let h=`<div class="gn-hero"><div class="gn-hero-badge">ACR Game Night</div><div class="gn-hero-sub">Two shows built on the record. Play in teams around one screen, or mirror to the TV with the screen icon above.</div></div>`;
+  renderGameNight(){ const gn=this._gn; if(!gn){ this.showScreen('home'); return; } document.getElementById('gn-title').textContent = gn.view==='feud'?'Evidence Board':gn.view==='dond'?"The Eraser's Offer":gn.view==='score'?'Final Scores':'Truth Uncovered'; const v={setup:'_gnSetup',feud:'_gnFeud',dond:'_gnDond',score:'_gnScoreboard'}[gn.view]; this[v](); },
+  _gnSetup(){ const gn=this._gn; let h=`<div class="gn-hero"><div class="gn-hero-badge">Truth Uncovered</div><div class="gn-hero-sub">Two shows built on the record. Play in teams around one screen, or mirror to the TV with the screen icon above.</div></div>`;
     h+='<div class="gn-sec">Teams</div><div class="gn-count">'+[1,2,3,4].map(n=>`<button class="${gn.teams.length===n?'sel':''}" onclick="App._gnTeamCount(${n})">${n}</button>`).join('')+'</div>';
     h+='<div class="gn-teamset">'+gn.teams.map((t,i)=>`<div class="gn-teamrow"><span class="gn-teamdot" style="background:${t.color}"></span><input class="gn-teamin" value="${this.esc(t.name)}" oninput="App._gnName(${i},this.value)" maxlength="18"></div>`).join('')+'</div>';
     h+='<div class="gn-sec">Choose a show</div><div class="gn-shows">';
-    h+=`<button class="gn-show gs-feud" onclick="App._feudStart()"><span class="gs-ic">${GICON.trophy}</span><span class="gs-t">Evidence Board</span><span class="gs-s">Family Feud. Name the top answers, three strikes, steal the pot.</span></button>`;
-    h+=`<button class="gn-show gs-dond" onclick="App._dondStart()"><span class="gs-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7V5h6v2M4 12h16"/></svg></span><span class="gs-t">The Eraser's Offer</span><span class="gs-s">Deal or No Deal. Hold the truth, or take the Eraser's buyout.</span></button>`;
+    h+=`<button class="gn-show gs-feud" onclick="App._feudStart()"><span class="gs-ic">${GICON.trophy}</span><span class="gs-t">Evidence Board</span><span class="gs-s">Name the top answers. Three strikes and the other team can steal the pot.</span></button>`;
+    h+=`<button class="gn-show gs-dond" onclick="App._dondStart()"><span class="gs-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7V5h6v2M4 12h16"/></svg></span><span class="gs-t">The Eraser's Offer</span><span class="gs-s">Hold the truth, or take the Eraser's buyout.</span></button>`;
     h+='</div>';
     document.getElementById('gn-body').innerHTML=h; },
   _gnTeamsBar(active){ return '<div class="gn-teams">'+this._gn.teams.map((t,i)=>`<div class="gn-team ${i===active?'active':''}"><div class="gt-name">${this.esc(t.name)}</div><div class="gt-score">${t.score}</div></div>`).join('')+'</div>'; },
@@ -2363,7 +2363,7 @@ Object.assign(App, {
     // pick / open board
     h+='<div class="dond-grid">'+d.cases.map(c=>{ if(c.open) return `<div class="dond-case open">${c.value}</div>`; const mine=c.i===d.mine; const act = d.phase==='pick'?`App._dondPick(${c.i})`:(mine?'':`App._dondOpen(${c.i})`); return `<button class="dond-case ${mine?'mine':''}" ${act?`onclick="${act}"`:'disabled'}>${mine?'MINE':(c.i+1)}</button>`; }).join('')+'</div>';
     document.getElementById('gn-body').innerHTML=h; },
-  _gnHeadDond(){ const d=this._gn.dond; let sub; if(!d||d.phase==='team') sub='Deal or No Deal, re-themed to the record.'; else if(d.phase==='pick') sub='Pick one sealed case to hold as your own.'; else if(d.phase==='open') sub='Open '+d.opensLeft+' more case'+(d.opensLeft===1?'':'s')+' to reveal what they held.'; else sub=''; return `<div class="game-prompt"><div class="gp-kicker">The Eraser's Offer</div><div class="gp-text">${sub}</div></div>`; },
+  _gnHeadDond(){ const d=this._gn.dond; let sub; if(!d||d.phase==='team') sub='A case-and-offer game, re-themed to the record.'; else if(d.phase==='pick') sub='Pick one sealed case to hold as your own.'; else if(d.phase==='open') sub='Open '+d.opensLeft+' more case'+(d.opensLeft===1?'':'s')+' to reveal what they held.'; else sub=''; return `<div class="game-prompt"><div class="gp-kicker">The Eraser's Offer</div><div class="gp-text">${sub}</div></div>`; },
 
   // ── SCOREBOARD ──
   _gnScoreboard(){ const gn=this._gn; const ranked=gn.teams.map((t,i)=>({t,i})).sort((a,b)=>b.t.score-a.t.score); const win=ranked[0]; let h='<div class="session-complete"><span class="sc-icon">'+GICON.trophy+'</span>'; h+=`<div class="sc-title">${this.esc(win.t.name)} wins</div><div class="sc-sub">${win.t.score} points. Well played.</div>`; h+='<div style="width:100%;margin:8px 0 20px">'+ranked.map((r,idx)=>`<div class="gn-team ${idx===0?'active':''}" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:14px 16px"><span class="gt-name" style="font-size:.95rem">${idx+1}. ${this.esc(r.t.name)}</span><span class="gt-score">${r.t.score}</span></div>`).join('')+'</div>'; h+=`<button class="sc-btn" onclick="App._gn.view='setup';App.renderGameNight()">Play Another Show</button><button class="game-next" style="background:var(--navy2);color:var(--text)" onclick="App.goHome()">Home</button>`; h+='</div>'; document.getElementById('gn-body').innerHTML=h; }
