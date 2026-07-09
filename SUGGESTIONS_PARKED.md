@@ -67,6 +67,44 @@ avoids external product names.
 
 ---
 
+## Truth Uncovered — Stage 2: phones-as-buzzers multiplayer (parked by user 2026-07-09)
+
+Great Eraser Study now has **Truth Uncovered** (game-show hub: Evidence Board +
+The Eraser's Offer, 1-4 teams, TV stage toggle) shipped as **Stage 1**, which is
+single-device / offline (teams gather around one iPad, AirPlay/mirror to the TV).
+
+**Stage 2 (deferred, DO NOT build until user asks):** let each person play on
+their **own phone** as a buzzer, host on the iPad, board on the TV.
+
+User's hard constraint (2026-07-09): **no paid Cloudflare storage.** Build it the
+exact way the OCC backend already works, so it is provably $0:
+
+- Add a Cloudflare **Pages Function** (e.g. `functions/api/games/[[path]].js`) in
+  THIS repo (auto-deploys with the site, same-origin, no CORS). Stays in one public
+  repo, no standalone worker, no second repo. Fits locked rule 10.
+- State in **free-tier D1** (same free plan as OCC `DB`; no payment method needed).
+  A `rooms` table: `code`, `state` (JSON blob), `updated_at`. Optionally a `players`
+  table. A room is a few tiny rows.
+- **Rooms auto-expire** (short TTL, e.g. delete on `updated_at` older than ~2h) and a
+  **self-enforced row/byte cap that refuses new rooms before any billable limit** —
+  mirror OCC's `STORAGE_CAP_BYTES` pattern ("writes stop before the cap so nothing
+  ever bills").
+- **Sync by light polling** (~1s) from phones/TV against the Pages Function. Do NOT
+  use **Durable Objects** or WebSockets (Durable Objects require a paid Workers plan).
+- Flow: host taps Host in Truth Uncovered -> room `code` + QR shown on the iPad/TV ->
+  players open the site on their phone, enter code -> buzz/answer -> host screen and
+  TV stage reflect it via polling. A standalone **TV "Stage" view** URL
+  (`?room=CODE&stage=1`) can be opened directly in a smart-TV browser or Chromecast.
+- Setup the user must do once (their side): create the D1 database in the Cloudflare
+  Pages dashboard and bind it (Settings -> Functions -> D1 binding), same as OCC `DB`.
+  Claude writes all the code and hands over the exact click-path.
+
+Everything else (the two shows, teams, scoreboard, TV stage layout) already exists in
+`GESTUDY/index.html` from Stage 1, so Stage 2 is mostly the room/sync layer plus a
+Host/Join entry point.
+
+---
+
 ## Reminder logistics
 
 I can't actually wake up on a specific date — my session is reactive,

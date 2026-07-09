@@ -1,11 +1,20 @@
 # Session Notes — 2026-07-08
 
-## Current state
+## Current state (end of session)
 
-- Branch: `claude/acr-search-content-checklist-ZgUAQ`
-- Latest main tip (after all merges): `02c4756` — PR #591 squash merge (acr-search-v138)
-- Working tree: clean
-- Live cache marker: `acr-search-v138`
+- Latest main tip: `1631c3f` — PR #594 squash merge (Study verses/quizzes for all
+  chapters + Sharks fix + divine-name rule across Great Eraser and the Study).
+- Branch: `claude/wsa-acr-design-alignment-ji5poy` (= origin/main + this notes
+  commit). Working tree: clean.
+- Live cache markers: Study `gestudy-v11`, Great Eraser `great-eraser-v14`,
+  Search `acr-search-v138`.
+- Backup: `backup/2026-07-08-ge-v14` at `1631c3f`.
+- Deploy: Cloudflare redeploys from `main`; confirm on iPad by the cache markers
+  above after a hard refresh (not verifiable from this session, host blocked).
+
+### Earlier state this session (Search work, already merged)
+
+- Prior main tip: `02c4756` — PR #591 (acr-search-v138).
 
 ## Built today
 
@@ -144,4 +153,12 @@ Applied the rule across BOTH apps this session (user directive: apply to both):
   intact, 0 emojis in either app.
 
 Files changed this pass: `CLAUDE.md` (rule 18), `GESTUDY/data/app_data.json`,
-`GreatE/index.html`, `GreatE/sw.js`. All on PR #594; NOT merged (rule 9).
+`GreatE/index.html`, `GreatE/sw.js`. Shipped via PR #594, MERGED (squash) at
+`1631c3f` with user approval.
+
+## Backups
+
+- `backup/2026-07-08-ge-v14` at `1631c3f` (main HEAD after PR #594 merge:
+  Study verses/quizzes + Sharks fix + divine-name rule across both apps).
+  Recovery: `git checkout backup/2026-07-08-ge-v14`.
+- Prior: `backup/2026-07-06-v129` at `acfdc4e`.
