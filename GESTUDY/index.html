@@ -559,6 +559,23 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
 .ef-sig{font-size:.72rem;color:var(--text2);padding:2px 0 6px 44px;line-height:1.4}
 .ef-aid{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.28);border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--text);margin-bottom:12px;line-height:1.4}
 .ef-hint{width:100%;padding:12px;border:1px dashed rgba(200,151,31,.4);background:none;color:var(--gold-lt);border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:8px}
+.ef-how{background:var(--navy2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 16px;margin:8px 0 16px}
+.ef-how-t{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ef-step{display:flex;gap:10px;font-size:.85rem;color:var(--text);line-height:1.5;margin-bottom:8px}
+.ef-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(200,151,31,.2);color:var(--gold);font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center}
+/* How to Use guide */
+.hu-intro{background:var(--navy2);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:16px}
+.hu-t{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.hu-s{font-size:.82rem;color:var(--text2);line-height:1.5}
+.hu-sec{background:var(--navy2);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.hu-sec>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.hu-sec>summary::-webkit-details-marker{display:none}
+.hu-st{flex:1;font-size:.95rem;font-weight:700;color:var(--text)}
+.hu-chev{width:18px;height:18px;stroke:var(--gold);fill:none;transition:transform .2s;flex-shrink:0}
+.hu-sec[open]>summary .hu-chev{transform:rotate(90deg)}
+.hu-body{padding:0 16px 14px}
+.hu-body p{font-size:.88rem;line-height:1.65;color:var(--text);margin:0 0 8px}
+.hu-body p:first-child{margin-top:2px}
 </style>
 </head>
 <body>
@@ -612,6 +629,11 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
       <div class="cb-arrow">→</div>
     </button>
     <div class="mode-grid">
+      <button class="mode-card" style="grid-column:1 / -1;background:linear-gradient(135deg,#2A6F6F,#12403F);color:#fff" onclick="App.showScreen('howto')">
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 4.3 2c0 1.6-2 2-2 3.3"/><path d="M12 17.5h.01"/></svg></span>
+        <span class="mc-title">How to Use</span>
+        <span class="mc-sub">New here? A plain, short guide to every part</span>
+      </button>
       <button class="mode-card mc-gamenight" style="grid-column:1 / -1" onclick="App.openGameNight()">
         <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg></span>
         <span class="mc-title">Truth Uncovered</span>
@@ -781,6 +803,15 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
     <button class="tv-toggle" onclick="App.gnToggleStage()" aria-label="TV mode"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
   </div>
   <div class="screen-body" id="gn-body"></div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="screen" id="howto">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.goHome()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <div class="top-bar-title">How to Use</div>
+  </div>
+  <div class="screen-body" id="howto-body"></div>
 </div>
 
 <!-- SETTINGS -->
@@ -998,6 +1029,7 @@ const App = {
       case 'games': this.renderGamesScreen(); break;
       case 'game': this.renderGameScreen(); break;
       case 'gamenight': this.renderGameNight(); break;
+      case 'howto': this.renderHelp(); break;
     }
   },
 
@@ -2451,6 +2483,10 @@ Object.assign(App, {
   _efIntro(){ let h='<div class="gn-hero"><div class="gn-hero-badge">Evidence Feud</div><div class="gn-hero-sub">The trial of the record. Two teams, two roles.</div></div>';
     h+='<div class="ef-roles"><div class="ef-role ef-def"><div class="ef-rt">The Witnesses</div><div class="ef-rs">Defense. Name the true exhibits and fill the board.</div></div><div class="ef-role ef-pro"><div class="ef-rt">The Erasers</div><div class="ef-rs">Prosecution. Push the false story, then get caught in cross-examination.</div></div></div>';
     h+='<div class="ef-levels">3 cases, rising levels: Discovery, Deliberation, Verdict. Then the Fast Verdict round.</div>';
+    h+='<div class="ef-how"><div class="ef-how-t">How to play</div>'
+      +'<div class="ef-step"><span class="ef-num">1</span>A question appears. Tap the team that won the buzz.</div>'
+      +'<div class="ef-step"><span class="ef-num">2</span>Fill the board: <b>tap the word chips at the bottom</b>. Right fills a row, wrong is a strike. Three strikes lets the other team steal.</div>'
+      +'<div class="ef-step"><span class="ef-num">3</span>Cross-examination: tap <b>Fabrication</b> if false, or <b>Record</b> if true.</div></div>';
     h+='<button class="game-next" data-ef="begin">Begin the Trial</button>';
     this._efWrap(h); },
   ef_begin(){ this._ef.ci=0; this._efStartCase(0); },
@@ -2523,6 +2559,27 @@ Object.assign(App, {
     h+='</div>'; document.getElementById('gn-body').innerHTML=h; document.getElementById('gn-title').textContent='The Verdict'; },
   ef_again(){ this.startEvidenceFeud(); },
   ef_home(){ this.goHome(); }
+});
+
+// ── HOW TO USE ────────────────────────────────────────────────────────────────
+const HELP_SECTIONS = [
+  {t:'What this app is', b:['Great Eraser Study helps you learn and remember the record: the evidence, the sources, and how it was erased.','Every fact here comes from real primary sources. Nothing is invented.']},
+  {t:'Study the volumes', b:['Tap Great Eraser Study to open the volumes. Tap a chapter to read its argument.','Chapters with a Connected Verses button show the primary sources behind the claim.']},
+  {t:'Memory Cards', b:['Short question-and-answer cards that come back for review at the right time, so facts stick.','Tap Cards on the home screen. Mark each Easy, Almost, or Hard.']},
+  {t:'Quiz Modes', b:['Quick questions across all volumes. Two kinds: Multiple Choice and Fill in the Blank.','Tap an answer. It tells you right away if you got it.']},
+  {t:'Chapter Games', b:['Open a chapter, then tap Games. Each chapter has games built from its own facts:','True or False, Which Source, Verse Builder, Key Terms, Word Match, Story Sequence, Memory Match, and more.']},
+  {t:'Truth Uncovered (game show)', b:['A game show you play in teams, from the home screen.','1 to 4 teams. Tap the TV button (top right) to make it big for a TV, then mirror your iPad to the screen.','It has two shows: Evidence Feud and The Eraser\'s Offer.']},
+  {t:'How to play Evidence Feud', b:['Two teams: The Witnesses and The Erasers. It runs like a courtroom.','1. Opening: a question appears. Tap the team that won the buzz. They play first.','2. The board: the answers are the numbered rows up top. To guess, TAP A WORD CHIP AT THE BOTTOM. Right fills a row. Wrong is a strike. Three strikes lets the other team steal.','3. Cross-examination: a claim shows up. Tap Fabrication if false, or Record if true.','Play 3 cases, then a Fast round, then the Verdict shows who won.']},
+  {t:"How to play The Eraser's Offer", b:['Like Deal or No Deal. Sealed cases each hold points.','Pick one case to keep. Open the others to reveal their points and a real fact.','The Scribe makes an offer. Take the Deal, or say No Deal and keep going. Hold the truth to the end.']},
+  {t:'Timeline and DSS vs Orit', b:['Timeline shows what was erased and what was restored, in order.','DSS vs Orit puts the two primary witnesses side by side.']},
+  {t:'Reading, display, and TV', b:['Settings lets you set text size, spacing, and a cream background for easier reading.','In the game show, the TV button enlarges everything so you can mirror it to an Apple TV with AirPlay.']}
+];
+Object.assign(App, {
+  renderHelp(){
+    let h='<div class="hu-intro"><div class="hu-t">A quick guide</div><div class="hu-s">Tap any section to open it. Short and plain, one step at a time.</div></div>';
+    h+=HELP_SECTIONS.map(s=>`<details class="hu-sec"><summary><span class="hu-st">${s.t}</span><svg class="hu-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg></summary><div class="hu-body">${s.b.map(x=>`<p>${x}</p>`).join('')}</div></details>`).join('');
+    document.getElementById('howto-body').innerHTML=h;
+  }
 });
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
