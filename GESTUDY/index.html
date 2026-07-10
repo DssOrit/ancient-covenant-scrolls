@@ -544,6 +544,21 @@ body.stage-mode .dond-case{font-size:1.6rem}
 body.stage-mode .offer-v{font-size:3.2rem}
 body.stage-mode .fb-cand{font-size:1rem;padding:12px 18px}
 body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
+/* Evidence Feud */
+.ef-wrap{padding:2px}
+.ef-roles{display:flex;gap:10px;margin:14px 0}
+.ef-role{flex:1;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.08)}
+.ef-def{background:linear-gradient(135deg,rgba(46,204,113,.16),rgba(46,204,113,.04));border-color:rgba(46,204,113,.35)}
+.ef-pro{background:linear-gradient(135deg,rgba(232,115,90,.16),rgba(232,115,90,.04));border-color:rgba(232,115,90,.35)}
+.ef-rt{font-weight:800;font-size:1rem;margin-bottom:4px}
+.ef-def .ef-rt{color:var(--emerald)}
+.ef-pro .ef-rt{color:var(--coral)}
+.ef-rs{font-size:.78rem;color:var(--text2);line-height:1.4}
+.ef-levels{font-size:.8rem;color:var(--text2);text-align:center;margin:6px 0 16px;line-height:1.5}
+.ef-note{font-size:.85rem;color:var(--text);text-align:center;margin:6px 0 10px;font-weight:600}
+.ef-sig{font-size:.72rem;color:var(--text2);padding:2px 0 6px 44px;line-height:1.4}
+.ef-aid{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.28);border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--text);margin-bottom:12px;line-height:1.4}
+.ef-hint{width:100%;padding:12px;border:1px dashed rgba(200,151,31,.4);background:none;color:var(--gold-lt);border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:8px}
 </style>
 </head>
 <body>
@@ -2206,7 +2221,7 @@ Object.assign(App, {
     const ch=this._chap(), vol=this._vol(), L=this._gameList();
     const card=g=>`<button class="game-card ${g.cls}" onclick="App.startGame('${g.key}')"><span class="gc-ic">${g.icon}</span><span class="gc-t">${g.label}</span><span class="gc-s">${g.sub}</span></button>`;
     let h=`<div class="games-intro"><div class="gi-t">Vol.${vol.vol} · Ch.${ch.num}</div><div class="gi-s">${this.highlightClaim(this._short(ch.title,90))}</div></div>`;
-    h+=`<button class="game-card gc-feud" onclick="App.startGame('feud')"><span class="gc-ic">${GICON.trophy}</span><span class="gc-t">Evidence Board</span><span class="gc-s">Name the top answers before three strikes.</span></button>`;
+    h+=`<button class="game-card gc-feud" onclick="App.startEvidenceFeud()"><span class="gc-ic">${GICON.trophy}</span><span class="gc-t">Evidence Feud</span><span class="gc-s">Courtroom Family Feud: Witnesses vs the Erasers, in teams.</span></button>`;
     const chg=L.filter(g=>g.grp==='ch'), vg=L.filter(g=>g.grp==='vol');
     if(chg.length) h+='<div class="games-sec">This chapter</div><div class="game-grid">'+chg.map(card).join('')+'</div>';
     if(vg.length) h+='<div class="games-sec">Across this volume</div><div class="game-grid">'+vg.map(card).join('')+'</div>';
@@ -2314,7 +2329,7 @@ Object.assign(App, {
     h+='<div class="gn-sec">Teams</div><div class="gn-count">'+[1,2,3,4].map(n=>`<button class="${gn.teams.length===n?'sel':''}" onclick="App._gnTeamCount(${n})">${n}</button>`).join('')+'</div>';
     h+='<div class="gn-teamset">'+gn.teams.map((t,i)=>`<div class="gn-teamrow"><span class="gn-teamdot" style="background:${t.color}"></span><input class="gn-teamin" value="${this.esc(t.name)}" oninput="App._gnName(${i},this.value)" maxlength="18"></div>`).join('')+'</div>';
     h+='<div class="gn-sec">Choose a show</div><div class="gn-shows">';
-    h+=`<button class="gn-show gs-feud" onclick="App._feudStart()"><span class="gs-ic">${GICON.trophy}</span><span class="gs-t">Evidence Board</span><span class="gs-s">Name the top answers. Three strikes and the other team can steal the pot.</span></button>`;
+    h+=`<button class="gn-show gs-feud" onclick="App.startEvidenceFeud()"><span class="gs-ic">${GICON.trophy}</span><span class="gs-t">Evidence Feud</span><span class="gs-s">The trial of the record. Witnesses defend the evidence, the Erasers push the false story and must be caught.</span></button>`;
     h+=`<button class="gn-show gs-dond" onclick="App._dondStart()"><span class="gs-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7V5h6v2M4 12h16"/></svg></span><span class="gs-t">The Eraser's Offer</span><span class="gs-s">Hold the truth, or take the Eraser's buyout.</span></button>`;
     h+='</div>';
     document.getElementById('gn-body').innerHTML=h; },
@@ -2367,6 +2382,147 @@ Object.assign(App, {
 
   // ── SCOREBOARD ──
   _gnScoreboard(){ const gn=this._gn; const ranked=gn.teams.map((t,i)=>({t,i})).sort((a,b)=>b.t.score-a.t.score); const win=ranked[0]; let h='<div class="session-complete"><span class="sc-icon">'+GICON.trophy+'</span>'; h+=`<div class="sc-title">${this.esc(win.t.name)} wins</div><div class="sc-sub">${win.t.score} points. Well played.</div>`; h+='<div style="width:100%;margin:8px 0 20px">'+ranked.map((r,idx)=>`<div class="gn-team ${idx===0?'active':''}" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:14px 16px"><span class="gt-name" style="font-size:.95rem">${idx+1}. ${this.esc(r.t.name)}</span><span class="gt-score">${r.t.score}</span></div>`).join('')+'</div>'; h+=`<button class="sc-btn" onclick="App._gn.view='setup';App.renderGameNight()">Play Another Show</button><button class="game-next" style="background:var(--navy2);color:var(--text)" onclick="App.goHome()">Home</button>`; h+='</div>'; document.getElementById('gn-body').innerHTML=h; }
+});
+
+// ── EVIDENCE FEUD (courtroom Family Feud) ─────────────────────────────────────
+const EF_CASES = [
+  {id:'name_stone',lvl:1,charge:'"The Name is a late invention"',prompt:'Name the ancient inscriptions that carry the Name YHWH',
+   exhibits:[{n:'Soleb Temple (~1400 BCE, Nubia)',s:'Oldest known reference to YHWH, carved in African stone.'},{n:'Amarah-West (~1320 BCE)',s:'Independently corroborates Soleb, again in Nubian Egypt.'},{n:'Ketef Hinnom amulets (~600 BCE)',s:'Oldest biblical text fragment naming YHWH.'},{n:'Elephantine Papyri (495-399 BCE)',s:'A Hebrew colony kept a YHWH temple on the Nile.'},{n:'Dead Sea Scrolls (250 BCE-70 CE)',s:'Write YHWH in Paleo-Hebrew, marking the Name as set apart.'}],
+   fakes:[{c:'The Name YHWH first appears in the Masoretic Text around 900 CE.',fix:'Soleb predates the Masoretic Text by roughly 2,300 years.'},{c:'YHWH worship originates in Babylon.',fix:'The oldest evidence is African, at Soleb in Nubia.'}]},
+  {id:'juda_map',lvl:1,charge:'"No Hebrew kingdom existed in West Africa"',prompt:'Name the maps that labeled the Kingdom of Juda in West Africa',
+   exhibits:[{n:'Bowen 1747',s:'Geographer to King George II labels the Slave Coast Kingdom of JUDA.'},{n:'de Fer 1705',s:'French royal cartographer marks Juida on the Bight of Benin.'},{n:'Moll 1710',s:'Marks Terra Judeorum in the Sahel interior.'},{n:'Senex 1725',s:'British royal cartographer: Kingdom of Judah.'},{n:'Dunn 1794',s:'Latest pre-Berlin-Conference Kingdom of Juda designation.'}],
+   fakes:[{c:'The Kingdom of Juda maps are modern forgeries.',fix:'They are official royal cartographic records held in national archives.'},{c:'European maps never recorded a Hebrew kingdom in Africa.',fix:'French, British and Dutch royal maps recorded it for over a century.'}]},
+  {id:'orit_books',lvl:1,charge:'"Africa preserved no ancient scripture"',prompt:"Name books the Ge'ez Orit preserved",
+   exhibits:[{n:'Henok (1 Enoch)',s:"The only complete ancient copy survived in Ge'ez, in Africa."},{n:'Kufale (Jubilees)',s:'Preserved complete; later confirmed by 15+ Qumran fragments.'},{n:'Meqabyan',s:'Ethiopian Maccabees, an independent African text.'},{n:'The Octateuch',s:'The Beta Israel eight-book Torah core.'}],
+   fakes:[{c:'1 Enoch survived only in Greek.',fix:"Its only complete ancient form survived in Ge'ez, preserved by the Beta Israel."},{c:'Jubilees was invented in the Middle Ages.',fix:'Qumran fragments confirm it is a Second-Temple text.'}]},
+  {id:'nine',lvl:2,charge:'"The prophecy was never fulfilled"',prompt:'Name the covenant conditions the transatlantic diaspora fulfilled',
+   exhibits:[{n:'Taken in ships',s:'Devarim 28:68 specifies ships; the Middle Passage matches.'},{n:'400 years',s:'1619 Point Comfort to 2019, the exact span.'},{n:'A language not understood',s:'Taken to English, Portuguese, French speaking nations.'},{n:'Identity stripped',s:'Names, language, memory erased across generations.'},{n:'Scattered among all nations',s:'The most widespread forced diaspora on record.'},{n:'The enslaving nation judged',s:'The slave-trading empires collapsed across the 20th century.'}],
+   fakes:[{c:'The prophecy was fulfilled by the Babylonian exile.',fix:'Babylon was overland and ~70 years; the text specifies ships and 400 years.'},{c:'The 400 years refers only to time in Egypt.',fix:'Bereshit 15:13 sets 400 years of bondage in a land not their own, matched to the documented record.'}]},
+  {id:'qumran',lvl:2,charge:'"The scrolls just match the modern Bible"',prompt:'Name writings found among the Dead Sea Scrolls at Qumran',
+   exhibits:[{n:'Community Rule (1QS)',s:"The Yahad community's own rule of life."},{n:'War Scroll (1QM)',s:'The battle of the Sons of Light and Darkness.'},{n:'Great Isaiah Scroll (1QIsa-a)',s:'Oldest complete Isaiah, ~1000 years older than the Masoretic.'},{n:'Pesher Habakkuk (1QpHab)',s:'A running commentary unique to the community.'},{n:'Damascus Document',s:'Names the three nets of Belial.'}],
+   fakes:[{c:'The Dead Sea Scrolls match the Masoretic Text exactly.',fix:'They differ in thousands of readings and predate it by over a thousand years.'},{c:'The scrolls contain the New Testament.',fix:'They are pre-Christian and contain no NT text.'}]},
+  {id:'african_zone',lvl:2,charge:'"The land was always the Middle East"',prompt:'Name ancient sources placing the Levant in the African zone',
+   exhibits:[{n:'Turin Papyrus Map (1160 BCE)',s:'Oldest surviving map, drawn by Africans, maps the Egypt-Sinai corridor.'},{n:'Hecataeus, Periegesis (550 BCE)',s:'Places Egypt and adjacent land within Libya-Africa.'},{n:'Herodotus (450 BCE)',s:'Places Sinai and Canaan within the African zone.'},{n:'Al-Idrisi, Tabula Rogeriana (1154 CE)',s:'South-up map preserving African geographic relationships.'}],
+   fakes:[{c:'"Middle East" is an ancient geographic term.',fix:'It was coined by Alfred Mahan in 1902 for imperial strategy.'},{c:'Ancient maps always separated the Levant from Africa.',fix:'The oldest maps place it within or at the boundary of the African zone.'}]},
+  {id:'calendar',lvl:3,charge:'"The lunar calendar is the original"',prompt:'Name the evidence for the 364-day covenant calendar',
+   exhibits:[{n:'Jubilees 6:23-38',s:'Commands a 364-day year and condemns following the moon.'},{n:'1 Enoch 72 (Astronomical Book)',s:'Lays out the solar year in detail.'},{n:'Qumran Mishmarot (4Q320-321)',s:'Priestly rotation tables that work only in a 364-day cycle.'},{n:'Beta Israel Sigd',s:'African community that kept the solar festivals in isolation.'}],
+   fakes:[{c:'The lunar calendar is the original covenant calendar.',fix:'Jubilees explicitly condemns lunar reckoning; the 364-day solar system is the attested one.'},{c:'The Qumran community used the Rabbinic calendar.',fix:'Their Mishmarot documents run on the 364-day solar calendar.'}]},
+  {id:'bloodline',lvl:3,charge:'"The Israelite marker is European"',prompt:'Name African lineage evidence for the covenant people',
+   exhibits:[{n:'E1b1a / E-M2',s:'Indigenous African paternal lineage at high frequency in West Africa.'},{n:'Lemba Cohen Modal Haplotype',s:'The priestly marker at ~53% in an African clan.'},{n:'Beta Israel L haplogroup',s:'Ancient African maternal lineage, no European bottleneck.'},{n:'Ramses III E1b1a',s:'African haplogroup confirmed in a pharaoh.'}],
+   fakes:[{c:'Ashkenazi R1b is the ancient Israelite marker.',fix:'R1a/R1b are European; the priestly CMH appears at high frequency in the African Lemba.'},{c:'The Lemba carry no Israelite genetic marker.',fix:'They carry the Cohen Modal Haplotype at rates equal to or above Ashkenazi Levites.'}]},
+  {id:'councils',lvl:3,charge:'"The canon was always settled"',prompt:'Name the institutions that fixed or altered the canon',
+   exhibits:[{n:'Council of Yavneh (~90 CE)',s:'Where the Rabbinic canon was fixed, excluding Enoch and Jubilees.'},{n:'Council of Nicaea (325 CE)',s:'Roman political authority over the Christian canon.'},{n:'The Masoretes (Tiberias)',s:'Added vowel pointing ~900 CE, over a thousand years after the DSS.'},{n:'Council of Carthage (397 CE)',s:'Further fixed the Western canon.'}],
+   fakes:[{c:'1 Enoch was never considered scripture.',fix:'It was authoritative at Qumran (multiple copies) and canonical in Ethiopia.'},{c:'The canon was settled everywhere by the first century.',fix:'Councils across centuries fixed different canons; Ethiopia kept a broader one.'}]}
+];
+const EF_SURVEYS = [
+  {q:'Name a source proving the Name YHWH is ancient and African',a:['Soleb inscription','Amarah-West','Elephantine temple']},
+  {q:"Name a book the Ge'ez Orit preserved",a:['Henok (1 Enoch)','Kufale (Jubilees)','Meqabyan']},
+  {q:'Name a covenant condition the diaspora fulfilled',a:['Ships','400 years','Scattered among nations','Identity stripped']},
+  {q:'Name a Dead Sea Scroll writing',a:['War Scroll','Community Rule','Great Isaiah Scroll']},
+  {q:'Name African lineage evidence',a:['E1b1a','Lemba Cohen Modal Haplotype','Beta Israel L haplogroup']}
+];
+const EF_AIDS = [
+  'Map: Bowen 1747 names the Kingdom of JUDA on the West African coast.',
+  'Timeline: 1619 to 2019 is the 400-year bondage window.',
+  'Inscription: Soleb (~1400 BCE, Nubia) is the oldest YHWH reference.',
+  'Genetics: E1b1a and the Cohen Modal Haplotype are African priestly lineage.',
+  'Scroll: 1QIsa-a predates the Masoretic Text by over a thousand years.'
+];
+// Robust delegated tap handling (no reliance on inline handlers reaching a lexical const).
+document.addEventListener('click', function(e){
+  var el = e.target && e.target.closest ? e.target.closest('[data-ef]') : null;
+  if(!el) return;
+  var a = el.getAttribute('data-ef');
+  var fn = App['ef_'+a];
+  if(typeof fn === 'function'){ e.preventDefault(); fn.call(App, el.getAttribute('data-arg'), el); }
+});
+
+Object.assign(App, {
+  startEvidenceFeud(){
+    const pick = l => this._shuffle(EF_CASES.filter(c=>c.lvl===l))[0];
+    this._ef = { teams:[{name:'The Witnesses',role:'Defense',score:0},{name:'The Erasers',role:'Prosecution',score:0}], cases:[pick(1),pick(2),pick(3)].filter(Boolean), ci:0, view:'intro', stage:(this._gn&&this._gn.stage)||false };
+    this.showScreen('gamenight');
+    document.getElementById('game-score')&&(document.getElementById('game-score').textContent='');
+    this.efRender();
+  },
+  _efWrap(inner){ document.getElementById('gn-body').innerHTML='<div class="'+(this._ef.stage?'tu-stage ':'')+'ef-wrap">'+inner+'</div>'; document.getElementById('gn-title').textContent='Evidence Feud'; },
+  _efTeams(active){ return '<div class="gn-teams">'+this._ef.teams.map((t,i)=>`<div class="gn-team ${i===active?'active':''}"><div class="gt-name">${this.esc(t.name)}</div><div class="gt-score">${t.score}</div></div>`).join('')+'</div>'; },
+  efRender(){ const m={intro:'_efIntro',opening:'_efOpening',testimony:'_efTestimony',cross:'_efCross',fast:'_efFast',verdict:'_efVerdict'}; const fn=this[m[this._ef.view]]; if(fn) fn.call(this); },
+  _efIntro(){ let h='<div class="gn-hero"><div class="gn-hero-badge">Evidence Feud</div><div class="gn-hero-sub">The trial of the record. Two teams, two roles.</div></div>';
+    h+='<div class="ef-roles"><div class="ef-role ef-def"><div class="ef-rt">The Witnesses</div><div class="ef-rs">Defense. Name the true exhibits and fill the board.</div></div><div class="ef-role ef-pro"><div class="ef-rt">The Erasers</div><div class="ef-rs">Prosecution. Push the false story, then get caught in cross-examination.</div></div></div>';
+    h+='<div class="ef-levels">3 cases, rising levels: Discovery, Deliberation, Verdict. Then the Fast Verdict round.</div>';
+    h+='<button class="game-next" data-ef="begin">Begin the Trial</button>';
+    this._efWrap(h); },
+  ef_begin(){ this._ef.ci=0; this._efStartCase(0); },
+  _efStartCase(ci){ const c=this._ef.cases[ci]; const answers=c.exhibits.map(e=>e.n); const sigs={}; c.exhibits.forEach(e=>sigs[e.n]=e.s);
+    const others=[]; EF_CASES.forEach(x=>{ if(x!==c) x.exhibits.forEach(e=>others.push(e.n)); });
+    const decoys=this._shuffle(others.filter(n=>answers.indexOf(n)<0)).slice(0, c.lvl===1?3:c.lvl===2?4:5);
+    this._ef.cur={ case:c, answers, sigs, pool:this._shuffle(answers.concat(decoys)), found:{}, used:{}, strikes:0, pot:0, control:0, steal:false, aidUsed:false, aidText:null };
+    this._ef.view='opening'; this.efRender(); },
+  _efLevelName(l){ return l===1?'Discovery':l===2?'Deliberation':'Verdict'; },
+  _efOpening(){ const ef=this._ef, c=ef.cur.case; let h=this._efTeams(-1);
+    h+=`<div class="gn-banner">Case ${ef.ci+1} of ${ef.cases.length} · Level: ${this._efLevelName(c.lvl)}</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">The charge</div><div class="gp-text">${this.esc(c.charge)}</div></div>`;
+    h+=`<div class="game-prompt" style="border-left:3px solid var(--gold)"><div class="gp-kicker">Opening statement</div><div class="gp-text">${this.highlightClaim(c.prompt)}</div></div>`;
+    h+='<div class="ef-note">Who won the opening statement and takes the board?</div><div class="gn-choice">';
+    h+=`<button class="gn-neutral" data-ef="face" data-arg="0">The Witnesses</button><button class="gn-neutral" data-ef="face" data-arg="1">The Erasers</button>`;
+    h+='</div>'; this._efWrap(h); },
+  ef_face(team){ this._ef.cur.control=parseInt(team,10); this._ef.view='testimony'; this.efRender(); },
+  _efTestimony(){ const ef=this._ef, cur=ef.cur, c=cur.case;
+    let h=this._efTeams(cur.steal?1-cur.control:cur.control);
+    const who = cur.steal ? `${this.esc(ef.teams[1-cur.control].name)} may steal` : `${this.esc(ef.teams[cur.control].name)} testify`;
+    h+=`<div class="gn-banner">${who}<span class="gn-pot">Pot ${cur.pot}</span></div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Exhibit board · ${this.highlightClaim(c.prompt)}</div></div>`;
+    h+='<div class="fb-strikes">'+[0,1,2].map(i=>`<span class="fb-x ${i<cur.strikes?'on':''}">X</span>`).join('')+'</div>';
+    h+='<div class="fb-board">'+cur.answers.map((a,i)=>{ const open=cur.found[i]; return `<div class="fb-slot ${open?'open':''}"><span class="fb-rank">${i+1}</span><span class="fb-ans">${open?this.highlightClaim(a):''}</span></div>`+(open?`<div class="ef-sig">${this.esc(cur.sigs[a])}</div>`:''); }).join('')+'</div>';
+    if(cur.aidText) h+=`<div class="ef-aid">Exhibit entered: ${this.esc(cur.aidText)}</div>`;
+    const act = cur.steal ? 'steal' : 'guess';
+    h+='<div class="games-sec">Name an exhibit</div><div class="fb-pool">'+cur.pool.map((p,i)=>`<button class="fb-cand ${cur.used[i]?'used':''}" data-ef="${act}" data-arg="${i}">${this.highlightClaim(p)}</button>`).join('')+'</div>';
+    if(!cur.steal && !cur.aidUsed && c.lvl<3) h+='<button class="ef-hint" data-ef="aid">Call an exhibit (hint, -25)</button>';
+    this._efWrap(h); },
+  ef_aid(){ const cur=this._ef.cur; if(cur.aidUsed) return; cur.aidUsed=true; cur.pot=Math.max(0,cur.pot-25); cur.aidText=this._shuffle(EF_AIDS)[0]; this.efRender(); },
+  ef_guess(pi){ pi=parseInt(pi,10); const cur=this._ef.cur; if(cur.used[pi]) return; cur.used[pi]=true; const ai=cur.answers.indexOf(cur.pool[pi]);
+    if(ai>=0 && !cur.found[ai]){ cur.found[ai]=true; cur.pot+=100; if(Object.keys(cur.found).length===cur.answers.length){ return this._efBank(cur.control); } }
+    else { cur.strikes++; if(cur.strikes>=3){ cur.steal=true; } }
+    this.efRender(); },
+  ef_steal(pi){ pi=parseInt(pi,10); const cur=this._ef.cur; if(cur.used[pi]) return; cur.used[pi]=true; const ai=cur.answers.indexOf(cur.pool[pi]);
+    if(ai>=0 && !cur.found[ai]){ cur.found[ai]=true; cur.pot+=100; this._efBank(1-cur.control); } else { this._efBank(cur.control); } },
+  _efBank(team){ const ef=this._ef, cur=ef.cur; ef.teams[team].score+=cur.pot; cur.awarded=team; this._bumpDaily();
+    // build cross-examination: the case fakes + one true control
+    const items=cur.case.fakes.map(f=>({text:f.c,fake:true,fix:f.fix}));
+    const ex=this._shuffle(cur.case.exhibits)[0]; items.push({text:ex.n+' is genuine evidence in this case.',fake:false,fix:ex.s});
+    ef.cross={ items:this._shuffle(items), idx:0, feedback:null };
+    ef.view='cross'; this.efRender(); },
+  _efCross(){ const ef=this._ef, cr=ef.cross; if(cr.idx>=cr.items.length){ return this._efNextCase(); }
+    const it=cr.items[cr.idx]; let h=this._efTeams(1);
+    h+=`<div class="gn-banner">Cross-examination · ${this.esc(ef.teams[1].name)} rule on the claim</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Claim ${cr.idx+1} of ${cr.items.length}</div><div class="gp-text gp-quote">"${this.esc(it.text)}"</div></div>`;
+    h+='<div class="gn-choice"><button class="gn-b" data-ef="rule" data-arg="fake">Fabrication</button><button class="gn-a" data-ef="rule" data-arg="real">Record</button></div>';
+    if(cr.feedback) h+=`<div class="game-result show ${cr.feedback.ok?'':''}"><span class="${cr.feedback.ok?'gr-ok':'gr-no'}">${cr.feedback.ok?'Correct.':'Overruled.'} ${this.highlightClaim(cr.feedback.fix)}</span></div>`;
+    this._efWrap(h); },
+  ef_rule(arg){ const ef=this._ef, cr=ef.cross, it=cr.items[cr.idx]; const said=arg==='fake'; const ok=(said===it.fake); if(ok){ ef.teams[1].score+=75; this._bumpDaily(); } cr.feedback={ok,fix:it.fix}; this.efRender();
+    setTimeout(()=>{ cr.idx++; cr.feedback=null; if(cr.idx>=cr.items.length){ this._efNextCase(); } else { this.efRender(); } }, 1900); },
+  _efNextCase(){ const ef=this._ef; ef.ci++; if(ef.ci>=ef.cases.length){ ef.fast={ surveys:this._shuffle(EF_SURVEYS).slice(0,3), idx:0 }; ef.view='fast'; this.efRender(); } else { this._efStartCase(ef.ci); } },
+  _efFast(){ const ef=this._ef, f=ef.fast; if(f.idx>=f.surveys.length){ ef.view='verdict'; return this.efRender(); }
+    const s=f.surveys[f.idx]; const team=f.idx%2; const others=[]; EF_SURVEYS.forEach(x=>{ if(x!==s) others.push(...x.a); });
+    const pool=this._shuffle(s.a.concat(this._shuffle(others).slice(0,3)));
+    let h=this._efTeams(team);
+    h+=`<div class="gn-banner">Fast Verdict · ${this.esc(ef.teams[team].name)} answer</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Survey ${f.idx+1} of ${f.surveys.length}</div><div class="gp-text">${this.highlightClaim(s.q)}</div></div>`;
+    h+='<div class="fb-pool">'+pool.map((p,i)=>`<button class="fb-cand" data-ef="fastans" data-arg="${i}|${this.esc(p)}">${this.highlightClaim(p)}</button>`).join('')+'</div>';
+    if(f.feedback) h+=`<div class="game-result show"><span class="${f.feedback.ok?'gr-ok':'gr-no'}">${f.feedback.ok?'On the board! +100':'Not a top answer.'}</span></div>`;
+    this._efWrap(h); },
+  ef_fastans(arg){ const ef=this._ef, f=ef.fast; const val=arg.split('|').slice(1).join('|'); const s=f.surveys[f.idx]; const team=f.idx%2; const ok=s.a.indexOf(val)>=0; if(ok){ ef.teams[team].score+=100; this._bumpDaily(); } f.feedback={ok}; this.efRender();
+    setTimeout(()=>{ f.idx++; f.feedback=null; this.efRender(); }, 1500); },
+  _efVerdict(){ const ef=this._ef; const ranked=ef.teams.map((t,i)=>({t,i})).sort((a,b)=>b.t.score-a.t.score); const win=ranked[0];
+    const tie=ranked[0].t.score===ranked[1].t.score;
+    let h='<div class="session-complete"><span class="sc-icon">'+GICON.trophy+'</span>';
+    h+=`<div class="sc-title">${tie?'A hung jury':this.esc(win.t.name)+' win the verdict'}</div><div class="sc-sub">${tie?'Even on points. Replay to break the tie.':win.t.score+' points. The record stands.'}</div>`;
+    h+='<div style="width:100%;margin:8px 0 20px">'+ranked.map(r=>`<div class="gn-team active" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:14px 16px"><span class="gt-name" style="font-size:.95rem">${this.esc(r.t.name)}</span><span class="gt-score">${r.t.score}</span></div>`).join('')+'</div>';
+    h+='<button class="sc-btn" data-ef="again">New Trial</button><button class="game-next" style="background:var(--navy2);color:var(--text)" data-ef="home">Home</button>';
+    h+='</div>'; document.getElementById('gn-body').innerHTML=h; document.getElementById('gn-title').textContent='The Verdict'; },
+  ef_again(){ this.startEvidenceFeud(); },
+  ef_home(){ this.goHome(); }
 });
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
