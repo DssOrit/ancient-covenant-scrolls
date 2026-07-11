@@ -1,11 +1,20 @@
 # Session Notes — 2026-07-08
 
-## Current state
+## Current state (end of session)
 
-- Branch: `claude/acr-search-content-checklist-ZgUAQ`
-- Latest main tip (after all merges): `02c4756` — PR #591 squash merge (acr-search-v138)
-- Working tree: clean
-- Live cache marker: `acr-search-v138`
+- Latest main tip: `1631c3f` — PR #594 squash merge (Study verses/quizzes for all
+  chapters + Sharks fix + divine-name rule across Great Eraser and the Study).
+- Branch: `claude/wsa-acr-design-alignment-ji5poy` (= origin/main + this notes
+  commit). Working tree: clean.
+- Live cache markers: Study `gestudy-v11`, Great Eraser `great-eraser-v14`,
+  Search `acr-search-v138`.
+- Backup: `backup/2026-07-08-ge-v14` at `1631c3f`.
+- Deploy: Cloudflare redeploys from `main`; confirm on iPad by the cache markers
+  above after a hard refresh (not verifiable from this session, host blocked).
+
+### Earlier state this session (Search work, already merged)
+
+- Prior main tip: `02c4756` — PR #591 (acr-search-v138).
 
 ## Built today
 
@@ -88,6 +97,68 @@ d60021c Search: The Courtroom — 6 cases, evidence exhibits, verdict screens (a
 (Uncover the Text v130 — pre-session)
 ```
 
-## Divine name rule (kept)
+## Great Eraser Study, modules/quizzes pass (gestudy-v11)
 
-Only YHWH and Creator. No Lord, Adonai, Elohim, capital-G God as divine name. Applied to all new content this session.
+Architecture found: the live Study app loads ONLY `data/app_data.json`. Each
+chapter's Connected Verses + quiz come from `verse_map[chapter-id]`. The
+`connections.json` "modules" file is orphaned dead code (never fetched); left
+untouched.
+
+Coverage before: 140/183 chapters had verses (Vols 1-4,10 complete; Vol 5
+partial; Vols 6,7,8 empty; Vol 9 falsely "covered" via id collisions).
+
+Built this pass (all grounded in each chapter's own named primary sources, no
+fabrication per rule 17; authored by 11 parallel subagents then merged +
+validated):
+- Filled every gap: Vol 5 (+4), Vol 6 (+7), Vol 7 (+10), Vol 8 (+34) with
+  primary-source verses + auto-quizzes matching the Vol 1 standard.
+- BUG FIX: Vol 9 (Sharks) 52 chapters reused Vol 1-4 ids (ch1, ch2, ch4...),
+  so they displayed the WRONG verses (e.g. "The Emperor's New Groove" showed
+  Vol 1 cartography). Re-keyed all Vol 9 chapters to a unique `v9_` namespace
+  and authored Sharks-specific verses/quizzes for all 52.
+- Coverage after: 183/183 chapters. 434 verses, 200 quiz items total.
+- Rule cleanup in the shipped data file: removed 1 emoji (in a Vol 9 chapter
+  body) and normalized 658 em/en dashes to plain punctuation across the older
+  study data (verse_map, timelines, memory_cards). New content had none.
+- Cache bumped `gestudy-v10` -> `gestudy-v11`. No on-screen version badge in
+  GESTUDY. No INLINE_DATA constant is defined; app relies on the fetched file.
+- Verified in headless Chromium: DATA loads, 10 volumes, 184 verse_map entries,
+  all volumes 100% covered, Sharks now shows its own verses, Vol 1-4 unchanged.
+
+Files changed: `GESTUDY/data/app_data.json`, `GESTUDY/sw.js`. Shipped via PR
+(feature branch `claude/wsa-acr-design-alignment-ji5poy`). NOT merged; awaiting
+user confirmation per rule 9.
+
+## Divine name rule (kept) + full sweep across Great Eraser AND Study
+
+Only YHWH and Creator / the Creator. No Lord, Adonai, Elohim, or capital-G God as
+the divine name. Now LOCKED in CLAUDE.md as rule 18 (was only a session note).
+
+Applied the rule across BOTH apps this session (user directive: apply to both):
+- Great Eraser (`GreatE/index.html`) and Great Eraser Study
+  (`GESTUDY/data/app_data.json`).
+- Authored via subagents, then merged + audited. Divine-name-as-Name uses changed
+  to YHWH or the Creator; documentation of the substitution, pagan/other deities,
+  the "sons of God"/benei Elohim council phrase, DSS title-phrases ("Son of God"
+  4Q246), Christian constructs named as constructs ("God-man", "Lamb of God",
+  "Lord's Day"), and book titles were KEPT (that keep-list is now part of rule 18).
+- Scripture appositive decision (user): swap the title word in place ->
+  "YHWH your Creator", "YHWH Creator finished", the Shema "YHWH is our Creator,
+  YHWH alone", "the Creator of Abraham/Isaac/Jacob".
+- Reconciled two praise-exclamation lines so both apps read identically.
+- Removed a stray emoji from Great Eraser's Sharks content (rule 3).
+- Great Eraser cache bumped great-eraser-v13 -> v14. Study stays gestudy-v11
+  (v11 not yet deployed, so the extra edits ride under it).
+- Verified: Study loads clean (0 page errors, 183/183 chapters), quiz integrity
+  intact, 0 emojis in either app.
+
+Files changed this pass: `CLAUDE.md` (rule 18), `GESTUDY/data/app_data.json`,
+`GreatE/index.html`, `GreatE/sw.js`. Shipped via PR #594, MERGED (squash) at
+`1631c3f` with user approval.
+
+## Backups
+
+- `backup/2026-07-08-ge-v14` at `1631c3f` (main HEAD after PR #594 merge:
+  Study verses/quizzes + Sharks fix + divine-name rule across both apps).
+  Recovery: `git checkout backup/2026-07-08-ge-v14`.
+- Prior: `backup/2026-07-06-v129` at `acfdc4e`.

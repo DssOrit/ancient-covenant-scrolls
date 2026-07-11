@@ -252,6 +252,40 @@ These have been re-locked on 2026-05-04 after repeated violations.
     instead. Read `CONTENT_STANDARD.md` before writing or editing any ACR
     historical content.
 
+18. **DIVINE NAME — ONLY YHWH AND CREATOR — LOCKED 2026-07-08 by user.** In all
+    ACR content and features, the divine name of the covenant deity is written
+    only as **YHWH** or **Creator** / **the Creator**. Never use "Lord", "LORD",
+    "Adonai", "Elohim", or capital-G "God" AS the divine name. Specific rules:
+    - Where any of those words are used to name or refer to the covenant deity,
+      replace them: "Lord"/"LORD"/"Adonai" -> YHWH; "Elohim" -> YHWH (or the
+      Creator where it reads better); capital-G "God" -> YHWH when it fills the
+      name slot, or "the Creator" for a generic maker reference.
+    - This applies to every ACR app, explicitly including Great Eraser (`/GreatE`)
+      and Great Eraser Study (`/GESTUDY`).
+    - In quoted scripture where the appositive title sits next to the Name,
+      swap the title word for **Creator** in place, keeping the structure
+      (mirrors the Hebrew "YHWH Elohim"): "YHWH your God" -> "YHWH your Creator";
+      "YHWH God" -> "YHWH Creator"; the Shema "YHWH is our God" -> "YHWH is our
+      Creator"; "the God of Abraham/Isaac/Jacob" -> "the Creator of Abraham/
+      Isaac/Jacob".
+    - KEEP unchanged (the word is being documented or is not the covenant Name,
+      not used AS the Name). This keep-list is part of the rule:
+      - text that documents the substitution/translation of the Name ("YHWH was
+        replaced with 'Lord'", "Adonai vowels", "Kyrios/Dominus/LORD", "the title
+        Lord", "the word for Lord is Baal", "the model outputs Lord for YHWH");
+      - pagan or other deities and generic non-covenant uses ("Sun God", "the god
+        of death", "high god", lowercase "god"/"gods", "Baal", "Helios");
+      - the divine-council phrase "sons of God" / "benei Elohim", and quoted
+        Hebrew being discussed as text ("Sing to Elohim", Psalm 68:4);
+      - DSS / scroll designations and title-phrases being analyzed ("Son of God"
+        text 4Q246, the "Sons of El/God" variant, "reading Adonai (Lord/My Lord)
+        aloud");
+      - Christian constructs named AS constructs being exposed ("God-man", "Lamb
+        of God", "Lord's Day", the "'Lord'/Jesus" mediator figure);
+      - book/article titles and citations; and the standalone term "El".
+    If there is ANY doubt whether a use is the divine name or documentation,
+    default to leaving documentation intact and only changing clear name uses.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
