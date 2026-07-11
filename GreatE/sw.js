@@ -1,4 +1,4 @@
-const CACHE = 'great-eraser-v15';
+const CACHE = 'great-eraser-v16';
 const PRECACHE = [
   '/',
   '/index.html',
