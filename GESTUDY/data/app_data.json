@@ -35172,6 +35172,18 @@
             "cannabis tax",
             "municipal reparations"
           ]
+        },
+        {
+          "ref": "Zong Massacre 1781 — Gregson v Gilbert 1783 — National Archives Kew HCA 30/466",
+          "scroll": "Lloyd's of London archive, London · Guildhall Library, City of London · National Archives Kew HCA 30/466",
+          "tradition": "historical",
+          "text": "In 1781, the captain of the slave ship Zong ordered 133 enslaved people thrown into the Atlantic over three days. The ship's owners — the Gregson family of Liverpool — filed an insurance claim for them as lost cargo. The case was heard in 1783 as Gregson v Gilbert, a property dispute. No murder charge was brought. Lloyd's underwriting syndicates had insured the enslaved people as property. Their enslavers were compensated for their loss. No descendant has received anything."
+        },
+        {
+          "ref": "CARICOM Ten-Point Plan 2014 — Hansard 2023 — H.R. 40 Congressional Record 1989-present",
+          "scroll": "CARICOM Reparations Commission Ten-Point Plan 2014 · Hansard (UK Parliament) 2023 · Congressional Record 1989-present",
+          "tradition": "historical",
+          "text": "The same institutions that profited from the trade — Lloyd's of London (2023 apology, no payment), Barclays (UCL database, no payment), HSBC (2021 review, no payment), Bank of England (2020 report naming 17 slave-owner governors, no payment), the British government (£20 million to enslavers 1833, debt cleared 2015, reparations rejected 2023) — have each acknowledged their role and made no financial commitment to descendants. CARICOM's 14-nation reparations demand was formally rejected. H.R. 40 has been introduced every US congressional session since 1989 without a floor vote."
         }
       ],
       "quiz": [
@@ -35207,6 +35219,18 @@
             "100",
             "50"
           ]
+        },
+        {
+          "type": "mc",
+          "question": "The 1783 court case Gregson v Gilbert was heard as what kind of dispute?",
+          "options": [
+            "A murder case",
+            "A property and insurance dispute",
+            "A human rights case",
+            "A parliamentary inquiry"
+          ],
+          "answer": 1,
+          "explain": "The Zong case — 133 enslaved people thrown overboard — was heard as a commercial property dispute over whether the insurance claim for 'lost cargo' was valid. No murder charge was brought. Records: National Archives Kew HCA 30/466."
         }
       ]
     },
@@ -36525,6 +36549,16 @@
       "category": "suppression",
       "source": "Vatican Apostolic Archive · British Museum · Louisiana State Archives",
       "difficulty": 3
+    },
+    {
+      "id": "mc_zong",
+      "front": "The Zong Massacre — 1781",
+      "back": "133 enslaved people thrown overboard by the captain of the slave ship Zong. Owners filed an insurance claim for them as lost cargo. Case heard in 1783 as Gregson v Gilbert — a property dispute, not a murder case. Records: National Archives Kew HCA 30/466."
+    },
+    {
+      "id": "mc_reparations_refusal",
+      "front": "Institutional reparations record — current position",
+      "back": "Lloyd's (2023 apology, no payment). Barclays (named in UCL database, no payment). Bank of England (17 slave-owner governors named 2020, no payment). British government (paid £20M to enslavers 1833, rejected CARICOM demands 2023, Hansard). H.R. 40 — 35 years introduced, never voted."
     }
   ]
 }
