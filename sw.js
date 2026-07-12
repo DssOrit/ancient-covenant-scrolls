@@ -5,15 +5,16 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v70';
+const CACHE = 'acr-v73';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
 // space-prefixed filenames in the repo and will 404 here; the individual
-// .catch below swallows those two so the rest still populate.
+// .catch below swallows those two so the rest still populate. file_108
+// (the removed 11QMelchizedek chapter) is skipped so we do not fetch it.
 const DATA_FILES = (function () {
   const arr = [];
-  for (let i = 1; i <= 111; i++) arr.push('data/file_' + i + '.json');
+  for (let i = 1; i <= 111; i++) { if (i !== 108) arr.push('data/file_' + i + '.json'); }
   arr.push('data/file 112.json');
   arr.push('data/file_113.json');
   return arr;
