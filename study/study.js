@@ -49,7 +49,7 @@ function lbIcon(name, sizePx) {
 try { window.lbIcon = lbIcon; } catch (e) {}
 
 // All 46 volumes / 111 sections matching the ACR reader, plus SR reference
-var IDS=[];for(var _i=1;_i<=111;_i++)IDS.push('file_'+_i);
+var IDS=[];for(var _i=1;_i<=111;_i++){if(_i!==108)IDS.push('file_'+_i);}
 IDS.push('file_200');
 
 var LBL = [
@@ -160,7 +160,6 @@ var LBL = [
 'Pesher Habakkuk (Commentary on Habakkuk) \u2014 Complete',
 'Songs of Sabbath Sacrifice (Shirot Olat HaShabbat) \u2014 Complete',
 'Genesis Apocryphon (Bereshit Apocryphon) \u2014 Complete',
-'11QMelchizedek (Melchizedek Scroll) \u2014 Complete',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 1 \u2014 Col 1\u201322',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 2 \u2014 Col 23\u201344',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366',
@@ -212,8 +211,7 @@ var VOL_GROUPS = [
 {title:'Vol 42 \u2014 Pesher Habakkuk 1QpHab',eng:'',count:1,vol:'42'},
 {title:'Vol 43 \u2014 Songs of Sabbath Sacrifice',eng:'',count:1,vol:'43'},
 {title:'Vol 44 \u2014 Genesis Apocryphon 1QapGen',eng:'',count:1,vol:'44'},
-{title:'Vol 45 \u2014 11QMelchizedek',eng:'',count:1,vol:'45'},
-{title:'Vol 46 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'46'},
+{title:'Vol 45 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'45'},
 {title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
