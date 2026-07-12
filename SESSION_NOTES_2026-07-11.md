@@ -102,9 +102,7 @@ User must say "Merge" before merging (Rule 9).
 
 ## Outstanding / blocking
 
-- PR #601 awaiting user merge confirmation
-- User needs to verify all three apps on device after merge
-- Backup branch needed once user confirms working (target: `backup/2026-07-11-v141`)
+- Nothing blocking. All three apps verified working on device by user.
 
 ## Pending / parked
 
@@ -120,8 +118,9 @@ User must say "Merge" before merging (Rule 9).
 
 ## Backups
 
-Last backup: `backup/2026-07-06-v129` (SHA acfdc4e)
-Next backup: create `backup/2026-07-11-v141` pointing at main HEAD after PR #601 merges and user confirms working.
+Last backup: `backup/2026-07-11-v142` (SHA b79dbcf) — verified working by user 2026-07-11
+Previous backup: `backup/2026-07-06-v129` (SHA acfdc4e)
+Recovery: `git checkout backup/2026-07-11-v142`
 Recovery: `git checkout backup/2026-07-06-v129`
 
 ## Today's commit log
