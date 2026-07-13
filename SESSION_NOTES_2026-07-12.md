@@ -1,12 +1,12 @@
 # Session Notes — 2026-07-12
 
-## Current state
+## Current state (session ran 2026-07-12 into 2026-07-13)
 
-- Latest main tip: `b9b013c` — PR #609 (trinity / worshipped-deity debunking notes + One Creator tab).
-- Working tree: clean (this notes update pending push).
-- Live cache markers after today: ACR Reader `acr-v74`, ACR Study `acr-study-v112`,
+- Latest main tip: `8780ebd` — PR #612 (Search DNA E1b1a P2/PN2 marker-detail note).
+- Working tree: clean.
+- Live cache markers: ACR Reader `acr-v74`, ACR Study `acr-study-v112`,
   Great Eraser Study `gestudy-v21`, Great Eraser `great-eraser-v19`,
-  Search `acr-search-v145`.
+  Search `acr-search-v147`.
 
 ## Built today (chronological, all merged)
 
@@ -42,6 +42,34 @@
    named 41:8; 44:1-2/21; 45:4; 49:3; 53:10 "sees his offspring, prolongs his
    days"). ACR Search gained a new "One Creator" tab (No Trinity + No Worshipped
    Figure + 10 proof-text cards). Caches acr-v74, acr-search-v145.
+6. **PR #611** — Search DNA tool: added keywords `e-m191, m191, e-m54, m54` to the
+   existing E1b1a entry so a person whose test reports the E-M191/E-M54 subclade
+   resolves to the West African Hebrew paternal entry. Pure keyword add. Cache
+   acr-search-v146.
+7. **PR #612** — Search DNA: appended one new "Marker detail" field at the END of the
+   E1b1a entry (original text byte-identical, verified): "The E1b1 trunk shared by
+   E1b1a and E1b1b is also written by its defining SNP P2 (also PN2); M180 (also P88)
+   marks the E1b1a West African branch." (User first reverted an inline M180->P2 edit
+   and asked for additive-only; original "E1b1 (M180)" statements kept untouched, x2.)
+   Cache acr-search-v147.
+
+## DNA / covenant-people research (discussion, verified against ACR + web)
+
+Long research thread with the user, verified against ACR content and web sources:
+- Promised land = two promises: the LAND grant (Bereshit 15, river of Egypt -> Euphrates,
+  African soil relabeled "Middle East"/severed by Suez 1869 + the 1902 Mahan term) and
+  the PEOPLE / gathering (Devarim 30) across Africa + diaspora.
+- West Africa (Igbo Benei-Yisrael/Eri; Bilad al-Sudan in Tarikh al-Sudan/al-Fattash;
+  Al-Zuhri Sahara Hebrew kingdoms; Lemba CMH) = covenant people, not the land grant.
+- Markers: E-M191 (E1b1a subclade, Igbo ~54%), L3e3b (maternal, W/C African + diaspora),
+  E1b1a/E1b1b two branches of the African trunk E1b1 (defined by P2/PN2; M180 is an
+  E1b1a West-African-branch marker, NOT the trunk). Ramesses III predicted E1b1a
+  (2012 BMJ Hawass) — ties Kemet royalty to the same African lineage as West Africa
+  and the covenant people. ACR Search already has a full "Hebrew DNA Research" tool
+  (dna-view, 88 entries) where people type a marker/percentage/community/region.
+- User's standing directive: when referencing Egypt / "Middle East," always name the
+  boundary changes (Suez, the 1902 term) and how the region was made distant from
+  Africa to further the erasure.
 
 ## Scan for Christian/Rabbinic additions presented as ancient — COMPLETE
 
@@ -73,12 +101,17 @@ spots (author-voice + quoted Jeremiah/Chanokh/Habakkuk). Reported as a rule-18 p
 
 ## Backups (recovery: `git checkout <branch>`)
 
+- `backup/2026-07-13-acr-search-v147` @ `8780ebd` (end-of-session verified state:
+  all of today's Reader/Study/Search/GESTUDY work merged).
 - `backup/2026-07-09-pre-reader-melchizedek` @ `7832b06` (pre-Melchizedek-removal
   safety point).
 
 ## Today's commit log (merges)
 
 ```
+8780ebd Search DNA: append P2/PN2 marker-detail note at end of E1b1a entry (#612)
+c6c524f Search DNA tool: resolve E-M191/E-M54 to the E1b1a entry (#611)
+2a15f32 Session notes 2026-07-12 (final) (#610)
 b9b013c Debunking notes: no pre-Christian/pre-Rabbinic trinity or worshipped deity (#609)
 daa734d Session notes 2026-07-12 (#607)
 6961613 Scan fixes: Hebrew term, divine-name slot, volume-header renumber (#606)
