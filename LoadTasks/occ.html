@@ -1801,20 +1801,27 @@ var FAQ=[
 function rHowTo(v){
   var owner=isOwner();
   function steps(title,arr,tint){
-    return '<div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
-      arr.map(function(s){return '<li style="margin-bottom:8px">'+s+'</li>';}).join('')+'</ol></div>';
+    return '<div class="ht-hit"><div class="card tint-'+tint+'" style="margin-bottom:14px"><h3>'+esc(title)+'</h3><ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+      arr.map(function(s){return '<li style="margin-bottom:8px">'+s+'</li>';}).join('')+'</ol></div></div>';
   }
   var html='<h1>How to Use Load Tasks — OCC</h1>';
-  html+='<div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+
+  // Instant search — type a word or question, results filter as you type (works offline)
+  html+='<div id="ht-search-wrap" style="margin:0 0 16px">'+
+    '<input id="htSearch" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" '+
+      'placeholder="Search the guide — type a word or question" aria-label="Search the guide">'+
+    '<div id="htCount" class="muted" style="margin-top:6px;font-size:.9rem"></div>'+
+    '<div id="htNone" class="card tint-gray" style="display:none;margin-top:10px">No match — try another word, like <b>paid</b>, <b>photo</b>, <b>broken</b> or <b>invoice</b>.</div>'+
+    '</div>';
+  html+='<div class="ht-hit"><div class="card tint-green" style="margin-bottom:14px"><b>In one line:</b> '+
     (owner?'You review the work, fix the issues she reports, approve, and pay only after the auto-check passes.'
           :'You check every section of the site with proof and report anything broken — you do not fix it yourself.')+
-    '<p class="muted" style="margin-top:8px;margin-bottom:0">This guide is always here in the <b>How to Use</b> tab. Read it any time you are unsure.</p></div>';
+    '<p class="muted" style="margin-top:8px;margin-bottom:0">This guide is always here in the <b>How to Use</b> tab. Read it any time you are unsure.</p></div></div>';
 
   // Quick start for the logged-in role
   html+=steps(owner?'Your first 5 minutes — Owner':'Your first 5 minutes — Employee', owner?HOWTO.owner:HOWTO.employee, owner?'blue':'purple');
 
   // How a day works (daily $60 model)
-  html+='<div class="card tint-purple" style="margin:14px 0"><h3>How a day works</h3>'+
+  html+='<div class="ht-hit"><div class="card tint-purple" style="margin:14px 0"><h3>How a day works</h3>'+
     '<p class="muted" style="margin:0 0 8px">A day is a checklist of about 8–10 items. Each item is tested on <b>PC, iPad and phone</b> across <b>Safari, Chrome and Opera</b>, with screenshots — about <b>45 minutes each</b>, so a day is roughly <b>6–7 hours</b> for the $60.</p>'+
     '<ol style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
       '<li style="margin-bottom:8px">Open <b>Assignments</b> — it shows today’s checklist, the estimated hours, and that it pays <b>$60</b>.</li>'+
@@ -1824,31 +1831,31 @@ function rHowTo(v){
       '<li style="margin-bottom:8px">Back in <b>Assignments</b>, tap <b>Submit this day for review</b>.</li>'+
       '<li style="margin-bottom:8px">The owner approves your day. At the <b>end of the week</b>, open <b>Invoice</b> and submit one <b>weekly invoice</b> for all approved days — the owner pays the total.</li>'+
       '<li style="margin-bottom:0">After <b>two days</b> of logging issues, the site opens a <b>re-verify day</b> ($60) — retest the fixes before any new area unlocks.</li>'+
-    '</ol></div>';
+    '</ol></div></div>';
   // Evidence in one step
-  html+='<div class="card tint-green" style="margin:14px 0"><h3>Evidence — keep it simple</h3>'+
-    '<p style="margin:0">Take a screenshot, then tap <b>Add photo / file</b> on that section (or <b>Add link</b> to paste a Google Doc). That’s your proof — one tap, done. Uploaded files auto-delete after 48 hours.</p></div>';
+  html+='<div class="ht-hit"><div class="card tint-green" style="margin:14px 0"><h3>Evidence — keep it simple</h3>'+
+    '<p style="margin:0">Take a screenshot, then tap <b>Add photo / file</b> on that section (or <b>Add link</b> to paste a Google Doc). That’s your proof — one tap, done. Uploaded files auto-delete after 48 hours.</p></div></div>';
   // Notes made easy — tap instead of type
-  html+='<div class="card tint-blue" style="margin:14px 0"><h3>Notes without typing</h3>'+
+  html+='<div class="ht-hit"><div class="card tint-blue" style="margin:14px 0"><h3>Notes without typing</h3>'+
     '<p style="margin:0 0 6px">On every section you can leave feedback with taps only:</p>'+
     '<ul style="margin:0;padding-left:20px;line-height:1.7">'+
       '<li style="margin-bottom:6px"><b>1&ndash;5 rating</b> &mdash; tap a number for how well it works (tap again to clear).</li>'+
       '<li style="margin-bottom:6px"><b>Quick problem chips</b> &mdash; tap what is wrong (Won’t open, Wrong page, Button dead&hellip;). Tap again to remove.</li>'+
       '<li style="margin-bottom:0"><b>Saved phrases</b> &mdash; tap a phrase you reuse to drop it into the note. <b>+ Add phrase</b> saves a new one for next time.</li>'+
     '</ul>'+
-    '<p class="muted" style="margin:8px 0 0">Typing is always optional &mdash; the Notes box is only for anything extra.</p></div>';
+    '<p class="muted" style="margin:8px 0 0">Typing is always optional &mdash; the Notes box is only for anything extra.</p></div></div>';
   // What each section does
-  html+='<h3 style="margin:18px 0 8px">What each section does</h3>';
+  html+='<h3 class="ht-label" style="margin:18px 0 8px">What each section does</h3>';
   GUIDE.filter(function(g){return !g.owner||owner;}).forEach(function(g){
-    html+='<button class="card tint-gray" data-go="'+g.tab+'" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:10px;display:block">'+
+    html+='<div class="ht-hit"><button class="card tint-gray" data-go="'+g.tab+'" style="width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;border-width:1px;margin-bottom:10px;display:block">'+
       '<h3 style="margin:0 0 4px">'+esc(g.name)+'</h3>'+
       '<div style="margin-bottom:6px">'+g.what+'</div>'+
       '<div class="muted"><b>What to do:</b> '+g.todo+'</div>'+
-      '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button>';
+      '<span class="muted" style="font-size:.82rem">Open '+esc(g.name)+' &rarr;</span></button></div>';
   });
 
   // Screenshots — how proof works (matches the current MVP: record file names, no upload button yet)
-  html+='<div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
+  html+='<div class="ht-hit"><div class="card tint-green" style="margin:16px 0 14px"><h3>Screenshots (your proof)</h3>'+
     '<p style="margin:0 0 8px">You have <b>two ways</b> to add screenshot proof. Both keep a permanent text record; the difference is whether the picture itself is stored.</p>'+
     '<p style="margin:0 0 6px"><b>Way 1 — Attach the file right on the section (recommended).</b></p>'+
     '<ol style="margin:0 0 10px;padding-left:20px;line-height:1.7">'+
@@ -1864,21 +1871,46 @@ function rHowTo(v){
       '<li style="margin-bottom:8px">Save the screenshot in your own evidence folder with a clear name, like <b>eco-homepage.png</b>.</li>'+
       '<li style="margin-bottom:8px">Open the <b>Evidence</b> tab &rarr; <b>Or record a file name</b>, type the name, and tap <b>Add evidence record</b>. (Attaching the photo on the section is the simpler way.)</li>'+
       '<li style="margin-bottom:0">Nothing is uploaded; you keep the picture yourself, forever.</li>'+
-    '</ol></div>';
+    '</ol></div></div>';
 
   // Pay rules
-  html+='<div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
-    PAY_RULES.map(function(p){return '<li style="margin-bottom:8px">'+p+'</li>';}).join('')+'</ul></div>';
+  html+='<div class="ht-hit"><div class="card tint-gold" style="margin:16px 0 14px"><h3>How you get paid</h3><ul style="margin:6px 0 0;padding-left:20px;line-height:1.7">'+
+    PAY_RULES.map(function(p){return '<li style="margin-bottom:8px">'+p+'</li>';}).join('')+'</ul></div></div>';
 
-  // FAQ
-  html+='<div class="card tint-blue" style="margin-bottom:14px"><h3>Common questions</h3>'+
-    FAQ.map(function(q){return '<div style="margin-bottom:12px"><b>'+esc(q[0])+'</b><div class="muted" style="margin-top:2px">'+esc(q[1])+'</div></div>';}).join('')+'</div>';
+  // FAQ — each question is its own searchable card
+  html+='<h3 class="ht-label" style="margin:18px 0 8px">Common questions</h3>';
+  FAQ.forEach(function(q){
+    html+='<div class="ht-hit"><div class="card tint-blue" style="margin-bottom:10px"><b>'+esc(q[0])+'</b>'+
+      '<div class="muted" style="margin-top:4px">'+esc(q[1])+'</div></div></div>';
+  });
 
   // The other role, for context
   html+=steps(owner?'What the employee does':'What the owner does', owner?HOWTO.employee:HOWTO.owner, 'gray');
 
   v.innerHTML=html;
   $$('[data-go]',v).forEach(function(b){b.addEventListener('click',function(){show(b.dataset.go);});});
+
+  // Instant search wiring — filters .ht-hit blocks by their text, offline
+  var box=$('#htSearch',v), none=$('#htNone',v), count=$('#htCount',v);
+  var hits=$$('.ht-hit',v), labels=$$('.ht-label',v);
+  function runSearch(){
+    var q=(box.value||'').trim().toLowerCase();
+    var shown=0;
+    hits.forEach(function(h){
+      var t=(h.getAttribute('data-q')||h.textContent||'').toLowerCase();
+      var m=!q||t.indexOf(q)>=0;
+      h.style.display=m?'':'none';
+      if(m) shown++;
+    });
+    // Section headers only make sense when nothing is being searched
+    labels.forEach(function(l){l.style.display=q?'none':'';});
+    none.style.display=(q&&shown===0)?'':'none';
+    count.textContent=q?(shown+(shown===1?' match':' matches')):'';
+  }
+  if(box){
+    box.addEventListener('input',runSearch);
+    box.addEventListener('search',runSearch);
+  }
 }
 
 function rDocuments(v){
