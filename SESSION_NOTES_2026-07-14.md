@@ -1,12 +1,13 @@
 # Session Notes — 2026-07-14
 
-## Current State
+## Current State (end of session)
 
-- Latest commit on main: `9383798` (PR #621 squash merge)
-- Cache: `acr-search-v156`
-- Branch: feature branch `claude/acr-search-content-checklist-ZgUAQ` (all PRs merged, branch stale)
-- Site: confirmed working on iPad — Enter button functional as of end of session
-- Nothing uncommitted
+- Latest commit on main: `954370b` (PR #624 squash merge — GESTUDY chapters)
+- GreatE cache: `great-eraser-v20` — confirmed working on iPad
+- GESTUDY cache: `gestudy-v22` — confirmed working, 14 chapters in Vol 3
+- ACR Search cache: `acr-search-v157`
+- Working branch: `claude/great-eraser-pwa-password-NPS0x` (session notes committed, nothing else uncommitted)
+- All PRs merged. Branch can be treated as stale for next session — start fresh from main.
 
 ## Built Today
 
@@ -27,34 +28,35 @@
 
 ## Outstanding / Blocking
 
-- None. Site is confirmed working.
+- None. All sites confirmed working.
 
 ## Pending / Parked
 
 - None carried forward from this session.
+
+## Backups
+
+- `backup/2026-07-14-v156` — SHA `9383798` — created earlier this session (ACR Search).
+  Recovery: `git checkout backup/2026-07-14-v156`
+
+Previous backups: `backup/2026-07-12-v144`, `backup/2026-07-11-v142`, `backup/2026-07-11-v141`, `backup/2026-07-08-pre-interactive`
 
 ## Capability Gaps This Session
 
 - Cannot reach live `acrscrolls.com` directly to verify deployment — must rely on user confirmation.
 - `raw.githubusercontent.com` or GitHub MCP `get_file_contents` can be used to verify main HEAD content if needed.
 
-## Backups
-
-- `backup/2026-07-14-v156` — SHA `9383798` — created after user confirmed Enter button working.
-  Recovery: `git checkout backup/2026-07-14-v156`
-
-Previous backups: `backup/2026-07-12-v144`, `backup/2026-07-11-v142`, `backup/2026-07-11-v141`, `backup/2026-07-08-pre-interactive`
-
 ## Today's Commit Log
 
 ```
-64e8f4c fix: remove stray closing brace that broke all JS execution (acr-search-v156)
+acb4c38 session notes: log GreatE/GESTUDY PRs #623-#624 and standing JS validation rule
+0caa815 GESTUDY: add 9 chapters (CH112-CH120) to Vol 3 — matches GreatE update
+977f799 GreatE: add 9 chapters (CH112-CH120) — 3 docs + Cities & Ports That Profited (PR #623)
+1fe0bc1 ACR Search: Final Days guide entry in How to Use (acr-search-v157)
+9383798 fix: remove stray brace — restore Enter button (acr-search-v156)
 cc06f33 fix: escape apostrophes — restore Enter button (acr-search-v155)
-efcffcc fix: escape apostrophes in missing scientists JS string (Enter button broken)
 6481060 Fix JS syntax error in Final Days panel — acr-search-v154
-3e1a25e ACR Search: sound, frequency, booms and missing scientists section — Final Days panel acr-search-v153
-3fb20f7 ACR Search: update missing scientists section with 2024-2026 cluster
-1a35e01 ACR Search: sound, frequency and booms section added to Final Days panel — acr-search-v152
+3e1a25e ACR Search: sound, frequency, booms and missing scientists section — acr-search-v153
 11b53f6 ACR Search: sky signs section added to Final Days panel — acr-search-v151
 ```
 
