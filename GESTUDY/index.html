@@ -219,8 +219,8 @@ body{font-family:'Inter',sans-serif;font-size:var(--font-size);background:var(--
 .tl-event{font-size:.88rem;line-height:1.65;color:var(--text);margin-bottom:10px}
 .tl-erased{font-size:.78rem;line-height:1.55;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:rgba(232,115,90,0.1);border-left:3px solid var(--coral);color:var(--text2)}
 .tl-restored{font-size:.78rem;line-height:1.55;padding:8px 10px;border-radius:8px;background:rgba(46,204,113,0.1);border-left:3px solid var(--emerald);color:var(--text2)}
-.tl-erased::before{content:'✗ ERASED: ';color:var(--coral);font-weight:700}
-.tl-restored::before{content:'✓ RESTORED: ';color:var(--emerald);font-weight:700}
+.tl-erased .tl-tag{color:var(--coral);font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.tl-restored .tl-tag{color:var(--emerald);font-weight:700;display:inline-flex;align-items:center;gap:4px}
 
 /* ── COMPARE MODE ── */
 #compare .screen-body{padding:16px 16px 100px}
@@ -390,6 +390,192 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 #lesson-panel{position:fixed;inset:0;z-index:1100;display:none;flex-direction:column;background:var(--navy)}
 #lesson-panel.open{display:flex}
 
+.ic{width:1em;height:1em;stroke-width:2;vertical-align:-.14em;flex-shrink:0}.ge-refresh{position:absolute;top:14px;right:16px;z-index:6;width:38px;height:38px;border-radius:11px;border:1px solid rgba(200,151,31,.32);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold)}.ge-refresh .ic{width:19px;height:19px}.home-btn{background:none;border:none;color:var(--text2);cursor:pointer;padding:4px 8px;border-radius:8px;display:inline-flex;align-items:center}.home-btn .ic{width:1.15rem;height:1.15rem}
+/* ── GAMES ── */
+.sa-games{background:rgba(200,151,31,0.2);color:var(--gold);border:1px solid rgba(200,151,31,0.3)}
+.games-intro{background:var(--navy2);border:1px solid rgba(200,151,31,0.18);border-left:4px solid var(--gold);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
+.games-intro .gi-t{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.games-intro .gi-s{font-size:.8rem;color:var(--text2);line-height:1.6}
+.games-sec{font-size:.7rem;color:var(--text3);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:16px 2px 8px}
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game-card{border:none;border-radius:var(--radius);padding:16px 14px;cursor:pointer;text-align:left;transition:transform .15s;color:#fff;position:relative;overflow:hidden;min-height:96px}
+.game-card:active{transform:scale(0.97)}
+.game-card .gc-ic{display:block;margin-bottom:8px}
+.game-card .gc-ic .ic{width:1.5rem;height:1.5rem}
+.game-card .gc-t{font-size:.85rem;font-weight:700;display:block;margin-bottom:2px}
+.game-card .gc-s{font-size:.68rem;opacity:.85;display:block;line-height:1.35}
+.gc-teal{background:linear-gradient(135deg,var(--teal),#0D6B6B)}
+.gc-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:#0A0E1A}
+.gc-coral{background:linear-gradient(135deg,var(--coral),#B84E35)}
+.gc-lav{background:linear-gradient(135deg,var(--lavender),#5C4EA8)}
+.gc-emer{background:linear-gradient(135deg,var(--emerald),#1A8A4A)}
+.gc-dss{background:linear-gradient(135deg,var(--dss),#1B4A73)}
+.gc-feud{background:linear-gradient(135deg,#B8860B,#7a5a08);grid-column:1 / -1;min-height:auto}
+.gc-feud .gc-ic .ic{width:1.7rem;height:1.7rem}
+.game-prompt{background:var(--navy2);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.06)}
+.gp-kicker{font-size:.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;font-weight:700;margin-bottom:8px}
+.gp-text{font-size:1.02rem;line-height:1.7;color:var(--text);font-weight:500}
+.gp-quote{font-style:italic;color:var(--text2)}
+.game-result{background:var(--navy3);border-radius:var(--radius-sm);padding:14px 16px;margin-top:14px;display:none;font-size:.9rem}
+.game-result.show{display:block}
+.gr-ok{color:var(--emerald)}
+.gr-no{color:var(--coral)}
+/* order / verse builder */
+.seq-answer{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;background:var(--navy2);border:1px dashed rgba(200,151,31,0.3);border-radius:var(--radius-sm);padding:10px;margin-bottom:14px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.seq-tile{background:var(--navy3);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 14px;font-size:.9rem;color:var(--text);cursor:pointer;transition:transform .12s}
+.seq-tile:active{transform:scale(0.95)}
+.seq-tile.placed{background:rgba(200,151,31,0.18);border-color:var(--gold);color:var(--gold)}
+.seq-tile.ok{background:rgba(46,204,113,0.2);border-color:var(--emerald);color:var(--emerald)}
+.seq-tile.bad{background:rgba(232,115,90,0.18);border-color:var(--coral);color:var(--coral)}
+.seq-num{display:inline-block;min-width:18px;font-weight:700;opacity:.7;margin-right:4px}
+/* match */
+.match-cols{display:flex;gap:12px;margin-bottom:14px}
+.match-col{flex:1;display:flex;flex-direction:column;gap:10px}
+.match-item{background:var(--navy2);border:2px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:12px;font-size:.82rem;color:var(--text);cursor:pointer;transition:all .15s;line-height:1.4;text-align:left}
+.match-item:active{transform:scale(0.98)}
+.match-item.sel{border-color:var(--gold);background:rgba(200,151,31,0.14)}
+.match-item.matched{border-color:var(--emerald);background:rgba(46,204,113,0.14);color:var(--emerald);cursor:default;opacity:.75}
+.match-item.miss{border-color:var(--coral)}
+/* memory grid */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.mem-tile{aspect-ratio:1;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:var(--navy3);display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-size:.62rem;line-height:1.25;color:var(--text);cursor:pointer;transition:all .15s;overflow:hidden}
+.mem-tile.down{background:var(--navy2);color:transparent}
+.mem-tile.down::after{content:'';width:18px;height:18px;border-radius:5px;background:rgba(200,151,31,0.35)}
+.mem-tile.up{background:rgba(200,151,31,0.14);border-color:var(--gold)}
+.mem-tile.matched{background:rgba(46,204,113,0.16);border-color:var(--emerald);color:var(--emerald);cursor:default}
+/* reveal / key terms */
+.rv-card{background:var(--navy2);border-radius:var(--radius);padding:26px 20px;text-align:center;border:1px solid rgba(255,255,255,0.07);margin-bottom:16px;min-height:180px;display:flex;flex-direction:column;justify-content:center;cursor:pointer}
+.rv-front{font-size:1.15rem;font-weight:700;color:var(--gold)}
+.rv-hint{font-size:.72rem;color:var(--text3);margin-top:14px;text-transform:uppercase;letter-spacing:.08em}
+.rv-back{font-size:.92rem;color:var(--text);line-height:1.7;margin-top:16px;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;text-align:left}
+.rv-rate{display:flex;gap:10px}
+.rv-rate button{flex:1;padding:14px;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:700;cursor:pointer}
+.rv-again{background:rgba(232,115,90,0.2);color:var(--coral);border:1px solid rgba(232,115,90,0.3)}
+.rv-got{background:rgba(46,204,113,0.2);color:var(--emerald);border:1px solid rgba(46,204,113,0.3)}
+/* family feud board */
+.fb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.fb-strikes{display:flex;gap:6px}
+.fb-x{width:26px;height:26px;border-radius:6px;border:2px solid rgba(232,115,90,0.4);color:var(--coral);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem}
+.fb-x.on{background:var(--coral);color:#fff;border-color:var(--coral)}
+.fb-board{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.fb-slot{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--navy2),var(--navy3));border:1px solid rgba(200,151,31,0.18);border-radius:10px;padding:12px 14px;min-height:48px}
+.fb-rank{width:24px;height:24px;border-radius:50%;background:rgba(200,151,31,0.2);color:var(--gold);font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fb-ans{font-size:.85rem;color:transparent;flex:1;font-weight:600}
+.fb-pts{font-size:.8rem;color:transparent;font-weight:800}
+.fb-slot.open{border-color:var(--gold);background:linear-gradient(180deg,rgba(200,151,31,0.16),rgba(200,151,31,0.06))}
+.fb-slot.open .fb-ans{color:var(--text)}
+.fb-slot.open .fb-pts{color:var(--gold)}
+.fb-slot.revealed .fb-ans{color:var(--text3)}
+.fb-slot.revealed .fb-pts{color:var(--text3)}
+.fb-pool{display:flex;flex-wrap:wrap;gap:8px}
+.fb-cand{background:var(--navy3);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:9px 14px;font-size:.8rem;color:var(--text);cursor:pointer;transition:transform .12s}
+.fb-cand:active{transform:scale(0.95)}
+.fb-cand.used{opacity:.3;pointer-events:none;text-decoration:line-through}
+.game-next{width:100%;padding:15px;border:none;border-radius:var(--radius-sm);background:var(--gold);color:#0A0E1A;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px}
+/* ── GAME NIGHT ── */
+.mc-gamenight{background:linear-gradient(135deg,#B8860B 0%,#7a2f8a 100%);color:#fff}
+.tv-toggle{background:none;border:1px solid rgba(200,151,31,0.4);color:var(--gold);cursor:pointer;padding:5px 9px;border-radius:9px;display:inline-flex}
+.tv-toggle.on{background:var(--gold);color:#0A0E1A}
+.tv-toggle .ic{width:1.1rem;height:1.1rem}
+.gn-hero{text-align:center;padding:10px 0 18px}
+.gn-hero-badge{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--gold);letter-spacing:.02em}
+.gn-hero-sub{font-size:.82rem;color:var(--text2);margin-top:6px;line-height:1.6}
+.gn-sec{font-size:.7rem;color:var(--text3);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:18px 2px 10px}
+.gn-teamset{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.gn-teamrow{display:flex;align-items:center;gap:10px}
+.gn-teamdot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.gn-teamin{flex:1;background:var(--navy2);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.95rem;font-family:inherit}
+.gn-teamdel{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:4px 8px}
+.gn-addteam{width:100%;padding:12px;border:1px dashed rgba(200,151,31,0.4);background:none;color:var(--gold);border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer}
+.gn-count{display:flex;gap:8px;margin-bottom:8px}
+.gn-count button{flex:1;padding:12px;border:1px solid rgba(255,255,255,0.1);background:var(--navy2);color:var(--text2);border-radius:10px;font-weight:700;cursor:pointer}
+.gn-count button.sel{background:rgba(200,151,31,0.2);border-color:var(--gold);color:var(--gold)}
+.gn-shows{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gn-show{border:none;border-radius:var(--radius);padding:20px 16px;text-align:left;cursor:pointer;color:#fff;min-height:120px;transition:transform .15s}
+.gn-show:active{transform:scale(0.97)}
+.gn-show .gs-ic .ic{width:1.9rem;height:1.9rem;margin-bottom:10px}
+.gn-show .gs-t{display:block;font-size:1rem;font-weight:800;margin-bottom:3px}
+.gn-show .gs-s{display:block;font-size:.72rem;opacity:.88;line-height:1.35}
+.gs-feud{background:linear-gradient(135deg,#B8860B,#6d4e08)}
+.gs-dond{background:linear-gradient(135deg,#7a2f8a,#3d1747)}
+.gn-start{width:100%;padding:16px;border:none;border-radius:var(--radius-sm);background:var(--gold);color:#0A0E1A;font-size:1rem;font-weight:800;cursor:pointer;margin-top:4px}
+.gn-start[disabled]{opacity:.4}
+/* teams scoreboard */
+.gn-teams{display:flex;gap:8px;margin-bottom:14px}
+.gn-team{flex:1;background:var(--navy2);border:2px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 8px;text-align:center}
+.gn-team.active{border-color:var(--gold);background:rgba(200,151,31,0.12)}
+.gn-team .gt-name{font-size:.72rem;color:var(--text2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gn-team .gt-score{font-size:1.4rem;font-weight:800;color:var(--gold)}
+.gn-team.active .gt-name{color:var(--gold)}
+.gn-banner{background:linear-gradient(180deg,rgba(200,151,31,0.14),rgba(200,151,31,0.04));border:1px solid rgba(200,151,31,0.25);border-radius:12px;padding:12px 14px;margin-bottom:14px;text-align:center;font-size:.9rem;font-weight:600;color:var(--text)}
+.gn-pot{font-size:.8rem;color:var(--gold);font-weight:800;margin-left:6px}
+.gn-choice{display:flex;gap:10px;margin-top:8px}
+.gn-choice button{flex:1;padding:14px;border:none;border-radius:12px;font-size:.9rem;font-weight:800;cursor:pointer}
+.gn-a{background:rgba(46,204,113,0.2);color:var(--emerald);border:1px solid rgba(46,204,113,0.35)}
+.gn-b{background:rgba(232,115,90,0.2);color:var(--coral);border:1px solid rgba(232,115,90,0.35)}
+.gn-neutral{background:var(--navy3);color:var(--text)}
+/* deal or no deal */
+.dond-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.dond-case{aspect-ratio:1;border-radius:12px;background:linear-gradient(160deg,#B8860B,#6d4e08);border:none;color:#0A0E1A;font-weight:900;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s;position:relative}
+.dond-case:active{transform:scale(0.95)}
+.dond-case.mine{background:linear-gradient(160deg,#7a2f8a,#4d1d5a);color:#fff;box-shadow:0 0 0 2px var(--gold)}
+.dond-case.open{background:var(--navy2);color:var(--text3);cursor:default;font-size:.72rem;padding:4px;line-height:1.15;text-align:center;border:1px solid rgba(255,255,255,0.06)}
+.ladder{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:14px}
+.lad-item{display:flex;justify-content:space-between;padding:7px 11px;border-radius:8px;background:var(--navy2);font-size:.78rem;color:var(--text2)}
+.lad-item.gone{opacity:.3;text-decoration:line-through}
+.lad-item .lv{font-weight:800;color:var(--gold)}
+.offer-card{background:linear-gradient(180deg,#2a1533,#1a0e20);border:1px solid rgba(122,47,138,0.5);border-radius:var(--radius);padding:22px 18px;text-align:center;margin-bottom:14px}
+.offer-k{font-size:.72rem;color:var(--lavender-lt);text-transform:uppercase;letter-spacing:.1em;font-weight:800}
+.offer-v{font-family:'Cinzel',serif;font-size:2.2rem;color:var(--gold);margin:8px 0}
+.offer-s{font-size:.8rem;color:var(--text2);line-height:1.5}
+.dond-fact{background:var(--navy3);border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--text2);margin-bottom:12px;line-height:1.5}
+/* stage / TV mode */
+body.stage-mode{--font-size:20px}
+body.stage-mode #gamenight .screen-body{padding:24px 28px 60px;max-width:1100px;margin:0 auto}
+body.stage-mode .gn-team .gt-score{font-size:2.4rem}
+body.stage-mode .gn-team .gt-name{font-size:.95rem}
+body.stage-mode .fb-slot{min-height:64px;padding:16px 20px}
+body.stage-mode .fb-ans{font-size:1.15rem}
+body.stage-mode .fb-rank{width:32px;height:32px;font-size:1rem}
+body.stage-mode .fb-pts{font-size:1.1rem}
+body.stage-mode .gp-text{font-size:1.5rem;line-height:1.5}
+body.stage-mode .dond-case{font-size:1.6rem}
+body.stage-mode .offer-v{font-size:3.2rem}
+body.stage-mode .fb-cand{font-size:1rem;padding:12px 18px}
+body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
+/* Evidence Feud */
+.ef-wrap{padding:2px}
+.ef-roles{display:flex;gap:10px;margin:14px 0}
+.ef-role{flex:1;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.08)}
+.ef-def{background:linear-gradient(135deg,rgba(46,204,113,.16),rgba(46,204,113,.04));border-color:rgba(46,204,113,.35)}
+.ef-pro{background:linear-gradient(135deg,rgba(232,115,90,.16),rgba(232,115,90,.04));border-color:rgba(232,115,90,.35)}
+.ef-rt{font-weight:800;font-size:1rem;margin-bottom:4px}
+.ef-def .ef-rt{color:var(--emerald)}
+.ef-pro .ef-rt{color:var(--coral)}
+.ef-rs{font-size:.78rem;color:var(--text2);line-height:1.4}
+.ef-levels{font-size:.8rem;color:var(--text2);text-align:center;margin:6px 0 16px;line-height:1.5}
+.ef-note{font-size:.85rem;color:var(--text);text-align:center;margin:6px 0 10px;font-weight:600}
+.ef-sig{font-size:.72rem;color:var(--text2);padding:2px 0 6px 44px;line-height:1.4}
+.ef-aid{background:rgba(200,151,31,.12);border:1px solid rgba(200,151,31,.28);border-radius:10px;padding:10px 12px;font-size:.78rem;color:var(--text);margin-bottom:12px;line-height:1.4}
+.ef-hint{width:100%;padding:12px;border:1px dashed rgba(200,151,31,.4);background:none;color:var(--gold-lt);border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;margin-top:8px}
+.ef-how{background:var(--navy2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 16px;margin:8px 0 16px}
+.ef-how-t{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ef-step{display:flex;gap:10px;font-size:.85rem;color:var(--text);line-height:1.5;margin-bottom:8px}
+.ef-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(200,151,31,.2);color:var(--gold);font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center}
+/* How to Use guide */
+.hu-intro{background:var(--navy2);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:16px}
+.hu-t{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.hu-s{font-size:.82rem;color:var(--text2);line-height:1.5}
+.hu-sec{background:var(--navy2);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.hu-sec>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.hu-sec>summary::-webkit-details-marker{display:none}
+.hu-st{flex:1;font-size:.95rem;font-weight:700;color:var(--text)}
+.hu-chev{width:18px;height:18px;stroke:var(--gold);fill:none;transition:transform .2s;flex-shrink:0}
+.hu-sec[open]>summary .hu-chev{transform:rotate(90deg)}
+.hu-body{padding:0 16px 14px}
+.hu-body p{font-size:.88rem;line-height:1.65;color:var(--text);margin:0 0 8px}
+.hu-body p:first-child{margin-top:2px}
 </style>
 </head>
 <body>
@@ -410,6 +596,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 
 <!-- HOME -->
 <div class="screen" id="home">
+  <button class="ge-refresh" onclick="location.reload(true)" aria-label="Refresh"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3"/></svg></button>
   <div class="screen-body" style="padding-top:50px">
     <div class="home-header">
       <div class="home-logo">Great Eraser Study</div>
@@ -429,7 +616,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
     </div>
     <div id="concept-row" class="concept-row"></div>
     <div class="today-path" id="today-path">
-      <div class="tp-label">📚 Today's 10-Minute Path</div>
+      <div class="tp-label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg> Today's 10-Minute Path</div>
       <div class="tp-steps" id="tp-steps">
         <div class="tp-step current">Loading...</div>
       </div>
@@ -442,44 +629,54 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
       <div class="cb-arrow">→</div>
     </button>
     <div class="mode-grid">
+      <button class="mode-card" style="grid-column:1 / -1;background:linear-gradient(135deg,#2A6F6F,#12403F);color:#fff" onclick="App.showScreen('howto')">
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 4.3 2c0 1.6-2 2-2 3.3"/><path d="M12 17.5h.01"/></svg></span>
+        <span class="mc-title">How to Use</span>
+        <span class="mc-sub">New here? A plain, short guide to every part</span>
+      </button>
+      <button class="mode-card mc-gamenight" style="grid-column:1 / -1" onclick="App.openGameNight()">
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg></span>
+        <span class="mc-title">Truth Uncovered</span>
+        <span class="mc-sub">Two team game shows · hold the truth · cast to TV</span>
+      </button>
       <button class="mode-card mc-study" onclick="App.showScreen('study')">
-        <span class="mc-icon">📖</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg></span>
         <span class="mc-title">Great Eraser Study</span>
         <span class="mc-sub">Arguments + verse connections</span>
       </button>
       <button class="mode-card mc-cards" onclick="App.showScreen('cards')">
-        <span class="mc-icon">🃏</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M12 7l2.2 5-2.2 5-2.2-5z"/></svg></span>
         <span class="mc-title">Memory Cards</span>
         <span class="mc-sub">Spaced repetition review</span>
         <span class="mc-badge" id="cards-badge">0 due</span>
       </button>
       <button class="mode-card mc-verse" onclick="App.showScreen('quiz')">
-        <span class="mc-icon">❓</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 4.3 2c0 1.6-2 2-2 3.3"/><path d="M12 17.5h.01"/></svg></span>
         <span class="mc-title">Quiz Modes</span>
         <span class="mc-sub">Fill blank · Multiple choice</span>
       </button>
       <button class="mode-card mc-compare" onclick="App.showScreen('compare')">
-        <span class="mc-icon">⚖️</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4v16M6 20h12M6 6l6-1 6 1"/><path d="M6 6L3 12a3 3 0 0 0 6 0zM18 6l-3 6a3 3 0 0 0 6 0z"/></svg></span>
         <span class="mc-title">DSS vs Orit</span>
         <span class="mc-sub">Compare primary sources</span>
       </button>
       <button class="mode-card mc-timeline" onclick="App.showScreen('timeline')">
-        <span class="mc-icon">📅</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M4 9.5h16M8 3v4M16 3v4"/></svg></span>
         <span class="mc-title">Timeline</span>
         <span class="mc-sub">Erased · Restored evidence</span>
       </button>
       <button class="mode-card" style="background:linear-gradient(135deg,#1E5580,#0D2A40);color:#fff" onclick="App.showScreen('lesson')">
-        <span class="mc-icon">🎓</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5l9 4-9 4-9-4 9-4z"/><path d="M6 11v4c0 1.3 3 3 6 3s6-1.7 6-3v-4"/></svg></span>
         <span class="mc-title">Lesson Mode</span>
         <span class="mc-sub">Learn · Explain · Practice</span>
       </button>
       <button class="mode-card" style="background:linear-gradient(135deg,#1a1a1a,#0D0B07);color:#C8971F;border:1px solid #C8971F44" onclick="App.openGEApp()">
-        <span class="mc-icon">📚</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg></span>
         <span class="mc-title">Read The Great Eraser</span>
         <span class="mc-sub">Open full book reader</span>
       </button>
       <button class="mode-card mc-hard" onclick="App.showScreen('hard-list')">
-        <span class="mc-icon">🔥</span>
+        <span class="mc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c1.2 3.8-2.8 5-2.8 8.8A2.8 2.8 0 0 0 15 12c0-1.8-1-2.8-1-2.8 2 .8 3 2.8 3 4.8A5 5 0 0 1 7 14c0-4.8 5-6 5-11z"/></svg></span>
         <span class="mc-title">Still Hard For Me</span>
         <span class="mc-sub">Review difficult material</span>
         <span class="mc-badge" id="hard-badge">0</span>
@@ -487,20 +684,20 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
     </div>
   </div>
   <nav class="bottom-nav" id="home-nav">
-    <button class="bn-item active" onclick="App.showScreen('home')"><span class="bn-icon">🏠</span><span class="bn-label">Home</span></button>
-    <button class="bn-item" onclick="App.showScreen('study')"><span class="bn-icon">📖</span><span class="bn-label">Study</span></button>
-    <button class="bn-item" onclick="App.showScreen('cards')"><span class="bn-icon">🃏</span><span class="bn-label">Cards</span></button>
-    <button class="bn-item" onclick="App.showScreen('quiz')"><span class="bn-icon">❓</span><span class="bn-label">Quiz</span></button>
-    <button class="bn-item" onclick="App.showScreen('settings')"><span class="bn-icon">⚙️</span><span class="bn-label">Settings</span></button>
+    <button class="bn-item active" onclick="App.showScreen('home')"><span class="bn-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></span><span class="bn-label">Home</span></button>
+    <button class="bn-item" onclick="App.showScreen('study')"><span class="bn-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg></span><span class="bn-label">Study</span></button>
+    <button class="bn-item" onclick="App.showScreen('cards')"><span class="bn-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M12 7l2.2 5-2.2 5-2.2-5z"/></svg></span><span class="bn-label">Cards</span></button>
+    <button class="bn-item" onclick="App.showScreen('quiz')"><span class="bn-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 4.3 2c0 1.6-2 2-2 3.3"/><path d="M12 17.5h.01"/></svg></span><span class="bn-label">Quiz</span></button>
+    <button class="bn-item" onclick="App.showScreen('settings')"><span class="bn-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span><span class="bn-label">Settings</span></button>
   </nav>
 </div>
 
 <!-- STUDY -->
 <div class="screen" id="study">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Great Eraser Study</div>
-    <button class="settings-btn" onclick="App.toggleVoice()">🔊</button>
+    <button class="settings-btn" onclick="App.toggleVoice()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a4.5 4.5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg></button>
   </div>
   <div style="padding:12px 16px 0;flex-shrink:0">
     <div class="module-tabs" id="module-tabs"></div>
@@ -517,7 +714,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
     </div>
     <div class="vp-scroll" id="vp-content"></div>
     <div class="vp-actions">
-      <button class="vpa-btn vpa-save" onclick="App.saveVerse()">★ Save</button>
+      <button class="vpa-btn vpa-save" onclick="App.saveVerse()"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"><path d="M12 4l2.3 5.2 5.7.5-4.3 3.8 1.3 5.5L12 21l-5 3.3 1.3-5.5L4 9.7l5.7-.5z"/></svg> Save</button>
       <button class="vpa-btn vpa-quiz" onclick="App.quizFromVerse()">Quiz Me</button>
       <button class="vpa-btn vpa-close" onclick="App.closeVersePanel()">Close</button>
     </div>
@@ -527,7 +724,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- MEMORY CARDS -->
 <div class="screen" id="cards">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Memory Cards</div>
     <span id="cards-count" style="font-size:.8rem;color:var(--text3)"></span>
   </div>
@@ -537,7 +734,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- QUIZ -->
 <div class="screen" id="quiz">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Quiz Mode</div>
     <span id="quiz-score" style="font-size:.8rem;color:var(--gold)"></span>
   </div>
@@ -547,7 +744,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- TIMELINE -->
 <div class="screen" id="timeline">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Timeline</div>
   </div>
   <div style="padding:12px 16px 0;flex-shrink:0">
@@ -563,7 +760,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- COMPARE -->
 <div class="screen" id="compare">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">DSS vs Orit Compare</div>
   </div>
   <div class="screen-body" id="compare-body"></div>
@@ -572,17 +769,55 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- HARD LIST -->
 <div class="screen" id="hard-list">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Still Hard For Me</div>
     <button class="settings-btn" onclick="App.clearHardList()">Clear All</button>
   </div>
   <div class="screen-body" id="hard-body"></div>
 </div>
 
+<!-- GAMES GRID -->
+<div class="screen" id="games">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <div class="top-bar-title" id="games-title">Games</div>
+  </div>
+  <div class="screen-body" id="games-body"></div>
+</div>
+
+<!-- GAME PLAY -->
+<div class="screen" id="game">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.showScreen('games')">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <div class="top-bar-title" id="game-title">Game</div>
+    <span id="game-score" style="font-size:.8rem;color:var(--gold)"></span>
+  </div>
+  <div class="screen-body" id="game-body"></div>
+</div>
+
+<!-- GAME NIGHT -->
+<div class="screen" id="gamenight">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.gnBack()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <div class="top-bar-title" id="gn-title">Truth Uncovered</div>
+    <button class="tv-toggle" onclick="App.gnToggleStage()" aria-label="TV mode"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+  </div>
+  <div class="screen-body" id="gn-body"></div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="screen" id="howto">
+  <div class="top-bar">
+    <button class="back-btn" onclick="App.goHome()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
+    <div class="top-bar-title">How to Use</div>
+  </div>
+  <div class="screen-body" id="howto-body"></div>
+</div>
+
 <!-- SETTINGS -->
 <div class="screen" id="settings">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Reading & Display</div>
   </div>
   <div class="screen-body">
@@ -637,7 +872,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- LESSON PANEL -->
 <div id="lesson-panel">
   <div class="lesson-header" style="border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
-    <button class="back-btn" onclick="Lesson.close()">←</button>
+    <button class="back-btn" onclick="Lesson.close()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div style="flex:1">
       <div style="font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold)" id="lp-title">Lesson</div>
       <div style="font-size:.72rem;color:var(--text3)" id="lp-subtitle"></div>
@@ -645,11 +880,11 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
     <div id="lp-mastery" class="mastery-badge mb-0">0 / 5</div>
   </div>
   <div class="lesson-step-pills" id="lp-steps">
-    <button class="ls-pill active" data-step="0" onclick="Lesson.goStep(0)" style="background:rgba(26,155,155,0.3);color:#2EC4C4">📖 Learn</button>
-    <button class="ls-pill" data-step="1" onclick="Lesson.goStep(1)">💬 Explain</button>
-    <button class="ls-pill" data-step="2" onclick="Lesson.goStep(2)">🧠 Remember</button>
-    <button class="ls-pill" data-step="3" onclick="Lesson.goStep(3)">✏️ Practice</button>
-    <button class="ls-pill" data-step="4" onclick="Lesson.goStep(4)">🔁 Review</button>
+    <button class="ls-pill active" data-step="0" onclick="Lesson.goStep(0)" style="background:rgba(26,155,155,0.3);color:#2EC4C4"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg> Learn</button>
+    <button class="ls-pill" data-step="1" onclick="Lesson.goStep(1)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h16v11H9l-4 3z"/></svg> Explain</button>
+    <button class="ls-pill" data-step="2" onclick="Lesson.goStep(2)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9.5 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5 3 3 0 0 0 2 3.8A3 3 0 0 0 12 18a3 3 0 0 0 4.5-2.2 3 3 0 0 0 2-3.8 3 3 0 0 0-1-5 3 3 0 0 0-3-3A2.6 2.6 0 0 0 12 5a2.6 2.6 0 0 0-2.5-1z"/><path d="M12 5v13"/></svg> Remember</button>
+    <button class="ls-pill" data-step="3" onclick="Lesson.goStep(3)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l1-4 10-10 3 3-10 10z"/><path d="M14 7l3 3"/></svg> Practice</button>
+    <button class="ls-pill" data-step="4" onclick="Lesson.goStep(4)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h11a4 4 0 0 1 4 4M20 16H9a4 4 0 0 1-4-4"/><path d="M15 5l3 3-3 3M9 19l-3-3 3-3"/></svg> Review</button>
   </div>
   <div class="screen-body" id="lp-body" style="padding:16px 16px 20px"></div>
   <div class="lesson-nav">
@@ -661,7 +896,7 @@ body.opendyslexic #study .section-claim{font-family:'OpenDyslexic',sans-serif!im
 <!-- LESSON SCREEN (menu) -->
 <div class="screen" id="lesson">
   <div class="top-bar">
-    <button class="back-btn" onclick="App.showScreen('home')">←</button>
+    <button class="back-btn" onclick="App.back()">←</button><button class="home-btn" onclick="App.goHome()" aria-label="Home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg></button>
     <div class="top-bar-title">Lesson Mode</div>
   </div>
   <div class="screen-body" id="lesson-body"></div>
@@ -710,7 +945,7 @@ const Store = {
 // ── APP ───────────────────────────────────────────────────────────────────────
 const App = {
   async init(){
-    // Load data — use inline data immediately for offline/HtmlQ support
+    // Load data, use inline data immediately for offline/HtmlQ support
     DATA = (typeof INLINE_DATA !== 'undefined') ? INLINE_DATA : null;
     // Try to fetch updated data if online
     try{
@@ -718,7 +953,7 @@ const App = {
       const fetched = await r.json();
       if(fetched) DATA = fetched;
     }catch(e){
-      // Offline or HtmlQ — use inline data
+      // Offline or HtmlQ, use inline data
     }
     // Update streak
     this.updateStreak();
@@ -759,7 +994,11 @@ const App = {
     document.getElementById('daily-pct').textContent = pct+'%';
   },
 
-  showScreen(id){
+  navHistory:[],
+  back(){const p=this.navHistory.pop()||'home';this.showScreen(p,true);},
+  goHome(){this.navHistory=[];this.showScreen('home',true);},
+  showScreen(id,skipHistory){
+    if(!skipHistory && State.currentScreen && State.currentScreen!==id){this.navHistory.push(State.currentScreen);}
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     State.currentScreen = id;
@@ -787,6 +1026,10 @@ const App = {
       case 'timeline': this.renderTimeline(); break;
       case 'compare': this.renderCompare(); break;
       case 'hard-list': this.renderHardList(); break;
+      case 'games': this.renderGamesScreen(); break;
+      case 'game': this.renderGameScreen(); break;
+      case 'gamenight': this.renderGameNight(); break;
+      case 'howto': this.renderHelp(); break;
     }
   },
 
@@ -812,7 +1055,7 @@ const App = {
     }
     const h = new Date().getHours();
     let greet = h<12?'Good morning':h<17?'Good afternoon':'Good evening';
-    document.getElementById('home-greeting').textContent = greet + ' — ready to recall?';
+    document.getElementById('home-greeting').textContent = greet + ', ready to recall?';
   },
 
   // ── STUDY MODE ──
@@ -822,7 +1065,7 @@ const App = {
     const vols = DATA.volumes||[];
     const tabs = document.getElementById('module-tabs');
     const colors = ['#1A9B9B','#C8971F','#E8735A','#8B7EC8','#2ECC71','#E84040','#1A9B9B','#C8971F','#8B7EC8'];
-    const icons = ['📜','📖','⛪','🧬','🗺️','⚡','🌿','📚','🌌'];
+    const icons = ['<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 21V10l6-4 6 4v11"/><path d="M9 21v-5h6v5"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3c0 6 10 6 10 12M17 3c0 6-10 6-10 12M8 6h8M8 18h8M7 21c0-1 10-1 10 0"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg>','<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l1.4 4L18 8.2l-4 2.1 1 4.7-3-2.6-3 2.6 1-4.7-4-2.1L10.6 7z"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="18" r="1"/></svg>'];
     tabs.innerHTML = vols.map((v,i)=>`
       <button class="mod-tab${i===State.currentModule?' active':''}"
         style="${i===State.currentModule?'background:'+colors[i%colors.length]+';color:#0A0E1A':''}"
@@ -872,13 +1115,14 @@ const App = {
         <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:${preview?'10px':'8px'};line-height:1.4">${this.highlightClaim(ch.title)}</div>
         ${preview ? `<div style="font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:12px">${this.highlightClaim(preview)}</div>` : ''}
         ${verseCount > 0 ? `<button class="verse-connect-btn" onclick="App.openVersePanelDirect('${ch.id}',${idx},${ci})">
-          <span>📜 Connected Verses (${verseCount})</span>
+          <span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg> Connected Verses (${verseCount})</span>
           <span class="vcb-arrow">↑</span>
-        </button>` : `<div style="font-size:.75rem;color:var(--text3);margin-bottom:8px;padding:8px;background:var(--navy3);border-radius:8px">📖 Read full chapter in Great Eraser PWA</div>`}
+        </button>` : `<div style="font-size:.75rem;color:var(--text3);margin-bottom:8px;padding:8px;background:var(--navy3);border-radius:8px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg> Read full chapter in Great Eraser PWA</div>`}
         <div class="section-actions">
-          ${verseData && verseData.quiz && verseData.quiz.length > 0 ? `<button class="sa-btn sa-quiz" onclick="App.quizFromChapter('${ch.id}')">❓ Quiz</button>` : ''}
-          <button class="sa-btn sa-save" onclick="App.saveChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}')">★ Save</button>
-          <button class="sa-btn sa-hard" onclick="App.markHardChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}',${idx},${ci})">🔥 Hard</button>
+          <button class="sa-btn sa-games" onclick="App.openGames(${idx},${ci})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M8 10v4M6 12h4"/><circle cx="15.5" cy="11" r="1"/><circle cx="17.5" cy="14" r="1"/></svg> Games</button>
+          ${verseData && verseData.quiz && verseData.quiz.length > 0 ? `<button class="sa-btn sa-quiz" onclick="App.quizFromChapter('${ch.id}')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.7 2.7 0 0 1 4.3 2c0 1.6-2 2-2 3.3"/><path d="M12 17.5h.01"/></svg> Quiz</button>` : ''}
+          <button class="sa-btn sa-save" onclick="App.saveChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}')"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"><path d="M12 4l2.3 5.2 5.7.5-4.3 3.8 1.3 5.5L12 21l-5 3.3 1.3-5.5L4 9.7l5.7-.5z"/></svg> Save</button>
+          <button class="sa-btn sa-hard" onclick="App.markHardChapter('${ch.id}','${this.esc(ch.title)}','Vol.${vol.vol}',${idx},${ci})"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c1.2 3.8-2.8 5-2.8 8.8A2.8 2.8 0 0 0 15 12c0-1.8-1-2.8-1-2.8 2 .8 3 2.8 3 4.8A5 5 0 0 1 7 14c0-4.8 5-6 5-11z"/></svg> Hard</button>
         </div>
       </div>`;
     });
@@ -923,7 +1167,7 @@ const App = {
     if(!saved.find(s=>s.id===id)){
       saved.push({id, type:'chapter', title:title.substring(0,80), source});
       Store.set('saved',saved);
-      this.toast('✓ Saved');
+      this.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Saved');
     } else { this.toast('Already saved'); }
   },
 
@@ -951,7 +1195,7 @@ const App = {
   renderVerseTabs(section){
     document.getElementById('vp-tabs').innerHTML = section.verses.map((v,i)=>`
       <button class="vp-tab${i===0?' active':''}" onclick="App.selectVerse(${i})">
-        ${v.tradition==='dss'?'📜 DSS':v.tradition==='orit'?'🌿 Orit':'📍 Record'} ${i+1}
+        ${v.tradition==='dss'?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg> DSS':v.tradition==='orit'?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg> Orit':'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Record'} ${i+1}
       </button>
     `).join('');
   },
@@ -966,7 +1210,7 @@ const App = {
   renderVerseContent(section, idx){
     const v = section.verses[idx];
     const badgeCls = v.tradition==='dss'?'vtb-dss':v.tradition==='orit'?'vtb-orit':'vtb-historical';
-    const badgeTxt = v.tradition==='dss'?'📜 Dead Sea Scrolls':v.tradition==='orit'?'🌿 Ge\'ez Orit':'📍 Historical Record';
+    const badgeTxt = v.tradition==='dss'?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg> Dead Sea Scrolls':v.tradition==='orit'?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg> Ge\'ez Orit':'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Historical Record';
     document.getElementById('vp-content').innerHTML = `
       <div class="verse-tradition-badge ${badgeCls}">${badgeTxt}</div>
       <div class="verse-ref">${v.ref}</div>
@@ -975,12 +1219,12 @@ const App = {
       <div class="verse-plain-label">Plain Language</div>
       <div class="verse-plain">${v.plain}</div>
       <div class="bridge-box">
-        <div class="bridge-label">🔗 Why This Connects to the Great Eraser</div>
+        <div class="bridge-label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1"/></svg> Why This Connects to the Great Eraser</div>
         <div class="bridge-text">${v.bridge}</div>
       </div>
       <div class="verse-plain-label">Key Words to Remember</div>
       <div class="keyword-row">${v.keywords.map(k=>`<span class="kw-chip">${k}</span>`).join('')}</div>
-      <button onclick="App.speakVerse('${this.esc(v.text)}')" style="width:100%;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(200,151,31,0.15);color:var(--gold);font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:12px;border:1px solid rgba(200,151,31,0.3)">🔊 Listen to This Verse</button>
+      <button onclick="App.speakVerse('${this.esc(v.text)}')" style="width:100%;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(200,151,31,0.15);color:var(--gold);font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:12px;border:1px solid rgba(200,151,31,0.3)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a4.5 4.5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg> Listen to This Verse</button>
     `;
   },
 
@@ -997,7 +1241,7 @@ const App = {
     if(!saved.find(s=>s.ref===v.ref)){
       saved.push({ref:v.ref, scroll:v.scroll, text:v.text.substring(0,100), bridge:v.bridge.substring(0,100)});
       Store.set('saved',saved);
-      this.toast('✓ Verse saved to collection');
+      this.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Verse saved to collection');
     } else {
       this.toast('Already saved');
     }
@@ -1023,7 +1267,7 @@ const App = {
     if(!saved.find(s=>s.id===section.id)){
       saved.push({id:section.id, type:'section', title:section.claim.substring(0,80)+'...', source:section.ge_source});
       Store.set('saved',saved);
-      this.toast('✓ Section saved');
+      this.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Section saved');
     }
   },
 
@@ -1050,7 +1294,7 @@ const App = {
     if(State.cardQueue.length===0){
       document.getElementById('cards-body').innerHTML = `
         <div class="session-complete">
-          <span class="sc-icon">🎉</span>
+          <span class="sc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l6-14 8 8zM11 6l1-2M15 8l2-1M17 12h2"/></svg></span>
           <div class="sc-title">All caught up!</div>
           <div class="sc-sub">You've reviewed all your memory cards. Come back tomorrow for your next scheduled review.</div>
           <button class="sc-btn" onclick="App.showScreen('home')">Back to Home</button>
@@ -1080,7 +1324,7 @@ const App = {
             <div class="fc-tap">Tap to reveal answer</div>
           </div>
           <div class="fc-back">
-            <div class="fc-label" style="color:${catColor}">✓ ANSWER</div>
+            <div class="fc-label" style="color:${catColor}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> ANSWER</div>
             <div class="fc-answer">${card.back}</div>
             <div class="fc-source">Source: ${card.source}</div>
           </div>
@@ -1089,15 +1333,15 @@ const App = {
       <div id="rating-area" style="display:none">
         <div style="text-align:center;font-size:.8rem;color:var(--text3);margin-bottom:12px">How well did you remember this?</div>
         <div class="rating-row">
-          <button class="rating-btn rb-easy" onclick="App.rateCard('easy')">✓ Easy</button>
+          <button class="rating-btn rb-easy" onclick="App.rateCard('easy')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Easy</button>
           <button class="rating-btn rb-almost" onclick="App.rateCard('almost')">≈ Almost</button>
-          <button class="rating-btn rb-hard" onclick="App.rateCard('hard')">✗ Hard</button>
+          <button class="rating-btn rb-hard" onclick="App.rateCard('hard')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 6l12 12M18 6L6 18"/></svg> Hard</button>
           <button class="rating-btn rb-again" onclick="App.rateCard('again')">↩ Again</button>
         </div>
       </div>
       <div id="fc-actions" style="margin-top:12px;display:flex;gap:10px">
-        <button onclick="App.speakCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:var(--navy3);color:var(--text2);font-size:.82rem;cursor:pointer">🔊 Listen</button>
-        <button onclick="App.hardCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(232,115,90,0.15);color:var(--coral);font-size:.82rem;cursor:pointer;border:1px solid rgba(232,115,90,0.3)">🔥 Mark Hard</button>
+        <button onclick="App.speakCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:var(--navy3);color:var(--text2);font-size:.82rem;cursor:pointer"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a4.5 4.5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg> Listen</button>
+        <button onclick="App.hardCard()" style="flex:1;padding:12px;border:none;border-radius:var(--radius-sm);background:rgba(232,115,90,0.15);color:var(--coral);font-size:.82rem;cursor:pointer;border:1px solid rgba(232,115,90,0.3)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c1.2 3.8-2.8 5-2.8 8.8A2.8 2.8 0 0 0 15 12c0-1.8-1-2.8-1-2.8 2 .8 3 2.8 3 4.8A5 5 0 0 1 7 14c0-4.8 5-6 5-11z"/></svg> Mark Hard</button>
       </div>`;
   },
 
@@ -1148,7 +1392,7 @@ const App = {
   renderCardsComplete(){
     document.getElementById('cards-body').innerHTML = `
       <div class="session-complete">
-        <span class="sc-icon">⭐</span>
+        <span class="sc-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l2.3 5.2 5.7.5-4.3 3.8 1.3 5.5L12 21l-5 3.3 1.3-5.5L4 9.7l5.7-.5z"/></svg></span>
         <div class="sc-title">Session Complete</div>
         <div class="sc-sub">Great work reviewing your memory cards.</div>
         <div class="sc-stats">
@@ -1223,8 +1467,8 @@ const App = {
     const qr = document.getElementById('qr');
     qr.className = 'quiz-result show';
     qr.innerHTML = isCorrect
-      ? '<div class="qr-correct">✓ Correct! Well recalled.</div>'
-      : `<div class="qr-wrong">✗ The answer is: ${correct}</div>`;
+      ? '<div class="qr-correct"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Correct! Well recalled.</div>'
+      : `<div class="qr-wrong"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 6l12 12M18 6L6 18"/></svg> The answer is: ${correct}</div>`;
     const stats = Store.stats();
     stats.daily = (stats.daily||0)+1;
     Store.saveStats(stats);
@@ -1248,9 +1492,9 @@ const App = {
     const pct = State.quizTotal>0?Math.round(State.quizScore/State.quizTotal*100):0;
     document.getElementById('quiz-body').innerHTML = `
       <div class="session-complete">
-        <span class="sc-icon">${pct>=80?'🏆':pct>=60?'⭐':'📚'}</span>
+        <span class="sc-icon">${pct>=80?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg>':pct>=60?'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4l2.3 5.2 5.7.5-4.3 3.8 1.3 5.5L12 21l-5 3.3 1.3-5.5L4 9.7l5.7-.5z"/></svg>':'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg>'}</span>
         <div class="sc-title">${pct>=80?'Outstanding':'Good work'}</div>
-        <div class="sc-sub">${pct>=80?'Your recall is strong. The evidence is anchoring.':pct>=60?'Solid recall. Keep reviewing the harder passages.':'Keep going — deep learning takes repeated exposure.'}</div>
+        <div class="sc-sub">${pct>=80?'Your recall is strong. The evidence is anchoring.':pct>=60?'Solid recall. Keep reviewing the harder passages.':'Keep going, deep learning takes repeated exposure.'}</div>
         <div class="sc-stats">
           <div class="sc-stat"><div class="sc-num">${State.quizScore}</div><div class="sc-label">Correct</div></div>
           <div class="sc-stat"><div class="sc-num">${State.quizTotal}</div><div class="sc-label">Total</div></div>
@@ -1288,8 +1532,8 @@ const App = {
         <div class="tl-card">
           <div class="tl-year" style="color:${t.color}">${t.year}</div>
           <div class="tl-event">${t.event}</div>
-          ${t.erased_by?`<div class="tl-erased">${t.erased_by}</div>`:''}
-          ${t.restored_by?`<div class="tl-restored">${t.restored_by}</div>`:''}
+          ${t.erased_by?`<div class="tl-erased"><span class="tl-tag"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 6l12 12M18 6L6 18"/></svg> ERASED:</span> ${t.erased_by}</div>`:''}
+          ${t.restored_by?`<div class="tl-restored"><span class="tl-tag"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> RESTORED:</span> ${t.restored_by}</div>`:''}
         </div>
       </div>
     `).join('');
@@ -1299,21 +1543,21 @@ const App = {
   renderCompare(){
     const pairs = [
       {
-        ref:'Bereshit 15:13 — The 400-Year Covenant',
+        ref:'Bereshit 15:13, The 400-Year Covenant',
         source:'DSS (4QGen-Exoda) vs Ge\'ez Orit (Jubilees 14:18)',
-        dss:{label:'DSS — 4QGen-Exoda, Cave 4', text:'Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.', plain:'A binding legal decree: four centuries of bondage for the covenant people in a foreign land.'},
-        orit:{label:'Ge\'ez Orit — Jubilees 14:18', text:'And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.', plain:'The Orit confirms the covenant countdown — four generations equals the 400-year term. Return is guaranteed after the full term.'},
+        dss:{label:'DSS, 4QGen-Exoda, Cave 4', text:'Know with certainty that your seed will be strangers in a land not theirs, and they will serve them, and they will afflict them four hundred years.', plain:'A binding legal decree: four centuries of bondage for the covenant people in a foreign land.'},
+        orit:{label:'Ge\'ez Orit, Jubilees 14:18', text:'And it came to pass that in the fourth generation they shall return hither; for the iniquity of the Amorites is not yet full.', plain:'The Orit confirms the covenant countdown, four generations equals the 400-year term. Return is guaranteed after the full term.'},
         consistent:'Both texts confirm the 400-year bondage period as a binding legal covenant term, not a prediction.',
         changed:'The DSS gives the specific number (400 years) while the Orit specifies the mechanism (four generations), providing complementary precision.',
         prompt:'What does the consistency between these two independent sources prove about the authority of this covenant claim?'
       },
       {
-        ref:'The Solar Calendar — 364 Days',
+        ref:'The Solar Calendar, 364 Days',
         source:'DSS (4Q317) vs Ge\'ez Orit (Jubilees 6:36-38)',
-        dss:{label:'DSS — 4Q317 Mishmarot Fragments', text:'The 364-day solar calendar documented in the Mishmarot fragments: 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.', plain:'The Qumran community maintained a precise solar calendar where festivals never shifted — every year the same weekday.'},
-        orit:{label:'Ge\'ez Orit — Jubilees 6:36-38', text:'For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.', plain:'Jubilees explicitly warns that lunar observation is a deliberate corruption that causes the covenant people to miss their appointed times with YHWH.'},
+        dss:{label:'DSS, 4Q317 Mishmarot Fragments', text:'The 364-day solar calendar documented in the Mishmarot fragments: 52 weeks, 4 seasons of 91 days each, with the annual festivals fixed to specific days of the week independent of lunar cycles.', plain:'The Qumran community maintained a precise solar calendar where festivals never shifted, every year the same weekday.'},
+        orit:{label:'Ge\'ez Orit, Jubilees 6:36-38', text:'For there will be those who will assuredly make observations of the moon, and they will disturb the years and alter the appointed times and they will go astray and not find the appointed season.', plain:'Jubilees explicitly warns that lunar observation is a deliberate corruption that causes the covenant people to miss their appointed times with YHWH.'},
         consistent:'Both sources confirm the 364-day solar calendar as the only valid covenant calendar and treat the lunar system as a corruption.',
-        changed:'The DSS gives the mathematical structure; the Orit gives the prophetic warning — together they provide both the system and the consequence of deviation.',
+        changed:'The DSS gives the mathematical structure; the Orit gives the prophetic warning, together they provide both the system and the consequence of deviation.',
         prompt:'Why would both texts preserved independently in two different communities agree on condemning the lunar calendar?'
       }
     ];
@@ -1324,26 +1568,26 @@ const App = {
         <div class="compare-source">${p.source}</div>
         <div class="compare-panels">
           <div class="cp-panel cpp-dss">
-            <div class="cpp-label">📜 ${p.dss.label}</div>
+            <div class="cpp-label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg> ${p.dss.label}</div>
             <div class="cpp-text">"${p.dss.text}"</div>
             <div class="cpp-plain">${p.dss.plain}</div>
           </div>
           <div class="cp-panel cpp-orit">
-            <div class="cpp-label">🌿 ${p.orit.label}</div>
+            <div class="cpp-label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg> ${p.orit.label}</div>
             <div class="cpp-text">"${p.orit.text}"</div>
             <div class="cpp-plain">${p.orit.plain}</div>
           </div>
         </div>
         <div style="background:rgba(46,204,113,0.08);border:1px solid rgba(46,204,113,0.2);border-radius:var(--radius-sm);padding:12px;margin-top:10px">
-          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--emerald);margin-bottom:5px">✓ What Stayed Consistent</div>
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--emerald);margin-bottom:5px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> What Stayed Consistent</div>
           <div style="font-size:.85rem;color:var(--text2);line-height:1.65">${p.consistent}</div>
         </div>
         <div style="background:rgba(139,126,200,0.08);border:1px solid rgba(139,126,200,0.2);border-radius:var(--radius-sm);padding:12px;margin-top:8px">
-          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lavender);margin-bottom:5px">⚡ What Changed / Added</div>
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lavender);margin-bottom:5px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg> What Changed / Added</div>
           <div style="font-size:.85rem;color:var(--text2);line-height:1.65">${p.changed}</div>
         </div>
         <div class="compare-question">
-          <div class="cq-label">💭 Memory Prompt</div>
+          <div class="cq-label"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.5 5h11a3.2 3.2 0 0 1 0 8h-1l-4 3.5V13H6.5a3.2 3.2 0 0 1 0-8z"/><circle cx="5" cy="18" r="1.1"/><circle cx="8" cy="20" r=".8"/></svg> Memory Prompt</div>
           <div class="cq-text">${p.prompt}</div>
         </div>
       </div>
@@ -1355,12 +1599,12 @@ const App = {
     const hard = Store.hard();
     const body = document.getElementById('hard-body');
     if(hard.length===0){
-      body.innerHTML = `<div class="hl-empty"><span class="hle-icon">✨</span><div class="hle-text">Nothing here yet. When you find passages or concepts you want to revisit, tap <strong>Hard</strong> on any section or card and it will appear here.</div></div>`;
+      body.innerHTML = `<div class="hl-empty"><span class="hle-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l1.4 4L17.5 8.4 13.4 10 12 14l-1.4-4L6.5 8.4 10.6 7z"/><path d="M18 15l.6 1.8 1.9.6-1.9.6-.6 1.8-.6-1.8-1.9-.6 1.9-.6z"/></svg></span><div class="hle-text">Nothing here yet. When you find passages or concepts you want to revisit, tap <strong>Hard</strong> on any section or card and it will appear here.</div></div>`;
       return;
     }
     body.innerHTML = hard.map((h,i)=>`
       <div class="hard-item">
-        <div class="hi-icon">🔥</div>
+        <div class="hi-icon"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c1.2 3.8-2.8 5-2.8 8.8A2.8 2.8 0 0 0 15 12c0-1.8-1-2.8-1-2.8 2 .8 3 2.8 3 4.8A5 5 0 0 1 7 14c0-4.8 5-6 5-11z"/></svg></div>
         <div class="hi-body">
           <div class="hi-title">${h.title}</div>
           <div class="hi-sub">${h.source||h.type}</div>
@@ -1472,7 +1716,7 @@ const App = {
 
   toast(msg){
     const t = document.getElementById('toast');
-    t.textContent = msg;
+    t.innerHTML = msg;
     t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'),2000);
   },
@@ -1489,37 +1733,37 @@ const App = {
 // ── TEACHING LAYER ──────────────────────────────────────────────────────────
 
 const CONCEPTS = [
-  {id:'covenant',   label:'Covenant',      icon:'📜', color:'#C8971F',
+  {id:'covenant',   label:'Covenant',      icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg>', color:'#C8971F',
    mem:'Legal contract. 400 years. Defined terms.',
    chapters:['ch40','ch41','ch52','chI','chII'],
-   teach:'YHWH made a binding legal covenant with Abraham — not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
+   teach:'YHWH made a binding legal covenant with Abraham, not a prediction but a legal contract with a defined term (400 years), a specific consequence (judgment of the enslaving nation), and a defined outcome (liberation with possessions). This is the framework for everything.',
    why:'Without the covenant framework, the historical evidence has no legal context. With it, every piece of evidence becomes a clause in a contract.',
    question:'What three elements does the 400-year covenant declare?',
    answer:'400 years of bondage → Judgment of the enslaving nation → Liberation with possessions',
    options:['400 years bondage → Judgment → Liberation','Ships → Slavery → No buyer','Calendar → Language → Territory']},
 
-  {id:'dss',        label:'DSS',           icon:'📜', color:'#5DADE2',
-   mem:'972 scrolls. 11 caves. 50 BCE – 68 CE.',
+  {id:'dss',        label:'DSS',           icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg>', color:'#5DADE2',
+   mem:'972 scrolls. 11 caves. 50 BCE - 68 CE.',
    chapters:['ch17','ch18','ch20','ch28'],
-   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947–1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT — all contradicting later institutional religious claims.',
+   teach:'The Dead Sea Scrolls are 972 manuscripts found in 11 caves near Qumran (1947-1956). They predate the Masoretic Text by 1,200 years. They include the Community Rule, War Scroll, Damascus Document, and 4QMMT, all contradicting later institutional religious claims.',
    why:'The DSS are the oldest surviving Hebrew manuscript tradition. Any claim about ancient Hebrew religion must answer to these texts first.',
    question:'How many years older are the DSS than the Masoretic Text?',
-   answer:'Approximately 1,200 years older — DSS c. 100 BCE vs Masoretic Text c. 950 CE',
+   answer:'Approximately 1,200 years older, DSS c. 100 BCE vs Masoretic Text c. 950 CE',
    options:['1,200 years older','100 years older','500 years older','They are the same age']},
 
-  {id:'orit',       label:'Ge\'ez Orit',   icon:'🌿', color:'#58D68D',
+  {id:'orit',       label:'Ge\'ez Orit',   icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 20c0-6 3-11 9-13-1 7-4 11-9 13z"/><path d="M11 20C7 17 5 12 6 6c4 2 5.2 6 5 10"/></svg>', color:'#58D68D',
    mem:'Ethiopia. Beta Israel. 1 Enoch + Jubilees complete.',
    chapters:['ch19','ch29','ch31'],
-   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters) — texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
+   teach:'The Ge\'ez Orit is the complete covenant textual canon preserved by the Beta Israel community of Ethiopia in the Ge\'ez language. It includes 1 Enoch (108 chapters) and Jubilees (50 chapters), texts excluded by both the Council of Yavneh (90 CE) and the Council of Nicaea (325 CE). Africa was the vault.',
    why:'The Orit preserved the most complete surviving covenant textual tradition. The double exclusion of 1 Enoch and Jubilees by two competing institutions is itself evidence of coordinated suppression.',
    question:'Which two institutions simultaneously excluded 1 Enoch and Jubilees?',
    answer:'Council of Yavneh (90 CE) and Council of Nicaea (325 CE)',
    options:['Council of Yavneh (90 CE) and Council of Nicaea (325 CE)','British Museum and Vatican','Athens and Rome','Babylon and Egypt']},
 
-  {id:'ships',      label:'Ships',         icon:'⛵', color:'#E8735A',
+  {id:'ships',      label:'Ships',         icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v11M12 4L6 14h6zM13 6l5 8h-5M4 17h16l-2 3H6z"/></svg>', color:'#E8735A',
    mem:'Devarim 28:68. Ships. Sold. No buyer.',
    chapters:['ch14','ch32','ch45'],
-   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific — not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
+   teach:'Devarim 28:68 in 4QDeut-j (DSS) declares the covenant people would be taken back to Egypt-like bondage specifically in ships, sold as slaves, with no mass redemption buyer. Every element is specific, not a general curse but a precise legal description matching the Trans-Atlantic Slave Trade.',
    why:'The ships element is the most specific and historically verifiable element of the covenant curse. It rules out every other mass displacement event in history and points to one.',
    question:'What three specific elements does Devarim 28:68 declare?',
    answer:'Ships + Sold as slaves + No man shall buy you (no mass redemption)',
@@ -1528,37 +1772,37 @@ const CONCEPTS = [
   {id:'400_years',  label:'400 Years',     icon:'⏳', color:'#C8971F',
    mem:'1619 + 400 = 2019. Legal expiration.',
    chapters:['ch40','ch41','chII','chVIII'],
-   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619 — the documented arrival of Africans at Point Comfort, Virginia — is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
-   why:'The 400-year calculation is not speculation — it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
+   teach:'The 400-year covenant term in Bereshit 15:13 (4QGen-Exoda) is a legal contract with an expiration date. 1619, the documented arrival of Africans at Point Comfort, Virginia, is the start of the formally recorded Atlantic bondage period in America. 1619 + 400 = 2019. The covenant legal term has expired.',
+   why:'The 400-year calculation is not speculation, it is arithmetic applied to a dated legal contract. The expiration of the term activates the judgment clause: YHWH will judge the enslaving nation.',
    question:'When does the 400-year covenant bondage term expire according to the 1619 start date?',
-   answer:'2019 CE — 1619 + 400 = 2019',
+   answer:'2019 CE, 1619 + 400 = 2019',
    options:['2019 CE','1865 CE','2000 CE','1965 CE']},
 
-  {id:'kingdom_juda', label:'Kingdom of JUDA', icon:'🗺️', color:'#1A9B9B',
+  {id:'kingdom_juda', label:'Kingdom of JUDA', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>', color:'#1A9B9B',
    mem:'Bowen 1747. Library of Congress. West Africa.',
    chapters:['ch36','ch37'],
-   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map — produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
+   teach:'The territory from which the Trans-Atlantic enslaved population was taken is labeled "Kingdom of JUDA" on Emanuel Bowen\'s 1747 royal cartographic map, produced by the Geographer to King George II of England, permanently archived in the Library of Congress. Four independent European royal cartographers spanning 100 years (1650-1747) all labeled the same West African territory with Hebrew identification.',
    why:'The cartographic evidence is physical proof in a named archive. It predates the Berlin Conference (1884-1885) which erased all Hebrew territorial identifications from Africa.',
    question:'Where is Bowen\'s 1747 map permanently archived?',
-   answer:'Library of Congress — Geography and Map Division',
-   options:['Library of Congress — Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
+   answer:'Library of Congress, Geography and Map Division',
+   options:['Library of Congress, Geography and Map Division','British Museum London','Vatican Archives','Smithsonian Institution']},
 
-  {id:'erased',     label:'What Was Erased', icon:'🚫', color:'#E84040',
+  {id:'erased',     label:'What Was Erased', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>', color:'#E84040',
    mem:'Calendar. Name. Territory. Identity.',
    chapters:['ch22','ch16','chXVII'],
    teach:'The erasure operated on four levels simultaneously: (1) The divine name YHWH replaced by "Lord" 7,000+ times in the textual tradition, (2) The 364-day solar calendar replaced by lunar systems disconnecting covenant timing, (3) African territorial identity erased by the Berlin Conference 1884-1885, (4) The identity of the covenant people replaced by Eurocentric framing.',
-   why:'The erasure was systematic and multi-institutional — Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
+   why:'The erasure was systematic and multi-institutional, Rabbinical Judaism, Roman Christianity, and Western academia all making the same erasures independently is the evidence of coordinated suppression.',
    question:'How many times was the divine name YHWH replaced by "Lord" in the standard textual tradition?',
-   answer:'Over 7,000 times — confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
+   answer:'Over 7,000 times, confirmed by the Nahal Hever scroll (8HevXIIgr) which preserves YHWH in Paleo-Hebrew inside a Greek text',
    options:['Over 7,000 times','Fewer than 100 times','Once in translation','It was never replaced']},
 
-  {id:'restored',   label:'Restored Evidence', icon:'✅', color:'#2ECC71',
+  {id:'restored',   label:'Restored Evidence', icon:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>', color:'#2ECC71',
    mem:'DSS 1947. Genetics 2000-2012. Maps. Archives.',
    chapters:['ch21','ch33','ch34'],
-   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts — Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics — Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography — Bowen 1747 map in Library of Congress, (4) Epigraphy — Soleb Temple inscription 1400 BCE in Sudan National Museum.',
-   why:'The convergence of four independent fields — manuscript, genetic, cartographic, and epigraphic — all pointing to the same conclusion is the Three-Witness method applied at scale.',
+   teach:'The restoration of evidence is documented across four independent fields: (1) Physical manuscripts, Dead Sea Scrolls discovered 1947, digital archive 2012, (2) Genetics, Thomas et al. 2000 (Lemba), Zink 2012 (Ramses III), Elhaik 2012, (3) Cartography, Bowen 1747 map in Library of Congress, (4) Epigraphy, Soleb Temple inscription 1400 BCE in Sudan National Museum.',
+   why:'The convergence of four independent fields, manuscript, genetic, cartographic, and epigraphic, all pointing to the same conclusion is the Three-Witness method applied at scale.',
    question:'In what year were the Dead Sea Scrolls discovered?',
-   answer:'1947 — Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
+   answer:'1947, Cave 1, Qumran, by Bedouin shepherd Muhammad edh-Dhib',
    options:['1947','1920','1967','2000']},
 ];
 
@@ -1611,7 +1855,7 @@ const Lesson = {
 
   markDone(){
     if(this.current) Mastery.increment(this.current.id);
-    App.toast('✓ Lesson complete — mastery updated');
+    App.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Lesson complete, mastery updated');
   },
 
   render(){
@@ -1619,7 +1863,7 @@ const Lesson = {
     if(!c) return;
     const score = Mastery.get(c.id);
     // Header
-    document.getElementById('lp-title').textContent = c.icon + ' ' + c.label;
+    document.getElementById('lp-title').innerHTML = c.icon + ' ' + c.label;
     document.getElementById('lp-subtitle').textContent = this.steps[this.step].charAt(0).toUpperCase()+this.steps[this.step].slice(1)+' · Step '+(this.step+1)+' of 5';
     const mb = document.getElementById('lp-mastery');
     mb.className = 'mastery-badge mb-'+score;
@@ -1633,7 +1877,7 @@ const Lesson = {
     // Nav
     document.getElementById('lp-back').style.display = this.step>0?'':'none';
     const nextBtn = document.getElementById('lp-next');
-    if(this.step===4){ nextBtn.className='ln-btn ln-done'; nextBtn.textContent='✓ Mark Complete'; }
+    if(this.step===4){ nextBtn.className='ln-btn ln-done'; nextBtn.innerHTML='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Mark Complete'; }
     else { nextBtn.className='ln-btn ln-next'; nextBtn.textContent='Continue →'; }
     // Content
     this.renderStep(c, this.step);
@@ -1647,7 +1891,7 @@ const Lesson = {
     if(step===0){ // LEARN
       html = `
         <div class="teach-me-card">
-          <div class="tmc-badge">📖 Learn</div>
+          <div class="tmc-badge"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 6v14M12 6C9.5 4.2 6 4.2 3.5 5v13c2.5-.8 6-.8 8.5 1 2.5-1.8 6-1.8 8.5-1V5C18 4.2 14.5 4.2 12 6z"/></svg> Learn</div>
           <div class="tmc-main">${c.icon} ${c.label}</div>
           <div class="tmc-plain">${c.teach}</div>
           <div class="tmc-why">${c.why}</div>
@@ -1656,23 +1900,23 @@ const Lesson = {
           <div class="ma-icon">${c.icon}</div>
           <div>
             <div class="ma-phrase">"${c.mem}"</div>
-            <div class="ma-source">Memory phrase — repeat this to lock it in</div>
+            <div class="ma-source">Memory phrase, repeat this to lock it in</div>
           </div>
         </div>`;
     }
     else if(step===1){ // EXPLAIN
       html = `<div class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">💬 Plain Language Explanation</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h16v11H9l-4 3z"/></svg> Plain Language Explanation</div>
         <div class="lc-text">${c.teach}</div>
       </div>
       <div class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">🔗 Why It Matters</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1"/></svg> Why It Matters</div>
         <div class="lc-text plain">${c.why}</div>
       </div>`;
     }
     else if(step===2){ // REMEMBER
       html = `<div class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">🧠 Memory Anchor</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9.5 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5 3 3 0 0 0 2 3.8A3 3 0 0 0 12 18a3 3 0 0 0 4.5-2.2 3 3 0 0 0 2-3.8 3 3 0 0 0-1-5 3 3 0 0 0-3-3A2.6 2.6 0 0 0 12 5a2.6 2.6 0 0 0-2.5-1z"/><path d="M12 5v13"/></svg> Memory Anchor</div>
         <div class="memory-anchor" style="background:${col}11;border:1px solid ${col}33;margin:0 0 12px">
           <div class="ma-icon" style="font-size:2rem">${c.icon}</div>
           <div>
@@ -1682,7 +1926,7 @@ const Lesson = {
         </div>
       </div>
       <div class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">🎨 Visual Anchor</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3a9 9 0 0 0 0 18c1.4 0 2-1 2-2 0-1.4 1-2 2-2h1a4 4 0 0 0 4-4 9 9 0 0 0-9-8z"/><circle cx="8" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="10.5" r="1"/></svg> Visual Anchor</div>
         <div style="text-align:center;padding:20px;background:${col}11;border-radius:var(--radius-sm)">
           <div style="font-size:3.5rem;margin-bottom:8px">${c.icon}</div>
           <div style="font-size:1rem;font-weight:700;color:${col}">${c.label}</div>
@@ -1690,24 +1934,24 @@ const Lesson = {
         </div>
       </div>`;
     }
-    else if(step===3){ // PRACTICE — active recall
+    else if(step===3){ // PRACTICE, active recall
       const opts = (c.options||[c.answer,'Wrong answer A','Wrong answer B']).sort(()=>Math.random()-0.5);
       html = `<div class="recall-card">
-        <div class="rc-prompt">✏️ Active Recall — Before we show you — what do you remember?</div>
+        <div class="rc-prompt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l1-4 10-10 3 3-10 10z"/><path d="M14 7l3 3"/></svg> Active Recall, Before we show you, what do you remember?</div>
         <div class="rc-question">${c.question}</div>
         <div class="rc-options" id="rc-opts">
           ${opts.map(o=>`<button class="rc-opt" onclick="Lesson.checkAnswer(this,'${this.esc(o)}','${this.esc(c.answer)}')">${o}</button>`).join('')}
         </div>
       </div>
       <div id="rc-explanation" style="display:none" class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">✓ Full Answer</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Full Answer</div>
         <div class="lc-text plain">${c.answer}</div>
       </div>`;
     }
     else if(step===4){ // REVIEW
       const score = Mastery.get(c.id);
       html = `<div class="lesson-chunk">
-        <div class="lc-step-label" style="color:${col}">🔁 Review Summary</div>
+        <div class="lc-step-label" style="color:${col}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h11a4 4 0 0 1 4 4M20 16H9a4 4 0 0 1-4-4"/><path d="M15 5l3 3-3 3M9 19l-3-3 3-3"/></svg> Review Summary</div>
         <div class="lc-text">${c.teach}</div>
       </div>
       <div class="memory-anchor">
@@ -1737,8 +1981,8 @@ const Lesson = {
       else if(b===el && selected!==correct) b.classList.add('wrong');
     });
     const isCorrect = selected===correct;
-    if(isCorrect){ Mastery.increment(this.current.id); App.toast('✓ Correct!'); }
-    else { Mastery.decrement(this.current.id); App.toast('Not quite — review the answer'); }
+    if(isCorrect){ Mastery.increment(this.current.id); App.toast('<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 13l4 4L19 7"/></svg> Correct!'); }
+    else { Mastery.decrement(this.current.id); App.toast('Not quite, review the answer'); }
     document.getElementById('rc-explanation').style.display='block';
   },
 
@@ -1798,7 +2042,7 @@ App.renderTodayPath = function(){
   const notDone = allConcepts.filter(c=>Mastery.get(c.id)<3);
   const done = allConcepts.filter(c=>Mastery.get(c.id)>=3);
   const path = [...notDone.slice(0,3), ...done.slice(0,1)];
-  if(path.length===0){ steps.innerHTML='<div class="tp-step done">🏆 All concepts developing!</div>'; return; }
+  if(path.length===0){ steps.innerHTML='<div class="tp-step done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg> All concepts developing!</div>'; return; }
   steps.innerHTML = path.map((c,i)=>`
     <div class="tp-step ${Mastery.get(c.id)>=3?'done':i===0?'current':''}" onclick="Lesson.open('${c.id}')">
       ${c.icon} ${c.label}
@@ -1881,7 +2125,7 @@ App.renderQuizQuestion = function(){
   if(!body) return;
   const qqCard = body.querySelector('.quiz-question-card');
   if(qqCard && !qqCard.querySelector('.recall-framing')){
-    qqCard.insertAdjacentHTML('afterbegin','<div class="recall-framing" style="font-size:.7rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">✏️ What do you remember?</div>');
+    qqCard.insertAdjacentHTML('afterbegin','<div class="recall-framing" style="font-size:.7rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l1-4 10-10 3 3-10 10z"/><path d="M14 7l3 3"/></svg> What do you remember?</div>');
   }
 };
 
@@ -1907,12 +2151,12 @@ App.openGEApp = function(){
   overlay.innerHTML = `
     <div style="background:#111109;border:1px solid #C8971F;border-radius:16px;padding:28px 24px;max-width:340px;width:100%">
       <div style="text-align:center;margin-bottom:20px">
-        <div style="font-size:1.8rem;margin-bottom:8px">📚</div>
+        <div style="font-size:1.8rem;margin-bottom:8px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h5v14H4zM10 5h5v14h-5z"/><path d="M16 6.2l3.8.9-2.4 12.6-3.8-.9"/></svg></div>
         <div style="font-family:'Cinzel',serif;font-size:1rem;color:#C8971F;letter-spacing:.05em">Open a companion app</div>
       </div>
       <a href="https://dssorit.github.io/ancient-covenant-scrolls/" target="_blank"
          style="display:flex;align-items:center;gap:14px;background:rgba(26,155,155,0.12);border:1px solid rgba(26,155,155,0.35);border-radius:12px;padding:16px;margin-bottom:10px;text-decoration:none;cursor:pointer">
-        <div style="font-size:1.8rem">📜</div>
+        <div style="font-size:1.8rem"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M6 4a2 2 0 0 0-2 2v1h2"/><path d="M9 9h6M9 13h5"/></svg></div>
         <div>
           <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">Ancient Covenant Scrolls</div>
           <div style="font-size:.72rem;color:#5DADE2;line-height:1.4">DSS · Orit · 46 volumes · Primary source reader</div>
@@ -1921,7 +2165,7 @@ App.openGEApp = function(){
       </a>
       <a href="https://dssorit.github.io/ancient-covenant-scrolls/GreatE/" target="_blank"
          style="display:flex;align-items:center;gap:14px;background:rgba(200,151,31,0.1);border:1px solid rgba(200,151,31,0.35);border-radius:12px;padding:16px;margin-bottom:20px;text-decoration:none;cursor:pointer">
-        <div style="font-size:1.8rem">🔥</div>
+        <div style="font-size:1.8rem"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3c1.2 3.8-2.8 5-2.8 8.8A2.8 2.8 0 0 0 15 12c0-1.8-1-2.8-1-2.8 2 .8 3 2.8 3 4.8A5 5 0 0 1 7 14c0-4.8 5-6 5-11z"/></svg></div>
         <div>
           <div style="font-size:.9rem;font-weight:700;color:#F0EAD6;margin-bottom:3px">The Great Eraser</div>
           <div style="font-size:.72rem;color:#C8971F;line-height:1.4">Full 8-volume research record · Primary source evidence</div>
@@ -1947,6 +2191,399 @@ function dismissSplash(){
     setTimeout(function(){ App.showScreen('home'); }, 1200);
   }, 600);
 }
+
+// ── GAMES ────────────────────────────────────────────────────────────────────
+const GICON = {
+  scale:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4v16M6 20h12M6 6l6-1 6 1"/><path d="M6 6L3 12a3 3 0 0 0 6 0zM18 6l-3 6a3 3 0 0 0 6 0z"/></svg>',
+  pencil:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/><path d="M14 6l3 3"/></svg>',
+  puzzle:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 4h4v3a2 2 0 0 0 4 0V4h2v6h-3a2 2 0 0 0 0 4h3v6h-6v-3a2 2 0 0 0-4 0v3H4v-6h3a2 2 0 0 0 0-4H4V4z"/></svg>',
+  book:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9a2 2 0 0 1 2 2v11a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V4z"/><path d="M9 9h6M9 13h5"/></svg>',
+  cards:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="5" width="14" height="16" rx="2"/><path d="M8 3h12v14"/></svg>',
+  shuffle:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h4l10 12h2M4 18h4l3-3.5M15 6h5M20 6l-2-2M20 6l-2 2M20 18l-2-2M20 18l-2 2"/></svg>',
+  link:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-1 1M13.5 17.5l-1 1a4 4 0 0 1-6-6l1-1"/></svg>',
+  grid:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>',
+  timeline:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 4v16"/><circle cx="5" cy="8" r="1.6"/><circle cx="5" cy="16" r="1.6"/><path d="M9 8h10M9 16h10"/></svg>',
+  calendar:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="5" width="16" height="16" rx="2.5"/><path d="M4 9.5h16M8 3v4M16 3v4"/></svg>',
+  trophy:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 4h8v4a4 4 0 0 1-8 0zM8 6H5v2a3 3 0 0 0 3 3M16 6h3v2a3 3 0 0 1-3 3M10 14h4M9 20h6M12 14v3"/></svg>'
+};
+const EVIDENCE_BOARDS = [
+  {vol:1, prompt:'Name the ancient inscriptions that carry the Name YHWH', answers:['Soleb Temple (~1400 BCE)','Amarah-West (~1320 BCE)','Ketef Hinnom amulets (~600 BCE)','Mesha Stele (~840 BCE)','Kuntillet Ajrud (800-750 BCE)','Arad Ostraca (600-580 BCE)','Elephantine Papyri (495-399 BCE)','Dead Sea Scrolls (250 BCE-70 CE)']},
+  {vol:1, prompt:'Name the maps that labeled the Kingdom of Juda in West Africa', answers:['Bowen 1747','de Fer 1705','Moll 1710','Senex 1725','Bonne 1766','Dunn 1794']},
+  {vol:1, prompt:'Name the covenant conditions the transatlantic diaspora fulfilled', answers:['Strangers in a foreign land','Taken in ships','400 years','A language they did not know','Identity stripped','A fierce nation, no mercy','Scattered among all nations','The enslaving nation judged','Come out with great possessions']},
+  {vol:1, prompt:"Name the books the Ge'ez Orit preserved", answers:['Henok (1 Enoch)','Kufale (Jubilees)','Meqabyan','The Octateuch']},
+  {vol:1, prompt:'Name writings found among the Dead Sea Scrolls at Qumran', answers:['Community Rule (1QS)','War Scroll (1QM)','Great Isaiah Scroll (1QIsa-a)','Hodayot (1QH)','Pesher Habakkuk (1QpHab)','Damascus Document']},
+  {vol:1, prompt:'Name the ancient sources that place the Levant in the African zone', answers:['Turin Papyrus Map (1160 BCE)','Hecataeus, Periegesis (550 BCE)','Herodotus (450 BCE)','Al-Idrisi, Tabula Rogeriana (1154 CE)','Anaximander world map']},
+  {vol:1, prompt:'Name African lineage evidence for the covenant people', answers:['E1b1a / E-M2','Lemba Cohen Modal Haplotype','Beta Israel L haplogroup','Ramses III E1b1a']},
+  {prompt:'Name the councils and traditions that fixed or altered the canon', answers:['Council of Yavneh (90 CE)','Council of Nicaea (325 CE)','The Masoretes of Tiberias','Council of Carthage (397 CE)']}
+];
+
+Object.assign(App, {
+  openGames(volIdx, chIdx){ this._gctx={volIdx, chIdx}; this.showScreen('games'); },
+  _vol(){ return DATA.volumes[this._gctx.volIdx]; },
+  _chap(){ return this._vol().chapters[this._gctx.chIdx]; },
+  _chVerses(){ const c=this._chap(); const e=DATA.verse_map[c.id]; return (e&&e.verses)||[]; },
+  _chQuiz(){ const c=this._chap(); const e=DATA.verse_map[c.id]; return (e&&e.quiz)||[]; },
+  _volVerses(){ let out=[]; this._vol().chapters.forEach(c=>{const e=DATA.verse_map[c.id]; if(e&&e.verses) e.verses.forEach(v=>out.push(v));}); return out; },
+  _allScrolls(){ let s=new Set(); this._volVerses().forEach(v=>s.add(v.scroll)); return [...s]; },
+  _shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); const t=a[i];a[i]=a[j];a[j]=t;} return a; },
+  _sample(a,n){ return this._shuffle(a).slice(0,n); },
+  _bumpDaily(){ const s=Store.stats(); s.daily=(s.daily||0)+1; Store.saveStats(s); },
+  _parseYear(y){ const bce=/BCE/i.test(y); const m=String(y).match(/\d{1,4}/); let n=m?parseInt(m[0]):0; return bce?-n:n; },
+  _short(t,n){ t=String(t); return t.length>n? t.slice(0,n-1)+'…' : t; },
+
+  _gameList(){
+    const cv=this._chVerses(), q=this._chQuiz(), tl=DATA.timelines||[], mc=DATA.memory_cards||[];
+    const L=[]; const add=(key,label,sub,cls,icon,grp)=>L.push({key,label,sub,cls,icon,grp});
+    if(cv.length>=1) add('truefalse','True or False','Spot the altered fact','gc-teal',GICON.scale,'ch');
+    if(q.some(x=>x.type==='multiple_choice')) add('mc','Multiple Choice','Pick the right answer','gc-lav',GICON.pencil,'ch');
+    if(q.some(x=>x.type==='fill_blank')) add('fill','Fill in the Blank','Complete the sentence','gc-emer',GICON.puzzle,'ch');
+    if(cv.length>=1) add('source','Which Source','Name the scroll or record','gc-dss',GICON.book,'ch');
+    if(cv.some(v=>(v.text||'').split(' ').length>=4)) add('build','Verse Builder','Rebuild the passage','gc-gold',GICON.puzzle,'ch');
+    if(cv.length>=1) add('terms','Key Terms','Recall then reveal','gc-coral',GICON.cards,'ch');
+    if(this._volVerses().length>=4) add('sort','Tradition Sort','DSS, Orit, or Record','gc-teal',GICON.shuffle,'vol');
+    if(this._volVerses().length>=4) add('match','Word Match','Pair passage to source','gc-lav',GICON.link,'vol');
+    if(this._volVerses().length>=6) add('memory','Memory Match','Find the pairs','gc-coral',GICON.grid,'vol');
+    if(tl.length>=4) add('sequence','Story Sequence','Order the events','gc-emer',GICON.timeline,'vol');
+    if(tl.length>=4) add('date','Date It','Pick the right era','gc-dss',GICON.calendar,'vol');
+    if(tl.filter(t=>t.erased_by&&t.restored_by).length>=4) add('erased','Erased or Restored','Who did what','gc-gold',GICON.scale,'vol');
+    return L;
+  },
+  renderGamesScreen(){
+    if(!this._gctx){ this.showScreen('study'); return; }
+    const ch=this._chap(), vol=this._vol(), L=this._gameList();
+    const card=g=>`<button class="game-card ${g.cls}" onclick="App.startGame('${g.key}')"><span class="gc-ic">${g.icon}</span><span class="gc-t">${g.label}</span><span class="gc-s">${g.sub}</span></button>`;
+    let h=`<div class="games-intro"><div class="gi-t">Vol.${vol.vol} · Ch.${ch.num}</div><div class="gi-s">${this.highlightClaim(this._short(ch.title,90))}</div></div>`;
+    h+=`<button class="game-card gc-feud" onclick="App.startEvidenceFeud()"><span class="gc-ic">${GICON.trophy}</span><span class="gc-t">Evidence Feud</span><span class="gc-s">Courtroom Family Feud: Witnesses vs the Erasers, in teams.</span></button>`;
+    const chg=L.filter(g=>g.grp==='ch'), vg=L.filter(g=>g.grp==='vol');
+    if(chg.length) h+='<div class="games-sec">This chapter</div><div class="game-grid">'+chg.map(card).join('')+'</div>';
+    if(vg.length) h+='<div class="games-sec">Across this volume</div><div class="game-grid">'+vg.map(card).join('')+'</div>';
+    document.getElementById('games-body').innerHTML=h;
+  },
+  startGame(key){
+    const g=(this._gen[key]||(()=>null)).call(this);
+    document.getElementById('game-score').textContent='';
+    if(!g){ this._g=null; this.showScreen('game'); document.getElementById('game-body').innerHTML='<div class="games-intro"><div class="gi-t">Not enough material for this game here.</div><div class="gi-s">Try it from a chapter with more verses, or pick another game.</div></div>'; document.getElementById('game-title').textContent='Games'; return; }
+    g.key=key; this._g=g; document.getElementById('game-title').textContent=g.title;
+    this.showScreen('game');
+  },
+  renderGameScreen(){
+    const g=this._g; const body=document.getElementById('game-body');
+    if(!g){ return; }
+    ({pickone:'_rPick',order:'_rOrder',match:'_rMatch',memory:'_rMemory',reveal:'_rReveal',board:'_rBoard'})[g.kind] && this[({pickone:'_rPick',order:'_rOrder',match:'_rMatch',memory:'_rMemory',reveal:'_rReveal',board:'_rBoard'})[g.kind]]();
+  },
+  _finish(title, sub, scoreN, totalN){
+    const pct=totalN>0?Math.round(scoreN/totalN*100):100;
+    document.getElementById('game-score').textContent='';
+    document.getElementById('game-body').innerHTML=`<div class="session-complete">
+      <span class="sc-icon">${GICON.trophy}</span>
+      <div class="sc-title">${title}</div>
+      <div class="sc-sub">${sub}</div>
+      <div class="sc-stats"><div class="sc-stat"><div class="sc-num">${scoreN}</div><div class="sc-label">Score</div></div><div class="sc-stat"><div class="sc-num">${totalN}</div><div class="sc-label">Total</div></div><div class="sc-stat"><div class="sc-num">${pct}%</div><div class="sc-label">Result</div></div></div>
+      <button class="sc-btn" onclick="App.startGame('${this._g.key}')">Play Again</button>
+      <button class="game-next" style="background:var(--navy2);color:var(--text)" onclick="App.showScreen('games')">Back to Games</button>
+    </div>`;
+  },
+
+  // ── generators ──
+  _gen:{
+    truefalse(){ const vs=this._chVerses(); if(!vs.length) return null; const rounds=this._sample(vs,Math.min(8,vs.length)).map(v=>this._mkTF(v)); return {kind:'pickone',title:'True or False',rounds,idx:0,score:0}; },
+    mc(){ const q=this._chQuiz().filter(x=>x.type==='multiple_choice'); if(!q.length) return null; const rounds=q.map(x=>({kicker:'Multiple Choice',text:x.text,options:this._shuffle(x.options),answer:x.answer,explain:'Answer: '+x.answer})); return {kind:'pickone',title:'Multiple Choice',rounds,idx:0,score:0}; },
+    fill(){ const q=this._chQuiz().filter(x=>x.type==='fill_blank'); if(!q.length) return null; const rounds=q.map(x=>({kicker:'Fill in the Blank',text:x.text.replace('___','_____'),options:this._shuffle(x.options),answer:x.answer,explain:'Answer: '+x.answer})); return {kind:'pickone',title:'Fill in the Blank',rounds,idx:0,score:0}; },
+    source(){ const vs=this._chVerses(); if(!vs.length) return null; const pool=this._allScrolls(); const rounds=this._sample(vs,Math.min(6,vs.length)).map(v=>{ const decoys=this._sample(pool.filter(s=>s!==v.scroll),3); return {kicker:'Which Source',text:'"'+this._short(v.text,150)+'"',options:this._shuffle([v.scroll,...decoys]),answer:v.scroll,explain:'From '+v.scroll}; }); return {kind:'pickone',title:'Which Source',rounds,idx:0,score:0}; },
+    build(){ const vs=this._chVerses().filter(v=>v.text); if(!vs.length) return null; let v=this._shuffle(vs)[0]; let sent=(v.text.split(/(?<=[.!?])\s+/).find(s=>{const w=s.trim().split(/\s+/).length; return w>=5&&w<=14;}))||v.text; let words=sent.trim().replace(/[."']+$/,'').split(/\s+/).slice(0,14); if(words.length<4) return null; const tiles=this._shuffle(words.map((w,i)=>({k:i,label:w}))); return {kind:'order',title:'Verse Builder',prompt:'Tap the words in the right order to rebuild the passage.',source:v.ref,tiles,order:words.map((w,i)=>i),placed:[]}; },
+    terms(){ const vs=this._chVerses(); if(!vs.length) return null; const cards=vs.map(v=>({front:v.ref,back:v.plain})); return {kind:'reveal',title:'Key Terms',cards,idx:0,score:0,show:false}; },
+    sort(){ const vs=this._volVerses(); if(vs.length<4) return null; const lab={dss:'Dead Sea Scrolls',orit:"Ge'ez Orit"}; const rounds=this._sample(vs,Math.min(8,vs.length)).map(v=>({kicker:'Which tradition',text:'"'+this._short(v.text,140)+'"',options:["Dead Sea Scrolls","Ge'ez Orit","Historical Record"],answer:lab[v.tradition]||'Historical Record',explain:'This is '+(lab[v.tradition]||'a historical record')+'.'})); return {kind:'pickone',title:'Tradition Sort',rounds,idx:0,score:0}; },
+    match(){ const vs=this._sample(this._volVerses().filter(v=>v.ref&&v.scroll),5); if(vs.length<3) return null; const left=vs.map((v,i)=>({id:i,label:v.ref})); const right=this._shuffle(vs.map((v,i)=>({id:i,label:this._short(v.scroll,40)}))); const pairs={}; vs.forEach((v,i)=>pairs[i]=i); return {kind:'match',title:'Word Match',prompt:'Match each passage to its source.',left,right,pairs,sel:null,matched:{}}; },
+    memory(){ const vs=this._sample(this._volVerses().filter(v=>v.ref&&v.scroll),6); if(vs.length<4) return null; let tiles=[]; vs.forEach((v,i)=>{ tiles.push({pair:i,label:this._short(v.ref,26)}); tiles.push({pair:i,label:this._short(v.scroll.split('·')[0].trim(),22)}); }); tiles=this._shuffle(tiles).map((t,i)=>({i,pair:t.pair,label:t.label})); return {kind:'memory',title:'Memory Match',tiles,up:[],matched:{},moves:0}; },
+    sequence(){ const tl=DATA.timelines||[]; if(tl.length<4) return null; const pick=this._sample(tl,Math.min(5,tl.length)); const withY=pick.map((t,i)=>({k:i,label:this._short(t.event,64),y:this._parseYear(t.year)})); const order=withY.slice().sort((a,b)=>a.y-b.y).map(x=>x.k); return {kind:'order',title:'Story Sequence',prompt:'Tap the events in order, earliest first.',tiles:this._shuffle(withY.map(x=>({k:x.k,label:x.label}))),order,placed:[]}; },
+    date(){ const tl=(DATA.timelines||[]).filter(t=>t.year); if(tl.length<4) return null; const years=[...new Set(tl.map(t=>t.year))]; const rounds=this._sample(tl,Math.min(6,tl.length)).map(t=>({kicker:'Date It',text:this._short(t.event,120),options:this._shuffle([t.year,...this._sample(years.filter(y=>y!==t.year),3)]),answer:t.year,explain:'This was '+t.year+'.'})); return {kind:'pickone',title:'Date It',rounds,idx:0,score:0}; },
+    erased(){ const tl=(DATA.timelines||[]).filter(t=>t.erased_by&&t.restored_by); if(tl.length<4) return null; const ero=[...new Set(tl.map(t=>t.erased_by))]; const res=[...new Set(tl.map(t=>t.restored_by))]; const rounds=this._sample(tl,Math.min(6,tl.length)).map(t=>{ const askErase=Math.random()<0.5; const field=askErase?'erased_by':'restored_by'; const pool=askErase?ero:res; return {kicker:askErase?'Who erased it':'Who restored it',text:this._short(t.event,110),options:this._shuffle([t[field],...this._sample(pool.filter(x=>x!==t[field]),3)]),answer:t[field],explain:(askErase?'Erased by: ':'Restored by: ')+t[field]}; }); return {kind:'pickone',title:'Erased or Restored',rounds,idx:0,score:0}; },
+    feud(){ const vol=this._vol().vol; let cands=EVIDENCE_BOARDS.filter(b=>b.vol===vol); if(!cands.length) cands=EVIDENCE_BOARDS; const b=this._shuffle(cands)[0]; const others=[]; EVIDENCE_BOARDS.forEach(x=>{ if(x!==b) others.push(...x.answers); }); const decoys=this._sample(others.filter(o=>!b.answers.includes(o)),Math.min(5,others.length)); const pool=this._shuffle(b.answers.concat(decoys)); return {kind:'board',title:'Evidence Board',prompt:b.prompt,answers:b.answers.slice(),pool,found:{},strikes:0,score:0}; }
+  },
+
+  _mkTF(v){ const base=v.plain||v.bridge||v.text; if(Math.random()<0.5) return {kicker:'True or False',text:base,options:['True','False'],answer:'True',explain:'True as stated.'}; const swaps=[['solar','lunar'],['364','360'],['ships','caravans'],['Dead Sea Scrolls','Masoretic Text'],['Qumran','Rome'],['400 years','70 years'],['400-year','70-year'],['E1b1a','R1b'],['1400 BCE','400 CE'],['oldest','newest']]; let f=base, changed=false; const m=base.match(/\b(\d{3,4})\b/); if(m){ let n=parseInt(m[1]); f=base.replace(m[1],String(n+(n>200?100:40))); changed=true; } if(!changed){ for(const [a,b] of swaps){ if(base.indexOf(a)>=0){ f=base.replace(a,b); changed=true; break; } } } if(!changed) return {kicker:'True or False',text:base,options:['True','False'],answer:'True',explain:'True as stated.'}; return {kicker:'True or False',text:f,options:['True','False'],answer:'False',explain:'Altered. The record says: '+base}; },
+
+  // ── pickone engine ──
+  _rPick(){ const g=this._g; if(g.idx>=g.rounds.length) return this._finish(g.score/g.rounds.length>=0.8?'Outstanding':'Good work','You worked through '+g.rounds.length+' questions.',g.score,g.rounds.length); const r=g.rounds[g.idx]; document.getElementById('game-score').textContent=g.score+'/'+g.idx; document.getElementById('game-body').innerHTML=`<div class="game-prompt"><div class="gp-kicker">${r.kicker} · ${g.idx+1} of ${g.rounds.length}</div><div class="gp-text ${r.text.charAt(0)==='"'?'gp-quote':''}">${this.highlightClaim(r.text)}</div></div><div class="quiz-options">${r.options.map((o,i)=>`<button class="qo-btn" onclick="App._pickAns(this,${i})">${this.highlightClaim(String(o))}</button>`).join('')}</div><div class="game-result" id="gres"></div>`; },
+  _pickAns(el,oi){ const g=this._g, r=g.rounds[g.idx]; const sel=String(r.options[oi]); const correct=String(r.answer); const ok=sel.toLowerCase()===correct.toLowerCase(); document.querySelectorAll('.qo-btn').forEach(b=>{ b.onclick=null; const t=b.textContent.trim(); if(t.toLowerCase()===correct.toLowerCase()) b.classList.add('correct'); else if(b===el&&!ok) b.classList.add('wrong'); }); if(ok){ g.score++; this._bumpDaily(); } const gr=document.getElementById('gres'); gr.className='game-result show'; gr.innerHTML=ok?`<span class="gr-ok">Correct. ${this.highlightClaim(r.explain)}</span>`:`<span class="gr-no">${this.highlightClaim(r.explain)}</span>`; setTimeout(()=>{ g.idx++; this._rPick(); },1650); },
+
+  // ── order engine (sequence + verse builder) ──
+  _rOrder(){ const g=this._g; const placed=g.placed; const remaining=g.tiles.filter(t=>!placed.includes(t.k)); document.getElementById('game-score').textContent=''; let h=`<div class="game-prompt"><div class="gp-kicker">${g.title}</div><div class="gp-text">${g.prompt}${g.source?' <span style="color:var(--text3)">('+g.source+')</span>':''}</div></div>`; h+='<div class="seq-answer" id="seqans">'+(placed.length?placed.map((k,pi)=>{const t=g.tiles.find(x=>x.k===k);return `<button class="seq-tile placed" onclick="App._orderUnplace(${k})"><span class="seq-num">${pi+1}</span>${this.highlightClaim(t.label)}</button>`;}).join(''):'<span style="color:var(--text3);font-size:.8rem;align-self:center">Tap words/events below in order</span>')+'</div>'; h+='<div class="seq-pool">'+this._shuffle(remaining).map(t=>`<button class="seq-tile" onclick="App._orderPlace(${t.k})">${this.highlightClaim(t.label)}</button>`).join('')+'</div>'; if(remaining.length===0) h+='<button class="game-next" onclick="App._orderCheck()">Check</button>'; h+='<div class="game-result" id="gres"></div>'; document.getElementById('game-body').innerHTML=h; },
+  _orderPlace(k){ this._g.placed.push(k); this._rOrder(); },
+  _orderUnplace(k){ const g=this._g; if(g.checked) return; g.placed=g.placed.filter(x=>x!==k); this._rOrder(); },
+  _orderCheck(){ const g=this._g; g.checked=true; let right=0; document.querySelectorAll('#seqans .seq-tile').forEach((el,i)=>{ if(g.placed[i]===g.order[i]){ el.classList.add('ok'); right++; } else el.classList.add('bad'); }); const gr=document.getElementById('gres'); gr.className='game-result show'; const ok=right===g.order.length; if(ok) this._bumpDaily(); gr.innerHTML=ok?'<span class="gr-ok">Perfect order.</span>':`<span class="gr-no">${right} of ${g.order.length} in place. Correct order: ${g.order.map((k,i)=>this._short(g.tiles.find(t=>t.k===k).label,30)).join(' → ')}</span>`; setTimeout(()=>this._finish(ok?'Nicely ordered':'Good try','You placed '+right+' of '+g.order.length+' correctly.',right,g.order.length),1400); },
+
+  // ── match engine ──
+  _rMatch(){ const g=this._g; document.getElementById('game-score').textContent=Object.keys(g.matched).length+'/'+g.left.length; let h=`<div class="game-prompt"><div class="gp-kicker">Word Match</div><div class="gp-text">${g.prompt}</div></div><div class="match-cols"><div class="match-col">`; h+=g.left.map(l=>`<button class="match-item ${g.matched[l.id]?'matched':''} ${g.sel===l.id?'sel':''}" onclick="App._matchLeft(${l.id})">${this.highlightClaim(l.label)}</button>`).join(''); h+='</div><div class="match-col">'; h+=g.right.map(r=>`<button class="match-item ${Object.values(g.matched).includes(r.id)?'matched':''}" onclick="App._matchRight(${r.id})">${this.highlightClaim(r.label)}</button>`).join(''); h+='</div></div><div class="game-result" id="gres"></div>'; document.getElementById('game-body').innerHTML=h; },
+  _matchLeft(id){ if(this._g.matched[id]!==undefined) return; this._g.sel=id; this._rMatch(); },
+  _matchRight(rid){ const g=this._g; if(g.sel===null||g.sel===undefined) return; if(Object.values(g.matched).includes(rid)) return; if(g.pairs[g.sel]===rid){ g.matched[g.sel]=rid; g.sel=null; if(Object.keys(g.matched).length===g.left.length){ this._bumpDaily(); this._rMatch(); setTimeout(()=>this._finish('All matched','You paired every passage to its source.',g.left.length,g.left.length),700); return; } } else { const gr=document.getElementById('gres'); if(gr){gr.className='game-result show';gr.innerHTML='<span class="gr-no">Not a match. Try again.</span>';} g.sel=null; } this._rMatch(); },
+
+  // ── memory engine ──
+  _rMemory(){ const g=this._g; document.getElementById('game-score').textContent=g.moves+' moves'; let h=`<div class="game-prompt"><div class="gp-kicker">Memory Match</div><div class="gp-text">Flip two tiles to find a passage and its source.</div></div><div class="mem-grid">`; h+=g.tiles.map(t=>{ const matched=g.matched[t.pair]; const up=g.up.includes(t.i)||matched; return `<button class="mem-tile ${matched?'matched':up?'up':'down'}" onclick="App._memTap(${t.i})">${up?this.highlightClaim(t.label):''}</button>`; }).join(''); h+='</div>'; document.getElementById('game-body').innerHTML=h; },
+  _memTap(i){ const g=this._g; const t=g.tiles.find(x=>x.i===i); if(g.matched[t.pair]||g.up.includes(i)||g.up.length>=2) return; g.up.push(i); this._rMemory(); if(g.up.length===2){ g.moves++; const [a,b]=g.up.map(x=>g.tiles.find(y=>y.i===x)); if(a.pair===b.pair){ g.matched[a.pair]=true; g.up=[]; this._rMemory(); if(Object.keys(g.matched).length===g.tiles.length/2){ this._bumpDaily(); setTimeout(()=>this._finish('Board cleared','You found every pair in '+g.moves+' moves.',g.tiles.length/2,g.tiles.length/2),600); } } else { setTimeout(()=>{ g.up=[]; this._rMemory(); },850); } } },
+
+  // ── reveal engine (key terms) ──
+  _rReveal(){ const g=this._g; if(g.idx>=g.cards.length) return this._finish('Session complete','You reviewed '+g.cards.length+' terms.',g.score,g.cards.length); document.getElementById('game-score').textContent=g.idx+' / '+g.cards.length; const c=g.cards[g.idx]; let h=`<div class="rv-card" onclick="App._revealFlip()"><div class="rv-front">${this.highlightClaim(c.front)}</div>`; if(g.show){ h+=`<div class="rv-back">${this.highlightClaim(c.back)}</div>`; } else { h+='<div class="rv-hint">Tap to reveal</div>'; } h+='</div>'; if(g.show){ h+='<div class="rv-rate"><button class="rv-again" onclick="App._revealRate(false)">Review again</button><button class="rv-got" onclick="App._revealRate(true)">Got it</button></div>'; } document.getElementById('game-body').innerHTML=h; },
+  _revealFlip(){ this._g.show=!this._g.show; this._rReveal(); },
+  _revealRate(got){ const g=this._g; if(got){ g.score++; this._bumpDaily(); } g.idx++; g.show=false; this._rReveal(); },
+
+  // ── board engine (family feud) ──
+  _rBoard(){ const g=this._g; const foundN=Object.keys(g.found).length; document.getElementById('game-score').textContent=g.score+' pts'; let h=`<div class="game-prompt"><div class="gp-kicker">Evidence Board</div><div class="gp-text">${this.highlightClaim(g.prompt)}</div></div>`; h+='<div class="fb-head"><span style="font-size:.75rem;color:var(--text2)">'+foundN+' / '+g.answers.length+' found</span><span class="fb-strikes">'+[0,1,2].map(i=>`<span class="fb-x ${i<g.strikes?'on':''}">X</span>`).join('')+'</span></div>'; h+='<div class="fb-board">'+g.answers.map((a,i)=>{ const open=g.found[i]; const rev=g.revealed&&!open; return `<div class="fb-slot ${open?'open':''} ${rev?'revealed':''}"><span class="fb-rank">${i+1}</span><span class="fb-ans">${(open||rev)?this.highlightClaim(a):''}</span><span class="fb-pts">${(open||rev)?'100':''}</span></div>`; }).join('')+'</div>'; if(!g.revealed){ h+='<div class="games-sec">Tap your answers</div><div class="fb-pool">'+g.pool.map((p,i)=>`<button class="fb-cand ${g.usedPool&&g.usedPool[i]?'used':''}" onclick="App._boardGuess(${i})">${this.highlightClaim(p)}</button>`).join('')+'</div>'; } else { h+='<button class="game-next" onclick="App._finish(\'Round over\',\'You scored '+g.score+' points.\','+foundN+','+g.answers.length+')">Continue</button>'; } document.getElementById('game-body').innerHTML=h; },
+  _boardGuess(pi){ const g=this._g; if(g.revealed) return; if(!g.usedPool) g.usedPool={}; if(g.usedPool[pi]) return; g.usedPool[pi]=true; const guess=g.pool[pi]; const ai=g.answers.indexOf(guess); if(ai>=0 && !g.found[ai]){ g.found[ai]=true; g.score+=100; this._bumpDaily(); } else { g.strikes++; } if(g.strikes>=3 || Object.keys(g.found).length===g.answers.length){ g.revealed=true; } this._rBoard(); }
+});
+
+// ── TRUTH UNCOVERED (two team game shows, teams, TV stage) ──────────
+const GN_COLORS=['#C8971F','#1A9B9B','#E8735A','#8B7EC8'];
+const DOND_VALUES=[5,10,25,50,75,100,150,250,400,600,900,1400];
+const DOND_FACTS=[
+  'Soleb, Nubia (~1400 BCE): the oldest inscription of the Name YHWH.',
+  'The Bowen map of 1747 labels the West African coast Kingdom of Juda.',
+  'The 364-day solar calendar is fixed in Jubilees and the Qumran Mishmarot.',
+  "The Ge'ez Orit preserves Henok (1 Enoch) complete.",
+  '1QIsa-a, the Great Isaiah Scroll, predates the Masoretic Text by over a thousand years.',
+  'The Lemba carry the Cohen Modal Haplotype in southern Africa.',
+  'Elephantine: a Hebrew colony kept a YHWH temple on the Nile.',
+  'The Turin Papyrus Map (1160 BCE) is the oldest surviving map, drawn by Africans.',
+  'Devarim 28:68: taken back in ships, sold as slaves.',
+  'The War Scroll (1QM) sets out the battle of the Sons of Light.',
+  'The Beta Israel kept the covenant calendar in Africa, in isolation.',
+  'Amarah-West (~1320 BCE) corroborates Soleb, the Name in African stone.'
+];
+
+Object.assign(App, {
+  openGameNight(){ this._gn={view:'setup', teams:[{name:'Team 1',score:0,color:GN_COLORS[0]},{name:'Team 2',score:0,color:GN_COLORS[1]}]}; this.showScreen('gamenight'); },
+  gnBack(){ const gn=this._gn; if(gn && gn.view!=='setup'){ gn.view='setup'; this.renderGameNight(); } else { this.goHome(); } },
+  gnToggleStage(){ const on=document.body.classList.toggle('stage-mode'); document.querySelector('.tv-toggle').classList.toggle('on',on); },
+  _gnTeamCount(n){ const gn=this._gn; const cur=gn.teams; const next=[]; for(let i=0;i<n;i++){ next.push(cur[i]||{name:'Team '+(i+1),score:0,color:GN_COLORS[i]}); } gn.teams=next; this.renderGameNight(); },
+  _gnName(i,v){ this._gn.teams[i].name=v; },
+  renderGameNight(){ const gn=this._gn; if(!gn){ this.showScreen('home'); return; } document.getElementById('gn-title').textContent = gn.view==='feud'?'Evidence Board':gn.view==='dond'?"The Eraser's Offer":gn.view==='score'?'Final Scores':'Truth Uncovered'; const v={setup:'_gnSetup',feud:'_gnFeud',dond:'_gnDond',score:'_gnScoreboard'}[gn.view]; this[v](); },
+  _gnSetup(){ const gn=this._gn; let h=`<div class="gn-hero"><div class="gn-hero-badge">Truth Uncovered</div><div class="gn-hero-sub">Two shows built on the record. Play in teams around one screen, or mirror to the TV with the screen icon above.</div></div>`;
+    h+='<div class="gn-sec">Teams</div><div class="gn-count">'+[1,2,3,4].map(n=>`<button class="${gn.teams.length===n?'sel':''}" onclick="App._gnTeamCount(${n})">${n}</button>`).join('')+'</div>';
+    h+='<div class="gn-teamset">'+gn.teams.map((t,i)=>`<div class="gn-teamrow"><span class="gn-teamdot" style="background:${t.color}"></span><input class="gn-teamin" value="${this.esc(t.name)}" oninput="App._gnName(${i},this.value)" maxlength="18"></div>`).join('')+'</div>';
+    h+='<div class="gn-sec">Choose a show</div><div class="gn-shows">';
+    h+=`<button class="gn-show gs-feud" onclick="App.startEvidenceFeud()"><span class="gs-ic">${GICON.trophy}</span><span class="gs-t">Evidence Feud</span><span class="gs-s">The trial of the record. Witnesses defend the evidence, the Erasers push the false story and must be caught.</span></button>`;
+    h+=`<button class="gn-show gs-dond" onclick="App._dondStart()"><span class="gs-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M9 7V5h6v2M4 12h16"/></svg></span><span class="gs-t">The Eraser's Offer</span><span class="gs-s">Hold the truth, or take the Eraser's buyout.</span></button>`;
+    h+='</div>';
+    document.getElementById('gn-body').innerHTML=h; },
+  _gnTeamsBar(active){ return '<div class="gn-teams">'+this._gn.teams.map((t,i)=>`<div class="gn-team ${i===active?'active':''}"><div class="gt-name">${this.esc(t.name)}</div><div class="gt-score">${t.score}</div></div>`).join('')+'</div>'; },
+
+  // ── FAMILY FEUD (deluxe) ──
+  _feudStart(){ const gn=this._gn; const boards=this._sample(EVIDENCE_BOARDS,Math.min(3,EVIDENCE_BOARDS.length)); gn.view='feud'; gn.feud={boards,round:0}; this._feudRound(); },
+  _feudRound(){ const gn=this._gn, f=gn.feud; const b=f.boards[f.round]; const others=[]; EVIDENCE_BOARDS.forEach(x=>{ if(x!==b) others.push(...x.answers); }); const decoys=this._sample(others.filter(o=>!b.answers.includes(o)),Math.min(5,others.length)); f.cur={prompt:b.prompt,answers:b.answers.slice(),pool:this._shuffle(b.answers.concat(decoys)),found:{},used:{},strikes:0,pot:0,phase:gn.teams.length>1?'faceoff':'play',control:0,revealed:false}; this.renderGameNight(); },
+  _feudFace(team){ const f=this._gn.feud.cur; f.control=team; f.phase='play'; this.renderGameNight(); },
+  _gnFeud(){ const gn=this._gn, f=gn.feud, c=f.cur; let h=this._gnTeamsBar(f.phase==='steal'?this._feudOther(c.control):c.control);
+    h+=`<div class="game-prompt"><div class="gp-kicker">Round ${f.round+1} of ${f.boards.length}</div><div class="gp-text">${this.highlightClaim(c.prompt)}</div></div>`;
+    if(c.phase==='faceoff'){ h+='<div class="gn-banner">Face-off. Who won the buzz and takes control?</div><div class="gn-choice">'+gn.teams.map((t,i)=>`<button class="gn-neutral" onclick="App._feudFace(${i})">${this.esc(t.name)}</button>`).join('')+'</div>'; document.getElementById('gn-body').innerHTML=h; return; }
+    const banner = c.phase==='steal' ? `<span style="color:var(--coral)">${this.esc(gn.teams[this._feudOther(c.control)].name)} may steal</span>` : `${this.esc(gn.teams[c.control].name)} is playing`;
+    h+=`<div class="gn-banner">${banner}<span class="gn-pot">Pot ${c.pot}</span></div>`;
+    h+='<div class="fb-head"><span style="font-size:.75rem;color:var(--text2)">'+Object.keys(c.found).length+' / '+c.answers.length+' found</span><span class="fb-strikes">'+[0,1,2].map(i=>`<span class="fb-x ${i<c.strikes?'on':''}">X</span>`).join('')+'</span></div>';
+    h+='<div class="fb-board">'+c.answers.map((a,i)=>{ const open=c.found[i], rev=c.revealed&&!open; return `<div class="fb-slot ${open?'open':''} ${rev?'revealed':''}"><span class="fb-rank">${i+1}</span><span class="fb-ans">${(open||rev)?this.highlightClaim(a):''}</span><span class="fb-pts">${(open||rev)?'100':''}</span></div>`; }).join('')+'</div>';
+    if(!c.revealed){ const tapper=c.phase==='steal'?'App._feudSteal':'App._feudGuess'; h+='<div class="games-sec">Tap the answer</div><div class="fb-pool">'+c.pool.map((p,i)=>`<button class="fb-cand ${c.used[i]?'used':''}" onclick="${tapper}(${i})">${this.highlightClaim(p)}</button>`).join('')+'</div>'; }
+    else { h+=`<button class="game-next" onclick="App._feudNext()">${f.round+1<f.boards.length?'Next Round':'See Final Scores'}</button>`; }
+    document.getElementById('gn-body').innerHTML=h; },
+  _feudOther(t){ return this._gn.teams.length>1 ? (t+1)%this._gn.teams.length : t; },
+  _feudGuess(pi){ const c=this._gn.feud.cur; if(c.revealed||c.used[pi]) return; c.used[pi]=true; const ai=c.answers.indexOf(c.pool[pi]); if(ai>=0&&!c.found[ai]){ c.found[ai]=true; c.pot+=100; if(Object.keys(c.found).length===c.answers.length){ this._feudBank(c.control); return; } } else { c.strikes++; if(c.strikes>=3){ if(this._gn.teams.length>1){ c.phase='steal'; c.strikes=3; } else { this._feudBank(c.control); return; } } } this.renderGameNight(); },
+  _feudSteal(pi){ const c=this._gn.feud.cur; if(c.revealed||c.used[pi]) return; c.used[pi]=true; const ai=c.answers.indexOf(c.pool[pi]); if(ai>=0&&!c.found[ai]){ c.found[ai]=true; c.pot+=100; this._feudBank(this._feudOther(c.control)); } else { this._feudBank(c.control); } },
+  _feudBank(team){ const c=this._gn.feud.cur; this._gn.teams[team].score+=c.pot; c.winner=team; c.revealed=true; this._bumpDaily(); this.renderGameNight(); },
+  _feudNext(){ const f=this._gn.feud; f.round++; if(f.round>=f.boards.length){ this._gn.view='score'; this.renderGameNight(); } else { this._feudRound(); } },
+
+  // ── DEAL OR NO DEAL (The Eraser's Offer) ──
+  _dondStart(){ const gn=this._gn; if(gn.teams.length>1){ gn.view='dond'; gn.dond={phase:'team'}; this.renderGameNight(); } else { this._dondBegin(0); } },
+  _dondBegin(team){ const gn=this._gn; const vals=this._shuffle(DOND_VALUES); const facts=this._shuffle(DOND_FACTS); const cases=vals.map((v,i)=>({i,value:v,fact:facts[i%facts.length],open:false})); gn.view='dond'; gn.dond={team,cases,mine:null,phase:'pick',round:0,rounds:[3,2,2,1,1,1],opensLeft:0,offer:0,lastFact:null}; this.renderGameNight(); },
+  _dondRemaining(){ const d=this._gn.dond; return d.cases.filter(c=>!c.open); },
+  _dondRemVals(){ return this._dondRemaining().map(c=>c.value); },
+  _dondPick(i){ const d=this._gn.dond; d.mine=i; d.cases[i].mine=true; d.phase='open'; d.round=0; d.opensLeft=d.rounds[0]; this.renderGameNight(); },
+  _dondOpen(i){ const d=this._gn.dond; const c=d.cases[i]; if(c.open||i===d.mine||d.phase!=='open') return; c.open=true; d.lastFact=c.fact+' ('+c.value+' pts)'; d.opensLeft--; if(d.opensLeft<=0){ this._dondMakeOffer(); } this.renderGameNight(); },
+  _dondMakeOffer(){ const d=this._gn.dond; const rem=this._dondRemVals(); const mean=rem.reduce((a,b)=>a+b,0)/rem.length; const frac=Math.min(0.95,0.35+0.12*d.round); d.offer=Math.max(5,Math.round(mean*frac/5)*5); d.phase='offer'; },
+  _dondDeal(){ const d=this._gn.dond; this._gn.teams[d.team].score+=d.offer; d.result={took:'deal',amount:d.offer,inCase:d.cases[d.mine].value}; d.phase='done'; d.cases.forEach(c=>c.open=true); this._bumpDaily(); this.renderGameNight(); },
+  _dondNoDeal(){ const d=this._gn.dond; d.round++; const rem=this._dondRemaining().filter(c=>c.i!==d.mine); if(rem.length<=1){ d.phase='final'; } else { d.opensLeft=Math.min(d.rounds[d.round]||1,rem.length-1); d.phase='open'; } this.renderGameNight(); },
+  _dondFinal(keep){ const d=this._gn.dond; let mineCase=d.cases[d.mine]; if(!keep){ const other=this._dondRemaining().find(c=>c.i!==d.mine); if(other){ d.mine=other.i; mineCase=other; } } const val=mineCase.value; this._gn.teams[d.team].score+=val; d.result={took:'hold',amount:val,inCase:val}; d.phase='done'; d.cases.forEach(c=>c.open=true); this._bumpDaily(); this.renderGameNight(); },
+  _gnDond(){ const gn=this._gn, d=gn.dond; if(d.phase==='team'){ let h=this._gnHeadDond(); h+='<div class="gn-banner">Which team takes the cases?</div><div class="gn-choice">'+gn.teams.map((t,i)=>`<button class="gn-neutral" onclick="App._dondBegin(${i})">${this.esc(t.name)}</button>`).join('')+'</div>'; document.getElementById('gn-body').innerHTML=h; return; }
+    let h=this._gnTeamsBar(d.team);
+    h+=this._gnHeadDond();
+    if(d.lastFact&&d.phase!=='done') h+=`<div class="dond-fact">Opened: ${this.highlightClaim(d.lastFact)}</div>`;
+    // ladder
+    h+='<div class="ladder">'+DOND_VALUES.slice().sort((a,b)=>a-b).map(v=>{ const gone=d.cases.some(c=>c.open&&c.value===v); return `<div class="lad-item ${gone?'gone':''}"><span>Restoration</span><span class="lv">${v}</span></div>`; }).join('')+'</div>';
+    if(d.phase==='offer'){ h+=`<div class="offer-card"><div class="offer-k">The Eraser offers</div><div class="offer-v">${d.offer}</div><div class="offer-s">Take the buyout and give up your sealed case, or hold the truth and keep opening.</div></div><div class="gn-choice"><button class="gn-b" onclick="App._dondDeal()">Deal</button><button class="gn-a" onclick="App._dondNoDeal()">No Deal</button></div>`; document.getElementById('gn-body').innerHTML=h; return; }
+    if(d.phase==='final'){ h+='<div class="gn-banner">Two cases left. Keep your sealed case, or swap it?</div><div class="gn-choice"><button class="gn-a" onclick="App._dondFinal(true)">Keep mine</button><button class="gn-neutral" onclick="App._dondFinal(false)">Swap</button></div>'; document.getElementById('gn-body').innerHTML=h; return; }
+    if(d.phase==='done'){ const r=d.result; const held=r.took==='hold'; h+=`<div class="offer-card"><div class="offer-k">${r.took==='deal'?'You took the buyout':'You held the truth'}</div><div class="offer-v">${r.amount}</div><div class="offer-s">${r.took==='deal'?('Your sealed case held '+r.inCase+'. '+(r.inCase>r.amount?'The truth was worth more than the Eraser paid.':'A fair trade this time.')):('Added to '+this.esc(gn.teams[d.team].name)+'.')}</div></div><button class="game-next" onclick="App._gn.view='score';App.renderGameNight()">See Final Scores</button>`; document.getElementById('gn-body').innerHTML=h; return; }
+    // pick / open board
+    h+='<div class="dond-grid">'+d.cases.map(c=>{ if(c.open) return `<div class="dond-case open">${c.value}</div>`; const mine=c.i===d.mine; const act = d.phase==='pick'?`App._dondPick(${c.i})`:(mine?'':`App._dondOpen(${c.i})`); return `<button class="dond-case ${mine?'mine':''}" ${act?`onclick="${act}"`:'disabled'}>${mine?'MINE':(c.i+1)}</button>`; }).join('')+'</div>';
+    document.getElementById('gn-body').innerHTML=h; },
+  _gnHeadDond(){ const d=this._gn.dond; let sub; if(!d||d.phase==='team') sub='A case-and-offer game, re-themed to the record.'; else if(d.phase==='pick') sub='Pick one sealed case to hold as your own.'; else if(d.phase==='open') sub='Open '+d.opensLeft+' more case'+(d.opensLeft===1?'':'s')+' to reveal what they held.'; else sub=''; return `<div class="game-prompt"><div class="gp-kicker">The Eraser's Offer</div><div class="gp-text">${sub}</div></div>`; },
+
+  // ── SCOREBOARD ──
+  _gnScoreboard(){ const gn=this._gn; const ranked=gn.teams.map((t,i)=>({t,i})).sort((a,b)=>b.t.score-a.t.score); const win=ranked[0]; let h='<div class="session-complete"><span class="sc-icon">'+GICON.trophy+'</span>'; h+=`<div class="sc-title">${this.esc(win.t.name)} wins</div><div class="sc-sub">${win.t.score} points. Well played.</div>`; h+='<div style="width:100%;margin:8px 0 20px">'+ranked.map((r,idx)=>`<div class="gn-team ${idx===0?'active':''}" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:14px 16px"><span class="gt-name" style="font-size:.95rem">${idx+1}. ${this.esc(r.t.name)}</span><span class="gt-score">${r.t.score}</span></div>`).join('')+'</div>'; h+=`<button class="sc-btn" onclick="App._gn.view='setup';App.renderGameNight()">Play Another Show</button><button class="game-next" style="background:var(--navy2);color:var(--text)" onclick="App.goHome()">Home</button>`; h+='</div>'; document.getElementById('gn-body').innerHTML=h; }
+});
+
+// ── EVIDENCE FEUD (courtroom Family Feud) ─────────────────────────────────────
+const EF_CASES = [
+  {id:'name_stone',lvl:1,charge:'"The Name is a late invention"',prompt:'Name the ancient inscriptions that carry the Name YHWH',
+   exhibits:[{n:'Soleb Temple (~1400 BCE, Nubia)',s:'Oldest known reference to YHWH, carved in African stone.'},{n:'Amarah-West (~1320 BCE)',s:'Independently corroborates Soleb, again in Nubian Egypt.'},{n:'Ketef Hinnom amulets (~600 BCE)',s:'Oldest biblical text fragment naming YHWH.'},{n:'Elephantine Papyri (495-399 BCE)',s:'A Hebrew colony kept a YHWH temple on the Nile.'},{n:'Dead Sea Scrolls (250 BCE-70 CE)',s:'Write YHWH in Paleo-Hebrew, marking the Name as set apart.'}],
+   fakes:[{c:'The Name YHWH first appears in the Masoretic Text around 900 CE.',fix:'Soleb predates the Masoretic Text by roughly 2,300 years.'},{c:'YHWH worship originates in Babylon.',fix:'The oldest evidence is African, at Soleb in Nubia.'}]},
+  {id:'juda_map',lvl:1,charge:'"No Hebrew kingdom existed in West Africa"',prompt:'Name the maps that labeled the Kingdom of Juda in West Africa',
+   exhibits:[{n:'Bowen 1747',s:'Geographer to King George II labels the Slave Coast Kingdom of JUDA.'},{n:'de Fer 1705',s:'French royal cartographer marks Juida on the Bight of Benin.'},{n:'Moll 1710',s:'Marks Terra Judeorum in the Sahel interior.'},{n:'Senex 1725',s:'British royal cartographer: Kingdom of Judah.'},{n:'Dunn 1794',s:'Latest pre-Berlin-Conference Kingdom of Juda designation.'}],
+   fakes:[{c:'The Kingdom of Juda maps are modern forgeries.',fix:'They are official royal cartographic records held in national archives.'},{c:'European maps never recorded a Hebrew kingdom in Africa.',fix:'French, British and Dutch royal maps recorded it for over a century.'}]},
+  {id:'orit_books',lvl:1,charge:'"Africa preserved no ancient scripture"',prompt:"Name books the Ge'ez Orit preserved",
+   exhibits:[{n:'Henok (1 Enoch)',s:"The only complete ancient copy survived in Ge'ez, in Africa."},{n:'Kufale (Jubilees)',s:'Preserved complete; later confirmed by 15+ Qumran fragments.'},{n:'Meqabyan',s:'Ethiopian Maccabees, an independent African text.'},{n:'The Octateuch',s:'The Beta Israel eight-book Torah core.'}],
+   fakes:[{c:'1 Enoch survived only in Greek.',fix:"Its only complete ancient form survived in Ge'ez, preserved by the Beta Israel."},{c:'Jubilees was invented in the Middle Ages.',fix:'Qumran fragments confirm it is a Second-Temple text.'}]},
+  {id:'nine',lvl:2,charge:'"The prophecy was never fulfilled"',prompt:'Name the covenant conditions the transatlantic diaspora fulfilled',
+   exhibits:[{n:'Taken in ships',s:'Devarim 28:68 specifies ships; the Middle Passage matches.'},{n:'400 years',s:'1619 Point Comfort to 2019, the exact span.'},{n:'A language not understood',s:'Taken to English, Portuguese, French speaking nations.'},{n:'Identity stripped',s:'Names, language, memory erased across generations.'},{n:'Scattered among all nations',s:'The most widespread forced diaspora on record.'},{n:'The enslaving nation judged',s:'The slave-trading empires collapsed across the 20th century.'}],
+   fakes:[{c:'The prophecy was fulfilled by the Babylonian exile.',fix:'Babylon was overland and ~70 years; the text specifies ships and 400 years.'},{c:'The 400 years refers only to time in Egypt.',fix:'Bereshit 15:13 sets 400 years of bondage in a land not their own, matched to the documented record.'}]},
+  {id:'qumran',lvl:2,charge:'"The scrolls just match the modern Bible"',prompt:'Name writings found among the Dead Sea Scrolls at Qumran',
+   exhibits:[{n:'Community Rule (1QS)',s:"The Yahad community's own rule of life."},{n:'War Scroll (1QM)',s:'The battle of the Sons of Light and Darkness.'},{n:'Great Isaiah Scroll (1QIsa-a)',s:'Oldest complete Isaiah, ~1000 years older than the Masoretic.'},{n:'Pesher Habakkuk (1QpHab)',s:'A running commentary unique to the community.'},{n:'Damascus Document',s:'Names the three nets of Belial.'}],
+   fakes:[{c:'The Dead Sea Scrolls match the Masoretic Text exactly.',fix:'They differ in thousands of readings and predate it by over a thousand years.'},{c:'The scrolls contain the New Testament.',fix:'They are pre-Christian and contain no NT text.'}]},
+  {id:'african_zone',lvl:2,charge:'"The land was always the Middle East"',prompt:'Name ancient sources placing the Levant in the African zone',
+   exhibits:[{n:'Turin Papyrus Map (1160 BCE)',s:'Oldest surviving map, drawn by Africans, maps the Egypt-Sinai corridor.'},{n:'Hecataeus, Periegesis (550 BCE)',s:'Places Egypt and adjacent land within Libya-Africa.'},{n:'Herodotus (450 BCE)',s:'Places Sinai and Canaan within the African zone.'},{n:'Al-Idrisi, Tabula Rogeriana (1154 CE)',s:'South-up map preserving African geographic relationships.'}],
+   fakes:[{c:'"Middle East" is an ancient geographic term.',fix:'It was coined by Alfred Mahan in 1902 for imperial strategy.'},{c:'Ancient maps always separated the Levant from Africa.',fix:'The oldest maps place it within or at the boundary of the African zone.'}]},
+  {id:'calendar',lvl:3,charge:'"The lunar calendar is the original"',prompt:'Name the evidence for the 364-day covenant calendar',
+   exhibits:[{n:'Jubilees 6:23-38',s:'Commands a 364-day year and condemns following the moon.'},{n:'1 Enoch 72 (Astronomical Book)',s:'Lays out the solar year in detail.'},{n:'Qumran Mishmarot (4Q320-321)',s:'Priestly rotation tables that work only in a 364-day cycle.'},{n:'Beta Israel Sigd',s:'African community that kept the solar festivals in isolation.'}],
+   fakes:[{c:'The lunar calendar is the original covenant calendar.',fix:'Jubilees explicitly condemns lunar reckoning; the 364-day solar system is the attested one.'},{c:'The Qumran community used the Rabbinic calendar.',fix:'Their Mishmarot documents run on the 364-day solar calendar.'}]},
+  {id:'bloodline',lvl:3,charge:'"The Israelite marker is European"',prompt:'Name African lineage evidence for the covenant people',
+   exhibits:[{n:'E1b1a / E-M2',s:'Indigenous African paternal lineage at high frequency in West Africa.'},{n:'Lemba Cohen Modal Haplotype',s:'The priestly marker at ~53% in an African clan.'},{n:'Beta Israel L haplogroup',s:'Ancient African maternal lineage, no European bottleneck.'},{n:'Ramses III E1b1a',s:'African haplogroup confirmed in a pharaoh.'}],
+   fakes:[{c:'Ashkenazi R1b is the ancient Israelite marker.',fix:'R1a/R1b are European; the priestly CMH appears at high frequency in the African Lemba.'},{c:'The Lemba carry no Israelite genetic marker.',fix:'They carry the Cohen Modal Haplotype at rates equal to or above Ashkenazi Levites.'}]},
+  {id:'councils',lvl:3,charge:'"The canon was always settled"',prompt:'Name the institutions that fixed or altered the canon',
+   exhibits:[{n:'Council of Yavneh (~90 CE)',s:'Where the Rabbinic canon was fixed, excluding Enoch and Jubilees.'},{n:'Council of Nicaea (325 CE)',s:'Roman political authority over the Christian canon.'},{n:'The Masoretes (Tiberias)',s:'Added vowel pointing ~900 CE, over a thousand years after the DSS.'},{n:'Council of Carthage (397 CE)',s:'Further fixed the Western canon.'}],
+   fakes:[{c:'1 Enoch was never considered scripture.',fix:'It was authoritative at Qumran (multiple copies) and canonical in Ethiopia.'},{c:'The canon was settled everywhere by the first century.',fix:'Councils across centuries fixed different canons; Ethiopia kept a broader one.'}]}
+];
+const EF_SURVEYS = [
+  {q:'Name a source proving the Name YHWH is ancient and African',a:['Soleb inscription','Amarah-West','Elephantine temple']},
+  {q:"Name a book the Ge'ez Orit preserved",a:['Henok (1 Enoch)','Kufale (Jubilees)','Meqabyan']},
+  {q:'Name a covenant condition the diaspora fulfilled',a:['Ships','400 years','Scattered among nations','Identity stripped']},
+  {q:'Name a Dead Sea Scroll writing',a:['War Scroll','Community Rule','Great Isaiah Scroll']},
+  {q:'Name African lineage evidence',a:['E1b1a','Lemba Cohen Modal Haplotype','Beta Israel L haplogroup']}
+];
+const EF_AIDS = [
+  'Map: Bowen 1747 names the Kingdom of JUDA on the West African coast.',
+  'Timeline: 1619 to 2019 is the 400-year bondage window.',
+  'Inscription: Soleb (~1400 BCE, Nubia) is the oldest YHWH reference.',
+  'Genetics: E1b1a and the Cohen Modal Haplotype are African priestly lineage.',
+  'Scroll: 1QIsa-a predates the Masoretic Text by over a thousand years.'
+];
+// Robust delegated tap handling (no reliance on inline handlers reaching a lexical const).
+document.addEventListener('click', function(e){
+  var el = e.target && e.target.closest ? e.target.closest('[data-ef]') : null;
+  if(!el) return;
+  var a = el.getAttribute('data-ef');
+  var fn = App['ef_'+a];
+  if(typeof fn === 'function'){ e.preventDefault(); fn.call(App, el.getAttribute('data-arg'), el); }
+});
+
+Object.assign(App, {
+  startEvidenceFeud(){
+    const pick = l => this._shuffle(EF_CASES.filter(c=>c.lvl===l))[0];
+    this._ef = { teams:[{name:'The Witnesses',role:'Defense',score:0},{name:'The Erasers',role:'Prosecution',score:0}], cases:[pick(1),pick(2),pick(3)].filter(Boolean), ci:0, view:'intro', stage:(this._gn&&this._gn.stage)||false };
+    this.showScreen('gamenight');
+    document.getElementById('game-score')&&(document.getElementById('game-score').textContent='');
+    this.efRender();
+  },
+  _efWrap(inner){ document.getElementById('gn-body').innerHTML='<div class="'+(this._ef.stage?'tu-stage ':'')+'ef-wrap">'+inner+'</div>'; document.getElementById('gn-title').textContent='Evidence Feud'; },
+  _efTeams(active){ return '<div class="gn-teams">'+this._ef.teams.map((t,i)=>`<div class="gn-team ${i===active?'active':''}"><div class="gt-name">${this.esc(t.name)}</div><div class="gt-score">${t.score}</div></div>`).join('')+'</div>'; },
+  efRender(){ const m={intro:'_efIntro',opening:'_efOpening',testimony:'_efTestimony',cross:'_efCross',fast:'_efFast',verdict:'_efVerdict'}; const fn=this[m[this._ef.view]]; if(fn) fn.call(this); },
+  _efIntro(){ let h='<div class="gn-hero"><div class="gn-hero-badge">Evidence Feud</div><div class="gn-hero-sub">The trial of the record. Two teams, two roles.</div></div>';
+    h+='<div class="ef-roles"><div class="ef-role ef-def"><div class="ef-rt">The Witnesses</div><div class="ef-rs">Defense. Name the true exhibits and fill the board.</div></div><div class="ef-role ef-pro"><div class="ef-rt">The Erasers</div><div class="ef-rs">Prosecution. Push the false story, then get caught in cross-examination.</div></div></div>';
+    h+='<div class="ef-levels">3 cases, rising levels: Discovery, Deliberation, Verdict. Then the Fast Verdict round.</div>';
+    h+='<div class="ef-how"><div class="ef-how-t">How to play</div>'
+      +'<div class="ef-step"><span class="ef-num">1</span>A question appears. Tap the team that won the buzz.</div>'
+      +'<div class="ef-step"><span class="ef-num">2</span>Fill the board: <b>tap the word chips at the bottom</b>. Right fills a row, wrong is a strike. Three strikes lets the other team steal.</div>'
+      +'<div class="ef-step"><span class="ef-num">3</span>Cross-examination: tap <b>Fabrication</b> if false, or <b>Record</b> if true.</div></div>';
+    h+='<button class="game-next" data-ef="begin">Begin the Trial</button>';
+    this._efWrap(h); },
+  ef_begin(){ this._ef.ci=0; this._efStartCase(0); },
+  _efStartCase(ci){ const c=this._ef.cases[ci]; const answers=c.exhibits.map(e=>e.n); const sigs={}; c.exhibits.forEach(e=>sigs[e.n]=e.s);
+    const others=[]; EF_CASES.forEach(x=>{ if(x!==c) x.exhibits.forEach(e=>others.push(e.n)); });
+    const decoys=this._shuffle(others.filter(n=>answers.indexOf(n)<0)).slice(0, c.lvl===1?3:c.lvl===2?4:5);
+    this._ef.cur={ case:c, answers, sigs, pool:this._shuffle(answers.concat(decoys)), found:{}, used:{}, strikes:0, pot:0, control:0, steal:false, aidUsed:false, aidText:null };
+    this._ef.view='opening'; this.efRender(); },
+  _efLevelName(l){ return l===1?'Discovery':l===2?'Deliberation':'Verdict'; },
+  _efOpening(){ const ef=this._ef, c=ef.cur.case; let h=this._efTeams(-1);
+    h+=`<div class="gn-banner">Case ${ef.ci+1} of ${ef.cases.length} · Level: ${this._efLevelName(c.lvl)}</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">The charge</div><div class="gp-text">${this.esc(c.charge)}</div></div>`;
+    h+=`<div class="game-prompt" style="border-left:3px solid var(--gold)"><div class="gp-kicker">Opening statement</div><div class="gp-text">${this.highlightClaim(c.prompt)}</div></div>`;
+    h+='<div class="ef-note">Who won the opening statement and takes the board?</div><div class="gn-choice">';
+    h+=`<button class="gn-neutral" data-ef="face" data-arg="0">The Witnesses</button><button class="gn-neutral" data-ef="face" data-arg="1">The Erasers</button>`;
+    h+='</div>'; this._efWrap(h); },
+  ef_face(team){ this._ef.cur.control=parseInt(team,10); this._ef.view='testimony'; this.efRender(); },
+  _efTestimony(){ const ef=this._ef, cur=ef.cur, c=cur.case;
+    let h=this._efTeams(cur.steal?1-cur.control:cur.control);
+    const who = cur.steal ? `${this.esc(ef.teams[1-cur.control].name)} may steal` : `${this.esc(ef.teams[cur.control].name)} testify`;
+    h+=`<div class="gn-banner">${who}<span class="gn-pot">Pot ${cur.pot}</span></div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Exhibit board · ${this.highlightClaim(c.prompt)}</div></div>`;
+    h+='<div class="fb-strikes">'+[0,1,2].map(i=>`<span class="fb-x ${i<cur.strikes?'on':''}">X</span>`).join('')+'</div>';
+    h+='<div class="fb-board">'+cur.answers.map((a,i)=>{ const open=cur.found[i]; return `<div class="fb-slot ${open?'open':''}"><span class="fb-rank">${i+1}</span><span class="fb-ans">${open?this.highlightClaim(a):''}</span></div>`+(open?`<div class="ef-sig">${this.esc(cur.sigs[a])}</div>`:''); }).join('')+'</div>';
+    if(cur.aidText) h+=`<div class="ef-aid">Exhibit entered: ${this.esc(cur.aidText)}</div>`;
+    const act = cur.steal ? 'steal' : 'guess';
+    h+='<div class="games-sec">Name an exhibit</div><div class="fb-pool">'+cur.pool.map((p,i)=>`<button class="fb-cand ${cur.used[i]?'used':''}" data-ef="${act}" data-arg="${i}">${this.highlightClaim(p)}</button>`).join('')+'</div>';
+    if(!cur.steal && !cur.aidUsed && c.lvl<3) h+='<button class="ef-hint" data-ef="aid">Call an exhibit (hint, -25)</button>';
+    this._efWrap(h); },
+  ef_aid(){ const cur=this._ef.cur; if(cur.aidUsed) return; cur.aidUsed=true; cur.pot=Math.max(0,cur.pot-25); cur.aidText=this._shuffle(EF_AIDS)[0]; this.efRender(); },
+  ef_guess(pi){ pi=parseInt(pi,10); const cur=this._ef.cur; if(cur.used[pi]) return; cur.used[pi]=true; const ai=cur.answers.indexOf(cur.pool[pi]);
+    if(ai>=0 && !cur.found[ai]){ cur.found[ai]=true; cur.pot+=100; if(Object.keys(cur.found).length===cur.answers.length){ return this._efBank(cur.control); } }
+    else { cur.strikes++; if(cur.strikes>=3){ cur.steal=true; } }
+    this.efRender(); },
+  ef_steal(pi){ pi=parseInt(pi,10); const cur=this._ef.cur; if(cur.used[pi]) return; cur.used[pi]=true; const ai=cur.answers.indexOf(cur.pool[pi]);
+    if(ai>=0 && !cur.found[ai]){ cur.found[ai]=true; cur.pot+=100; this._efBank(1-cur.control); } else { this._efBank(cur.control); } },
+  _efBank(team){ const ef=this._ef, cur=ef.cur; ef.teams[team].score+=cur.pot; cur.awarded=team; this._bumpDaily();
+    // build cross-examination: the case fakes + one true control
+    const items=cur.case.fakes.map(f=>({text:f.c,fake:true,fix:f.fix}));
+    const ex=this._shuffle(cur.case.exhibits)[0]; items.push({text:ex.n+' is genuine evidence in this case.',fake:false,fix:ex.s});
+    ef.cross={ items:this._shuffle(items), idx:0, feedback:null };
+    ef.view='cross'; this.efRender(); },
+  _efCross(){ const ef=this._ef, cr=ef.cross; if(cr.idx>=cr.items.length){ return this._efNextCase(); }
+    const it=cr.items[cr.idx]; let h=this._efTeams(1);
+    h+=`<div class="gn-banner">Cross-examination · ${this.esc(ef.teams[1].name)} rule on the claim</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Claim ${cr.idx+1} of ${cr.items.length}</div><div class="gp-text gp-quote">"${this.esc(it.text)}"</div></div>`;
+    h+='<div class="gn-choice"><button class="gn-b" data-ef="rule" data-arg="fake">Fabrication</button><button class="gn-a" data-ef="rule" data-arg="real">Record</button></div>';
+    if(cr.feedback) h+=`<div class="game-result show ${cr.feedback.ok?'':''}"><span class="${cr.feedback.ok?'gr-ok':'gr-no'}">${cr.feedback.ok?'Correct.':'Overruled.'} ${this.highlightClaim(cr.feedback.fix)}</span></div>`;
+    this._efWrap(h); },
+  ef_rule(arg){ const ef=this._ef, cr=ef.cross, it=cr.items[cr.idx]; const said=arg==='fake'; const ok=(said===it.fake); if(ok){ ef.teams[1].score+=75; this._bumpDaily(); } cr.feedback={ok,fix:it.fix}; this.efRender();
+    setTimeout(()=>{ cr.idx++; cr.feedback=null; if(cr.idx>=cr.items.length){ this._efNextCase(); } else { this.efRender(); } }, 1900); },
+  _efNextCase(){ const ef=this._ef; ef.ci++; if(ef.ci>=ef.cases.length){ ef.fast={ surveys:this._shuffle(EF_SURVEYS).slice(0,3), idx:0 }; ef.view='fast'; this.efRender(); } else { this._efStartCase(ef.ci); } },
+  _efFast(){ const ef=this._ef, f=ef.fast; if(f.idx>=f.surveys.length){ ef.view='verdict'; return this.efRender(); }
+    const s=f.surveys[f.idx]; const team=f.idx%2; const others=[]; EF_SURVEYS.forEach(x=>{ if(x!==s) others.push(...x.a); });
+    const pool=this._shuffle(s.a.concat(this._shuffle(others).slice(0,3)));
+    let h=this._efTeams(team);
+    h+=`<div class="gn-banner">Fast Verdict · ${this.esc(ef.teams[team].name)} answer</div>`;
+    h+=`<div class="game-prompt"><div class="gp-kicker">Survey ${f.idx+1} of ${f.surveys.length}</div><div class="gp-text">${this.highlightClaim(s.q)}</div></div>`;
+    h+='<div class="fb-pool">'+pool.map((p,i)=>`<button class="fb-cand" data-ef="fastans" data-arg="${i}|${this.esc(p)}">${this.highlightClaim(p)}</button>`).join('')+'</div>';
+    if(f.feedback) h+=`<div class="game-result show"><span class="${f.feedback.ok?'gr-ok':'gr-no'}">${f.feedback.ok?'On the board! +100':'Not a top answer.'}</span></div>`;
+    this._efWrap(h); },
+  ef_fastans(arg){ const ef=this._ef, f=ef.fast; const val=arg.split('|').slice(1).join('|'); const s=f.surveys[f.idx]; const team=f.idx%2; const ok=s.a.indexOf(val)>=0; if(ok){ ef.teams[team].score+=100; this._bumpDaily(); } f.feedback={ok}; this.efRender();
+    setTimeout(()=>{ f.idx++; f.feedback=null; this.efRender(); }, 1500); },
+  _efVerdict(){ const ef=this._ef; const ranked=ef.teams.map((t,i)=>({t,i})).sort((a,b)=>b.t.score-a.t.score); const win=ranked[0];
+    const tie=ranked[0].t.score===ranked[1].t.score;
+    let h='<div class="session-complete"><span class="sc-icon">'+GICON.trophy+'</span>';
+    h+=`<div class="sc-title">${tie?'A hung jury':this.esc(win.t.name)+' win the verdict'}</div><div class="sc-sub">${tie?'Even on points. Replay to break the tie.':win.t.score+' points. The record stands.'}</div>`;
+    h+='<div style="width:100%;margin:8px 0 20px">'+ranked.map(r=>`<div class="gn-team active" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:14px 16px"><span class="gt-name" style="font-size:.95rem">${this.esc(r.t.name)}</span><span class="gt-score">${r.t.score}</span></div>`).join('')+'</div>';
+    h+='<button class="sc-btn" data-ef="again">New Trial</button><button class="game-next" style="background:var(--navy2);color:var(--text)" data-ef="home">Home</button>';
+    h+='</div>'; document.getElementById('gn-body').innerHTML=h; document.getElementById('gn-title').textContent='The Verdict'; },
+  ef_again(){ this.startEvidenceFeud(); },
+  ef_home(){ this.goHome(); }
+});
+
+// ── HOW TO USE ────────────────────────────────────────────────────────────────
+const HELP_SECTIONS = [
+  {t:'What this app is', b:['Great Eraser Study helps you learn and remember the record: the evidence, the sources, and how it was erased.','Every fact here comes from real primary sources. Nothing is invented.']},
+  {t:'Study the volumes', b:['Tap Great Eraser Study to open the volumes. Tap a chapter to read its argument.','Chapters with a Connected Verses button show the primary sources behind the claim.']},
+  {t:'Memory Cards', b:['Short question-and-answer cards that come back for review at the right time, so facts stick.','Tap Cards on the home screen. Mark each Easy, Almost, or Hard.']},
+  {t:'Quiz Modes', b:['Quick questions across all volumes. Two kinds: Multiple Choice and Fill in the Blank.','Tap an answer. It tells you right away if you got it.']},
+  {t:'Chapter Games', b:['Open a chapter, then tap Games. Each chapter has games built from its own facts:','True or False, Which Source, Verse Builder, Key Terms, Word Match, Story Sequence, Memory Match, and more.']},
+  {t:'Truth Uncovered (game show)', b:['A game show you play in teams, from the home screen.','1 to 4 teams. Tap the TV button (top right) to make it big for a TV, then mirror your iPad to the screen.','It has two shows: Evidence Feud and The Eraser\'s Offer.']},
+  {t:'How to play Evidence Feud', b:['Two teams: The Witnesses and The Erasers. It runs like a courtroom.','1. Opening: a question appears. Tap the team that won the buzz. They play first.','2. The board: the answers are the numbered rows up top. To guess, TAP A WORD CHIP AT THE BOTTOM. Right fills a row. Wrong is a strike. Three strikes lets the other team steal.','3. Cross-examination: a claim shows up. Tap Fabrication if false, or Record if true.','Play 3 cases, then a Fast round, then the Verdict shows who won.']},
+  {t:"How to play The Eraser's Offer", b:['Like Deal or No Deal. Sealed cases each hold points.','Pick one case to keep. Open the others to reveal their points and a real fact.','The Scribe makes an offer. Take the Deal, or say No Deal and keep going. Hold the truth to the end.']},
+  {t:'Timeline and DSS vs Orit', b:['Timeline shows what was erased and what was restored, in order.','DSS vs Orit puts the two primary witnesses side by side.']},
+  {t:'Reading, display, and TV', b:['Settings lets you set text size, spacing, and a cream background for easier reading.','In the game show, the TV button enlarges everything so you can mirror it to an Apple TV with AirPlay.']},
+  {t:'The Curse of Ham — primary source vs. fabrication', b:['The Hamitic Hypothesis chapter (Volume 4, Chapter 47) now has three connected verse sets covering the full record. The oldest DSS manuscript (4QGen-Exoda, Cave 4) curses Canaan for a land boundary violation — no color, no race, no skin.','Two fabrication layers are documented as separate verses: Talmud Sanhedrin 70a (c. 500 CE, absent from DSS and Orit) and Thornton Stringfellow (1856). Open the chapter, tap Connected Verses, and tap Games to quiz yourself on all three versions.','Memory cards cover the Curse of Ham primary source, Fabrication One, and Fabrication Two. Tap Cards on the home screen to find them.']},
+  {t:'Financial chain, legal records, and reparations', b:['The Scale of the Middle Passage chapter (Volume 9) now includes connected verses on the UCL Legacies of British Slavery database (£17 billion today\'s value paid to 47,000 enslavers in 1833 — Barclays, HSBC, Lloyds all documented).','H.R. 40 — a bill mandating only a study of reparations — has been introduced every Congressional session since 1989 and never brought to a floor vote. Evanston 2022 is the first and only implemented municipal reparations program in US history. Both are now connected verses in the same chapter.','New memory cards: UCL database, H.R. 40, Evanston, and the full direct line from Dum Diversas 1452 to the Slave Bible 1807 to Code Noir 1724. Find them in Cards under the suppression and reparations categories.']},
+  {t:'Covenant promises, Yehezkel 36, and land record', b:['The What the Ancient Texts Actually State chapter (Volume 9, Chapter 30) now has connected verses on Yehezkel 36:24-26 from 4QEzek (Qumran Cave 4) — gathering from all nations, clean water, new heart — and the covenant land promises from four named DSS and Orit sources.','The Covenant Entity chapter (Volume 10, Chapter I) has Yehezkel 36:34-35 (the desolate land becoming like the Garden of Eden) and 1 Enoch 99:14 and 104:10 on consequences for those who fabricated covenant texts.','New memory cards cover Yehezkel 36:24-26 and the direct line from Dum Diversas to Code Noir. Tap Connected Verses in either chapter to start, then tap Games to test yourself.']}
+];
+Object.assign(App, {
+  renderHelp(){
+    let h='<div class="hu-intro"><div class="hu-t">A quick guide</div><div class="hu-s">Tap any section to open it. Short and plain, one step at a time.</div></div>';
+    h+=HELP_SECTIONS.map(s=>`<details class="hu-sec"><summary><span class="hu-st">${s.t}</span><svg class="hu-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg></summary><div class="hu-body">${s.b.map(x=>`<p>${x}</p>`).join('')}</div></details>`).join('');
+    document.getElementById('howto-body').innerHTML=h;
+  }
+});
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 window.addEventListener('load', ()=>{

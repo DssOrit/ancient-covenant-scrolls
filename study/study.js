@@ -49,7 +49,7 @@ function lbIcon(name, sizePx) {
 try { window.lbIcon = lbIcon; } catch (e) {}
 
 // All 46 volumes / 111 sections matching the ACR reader, plus SR reference
-var IDS=[];for(var _i=1;_i<=111;_i++)IDS.push('file_'+_i);
+var IDS=[];for(var _i=1;_i<=111;_i++){if(_i!==108)IDS.push('file_'+_i);}
 IDS.push('file_200');
 
 var LBL = [
@@ -160,7 +160,6 @@ var LBL = [
 'Pesher Habakkuk (Commentary on Habakkuk) \u2014 Complete',
 'Songs of Sabbath Sacrifice (Shirot Olat HaShabbat) \u2014 Complete',
 'Genesis Apocryphon (Bereshit Apocryphon) \u2014 Complete',
-'11QMelchizedek (Melchizedek Scroll) \u2014 Complete',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 1 \u2014 Col 1\u201322',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 2 \u2014 Col 23\u201344',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366',
@@ -212,8 +211,7 @@ var VOL_GROUPS = [
 {title:'Vol 42 \u2014 Pesher Habakkuk 1QpHab',eng:'',count:1,vol:'42'},
 {title:'Vol 43 \u2014 Songs of Sabbath Sacrifice',eng:'',count:1,vol:'43'},
 {title:'Vol 44 \u2014 Genesis Apocryphon 1QapGen',eng:'',count:1,vol:'44'},
-{title:'Vol 45 \u2014 11QMelchizedek',eng:'',count:1,vol:'45'},
-{title:'Vol 46 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'46'},
+{title:'Vol 45 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'45'},
 {title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
@@ -855,6 +853,9 @@ function go(fid) {
       (trialDone ? '<br><span style="font-size:11px;opacity:.85">Best: ' + (trialBest || 0) + '%</span>' : '<br><span style="font-size:11px;opacity:.85">Double XP — No hints</span>') +
       '</div></div>';
   }
+  h += '<div class="act-card" data-mode="truthuncovered" style="background:linear-gradient(135deg,#7a2f8a,#b8860b);border:2px solid #d9a441" role="button" tabindex="0" aria-label="Truth Uncovered game show">' +
+    '<div class="act-icon" aria-hidden="true">' + lbIcon('trophy', 32) + '</div>' +
+    '<div class="act-label">Truth Uncovered<br><span style="font-size:11px;opacity:.85">Evidence Board · Sealed Scrolls · teams</span></div></div>';
   h += '<div style="font-size:11px;color:#4ade80;font-weight:700;letter-spacing:1px;padding:8px 0 4px">START HERE</div>';
   h += '<div class="activity-grid" style="margin-bottom:4px">';
   h += actCard(lbIcon('puzzle',        32), 'Fill in the Blank', '#059669', 'filblank', fid);
@@ -1249,6 +1250,7 @@ function openActivity(mode, fid) {
   if (mode === 'versebuild') { showVerseBuild(fid); return; }
   if (mode === 'wordmatch') { showWordMatch(fid); return; }
   if (mode === 'challenge') { showChallenge(fid); return; }
+  if (mode === 'truthuncovered') { showTruthUncovered(fid); return; }
   if (mode === 'trial') { showCovenantTrial(getVolForFid(fid)); return; }
   if (mode === 'whosaidit') { showWhoSaidIt(fid); return; }
   if (mode === 'truefalse') { showTrueFalse(fid); return; }
@@ -5849,6 +5851,234 @@ document.addEventListener('DOMContentLoaded', function () {
     try { localStorage.setItem('acr_study_font', on ? 'dyslexic' : 'default'); } catch (e) {}
   });
 });
+
+/* ===== Truth Uncovered — game show: Evidence Board + Sealed Scrolls ===== */
+var TU = { active:false, fid:null, bookLabel:'', terms:[], fills:[], termPool:[], state:null };
+var TU_VALUES = [5,10,25,50,75,100,150,250,400,600,900,1400];
+var TU_COLORS = ['#2563eb','#dc2626','#059669','#7c3aed'];
+function tuEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function tuShort(t,n){ t=String(t==null?'':t); return t.length>n ? t.slice(0,n-1)+'…' : t; }
+
+document.addEventListener('click', function (e) {
+  var el = e.target && e.target.closest ? e.target.closest('[data-tu]') : null;
+  if (!el) return;
+  var a = el.getAttribute('data-tu');
+  if (typeof TU[a] === 'function') { e.preventDefault(); TU[a](el.getAttribute('data-arg'), el); }
+});
+document.addEventListener('input', function (e) {
+  var el = e.target && e.target.closest ? e.target.closest('[data-tu-name]') : null;
+  if (!el || !TU.state) return;
+  var i = parseInt(el.getAttribute('data-tu-name'), 10);
+  if (TU.state.teams[i]) TU.state.teams[i].name = el.value;
+});
+
+function showTruthUncovered(fid) {
+  TU.fid = fid; TU.active = true;
+  var idx = IDS.indexOf(fid);
+  TU.bookLabel = (idx >= 0 ? LBL[idx].split(' — ')[0] : 'This book');
+  var others = shuffle(IDS.filter(function (x) { return x !== fid; })).slice(0, 4);
+  var loads = [loadContent(fid)].concat(others.map(function (f) { return loadContent(f); }));
+  document.getElementById('content').innerHTML = '<div class="tu-wrap"><div class="tu-msg">Preparing the stage…</div></div>';
+  Promise.all(loads).then(function (all) {
+    var main = all[0] || {};
+    TU.terms = (main.key_terms || []).slice();
+    TU.fills = (main.fill_blank || []).slice();
+    var pool = [];
+    for (var k = 1; k < all.length; k++) { var d = all[k]; if (d && d.key_terms) { for (var t = 0; t < d.key_terms.length; t++) pool.push(d.key_terms[t].term); } }
+    TU.termPool = pool;
+    TU.state = { view: 'setup', teams: [{ name: 'Team 1', score: 0, color: TU_COLORS[0] }, { name: 'Team 2', score: 0, color: TU_COLORS[1] }], stage: false };
+    TU.render();
+  }).catch(function () {
+    document.getElementById('content').innerHTML = '<div class="tu-wrap"><div class="tu-msg">Could not load content for the game.</div></div>';
+  });
+}
+
+TU._wrap = function (inner) {
+  document.getElementById('content').innerHTML = '<div class="tu-wrap' + (this.state && this.state.stage ? ' tu-stage' : '') + '">' + inner + '</div>';
+};
+TU._bar = function () {
+  var t = this.state.view === 'feud' ? 'Evidence Board' : this.state.view === 'sealed' ? 'Sealed Scrolls' : this.state.view === 'score' ? 'Final Scores' : 'Truth Uncovered';
+  return '<div class="tu-bar"><button class="tu-back" data-tu="exit">‹ Back</button><div class="tu-title">' + t + '</div><button class="tu-tv' + (this.state.stage ? ' on' : '') + '" data-tu="toggleStage" aria-label="TV mode">TV</button></div>';
+};
+TU._teams = function (active) {
+  var h = '<div class="tu-teams">';
+  this.state.teams.forEach(function (t, i) { h += '<div class="tu-team' + (i === active ? ' active' : '') + '"><div class="tu-tn">' + tuEsc(t.name) + '</div><div class="tu-ts">' + t.score + '</div></div>'; });
+  return h + '</div>';
+};
+TU.render = function () {
+  var v = this.state.view;
+  if (v === 'setup') this.setup();
+  else if (v === 'feud') this.feud();
+  else if (v === 'sealed') this.sealed();
+  else if (v === 'score') this.scoreboard();
+};
+TU.exit = function () { TU.active = false; go(TU.fid); };
+TU.toggleStage = function () { this.state.stage = !this.state.stage; this.render(); };
+TU.teamCount = function (n) {
+  n = parseInt(n, 10); var cur = this.state.teams, next = [];
+  for (var i = 0; i < n; i++) next.push(cur[i] || { name: 'Team ' + (i + 1), score: 0, color: TU_COLORS[i] });
+  this.state.teams = next; this.render();
+};
+TU.setup = function () {
+  var s = this.state, h = this._bar();
+  h += '<div class="tu-hero"><div class="tu-hero-t">Truth Uncovered</div><div class="tu-hero-s">' + tuEsc(this.bookLabel) + ' · play in teams around one screen, or tap TV and mirror to the big screen.</div></div>';
+  h += '<div class="tu-sec">Teams</div><div class="tu-count">';
+  [1, 2, 3, 4].forEach(function (n) { h += '<button class="tu-cbtn' + (s.teams.length === n ? ' on' : '') + '" data-tu="teamCount" data-arg="' + n + '">' + n + '</button>'; });
+  h += '</div><div class="tu-teamset">';
+  s.teams.forEach(function (t, i) { h += '<div class="tu-teamrow"><span class="tu-dot" style="background:' + t.color + '"></span><input class="tu-in" data-tu-name="' + i + '" value="' + tuEsc(t.name) + '" maxlength="16"></div>'; });
+  h += '</div><div class="tu-sec">Choose a show</div><div class="tu-shows">';
+  h += '<button class="tu-show tu-showfeud" data-tu="startFeud"><div class="tu-show-t">Evidence Board</div><div class="tu-show-s">Name the top answers. Three strikes and the other team can steal.</div></button>';
+  h += '<button class="tu-show tu-showsealed" data-tu="startSealed"><div class="tu-show-t">Sealed Scrolls</div><div class="tu-show-s">Open sealed cases. Take the Scribe\'s offer, or hold.</div></button>';
+  h += '</div>';
+  this._wrap(h);
+};
+
+/* ---- Evidence Board (Family Feud) ---- */
+TU.startFeud = function () {
+  var s = this.state, terms = this.terms.slice(), self = this;
+  if (terms.length < 3) { this._wrap(this._bar() + '<div class="tu-msg">This book has too few key terms for the board. Try a larger section.</div>'); return; }
+  terms = shuffle(terms);
+  var boards = [], per = terms.length >= 12 ? 6 : Math.min(8, terms.length);
+  for (var i = 0; i < terms.length && boards.length < 3; i += per) {
+    var chunk = terms.slice(i, i + per);
+    if (chunk.length < 3) break;
+    var defs = {}, ans = [];
+    chunk.forEach(function (k) { ans.push(k.term); defs[k.term] = k.definition; });
+    boards.push({ prompt: 'Name key terms from ' + self.bookLabel, answers: ans, defs: defs });
+  }
+  if (!boards.length) { this._wrap(this._bar() + '<div class="tu-msg">Not enough terms.</div>'); return; }
+  s.view = 'feud'; s.feud = { boards: boards, round: 0 };
+  this._feudRound();
+};
+TU._feudRound = function () {
+  var s = this.state, f = s.feud, b = f.boards[f.round];
+  var decoys = shuffle(this.termPool.filter(function (t) { return b.answers.indexOf(t) < 0; })).slice(0, 5);
+  f.cur = { prompt: b.prompt, answers: b.answers.slice(), defs: b.defs, pool: shuffle(b.answers.concat(decoys)), found: {}, used: {}, strikes: 0, pot: 0, phase: s.teams.length > 1 ? 'faceoff' : 'play', control: 0, revealed: false };
+  this.render();
+};
+TU._other = function (t) { return this.state.teams.length > 1 ? (t + 1) % this.state.teams.length : t; };
+TU.feudFace = function (team) { this.state.feud.cur.control = parseInt(team, 10); this.state.feud.cur.phase = 'play'; this.render(); };
+TU.feud = function () {
+  var s = this.state, f = s.feud, c = f.cur, self = this;
+  var h = this._teams(c.phase === 'steal' ? this._other(c.control) : c.control) + this._bar();
+  h += '<div class="tu-prompt"><span class="tu-round">Round ' + (f.round + 1) + ' of ' + f.boards.length + '</span>' + tuEsc(c.prompt) + '</div>';
+  if (c.phase === 'faceoff') {
+    h += '<div class="tu-banner">Face-off. Who won the buzz and takes control?</div><div class="tu-choice">';
+    s.teams.forEach(function (t, i) { h += '<button class="tu-cbtn2" data-tu="feudFace" data-arg="' + i + '">' + tuEsc(t.name) + '</button>'; });
+    h += '</div>'; this._wrap(h); return;
+  }
+  var who = c.phase === 'steal' ? (tuEsc(s.teams[this._other(c.control)].name) + ' may steal') : (tuEsc(s.teams[c.control].name) + ' is playing');
+  h += '<div class="tu-banner">' + who + '<span class="tu-pot">Pot ' + c.pot + '</span></div>';
+  h += '<div class="tu-strikes">' + [0, 1, 2].map(function (i) { return '<span class="tu-x' + (i < c.strikes ? ' on' : '') + '">X</span>'; }).join('') + '</div>';
+  h += '<div class="tu-board">';
+  c.answers.forEach(function (a, i) {
+    var open = c.found[i], rev = c.revealed && !open;
+    h += '<div class="tu-slot' + (open ? ' open' : '') + (rev ? ' rev' : '') + '"><span class="tu-rank">' + (i + 1) + '</span><span class="tu-ans">' + ((open || rev) ? tuEsc(a) : '') + '</span></div>';
+    if ((open || rev) && c.defs[a]) h += '<div class="tu-def">' + tuEsc(tuShort(c.defs[a], 120)) + '</div>';
+  });
+  h += '</div>';
+  if (!c.revealed) {
+    var act = c.phase === 'steal' ? 'feudSteal' : 'feudGuess';
+    h += '<div class="tu-sec">Tap the answer</div><div class="tu-pool">';
+    c.pool.forEach(function (p, i) { h += '<button class="tu-cand' + (c.used[i] ? ' used' : '') + '" data-tu="' + act + '" data-arg="' + i + '">' + tuEsc(p) + '</button>'; });
+    h += '</div>';
+  } else {
+    h += '<button class="tu-next" data-tu="feudNext">' + (f.round + 1 < f.boards.length ? 'Next Round' : 'See Final Scores') + '</button>';
+  }
+  this._wrap(h);
+};
+TU.feudGuess = function (pi) {
+  pi = parseInt(pi, 10); var c = this.state.feud.cur; if (c.revealed || c.used[pi]) return; c.used[pi] = true;
+  var ai = c.answers.indexOf(c.pool[pi]);
+  if (ai >= 0 && !c.found[ai]) { c.found[ai] = true; c.pot += 100; if (Object.keys(c.found).length === c.answers.length) { return this._feudBank(c.control); } }
+  else { c.strikes++; if (c.strikes >= 3) { if (this.state.teams.length > 1) { c.phase = 'steal'; } else { return this._feudBank(c.control); } } }
+  this.render();
+};
+TU.feudSteal = function (pi) {
+  pi = parseInt(pi, 10); var c = this.state.feud.cur; if (c.revealed || c.used[pi]) return; c.used[pi] = true;
+  var ai = c.answers.indexOf(c.pool[pi]);
+  if (ai >= 0 && !c.found[ai]) { c.found[ai] = true; c.pot += 100; this._feudBank(this._other(c.control)); }
+  else { this._feudBank(c.control); }
+};
+TU._feudBank = function (team) { var c = this.state.feud.cur; this.state.teams[team].score += c.pot; c.revealed = true; recordSession(TU.fid, 'truthuncovered', 1, 1); this.render(); };
+TU.feudNext = function () { var f = this.state.feud; f.round++; if (f.round >= f.boards.length) { this.state.view = 'score'; this.render(); } else { this._feudRound(); } };
+
+/* ---- Sealed Scrolls (Deal or No Deal) ---- */
+TU.startSealed = function () {
+  if (this.state.teams.length > 1) { this.state.view = 'sealed'; this.state.sealed = { phase: 'team' }; this.render(); }
+  else { this.sealedBegin(0); }
+};
+TU.sealedBegin = function (team) {
+  team = parseInt(team, 10);
+  var facts = [];
+  this.terms.forEach(function (k) { if (k.definition) facts.push(k.term + ': ' + k.definition); });
+  this.fills.forEach(function (q) { if (q.answer) facts.push('Fill the blank: ' + q.prompt.replace('______', '_____') + ' Answer: ' + q.answer); });
+  facts = shuffle(facts.length ? facts : ['A sealed testimony of the record.']);
+  var vals = shuffle(TU_VALUES.slice());
+  var cases = vals.map(function (v, i) { return { i: i, value: v, fact: facts[i % facts.length], open: false }; });
+  this.state.view = 'sealed';
+  this.state.sealed = { team: team, cases: cases, mine: null, phase: 'pick', round: 0, rounds: [3, 2, 2, 1, 1, 1], opensLeft: 0, offer: 0, lastFact: null };
+  this.render();
+};
+TU._sealRemain = function () { return this.state.sealed.cases.filter(function (c) { return !c.open; }); };
+TU.sealedPick = function (i) { i = parseInt(i, 10); var d = this.state.sealed; d.mine = i; d.cases[i].mine = true; d.phase = 'open'; d.round = 0; d.opensLeft = d.rounds[0]; this.render(); };
+TU.sealedOpen = function (i) {
+  i = parseInt(i, 10); var d = this.state.sealed, c = d.cases[i];
+  if (c.open || i === d.mine || d.phase !== 'open') return;
+  c.open = true; d.lastFact = c.fact + ' (' + c.value + ' pts)'; d.opensLeft--;
+  if (d.opensLeft <= 0) { var rem = this._sealRemain().map(function (x) { return x.value; }); var mean = rem.reduce(function (a, b) { return a + b; }, 0) / rem.length; var frac = Math.min(0.95, 0.35 + 0.12 * d.round); d.offer = Math.max(5, Math.round(mean * frac / 5) * 5); d.phase = 'offer'; }
+  this.render();
+};
+TU.sealedDeal = function () { var d = this.state.sealed; this.state.teams[d.team].score += d.offer; d.result = { took: 'deal', amount: d.offer, inCase: d.cases[d.mine].value }; d.phase = 'done'; d.cases.forEach(function (c) { c.open = true; }); recordSession(TU.fid, 'truthuncovered', 1, 1); this.render(); };
+TU.sealedNoDeal = function () { var d = this.state.sealed; d.round++; var rem = this._sealRemain().filter(function (c) { return c.i !== d.mine; }); if (rem.length <= 1) { d.phase = 'final'; } else { d.opensLeft = Math.min(d.rounds[d.round] || 1, rem.length - 1); d.phase = 'open'; } this.render(); };
+TU.sealedFinal = function (keep) {
+  var d = this.state.sealed, mineCase = d.cases[d.mine];
+  if (keep === '0') { var other = this._sealRemain().filter(function (c) { return c.i !== d.mine; })[0]; if (other) { d.mine = other.i; mineCase = other; } }
+  this.state.teams[d.team].score += mineCase.value; d.result = { took: 'hold', amount: mineCase.value }; d.phase = 'done'; d.cases.forEach(function (c) { c.open = true; }); recordSession(TU.fid, 'truthuncovered', 1, 1); this.render();
+};
+TU.toScore = function () { this.state.view = 'score'; this.render(); };
+TU.sealed = function () {
+  var s = this.state, d = s.sealed;
+  if (d.phase === 'team') {
+    var h0 = this._bar() + '<div class="tu-banner">Which team takes the cases?</div><div class="tu-choice">';
+    s.teams.forEach(function (t, i) { h0 += '<button class="tu-cbtn2" data-tu="sealedBegin" data-arg="' + i + '">' + tuEsc(t.name) + '</button>'; });
+    this._wrap(h0 + '</div>'); return;
+  }
+  var h = this._teams(d.team) + this._bar();
+  var sub = d.phase === 'pick' ? 'Pick one sealed case to hold as your own.' : d.phase === 'open' ? ('Open ' + d.opensLeft + ' more case' + (d.opensLeft === 1 ? '' : 's') + ' to reveal what they held.') : '';
+  h += '<div class="tu-prompt"><span class="tu-round">Sealed Scrolls</span>' + sub + '</div>';
+  if (d.lastFact && d.phase !== 'done') h += '<div class="tu-fact">Opened: ' + tuEsc(d.lastFact) + '</div>';
+  h += '<div class="tu-ladder">' + TU_VALUES.slice().sort(function (a, b) { return a - b; }).map(function (v) { var gone = d.cases.some(function (c) { return c.open && c.value === v; }); return '<div class="tu-lad' + (gone ? ' gone' : '') + '"><span>Restoration</span><span class="tu-lv">' + v + '</span></div>'; }).join('') + '</div>';
+  if (d.phase === 'offer') {
+    h += '<div class="tu-offer"><div class="tu-offk">The Scribe offers</div><div class="tu-offv">' + d.offer + '</div><div class="tu-offs">Take the offer and give up your case, or hold the truth and keep opening.</div></div>';
+    h += '<div class="tu-choice"><button class="tu-deal" data-tu="sealedDeal">Deal</button><button class="tu-nodeal" data-tu="sealedNoDeal">No Deal</button></div>';
+    this._wrap(h); return;
+  }
+  if (d.phase === 'final') {
+    h += '<div class="tu-banner">Two cases left. Keep your sealed case, or swap it?</div><div class="tu-choice"><button class="tu-deal" data-tu="sealedFinal" data-arg="1">Keep mine</button><button class="tu-cbtn2" data-tu="sealedFinal" data-arg="0">Swap</button></div>';
+    this._wrap(h); return;
+  }
+  if (d.phase === 'done') {
+    var r = d.result;
+    h += '<div class="tu-offer"><div class="tu-offk">' + (r.took === 'deal' ? 'You took the offer' : 'You held the truth') + '</div><div class="tu-offv">' + r.amount + '</div><div class="tu-offs">' + (r.took === 'deal' ? ('Your sealed case held ' + r.inCase + '. ' + (r.inCase > r.amount ? 'The truth was worth more than the Scribe paid.' : 'A fair trade this time.')) : ('Added to ' + tuEsc(s.teams[d.team].name) + '.')) + '</div></div>';
+    h += '<button class="tu-next" data-tu="toScore">See Final Scores</button>';
+    this._wrap(h); return;
+  }
+  h += '<div class="tu-cases">';
+  d.cases.forEach(function (c) {
+    if (c.open) { h += '<div class="tu-case open">' + c.value + '</div>'; }
+    else { var mine = c.i === d.mine; var act = d.phase === 'pick' ? 'sealedPick' : (mine ? '' : 'sealedOpen'); h += '<button class="tu-case' + (mine ? ' mine' : '') + '"' + (act ? ' data-tu="' + act + '" data-arg="' + c.i + '"' : ' disabled') + '>' + (mine ? 'MINE' : (c.i + 1)) + '</button>'; }
+  });
+  this._wrap(h + '</div>');
+};
+TU.scoreboard = function () {
+  var s = this.state, ranked = s.teams.map(function (t, i) { return { t: t, i: i }; }).sort(function (a, b) { return b.t.score - a.t.score; });
+  var h = this._bar() + '<div class="tu-final"><div class="tu-winbadge">' + lbIcon('trophy', 40) + '</div><div class="tu-wint">' + tuEsc(ranked[0].t.name) + ' wins</div><div class="tu-wins">' + ranked[0].t.score + ' points</div>';
+  h += '<div class="tu-rank">' + ranked.map(function (r, idx) { return '<div class="tu-team' + (idx === 0 ? ' active' : '') + '" style="display:flex;justify-content:space-between;padding:12px 14px;margin-bottom:8px"><span class="tu-tn">' + (idx + 1) + '. ' + tuEsc(r.t.name) + '</span><span class="tu-ts">' + r.t.score + '</span></div>'; }).join('') + '</div>';
+  h += '<button class="tu-next" data-tu="playAgain">Play Another Show</button></div>';
+  this._wrap(h);
+};
+TU.playAgain = function () { this.state.view = 'setup'; this.render(); };
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
