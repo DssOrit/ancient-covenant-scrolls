@@ -2,10 +2,11 @@
 
 ## Current State
 
-- Latest commit on main: `9383798` (PR #621 squash merge)
-- Cache: `acr-search-v156`
+- Latest commit on main: `388e6b5` (PR #625 squash merge)
+- Cache: `acr-search-v157`, `great-eraser-v21`
 - Branch: feature branch `claude/acr-search-content-checklist-ZgUAQ` (all PRs merged, branch stale)
-- Site: confirmed working on iPad — Enter button functional as of end of session
+- ACR Search: confirmed working on iPad — Enter button functional
+- Great Eraser: fix merged (v21) — awaiting user confirmation that splash auto-dismisses
 - Nothing uncommitted
 
 ## Built Today
@@ -25,9 +26,15 @@
 - **PR #621 — Remove stray closing brace** (acr-search-v156)
   Append script added an extra `}` after `renderFinalDaysPanel`'s closing brace. Made the entire script block unparseable — no JS ran, Enter button completely unresponsive. `node --check` confirmed clean after removal.
 
+- **PR #622 — Final Days guide entry in How To Use** (acr-search-v157)
+  Added "Final Days Pattern, Primary Source Record" section to the How To Use guide in ACR Search, covering all content added today (sky signs, frequency/sound, missing scientists, Schumann anomalies). 4 steps + tip.
+
+- **PR #625 — Fix Great Eraser HOWTO_HTML apostrophes** (great-eraser-v21)
+  Emergency fix: 7 unescaped apostrophes in `var HOWTO_HTML='...'` at JS line 71 of `GreatE/index.html` caused a `SyntaxError: Unexpected identifier 's'` that killed ALL JS execution — including `setTimeout(dismissSplash, 2000)` at line 139. Splash screen never auto-dismissed; site appeared completely broken in all browsers. Bug present since v17 (never worked). Fixed by escaping: `Ham\'s`, `Shem\'s`, `billion today\'s value paid`, `Haiti\'s`, `Strugnell\'s`, `Ha\'aretz` (x2), `Ge\'ez` (x2). `node --check` confirmed clean.
+
 ## Outstanding / Blocking
 
-- None. Site is confirmed working.
+- Confirm Great Eraser opens (splash auto-dismisses within 2 seconds of loading acrscrolls.com/GreatE).
 
 ## Pending / Parked
 
@@ -40,6 +47,9 @@
 
 ## Backups
 
+- `backup/2026-07-14-v21` — SHA `388e6b5` — created after Great Eraser fix merged (PR #625).
+  Recovery: `git checkout backup/2026-07-14-v21`
+
 - `backup/2026-07-14-v156` — SHA `9383798` — created after user confirmed Enter button working.
   Recovery: `git checkout backup/2026-07-14-v156`
 
@@ -48,16 +58,19 @@ Previous backups: `backup/2026-07-12-v144`, `backup/2026-07-11-v142`, `backup/20
 ## Today's Commit Log
 
 ```
-64e8f4c fix: remove stray closing brace that broke all JS execution (acr-search-v156)
+388e6b5 fix: escape HOWTO_HTML apostrophes — restore Great Eraser splash (great-eraser-v21)
+977f799 GreatE: add 9 chapters (CH112-CH120) — 3 docs + Cities & Ports That Profited
+1fe0bc1 ACR Search: Final Days guide entry in How to Use (acr-search-v157)
+9383798 fix: remove stray brace — restore Enter button (acr-search-v156)
 cc06f33 fix: escape apostrophes — restore Enter button (acr-search-v155)
-efcffcc fix: escape apostrophes in missing scientists JS string (Enter button broken)
 6481060 Fix JS syntax error in Final Days panel — acr-search-v154
 3e1a25e ACR Search: sound, frequency, booms and missing scientists section — Final Days panel acr-search-v153
-3fb20f7 ACR Search: update missing scientists section with 2024-2026 cluster
-1a35e01 ACR Search: sound, frequency and booms section added to Final Days panel — acr-search-v152
 11b53f6 ACR Search: sky signs section added to Final Days panel — acr-search-v151
+b1b5bff ACR Search: Final Days Pattern panel — 23 sections, acr-search-v150
 ```
 
 ## Note for Next Session
 
-All three bugs in PRs #619-#621 came from Python append scripts writing to the JS file without validation. Before any future content append to `Search/index.html`, extract the `<script>` block and run `node --check` to catch syntax errors before pushing.
+- Before any content append to `Search/index.html` or `GreatE/index.html`, extract the `<script>` block and run `node --check` to catch syntax errors before pushing.
+- Great Eraser HOWTO_HTML is a massive single-quoted JS string — any future edits to it must escape every apostrophe as `\'`.
+- The Great Eraser splash auto-dismiss is `setTimeout(dismissSplash, 2000)` at JS line 139. Any syntax error anywhere in the script block before that line will prevent the splash from ever dismissing — the site appears completely broken with no visible error.
