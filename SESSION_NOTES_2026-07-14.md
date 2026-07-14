@@ -58,6 +58,29 @@ efcffcc fix: escape apostrophes in missing scientists JS string (Enter button br
 11b53f6 ACR Search: sky signs section added to Final Days panel — acr-search-v151
 ```
 
+## Built This Session (continued — GreatE + GESTUDY)
+
+- **PR #623 — Great Eraser: 9 new chapters (CH112–CH120)** — merged to main SHA `977f799`
+  Added to Vol 3 (`GreatE/index.html` embedded `var DATA` array). Append-only. SW bumped to `great-eraser-v20`.
+  Content: Civilizational Record, Identity Erasure Apparatus, Named Institutions (Bank of England / Lloyd's / Barclays / Glasgow / Harvard / Brown / the Zong), Spanish American Cities (Cartagena / Lima / Mexico City / Veracruz), African Cities (Elmina / Gorée / Luanda / Cape Town), Cities & Ports That Profited — Britain / France / Netherlands & Caribbean / North America.
+
+- **PR #624 — Great Eraser Study: same 9 chapters** — merged to main SHA `954370b`
+  Added to `GESTUDY/data/app_data.json` Vol 3, converted to GESTUDY format. SW bumped to `gestudy-v22`.
+
+- **Incident:** Site briefly appeared stuck on splash screen after PR #623 merged. Root cause: SW transition — old v19 still active on first open. Site self-resolved once v20 installed and activated. No code error.
+
+## Standing Rule — LOCKED 2026-07-14
+
+**JS validation before every push to `GreatE/index.html`:**
+
+1. Extract the `<script>` block to a temp file
+2. Run `node --check tempfile.js`
+3. If it passes — push. If it fails — it shows the exact line number.
+
+This catches all syntax errors (unclosed strings, extra braces, bad escapes) before they reach the live site. Applies to any session that touches `GreatE/index.html`. Same rule already applies to `Search/index.html` from PRs #619–#621.
+
 ## Note for Next Session
 
-All three bugs in PRs #619-#621 came from Python append scripts writing to the JS file without validation. Before any future content append to `Search/index.html`, extract the `<script>` block and run `node --check` to catch syntax errors before pushing.
+- GreatE data is embedded in `var DATA` on line 298 of `GreatE/index.html` — NOT in the external `data/vol*.json` files (stale).
+- GESTUDY data is in `GESTUDY/data/app_data.json` (external, precached by SW). Chapter format: `{num, title, id, content:[blocks]}`.
+- Run `node --check` on the extracted script block before any push to `GreatE/index.html`.
