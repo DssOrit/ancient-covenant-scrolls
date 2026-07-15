@@ -154,17 +154,23 @@ LM.guided = [
     name:'Seven Hanging Valleys',
     area:'Carvoeiro, Algarve, Portugal',
     cc:'PT', type:'hike',
-    distanceKm:6, timeMin:'240–360', difficulty:'Easy to moderate',
-    elevGainM:150,
+    distanceKm:11.2, timeMin:'180–240', difficulty:'Moderate',
+    elevGainM:230,
     tolls:'',
     signal:'Coastal clifftop — signal is patchy. Download before you go.',
-    comfort:'Clifftop path with fenced sections. Never go past the barriers.',
+    comfort:'Clifftop out-and-back. Stay behind the barriers near cliffs and blowholes.',
+    images:[
+      { src:'routes/seven-valleys-map.png', cap:'Trail map — Marinha to Vale Centeanes' }
+    ],
     coordsApprox:true,
     waypoints:[
-      { n:1, name:'Praia da Marinha (start)', desc:'Clifftop trailhead above Marinha beach.',            lat:37.0902, lng:-8.4128, approx:false, hazard:null },
-      { n:2, name:'Benagil',                  desc:'Above the famous sea cave.',                         lat:37.0876, lng:-8.4270, approx:false, hazard:{ level:'high', text:'Unstable cliff edges. Stay behind the fences.' } },
-      { n:3, name:'Cliff blowholes',          desc:'Vertical holes in the cliffs — waves crash below.',  lat:37.0898, lng:-8.4400, approx:true,  hazard:{ level:'high', text:'Do not approach the blowholes. Cliffs are unstable.' } },
-      { n:4, name:'Praia de Vale Centeanes (finish)', desc:'The trail ends above this cove.',            lat:37.0913, lng:-8.4541, approx:false, hazard:null }
+      { n:1, name:'Praia da Marinha (start)',   desc:'Iconic cliffs and turquoise water. Car park, restrooms, cafe.', lat:37.0903, lng:-8.4127, approx:false, hazard:null },
+      { n:2, name:'Benagil Viewpoint',          desc:'Panoramic views of the Benagil coastline.',             lat:37.0888, lng:-8.4225, approx:true,  hazard:null },
+      { n:3, name:'Benagil Sea Cave (above)',   desc:'The clifftop above the world-famous sea cave.',         lat:37.0876, lng:-8.4270, approx:false, hazard:null },
+      { n:4, name:'Algar de Benagil Blowhole',  desc:'Natural blowhole where waves shoot up.',                lat:37.0898, lng:-8.4360, approx:true,  hazard:{ level:'high', text:'Waves shoot up the blowhole. Keep well back.' } },
+      { n:5, name:'Cliff Edge Section',         desc:'Breathtaking views — the most exposed stretch.',        lat:37.0925, lng:-8.4435, approx:true,  hazard:{ level:'high', text:'Unstable cliff edge. Keep a safe distance.' } },
+      { n:6, name:'Praia do Carvalho',          desc:'Small hidden beach, a good rest spot.',                 lat:37.0942, lng:-8.4475, approx:true,  hazard:null },
+      { n:7, name:'Praia de Vale Centeanes (finish)', desc:'Beautiful beach and cafes to relax and finish.',  lat:37.0955, lng:-8.4558, approx:false, hazard:null }
     ]
   },
 
