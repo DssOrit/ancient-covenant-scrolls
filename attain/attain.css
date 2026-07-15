@@ -84,6 +84,7 @@ body.theme-amber .act-card{box-shadow:0 4px 14px rgba(0,0,0,.3)}
 }
 #topnav button svg,#topnav a.lnk svg{width:20px;height:20px;flex-shrink:0}
 #topnav .lbl{font-weight:600;letter-spacing:.01em}
+#b-refresh{color:#2563eb}
 @media (max-width:540px){#topnav .lbl{display:none}}
 #tb{
   flex:1 1 auto;min-width:80px;max-width:320px;

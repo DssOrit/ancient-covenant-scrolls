@@ -103,6 +103,7 @@ body.theme-amber .act-card{box-shadow:0 4px 14px rgba(0,0,0,.3)}
 #topnav button:hover,#topnav button.on,#topnav a.lnk:hover{
   background:rgba(255,255,255,.12);color:#fff;
 }
+#b-refresh{color:#C8971F}
 #tb{
   flex:1 1 auto;min-width:80px;max-width:320px;
   color:#b8b8d8;font-size:13px;
