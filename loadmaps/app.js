@@ -342,6 +342,7 @@ function openPlace(p){
       '<div class="arrow" id="darrow" style="transform:rotate('+(br||0)+'deg)">'+ICO.up+'</div>'+
       '<div class="coordline">'+p.lat.toFixed(4)+', '+p.lng.toFixed(4)+'</div></div>'+
     galleryHTML(p.images)+
+    '<div class="wx" id="wxCard"></div>'+
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
@@ -356,6 +357,7 @@ function openPlace(p){
   showView('detail','places');
   bindBacks(v);
   bindGallery(v);
+  loadWeather(p.lat, p.lng, 'wxCard');
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
@@ -482,6 +484,7 @@ function openGuided(g){
     routeMapSVG(g)+
     '<button class="btn ghost" id="mapBtn" style="margin-bottom:14px">'+ICO.pin+' Open live map</button>'+
     gallery+
+    '<div class="wx" id="wxCard"></div>'+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
     '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
@@ -499,6 +502,7 @@ function openGuided(g){
   showView('detail', backKey);
   bindBacks(v);
   $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
+  loadWeather(g.waypoints[0].lat, g.waypoints[0].lng, 'wxCard');
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   if(el('mapBtn')) el('mapBtn').onclick=function(){ openMap({ route:g }); };
   el('sosG').onclick=function(){ doSOS(); };
@@ -656,6 +660,64 @@ function addReport(kind){
   toast(kind+' reported'+(state.pos?' here':''));
 }
 function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
+
+/* ---------------- weather (Stage 3, Open-Meteo, free/no key) ---------------- */
+var WMO = { 0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',
+  51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',56:'Freezing drizzle',57:'Freezing drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',
+  71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',
+  80:'Light showers',81:'Showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',
+  95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm' };
+function wxRainy(code){ return (code>=51&&code<=67)||(code>=80&&code<=82)||(code>=95); }
+function wxIcon(code){
+  var s='stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+  if(code<=1) return '<svg viewBox="0 0 24 24" '+s+'><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+  if(code<=48) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 10a4 4 0 010 8H7A5 5 0 117 8a6 6 0 0111 2z"/></svg>';
+  if((code>=71&&code<=77)||(code>=85&&code<=86)) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M8 20v.4M12 20v.4M16 20v.4"/></svg>';
+  if(code>=95) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M13 14l-3 4h4l-3 4"/></svg>';
+  return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M8 19l-1 2M12 19l-1 2M16 19l-1 2"/></svg>';
+}
+function parseWeather(j){
+  if(!j || !j.current) return null;
+  var c=j.current, d=j.daily||{};
+  return {
+    tempC: Math.round(c.temperature_2m),
+    code: c.weather_code,
+    desc: WMO[c.weather_code]||'—',
+    rainy: wxRainy(c.weather_code),
+    hiC: (d.temperature_2m_max&&d.temperature_2m_max.length)?Math.round(d.temperature_2m_max[0]):null,
+    loC: (d.temperature_2m_min&&d.temperature_2m_min.length)?Math.round(d.temperature_2m_min[0]):null,
+    rainPct: (d.precipitation_probability_max&&d.precipitation_probability_max.length)?d.precipitation_probability_max[0]:null
+  };
+}
+function weatherCardHTML(w, note){
+  if(!w) return '';
+  var hilo=(w.hiC!=null&&w.loC!=null)?(' · H '+w.hiC+'° L '+w.loC+'°'):'';
+  var rain=(w.rainPct!=null&&w.rainPct>0)?(' · '+w.rainPct+'% rain'):'';
+  var warn=w.rainy?'<div class="wx-warn">'+ICO.warn+'Rain around — rocks and roads get slippery.</div>':'';
+  return '<div class="wx-row"><div class="wx-ic">'+wxIcon(w.code)+'</div>'+
+    '<div><b>'+esc(w.desc)+' · '+w.tempC+'°C</b><span class="wx-sub">'+esc(hilo+rain)+(note?(' · '+note):'')+'</span></div></div>'+warn;
+}
+function loadWeather(lat, lng, elId){
+  var host=el(elId); if(!host) return;
+  var key='lm_wx_'+lat.toFixed(2)+'_'+lng.toFixed(2), cached=null;
+  try{ cached=JSON.parse(localStorage.getItem(key)||'null'); }catch(e){}
+  if(!navigator.onLine){
+    host.innerHTML = cached ? weatherCardHTML(cached.w,'last update') : '<span class="muted small">Weather updates when you are online.</span>';
+    return;
+  }
+  host.innerHTML='<span class="muted small">Loading weather…</span>';
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+
+    '&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1';
+  fetch(url).then(function(r){ return r.json(); }).then(function(j){
+    var w=parseWeather(j);
+    if(!w){ if(host) host.innerHTML='<span class="muted small">Weather unavailable.</span>'; return; }
+    if(host) host.innerHTML=weatherCardHTML(w,'now');
+    try{ localStorage.setItem(key, JSON.stringify({ w:w, t:Date.now() })); }catch(e){}
+  }).catch(function(){
+    if(host) host.innerHTML = cached ? weatherCardHTML(cached.w,'last update') : '<span class="muted small">Could not load weather.</span>';
+  });
+}
 
 /* ---------------- online / offline ---------------- */
 function updateNet(){
