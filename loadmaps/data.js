@@ -146,6 +146,94 @@ LM.guided = [
       { n:5, name:'Campo do Gerês — N205-3',    desc:'Narrower, more curves.',                      lat:41.7626, lng:-8.1900, approx:true,  hazard:{ level:'caution', text:'Narrower road, curves and some drop-offs. Slow down.' } },
       { n:6, name:'Xertelo Parking — M535',     desc:'Final 1.4 km to the parking area.',           lat:41.6984, lng:-8.1538, approx:true,  hazard:{ level:'caution', text:'Very narrow, one lane in places, drop-offs. Drive slowly.' } }
     ]
+  },
+
+  /* ===== More HIKING routes (real trailhead data, sourced) ===== */
+  {
+    id:'seven-valleys',
+    name:'Seven Hanging Valleys',
+    area:'Carvoeiro, Algarve, Portugal',
+    cc:'PT', type:'hike',
+    distanceKm:6, timeMin:'240–360', difficulty:'Easy to moderate',
+    elevGainM:150,
+    tolls:'',
+    signal:'Coastal clifftop — signal is patchy. Download before you go.',
+    comfort:'Clifftop path with fenced sections. Never go past the barriers.',
+    coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Praia da Marinha (start)', desc:'Clifftop trailhead above Marinha beach.',            lat:37.0902, lng:-8.4128, approx:false, hazard:null },
+      { n:2, name:'Benagil',                  desc:'Above the famous sea cave.',                         lat:37.0876, lng:-8.4270, approx:false, hazard:{ level:'high', text:'Unstable cliff edges. Stay behind the fences.' } },
+      { n:3, name:'Cliff blowholes',          desc:'Vertical holes in the cliffs — waves crash below.',  lat:37.0898, lng:-8.4400, approx:true,  hazard:{ level:'high', text:'Do not approach the blowholes. Cliffs are unstable.' } },
+      { n:4, name:'Praia de Vale Centeanes (finish)', desc:'The trail ends above this cove.',            lat:37.0913, lng:-8.4541, approx:false, hazard:null }
+    ]
+  },
+
+  /* ===== More DRIVING routes (real city coordinates) ===== */
+  {
+    id:'lisbon-porto', name:'Lisbon to Porto', area:'Lisbon to Porto, Portugal', cc:'PT', type:'drive',
+    distanceKm:313, timeMin:'about 180', difficulty:'Easy — wide motorway',
+    tolls:'Tolls on the A1.', signal:'Good signal along the motorway.',
+    comfort:'Wide A1 motorway the whole way. Easy driving.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Lisbon — start', desc:'Join the A1 heading north.', lat:38.7223, lng:-9.1393, approx:false, hazard:null },
+      { n:2, name:'Coimbra',        desc:'Roughly halfway. Services and fuel.', lat:40.2033, lng:-8.4103, approx:false, hazard:null },
+      { n:3, name:'Porto',          desc:'Arrive in Porto.', lat:41.1579, lng:-8.6291, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'madrid-barcelona', name:'Madrid to Barcelona', area:'Madrid to Barcelona, Spain', cc:'ES', type:'drive',
+    distanceKm:620, timeMin:'about 360', difficulty:'Easy — long motorway',
+    tolls:'The A-2 is toll-free.', signal:'Good signal along the A-2.',
+    comfort:'Long but easy. Wide motorway; take breaks.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Madrid — start', desc:'Join the A-2 heading east.', lat:40.4168, lng:-3.7038, approx:false, hazard:null },
+      { n:2, name:'Zaragoza',       desc:'Roughly halfway. Good place to rest.', lat:41.6488, lng:-0.8891, approx:false, hazard:null },
+      { n:3, name:'Barcelona',      desc:'Arrive in Barcelona.', lat:41.3874, lng:2.1686, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'paris-nice', name:'Paris to Nice', area:'Paris to Nice, France', cc:'FR', type:'drive',
+    distanceKm:930, timeMin:'about 540', difficulty:'Long — plan an overnight',
+    tolls:'Tolls on the autoroutes.', signal:'Good signal along the autoroutes.',
+    comfort:'A very long drive. Break it up; consider a stop in Lyon.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Paris — start', desc:'Head south on the A6.', lat:48.8566, lng:2.3522, approx:false, hazard:null },
+      { n:2, name:'Lyon',          desc:'Good place to break the drive.', lat:45.7640, lng:4.8357, approx:false, hazard:null },
+      { n:3, name:'Nice',          desc:'Arrive on the Riviera.', lat:43.7102, lng:7.2620, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'rome-florence', name:'Rome to Florence', area:'Rome to Florence, Italy', cc:'IT', type:'drive',
+    distanceKm:280, timeMin:'about 180', difficulty:'Easy — motorway',
+    tolls:'Tolls on the A1 autostrada.', signal:'Good signal along the A1.',
+    comfort:'Wide A1 autostrada. Easy driving.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Rome — start', desc:'Join the A1 heading north.', lat:41.9028, lng:12.4964, approx:false, hazard:null },
+      { n:2, name:'Arezzo',       desc:'Roughly two-thirds of the way.', lat:43.4633, lng:11.8797, approx:false, hazard:null },
+      { n:3, name:'Florence',     desc:'Arrive in Florence.', lat:43.7696, lng:11.2558, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'london-edinburgh', name:'London to Edinburgh', area:'London to Edinburgh, UK', cc:'GB', type:'drive',
+    distanceKm:660, timeMin:'about 450', difficulty:'Long — motorway',
+    tolls:'No tolls on this route.', signal:'Good signal along the motorways.',
+    comfort:'Long but straightforward on the A1(M) / M6. Take breaks.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'London — start', desc:'Head north on the A1(M).', lat:51.5074, lng:-0.1278, approx:false, hazard:null },
+      { n:2, name:'York',          desc:'A good midway stop.', lat:53.9600, lng:-1.0873, approx:false, hazard:null },
+      { n:3, name:'Edinburgh',     desc:'Arrive in Edinburgh.', lat:55.9533, lng:-3.1883, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'athens-delphi', name:'Athens to Delphi', area:'Athens to Delphi, Greece', cc:'GR', type:'drive',
+    distanceKm:180, timeMin:'about 150', difficulty:'Easy — some mountain road',
+    tolls:'Some tolls on the national road.', signal:'Signal drops in the mountains near Delphi.',
+    comfort:'Motorway most of the way, then a winding climb to Delphi. Drive it in daylight.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Athens — start', desc:'Head northwest toward Livadeia.', lat:37.9838, lng:23.7275, approx:false, hazard:null },
+      { n:2, name:'Livadeia',       desc:'Leave the motorway for the mountain road.', lat:38.4361, lng:22.8756, approx:false, hazard:{ level:'caution', text:'Winding mountain road ahead. Take it slow.' } },
+      { n:3, name:'Delphi',         desc:'Arrive at the ancient site.', lat:38.4824, lng:22.5010, approx:false, hazard:null }
+    ]
   }
 ];
 
