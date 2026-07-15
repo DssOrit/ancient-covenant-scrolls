@@ -186,6 +186,13 @@ function renderRoutes(type){
   v.innerHTML=html;
   $$('[data-guide]',v).forEach(function(b){ b.onclick=function(){ openGuided(byId(LM.guided,b.getAttribute('data-guide'))); }; });
 }
+function galleryHTML(images){
+  if(!images || !images.length) return '';
+  return '<div class="gallery">'+images.map(function(im){
+    return '<figure><img loading="lazy" src="'+esc(im.src)+'" alt="'+esc(im.cap)+'" data-img="'+esc(im.src)+'"><figcaption>'+esc(im.cap)+'</figcaption></figure>';
+  }).join('')+'</div>';
+}
+function bindGallery(v){ $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; }); }
 function openLightbox(src){
   var lb=document.getElementById('lightbox');
   if(!lb){
@@ -279,6 +286,7 @@ function openPlace(p){
       '<div class="bigdist"><b id="dd">'+(d!=null?fmtDist(d):'--')+'</b> <span id="ddc">'+(br!=null?('· head '+compass(br)):'')+'</span></div>'+
       '<div class="arrow" id="darrow" style="transform:rotate('+(br||0)+'deg)">'+ICO.up+'</div>'+
       '<div class="coordline">'+p.lat.toFixed(4)+', '+p.lng.toFixed(4)+'</div></div>'+
+    galleryHTML(p.images)+
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
@@ -291,6 +299,7 @@ function openPlace(p){
     '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
   showView('detail','places');
   bindBacks(v);
+  bindGallery(v);
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);

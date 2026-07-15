@@ -34,7 +34,7 @@ LM.places = [
   { id:'pt-jeronimos',name:'Jerónimos Monastery',  area:'Lisbon, Portugal',   cc:'PT', lat:38.6979, lng:-9.2065, blurb:'Grand Manueline monastery beside Belém.' },
   { id:'pt-pena',    name:'Pena Palace',            area:'Sintra, Portugal',   cc:'PT', lat:38.7876, lng:-9.3906, blurb:'Colourful romantic palace above Sintra.' },
   { id:'pt-lello',   name:'Livraria Lello',         area:'Porto, Portugal',    cc:'PT', lat:41.1470, lng:-8.6150, blurb:'Ornate historic bookshop in central Porto.' },
-  { id:'pt-coimbra', name:'University of Coimbra',  area:'Coimbra, Portugal',  cc:'PT', lat:40.2077, lng:-8.4256, blurb:'Ancient university and the Joanina Library.' },
+  { id:'pt-coimbra', name:'Coimbra',  area:'Coimbra, Portugal',  cc:'PT', lat:40.2077, lng:-8.4256, blurb:'Historic university city on the Mondego — one of Portugal’s oldest, with the Joanina Library.', images:[ { src:'places/coimbra-city.png', cap:'Coimbra city guide — attractions and walking route' } ] },
   { id:'pt-benagil', name:'Benagil Sea Cave',       area:'Algarve, Portugal',  cc:'PT', lat:37.0876, lng:-8.4270, blurb:'Sea cave with a natural skylight.' },
   { id:'pt-douro',   name:'Douro Valley',           area:'Pinhão, Portugal',   cc:'PT', lat:41.1896, lng:-7.5541, blurb:'Terraced vineyards along the Douro river.' },
 
@@ -177,24 +177,36 @@ LM.guided = [
   /* ===== More DRIVING routes (real city coordinates) ===== */
   {
     id:'lisbon-porto', name:'Lisbon to Porto', area:'Lisbon to Porto, Portugal', cc:'PT', type:'drive',
-    distanceKm:313, timeMin:'about 180', difficulty:'Easy — wide motorway',
-    tolls:'Tolls on the A1.', signal:'Good signal along the motorway.',
-    comfort:'Wide A1 motorway the whole way. Easy driving.', coordsApprox:true,
+    distanceKm:313, timeMin:'about 195', difficulty:'Easy — A1 motorway',
+    tolls:'Electronic tolls only (about €20–25). Make sure your device is active.',
+    signal:'Good signal along the A1.',
+    comfort:'Wide A1 motorway the whole way. Service areas every 40–60 km; EV charging available.',
+    images:[ { src:'routes/lisbon-porto-map.png', cap:'Route map — Lisbon to Porto (A1)' } ],
+    coordsApprox:true,
     waypoints:[
-      { n:1, name:'Lisbon — start', desc:'Join the A1 heading north.', lat:38.7223, lng:-9.1393, approx:false, hazard:null },
-      { n:2, name:'Coimbra',        desc:'Roughly halfway. Services and fuel.', lat:40.2033, lng:-8.4103, approx:false, hazard:null },
-      { n:3, name:'Porto',          desc:'Arrive in Porto.', lat:41.1579, lng:-8.6291, approx:false, hazard:null }
+      { n:1, name:'Lisbon — start',    desc:'Oriente / A1 north. Vasco da Gama Bridge start.', lat:38.7223, lng:-9.1393, approx:false, hazard:null },
+      { n:2, name:'Santarém',          desc:'Viewpoint over the Tagus valley. ~80 km.',        lat:39.2362, lng:-8.6871, approx:false, hazard:null },
+      { n:3, name:'Leiria',            desc:'Imposing medieval castle. ~130 km.',               lat:39.7436, lng:-8.8070, approx:false, hazard:null },
+      { n:4, name:'Coimbra',           desc:'One of Europe’s oldest universities. ~200 km.',    lat:40.2033, lng:-8.4103, approx:false, hazard:null },
+      { n:5, name:'Aveiro (optional)', desc:'The canals — a short detour. ~235 km.',            lat:40.6405, lng:-8.6538, approx:false, hazard:null },
+      { n:6, name:'Porto (finish)',    desc:'Unesco-listed historic riverside. ~313 km.',       lat:41.1579, lng:-8.6291, approx:false, hazard:null }
     ]
   },
   {
     id:'madrid-barcelona', name:'Madrid to Barcelona', area:'Madrid to Barcelona, Spain', cc:'ES', type:'drive',
-    distanceKm:620, timeMin:'about 360', difficulty:'Easy — long motorway',
-    tolls:'The A-2 is toll-free.', signal:'Good signal along the A-2.',
-    comfort:'Long but easy. Wide motorway; take breaks.', coordsApprox:true,
+    distanceKm:623, timeMin:'about 405', difficulty:'Easy — A-2 / E-90 motorway',
+    tolls:'Electronic tolls (VIA-T), about €30–40.',
+    signal:'Good signal along the A-2.',
+    comfort:'Long but well-maintained motorway. Service areas every 70–100 km; take breaks.',
+    images:[ { src:'routes/madrid-barcelona-map.png', cap:'Route map — Madrid to Barcelona (A-2 / E-90)' } ],
+    coordsApprox:true,
     waypoints:[
-      { n:1, name:'Madrid — start', desc:'Join the A-2 heading east.', lat:40.4168, lng:-3.7038, approx:false, hazard:null },
-      { n:2, name:'Zaragoza',       desc:'Roughly halfway. Good place to rest.', lat:41.6488, lng:-0.8891, approx:false, hazard:null },
-      { n:3, name:'Barcelona',      desc:'Arrive in Barcelona.', lat:41.3874, lng:2.1686, approx:false, hazard:null }
+      { n:1, name:'Madrid — start', desc:'M-30 / A-2 heading east.',                 lat:40.4168, lng:-3.7038, approx:false, hazard:null },
+      { n:2, name:'Guadalajara',    desc:'Panoramic views in La Alcarria. ~70 km.',  lat:40.6329, lng:-3.1667, approx:false, hazard:null },
+      { n:3, name:'Zaragoza',       desc:'Historic city on the Ebro. ~290 km.',      lat:41.6488, lng:-0.8891, approx:false, hazard:{ level:'caution', text:'Strong winds possible near Zaragoza.' } },
+      { n:4, name:'Lleida',         desc:'Medieval charm. ~520 km.',                 lat:41.6176, lng:0.6200,  approx:false, hazard:null },
+      { n:5, name:'Tarragona',      desc:'Roman ruins by the Mediterranean. ~600 km.', lat:41.1189, lng:1.2445, approx:false, hazard:null },
+      { n:6, name:'Barcelona (finish)', desc:'Mediterranean arrival. ~623 km.',      lat:41.3874, lng:2.1686,  approx:false, hazard:null }
     ]
   },
   {
