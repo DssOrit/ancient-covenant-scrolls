@@ -37,7 +37,7 @@ var ICO = {
 };
 
 var state = { view:'places', cc:'ALL', pos:null, watchId:null, voiceOn:true, voice:null,
-              curPlace:null, curGuide:null, curEmergency:'112', curSpeed:null, _lastFix:null, _lastNext:null };
+              curPlace:null, curGuide:null, detailKind:null, curEmergency:'112', curSpeed:null, _lastFix:null, _lastNext:null };
 function emergencyFor(cc){ return (LM.emergencyFor ? LM.emergencyFor(cc) : LM.EMERGENCY_DEFAULT); }
 
 ICO.star='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 5.9L12 18l-5.4 3.1 1.3-5.9-4.5-4 6-.6z"/></svg>';
@@ -220,7 +220,7 @@ function doShare(title, text){
 /* ---------------- Place detail + guide-to ---------------- */
 function openPlace(p){
   if(!p) return;
-  state.curPlace=p;
+  state.curPlace=p; state.detailKind='place';
   state.curEmergency=emergencyFor(p.cc);
   var d=state.pos?haversine(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
   var br=state.pos?bearing(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
@@ -306,26 +306,30 @@ function prepCard(g){
 }
 function openGuided(g){
   if(!g) return;
-  state.curGuide=g;
+  state.curGuide=g; state.detailKind='guide';
   state.curEmergency=emergencyFor(g.cc);
   var wl=g.waypoints.map(function(w){
     var hz = w.hazard ? '<div class="hz '+w.hazard.level+'">'+ICO.warn+esc(w.hazard.text)+'</div>' : '';
+    var meta = (w.elev!=null ? w.elev+' m' : '') + (w.approx ? ((w.elev!=null?'<br>':'')+'approx') : '');
     return '<div class="wp"><div class="wpn">'+w.n+'</div><div class="wt"><b>'+esc(w.name)+'</b>'+
       '<div class="d">'+esc(w.desc)+'</div>'+hz+'</div>'+
-      '<div class="wpmeta">'+w.elev+' m'+(w.approx?'<br>approx':'')+'</div></div>';
+      '<div class="wpmeta">'+meta+'</div></div>';
   }).join('');
+  var stopsCard = (g.stops&&g.stops.length) ? '<div class="info"><h4>Fuel &amp; stops</h4>'+
+    g.stops.map(function(s){ return '<p style="margin:0 0 4px">'+esc(s)+'</p>'; }).join('')+'</div>' : '';
   var v=el('v-detail');
   v.innerHTML=
     '<button class="back" data-back="guided">'+ICO.left+' Guided</button>'+
     '<h2 class="sec" style="margin-top:2px">'+esc(g.name)+'</h2>'+
     '<p class="muted small" style="margin:0 0 12px">'+esc(g.area)+' · '+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</p>'+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
-    elevSvg(g)+
-    '<div class="info flat"><h4>Waypoints</h4>'+wl+'</div>'+
+    (g.type==='hike'?elevSvg(g):'')+
+    '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
+    stopsCard+
     '<div class="info"><h4>Good to know</h4><p>'+esc(g.signal)+' '+esc(g.tolls)+'</p>'+
       (g.coordsApprox?'<p class="small" style="margin-top:6px">Waypoints marked <b>approx</b> are placed roughly for now — they get fine-tuned by walking the trail.</p>':'')+'</div>'+
     prepCard(g)+
-    '<button class="btn green" id="startGuide">'+ICO.play+' Start guiding</button>'+
+    '<button class="btn green" id="startGuide">'+ICO.play+' '+(g.type==='drive'?'Start driving':'Start guiding')+'</button>'+
     '<div class="row2" style="margin-top:10px">'+
       '<button class="savebtn'+(isFav(g.id)?' on':'')+'" id="favG" style="margin-top:0">'+ICO.star+'<span id="favGt">'+(isFav(g.id)?'Saved':'Save')+'</span></button>'+
       '<button class="savebtn" id="shareG" style="margin-top:0">'+ICO.share+' Share plan</button>'+
@@ -344,6 +348,7 @@ function openGuided(g){
 }
 function startGuidedLive(g){
   state.voiceOn=true; state._lastNext=null; state._lastFix=null; state.curSpeed=null; updateVoiceLabel();
+  try{ if(!audioCtx){ var _AC=window.AudioContext||window.webkitAudioContext; if(_AC) audioCtx=new _AC(); } if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); }catch(e){}
   var v=el('v-live');
   v.innerHTML=
     '<button class="back" data-back="guided-detail">'+ICO.left+' '+esc(g.name)+'</button>'+
@@ -354,6 +359,10 @@ function startGuidedLive(g){
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
     '<button class="voicebar" id="liveVoice">'+ICO.voice+'<span id="liveVoiceLabel">Voice on — Samantha</span></button>'+
+    '<button class="btn ghost" id="reportBtn" style="margin-bottom:10px">'+ICO.warn+' Report</button>'+
+    '<div class="reprow" id="reprow">'+
+      ['Hazard','Closure','Animal','Police'].map(function(k){ return '<button class="repchip" data-rep="'+k+'">'+k+'</button>'; }).join('')+
+    '</div>'+
     '<button class="btn sos" id="sosLive">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<div style="height:10px"></div>'+
     '<button class="btn ghost" id="stopGuide">Stop guiding</button>';
@@ -363,6 +372,8 @@ function startGuidedLive(g){
   updateVoiceLabel();
   el('sosLive').onclick=function(){ doSOS(); };
   el('stopGuide').onclick=function(){ stopWatch(); openGuided(g); };
+  el('reportBtn').onclick=function(){ var r=el('reprow'); r.classList.toggle('open'); };
+  $$('[data-rep]',v).forEach(function(c){ c.onclick=function(){ addReport(c.getAttribute('data-rep')); el('reprow').classList.remove('open'); }; });
   var spoken={};
   if(!('geolocation' in navigator)){ el('lives').textContent='Location is not available on this device.'; return; }
   stopWatch();
@@ -387,10 +398,11 @@ function updateGuided(g, spoken){
   var gt=el('gto'); if(gt) gt.textContent=fmtDist(dToNext);
   var gl=el('gleft'); if(gl) gl.textContent=left;
   var sp=el('speedpill'); if(sp){ var sb=sp.querySelector('b'); if(sb) sb.textContent = (state.curSpeed==null?'--':Math.round(state.curSpeed)); }
+  if(state._lastNext!==next.n && state._lastNext!=null){ chime('next'); }
   if(next.hazard && dToNext<80 && !spoken['h'+next.n]){ spoken['h'+next.n]=1; speak('Caution ahead. '+next.name+'. '+next.hazard.text, true); }
   else if(state._lastNext!==next.n){ speak((nextIdx===nearIdx?'At ':'Heading to ')+next.name+', '+fmtDist(dToNext)+'.'); }
   state._lastNext=next.n;
-  if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; speak('You have reached '+wps[wps.length-1].name+'. Take care near the water.', true); }
+  if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; chime('arrive'); speak('You have reached '+wps[wps.length-1].name+'.', true); }
 }
 
 /* ---------------- Alerts ---------------- */
@@ -399,12 +411,24 @@ function alertIcon(level){
   if(level==='red') return ICO.warn;
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 }
+function ago(t){ var s=Math.round((Date.now()-t)/1000); if(s<60) return 'just now'; var m=Math.round(s/60); if(m<60) return m+' min ago'; var h=Math.round(m/60); return h+' h ago'; }
 function renderAlerts(){
   var host=el('alertList');
-  host.innerHTML=LM.notes.map(function(n){
+  var html='<p class="muted small" style="margin:0 0 12px">Updated just now — tap the orange refresh circle any time to check again.</p>';
+  html+=LM.notes.map(function(n){
     var cls={ amber:'a-amber', red:'a-red', green:'a-green', blue:'a-blue' }[n.level]||'a-blue';
     return '<div class="alert '+cls+'"><div class="ai">'+alertIcon(n.level)+'</div><div><h4>'+esc(n.title)+'</h4><p>'+esc(n.body)+'</p></div></div>';
   }).join('');
+  var rs=reports();
+  if(rs.length){
+    html+='<div class="updated" style="margin-top:16px"><h4 style="margin:0">Your reports</h4><button id="clrRep" style="background:none;border:none;color:var(--muted);font:inherit;font-weight:700;cursor:pointer">Clear</button></div>';
+    html+=rs.map(function(r){
+      var loc = (r.lat!=null) ? (r.lat.toFixed(4)+', '+r.lng.toFixed(4)) : 'location was off';
+      return '<div class="alert a-amber"><div class="ai">'+alertIcon('amber')+'</div><div><h4>'+esc(r.kind)+'</h4><p>'+ago(r.t)+' · '+loc+'</p></div></div>';
+    }).join('');
+  }
+  host.innerHTML=html;
+  if(el('clrRep')) el('clrRep').onclick=function(){ clearReports(); renderAlerts(); };
 }
 
 /* ---------------- How to Use (with search) ---------------- */
@@ -423,6 +447,54 @@ function renderHelp(){
   box.oninput=run;
 }
 
+/* ---------------- hard refresh (the circle-arrow button) ---------------- */
+function rerenderCurrent(){
+  if(state.view==='places') renderPlaces();
+  else if(state.view==='alerts') renderAlerts();
+  else if(state.view==='detail'){
+    if(state.detailKind==='guide' && state.curGuide) openGuided(state.curGuide);
+    else if(state.detailKind==='place' && state.curPlace) openPlace(state.curPlace);
+  }
+}
+function hardRefresh(){
+  var b=el('hrefresh'); if(b){ b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin'); setTimeout(function(){ b.classList.remove('spin'); },750); }
+  updateNet();
+  ensurePos(function(){ rerenderCurrent(); });
+  rerenderCurrent();
+  toast('Refreshed');
+}
+
+/* ---------------- chimes (arrival / waypoint) ---------------- */
+var audioCtx=null;
+function chime(kind){
+  try{
+    if(!audioCtx){ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; audioCtx=new AC(); }
+    if(audioCtx.state==='suspended'){ audioCtx.resume(); }
+    function beep(freq, at, dur){
+      var o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.type='sine'; o.frequency.value=freq; o.connect(g); g.connect(audioCtx.destination);
+      var t=audioCtx.currentTime+at;
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.18,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.start(t); o.stop(t+dur+0.02);
+    }
+    if(kind==='arrive'){ beep(660,0,0.18); beep(880,0.16,0.28); }
+    else { beep(620,0,0.16); }
+  }catch(e){}
+}
+
+/* ---------------- your reports (offline hazard log) ---------------- */
+function reports(){ try{ return JSON.parse(localStorage.getItem('lm_reports')||'[]'); }catch(e){ return []; } }
+function addReport(kind){
+  var r=reports();
+  r.unshift({ kind:kind, lat:state.pos?state.pos.lat:null, lng:state.pos?state.pos.lng:null, t:Date.now() });
+  if(r.length>30) r=r.slice(0,30);
+  try{ localStorage.setItem('lm_reports', JSON.stringify(r)); }catch(e){}
+  toast(kind+' reported'+(state.pos?' here':''));
+}
+function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -438,13 +510,7 @@ function init(){
   bindVoice(el('voiceToggle')); updateVoiceLabel();
   var note=el('locNote'); if(note){ note.style.cursor='pointer'; note.addEventListener('click', function(){
     ensurePos(function(){ renderPlaces(); note.textContent='Location on — sorted by distance.'; }); }); }
-  el('hrefresh').onclick=function(){
-    var b=el('hrefresh'); b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin');
-    setTimeout(function(){ b.classList.remove('spin'); },750);
-    updateNet();
-    ensurePos(function(){ if(state.view==='places'){ renderPlaces(); } });
-    toast('Refreshed');
-  };
+  el('hrefresh').onclick=function(){ hardRefresh(); };
   $$('nav button').forEach(function(b){ b.addEventListener('click', function(){ navTo(b.getAttribute('data-nav')); }); });
   window.addEventListener('online', updateNet);
   window.addEventListener('offline', updateNet);

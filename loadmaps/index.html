@@ -211,6 +211,12 @@
   .prepbar{height:8px;border-radius:999px;background:var(--card2);overflow:hidden;margin:2px 0 12px;border:1px solid var(--line)}
   .prepbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#25b94e);width:0;transition:width .3s}
 
+  /* report chips on live guide */
+  .reprow{display:none;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .reprow.open{display:flex}
+  .repchip{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer}
+  .repchip:active{background:rgba(255,77,61,.15);border-color:rgba(255,77,61,.5);color:var(--red)}
+
   /* speed pill on live guide */
   .speedpill{display:inline-flex;align-items:baseline;gap:5px;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;margin-bottom:12px}
   .speedpill b{font-size:1.25rem} .speedpill span{font-size:.68rem;color:var(--muted);font-weight:700}

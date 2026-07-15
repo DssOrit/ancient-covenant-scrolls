@@ -34,9 +34,12 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 **Stage 2 — in progress**
 - Done: favorites ("Save" + Saved filter, on device), prep checklist per route
   (tickable, saved), speedometer on the live guide, share place / share plan,
-  per-country emergency numbers, proper PWA icons + favicon.
-- Next: turn cards for driving, report button, gas/rest/tolls per route,
-  arrival/reroute chimes.
+  per-country emergency numbers, proper PWA icons + favicon, a driving route
+  (Coimbra to Sete Lagoas: road sections, fuel/stops, tolls, comfort mode),
+  report button (offline hazard log shown in Alerts), arrival/waypoint chimes,
+  hard-refresh circle re-renders the current view.
+- Next: proper street-level turn cards (needs Stage 3 map data), gas/rest live
+  search.
 
 **Stage 3 — online extras (need a signal)** — sources researched, see below.
 
