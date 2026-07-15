@@ -41,6 +41,16 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 - Next: proper street-level turn cards (needs Stage 3 map data), gas/rest live
   search.
 
+**UX pass (dyslexia-friendly)**
+- Home screen with big glassy Drive / Hike / Places / Alerts / How-to cards so
+  road vs trail maps are obvious. Bottom nav: Home, Drive, Hike, Places.
+- Real imagery: the supplied trail maps show on the hike route and the road maps
+  on the drive route, in a swipeable gallery with tap-to-enlarge (`loadmaps/routes/`).
+- Modern transparent glass styling (blur, subtle borders), readable type, plain
+  labels. Cache `loadmaps-v6`.
+- Route images use runtime caching (cached after first online view), not the
+  install list, to keep install light.
+
 **Stage 3 — online extras (need a signal)** — sources researched, see below.
 
 **Stage 4 — innovative gaps**

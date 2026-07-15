@@ -188,6 +188,62 @@
     box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center}
   .toast.show{opacity:1}
 
+  /* ===== readable + modern glass (Load look) ===== */
+  body{font-size:16.5px;line-height:1.55}
+  main{padding:6px 16px 100px}
+  h2.sec{font-size:1.25rem;margin:16px 2px 12px}
+  .place h3{font-size:1.08rem}
+  .muted.small,.small{font-size:.9rem}
+  .btn{padding:15px;font-size:1.05rem;border-radius:16px}
+  .btn.ghost{background:rgba(255,255,255,.05);backdrop-filter:blur(8px)}
+  .card{padding:15px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(10px)}
+  .info,.elev,.comfort,.alert,.searchbar,.voicebar,.savebtn,.speedpill,.netpill{backdrop-filter:blur(10px)}
+
+  /* ===== Home screen (glassy cards) ===== */
+  .home-hi{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
+  .home-hi .logo{width:44px;height:44px;background:url(icon.png) center/contain no-repeat;flex:0 0 auto;filter:drop-shadow(0 0 8px rgba(47,216,95,.35))}
+  .home-hi b{font-size:1.3rem;display:block}
+  .home-hi span{color:var(--muted);font-size:.92rem}
+  .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .hcard{border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:9px;min-height:118px;
+    background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(12px);transition:border-color .2s,transform .1s}
+  .hcard:active{transform:scale(.99)}
+  .hcard .hi{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center}
+  .hcard .hi svg{width:25px;height:25px}
+  .hcard b{font-size:1.1rem;display:block;margin-bottom:2px}
+  .hcard span{color:var(--muted);font-size:.86rem;line-height:1.4}
+  .hcard.wide{grid-column:1/-1;flex-direction:row;align-items:center;min-height:0;gap:13px}
+  .hcard.wide .hi{flex:0 0 auto}
+  .hcard.wide .ht{flex:1}
+  .hcard.drive{border-color:rgba(61,139,255,.28)} .hcard.drive .hi{background:rgba(61,139,255,.16);color:var(--blue)}
+  .hcard.hike{border-color:rgba(47,216,95,.28)} .hcard.hike .hi{background:rgba(47,216,95,.16);color:var(--green)}
+  .hcard.places .hi{background:rgba(255,176,35,.16);color:var(--amber)}
+  .hcard.alerts .hi{background:rgba(255,77,61,.16);color:var(--red)}
+  .hcard.help .hi{background:rgba(51,214,224,.16);color:var(--cyan)}
+
+  /* hero illustration on a route (see the road / trail) */
+  .hero-scene{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px;background:#0b1120}
+  .hero-scene svg{display:block;width:100%;height:130px}
+  .hero-scene .cap{padding:9px 13px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);background:rgba(255,255,255,.03)}
+
+  /* route image gallery (the real trail / road maps) */
+  .gallery{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+  .gallery figure{margin:0;flex:0 0 auto;width:82%;max-width:340px;scroll-snap-align:start}
+  .gallery img{width:100%;border-radius:15px;border:1px solid var(--line);display:block;background:#0b1120;cursor:zoom-in}
+  .gallery figcaption{font-size:.85rem;color:var(--muted);margin-top:7px}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:16px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:88vh;border-radius:12px}
+  .lightbox .x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .lightbox .x svg{width:22px;height:22px}
+
+  /* card thumbnail (visual, not just text) */
+  .thumb{width:50px;height:50px;border-radius:13px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .thumb svg{width:26px;height:26px}
+  .thumb.drive{background:rgba(61,139,255,.16);color:var(--blue)}
+  .thumb.hike{background:rgba(47,216,95,.16);color:var(--green)}
+  .thumb.place{background:rgba(255,176,35,.16);color:var(--amber)}
+
   /* favorites star on cards + detail */
   .place{position:relative}
   .fav{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);cursor:pointer;z-index:2}
@@ -265,8 +321,11 @@
   </header>
 
   <main>
+    <!-- ============ HOME ============ -->
+    <section class="view on" id="v-home"></section>
+
     <!-- ============ PLACES ============ -->
-    <section class="view on" id="v-places">
+    <section class="view" id="v-places">
       <div class="searchbar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
         <input id="q" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search a place or trail">
@@ -309,17 +368,17 @@
   </main>
 
   <nav>
-    <button class="on" data-nav="places" aria-label="Places">
+    <button class="on" data-nav="home" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Home
+    </button>
+    <button data-nav="drive" aria-label="Drive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>Drive
+    </button>
+    <button data-nav="hike" aria-label="Hike">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>Hike
+    </button>
+    <button data-nav="places" aria-label="Places">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Places
-    </button>
-    <button data-nav="guided" aria-label="Guided">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>Guided
-    </button>
-    <button data-nav="alerts" aria-label="Alerts">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17v.4"/></svg>Alerts
-    </button>
-    <button data-nav="help" aria-label="How to Use">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>How to Use
     </button>
   </nav>
 </div>

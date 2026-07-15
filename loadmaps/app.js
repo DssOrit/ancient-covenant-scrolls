@@ -43,6 +43,11 @@ function emergencyFor(cc){ return (LM.emergencyFor ? LM.emergencyFor(cc) : LM.EM
 ICO.star='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 5.9L12 18l-5.4 3.1 1.3-5.9-4.5-4 6-.6z"/></svg>';
 ICO.check='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 ICO.share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>';
+ICO.car='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>';
+ICO.hiker='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>';
+ICO.pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>';
+ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -144,10 +149,53 @@ function showView(id, navKey){
 }
 function navTo(key){
   stopWatch();
-  if(key==='places'){ renderPlaces(); showView('places','places'); }
-  else if(key==='guided'){ renderGuidedList(); showView('guided','guided'); }
-  else if(key==='alerts'){ renderAlerts(); showView('alerts','alerts'); }
-  else if(key==='help'){ showView('help','help'); }
+  if(key==='home'){ renderHome(); showView('home','home'); }
+  else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
+  else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
+  else if(key==='places'){ renderPlaces(); showView('places','places'); }
+  else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
+  else if(key==='help'){ renderHelp(); showView('help','home'); }
+}
+function renderHome(){
+  var v=el('v-home');
+  v.innerHTML=
+    '<div class="home-hi"><div class="logo"></div><div><b>Load Maps</b><span>Where do you want to go?</span></div></div>'+
+    '<div class="home-grid">'+
+      '<button class="hcard drive" data-go="drive"><div class="hi">'+ICO.car+'</div><b>Drive</b><span>Road routes with directions</span></button>'+
+      '<button class="hcard hike" data-go="hike"><div class="hi">'+ICO.hiker+'</div><b>Hike</b><span>Trail routes and safety</span></button>'+
+      '<button class="hcard places wide" data-go="places"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Explore places</b><span>Famous places to guide you to</span></div></button>'+
+      '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
+      '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
+    '</div>';
+  $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ navTo(b.getAttribute('data-go')); }; });
+}
+function routeThumb(type){ return '<div class="thumb '+(type==='drive'?'drive':'hike')+'">'+(type==='drive'?ICO.car:ICO.hiker)+'</div>'; }
+function renderRoutes(type){
+  var v=el('v-guided');
+  var list=LM.guided.filter(function(g){ return (g.type||'hike')===type; });
+  var title=type==='drive'?'Road routes':'Trail routes';
+  var sub=type==='drive'?'Driving directions with road cautions and stops.':'Walking trails with waypoints and hazard warnings.';
+  var html='<h2 class="sec">'+title+'</h2><p class="muted small" style="margin:0 0 12px">'+sub+'</p>';
+  if(!list.length){ html+='<div class="info flat"><p class="muted">More '+title.toLowerCase()+' coming soon.</p></div>'; }
+  html+=list.map(function(g){
+    return '<button class="card place" data-guide="'+g.id+'"><div class="top">'+routeThumb(g.type)+
+      '<div><h3>'+esc(g.name)+'</h3><div class="area">'+esc(g.area)+'</div></div></div>'+
+      '<div class="muted small" style="margin-top:8px">'+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</div>'+
+      '<span class="tag '+(g.type==='drive'?'drive':'hike')+'">'+(g.type==='drive'?'Drive':'Hike')+'</span><span class="tag ok">Offline ready</span></button>';
+  }).join('');
+  v.innerHTML=html;
+  $$('[data-guide]',v).forEach(function(b){ b.onclick=function(){ openGuided(byId(LM.guided,b.getAttribute('data-guide'))); }; });
+}
+function openLightbox(src){
+  var lb=document.getElementById('lightbox');
+  if(!lb){
+    lb=document.createElement('div'); lb.id='lightbox'; lb.className='lightbox';
+    lb.innerHTML='<button class="x" aria-label="Close">'+ICO.x+'</button><img alt="">';
+    document.body.appendChild(lb);
+    lb.addEventListener('click',function(e){ if(e.target===lb || (e.target.closest && e.target.closest('.x'))) lb.classList.remove('open'); });
+  }
+  lb.querySelector('img').src=src;
+  lb.classList.add('open');
 }
 function bindBacks(scope){
   $$('[data-back]',scope).forEach(function(b){
@@ -317,11 +365,17 @@ function openGuided(g){
   }).join('');
   var stopsCard = (g.stops&&g.stops.length) ? '<div class="info"><h4>Fuel &amp; stops</h4>'+
     g.stops.map(function(s){ return '<p style="margin:0 0 4px">'+esc(s)+'</p>'; }).join('')+'</div>' : '';
+  var gallery = (g.images&&g.images.length) ? '<div class="gallery">'+g.images.map(function(im){
+    return '<figure><img loading="lazy" src="'+esc(im.src)+'" alt="'+esc(im.cap)+'" data-img="'+esc(im.src)+'"><figcaption>'+esc(im.cap)+'</figcaption></figure>';
+  }).join('')+'</div>' : '';
+  var backKey = (g.type==='drive'?'drive':'hike');
+  var backLabel = (g.type==='drive'?'Drive':'Hike');
   var v=el('v-detail');
   v.innerHTML=
-    '<button class="back" data-back="guided">'+ICO.left+' Guided</button>'+
+    '<button class="back" data-back="'+backKey+'">'+ICO.left+' '+backLabel+'</button>'+
     '<h2 class="sec" style="margin-top:2px">'+esc(g.name)+'</h2>'+
     '<p class="muted small" style="margin:0 0 12px">'+esc(g.area)+' · '+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</p>'+
+    gallery+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
     '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
@@ -336,8 +390,9 @@ function openGuided(g){
     '</div>'+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosG">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>';
-  showView('detail','guided');
+  showView('detail', backKey);
   bindBacks(v);
+  $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   el('sosG').onclick=function(){ doSOS(); };
   el('favG').onclick=function(){ toggleFav(g.id); var on=isFav(g.id); el('favG').classList.toggle('on',on); el('favGt').textContent=on?'Saved':'Save'; };
@@ -366,7 +421,7 @@ function startGuidedLive(g){
     '<button class="btn sos" id="sosLive">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<div style="height:10px"></div>'+
     '<button class="btn ghost" id="stopGuide">Stop guiding</button>';
-  showView('live','guided');
+  showView('live', (g.type==='drive'?'drive':'hike'));
   bindBacks(v);
   bindVoice(el('liveVoice'));
   updateVoiceLabel();
@@ -505,7 +560,7 @@ function updateNet(){
 
 /* ---------------- init ---------------- */
 function init(){
-  renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
+  renderHome(); renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
   var q=el('q'); if(q) q.addEventListener('input', renderPlaces);
   bindVoice(el('voiceToggle')); updateVoiceLabel();
   var note=el('locNote'); if(note){ note.style.cursor='pointer'; note.addEventListener('click', function(){

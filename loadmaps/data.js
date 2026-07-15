@@ -104,6 +104,11 @@ LM.guided = [
     tolls:'No tolls on the drive in.',
     signal:'No mobile signal on the trail — download before you go.',
     comfort:'Wide, safe start. First caution at the stone bridge.',
+    images:[
+      { src:'routes/sete-trail-map.jpg',    cap:'Trail map — parking to the water' },
+      { src:'routes/sete-safety-map.png',   cap:'Detailed safety map and guide' },
+      { src:'routes/sete-parents-guide.png',cap:'Safety guide — where it is safe' }
+    ],
     coordsApprox:true, // waypoints below the parking are placed approximately
     waypoints:[
       { n:1, name:'Parking Area',       desc:'Free parking in Xertelo. Restrooms and info board.', lat:41.6984, lng:-8.1538, elev:430, approx:false, hazard:null },
@@ -127,6 +132,10 @@ LM.guided = [
     tolls:'No tolls on this route.',
     signal:'Signal drops near the park — download before you go.',
     comfort:'Wide highways almost the whole way. Only the last road (M535) is narrow.',
+    images:[
+      { src:'routes/drive-scenic-safe.png', cap:'Scenic and safe drive — roads to avoid' },
+      { src:'routes/drive-comfort-map.png', cap:'Driver comfort roadmap' }
+    ],
     coordsApprox:true, // section points sit on the towns along the way
     stops:[ 'Fuel: Coimbra, Porto, Braga, Terras de Bouro.', 'No fuel or shops near the park — fill up in Terras de Bouro.' ],
     waypoints:[
