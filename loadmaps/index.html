@@ -222,11 +222,18 @@
   .hcard.alerts .hi{background:rgba(255,77,61,.16);color:var(--red)}
   .hcard.help .hi{background:rgba(51,214,224,.16);color:var(--cyan)}
   .hcard.livemap .hi{background:rgba(47,216,95,.16);color:var(--green)}
+  .hcard.nearby .hi{background:rgba(255,176,35,.16);color:var(--amber)}
 
   /* hero illustration on a route (see the road / trail) */
   .hero-scene{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px;background:#0b1120}
   .hero-scene svg{display:block;width:100%;height:130px}
   .hero-scene .cap{padding:9px 13px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);background:rgba(255,255,255,.03)}
+
+  /* nearby POI categories */
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .cat{display:flex;align-items:center;gap:9px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;padding:13px;font:inherit;font-weight:700;font-size:.95rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);text-align:left}
+  .cat svg{width:21px;height:21px;color:var(--amber);flex:0 0 auto}
+  .cat.on{border-color:rgba(255,176,35,.5);background:rgba(255,176,35,.12)}
 
   /* weather card */
   .wx{margin-bottom:12px;min-height:2px}
@@ -389,6 +396,9 @@
       <div class="banner">Live weather, fire watch and traffic arrive in the next update. For now these are the <b>route notes</b> saved with each place, so they work with no signal.</div>
       <div id="alertList"></div>
     </section>
+
+    <!-- ============ NEAR ME (POI categories) ============ -->
+    <section class="view" id="v-nearby"></section>
 
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
