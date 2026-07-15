@@ -54,6 +54,17 @@ function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); 
 function isFav(id){ return favs().indexOf(id)>=0; }
 function toggleFav(id){ var f=favs(), i=f.indexOf(id); if(i>=0) f.splice(i,1); else f.push(id); try{ localStorage.setItem('lm_favs', JSON.stringify(f)); }catch(e){} }
 
+/* custom pins (your own saved places, on the device) */
+function getPins(){ try{ return JSON.parse(localStorage.getItem('lm_pins')||'[]'); }catch(e){ return []; } }
+function savePins(a){ try{ localStorage.setItem('lm_pins', JSON.stringify(a)); }catch(e){} }
+function addPin(lat, lng, name){
+  var a=getPins();
+  var id='pin-'+Math.abs(Math.round(lat*10000))+'-'+Math.abs(Math.round(lng*10000))+'-'+a.length;
+  a.push({ id:id, name:name||('Pin '+(a.length+1)), area:'Your pin', cc:'', lat:lat, lng:lng, pin:true });
+  savePins(a); return a;
+}
+function removePin(id){ savePins(getPins().filter(function(p){ return p.id!==id; })); }
+
 /* prep checklist state */
 function getPrep(id){ try{ return JSON.parse(localStorage.getItem('lm_prep_'+id)||'[]'); }catch(e){ return []; } }
 function setPrep(id, arr){ try{ localStorage.setItem('lm_prep_'+id, JSON.stringify(arr)); }catch(e){} }
@@ -152,7 +163,7 @@ function navTo(key){
   if(key==='home'){ renderHome(); showView('home','home'); }
   else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
-  else if(key==='places'){ renderPlaces(); showView('places','places'); }
+  else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -241,6 +252,7 @@ function openMap(opts){
     L.marker([p.lat,p.lng]).bindPopup('<b>'+esc(p.name)+'</b>').addTo(grp2);
     grp2.addTo(LMap.map); LMap.routeLayer=grp2; center=[p.lat,p.lng];
   } else if(state.pos){ center=[state.pos.lat,state.pos.lng]; }
+  renderPins();
   el('mapTitle').textContent=title;
   setTimeout(function(){
     LMap.map.invalidateSize();
@@ -248,6 +260,15 @@ function openMap(opts){
     else if(center) LMap.map.setView(center, 14);
   }, 80);
   startMapLocate();
+}
+function renderPins(){
+  if(!LMap.map) return;
+  if(LMap.pinLayer){ LMap.map.removeLayer(LMap.pinLayer); }
+  LMap.pinLayer=L.layerGroup();
+  getPins().forEach(function(pn){
+    L.marker([pn.lat,pn.lng]).bindPopup('<b>'+esc(pn.name)+'</b><br>your pin').addTo(LMap.pinLayer);
+  });
+  LMap.pinLayer.addTo(LMap.map);
 }
 function closeMap(){ el('mapwrap').classList.remove('open'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
 function startMapLocate(){
@@ -276,6 +297,8 @@ function renderChips(){
   var fc=favs().length;
   var html='<button class="chip'+(state.cc==='ALL'?' on':'')+'" data-cc="ALL">All</button>';
   html+='<button class="chip fav-chip'+(state.cc==='FAV'?' on':'')+'" data-cc="FAV">Saved'+(fc?(' '+fc):'')+'</button>';
+  var pc=getPins().length;
+  html+='<button class="chip fav-chip'+(state.cc==='PINS'?' on':'')+'" data-cc="PINS">My pins'+(pc?(' '+pc):'')+'</button>';
   LM.countries.forEach(function(k){ html+='<button class="chip'+(state.cc===k.cc?' on':'')+'" data-cc="'+k.cc+'">'+esc(k.name)+'</button>'; });
   c.innerHTML=html;
   $$('.chip',c).forEach(function(b){ b.onclick=function(){ state.cc=b.getAttribute('data-cc'); renderChips(); renderPlaces(); }; });
@@ -288,9 +311,12 @@ function allItems(){
 }
 function renderPlaces(){
   var q=((el('q')&&el('q').value)||'').trim().toLowerCase();
-  var items=allItems().filter(function(it){
+  var base = state.cc==='PINS'
+    ? getPins().map(function(pn){ return { kind:'pin', ref:pn, name:pn.name, area:pn.area, cc:pn.cc, lat:pn.lat, lng:pn.lng, blurb:pn.lat.toFixed(4)+', '+pn.lng.toFixed(4) }; })
+    : allItems();
+  var items=base.filter(function(it){
     if(state.cc==='FAV'){ if(!isFav(it.ref.id)) return false; }
-    else if(state.cc!=='ALL' && it.cc!==state.cc) return false;
+    else if(state.cc!=='ALL' && state.cc!=='PINS' && it.cc!==state.cc) return false;
     if(q){ if((it.name+' '+it.area+' '+it.blurb).toLowerCase().indexOf(q)<0) return false; }
     return true;
   });
@@ -299,27 +325,32 @@ function renderPlaces(){
   if(!items.length){
     host.innerHTML = state.cc==='FAV'
       ? '<div class="info flat"><p class="muted">No saved places yet. Tap the star on any place to save it here.</p></div>'
-      : '<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>';
+      : (state.cc==='PINS'
+        ? '<div class="info flat"><p class="muted">No pins yet. Open the <b>Live map</b> and tap <b>Drop pin</b> to save your own spot.</p></div>'
+        : '<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>');
     return;
   }
   host.innerHTML=items.map(function(it){
     var dist='';
     if(state.pos){ var d=haversine(state.pos.lat,state.pos.lng,it.lat,it.lng), br=bearing(state.pos.lat,state.pos.lng,it.lat,it.lng);
       dist='<div class="dist"><b>'+fmtDist(d)+'</b><span>'+compass(br)+'</span></div>'; }
+    var flag = it.kind==='pin' ? 'PIN' : esc(it.cc);
     var tags = it.kind==='guided'
       ? '<span class="tag guide">Guided route</span><span class="tag ok">Offline ready</span>'
-      : '<span class="tag">'+esc(ccName(it.cc))+'</span>';
-    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'">'+
-      '<span class="fav'+(isFav(it.ref.id)?' on':'')+'" data-fav="'+it.ref.id+'" role="button" aria-label="Save">'+ICO.star+'</span>'+
+      : (it.kind==='pin' ? '<span class="tag">Your pin</span>' : '<span class="tag">'+esc(ccName(it.cc))+'</span>');
+    var star = it.kind==='pin' ? '' : '<span class="fav'+(isFav(it.ref.id)?' on':'')+'" data-fav="'+it.ref.id+'" role="button" aria-label="Save">'+ICO.star+'</span>';
+    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'">'+ star +
       '<div class="top">'+
-      '<div class="flag">'+esc(it.cc)+'</div>'+
+      '<div class="flag">'+flag+'</div>'+
       '<div><h3>'+esc(it.name)+'</h3><div class="area">'+esc(it.area)+'</div></div>'+ dist +
       '</div><div class="muted small" style="margin-top:8px">'+esc(it.blurb)+'</div>'+ tags +'</button>';
   }).join('');
   $$('[data-fav]',host).forEach(function(s){ s.onclick=function(e){ e.stopPropagation(); e.preventDefault();
     toggleFav(s.getAttribute('data-fav')); renderChips(); renderPlaces(); }; });
   $$('[data-open]',host).forEach(function(b){ b.onclick=function(){ var pr=b.getAttribute('data-open').split(':');
-    if(pr[0]==='guided'){ openGuided(byId(LM.guided,pr[1])); } else { openPlace(byId(LM.places,pr[1])); } }; });
+    if(pr[0]==='guided'){ openGuided(byId(LM.guided,pr[1])); }
+    else if(pr[0]==='pin'){ openPlace(byId(getPins(),pr[1])); }
+    else { openPlace(byId(LM.places,pr[1])); } }; });
 }
 function doShare(title, text){
   if(navigator.share){ navigator.share({title:title, text:text}).catch(function(){}); }
@@ -351,6 +382,7 @@ function openPlace(p){
       '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
     '</div>'+
     '<button class="btn ghost" id="placeMapBtn" style="margin-top:10px">'+ICO.pin+' Show on live map</button>'+
+    (p.pin ? '<button class="btn ghost" id="rmPinBtn" style="margin-top:10px;color:var(--red)">Remove pin</button>' : '')+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
@@ -364,6 +396,7 @@ function openPlace(p){
     el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
   el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
   if(el('placeMapBtn')) el('placeMapBtn').onclick=function(){ openMap({ place:p }); };
+  if(el('rmPinBtn')) el('rmPinBtn').onclick=function(){ removePin(p.id); toast('Pin removed'); state.cc='PINS'; renderChips(); navTo('places'); };
 }
 function startPlaceGuide(p){
   state.voiceOn=true; updateVoiceLabel();
@@ -748,6 +781,14 @@ function init(){
   if(el('mapRecenter')) el('mapRecenter').onclick=function(){
     if(LMap.meMarker){ LMap.map.setView(LMap.meMarker.getLatLng(), 15); }
     else { ensurePos(function(){ if(state.pos && LMap.map) LMap.map.setView([state.pos.lat,state.pos.lng], 15); }); }
+  };
+  if(el('mapDrop')) el('mapDrop').onclick=function(){
+    if(!LMap.map) return;
+    var c=LMap.map.getCenter();
+    var name=null;
+    try{ name=window.prompt('Name this pin', 'My spot'); }catch(e){}
+    if(name===null) name='My spot';
+    addPin(c.lat, c.lng, name.trim()||'My spot'); renderPins(); toast('Pin saved to My pins');
   };
 }
 init();
