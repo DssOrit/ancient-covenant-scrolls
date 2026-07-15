@@ -147,3 +147,45 @@ e8c6198 Load AI boot intro + OCC How-to instant search (#575)
 - Merged as 8edeb59. Backup: backup/2026-07-15-loadmaps-v6.
 - Known: place catalog still has no photos (only the 2 Sete Lagoas routes have real
   imagery). CodeQL check red is the known benign config-only fail (real Analyze passed).
+
+---
+
+## NIGHT WRAP — Load Maps full session (2026-07-15)
+
+### State
+- `origin/main` HEAD: `2b9288c` — Load Maps stack (#650). All Load Maps PRs merged.
+- Load Maps cache: `loadmaps-v20`. Live at `https://acrscrolls.com/loadmaps/` (verify on deploy).
+- Branch reset to origin/main; nothing uncommitted.
+
+### Load Maps — what exists now (built this session, PRs #639 #640 #647 #648 #649 #650)
+- Offline-first PWA at `/loadmaps`. Home screen (Drive / Hike / Places / Near me / Alerts / How to use / Live map / Ask). Bottom nav Home/Drive/Hike/Places. Glassy dark neon theme, auto intro + brand splash, installable, favicons/icons.
+- Places catalog (~55): landmarks across PT/ES/GB/FR/IT/GR + PT city guides with real imagery (Coimbra, Porto, Aveiro, Lisbon, Cascais, Braga, Setúbal, Albufeira, Faro). Per-country emergency numbers.
+- Guided routes: Sete Lagoas (hike, real trail map + logo fixed), Coimbra→Sete Lagoas (drive), Seven Hanging Valleys (hike), + 6 city-to-city drives (Lisbon→Porto & Madrid→Barcelona have real road maps). Auto SVG route map from coords; real photo-map galleries (tap to enlarge, on routes AND places).
+- Live guide: GPS position, Samantha voice, spoken hazards, speedometer, elevation, comfort mode, chimes, report button (offline hazard log → Alerts).
+- Favorites/Save, prep checklist, share, custom pins (My pins), Near me POI (10 categories via Overpass).
+- MAP STACK (all free/no key): Leaflet + OpenFreeMap vector (self-hosted MapLibre, `vendor/maplibre/`, OSM-raster fallback if no WebGL) + Esri satellite toggle. Valhalla multi-modal routing (drive/walk/cycle mode bar). Photon search-anywhere. Live weather (Open-Meteo).
+- Wired, need keys: Fire watch (`functions/api/loadmaps/fire.js`, env `FIRMS_KEY`), AI assistant (`functions/api/loadmaps/ai.js`, env `AI_KEY`/`AI_MODEL`, OpenRouter). "Ask Load Maps" home card. Keys go in Cloudflare env only.
+
+### VERIFY ON IPAD (couldn't test in sandbox — no WebGL / no external network)
+- Open `/loadmaps/`: intro+splash, allow location.
+- Live map: does the OpenFreeMap **vector** map render? (fallback is OSM raster.) Satellite toggle. Drop pin.
+- Directions (drive/walk/cycle) via Valhalla draw + show km/min.
+- Search anywhere (type a foreign city), city-guide galleries, weather line on a route/place.
+
+### TO SWITCH ON (Cloudflare Pages -> Settings -> Environment variables)
+- `FIRMS_KEY` = free NASA FIRMS map key (firms.modaps.eosdis.nasa.gov/api/map_key/) -> fire watch
+- `AI_KEY` = OpenRouter key (openrouter.ai/keys), optional `AI_MODEL` -> assistant. (User dislikes Groq; using OpenRouter. Set a free model if cost-averse.)
+
+### TOMORROW — plan (from the big research doc)
+1. Free/no-key tranche: weather map overlay (rain/cloud tiles), isochrones (Valhalla), GPX import/export, Turf.js spatial ("X within 5km of route"), elevation profile for routed trips.
+2. Crowdsourced hazard layer — build on **Cloudflare D1** (NOT Supabase; keep one-repo/infra per rule 10). Pin -> hazard type -> live GeoJSON layer.
+3. AI natural-language routing (once AI key set): "nearest pharmacy open after 8pm" -> intent -> Valhalla.
+4. Offline map packs (PMTiles + OPFS) — I write loader; region tile file must be generated once (sandbox can't download OSM); hosts free in repo/Pages.
+5. AR navigation (WebXR + A-Frame) — heavy/experimental; do as a standalone prototype after core is solid.
+
+### Capability gaps this session
+- Sandbox: no WebGL (can't verify MapLibre vector render), egress blocks image hosts + map/API servers (Wikimedia, tile servers, Open-Meteo, OSRM/Valhalla, Overpass, Photon, FIRMS, OpenRouter) — all verified via mocks; live paths run on device/Cloudflare.
+- No image tools (ImageMagick/sharp) — used headless Chromium for favicons/icons, logo compositing, and splitting the 3-in-1 city image.
+
+### Backups (today)
+- `backup/2026-07-15-loadmaps-v20` @ `2b9288c` (tonight's tip). Also v14/v16/v17 earlier. Recover: `git checkout backup/2026-07-15-loadmaps-v20`.
