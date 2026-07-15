@@ -14,8 +14,19 @@ LM.countries = [
   { cc:'GR', name:'Greece' }
 ];
 
-/* Every listed country uses 112 (EU-wide emergency number). */
+/* Per-country emergency number. Each place uses its own country's number.
+   Only verified numbers are listed; anything not listed falls back to 112.
+   When a new country is added, add its verified number here too. */
 LM.EMERGENCY_DEFAULT = '112';
+LM.emergencyByCC = {
+  // Europe — 112 is the single EU-wide emergency number (also works in the UK)
+  PT:'112', ES:'112', GB:'112', FR:'112', IT:'112', GR:'112',
+  DE:'112', IE:'112', NL:'112', BE:'112', AT:'112', CH:'112',
+  SE:'112', NO:'112', DK:'112', FI:'112', PL:'112', CZ:'112', HR:'112',
+  // Elsewhere — single national emergency numbers (verified)
+  US:'911', CA:'911', MX:'911', AU:'000', NZ:'111'
+};
+LM.emergencyFor = function(cc){ return (LM.emergencyByCC && LM.emergencyByCC[cc]) || LM.EMERGENCY_DEFAULT; };
 
 LM.places = [
   // ---------- Portugal ----------

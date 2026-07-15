@@ -37,7 +37,8 @@ var ICO = {
 };
 
 var state = { view:'places', cc:'ALL', pos:null, watchId:null, voiceOn:true, voice:null,
-              curPlace:null, curGuide:null, _lastNext:null };
+              curPlace:null, curGuide:null, curEmergency:'112', _lastNext:null };
+function emergencyFor(cc){ return (LM.emergencyFor ? LM.emergencyFor(cc) : LM.EMERGENCY_DEFAULT); }
 
 /* ---------------- geo ---------------- */
 function toRad(d){ return d*Math.PI/180; }
@@ -177,6 +178,7 @@ function renderPlaces(){
 function openPlace(p){
   if(!p) return;
   state.curPlace=p;
+  state.curEmergency=emergencyFor(p.cc);
   var d=state.pos?haversine(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
   var br=state.pos?bearing(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
   var v=el('v-detail');
@@ -190,8 +192,8 @@ function openPlace(p){
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
     '<div style="height:10px"></div>'+
-    '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(LM.EMERGENCY_DEFAULT)+'</button>'+
-    '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(LM.EMERGENCY_DEFAULT)+' and shows your coordinates to read out.</p>';
+    '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
+    '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
   showView('detail','places');
   bindBacks(v);
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
@@ -217,8 +219,9 @@ function startPlaceGuide(p){
 }
 function doSOS(){
   var coords = state.pos ? (state.pos.lat.toFixed(4)+', '+state.pos.lng.toFixed(4)) : 'unknown — enable location';
-  toast('Your location: '+coords);
-  try{ window.location.href='tel:'+LM.EMERGENCY_DEFAULT; }catch(e){}
+  var num = state.curEmergency || LM.EMERGENCY_DEFAULT;
+  toast('Calling '+num+' · your location: '+coords);
+  try{ window.location.href='tel:'+num; }catch(e){}
 }
 
 /* ---------------- Guided routes ---------------- */
@@ -247,6 +250,7 @@ function elevSvg(g){
 function openGuided(g){
   if(!g) return;
   state.curGuide=g;
+  state.curEmergency=emergencyFor(g.cc);
   var wl=g.waypoints.map(function(w){
     var hz = w.hazard ? '<div class="hz '+w.hazard.level+'">'+ICO.warn+esc(w.hazard.text)+'</div>' : '';
     return '<div class="wp"><div class="wpn">'+w.n+'</div><div class="wt"><b>'+esc(w.name)+'</b>'+
@@ -265,7 +269,7 @@ function openGuided(g){
       (g.coordsApprox?'<p class="small" style="margin-top:6px">Waypoints marked <b>approx</b> are placed roughly for now — they get fine-tuned by walking the trail.</p>':'')+'</div>'+
     '<button class="btn green" id="startGuide">'+ICO.play+' Start guiding</button>'+
     '<div style="height:10px"></div>'+
-    '<button class="btn sos" id="sosG">'+ICO.phone+' Emergency '+esc(LM.EMERGENCY_DEFAULT)+'</button>';
+    '<button class="btn sos" id="sosG">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>';
   showView('detail','guided');
   bindBacks(v);
   el('startGuide').onclick=function(){ startGuidedLive(g); };
@@ -282,7 +286,7 @@ function startGuidedLive(g){
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
     '<button class="voicebar" id="liveVoice">'+ICO.voice+'<span id="liveVoiceLabel">Voice on — Samantha</span></button>'+
-    '<button class="btn sos" id="sosLive">'+ICO.phone+' Emergency '+esc(LM.EMERGENCY_DEFAULT)+'</button>'+
+    '<button class="btn sos" id="sosLive">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<div style="height:10px"></div>'+
     '<button class="btn ghost" id="stopGuide">Stop guiding</button>';
   showView('live','guided');
