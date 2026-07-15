@@ -260,6 +260,9 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
 .sun-time-icon.set { color: var(--orange); }
 .sun-time-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .sun-time-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); }
+.sun-clock-sub { font-size: 12px; color: var(--gold); margin-top: 3px; font-family: var(--mono); font-weight: 600; }
+#dst-banner { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--text2); line-height: 1.6; display: none; }
+#dst-banner b { color: var(--gold); display: block; margin-bottom: 4px; font-size: 13px; }
 .sun-progress-bar {
   margin-top: 16px; height: 6px; background: rgba(255,255,255,0.06);
   border-radius: 6px; overflow: hidden; position: relative;
@@ -868,12 +871,14 @@ select.form-input option { background: var(--surface2); }
         <div class="sun-widget-title">
           <i class="ri-sun-line"></i> Today — <span id="sun-date-label"></span>
         </div>
+        <div id="dst-banner"></div>
         <div class="sun-times">
           <div class="sun-time-item">
             <i class="ri-sun-line sun-time-icon"></i>
             <div>
               <div class="sun-time-label">Sunrise</div>
               <div class="sun-time-val" id="sunrise-time">--:--</div>
+              <div class="sun-clock-sub" id="sunrise-clock"></div>
             </div>
           </div>
           <div class="sun-time-item">
@@ -881,6 +886,7 @@ select.form-input option { background: var(--surface2); }
             <div>
               <div class="sun-time-label">Sunset</div>
               <div class="sun-time-val" id="sunset-time">--:--</div>
+              <div class="sun-clock-sub" id="sunset-clock"></div>
             </div>
           </div>
           <div class="sun-time-item">
@@ -888,6 +894,7 @@ select.form-input option { background: var(--surface2); }
             <div>
               <div class="sun-time-label">Nightfall</div>
               <div class="sun-time-val" id="nightfall-time">--:--</div>
+              <div class="sun-clock-sub" id="nightfall-clock"></div>
             </div>
           </div>
           <div class="sun-time-item">
@@ -907,7 +914,7 @@ select.form-input option { background: var(--surface2); }
 
       <div class="solar-true-note">
         <div class="solar-true-note-title">True Solar Time</div>
-        <div class="solar-true-note-body">Times shown are calculated from the sun's actual position at this location. During government Daylight Saving Time, the official clock runs one hour ahead of true solar time. ACR Solar does not follow the government clock offset. The times here reflect when the sun actually rises and sets, not when the government says it does.</div>
+        <div class="solar-true-note-body">Times shown are true solar times — calculated from the sun's actual position at this location. During summer time (government DST), your device clock runs ahead of true solar time. When that is active, a <b>clock:</b> label appears below each time above showing the matching time on your device clock. That is the time to look for when you go to pray.</div>
       </div>
 
       <div class="solar-dst-panel">
@@ -1787,6 +1794,12 @@ function resetLocation() {
 }
 
 // Sun position calculations (simplified but accurate to ~minutes)
+function getDSTHours() {
+  var jan = new Date(new Date().getFullYear(), 0, 15);
+  var now = new Date();
+  return (jan.getTimezoneOffset() - now.getTimezoneOffset()) / 60;
+}
+
 function getSunTimes(date, lat, lon, utcOffset) {
   var J2000 = 2451545.0;
   var JD = date.getTime()/86400000 + 2440587.5;
@@ -1858,10 +1871,38 @@ function renderSunView() {
   var dlH = Math.floor(dl), dlM = Math.round((dl - dlH) * 60);
   document.getElementById('day-length').textContent = dlH + 'h ' + pad(dlM) + 'm';
 
-  // Progress bar
+  // DST clock equivalents
+  var dstH = getDSTHours();
+  var dstBanner = document.getElementById('dst-banner');
+  var srClock = document.getElementById('sunrise-clock');
+  var ssClock = document.getElementById('sunset-clock');
+  var nfClock = document.getElementById('nightfall-clock');
+  var clockStr = function(solarTotal, offset) {
+    var h = ((solarTotal + offset) % 24 + 24) % 24;
+    var hh = Math.floor(h); var mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh++; mm = 0; }
+    return 'clock: ' + pad(hh) + ':' + pad(mm);
+  };
+  if (dstH > 0) {
+    if (srClock) srClock.textContent = clockStr(st.sunrise.total, dstH);
+    if (ssClock) ssClock.textContent = clockStr(st.sunset.total, dstH);
+    if (nfClock) nfClock.textContent = clockStr(st.nightfall.total, dstH);
+    if (dstBanner) {
+      dstBanner.style.display = 'block';
+      dstBanner.innerHTML = '<b>Summer clock (DST) is active — your device runs ' + dstH + ' hour' + (dstH !== 1 ? 's' : '') + ' ahead of true solar time.</b>Solar times above are true solar. Look for the "clock:" time on your device when you go to pray.';
+    }
+  } else {
+    if (srClock) srClock.textContent = '';
+    if (ssClock) ssClock.textContent = '';
+    if (nfClock) nfClock.textContent = '';
+    if (dstBanner) dstBanner.style.display = 'none';
+  }
+
+  // Progress bar — compare in true solar hours
   var now = new Date();
   var currentH = now.getHours() + now.getMinutes()/60;
-  var prog = Math.max(0, Math.min(100, (currentH - st.sunrise.total) / (st.sunset.total - st.sunrise.total) * 100));
+  var solarCurrentH = currentH - dstH;
+  var prog = Math.max(0, Math.min(100, (solarCurrentH - st.sunrise.total) / (st.sunset.total - st.sunrise.total) * 100));
   document.getElementById('sun-progress').style.width = prog + '%';
   document.getElementById('sun-dot').style.left = prog + '%';
 
@@ -1869,10 +1910,10 @@ function renderSunView() {
   var shabbatNotice = document.getElementById('shabbat-notice');
   var nowDay = today.getDay(); // 5=Friday
   if (nowDay === 5) {
-    var minsToSunset = (st.sunset.total - currentH) * 60;
+    var minsToSunset = (st.sunset.total - solarCurrentH) * 60;
     if (minsToSunset > 0 && minsToSunset < 120) {
       shabbatNotice.style.display = 'block';
-      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at ' + st.sunsetStr + ' — ' + Math.round(minsToSunset) + ' minutes';
+      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at ' + st.sunsetStr + ' (clock: ' + clockStr(st.sunset.total, dstH) + ') — ' + Math.round(minsToSunset) + ' minutes';
     }
   }
 
@@ -2103,7 +2144,8 @@ function scheduleAlerts() {
     var st = getSunTimes(now, userLocation.lat, userLocation.lon, userLocation.utcOffset);
     if (!st) return;
 
-    var nowMins = now.getHours() * 60 + now.getMinutes();
+    var dstH = getDSTHours();
+    var nowMins = now.getHours() * 60 + now.getMinutes() - dstH * 60;
     var sunsetMins = Math.round(st.sunset.total * 60);
     var alertMins = settings.alert_mins || 30;
     var alertAt = sunsetMins - alertMins;
