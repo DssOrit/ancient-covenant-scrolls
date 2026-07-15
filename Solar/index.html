@@ -251,15 +251,16 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
   background: radial-gradient(circle, rgba(245,200,66,0.15), transparent 70%);
 }
 .sun-widget-title { font-size: 12px; font-weight: 700; color: var(--blue2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
-.sun-times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.prayer-times { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.sun-times { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .sun-time-item {
-  background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px;
-  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 8px;
 }
-.sun-time-icon { font-size: 22px; color: var(--gold); }
+.sun-time-icon { font-size: 20px; color: var(--gold); }
 .sun-time-icon.set { color: var(--orange); }
-.sun-time-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-.sun-time-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); }
+.sun-time-label { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.sun-time-val { font-size: 17px; font-weight: 700; font-family: var(--mono); color: var(--text); }
 .sun-clock-sub { font-size: 13px; color: var(--text3); margin-top: 4px; font-family: var(--mono); }
 #dst-banner { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--text2); line-height: 1.6; display: none; }
 #dst-banner b { color: var(--gold); display: block; margin-bottom: 4px; font-size: 13px; }
@@ -872,13 +873,21 @@ select.form-input option { background: var(--surface2); }
           <i class="ri-sun-line"></i> Today — <span id="sun-date-label"></span>
         </div>
         <div id="dst-banner"></div>
-        <div class="sun-times">
+        <div class="prayer-times">
           <div class="sun-time-item">
             <i class="ri-sun-line sun-time-icon"></i>
             <div>
               <div class="sun-time-label">Sunrise</div>
               <div class="sun-time-val" id="sunrise-time">--:--</div>
               <div class="sun-clock-sub" id="sunrise-clock"></div>
+            </div>
+          </div>
+          <div class="sun-time-item">
+            <i class="ri-sun-line sun-time-icon" style="color:var(--teal)"></i>
+            <div>
+              <div class="sun-time-label">Solar Noon</div>
+              <div class="sun-time-val" id="noon-time">--:--</div>
+              <div class="sun-clock-sub" id="noon-clock"></div>
             </div>
           </div>
           <div class="sun-time-item">
@@ -889,6 +898,8 @@ select.form-input option { background: var(--surface2); }
               <div class="sun-clock-sub" id="sunset-clock"></div>
             </div>
           </div>
+        </div>
+        <div class="sun-times">
           <div class="sun-time-item">
             <i class="ri-moon-line sun-time-icon" style="color:var(--purple)"></i>
             <div>
@@ -898,7 +909,7 @@ select.form-input option { background: var(--surface2); }
             </div>
           </div>
           <div class="sun-time-item">
-            <i class="ri-sun-foggy-line sun-time-icon" style="color:var(--teal)"></i>
+            <i class="ri-sun-foggy-line sun-time-icon" style="color:var(--gold)"></i>
             <div>
               <div class="sun-time-label">Day Length</div>
               <div class="sun-time-val" id="day-length">--h --m</div>
@@ -1838,13 +1849,15 @@ function getSunTimes(date, lat, lon, utcOffset) {
   }
 
   var sr = hToTime(sunriseH);
+  var sn = hToTime(noon);
   var ss = hToTime(sunsetH);
   var nf = hToTime(sunsetH + 0.3); // nightfall ~18 min after sunset
 
   return {
-    sunrise: sr, sunset: ss, nightfall: nf,
+    sunrise: sr, noon: sn, sunset: ss, nightfall: nf,
     dayLength: sunsetH - sunriseH,
     sunriseStr: pad(sr.h) + ':' + pad(sr.m),
+    noonStr: pad(sn.h) + ':' + pad(sn.m),
     sunsetStr: pad(ss.h) + ':' + pad(ss.m),
     nightfallStr: pad(nf.h) + ':' + pad(nf.m)
   };
@@ -1882,12 +1895,16 @@ function renderSunView() {
     return h + ':' + m + ' ' + ampm;
   };
   var srStr = clockTimeStr(st.sunrise.total, dstH);
+  var snStr = clockTimeStr(st.noon.total, dstH);
   var ssStr = clockTimeStr(st.sunset.total, dstH);
   var nfStr = clockTimeStr(st.nightfall.total, dstH);
   document.getElementById('sunrise-time').textContent = srStr;
+  document.getElementById('noon-time').textContent = snStr;
   document.getElementById('sunset-time').textContent = ssStr;
   document.getElementById('nightfall-time').textContent = nfStr;
   if (srClock) srClock.textContent = to12h(srStr);
+  var noonClock = document.getElementById('noon-clock');
+  if (noonClock) noonClock.textContent = to12h(snStr);
   if (ssClock) ssClock.textContent = to12h(ssStr);
   if (nfClock) nfClock.textContent = to12h(nfStr);
   if (dstBanner) dstBanner.style.display = 'none';
