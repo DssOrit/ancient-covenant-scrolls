@@ -337,6 +337,7 @@ function renderGuidedList(){
 }
 function elevSvg(g){
   var els=g.waypoints.map(function(w){ return w.elev; });
+  if(els.some(function(e){ return e==null || isNaN(e); })) return ''; // no elevation data -> no chart
   var min=Math.min.apply(null,els), max=Math.max.apply(null,els);
   var W=280,H=70,n=els.length;
   var pts=els.map(function(e,i){ var x=(i/(n-1))*W; var y=H-6-((e-min)/((max-min)||1))*(H-16); return x.toFixed(0)+','+y.toFixed(0); });
@@ -351,6 +352,43 @@ function prepCard(g){
   return '<div class="info"><h4>Prep checklist</h4><div class="prepbar"><i style="width:'+pct+'%"></i></div>'+
     items.map(function(t,i){ var on=saved.indexOf(i)>=0;
       return '<label class="chk'+(on?' on':'')+'" data-prep="'+i+'"><span class="box">'+(on?ICO.check:'')+'</span>'+esc(t)+'</label>'; }).join('')+'</div>';
+}
+function routeMapSVG(g){
+  var wps=g.waypoints; if(!wps || wps.length<2) return '';
+  var lats=wps.map(function(w){return w.lat;}), lngs=wps.map(function(w){return w.lng;});
+  var minLa=Math.min.apply(null,lats), maxLa=Math.max.apply(null,lats);
+  var minLo=Math.min.apply(null,lngs), maxLo=Math.max.apply(null,lngs);
+  var midLa=(minLa+maxLa)/2, k=Math.cos(midLa*Math.PI/180)||1;
+  var W=320, H=190, pad=28;
+  var spanX=Math.max((maxLo-minLo)*k, 1e-6), spanY=Math.max(maxLa-minLa, 1e-6);
+  var s=Math.min((W-2*pad)/spanX, (H-2*pad)/spanY);
+  var offX=((W-2*pad)-spanX*s)/2, offY=((H-2*pad)-spanY*s)/2;
+  function X(lo){ return pad + (lo-minLo)*k*s + offX; }
+  function Y(la){ return H-pad - (la-minLa)*s - offY; }
+  var pts=wps.map(function(w){ return X(w.lng).toFixed(1)+','+Y(w.lat).toFixed(1); }).join(' ');
+  var grid='';
+  for(var gx=0; gx<=W; gx+=26){ grid+='<line x1="'+gx+'" y1="0" x2="'+gx+'" y2="'+H+'"/>'; }
+  for(var gy=0; gy<=H; gy+=26){ grid+='<line x1="0" y1="'+gy+'" x2="'+W+'" y2="'+gy+'"/>'; }
+  var pins=wps.map(function(w,i){
+    var x=X(w.lng), y=Y(w.lat);
+    var col=w.hazard ? (w.hazard.level==='high'?'#ff4d3d':'#ffb023') : (i===0?'#2fd85f':(i===wps.length-1?'#ffb023':'#3d8bff'));
+    return '<g transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+')">'+
+      (w.hazard?'<circle r="13" fill="'+col+'" opacity=".18"/>':'')+
+      '<circle r="9" fill="#0b1120" stroke="'+col+'" stroke-width="2.5"/>'+
+      '<text y="3.4" text-anchor="middle" font-size="9" font-weight="800" fill="'+col+'">'+w.n+'</text></g>';
+  }).join('');
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+
+    '<defs><linearGradient id="rmbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#12203a"/><stop offset="1" stop-color="#0a1020"/></linearGradient>'+
+    '<linearGradient id="rmline" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#3d8bff"/><stop offset="1" stop-color="#2fd85f"/></linearGradient></defs>'+
+    '<rect width="'+W+'" height="'+H+'" fill="url(#rmbg)"/>'+
+    '<g stroke="rgba(255,255,255,.05)" stroke-width="1">'+grid+'</g>'+
+    '<polyline points="'+pts+'" fill="none" stroke="#0b3a6b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>'+
+    '<polyline points="'+pts+'" fill="none" stroke="url(#rmline)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
+    pins+
+    '<g transform="translate('+(W-16)+' 18)"><circle r="10" fill="rgba(10,16,32,.7)" stroke="rgba(255,255,255,.2)"/><path d="M0 -6 L3 3 L0 1 L-3 3 Z" fill="#e9edf6"/><text y="-11" text-anchor="middle" font-size="7" fill="#95a0b6">N</text></g>'+
+    '</svg>';
+  return '<div class="routemap">'+svg+'<div class="cap">Route map &middot; '+esc(g.name)+' &middot; '+g.distanceKm+' km'+
+    ' <span style="opacity:.8">(green = start, amber = end, red = hazard)</span></div></div>';
 }
 function openGuided(g){
   if(!g) return;
@@ -375,6 +413,7 @@ function openGuided(g){
     '<button class="back" data-back="'+backKey+'">'+ICO.left+' '+backLabel+'</button>'+
     '<h2 class="sec" style="margin-top:2px">'+esc(g.name)+'</h2>'+
     '<p class="muted small" style="margin:0 0 12px">'+esc(g.area)+' · '+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</p>'+
+    routeMapSVG(g)+
     gallery+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
