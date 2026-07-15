@@ -189,3 +189,13 @@ e8c6198 Load AI boot intro + OCC How-to instant search (#575)
 
 ### Backups (today)
 - `backup/2026-07-15-loadmaps-v20` @ `2b9288c` (tonight's tip). Also v14/v16/v17 earlier. Recover: `git checkout backup/2026-07-15-loadmaps-v20`.
+
+### REVISED PLAN (late 2026-07-15) — no Groq, limited AI
+- AI function switched OpenRouter -> **Claude Haiku** (`functions/api/loadmaps/ai.js`,
+  env `ANTHROPIC_API_KEY`, optional `AI_MODEL`). One Haiku call max = near-zero cost.
+  App still needs its OWN Anthropic key in Cloudflare (can't use Claude Code access).
+- Zero-AI "smart" features to build (pure logic): predictive rerouting around
+  reported hazards (Valhalla), speed-limit voice warnings (Overpass speed vs GPS),
+  auto ETA recalc, Photon typo-tolerant search (done), Turf.js "nearest fuel on route".
+- Hazard layer: Cloudflare **D1** (not Supabase) to keep one-repo/infra (rule 10).
+- Tomorrow order unchanged, with AI = Haiku-only for ambiguous input parsing.
