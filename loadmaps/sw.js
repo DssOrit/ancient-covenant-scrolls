@@ -1,5 +1,5 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v19';
+var CACHE = 'loadmaps-v20';
 var CORE = [
   'index.html',
   'app.js',
@@ -15,6 +15,9 @@ var CORE = [
   'vendor/leaflet/images/marker-icon.png',
   'vendor/leaflet/images/marker-icon-2x.png',
   'vendor/leaflet/images/marker-shadow.png',
+  'vendor/maplibre/maplibre-gl.js',
+  'vendor/maplibre/maplibre-gl.css',
+  'vendor/maplibre/leaflet-maplibre-gl.js',
   'splash/splash-1284x2778.png',
   'splash/splash-1668x2388.png'
 ];

@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Load Maps">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="vendor/maplibre/maplibre-gl.css">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
 <link rel="apple-touch-icon" href="favicon-180.png">
@@ -275,6 +276,10 @@
   .map-btn svg{width:19px;height:19px}
   .map-btn.round{border-radius:12px}
   .map-btn.icon{width:46px;height:46px;padding:0;justify-content:center}
+  .map-modes{position:absolute;top:calc(58px + env(safe-area-inset-top));left:12px;z-index:1000;display:none;gap:8px}
+  .map-modes.on{display:flex}
+  .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
+  .map-modes button.on{background:rgba(61,139,255,.2);border-color:rgba(61,139,255,.5);color:var(--blue)}
   .map-side{position:absolute;right:12px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
   .leaflet-control-attribution{background:rgba(10,16,32,.7)!important;color:#95a0b6!important}
   .leaflet-control-attribution a{color:#8fb6ff!important}
@@ -459,6 +464,11 @@
     </button>
     <div class="map-title" id="mapTitle">Map</div>
   </div>
+  <div class="map-modes" id="mapModes">
+    <button data-mode="auto" class="on">Drive</button>
+    <button data-mode="pedestrian">Walk</button>
+    <button data-mode="bicycle">Cycle</button>
+  </div>
   <div class="map-side">
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
@@ -469,6 +479,8 @@
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
+<script src="vendor/maplibre/maplibre-gl.js"></script>
+<script src="vendor/maplibre/leaflet-maplibre-gl.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>

@@ -51,6 +51,11 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 - Route images use runtime caching (cached after first online view), not the
   install list, to keep install light.
 
+**Map stack (all free / no key):** Leaflet + **OpenFreeMap** vector tiles (via
+self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
+**Valhalla** multi-modal routing (drive / walk / cycle, keyless public server) +
+**Photon** geocoding (search anywhere). Esri satellite layer as a toggle.
+
 **Stage 3 — the live map (in progress)**
 - Done: real scrolling map (Leaflet, self-hosted in `vendor/leaflet/`) with an
   OpenStreetMap streets layer and an Esri satellite layer (toggle), the route drawn

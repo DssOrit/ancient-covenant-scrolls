@@ -228,10 +228,31 @@ function mapInit(){
   try{ L.Icon.Default.imagePath='vendor/leaflet/images/'; }catch(e){}
   LMap.map = L.map('map', { zoomControl:false });
   L.control.zoom({ position:'bottomleft' }).addTo(LMap.map);
-  LMap.streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap contributors' });
+  LMap.raster = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap contributors' });
   LMap.sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics' });
-  LMap.streets.addTo(LMap.map); LMap.cur='streets';
+  LMap.base=null;
+  // OpenFreeMap vector via MapLibre (keyless, unlimited); fall back to OSM raster
+  try{
+    if(L.maplibreGL && typeof maplibregl!=='undefined'){
+      LMap.vector = L.maplibreGL({ style:'https://tiles.openfreemap.org/styles/liberty', attribution:'&copy; OpenFreeMap &copy; OpenStreetMap' });
+      LMap.vector.addTo(LMap.map); LMap.base=LMap.vector; LMap.cur='vector';
+    }
+  }catch(e){ LMap.vector=null; LMap.base=null; }
+  if(!LMap.base){ LMap.raster.addTo(LMap.map); LMap.base=LMap.raster; LMap.cur='streets'; }
   LMap.map.setView([39.5,-8], 6);
+}
+function decodePoly(str, precision){
+  var index=0, lat=0, lng=0, coords=[], factor=Math.pow(10, precision||6), shift, result, b, dlat, dlng;
+  while(index<str.length){
+    shift=0; result=0;
+    do{ b=str.charCodeAt(index++)-63; result|=(b&0x1f)<<shift; shift+=5; } while(b>=0x20);
+    dlat=(result&1)?~(result>>1):(result>>1); lat+=dlat;
+    shift=0; result=0;
+    do{ b=str.charCodeAt(index++)-63; result|=(b&0x1f)<<shift; shift+=5; } while(b>=0x20);
+    dlng=(result&1)?~(result>>1):(result>>1); lng+=dlng;
+    coords.push([lat/factor, lng/factor]);
+  }
+  return coords;
 }
 function openMap(opts){
   if(typeof L==='undefined'){ toast('The live map needs a connection the first time.'); return; }
@@ -265,24 +286,32 @@ function openMap(opts){
     else if(center) LMap.map.setView(center, 14);
   }, 80);
   startMapLocate();
+  var mm=el('mapModes');
   if(opts && opts.directions && opts.place){
-    ensurePos(function(){ if(state.pos) drawRoute([state.pos.lat,state.pos.lng], [opts.place.lat,opts.place.lng]); });
-  }
+    if(mm){ mm.classList.add('on'); $$('#mapModes button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-mode')==='auto'); }); }
+    ensurePos(function(){ if(state.pos) drawRoute([state.pos.lat,state.pos.lng], [opts.place.lat,opts.place.lng], 'auto'); });
+  } else if(mm){ mm.classList.remove('on'); }
 }
-function drawRoute(from, to){
+function drawRoute(from, to, costing){
   if(!from){ toast('Turn on location for directions'); return; }
   if(!navigator.onLine){ toast('Directions need a connection'); return; }
-  toast('Getting driving directions…');
-  var url='https://router.project-osrm.org/route/v1/driving/'+from[1]+','+from[0]+';'+to[1]+','+to[0]+'?overview=full&geometries=geojson';
-  fetch(url).then(function(r){ return r.json(); }).then(function(j){
-    if(!j || !j.routes || !j.routes[0]){ toast('No driving route found'); return; }
-    var rt=j.routes[0], coords=rt.geometry.coordinates.map(function(c){ return [c[1],c[0]]; });
-    if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); }
-    LMap.driveLayer=L.polyline(coords, { color:'#3d8bff', weight:6, opacity:.92 }).addTo(LMap.map);
-    LMap.map.fitBounds(L.latLngBounds(coords), { padding:[50,50] });
-    var km=(rt.distance/1000).toFixed(rt.distance<10000?1:0), min=Math.round(rt.duration/60);
-    var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min by car';
-  }).catch(function(){ toast('Could not get directions'); });
+  costing=costing||'auto';
+  LMap.from=from; LMap.dest=to; LMap.costing=costing;
+  toast('Getting directions…');
+  var body={ locations:[{ lat:from[0], lon:from[1] },{ lat:to[0], lon:to[1] }], costing:costing, directions_options:{ units:'kilometers' } };
+  fetch('https://valhalla.openstreetmap.de/route', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(body) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var leg=j && j.trip && j.trip.legs && j.trip.legs[0];
+      if(!leg || !leg.shape){ toast('No route found'); return; }
+      var coords=decodePoly(leg.shape, 6);
+      if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); }
+      var col=costing==='pedestrian'?'#2fd85f':(costing==='bicycle'?'#ffb023':'#3d8bff');
+      LMap.driveLayer=L.polyline(coords, { color:col, weight:6, opacity:.92 }).addTo(LMap.map);
+      LMap.map.fitBounds(L.latLngBounds(coords), { padding:[50,50] });
+      var s=j.trip.summary, km=s.length.toFixed(s.length<10?1:0), min=Math.round(s.time/60);
+      var lab=costing==='pedestrian'?'on foot':(costing==='bicycle'?'by bike':'by car');
+      var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min '+lab;
+    }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
   if(!LMap.map) return;
@@ -293,7 +322,7 @@ function renderPins(){
   });
   LMap.pinLayer.addTo(LMap.map);
 }
-function closeMap(){ el('mapwrap').classList.remove('open'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
+function closeMap(){ el('mapwrap').classList.remove('open'); var mm=el('mapModes'); if(mm) mm.classList.remove('on'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
 function startMapLocate(){
   if(LMap.watch!=null || !navigator.geolocation) return;
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
@@ -945,10 +974,14 @@ function init(){
   // live map controls
   if(el('mapBack')) el('mapBack').onclick=closeMap;
   if(el('mapLayer')) el('mapLayer').onclick=function(){
-    if(!LMap.map) return;
-    if(LMap.cur==='streets'){ LMap.map.removeLayer(LMap.streets); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Streets'; }
-    else { LMap.map.removeLayer(LMap.sat); LMap.streets.addTo(LMap.map); LMap.cur='streets'; el('mapLayer').textContent='Satellite'; }
+    if(!LMap.map || !LMap.base) return;
+    if(LMap.cur!=='sat'){ LMap.map.removeLayer(LMap.base); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Map'; }
+    else { LMap.map.removeLayer(LMap.sat); LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; }
   };
+  $$('#mapModes button').forEach(function(bt){ bt.onclick=function(){
+    $$('#mapModes button').forEach(function(x){ x.classList.remove('on'); }); bt.classList.add('on');
+    if(LMap.from && LMap.dest) drawRoute(LMap.from, LMap.dest, bt.getAttribute('data-mode'));
+  }; });
   if(el('mapRecenter')) el('mapRecenter').onclick=function(){
     if(LMap.meMarker){ LMap.map.setView(LMap.meMarker.getLatLng(), 15); }
     else { ensurePos(function(){ if(state.pos && LMap.map) LMap.map.setView([state.pos.lat,state.pos.lng], 15); }); }
