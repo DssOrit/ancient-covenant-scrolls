@@ -70,10 +70,19 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
 **Keys to switch on (Cloudflare Pages env — never in the repo)**
 - **Fire watch:** set `FIRMS_KEY` to a free NASA FIRMS map key. The function is
   `functions/api/loadmaps/fire.js`; until the key is set it stays silent.
-- **AI assistant:** set `AI_KEY` (an OpenRouter key) and optionally `AI_MODEL`.
+- **AI assistant (limited):** set `ANTHROPIC_API_KEY` (optional `AI_MODEL`, default
+  Claude Haiku). One small Haiku call per request — near-zero cost, no Groq.
   The function is `functions/api/loadmaps/ai.js`; until the key is set the
   "Ask Load Maps" screen shows "not set up yet".
 Both keep the key server-side; nothing sensitive is committed.
+
+**Revised direction (2026-07-15, user): no Groq, limited AI.** Almost everything
+is pure open-source logic (zero AI): predictive rerouting around reported hazards
+(Valhalla), speed-limit warnings (Overpass speed data vs GPS speed), auto ETA
+recalculation, smart typo-tolerant search (Photon), Turf.js spatial ("nearest fuel
+on my route"). The ONLY AI is a single Claude Haiku call to parse ambiguous
+voice/text input. Hazard layer: build on Cloudflare D1 (one-repo/infra), not
+Supabase.
 
 **Stage 3 fire watch + Stage 5 AI assistant** are wired (client + Cloudflare
 functions), waiting only on the keys above.
