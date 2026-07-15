@@ -164,6 +164,7 @@ function navTo(key){
   else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
+  else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -175,6 +176,7 @@ function renderHome(){
       '<button class="hcard drive" data-go="drive"><div class="hi">'+ICO.car+'</div><b>Drive</b><span>Road routes with directions</span></button>'+
       '<button class="hcard hike" data-go="hike"><div class="hi">'+ICO.hiker+'</div><b>Hike</b><span>Trail routes and safety</span></button>'+
       '<button class="hcard places wide" data-go="places"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Explore places</b><span>Famous places to guide you to</span></div></button>'+
+      '<button class="hcard nearby wide" data-go="nearby"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Near me</b><span>Waterfalls, beaches, EV, camping and more</span></div></button>'+
       '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
@@ -749,6 +751,81 @@ function loadWeather(lat, lng, elId){
     try{ localStorage.setItem(key, JSON.stringify({ w:w, t:Date.now() })); }catch(e){}
   }).catch(function(){
     if(host) host.innerHTML = cached ? weatherCardHTML(cached.w,'last update') : '<span class="muted small">Could not load weather.</span>';
+  });
+}
+
+/* ---------------- Near me: POI categories (Stage 4, OpenStreetMap) ---------------- */
+var CATS=[
+  { key:'waterfall', label:'Waterfalls',     q:['["natural"="waterfall"]'] },
+  { key:'beach',     label:'Beaches',        q:['["natural"="beach"]'] },
+  { key:'ev',        label:'EV charging',    q:['["amenity"="charging_station"]'] },
+  { key:'camp',      label:'Camping',        q:['["tourism"="camp_site"]'] },
+  { key:'fuel',      label:'Fuel',           q:['["amenity"="fuel"]'] },
+  { key:'view',      label:'Viewpoints',     q:['["tourism"="viewpoint"]'] },
+  { key:'toilets',   label:'Restrooms',      q:['["amenity"="toilets"]'] },
+  { key:'water',     label:'Drinking water', q:['["amenity"="drinking_water"]'] },
+  { key:'dog',       label:'Dog parks',      q:['["leisure"="dog_park"]'] },
+  { key:'park',      label:'Nature & parks', q:['["leisure"="nature_reserve"]','["boundary"="national_park"]'] }
+];
+function renderNearby(){
+  var v=el('v-nearby');
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Near me</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Find places around you from OpenStreetMap. Needs a connection and your location.</p>'+
+    '<div class="cat-grid">'+CATS.map(function(c){ return '<button class="cat" data-cat="'+c.key+'">'+ICO.pin+'<span>'+esc(c.label)+'</span></button>'; }).join('')+'</div>'+
+    '<div id="poiResults"></div>';
+  bindBacks(v);
+  $$('[data-cat]',v).forEach(function(b){ b.onclick=function(){
+    $$('.cat',v).forEach(function(x){ x.classList.remove('on'); }); b.classList.add('on');
+    var k=b.getAttribute('data-cat'), c=null;
+    for(var i=0;i<CATS.length;i++){ if(CATS[i].key===k) c=CATS[i]; }
+    if(c) runPoi(c);
+  }; });
+}
+function parsePoi(json){
+  if(!json || !json.elements) return [];
+  var out=[];
+  json.elements.forEach(function(e){
+    var lat=(e.lat!=null)?e.lat:(e.center&&e.center.lat), lng=(e.lon!=null)?e.lon:(e.center&&e.center.lon);
+    if(lat==null || lng==null) return;
+    out.push({ name:(e.tags&&(e.tags.name||e.tags['name:en']))||null, lat:lat, lng:lng });
+  });
+  return out;
+}
+var _poi=[];
+function renderPoiList(cat, list){
+  var host=el('poiResults');
+  if(!list.length){ host.innerHTML='<div class="info flat"><p class="muted">Nothing found nearby for '+esc(cat.label)+'. Try another category.</p></div>'; return; }
+  _poi=list.map(function(it,i){ return { id:'poi-'+i, name:it.name||cat.label, area:cat.label+' · nearby', cc:'', lat:it.lat, lng:it.lng }; });
+  host.innerHTML='<p class="muted small" style="margin:6px 2px 10px">'+_poi.length+' found — nearest first</p>'+
+    _poi.map(function(p){
+      var d=state.pos?fmtDist(haversine(state.pos.lat,state.pos.lng,p.lat,p.lng)):'';
+      return '<button class="card place" data-poi="'+p.id+'"><div class="top"><div class="thumb place">'+ICO.pin+'</div>'+
+        '<div><h3>'+esc(p.name)+'</h3><div class="area">'+esc(p.area)+'</div></div>'+(d?'<div class="dist"><b>'+d+'</b></div>':'')+'</div></button>';
+    }).join('');
+  $$('[data-poi]',host).forEach(function(b){ b.onclick=function(){ var id=b.getAttribute('data-poi');
+    for(var i=0;i<_poi.length;i++){ if(_poi[i].id===id){ openPlace(_poi[i]); break; } } }; });
+}
+function runPoi(cat){
+  var host=el('poiResults');
+  if(!navigator.onLine){ host.innerHTML='<div class="info flat"><p class="muted">Nearby search needs a connection.</p></div>'; return; }
+  host.innerHTML='<p class="muted small">Finding your location…</p>';
+  ensurePos(function(){
+    if(!state.pos){ host.innerHTML='<div class="info flat"><p class="muted">Turn on location to search near you.</p></div>'; return; }
+    var lat=state.pos.lat, lng=state.pos.lng, r=25000;
+    host.innerHTML='<p class="muted small">Searching '+esc(cat.label)+' nearby…</p>';
+    var body='[out:json][timeout:20];(';
+    cat.q.forEach(function(f){ body+='node'+f+'(around:'+r+','+lat+','+lng+');way'+f+'(around:'+r+','+lat+','+lng+');'; });
+    body+=');out center 60;';
+    fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+      .then(function(x){ return x.json(); })
+      .then(function(j){
+        var list=parsePoi(j);
+        list.forEach(function(it){ it.d=haversine(lat,lng,it.lat,it.lng); });
+        list.sort(function(a,b){ return a.d-b.d; });
+        renderPoiList(cat, list.slice(0,40));
+      })
+      .catch(function(){ host.innerHTML='<div class="info flat"><p class="muted">Could not search right now. Try again in a moment.</p></div>'; });
   });
 }
 
