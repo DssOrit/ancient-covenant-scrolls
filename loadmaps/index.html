@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#05070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Load Maps">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<!-- iOS home-screen launch images (installed PWA), from the supplied splash pack -->
+<link rel="apple-touch-startup-image" media="(device-width:320px) and (device-height:568px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-640x1136.png">
+<link rel="apple-touch-startup-image" media="(device-width:375px) and (device-height:667px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-750x1334.png">
+<link rel="apple-touch-startup-image" media="(device-width:414px) and (device-height:896px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-828x1792.png">
+<link rel="apple-touch-startup-image" media="(device-width:375px) and (device-height:812px) and (-webkit-device-pixel-ratio:3) and (orientation:portrait)" href="splash/splash-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(device-width:390px) and (device-height:844px) and (-webkit-device-pixel-ratio:3) and (orientation:portrait)" href="splash/splash-1170x2532.png">
+<link rel="apple-touch-startup-image" media="(device-width:414px) and (device-height:736px) and (-webkit-device-pixel-ratio:3) and (orientation:portrait)" href="splash/splash-1242x2208.png">
+<link rel="apple-touch-startup-image" media="(device-width:414px) and (device-height:896px) and (-webkit-device-pixel-ratio:3) and (orientation:portrait)" href="splash/splash-1242x2688.png">
+<link rel="apple-touch-startup-image" media="(device-width:428px) and (device-height:926px) and (-webkit-device-pixel-ratio:3) and (orientation:portrait)" href="splash/splash-1284x2778.png">
+<link rel="apple-touch-startup-image" media="(device-width:768px) and (device-height:1024px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-1536x2048.png">
+<link rel="apple-touch-startup-image" media="(device-width:834px) and (device-height:1112px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-1668x2224.png">
+<link rel="apple-touch-startup-image" media="(device-width:834px) and (device-height:1194px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-1668x2388.png">
+<link rel="apple-touch-startup-image" media="(device-width:1024px) and (device-height:1366px) and (-webkit-device-pixel-ratio:2) and (orientation:portrait)" href="splash/splash-2048x2732.png">
+<title>Load Maps</title>
+<style>
+  :root{
+    --bg:#05070d; --panel:#0a0e17; --map:#0b1120; --card:#131a2a; --card2:#0f1524;
+    --line:rgba(255,255,255,.08); --text:#f2f5fb; --muted:#95a0b6;
+    --blue:#3d8bff; --green:#2fd85f; --amber:#ffb023; --red:#ff4d3d; --yellow:#ffe14d; --cyan:#33d6e0;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    background:
+      radial-gradient(1000px 600px at 50% -10%, rgba(61,139,255,.10), transparent 60%),
+      radial-gradient(800px 500px at 90% 110%, rgba(47,216,95,.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;
+    padding-top:env(safe-area-inset-top);
+  }
+  .app{width:100%;max-width:560px;margin:0 auto;flex:1;display:flex;flex-direction:column;position:relative}
+
+  /* header */
+  header{display:flex;align-items:center;gap:11px;padding:12px 14px 10px;position:sticky;top:0;z-index:20;
+    background:linear-gradient(180deg,rgba(5,7,13,.96),rgba(5,7,13,.7) 80%,transparent);backdrop-filter:blur(6px)}
+  header .logo{width:34px;height:34px;background:url(icon.png) center/contain no-repeat;flex:0 0 auto;filter:drop-shadow(0 0 8px rgba(47,216,95,.35))}
+  header h1{font-size:1.12rem;margin:0;letter-spacing:-.3px;flex:1}
+  .netpill{display:inline-flex;align-items:center;gap:6px;background:rgba(15,21,36,.8);border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:.7rem;font-weight:800}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .dot.on{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .dot.off{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  .hrefresh{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#ffb023,#ff8f1f);border:none;color:#111;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,176,35,.4);cursor:pointer;flex:0 0 auto}
+  .hrefresh svg{width:20px;height:20px}
+  .spin svg{animation:spin .7s cubic-bezier(.4,0,.2,1)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  main{flex:1;padding:4px 14px 96px;overflow-y:auto}
+  .view{display:none}
+  .view.on{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  h2.sec{font-size:1.15rem;margin:14px 2px 10px}
+  .muted{color:var(--muted)}
+  .small{font-size:.82rem}
+
+  /* search + chips */
+  .searchbar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px 13px;margin:6px 0 12px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+  .searchbar svg{width:19px;height:19px;color:var(--muted);flex:0 0 auto}
+  .searchbar input{flex:1;background:none;border:none;color:var(--text);font:inherit;font-size:1rem;outline:none;min-width:0}
+  .searchbar input::placeholder{color:var(--muted)}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
+  .chip{white-space:nowrap;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:.82rem;font-weight:700;color:var(--text);cursor:pointer}
+  .chip.on{background:rgba(61,139,255,.16);border-color:rgba(61,139,255,.5);color:var(--blue)}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:11px;cursor:pointer;display:block;width:100%;text-align:left;font:inherit;color:inherit}
+  .card.flat{cursor:default}
+  .place .top{display:flex;align-items:center;gap:11px}
+  .flag{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:800;flex:0 0 auto;background:var(--card2);border:1px solid var(--line)}
+  .place h3{margin:0;font-size:1.02rem}
+  .place .area{color:var(--muted);font-size:.82rem;margin-top:1px}
+  .place .dist{margin-left:auto;text-align:right;flex:0 0 auto}
+  .place .dist b{font-size:1.05rem;color:var(--green)}
+  .place .dist span{display:block;font-size:.68rem;color:var(--muted)}
+  .tag{display:inline-block;font-size:.7rem;font-weight:800;padding:4px 9px;border-radius:999px;background:var(--card2);border:1px solid var(--line);color:var(--muted);margin:8px 6px 0 0}
+  .tag.guide{color:var(--green);border-color:rgba(47,216,95,.4)}
+  .tag.hike{color:var(--green)} .tag.drive{color:var(--blue)}
+  .tag.warn{color:var(--amber)} .tag.ok{color:var(--green)}
+
+  .btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;border:none;border-radius:15px;padding:15px;font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer}
+  .btn svg{width:20px;height:20px}
+  .btn.green{color:#04140a;background:linear-gradient(135deg,#2fd85f,#25b94e);box-shadow:0 0 26px rgba(47,216,95,.28)}
+  .btn.blue{color:#fff;background:linear-gradient(135deg,#3d8bff,#2f6fe0)}
+  .btn.ghost{background:var(--card2);border:1px solid var(--line);color:var(--text);font-weight:700}
+  .btn.sos{color:#fff;background:linear-gradient(135deg,#ff5d4d,#e01f0c)}
+  .row2{display:flex;gap:10px}
+  .row2>*{flex:1}
+
+  /* back */
+  .back{display:inline-flex;align-items:center;gap:7px;background:none;border:none;color:var(--muted);font:inherit;font-weight:700;padding:8px 0;cursor:pointer;font-size:.95rem}
+  .back svg{width:18px;height:18px}
+
+  /* detail */
+  .hero{background:radial-gradient(120% 90% at 50% 0%, #12203a, var(--map));border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden}
+  .hero .flag{margin:0 auto 10px;width:54px;height:54px;font-size:1.5rem}
+  .hero h2{margin:0;font-size:1.5rem}
+  .hero .area{color:var(--muted);margin-top:3px}
+  .bigdist{margin:16px 0 6px}
+  .bigdist b{font-size:2.6rem;font-weight:800;color:var(--green);line-height:1}
+  .bigdist span{color:var(--muted);font-size:.9rem}
+  .arrow{width:66px;height:66px;margin:6px auto 0;color:var(--blue);transition:transform .3s ease}
+  .arrow svg{width:100%;height:100%}
+  .coordline{font-size:.8rem;color:var(--muted);margin-top:6px;letter-spacing:.3px}
+
+  .info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:11px}
+  .info h4{margin:0 0 6px;font-size:.95rem}
+  .info p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.5}
+
+  /* waypoints */
+  .wp{display:flex;gap:12px;align-items:flex-start;padding:12px 2px;border-bottom:1px solid var(--line)}
+  .wp:last-child{border-bottom:none}
+  .wpn{width:26px;height:26px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:800;flex:0 0 auto;margin-top:1px}
+  .wp.act .wpn{background:var(--green);color:#04140a;border-color:transparent}
+  .wp .wt b{font-size:.96rem}
+  .wp .wt .d{font-size:.8rem;color:var(--muted);margin-top:2px}
+  .wp .wt .hz{font-size:.78rem;font-weight:700;margin-top:5px;display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:8px}
+  .wp .wt .hz.caution{color:var(--amber);background:rgba(255,176,35,.12)}
+  .wp .wt .hz.high{color:var(--red);background:rgba(255,77,61,.12)}
+  .wp .wt .hz svg{width:13px;height:13px}
+  .wpmeta{margin-left:auto;text-align:right;color:var(--muted);font-size:.72rem;flex:0 0 auto;white-space:nowrap}
+
+  .comfort{background:linear-gradient(135deg,rgba(61,139,255,.14),rgba(47,216,95,.09));border:1px solid rgba(61,139,255,.3);border-radius:14px;padding:13px;display:flex;gap:11px;align-items:center;margin-bottom:12px}
+  .comfort svg{width:24px;height:24px;color:var(--blue);flex:0 0 auto}
+  .comfort b{font-size:.95rem} .comfort .s{display:block;font-size:.8rem;color:var(--muted);margin-top:1px}
+
+  .elev{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:12px}
+  .elev .l{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+
+  /* live guide */
+  .liveturn{background:linear-gradient(135deg,#177a3a,#0f5a2b);border:1px solid rgba(47,216,95,.4);border-radius:20px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .liveturn.caution{background:linear-gradient(135deg,#8a6410,#6b4d08);border-color:rgba(255,176,35,.5)}
+  .liveturn.high{background:linear-gradient(135deg,#8a241c,#6b1710);border-color:rgba(255,77,61,.55)}
+  .liveturn .ic{width:46px;height:46px;flex:0 0 auto}
+  .liveturn .ic svg{width:100%;height:100%}
+  .liveturn .d{font-size:1.7rem;font-weight:800;line-height:1}
+  .liveturn .s{font-size:.92rem;color:#eafff1;margin-top:4px}
+  .gstat{display:flex;gap:10px;margin-bottom:12px}
+  .gstat .box{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+  .gstat .box b{font-size:1.5rem;font-weight:800;display:block}
+  .gstat .box span{font-size:.7rem;color:var(--muted)}
+
+  /* how to use */
+  .htblock{margin-bottom:11px}
+  .htnone{display:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--muted)}
+
+  /* alerts */
+  .alert{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-left-width:4px;border-radius:13px;padding:12px;margin-bottom:10px}
+  .alert .ai{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .alert h4{margin:0;font-size:.92rem} .alert p{margin:3px 0 0;font-size:.8rem;color:var(--muted);line-height:1.45}
+  .alert svg{width:17px;height:17px}
+  .a-amber{border-left-color:var(--amber)} .a-amber .ai{background:rgba(255,176,35,.15);color:var(--amber)}
+  .a-red{border-left-color:var(--red)} .a-red .ai{background:rgba(255,77,61,.15);color:var(--red)}
+  .a-green{border-left-color:var(--green)} .a-green .ai{background:rgba(47,216,95,.15);color:var(--green)}
+  .a-blue{border-left-color:var(--blue)} .a-blue .ai{background:rgba(61,139,255,.15);color:var(--blue)}
+
+  .banner{background:rgba(61,139,255,.1);border:1px solid rgba(61,139,255,.3);border-radius:13px;padding:12px;font-size:.85rem;color:var(--text);line-height:1.5;margin-bottom:12px}
+
+  /* voice toggle */
+  .voicebar{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:.82rem;font-weight:700;margin-bottom:12px;width:100%;cursor:pointer;color:var(--text)}
+  .voicebar svg{width:16px;height:16px;color:var(--cyan)}
+  .voicebar .muted-x{color:var(--muted)}
+
+  /* bottom nav */
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(10,14,23,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+    display:flex;justify-content:space-around;padding:8px 6px calc(10px + env(safe-area-inset-bottom))}
+  nav button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font:inherit;font-size:.64rem;font-weight:700;cursor:pointer;flex:1}
+  nav button svg{width:23px;height:23px}
+  nav button.on{color:var(--green)}
+
+  .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;
+    background:#1b2233;border:1px solid var(--line);border-radius:12px;padding:11px 16px;font-size:.9rem;font-weight:700;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center}
+  .toast.show{opacity:1}
+
+  /* ============ AUTO LOADING INTRO (like other Load apps, Load Maps colors) ============ */
+  #boot-intro{position:fixed;inset:0;z-index:100000;background:#04060b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+  #boot-intro.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease}
+  #boot-intro .bi-logo{display:flex;align-items:center;gap:13px;animation:biIn .7s cubic-bezier(.34,1.56,.64,1) both}
+  @keyframes biIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+  #boot-intro .bi-icon{width:52px;height:52px;background:url(icon.png) center/contain no-repeat;filter:drop-shadow(0 0 14px rgba(47,216,95,.4))}
+  #boot-intro .bi-word{font-size:2.1rem;font-weight:800;letter-spacing:-1px;color:#fff}
+  #boot-intro .bi-word span{background:linear-gradient(90deg,#3d8bff,#2fd85f,#ffb023);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  #boot-intro .bi-bar{width:168px;height:3px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden}
+  #boot-intro .bi-fill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#3d8bff,#2fd85f,#ffe14d,#ffb023,#ff4d3d);animation:biLoad 1.6s ease forwards}
+  @keyframes biLoad{from{width:0}to{width:100%}}
+
+  /* ============ SPLASH (after the intro) — the provided brand splash art ============ */
+  #splash{position:fixed;inset:0;z-index:99999;background:#04060b;overflow:hidden}
+  #splash.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s ease}
+  #splash .sp-img{position:absolute;inset:0;background:#04060b url(splash/splash-1284x2778.png) center/contain no-repeat;animation:fadeIn .5s ease both}
+  /* squarer screens (iPad) get the iPad-proportioned art so nothing shrinks */
+  @media (min-aspect-ratio:7/10){ #splash .sp-img{background-image:url(splash/splash-1668x2388.png)} }
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){ #boot-intro .bi-fill{animation-duration:.3s} }
+</style>
+</head>
+<body>
+
+<!-- Auto loading intro (plays first, like the other Load apps) -->
+<div id="boot-intro">
+  <div class="bi-logo"><div class="bi-icon"></div><div class="bi-word">Load <span>Maps</span></div></div>
+  <div class="bi-bar"><div class="bi-fill"></div></div>
+</div>
+
+<!-- Splash (appears after the intro, then reveals the app) -->
+<div id="splash"><div class="sp-img"></div></div>
+
+<div class="app">
+  <header>
+    <div class="logo"></div>
+    <h1>Load Maps</h1>
+    <span class="netpill"><span class="dot on" id="netdot"></span><span id="nettxt">Online</span></span>
+    <button class="hrefresh" id="hrefresh" aria-label="Hard refresh" title="Hard refresh — reload maps, alerts and position">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- ============ PLACES ============ -->
+    <section class="view on" id="v-places">
+      <div class="searchbar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="q" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search a place or trail">
+      </div>
+      <div class="chips" id="ccChips"></div>
+      <button class="voicebar" id="voiceToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10v4h4l5 5V5L7 10H3z"/><path d="M16 9a3 3 0 010 6"/></svg>
+        <span id="voiceLabel">Voice on — Samantha</span>
+      </button>
+      <div id="placeList"></div>
+      <p class="muted small" id="locNote" style="text-align:center;margin:14px 0">Turn on location to see how far each place is.</p>
+    </section>
+
+    <!-- ============ GUIDED (Sete Lagoas overview) ============ -->
+    <section class="view" id="v-guided"></section>
+
+    <!-- ============ LIVE GUIDE ============ -->
+    <section class="view" id="v-live"></section>
+
+    <!-- ============ PLACE DETAIL ============ -->
+    <section class="view" id="v-detail"></section>
+
+    <!-- ============ ALERTS ============ -->
+    <section class="view" id="v-alerts">
+      <h2 class="sec">Conditions</h2>
+      <div class="banner">Live weather, fire watch and traffic arrive in the next update. For now these are the <b>route notes</b> saved with each place, so they work with no signal.</div>
+      <div id="alertList"></div>
+    </section>
+
+    <!-- ============ HOW TO USE ============ -->
+    <section class="view" id="v-help">
+      <h2 class="sec">How to Use</h2>
+      <div class="searchbar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="htq" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Type a word or question">
+      </div>
+      <div id="htBody"></div>
+      <div class="htnone" id="htNone">No match — try another word, like <b>voice</b>, <b>offline</b>, <b>emergency</b> or <b>hazard</b>.</div>
+    </section>
+  </main>
+
+  <nav>
+    <button class="on" data-nav="places" aria-label="Places">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Places
+    </button>
+    <button data-nav="guided" aria-label="Guided">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>Guided
+    </button>
+    <button data-nav="alerts" aria-label="Alerts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17v.4"/></svg>Alerts
+    </button>
+    <button data-nav="help" aria-label="How to Use">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>How to Use
+    </button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body>
+</html>
