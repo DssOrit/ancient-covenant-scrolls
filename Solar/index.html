@@ -280,6 +280,36 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
   font-size: 13px; color: var(--gold); font-weight: 500; display: none;
 }
 
+/* HOW TO USE PANEL (SOLAR) */
+.solar-howto-panel {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+}
+.solar-howto-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.solar-howto-title { font-size: 14px; font-weight: 700; color: var(--text1); }
+.solar-howto-arrow { color: var(--text3); font-size: 18px; transition: transform 0.2s; flex-shrink: 0; }
+.solar-howto-panel.open .solar-howto-arrow { transform: rotate(180deg); }
+.solar-howto-body {
+  display: none; padding: 0 16px 16px;
+}
+.solar-howto-panel.open .solar-howto-body { display: block; }
+.solar-howto-step {
+  display: flex; gap: 12px; padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.solar-howto-step:first-child { border-top: none; }
+.solar-howto-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(200,151,31,0.12); border: 1px solid var(--gold);
+  color: var(--gold); font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.solar-howto-text { font-size: 13px; color: var(--text2); line-height: 1.65; flex: 1; }
+.solar-howto-text b { color: var(--text1); }
+
 /* TRUE SOLAR TIME NOTE + DST PANEL */
 .solar-true-note {
   background: var(--surface2); border: 1px solid var(--border);
@@ -745,6 +775,9 @@ select.form-input option { background: var(--surface2); }
       <div class="icon-btn" id="add-event-btn" onclick="openAddEvent()" title="Add reminder">
         <i class="ri-add-line"></i>
       </div>
+      <div class="icon-btn" onclick="hardRefresh()" title="Refresh app">
+        <i class="ri-refresh-line"></i>
+      </div>
     </div>
   </div>
 
@@ -882,6 +915,21 @@ select.form-input option { background: var(--surface2); }
           <p>Dani'el 7:25, DSS confirmed: the fourth beast "shall think to change the times and the law" — the Aramaic word is moadim, the covenant appointed times anchored by the sun and moon.</p>
           <p>The sequence of legal acts: Constantine 321 CE moved the official rest day from the seventh-day Sabbath to Sunday. The Gregorian calendar (1582 CE) replaced the 364-day covenant year. Standard time zones (1880s) disconnected the civil clock from the sun's local position. Daylight Saving Time (1916-1918) moved the clock one hour further from solar reality for part of the year.</p>
           <p>Bereshit 1:14, DSS confirmed: the lights in the heavens govern the moadim. The sun's actual position is the covenant clock. ACR Solar calculates true solar time and does not apply the government offset. The difference between ACR Solar times and the official clock during Daylight Saving Time is the government's one-hour substitution made visible.</p>
+        </div>
+      </div>
+
+      <div class="solar-howto-panel">
+        <div class="solar-howto-hdr" onclick="this.parentElement.classList.toggle('open')">
+          <span class="solar-howto-title">How to Use ACR Solar</span>
+          <i class="ri-arrow-down-s-line solar-howto-arrow"></i>
+        </div>
+        <div class="solar-howto-body">
+          <div class="solar-howto-step"><div class="solar-howto-num">1</div><div class="solar-howto-text">ACR Solar shows <b>true solar sunrise and sunset times</b> based on the sun\'s actual position at your location. The default location is Coimbra, Portugal. Tap <b>Use My Location</b> to set your own location using your device\'s GPS.</div></div>
+          <div class="solar-howto-step"><div class="solar-howto-num">2</div><div class="solar-howto-text">The times shown are <b>true solar times</b> based on the sun\'s actual position, not the government clock. During Daylight Saving Time, ACR Solar times will differ from the official clock by one hour. That one-hour gap is the government\'s offset from the sun. Dani\'el 7:25, DSS confirmed, names changing the appointed times (moadim) as an act of the fourth beast. Bereshit 1:14 anchors the moadim to the sun. ACR Solar follows the sun.</div></div>
+          <div class="solar-howto-step"><div class="solar-howto-num">3</div><div class="solar-howto-text">The <b>calendar view</b> shows the 364-day covenant calendar mandated in 1 Enoch 72-82, the Book of Jubilees, and the Dead Sea Scrolls. Tap any day to see covenant events and appointed times. The Month view shows the current solar month in the 364-day year.</div></div>
+          <div class="solar-howto-step"><div class="solar-howto-num">4</div><div class="solar-howto-text"><b>Shabbat</b> begins at sunrise Saturday and ends at sunrise Sunday, per Yovelim (Jubilees) and the DSS calendrical texts. ACR Solar shows both times and counts down to the next Shabbat start. Set the Shabbat alert below to receive a reminder before it begins.</div></div>
+          <div class="solar-howto-step"><div class="solar-howto-num">5</div><div class="solar-howto-text">Tap the <b>circular arrow button</b> (top right of the app bar) to hard refresh ACR Solar. This clears the locally stored version and loads the current one from the server. Use it when an update has been announced and you want to confirm your device has the latest version.</div></div>
+          <div class="solar-howto-step"><div class="solar-howto-num">6</div><div class="solar-howto-text">Add ACR Solar to your Home Screen from Safari to install it as a standalone app on your iPad or iPhone. Tap the share icon in Safari and choose <b>Add to Home Screen</b>. The app works fully offline once installed.</div></div>
         </div>
       </div>
 
@@ -1393,6 +1441,16 @@ function saveReminders() {
 }
 
 // ─── VIEWS ────────────────────────────────────────────────────────────────────
+
+function hardRefresh() {
+  if ('caches' in window) {
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+    }).then(function() { window.location.reload(); });
+  } else {
+    window.location.reload(true);
+  }
+}
 
 function switchView(name) {
   document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
