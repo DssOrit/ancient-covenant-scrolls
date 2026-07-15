@@ -35,6 +35,7 @@ LM.places = [
   { id:'pt-pena',    name:'Pena Palace',            area:'Sintra, Portugal',   cc:'PT', lat:38.7876, lng:-9.3906, blurb:'Colourful romantic palace above Sintra.' },
   { id:'pt-lello',   name:'Livraria Lello',         area:'Porto, Portugal',    cc:'PT', lat:41.1470, lng:-8.6150, blurb:'Ornate historic bookshop in central Porto.' },
   { id:'pt-coimbra', name:'Coimbra',  area:'Coimbra, Portugal',  cc:'PT', lat:40.2077, lng:-8.4256, blurb:'Historic university city on the Mondego — one of Portugal’s oldest, with the Joanina Library.', images:[ { src:'places/coimbra-city.png', cap:'Coimbra city guide — attractions and walking route' } ] },
+  { id:'pt-porto',   name:'Porto',    area:'Porto, Portugal',    cc:'PT', lat:41.1579, lng:-8.6291, blurb:'Portugal’s second city — UNESCO riverside, port wine cellars and iconic bridges.', images:[ { src:'places/porto-city.png', cap:'Porto city guide — attractions and walking route' } ] },
   { id:'pt-benagil', name:'Benagil Sea Cave',       area:'Algarve, Portugal',  cc:'PT', lat:37.0876, lng:-8.4270, blurb:'Sea cave with a natural skylight.' },
   { id:'pt-douro',   name:'Douro Valley',           area:'Pinhão, Portugal',   cc:'PT', lat:41.1896, lng:-7.5541, blurb:'Terraced vineyards along the Douro river.' },
 
