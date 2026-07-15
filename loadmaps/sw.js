@@ -1,5 +1,5 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v17';
+var CACHE = 'loadmaps-v18';
 var CORE = [
   'index.html',
   'app.js',

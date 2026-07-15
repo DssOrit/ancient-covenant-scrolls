@@ -229,6 +229,22 @@
   .hero-scene svg{display:block;width:100%;height:130px}
   .hero-scene .cap{padding:9px 13px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);background:rgba(255,255,255,.03)}
 
+  /* fire watch line */
+  .fire{margin-bottom:12px}
+  .fire-warn{display:flex;align-items:center;gap:9px;font-size:.9rem;font-weight:700;color:var(--red);background:rgba(255,77,61,.1);border:1px solid rgba(255,77,61,.3);border-radius:12px;padding:11px}
+  .fire-ok{display:flex;align-items:center;gap:9px;font-size:.88rem;font-weight:600;color:var(--green);background:rgba(47,216,95,.08);border:1px solid rgba(47,216,95,.25);border-radius:12px;padding:10px}
+  .fire-warn svg,.fire-ok svg{width:18px;height:18px;flex:0 0 auto}
+
+  /* AI assistant */
+  .hcard.assistant .hi{background:rgba(51,214,224,.16);color:var(--cyan)}
+  .ask-row{display:flex;gap:10px;margin-bottom:12px}
+  .ask-row input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--text);font:inherit}
+  .ask-row .btn{width:auto;padding:13px 20px;flex:0 0 auto}
+  .ask-out{min-height:2px;margin-bottom:12px}
+  .ask-answer{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.55;white-space:normal}
+  .ask-eg{color:var(--muted);font-size:.85rem;line-height:1.6}
+  .ask-eg b{color:var(--text)}
+
   /* nearby POI categories */
   .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .cat{display:flex;align-items:center;gap:9px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;padding:13px;font:inherit;font-weight:700;font-size:.95rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);text-align:left}
@@ -399,6 +415,9 @@
 
     <!-- ============ NEAR ME (POI categories) ============ -->
     <section class="view" id="v-nearby"></section>
+
+    <!-- ============ ASSISTANT (AI) ============ -->
+    <section class="view" id="v-assistant"></section>
 
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">

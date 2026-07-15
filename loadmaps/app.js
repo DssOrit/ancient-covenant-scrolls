@@ -165,6 +165,7 @@ function navTo(key){
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
+  else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -180,6 +181,7 @@ function renderHome(){
       '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
+      '<button class="hcard assistant wide" data-go="assistant"><div class="hi">'+ICO.q+'</div><div class="ht"><b>Ask Load Maps</b><span>Plan a trip or ask about a place (needs setup)</span></div></button>'+
     '</div>';
   $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
 }
@@ -376,6 +378,7 @@ function openPlace(p){
       '<div class="coordline">'+p.lat.toFixed(4)+', '+p.lng.toFixed(4)+'</div></div>'+
     galleryHTML(p.images)+
     '<div class="wx" id="wxCard"></div>'+
+    '<div class="fire" id="fireCard"></div>'+
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
@@ -392,6 +395,7 @@ function openPlace(p){
   bindBacks(v);
   bindGallery(v);
   loadWeather(p.lat, p.lng, 'wxCard');
+  loadFire(p.lat, p.lng, 'fireCard');
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
@@ -520,6 +524,7 @@ function openGuided(g){
     '<button class="btn ghost" id="mapBtn" style="margin-bottom:14px">'+ICO.pin+' Open live map</button>'+
     gallery+
     '<div class="wx" id="wxCard"></div>'+
+    '<div class="fire" id="fireCard"></div>'+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
     '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
@@ -538,6 +543,7 @@ function openGuided(g){
   bindBacks(v);
   $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
   loadWeather(g.waypoints[0].lat, g.waypoints[0].lng, 'wxCard');
+  loadFire(g.waypoints[0].lat, g.waypoints[0].lng, 'fireCard');
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   if(el('mapBtn')) el('mapBtn').onclick=function(){ openMap({ route:g }); };
   el('sosG').onclick=function(){ doSOS(); };
@@ -827,6 +833,45 @@ function runPoi(cat){
       })
       .catch(function(){ host.innerHTML='<div class="info flat"><p class="muted">Could not search right now. Try again in a moment.</p></div>'; });
   });
+}
+
+/* ---------------- Fire watch (Stage 3, via Cloudflare function) ---------------- */
+function loadFire(lat, lng, elId){
+  var host=el(elId); if(!host) return;
+  host.innerHTML='';
+  if(!navigator.onLine) return;
+  fetch('/api/loadmaps/fire?lat='+lat+'&lng='+lng).then(function(r){ return r.json(); }).then(function(j){
+    if(!host) return;
+    if(!j || j.configured===false || j.error){ host.innerHTML=''; return; } // not set up -> silent
+    if(j.count>0){ host.innerHTML='<div class="fire-warn">'+ICO.warn+'Fire watch: '+j.count+' heat hotspot'+(j.count===1?'':'s')+' detected within ~75 km (last 24h). Check local advice.</div>'; }
+    else { host.innerHTML='<div class="fire-ok">'+ICO.check+'Fire watch: none detected nearby.</div>'; }
+  }).catch(function(){ if(host) host.innerHTML=''; });
+}
+
+/* ---------------- AI assistant (Stage 5, via Cloudflare function) ---------------- */
+function renderAssistant(){
+  var v=el('v-assistant');
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Ask Load Maps</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Ask about a place, a route, or plan a trip. Needs a connection.</p>'+
+    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. plan a safe day trip near Porto"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div id="askOut" class="ask-out"></div>'+
+    '<div class="ask-eg"><b>Try:</b> "hidden waterfalls near me" · "avoid narrow mountain roads to Gerês" · "history of Coimbra"</div>';
+  bindBacks(v);
+  el('askBtn').onclick=doAsk;
+  el('askIn').addEventListener('keydown', function(e){ if(e.key==='Enter') doAsk(); });
+}
+function doAsk(){
+  var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
+  var out=el('askOut'); if(!out) return;
+  if(!navigator.onLine){ out.innerHTML='<div class="info flat"><p class="muted">The assistant needs a connection.</p></div>'; return; }
+  out.innerHTML='<p class="muted small">Thinking…</p>';
+  fetch('/api/loadmaps/ai', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify({ q:q }) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      if(!j || j.configured===false){ out.innerHTML='<div class="info flat"><p class="muted">The assistant is not set up yet. Add an AI key in Cloudflare to switch it on.</p></div>'; return; }
+      if(j.error || !j.answer){ out.innerHTML='<div class="info flat"><p class="muted">Could not answer right now. Try again.</p></div>'; return; }
+      out.innerHTML='<div class="ask-answer">'+esc(j.answer).replace(/\n/g,'<br>')+'</div>';
+    }).catch(function(){ out.innerHTML='<div class="info flat"><p class="muted">Could not reach the assistant.</p></div>'; });
 }
 
 /* ---------------- online / offline ---------------- */
