@@ -188,6 +188,33 @@
     box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center}
   .toast.show{opacity:1}
 
+  /* favorites star on cards + detail */
+  .place{position:relative}
+  .fav{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);cursor:pointer;z-index:2}
+  .fav svg{width:18px;height:18px}
+  .fav.on{color:var(--amber);border-color:rgba(255,176,35,.5);background:rgba(255,176,35,.12)}
+  .fav.on svg{fill:var(--amber)}
+  .place .dist{margin-right:40px}
+  .savebtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;border:1px solid var(--line);border-radius:15px;padding:13px;font:inherit;font-weight:700;background:var(--card2);color:var(--text);cursor:pointer;margin-top:10px}
+  .savebtn svg{width:19px;height:19px}
+  .savebtn.on{color:var(--amber);border-color:rgba(255,176,35,.5);background:rgba(255,176,35,.1)}
+  .savebtn.on svg{fill:var(--amber)}
+  .chip.fav-chip.on{background:rgba(255,176,35,.16);border-color:rgba(255,176,35,.5);color:var(--amber)}
+
+  /* prep checklist */
+  .chk{display:flex;align-items:center;gap:11px;padding:11px 2px;border-bottom:1px solid var(--line);cursor:pointer;font-size:.95rem}
+  .chk:last-child{border-bottom:none}
+  .chk .box{width:24px;height:24px;border-radius:8px;border:1.5px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#04140a}
+  .chk.on .box{background:var(--green);border-color:transparent}
+  .chk.on{color:var(--muted);text-decoration:line-through}
+  .chk .box svg{width:15px;height:15px}
+  .prepbar{height:8px;border-radius:999px;background:var(--card2);overflow:hidden;margin:2px 0 12px;border:1px solid var(--line)}
+  .prepbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#25b94e);width:0;transition:width .3s}
+
+  /* speed pill on live guide */
+  .speedpill{display:inline-flex;align-items:baseline;gap:5px;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;margin-bottom:12px}
+  .speedpill b{font-size:1.25rem} .speedpill span{font-size:.68rem;color:var(--muted);font-weight:700}
+
   /* ============ AUTO LOADING INTRO (like other Load apps, Load Maps colors) ============ */
   #boot-intro{position:fixed;inset:0;z-index:100000;background:#04060b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
   #boot-intro.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease}

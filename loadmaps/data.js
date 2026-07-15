@@ -126,6 +126,12 @@ LM.notes = [
   { level:'green', title:'Road closures — none known',      body:'No closures recorded on the route to Sete Lagoas.' }
 ];
 
+/* ---------- Prep checklists (tickable, saved on the device) ---------- */
+LM.prep = {
+  hike: ['Proper shoes with good grip','1.5–2 L water each person','First aid kit + phone charged','Offline map downloaded','Told someone your plan and return time','Checked the weather'],
+  drive:['Fuel topped up before remote roads','Rest breaks planned','Weather checked','Drive in daylight if possible','Phone charged / car charger']
+};
+
 /* ---------- How to Use content ---------- */
 LM.help = [
   { q:'What is Load Maps', a:'A guide that shows where you are, speaks the next step out loud, and warns you about hazards — for driving and hiking. It works offline once loaded.' },

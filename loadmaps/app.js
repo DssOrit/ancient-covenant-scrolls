@@ -37,8 +37,21 @@ var ICO = {
 };
 
 var state = { view:'places', cc:'ALL', pos:null, watchId:null, voiceOn:true, voice:null,
-              curPlace:null, curGuide:null, curEmergency:'112', _lastNext:null };
+              curPlace:null, curGuide:null, curEmergency:'112', curSpeed:null, _lastFix:null, _lastNext:null };
 function emergencyFor(cc){ return (LM.emergencyFor ? LM.emergencyFor(cc) : LM.EMERGENCY_DEFAULT); }
+
+ICO.star='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 5.9L12 18l-5.4 3.1 1.3-5.9-4.5-4 6-.6z"/></svg>';
+ICO.check='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+ICO.share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>';
+
+/* favorites (saved on the device) */
+function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
+function isFav(id){ return favs().indexOf(id)>=0; }
+function toggleFav(id){ var f=favs(), i=f.indexOf(id); if(i>=0) f.splice(i,1); else f.push(id); try{ localStorage.setItem('lm_favs', JSON.stringify(f)); }catch(e){} }
+
+/* prep checklist state */
+function getPrep(id){ try{ return JSON.parse(localStorage.getItem('lm_prep_'+id)||'[]'); }catch(e){ return []; } }
+function setPrep(id, arr){ try{ localStorage.setItem('lm_prep_'+id, JSON.stringify(arr)); }catch(e){} }
 
 /* ---------------- geo ---------------- */
 function toRad(d){ return d*Math.PI/180; }
@@ -55,6 +68,19 @@ function bearing(la1,lo1,la2,lo2){
 function compass(b){ return ['N','NE','E','SE','S','SW','W','NW'][Math.round(b/45)%8]; }
 function fmtDist(m){ if(m==null) return '—'; if(m<1000) return Math.round(m)+' m'; return (m/1000).toFixed(m<10000?1:0)+' km'; }
 function ccName(cc){ for(var i=0;i<LM.countries.length;i++){ if(LM.countries[i].cc===cc) return LM.countries[i].name; } return cc; }
+function speedKmh(pos){
+  var s=pos.coords.speed;
+  if(s!=null && !isNaN(s) && s>=0) return s*3.6;
+  var t=pos.timestamp||Date.now();
+  if(state._lastFix){
+    var dt=(t-state._lastFix.t)/1000;
+    if(dt>0.4){ var d=haversine(state._lastFix.lat,state._lastFix.lng,pos.coords.latitude,pos.coords.longitude);
+      var v=(d/dt)*3.6; state._lastFix={lat:pos.coords.latitude,lng:pos.coords.longitude,t:t}; return v<0.8?0:v; }
+    return state.curSpeed;
+  }
+  state._lastFix={lat:pos.coords.latitude,lng:pos.coords.longitude,t:t};
+  return null;
+}
 
 /* ---------------- voice (Samantha by default) ---------------- */
 function pickVoice(){
@@ -137,7 +163,9 @@ function bindBacks(scope){
 /* ---------------- Places ---------------- */
 function renderChips(){
   var c=el('ccChips');
+  var fc=favs().length;
   var html='<button class="chip'+(state.cc==='ALL'?' on':'')+'" data-cc="ALL">All</button>';
+  html+='<button class="chip fav-chip'+(state.cc==='FAV'?' on':'')+'" data-cc="FAV">Saved'+(fc?(' '+fc):'')+'</button>';
   LM.countries.forEach(function(k){ html+='<button class="chip'+(state.cc===k.cc?' on':'')+'" data-cc="'+k.cc+'">'+esc(k.name)+'</button>'; });
   c.innerHTML=html;
   $$('.chip',c).forEach(function(b){ b.onclick=function(){ state.cc=b.getAttribute('data-cc'); renderChips(); renderPlaces(); }; });
@@ -151,13 +179,19 @@ function allItems(){
 function renderPlaces(){
   var q=((el('q')&&el('q').value)||'').trim().toLowerCase();
   var items=allItems().filter(function(it){
-    if(state.cc!=='ALL' && it.cc!==state.cc) return false;
+    if(state.cc==='FAV'){ if(!isFav(it.ref.id)) return false; }
+    else if(state.cc!=='ALL' && it.cc!==state.cc) return false;
     if(q){ if((it.name+' '+it.area+' '+it.blurb).toLowerCase().indexOf(q)<0) return false; }
     return true;
   });
   if(state.pos){ items.sort(function(a,b){ return haversine(state.pos.lat,state.pos.lng,a.lat,a.lng)-haversine(state.pos.lat,state.pos.lng,b.lat,b.lng); }); }
   var host=el('placeList');
-  if(!items.length){ host.innerHTML='<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>'; return; }
+  if(!items.length){
+    host.innerHTML = state.cc==='FAV'
+      ? '<div class="info flat"><p class="muted">No saved places yet. Tap the star on any place to save it here.</p></div>'
+      : '<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>';
+    return;
+  }
   host.innerHTML=items.map(function(it){
     var dist='';
     if(state.pos){ var d=haversine(state.pos.lat,state.pos.lng,it.lat,it.lng), br=bearing(state.pos.lat,state.pos.lng,it.lat,it.lng);
@@ -165,13 +199,22 @@ function renderPlaces(){
     var tags = it.kind==='guided'
       ? '<span class="tag guide">Guided route</span><span class="tag ok">Offline ready</span>'
       : '<span class="tag">'+esc(ccName(it.cc))+'</span>';
-    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'"><div class="top">'+
+    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'">'+
+      '<span class="fav'+(isFav(it.ref.id)?' on':'')+'" data-fav="'+it.ref.id+'" role="button" aria-label="Save">'+ICO.star+'</span>'+
+      '<div class="top">'+
       '<div class="flag">'+esc(it.cc)+'</div>'+
       '<div><h3>'+esc(it.name)+'</h3><div class="area">'+esc(it.area)+'</div></div>'+ dist +
       '</div><div class="muted small" style="margin-top:8px">'+esc(it.blurb)+'</div>'+ tags +'</button>';
   }).join('');
+  $$('[data-fav]',host).forEach(function(s){ s.onclick=function(e){ e.stopPropagation(); e.preventDefault();
+    toggleFav(s.getAttribute('data-fav')); renderChips(); renderPlaces(); }; });
   $$('[data-open]',host).forEach(function(b){ b.onclick=function(){ var pr=b.getAttribute('data-open').split(':');
     if(pr[0]==='guided'){ openGuided(byId(LM.guided,pr[1])); } else { openPlace(byId(LM.places,pr[1])); } }; });
+}
+function doShare(title, text){
+  if(navigator.share){ navigator.share({title:title, text:text}).catch(function(){}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ toast('Copied'); }, function(){ toast(text); }); }
+  else { toast(text); }
 }
 
 /* ---------------- Place detail + guide-to ---------------- */
@@ -191,6 +234,10 @@ function openPlace(p){
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
+    '<div class="row2" style="margin-top:10px">'+
+      '<button class="savebtn'+(isFav(p.id)?' on':'')+'" id="favBtn" style="margin-top:0">'+ICO.star+'<span id="favTxt">'+(isFav(p.id)?'Saved':'Save')+'</span></button>'+
+      '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
+    '</div>'+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
@@ -198,6 +245,9 @@ function openPlace(p){
   bindBacks(v);
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
+  el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
+    el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
+  el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
 }
 function startPlaceGuide(p){
   state.voiceOn=true; updateVoiceLabel();
@@ -247,6 +297,13 @@ function elevSvg(g){
     '<polygon points="0,'+H+' '+pts.join(' ')+' '+W+','+H+'" fill="rgba(47,216,95,.12)"/>'+
     '<polyline points="'+pts.join(' ')+'" fill="none" stroke="#2fd85f" stroke-width="2.5"/></svg></div>';
 }
+function prepCard(g){
+  var type=g.type||'hike', items=(LM.prep&&LM.prep[type])||(LM.prep&&LM.prep.hike)||[], saved=getPrep(g.id);
+  var pct=items.length?Math.round(saved.length/items.length*100):0;
+  return '<div class="info"><h4>Prep checklist</h4><div class="prepbar"><i style="width:'+pct+'%"></i></div>'+
+    items.map(function(t,i){ var on=saved.indexOf(i)>=0;
+      return '<label class="chk'+(on?' on':'')+'" data-prep="'+i+'"><span class="box">'+(on?ICO.check:'')+'</span>'+esc(t)+'</label>'; }).join('')+'</div>';
+}
 function openGuided(g){
   if(!g) return;
   state.curGuide=g;
@@ -267,21 +324,32 @@ function openGuided(g){
     '<div class="info flat"><h4>Waypoints</h4>'+wl+'</div>'+
     '<div class="info"><h4>Good to know</h4><p>'+esc(g.signal)+' '+esc(g.tolls)+'</p>'+
       (g.coordsApprox?'<p class="small" style="margin-top:6px">Waypoints marked <b>approx</b> are placed roughly for now — they get fine-tuned by walking the trail.</p>':'')+'</div>'+
+    prepCard(g)+
     '<button class="btn green" id="startGuide">'+ICO.play+' Start guiding</button>'+
+    '<div class="row2" style="margin-top:10px">'+
+      '<button class="savebtn'+(isFav(g.id)?' on':'')+'" id="favG" style="margin-top:0">'+ICO.star+'<span id="favGt">'+(isFav(g.id)?'Saved':'Save')+'</span></button>'+
+      '<button class="savebtn" id="shareG" style="margin-top:0">'+ICO.share+' Share plan</button>'+
+    '</div>'+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosG">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>';
   showView('detail','guided');
   bindBacks(v);
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   el('sosG').onclick=function(){ doSOS(); };
+  el('favG').onclick=function(){ toggleFav(g.id); var on=isFav(g.id); el('favG').classList.toggle('on',on); el('favGt').textContent=on?'Saved':'Save'; };
+  el('shareG').onclick=function(){ doShare('Load Maps — '+g.name, g.name+' ('+g.area+') — '+g.distanceKm+' km, '+g.timeMin+' min. Parking '+g.waypoints[0].lat.toFixed(4)+', '+g.waypoints[0].lng.toFixed(4)); };
+  $$('[data-prep]',v).forEach(function(lb){ lb.onclick=function(){
+    var i=parseInt(lb.getAttribute('data-prep'),10), s=getPrep(g.id), k=s.indexOf(i);
+    if(k>=0) s.splice(k,1); else s.push(i); setPrep(g.id,s); openGuided(g); }; });
 }
 function startGuidedLive(g){
-  state.voiceOn=true; state._lastNext=null; updateVoiceLabel();
+  state.voiceOn=true; state._lastNext=null; state._lastFix=null; state.curSpeed=null; updateVoiceLabel();
   var v=el('v-live');
   v.innerHTML=
     '<button class="back" data-back="guided-detail">'+ICO.left+' '+esc(g.name)+'</button>'+
     '<div class="liveturn" id="liveturn"><div class="ic" id="liveic">'+ICO.up+'</div>'+
       '<div><div class="d" id="lived">--</div><div class="s" id="lives">Getting your position…</div></div></div>'+
+    '<div class="speedpill" id="speedpill"><b>--</b><span>KM/H</span></div>'+
     '<div class="gstat"><div class="box"><b id="gnext">--</b><span>waypoint</span></div>'+
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
@@ -300,6 +368,7 @@ function startGuidedLive(g){
   stopWatch();
   state.watchId=navigator.geolocation.watchPosition(function(pos){
     state.pos={ lat:pos.coords.latitude, lng:pos.coords.longitude, acc:pos.coords.accuracy };
+    state.curSpeed=speedKmh(pos);
     updateGuided(g, spoken);
   }, function(){ var s=el('lives'); if(s) s.textContent='Turn on location to guide you.'; }, { enableHighAccuracy:true, maximumAge:4000, timeout:15000 });
   speak('Starting '+g.name+'. '+g.comfort, true);
@@ -317,6 +386,7 @@ function updateGuided(g, spoken){
   var gn=el('gnext'); if(gn) gn.textContent=next.n;
   var gt=el('gto'); if(gt) gt.textContent=fmtDist(dToNext);
   var gl=el('gleft'); if(gl) gl.textContent=left;
+  var sp=el('speedpill'); if(sp){ var sb=sp.querySelector('b'); if(sb) sb.textContent = (state.curSpeed==null?'--':Math.round(state.curSpeed)); }
   if(next.hazard && dToNext<80 && !spoken['h'+next.n]){ spoken['h'+next.n]=1; speak('Caution ahead. '+next.name+'. '+next.hazard.text, true); }
   else if(state._lastNext!==next.n){ speak((nextIdx===nearIdx?'At ':'Heading to ')+next.name+', '+fmtDist(dToNext)+'.'); }
   state._lastNext=next.n;

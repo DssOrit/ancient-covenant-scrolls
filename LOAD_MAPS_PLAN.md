@@ -31,9 +31,12 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 - Auto loading intro + brand splash (from the supplied splash pack).
 - PWA: installable, offline service worker (`loadmaps-v1`).
 
-**Stage 2 — driving layer**
-- Speedometer, turn cards, share drive, report button, gas/rest/tolls per route,
-  prep checklist, arrival chimes.
+**Stage 2 — in progress**
+- Done: favorites ("Save" + Saved filter, on device), prep checklist per route
+  (tickable, saved), speedometer on the live guide, share place / share plan,
+  per-country emergency numbers, proper PWA icons + favicon.
+- Next: turn cards for driving, report button, gas/rest/tolls per route,
+  arrival/reroute chimes.
 
 **Stage 3 — online extras (need a signal)** — sources researched, see below.
 
