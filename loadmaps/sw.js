@@ -1,11 +1,13 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v2';
+var CACHE = 'loadmaps-v3';
 var CORE = [
   'index.html',
   'app.js',
   'data.js',
   'manifest.webmanifest',
   'icon.png',
+  'favicon-32.png',
+  'favicon-180.png',
   'splash/splash-1284x2778.png',
   'splash/splash-1668x2388.png'
 ];
