@@ -280,6 +280,28 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
   font-size: 13px; color: var(--gold); font-weight: 500; display: none;
 }
 
+/* TRUE SOLAR TIME NOTE + DST PANEL */
+.solar-true-note {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px;
+}
+.solar-true-note-title {
+  font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.solar-true-note-body { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.solar-dst-panel {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 18px 14px; margin-bottom: 20px;
+}
+.solar-dst-title {
+  font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text1);
+}
+.solar-dst-body p {
+  font-size: 13px; color: var(--text2); line-height: 1.6; margin: 0 0 10px;
+}
+.solar-dst-body p:last-child { margin-bottom: 0; }
+
 /* SOLAR CALENDAR INFO PANEL */
 #solar-panel {
   background: var(--surface2); border: 1px solid var(--border);
@@ -849,6 +871,20 @@ select.form-input option { background: var(--surface2); }
         <div class="sun-shabbat-alert" id="shabbat-notice"></div>
       </div>
 
+      <div class="solar-true-note">
+        <div class="solar-true-note-title">True Solar Time</div>
+        <div class="solar-true-note-body">Times shown are calculated from the sun's actual position at this location. During government Daylight Saving Time, the official clock runs one hour ahead of true solar time. ACR Solar does not follow the government clock offset. The times here reflect when the sun actually rises and sets, not when the government says it does.</div>
+      </div>
+
+      <div class="solar-dst-panel">
+        <div class="solar-dst-title">Dani'el 7:25 — The Appointed Times Were Changed</div>
+        <div class="solar-dst-body">
+          <p>Dani'el 7:25, DSS confirmed: the fourth beast "shall think to change the times and the law" — the Aramaic word is moadim, the covenant appointed times anchored by the sun and moon.</p>
+          <p>The sequence of legal acts: Constantine 321 CE moved the official rest day from the seventh-day Sabbath to Sunday. The Gregorian calendar (1582 CE) replaced the 364-day covenant year. Standard time zones (1880s) disconnected the civil clock from the sun's local position. Daylight Saving Time (1916-1918) moved the clock one hour further from solar reality for part of the year.</p>
+          <p>Bereshit 1:14, DSS confirmed: the lights in the heavens govern the moadim. The sun's actual position is the covenant clock. ACR Solar calculates true solar time and does not apply the government offset. The difference between ACR Solar times and the official clock during Daylight Saving Time is the government's one-hour substitution made visible.</p>
+        </div>
+      </div>
+
       <!-- ALERT SETTINGS -->
       <div class="setting-group">
         <div class="setting-group-title">Sunset Alerts</div>
@@ -1327,7 +1363,7 @@ today.setHours(0,0,0,0);
 var viewDate = new Date(today);
 var selectedDate = new Date(today);
 var currentView = 'month';
-var userLocation = { lat: 40.2033, lon: -8.4103 }; // Coimbra, Portugal default
+var userLocation = { lat: 40.2033, lon: -8.4103, utcOffset: 0 }; // Coimbra, Portugal (WET = UTC+0 standard)
 var reminders = [];
 var settings = {
   shabbat_alert: true, holyday_alert: true, sunrise_alert: false,
@@ -1671,14 +1707,14 @@ function renderAgenda() {
 function requestLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(function(pos) {
-      userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude, utcOffset: (function() { var jan1 = new Date(new Date().getFullYear(), 0, 15); return -jan1.getTimezoneOffset() / 60; })() };
       localStorage.setItem('acr_solar_location', JSON.stringify(userLocation));
       document.getElementById('location-prompt').style.display = 'none';
       renderSunView();
       scheduleAlerts();
     }, function() {
       // Fall back to Coimbra default
-      userLocation = { lat: 40.2033, lon: -8.4103 };
+      userLocation = { lat: 40.2033, lon: -8.4103, utcOffset: 0 };
       renderSunView();
     });
   }
@@ -1686,13 +1722,13 @@ function requestLocation() {
 
 function resetLocation() {
   localStorage.removeItem('acr_solar_location');
-  userLocation = { lat: 40.2033, lon: -8.4103 };
+  userLocation = { lat: 40.2033, lon: -8.4103, utcOffset: 0 };
   document.getElementById('location-prompt').style.display = '';
   renderSunView();
 }
 
 // Sun position calculations (simplified but accurate to ~minutes)
-function getSunTimes(date, lat, lon) {
+function getSunTimes(date, lat, lon, utcOffset) {
   var J2000 = 2451545.0;
   var JD = date.getTime()/86400000 + 2440587.5;
   var n = JD - J2000;
@@ -1715,7 +1751,7 @@ function getSunTimes(date, lat, lon) {
   // Equation of time correction
   var EqT = 4 * (L - 0.0057183 - RA * 180/Math.PI + 360 * Math.round((L - RA * 180/Math.PI)/360));
   var lonCorr = lon / 15;
-  var tzOffset = -date.getTimezoneOffset() / 60;
+  var tzOffset = (utcOffset !== undefined && utcOffset !== null) ? utcOffset : (function() { var jan1 = new Date(date.getFullYear(), 0, 15); return -jan1.getTimezoneOffset() / 60; })();
 
   var noon = 12 - lonCorr + EqT/60 + tzOffset;
   var sunriseH = noon - HA/15;
@@ -1748,7 +1784,7 @@ function renderSunView() {
   if (!userLocation) return;
 
   var loc = userLocation;
-  var st = getSunTimes(today, loc.lat, loc.lon);
+  var st = getSunTimes(today, loc.lat, loc.lon, loc.utcOffset);
   if (!st) return;
 
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -2005,7 +2041,7 @@ function scheduleAlerts() {
   function checkAlerts() {
     if (!userLocation) return;
     var now = new Date();
-    var st = getSunTimes(now, userLocation.lat, userLocation.lon);
+    var st = getSunTimes(now, userLocation.lat, userLocation.lon, userLocation.utcOffset);
     if (!st) return;
 
     var nowMins = now.getHours() * 60 + now.getMinutes();
@@ -2227,8 +2263,8 @@ function updateShabbatDisplay(){
   var sun=new Date(sat);sun.setDate(sat.getDate()+1);
   var st='06:00',en='06:00';
   if(typeof userLocation!=='undefined'&&userLocation){
-    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon);
-    var es=getSunTimes(sun,userLocation.lat,userLocation.lon);
+    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset);
+    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset);
     if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;
   }
   var el1=document.getElementById('shab-start-time');if(el1)el1.textContent=st;
