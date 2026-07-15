@@ -2,11 +2,11 @@
 
 ## Current State
 
-- Latest commit on main: `3d85f49` (PR #633 squash merge)
-- Cache: `acr-search-v168`, `acr-solar-v22`
-- Branch: `claude/acr-search-content-checklist-ZgUAQ` (PR #633 merged, stale)
-- ACR Search: Final Days panel now includes Dani'el 7:25 / DST section (v168)
-- ACR Solar: true solar time fix live (v22)
+- Latest commit on main: `25c2b8d` (PR #635 squash merge)
+- Cache: `acr-search-v169`, `acr-solar-v23`
+- Branch: `claude/acr-search-content-checklist-ZgUAQ` (PRs #633, #635 merged, stale)
+- ACR Search: Final Days DST section (v168), hard refresh button + How to Use updates (v169)
+- ACR Solar: true solar time fix (v22), hard refresh button + How to Use panel (v23)
 - Nothing uncommitted
 
 ## Built Today
@@ -35,9 +35,11 @@
 
 ## Outstanding / Blocking
 
-- User to verify ACR Search Final Days panel: Dani'el 7:25 section appears after the 1 Enoch 72-82 item and before Yirmeyahu 30-31.
-- User to verify ACR Solar: "True Solar Time" note and Dani'el 7:25 panel appear below the sun widget. Times shown should NOT match government clock during DST.
-- User to confirm Great Eraser opens (splash auto-dismisses within 2 seconds) — from earlier session, not yet confirmed.
+- User to verify ACR Search Final Days panel: Dani'el 7:25 section appears after 1 Enoch 72-82 item, before Yirmeyahu 30-31.
+- User to verify ACR Search How to Use: new "Refreshing the App" section and updated ACR Suite step 4 visible.
+- User to verify ACR Solar: "True Solar Time" note, Dani'el 7:25 panel, "How to Use ACR Solar" collapsible panel all appear below sun widget.
+- User to verify ACR Solar: hard refresh button (circular arrow) visible in topbar; ACR Search: same button right of journal icon.
+- User to confirm Great Eraser opens (splash auto-dismisses within 2 seconds) — from prior session, not yet confirmed.
 - User to verify Covenant Table section renders on iPad (ACR Search, Orit Record tab) — from prior session, not yet confirmed.
 
 ## Pending / Parked
@@ -60,7 +62,10 @@
 
 ## Backups
 
-- `backup/2026-07-15-v168` — SHA `3d85f49` — end of session, Dani'el 7:25/DST content and Solar true time fix verified merged.
+- `backup/2026-07-15-v169` — SHA `25c2b8d` — hard refresh buttons + How to Use updates merged.
+  Recovery: `git checkout backup/2026-07-15-v169`
+
+- `backup/2026-07-15-v168` — SHA `3d85f49` — Dani'el 7:25/DST content and Solar true time fix merged.
   Recovery: `git checkout backup/2026-07-15-v168`
 
 Previous backups: `backup/2026-07-14-v167`, `backup/2026-07-14-v21`, `backup/2026-07-14-v156`, `backup/2026-07-12-v144`, `backup/2026-07-11-v142`
@@ -68,6 +73,7 @@ Previous backups: `backup/2026-07-14-v167`, `backup/2026-07-14-v21`, `backup/202
 ## Today's Commit Log
 
 ```
+25c2b8d Search + Solar: hard refresh button + How to Use updates (v169/v23) (#635)
 3d85f49 Search: DST/Dani'el 7:25 in Final Days; Solar: true solar time fix (v168/v22) (#633)
 31214a9 Prophetic Watch brief 2026-07-15
 25a129a Add Nevelah/Treifah sourcing item; rewrite Modern Practice (v167) (#632)

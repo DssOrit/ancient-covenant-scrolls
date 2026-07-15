@@ -596,7 +596,7 @@ body.stage-mode .gn-banner{font-size:1.15rem;padding:16px}
 
 <!-- HOME -->
 <div class="screen" id="home">
-  <button class="ge-refresh" onclick="location.reload(true)" aria-label="Refresh"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3"/></svg></button>
+  <button class="ge-refresh" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}catch(e){}location.reload(true);})()" aria-label="Refresh"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3"/></svg></button>
   <div class="screen-body" style="padding-top:50px">
     <div class="home-header">
       <div class="home-logo">Great Eraser Study</div>

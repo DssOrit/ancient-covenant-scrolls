@@ -147,7 +147,7 @@ details[open]>summary .chev{transform:rotate(90deg)}
 .pill .pd{width:9px;height:9px;border-radius:50%;background:var(--pc,var(--acc))}
 .pill.active{border-color:var(--pc,var(--acc));color:var(--pc,var(--acc2));background:color-mix(in srgb,var(--pc,var(--acc)) 14%,transparent)}
 .refresh{margin-left:auto;width:38px;height:38px;border-radius:11px;border:1px solid #2c2c2c;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer}
-.refresh svg{width:18px;height:18px;stroke:var(--tx2);fill:none}
+.refresh svg{width:18px;height:18px;stroke:var(--acc);fill:none}
 .refresh:active{border-color:var(--acc)}
 
 /* production app extras */
@@ -274,7 +274,7 @@ body[data-theme="light"] .welcome,body[data-theme="light"] .guide-sec{border-col
 <div id="topbar"><div class="tb-row">
   <div class="mark" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#FFD9BE" stroke-width="2.2"/><line x1="16" y1="16" x2="21" y2="21" stroke="#FFD9BE" stroke-width="2.2" stroke-linecap="round"/></svg></div>
   <div class="tb-titles"><div class="tb-name">The Great Eraser</div><div class="tb-sub" id="subc"></div></div>
-  <div class="refresh" onclick="location.reload(true)" title="Refresh"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6" stroke-width="1.8"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3" stroke-width="1.8"/></svg></div>
+  <div class="refresh" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}catch(e){}location.reload(true);})()" title="Refresh"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6" stroke-width="1.8"/><path d="M20 10a8 8 0 0 0-14.5-3M4 14a8 8 0 0 0 14.5 3" stroke-width="1.8"/></svg></div>
   <div class="ibtn" onclick="toggleTheme()" aria-label="Theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg></div>
   <div class="ibtn" onclick="togglePop2(event)" aria-label="Reading"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19l5-13 5 13M6 14h6" stroke-width="1.7"/><path d="M15 19l3-8 3 8M16.2 16h3.6" stroke-width="1.5"/></svg>
     <div class="pop pop2" id="pop2" onclick="event.stopPropagation()">

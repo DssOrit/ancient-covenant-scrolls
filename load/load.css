@@ -155,6 +155,7 @@ button, .tap, [role="button"] { min-height: 48px; }
   .nav-btn .nav-label { display: none; }
   .nav-btn { padding: 10px 10px; gap: 0; }
 }
+[data-tool="hard-refresh"] { color: #fbbf24; }
 
 /* Splash image — Attain pattern: 100% of content width up to 600px,
    centered, natural aspect ratio. Nothing cropped. */

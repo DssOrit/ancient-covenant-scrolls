@@ -352,6 +352,7 @@ a.jr-action {
 }
 .topbar-tools button:hover, .topbar-tools .tool-link:hover { background: rgba(255,255,255,0.12); color: #fff; }
 #tool-focus.on { background: rgba(255,209,102,0.22); color: #ffd166; }
+#tool-refresh { color: #7b6cff; }
 
 /* ===== Scene strip ===== */
 .scene-strip {

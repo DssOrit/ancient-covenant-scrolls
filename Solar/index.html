@@ -91,6 +91,7 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
   transition: all 0.2s;
 }
 .icon-btn:hover, .icon-btn.active { background: var(--surface3); color: var(--gold); border-color: var(--border2); }
+#solar-refresh-btn { color: var(--gold); }
 
 /* MAIN CONTENT */
 #main { flex: 1; overflow: hidden; position: relative; }
@@ -775,7 +776,7 @@ select.form-input option { background: var(--surface2); }
       <div class="icon-btn" id="add-event-btn" onclick="openAddEvent()" title="Add reminder">
         <i class="ri-add-line"></i>
       </div>
-      <div class="icon-btn" onclick="hardRefresh()" title="Refresh app">
+      <div class="icon-btn" id="solar-refresh-btn" onclick="hardRefresh()" title="Refresh app">
         <i class="ri-refresh-line"></i>
       </div>
     </div>
