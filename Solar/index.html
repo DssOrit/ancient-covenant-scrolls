@@ -1883,19 +1883,16 @@ function renderSunView() {
     if (mm === 60) { hh++; mm = 0; }
     return 'clock: ' + pad(hh) + ':' + pad(mm);
   };
-  if (dstH > 0) {
-    if (srClock) srClock.textContent = clockStr(st.sunrise.total, dstH);
-    if (ssClock) ssClock.textContent = clockStr(st.sunset.total, dstH);
-    if (nfClock) nfClock.textContent = clockStr(st.nightfall.total, dstH);
-    if (dstBanner) {
+  if (srClock) srClock.textContent = clockStr(st.sunrise.total, dstH);
+  if (ssClock) ssClock.textContent = clockStr(st.sunset.total, dstH);
+  if (nfClock) nfClock.textContent = clockStr(st.nightfall.total, dstH);
+  if (dstBanner) {
+    if (dstH > 0) {
       dstBanner.style.display = 'block';
       dstBanner.innerHTML = '<b>Summer clock (DST) is active — your device runs ' + dstH + ' hour' + (dstH !== 1 ? 's' : '') + ' ahead of true solar time.</b>Solar times above are true solar. Look for the "clock:" time on your device when you go to pray.';
+    } else {
+      dstBanner.style.display = 'none';
     }
-  } else {
-    if (srClock) srClock.textContent = '';
-    if (ssClock) ssClock.textContent = '';
-    if (nfClock) nfClock.textContent = '';
-    if (dstBanner) dstBanner.style.display = 'none';
   }
 
   // Progress bar — compare in true solar hours
