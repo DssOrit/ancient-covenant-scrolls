@@ -34,9 +34,22 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 **Stage 2 — in progress**
 - Done: favorites ("Save" + Saved filter, on device), prep checklist per route
   (tickable, saved), speedometer on the live guide, share place / share plan,
-  per-country emergency numbers, proper PWA icons + favicon.
-- Next: turn cards for driving, report button, gas/rest/tolls per route,
-  arrival/reroute chimes.
+  per-country emergency numbers, proper PWA icons + favicon, a driving route
+  (Coimbra to Sete Lagoas: road sections, fuel/stops, tolls, comfort mode),
+  report button (offline hazard log shown in Alerts), arrival/waypoint chimes,
+  hard-refresh circle re-renders the current view.
+- Next: proper street-level turn cards (needs Stage 3 map data), gas/rest live
+  search.
+
+**UX pass (dyslexia-friendly)**
+- Home screen with big glassy Drive / Hike / Places / Alerts / How-to cards so
+  road vs trail maps are obvious. Bottom nav: Home, Drive, Hike, Places.
+- Real imagery: the supplied trail maps show on the hike route and the road maps
+  on the drive route, in a swipeable gallery with tap-to-enlarge (`loadmaps/routes/`).
+- Modern transparent glass styling (blur, subtle borders), readable type, plain
+  labels. Cache `loadmaps-v6`.
+- Route images use runtime caching (cached after first online view), not the
+  install list, to keep install light.
 
 **Stage 3 — online extras (need a signal)** — sources researched, see below.
 

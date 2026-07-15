@@ -104,6 +104,11 @@ LM.guided = [
     tolls:'No tolls on the drive in.',
     signal:'No mobile signal on the trail — download before you go.',
     comfort:'Wide, safe start. First caution at the stone bridge.',
+    images:[
+      { src:'routes/sete-trail-map.jpg',    cap:'Trail map — parking to the water' },
+      { src:'routes/sete-safety-map.png',   cap:'Detailed safety map and guide' },
+      { src:'routes/sete-parents-guide.png',cap:'Safety guide — where it is safe' }
+    ],
     coordsApprox:true, // waypoints below the parking are placed approximately
     waypoints:[
       { n:1, name:'Parking Area',       desc:'Free parking in Xertelo. Restrooms and info board.', lat:41.6984, lng:-8.1538, elev:430, approx:false, hazard:null },
@@ -113,6 +118,33 @@ LM.guided = [
       { n:5, name:'Descent to Lagoons', desc:'Rocky downhill section.',                              lat:41.6949, lng:-8.1529, elev:450, approx:true,  hazard:{ level:'caution', text:'Rocky downhill — slow on wet rocks.' } },
       { n:6, name:'First Viewpoint',    desc:'Beautiful view over the first lagoons. Photo spot.',   lat:41.6941, lng:-8.1527, elev:430, approx:true,  hazard:null },
       { n:7, name:'To the Water',       desc:'Short final descent on rocks to the natural pools.',   lat:41.6934, lng:-8.1525, elev:410, approx:true,  hazard:{ level:'high', text:'Deep water, strong currents after rain. No jumping or diving.' } }
+    ]
+  },
+  {
+    id:'coimbra-sete-lagoas',
+    name:'Coimbra to Sete Lagoas',
+    area:'Coimbra to Peneda-Gerês, Portugal',
+    cc:'PT',
+    type:'drive',
+    distanceKm:180,
+    timeMin:'about 165',
+    difficulty:'Easy — fear-of-heights safe',
+    tolls:'No tolls on this route.',
+    signal:'Signal drops near the park — download before you go.',
+    comfort:'Wide highways almost the whole way. Only the last road (M535) is narrow.',
+    images:[
+      { src:'routes/drive-scenic-safe.png', cap:'Scenic and safe drive — roads to avoid' },
+      { src:'routes/drive-comfort-map.png', cap:'Driver comfort roadmap' }
+    ],
+    coordsApprox:true, // section points sit on the towns along the way
+    stops:[ 'Fuel: Coimbra, Porto, Braga, Terras de Bouro.', 'No fuel or shops near the park — fill up in Terras de Bouro.' ],
+    waypoints:[
+      { n:1, name:'Coimbra — start',            desc:'Join the A1 heading north.',                  lat:40.2077, lng:-8.4256, approx:false, hazard:null },
+      { n:2, name:'Porto — A1',                 desc:'Wide motorway. Continue toward Braga.',       lat:41.1579, lng:-8.6291, approx:true,  hazard:null },
+      { n:3, name:'Braga — A3 to A7',           desc:'Take the A7 toward Terras de Bouro.',         lat:41.5454, lng:-8.4265, approx:true,  hazard:null },
+      { n:4, name:'Terras de Bouro — N205',     desc:'Good two-lane road with guardrails. Last fuel.', lat:41.7205, lng:-8.1610, approx:true, hazard:null },
+      { n:5, name:'Campo do Gerês — N205-3',    desc:'Narrower, more curves.',                      lat:41.7626, lng:-8.1900, approx:true,  hazard:{ level:'caution', text:'Narrower road, curves and some drop-offs. Slow down.' } },
+      { n:6, name:'Xertelo Parking — M535',     desc:'Final 1.4 km to the parking area.',           lat:41.6984, lng:-8.1538, approx:true,  hazard:{ level:'caution', text:'Very narrow, one lane in places, drop-offs. Drive slowly.' } }
     ]
   }
 ];

@@ -37,12 +37,17 @@ var ICO = {
 };
 
 var state = { view:'places', cc:'ALL', pos:null, watchId:null, voiceOn:true, voice:null,
-              curPlace:null, curGuide:null, curEmergency:'112', curSpeed:null, _lastFix:null, _lastNext:null };
+              curPlace:null, curGuide:null, detailKind:null, curEmergency:'112', curSpeed:null, _lastFix:null, _lastNext:null };
 function emergencyFor(cc){ return (LM.emergencyFor ? LM.emergencyFor(cc) : LM.EMERGENCY_DEFAULT); }
 
 ICO.star='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .6-4.5 4 1.3 5.9L12 18l-5.4 3.1 1.3-5.9-4.5-4 6-.6z"/></svg>';
 ICO.check='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 ICO.share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>';
+ICO.car='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>';
+ICO.hiker='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>';
+ICO.pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>';
+ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -144,10 +149,53 @@ function showView(id, navKey){
 }
 function navTo(key){
   stopWatch();
-  if(key==='places'){ renderPlaces(); showView('places','places'); }
-  else if(key==='guided'){ renderGuidedList(); showView('guided','guided'); }
-  else if(key==='alerts'){ renderAlerts(); showView('alerts','alerts'); }
-  else if(key==='help'){ showView('help','help'); }
+  if(key==='home'){ renderHome(); showView('home','home'); }
+  else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
+  else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
+  else if(key==='places'){ renderPlaces(); showView('places','places'); }
+  else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
+  else if(key==='help'){ renderHelp(); showView('help','home'); }
+}
+function renderHome(){
+  var v=el('v-home');
+  v.innerHTML=
+    '<div class="home-hi"><div class="logo"></div><div><b>Load Maps</b><span>Where do you want to go?</span></div></div>'+
+    '<div class="home-grid">'+
+      '<button class="hcard drive" data-go="drive"><div class="hi">'+ICO.car+'</div><b>Drive</b><span>Road routes with directions</span></button>'+
+      '<button class="hcard hike" data-go="hike"><div class="hi">'+ICO.hiker+'</div><b>Hike</b><span>Trail routes and safety</span></button>'+
+      '<button class="hcard places wide" data-go="places"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Explore places</b><span>Famous places to guide you to</span></div></button>'+
+      '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
+      '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
+    '</div>';
+  $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ navTo(b.getAttribute('data-go')); }; });
+}
+function routeThumb(type){ return '<div class="thumb '+(type==='drive'?'drive':'hike')+'">'+(type==='drive'?ICO.car:ICO.hiker)+'</div>'; }
+function renderRoutes(type){
+  var v=el('v-guided');
+  var list=LM.guided.filter(function(g){ return (g.type||'hike')===type; });
+  var title=type==='drive'?'Road routes':'Trail routes';
+  var sub=type==='drive'?'Driving directions with road cautions and stops.':'Walking trails with waypoints and hazard warnings.';
+  var html='<h2 class="sec">'+title+'</h2><p class="muted small" style="margin:0 0 12px">'+sub+'</p>';
+  if(!list.length){ html+='<div class="info flat"><p class="muted">More '+title.toLowerCase()+' coming soon.</p></div>'; }
+  html+=list.map(function(g){
+    return '<button class="card place" data-guide="'+g.id+'"><div class="top">'+routeThumb(g.type)+
+      '<div><h3>'+esc(g.name)+'</h3><div class="area">'+esc(g.area)+'</div></div></div>'+
+      '<div class="muted small" style="margin-top:8px">'+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</div>'+
+      '<span class="tag '+(g.type==='drive'?'drive':'hike')+'">'+(g.type==='drive'?'Drive':'Hike')+'</span><span class="tag ok">Offline ready</span></button>';
+  }).join('');
+  v.innerHTML=html;
+  $$('[data-guide]',v).forEach(function(b){ b.onclick=function(){ openGuided(byId(LM.guided,b.getAttribute('data-guide'))); }; });
+}
+function openLightbox(src){
+  var lb=document.getElementById('lightbox');
+  if(!lb){
+    lb=document.createElement('div'); lb.id='lightbox'; lb.className='lightbox';
+    lb.innerHTML='<button class="x" aria-label="Close">'+ICO.x+'</button><img alt="">';
+    document.body.appendChild(lb);
+    lb.addEventListener('click',function(e){ if(e.target===lb || (e.target.closest && e.target.closest('.x'))) lb.classList.remove('open'); });
+  }
+  lb.querySelector('img').src=src;
+  lb.classList.add('open');
 }
 function bindBacks(scope){
   $$('[data-back]',scope).forEach(function(b){
@@ -220,7 +268,7 @@ function doShare(title, text){
 /* ---------------- Place detail + guide-to ---------------- */
 function openPlace(p){
   if(!p) return;
-  state.curPlace=p;
+  state.curPlace=p; state.detailKind='place';
   state.curEmergency=emergencyFor(p.cc);
   var d=state.pos?haversine(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
   var br=state.pos?bearing(state.pos.lat,state.pos.lng,p.lat,p.lng):null;
@@ -306,34 +354,45 @@ function prepCard(g){
 }
 function openGuided(g){
   if(!g) return;
-  state.curGuide=g;
+  state.curGuide=g; state.detailKind='guide';
   state.curEmergency=emergencyFor(g.cc);
   var wl=g.waypoints.map(function(w){
     var hz = w.hazard ? '<div class="hz '+w.hazard.level+'">'+ICO.warn+esc(w.hazard.text)+'</div>' : '';
+    var meta = (w.elev!=null ? w.elev+' m' : '') + (w.approx ? ((w.elev!=null?'<br>':'')+'approx') : '');
     return '<div class="wp"><div class="wpn">'+w.n+'</div><div class="wt"><b>'+esc(w.name)+'</b>'+
       '<div class="d">'+esc(w.desc)+'</div>'+hz+'</div>'+
-      '<div class="wpmeta">'+w.elev+' m'+(w.approx?'<br>approx':'')+'</div></div>';
+      '<div class="wpmeta">'+meta+'</div></div>';
   }).join('');
+  var stopsCard = (g.stops&&g.stops.length) ? '<div class="info"><h4>Fuel &amp; stops</h4>'+
+    g.stops.map(function(s){ return '<p style="margin:0 0 4px">'+esc(s)+'</p>'; }).join('')+'</div>' : '';
+  var gallery = (g.images&&g.images.length) ? '<div class="gallery">'+g.images.map(function(im){
+    return '<figure><img loading="lazy" src="'+esc(im.src)+'" alt="'+esc(im.cap)+'" data-img="'+esc(im.src)+'"><figcaption>'+esc(im.cap)+'</figcaption></figure>';
+  }).join('')+'</div>' : '';
+  var backKey = (g.type==='drive'?'drive':'hike');
+  var backLabel = (g.type==='drive'?'Drive':'Hike');
   var v=el('v-detail');
   v.innerHTML=
-    '<button class="back" data-back="guided">'+ICO.left+' Guided</button>'+
+    '<button class="back" data-back="'+backKey+'">'+ICO.left+' '+backLabel+'</button>'+
     '<h2 class="sec" style="margin-top:2px">'+esc(g.name)+'</h2>'+
     '<p class="muted small" style="margin:0 0 12px">'+esc(g.area)+' · '+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</p>'+
+    gallery+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
-    elevSvg(g)+
-    '<div class="info flat"><h4>Waypoints</h4>'+wl+'</div>'+
+    (g.type==='hike'?elevSvg(g):'')+
+    '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
+    stopsCard+
     '<div class="info"><h4>Good to know</h4><p>'+esc(g.signal)+' '+esc(g.tolls)+'</p>'+
       (g.coordsApprox?'<p class="small" style="margin-top:6px">Waypoints marked <b>approx</b> are placed roughly for now — they get fine-tuned by walking the trail.</p>':'')+'</div>'+
     prepCard(g)+
-    '<button class="btn green" id="startGuide">'+ICO.play+' Start guiding</button>'+
+    '<button class="btn green" id="startGuide">'+ICO.play+' '+(g.type==='drive'?'Start driving':'Start guiding')+'</button>'+
     '<div class="row2" style="margin-top:10px">'+
       '<button class="savebtn'+(isFav(g.id)?' on':'')+'" id="favG" style="margin-top:0">'+ICO.star+'<span id="favGt">'+(isFav(g.id)?'Saved':'Save')+'</span></button>'+
       '<button class="savebtn" id="shareG" style="margin-top:0">'+ICO.share+' Share plan</button>'+
     '</div>'+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosG">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>';
-  showView('detail','guided');
+  showView('detail', backKey);
   bindBacks(v);
+  $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   el('sosG').onclick=function(){ doSOS(); };
   el('favG').onclick=function(){ toggleFav(g.id); var on=isFav(g.id); el('favG').classList.toggle('on',on); el('favGt').textContent=on?'Saved':'Save'; };
@@ -344,6 +403,7 @@ function openGuided(g){
 }
 function startGuidedLive(g){
   state.voiceOn=true; state._lastNext=null; state._lastFix=null; state.curSpeed=null; updateVoiceLabel();
+  try{ if(!audioCtx){ var _AC=window.AudioContext||window.webkitAudioContext; if(_AC) audioCtx=new _AC(); } if(audioCtx&&audioCtx.state==='suspended') audioCtx.resume(); }catch(e){}
   var v=el('v-live');
   v.innerHTML=
     '<button class="back" data-back="guided-detail">'+ICO.left+' '+esc(g.name)+'</button>'+
@@ -354,15 +414,21 @@ function startGuidedLive(g){
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
     '<button class="voicebar" id="liveVoice">'+ICO.voice+'<span id="liveVoiceLabel">Voice on — Samantha</span></button>'+
+    '<button class="btn ghost" id="reportBtn" style="margin-bottom:10px">'+ICO.warn+' Report</button>'+
+    '<div class="reprow" id="reprow">'+
+      ['Hazard','Closure','Animal','Police'].map(function(k){ return '<button class="repchip" data-rep="'+k+'">'+k+'</button>'; }).join('')+
+    '</div>'+
     '<button class="btn sos" id="sosLive">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<div style="height:10px"></div>'+
     '<button class="btn ghost" id="stopGuide">Stop guiding</button>';
-  showView('live','guided');
+  showView('live', (g.type==='drive'?'drive':'hike'));
   bindBacks(v);
   bindVoice(el('liveVoice'));
   updateVoiceLabel();
   el('sosLive').onclick=function(){ doSOS(); };
   el('stopGuide').onclick=function(){ stopWatch(); openGuided(g); };
+  el('reportBtn').onclick=function(){ var r=el('reprow'); r.classList.toggle('open'); };
+  $$('[data-rep]',v).forEach(function(c){ c.onclick=function(){ addReport(c.getAttribute('data-rep')); el('reprow').classList.remove('open'); }; });
   var spoken={};
   if(!('geolocation' in navigator)){ el('lives').textContent='Location is not available on this device.'; return; }
   stopWatch();
@@ -387,10 +453,11 @@ function updateGuided(g, spoken){
   var gt=el('gto'); if(gt) gt.textContent=fmtDist(dToNext);
   var gl=el('gleft'); if(gl) gl.textContent=left;
   var sp=el('speedpill'); if(sp){ var sb=sp.querySelector('b'); if(sb) sb.textContent = (state.curSpeed==null?'--':Math.round(state.curSpeed)); }
+  if(state._lastNext!==next.n && state._lastNext!=null){ chime('next'); }
   if(next.hazard && dToNext<80 && !spoken['h'+next.n]){ spoken['h'+next.n]=1; speak('Caution ahead. '+next.name+'. '+next.hazard.text, true); }
   else if(state._lastNext!==next.n){ speak((nextIdx===nearIdx?'At ':'Heading to ')+next.name+', '+fmtDist(dToNext)+'.'); }
   state._lastNext=next.n;
-  if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; speak('You have reached '+wps[wps.length-1].name+'. Take care near the water.', true); }
+  if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; chime('arrive'); speak('You have reached '+wps[wps.length-1].name+'.', true); }
 }
 
 /* ---------------- Alerts ---------------- */
@@ -399,12 +466,24 @@ function alertIcon(level){
   if(level==='red') return ICO.warn;
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 }
+function ago(t){ var s=Math.round((Date.now()-t)/1000); if(s<60) return 'just now'; var m=Math.round(s/60); if(m<60) return m+' min ago'; var h=Math.round(m/60); return h+' h ago'; }
 function renderAlerts(){
   var host=el('alertList');
-  host.innerHTML=LM.notes.map(function(n){
+  var html='<p class="muted small" style="margin:0 0 12px">Updated just now — tap the orange refresh circle any time to check again.</p>';
+  html+=LM.notes.map(function(n){
     var cls={ amber:'a-amber', red:'a-red', green:'a-green', blue:'a-blue' }[n.level]||'a-blue';
     return '<div class="alert '+cls+'"><div class="ai">'+alertIcon(n.level)+'</div><div><h4>'+esc(n.title)+'</h4><p>'+esc(n.body)+'</p></div></div>';
   }).join('');
+  var rs=reports();
+  if(rs.length){
+    html+='<div class="updated" style="margin-top:16px"><h4 style="margin:0">Your reports</h4><button id="clrRep" style="background:none;border:none;color:var(--muted);font:inherit;font-weight:700;cursor:pointer">Clear</button></div>';
+    html+=rs.map(function(r){
+      var loc = (r.lat!=null) ? (r.lat.toFixed(4)+', '+r.lng.toFixed(4)) : 'location was off';
+      return '<div class="alert a-amber"><div class="ai">'+alertIcon('amber')+'</div><div><h4>'+esc(r.kind)+'</h4><p>'+ago(r.t)+' · '+loc+'</p></div></div>';
+    }).join('');
+  }
+  host.innerHTML=html;
+  if(el('clrRep')) el('clrRep').onclick=function(){ clearReports(); renderAlerts(); };
 }
 
 /* ---------------- How to Use (with search) ---------------- */
@@ -423,6 +502,54 @@ function renderHelp(){
   box.oninput=run;
 }
 
+/* ---------------- hard refresh (the circle-arrow button) ---------------- */
+function rerenderCurrent(){
+  if(state.view==='places') renderPlaces();
+  else if(state.view==='alerts') renderAlerts();
+  else if(state.view==='detail'){
+    if(state.detailKind==='guide' && state.curGuide) openGuided(state.curGuide);
+    else if(state.detailKind==='place' && state.curPlace) openPlace(state.curPlace);
+  }
+}
+function hardRefresh(){
+  var b=el('hrefresh'); if(b){ b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin'); setTimeout(function(){ b.classList.remove('spin'); },750); }
+  updateNet();
+  ensurePos(function(){ rerenderCurrent(); });
+  rerenderCurrent();
+  toast('Refreshed');
+}
+
+/* ---------------- chimes (arrival / waypoint) ---------------- */
+var audioCtx=null;
+function chime(kind){
+  try{
+    if(!audioCtx){ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; audioCtx=new AC(); }
+    if(audioCtx.state==='suspended'){ audioCtx.resume(); }
+    function beep(freq, at, dur){
+      var o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.type='sine'; o.frequency.value=freq; o.connect(g); g.connect(audioCtx.destination);
+      var t=audioCtx.currentTime+at;
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.18,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.start(t); o.stop(t+dur+0.02);
+    }
+    if(kind==='arrive'){ beep(660,0,0.18); beep(880,0.16,0.28); }
+    else { beep(620,0,0.16); }
+  }catch(e){}
+}
+
+/* ---------------- your reports (offline hazard log) ---------------- */
+function reports(){ try{ return JSON.parse(localStorage.getItem('lm_reports')||'[]'); }catch(e){ return []; } }
+function addReport(kind){
+  var r=reports();
+  r.unshift({ kind:kind, lat:state.pos?state.pos.lat:null, lng:state.pos?state.pos.lng:null, t:Date.now() });
+  if(r.length>30) r=r.slice(0,30);
+  try{ localStorage.setItem('lm_reports', JSON.stringify(r)); }catch(e){}
+  toast(kind+' reported'+(state.pos?' here':''));
+}
+function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -433,18 +560,12 @@ function updateNet(){
 
 /* ---------------- init ---------------- */
 function init(){
-  renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
+  renderHome(); renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
   var q=el('q'); if(q) q.addEventListener('input', renderPlaces);
   bindVoice(el('voiceToggle')); updateVoiceLabel();
   var note=el('locNote'); if(note){ note.style.cursor='pointer'; note.addEventListener('click', function(){
     ensurePos(function(){ renderPlaces(); note.textContent='Location on — sorted by distance.'; }); }); }
-  el('hrefresh').onclick=function(){
-    var b=el('hrefresh'); b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin');
-    setTimeout(function(){ b.classList.remove('spin'); },750);
-    updateNet();
-    ensurePos(function(){ if(state.view==='places'){ renderPlaces(); } });
-    toast('Refreshed');
-  };
+  el('hrefresh').onclick=function(){ hardRefresh(); };
   $$('nav button').forEach(function(b){ b.addEventListener('click', function(){ navTo(b.getAttribute('data-nav')); }); });
   window.addEventListener('online', updateNet);
   window.addEventListener('offline', updateNet);

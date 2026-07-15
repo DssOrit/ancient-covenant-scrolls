@@ -87,3 +87,51 @@ Previous backups: `backup/2026-07-14-v167`, `backup/2026-07-14-v21`, `backup/202
 - The Dani'el 7:25 / DST section is inside the 364-Day Covenant Calendar `<div class="hr-sec-head">` block, after the 1 Enoch 72-82 item.
 - Before any content append to `Search/index.html` or `GreatE/index.html`, extract the `<script>` block and run `node --check` to catch syntax errors before pushing.
 - Great Eraser HOWTO_HTML is a massive single-quoted JS string — any future edits must escape every apostrophe as `\'`.
+
+---
+
+## Load Maps + OCC (later session, same day)
+
+### Built
+- **OCC How to Use — instant offline search** (shipped in PR #575). Filters guide
+  cards / section cards / FAQ as the employee types. Cache `load-tasks-cache-v2.5.3`.
+- **PR #575 merged** (Load AI boot intro + OCC search).
+- **Load Maps** — brand-new offline-first PWA at `/loadmaps` (PR #639, merged):
+  - Stage 1: ~48 major places across PT/ES/GB/FR/IT/GR (real coordinates), live
+    distance + compass, guide-me-there with Samantha voice, per-country emergency
+    numbers, Sete Lagoas guided route (waypoints/elevation/comfort/spoken hazards,
+    waypoints approx / parking exact), Alerts (curated offline), How to Use search,
+    auto intro + brand splash (supplied pack), installable PWA.
+  - Stage 2 batch: favorites/Save + Saved filter, prep checklist per route,
+    speedometer on live guide, share place/plan, proper 192/512 icons + 32/180
+    favicons. Cache `loadmaps-v4`.
+- **PR #639 merged** → live on main (`dfab618`).
+- `LOAD_MAPS_PLAN.md` is the living spec (stages, researched live-data sources).
+
+### Outstanding / verify on iPad
+- Open `https://acrscrolls.com/loadmaps/` after Pages deploys: intro+splash, allow
+  location, Places → guide, Guided → Sete Lagoas → Start guiding (voice + speed),
+  Save/star, prep checklist, Add to Home Screen. Samantha may fall back to the iOS
+  default voice on some iPads (known limit).
+
+### Pending / parked (Load Maps)
+- Stage 2 remainder: driving turn cards, report button, gas/rest/tolls per route,
+  arrival/reroute chimes.
+- Stage 3 (needs signal): Protomaps map layer on Cloudflare R2, Open-Meteo weather,
+  NASA FIRMS fire watch. Keys in Cloudflare env, never the repo.
+- Stage 4: car-to-trail handoff, auto check-in, route packs, battery-saver guidance,
+  landmark photos, group mode.
+- Expand catalog / add guided routes (worldwide, real data only).
+
+### Capability gaps
+- No image tools (ImageMagick/sips/sharp) — resized icons/favicons via headless Chromium.
+- Live Pages URLs not fetchable from sandbox — deploy verified on device only.
+
+### Backups
+- `backup/2026-07-15-loadmaps-v4` at `dfab618`. Recover: `git checkout backup/2026-07-15-loadmaps-v4`.
+
+### Load Maps commit log
+```
+dfab618 Load Maps: Stage 1 + Stage 2 batch — offline-first route + trail guide (#639)
+e8c6198 Load AI boot intro + OCC How-to instant search (#575)
+```
