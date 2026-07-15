@@ -260,8 +260,7 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
 .sun-time-icon.set { color: var(--orange); }
 .sun-time-label { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .sun-time-val { font-size: 18px; font-weight: 700; font-family: var(--mono); color: var(--text); }
-.sun-clock-sub { display: none; }
-.sun-device-inline { color: var(--gold); font-size: 14px; font-weight: 700; margin-left: 6px; }
+.sun-clock-sub { font-size: 13px; color: var(--text3); margin-top: 4px; font-family: var(--mono); }
 #dst-banner { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; color: var(--text2); line-height: 1.6; display: none; }
 #dst-banner b { color: var(--gold); display: block; margin-bottom: 4px; font-size: 13px; }
 .sun-progress-bar {
@@ -1876,12 +1875,21 @@ function renderSunView() {
     if (mm === 60) { hh++; mm = 0; }
     return pad(hh) + ':' + pad(mm);
   };
-  document.getElementById('sunrise-time').textContent = clockTimeStr(st.sunrise.total, dstH);
-  document.getElementById('sunset-time').textContent = clockTimeStr(st.sunset.total, dstH);
-  document.getElementById('nightfall-time').textContent = clockTimeStr(st.nightfall.total, dstH);
-  if (srClock) srClock.textContent = '';
-  if (ssClock) ssClock.textContent = '';
-  if (nfClock) nfClock.textContent = '';
+  var to12h = function(str24) {
+    var p = str24.split(':'); var h = parseInt(p[0]); var m = p[1];
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if (h === 0) h = 12;
+    return h + ':' + m + ' ' + ampm;
+  };
+  var srStr = clockTimeStr(st.sunrise.total, dstH);
+  var ssStr = clockTimeStr(st.sunset.total, dstH);
+  var nfStr = clockTimeStr(st.nightfall.total, dstH);
+  document.getElementById('sunrise-time').textContent = srStr;
+  document.getElementById('sunset-time').textContent = ssStr;
+  document.getElementById('nightfall-time').textContent = nfStr;
+  if (srClock) srClock.textContent = to12h(srStr);
+  if (ssClock) ssClock.textContent = to12h(ssStr);
+  if (nfClock) nfClock.textContent = to12h(nfStr);
   if (dstBanner) dstBanner.style.display = 'none';
 
   var dl = st.dayLength;
