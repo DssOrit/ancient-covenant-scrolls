@@ -915,7 +915,7 @@ select.form-input option { background: var(--surface2); }
 
       <div class="solar-true-note">
         <div class="solar-true-note-title">True Solar Time</div>
-        <div class="solar-true-note-body">Times shown are true solar prayer times — the sun's actual position at this location. During summer time (DST), your device clock runs ahead. A <b>your device:</b> line appears below each time showing exactly when your device clock will match that solar position. Go outside at the <b>your device:</b> time to pray at the true solar moment.</div>
+        <div class="solar-true-note-body">Times shown are when to go outside and pray — calculated from the sun's actual position at your location. The times adjust naturally through the year as the sun rises and sets earlier or later each season. During summer (DST), the government clock runs 1 hour ahead of the sun; the times shown already account for this so you never need to add or subtract anything. One time. Go pray.</div>
       </div>
 
       <div class="solar-dst-panel">
@@ -1864,7 +1864,7 @@ function renderSunView() {
   document.getElementById('sun-date-label').textContent =
     months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
-  // Show device clock time as the primary time to act on; true solar as small note
+  // Always show the device clock time of the solar event — one number, always correct
   var dstH = getDSTHours();
   var dstBanner = document.getElementById('dst-banner');
   var srClock = document.getElementById('sunrise-clock');
@@ -1876,26 +1876,13 @@ function renderSunView() {
     if (mm === 60) { hh++; mm = 0; }
     return pad(hh) + ':' + pad(mm);
   };
-  function timeHTML(solarStr, solarTotal, offset) {
-    if (offset > 0) {
-      return solarStr + '<span class="sun-device-inline">/ ' + clockTimeStr(solarTotal, offset) + '</span>';
-    }
-    return solarStr;
-  }
-  document.getElementById('sunrise-time').innerHTML = timeHTML(st.sunriseStr, st.sunrise.total, dstH);
-  document.getElementById('sunset-time').innerHTML = timeHTML(st.sunsetStr, st.sunset.total, dstH);
-  document.getElementById('nightfall-time').innerHTML = timeHTML(st.nightfallStr, st.nightfall.total, dstH);
+  document.getElementById('sunrise-time').textContent = clockTimeStr(st.sunrise.total, dstH);
+  document.getElementById('sunset-time').textContent = clockTimeStr(st.sunset.total, dstH);
+  document.getElementById('nightfall-time').textContent = clockTimeStr(st.nightfall.total, dstH);
   if (srClock) srClock.textContent = '';
   if (ssClock) ssClock.textContent = '';
   if (nfClock) nfClock.textContent = '';
-  if (dstBanner) {
-    if (dstH > 0) {
-      dstBanner.style.display = 'block';
-      dstBanner.innerHTML = '<b>Summer clock (DST) is active.</b>White = true solar prayer time. Gold = your device clock. Go outside when your device shows the gold time.';
-    } else {
-      dstBanner.style.display = 'none';
-    }
-  }
+  if (dstBanner) dstBanner.style.display = 'none';
 
   var dl = st.dayLength;
   var dlH = Math.floor(dl), dlM = Math.round((dl - dlH) * 60);
@@ -1916,8 +1903,7 @@ function renderSunView() {
     var minsToSunset = (st.sunset.total - solarCurrentH) * 60;
     if (minsToSunset > 0 && minsToSunset < 120) {
       shabbatNotice.style.display = 'block';
-      var shabDevice = dstH > 0 ? ' (your device: ' + clockTimeStr(st.sunset.total, dstH) + ')' : '';
-      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at solar ' + st.sunsetStr + shabDevice + ' — ' + Math.round(minsToSunset) + ' minutes';
+      shabbatNotice.innerHTML = '<i class="ri-moon-line"></i> Shabbat begins at ' + clockTimeStr(st.sunset.total, dstH) + ' — ' + Math.round(minsToSunset) + ' minutes';
     }
   }
 
