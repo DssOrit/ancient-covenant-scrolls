@@ -238,6 +238,7 @@ function openMap(opts){
   el('mapwrap').classList.add('open');
   mapInit();
   if(LMap.routeLayer){ LMap.map.removeLayer(LMap.routeLayer); LMap.routeLayer=null; }
+  if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); LMap.driveLayer=null; }
   var title='Live map', bounds=null, center=null;
   if(opts && opts.route){
     var g=opts.route; title=g.name;
@@ -264,6 +265,24 @@ function openMap(opts){
     else if(center) LMap.map.setView(center, 14);
   }, 80);
   startMapLocate();
+  if(opts && opts.directions && opts.place){
+    ensurePos(function(){ if(state.pos) drawRoute([state.pos.lat,state.pos.lng], [opts.place.lat,opts.place.lng]); });
+  }
+}
+function drawRoute(from, to){
+  if(!from){ toast('Turn on location for directions'); return; }
+  if(!navigator.onLine){ toast('Directions need a connection'); return; }
+  toast('Getting driving directions…');
+  var url='https://router.project-osrm.org/route/v1/driving/'+from[1]+','+from[0]+';'+to[1]+','+to[0]+'?overview=full&geometries=geojson';
+  fetch(url).then(function(r){ return r.json(); }).then(function(j){
+    if(!j || !j.routes || !j.routes[0]){ toast('No driving route found'); return; }
+    var rt=j.routes[0], coords=rt.geometry.coordinates.map(function(c){ return [c[1],c[0]]; });
+    if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); }
+    LMap.driveLayer=L.polyline(coords, { color:'#3d8bff', weight:6, opacity:.92 }).addTo(LMap.map);
+    LMap.map.fitBounds(L.latLngBounds(coords), { padding:[50,50] });
+    var km=(rt.distance/1000).toFixed(rt.distance<10000?1:0), min=Math.round(rt.duration/60);
+    var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min by car';
+  }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
   if(!LMap.map) return;
@@ -356,6 +375,34 @@ function renderPlaces(){
     else if(pr[0]==='pin'){ openPlace(byId(getPins(),pr[1])); }
     else { openPlace(byId(LM.places,pr[1])); } }; });
 }
+/* search anywhere (Photon geocoder, free/no key) */
+var _world=[], _worldT;
+function searchWorld(){
+  var box=el('q'), host=el('worldResults'); if(!host) return;
+  var q=((box&&box.value)||'').trim();
+  clearTimeout(_worldT);
+  if(q.length<3 || !navigator.onLine){ host.innerHTML=''; return; }
+  _worldT=setTimeout(function(){
+    host.innerHTML='<p class="muted small" style="margin:12px 2px 6px">Searching everywhere…</p>';
+    fetch('https://photon.komoot.io/api/?limit=8&q='+encodeURIComponent(q)).then(function(r){ return r.json(); }).then(function(j){
+      var feats=(j&&j.features)||[];
+      _world=feats.map(function(f,i){
+        var c=(f.geometry&&f.geometry.coordinates)||[], pr=f.properties||{};
+        var name=pr.name||pr.street||pr.city||'Place';
+        var area=[pr.city,pr.state,pr.country].filter(Boolean).join(', ');
+        return { id:'world-'+i, name:name, area:area||'Search result', cc:(pr.countrycode||'').toUpperCase(), lat:c[1], lng:c[0] };
+      }).filter(function(x){ return x.lat!=null && x.lng!=null; });
+      if(!_world.length){ host.innerHTML=''; return; }
+      host.innerHTML='<h2 class="sec" style="font-size:1.05rem">Search results (worldwide)</h2>'+
+        _world.map(function(p){
+          var d=state.pos?(' · '+fmtDist(haversine(state.pos.lat,state.pos.lng,p.lat,p.lng))):'';
+          return '<button class="card place" data-world="'+p.id+'"><div class="top"><div class="thumb place">'+ICO.pin+'</div><div><h3>'+esc(p.name)+'</h3><div class="area">'+esc(p.area)+esc(d)+'</div></div></div></button>';
+        }).join('');
+      $$('[data-world]',host).forEach(function(b){ b.onclick=function(){ var id=b.getAttribute('data-world');
+        for(var i=0;i<_world.length;i++){ if(_world[i].id===id){ openPlace(_world[i]); break; } } }; });
+    }).catch(function(){ if(host) host.innerHTML=''; });
+  }, 450);
+}
 function doShare(title, text){
   if(navigator.share){ navigator.share({title:title, text:text}).catch(function(){}); }
   else if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ toast('Copied'); }, function(){ toast(text); }); }
@@ -387,6 +434,7 @@ function openPlace(p){
       '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
     '</div>'+
     '<button class="btn ghost" id="placeMapBtn" style="margin-top:10px">'+ICO.pin+' Show on live map</button>'+
+    '<button class="btn ghost" id="dirBtn" style="margin-top:10px">'+ICO.nav+' Directions (drive)</button>'+
     (p.pin ? '<button class="btn ghost" id="rmPinBtn" style="margin-top:10px;color:var(--red)">Remove pin</button>' : '')+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
@@ -402,6 +450,7 @@ function openPlace(p){
     el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
   el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
   if(el('placeMapBtn')) el('placeMapBtn').onclick=function(){ openMap({ place:p }); };
+  if(el('dirBtn')) el('dirBtn').onclick=function(){ openMap({ place:p, directions:true }); };
   if(el('rmPinBtn')) el('rmPinBtn').onclick=function(){ removePin(p.id); toast('Pin removed'); state.cc='PINS'; renderChips(); navTo('places'); };
 }
 function startPlaceGuide(p){
@@ -885,7 +934,7 @@ function updateNet(){
 /* ---------------- init ---------------- */
 function init(){
   renderHome(); renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
-  var q=el('q'); if(q) q.addEventListener('input', renderPlaces);
+  var q=el('q'); if(q) q.addEventListener('input', function(){ renderPlaces(); searchWorld(); });
   bindVoice(el('voiceToggle')); updateVoiceLabel();
   var note=el('locNote'); if(note){ note.style.cursor='pointer'; note.addEventListener('click', function(){
     ensurePos(function(){ renderPlaces(); note.textContent='Location on — sorted by distance.'; }); }); }
