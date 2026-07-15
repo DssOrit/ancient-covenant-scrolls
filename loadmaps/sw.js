@@ -1,5 +1,5 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v13';
+var CACHE = 'loadmaps-v14';
 var CORE = [
   'index.html',
   'app.js',
@@ -10,6 +10,11 @@ var CORE = [
   'icon-512.png',
   'favicon-32.png',
   'favicon-180.png',
+  'vendor/leaflet/leaflet.js',
+  'vendor/leaflet/leaflet.css',
+  'vendor/leaflet/images/marker-icon.png',
+  'vendor/leaflet/images/marker-icon-2x.png',
+  'vendor/leaflet/images/marker-shadow.png',
   'splash/splash-1284x2778.png',
   'splash/splash-1668x2388.png'
 ];

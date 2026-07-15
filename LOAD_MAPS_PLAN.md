@@ -51,7 +51,16 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 - Route images use runtime caching (cached after first online view), not the
   install list, to keep install light.
 
-**Stage 3 — online extras (need a signal)** — sources researched, see below.
+**Stage 3 — the live map (in progress)**
+- Done: real scrolling map (Leaflet, self-hosted in `vendor/leaflet/`) with an
+  OpenStreetMap streets layer and an Esri satellite layer (toggle), the route drawn
+  on it (polyline + colored waypoint markers), live "you are here", recenter, zoom.
+  Opens from any route, any place, and a Home "Live map" card. Tiles load online
+  (attribution shown); offline still uses the coordinate guide + cached route images.
+- Next: weather + fire overlays (Open-Meteo, NASA FIRMS), offline map packs
+  (Protomaps on Cloudflare R2) for full offline maps.
+
+**Stage 3 sources (need a signal)** — researched, see below.
 
 **Stage 4 — innovative gaps**
 - Car-to-trail handoff, auto check-in, route packs, battery-saver guidance, landmark

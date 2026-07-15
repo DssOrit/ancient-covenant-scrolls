@@ -166,8 +166,9 @@ function renderHome(){
       '<button class="hcard places wide" data-go="places"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Explore places</b><span>Famous places to guide you to</span></div></button>'+
       '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
+      '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
     '</div>';
-  $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ navTo(b.getAttribute('data-go')); }; });
+  $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
 }
 function routeThumb(type){ return '<div class="thumb '+(type==='drive'?'drive':'hike')+'">'+(type==='drive'?ICO.car:ICO.hiker)+'</div>'; }
 function renderRoutes(type){
@@ -203,6 +204,60 @@ function openLightbox(src){
   }
   lb.querySelector('img').src=src;
   lb.classList.add('open');
+}
+
+/* ---------------- live map (Stage 3, Leaflet) ---------------- */
+var LMap = { map:null, streets:null, sat:null, cur:'streets', routeLayer:null, meMarker:null, watch:null };
+function mapInit(){
+  if(LMap.map || typeof L==='undefined') return;
+  try{ L.Icon.Default.imagePath='vendor/leaflet/images/'; }catch(e){}
+  LMap.map = L.map('map', { zoomControl:false });
+  L.control.zoom({ position:'bottomleft' }).addTo(LMap.map);
+  LMap.streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap contributors' });
+  LMap.sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics' });
+  LMap.streets.addTo(LMap.map); LMap.cur='streets';
+  LMap.map.setView([39.5,-8], 6);
+}
+function openMap(opts){
+  if(typeof L==='undefined'){ toast('The live map needs a connection the first time.'); return; }
+  el('mapwrap').classList.add('open');
+  mapInit();
+  if(LMap.routeLayer){ LMap.map.removeLayer(LMap.routeLayer); LMap.routeLayer=null; }
+  var title='Live map', bounds=null, center=null;
+  if(opts && opts.route){
+    var g=opts.route; title=g.name;
+    var pts=g.waypoints.map(function(w){ return [w.lat,w.lng]; });
+    var grp=L.layerGroup();
+    L.polyline(pts, { color:'#2fd85f', weight:5, opacity:.92 }).addTo(grp);
+    g.waypoints.forEach(function(w){
+      var col=w.hazard ? (w.hazard.level==='high'?'#ff4d3d':'#ffb023') : (w.n===1?'#2fd85f':'#3d8bff');
+      L.circleMarker([w.lat,w.lng], { radius:9, color:'#04140a', weight:2, fillColor:col, fillOpacity:1 })
+        .bindPopup('<b>'+esc(w.name)+'</b>'+(w.hazard?'<br>'+esc(w.hazard.text):'')).addTo(grp);
+    });
+    grp.addTo(LMap.map); LMap.routeLayer=grp; bounds=L.latLngBounds(pts);
+  } else if(opts && opts.place){
+    var p=opts.place; title=p.name;
+    var grp2=L.layerGroup();
+    L.marker([p.lat,p.lng]).bindPopup('<b>'+esc(p.name)+'</b>').addTo(grp2);
+    grp2.addTo(LMap.map); LMap.routeLayer=grp2; center=[p.lat,p.lng];
+  } else if(state.pos){ center=[state.pos.lat,state.pos.lng]; }
+  el('mapTitle').textContent=title;
+  setTimeout(function(){
+    LMap.map.invalidateSize();
+    if(bounds) LMap.map.fitBounds(bounds, { padding:[50,50] });
+    else if(center) LMap.map.setView(center, 14);
+  }, 80);
+  startMapLocate();
+}
+function closeMap(){ el('mapwrap').classList.remove('open'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
+function startMapLocate(){
+  if(LMap.watch!=null || !navigator.geolocation) return;
+  LMap.watch=navigator.geolocation.watchPosition(function(pos){
+    var ll=[pos.coords.latitude,pos.coords.longitude];
+    state.pos={ lat:pos.coords.latitude, lng:pos.coords.longitude, acc:pos.coords.accuracy };
+    if(!LMap.meMarker){ LMap.meMarker=L.circleMarker(ll, { radius:8, color:'#fff', weight:2, fillColor:'#3d8bff', fillOpacity:1 }).addTo(LMap.map); }
+    else LMap.meMarker.setLatLng(ll);
+  }, function(){}, { enableHighAccuracy:true, maximumAge:5000 });
 }
 function bindBacks(scope){
   $$('[data-back]',scope).forEach(function(b){
@@ -294,6 +349,7 @@ function openPlace(p){
       '<button class="savebtn'+(isFav(p.id)?' on':'')+'" id="favBtn" style="margin-top:0">'+ICO.star+'<span id="favTxt">'+(isFav(p.id)?'Saved':'Save')+'</span></button>'+
       '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
     '</div>'+
+    '<button class="btn ghost" id="placeMapBtn" style="margin-top:10px">'+ICO.pin+' Show on live map</button>'+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
@@ -305,6 +361,7 @@ function openPlace(p){
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
     el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
   el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
+  if(el('placeMapBtn')) el('placeMapBtn').onclick=function(){ openMap({ place:p }); };
 }
 function startPlaceGuide(p){
   state.voiceOn=true; updateVoiceLabel();
@@ -423,6 +480,7 @@ function openGuided(g){
     '<h2 class="sec" style="margin-top:2px">'+esc(g.name)+'</h2>'+
     '<p class="muted small" style="margin:0 0 12px">'+esc(g.area)+' · '+g.distanceKm+' km · '+g.timeMin+' min · '+esc(g.difficulty)+'</p>'+
     routeMapSVG(g)+
+    '<button class="btn ghost" id="mapBtn" style="margin-bottom:14px">'+ICO.pin+' Open live map</button>'+
     gallery+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
@@ -442,6 +500,7 @@ function openGuided(g){
   bindBacks(v);
   $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
   el('startGuide').onclick=function(){ startGuidedLive(g); };
+  if(el('mapBtn')) el('mapBtn').onclick=function(){ openMap({ route:g }); };
   el('sosG').onclick=function(){ doSOS(); };
   el('favG').onclick=function(){ toggleFav(g.id); var on=isFav(g.id); el('favG').classList.toggle('on',on); el('favGt').textContent=on?'Saved':'Save'; };
   el('shareG').onclick=function(){ doShare('Load Maps — '+g.name, g.name+' ('+g.area+') — '+g.distanceKm+' km, '+g.timeMin+' min. Parking '+g.waypoints[0].lat.toFixed(4)+', '+g.waypoints[0].lng.toFixed(4)); };
@@ -617,6 +676,17 @@ function init(){
   $$('nav button').forEach(function(b){ b.addEventListener('click', function(){ navTo(b.getAttribute('data-nav')); }); });
   window.addEventListener('online', updateNet);
   window.addEventListener('offline', updateNet);
+  // live map controls
+  if(el('mapBack')) el('mapBack').onclick=closeMap;
+  if(el('mapLayer')) el('mapLayer').onclick=function(){
+    if(!LMap.map) return;
+    if(LMap.cur==='streets'){ LMap.map.removeLayer(LMap.streets); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Streets'; }
+    else { LMap.map.removeLayer(LMap.sat); LMap.streets.addTo(LMap.map); LMap.cur='streets'; el('mapLayer').textContent='Satellite'; }
+  };
+  if(el('mapRecenter')) el('mapRecenter').onclick=function(){
+    if(LMap.meMarker){ LMap.map.setView(LMap.meMarker.getLatLng(), 15); }
+    else { ensurePos(function(){ if(state.pos && LMap.map) LMap.map.setView([state.pos.lat,state.pos.lng], 15); }); }
+  };
 }
 init();
 
