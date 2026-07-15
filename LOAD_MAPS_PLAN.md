@@ -51,6 +51,11 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 - Route images use runtime caching (cached after first online view), not the
   install list, to keep install light.
 
+**Map stack (all free / no key):** Leaflet + **OpenFreeMap** vector tiles (via
+self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
+**Valhalla** multi-modal routing (drive / walk / cycle, keyless public server) +
+**Photon** geocoding (search anywhere). Esri satellite layer as a toggle.
+
 **Stage 3 — the live map (in progress)**
 - Done: real scrolling map (Leaflet, self-hosted in `vendor/leaflet/`) with an
   OpenStreetMap streets layer and an Esri satellite layer (toggle), the route drawn
@@ -61,6 +66,17 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
   (Protomaps on Cloudflare R2) for full offline maps.
 
 **Stage 3 sources (need a signal)** — researched, see below.
+
+**Keys to switch on (Cloudflare Pages env — never in the repo)**
+- **Fire watch:** set `FIRMS_KEY` to a free NASA FIRMS map key. The function is
+  `functions/api/loadmaps/fire.js`; until the key is set it stays silent.
+- **AI assistant:** set `AI_KEY` (an OpenRouter key) and optionally `AI_MODEL`.
+  The function is `functions/api/loadmaps/ai.js`; until the key is set the
+  "Ask Load Maps" screen shows "not set up yet".
+Both keep the key server-side; nothing sensitive is committed.
+
+**Stage 3 fire watch + Stage 5 AI assistant** are wired (client + Cloudflare
+functions), waiting only on the keys above.
 
 **Stage 4 — innovative gaps**
 - Car-to-trail handoff, auto check-in, route packs, battery-saver guidance, landmark

@@ -165,6 +165,7 @@ function navTo(key){
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
+  else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -180,6 +181,7 @@ function renderHome(){
       '<button class="hcard alerts" data-go="alerts"><div class="hi">'+ICO.warn+'</div><b>Alerts</b><span>Route notes and reports</span></button>'+
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
+      '<button class="hcard assistant wide" data-go="assistant"><div class="hi">'+ICO.q+'</div><div class="ht"><b>Ask Load Maps</b><span>Plan a trip or ask about a place (needs setup)</span></div></button>'+
     '</div>';
   $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
 }
@@ -226,16 +228,38 @@ function mapInit(){
   try{ L.Icon.Default.imagePath='vendor/leaflet/images/'; }catch(e){}
   LMap.map = L.map('map', { zoomControl:false });
   L.control.zoom({ position:'bottomleft' }).addTo(LMap.map);
-  LMap.streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap contributors' });
+  LMap.raster = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'&copy; OpenStreetMap contributors' });
   LMap.sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics' });
-  LMap.streets.addTo(LMap.map); LMap.cur='streets';
+  LMap.base=null;
+  // OpenFreeMap vector via MapLibre (keyless, unlimited); fall back to OSM raster
+  try{
+    if(L.maplibreGL && typeof maplibregl!=='undefined'){
+      LMap.vector = L.maplibreGL({ style:'https://tiles.openfreemap.org/styles/liberty', attribution:'&copy; OpenFreeMap &copy; OpenStreetMap' });
+      LMap.vector.addTo(LMap.map); LMap.base=LMap.vector; LMap.cur='vector';
+    }
+  }catch(e){ LMap.vector=null; LMap.base=null; }
+  if(!LMap.base){ LMap.raster.addTo(LMap.map); LMap.base=LMap.raster; LMap.cur='streets'; }
   LMap.map.setView([39.5,-8], 6);
+}
+function decodePoly(str, precision){
+  var index=0, lat=0, lng=0, coords=[], factor=Math.pow(10, precision||6), shift, result, b, dlat, dlng;
+  while(index<str.length){
+    shift=0; result=0;
+    do{ b=str.charCodeAt(index++)-63; result|=(b&0x1f)<<shift; shift+=5; } while(b>=0x20);
+    dlat=(result&1)?~(result>>1):(result>>1); lat+=dlat;
+    shift=0; result=0;
+    do{ b=str.charCodeAt(index++)-63; result|=(b&0x1f)<<shift; shift+=5; } while(b>=0x20);
+    dlng=(result&1)?~(result>>1):(result>>1); lng+=dlng;
+    coords.push([lat/factor, lng/factor]);
+  }
+  return coords;
 }
 function openMap(opts){
   if(typeof L==='undefined'){ toast('The live map needs a connection the first time.'); return; }
   el('mapwrap').classList.add('open');
   mapInit();
   if(LMap.routeLayer){ LMap.map.removeLayer(LMap.routeLayer); LMap.routeLayer=null; }
+  if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); LMap.driveLayer=null; }
   var title='Live map', bounds=null, center=null;
   if(opts && opts.route){
     var g=opts.route; title=g.name;
@@ -262,6 +286,32 @@ function openMap(opts){
     else if(center) LMap.map.setView(center, 14);
   }, 80);
   startMapLocate();
+  var mm=el('mapModes');
+  if(opts && opts.directions && opts.place){
+    if(mm){ mm.classList.add('on'); $$('#mapModes button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-mode')==='auto'); }); }
+    ensurePos(function(){ if(state.pos) drawRoute([state.pos.lat,state.pos.lng], [opts.place.lat,opts.place.lng], 'auto'); });
+  } else if(mm){ mm.classList.remove('on'); }
+}
+function drawRoute(from, to, costing){
+  if(!from){ toast('Turn on location for directions'); return; }
+  if(!navigator.onLine){ toast('Directions need a connection'); return; }
+  costing=costing||'auto';
+  LMap.from=from; LMap.dest=to; LMap.costing=costing;
+  toast('Getting directions…');
+  var body={ locations:[{ lat:from[0], lon:from[1] },{ lat:to[0], lon:to[1] }], costing:costing, directions_options:{ units:'kilometers' } };
+  fetch('https://valhalla.openstreetmap.de/route', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(body) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var leg=j && j.trip && j.trip.legs && j.trip.legs[0];
+      if(!leg || !leg.shape){ toast('No route found'); return; }
+      var coords=decodePoly(leg.shape, 6);
+      if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); }
+      var col=costing==='pedestrian'?'#2fd85f':(costing==='bicycle'?'#ffb023':'#3d8bff');
+      LMap.driveLayer=L.polyline(coords, { color:col, weight:6, opacity:.92 }).addTo(LMap.map);
+      LMap.map.fitBounds(L.latLngBounds(coords), { padding:[50,50] });
+      var s=j.trip.summary, km=s.length.toFixed(s.length<10?1:0), min=Math.round(s.time/60);
+      var lab=costing==='pedestrian'?'on foot':(costing==='bicycle'?'by bike':'by car');
+      var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min '+lab;
+    }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
   if(!LMap.map) return;
@@ -272,7 +322,7 @@ function renderPins(){
   });
   LMap.pinLayer.addTo(LMap.map);
 }
-function closeMap(){ el('mapwrap').classList.remove('open'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
+function closeMap(){ el('mapwrap').classList.remove('open'); var mm=el('mapModes'); if(mm) mm.classList.remove('on'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
 function startMapLocate(){
   if(LMap.watch!=null || !navigator.geolocation) return;
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
@@ -354,6 +404,34 @@ function renderPlaces(){
     else if(pr[0]==='pin'){ openPlace(byId(getPins(),pr[1])); }
     else { openPlace(byId(LM.places,pr[1])); } }; });
 }
+/* search anywhere (Photon geocoder, free/no key) */
+var _world=[], _worldT;
+function searchWorld(){
+  var box=el('q'), host=el('worldResults'); if(!host) return;
+  var q=((box&&box.value)||'').trim();
+  clearTimeout(_worldT);
+  if(q.length<3 || !navigator.onLine){ host.innerHTML=''; return; }
+  _worldT=setTimeout(function(){
+    host.innerHTML='<p class="muted small" style="margin:12px 2px 6px">Searching everywhere…</p>';
+    fetch('https://photon.komoot.io/api/?limit=8&q='+encodeURIComponent(q)).then(function(r){ return r.json(); }).then(function(j){
+      var feats=(j&&j.features)||[];
+      _world=feats.map(function(f,i){
+        var c=(f.geometry&&f.geometry.coordinates)||[], pr=f.properties||{};
+        var name=pr.name||pr.street||pr.city||'Place';
+        var area=[pr.city,pr.state,pr.country].filter(Boolean).join(', ');
+        return { id:'world-'+i, name:name, area:area||'Search result', cc:(pr.countrycode||'').toUpperCase(), lat:c[1], lng:c[0] };
+      }).filter(function(x){ return x.lat!=null && x.lng!=null; });
+      if(!_world.length){ host.innerHTML=''; return; }
+      host.innerHTML='<h2 class="sec" style="font-size:1.05rem">Search results (worldwide)</h2>'+
+        _world.map(function(p){
+          var d=state.pos?(' · '+fmtDist(haversine(state.pos.lat,state.pos.lng,p.lat,p.lng))):'';
+          return '<button class="card place" data-world="'+p.id+'"><div class="top"><div class="thumb place">'+ICO.pin+'</div><div><h3>'+esc(p.name)+'</h3><div class="area">'+esc(p.area)+esc(d)+'</div></div></div></button>';
+        }).join('');
+      $$('[data-world]',host).forEach(function(b){ b.onclick=function(){ var id=b.getAttribute('data-world');
+        for(var i=0;i<_world.length;i++){ if(_world[i].id===id){ openPlace(_world[i]); break; } } }; });
+    }).catch(function(){ if(host) host.innerHTML=''; });
+  }, 450);
+}
 function doShare(title, text){
   if(navigator.share){ navigator.share({title:title, text:text}).catch(function(){}); }
   else if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ toast('Copied'); }, function(){ toast(text); }); }
@@ -376,6 +454,7 @@ function openPlace(p){
       '<div class="coordline">'+p.lat.toFixed(4)+', '+p.lng.toFixed(4)+'</div></div>'+
     galleryHTML(p.images)+
     '<div class="wx" id="wxCard"></div>'+
+    '<div class="fire" id="fireCard"></div>'+
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
@@ -384,6 +463,7 @@ function openPlace(p){
       '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
     '</div>'+
     '<button class="btn ghost" id="placeMapBtn" style="margin-top:10px">'+ICO.pin+' Show on live map</button>'+
+    '<button class="btn ghost" id="dirBtn" style="margin-top:10px">'+ICO.nav+' Directions (drive)</button>'+
     (p.pin ? '<button class="btn ghost" id="rmPinBtn" style="margin-top:10px;color:var(--red)">Remove pin</button>' : '')+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
@@ -392,12 +472,14 @@ function openPlace(p){
   bindBacks(v);
   bindGallery(v);
   loadWeather(p.lat, p.lng, 'wxCard');
+  loadFire(p.lat, p.lng, 'fireCard');
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
     el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
   el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
   if(el('placeMapBtn')) el('placeMapBtn').onclick=function(){ openMap({ place:p }); };
+  if(el('dirBtn')) el('dirBtn').onclick=function(){ openMap({ place:p, directions:true }); };
   if(el('rmPinBtn')) el('rmPinBtn').onclick=function(){ removePin(p.id); toast('Pin removed'); state.cc='PINS'; renderChips(); navTo('places'); };
 }
 function startPlaceGuide(p){
@@ -520,6 +602,7 @@ function openGuided(g){
     '<button class="btn ghost" id="mapBtn" style="margin-bottom:14px">'+ICO.pin+' Open live map</button>'+
     gallery+
     '<div class="wx" id="wxCard"></div>'+
+    '<div class="fire" id="fireCard"></div>'+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
     '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
@@ -538,6 +621,7 @@ function openGuided(g){
   bindBacks(v);
   $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
   loadWeather(g.waypoints[0].lat, g.waypoints[0].lng, 'wxCard');
+  loadFire(g.waypoints[0].lat, g.waypoints[0].lng, 'fireCard');
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   if(el('mapBtn')) el('mapBtn').onclick=function(){ openMap({ route:g }); };
   el('sosG').onclick=function(){ doSOS(); };
@@ -829,6 +913,45 @@ function runPoi(cat){
   });
 }
 
+/* ---------------- Fire watch (Stage 3, via Cloudflare function) ---------------- */
+function loadFire(lat, lng, elId){
+  var host=el(elId); if(!host) return;
+  host.innerHTML='';
+  if(!navigator.onLine) return;
+  fetch('/api/loadmaps/fire?lat='+lat+'&lng='+lng).then(function(r){ return r.json(); }).then(function(j){
+    if(!host) return;
+    if(!j || j.configured===false || j.error){ host.innerHTML=''; return; } // not set up -> silent
+    if(j.count>0){ host.innerHTML='<div class="fire-warn">'+ICO.warn+'Fire watch: '+j.count+' heat hotspot'+(j.count===1?'':'s')+' detected within ~75 km (last 24h). Check local advice.</div>'; }
+    else { host.innerHTML='<div class="fire-ok">'+ICO.check+'Fire watch: none detected nearby.</div>'; }
+  }).catch(function(){ if(host) host.innerHTML=''; });
+}
+
+/* ---------------- AI assistant (Stage 5, via Cloudflare function) ---------------- */
+function renderAssistant(){
+  var v=el('v-assistant');
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Ask Load Maps</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Ask about a place, a route, or plan a trip. Needs a connection.</p>'+
+    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. plan a safe day trip near Porto"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div id="askOut" class="ask-out"></div>'+
+    '<div class="ask-eg"><b>Try:</b> "hidden waterfalls near me" · "avoid narrow mountain roads to Gerês" · "history of Coimbra"</div>';
+  bindBacks(v);
+  el('askBtn').onclick=doAsk;
+  el('askIn').addEventListener('keydown', function(e){ if(e.key==='Enter') doAsk(); });
+}
+function doAsk(){
+  var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
+  var out=el('askOut'); if(!out) return;
+  if(!navigator.onLine){ out.innerHTML='<div class="info flat"><p class="muted">The assistant needs a connection.</p></div>'; return; }
+  out.innerHTML='<p class="muted small">Thinking…</p>';
+  fetch('/api/loadmaps/ai', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify({ q:q }) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      if(!j || j.configured===false){ out.innerHTML='<div class="info flat"><p class="muted">The assistant is not set up yet. Add an AI key in Cloudflare to switch it on.</p></div>'; return; }
+      if(j.error || !j.answer){ out.innerHTML='<div class="info flat"><p class="muted">Could not answer right now. Try again.</p></div>'; return; }
+      out.innerHTML='<div class="ask-answer">'+esc(j.answer).replace(/\n/g,'<br>')+'</div>';
+    }).catch(function(){ out.innerHTML='<div class="info flat"><p class="muted">Could not reach the assistant.</p></div>'; });
+}
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -840,7 +963,7 @@ function updateNet(){
 /* ---------------- init ---------------- */
 function init(){
   renderHome(); renderChips(); renderPlaces(); renderAlerts(); renderHelp(); updateNet();
-  var q=el('q'); if(q) q.addEventListener('input', renderPlaces);
+  var q=el('q'); if(q) q.addEventListener('input', function(){ renderPlaces(); searchWorld(); });
   bindVoice(el('voiceToggle')); updateVoiceLabel();
   var note=el('locNote'); if(note){ note.style.cursor='pointer'; note.addEventListener('click', function(){
     ensurePos(function(){ renderPlaces(); note.textContent='Location on — sorted by distance.'; }); }); }
@@ -851,10 +974,14 @@ function init(){
   // live map controls
   if(el('mapBack')) el('mapBack').onclick=closeMap;
   if(el('mapLayer')) el('mapLayer').onclick=function(){
-    if(!LMap.map) return;
-    if(LMap.cur==='streets'){ LMap.map.removeLayer(LMap.streets); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Streets'; }
-    else { LMap.map.removeLayer(LMap.sat); LMap.streets.addTo(LMap.map); LMap.cur='streets'; el('mapLayer').textContent='Satellite'; }
+    if(!LMap.map || !LMap.base) return;
+    if(LMap.cur!=='sat'){ LMap.map.removeLayer(LMap.base); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Map'; }
+    else { LMap.map.removeLayer(LMap.sat); LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; }
   };
+  $$('#mapModes button').forEach(function(bt){ bt.onclick=function(){
+    $$('#mapModes button').forEach(function(x){ x.classList.remove('on'); }); bt.classList.add('on');
+    if(LMap.from && LMap.dest) drawRoute(LMap.from, LMap.dest, bt.getAttribute('data-mode'));
+  }; });
   if(el('mapRecenter')) el('mapRecenter').onclick=function(){
     if(LMap.meMarker){ LMap.map.setView(LMap.meMarker.getLatLng(), 15); }
     else { ensurePos(function(){ if(state.pos && LMap.map) LMap.map.setView([state.pos.lat,state.pos.lng], 15); }); }
