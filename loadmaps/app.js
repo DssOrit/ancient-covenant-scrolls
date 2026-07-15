@@ -54,6 +54,17 @@ function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); 
 function isFav(id){ return favs().indexOf(id)>=0; }
 function toggleFav(id){ var f=favs(), i=f.indexOf(id); if(i>=0) f.splice(i,1); else f.push(id); try{ localStorage.setItem('lm_favs', JSON.stringify(f)); }catch(e){} }
 
+/* custom pins (your own saved places, on the device) */
+function getPins(){ try{ return JSON.parse(localStorage.getItem('lm_pins')||'[]'); }catch(e){ return []; } }
+function savePins(a){ try{ localStorage.setItem('lm_pins', JSON.stringify(a)); }catch(e){} }
+function addPin(lat, lng, name){
+  var a=getPins();
+  var id='pin-'+Math.abs(Math.round(lat*10000))+'-'+Math.abs(Math.round(lng*10000))+'-'+a.length;
+  a.push({ id:id, name:name||('Pin '+(a.length+1)), area:'Your pin', cc:'', lat:lat, lng:lng, pin:true });
+  savePins(a); return a;
+}
+function removePin(id){ savePins(getPins().filter(function(p){ return p.id!==id; })); }
+
 /* prep checklist state */
 function getPrep(id){ try{ return JSON.parse(localStorage.getItem('lm_prep_'+id)||'[]'); }catch(e){ return []; } }
 function setPrep(id, arr){ try{ localStorage.setItem('lm_prep_'+id, JSON.stringify(arr)); }catch(e){} }
@@ -152,7 +163,7 @@ function navTo(key){
   if(key==='home'){ renderHome(); showView('home','home'); }
   else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
-  else if(key==='places'){ renderPlaces(); showView('places','places'); }
+  else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -241,6 +252,7 @@ function openMap(opts){
     L.marker([p.lat,p.lng]).bindPopup('<b>'+esc(p.name)+'</b>').addTo(grp2);
     grp2.addTo(LMap.map); LMap.routeLayer=grp2; center=[p.lat,p.lng];
   } else if(state.pos){ center=[state.pos.lat,state.pos.lng]; }
+  renderPins();
   el('mapTitle').textContent=title;
   setTimeout(function(){
     LMap.map.invalidateSize();
@@ -248,6 +260,15 @@ function openMap(opts){
     else if(center) LMap.map.setView(center, 14);
   }, 80);
   startMapLocate();
+}
+function renderPins(){
+  if(!LMap.map) return;
+  if(LMap.pinLayer){ LMap.map.removeLayer(LMap.pinLayer); }
+  LMap.pinLayer=L.layerGroup();
+  getPins().forEach(function(pn){
+    L.marker([pn.lat,pn.lng]).bindPopup('<b>'+esc(pn.name)+'</b><br>your pin').addTo(LMap.pinLayer);
+  });
+  LMap.pinLayer.addTo(LMap.map);
 }
 function closeMap(){ el('mapwrap').classList.remove('open'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
 function startMapLocate(){
@@ -276,6 +297,8 @@ function renderChips(){
   var fc=favs().length;
   var html='<button class="chip'+(state.cc==='ALL'?' on':'')+'" data-cc="ALL">All</button>';
   html+='<button class="chip fav-chip'+(state.cc==='FAV'?' on':'')+'" data-cc="FAV">Saved'+(fc?(' '+fc):'')+'</button>';
+  var pc=getPins().length;
+  html+='<button class="chip fav-chip'+(state.cc==='PINS'?' on':'')+'" data-cc="PINS">My pins'+(pc?(' '+pc):'')+'</button>';
   LM.countries.forEach(function(k){ html+='<button class="chip'+(state.cc===k.cc?' on':'')+'" data-cc="'+k.cc+'">'+esc(k.name)+'</button>'; });
   c.innerHTML=html;
   $$('.chip',c).forEach(function(b){ b.onclick=function(){ state.cc=b.getAttribute('data-cc'); renderChips(); renderPlaces(); }; });
@@ -288,9 +311,12 @@ function allItems(){
 }
 function renderPlaces(){
   var q=((el('q')&&el('q').value)||'').trim().toLowerCase();
-  var items=allItems().filter(function(it){
+  var base = state.cc==='PINS'
+    ? getPins().map(function(pn){ return { kind:'pin', ref:pn, name:pn.name, area:pn.area, cc:pn.cc, lat:pn.lat, lng:pn.lng, blurb:pn.lat.toFixed(4)+', '+pn.lng.toFixed(4) }; })
+    : allItems();
+  var items=base.filter(function(it){
     if(state.cc==='FAV'){ if(!isFav(it.ref.id)) return false; }
-    else if(state.cc!=='ALL' && it.cc!==state.cc) return false;
+    else if(state.cc!=='ALL' && state.cc!=='PINS' && it.cc!==state.cc) return false;
     if(q){ if((it.name+' '+it.area+' '+it.blurb).toLowerCase().indexOf(q)<0) return false; }
     return true;
   });
@@ -299,27 +325,32 @@ function renderPlaces(){
   if(!items.length){
     host.innerHTML = state.cc==='FAV'
       ? '<div class="info flat"><p class="muted">No saved places yet. Tap the star on any place to save it here.</p></div>'
-      : '<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>';
+      : (state.cc==='PINS'
+        ? '<div class="info flat"><p class="muted">No pins yet. Open the <b>Live map</b> and tap <b>Drop pin</b> to save your own spot.</p></div>'
+        : '<div class="info flat"><p class="muted">No match. Try another word or a different country.</p></div>');
     return;
   }
   host.innerHTML=items.map(function(it){
     var dist='';
     if(state.pos){ var d=haversine(state.pos.lat,state.pos.lng,it.lat,it.lng), br=bearing(state.pos.lat,state.pos.lng,it.lat,it.lng);
       dist='<div class="dist"><b>'+fmtDist(d)+'</b><span>'+compass(br)+'</span></div>'; }
+    var flag = it.kind==='pin' ? 'PIN' : esc(it.cc);
     var tags = it.kind==='guided'
       ? '<span class="tag guide">Guided route</span><span class="tag ok">Offline ready</span>'
-      : '<span class="tag">'+esc(ccName(it.cc))+'</span>';
-    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'">'+
-      '<span class="fav'+(isFav(it.ref.id)?' on':'')+'" data-fav="'+it.ref.id+'" role="button" aria-label="Save">'+ICO.star+'</span>'+
+      : (it.kind==='pin' ? '<span class="tag">Your pin</span>' : '<span class="tag">'+esc(ccName(it.cc))+'</span>');
+    var star = it.kind==='pin' ? '' : '<span class="fav'+(isFav(it.ref.id)?' on':'')+'" data-fav="'+it.ref.id+'" role="button" aria-label="Save">'+ICO.star+'</span>';
+    return '<button class="card place" data-open="'+it.kind+':'+it.ref.id+'">'+ star +
       '<div class="top">'+
-      '<div class="flag">'+esc(it.cc)+'</div>'+
+      '<div class="flag">'+flag+'</div>'+
       '<div><h3>'+esc(it.name)+'</h3><div class="area">'+esc(it.area)+'</div></div>'+ dist +
       '</div><div class="muted small" style="margin-top:8px">'+esc(it.blurb)+'</div>'+ tags +'</button>';
   }).join('');
   $$('[data-fav]',host).forEach(function(s){ s.onclick=function(e){ e.stopPropagation(); e.preventDefault();
     toggleFav(s.getAttribute('data-fav')); renderChips(); renderPlaces(); }; });
   $$('[data-open]',host).forEach(function(b){ b.onclick=function(){ var pr=b.getAttribute('data-open').split(':');
-    if(pr[0]==='guided'){ openGuided(byId(LM.guided,pr[1])); } else { openPlace(byId(LM.places,pr[1])); } }; });
+    if(pr[0]==='guided'){ openGuided(byId(LM.guided,pr[1])); }
+    else if(pr[0]==='pin'){ openPlace(byId(getPins(),pr[1])); }
+    else { openPlace(byId(LM.places,pr[1])); } }; });
 }
 function doShare(title, text){
   if(navigator.share){ navigator.share({title:title, text:text}).catch(function(){}); }
@@ -342,6 +373,7 @@ function openPlace(p){
       '<div class="arrow" id="darrow" style="transform:rotate('+(br||0)+'deg)">'+ICO.up+'</div>'+
       '<div class="coordline">'+p.lat.toFixed(4)+', '+p.lng.toFixed(4)+'</div></div>'+
     galleryHTML(p.images)+
+    '<div class="wx" id="wxCard"></div>'+
     '<div class="info"><h4>About</h4><p>'+esc(p.blurb)+'</p></div>'+
     (state.pos?'':'<div class="info"><p class="muted small">Tap <b>Guide me there</b> and allow location to see live distance and direction.</p></div>')+
     '<button class="btn green" id="guideBtn">'+ICO.nav+' Guide me there</button>'+
@@ -350,18 +382,21 @@ function openPlace(p){
       '<button class="savebtn" id="shareBtn" style="margin-top:0">'+ICO.share+' Share</button>'+
     '</div>'+
     '<button class="btn ghost" id="placeMapBtn" style="margin-top:10px">'+ICO.pin+' Show on live map</button>'+
+    (p.pin ? '<button class="btn ghost" id="rmPinBtn" style="margin-top:10px;color:var(--red)">Remove pin</button>' : '')+
     '<div style="height:10px"></div>'+
     '<button class="btn sos" id="sosBtn">'+ICO.phone+' Emergency '+esc(state.curEmergency)+'</button>'+
     '<p class="muted small" style="text-align:center;margin-top:8px">Dials '+esc(state.curEmergency)+' ('+esc(ccName(p.cc))+') and shows your coordinates to read out.</p>';
   showView('detail','places');
   bindBacks(v);
   bindGallery(v);
+  loadWeather(p.lat, p.lng, 'wxCard');
   el('guideBtn').onclick=function(){ startPlaceGuide(p); };
   el('sosBtn').onclick=function(){ doSOS(); };
   el('favBtn').onclick=function(){ toggleFav(p.id); var on=isFav(p.id);
     el('favBtn').classList.toggle('on',on); el('favTxt').textContent=on?'Saved':'Save'; };
   el('shareBtn').onclick=function(){ doShare('Load Maps — '+p.name, p.name+' ('+p.area+')  '+p.lat.toFixed(4)+', '+p.lng.toFixed(4)); };
   if(el('placeMapBtn')) el('placeMapBtn').onclick=function(){ openMap({ place:p }); };
+  if(el('rmPinBtn')) el('rmPinBtn').onclick=function(){ removePin(p.id); toast('Pin removed'); state.cc='PINS'; renderChips(); navTo('places'); };
 }
 function startPlaceGuide(p){
   state.voiceOn=true; updateVoiceLabel();
@@ -482,6 +517,7 @@ function openGuided(g){
     routeMapSVG(g)+
     '<button class="btn ghost" id="mapBtn" style="margin-bottom:14px">'+ICO.pin+' Open live map</button>'+
     gallery+
+    '<div class="wx" id="wxCard"></div>'+
     '<div class="comfort">'+ICO.shield+'<div><b>Comfort mode</b><span class="s">'+esc(g.comfort)+'</span></div></div>'+
     (g.type==='hike'?elevSvg(g):'')+
     '<div class="info flat"><h4>'+(g.type==='drive'?'Road sections':'Waypoints')+'</h4>'+wl+'</div>'+
@@ -499,6 +535,7 @@ function openGuided(g){
   showView('detail', backKey);
   bindBacks(v);
   $$('[data-img]',v).forEach(function(im){ im.onclick=function(){ openLightbox(im.getAttribute('data-img')); }; });
+  loadWeather(g.waypoints[0].lat, g.waypoints[0].lng, 'wxCard');
   el('startGuide').onclick=function(){ startGuidedLive(g); };
   if(el('mapBtn')) el('mapBtn').onclick=function(){ openMap({ route:g }); };
   el('sosG').onclick=function(){ doSOS(); };
@@ -657,6 +694,64 @@ function addReport(kind){
 }
 function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
 
+/* ---------------- weather (Stage 3, Open-Meteo, free/no key) ---------------- */
+var WMO = { 0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',
+  51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',56:'Freezing drizzle',57:'Freezing drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',
+  71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',
+  80:'Light showers',81:'Showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',
+  95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm' };
+function wxRainy(code){ return (code>=51&&code<=67)||(code>=80&&code<=82)||(code>=95); }
+function wxIcon(code){
+  var s='stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+  if(code<=1) return '<svg viewBox="0 0 24 24" '+s+'><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+  if(code<=48) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 10a4 4 0 010 8H7A5 5 0 117 8a6 6 0 0111 2z"/></svg>';
+  if((code>=71&&code<=77)||(code>=85&&code<=86)) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M8 20v.4M12 20v.4M16 20v.4"/></svg>';
+  if(code>=95) return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M13 14l-3 4h4l-3 4"/></svg>';
+  return '<svg viewBox="0 0 24 24" '+s+'><path d="M18 8a4 4 0 010 8H7A5 5 0 117 6a6 6 0 0111 2z"/><path d="M8 19l-1 2M12 19l-1 2M16 19l-1 2"/></svg>';
+}
+function parseWeather(j){
+  if(!j || !j.current) return null;
+  var c=j.current, d=j.daily||{};
+  return {
+    tempC: Math.round(c.temperature_2m),
+    code: c.weather_code,
+    desc: WMO[c.weather_code]||'—',
+    rainy: wxRainy(c.weather_code),
+    hiC: (d.temperature_2m_max&&d.temperature_2m_max.length)?Math.round(d.temperature_2m_max[0]):null,
+    loC: (d.temperature_2m_min&&d.temperature_2m_min.length)?Math.round(d.temperature_2m_min[0]):null,
+    rainPct: (d.precipitation_probability_max&&d.precipitation_probability_max.length)?d.precipitation_probability_max[0]:null
+  };
+}
+function weatherCardHTML(w, note){
+  if(!w) return '';
+  var hilo=(w.hiC!=null&&w.loC!=null)?(' · H '+w.hiC+'° L '+w.loC+'°'):'';
+  var rain=(w.rainPct!=null&&w.rainPct>0)?(' · '+w.rainPct+'% rain'):'';
+  var warn=w.rainy?'<div class="wx-warn">'+ICO.warn+'Rain around — rocks and roads get slippery.</div>':'';
+  return '<div class="wx-row"><div class="wx-ic">'+wxIcon(w.code)+'</div>'+
+    '<div><b>'+esc(w.desc)+' · '+w.tempC+'°C</b><span class="wx-sub">'+esc(hilo+rain)+(note?(' · '+note):'')+'</span></div></div>'+warn;
+}
+function loadWeather(lat, lng, elId){
+  var host=el(elId); if(!host) return;
+  var key='lm_wx_'+lat.toFixed(2)+'_'+lng.toFixed(2), cached=null;
+  try{ cached=JSON.parse(localStorage.getItem(key)||'null'); }catch(e){}
+  if(!navigator.onLine){
+    host.innerHTML = cached ? weatherCardHTML(cached.w,'last update') : '<span class="muted small">Weather updates when you are online.</span>';
+    return;
+  }
+  host.innerHTML='<span class="muted small">Loading weather…</span>';
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+
+    '&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1';
+  fetch(url).then(function(r){ return r.json(); }).then(function(j){
+    var w=parseWeather(j);
+    if(!w){ if(host) host.innerHTML='<span class="muted small">Weather unavailable.</span>'; return; }
+    if(host) host.innerHTML=weatherCardHTML(w,'now');
+    try{ localStorage.setItem(key, JSON.stringify({ w:w, t:Date.now() })); }catch(e){}
+  }).catch(function(){
+    if(host) host.innerHTML = cached ? weatherCardHTML(cached.w,'last update') : '<span class="muted small">Could not load weather.</span>';
+  });
+}
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -686,6 +781,14 @@ function init(){
   if(el('mapRecenter')) el('mapRecenter').onclick=function(){
     if(LMap.meMarker){ LMap.map.setView(LMap.meMarker.getLatLng(), 15); }
     else { ensurePos(function(){ if(state.pos && LMap.map) LMap.map.setView([state.pos.lat,state.pos.lng], 15); }); }
+  };
+  if(el('mapDrop')) el('mapDrop').onclick=function(){
+    if(!LMap.map) return;
+    var c=LMap.map.getCenter();
+    var name=null;
+    try{ name=window.prompt('Name this pin', 'My spot'); }catch(e){}
+    if(name===null) name='My spot';
+    addPin(c.lat, c.lng, name.trim()||'My spot'); renderPins(); toast('Pin saved to My pins');
   };
 }
 init();
