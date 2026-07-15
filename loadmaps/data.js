@@ -34,7 +34,9 @@ LM.places = [
   { id:'pt-jeronimos',name:'Jerónimos Monastery',  area:'Lisbon, Portugal',   cc:'PT', lat:38.6979, lng:-9.2065, blurb:'Grand Manueline monastery beside Belém.' },
   { id:'pt-pena',    name:'Pena Palace',            area:'Sintra, Portugal',   cc:'PT', lat:38.7876, lng:-9.3906, blurb:'Colourful romantic palace above Sintra.' },
   { id:'pt-lello',   name:'Livraria Lello',         area:'Porto, Portugal',    cc:'PT', lat:41.1470, lng:-8.6150, blurb:'Ornate historic bookshop in central Porto.' },
-  { id:'pt-coimbra', name:'University of Coimbra',  area:'Coimbra, Portugal',  cc:'PT', lat:40.2077, lng:-8.4256, blurb:'Ancient university and the Joanina Library.' },
+  { id:'pt-coimbra', name:'Coimbra',  area:'Coimbra, Portugal',  cc:'PT', lat:40.2077, lng:-8.4256, blurb:'Historic university city on the Mondego — one of Portugal’s oldest, with the Joanina Library.', images:[ { src:'places/coimbra-city.png', cap:'Coimbra city guide — attractions and walking route' } ] },
+  { id:'pt-porto',   name:'Porto',    area:'Porto, Portugal',    cc:'PT', lat:41.1579, lng:-8.6291, blurb:'Portugal’s second city — UNESCO riverside, port wine cellars and iconic bridges.', images:[ { src:'places/porto-city.png', cap:'Porto city guide — attractions and walking route' } ] },
+  { id:'pt-aveiro',  name:'Aveiro',   area:'Aveiro, Portugal',   cc:'PT', lat:40.6405, lng:-8.6538, blurb:'The "Venice of Portugal" — canals, colourful moliceiro boats and Art Nouveau.', images:[ { src:'places/aveiro-city.png', cap:'Aveiro city guide — canals, attractions and walking route' } ] },
   { id:'pt-benagil', name:'Benagil Sea Cave',       area:'Algarve, Portugal',  cc:'PT', lat:37.0876, lng:-8.4270, blurb:'Sea cave with a natural skylight.' },
   { id:'pt-douro',   name:'Douro Valley',           area:'Pinhão, Portugal',   cc:'PT', lat:41.1896, lng:-7.5541, blurb:'Terraced vineyards along the Douro river.' },
 
@@ -145,6 +147,112 @@ LM.guided = [
       { n:4, name:'Terras de Bouro — N205',     desc:'Good two-lane road with guardrails. Last fuel.', lat:41.7205, lng:-8.1610, approx:true, hazard:null },
       { n:5, name:'Campo do Gerês — N205-3',    desc:'Narrower, more curves.',                      lat:41.7626, lng:-8.1900, approx:true,  hazard:{ level:'caution', text:'Narrower road, curves and some drop-offs. Slow down.' } },
       { n:6, name:'Xertelo Parking — M535',     desc:'Final 1.4 km to the parking area.',           lat:41.6984, lng:-8.1538, approx:true,  hazard:{ level:'caution', text:'Very narrow, one lane in places, drop-offs. Drive slowly.' } }
+    ]
+  },
+
+  /* ===== More HIKING routes (real trailhead data, sourced) ===== */
+  {
+    id:'seven-valleys',
+    name:'Seven Hanging Valleys',
+    area:'Carvoeiro, Algarve, Portugal',
+    cc:'PT', type:'hike',
+    distanceKm:11.2, timeMin:'180–240', difficulty:'Moderate',
+    elevGainM:230,
+    tolls:'',
+    signal:'Coastal clifftop — signal is patchy. Download before you go.',
+    comfort:'Clifftop out-and-back. Stay behind the barriers near cliffs and blowholes.',
+    images:[
+      { src:'routes/seven-valleys-map.png', cap:'Trail map — Marinha to Vale Centeanes' }
+    ],
+    coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Praia da Marinha (start)',   desc:'Iconic cliffs and turquoise water. Car park, restrooms, cafe.', lat:37.0903, lng:-8.4127, approx:false, hazard:null },
+      { n:2, name:'Benagil Viewpoint',          desc:'Panoramic views of the Benagil coastline.',             lat:37.0888, lng:-8.4225, approx:true,  hazard:null },
+      { n:3, name:'Benagil Sea Cave (above)',   desc:'The clifftop above the world-famous sea cave.',         lat:37.0876, lng:-8.4270, approx:false, hazard:null },
+      { n:4, name:'Algar de Benagil Blowhole',  desc:'Natural blowhole where waves shoot up.',                lat:37.0898, lng:-8.4360, approx:true,  hazard:{ level:'high', text:'Waves shoot up the blowhole. Keep well back.' } },
+      { n:5, name:'Cliff Edge Section',         desc:'Breathtaking views — the most exposed stretch.',        lat:37.0925, lng:-8.4435, approx:true,  hazard:{ level:'high', text:'Unstable cliff edge. Keep a safe distance.' } },
+      { n:6, name:'Praia do Carvalho',          desc:'Small hidden beach, a good rest spot.',                 lat:37.0942, lng:-8.4475, approx:true,  hazard:null },
+      { n:7, name:'Praia de Vale Centeanes (finish)', desc:'Beautiful beach and cafes to relax and finish.',  lat:37.0955, lng:-8.4558, approx:false, hazard:null }
+    ]
+  },
+
+  /* ===== More DRIVING routes (real city coordinates) ===== */
+  {
+    id:'lisbon-porto', name:'Lisbon to Porto', area:'Lisbon to Porto, Portugal', cc:'PT', type:'drive',
+    distanceKm:313, timeMin:'about 195', difficulty:'Easy — A1 motorway',
+    tolls:'Electronic tolls only (about €20–25). Make sure your device is active.',
+    signal:'Good signal along the A1.',
+    comfort:'Wide A1 motorway the whole way. Service areas every 40–60 km; EV charging available.',
+    images:[ { src:'routes/lisbon-porto-map.png', cap:'Route map — Lisbon to Porto (A1)' } ],
+    coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Lisbon — start',    desc:'Oriente / A1 north. Vasco da Gama Bridge start.', lat:38.7223, lng:-9.1393, approx:false, hazard:null },
+      { n:2, name:'Santarém',          desc:'Viewpoint over the Tagus valley. ~80 km.',        lat:39.2362, lng:-8.6871, approx:false, hazard:null },
+      { n:3, name:'Leiria',            desc:'Imposing medieval castle. ~130 km.',               lat:39.7436, lng:-8.8070, approx:false, hazard:null },
+      { n:4, name:'Coimbra',           desc:'One of Europe’s oldest universities. ~200 km.',    lat:40.2033, lng:-8.4103, approx:false, hazard:null },
+      { n:5, name:'Aveiro (optional)', desc:'The canals — a short detour. ~235 km.',            lat:40.6405, lng:-8.6538, approx:false, hazard:null },
+      { n:6, name:'Porto (finish)',    desc:'Unesco-listed historic riverside. ~313 km.',       lat:41.1579, lng:-8.6291, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'madrid-barcelona', name:'Madrid to Barcelona', area:'Madrid to Barcelona, Spain', cc:'ES', type:'drive',
+    distanceKm:623, timeMin:'about 405', difficulty:'Easy — A-2 / E-90 motorway',
+    tolls:'Electronic tolls (VIA-T), about €30–40.',
+    signal:'Good signal along the A-2.',
+    comfort:'Long but well-maintained motorway. Service areas every 70–100 km; take breaks.',
+    images:[ { src:'routes/madrid-barcelona-map.png', cap:'Route map — Madrid to Barcelona (A-2 / E-90)' } ],
+    coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Madrid — start', desc:'M-30 / A-2 heading east.',                 lat:40.4168, lng:-3.7038, approx:false, hazard:null },
+      { n:2, name:'Guadalajara',    desc:'Panoramic views in La Alcarria. ~70 km.',  lat:40.6329, lng:-3.1667, approx:false, hazard:null },
+      { n:3, name:'Zaragoza',       desc:'Historic city on the Ebro. ~290 km.',      lat:41.6488, lng:-0.8891, approx:false, hazard:{ level:'caution', text:'Strong winds possible near Zaragoza.' } },
+      { n:4, name:'Lleida',         desc:'Medieval charm. ~520 km.',                 lat:41.6176, lng:0.6200,  approx:false, hazard:null },
+      { n:5, name:'Tarragona',      desc:'Roman ruins by the Mediterranean. ~600 km.', lat:41.1189, lng:1.2445, approx:false, hazard:null },
+      { n:6, name:'Barcelona (finish)', desc:'Mediterranean arrival. ~623 km.',      lat:41.3874, lng:2.1686,  approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'paris-nice', name:'Paris to Nice', area:'Paris to Nice, France', cc:'FR', type:'drive',
+    distanceKm:930, timeMin:'about 540', difficulty:'Long — plan an overnight',
+    tolls:'Tolls on the autoroutes.', signal:'Good signal along the autoroutes.',
+    comfort:'A very long drive. Break it up; consider a stop in Lyon.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Paris — start', desc:'Head south on the A6.', lat:48.8566, lng:2.3522, approx:false, hazard:null },
+      { n:2, name:'Lyon',          desc:'Good place to break the drive.', lat:45.7640, lng:4.8357, approx:false, hazard:null },
+      { n:3, name:'Nice',          desc:'Arrive on the Riviera.', lat:43.7102, lng:7.2620, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'rome-florence', name:'Rome to Florence', area:'Rome to Florence, Italy', cc:'IT', type:'drive',
+    distanceKm:280, timeMin:'about 180', difficulty:'Easy — motorway',
+    tolls:'Tolls on the A1 autostrada.', signal:'Good signal along the A1.',
+    comfort:'Wide A1 autostrada. Easy driving.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Rome — start', desc:'Join the A1 heading north.', lat:41.9028, lng:12.4964, approx:false, hazard:null },
+      { n:2, name:'Arezzo',       desc:'Roughly two-thirds of the way.', lat:43.4633, lng:11.8797, approx:false, hazard:null },
+      { n:3, name:'Florence',     desc:'Arrive in Florence.', lat:43.7696, lng:11.2558, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'london-edinburgh', name:'London to Edinburgh', area:'London to Edinburgh, UK', cc:'GB', type:'drive',
+    distanceKm:660, timeMin:'about 450', difficulty:'Long — motorway',
+    tolls:'No tolls on this route.', signal:'Good signal along the motorways.',
+    comfort:'Long but straightforward on the A1(M) / M6. Take breaks.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'London — start', desc:'Head north on the A1(M).', lat:51.5074, lng:-0.1278, approx:false, hazard:null },
+      { n:2, name:'York',          desc:'A good midway stop.', lat:53.9600, lng:-1.0873, approx:false, hazard:null },
+      { n:3, name:'Edinburgh',     desc:'Arrive in Edinburgh.', lat:55.9533, lng:-3.1883, approx:false, hazard:null }
+    ]
+  },
+  {
+    id:'athens-delphi', name:'Athens to Delphi', area:'Athens to Delphi, Greece', cc:'GR', type:'drive',
+    distanceKm:180, timeMin:'about 150', difficulty:'Easy — some mountain road',
+    tolls:'Some tolls on the national road.', signal:'Signal drops in the mountains near Delphi.',
+    comfort:'Motorway most of the way, then a winding climb to Delphi. Drive it in daylight.', coordsApprox:true,
+    waypoints:[
+      { n:1, name:'Athens — start', desc:'Head northwest toward Livadeia.', lat:37.9838, lng:23.7275, approx:false, hazard:null },
+      { n:2, name:'Livadeia',       desc:'Leave the motorway for the mountain road.', lat:38.4361, lng:22.8756, approx:false, hazard:{ level:'caution', text:'Winding mountain road ahead. Take it slow.' } },
+      { n:3, name:'Delphi',         desc:'Arrive at the ancient site.', lat:38.4824, lng:22.5010, approx:false, hazard:null }
     ]
   }
 ];
