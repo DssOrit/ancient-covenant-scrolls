@@ -135,3 +135,15 @@ Previous backups: `backup/2026-07-14-v167`, `backup/2026-07-14-v21`, `backup/202
 dfab618 Load Maps: Stage 1 + Stage 2 batch — offline-first route + trail guide (#639)
 e8c6198 Load AI boot intro + OCC How-to instant search (#575)
 ```
+
+### Load Maps — Stage 2 + friendly redesign (PR #640, merged)
+- Driving route "Coimbra to Sete Lagoas" (road sections, cautions, stops, no-tolls,
+  Start driving, speedometer), Report button (offline log -> Alerts), arrival/waypoint
+  chimes, hard-refresh circle re-renders current view.
+- Friendly redesign: Home screen (big glassy Drive/Hike/Places/Alerts/How-to cards);
+  bottom nav Home/Drive/Hike/Places; real trail/road map imagery in a swipeable
+  gallery with tap-to-enlarge (loadmaps/routes/); transparent glass styling; bigger
+  readable type. Cache loadmaps-v6.
+- Merged as 8edeb59. Backup: backup/2026-07-15-loadmaps-v6.
+- Known: place catalog still has no photos (only the 2 Sete Lagoas routes have real
+  imagery). CodeQL check red is the known benign config-only fail (real Analyze passed).
