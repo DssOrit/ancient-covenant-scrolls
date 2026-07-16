@@ -130,11 +130,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .ld-msg{font-size:.72rem;color:var(--tx3);letter-spacing:.1em;min-height:1em;text-align:center}
 
 /* ── APP SHELL ──────────────────────────────────────────────── */
-#app{height:100%;display:flex;flex-direction:column}
+#app{height:100%;display:flex;flex-direction:column;position:relative}
 #app.hidden{display:none}
 
 /* ── MAP CONTAINER ──────────────────────────────────────────── */
-#map{flex:1 1 0%;min-height:0;width:100%;position:relative;background:#0a0a14}
+#map{flex:1 1 0%;min-height:0;width:100%;position:relative;background:#0a0a14;isolation:isolate}
 
 /* ── TOPBAR ─────────────────────────────────────────────────── */
 #topbar{
@@ -468,9 +468,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <!-- ══ APP ════════════════════════════════════════════════════ -->
 <div id="app" class="hidden">
-  <div id="map">
+  <div id="map"></div>
 
-    <!-- Topbar -->
+  <!-- Topbar -->
     <div id="topbar">
       <div class="tb-inner">
         <img class="tb-logo" src="./icon-192.png" alt="">
@@ -554,7 +554,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="sheet-scroll" id="sheet-body"></div>
     </div>
 
-  </div>
 </div>
 
 <script src="./vendor/leaflet.js"></script>
