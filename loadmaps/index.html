@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Load Maps">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="vendor/maplibre/maplibre-gl.css">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="180x180" href="favicon-180.png">
 <link rel="apple-touch-icon" href="favicon-180.png">
@@ -188,6 +190,123 @@
     box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center}
   .toast.show{opacity:1}
 
+  /* ===== readable + modern glass (Load look) ===== */
+  body{font-size:16.5px;line-height:1.55}
+  main{padding:6px 16px 100px}
+  h2.sec{font-size:1.25rem;margin:16px 2px 12px}
+  .place h3{font-size:1.08rem}
+  .muted.small,.small{font-size:.9rem}
+  .btn{padding:15px;font-size:1.05rem;border-radius:16px}
+  .btn.ghost{background:rgba(255,255,255,.05);backdrop-filter:blur(8px)}
+  .card{padding:15px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(10px)}
+  .info,.elev,.comfort,.alert,.searchbar,.voicebar,.savebtn,.speedpill,.netpill{backdrop-filter:blur(10px)}
+
+  /* ===== Home screen (glassy cards) ===== */
+  .home-hi{display:flex;align-items:center;gap:12px;margin:8px 2px 18px}
+  .home-hi .logo{width:44px;height:44px;background:url(icon.png) center/contain no-repeat;flex:0 0 auto;filter:drop-shadow(0 0 8px rgba(47,216,95,.35))}
+  .home-hi b{font-size:1.3rem;display:block}
+  .home-hi span{color:var(--muted);font-size:.92rem}
+  .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .hcard{border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:9px;min-height:118px;
+    background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(12px);transition:border-color .2s,transform .1s}
+  .hcard:active{transform:scale(.99)}
+  .hcard .hi{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center}
+  .hcard .hi svg{width:25px;height:25px}
+  .hcard b{font-size:1.1rem;display:block;margin-bottom:2px}
+  .hcard span{color:var(--muted);font-size:.86rem;line-height:1.4}
+  .hcard.wide{grid-column:1/-1;flex-direction:row;align-items:center;min-height:0;gap:13px}
+  .hcard.wide .hi{flex:0 0 auto}
+  .hcard.wide .ht{flex:1}
+  .hcard.drive{border-color:rgba(61,139,255,.28)} .hcard.drive .hi{background:rgba(61,139,255,.16);color:var(--blue)}
+  .hcard.hike{border-color:rgba(47,216,95,.28)} .hcard.hike .hi{background:rgba(47,216,95,.16);color:var(--green)}
+  .hcard.places .hi{background:rgba(255,176,35,.16);color:var(--amber)}
+  .hcard.alerts .hi{background:rgba(255,77,61,.16);color:var(--red)}
+  .hcard.help .hi{background:rgba(51,214,224,.16);color:var(--cyan)}
+  .hcard.livemap .hi{background:rgba(47,216,95,.16);color:var(--green)}
+  .hcard.nearby .hi{background:rgba(255,176,35,.16);color:var(--amber)}
+
+  /* hero illustration on a route (see the road / trail) */
+  .hero-scene{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px;background:#0b1120}
+  .hero-scene svg{display:block;width:100%;height:130px}
+  .hero-scene .cap{padding:9px 13px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);background:rgba(255,255,255,.03)}
+
+  /* fire watch line */
+  .fire{margin-bottom:12px}
+  .fire-warn{display:flex;align-items:center;gap:9px;font-size:.9rem;font-weight:700;color:var(--red);background:rgba(255,77,61,.1);border:1px solid rgba(255,77,61,.3);border-radius:12px;padding:11px}
+  .fire-ok{display:flex;align-items:center;gap:9px;font-size:.88rem;font-weight:600;color:var(--green);background:rgba(47,216,95,.08);border:1px solid rgba(47,216,95,.25);border-radius:12px;padding:10px}
+  .fire-warn svg,.fire-ok svg{width:18px;height:18px;flex:0 0 auto}
+
+  /* AI assistant */
+  .hcard.assistant .hi{background:rgba(51,214,224,.16);color:var(--cyan)}
+  .ask-row{display:flex;gap:10px;margin-bottom:12px}
+  .ask-row input{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--text);font:inherit}
+  .ask-row .btn{width:auto;padding:13px 20px;flex:0 0 auto}
+  .ask-out{min-height:2px;margin-bottom:12px}
+  .ask-answer{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;line-height:1.55;white-space:normal}
+  .ask-eg{color:var(--muted);font-size:.85rem;line-height:1.6}
+  .ask-eg b{color:var(--text)}
+
+  /* nearby POI categories */
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .cat{display:flex;align-items:center;gap:9px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;padding:13px;font:inherit;font-weight:700;font-size:.95rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);text-align:left}
+  .cat svg{width:21px;height:21px;color:var(--amber);flex:0 0 auto}
+  .cat.on{border-color:rgba(255,176,35,.5);background:rgba(255,176,35,.12)}
+
+  /* weather card */
+  .wx{margin-bottom:12px;min-height:2px}
+  .wx-row{display:flex;align-items:center;gap:12px;background:linear-gradient(160deg,rgba(61,139,255,.12),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:14px;padding:12px;backdrop-filter:blur(10px)}
+  .wx-ic{width:38px;height:38px;color:var(--blue);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .wx-ic svg{width:30px;height:30px}
+  .wx-row b{font-size:1rem} .wx-sub{display:block;font-size:.82rem;color:var(--muted);margin-top:1px}
+  .wx-warn{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.85rem;font-weight:700;color:var(--amber);background:rgba(255,176,35,.1);border-radius:10px;padding:8px 10px}
+  .wx-warn svg{width:16px;height:16px;flex:0 0 auto}
+
+  /* live map overlay (Leaflet) */
+  #mapwrap{position:fixed;inset:0;z-index:95;display:none;background:#0a1020}
+  #mapwrap.open{display:block}
+  #map{position:absolute;inset:0}
+  .leaflet-container{background:#0a1020;font-family:inherit}
+  .map-top{position:absolute;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;gap:10px;
+    padding:calc(10px + env(safe-area-inset-top)) 12px 10px;
+    background:linear-gradient(180deg,rgba(5,7,13,.9),rgba(5,7,13,.5) 70%,transparent);pointer-events:none}
+  .map-top>*{pointer-events:auto}
+  .map-title{font-weight:800;font-size:1.02rem;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .map-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:12px;
+    padding:9px 13px;font:inherit;font-weight:700;font-size:.92rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  .map-btn svg{width:19px;height:19px}
+  .map-btn.round{border-radius:12px}
+  .map-btn.icon{width:46px;height:46px;padding:0;justify-content:center}
+  .map-modes{position:absolute;top:calc(58px + env(safe-area-inset-top));left:12px;z-index:1000;display:none;gap:8px}
+  .map-modes.on{display:flex}
+  .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
+  .map-modes button.on{background:rgba(61,139,255,.2);border-color:rgba(61,139,255,.5);color:var(--blue)}
+  .map-side{position:absolute;right:12px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .leaflet-control-attribution{background:rgba(10,16,32,.7)!important;color:#95a0b6!important}
+  .leaflet-control-attribution a{color:#8fb6ff!important}
+
+  /* auto-generated route map (drawn from the real coordinates) */
+  .routemap{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px;background:#0a1020}
+  .routemap svg{display:block;width:100%;height:190px}
+  .routemap .cap{padding:9px 13px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);background:rgba(255,255,255,.03)}
+
+  /* route image gallery (the real trail / road maps) */
+  .gallery{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+  .gallery figure{margin:0;flex:0 0 auto;width:82%;max-width:340px;scroll-snap-align:start}
+  .gallery img{width:100%;border-radius:15px;border:1px solid var(--line);display:block;background:#0b1120;cursor:zoom-in}
+  .gallery figcaption{font-size:.85rem;color:var(--muted);margin-top:7px}
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.94);display:none;align-items:center;justify-content:center;padding:16px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:88vh;border-radius:12px}
+  .lightbox .x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .lightbox .x svg{width:22px;height:22px}
+
+  /* card thumbnail (visual, not just text) */
+  .thumb{width:50px;height:50px;border-radius:13px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .thumb svg{width:26px;height:26px}
+  .thumb.drive{background:rgba(61,139,255,.16);color:var(--blue)}
+  .thumb.hike{background:rgba(47,216,95,.16);color:var(--green)}
+  .thumb.place{background:rgba(255,176,35,.16);color:var(--amber)}
+
   /* favorites star on cards + detail */
   .place{position:relative}
   .fav{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);cursor:pointer;z-index:2}
@@ -210,6 +329,12 @@
   .chk .box svg{width:15px;height:15px}
   .prepbar{height:8px;border-radius:999px;background:var(--card2);overflow:hidden;margin:2px 0 12px;border:1px solid var(--line)}
   .prepbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#25b94e);width:0;transition:width .3s}
+
+  /* report chips on live guide */
+  .reprow{display:none;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .reprow.open{display:flex}
+  .repchip{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer}
+  .repchip:active{background:rgba(255,77,61,.15);border-color:rgba(255,77,61,.5);color:var(--red)}
 
   /* speed pill on live guide */
   .speedpill{display:inline-flex;align-items:baseline;gap:5px;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:800;margin-bottom:12px}
@@ -259,8 +384,11 @@
   </header>
 
   <main>
+    <!-- ============ HOME ============ -->
+    <section class="view on" id="v-home"></section>
+
     <!-- ============ PLACES ============ -->
-    <section class="view on" id="v-places">
+    <section class="view" id="v-places">
       <div class="searchbar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
         <input id="q" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search a place or trail">
@@ -271,6 +399,7 @@
         <span id="voiceLabel">Voice on — Samantha</span>
       </button>
       <div id="placeList"></div>
+      <div id="worldResults"></div>
       <p class="muted small" id="locNote" style="text-align:center;margin:14px 0">Turn on location to see how far each place is.</p>
     </section>
 
@@ -290,6 +419,12 @@
       <div id="alertList"></div>
     </section>
 
+    <!-- ============ NEAR ME (POI categories) ============ -->
+    <section class="view" id="v-nearby"></section>
+
+    <!-- ============ ASSISTANT (AI) ============ -->
+    <section class="view" id="v-assistant"></section>
+
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
       <h2 class="sec">How to Use</h2>
@@ -303,23 +438,49 @@
   </main>
 
   <nav>
-    <button class="on" data-nav="places" aria-label="Places">
+    <button class="on" data-nav="home" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Home
+    </button>
+    <button data-nav="drive" aria-label="Drive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l-1-5 2-5h10l2 5-1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>Drive
+    </button>
+    <button data-nav="hike" aria-label="Hike">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>Hike
+    </button>
+    <button data-nav="places" aria-label="Places">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Places
-    </button>
-    <button data-nav="guided" aria-label="Guided">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l3 6-3 5 4 7"/><circle cx="13" cy="5" r="1.6"/></svg>Guided
-    </button>
-    <button data-nav="alerts" aria-label="Alerts">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/><path d="M12 9v4M12 17v.4"/></svg>Alerts
-    </button>
-    <button data-nav="help" aria-label="How to Use">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>How to Use
     </button>
   </nav>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<!-- Live map overlay (Stage 3) -->
+<div id="mapwrap">
+  <div id="map"></div>
+  <div class="map-top">
+    <button class="map-btn" id="mapBack" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back
+    </button>
+    <div class="map-title" id="mapTitle">Map</div>
+  </div>
+  <div class="map-modes" id="mapModes">
+    <button data-mode="auto" class="on">Drive</button>
+    <button data-mode="pedestrian">Walk</button>
+    <button data-mode="bicycle">Cycle</button>
+  </div>
+  <div class="map-side">
+    <button class="map-btn round" id="mapDrop">Drop pin</button>
+    <button class="map-btn round" id="mapLayer">Satellite</button>
+    <button class="map-btn round icon" id="mapRecenter" aria-label="Recenter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="vendor/maplibre/maplibre-gl.js"></script>
+<script src="vendor/maplibre/leaflet-maplibre-gl.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>

@@ -34,11 +34,58 @@ App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first co
 **Stage 2 — in progress**
 - Done: favorites ("Save" + Saved filter, on device), prep checklist per route
   (tickable, saved), speedometer on the live guide, share place / share plan,
-  per-country emergency numbers, proper PWA icons + favicon.
-- Next: turn cards for driving, report button, gas/rest/tolls per route,
-  arrival/reroute chimes.
+  per-country emergency numbers, proper PWA icons + favicon, a driving route
+  (Coimbra to Sete Lagoas: road sections, fuel/stops, tolls, comfort mode),
+  report button (offline hazard log shown in Alerts), arrival/waypoint chimes,
+  hard-refresh circle re-renders the current view.
+- Next: proper street-level turn cards (needs Stage 3 map data), gas/rest live
+  search.
 
-**Stage 3 — online extras (need a signal)** — sources researched, see below.
+**UX pass (dyslexia-friendly)**
+- Home screen with big glassy Drive / Hike / Places / Alerts / How-to cards so
+  road vs trail maps are obvious. Bottom nav: Home, Drive, Hike, Places.
+- Real imagery: the supplied trail maps show on the hike route and the road maps
+  on the drive route, in a swipeable gallery with tap-to-enlarge (`loadmaps/routes/`).
+- Modern transparent glass styling (blur, subtle borders), readable type, plain
+  labels. Cache `loadmaps-v6`.
+- Route images use runtime caching (cached after first online view), not the
+  install list, to keep install light.
+
+**Map stack (all free / no key):** Leaflet + **OpenFreeMap** vector tiles (via
+self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
+**Valhalla** multi-modal routing (drive / walk / cycle, keyless public server) +
+**Photon** geocoding (search anywhere). Esri satellite layer as a toggle.
+
+**Stage 3 — the live map (in progress)**
+- Done: real scrolling map (Leaflet, self-hosted in `vendor/leaflet/`) with an
+  OpenStreetMap streets layer and an Esri satellite layer (toggle), the route drawn
+  on it (polyline + colored waypoint markers), live "you are here", recenter, zoom.
+  Opens from any route, any place, and a Home "Live map" card. Tiles load online
+  (attribution shown); offline still uses the coordinate guide + cached route images.
+- Next: weather + fire overlays (Open-Meteo, NASA FIRMS), offline map packs
+  (Protomaps on Cloudflare R2) for full offline maps.
+
+**Stage 3 sources (need a signal)** — researched, see below.
+
+**Keys to switch on (Cloudflare Pages env — never in the repo)**
+- **Fire watch:** set `FIRMS_KEY` to a free NASA FIRMS map key. The function is
+  `functions/api/loadmaps/fire.js`; until the key is set it stays silent.
+- **AI assistant (limited):** set `ANTHROPIC_API_KEY` (optional `AI_MODEL`, default
+  Claude Haiku). One small Haiku call per request — near-zero cost, no Groq.
+  The function is `functions/api/loadmaps/ai.js`; until the key is set the
+  "Ask Load Maps" screen shows "not set up yet".
+Both keep the key server-side; nothing sensitive is committed.
+
+**Revised direction (2026-07-15, user): no Groq, limited AI.** Almost everything
+is pure open-source logic (zero AI): predictive rerouting around reported hazards
+(Valhalla), speed-limit warnings (Overpass speed data vs GPS speed), auto ETA
+recalculation, smart typo-tolerant search (Photon), Turf.js spatial ("nearest fuel
+on my route"). The ONLY AI is a single Claude Haiku call to parse ambiguous
+voice/text input. Hazard layer: build on Cloudflare D1 (one-repo/infra), not
+Supabase.
+
+**Stage 3 fire watch + Stage 5 AI assistant** are wired (client + Cloudflare
+functions), waiting only on the keys above.
 
 **Stage 4 — innovative gaps**
 - Car-to-trail handoff, auto check-in, route packs, battery-saver guidance, landmark

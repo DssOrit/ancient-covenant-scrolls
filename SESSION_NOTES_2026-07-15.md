@@ -87,3 +87,115 @@ Previous backups: `backup/2026-07-14-v167`, `backup/2026-07-14-v21`, `backup/202
 - The Dani'el 7:25 / DST section is inside the 364-Day Covenant Calendar `<div class="hr-sec-head">` block, after the 1 Enoch 72-82 item.
 - Before any content append to `Search/index.html` or `GreatE/index.html`, extract the `<script>` block and run `node --check` to catch syntax errors before pushing.
 - Great Eraser HOWTO_HTML is a massive single-quoted JS string — any future edits must escape every apostrophe as `\'`.
+
+---
+
+## Load Maps + OCC (later session, same day)
+
+### Built
+- **OCC How to Use — instant offline search** (shipped in PR #575). Filters guide
+  cards / section cards / FAQ as the employee types. Cache `load-tasks-cache-v2.5.3`.
+- **PR #575 merged** (Load AI boot intro + OCC search).
+- **Load Maps** — brand-new offline-first PWA at `/loadmaps` (PR #639, merged):
+  - Stage 1: ~48 major places across PT/ES/GB/FR/IT/GR (real coordinates), live
+    distance + compass, guide-me-there with Samantha voice, per-country emergency
+    numbers, Sete Lagoas guided route (waypoints/elevation/comfort/spoken hazards,
+    waypoints approx / parking exact), Alerts (curated offline), How to Use search,
+    auto intro + brand splash (supplied pack), installable PWA.
+  - Stage 2 batch: favorites/Save + Saved filter, prep checklist per route,
+    speedometer on live guide, share place/plan, proper 192/512 icons + 32/180
+    favicons. Cache `loadmaps-v4`.
+- **PR #639 merged** → live on main (`dfab618`).
+- `LOAD_MAPS_PLAN.md` is the living spec (stages, researched live-data sources).
+
+### Outstanding / verify on iPad
+- Open `https://acrscrolls.com/loadmaps/` after Pages deploys: intro+splash, allow
+  location, Places → guide, Guided → Sete Lagoas → Start guiding (voice + speed),
+  Save/star, prep checklist, Add to Home Screen. Samantha may fall back to the iOS
+  default voice on some iPads (known limit).
+
+### Pending / parked (Load Maps)
+- Stage 2 remainder: driving turn cards, report button, gas/rest/tolls per route,
+  arrival/reroute chimes.
+- Stage 3 (needs signal): Protomaps map layer on Cloudflare R2, Open-Meteo weather,
+  NASA FIRMS fire watch. Keys in Cloudflare env, never the repo.
+- Stage 4: car-to-trail handoff, auto check-in, route packs, battery-saver guidance,
+  landmark photos, group mode.
+- Expand catalog / add guided routes (worldwide, real data only).
+
+### Capability gaps
+- No image tools (ImageMagick/sips/sharp) — resized icons/favicons via headless Chromium.
+- Live Pages URLs not fetchable from sandbox — deploy verified on device only.
+
+### Backups
+- `backup/2026-07-15-loadmaps-v4` at `dfab618`. Recover: `git checkout backup/2026-07-15-loadmaps-v4`.
+
+### Load Maps commit log
+```
+dfab618 Load Maps: Stage 1 + Stage 2 batch — offline-first route + trail guide (#639)
+e8c6198 Load AI boot intro + OCC How-to instant search (#575)
+```
+
+### Load Maps — Stage 2 + friendly redesign (PR #640, merged)
+- Driving route "Coimbra to Sete Lagoas" (road sections, cautions, stops, no-tolls,
+  Start driving, speedometer), Report button (offline log -> Alerts), arrival/waypoint
+  chimes, hard-refresh circle re-renders current view.
+- Friendly redesign: Home screen (big glassy Drive/Hike/Places/Alerts/How-to cards);
+  bottom nav Home/Drive/Hike/Places; real trail/road map imagery in a swipeable
+  gallery with tap-to-enlarge (loadmaps/routes/); transparent glass styling; bigger
+  readable type. Cache loadmaps-v6.
+- Merged as 8edeb59. Backup: backup/2026-07-15-loadmaps-v6.
+- Known: place catalog still has no photos (only the 2 Sete Lagoas routes have real
+  imagery). CodeQL check red is the known benign config-only fail (real Analyze passed).
+
+---
+
+## NIGHT WRAP — Load Maps full session (2026-07-15)
+
+### State
+- `origin/main` HEAD: `2b9288c` — Load Maps stack (#650). All Load Maps PRs merged.
+- Load Maps cache: `loadmaps-v20`. Live at `https://acrscrolls.com/loadmaps/` (verify on deploy).
+- Branch reset to origin/main; nothing uncommitted.
+
+### Load Maps — what exists now (built this session, PRs #639 #640 #647 #648 #649 #650)
+- Offline-first PWA at `/loadmaps`. Home screen (Drive / Hike / Places / Near me / Alerts / How to use / Live map / Ask). Bottom nav Home/Drive/Hike/Places. Glassy dark neon theme, auto intro + brand splash, installable, favicons/icons.
+- Places catalog (~55): landmarks across PT/ES/GB/FR/IT/GR + PT city guides with real imagery (Coimbra, Porto, Aveiro, Lisbon, Cascais, Braga, Setúbal, Albufeira, Faro). Per-country emergency numbers.
+- Guided routes: Sete Lagoas (hike, real trail map + logo fixed), Coimbra→Sete Lagoas (drive), Seven Hanging Valleys (hike), + 6 city-to-city drives (Lisbon→Porto & Madrid→Barcelona have real road maps). Auto SVG route map from coords; real photo-map galleries (tap to enlarge, on routes AND places).
+- Live guide: GPS position, Samantha voice, spoken hazards, speedometer, elevation, comfort mode, chimes, report button (offline hazard log → Alerts).
+- Favorites/Save, prep checklist, share, custom pins (My pins), Near me POI (10 categories via Overpass).
+- MAP STACK (all free/no key): Leaflet + OpenFreeMap vector (self-hosted MapLibre, `vendor/maplibre/`, OSM-raster fallback if no WebGL) + Esri satellite toggle. Valhalla multi-modal routing (drive/walk/cycle mode bar). Photon search-anywhere. Live weather (Open-Meteo).
+- Wired, need keys: Fire watch (`functions/api/loadmaps/fire.js`, env `FIRMS_KEY`), AI assistant (`functions/api/loadmaps/ai.js`, env `AI_KEY`/`AI_MODEL`, OpenRouter). "Ask Load Maps" home card. Keys go in Cloudflare env only.
+
+### VERIFY ON IPAD (couldn't test in sandbox — no WebGL / no external network)
+- Open `/loadmaps/`: intro+splash, allow location.
+- Live map: does the OpenFreeMap **vector** map render? (fallback is OSM raster.) Satellite toggle. Drop pin.
+- Directions (drive/walk/cycle) via Valhalla draw + show km/min.
+- Search anywhere (type a foreign city), city-guide galleries, weather line on a route/place.
+
+### TO SWITCH ON (Cloudflare Pages -> Settings -> Environment variables)
+- `FIRMS_KEY` = free NASA FIRMS map key (firms.modaps.eosdis.nasa.gov/api/map_key/) -> fire watch
+- `AI_KEY` = OpenRouter key (openrouter.ai/keys), optional `AI_MODEL` -> assistant. (User dislikes Groq; using OpenRouter. Set a free model if cost-averse.)
+
+### TOMORROW — plan (from the big research doc)
+1. Free/no-key tranche: weather map overlay (rain/cloud tiles), isochrones (Valhalla), GPX import/export, Turf.js spatial ("X within 5km of route"), elevation profile for routed trips.
+2. Crowdsourced hazard layer — build on **Cloudflare D1** (NOT Supabase; keep one-repo/infra per rule 10). Pin -> hazard type -> live GeoJSON layer.
+3. AI natural-language routing (once AI key set): "nearest pharmacy open after 8pm" -> intent -> Valhalla.
+4. Offline map packs (PMTiles + OPFS) — I write loader; region tile file must be generated once (sandbox can't download OSM); hosts free in repo/Pages.
+5. AR navigation (WebXR + A-Frame) — heavy/experimental; do as a standalone prototype after core is solid.
+
+### Capability gaps this session
+- Sandbox: no WebGL (can't verify MapLibre vector render), egress blocks image hosts + map/API servers (Wikimedia, tile servers, Open-Meteo, OSRM/Valhalla, Overpass, Photon, FIRMS, OpenRouter) — all verified via mocks; live paths run on device/Cloudflare.
+- No image tools (ImageMagick/sharp) — used headless Chromium for favicons/icons, logo compositing, and splitting the 3-in-1 city image.
+
+### Backups (today)
+- `backup/2026-07-15-loadmaps-v20` @ `2b9288c` (tonight's tip). Also v14/v16/v17 earlier. Recover: `git checkout backup/2026-07-15-loadmaps-v20`.
+
+### REVISED PLAN (late 2026-07-15) — no Groq, limited AI
+- AI function switched OpenRouter -> **Claude Haiku** (`functions/api/loadmaps/ai.js`,
+  env `ANTHROPIC_API_KEY`, optional `AI_MODEL`). One Haiku call max = near-zero cost.
+  App still needs its OWN Anthropic key in Cloudflare (can't use Claude Code access).
+- Zero-AI "smart" features to build (pure logic): predictive rerouting around
+  reported hazards (Valhalla), speed-limit voice warnings (Overpass speed vs GPS),
+  auto ETA recalc, Photon typo-tolerant search (done), Turf.js "nearest fuel on route".
+- Hazard layer: Cloudflare **D1** (not Supabase) to keep one-repo/infra (rule 10).
+- Tomorrow order unchanged, with AI = Haiku-only for ambiguous input parsing.
