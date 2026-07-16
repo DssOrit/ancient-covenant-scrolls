@@ -289,14 +289,46 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   width:28px;height:28px;border-radius:50%;
   border:2px solid #05050b;
   display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:800;color:#fff;
+  font-size:10px;font-weight:800;color:#fff;
   cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.6);
   transition:transform .15s;
 }
 .mk:active{transform:scale(1.2)}
 .mk-community{background:var(--green)}
 .mk-history{background:var(--red)}
-.mk-source{background:var(--gold)}
+.mk-archive{background:var(--gold)}
+.mk-inscription{background:#c8971f;border-color:#e8c81a}
+.mk-resistance{background:#9b27d4}
+.mk-discovery{background:var(--blue)}
+
+/* ── VERSE BANNER ───────────────────────────────────────────── */
+.verse-banner{
+  background:rgba(200,151,31,.08);border:1px solid rgba(200,151,31,.2);
+  border-left:3px solid var(--gold);border-radius:8px;
+  padding:10px 12px;margin-bottom:14px;
+}
+.verse-ref{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.verse-text{font-size:.78rem;color:var(--tx2);line-height:1.6;font-style:italic}
+
+/* ── LAYER BAR ──────────────────────────────────────────────── */
+#layer-bar{
+  position:absolute;bottom:56px;left:0;right:0;z-index:100;
+  pointer-events:none;padding:0 12px;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+}
+#layer-bar::-webkit-scrollbar{display:none}
+.lpill{
+  pointer-events:all;
+  padding:6px 11px;border-radius:16px;
+  background:rgba(13,13,26,.88);border:1px solid var(--border);
+  font-size:.65rem;font-weight:600;letter-spacing:.05em;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:background .15s,color .15s,border-color .15s;flex-shrink:0;
+}
+.lpill.active{background:rgba(155,39,212,.15);border-color:#9b27d4;color:#c97ef7}
+.lpill .ldot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lpill-trail.active{background:rgba(230,51,41,.1);border-color:var(--red);color:#ff8080}
 
 /* ── GPS BUTTON ─────────────────────────────────────────────── */
 #gps-btn{
@@ -384,13 +416,34 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <!-- GPS button -->
     <button id="gps-btn" onclick="locateMe()" title="My location">&#9678;</button>
 
+    <!-- Layer bar -->
+    <div id="layer-bar">
+      <div class="lpill lpill-trail" id="trail-pill" onclick="toggleTrail()">
+        <span class="ldot" style="background:var(--red)"></span> Displacement Trail
+      </div>
+      <div class="lpill" id="inscription-pill" onclick="toggleTypeFilter('inscription')">
+        <span class="ldot" style="background:var(--gold)"></span> YHWH Inscriptions
+      </div>
+      <div class="lpill" id="resistance-pill" onclick="toggleTypeFilter('resistance')">
+        <span class="ldot" style="background:#9b27d4"></span> Resistance Sites
+      </div>
+      <div class="lpill" id="discovery-pill" onclick="toggleTypeFilter('discovery')">
+        <span class="ldot" style="background:var(--blue)"></span> DSS Discovery
+      </div>
+      <div class="lpill" id="archive-pill" onclick="toggleTypeFilter('archive')">
+        <span class="ldot" style="background:var(--amber)"></span> Archives
+      </div>
+    </div>
+
     <!-- Region pills -->
     <div id="region-bar">
       <div class="rpill active" data-region="all" onclick="filterRegion(this)">All</div>
-      <div class="rpill" data-region="Portugal" onclick="filterRegion(this)">Portugal</div>
-      <div class="rpill" data-region="UK" onclick="filterRegion(this)">UK</div>
-      <div class="rpill" data-region="USA" onclick="filterRegion(this)">USA</div>
       <div class="rpill" data-region="Africa" onclick="filterRegion(this)">Africa</div>
+      <div class="rpill" data-region="Portugal" onclick="filterRegion(this)">Portugal</div>
+      <div class="rpill" data-region="Caribbean" onclick="filterRegion(this)">Caribbean</div>
+      <div class="rpill" data-region="South America" onclick="filterRegion(this)">S. America</div>
+      <div class="rpill" data-region="USA" onclick="filterRegion(this)">USA</div>
+      <div class="rpill" data-region="UK" onclick="filterRegion(this)">UK</div>
       <div class="rpill" data-region="Israel" onclick="filterRegion(this)">Israel</div>
     </div>
 
@@ -410,7 +463,10 @@ var map = null;
 var places = [];
 var markers = [];
 var activeRegion = 'all';
+var activeTypeFilter = null;
+var trailVisible = false;
 var userMarker = null;
+var placesData = null;
 
 /* ── NAME CYCLING ON GATE ───────────────────────────────────── */
 var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
@@ -502,10 +558,12 @@ function loadPlaces() {
   fetch('./acr_places.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
+      placesData = data;
       places = data.places || [];
       openApp();
     })
     .catch(function() {
+      placesData = null;
       places = [];
       openApp();
     });
@@ -533,14 +591,15 @@ function initMap() {
   map = new maplibregl.Map({
     container: 'map',
     style: 'https://tiles.openfreemap.org/styles/dark',
-    center: [0, 20],
-    zoom: 2.2,
+    center: [10, 15],
+    zoom: 2.0,
     attributionControl: false
   });
 
   map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 
   map.on('load', function() {
+    addDisplacementTrailLayer();
     placeMarkers(places);
   });
 
@@ -551,15 +610,91 @@ function initMap() {
   });
 }
 
+/* ── DISPLACEMENT TRAIL ─────────────────────────────────────── */
+function addDisplacementTrailLayer() {
+  if (!map || !placesData || !placesData.displacement_trail) return;
+  var coords = placesData.displacement_trail.coordinates;
+  map.addSource('trail', {
+    type: 'geojson',
+    data: { type: 'Feature', geometry: { type: 'LineString', coordinates: coords } }
+  });
+  map.addLayer({
+    id: 'trail-line',
+    type: 'line',
+    source: 'trail',
+    layout: { 'line-cap': 'round', 'line-join': 'round', visibility: 'none' },
+    paint: {
+      'line-color': '#e63329',
+      'line-width': 2,
+      'line-opacity': 0.7,
+      'line-dasharray': [2, 3]
+    }
+  });
+  map.addLayer({
+    id: 'trail-glow',
+    type: 'line',
+    source: 'trail',
+    layout: { 'line-cap': 'round', visibility: 'none' },
+    paint: { 'line-color': '#e63329', 'line-width': 6, 'line-opacity': 0.12 }
+  });
+}
+
+function toggleTrail() {
+  trailVisible = !trailVisible;
+  var pill = document.getElementById('trail-pill');
+  if (pill) pill.classList.toggle('active', trailVisible);
+  if (!map || !map.getLayer('trail-line')) return;
+  var vis = trailVisible ? 'visible' : 'none';
+  map.setLayoutProperty('trail-line', 'visibility', vis);
+  map.setLayoutProperty('trail-glow', 'visibility', vis);
+  if (trailVisible) {
+    map.flyTo({ center: [0, 15], zoom: 2.0, duration: 800 });
+    showRoute('devarim-28-trail');
+  }
+}
+
+/* ── TYPE FILTER ────────────────────────────────────────────── */
+function toggleTypeFilter(type) {
+  if (activeTypeFilter === type) {
+    activeTypeFilter = null;
+  } else {
+    activeTypeFilter = type;
+    activeRegion = 'all';
+    document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelector('.rpill[data-region="all"]').classList.add('active');
+  }
+  document.querySelectorAll('.lpill:not(.lpill-trail)').forEach(function(p) { p.classList.remove('active'); });
+  if (activeTypeFilter) {
+    var pid = activeTypeFilter + '-pill';
+    var el = document.getElementById(pid);
+    if (el) el.classList.add('active');
+  }
+  var filtered = getFilteredPlaces();
+  if (map) placeMarkers(filtered);
+  else showRegionList();
+}
+
+function getFilteredPlaces() {
+  var list = places;
+  if (activeRegion !== 'all') {
+    list = list.filter(function(p) { return p.region === activeRegion; });
+  }
+  if (activeTypeFilter) {
+    list = list.filter(function(p) { return p.type === activeTypeFilter; });
+  }
+  return list;
+}
+
 /* ── PLACE MARKERS ──────────────────────────────────────────── */
+var MK_LABELS = { community:'C', history:'H', archive:'A', inscription:'Y', resistance:'R', discovery:'D' };
 function placeMarkers(list) {
   markers.forEach(function(m) { m.remove(); });
   markers = [];
-
   list.forEach(function(pl) {
     var el = document.createElement('div');
-    el.className = 'mk mk-' + (pl.type || 'community');
-    el.textContent = pl.type === 'source' ? 'S' : pl.type === 'history' ? 'H' : 'C';
+    var t = pl.type || 'community';
+    el.className = 'mk mk-' + t;
+    el.textContent = MK_LABELS[t] || 'C';
     el.setAttribute('title', pl.name);
     el.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -577,13 +712,13 @@ function filterRegion(el) {
   document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
   el.classList.add('active');
   activeRegion = el.dataset.region;
-  var filtered = activeRegion === 'all' ? places : places.filter(function(p) { return p.region === activeRegion; });
-  if (markers.length && map) {
+  var filtered = getFilteredPlaces();
+  if (map) {
     placeMarkers(filtered);
     if (filtered.length && activeRegion !== 'all') {
       var lngs = filtered.map(function(p) { return p.lng; });
       var lats = filtered.map(function(p) { return p.lat; });
-      map.fitBounds([[Math.min.apply(null,lngs)-1, Math.min.apply(null,lats)-1],[Math.max.apply(null,lngs)+1, Math.max.apply(null,lats)+1]], {padding:60, duration:700});
+      map.fitBounds([[Math.min.apply(null,lngs)-2, Math.min.apply(null,lats)-2],[Math.max.apply(null,lngs)+2, Math.max.apply(null,lats)+2]], {padding:60, duration:700});
     }
   } else {
     showRegionList(activeRegion);
@@ -591,16 +726,29 @@ function filterRegion(el) {
 }
 
 /* ── SHOW PLACE ─────────────────────────────────────────────── */
+var TYPE_LABELS = { community:'Covenant Community', history:'Historical Site', archive:'Primary Archive', inscription:'YHWH Inscription', resistance:'Resistance Site', discovery:'DSS Discovery Site' };
+var VERSE_TEXTS = {
+  'Devarim 28:68': 'YHWH will bring you back to Egypt in ships, by a route I said you would never see again. There you will offer yourselves for sale to your enemies as male and female slaves, but no one will buy you.',
+  'Devarim 28:64': 'YHWH will scatter you among all nations, from one end of the earth to the other.',
+  'Devarim 28:65': 'Among those nations you will find no repose, no resting place for the sole of your foot.'
+};
+
 function showPlace(pl) {
   if (map) {
-    map.flyTo({center:[pl.lng, pl.lat], zoom:13, duration:800});
+    map.flyTo({center:[pl.lng, pl.lat], zoom: pl.type === 'inscription' ? 10 : 13, duration:800});
   }
-  var typeLabel = pl.type === 'source' ? 'Primary Source Archive' : pl.type === 'history' ? 'Historical Site' : 'Covenant Community';
+  var typeLabel = TYPE_LABELS[pl.type] || 'Covenant Site';
   var src = (pl.sources || []).map(function(s) { return '<div>' + esc(s) + '</div>'; }).join('');
+  var verseBanner = '';
+  if (pl.verse && VERSE_TEXTS[pl.verse]) {
+    verseBanner = '<div class="verse-banner"><div class="verse-ref">' + esc(pl.verse) + ' — Ge\'ez Orit, DSS Confirmed</div><div class="verse-text">' + esc(VERSE_TEXTS[pl.verse]) + '</div></div>';
+  }
   var routeBtn = pl.route ? '<button class="place-nav-btn" style="margin-bottom:10px;background:linear-gradient(90deg,var(--amber),var(--gold));color:#05050b" onclick="showRoute(\'' + pl.route + '\')">View Full Route</button>' : '';
   document.getElementById('sheet-body').innerHTML =
-    '<div class="place-tag">' + esc(pl.region) + ' &middot; ' + esc(pl.city) + ' &middot; ' + typeLabel + '</div>' +
+    '<div class="place-tag">' + esc(pl.region) + ' &middot; ' + esc(pl.city) + '</div>' +
     '<div class="place-name">' + esc(pl.name) + '</div>' +
+    '<div class="place-meta">' + typeLabel + '</div>' +
+    verseBanner +
     '<div class="place-body">' + esc(pl.summary) + '</div>' +
     '<div class="place-sources"><div class="place-sources-lbl">Primary Sources</div><div class="place-sources-list">' + src + '</div></div>' +
     routeBtn +
@@ -610,41 +758,48 @@ function showPlace(pl) {
 
 /* ── SHOW ROUTE ─────────────────────────────────────────────── */
 function showRoute(routeId) {
-  fetch('./acr_places.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      var route = (data.routes || []).find(function(r) { return r.id === routeId; });
-      if (!route) return;
-      var stops = (route.stops || []).map(function(id, i) {
-        return data.places.find(function(p) { return p.id === id; });
-      }).filter(Boolean);
+  var data = placesData;
+  if (!data) return;
+  var route = (data.routes || []).find(function(r) { return r.id === routeId; });
+  if (!route) return;
+  var stops = (route.stops || []).map(function(id) {
+    return data.places.find(function(p) { return p.id === id; });
+  }).filter(Boolean);
 
-      var stopsHtml = stops.map(function(pl, i) {
-        return '<div class="stop-row" onclick="showPlace(' + JSON.stringify(pl).replace(/"/g,'&quot;') + ')">' +
-          '<div class="stop-num">' + (i + 1) + '</div>' +
-          '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
-          '<div class="stop-summary">' + esc(pl.summary) + '</div></div>' +
-          '</div>';
-      }).join('');
+  var isGlobal = route.distance_km === 0;
+  var stopsHtml = stops.map(function(pl, i) {
+    return '<div class="stop-row" onclick="showPlace(' + JSON.stringify(pl).replace(/"/g,'&quot;') + ')">' +
+      '<div class="stop-num" style="background:' + typeColor(pl.type) + '">' + (i + 1) + '</div>' +
+      '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
+      '<div class="stop-summary">' + esc(pl.city) + ', ' + esc(pl.region) + ' &mdash; ' + esc((pl.summary||'').substring(0,80)) + '...</div></div>' +
+      '</div>';
+  }).join('');
 
-      document.getElementById('sheet-body').innerHTML =
-        '<div class="route-hdr">' +
-          '<div class="route-tag">' + esc(route.region) + ' &middot; ' + esc(route.city) + '</div>' +
-          '<div class="route-name">' + esc(route.name) + '</div>' +
-          '<div class="route-meta">' + stops.length + ' stops &middot; ' + route.distance_km + ' km &middot; ' + route.duration_hrs + ' hrs</div>' +
-        '</div>' +
-        '<div class="route-summary">' + esc(route.summary) + '</div>' +
-        '<div class="stop-list">' + stopsHtml + '</div>' +
-        '<button class="route-start-btn" onclick="navTo(' + stops[0].lat + ',' + stops[0].lng + ')">Start Route</button>';
-      openSheet();
+  var metaLine = stops.length + ' stops';
+  if (!isGlobal) metaLine += ' &middot; ' + route.distance_km + ' km &middot; ' + route.duration_hrs + ' hrs';
+  else metaLine += ' &middot; ' + route.duration_hrs;
 
-      if (map && stops.length) {
-        var lngs = stops.map(function(p) { return p.lng; });
-        var lats = stops.map(function(p) { return p.lat; });
-        map.fitBounds([[Math.min.apply(null,lngs)-.05, Math.min.apply(null,lats)-.05],[Math.max.apply(null,lngs)+.05, Math.max.apply(null,lats)+.05]], {padding:80, duration:800});
-      }
-    })
-    .catch(function() {});
+  var navBtn = stops.length && !isGlobal
+    ? '<button class="route-start-btn" onclick="navTo(' + stops[0].lat + ',' + stops[0].lng + ')">Start Route</button>'
+    : '';
+
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="route-hdr">' +
+      '<div class="route-tag">' + esc(route.region) + ' &middot; ' + esc(route.city) + '</div>' +
+      '<div class="route-name">' + esc(route.name) + '</div>' +
+      '<div class="route-meta">' + metaLine + '</div>' +
+    '</div>' +
+    '<div class="route-summary">' + esc(route.summary) + '</div>' +
+    '<div class="stop-list">' + stopsHtml + '</div>' +
+    navBtn;
+  openSheet();
+
+  if (map && stops.length) {
+    var lngs = stops.map(function(p) { return p.lng; });
+    var lats = stops.map(function(p) { return p.lat; });
+    var pad = isGlobal ? 20 : 0.05;
+    map.fitBounds([[Math.min.apply(null,lngs)-pad, Math.min.apply(null,lats)-pad],[Math.max.apply(null,lngs)+pad, Math.max.apply(null,lats)+pad]], {padding:60, duration:900});
+  }
 }
 
 /* ── SHOW REGION LIST (no map fallback) ─────────────────────── */
@@ -653,8 +808,7 @@ function showRegionList(region) {
   if (!list.length) { closeSheet(); return; }
   var items = list.map(function(pl) {
     return '<div class="stop-row" onclick=\'showPlace(' + JSON.stringify(pl).replace(/'/g,"&#39;") + ')\'>' +
-      '<div class="stop-num mk-' + (pl.type||'community') + '" style="background:' + typeColor(pl.type) + '">' +
-        (pl.type==='source'?'S':pl.type==='history'?'H':'C') + '</div>' +
+      '<div class="stop-num" style="background:' + typeColor(pl.type) + '">' + typeIconChar(pl.type) + '</div>' +
       '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
       '<div class="sr-city">' + esc(pl.city) + ', ' + esc(pl.region) + '</div></div>' +
       '</div>';
@@ -666,7 +820,12 @@ function showRegionList(region) {
 }
 
 function typeColor(t) {
-  return t === 'source' ? 'var(--gold)' : t === 'history' ? 'var(--red)' : 'var(--green)';
+  var colors = { community:'var(--green)', history:'var(--red)', archive:'var(--gold)', inscription:'#c8971f', resistance:'#9b27d4', discovery:'var(--blue)' };
+  return colors[t] || 'var(--green)';
+}
+
+function typeIconChar(t) {
+  return MK_LABELS[t] || 'C';
 }
 
 /* ── SEARCH ─────────────────────────────────────────────────── */
