@@ -11,9 +11,8 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="icon" href="./icon.png">
-<!-- MapLibre GL JS (CDN — requires connection; falls back gracefully offline) -->
-<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<!-- Leaflet CSS only in head — JS loaded at end of body to avoid blocking render -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 /* ── RESET & TOKENS ─────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -163,6 +162,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   flex-shrink:0;
 }
 .tb-btn:active{background:rgba(255,255,255,.12)}
+.tb-refresh{background:#c8971f;border-color:#c8971f;color:#05050b}
+.tb-refresh:active{background:#e8a800;border-color:#e8a800}
 
 /* ── SEARCH BAR ─────────────────────────────────────────────── */
 #searchbar{
@@ -427,6 +428,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .sr-region{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:2px}
 .sr-name{font-size:.85rem;font-weight:600;color:var(--text)}
 .sr-city{font-size:.72rem;color:var(--tx2)}
+
+/* ── LEAFLET OVERRIDES ──────────────────────────────────────── */
+/* Isolate all Leaflet z-indices from our UI controls (z-index:100+) */
+.leaflet-map-pane{z-index:1 !important}
+.leaflet-container{background:#0a0a14;font-family:inherit}
+.leaflet-control-attribution{
+  background:rgba(5,5,11,.8)!important;color:var(--tx3)!important;
+  font-size:10px!important;border-radius:4px!important;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.leaflet-control-attribution a{color:var(--tx3)!important}
 </style>
 </head>
 <body>
@@ -469,6 +481,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="tb-cal" id="cal-chip" onclick="showCalendar()" title="DSS Covenant Calendar">
           <div class="tb-cal-date" id="cal-date-label">—</div>
           <div class="tb-cal-era">364-Day</div>
+        </button>
+        <button class="tb-btn tb-refresh" onclick="hardRefresh()" title="Clear cache and reload">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M3.5 10a6.5 6.5 0 1 0 6.5-6.5"/><polyline points="1 4.5 3.5 10 9 10"/></svg>
         </button>
         <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
       </div>
@@ -542,6 +557,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
+<!-- Leaflet JS here so the gate screen HTML/CSS renders before any script loads -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* ── STATE ─────────────────────────────────────────────────── */
 var map = null;
@@ -555,6 +572,9 @@ var geneticVisible = false;
 var trailVisible = false;
 var userMarker = null;
 var placesData = null;
+var trailLayer = null;
+var trailGlowLayer = null;
+var corridorLayers = {};
 
 /* ── NAME CYCLING ON GATE ───────────────────────────────────── */
 var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
@@ -743,111 +763,58 @@ function openApp() {
 
 /* ── MAP INIT ───────────────────────────────────────────────── */
 function initMap() {
-  var mapEl = document.getElementById('map');
-  var fallback = function(msg) {
-    mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">' + msg + '</div>';
-    showRegionList();
-  };
-  if (!window.maplibregl) {
-    fallback('Map requires a connection on first load. Places are available — tap the region pills to browse.');
+  if (typeof L === 'undefined') {
+    document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">Map requires a connection on first load. Tap the region pills to browse places.</div>';
     return;
   }
-  if (!maplibregl.supported()) {
-    fallback('Interactive map not available on this device. Tap the region pills below to browse all places.');
-    return;
-  }
-  try {
-    map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://tiles.openfreemap.org/styles/dark',
-      center: [10, 15],
-      zoom: 2.0,
-      attributionControl: false
-    });
-    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
-    var tileTimeout = setTimeout(function() {
-      if (map && !map.loaded()) { showRegionList(); }
-    }, 8000);
-    map.on('load', function() {
-      clearTimeout(tileTimeout);
-      addDisplacementTrailLayer();
-      addGeneticCorridorLayers();
-      placeMarkers(places);
-    });
-    map.on('error', function() { showRegionList(); });
-    map.on('click', function(e) {
-      if (!e.originalEvent.target.classList.contains('mk')) {
-        closeSheet();
-      }
-    });
-  } catch(e) {
-    map = null;
-    fallback('Map failed to start. Tap the region pills below to browse all places.');
-  }
+  map = L.map('map', { center: [15, 10], zoom: 2, zoomControl: false, attributionControl: false });
+  L.control.attribution({ compact: true, position: 'bottomleft' }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19, subdomains: 'abcd',
+    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; CARTO'
+  }).addTo(map);
+  setTimeout(function() { if (map) map.invalidateSize(); }, 100);
+  addDisplacementTrailLayer();
+  addGeneticCorridorLayers();
+  placeMarkers(places);
+  map.on('click', function() { closeSheet(); });
 }
 
 /* ── DISPLACEMENT TRAIL ─────────────────────────────────────── */
 function addDisplacementTrailLayer() {
   if (!map || !placesData || !placesData.displacement_trail) return;
-  var coords = placesData.displacement_trail.coordinates;
-  map.addSource('trail', {
-    type: 'geojson',
-    data: { type: 'Feature', geometry: { type: 'LineString', coordinates: coords } }
-  });
-  map.addLayer({
-    id: 'trail-line',
-    type: 'line',
-    source: 'trail',
-    layout: { 'line-cap': 'round', 'line-join': 'round', visibility: 'none' },
-    paint: {
-      'line-color': '#e63329',
-      'line-width': 2,
-      'line-opacity': 0.7,
-      'line-dasharray': [2, 3]
-    }
-  });
-  map.addLayer({
-    id: 'trail-glow',
-    type: 'line',
-    source: 'trail',
-    layout: { 'line-cap': 'round', visibility: 'none' },
-    paint: { 'line-color': '#e63329', 'line-width': 6, 'line-opacity': 0.12 }
-  });
+  var raw = placesData.displacement_trail.coordinates;
+  var coords = raw.map(function(c) { return [c[1], c[0]]; }); // GeoJSON [lng,lat] -> Leaflet [lat,lng]
+  trailGlowLayer = L.polyline(coords, { color: '#e63329', weight: 6, opacity: 0.12, interactive: false });
+  trailLayer = L.polyline(coords, { color: '#e63329', weight: 2, opacity: 0.7, dashArray: '5 7', interactive: false });
 }
 
 function toggleTrail() {
   trailVisible = !trailVisible;
   var pill = document.getElementById('trail-pill');
   if (pill) pill.classList.toggle('active', trailVisible);
-  if (!map || !map.getLayer('trail-line')) return;
-  var vis = trailVisible ? 'visible' : 'none';
-  map.setLayoutProperty('trail-line', 'visibility', vis);
-  map.setLayoutProperty('trail-glow', 'visibility', vis);
+  if (!trailLayer) return;
   if (trailVisible) {
-    map.flyTo({ center: [0, 15], zoom: 2.0, duration: 800 });
+    trailGlowLayer.addTo(map);
+    trailLayer.addTo(map);
+    map.flyTo([15, 0], 2.0);
     showRoute('devarim-28-trail');
+  } else {
+    if (map.hasLayer(trailGlowLayer)) map.removeLayer(trailGlowLayer);
+    if (map.hasLayer(trailLayer)) map.removeLayer(trailLayer);
   }
 }
 
 /* ── GENETIC CORRIDORS ──────────────────────────────────────── */
 function addGeneticCorridorLayers() {
   if (!map || !placesData || !placesData.genetic_corridors) return;
+  corridorLayers = {};
   placesData.genetic_corridors.forEach(function(corridor) {
-    var srcId = 'genetic-' + corridor.id;
-    map.addSource(srcId, {
-      type: 'geojson',
-      data: { type: 'Feature', geometry: { type: 'LineString', coordinates: corridor.coordinates } }
-    });
-    map.addLayer({
-      id: srcId + '-glow', type: 'line', source: srcId,
-      layout: { 'line-cap': 'round', visibility: 'none' },
-      paint: { 'line-color': corridor.color, 'line-width': 8, 'line-opacity': 0.07 }
-    });
-    map.addLayer({
-      id: srcId + '-line', type: 'line', source: srcId,
-      layout: { 'line-cap': 'round', 'line-join': 'round', visibility: 'none' },
-      paint: { 'line-color': corridor.color, 'line-width': 1.5, 'line-opacity': 0.65, 'line-dasharray': [4, 2] }
-    });
+    var coords = corridor.coordinates.map(function(c) { return [c[1], c[0]]; });
+    corridorLayers[corridor.id] = {
+      glow: L.polyline(coords, { color: corridor.color, weight: 8, opacity: 0.07, interactive: false }),
+      line: L.polyline(coords, { color: corridor.color, weight: 1.5, opacity: 0.65, dashArray: '6 3', interactive: false })
+    };
   });
 }
 
@@ -855,17 +822,19 @@ function toggleGeneticCorridors() {
   geneticVisible = !geneticVisible;
   var pill = document.getElementById('genetic-pill');
   if (pill) pill.classList.toggle('active', geneticVisible);
-  if (map && placesData) {
-    var vis = geneticVisible ? 'visible' : 'none';
-    (placesData.genetic_corridors || []).forEach(function(c) {
-      var base = 'genetic-' + c.id;
-      if (map.getLayer(base + '-line')) map.setLayoutProperty(base + '-line', 'visibility', vis);
-      if (map.getLayer(base + '-glow')) map.setLayoutProperty(base + '-glow', 'visibility', vis);
-    });
+  Object.keys(corridorLayers).forEach(function(id) {
+    var cl = corridorLayers[id];
     if (geneticVisible) {
-      map.flyTo({ center: [20, 20], zoom: 2.2, duration: 900 });
-      showGeneticInfo();
+      cl.glow.addTo(map);
+      cl.line.addTo(map);
+    } else {
+      if (map.hasLayer(cl.glow)) map.removeLayer(cl.glow);
+      if (map.hasLayer(cl.line)) map.removeLayer(cl.line);
     }
+  });
+  if (geneticVisible) {
+    map.flyTo([20, 20], 2.2);
+    showGeneticInfo();
   }
 }
 
@@ -972,18 +941,20 @@ function placeMarkers(list) {
   markers.forEach(function(m) { m.remove(); });
   markers = [];
   list.forEach(function(pl) {
-    var el = document.createElement('div');
     var t = pl.type || 'community';
-    el.className = 'mk mk-' + t;
-    el.textContent = MK_LABELS[t] || 'C';
-    el.setAttribute('title', pl.name);
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
+    var lbl = MK_LABELS[t] || 'C';
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="mk mk-' + t + '" title="' + esc(pl.name) + '">' + lbl + '</div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14]
+    });
+    var m = L.marker([pl.lat, pl.lng], { icon: icon });
+    m.on('click', function(e) {
+      L.DomEvent.stopPropagation(e);
       showPlace(pl);
     });
-    var m = new maplibregl.Marker({ element: el, anchor: 'center' })
-      .setLngLat([pl.lng, pl.lat])
-      .addTo(map);
+    m.addTo(map);
     markers.push(m);
   });
 }
@@ -999,7 +970,10 @@ function filterRegion(el) {
     if (filtered.length && activeRegion !== 'all') {
       var lngs = filtered.map(function(p) { return p.lng; });
       var lats = filtered.map(function(p) { return p.lat; });
-      map.fitBounds([[Math.min.apply(null,lngs)-2, Math.min.apply(null,lats)-2],[Math.max.apply(null,lngs)+2, Math.max.apply(null,lats)+2]], {padding:60, duration:700});
+      map.fitBounds([
+        [Math.min.apply(null,lats)-2, Math.min.apply(null,lngs)-2],
+        [Math.max.apply(null,lats)+2, Math.max.apply(null,lngs)+2]
+      ], { padding: [60, 60] });
     }
   } else {
     showRegionList(activeRegion);
@@ -1017,7 +991,7 @@ var VERSE_TEXTS = {
 
 function showPlace(pl) {
   if (map) {
-    map.flyTo({center:[pl.lng, pl.lat], zoom: pl.type === 'inscription' ? 10 : 13, duration:800});
+    map.flyTo([pl.lat, pl.lng], pl.type === 'inscription' ? 10 : 13);
   }
   var typeLabel = TYPE_LABELS[pl.type] || 'Covenant Site';
   var src = (pl.sources || []).map(function(s) { return '<div>' + esc(s) + '</div>'; }).join('');
@@ -1121,7 +1095,10 @@ function showRoute(routeId) {
     var lngs = stops.map(function(p) { return p.lng; });
     var lats = stops.map(function(p) { return p.lat; });
     var pad = isGlobal ? 20 : 0.05;
-    map.fitBounds([[Math.min.apply(null,lngs)-pad, Math.min.apply(null,lats)-pad],[Math.max.apply(null,lngs)+pad, Math.max.apply(null,lats)+pad]], {padding:60, duration:900});
+    map.fitBounds([
+      [Math.min.apply(null,lats)-pad, Math.min.apply(null,lngs)-pad],
+      [Math.max.apply(null,lats)+pad, Math.max.apply(null,lngs)+pad]
+    ], { padding: [60, 60] });
   }
 }
 
@@ -1207,13 +1184,16 @@ function locateMe() {
   var btn = document.getElementById('gps-btn');
   btn.classList.add('active');
   navigator.geolocation.getCurrentPosition(function(pos) {
-    var ll = [pos.coords.longitude, pos.coords.latitude];
     if (map) {
-      if (userMarker) userMarker.remove();
-      var el = document.createElement('div');
-      el.style.cssText = 'width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(43,125,233,.3)';
-      userMarker = new maplibregl.Marker({element:el}).setLngLat(ll).addTo(map);
-      map.flyTo({center:ll, zoom:13, duration:700});
+      if (userMarker) map.removeLayer(userMarker);
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(43,125,233,.3)"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+      userMarker = L.marker([pos.coords.latitude, pos.coords.longitude], { icon: icon }).addTo(map);
+      map.flyTo([pos.coords.latitude, pos.coords.longitude], 13);
     }
     setTimeout(function(){ btn.classList.remove('active'); }, 2000);
   }, function() {
@@ -1231,6 +1211,25 @@ function navTo(lat, lng) {
 function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── HARD REFRESH ───────────────────────────────────────────── */
+function hardRefresh() {
+  var btn = document.querySelector('.tb-refresh');
+  if (btn) { btn.style.opacity = '.4'; btn.style.pointerEvents = 'none'; }
+  var reload = function() { location.reload(); };
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); })
+      .then(function() {
+        return 'caches' in window
+          ? caches.keys().then(function(keys) { return Promise.all(keys.map(function(k) { return caches.delete(k); })); })
+          : Promise.resolve();
+      })
+      .then(reload).catch(reload);
+  } else {
+    reload();
+  }
 }
 
 /* ── SERVICE WORKER ─────────────────────────────────────────── */
