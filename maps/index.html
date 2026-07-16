@@ -138,7 +138,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── TOPBAR ─────────────────────────────────────────────────── */
 #topbar{
-  position:absolute;top:0;left:0;right:0;z-index:100;
+  position:absolute;top:0;left:0;right:0;z-index:9000;
   padding:env(safe-area-inset-top,0) 12px 0;
   background:linear-gradient(180deg,rgba(5,5,11,.95) 0%,rgba(5,5,11,.7) 80%,transparent 100%);
   pointer-events:none;
@@ -167,7 +167,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── SEARCH BAR ─────────────────────────────────────────────── */
 #searchbar{
-  position:absolute;top:58px;left:12px;right:12px;z-index:100;
+  position:absolute;top:58px;left:12px;right:12px;z-index:9000;
   pointer-events:all;
 }
 .sb-wrap{
@@ -187,7 +187,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── BOTTOM SHEET ───────────────────────────────────────────── */
 #sheet{
-  position:absolute;bottom:0;left:0;right:0;z-index:200;
+  position:absolute;bottom:0;left:0;right:0;z-index:9200;
   background:var(--s1);
   border-radius:20px 20px 0 0;
   border-top:1px solid var(--border);
@@ -263,7 +263,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── REGION PILLS ───────────────────────────────────────────── */
 #region-bar{
-  position:absolute;bottom:0;left:0;right:0;z-index:100;
+  position:absolute;bottom:0;left:0;right:0;z-index:9000;
   pointer-events:none;
   padding:0 12px calc(env(safe-area-inset-bottom,0px) + 10px);
   display:flex;gap:8px;overflow-x:auto;
@@ -314,7 +314,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── LAYER BAR ──────────────────────────────────────────────── */
 #layer-bar{
-  position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 50px);left:0;right:0;z-index:100;
+  position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 50px);left:0;right:0;z-index:9000;
   pointer-events:none;padding:0 12px;
   display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
 }
@@ -382,7 +382,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── GPS BUTTON ─────────────────────────────────────────────── */
 #gps-btn{
-  position:absolute;bottom:66px;right:14px;z-index:100;
+  position:absolute;bottom:66px;right:14px;z-index:9000;
   width:42px;height:42px;border-radius:12px;
   background:rgba(13,13,26,.92);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
@@ -413,7 +413,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── SEARCH RESULTS OVERLAY ─────────────────────────────────── */
 #search-results{
-  position:absolute;top:108px;left:12px;right:12px;z-index:150;
+  position:absolute;top:108px;left:12px;right:12px;z-index:9100;
   background:rgba(13,13,26,.97);border:1px solid var(--border);
   border-radius:12px;overflow:hidden;display:none;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
