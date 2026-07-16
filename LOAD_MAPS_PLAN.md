@@ -124,6 +124,16 @@ hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_K
     weather) to build the elevation profile — so driving/cycling/walking routes get
     a climb graph too, not just the pre-baked guided trails.
   - Both keyless, no new accounts. Earlier tab-favicon cleanup shipped at v26.
+- Done (fuel prices, 2026-07-16, cache `loadmaps-v28`): **Fuel prices** Home card /
+  screen. Live petrol + diesel prices near you from government open data, keyless.
+  Fetched server-side via `functions/api/loadmaps/fuel.js` (the gov feeds send no
+  CORS headers, so a browser can't read them directly; the function is keyless and
+  edge-caches the feed). **Spain** = Ministerio (Minetur) official feed, live.
+  **Portugal** = DGEG best-effort; if its feed is unreachable/changed the screen
+  falls back to keyless Overpass stations (no price) with a clear note. Cheapest
+  diesel/petrol banners, nearest-15 within 25 km, tap to route. NOTE: the gov feeds
+  can't be reached from the build sandbox, so ES prices verify on the live Cloudflare
+  deploy; the parser + filter + cheapest logic are unit-tested.
 
 **Stage 3 sources (need a signal)** — researched, see below.
 
