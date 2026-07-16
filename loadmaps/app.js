@@ -266,6 +266,7 @@ function openMap(opts){
   if(LMap.reachLayer){ LMap.map.removeLayer(LMap.reachLayer); LMap.reachLayer=null; var rb=el('mapReach'); if(rb) rb.classList.remove('on'); }
   if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); LMap.gpxLayer=null; }
   if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); LMap.onRouteLayer=null; }
+  if(LMap.camLayer){ LMap.map.removeLayer(LMap.camLayer); LMap.camLayer=null; LMap.cams=null; var cb=el('mapCam'); if(cb) cb.classList.remove('on'); }
   if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); LMap.hazardLayer=null; }
   if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; if(LMap.base){ try{ LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); }catch(e){} } var ml=el('mapLayer'); if(ml) ml.textContent='Satellite'; }
   LMap.route=null; LMap.avoid=null; LMap._hzLoaded=false; _spd.limit=null; _spd.at=0;
@@ -328,6 +329,7 @@ function drawRoute(from, to, costing){
       var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min '+lab;
       LMap.route={ coords:coords, lengthM:s.length*1000, timeSec:s.time, offNotified:false };
       updateEta();
+      fetchRouteElevation(coords);
     }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
@@ -366,6 +368,64 @@ function toggleReach(){
         toast('Reach: 15 / 30 / 45 min');
       }).catch(function(){ toast('Could not work out reach'); });
   });
+}
+// Speed cameras — OpenStreetMap via Overpass (same keyless endpoint used elsewhere).
+function toggleCameras(){
+  if(!LMap.map) return;
+  var btn=el('mapCam');
+  if(LMap.camLayer){ LMap.map.removeLayer(LMap.camLayer); LMap.camLayer=null; LMap.cams=null; if(btn) btn.classList.remove('on'); toast('Cameras off'); return; }
+  if(!navigator.onLine){ toast('Cameras need a connection'); return; }
+  var b=LMap.map.getBounds();
+  if(LMap.map.getZoom()<9){ toast('Zoom in to load cameras'); return; }
+  toast('Loading speed cameras…');
+  var box='('+b.getSouth()+','+b.getWest()+','+b.getNorth()+','+b.getEast()+')';
+  var body='[out:json][timeout:20];(node["highway"="speed_camera"]'+box+';node["highway"="enforcement"]'+box+';);out 300;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var cams=[];
+      if(j && j.elements){ j.elements.forEach(function(e){ if(e.lat!=null && e.lon!=null) cams.push({ lat:e.lat, lng:e.lon }); }); }
+      if(!cams.length){ toast('No speed cameras in view'); return; }
+      LMap.cams=cams;
+      LMap.camLayer=L.layerGroup();
+      cams.forEach(function(c){
+        L.circleMarker([c.lat,c.lng], { radius:6, color:'#1a0d04', weight:2, fillColor:'#ff4d3d', fillOpacity:.95 })
+          .bindPopup('Speed camera').addTo(LMap.camLayer);
+      });
+      LMap.camLayer.addTo(LMap.map);
+      if(btn) btn.classList.add('on');
+      toast(cams.length+' speed camera'+(cams.length===1?'':'s')+' shown');
+    }).catch(function(){ toast('Could not load cameras'); });
+}
+// Voice warning when driving up on a loaded speed camera.
+var _camWarn={ at:0, key:null };
+function checkCameraAhead(){
+  if(!LMap.cams || !state.pos) return;
+  var best=Infinity, bc=null;
+  for(var i=0;i<LMap.cams.length;i++){ var d=haversine(state.pos.lat,state.pos.lng,LMap.cams[i].lat,LMap.cams[i].lng); if(d<best){ best=d; bc=LMap.cams[i]; } }
+  if(bc && best<220){
+    var key=bc.lat.toFixed(4)+','+bc.lng.toFixed(4);
+    if(_camWarn.key!==key && Date.now()-_camWarn.at>15000){ _camWarn.key=key; _camWarn.at=Date.now(); chime('next'); speak('Speed camera ahead.', true); }
+  }
+}
+// Real elevation for ANY route — Open-Meteo elevation (same keyless host as the weather).
+function sampleCoords(coords, n){
+  if(coords.length<=n) return coords.slice();
+  var out=[], step=(coords.length-1)/(n-1);
+  for(var i=0;i<n;i++){ out.push(coords[Math.round(i*step)]); }
+  return out;
+}
+function fetchRouteElevation(coords){
+  if(!coords || coords.length<2 || !navigator.onLine) return;
+  var pts=sampleCoords(coords, 40);
+  var lats=pts.map(function(p){ return p[0].toFixed(5); }).join(',');
+  var lngs=pts.map(function(p){ return p[1].toFixed(5); }).join(',');
+  fetch('https://api.open-meteo.com/v1/elevation?latitude='+lats+'&longitude='+lngs)
+    .then(function(r){ return r.json(); }).then(function(j){
+      var el2=j && j.elevation;
+      if(!el2 || !el2.length || el2.length!==pts.length) return;
+      var wps=pts.map(function(p,i){ return { n:i+1, name:'', lat:p[0], lng:p[1], elev:el2[i] }; });
+      showElevation({ name:'route', waypoints:wps });
+    }).catch(function(){});
 }
 // Elevation profile for a guided route (uses the route's own waypoint elevations).
 function showElevation(g){
@@ -590,6 +650,7 @@ function startMapLocate(){
     else LMap.meMarker.setLatLng(ll);
     updateEta();
     checkSpeedLimit();
+    checkCameraAhead();
     if(!LMap._hzLoaded){ LMap._hzLoaded=true; loadHazards(state.pos.lat, state.pos.lng); }
   }, function(){}, { enableHighAccuracy:true, maximumAge:5000 });
 }
@@ -1554,6 +1615,7 @@ function init(){
   };
   if(el('mapRain')) el('mapRain').onclick=function(){ toggleRain(); };
   if(el('mapReach')) el('mapReach').onclick=function(){ toggleReach(); };
+  if(el('mapCam')) el('mapCam').onclick=function(){ toggleCameras(); };
   if(el('mapOnRoute')) el('mapOnRoute').onclick=function(){
     var rt=el('mapRouteTools'); if(!rt) return;
     if(rt.classList.contains('open')){ rt.classList.remove('open'); return; }
