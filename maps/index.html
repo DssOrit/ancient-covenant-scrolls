@@ -11,8 +11,8 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="icon" href="./icon.png">
-<!-- Leaflet CSS only in head — JS loaded at end of body to avoid blocking render -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<!-- Leaflet — vendored locally, no CDN dependency -->
+<link rel="stylesheet" href="./vendor/leaflet.css">
 <style>
 /* ── RESET & TOKENS ─────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -557,8 +557,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- Leaflet JS here so the gate screen HTML/CSS renders before any script loads -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./vendor/leaflet.js"></script>
 <script>
 /* ── STATE ─────────────────────────────────────────────────── */
 var map = null;

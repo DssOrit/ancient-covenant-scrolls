@@ -1,4 +1,4 @@
-var CACHE = 'acr-maps-v10';
+var CACHE = 'acr-maps-v11';
 var FILES = [
   './',
   './index.html',
@@ -7,7 +7,14 @@ var FILES = [
   './icon.png',
   './icon-192.png',
   './icon-512.png',
-  './apple-touch-icon.png'
+  './apple-touch-icon.png',
+  './vendor/leaflet.css',
+  './vendor/leaflet.js',
+  './vendor/images/layers.png',
+  './vendor/images/layers-2x.png',
+  './vendor/images/marker-icon.png',
+  './vendor/images/marker-icon-2x.png',
+  './vendor/images/marker-shadow.png'
 ];
 self.addEventListener('install', function(e) {
   e.waitUntil(
