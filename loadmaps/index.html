@@ -276,6 +276,15 @@
   .map-btn svg{width:19px;height:19px}
   .map-btn.round{border-radius:12px}
   .map-btn.icon{width:46px;height:46px;padding:0;justify-content:center}
+  .map-btn.on{background:rgba(43,110,255,.92);border-color:rgba(120,170,255,.9);color:#fff;box-shadow:0 4px 16px rgba(43,110,255,.5)}
+  .map-elev{position:absolute;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:1000;display:none;
+    background:rgba(12,17,30,.94);border:1px solid var(--line);border-radius:14px;padding:10px 12px 8px;backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .map-elev.on{display:block}
+  .map-elev .el-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .map-elev .el-lab{font-weight:800;font-size:.86rem;letter-spacing:.02em}
+  .map-elev .el-x{background:none;border:0;color:var(--muted);font:inherit;font-size:1.1rem;cursor:pointer;padding:0 4px;line-height:1}
+  .map-elev .el-meta{color:var(--muted);font-size:.78rem;font-weight:600}
+  .map-elev svg{display:block;width:100%;height:64px}
   .map-modes{position:absolute;top:calc(58px + env(safe-area-inset-top));left:12px;z-index:1000;display:none;gap:8px}
   .map-modes.on{display:flex}
   .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
@@ -470,12 +479,17 @@
     <button data-mode="bicycle">Cycle</button>
   </div>
   <div class="map-side">
+    <button class="map-btn round" id="mapRain">Rain</button>
+    <button class="map-btn round" id="mapReach">Reach</button>
+    <button class="map-btn round" id="mapGpx">GPX</button>
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
     <button class="map-btn round icon" id="mapRecenter" aria-label="Recenter">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
     </button>
   </div>
+  <div class="map-elev" id="mapElev"></div>
+  <input type="file" id="gpxFile" accept=".gpx,application/gpx+xml" style="display:none">
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
