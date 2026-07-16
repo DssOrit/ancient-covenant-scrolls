@@ -89,8 +89,18 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
     that returns a small JSON intent; the client ("Find it on the map") acts on it
     with plain logic — geocode a place via Photon and open it, or find a facility
     category on the route / near a place. Dark until `ANTHROPIC_API_KEY` is set.
-- Next: offline map packs (PMTiles + OPFS) for full offline maps; AR walking
-  arrows (WebXR + A-Frame) as a last, experimental prototype.
+- Done (offline packs, 2026-07-16, cache `loadmaps-v23`): **Offline maps** screen
+  (Home card). Import a `.pmtiles` map file once; it is stored on the device via
+  OPFS (free — no Cloudflare storage, nothing uploaded). The live map then uses it
+  as the base with no signal, via a vendored `pmtiles` protocol on MapLibre
+  (`loadmaps/vendor/pmtiles/pmtiles.js`). Manage packs (size, use, delete), storage
+  estimate shown, graceful session-only fallback where OPFS is unavailable. Raster
+  `.pmtiles` are the supported offline base (vector needs a matching style). The
+  "Satellite/Map" button returns to live tiles when an offline base is active.
+  Verified: library loads + exposes PMTiles/Protocol/FileSource, app boots clean,
+  pack-list + byte-format + OPFS-fallback logic pass; live WebGL tile render proves
+  out on device with a real pack.
+- Next: AR walking arrows (WebXR + A-Frame) as a last, experimental prototype.
 
 **Stage 3 sources (need a signal)** — researched, see below.
 

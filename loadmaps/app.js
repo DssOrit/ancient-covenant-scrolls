@@ -48,6 +48,7 @@ ICO.hiker='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 ICO.pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
 ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>';
 ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+ICO.download='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -166,6 +167,7 @@ function navTo(key){
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
   else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
+  else if(key==='offline'){ renderOffline(); showView('offline','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -182,6 +184,7 @@ function renderHome(){
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
       '<button class="hcard assistant wide" data-go="assistant"><div class="hi">'+ICO.q+'</div><div class="ht"><b>Ask Load Maps</b><span>Plan a trip or ask about a place (needs setup)</span></div></button>'+
+      '<button class="hcard offline wide" data-go="offline"><div class="hi">'+ICO.download+'</div><div class="ht"><b>Offline maps</b><span>Load a map file onto your device so the map works with no signal</span></div></button>'+
     '</div>';
   $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
 }
@@ -264,6 +267,7 @@ function openMap(opts){
   if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); LMap.gpxLayer=null; }
   if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); LMap.onRouteLayer=null; }
   if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); LMap.hazardLayer=null; }
+  if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; if(LMap.base){ try{ LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); }catch(e){} } var ml=el('mapLayer'); if(ml) ml.textContent='Satellite'; }
   LMap.route=null; LMap.avoid=null; LMap._hzLoaded=false; _spd.limit=null; _spd.at=0;
   var ee=el('mapEta'); if(ee) ee.classList.remove('on');
   var rt=el('mapRouteTools'); if(rt) rt.classList.remove('open');
@@ -1288,6 +1292,119 @@ function doAsk(){
     }).catch(function(){ out.innerHTML='<div class="info flat"><p class="muted">Could not reach the assistant.</p></div>'; });
 }
 
+/* ---------------- Offline map packs (PMTiles + OPFS, no cloud storage) ----------------
+   Import a .pmtiles map file (made once) — it is stored on THIS device via the
+   Origin Private File System (free, no Cloudflare storage). The live map can then
+   use it as the base with no signal. Raster .pmtiles render directly; vector packs
+   need a matching style, so raster packs are the supported offline base. */
+var LOffline = { mem:{} };
+function opfsOk(){ return !!(navigator.storage && navigator.storage.getDirectory && window.FileSystemWritableFileStream); }
+function opfsDir(){ if(!(navigator.storage && navigator.storage.getDirectory)) return Promise.resolve(null); return navigator.storage.getDirectory().catch(function(){ return null; }); }
+function fmtBytes(n){ if(n==null) return '—'; if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(0)+' KB'; if(n<1073741824) return (n/1048576).toFixed(1)+' MB'; return (n/1073741824).toFixed(2)+' GB'; }
+function listPacks(){
+  return opfsDir().then(function(dir){
+    var out=[]; Object.keys(LOffline.mem).forEach(function(k){ out.push({ name:k, size:LOffline.mem[k].size, mem:true }); });
+    if(!dir || !dir.values) return out;
+    var it=dir.values(), acc=[];
+    function step(){
+      return it.next().then(function(res){
+        if(res.done) return acc;
+        var h=res.value;
+        if(h.kind==='file' && /\.pmtiles$/i.test(h.name)){
+          return h.getFile().then(function(f){ acc.push({ name:h.name, size:f.size }); return step(); });
+        }
+        return step();
+      });
+    }
+    return step().then(function(fromOpfs){ return out.concat(fromOpfs); });
+  });
+}
+function savePack(file){
+  return opfsDir().then(function(dir){
+    if(!dir){ LOffline.mem[file.name]=file; return { name:file.name, size:file.size, mem:true }; }
+    return dir.getFileHandle(file.name, { create:true }).then(function(fh){
+      return fh.createWritable().then(function(w){ return w.write(file).then(function(){ return w.close(); }); });
+    }).then(function(){ return { name:file.name, size:file.size }; });
+  });
+}
+function deletePack(name){
+  if(LOffline.mem[name]){ delete LOffline.mem[name]; return Promise.resolve(); }
+  return opfsDir().then(function(dir){ if(!dir) return; return dir.removeEntry(name).catch(function(){}); });
+}
+function packFile(name){
+  if(LOffline.mem[name]) return Promise.resolve(LOffline.mem[name]);
+  return opfsDir().then(function(dir){ if(!dir) return null; return dir.getFileHandle(name).then(function(fh){ return fh.getFile(); }).catch(function(){ return null; }); });
+}
+function renderOffline(){
+  var v=el('v-offline');
+  var support = opfsOk() ? '' : '<div class="info flat"><p class="muted">This device keeps imported maps for this session only (it does not support permanent on-device storage). They clear when you fully close the app.</p></div>';
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Offline maps</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Load a map file (.pmtiles) onto your device once. After that the live map works with no signal. Nothing is uploaded — it stays on your device. No cloud storage, no fees.</p>'+
+    support+
+    '<button class="btn green" id="offImport">'+ICO.download+' Import a map file</button>'+
+    '<div id="offStore" class="muted small" style="margin:10px 2px"></div>'+
+    '<div id="offList" style="margin-top:6px"></div>'+
+    '<div class="ask-eg" style="margin-top:14px"><b>How to make one:</b> a .pmtiles is a single-file map of a region you build once (raster tiles). Keep it on your device and Load Maps reads it offline. A road/satellite raster pack works best as the offline base.</div>';
+  bindBacks(v);
+  el('offImport').onclick=function(){ var fi=el('packFile'); if(fi){ fi.value=''; fi.click(); } };
+  if(navigator.storage && navigator.storage.estimate){
+    navigator.storage.estimate().then(function(est){
+      var s=el('offStore'); if(!s) return;
+      var used=fmtBytes(est.usage||0), quota=fmtBytes(est.quota||0);
+      s.textContent='On-device storage used: '+used+' of about '+quota+' available.';
+    }).catch(function(){});
+  }
+  refreshPackList();
+}
+function refreshPackList(){
+  var host=el('offList'); if(!host) return;
+  host.innerHTML='<p class="muted small">Checking your device…</p>';
+  listPacks().then(function(packs){
+    if(!packs.length){ host.innerHTML='<div class="info flat"><p class="muted">No offline maps yet. Import a .pmtiles file to get started.</p></div>'; return; }
+    host.innerHTML=packs.map(function(p){
+      return '<div class="card flat" style="display:flex;align-items:center;gap:10px;justify-content:space-between">'+
+        '<div><b>'+esc(p.name)+'</b><div class="muted small">'+fmtBytes(p.size)+(p.mem?' · session only':' · on device')+'</div></div>'+
+        '<div style="display:flex;gap:8px">'+
+          '<button class="btn green" data-usepack="'+esc(p.name)+'">Use on map</button>'+
+          '<button class="btn ghost" data-delpack="'+esc(p.name)+'">Delete</button>'+
+        '</div></div>';
+    }).join('');
+    $$('[data-usepack]',host).forEach(function(b){ b.onclick=function(){ openMapOffline(b.getAttribute('data-usepack')); }; });
+    $$('[data-delpack]',host).forEach(function(b){ b.onclick=function(){
+      var n=b.getAttribute('data-delpack');
+      deletePack(n).then(function(){ toast('Deleted '+n); refreshPackList(); });
+    }; });
+  }).catch(function(){ host.innerHTML='<div class="info flat"><p class="muted">Could not read device storage.</p></div>'; });
+}
+function ensurePmProtocol(){
+  if(typeof pmtiles==='undefined' || typeof maplibregl==='undefined') return false;
+  if(!LMap.pmProto){ try{ LMap.pmProto=new pmtiles.Protocol(); maplibregl.addProtocol('pmtiles', LMap.pmProto.tile); }catch(e){ return false; } }
+  return true;
+}
+function applyOfflineBase(file){
+  if(!ensurePmProtocol() || !L.maplibreGL){ toast('Offline maps need this device\'s map engine'); return false; }
+  try{
+    var pm=new pmtiles.PMTiles(new pmtiles.FileSource(file));
+    LMap.pmProto.add(pm);
+    var key=pm.source.getKey();
+    var style={ version:8, sources:{ lmoff:{ type:'raster', url:'pmtiles://'+key, tileSize:256, attribution:'Offline map (PMTiles)' } }, layers:[{ id:'lmoff', type:'raster', source:'lmoff' }] };
+    if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; }
+    try{ if(LMap.base) LMap.map.removeLayer(LMap.base); }catch(e){}
+    try{ if(LMap.cur==='sat' && LMap.sat) LMap.map.removeLayer(LMap.sat); }catch(e){}
+    LMap.offline=L.maplibreGL({ style:style }); LMap.offline.addTo(LMap.map); LMap.cur='offline';
+    pm.getHeader().then(function(h){ try{ var z=Math.max(h.minZoom||3, Math.min(h.maxZoom||14, 10)); LMap.map.setView([h.centerLat, h.centerLon], z); }catch(e){} }).catch(function(){});
+    return true;
+  }catch(e){ toast('That map file could not be opened'); return false; }
+}
+function openMapOffline(name){
+  packFile(name).then(function(f){
+    if(!f){ toast('Could not open that map'); return; }
+    openMap({});
+    setTimeout(function(){ if(applyOfflineBase(f)) toast('Offline map on — works with no signal'); }, 200);
+  });
+}
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -1311,6 +1428,7 @@ function init(){
   if(el('mapBack')) el('mapBack').onclick=closeMap;
   if(el('mapLayer')) el('mapLayer').onclick=function(){
     if(!LMap.map || !LMap.base) return;
+    if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; toast('Back to live tiles'); return; }
     if(LMap.cur!=='sat'){ LMap.map.removeLayer(LMap.base); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Map'; }
     else { LMap.map.removeLayer(LMap.sat); LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; }
   };
@@ -1350,6 +1468,13 @@ function init(){
     else { gpxExport(); }
   };
   if(el('gpxFile')) el('gpxFile').onchange=function(){ if(this.files && this.files[0]) gpxImport(this.files[0]); };
+  if(el('packFile')) el('packFile').onchange=function(){
+    var f=this.files && this.files[0]; if(!f) return;
+    if(!/\.pmtiles$/i.test(f.name)){ toast('Please pick a .pmtiles file'); return; }
+    toast('Saving map to your device…');
+    savePack(f).then(function(){ toast('Map saved'); if(state.view==='offline') refreshPackList(); })
+      .catch(function(){ toast('Could not save that map'); });
+  };
 }
 init();
 
