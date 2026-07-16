@@ -262,6 +262,11 @@ function openMap(opts){
   if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); LMap.driveLayer=null; }
   if(LMap.reachLayer){ LMap.map.removeLayer(LMap.reachLayer); LMap.reachLayer=null; var rb=el('mapReach'); if(rb) rb.classList.remove('on'); }
   if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); LMap.gpxLayer=null; }
+  if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); LMap.onRouteLayer=null; }
+  if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); LMap.hazardLayer=null; }
+  LMap.route=null; LMap.avoid=null; LMap._hzLoaded=false; _spd.limit=null; _spd.at=0;
+  var ee=el('mapEta'); if(ee) ee.classList.remove('on');
+  var rt=el('mapRouteTools'); if(rt) rt.classList.remove('open');
   var em=el('mapElev'); if(em) em.classList.remove('on');
   LMap.curRoute=(opts && opts.route) || null;
   var title='Live map', bounds=null, center=null;
@@ -304,6 +309,7 @@ function drawRoute(from, to, costing){
   LMap.from=from; LMap.dest=to; LMap.costing=costing;
   toast('Getting directions…');
   var body={ locations:[{ lat:from[0], lon:from[1] },{ lat:to[0], lon:to[1] }], costing:costing, directions_options:{ units:'kilometers' } };
+  if(LMap.avoid && LMap.avoid.length) body.exclude_locations=LMap.avoid.slice(0,20);
   fetch('https://valhalla.openstreetmap.de/route', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(body) })
     .then(function(r){ return r.json(); }).then(function(j){
       var leg=j && j.trip && j.trip.legs && j.trip.legs[0];
@@ -316,6 +322,8 @@ function drawRoute(from, to, costing){
       var s=j.trip.summary, km=s.length.toFixed(s.length<10?1:0), min=Math.round(s.time/60);
       var lab=costing==='pedestrian'?'on foot':(costing==='bicycle'?'by bike':'by car');
       var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min '+lab;
+      LMap.route={ coords:coords, lengthM:s.length*1000, timeSec:s.time, offNotified:false };
+      updateEta();
     }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
@@ -447,6 +455,110 @@ function parseGpx(text){
   }catch(err){}
   return out;
 }
+// ---------------- Nearest-on-route (in-browser spatial, no library) ----------------
+var ROUTE_CATS=[
+  { key:'fuel',    label:'Fuel',    q:'["amenity"="fuel"]' },
+  { key:'ev',      label:'EV',      q:'["amenity"="charging_station"]' },
+  { key:'food',    label:'Food',    q:'["amenity"~"restaurant|cafe|fast_food"]' },
+  { key:'water',   label:'Water',   q:'["amenity"="drinking_water"]' },
+  { key:'rest',    label:'Rest',    q:'["highway"="rest_area"]' },
+  { key:'toilets', label:'Toilets', q:'["amenity"="toilets"]' }
+];
+function routeCoords(){
+  if(LMap.driveLayer && LMap.driveLayer.getLatLngs){ var ll=LMap.driveLayer.getLatLngs(); if(ll && ll.length) return ll.map(function(p){ return [p.lat,p.lng]; }); }
+  if(LMap.curRoute && LMap.curRoute.waypoints) return LMap.curRoute.waypoints.map(function(w){ return [w.lat,w.lng]; });
+  return null;
+}
+function segDistMeters(plat,plng, alat,alng, blat,blng){
+  var R=6371000, rad=Math.PI/180, latc=Math.cos(alat*rad);
+  var bx=(blng-alng)*rad*latc*R, by=(blat-alat)*rad*R;
+  var px=(plng-alng)*rad*latc*R, py=(plat-alat)*rad*R;
+  var len2=bx*bx+by*by, t=len2?(px*bx+py*by)/len2:0; t=t<0?0:(t>1?1:t);
+  var ex=px-t*bx, ey=py-t*by;
+  return Math.sqrt(ex*ex+ey*ey);
+}
+function distToRoute(plat,plng, coords){
+  var min=Infinity;
+  for(var i=1;i<coords.length;i++){ var d=segDistMeters(plat,plng, coords[i-1][0],coords[i-1][1], coords[i][0],coords[i][1]); if(d<min) min=d; }
+  return min;
+}
+function bboxOf(coords, padM){
+  var minLa=90,maxLa=-90,minLo=180,maxLo=-180;
+  coords.forEach(function(c){ if(c[0]<minLa)minLa=c[0]; if(c[0]>maxLa)maxLa=c[0]; if(c[1]<minLo)minLo=c[1]; if(c[1]>maxLo)maxLo=c[1]; });
+  var midLa=(minLa+maxLa)/2, dLa=padM/111000, dLo=padM/((111000*Math.cos(midLa*Math.PI/180))||1);
+  return { s:minLa-dLa, w:minLo-dLo, n:maxLa+dLa, e:maxLo+dLo };
+}
+function nearestOnRoute(cat){
+  var coords=routeCoords();
+  if(!coords || coords.length<2){ toast('Open or draw a route first'); return; }
+  if(!navigator.onLine){ toast('On-route search needs a connection'); return; }
+  toast('Finding '+cat.label.toLowerCase()+' on your route…');
+  var bb=bboxOf(coords, 3000);
+  var box='('+bb.s+','+bb.w+','+bb.n+','+bb.e+')';
+  var body='[out:json][timeout:20];(node'+cat.q+box+';way'+cat.q+box+';);out center 200;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var pts=parsePoi(j);
+      if(!pts.length){ toast('No '+cat.label.toLowerCase()+' found near this route'); return; }
+      pts.forEach(function(p){ p.off=distToRoute(p.lat,p.lng, coords); });
+      pts.sort(function(a,b){ return a.off-b.off; });
+      var best=pts[0];
+      if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); }
+      LMap.onRouteLayer=L.layerGroup();
+      pts.slice(0,8).forEach(function(p,i){
+        var top=i===0;
+        L.circleMarker([p.lat,p.lng], { radius:top?9:6, color:'#04140a', weight:2, fillColor:top?'#2fd85f':'#3d8bff', fillOpacity:1 })
+          .bindPopup('<b>'+esc(p.name||cat.label)+'</b><br>'+fmtDist(p.off)+' off route').addTo(LMap.onRouteLayer);
+      });
+      LMap.onRouteLayer.addTo(LMap.map);
+      try{ LMap.map.panTo([best.lat,best.lng]); }catch(e){}
+      toast('Nearest '+cat.label.toLowerCase()+': '+fmtDist(best.off)+' off route');
+      speak('Nearest '+cat.label.toLowerCase()+' is '+fmtDist(best.off)+' off your route.');
+    }).catch(function(){ toast('Could not search right now'); });
+}
+// ---------------- Smart logic: speed-limit warning, live ETA, reroute (no AI) ----------------
+var _spd={ limit:null, at:0, lat:0, lng:0, warnedAt:0 };
+function checkSpeedLimit(){
+  if(!state.pos || !navigator.onLine) return;
+  var now=Date.now(), moved=_spd.lat? haversine(state.pos.lat,state.pos.lng,_spd.lat,_spd.lng):9999;
+  if(_spd.at && (now-_spd.at)<15000 && moved<250){ evalSpeed(); return; }
+  _spd.at=now; _spd.lat=state.pos.lat; _spd.lng=state.pos.lng;
+  var la=state.pos.lat, lo=state.pos.lng;
+  var body='[out:json][timeout:10];way(around:25,'+la+','+lo+')["highway"]["maxspeed"];out tags 1;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var lim=null;
+      if(j && j.elements){ for(var i=0;i<j.elements.length;i++){ var mx=j.elements[i].tags && j.elements[i].tags.maxspeed; if(mx){ var m=parseInt(mx,10); if(!isNaN(m)){ lim=/mph/i.test(mx)?Math.round(m*1.60934):m; break; } } } }
+      _spd.limit=lim; evalSpeed();
+    }).catch(function(){});
+}
+function evalSpeed(){
+  var sp=el('speedpill');
+  if(_spd.limit==null || state.curSpeed==null){ if(sp) sp.classList.remove('over'); return; }
+  var over=state.curSpeed-_spd.limit;
+  if(sp) sp.classList.toggle('over', over>5);
+  if(over>7 && Date.now()-_spd.warnedAt>20000){ _spd.warnedAt=Date.now(); chime('next'); speak('Slow down. The limit here is '+_spd.limit+'.', true); }
+}
+function updateEta(){
+  var pill=el('mapEta'); if(!pill) return;
+  var R=LMap.route;
+  if(!R || !state.pos){ return; }
+  var coords=R.coords, best=Infinity, bi=0;
+  for(var i=0;i<coords.length;i++){ var d=haversine(state.pos.lat,state.pos.lng,coords[i][0],coords[i][1]); if(d<best){ best=d; bi=i; } }
+  var rem=0; for(var k=bi+1;k<coords.length;k++){ rem+=haversine(coords[k-1][0],coords[k-1][1],coords[k][0],coords[k][1]); }
+  var frac=R.lengthM? rem/R.lengthM : 0, secs=Math.max(0, Math.round(R.timeSec*frac));
+  var mins=Math.round(secs/60);
+  pill.innerHTML='<b>'+(mins<1?'<1':mins)+'</b><span>MIN · '+fmtDist(rem)+'</span>';
+  pill.classList.add('on');
+  if(best>70 && !R.offNotified){ R.offNotified=true; toast('Off route — tap a mode to re-route'); }
+  else if(best<=70){ R.offNotified=false; }
+}
+function rerouteAvoiding(lat,lng){
+  if(!LMap.from || !LMap.dest){ return; }
+  LMap.avoid=LMap.avoid||[]; LMap.avoid.push({ lat:lat, lon:lng });
+  toast('Re-routing around the hazard…');
+  drawRoute(LMap.from, LMap.dest, LMap.costing||'auto');
+}
 function toggleRain(){
   if(!LMap.map) return;
   var btn=el('mapRain');
@@ -469,8 +581,12 @@ function startMapLocate(){
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
     var ll=[pos.coords.latitude,pos.coords.longitude];
     state.pos={ lat:pos.coords.latitude, lng:pos.coords.longitude, acc:pos.coords.accuracy };
+    state.curSpeed=speedKmh(pos);
     if(!LMap.meMarker){ LMap.meMarker=L.circleMarker(ll, { radius:8, color:'#fff', weight:2, fillColor:'#3d8bff', fillOpacity:1 }).addTo(LMap.map); }
     else LMap.meMarker.setLatLng(ll);
+    updateEta();
+    checkSpeedLimit();
+    if(!LMap._hzLoaded){ LMap._hzLoaded=true; loadHazards(state.pos.lat, state.pos.lng); }
   }, function(){}, { enableHighAccuracy:true, maximumAge:5000 });
 }
 function bindBacks(scope){
@@ -829,6 +945,7 @@ function updateGuided(g, spoken){
   else if(state._lastNext!==next.n){ speak((nextIdx===nearIdx?'At ':'Heading to ')+next.name+', '+fmtDist(dToNext)+'.'); }
   state._lastNext=next.n;
   if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; chime('arrive'); speak('You have reached '+wps[wps.length-1].name+'.', true); }
+  checkSpeedLimit();
 }
 
 /* ---------------- Alerts ---------------- */
@@ -918,6 +1035,11 @@ function addReport(kind){
   if(r.length>30) r=r.slice(0,30);
   try{ localStorage.setItem('lm_reports', JSON.stringify(r)); }catch(e){}
   toast(kind+' reported'+(state.pos?' here':''));
+  shareHazard(kind, state.pos);
+  // If we're actively navigating a Valhalla route, re-route around this hazard.
+  if(state.pos && LMap.map && LMap.driveLayer && LMap.from && LMap.dest && (kind==='Hazard'||kind==='Closure'||kind==='Animal')){
+    rerouteAvoiding(state.pos.lat, state.pos.lng);
+  }
 }
 function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
 
@@ -1067,18 +1189,91 @@ function loadFire(lat, lng, elId){
   }).catch(function(){ if(host) host.innerHTML=''; });
 }
 
+/* ---------------- Shared hazard layer (Cloudflare D1; dark until DB bound) ---------------- */
+function shareHazard(kind, pos){
+  if(!navigator.onLine || !pos) return;
+  fetch('/api/loadmaps/hazards', { method:'POST', headers:{ 'content-type':'application/json' },
+    body:JSON.stringify({ kind:kind, lat:pos.lat, lng:pos.lng }) }).catch(function(){});
+}
+function loadHazards(lat, lng){
+  if(!LMap.map || !navigator.onLine) return;
+  fetch('/api/loadmaps/hazards?lat='+lat+'&lng='+lng).then(function(r){ return r.json(); }).then(function(j){
+    if(!j || j.configured===false || !j.hazards) return; // not set up -> silent, local-only
+    if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); }
+    LMap.hazardLayer=L.layerGroup();
+    j.hazards.forEach(function(h){
+      if(h.lat==null||h.lng==null) return;
+      L.circleMarker([h.lat,h.lng], { radius:7, color:'#1a0d04', weight:2, fillColor:'#ffb023', fillOpacity:.95 })
+        .bindPopup('<b>'+esc(h.kind||'Hazard')+'</b>'+(h.ago?('<br>'+esc(h.ago)):'')).addTo(LMap.hazardLayer);
+    });
+    LMap.hazardLayer.addTo(LMap.map);
+  }).catch(function(){});
+}
+
 /* ---------------- AI assistant (Stage 5, via Cloudflare function) ---------------- */
 function renderAssistant(){
   var v=el('v-assistant');
   v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
     '<h2 class="sec">Ask Load Maps</h2>'+
     '<p class="muted small" style="margin:0 0 12px">Ask about a place, a route, or plan a trip. Needs a connection.</p>'+
-    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. plan a safe day trip near Porto"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. take me somewhere I can get fuel near the motorway"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div class="ask-row2"><button class="btn ghost" id="findBtn">'+ICO.pin+' Find it on the map</button></div>'+
     '<div id="askOut" class="ask-out"></div>'+
-    '<div class="ask-eg"><b>Try:</b> "hidden waterfalls near me" · "avoid narrow mountain roads to Gerês" · "history of Coimbra"</div>';
+    '<div class="ask-eg"><b>Ask:</b> "history of Coimbra" · "avoid narrow mountain roads to Gerês"<br><b>Find:</b> "fuel on my route" · "nearest EV charging near Porto" · "take me to Sete Lagoas"</div>';
   bindBacks(v);
   el('askBtn').onclick=doAsk;
+  el('findBtn').onclick=smartFind;
   el('askIn').addEventListener('keydown', function(e){ if(e.key==='Enter') doAsk(); });
+}
+// Feature: natural-language "find" — one Haiku parse call, then plain logic acts on it.
+function smartFind(){
+  var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
+  var out=el('askOut');
+  if(!navigator.onLine){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Smart find needs a connection.</p></div>'; return; }
+  if(out) out.innerHTML='<p class="muted small">Working it out…</p>';
+  fetch('/api/loadmaps/ai', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify({ q:q, mode:'parse' }) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      if(!j || j.configured===false){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Smart find needs an AI key in Cloudflare. Plain search still works.</p></div>'; return; }
+      var it=j.intent;
+      if(!it || it.action==='unknown' || j.error){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Not sure what to find. Try a place name, or "fuel on my route".</p></div>'; return; }
+      if(it.action==='category' && it.category){
+        var cat=null; for(var i=0;i<ROUTE_CATS.length;i++){ if(ROUTE_CATS[i].key===it.category) cat=ROUTE_CATS[i]; }
+        if(!cat){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not match that category.</p></div>'; return; }
+        if(routeCoords()){ if(out) out.innerHTML='<div class="ask-answer">Finding '+esc(cat.label.toLowerCase())+' on your open route…</div>'; nearestOnRoute(cat); return; }
+        geocodeOne(it.near||q, function(ctr){
+          if(!ctr && state.pos) ctr={ name:'you', lat:state.pos.lat, lng:state.pos.lng };
+          if(!ctr){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Tell me where — e.g. "fuel near Coimbra".</p></div>'; return; }
+          nearbyCategory(cat, ctr, out);
+        });
+        return;
+      }
+      geocodeOne(it.query||it.near||q, function(ctr){
+        if(!ctr){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not find that place.</p></div>'; return; }
+        if(out) out.innerHTML='<div class="ask-answer">Opening '+esc(ctr.name)+' on the map.</div>';
+        openMap({ place:{ name:ctr.name, lat:ctr.lat, lng:ctr.lng }, directions:true });
+      });
+    }).catch(function(){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not run smart find.</p></div>'; });
+}
+function geocodeOne(q, cb){
+  if(!q){ cb(null); return; }
+  fetch('https://photon.komoot.io/api/?limit=1&q='+encodeURIComponent(q)).then(function(r){ return r.json(); }).then(function(j){
+    var f=(j&&j.features&&j.features[0]); if(!f){ cb(null); return; }
+    var c=(f.geometry&&f.geometry.coordinates)||[], pr=f.properties||{};
+    if(c[1]==null||c[0]==null){ cb(null); return; }
+    cb({ name:pr.name||pr.city||q, lat:c[1], lng:c[0] });
+  }).catch(function(){ cb(null); });
+}
+function nearbyCategory(cat, ctr, out){
+  var box='(around:20000,'+ctr.lat+','+ctr.lng+')';
+  var body='[out:json][timeout:20];(node'+cat.q+box+';way'+cat.q+box+';);out center 60;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body }).then(function(r){ return r.json(); }).then(function(j){
+    var pts=parsePoi(j);
+    if(!pts.length){ if(out) out.innerHTML='<div class="info flat"><p class="muted">No '+esc(cat.label.toLowerCase())+' found near '+esc(ctr.name)+'.</p></div>'; return; }
+    pts.forEach(function(p){ p.d=haversine(ctr.lat,ctr.lng,p.lat,p.lng); }); pts.sort(function(a,b){ return a.d-b.d; });
+    var best=pts[0];
+    if(out) out.innerHTML='<div class="ask-answer">Nearest '+esc(cat.label.toLowerCase())+' to '+esc(ctr.name)+': '+esc(best.name||cat.label)+', '+fmtDist(best.d)+' away. Opening the map.</div>';
+    openMap({ place:{ name:best.name||cat.label, lat:best.lat, lng:best.lng }, directions:true });
+  }).catch(function(){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not search right now.</p></div>'; });
 }
 function doAsk(){
   var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
@@ -1137,6 +1332,17 @@ function init(){
   };
   if(el('mapRain')) el('mapRain').onclick=function(){ toggleRain(); };
   if(el('mapReach')) el('mapReach').onclick=function(){ toggleReach(); };
+  if(el('mapOnRoute')) el('mapOnRoute').onclick=function(){
+    var rt=el('mapRouteTools'); if(!rt) return;
+    if(rt.classList.contains('open')){ rt.classList.remove('open'); return; }
+    if(!routeCoords()){ toast('Open or draw a route first'); return; }
+    rt.innerHTML=ROUTE_CATS.map(function(c){ return '<button data-rcat="'+c.key+'">'+esc(c.label)+' on route</button>'; }).join('');
+    $$('[data-rcat]',rt).forEach(function(b){ b.onclick=function(){
+      var k=b.getAttribute('data-rcat'), cat=null; for(var i=0;i<ROUTE_CATS.length;i++){ if(ROUTE_CATS[i].key===k) cat=ROUTE_CATS[i]; }
+      rt.classList.remove('open'); if(cat) nearestOnRoute(cat);
+    }; });
+    rt.classList.add('open');
+  };
   if(el('mapGpx')) el('mapGpx').onclick=function(){
     var imp=false;
     try{ imp=window.confirm('Load a GPX file?\n\nOK = open a track file to view.\nCancel = save this route as GPX.'); }catch(e){ imp=false; }

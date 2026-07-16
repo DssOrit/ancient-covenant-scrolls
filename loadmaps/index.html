@@ -290,6 +290,19 @@
   .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
   .map-modes button.on{background:rgba(61,139,255,.2);border-color:rgba(61,139,255,.5);color:var(--blue)}
   .map-side{position:absolute;right:12px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .map-route-tools{position:absolute;right:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;flex-direction:column;gap:7px;align-items:flex-end}
+  .map-route-tools.open{display:flex}
+  .map-route-tools button{background:rgba(15,21,36,.94);border:1px solid var(--line);border-radius:11px;padding:7px 13px;font:inherit;font-weight:700;font-size:.84rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 3px 12px rgba(0,0,0,.4)}
+  .map-route-tools button:active{background:rgba(61,139,255,.25)}
+  .map-eta{position:absolute;left:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;
+    background:rgba(43,110,255,.95);border:1px solid rgba(120,170,255,.8);border-radius:13px;padding:7px 14px;color:#fff;box-shadow:0 5px 18px rgba(43,110,255,.45);align-items:baseline;gap:6px}
+  .map-eta.on{display:inline-flex}
+  .map-eta b{font-size:1.25rem;font-weight:800;line-height:1}
+  .map-eta span{font-size:.66rem;font-weight:700;letter-spacing:.04em;opacity:.92}
+  .speedpill.over{background:rgba(255,77,61,.92)!important;border-color:rgba(255,150,140,.9)!important;color:#fff!important;animation:spdpulse 1s ease-in-out infinite}
+  @keyframes spdpulse{0%,100%{box-shadow:0 4px 14px rgba(255,77,61,.4)}50%{box-shadow:0 4px 22px rgba(255,77,61,.85)}}
+  .ask-row2{margin:8px 0 0}
+  .ask-row2 .btn{width:100%;justify-content:center}
   .leaflet-control-attribution{background:rgba(10,16,32,.7)!important;color:#95a0b6!important}
   .leaflet-control-attribution a{color:#8fb6ff!important}
 
@@ -481,6 +494,7 @@
   <div class="map-side">
     <button class="map-btn round" id="mapRain">Rain</button>
     <button class="map-btn round" id="mapReach">Reach</button>
+    <button class="map-btn round" id="mapOnRoute">On route</button>
     <button class="map-btn round" id="mapGpx">GPX</button>
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
@@ -488,6 +502,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
     </button>
   </div>
+  <div class="map-route-tools" id="mapRouteTools"></div>
+  <div class="map-eta" id="mapEta"></div>
   <div class="map-elev" id="mapElev"></div>
   <input type="file" id="gpxFile" accept=".gpx,application/gpx+xml" style="display:none">
 </div>
