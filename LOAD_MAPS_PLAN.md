@@ -8,6 +8,21 @@ the next step aloud (default voice **Samantha**), warns about hazards, and works
 
 App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first content.
 
+## Queued to build (approved, not yet built)
+
+**Clean restrooms finder (user idea 2026-07-16).** For parents/women needing clean,
+child-friendly restrooms.
+- **Layer 1 (keyless, build first):** a Restrooms screen listing nearest `amenity=toilets`
+  from OpenStreetMap via Overpass (no key), with badges straight from OSM tags:
+  **baby changing** (`changing_table=yes`), **step-free/accessible** (`wheelchair=yes`),
+  **free vs fee** (`fee`), **women's/unisex** (`female`/`unisex`), **opening hours**.
+  Distance + open-on-map to route there. Also add a Restrooms pin category to the dark map.
+- **Layer 2 (Cloudflare D1, ready-but-dark):** community **cleanliness ratings** (1-5 stars)
+  stored in the same D1 as hazards. Show average stars + count; sort by cleanest nearby.
+  `functions/api/loadmaps/restrooms.js` (GET ratings near lat/lng, POST a rating). Dark
+  until the `DB` binding exists. Honest note: ratings are thin until users contribute;
+  the OSM badges carry it meanwhile.
+
 ## Core principles
 
 - **Offline-first, online when available.** Nothing core needs a signal. Live extras
