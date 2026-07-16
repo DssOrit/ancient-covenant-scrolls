@@ -520,6 +520,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div id="region-bar">
       <div class="rpill active" data-region="all" onclick="filterRegion(this)">All</div>
       <div class="rpill" data-region="Africa" onclick="filterRegion(this)">Africa</div>
+      <div class="rpill" data-region="Spain" onclick="filterRegion(this)">Spain</div>
       <div class="rpill" data-region="Portugal" onclick="filterRegion(this)">Portugal</div>
       <div class="rpill" data-region="Caribbean" onclick="filterRegion(this)">Caribbean</div>
       <div class="rpill" data-region="South America" onclick="filterRegion(this)">S. America</div>
@@ -991,8 +992,9 @@ function filterRegion(el) {
 var TYPE_LABELS = { community:'Covenant Community', history:'Historical Site', archive:'Primary Archive', inscription:'YHWH Inscription', resistance:'Resistance Site', discovery:'DSS Discovery Site' };
 var VERSE_TEXTS = {
   'Devarim 28:68': 'YHWH will bring you back to Egypt in ships, by a route I said you would never see again. There you will offer yourselves for sale to your enemies as male and female slaves, but no one will buy you.',
-  'Devarim 28:64': 'YHWH will scatter you among all nations, from one end of the earth to the other.',
-  'Devarim 28:65': 'Among those nations you will find no repose, no resting place for the sole of your foot.'
+  'Devarim 28:64': 'YHWH will scatter you among all nations, from one end of the earth to the other. There you will worship other gods — gods of wood and stone, which neither you nor your ancestors have known.',
+  'Devarim 28:65': 'Among those nations you will find no repose, no resting place for the sole of your foot. There YHWH will give you an anxious mind, eyes weary with longing, and a despairing heart.',
+  'Yesha\'yahu 11:11': 'In that day YHWH will reach out his hand a second time to reclaim the surviving remnant of his people — from Assyria, from Lower Egypt, from Upper Egypt, from Kush, from Elam, from Shinar, from Hamath, and from the islands of the sea.'
 };
 
 function showPlace(pl) {

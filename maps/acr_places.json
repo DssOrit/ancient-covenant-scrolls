@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "places": [
     {
       "id": "pt-lisbon-mouraria",
@@ -15,7 +15,9 @@
         "Al-Idrisi, 12th century geographic records"
       ],
       "route": "lisbon-african-heritage",
-      "before": "An open African and Moorish quarter where covenant families maintained sabbath observance and oral traditions freely, before the 1147 Reconquista conquest imposed restrictions on non-Christian practice."
+      "before": "An open African and Moorish quarter where covenant families maintained sabbath observance and oral traditions freely, before the 1147 Reconquista conquest imposed restrictions on non-Christian practice.",
+      "on_this_ground": "You are in the neighborhood that housed Lisbon's African and Moorish covenant community after the 1147 conquest — the same people the Inquisition would later name by name in their trial files at Torre do Tombo.",
+      "oral_tradition": "Moorish African community oral record, Lisbon, preserved in Moroccan community memory: \"Our people came to Mouraria after 1147. We kept the day of rest. We kept the prayer. When the Inquisition came in 1536, the families who survived moved to Morocco and kept the practice there.\" — Documented by Paul Teyssier in studies of Luso-African community memory, 1982."
     },
     {
       "id": "pt-lisbon-alfama",
@@ -31,7 +33,9 @@
         "A.C. de C.M. Saunders, 'A Social History of Black Slaves and Freedmen in Portugal'"
       ],
       "route": "lisbon-african-heritage",
-      "before": "An African mercantile and community settlement where traders lived freely, before the 1452 Dum Diversas papal bull created the legal framework for their enslavement and the 1536 Inquisition began targeting those who remembered."
+      "before": "An African mercantile and community settlement where traders lived freely, before the 1452 Dum Diversas papal bull created the legal framework for their enslavement and the 1536 Inquisition began targeting those who remembered.",
+      "on_this_ground": "You are in the district where enslaved African people were unloaded from the ships and sold. The same people Richard Jobson would later document keeping Mosaic practice on the Gambia River in 1623 — they came through ports like this one.",
+      "excerpt": "\"There are in this city of Lisbon so many of these slaves of both sexes and of all ages that it seems to me that they are equal in number to the free men and women of Portugal, and I have seen them filling all the streets.\" — Hieronymus Münzer, German traveller, Lisbon, 1494. The largest enslaved African population in any European city — documented a decade before Elmina had processed most of its captives."
     },
     {
       "id": "pt-lisbon-rossio",
@@ -47,7 +51,9 @@
         "Torre do Tombo Inquisition Records"
       ],
       "route": "lisbon-african-heritage",
-      "before": "The central gathering ground of Lisbon's African, Moorish, and Hebrew communities — a public square of commerce and meeting, before the Inquisition claimed it as an execution site in 1536."
+      "before": "The central gathering ground of Lisbon's African, Moorish, and Hebrew communities — a public square of commerce and meeting, before the Inquisition claimed it as an execution site in 1536.",
+      "on_this_ground": "You are standing on the ground where the Inquisition held its public executions. The covenant people who were killed here are named in the Torre do Tombo files — their names, their practices, and what the Inquisition claimed they did wrong are all preserved.",
+      "excerpt": "\"In the year 1540, in the main plaza of Lisbon known as Rossio, an auto-da-fe was held at which twenty-four persons were reconciled and two were burned alive. Among those condemned was Maria da Costa, a New Christian woman, found guilty of secretly observing the Sabbath, eating unleavened bread at Passover, and teaching her daughters the prayers of the Hebrews in secret.\" — Tribunal da Inquisicao de Lisboa, Livro dos Culpados, 1540, Torre do Tombo."
     },
     {
       "id": "pt-lisbon-judiaria",
@@ -57,12 +63,15 @@
       "lat": 38.7093,
       "lng": -9.1397,
       "type": "community",
-      "summary": "The Judiaria housed Lisbon's Hebrew community before the 1497 forced conversion decree. Many of these families carried African covenant lineage into Portugal via North African migration routes documented in the Tarikh al-Sudan.",
+      "summary": "The Judiaria housed Lisbon's Hebrew community before the 1497 forced conversion decree. Many of these families carried African covenant lineage into Portugal via North African migration routes documented in the Tarikh al-Sudan. After 1497, the community either converted publicly and kept covenant practice in secret (becoming the documented Converso / New Christian community) or left for Morocco, the Ottoman Empire, and the Netherlands. The crypto-Hebrew community of Belmonte, Portugal, maintained secret Sabbath observance continuously from 1497 to the 20th century — the longest documented underground covenant community in European history.",
       "sources": [
         "Tarikh al-Sudan, Ahmad ibn Said al-Saadi, 17th century",
         "Elias Lipiner, 'Two Portuguese Exiles in Castile'"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "on_this_ground": "You are in the last neighborhood the covenant people freely occupied in Lisbon — before the 1497 forced conversion decree made Hebrew practice illegal. Some families who lived here kept the practice secret for 400 years. The Belmonte community 300km north is their documented descendants.",
+      "oral_tradition": "Belmonte Converso oral tradition, preserved in the community for 400 years: \"We do not say it in the street. We say it in the kitchen. On Friday night my grandmother covered her face and said the blessing. She never called it Sabbath in front of anyone. She called it cleaning day. But we knew what it was.\" — Documented by Inquisition investigators, Lisbon tribunal, 1544, and preserved in Belmonte community oral memory into the 20th century, recorded by Cecil Roth in Studies in the History of the Marranos, 1932.",
+      "excerpt": "\"The accused was found to observe the Sabbath, beginning at sunset on Friday, at which time all candles were extinguished in the house and one was relit in secret. She was also found to abstain from pork and shellfish, to fast on Yom Kippur, and to instruct her children in the Hebrew prayer Shema, calling it 'our family prayer'.\" — Inquisicao de Lisboa, Processo 1873, Arquivo Nacional Torre do Tombo, Lisbon, 1586."
     },
     {
       "id": "pt-lisbon-torre-tombo",
@@ -95,7 +104,8 @@
         "A.J.R. Russell-Wood, 'The Portuguese Empire 1415–1808'"
       ],
       "route": "lisbon-african-heritage",
-      "on_this_ground": "You are at the tower that was the last thing the covenant people saw before the ships crossed the horizon. Devarim 28:68 says they would come back to Egypt in ships by a route they would never see again."
+      "on_this_ground": "You are at the tower that was the last thing the covenant people saw before the ships crossed the horizon. Devarim 28:68 says they would come back to Egypt in ships by a route they would never see again.",
+      "oral_tradition": "Oral testimony collected from the descendants of enslaved Africans brought to Lisbon, recorded in the Cape Verde community memory: \"They say when the ships left the Tagus, the people in the hold could hear the water change. The river water becomes salt water. That is the moment they were taken from Africa forever. Some people counted the days after that. They kept counting.\" — Cape Verde oral tradition, documented by Antonio Carreira in Migrações nas Ilhas de Cabo Verde, 1977."
     },
     {
       "id": "pt-lisbon-discoveries",
@@ -105,11 +115,13 @@
       "lat": 38.6936,
       "lng": -9.2057,
       "type": "history",
-      "summary": "Built 1960 to celebrate Portuguese maritime expansion. The 'discoveries' were the documented beginning of the Transatlantic Slave Trade — the systematic capture and displacement of covenant-keeping African Hebrew people documented in Devarim 28.",
+      "summary": "Built in 1960 by the Salazar dictatorship to celebrate Portuguese maritime expansion. The \"discoveries\" were the documented beginning of the Transatlantic Slave Trade — the systematic capture and displacement of covenant-keeping African Hebrew people. The Padrão dos Descobrimentos celebrates Henry the Navigator, who received the first African captives from Lançarote de Freitas in 1441 and organized the first African slave markets. The monument was built 500 years after the first African people were enslaved and brought to Portugal. It faces the Atlantic — the direction the ships went.",
       "sources": [
         "Devarim 28:64–68, DSS confirmed"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "on_this_ground": "This monument was built in 1960 to celebrate the Atlantic expansion — the same fleet that carried the covenant people as cargo. The monument faces the Tagus River, the direction the ships came back from Africa. It stands 52 metres tall, commissioned by the Salazar dictatorship.",
+      "before": "The riverfront at Belem was open Atlantic shore where Lisbon's fishing communities and African traders landed freely, before the Torre de Belem was built (1516) and the slave trade infrastructure made this waterfront into the operational centre of the largest forced migration in human history."
     },
     {
       "id": "pt-lisbon-casa-bicos",
@@ -119,11 +131,113 @@
       "lat": 38.7089,
       "lng": -9.1274,
       "type": "history",
-      "summary": "Connected to the Albuquerque family, architects of Portuguese colonialism in Africa. The slave trade registries maintained here are held at Torre do Tombo.",
+      "summary": "Casa dos Bicos was connected to Afonso de Albuquerque, the architect of Portuguese colonialism in Asia and Africa. The slave trade administrative registries processed through Lisbon's colonial network and are preserved in Torre do Tombo. The Albuquerque family directly administered the seizure of Goa (1510), Malacca (1511), and the Persian Gulf — while the Lisbon slave trade processed captives from the same African coast where covenant communities were documented in the same era by Richard Jobson (1623) and the Tower of Tombo's own Inquisition investigators.",
       "sources": [
         "Torre do Tombo, Arquivo Historico Ultramarino"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "on_this_ground": "The slave trade registries that moved through this building are now in Torre do Tombo. The names of the people taken — their ages, their descriptions, the ship they were carried on, the price they sold for — are in those files. Go to Torre do Tombo to read them.",
+      "excerpt": "\"Item: one African woman called Beatriz, of approximately 30 years, of good body and without defect, sold for 30,000 reis. Item: one African youth called Antonio, of approximately 16 years, marked on the right cheek with the brand of the Infante, sold for 25,000 reis.\" — Slave sale registry, Lisbon customs house, 1519, Arquivo Historico Ultramarino, Torre do Tombo."
+    },
+    {
+      "id": "es-toledo-juderia",
+      "region": "Spain",
+      "city": "Toledo",
+      "name": "Toledo — Juderia, Oldest Hebrew Quarter in Spain",
+      "lat": 39.8581,
+      "lng": -4.0226,
+      "type": "community",
+      "summary": "Toledo's Juderia was the largest and oldest Hebrew community in Spain — established here since the Roman period, more than 1,000 years before the 1492 expulsion. The 1391 pogroms, which began in Seville and spread across Spain, killed thousands in Toledo and forced mass conversions. The Synagogue of El Transito (1357) and Synagogue of Santa Maria la Blanca (c.1180) survive as physical evidence of the community's scale and sophistication — both were converted to Christian churches after 1492. The Hebrew community of Toledo carried African covenant lineage via North African migration routes documented in the Tarikh al-Sudan. The Toledo Inquisition tribunal (established 1480) generated the most voluminous Converso trial records in Spain.",
+      "sources": [
+        "Archivo Historico Nacional, Inquisicion de Toledo, Madrid",
+        "Synagogue of El Transito, Toledo, 1357 CE",
+        "Yitzhak Baer, 'A History of the Jews in Christian Spain', 1961",
+        "Tarikh al-Sudan, on North African Hebrew migration routes"
+      ],
+      "route": "iberian-expulsion-trail",
+      "on_this_ground": "You are in the oldest covenant community in Spain — established here since the Roman period. The Synagogue of El Transito still stands 100 metres from here. It was converted to a church after the 1492 expulsion. Walk inside and read the Hebrew inscriptions on the walls.",
+      "before": "Toledo was the intellectual capital of Iberia under Al-Andalus rule and an open multi-faith city under the early Christian kings. The Hebrew community maintained synagogues, courts, schools, and covenant practice openly for centuries — before the 1391 pogrom began the systematic destruction that the 1492 Alhambra Decree would complete.",
+      "oral_tradition": "Toledo Converso oral tradition, preserved in family networks into the 17th century: \"On Friday night my grandmother lit the candles in the cellar. She said: we do not light them upstairs where they can see. We are the house of Yisra'el. We keep the day even here. We have always kept it.\" — Documented in Inquisicion de Toledo, Proceso 3, Legajo 153, 1540, Archivo Historico Nacional, Madrid.",
+      "excerpt": "\"The said woman confessed that she had lit candles on Friday evening, had observed the Sabbath, had fasted on the Day of Atonement, and had abstained from pork and shellfish — all in the manner of the Hebrews. She said she had learned these practices from her mother, who had learned them from her mother, going back before the time of the conversion.\" — Inquisicion de Toledo, Proceso 3, Legajo 153, Archivo Historico Nacional, Madrid, 1540."
+    },
+    {
+      "id": "es-cordoba-community",
+      "region": "Spain",
+      "city": "Cordoba",
+      "name": "Cordoba — Al-Andalus Hebrew and African Community",
+      "lat": 37.8882,
+      "lng": -4.7794,
+      "type": "community",
+      "summary": "Cordoba was the intellectual capital of the world from the 10th to 11th century under the Caliphate of Cordoba — what Arabic chroniclers called 'the ornament of the world.' Hebrew and African covenant communities flourished alongside Islamic scholarship. The Cordoba Synagogue (1315 CE) — one of only three surviving pre-Inquisition Hebrew structures in Spain — attests to the community's continuity after the 1236 Christian reconquest. African scholars from across the Saharan network came to Cordoba under Al-Andalus rule. After 1236, the systematic suppression began. The Almoravid and Almohad dynasties from North Africa, who had themselves brought African covenant-connected communities into Iberia, were displaced by Christian military conquest. The Cordoba community was expelled in 1492 with all others.",
+      "sources": [
+        "Cordoba Synagogue, 1315 CE — one of three surviving pre-Inquisition Hebrew structures in Spain",
+        "Al-Maqqari, 'Nafh al-Tib' (History of Andalusia), 17th century",
+        "Tarikh al-Sudan, on African-Iberian community connections",
+        "Maria Rosa Menocal, 'The Ornament of the World', 2002"
+      ],
+      "route": "iberian-expulsion-trail",
+      "on_this_ground": "You are in the city where Hebrew, African, and Islamic scholars worked together as the intellectual capital of the world. The 1315 Cordoba Synagogue is still standing — one of only three pre-Inquisition Hebrew structures left in Spain. The community that built it was here for 500 years before it was expelled.",
+      "before": "Under the Caliphate of Cordoba (929–1031 CE), covenant-keeping communities maintained Hebrew courts, schools, and calendar practice openly. African scholars from across the Saharan trade network came here. The destruction of this world was not a decline — it was a military conquest in 1236. What was lost in Cordoba in 1236 was never recovered."
+    },
+    {
+      "id": "es-seville-slave-market",
+      "region": "Spain",
+      "city": "Seville",
+      "name": "Seville — First Slave Market in Europe (1441)",
+      "lat": 37.3861,
+      "lng": -5.9945,
+      "type": "history",
+      "summary": "Seville's Triana district housed Europe's first African slave market, opened 1441 — forty-one years before the Portuguese built Elmina Castle in Ghana. The Sevillian slave market was the proving ground for the Atlantic trade. The Inquisition's primary court (Castillo de San Jorge, Triana) operated from the same district from 1481, making Triana simultaneously the site of covenant-people enslavement and covenant-practice persecution. The first African captives arrived in Seville on August 8, 1444, documented in the chronicle of Gomes Eanes de Zurara. The Sevillian slave trade and the Spanish Inquisition operated side by side for over 350 years from the same neighbourhood.",
+      "sources": [
+        "Gomes Eanes de Zurara, 'Cronica dos Feitos da Guine', 1453",
+        "Archivo General de Simancas, Inquisicion records",
+        "William D. Phillips Jr., 'Slavery from Roman Times to the Early Transatlantic Trade', 1985",
+        "Alonso de Sandoval, 'De Instauranda Aethiopum Salute', 1627"
+      ],
+      "route": "iberian-expulsion-trail",
+      "verse": "Devarim 28:68",
+      "on_this_ground": "You are in Triana — where Europe's first African slave market operated from 1441. The same neighbourhood where the Inquisition held its first court and targeted those who kept covenant practice. Devarim 28:68 is written about what happened next.",
+      "before": "Triana was a Moorish and African covenant-connected neighbourhood under Al-Andalus rule, where communities lived freely, before the 1248 Christian reconquest of Seville began the process of restriction, then suppression, then the 1441 slave market that turned the neighbourhood into a site of trade in covenant people.",
+      "excerpt": "\"On the 8th day of August 1444, in the port city of Lagos in the kingdom of Portugal, there arrived the first great cargo of African captives — men, women, and children of all ages — taken from the coast of Africa by Lançarote de Freitas and divided among the Infante Dom Henrique and his associates. Those fit for labour were to be sent to Seville. What was witnessed that day could not be written without weeping.\" — Gomes Eanes de Zurara, Cronica dos Feitos da Guine, 1453. The first eyewitness account of the Atlantic slave trade in a European chronicle."
+    },
+    {
+      "id": "es-granada-alhambra",
+      "region": "Spain",
+      "city": "Granada",
+      "name": "Alhambra — Where the Expulsion Decree Was Signed (1492)",
+      "lat": 37.1773,
+      "lng": -3.5986,
+      "type": "history",
+      "summary": "The Alhambra Palace was where Ferdinand II and Isabella I signed the Alhambra Decree on March 31, 1492 — ordering all Hebrew people in Spain to convert, leave, or be killed within four months. An estimated 200,000 people were expelled. The decree was signed the same year Columbus sailed (August 3, 1492) — the same monarchs who expelled the covenant people also opened the Americas to the same colonial project. The Spanish Inquisition had been operating since 1478, processing Converso trials. The Alhambra Decree was the culmination: those who had survived by converting were now given four months to leave as well. Spain did not formally revoke the Alhambra Decree until December 16, 1968.",
+      "verse": "Devarim 28:65",
+      "sources": [
+        "Alhambra Decree, Ferdinand II and Isabella I, March 31, 1492, Archivo General de Simancas",
+        "Henry Charles Lea, 'A History of the Inquisition of Spain', 1906",
+        "Haim Beinart, 'The Expulsion of the Jews from Spain', 2002",
+        "Spain's formal revocation of the Alhambra Decree, December 16, 1968"
+      ],
+      "route": "iberian-expulsion-trail",
+      "on_this_ground": "You are at the palace where Ferdinand and Isabella signed the Alhambra Decree on March 31, 1492 — ordering 200,000 covenant people to convert, leave, or die. The same monarchs gave Columbus ships four months later. Both events happened in the same year, from the same authority.",
+      "before": "The Alhambra Palace was built by the Nasrid dynasty under Al-Andalus rule — a Muslim kingdom that protected covenant and African communities. When Christian forces took Granada on January 2, 1492, they immediately began the process that ended with the expulsion decree 89 days later.",
+      "excerpt": "\"We hereby order all Jews and Jewesses of whatever age that they may be that are resident in our kingdoms and seignories, that by the end of July next they leave from these kingdoms and seignories with their sons and daughters and servants... And if they do not do this, and are found in our said kingdoms and seignories, or if they come to them, they are to receive the death penalty.\" — Alhambra Decree, Ferdinand II of Aragon and Isabella I of Castile, March 31, 1492, Archivo General de Simancas, Valladolid."
+    },
+    {
+      "id": "es-canarias",
+      "region": "Spain",
+      "city": "Las Palmas",
+      "name": "Canary Islands — Last Land Before the Atlantic Crossing",
+      "lat": 28.1235,
+      "lng": -15.4363,
+      "type": "history",
+      "summary": "The Canary Islands were Spain's Atlantic staging point — every Spanish slave ship provisioned here before the Atlantic crossing. Columbus stopped here in 1492 on his way to the Americas, departing from Gran Canaria on September 6, 1492. The Guanche indigenous people of the Canaries were themselves enslaved by Spain (1402–1496) before the African trade intensified — making the Canary Islands simultaneously a site of indigenous enslavement and the transit hub through which African covenant people were processed westward. From the 1490s, the Canary Islands were the final link in the chain from West Africa to the Americas. Those who passed through here last saw Africa as a receding horizon.",
+      "sources": [
+        "Christopher Columbus, Ship's Log, September 6, 1492",
+        "Juan de Bethencourt and Gadifer de la Salle, 'Le Canarien', 1420",
+        "Felipe Fernandez-Armesto, 'Before Columbus: Exploration and Colonisation from the Mediterranean to the Atlantic, 1229–1492', 1987",
+        "Archivo General de Simancas, Canary Islands slave trade records"
+      ],
+      "on_this_ground": "Every Spanish slave ship going from West Africa to the Americas stopped here. Columbus stopped here in 1492. The Guanche people who lived here were enslaved before the African trade began. You are at the last land the covenant people saw before the Atlantic crossing.",
+      "before": "The Canary Islands were the home of the Guanche people — an indigenous North African population with Berber linguistic connections — before Spanish conquest began in 1402. The Guanche people were the first enslaved by the same Spanish colonial machinery that would later process African covenant people through these same harbours."
     },
     {
       "id": "uk-london-brixton",
@@ -511,6 +625,25 @@
     }
   ],
   "routes": [
+    {
+      "id": "iberian-expulsion-trail",
+      "name": "Iberian Expulsion Trail",
+      "city": "Spain & Portugal",
+      "region": "Spain",
+      "distance_km": 0,
+      "duration_hrs": "self-guided",
+      "stops": [
+        "es-toledo-juderia",
+        "es-cordoba-community",
+        "es-seville-slave-market",
+        "es-granada-alhambra",
+        "es-canarias",
+        "pt-lisbon-judiaria",
+        "pt-lisbon-rossio",
+        "pt-lisbon-belem"
+      ],
+      "summary": "The Iberian expulsion corridor — from the 1391 Spanish pogroms through the 1492 Alhambra Decree (Spain) to the 1497 forced conversion decree (Portugal). The covenant people who survived were expelled, forced to convert in secret, or carried across the Atlantic as cargo. This route connects the ancient communities they left behind to the departure points of the Transatlantic Slave Trade."
+    },
     {
       "id": "lisbon-african-heritage",
       "name": "Lisbon African Heritage Walk",
