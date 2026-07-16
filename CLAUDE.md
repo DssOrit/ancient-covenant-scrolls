@@ -71,18 +71,22 @@ These have been re-locked on 2026-05-04 after repeated violations.
    This is also the first thing to do at session start. If a direct
    push to `main` fails, fall back to the PR workflow in rule 6.
    Do not ship from a stale branch. Do not force push.
-8. **DO NOT TOUCH ACR READER, ACR2, OR ACR SOLAR — EVER, WITHOUT DIRECT APPROVAL.**
-   Locked 2026-06-02 by user. Covers all three apps:
+8. **DO NOT TOUCH ACR READER, ACR2, ACR SOLAR, OR ACR SEARCH — EVER, WITHOUT DIRECT APPROVAL.**
+   Locked 2026-06-02 by user. Extended 2026-07-16 to cover ACR Search and
+   to re-lock ACR Solar. Covers all four apps:
    - ACR Reader (root `/` app): `index.html`, `acr.css`, `sw.js`, etc.,
-     and the `content/` folder.
+     and the `content/` and `data/` folders.
    - ACR2: the `/ACR2/` subfolder and all files inside it.
-   - ACR Solar: the `/solar/` subfolder and all files inside it (including
-     any solar-reader, solar-vol, or solar-day files).
+   - ACR Solar: the `/Solar/` subfolder and all files inside it.
+   - ACR Search: the `/Search/` subfolder and all files inside it,
+     including `Search/index.html`, `Search/sw.js`, and
+     `Search/acr_search_data.json`.
    Only edit any of the above if the user says one of these exact phrases:
    "edit ACR reader", "fix the reader", "edit ACR2", "fix ACR2",
-   "edit ACR Solar", "fix Solar", or explicitly names a file inside one
-   of those folders. A general bug report or question about those apps
-   does NOT count as approval — stop and ask before touching anything.
+   "edit ACR Solar", "fix Solar", "edit ACR Search", "fix Search",
+   or explicitly names a specific file inside one of those folders.
+   A general bug report, content question, or feature idea does NOT count
+   as approval — stop and ask before touching anything in those folders.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
 9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
