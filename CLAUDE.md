@@ -321,7 +321,7 @@ These have been re-locked on 2026-05-04 after repeated violations.
     - **Colophon**: centered, `color:#555555 font-size:0.857em font-style:italic`.
     - **Colors**: `#111111 #222222 #333333 #444444 #555555 #666666 #777777
       #888888 #aaaaaa` plus the four note label colors above. Two additional
-      permitted colors: `#C8971F` (gold for ancient-Hebrew RTL spans) and
+      permitted colors: `#C8971F` (gold for the ↺ hard-refresh button) and
       `#8B0000` (red for concern-level volumes). No other colors.
     - **Font**: Arial throughout (inherited from reader body CSS). Paleo
       font-family only on paleo character spans.
