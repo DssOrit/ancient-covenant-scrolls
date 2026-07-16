@@ -54,7 +54,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   margin-bottom:10px;
 }
 .g-name-form{
-  font-size:64px;
+  font-size:56px;
   line-height:1.1;
   transition:opacity .4s ease,transform .4s ease;
   font-weight:400;
@@ -72,9 +72,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   text-align:center;margin-top:20px;margin-bottom:5px;
   animation:nameIn .5s .3s ease both;opacity:0;
 }
-.g-appname .acr{font-size:15px;font-weight:300;letter-spacing:.22em;color:#aaa}
+.g-appname .acr{font-size:14px;font-weight:300;letter-spacing:.22em;color:#aaa}
 .g-appname .maps{
-  font-size:15px;font-weight:800;letter-spacing:.26em;
+  font-size:14px;font-weight:800;letter-spacing:.26em;
   background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .g-sub{
@@ -83,8 +83,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 }
 
 .g-btn{
-  position:relative;padding:14px 52px;border-radius:30px;border:none;
-  font-size:15px;font-weight:600;letter-spacing:.06em;color:var(--text);
+  position:relative;padding:10px 0;border-radius:8px;border:none;
+  font-size:15px;font-weight:400;letter-spacing:.10em;color:var(--text);
+  width:100%;max-width:220px;
   background:rgba(255,255,255,.04);cursor:pointer;
   animation:nameIn .5s .6s ease both;opacity:0;
 }
@@ -417,7 +418,7 @@ var NAME_FORMS = [
   { text: 'יהוה', label: 'Square Hebrew',  color: '#e8751a', font: 'inherit', dir: 'rtl' },
   { text: 'YHWH',         label: 'Romanized',      color: '#e63329', font: 'inherit', weight: '700', spacing: '.14em' },
   { text: 'Yahweh',       label: 'Pronunciation',  color: '#3dbf5e', font: 'inherit', weight: '300' },
-  { text: 'The Creator',  label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '38px' }
+  { text: 'The Creator',  label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '40px' }
 ];
 var nameIdx = 0;
 var nameCycleTimer = null;
