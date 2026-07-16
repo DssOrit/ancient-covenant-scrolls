@@ -262,11 +262,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── REGION PILLS ───────────────────────────────────────────── */
 #region-bar{
-  position:absolute;bottom:16px;left:0;right:0;z-index:100;
+  position:absolute;bottom:0;left:0;right:0;z-index:100;
   pointer-events:none;
-  padding:0 12px;
+  padding:0 12px calc(env(safe-area-inset-bottom,0px) + 10px);
   display:flex;gap:8px;overflow-x:auto;
   scrollbar-width:none;
+  background:linear-gradient(transparent,rgba(5,5,11,.9) 35%);
 }
 #region-bar::-webkit-scrollbar{display:none}
 .rpill{
@@ -312,7 +313,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 /* ── LAYER BAR ──────────────────────────────────────────────── */
 #layer-bar{
-  position:absolute;bottom:56px;left:0;right:0;z-index:100;
+  position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 50px);left:0;right:0;z-index:100;
   pointer-events:none;padding:0 12px;
   display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
 }
@@ -742,32 +743,42 @@ function openApp() {
 
 /* ── MAP INIT ───────────────────────────────────────────────── */
 function initMap() {
-  if (!window.maplibregl) {
-    document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">Map requires a connection on first load. Places are available — tap the region pills to browse.</div>';
+  var mapEl = document.getElementById('map');
+  var fallback = function(msg) {
+    mapEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">' + msg + '</div>';
     showRegionList();
+  };
+  if (!window.maplibregl) {
+    fallback('Map requires a connection on first load. Places are available — tap the region pills to browse.');
     return;
   }
-  map = new maplibregl.Map({
-    container: 'map',
-    style: 'https://tiles.openfreemap.org/styles/dark',
-    center: [10, 15],
-    zoom: 2.0,
-    attributionControl: false
-  });
-
-  map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
-
-  map.on('load', function() {
-    addDisplacementTrailLayer();
-    addGeneticCorridorLayers();
-    placeMarkers(places);
-  });
-
-  map.on('click', function(e) {
-    if (!e.originalEvent.target.classList.contains('mk')) {
-      closeSheet();
-    }
-  });
+  if (!maplibregl.supported()) {
+    fallback('Interactive map not available on this device. Tap the region pills below to browse all places.');
+    return;
+  }
+  try {
+    map = new maplibregl.Map({
+      container: 'map',
+      style: 'https://tiles.openfreemap.org/styles/dark',
+      center: [10, 15],
+      zoom: 2.0,
+      attributionControl: false
+    });
+    map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+    map.on('load', function() {
+      addDisplacementTrailLayer();
+      addGeneticCorridorLayers();
+      placeMarkers(places);
+    });
+    map.on('click', function(e) {
+      if (!e.originalEvent.target.classList.contains('mk')) {
+        closeSheet();
+      }
+    });
+  } catch(e) {
+    map = null;
+    fallback('Map failed to start. Tap the region pills below to browse all places.');
+  }
 }
 
 /* ── DISPLACEMENT TRAIL ─────────────────────────────────────── */
