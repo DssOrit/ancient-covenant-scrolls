@@ -114,6 +114,17 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
 **Roadmap 1-6 complete.** Two features are "dark" pending your setup: shared
 hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_KEY`).
 
+- Done (keyless extras, 2026-07-16, cache `loadmaps-v27`):
+  - **Speed cameras** ("Cameras" map button): OpenStreetMap via Overpass (same
+    keyless endpoint already used), shows `highway=speed_camera`/`enforcement`
+    nodes in view as red markers, plus a voice "speed camera ahead" warning when
+    driving within ~220 m of one during live navigation.
+  - **Real elevation on ANY route**: after a Valhalla route is drawn, ~40 points
+    are sampled and sent to the Open-Meteo elevation API (same keyless host as the
+    weather) to build the elevation profile — so driving/cycling/walking routes get
+    a climb graph too, not just the pre-baked guided trails.
+  - Both keyless, no new accounts. Earlier tab-favicon cleanup shipped at v26.
+
 **Stage 3 sources (need a signal)** — researched, see below.
 
 **Keys to switch on (Cloudflare Pages env — never in the repo)**
