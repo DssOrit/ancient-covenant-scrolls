@@ -347,6 +347,17 @@
   .fuel-prices{display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
   .fuel-prices span{font-size:.82rem;color:var(--muted)}
   .fuel-prices b{color:var(--text);font-size:1rem}
+  .rr-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .rr-badge{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:700;padding:4px 9px;border-radius:9px;border:1px solid var(--line);color:var(--muted)}
+  .rr-badge.baby{background:rgba(47,216,95,.14);border-color:rgba(47,216,95,.4);color:#8ff0b4}
+  .rr-badge.acc{background:rgba(61,139,255,.14);border-color:rgba(61,139,255,.4);color:#9dc0ff}
+  .rr-badge.free{background:rgba(200,151,31,.14);border-color:rgba(200,151,31,.4);color:#e6c05a}
+  .rr-rate{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+  .rr-stars{display:inline-flex;gap:3px}
+  .rr-stars button{background:none;border:0;padding:0 1px;cursor:pointer;font-size:1.3rem;line-height:1;color:#3a4152}
+  .rr-stars button.lit{color:#ffc53d}
+  .rr-avg{font-size:.82rem;color:var(--muted)}
+  .rr-avg b{color:var(--text);font-size:.95rem}
   #arwrap{position:fixed;inset:0;z-index:3000;display:none;background:#05070d}
   #arwrap.open{display:block}
   #arVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#05070d}
@@ -514,6 +525,8 @@
     <section class="view" id="v-offline"></section>
 
     <section class="view" id="v-fuel"></section>
+
+    <section class="view" id="v-restrooms"></section>
 
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">

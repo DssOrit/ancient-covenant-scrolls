@@ -8,7 +8,20 @@ the next step aloud (default voice **Samantha**), warns about hazards, and works
 
 App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first content.
 
-## Queued to build (approved, not yet built)
+## Done — clean restrooms finder (2026-07-16, cache `loadmaps-v32`)
+
+Built both layers. Menu item **Clean restrooms** + a **Restrooms** pin category on the
+dark map. Layer 1 lists nearest `amenity=toilets` from Overpass (keyless) with badges
+(baby change, step-free, free/fee, women's/unisex, drinking water, hours), nearest-first,
+tap to route. Layer 2 (`functions/api/loadmaps/restrooms.js` + `restroom_ratings` table
+in `schema.sql`) adds 1-5 star cleanliness ratings on Cloudflare D1 — average + count,
+tap a star to rate — **dark until the `DB` binding exists** (badges show meanwhile).
+
+Also shipped in v32: a **loading safeguard** — the service worker's network-first shell
+now falls back to the cached app after 3.5s instead of hanging on a flaky connection
+(was causing "server stopped responding" on iPhone over a VPN).
+
+### Original plan (kept for reference)
 
 **Clean restrooms finder (user idea 2026-07-16).** For parents/women needing clean,
 child-friendly restrooms.

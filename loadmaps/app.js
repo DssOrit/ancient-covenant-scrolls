@@ -50,6 +50,7 @@ ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="
 ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 ICO.download='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>';
 ICO.fuel='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V5a2 2 0 012-2h6a2 2 0 012 2v15"/><path d="M3 20h12"/><path d="M14 9h2.5A1.5 1.5 0 0118 10.5V16a2 2 0 004 0V8l-3-3"/></svg>';
+ICO.restroom='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><circle cx="7" cy="6" r="2"/><path d="M5 21v-6H4l2-5h2l2 5H9v6"/><circle cx="17" cy="6" r="2"/><path d="M15 10h4l1 6h-2v5h-2v-5h-2z"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -173,6 +174,7 @@ function navTo(key){
   else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
   else if(key==='offline'){ renderOffline(); showView('offline','home'); }
   else if(key==='fuel'){ renderFuel(); showView('fuel','home'); }
+  else if(key==='restrooms'){ renderRestrooms(); showView('restrooms','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -183,6 +185,7 @@ var NAV_ITEMS=[
   { key:'places',    label:'Explore places',sub:'Famous places to guide you to', ico:'pin' },
   { key:'nearby',    label:'Near me',       sub:'Waterfalls, beaches, EV and more', ico:'pin' },
   { key:'fuel',      label:'Fuel prices',   sub:'Live petrol and diesel near you', ico:'fuel' },
+  { key:'restrooms', label:'Clean restrooms',sub:'Baby-change, step-free, rated by users', ico:'restroom' },
   { key:'offline',   label:'Offline maps',  sub:'Use the map with no signal', ico:'download' },
   { key:'alerts',    label:'Alerts',        sub:'Route notes and reports', ico:'warn' },
   { key:'assistant', label:'Ask Load Maps', sub:'Plan a trip or ask about a place', ico:'q' },
@@ -698,7 +701,8 @@ var MAP_CATS=[
   { key:'waterfall', label:'Waterfalls',  letter:'W', color:'#3d8bff', q:['["natural"="waterfall"]'] },
   { key:'beach',     label:'Beaches',     letter:'B', color:'#c8971f', q:['["natural"="beach"]'] },
   { key:'camp',      label:'Camping',     letter:'C', color:'#9b27d4', q:['["tourism"="camp_site"]'] },
-  { key:'view',      label:'Viewpoints',  letter:'V', color:'#e84c3d', q:['["tourism"="viewpoint"]'] }
+  { key:'view',      label:'Viewpoints',  letter:'V', color:'#e84c3d', q:['["tourism"="viewpoint"]'] },
+  { key:'toilets',   label:'Restrooms',   letter:'R', color:'#7d6aff', q:['["amenity"="toilets"]'] }
 ];
 var MAP_REGIONS=[
   { key:'all', label:'All',            lat:44.0, lng:2.0,  zoom:4 },
@@ -1541,6 +1545,109 @@ function fuelFallback(host){
       if(c) runPoi(c);
     }, 60);
   };
+}
+/* ---------------- Clean restrooms (OpenStreetMap facilities + D1 cleanliness ratings) ---------------- */
+var _rr=[];
+function parseToilets(json){
+  if(!json || !json.elements) return [];
+  var out=[];
+  json.elements.forEach(function(e){
+    var lat=(e.lat!=null)?e.lat:(e.center&&e.center.lat), lng=(e.lon!=null)?e.lon:(e.center&&e.center.lon);
+    if(lat==null||lng==null) return;
+    var t=e.tags||{};
+    out.push({
+      ref:(e.type||'node')+'/'+e.id,
+      name:t.name||t['name:en']||'Public toilets',
+      lat:lat, lng:lng,
+      baby:(t.changing_table==='yes'),
+      accessible:(t.wheelchair==='yes'),
+      fee:(t.fee==='no')?'free':((t.fee==='yes')?'fee':null),
+      women:(t.female==='yes'),
+      unisex:(t.unisex==='yes'),
+      hours:t.opening_hours||null,
+      water:(t.drinking_water==='yes')
+    });
+  });
+  return out;
+}
+function rrBadges(r){
+  var b=[];
+  if(r.baby) b.push('<span class="rr-badge baby">Baby change</span>');
+  if(r.accessible) b.push('<span class="rr-badge acc">Step-free</span>');
+  if(r.fee==='free') b.push('<span class="rr-badge free">Free</span>');
+  else if(r.fee==='fee') b.push('<span class="rr-badge">Fee</span>');
+  if(r.women) b.push('<span class="rr-badge">Women’s</span>');
+  if(r.unisex) b.push('<span class="rr-badge">Unisex</span>');
+  if(r.water) b.push('<span class="rr-badge">Drinking water</span>');
+  if(r.hours) b.push('<span class="rr-badge">'+esc(r.hours.length>16?r.hours.slice(0,16)+'…':r.hours)+'</span>');
+  return b.length?('<div class="rr-badges">'+b.join('')+'</div>'):'';
+}
+function starRow(ref, mine){
+  var s='';
+  for(var i=1;i<=5;i++){ s+='<button data-star="'+i+'" data-ref="'+esc(ref)+'"'+(mine&&i<=mine?' class="lit"':'')+'>★</button>'; }
+  return '<span class="rr-stars">'+s+'</span>';
+}
+function renderRestrooms(){
+  var v=el('v-restrooms');
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Map</button>'+
+    '<h2 class="sec">Clean restrooms</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Restrooms near you from OpenStreetMap, with baby-change, step-free and free/fee shown where known. Needs a connection and your location.</p>'+
+    '<div id="rrBody"><p class="muted small">Finding your location…</p></div>';
+  bindBacks(v);
+  if(!navigator.onLine){ el('rrBody').innerHTML='<div class="info flat"><p class="muted">Restrooms need a connection.</p></div>'; return; }
+  ensurePos(function(){
+    var host=el('rrBody'); if(!host) return;
+    if(!state.pos){ host.innerHTML='<div class="info flat"><p class="muted">Turn on location to find restrooms near you.</p></div>'; return; }
+    host.innerHTML='<p class="muted small">Finding restrooms…</p>';
+    var lat=state.pos.lat, lng=state.pos.lng, rad=4000;
+    var body='[out:json][timeout:25];(node["amenity"="toilets"](around:'+rad+','+lat+','+lng+');way["amenity"="toilets"](around:'+rad+','+lat+','+lng+'););out center 80;';
+    fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body }).then(function(r){ return r.json(); }).then(function(j){
+      var list=parseToilets(j);
+      if(!list.length){ host.innerHTML='<div class="info flat"><p class="muted">No restrooms found nearby in OpenStreetMap. Try again from a busier area.</p></div>'; return; }
+      list.forEach(function(x){ x.d=haversine(lat,lng,x.lat,x.lng); });
+      list.sort(function(a,b){ return a.d-b.d; });
+      _rr=list.slice(0,40);
+      // pull community ratings (dark until D1 bound)
+      fetch('/api/loadmaps/restrooms?lat='+lat+'&lng='+lng).then(function(r){ return r.json(); }).then(function(rj){
+        var ratings=(rj && rj.configured!==false && rj.ratings) || null;
+        rrRender(host, ratings);
+      }).catch(function(){ rrRender(host, null); });
+    }).catch(function(){ host.innerHTML='<div class="info flat"><p class="muted">Could not search right now. Try again in a moment.</p></div>'; });
+  });
+}
+function rrRender(host, ratings){
+  if(!host) return;
+  host.innerHTML='<p class="muted small" style="margin:2px 2px 10px">'+_rr.length+' nearby · nearest first'+(ratings?' · cleanliness rated by users':'')+'</p>'+
+    _rr.map(function(r,i){
+      var rt=ratings && ratings[r.ref];
+      var rateBlock = ratings ?
+        ('<div class="rr-rate">'+starRow(r.ref, 0)+'<span class="rr-avg">'+(rt?('<b>'+rt.avg+'</b> ★ · '+rt.count+' rating'+(rt.count===1?'':'s')):'Be the first to rate')+'</span></div>')
+        : '';
+      return '<button class="card place" data-rr="'+i+'"><div class="top"><div class="thumb place">'+ICO.restroom+'</div>'+
+        '<div><h3>'+esc(r.name)+'</h3><div class="area">'+fmtDist(r.d)+' away</div></div></div>'+
+        rrBadges(r)+rateBlock+'</button>';
+    }).join('');
+  $$('[data-rr]',host).forEach(function(b){ b.onclick=function(e){
+    if(e.target && e.target.getAttribute && e.target.getAttribute('data-star')) return; // let star taps through
+    var r=_rr[parseInt(b.getAttribute('data-rr'),10)]; if(r) openMap({ place:{ name:r.name, lat:r.lat, lng:r.lng }, directions:true });
+  }; });
+  $$('[data-star]',host).forEach(function(s){ s.onclick=function(ev){
+    ev.stopPropagation();
+    var ref=s.getAttribute('data-ref'), stars=parseInt(s.getAttribute('data-star'),10);
+    var row=s.parentNode; $$('button',row).forEach(function(x,i){ x.classList.toggle('lit', i<stars); });
+    rateRestroom(ref, stars);
+  }; });
+}
+function rateRestroom(ref, stars){
+  var r=null; for(var i=0;i<_rr.length;i++){ if(_rr[i].ref===ref) r=_rr[i]; }
+  if(!r || !navigator.onLine){ toast('Rating needs a connection'); return; }
+  fetch('/api/loadmaps/restrooms', { method:'POST', headers:{ 'content-type':'application/json' },
+    body:JSON.stringify({ ref:ref, lat:r.lat, lng:r.lng, stars:stars }) })
+    .then(function(x){ return x.json(); }).then(function(j){
+      if(!j || j.configured===false){ toast('Ratings switch on once the database is connected'); return; }
+      if(j.ok){ toast('Thanks — '+stars+' star'+(stars===1?'':'s')+' saved'); }
+      else { toast('Could not save your rating'); }
+    }).catch(function(){ toast('Could not save your rating'); });
 }
 function doAsk(){
   var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
