@@ -46,55 +46,51 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 #gate.hiding{opacity:0;pointer-events:none}
 #gate.hidden{display:none}
 
-.g-icon{
-  width:80px;height:80px;border-radius:20px;
-  margin-bottom:28px;
-  box-shadow:0 0 40px rgba(200,151,31,.18);
-  object-fit:cover;
+/* large cycling name form — mirrors ACR Search paleo glyph */
+.g-name-display{
+  text-align:center;
+  min-height:90px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin-bottom:10px;
 }
-
-.names-stack{
-  display:flex;flex-direction:column;align-items:center;
-  gap:2px;margin-bottom:22px;
+.g-name-form{
+  font-size:64px;
+  line-height:1.1;
+  transition:opacity .4s ease,transform .4s ease;
+  font-weight:400;
 }
-.name-row{display:flex;align-items:baseline;gap:10px;animation:nameIn .55s ease both}
-.nf{line-height:1.2}
-.nl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.45}
-
-.nf-paleo{color:var(--gold);font-size:2.9rem;font-weight:400;font-family:'Segoe UI Historic','Noto Sans Phoenician','Noto Serif',serif;animation-delay:.05s}
-.nl-paleo{color:var(--gold);animation-delay:.05s}
-.nf-heb{color:var(--amber);font-size:2.3rem;direction:rtl;animation-delay:.2s}
-.nl-heb{color:var(--amber);animation-delay:.2s}
-.nf-roman{color:var(--red);font-size:2rem;font-weight:700;letter-spacing:.15em;animation-delay:.38s}
-.nl-roman{color:var(--red);animation-delay:.38s}
-.nf-pron{color:var(--green);font-size:1.5rem;font-weight:300;letter-spacing:.07em;animation-delay:.55s}
-.nl-pron{color:var(--green);animation-delay:.55s}
-.nf-title{color:var(--blue);font-size:1rem;font-weight:500;letter-spacing:.1em;animation-delay:.72s}
-.nl-title{color:var(--blue);animation-delay:.72s}
+.g-name-form.fade-out{opacity:0;transform:translateY(-6px)}
+.g-name-form.fade-in{animation:nameIn .45s ease both}
+.g-name-label{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  margin-top:6px;opacity:.5;
+  transition:opacity .4s ease;
+}
+.g-name-label.fade-out{opacity:0}
 
 .g-appname{
-  text-align:center;margin-bottom:5px;
-  animation:nameIn .5s .88s ease both;
+  text-align:center;margin-top:20px;margin-bottom:5px;
+  animation:nameIn .5s .3s ease both;opacity:0;
 }
-.g-appname .acr{font-size:1rem;font-weight:300;letter-spacing:.22em;color:#aaa}
+.g-appname .acr{font-size:15px;font-weight:300;letter-spacing:.22em;color:#aaa}
 .g-appname .maps{
-  font-size:1rem;font-weight:800;letter-spacing:.26em;
+  font-size:15px;font-weight:800;letter-spacing:.26em;
   background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .g-sub{
-  font-size:.72rem;color:var(--tx3);letter-spacing:.1em;text-align:center;
-  margin-bottom:30px;animation:nameIn .5s .96s ease both;
+  font-size:11px;color:var(--tx3);letter-spacing:.1em;text-align:center;
+  margin-bottom:32px;animation:nameIn .5s .45s ease both;opacity:0;
 }
 
 .g-btn{
-  position:relative;padding:13px 44px;border-radius:30px;border:none;
-  font-size:.88rem;font-weight:600;letter-spacing:.08em;color:var(--text);
-  background:rgba(255,255,255,.05);cursor:pointer;
-  animation:nameIn .5s 1.1s ease both;
+  position:relative;padding:14px 52px;border-radius:30px;border:none;
+  font-size:15px;font-weight:600;letter-spacing:.06em;color:var(--text);
+  background:rgba(255,255,255,.04);cursor:pointer;
+  animation:nameIn .5s .6s ease both;opacity:0;
 }
 .g-btn::before{
   content:'';position:absolute;inset:-1.5px;border-radius:32px;
-  background:var(--rainbow);z-index:-1;opacity:.65;
+  background:var(--rainbow);z-index:-1;opacity:.6;
 }
 .g-btn::after{
   content:'';position:absolute;inset:1px;border-radius:29px;
@@ -334,29 +330,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <!-- ══ GATE SCREEN ════════════════════════════════════════════ -->
 <div id="gate">
-  <img class="g-icon" src="./icon-192.png" alt="ACR Maps">
-
-  <div class="names-stack">
-    <div class="name-row" style="animation-delay:.05s">
-      <span class="nf nf-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</span>
-      <span class="nl nl-paleo">Paleo Script</span>
-    </div>
-    <div class="name-row" style="animation-delay:.2s">
-      <span class="nf nf-heb">&#x05D9;&#x05D4;&#x05D5;&#x05D4;</span>
-      <span class="nl nl-heb">Square Hebrew</span>
-    </div>
-    <div class="name-row" style="animation-delay:.38s">
-      <span class="nf nf-roman">YHWH</span>
-      <span class="nl nl-roman">Romanized</span>
-    </div>
-    <div class="name-row" style="animation-delay:.55s">
-      <span class="nf nf-pron">Yahweh</span>
-      <span class="nl nl-pron">Pronunciation</span>
-    </div>
-    <div class="name-row" style="animation-delay:.72s">
-      <span class="nf nf-title">The Creator</span>
-      <span class="nl nl-title">Covenant Title</span>
-    </div>
+  <div class="g-name-display">
+    <div class="g-name-form" id="g-name-form" style="color:#c8971f;font-family:'Segoe UI Historic','Noto Sans Phoenician','Noto Serif',serif">𐤉𐤄𐤅𐤄</div>
+    <div class="g-name-label" id="g-name-label" style="color:#c8971f">Paleo Script</div>
   </div>
 
   <div class="g-appname">
@@ -434,6 +410,57 @@ var markers = [];
 var activeRegion = 'all';
 var userMarker = null;
 
+/* ── NAME CYCLING ON GATE ───────────────────────────────────── */
+var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
+var NAME_FORMS = [
+  { text: PALEO_YHWH, label: 'Paleo Script',   color: '#c8971f', font: '\'Segoe UI Historic\',\'Noto Sans Phoenician\',\'Noto Serif\',serif' },
+  { text: 'יהוה', label: 'Square Hebrew',  color: '#e8751a', font: 'inherit', dir: 'rtl' },
+  { text: 'YHWH',         label: 'Romanized',      color: '#e63329', font: 'inherit', weight: '700', spacing: '.14em' },
+  { text: 'Yahweh',       label: 'Pronunciation',  color: '#3dbf5e', font: 'inherit', weight: '300' },
+  { text: 'The Creator',  label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '38px' }
+];
+var nameIdx = 0;
+var nameCycleTimer = null;
+
+function startNameCycle() {
+  applyNameForm(NAME_FORMS[0]);
+  nameCycleTimer = setInterval(function() {
+    var el = document.getElementById('g-name-form');
+    var lb = document.getElementById('g-name-label');
+    if (!el) { clearInterval(nameCycleTimer); return; }
+    el.classList.add('fade-out');
+    lb.classList.add('fade-out');
+    setTimeout(function() {
+      nameIdx = (nameIdx + 1) % NAME_FORMS.length;
+      applyNameForm(NAME_FORMS[nameIdx]);
+      el.classList.remove('fade-out');
+      el.classList.add('fade-in');
+      lb.classList.remove('fade-out');
+      setTimeout(function() { el.classList.remove('fade-in'); }, 450);
+    }, 400);
+  }, 2000);
+}
+
+function applyNameForm(f) {
+  var el = document.getElementById('g-name-form');
+  var lb = document.getElementById('g-name-label');
+  if (!el) return;
+  el.textContent = f.text;
+  el.style.color = f.color;
+  el.style.fontFamily = f.font || 'inherit';
+  el.style.fontWeight = f.weight || '400';
+  el.style.letterSpacing = f.spacing || 'normal';
+  el.style.fontSize = f.size || '64px';
+  el.style.direction = f.dir || 'ltr';
+  lb.textContent = f.label;
+  lb.style.color = f.color;
+}
+
+// Start cycling on page load
+window.addEventListener('DOMContentLoaded', function() {
+  startNameCycle();
+});
+
 /* ── LOADING MESSAGES ───────────────────────────────────────── */
 var LD_MSGS = [
   'Opening covenant map...',
@@ -445,6 +472,7 @@ var LD_MSGS = [
 
 /* ── GATE → LOADING ─────────────────────────────────────────── */
 function doEnter() {
+  if (nameCycleTimer) { clearInterval(nameCycleTimer); nameCycleTimer = null; }
   var gate = document.getElementById('gate');
   gate.classList.add('hiding');
   setTimeout(function() {
