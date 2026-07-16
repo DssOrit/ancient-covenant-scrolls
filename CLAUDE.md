@@ -290,6 +290,48 @@ These have been re-locked on 2026-05-04 after repeated violations.
     If there is ANY doubt whether a use is the divine name or documentation,
     default to leaving documentation intact and only changing clear name uses.
 
+19. **ACR READER DESIGN IS DOCUMENTED — READ IT FIRST — locked 2026-07-16.**
+    Before making any change to the ACR Reader app structure, layout, or
+    behaviour, read `ACR_READER_DESIGN.md` at the repo root. It documents how
+    the reader is built, what drives navigation, and the architectural decisions
+    that must not be broken.
+
+20. **ACR READER CONTENT FORMAT STANDARD — LOCKED 2026-07-16 by user.**
+    Every ACR Reader content file (`data/file_N.json`) must exactly match the
+    format of the existing volumes. Before writing any new or edited content
+    file, show a visual preview rendered with the actual reader CSS
+    (`body{font-family:Arial;font-size:10.5pt;background:#f5f5f0}`) and wait
+    for explicit user approval. The standard is:
+    - **Title block**: paleo YHWH (`𐤉𐤄𐤅𐤄`) at top, THE ANCIENT COVENANT
+      RECORD, Volume + Part line, book name, large book title, subtitle,
+      chapter range, thematic summary, PRIMARY MANUSCRIPT AUTHORITIES list,
+      COMPARATIVE NOTES AT END OF EVERY CHAPTER header, four note type line
+      (DSS · ORIT GEʼEZ · MASORETIC VARIANT · CRITICAL NOTE), YHWH/paleo
+      line, names line, section divider bar.
+    - **Chapter heading**: `border-bottom:1.5px solid #666666`, bold chapter
+      label + italic subtitle in one line.
+    - **Verses**: `data-ptype="verse"`, `padding-left:1.8em`, verse number
+      `color:#444444 font-weight:bold`, verse text `color:#111111`.
+    - **Notes**: four notes at the END of every chapter (never at the start),
+      preceded by COMPARATIVE MANUSCRIPT NOTES separator
+      (`border-top:1px solid #aaaaaa`). Order: [DSS] `#1A5276`,
+      [ORIT GEʼEZ] `#1E8449`, [MASORETIC VARIANT] `#7D6608`,
+      [CRITICAL NOTE] `#6E2F8A`. Note text `color:#555555 font-size:0.810em
+      font-style:italic`, `padding-left:2.4em`.
+    - **Colophon**: centered, `color:#555555 font-size:0.857em font-style:italic`.
+    - **Colors**: `#111111 #222222 #333333 #444444 #555555 #666666 #777777
+      #888888 #aaaaaa` plus the four note label colors above. Two additional
+      permitted colors: `#C8971F` (gold for the ↺ hard-refresh button) and
+      `#8B0000` (red for concern-level volumes). No other colors.
+    - **Font**: Arial throughout (inherited from reader body CSS). Paleo
+      font-family only on paleo character spans.
+    - **Navigation**: NAVIDS, LABELS, and TOC arrays in `index.html` are the
+      sidebar drivers — update all three when adding a volume. `data/nav.json`
+      must also be kept in sync but is not the driver.
+    - **SW cache** must be bumped on every new volume.
+    If there is ANY doubt whether a content file matches this standard, STOP
+    and show a preview before writing anything.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
