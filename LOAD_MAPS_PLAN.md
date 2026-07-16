@@ -62,6 +62,14 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
   on it (polyline + colored waypoint markers), live "you are here", recenter, zoom.
   Opens from any route, any place, and a Home "Live map" card. Tiles load online
   (attribution shown); offline still uses the coordinate guide + cached route images.
+- Done (free/no-key tranche, 2026-07-16): rain radar overlay (RainViewer, keyless,
+  freshest frame, toggle button); reachability "Reach" isochrone (Valhalla keyless
+  /isochrone, 15/30/45 min contours coloured by time, follows the active travel
+  mode); GPX export (current route or dropped pins -> downloadable .gpx with
+  waypoints + track + elevation) and GPX import (view any .gpx track, start/end
+  markers, auto-fit, elevation profile if the track carries ele); elevation profile
+  panel for guided routes (uses each route's own waypoint elevations — climb, range,
+  distance + inline area sparkline). Cache `loadmaps-v21`.
 - Next: weather + fire overlays (Open-Meteo, NASA FIRMS), offline map packs
   (Protomaps on Cloudflare R2) for full offline maps.
 

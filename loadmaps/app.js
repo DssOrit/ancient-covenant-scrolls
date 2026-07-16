@@ -260,6 +260,10 @@ function openMap(opts){
   mapInit();
   if(LMap.routeLayer){ LMap.map.removeLayer(LMap.routeLayer); LMap.routeLayer=null; }
   if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); LMap.driveLayer=null; }
+  if(LMap.reachLayer){ LMap.map.removeLayer(LMap.reachLayer); LMap.reachLayer=null; var rb=el('mapReach'); if(rb) rb.classList.remove('on'); }
+  if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); LMap.gpxLayer=null; }
+  var em=el('mapElev'); if(em) em.classList.remove('on');
+  LMap.curRoute=(opts && opts.route) || null;
   var title='Live map', bounds=null, center=null;
   if(opts && opts.route){
     var g=opts.route; title=g.name;
@@ -272,6 +276,7 @@ function openMap(opts){
         .bindPopup('<b>'+esc(w.name)+'</b>'+(w.hazard?'<br>'+esc(w.hazard.text):'')).addTo(grp);
     });
     grp.addTo(LMap.map); LMap.routeLayer=grp; bounds=L.latLngBounds(pts);
+    showElevation(g);
   } else if(opts && opts.place){
     var p=opts.place; title=p.name;
     var grp2=L.layerGroup();
@@ -323,6 +328,142 @@ function renderPins(){
   LMap.pinLayer.addTo(LMap.map);
 }
 function closeMap(){ el('mapwrap').classList.remove('open'); var mm=el('mapModes'); if(mm) mm.classList.remove('on'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
+// Reachability (isochrone) — how far you can get in 15/30/45 min. Valhalla, keyless.
+function toggleReach(){
+  if(!LMap.map) return;
+  var btn=el('mapReach');
+  if(LMap.reachLayer){ LMap.map.removeLayer(LMap.reachLayer); LMap.reachLayer=null; if(btn) btn.classList.remove('on'); return; }
+  if(!navigator.onLine){ toast('Reach needs a connection'); return; }
+  ensurePos(function(){
+    if(!state.pos){ toast('Turn on location for reach'); return; }
+    var costing=LMap.costing || 'auto';
+    toast('Working out how far you can get…');
+    var body={ locations:[{ lat:state.pos.lat, lon:state.pos.lng }], costing:costing,
+      contours:[{ time:15, color:'2fd85f' },{ time:30, color:'ffb023' },{ time:45, color:'ff4d3d' }], polygons:true, denoise:0.5 };
+    fetch('https://valhalla.openstreetmap.de/isochrone', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(body) })
+      .then(function(r){ return r.json(); }).then(function(j){
+        if(!j || !j.features || !j.features.length){ toast('No reach area found here'); return; }
+        LMap.reachLayer=L.geoJSON(j, { style:function(ft){
+          var c='#'+((ft.properties&&ft.properties.color)||'3d8bff');
+          return { color:c, weight:2, opacity:.9, fillColor:c, fillOpacity:.14 };
+        }, onEachFeature:function(ft,layer){
+          var m=ft.properties&&ft.properties.contour; if(m) layer.bindPopup(m+' min '+(costing==='pedestrian'?'on foot':costing==='bicycle'?'by bike':'by car'));
+        } }).addTo(LMap.map);
+        try{ LMap.map.fitBounds(LMap.reachLayer.getBounds(), { padding:[40,40] }); }catch(e){}
+        if(btn) btn.classList.add('on');
+        toast('Reach: 15 / 30 / 45 min');
+      }).catch(function(){ toast('Could not work out reach'); });
+  });
+}
+// Elevation profile for a guided route (uses the route's own waypoint elevations).
+function showElevation(g){
+  var panel=el('mapElev'); if(!panel) return;
+  var wps=(g && g.waypoints) || [];
+  var pts=[]; for(var i=0;i<wps.length;i++){ if(typeof wps[i].elev==='number') pts.push({ e:wps[i].elev, lat:wps[i].lat, lng:wps[i].lng }); }
+  if(pts.length<2){ panel.classList.remove('on'); panel.innerHTML=''; return; }
+  var cum=0, dists=[0];
+  for(var k=1;k<pts.length;k++){ cum+=haversine(pts[k-1].lat,pts[k-1].lng,pts[k].lat,pts[k].lng); dists.push(cum); }
+  var total=cum||1, minE=Infinity, maxE=-Infinity, gain=0;
+  for(var m=0;m<pts.length;m++){ if(pts[m].e<minE)minE=pts[m].e; if(pts[m].e>maxE)maxE=pts[m].e; if(m>0 && pts[m].e>pts[m-1].e) gain+=pts[m].e-pts[m-1].e; }
+  var W=300, H=64, pad=6, span=(maxE-minE)||1, poly='';
+  for(var n=0;n<pts.length;n++){
+    var x=pad + (dists[n]/total)*(W-2*pad);
+    var y=(H-pad) - ((pts[n].e-minE)/span)*(H-2*pad);
+    poly+=(n?' ':'')+x.toFixed(1)+','+y.toFixed(1);
+  }
+  var area='M'+pad+','+(H-pad)+' L'+poly.replace(/ /g,' L')+' L'+(W-pad)+','+(H-pad)+' Z';
+  panel.innerHTML='<div class="el-top"><span class="el-lab">Elevation</span>'
+    +'<span class="el-meta">'+Math.round(minE)+'–'+Math.round(maxE)+' m · +'+Math.round(gain)+' m climb · '+fmtDist(total)+'</span>'
+    +'<button class="el-x" id="elClose" aria-label="Close">&times;</button></div>'
+    +'<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'
+    +'<path d="'+area+'" fill="rgba(47,216,95,.18)"/>'
+    +'<polyline points="'+poly+'" fill="none" stroke="#2fd85f" stroke-width="2" stroke-linejoin="round"/></svg>';
+  panel.classList.add('on');
+  var xb=el('elClose'); if(xb) xb.onclick=function(){ panel.classList.remove('on'); };
+}
+// GPX export of the current route (waypoints) and GPX import to view a track.
+function gpxExport(){
+  var g=LMap.curRoute;
+  var name, segs=[];
+  if(g && g.waypoints && g.waypoints.length){
+    name=g.name;
+    segs=g.waypoints.map(function(w){ return { lat:w.lat, lng:w.lng, name:w.name, elev:w.elev }; });
+  } else {
+    var pins=getPins();
+    if(!pins.length){ toast('Open a route or drop pins to export'); return; }
+    name='Load Maps pins'; segs=pins.map(function(p){ return { lat:p.lat, lng:p.lng, name:p.name }; });
+  }
+  var head='<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Load Maps" xmlns="http://www.topografix.com/GPX/1/1">\n';
+  var meta='  <metadata><name>'+esc(name)+'</name></metadata>\n';
+  var wpt=segs.map(function(s){ return '  <wpt lat="'+s.lat+'" lon="'+s.lng+'">'+(typeof s.elev==='number'?'<ele>'+s.elev+'</ele>':'')+'<name>'+esc(s.name||'Point')+'</name></wpt>'; }).join('\n');
+  var trk='\n  <trk><name>'+esc(name)+'</name><trkseg>\n'
+    + segs.map(function(s){ return '    <trkpt lat="'+s.lat+'" lon="'+s.lng+'">'+(typeof s.elev==='number'?'<ele>'+s.elev+'</ele>':'')+'</trkpt>'; }).join('\n')
+    + '\n  </trkseg></trk>\n';
+  var gpx=head+meta+wpt+trk+'</gpx>\n';
+  var blob=new Blob([gpx], { type:'application/gpx+xml' });
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download=(name.replace(/[^a-z0-9]+/gi,'-').toLowerCase()||'route')+'.gpx';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  toast('GPX saved');
+}
+function gpxImport(file){
+  if(!file){ return; }
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var pts=parseGpx(ev.target.result);
+    if(!pts.length){ toast('No track points in that file'); return; }
+    if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); }
+    var line=pts.map(function(p){ return [p.lat, p.lng]; });
+    LMap.gpxLayer=L.layerGroup();
+    L.polyline(line, { color:'#b46bff', weight:5, opacity:.95, dashArray:'1' }).addTo(LMap.gpxLayer);
+    L.circleMarker(line[0], { radius:7, color:'#04140a', weight:2, fillColor:'#2fd85f', fillOpacity:1 }).bindPopup('Track start').addTo(LMap.gpxLayer);
+    L.circleMarker(line[line.length-1], { radius:7, color:'#04140a', weight:2, fillColor:'#ff4d3d', fillOpacity:1 }).bindPopup('Track end').addTo(LMap.gpxLayer);
+    LMap.gpxLayer.addTo(LMap.map);
+    try{ LMap.map.fitBounds(L.latLngBounds(line), { padding:[50,50] }); }catch(e){}
+    // elevation from the imported track, if present
+    var withE=pts.filter(function(p){ return typeof p.elev==='number'; });
+    if(withE.length>1){ showElevation({ name:'Imported track', waypoints:withE.map(function(p,i){ return { n:i+1, name:'pt', lat:p.lat, lng:p.lng, elev:p.elev }; }) }); }
+    toast('Track loaded ('+pts.length+' points)');
+  };
+  reader.onerror=function(){ toast('Could not read that file'); };
+  reader.readAsText(file);
+}
+function parseGpx(text){
+  var out=[];
+  try{
+    var doc=new DOMParser().parseFromString(text, 'application/xml');
+    if(doc.getElementsByTagName('parsererror').length) return out;
+    var nodes=doc.getElementsByTagName('trkpt');
+    if(!nodes.length) nodes=doc.getElementsByTagName('rtept');
+    if(!nodes.length) nodes=doc.getElementsByTagName('wpt');
+    for(var i=0;i<nodes.length;i++){
+      var la=parseFloat(nodes[i].getAttribute('lat')), lo=parseFloat(nodes[i].getAttribute('lon'));
+      if(isNaN(la)||isNaN(lo)) continue;
+      var eles=nodes[i].getElementsByTagName('ele'), e;
+      if(eles.length){ var ev=parseFloat(eles[0].textContent); if(!isNaN(ev)) e=ev; }
+      out.push({ lat:la, lng:lo, elev:e });
+    }
+  }catch(err){}
+  return out;
+}
+function toggleRain(){
+  if(!LMap.map) return;
+  var btn=el('mapRain');
+  if(LMap.rainLayer){ LMap.map.removeLayer(LMap.rainLayer); LMap.rainLayer=null; if(btn) btn.classList.remove('on'); return; }
+  if(!navigator.onLine){ toast('Rain radar needs a connection'); return; }
+  toast('Loading rain radar…');
+  fetch('https://api.rainviewer.com/public/weather-maps.json').then(function(r){ return r.json(); }).then(function(j){
+    var frames=(j && j.radar && j.radar.past) || [];
+    if(j && j.radar && j.radar.nowcast && j.radar.nowcast.length) frames=frames.concat(j.radar.nowcast);
+    if(!frames.length){ toast('No radar available right now'); return; }
+    var f=frames[frames.length-1], host=j.host || 'https://tilecache.rainviewer.com';
+    var url=host + f.path + '/256/{z}/{x}/{y}/2/1_1.png';
+    LMap.rainLayer=L.tileLayer(url, { opacity:0.6, attribution:'Radar &copy; RainViewer' }).addTo(LMap.map);
+    if(btn) btn.classList.add('on');
+    toast('Rain radar on');
+  }).catch(function(){ toast('Could not load radar'); });
+}
 function startMapLocate(){
   if(LMap.watch!=null || !navigator.geolocation) return;
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
@@ -994,6 +1135,15 @@ function init(){
     if(name===null) name='My spot';
     addPin(c.lat, c.lng, name.trim()||'My spot'); renderPins(); toast('Pin saved to My pins');
   };
+  if(el('mapRain')) el('mapRain').onclick=function(){ toggleRain(); };
+  if(el('mapReach')) el('mapReach').onclick=function(){ toggleReach(); };
+  if(el('mapGpx')) el('mapGpx').onclick=function(){
+    var imp=false;
+    try{ imp=window.confirm('Load a GPX file?\n\nOK = open a track file to view.\nCancel = save this route as GPX.'); }catch(e){ imp=false; }
+    if(imp){ var fi=el('gpxFile'); if(fi){ fi.value=''; fi.click(); } }
+    else { gpxExport(); }
+  };
+  if(el('gpxFile')) el('gpxFile').onchange=function(){ if(this.files && this.files[0]) gpxImport(this.files[0]); };
 }
 init();
 
