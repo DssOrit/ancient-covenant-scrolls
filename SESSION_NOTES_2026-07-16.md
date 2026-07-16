@@ -72,3 +72,44 @@ Roadmap 1–6 complete.
 - a2ac1da Load Maps: offline map packs (PMTiles + OPFS) (#659)
 - 0ee630b Load Maps: nearest-on-route, speed/ETA/reroute, D1 hazards, NL find (#655)
 - dd02876 Load Maps: rain radar, reach isochrone, GPX, elevation profile (#654)
+
+---
+
+## Continuation (same day, evening) — map-first redesign + fixes + restrooms
+
+Shipped after the initial notes above (cache v20 -> **v32**):
+
+- **v21** rain radar; **v21** reach isochrone + GPX + elevation (#654)
+- **v22** nearest-on-route, speed/ETA/reroute, D1 hazards (dark), NL find (dark) (#655)
+- **v23** offline map packs (PMTiles + OPFS) (#659)
+- **v24** AR heads-up walk (camera + compass) (#660)
+- **v25** hard-refresh circle now clears cache + updates (like other Load apps) (#663)
+- **v26** cleaner tab favicon (emblem, no text) (#665)
+- **v27** speed cameras (Overpass) + real elevation on any route (Open-Meteo) (#670)
+- **v28** live fuel prices — Spain live, Portugal best-effort, keyless server fn (#673)
+- **v29** dark live-map redesign in the ACR Maps style: OpenFreeMap dark + on-map
+  search + region pills + category legend pins (#676)
+- **v30** map-first shell: app opens straight into the dark map; menu moved to a
+  slide-out drawer; sections return to the map (#677)
+- **v31** fix stale-version loading (SW network-first for the app shell) + one-time
+  reload on SW update + dark/repositioned zoom buttons (#679) — user-verified "fixed"
+- **v32** clean-restrooms finder (OSM badges: baby-change/step-free/free/women's;
+  + D1 star ratings dark) + iPhone loading safeguard (SW 3.5s network timeout ->
+  cache fallback, stops "server stopped responding" on VPN) (#683)
+
+### Outstanding for tomorrow
+- **User will set up Cloudflare D1 tomorrow.** Steps: `npx wrangler d1 create loadmaps`
+  -> bind as `DB` in Pages Functions -> `wrangler d1 execute loadmaps --remote
+  --file=functions/api/loadmaps/schema.sql`. Turns on BOTH hazards and restroom
+  ratings at once. Confirmed free, no credit card (Cloudflare Workers/D1 free tier).
+- Still dark until AI key: Ask Load Maps + smart Find (`ANTHROPIC_API_KEY`).
+- Alternative discussed: Cloudflare KV (also free/no-card) if we'd rather not use D1.
+
+### Devices / known notes
+- Location + on-device storage need a **normal (non-Private) Safari tab**.
+- Category/camera/restroom pins load for the **current map view** (zoom into an area).
+- iPhone "server stopped responding" was transient (VPN/deploy); v32 safeguard added.
+
+### Backups
+- `backup/2026-07-16-loadmaps-v31` (verified-working state).
+- `backup/2026-07-16-loadmaps-v32` (latest main after restrooms + safeguard).
