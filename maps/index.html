@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ACR Maps">
+<meta name="theme-color" content="#05050b">
+<title>ACR Maps</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" href="./icon.png">
+<!-- MapLibre GL JS (CDN — requires connection; falls back gracefully offline) -->
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#05050b;
+  --s1:#0d0d1a;
+  --s2:#121220;
+  --border:rgba(255,255,255,.07);
+  --gold:#c8971f;
+  --amber:#e8751a;
+  --red:#e63329;
+  --green:#3dbf5e;
+  --blue:#2b7de9;
+  --text:#f0ede8;
+  --tx2:#9a9080;
+  --tx3:#4a4460;
+  --r:10px;
+  --rainbow:linear-gradient(90deg,var(--red),var(--amber),#e8c81a,var(--green),var(--blue));
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Helvetica Neue',sans-serif}
+
+/* ── GATE SCREEN ────────────────────────────────────────────── */
+#gate{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;padding:40px 24px 36px;
+  transition:opacity .5s ease;
+}
+#gate.hiding{opacity:0;pointer-events:none}
+#gate.hidden{display:none}
+
+.g-icon{
+  width:80px;height:80px;border-radius:20px;
+  margin-bottom:28px;
+  box-shadow:0 0 40px rgba(200,151,31,.18);
+  object-fit:cover;
+}
+
+.names-stack{
+  display:flex;flex-direction:column;align-items:center;
+  gap:2px;margin-bottom:22px;
+}
+.name-row{display:flex;align-items:baseline;gap:10px;animation:nameIn .55s ease both}
+.nf{line-height:1.2}
+.nl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.45}
+
+.nf-paleo{color:var(--gold);font-size:2.9rem;font-weight:400;font-family:'Segoe UI Historic','Noto Sans Phoenician','Noto Serif',serif;animation-delay:.05s}
+.nl-paleo{color:var(--gold);animation-delay:.05s}
+.nf-heb{color:var(--amber);font-size:2.3rem;direction:rtl;animation-delay:.2s}
+.nl-heb{color:var(--amber);animation-delay:.2s}
+.nf-roman{color:var(--red);font-size:2rem;font-weight:700;letter-spacing:.15em;animation-delay:.38s}
+.nl-roman{color:var(--red);animation-delay:.38s}
+.nf-pron{color:var(--green);font-size:1.5rem;font-weight:300;letter-spacing:.07em;animation-delay:.55s}
+.nl-pron{color:var(--green);animation-delay:.55s}
+.nf-title{color:var(--blue);font-size:1rem;font-weight:500;letter-spacing:.1em;animation-delay:.72s}
+.nl-title{color:var(--blue);animation-delay:.72s}
+
+.g-appname{
+  text-align:center;margin-bottom:5px;
+  animation:nameIn .5s .88s ease both;
+}
+.g-appname .acr{font-size:1rem;font-weight:300;letter-spacing:.22em;color:#aaa}
+.g-appname .maps{
+  font-size:1rem;font-weight:800;letter-spacing:.26em;
+  background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.g-sub{
+  font-size:.72rem;color:var(--tx3);letter-spacing:.1em;text-align:center;
+  margin-bottom:30px;animation:nameIn .5s .96s ease both;
+}
+
+.g-btn{
+  position:relative;padding:13px 44px;border-radius:30px;border:none;
+  font-size:.88rem;font-weight:600;letter-spacing:.08em;color:var(--text);
+  background:rgba(255,255,255,.05);cursor:pointer;
+  animation:nameIn .5s 1.1s ease both;
+}
+.g-btn::before{
+  content:'';position:absolute;inset:-1.5px;border-radius:32px;
+  background:var(--rainbow);z-index:-1;opacity:.65;
+}
+.g-btn::after{
+  content:'';position:absolute;inset:1px;border-radius:29px;
+  background:#08080e;z-index:-1;
+}
+
+@keyframes nameIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── LOADING SCREEN ─────────────────────────────────────────── */
+#loading{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--bg);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;padding:40px 24px;
+}
+#loading.show{display:flex}
+#loading.hiding{opacity:0;pointer-events:none;transition:opacity .5s ease}
+#loading.hidden{display:none}
+
+.ld-wordmark{text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:.2em}
+.ld-wordmark .acr{color:#fff}
+.ld-wordmark .maps{background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ld-sub{font-size:.7rem;color:var(--tx3);letter-spacing:.15em;text-align:center}
+
+.ld-spinner{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:var(--red);
+  border-right-color:var(--amber);
+  border-bottom-color:var(--green);
+  border-left-color:var(--blue);
+  animation:spin 1.1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.ld-msg{font-size:.72rem;color:var(--tx3);letter-spacing:.1em;min-height:1em;text-align:center}
+
+/* ── APP SHELL ──────────────────────────────────────────────── */
+#app{height:100%;display:flex;flex-direction:column}
+#app.hidden{display:none}
+
+/* ── MAP CONTAINER ──────────────────────────────────────────── */
+#map{flex:1;width:100%;position:relative;background:#0a0a14}
+
+/* ── TOPBAR ─────────────────────────────────────────────────── */
+#topbar{
+  position:absolute;top:0;left:0;right:0;z-index:100;
+  padding:env(safe-area-inset-top,0) 12px 0;
+  background:linear-gradient(180deg,rgba(5,5,11,.95) 0%,rgba(5,5,11,.7) 80%,transparent 100%);
+  pointer-events:none;
+}
+.tb-inner{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0 8px;
+  pointer-events:all;
+}
+.tb-logo{
+  width:34px;height:34px;border-radius:9px;object-fit:cover;
+  box-shadow:0 0 12px rgba(200,151,31,.2);
+}
+.tb-titles{flex:1;min-width:0}
+.tb-name{font-size:.82rem;font-weight:700;letter-spacing:.08em;color:var(--text)}
+.tb-sub{font-size:.62rem;color:var(--tx2);letter-spacing:.06em}
+.tb-btn{
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:8px;width:34px;height:34px;color:var(--tx2);
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tb-btn:active{background:rgba(255,255,255,.12)}
+
+/* ── SEARCH BAR ─────────────────────────────────────────────── */
+#searchbar{
+  position:absolute;top:58px;left:12px;right:12px;z-index:100;
+  pointer-events:all;
+}
+.sb-wrap{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(13,13,26,.92);border:1px solid var(--border);
+  border-radius:12px;padding:0 12px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.sb-icon{font-size:16px;color:var(--tx3);flex-shrink:0}
+.sb-input{
+  flex:1;background:none;border:none;outline:none;
+  font-size:.85rem;color:var(--text);padding:11px 0;
+  font-family:inherit;
+}
+.sb-input::placeholder{color:var(--tx3)}
+.sb-clear{background:none;border:none;color:var(--tx3);font-size:18px;cursor:pointer;padding:0;line-height:1;display:none}
+
+/* ── BOTTOM SHEET ───────────────────────────────────────────── */
+#sheet{
+  position:absolute;bottom:0;left:0;right:0;z-index:200;
+  background:var(--s1);
+  border-radius:20px 20px 0 0;
+  border-top:1px solid var(--border);
+  max-height:70vh;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom,0);
+}
+#sheet.open{transform:translateY(0)}
+
+.sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,.15);
+  margin:10px auto 14px;flex-shrink:0;
+}
+.sheet-scroll{flex:1;overflow-y:auto;padding:0 16px 20px}
+.sheet-title{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin-bottom:12px}
+.sheet-close{
+  position:absolute;top:12px;right:14px;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:6px;width:28px;height:28px;color:var(--tx2);
+  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── PLACE CARD ─────────────────────────────────────────────── */
+.place-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.place-name{font-size:1.1rem;font-weight:700;margin-bottom:4px;line-height:1.3}
+.place-meta{font-size:.72rem;color:var(--tx2);margin-bottom:12px}
+.place-body{font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:14px}
+.place-sources{
+  border-top:1px solid var(--border);padding-top:12px;margin-bottom:14px;
+}
+.place-sources-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px}
+.place-sources-list{font-size:.72rem;color:var(--tx3);line-height:1.7;font-style:italic}
+.place-nav-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  color:#fff;font-size:.85rem;font-weight:700;letter-spacing:.06em;cursor:pointer;
+}
+
+/* ── ROUTE CARD ─────────────────────────────────────────────── */
+.route-hdr{margin-bottom:14px}
+.route-tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.route-name{font-size:1rem;font-weight:700;margin-bottom:3px}
+.route-meta{font-size:.72rem;color:var(--tx2)}
+.route-summary{font-size:.78rem;color:var(--tx2);line-height:1.7;margin:10px 0 14px}
+.stop-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.stop-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;
+  cursor:pointer;
+}
+.stop-num{
+  min-width:22px;height:22px;border-radius:50%;
+  background:var(--rainbow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px;
+}
+.stop-info{flex:1;min-width:0}
+.stop-name{font-size:.8rem;font-weight:600;margin-bottom:2px}
+.stop-summary{font-size:.68rem;color:var(--tx2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.route-start-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;
+}
+
+/* ── REGION PILLS ───────────────────────────────────────────── */
+#region-bar{
+  position:absolute;bottom:16px;left:0;right:0;z-index:100;
+  pointer-events:none;
+  padding:0 12px;
+  display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;
+}
+#region-bar::-webkit-scrollbar{display:none}
+.rpill{
+  pointer-events:all;
+  padding:8px 14px;border-radius:20px;
+  background:rgba(13,13,26,.88);border:1px solid var(--border);
+  font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:background .15s,color .15s,border-color .15s;
+  flex-shrink:0;
+}
+.rpill.active{
+  background:rgba(200,151,31,.15);border-color:var(--gold);color:var(--gold);
+}
+.rpill:active{background:rgba(255,255,255,.1)}
+
+/* ── MAP MARKERS ────────────────────────────────────────────── */
+.mk{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid #05050b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.6);
+  transition:transform .15s;
+}
+.mk:active{transform:scale(1.2)}
+.mk-community{background:var(--green)}
+.mk-history{background:var(--red)}
+.mk-source{background:var(--gold)}
+
+/* ── GPS BUTTON ─────────────────────────────────────────────── */
+#gps-btn{
+  position:absolute;bottom:66px;right:14px;z-index:100;
+  width:42px;height:42px;border-radius:12px;
+  background:rgba(13,13,26,.92);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--tx2);font-size:20px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+#gps-btn.active{color:var(--blue);border-color:var(--blue)}
+
+/* ── SEARCH RESULTS OVERLAY ─────────────────────────────────── */
+#search-results{
+  position:absolute;top:108px;left:12px;right:12px;z-index:150;
+  background:rgba(13,13,26,.97);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;display:none;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  max-height:50vh;overflow-y:auto;
+}
+#search-results.show{display:block}
+.sr-item{
+  padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;
+}
+.sr-item:last-child{border-bottom:none}
+.sr-item:active{background:rgba(255,255,255,.04)}
+.sr-region{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:2px}
+.sr-name{font-size:.85rem;font-weight:600;color:var(--text)}
+.sr-city{font-size:.72rem;color:var(--tx2)}
+</style>
+</head>
+<body>
+
+<!-- ══ GATE SCREEN ════════════════════════════════════════════ -->
+<div id="gate">
+  <img class="g-icon" src="./icon-192.png" alt="ACR Maps">
+
+  <div class="names-stack">
+    <div class="name-row" style="animation-delay:.05s">
+      <span class="nf nf-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</span>
+      <span class="nl nl-paleo">Paleo Script</span>
+    </div>
+    <div class="name-row" style="animation-delay:.2s">
+      <span class="nf nf-heb">&#x05D9;&#x05D4;&#x05D5;&#x05D4;</span>
+      <span class="nl nl-heb">Square Hebrew</span>
+    </div>
+    <div class="name-row" style="animation-delay:.38s">
+      <span class="nf nf-roman">YHWH</span>
+      <span class="nl nl-roman">Romanized</span>
+    </div>
+    <div class="name-row" style="animation-delay:.55s">
+      <span class="nf nf-pron">Yahweh</span>
+      <span class="nl nl-pron">Pronunciation</span>
+    </div>
+    <div class="name-row" style="animation-delay:.72s">
+      <span class="nf nf-title">The Creator</span>
+      <span class="nl nl-title">Covenant Title</span>
+    </div>
+  </div>
+
+  <div class="g-appname">
+    <span class="acr">ACR&nbsp;</span><span class="maps">MAPS</span>
+  </div>
+  <div class="g-sub">The Covenant Diaspora</div>
+
+  <button class="g-btn" onclick="doEnter()">Enter</button>
+</div>
+
+<!-- ══ LOADING SCREEN ════════════════════════════════════════ -->
+<div id="loading">
+  <div class="ld-wordmark"><span class="acr">ACR</span> <span class="maps">MAPS</span></div>
+  <div class="ld-sub">The Covenant Diaspora</div>
+  <div class="ld-spinner"></div>
+  <div class="ld-msg" id="ld-msg">Opening covenant map...</div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════ -->
+<div id="app" class="hidden">
+  <div id="map">
+
+    <!-- Topbar -->
+    <div id="topbar">
+      <div class="tb-inner">
+        <img class="tb-logo" src="./icon-192.png" alt="">
+        <div class="tb-titles">
+          <div class="tb-name">ACR Maps</div>
+          <div class="tb-sub">Covenant Diaspora</div>
+        </div>
+        <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <div id="searchbar">
+      <div class="sb-wrap">
+        <span class="sb-icon">&#128269;</span>
+        <input class="sb-input" id="sb-input" type="text" placeholder="Search places, cities, regions..." autocomplete="off" oninput="onSearch(this.value)" onfocus="onSearchFocus()" onblur="setTimeout(hideSearch,200)">
+        <button class="sb-clear" id="sb-clear" onclick="clearSearch()">&#215;</button>
+      </div>
+    </div>
+
+    <!-- Search results -->
+    <div id="search-results"></div>
+
+    <!-- GPS button -->
+    <button id="gps-btn" onclick="locateMe()" title="My location">&#9678;</button>
+
+    <!-- Region pills -->
+    <div id="region-bar">
+      <div class="rpill active" data-region="all" onclick="filterRegion(this)">All</div>
+      <div class="rpill" data-region="Portugal" onclick="filterRegion(this)">Portugal</div>
+      <div class="rpill" data-region="UK" onclick="filterRegion(this)">UK</div>
+      <div class="rpill" data-region="USA" onclick="filterRegion(this)">USA</div>
+      <div class="rpill" data-region="Africa" onclick="filterRegion(this)">Africa</div>
+      <div class="rpill" data-region="Israel" onclick="filterRegion(this)">Israel</div>
+    </div>
+
+    <!-- Bottom sheet -->
+    <div id="sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close" onclick="closeSheet()">&#215;</button>
+      <div class="sheet-scroll" id="sheet-body"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ── STATE ─────────────────────────────────────────────────── */
+var map = null;
+var places = [];
+var markers = [];
+var activeRegion = 'all';
+var userMarker = null;
+
+/* ── LOADING MESSAGES ───────────────────────────────────────── */
+var LD_MSGS = [
+  'Opening covenant map...',
+  'Loading covenant places...',
+  'Placing diaspora markers...',
+  'Reading sources...',
+  'Ready...'
+];
+
+/* ── GATE → LOADING ─────────────────────────────────────────── */
+function doEnter() {
+  var gate = document.getElementById('gate');
+  gate.classList.add('hiding');
+  setTimeout(function() {
+    gate.classList.add('hidden');
+    startLoading();
+  }, 500);
+}
+
+function startLoading() {
+  var ld = document.getElementById('loading');
+  ld.classList.add('show');
+  var i = 0;
+  var iv = setInterval(function() {
+    document.getElementById('ld-msg').textContent = LD_MSGS[i] || '';
+    i++;
+    if (i >= LD_MSGS.length) {
+      clearInterval(iv);
+      loadPlaces();
+    }
+  }, 480);
+}
+
+/* ── LOAD PLACES DATA ───────────────────────────────────────── */
+function loadPlaces() {
+  fetch('./acr_places.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      places = data.places || [];
+      openApp();
+    })
+    .catch(function() {
+      places = [];
+      openApp();
+    });
+}
+
+/* ── OPEN APP ───────────────────────────────────────────────── */
+function openApp() {
+  var ld = document.getElementById('loading');
+  ld.classList.add('hiding');
+  setTimeout(function() {
+    ld.classList.add('hidden');
+    var app = document.getElementById('app');
+    app.classList.remove('hidden');
+    initMap();
+  }, 500);
+}
+
+/* ── MAP INIT ───────────────────────────────────────────────── */
+function initMap() {
+  if (!window.maplibregl) {
+    document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">Map requires a connection on first load. Places are available — tap the region pills to browse.</div>';
+    showRegionList();
+    return;
+  }
+  map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://tiles.openfreemap.org/styles/dark',
+    center: [0, 20],
+    zoom: 2.2,
+    attributionControl: false
+  });
+
+  map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+
+  map.on('load', function() {
+    placeMarkers(places);
+  });
+
+  map.on('click', function(e) {
+    if (!e.originalEvent.target.classList.contains('mk')) {
+      closeSheet();
+    }
+  });
+}
+
+/* ── PLACE MARKERS ──────────────────────────────────────────── */
+function placeMarkers(list) {
+  markers.forEach(function(m) { m.remove(); });
+  markers = [];
+
+  list.forEach(function(pl) {
+    var el = document.createElement('div');
+    el.className = 'mk mk-' + (pl.type || 'community');
+    el.textContent = pl.type === 'source' ? 'S' : pl.type === 'history' ? 'H' : 'C';
+    el.setAttribute('title', pl.name);
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      showPlace(pl);
+    });
+    var m = new maplibregl.Marker({ element: el, anchor: 'center' })
+      .setLngLat([pl.lng, pl.lat])
+      .addTo(map);
+    markers.push(m);
+  });
+}
+
+/* ── FILTER BY REGION ───────────────────────────────────────── */
+function filterRegion(el) {
+  document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+  el.classList.add('active');
+  activeRegion = el.dataset.region;
+  var filtered = activeRegion === 'all' ? places : places.filter(function(p) { return p.region === activeRegion; });
+  if (markers.length && map) {
+    placeMarkers(filtered);
+    if (filtered.length && activeRegion !== 'all') {
+      var lngs = filtered.map(function(p) { return p.lng; });
+      var lats = filtered.map(function(p) { return p.lat; });
+      map.fitBounds([[Math.min.apply(null,lngs)-1, Math.min.apply(null,lats)-1],[Math.max.apply(null,lngs)+1, Math.max.apply(null,lats)+1]], {padding:60, duration:700});
+    }
+  } else {
+    showRegionList(activeRegion);
+  }
+}
+
+/* ── SHOW PLACE ─────────────────────────────────────────────── */
+function showPlace(pl) {
+  if (map) {
+    map.flyTo({center:[pl.lng, pl.lat], zoom:13, duration:800});
+  }
+  var typeLabel = pl.type === 'source' ? 'Primary Source Archive' : pl.type === 'history' ? 'Historical Site' : 'Covenant Community';
+  var src = (pl.sources || []).map(function(s) { return '<div>' + esc(s) + '</div>'; }).join('');
+  var routeBtn = pl.route ? '<button class="place-nav-btn" style="margin-bottom:10px;background:linear-gradient(90deg,var(--amber),var(--gold));color:#05050b" onclick="showRoute(\'' + pl.route + '\')">View Full Route</button>' : '';
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="place-tag">' + esc(pl.region) + ' &middot; ' + esc(pl.city) + ' &middot; ' + typeLabel + '</div>' +
+    '<div class="place-name">' + esc(pl.name) + '</div>' +
+    '<div class="place-body">' + esc(pl.summary) + '</div>' +
+    '<div class="place-sources"><div class="place-sources-lbl">Primary Sources</div><div class="place-sources-list">' + src + '</div></div>' +
+    routeBtn +
+    '<button class="place-nav-btn" onclick="navTo(' + pl.lat + ',' + pl.lng + ')">Navigate Here</button>';
+  openSheet();
+}
+
+/* ── SHOW ROUTE ─────────────────────────────────────────────── */
+function showRoute(routeId) {
+  fetch('./acr_places.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var route = (data.routes || []).find(function(r) { return r.id === routeId; });
+      if (!route) return;
+      var stops = (route.stops || []).map(function(id, i) {
+        return data.places.find(function(p) { return p.id === id; });
+      }).filter(Boolean);
+
+      var stopsHtml = stops.map(function(pl, i) {
+        return '<div class="stop-row" onclick="showPlace(' + JSON.stringify(pl).replace(/"/g,'&quot;') + ')">' +
+          '<div class="stop-num">' + (i + 1) + '</div>' +
+          '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
+          '<div class="stop-summary">' + esc(pl.summary) + '</div></div>' +
+          '</div>';
+      }).join('');
+
+      document.getElementById('sheet-body').innerHTML =
+        '<div class="route-hdr">' +
+          '<div class="route-tag">' + esc(route.region) + ' &middot; ' + esc(route.city) + '</div>' +
+          '<div class="route-name">' + esc(route.name) + '</div>' +
+          '<div class="route-meta">' + stops.length + ' stops &middot; ' + route.distance_km + ' km &middot; ' + route.duration_hrs + ' hrs</div>' +
+        '</div>' +
+        '<div class="route-summary">' + esc(route.summary) + '</div>' +
+        '<div class="stop-list">' + stopsHtml + '</div>' +
+        '<button class="route-start-btn" onclick="navTo(' + stops[0].lat + ',' + stops[0].lng + ')">Start Route</button>';
+      openSheet();
+
+      if (map && stops.length) {
+        var lngs = stops.map(function(p) { return p.lng; });
+        var lats = stops.map(function(p) { return p.lat; });
+        map.fitBounds([[Math.min.apply(null,lngs)-.05, Math.min.apply(null,lats)-.05],[Math.max.apply(null,lngs)+.05, Math.max.apply(null,lats)+.05]], {padding:80, duration:800});
+      }
+    })
+    .catch(function() {});
+}
+
+/* ── SHOW REGION LIST (no map fallback) ─────────────────────── */
+function showRegionList(region) {
+  var list = region && region !== 'all' ? places.filter(function(p) { return p.region === region; }) : places;
+  if (!list.length) { closeSheet(); return; }
+  var items = list.map(function(pl) {
+    return '<div class="stop-row" onclick=\'showPlace(' + JSON.stringify(pl).replace(/'/g,"&#39;") + ')\'>' +
+      '<div class="stop-num mk-' + (pl.type||'community') + '" style="background:' + typeColor(pl.type) + '">' +
+        (pl.type==='source'?'S':pl.type==='history'?'H':'C') + '</div>' +
+      '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
+      '<div class="sr-city">' + esc(pl.city) + ', ' + esc(pl.region) + '</div></div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="sheet-title">Covenant Places' + (region && region !== 'all' ? ' — ' + region : '') + '</div>' +
+    '<div class="stop-list">' + items + '</div>';
+  openSheet();
+}
+
+function typeColor(t) {
+  return t === 'source' ? 'var(--gold)' : t === 'history' ? 'var(--red)' : 'var(--green)';
+}
+
+/* ── SEARCH ─────────────────────────────────────────────────── */
+function onSearch(val) {
+  document.getElementById('sb-clear').style.display = val ? 'block' : 'none';
+  if (!val.trim()) { hideSearch(); return; }
+  var q = val.toLowerCase();
+  var res = places.filter(function(p) {
+    return p.name.toLowerCase().indexOf(q) > -1 ||
+      (p.city || '').toLowerCase().indexOf(q) > -1 ||
+      (p.region || '').toLowerCase().indexOf(q) > -1 ||
+      (p.summary || '').toLowerCase().indexOf(q) > -1;
+  }).slice(0, 10);
+  var sr = document.getElementById('search-results');
+  if (!res.length) { hideSearch(); return; }
+  sr.innerHTML = res.map(function(p) {
+    return '<div class="sr-item" onclick="selectSearch(\'' + p.id + '\')">' +
+      '<div class="sr-region">' + esc(p.region) + '</div>' +
+      '<div class="sr-name">' + esc(p.name) + '</div>' +
+      '<div class="sr-city">' + esc(p.city) + '</div>' +
+      '</div>';
+  }).join('');
+  sr.classList.add('show');
+}
+
+function onSearchFocus() {
+  var val = document.getElementById('sb-input').value;
+  if (val) onSearch(val);
+}
+
+function selectSearch(id) {
+  hideSearch();
+  document.getElementById('sb-input').value = '';
+  document.getElementById('sb-clear').style.display = 'none';
+  var pl = places.find(function(p) { return p.id === id; });
+  if (pl) showPlace(pl);
+}
+
+function clearSearch() {
+  document.getElementById('sb-input').value = '';
+  document.getElementById('sb-clear').style.display = 'none';
+  hideSearch();
+}
+
+function hideSearch() {
+  document.getElementById('search-results').classList.remove('show');
+}
+
+/* ── SHEET ──────────────────────────────────────────────────── */
+function openSheet() { document.getElementById('sheet').classList.add('open'); }
+function closeSheet() { document.getElementById('sheet').classList.remove('open'); }
+
+/* ── GPS ─────────────────────────────────────────────────────── */
+function locateMe() {
+  if (!navigator.geolocation) return;
+  var btn = document.getElementById('gps-btn');
+  btn.classList.add('active');
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    var ll = [pos.coords.longitude, pos.coords.latitude];
+    if (map) {
+      if (userMarker) userMarker.remove();
+      var el = document.createElement('div');
+      el.style.cssText = 'width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(43,125,233,.3)';
+      userMarker = new maplibregl.Marker({element:el}).setLngLat(ll).addTo(map);
+      map.flyTo({center:ll, zoom:13, duration:700});
+    }
+    setTimeout(function(){ btn.classList.remove('active'); }, 2000);
+  }, function() {
+    btn.classList.remove('active');
+  });
+}
+
+/* ── NAVIGATE ───────────────────────────────────────────────── */
+function navTo(lat, lng) {
+  var url = 'https://maps.apple.com/?daddr=' + lat + ',' + lng + '&dirflg=w';
+  window.open(url, '_blank');
+}
+
+/* ── UTILS ──────────────────────────────────────────────────── */
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── SERVICE WORKER ─────────────────────────────────────────── */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>
