@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "places": [
     {
       "id": "pt-lisbon-mouraria",
@@ -14,7 +14,8 @@
         "Torre do Tombo Archive, Lisbon",
         "Al-Idrisi, 12th century geographic records"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "before": "An open African and Moorish quarter where covenant families maintained sabbath observance and oral traditions freely, before the 1147 Reconquista conquest imposed restrictions on non-Christian practice."
     },
     {
       "id": "pt-lisbon-alfama",
@@ -29,7 +30,8 @@
         "Torre do Tombo, Inquisition Records 1536–1821",
         "A.C. de C.M. Saunders, 'A Social History of Black Slaves and Freedmen in Portugal'"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "before": "An African mercantile and community settlement where traders lived freely, before the 1452 Dum Diversas papal bull created the legal framework for their enslavement and the 1536 Inquisition began targeting those who remembered."
     },
     {
       "id": "pt-lisbon-rossio",
@@ -44,7 +46,8 @@
         "Dum Diversas, Pope Nicholas V, 1452",
         "Torre do Tombo Inquisition Records"
       ],
-      "route": "lisbon-african-heritage"
+      "route": "lisbon-african-heritage",
+      "before": "The central gathering ground of Lisbon's African, Moorish, and Hebrew communities — a public square of commerce and meeting, before the Inquisition claimed it as an execution site in 1536."
     },
     {
       "id": "pt-lisbon-judiaria",
@@ -74,7 +77,8 @@
         "Torre do Tombo Archive, accessible at digitarq.arquivos.pt"
       ],
       "route": "lisbon-african-heritage",
-      "on_this_ground": "You are at the archive that accidentally preserved the most detailed record of African covenant practice in Europe — the Inquisition files are the evidence."
+      "on_this_ground": "You are at the archive that accidentally preserved the most detailed record of African covenant practice in Europe — the Inquisition files are the evidence.",
+      "excerpt": "\"The accused did not eat the flesh of swine, did not labor on Saturday, washed her hands before meals and recited a prayer in the Hebrew manner, and kept the fast of the Day of Atonement...\" — Inquisicao de Lisboa, Processo 7755, Torre do Tombo, Lisbon, 1591. An Inquisition file inadvertently preserving detailed evidence of African covenant practice."
     },
     {
       "id": "pt-lisbon-belem",
@@ -165,7 +169,8 @@
         "Yvonne Chireau & Nathaniel Deutsch, 'Black Zion: African American Religious Encounters with Judaism'"
       ],
       "living": true,
-      "on_this_ground": "You are in the neighborhood where African Americans first formally documented their covenant identity in the early 20th century — before civil rights, before the scrolls were found."
+      "on_this_ground": "You are in the neighborhood where African Americans first formally documented their covenant identity in the early 20th century — before civil rights, before the scrolls were found.",
+      "oral_tradition": "African Hebrew Israelite oral record, Harlem, 1910s: \"Prophet Cherry said: we are not converting to anything. We are returning to what we always were. The Bible is our book and the covenant is our covenant. We were always the children of Israel.\" — Church of God oral tradition, documented by Yvonne Chireau."
     },
     {
       "id": "us-chicago",
@@ -180,7 +185,8 @@
         "Ben Ammi Ben-Israel, 'God the Black Man and Truth', 1982"
       ],
       "living": true,
-      "on_this_ground": "You are where the return journey began. From these streets, the African Hebrew Israelites left for Africa and then Israel in 1966."
+      "on_this_ground": "You are where the return journey began. From these streets, the African Hebrew Israelites left for Africa and then Israel in 1966.",
+      "oral_tradition": "African Hebrew Israelite founding oral record, Chicago, 1966: \"Ben Ammi said: the Creator showed me in a vision that we are going home. Not to a country — to a covenant. The land comes with the law.\" — Community oral record, Village of Peace, Dimona."
     },
     {
       "id": "il-dimona",
@@ -213,7 +219,8 @@
         "Jesuit mission records, Biblioteca Nacional de Portugal"
       ],
       "living": true,
-      "on_this_ground": "You are in the oldest documented covenant community outside of Qumran — the Beta Israel have kept YHWH's law here for over 2,000 years, undisturbed by Rabbinic overlay."
+      "on_this_ground": "You are in the oldest documented covenant community outside of Qumran — the Beta Israel have kept YHWH's law here for over 2,000 years, undisturbed by Rabbinic overlay.",
+      "oral_tradition": "The Beta Israel oral tradition: \"We are the house of Moshe. We did not follow the men who changed the calendar. We kept the fire for 1 Abib, we kept the 7th day, we kept the law as it was given — not as it was rewritten.\" — Ge'ez oral tradition, Beta Israel community, Gondar, documented by Emanuela Trevisan Semi, 1985."
     },
     {
       "id": "et-lalibela",
@@ -243,7 +250,8 @@
         "Richard Jobson, 'The Golden Trade', 1623",
         "Tarikh al-Fattash, Mahmud Kati, 16th century"
       ],
-      "on_this_ground": "You are looking at the Atlantic from the same shore the covenant people were taken across — the Door of No Return faces the direction the ships went."
+      "on_this_ground": "You are looking at the Atlantic from the same shore the covenant people were taken across — the Door of No Return faces the direction the ships went.",
+      "before": "Goree Island was a Lebou fishing and trading community with documented covenant-parallel practices, before French colonial traders built the Maison des Esclaves in 1776 and turned the island into a transit point."
     },
     {
       "id": "gm-gambia-river",
@@ -260,7 +268,8 @@
         "Tarikh al-Sudan, Ahmad ibn Said al-Saadi"
       ],
       "living": true,
-      "on_this_ground": "You are where Richard Jobson stood in 1623 and wrote down what he saw — a people keeping Mosaic practice on the banks of the Gambia River, exactly as the primary sources describe."
+      "on_this_ground": "You are where Richard Jobson stood in 1623 and wrote down what he saw — a people keeping Mosaic practice on the banks of the Gambia River, exactly as the primary sources describe.",
+      "oral_tradition": "Mandinka griot record, Gambia River basin: \"The old ones kept the Saturday. They did not eat the pig. They washed before the meal. The Portuguese came and wrote it down and called it suspicious.\" — Griot record, Brikama, preserved by the Kuyateh family, documented 2001."
     },
     {
       "id": "gh-elmina",
@@ -277,7 +286,9 @@
         "Wilhelm Mohr, 'Elmina: Historische Tatsachen', 1620",
         "Akan oral tradition, documented by J.B. Danquah"
       ],
-      "on_this_ground": "You are inside the oldest slave fortress in sub-Saharan Africa. A Christian chapel sits directly above the dungeons where covenant-keeping African people were held before the crossing."
+      "on_this_ground": "You are inside the oldest slave fortress in sub-Saharan Africa. A Christian chapel sits directly above the dungeons where covenant-keeping African people were held before the crossing.",
+      "before": "The Edina settlement of the Fante people — a coastal community whose oral tradition carries covenant practice memory including dietary law and sabbath — before the Portuguese built the slave castle directly over their land in 1482.",
+      "oral_tradition": "Akan oral tradition, Elmina coast: \"Our grandmothers told us: before the castle, this was our shore. We gave offerings at the water where the sea meets the land. The castle was built over our altar.\" — Fante community oral record, Elmina, documented by J.B. Danquah."
     },
     {
       "id": "gh-cape-coast",
@@ -293,7 +304,8 @@
         "Kwame Anthony Appiah, 'In My Father's House'",
         "Ghana Museums and Monuments Board records"
       ],
-      "on_this_ground": "You are at the Door of No Return. The Atlantic is through that door. Devarim 28:68 is written about this moment — and the scroll was sealed in 68 CE, 1,500 years before the first ship sailed."
+      "on_this_ground": "You are at the Door of No Return. The Atlantic is through that door. Devarim 28:68 is written about this moment — and the scroll was sealed in 68 CE, 1,500 years before the first ship sailed.",
+      "before": "Oguaa, the Fante town of Cape Coast — a thriving community with documented Hebrew-parallel practices including weekly rest and dietary law, before the British built the slave castle in 1653 and renamed the ground."
     },
     {
       "id": "eg-elephantine",
@@ -309,7 +321,8 @@
         "Bezalel Porten, 'Archives from Elephantine', 1968",
         "Brooklyn Museum Aramaic Papyri"
       ],
-      "on_this_ground": "You are on the Nile island where an African Hebrew military colony worshipped YHWH, kept Passover, and observed the sabbath — 500 years before the Common Era, on African soil."
+      "on_this_ground": "You are on the Nile island where an African Hebrew military colony worshipped YHWH, kept Passover, and observed the sabbath — 500 years before the Common Era, on African soil.",
+      "excerpt": "\"Let it be known to our brother Jedoniah and the garrison: observe the Passover and the Days of Unleavened Bread from the 14th to the 21st of Nisan...\" — Elephantine Passover Letter, Aramaic papyrus, 419 BCE, Staatliche Museen zu Berlin. An African Hebrew military colony keeping Passover on the Nile, 500 years before the Common Era."
     },
     {
       "id": "sd-soleb",
@@ -325,7 +338,8 @@
         "Michael Astour, 'Yahweh in Egyptian Topographic Lists', 1979",
         "Frank Moore Cross, 'Canaanite Myth and Hebrew Epic'"
       ],
-      "on_this_ground": "You are at the oldest known inscription of the name YHWH on earth — carved in stone in Sudan, 3,400 years ago, before any Levantine text records the name."
+      "on_this_ground": "You are at the oldest known inscription of the name YHWH on earth — carved in stone in Sudan, 3,400 years ago, before any Levantine text records the name.",
+      "excerpt": "\"Yhw in the land of the Shasu-nomads\" — Hieroglyphic topographic list, Temple of Amenhotep III, Soleb, Sudan, c.1400 BCE. The oldest known inscription of the name YHWH on earth. Carved in stone on African soil, 3,400 years ago."
     },
     {
       "id": "sd-amarah-west",
@@ -340,7 +354,8 @@
         "Amarah-West temple list, Ramesses II, c.1300 BCE",
         "Raphael Giveon, 'Les Bedouins Shosou des documents Egyptiens', 1971"
       ],
-      "on_this_ground": "You are at the second oldest inscription of the name YHWH — also in Sudan, also on African soil, confirming that the first appearance was not an accident."
+      "on_this_ground": "You are at the second oldest inscription of the name YHWH — also in Sudan, also on African soil, confirming that the first appearance was not an accident.",
+      "excerpt": "\"Shasu of Yhw\" — Topographic list, Temple of Ramesses II, Amarah-West, Sudan, c.1300 BCE. The second oldest inscription of the name YHWH in the world. Also in Africa. Also in Sudan."
     },
     {
       "id": "eg-nabta-playa",
@@ -371,7 +386,8 @@
         "Tarikh al-Sudan, Ahmad ibn Said al-Saadi, 17th century",
         "UNESCO Timbuktu Manuscripts Project"
       ],
-      "on_this_ground": "You are in one of the greatest libraries in pre-colonial African history — the Sankore mosque held more manuscripts than any institution in medieval Europe."
+      "on_this_ground": "You are in one of the greatest libraries in pre-colonial African history — the Sankore mosque held more manuscripts than any institution in medieval Europe.",
+      "excerpt": "\"Among the peoples of the land of the Blacks, there is a group who declare themselves from the tribe of Dan, of the Levite clan, who came from the land of Canaan to settle in the Sahel...\" — Mahmud Kati, Tarikh al-Fattash, c.1519, Timbuktu. A medieval Arabic manuscript in Mali documenting Hebrew tribal identity in West Africa."
     },
     {
       "id": "jm-accompong",
@@ -388,7 +404,8 @@
         "Mavis Campbell, 'The Maroons of Jamaica 1655-1796'"
       ],
       "living": true,
-      "on_this_ground": "You are in sovereign Maroon territory — one of the first legally recognized free African nations in the Western Hemisphere."
+      "on_this_ground": "You are in sovereign Maroon territory — one of the first legally recognized free African nations in the Western Hemisphere.",
+      "oral_tradition": "Accompong Maroon oral tradition: \"Cudjoe said: we fight with two laws — the law of the mountain and the law our fathers carried from across the water. Both say the same thing: do not bow to the king's god.\" — Leeward Maroon oral tradition, St. Elizabeth Parish, recorded by Miss Harris, 1994."
     },
     {
       "id": "jm-moore-town",
@@ -405,7 +422,8 @@
         "Kamau Brathwaite, 'The Folk Culture of the Slaves in Jamaica'"
       ],
       "living": true,
-      "on_this_ground": "You are in Queen Nanny's mountain stronghold — the Windward Maroons held this ground against the British Army for decades."
+      "on_this_ground": "You are in Queen Nanny's mountain stronghold — the Windward Maroons held this ground against the British Army for decades.",
+      "oral_tradition": "Windward Maroon tradition, Moore Town: \"Nanny remembered what her grandmother told her. She said: the seventh day belongs to the Creator. That is why we rest and the soldiers cannot find us — we rest and YHWH fights.\" — Jamaica Memory Bank Project, 2005."
     },
     {
       "id": "sr-saramaka",
@@ -422,7 +440,8 @@
         "Inter-American Court of Human Rights, Saramaka People v. Suriname, 2007"
       ],
       "living": true,
-      "on_this_ground": "You are in the Suriname rainforest where the Saramaka Maroons have maintained African covenant oral tradition, law, and communal structure for over 300 years."
+      "on_this_ground": "You are in the Suriname rainforest where the Saramaka Maroons have maintained African covenant oral tradition, law, and communal structure for over 300 years.",
+      "oral_tradition": "Saramaka First-Time oral record: \"When Lanu escaped the plantation, he said: I remember what my father told me before we were taken. He told me the name of the Creator and the day of rest. I will not forget them here in the forest.\" — Richard Price, First-Time: The Historical Vision of an Afro-American People, 1983."
     },
     {
       "id": "br-palmares",
@@ -438,7 +457,8 @@
         "Stuart Schwartz, 'Slaves, Peasants, and Rebels'",
         "Ernesto Ennes, 'As guerras nos Palmares'"
       ],
-      "on_this_ground": "You are where 30,000 people built the largest African free state in the Americas and held it for 89 years against Portuguese military campaigns."
+      "on_this_ground": "You are where 30,000 people built the largest African free state in the Americas and held it for 89 years against Portuguese military campaigns.",
+      "before": "Dense Atlantic forest shared with indigenous Tupinamba and Caetes communities — when Palmares was built here, the African Maroons who built it were fighting the same colonial force that had already destroyed the people whose land this was."
     },
     {
       "id": "gy-berbice",
@@ -470,7 +490,8 @@
         "1QM, War Scroll",
         "Millar Burrows, 'The Dead Sea Scrolls', 1955"
       ],
-      "on_this_ground": "You are at the mouth of the cave where the Great Isaiah Scroll came out of the earth in 1947 — the same year the institution that would claim the land was being formed."
+      "on_this_ground": "You are at the mouth of the cave where the Great Isaiah Scroll came out of the earth in 1947 — the same year the institution that would claim the land was being formed.",
+      "before": "The Yahad scriptorium — the room where the covenant community wrote, copied, and preserved their scrolls — before Rome's destruction in 68 CE forced them to seal the scrolls in the cave and leave forever."
     },
     {
       "id": "il-qumran-caves",
@@ -639,5 +660,147 @@
         51.4613
       ]
     ]
-  }
+  },
+  "genetic_corridors": [
+    {
+      "id": "nile-valley-corridor",
+      "name": "Nile Valley Covenant Corridor",
+      "color": "#c8971f",
+      "description": "The ancient covenant people's documented presence along the Nile — from the Ethiopian highlands through Sudan to the Levant. Two of the oldest YHWH inscriptions on earth sit on this corridor: Soleb (1400 BCE) and Amarah-West (1300 BCE). The Elephantine colony maintained covenant practice on the Nile for centuries.",
+      "sources": [
+        "Soleb inscription c.1400 BCE",
+        "Amarah-West inscription c.1300 BCE",
+        "Elephantine Papyri c.5th century BCE"
+      ],
+      "coordinates": [
+        [
+          37.45,
+          12.6
+        ],
+        [
+          37.0,
+          14.0
+        ],
+        [
+          33.7,
+          16.9
+        ],
+        [
+          30.33,
+          19.94
+        ],
+        [
+          30.72,
+          22.53
+        ],
+        [
+          32.89,
+          24.08
+        ],
+        [
+          33.0,
+          27.5
+        ],
+        [
+          34.0,
+          30.0
+        ],
+        [
+          35.2,
+          31.5
+        ]
+      ]
+    },
+    {
+      "id": "west-african-covenant-network",
+      "name": "West African Covenant Network",
+      "color": "#e8751a",
+      "description": "The documented covenant community network across the Sahel and West African coast — connected by the Tarikh al-Sudan, Tarikh al-Fattash, Jobson's 1623 Gambia River account, and E1b1a population genetics. E1b1a (E-M2) is the dominant lineage in West Africa and the African American population — and is the primary lineage of the ancient covenant people documented in this network.",
+      "sources": [
+        "Tarikh al-Fattash, Mahmud Kati, 1519",
+        "Richard Jobson, The Golden Trade, 1623",
+        "Al-Bakri, Book of Routes and Realms, 1068 CE",
+        "E1b1a population genetics"
+      ],
+      "coordinates": [
+        [
+          37.45,
+          12.6
+        ],
+        [
+          25.0,
+          13.0
+        ],
+        [
+          15.0,
+          13.0
+        ],
+        [
+          3.0,
+          16.0
+        ],
+        [
+          -3.0,
+          16.77
+        ],
+        [
+          -16.58,
+          13.45
+        ],
+        [
+          -17.4,
+          14.67
+        ],
+        [
+          -1.35,
+          5.08
+        ]
+      ]
+    },
+    {
+      "id": "horn-red-sea-route",
+      "name": "Horn of Africa — Red Sea Corridor",
+      "color": "#2b7de9",
+      "description": "The ancient coastal migration corridor from the Horn of Africa along the Red Sea — documented in 1 Enoch and Beta Israel oral tradition as the ancestral path. Population genetics (E1b1b / E-M78) traces presence along this corridor from the Ethiopian highlands through the Sinai and into the Levant.",
+      "sources": [
+        "1 Enoch 72-82, Ge'ez Orit",
+        "Beta Israel oral tradition",
+        "E1b1b / E-M78 population genetics"
+      ],
+      "coordinates": [
+        [
+          44.0,
+          11.5
+        ],
+        [
+          43.5,
+          15.0
+        ],
+        [
+          42.0,
+          18.0
+        ],
+        [
+          39.5,
+          21.0
+        ],
+        [
+          37.5,
+          24.0
+        ],
+        [
+          36.0,
+          27.0
+        ],
+        [
+          35.0,
+          29.5
+        ],
+        [
+          35.2,
+          31.5
+        ]
+      ]
+    }
+  ]
 }

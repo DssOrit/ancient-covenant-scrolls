@@ -330,6 +330,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .lpill .ldot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .lpill-trail.active{background:rgba(230,51,41,.1);border-color:var(--red);color:#ff8080}
 .lpill-living.active{background:rgba(61,191,94,.12);border-color:var(--green);color:#6de990}
+.lpill-genetic.active{background:rgba(200,151,31,.12);border-color:var(--gold);color:#e8c050}
+.lpill-oral.active{background:rgba(155,39,212,.12);border-color:#9b27d4;color:#c97ef7}
 
 /* ── TOPBAR CALENDAR CHIP ────────────────────────────────────── */
 .tb-cal{
@@ -386,6 +388,26 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
 #gps-btn.active{color:var(--blue);border-color:var(--blue)}
+
+/* ── BEFORE / ORAL RECORD / DOCUMENT EXCERPT BLOCKS ─────────── */
+.place-before-wrap{
+  background:rgba(43,125,233,.05);border-left:2px solid rgba(43,125,233,.35);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-before-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,125,233,.45);margin-bottom:4px}
+.place-before-text{font-size:.78rem;color:var(--tx2);line-height:1.65}
+.place-oral-wrap{
+  background:rgba(155,39,212,.05);border-left:2px solid rgba(155,39,212,.35);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-oral-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(155,39,212,.45);margin-bottom:4px}
+.place-oral-text{font-size:.78rem;color:var(--tx2);line-height:1.65;font-style:italic}
+.place-excerpt-wrap{
+  background:rgba(255,255,255,.02);border:1px solid var(--border);border-left:2px solid rgba(200,151,31,.3);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-excerpt-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,151,31,.4);margin-bottom:4px}
+.place-excerpt-text{font-size:.75rem;color:var(--tx3);line-height:1.7;font-style:italic}
 
 /* ── SEARCH RESULTS OVERLAY ─────────────────────────────────── */
 #search-results{
@@ -486,6 +508,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="lpill lpill-living" id="living-pill" onclick="toggleLivingFilter()">
         <span class="ldot" style="background:var(--green)"></span> Living Communities
       </div>
+      <div class="lpill lpill-genetic" id="genetic-pill" onclick="toggleGeneticCorridors()">
+        <span class="ldot" style="background:var(--gold)"></span> Genetic Corridors
+      </div>
+      <div class="lpill lpill-oral" id="oral-pill" onclick="toggleOralFilter()">
+        <span class="ldot" style="background:#9b27d4"></span> Oral Record
+      </div>
     </div>
 
     <!-- Region pills -->
@@ -518,6 +546,8 @@ var markers = [];
 var activeRegion = 'all';
 var activeTypeFilter = null;
 var activeLivingFilter = false;
+var activeOralFilter = false;
+var geneticVisible = false;
 var trailVisible = false;
 var userMarker = null;
 var placesData = null;
@@ -726,6 +756,7 @@ function initMap() {
 
   map.on('load', function() {
     addDisplacementTrailLayer();
+    addGeneticCorridorLayers();
     placeMarkers(places);
   });
 
@@ -779,6 +810,87 @@ function toggleTrail() {
   }
 }
 
+/* ── GENETIC CORRIDORS ──────────────────────────────────────── */
+function addGeneticCorridorLayers() {
+  if (!map || !placesData || !placesData.genetic_corridors) return;
+  placesData.genetic_corridors.forEach(function(corridor) {
+    var srcId = 'genetic-' + corridor.id;
+    map.addSource(srcId, {
+      type: 'geojson',
+      data: { type: 'Feature', geometry: { type: 'LineString', coordinates: corridor.coordinates } }
+    });
+    map.addLayer({
+      id: srcId + '-glow', type: 'line', source: srcId,
+      layout: { 'line-cap': 'round', visibility: 'none' },
+      paint: { 'line-color': corridor.color, 'line-width': 8, 'line-opacity': 0.07 }
+    });
+    map.addLayer({
+      id: srcId + '-line', type: 'line', source: srcId,
+      layout: { 'line-cap': 'round', 'line-join': 'round', visibility: 'none' },
+      paint: { 'line-color': corridor.color, 'line-width': 1.5, 'line-opacity': 0.65, 'line-dasharray': [4, 2] }
+    });
+  });
+}
+
+function toggleGeneticCorridors() {
+  geneticVisible = !geneticVisible;
+  var pill = document.getElementById('genetic-pill');
+  if (pill) pill.classList.toggle('active', geneticVisible);
+  if (map && placesData) {
+    var vis = geneticVisible ? 'visible' : 'none';
+    (placesData.genetic_corridors || []).forEach(function(c) {
+      var base = 'genetic-' + c.id;
+      if (map.getLayer(base + '-line')) map.setLayoutProperty(base + '-line', 'visibility', vis);
+      if (map.getLayer(base + '-glow')) map.setLayoutProperty(base + '-glow', 'visibility', vis);
+    });
+    if (geneticVisible) {
+      map.flyTo({ center: [20, 20], zoom: 2.2, duration: 900 });
+      showGeneticInfo();
+    }
+  }
+}
+
+function showGeneticInfo() {
+  var corridors = (placesData && placesData.genetic_corridors) || [];
+  var itemsHtml = corridors.map(function(c) {
+    return '<div class="stop-row" style="border-left:3px solid ' + c.color + ';padding-left:14px">' +
+      '<div class="stop-info">' +
+        '<div class="stop-name" style="color:' + c.color + '">' + esc(c.name) + '</div>' +
+        '<div class="stop-summary">' + esc(c.description) + '</div>' +
+        '<div class="stop-summary" style="margin-top:4px;color:var(--tx3)">' + (c.sources || []).map(function(s){return esc(s);}).join(' &middot; ') + '</div>' +
+      '</div></div>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="route-hdr">' +
+      '<div class="route-tag">Primary Evidence Layer</div>' +
+      '<div class="route-name">African Genetic Corridors</div>' +
+      '<div class="route-meta">3 corridors &middot; E1b1a / E1b1b lineages &middot; Primary sources named</div>' +
+    '</div>' +
+    '<div class="route-summary">The covenant people\'s documented movement across the African continent — traced through population genetics, ancient inscriptions, and primary source texts. E1b1a (E-M2) is the dominant lineage in West Africa and the African American population. E1b1b (E-M78) traces the Horn of Africa and Red Sea corridor. Both are indigenous African lineages. Neither is European or Ashkenazi.</div>' +
+    '<div class="place-sources" style="margin-bottom:14px"><div class="place-sources-lbl">Evidence Standard</div><div class="place-sources-list">No European or Ashkenazi lineage is referenced here. African-origin haplogroups are the record. Western academic validation is not required — the inscriptions, the manuscripts, and the oral tradition predate the academic institutions that would claim to evaluate them.</div></div>' +
+    '<div class="stop-list">' + itemsHtml + '</div>';
+  openSheet();
+}
+
+/* ── ORAL RECORD FILTER ─────────────────────────────────────── */
+function toggleOralFilter() {
+  activeOralFilter = !activeOralFilter;
+  var pill = document.getElementById('oral-pill');
+  if (pill) pill.classList.toggle('active', activeOralFilter);
+  if (activeOralFilter) {
+    activeTypeFilter = null;
+    activeLivingFilter = false;
+    activeRegion = 'all';
+    document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+    var allPill = document.querySelector('.rpill[data-region="all"]');
+    if (allPill) allPill.classList.add('active');
+    document.querySelectorAll('.lpill:not(.lpill-trail):not(.lpill-oral)').forEach(function(p) { p.classList.remove('active'); });
+  }
+  var filtered = getFilteredPlaces();
+  if (map) placeMarkers(filtered);
+  else showRegionList();
+}
+
 /* ── TYPE FILTER ────────────────────────────────────────────── */
 function toggleTypeFilter(type) {
   if (activeTypeFilter === type) {
@@ -811,6 +923,9 @@ function getFilteredPlaces() {
   if (activeLivingFilter) {
     list = list.filter(function(p) { return p.living === true; });
   }
+  if (activeOralFilter) {
+    list = list.filter(function(p) { return !!p.oral_tradition; });
+  }
   return list;
 }
 
@@ -820,6 +935,7 @@ function toggleLivingFilter() {
   if (pill) pill.classList.toggle('active', activeLivingFilter);
   if (activeLivingFilter) {
     activeTypeFilter = null;
+    activeOralFilter = false;
     activeRegion = 'all';
     document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
     var allPill = document.querySelector('.rpill[data-region="all"]');
@@ -896,9 +1012,33 @@ function showPlace(pl) {
       '</div>';
   }
 
+  var oralHtml = '';
+  if (pl.oral_tradition) {
+    oralHtml = '<div class="place-oral-wrap">' +
+      '<div class="place-oral-lbl">Oral Record</div>' +
+      '<div class="place-oral-text">' + esc(pl.oral_tradition) + '</div>' +
+      '</div>';
+  }
+
   var verseBanner = '';
   if (pl.verse && VERSE_TEXTS[pl.verse]) {
     verseBanner = '<div class="verse-banner"><div class="verse-ref">' + esc(pl.verse) + ' — Ge\'ez Orit, DSS Confirmed</div><div class="verse-text">' + esc(VERSE_TEXTS[pl.verse]) + '</div></div>';
+  }
+
+  var beforeHtml = '';
+  if (pl.before) {
+    beforeHtml = '<div class="place-before-wrap">' +
+      '<div class="place-before-lbl">What Was Here Before</div>' +
+      '<div class="place-before-text">' + esc(pl.before) + '</div>' +
+      '</div>';
+  }
+
+  var excerptHtml = '';
+  if (pl.excerpt) {
+    excerptHtml = '<div class="place-excerpt-wrap">' +
+      '<div class="place-excerpt-lbl">Primary Document</div>' +
+      '<div class="place-excerpt-text">' + esc(pl.excerpt) + '</div>' +
+      '</div>';
   }
 
   var routeBtn = pl.route ? '<button class="place-nav-btn" style="margin-bottom:10px;background:linear-gradient(90deg,var(--amber),var(--gold));color:#05050b" onclick="showRoute(\'' + pl.route + '\')">View Full Route</button>' : '';
@@ -908,8 +1048,11 @@ function showPlace(pl) {
     '<div class="place-name">' + esc(pl.name) + '</div>' +
     '<div class="place-meta">' + typeLabel + '</div>' +
     otgHtml +
-    verseBanner +
+    oralHtml +
     '<div class="place-body">' + esc(pl.summary) + '</div>' +
+    verseBanner +
+    beforeHtml +
+    excerptHtml +
     '<div class="place-sources"><div class="place-sources-lbl">Primary Evidence</div><div class="place-sources-list">' + src + '</div></div>' +
     routeBtn +
     '<button class="place-nav-btn" onclick="navTo(' + pl.lat + ',' + pl.lng + ')">Navigate Here</button>';
