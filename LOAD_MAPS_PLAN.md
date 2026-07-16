@@ -100,7 +100,19 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
   Verified: library loads + exposes PMTiles/Protocol/FileSource, app boots clean,
   pack-list + byte-format + OPFS-fallback logic pass; live WebGL tile render proves
   out on device with a real pack.
-- Next: AR walking arrows (WebXR + A-Frame) as a last, experimental prototype.
+- Done (AR walk, 2026-07-16, cache `loadmaps-v24`): **AR heads-up walk** — an
+  "AR walk (camera)" button on the live guide opens a full-screen back-camera view
+  with a large arrow that points to your next waypoint plus the live distance and
+  compass label. Uses getUserMedia + DeviceOrientation (true compass heading on iOS
+  via `webkitCompassHeading`, alpha fallback elsewhere) + Geolocation. **No WebXR** —
+  the planned WebXR/A-Frame path does not render on iPad/iPhone Safari, so this is
+  the iPad-first equivalent (user chose this, 2026-07-16). Graceful fallbacks: no
+  camera -> arrow still points; no compass permission -> north-up arrow. Verified:
+  bearing/rotation math, next-waypoint selection, heading conversion, and a clean
+  app boot with the AR overlay; live camera + compass prove out on device.
+
+**Roadmap 1-6 complete.** Two features are "dark" pending your setup: shared
+hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_KEY`).
 
 **Stage 3 sources (need a signal)** — researched, see below.
 
