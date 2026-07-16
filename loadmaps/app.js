@@ -1006,11 +1006,28 @@ function rerenderCurrent(){
   }
 }
 function hardRefresh(){
-  var b=el('hrefresh'); if(b){ b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin'); setTimeout(function(){ b.classList.remove('spin'); },750); }
-  updateNet();
-  ensurePos(function(){ rerenderCurrent(); });
-  rerenderCurrent();
-  toast('Refreshed');
+  var b=el('hrefresh'); if(b){ b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin'); }
+  toast('Getting the newest version…');
+  clearAndReload();
+}
+function clearAndReload(){
+  var steps=[];
+  try{
+    if('serviceWorker' in navigator && navigator.serviceWorker.getRegistrations){
+      steps.push(navigator.serviceWorker.getRegistrations().then(function(regs){
+        return Promise.all(regs.map(function(r){ return r.update(); }));
+      }));
+    }
+    if('caches' in window){
+      steps.push(caches.keys().then(function(keys){
+        // clear only Load Maps caches so the other Load/ACR apps keep their offline data
+        return Promise.all(keys.filter(function(k){ return k.indexOf('loadmaps-')===0; }).map(function(k){ return caches.delete(k); }));
+      }));
+    }
+  }catch(e){}
+  Promise.all(steps).catch(function(){}).then(function(){
+    location.replace(location.pathname + '?_=' + Date.now());
+  });
 }
 
 /* ---------------- chimes (arrival / waypoint) ---------------- */
