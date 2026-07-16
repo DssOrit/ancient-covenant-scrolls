@@ -135,7 +135,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 #app.hidden{display:none}
 
 /* ── MAP CONTAINER ──────────────────────────────────────────── */
-#map{flex:1;width:100%;position:relative;background:#0a0a14}
+#map{flex:1 1 0%;min-height:0;width:100%;position:relative;background:#0a0a14}
 
 /* ── TOPBAR ─────────────────────────────────────────────────── */
 #topbar{
@@ -765,11 +765,16 @@ function initMap() {
       attributionControl: false
     });
     map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+    var tileTimeout = setTimeout(function() {
+      if (map && !map.loaded()) { showRegionList(); }
+    }, 8000);
     map.on('load', function() {
+      clearTimeout(tileTimeout);
       addDisplacementTrailLayer();
       addGeneticCorridorLayers();
       placeMarkers(places);
     });
+    map.on('error', function() { showRegionList(); });
     map.on('click', function(e) {
       if (!e.originalEvent.target.classList.contains('mk')) {
         closeSheet();
