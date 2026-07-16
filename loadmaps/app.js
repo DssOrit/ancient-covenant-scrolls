@@ -905,6 +905,7 @@ function startGuidedLive(g){
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
     '<button class="voicebar" id="liveVoice">'+ICO.voice+'<span id="liveVoiceLabel">Voice on — Samantha</span></button>'+
+    '<button class="btn ghost" id="arBtn" style="margin-bottom:10px">'+ICO.pin+' AR walk (camera)</button>'+
     '<button class="btn ghost" id="reportBtn" style="margin-bottom:10px">'+ICO.warn+' Report</button>'+
     '<div class="reprow" id="reprow">'+
       ['Hazard','Closure','Animal','Police'].map(function(k){ return '<button class="repchip" data-rep="'+k+'">'+k+'</button>'; }).join('')+
@@ -918,6 +919,7 @@ function startGuidedLive(g){
   updateVoiceLabel();
   el('sosLive').onclick=function(){ doSOS(); };
   el('stopGuide').onclick=function(){ stopWatch(); openGuided(g); };
+  if(el('arBtn')) el('arBtn').onclick=function(){ openAR({ route:g }); };
   el('reportBtn').onclick=function(){ var r=el('reprow'); r.classList.toggle('open'); };
   $$('[data-rep]',v).forEach(function(c){ c.onclick=function(){ addReport(c.getAttribute('data-rep')); el('reprow').classList.remove('open'); }; });
   var spoken={};
@@ -1405,6 +1407,91 @@ function openMapOffline(name){
   });
 }
 
+/* ---------------- AR heads-up walk (camera + compass arrow, iPad-friendly) ----------------
+   Full-screen back-camera view with a big arrow that points to your next waypoint and
+   the live distance. Uses getUserMedia + DeviceOrientation (true compass on iOS) +
+   Geolocation. No WebXR (unsupported on iPad Safari) — works on the device you use. */
+var AR = { stream:null, watch:null, orient:null, target:null, route:null, heading:null, raf:null };
+function openAR(opts){
+  var w=el('arwrap'); if(!w) return;
+  AR.route=(opts&&opts.route)||null;
+  AR.target=(opts&&opts.point)||null;
+  AR.heading=null;
+  w.classList.add('open');
+  var c=el('arCal'); if(c) c.textContent='';
+  startAROrientation();
+  startARCamera();
+  if('geolocation' in navigator){
+    AR.watch=navigator.geolocation.watchPosition(function(p){
+      state.pos={ lat:p.coords.latitude, lng:p.coords.longitude, acc:p.coords.accuracy };
+    }, function(){}, { enableHighAccuracy:true, maximumAge:3000, timeout:15000 });
+  }
+  if(AR.raf) cancelAnimationFrame(AR.raf);
+  arTick();
+}
+function startARCamera(){
+  var v=el('arVideo');
+  if(!v || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ var c=el('arCal'); if(c) c.textContent='Camera not available — the arrow still points the way.'; return; }
+  navigator.mediaDevices.getUserMedia({ video:{ facingMode:{ ideal:'environment' } }, audio:false })
+    .then(function(s){ AR.stream=s; v.srcObject=s; var pl=v.play&&v.play(); if(pl&&pl.catch) pl.catch(function(){}); })
+    .catch(function(){ var c=el('arCal'); if(c) c.textContent='Camera is off — allow it in Settings, or use the arrow as-is.'; });
+}
+function startAROrientation(){
+  function handler(e){
+    var h=null;
+    if(typeof e.webkitCompassHeading==='number' && !isNaN(e.webkitCompassHeading)) h=e.webkitCompassHeading;
+    else if(typeof e.alpha==='number') h=360-e.alpha;
+    if(h!=null) AR.heading=(h+360)%360;
+  }
+  AR.orient=handler;
+  try{
+    if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(r){
+        if(r==='granted'){ window.addEventListener('deviceorientation', handler, true); }
+        else { var c=el('arCal'); if(c) c.textContent='Compass permission off — the arrow points north-up.'; }
+      }).catch(function(){});
+    } else {
+      window.addEventListener('deviceorientationabsolute', handler, true);
+      window.addEventListener('deviceorientation', handler, true);
+    }
+  }catch(e){}
+}
+function arCurrentTarget(){
+  if(AR.target) return AR.target;
+  if(AR.route && AR.route.waypoints && AR.route.waypoints.length && state.pos){
+    var wps=AR.route.waypoints, nearI=0, nearD=Infinity, i, d;
+    for(i=0;i<wps.length;i++){ d=haversine(state.pos.lat,state.pos.lng,wps[i].lat,wps[i].lng); if(d<nearD){ nearD=d; nearI=i; } }
+    var ni=nearI<wps.length-1?nearI+1:nearI; return wps[ni];
+  }
+  return null;
+}
+function arTick(){
+  var w=el('arwrap');
+  if(!w || !w.classList.contains('open')){ AR.raf=null; return; }
+  var t=arCurrentTarget();
+  if(t && state.pos){
+    var d=haversine(state.pos.lat,state.pos.lng,t.lat,t.lng);
+    var brg=bearing(state.pos.lat,state.pos.lng,t.lat,t.lng);
+    var tg=el('arTarget'); if(tg) tg.textContent=(t.name?('Next: '+t.name):'Waypoint')+' · '+compass(brg);
+    var di=el('arDist'); if(di) di.textContent=fmtDist(d);
+    var rot=(AR.heading!=null)?(brg-AR.heading):brg;
+    var ar=el('arArrow'); if(ar) ar.style.transform='rotate('+rot+'deg)';
+    var c=el('arCal'); if(c && AR.heading==null && !c.textContent) c.textContent='Hold the iPad flat and point its top where you face.';
+  } else {
+    var tg2=el('arTarget'); if(tg2) tg2.textContent='Turn on location to guide you';
+    var di2=el('arDist'); if(di2) di2.textContent='--';
+  }
+  AR.raf=requestAnimationFrame(arTick);
+}
+function closeAR(){
+  var w=el('arwrap'); if(w) w.classList.remove('open');
+  if(AR.stream){ try{ AR.stream.getTracks().forEach(function(tr){ tr.stop(); }); }catch(e){} AR.stream=null; }
+  if(AR.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(AR.watch); AR.watch=null; }
+  if(AR.orient){ try{ window.removeEventListener('deviceorientation', AR.orient, true); window.removeEventListener('deviceorientationabsolute', AR.orient, true); }catch(e){} AR.orient=null; }
+  if(AR.raf){ cancelAnimationFrame(AR.raf); AR.raf=null; }
+  var v=el('arVideo'); if(v){ try{ v.srcObject=null; }catch(e){} }
+}
+
 /* ---------------- online / offline ---------------- */
 function updateNet(){
   var on=navigator.onLine;
@@ -1468,6 +1555,7 @@ function init(){
     else { gpxExport(); }
   };
   if(el('gpxFile')) el('gpxFile').onchange=function(){ if(this.files && this.files[0]) gpxImport(this.files[0]); };
+  if(el('arBack')) el('arBack').onclick=function(){ closeAR(); };
   if(el('packFile')) el('packFile').onchange=function(){
     var f=this.files && this.files[0]; if(!f) return;
     if(!/\.pmtiles$/i.test(f.name)){ toast('Please pick a .pmtiles file'); return; }
