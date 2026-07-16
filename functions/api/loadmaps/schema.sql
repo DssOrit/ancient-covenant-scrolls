@@ -21,3 +21,19 @@ CREATE TABLE IF NOT EXISTS hazards (
 
 CREATE INDEX IF NOT EXISTS idx_hazards_ts  ON hazards (ts);
 CREATE INDEX IF NOT EXISTS idx_hazards_geo ON hazards (lat, lng);
+
+-- Community cleanliness ratings for restrooms (1-5 stars). `ref` is the
+-- OpenStreetMap element ref (e.g. "node/12345") so ratings attach to a specific
+-- restroom. Until the DB binding exists, /api/loadmaps/restrooms returns
+-- { configured:false } and the app shows OSM badges only (no ratings).
+CREATE TABLE IF NOT EXISTS restroom_ratings (
+  id    INTEGER PRIMARY KEY AUTOINCREMENT,
+  ref   TEXT NOT NULL,
+  lat   REAL NOT NULL,
+  lng   REAL NOT NULL,
+  stars INTEGER NOT NULL,
+  ts    INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_restroom_ref ON restroom_ratings (ref);
+CREATE INDEX IF NOT EXISTS idx_restroom_geo ON restroom_ratings (lat, lng);

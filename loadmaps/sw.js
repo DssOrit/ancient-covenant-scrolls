@@ -1,5 +1,5 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v31';
+var CACHE = 'loadmaps-v32';
 var CORE = [
   'index.html',
   'app.js',
@@ -40,6 +40,15 @@ function cachePut(req, res){
   if(res && res.status===200 && res.type==='basic'){ var copy=res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); }); }
   return res;
 }
+// Network, but never hang: if it doesn't answer within `ms`, reject so we fall back to cache.
+function timeoutFetch(req, ms){
+  return new Promise(function(resolve, reject){
+    var settled=false;
+    var timer=setTimeout(function(){ if(!settled){ settled=true; reject(new Error('timeout')); } }, ms);
+    fetch(req).then(function(res){ if(!settled){ settled=true; clearTimeout(timer); resolve(res); } },
+                    function(err){ if(!settled){ settled=true; clearTimeout(timer); reject(err); } });
+  });
+}
 self.addEventListener('fetch', function(e){
   var req=e.request;
   if(req.method!=='GET') return;
@@ -49,8 +58,10 @@ self.addEventListener('fetch', function(e){
   // loads when online — this is what stops the old cached screen "coming through".
   var freshFirst = req.mode==='navigate' || /(?:^|\/)(index\.html|app\.js|data\.js)$/.test(url.pathname) || url.pathname===self.registration.scope;
   if(freshFirst){
+    // Fresh when the network is quick; if it's slow/flaky (e.g. a VPN), fall back to
+    // the saved app after 3.5s instead of hanging until Safari shows an error page.
     e.respondWith(
-      fetch(req).then(function(res){ return cachePut(req, res); }).catch(function(){
+      timeoutFetch(req, 3500).then(function(res){ return cachePut(req, res); }).catch(function(){
         return caches.match(req).then(function(hit){ return hit || caches.match('index.html'); });
       })
     );
