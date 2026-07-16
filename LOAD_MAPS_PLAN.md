@@ -146,6 +146,17 @@ hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_K
   "Ask Load Maps" screen shows "not set up yet".
 Both keep the key server-side; nothing sensitive is committed.
 
+**Live map dark redesign (2026-07-16, cache `loadmaps-v29`).** The Live map now uses
+the **OpenFreeMap dark** vector style (matching the ACR Maps look the user asked for),
+with a **CARTO dark** raster fallback for no-WebGL. Added an ACR-Maps-style browser
+chrome on the map, driven by Load Maps' OWN content (not ACR's): an **on-map search
+bar** (Photon; tap a result to drop a marker + offer Drive/Walk/Cycle), **region pills**
+(All · Portugal · Spain · France · Italy · Greece · United Kingdom — jump the view), and
+a **category legend** (Fuel · EV · Waterfalls · Beaches · Camping · Viewpoints) that
+toggles coloured lettered pins loaded in the current view via keyless Overpass. All
+keyless. The existing Rain/Reach/Cameras/etc. buttons remain (raised to clear the new
+bottom bars).
+
 **Revised direction (2026-07-15, user): no Groq, limited AI.** Almost everything
 is pure open-source logic (zero AI): predictive rerouting around reported hazards
 (Valhalla), speed-limit warnings (Overpass speed data vs GPS speed), auto ETA
