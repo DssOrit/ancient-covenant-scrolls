@@ -70,8 +70,49 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
   markers, auto-fit, elevation profile if the track carries ele); elevation profile
   panel for guided routes (uses each route's own waypoint elevations — climb, range,
   distance + inline area sparkline). Cache `loadmaps-v21`.
-- Next: weather + fire overlays (Open-Meteo, NASA FIRMS), offline map packs
-  (Protomaps on Cloudflare R2) for full offline maps.
+- Done (smart tranche, 2026-07-16, cache `loadmaps-v22`):
+  - **Nearest-on-route** ("On route" button): in-browser spatial math (point-to-
+    segment distance, no library) finds the nearest fuel / EV / food / water /
+    rest / toilets along the open route and marks the closest + how far off-route.
+  - **Speed-limit warning**: throttled Overpass `maxspeed` lookup vs GPS speed;
+    the speed pill turns red and Samantha says "slow down" when over. Works on
+    guided routes and live map navigation. Pure logic, no AI.
+  - **Live ETA**: a map ETA pill recomputes remaining time + distance from the
+    drawn route as you move; nudges to re-route when you drift off it.
+  - **Reroute around a hazard**: reporting a Hazard/Closure/Animal while navigating
+    re-runs Valhalla with that point excluded (`exclude_locations`).
+  - **Shared hazard layer (Cloudflare D1, dark)**: `functions/api/loadmaps/hazards.js`
+    + `schema.sql`. Reads/writes a D1 table bound as `DB`; until the binding exists
+    it returns `{configured:false}` and the app stays local-only, silently. When on,
+    reports post to the shared layer and nearby hazards show as pins on the map.
+  - **Natural-language find (one Haiku call, dark)**: `ai.js` gains a `mode:'parse'`
+    that returns a small JSON intent; the client ("Find it on the map") acts on it
+    with plain logic — geocode a place via Photon and open it, or find a facility
+    category on the route / near a place. Dark until `ANTHROPIC_API_KEY` is set.
+- Done (offline packs, 2026-07-16, cache `loadmaps-v23`): **Offline maps** screen
+  (Home card). Import a `.pmtiles` map file once; it is stored on the device via
+  OPFS (free — no Cloudflare storage, nothing uploaded). The live map then uses it
+  as the base with no signal, via a vendored `pmtiles` protocol on MapLibre
+  (`loadmaps/vendor/pmtiles/pmtiles.js`). Manage packs (size, use, delete), storage
+  estimate shown, graceful session-only fallback where OPFS is unavailable. Raster
+  `.pmtiles` are the supported offline base (vector needs a matching style). The
+  "Satellite/Map" button returns to live tiles when an offline base is active.
+  Verified: library loads + exposes PMTiles/Protocol/FileSource, app boots clean,
+  pack-list + byte-format + OPFS-fallback logic pass; live WebGL tile render proves
+  out on device with a real pack.
+- Done (AR walk, 2026-07-16, cache `loadmaps-v24`): **AR heads-up walk** — an
+  "AR walk (camera)" button on the live guide opens a full-screen back-camera view
+  with a large arrow that points to your next waypoint plus the live distance and
+  compass label. Uses getUserMedia + DeviceOrientation (true compass heading on iOS
+  via `webkitCompassHeading`, alpha fallback elsewhere) + Geolocation. **No WebXR** —
+  the planned WebXR/A-Frame path does not render on iPad/iPhone Safari, so this is
+  the iPad-first equivalent (user chose this, 2026-07-16). Graceful fallbacks: no
+  camera -> arrow still points; no compass permission -> north-up arrow. Verified:
+  bearing/rotation math, next-waypoint selection, heading conversion, and a clean
+  app boot with the AR overlay; live camera + compass prove out on device.
+
+**Roadmap 1-6 complete.** Two features are "dark" pending your setup: shared
+hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_KEY`).
 
 **Stage 3 sources (need a signal)** — researched, see below.
 

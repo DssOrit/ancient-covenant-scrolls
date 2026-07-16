@@ -290,6 +290,33 @@
   .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
   .map-modes button.on{background:rgba(61,139,255,.2);border-color:rgba(61,139,255,.5);color:var(--blue)}
   .map-side{position:absolute;right:12px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .map-route-tools{position:absolute;right:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;flex-direction:column;gap:7px;align-items:flex-end}
+  .map-route-tools.open{display:flex}
+  .map-route-tools button{background:rgba(15,21,36,.94);border:1px solid var(--line);border-radius:11px;padding:7px 13px;font:inherit;font-weight:700;font-size:.84rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 3px 12px rgba(0,0,0,.4)}
+  .map-route-tools button:active{background:rgba(61,139,255,.25)}
+  .map-eta{position:absolute;left:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;
+    background:rgba(43,110,255,.95);border:1px solid rgba(120,170,255,.8);border-radius:13px;padding:7px 14px;color:#fff;box-shadow:0 5px 18px rgba(43,110,255,.45);align-items:baseline;gap:6px}
+  .map-eta.on{display:inline-flex}
+  .map-eta b{font-size:1.25rem;font-weight:800;line-height:1}
+  .map-eta span{font-size:.66rem;font-weight:700;letter-spacing:.04em;opacity:.92}
+  .speedpill.over{background:rgba(255,77,61,.92)!important;border-color:rgba(255,150,140,.9)!important;color:#fff!important;animation:spdpulse 1s ease-in-out infinite}
+  @keyframes spdpulse{0%,100%{box-shadow:0 4px 14px rgba(255,77,61,.4)}50%{box-shadow:0 4px 22px rgba(255,77,61,.85)}}
+  .ask-row2{margin:8px 0 0}
+  .ask-row2 .btn{width:100%;justify-content:center}
+  #arwrap{position:fixed;inset:0;z-index:3000;display:none;background:#05070d}
+  #arwrap.open{display:block}
+  #arVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#05070d}
+  .ar-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    padding:calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,rgba(0,0,0,.55))}
+  .ar-overlay #arBack{position:absolute;left:14px;top:calc(14px + env(safe-area-inset-top))}
+  .ar-target{margin-top:6px;background:rgba(8,12,22,.7);border:1px solid var(--line);border-radius:12px;
+    padding:8px 16px;font-weight:800;font-size:1rem;color:#fff;backdrop-filter:blur(6px);max-width:80%;text-align:center}
+  .ar-arrow{margin:auto;width:min(56vw,240px);height:min(56vw,240px);transition:transform .12s linear;filter:drop-shadow(0 6px 20px rgba(0,0,0,.6))}
+  .ar-arrow svg{width:100%;height:100%;display:block}
+  .ar-dist{background:rgba(43,110,255,.92);border:1px solid rgba(120,170,255,.8);border-radius:14px;
+    padding:9px 22px;font-weight:800;font-size:1.5rem;color:#fff;box-shadow:0 6px 20px rgba(43,110,255,.45)}
+  .ar-cal{margin-top:10px;min-height:18px;color:#dbe4f5;font-size:.82rem;font-weight:600;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.8)}
   .leaflet-control-attribution{background:rgba(10,16,32,.7)!important;color:#95a0b6!important}
   .leaflet-control-attribution a{color:#8fb6ff!important}
 
@@ -434,6 +461,8 @@
     <!-- ============ ASSISTANT (AI) ============ -->
     <section class="view" id="v-assistant"></section>
 
+    <section class="view" id="v-offline"></section>
+
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
       <h2 class="sec">How to Use</h2>
@@ -481,6 +510,7 @@
   <div class="map-side">
     <button class="map-btn round" id="mapRain">Rain</button>
     <button class="map-btn round" id="mapReach">Reach</button>
+    <button class="map-btn round" id="mapOnRoute">On route</button>
     <button class="map-btn round" id="mapGpx">GPX</button>
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
@@ -488,13 +518,33 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
     </button>
   </div>
+  <div class="map-route-tools" id="mapRouteTools"></div>
+  <div class="map-eta" id="mapEta"></div>
   <div class="map-elev" id="mapElev"></div>
   <input type="file" id="gpxFile" accept=".gpx,application/gpx+xml" style="display:none">
+</div>
+<input type="file" id="packFile" accept=".pmtiles" style="display:none">
+
+<!-- AR heads-up walk (camera + compass arrow to the next waypoint) -->
+<div id="arwrap">
+  <video id="arVideo" playsinline autoplay muted></video>
+  <div class="ar-overlay">
+    <button class="map-btn" id="arBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back
+    </button>
+    <div class="ar-target" id="arTarget">Finding waypoint…</div>
+    <div class="ar-arrow" id="arArrow" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><path d="M50 6 L82 78 L50 62 L18 78 Z" fill="#2fd85f" stroke="#04140a" stroke-width="3" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ar-dist" id="arDist">--</div>
+    <div class="ar-cal" id="arCal"></div>
+  </div>
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="vendor/maplibre/maplibre-gl.js"></script>
 <script src="vendor/maplibre/leaflet-maplibre-gl.js"></script>
+<script src="vendor/pmtiles/pmtiles.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>

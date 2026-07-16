@@ -48,6 +48,7 @@ ICO.hiker='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 ICO.pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
 ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>';
 ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+ICO.download='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -166,6 +167,7 @@ function navTo(key){
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
   else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
+  else if(key==='offline'){ renderOffline(); showView('offline','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -182,6 +184,7 @@ function renderHome(){
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
       '<button class="hcard assistant wide" data-go="assistant"><div class="hi">'+ICO.q+'</div><div class="ht"><b>Ask Load Maps</b><span>Plan a trip or ask about a place (needs setup)</span></div></button>'+
+      '<button class="hcard offline wide" data-go="offline"><div class="hi">'+ICO.download+'</div><div class="ht"><b>Offline maps</b><span>Load a map file onto your device so the map works with no signal</span></div></button>'+
     '</div>';
   $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
 }
@@ -262,6 +265,12 @@ function openMap(opts){
   if(LMap.driveLayer){ LMap.map.removeLayer(LMap.driveLayer); LMap.driveLayer=null; }
   if(LMap.reachLayer){ LMap.map.removeLayer(LMap.reachLayer); LMap.reachLayer=null; var rb=el('mapReach'); if(rb) rb.classList.remove('on'); }
   if(LMap.gpxLayer){ LMap.map.removeLayer(LMap.gpxLayer); LMap.gpxLayer=null; }
+  if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); LMap.onRouteLayer=null; }
+  if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); LMap.hazardLayer=null; }
+  if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; if(LMap.base){ try{ LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); }catch(e){} } var ml=el('mapLayer'); if(ml) ml.textContent='Satellite'; }
+  LMap.route=null; LMap.avoid=null; LMap._hzLoaded=false; _spd.limit=null; _spd.at=0;
+  var ee=el('mapEta'); if(ee) ee.classList.remove('on');
+  var rt=el('mapRouteTools'); if(rt) rt.classList.remove('open');
   var em=el('mapElev'); if(em) em.classList.remove('on');
   LMap.curRoute=(opts && opts.route) || null;
   var title='Live map', bounds=null, center=null;
@@ -304,6 +313,7 @@ function drawRoute(from, to, costing){
   LMap.from=from; LMap.dest=to; LMap.costing=costing;
   toast('Getting directions…');
   var body={ locations:[{ lat:from[0], lon:from[1] },{ lat:to[0], lon:to[1] }], costing:costing, directions_options:{ units:'kilometers' } };
+  if(LMap.avoid && LMap.avoid.length) body.exclude_locations=LMap.avoid.slice(0,20);
   fetch('https://valhalla.openstreetmap.de/route', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify(body) })
     .then(function(r){ return r.json(); }).then(function(j){
       var leg=j && j.trip && j.trip.legs && j.trip.legs[0];
@@ -316,6 +326,8 @@ function drawRoute(from, to, costing){
       var s=j.trip.summary, km=s.length.toFixed(s.length<10?1:0), min=Math.round(s.time/60);
       var lab=costing==='pedestrian'?'on foot':(costing==='bicycle'?'by bike':'by car');
       var t=el('mapTitle'); if(t) t.textContent=km+' km · '+min+' min '+lab;
+      LMap.route={ coords:coords, lengthM:s.length*1000, timeSec:s.time, offNotified:false };
+      updateEta();
     }).catch(function(){ toast('Could not get directions'); });
 }
 function renderPins(){
@@ -447,6 +459,110 @@ function parseGpx(text){
   }catch(err){}
   return out;
 }
+// ---------------- Nearest-on-route (in-browser spatial, no library) ----------------
+var ROUTE_CATS=[
+  { key:'fuel',    label:'Fuel',    q:'["amenity"="fuel"]' },
+  { key:'ev',      label:'EV',      q:'["amenity"="charging_station"]' },
+  { key:'food',    label:'Food',    q:'["amenity"~"restaurant|cafe|fast_food"]' },
+  { key:'water',   label:'Water',   q:'["amenity"="drinking_water"]' },
+  { key:'rest',    label:'Rest',    q:'["highway"="rest_area"]' },
+  { key:'toilets', label:'Toilets', q:'["amenity"="toilets"]' }
+];
+function routeCoords(){
+  if(LMap.driveLayer && LMap.driveLayer.getLatLngs){ var ll=LMap.driveLayer.getLatLngs(); if(ll && ll.length) return ll.map(function(p){ return [p.lat,p.lng]; }); }
+  if(LMap.curRoute && LMap.curRoute.waypoints) return LMap.curRoute.waypoints.map(function(w){ return [w.lat,w.lng]; });
+  return null;
+}
+function segDistMeters(plat,plng, alat,alng, blat,blng){
+  var R=6371000, rad=Math.PI/180, latc=Math.cos(alat*rad);
+  var bx=(blng-alng)*rad*latc*R, by=(blat-alat)*rad*R;
+  var px=(plng-alng)*rad*latc*R, py=(plat-alat)*rad*R;
+  var len2=bx*bx+by*by, t=len2?(px*bx+py*by)/len2:0; t=t<0?0:(t>1?1:t);
+  var ex=px-t*bx, ey=py-t*by;
+  return Math.sqrt(ex*ex+ey*ey);
+}
+function distToRoute(plat,plng, coords){
+  var min=Infinity;
+  for(var i=1;i<coords.length;i++){ var d=segDistMeters(plat,plng, coords[i-1][0],coords[i-1][1], coords[i][0],coords[i][1]); if(d<min) min=d; }
+  return min;
+}
+function bboxOf(coords, padM){
+  var minLa=90,maxLa=-90,minLo=180,maxLo=-180;
+  coords.forEach(function(c){ if(c[0]<minLa)minLa=c[0]; if(c[0]>maxLa)maxLa=c[0]; if(c[1]<minLo)minLo=c[1]; if(c[1]>maxLo)maxLo=c[1]; });
+  var midLa=(minLa+maxLa)/2, dLa=padM/111000, dLo=padM/((111000*Math.cos(midLa*Math.PI/180))||1);
+  return { s:minLa-dLa, w:minLo-dLo, n:maxLa+dLa, e:maxLo+dLo };
+}
+function nearestOnRoute(cat){
+  var coords=routeCoords();
+  if(!coords || coords.length<2){ toast('Open or draw a route first'); return; }
+  if(!navigator.onLine){ toast('On-route search needs a connection'); return; }
+  toast('Finding '+cat.label.toLowerCase()+' on your route…');
+  var bb=bboxOf(coords, 3000);
+  var box='('+bb.s+','+bb.w+','+bb.n+','+bb.e+')';
+  var body='[out:json][timeout:20];(node'+cat.q+box+';way'+cat.q+box+';);out center 200;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var pts=parsePoi(j);
+      if(!pts.length){ toast('No '+cat.label.toLowerCase()+' found near this route'); return; }
+      pts.forEach(function(p){ p.off=distToRoute(p.lat,p.lng, coords); });
+      pts.sort(function(a,b){ return a.off-b.off; });
+      var best=pts[0];
+      if(LMap.onRouteLayer){ LMap.map.removeLayer(LMap.onRouteLayer); }
+      LMap.onRouteLayer=L.layerGroup();
+      pts.slice(0,8).forEach(function(p,i){
+        var top=i===0;
+        L.circleMarker([p.lat,p.lng], { radius:top?9:6, color:'#04140a', weight:2, fillColor:top?'#2fd85f':'#3d8bff', fillOpacity:1 })
+          .bindPopup('<b>'+esc(p.name||cat.label)+'</b><br>'+fmtDist(p.off)+' off route').addTo(LMap.onRouteLayer);
+      });
+      LMap.onRouteLayer.addTo(LMap.map);
+      try{ LMap.map.panTo([best.lat,best.lng]); }catch(e){}
+      toast('Nearest '+cat.label.toLowerCase()+': '+fmtDist(best.off)+' off route');
+      speak('Nearest '+cat.label.toLowerCase()+' is '+fmtDist(best.off)+' off your route.');
+    }).catch(function(){ toast('Could not search right now'); });
+}
+// ---------------- Smart logic: speed-limit warning, live ETA, reroute (no AI) ----------------
+var _spd={ limit:null, at:0, lat:0, lng:0, warnedAt:0 };
+function checkSpeedLimit(){
+  if(!state.pos || !navigator.onLine) return;
+  var now=Date.now(), moved=_spd.lat? haversine(state.pos.lat,state.pos.lng,_spd.lat,_spd.lng):9999;
+  if(_spd.at && (now-_spd.at)<15000 && moved<250){ evalSpeed(); return; }
+  _spd.at=now; _spd.lat=state.pos.lat; _spd.lng=state.pos.lng;
+  var la=state.pos.lat, lo=state.pos.lng;
+  var body='[out:json][timeout:10];way(around:25,'+la+','+lo+')["highway"]["maxspeed"];out tags 1;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body })
+    .then(function(r){ return r.json(); }).then(function(j){
+      var lim=null;
+      if(j && j.elements){ for(var i=0;i<j.elements.length;i++){ var mx=j.elements[i].tags && j.elements[i].tags.maxspeed; if(mx){ var m=parseInt(mx,10); if(!isNaN(m)){ lim=/mph/i.test(mx)?Math.round(m*1.60934):m; break; } } } }
+      _spd.limit=lim; evalSpeed();
+    }).catch(function(){});
+}
+function evalSpeed(){
+  var sp=el('speedpill');
+  if(_spd.limit==null || state.curSpeed==null){ if(sp) sp.classList.remove('over'); return; }
+  var over=state.curSpeed-_spd.limit;
+  if(sp) sp.classList.toggle('over', over>5);
+  if(over>7 && Date.now()-_spd.warnedAt>20000){ _spd.warnedAt=Date.now(); chime('next'); speak('Slow down. The limit here is '+_spd.limit+'.', true); }
+}
+function updateEta(){
+  var pill=el('mapEta'); if(!pill) return;
+  var R=LMap.route;
+  if(!R || !state.pos){ return; }
+  var coords=R.coords, best=Infinity, bi=0;
+  for(var i=0;i<coords.length;i++){ var d=haversine(state.pos.lat,state.pos.lng,coords[i][0],coords[i][1]); if(d<best){ best=d; bi=i; } }
+  var rem=0; for(var k=bi+1;k<coords.length;k++){ rem+=haversine(coords[k-1][0],coords[k-1][1],coords[k][0],coords[k][1]); }
+  var frac=R.lengthM? rem/R.lengthM : 0, secs=Math.max(0, Math.round(R.timeSec*frac));
+  var mins=Math.round(secs/60);
+  pill.innerHTML='<b>'+(mins<1?'<1':mins)+'</b><span>MIN · '+fmtDist(rem)+'</span>';
+  pill.classList.add('on');
+  if(best>70 && !R.offNotified){ R.offNotified=true; toast('Off route — tap a mode to re-route'); }
+  else if(best<=70){ R.offNotified=false; }
+}
+function rerouteAvoiding(lat,lng){
+  if(!LMap.from || !LMap.dest){ return; }
+  LMap.avoid=LMap.avoid||[]; LMap.avoid.push({ lat:lat, lon:lng });
+  toast('Re-routing around the hazard…');
+  drawRoute(LMap.from, LMap.dest, LMap.costing||'auto');
+}
 function toggleRain(){
   if(!LMap.map) return;
   var btn=el('mapRain');
@@ -469,8 +585,12 @@ function startMapLocate(){
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
     var ll=[pos.coords.latitude,pos.coords.longitude];
     state.pos={ lat:pos.coords.latitude, lng:pos.coords.longitude, acc:pos.coords.accuracy };
+    state.curSpeed=speedKmh(pos);
     if(!LMap.meMarker){ LMap.meMarker=L.circleMarker(ll, { radius:8, color:'#fff', weight:2, fillColor:'#3d8bff', fillOpacity:1 }).addTo(LMap.map); }
     else LMap.meMarker.setLatLng(ll);
+    updateEta();
+    checkSpeedLimit();
+    if(!LMap._hzLoaded){ LMap._hzLoaded=true; loadHazards(state.pos.lat, state.pos.lng); }
   }, function(){}, { enableHighAccuracy:true, maximumAge:5000 });
 }
 function bindBacks(scope){
@@ -785,6 +905,7 @@ function startGuidedLive(g){
       '<div class="box"><b id="gto">--</b><span>to next</span></div>'+
       '<div class="box"><b id="gleft">--</b><span>left</span></div></div>'+
     '<button class="voicebar" id="liveVoice">'+ICO.voice+'<span id="liveVoiceLabel">Voice on — Samantha</span></button>'+
+    '<button class="btn ghost" id="arBtn" style="margin-bottom:10px">'+ICO.pin+' AR walk (camera)</button>'+
     '<button class="btn ghost" id="reportBtn" style="margin-bottom:10px">'+ICO.warn+' Report</button>'+
     '<div class="reprow" id="reprow">'+
       ['Hazard','Closure','Animal','Police'].map(function(k){ return '<button class="repchip" data-rep="'+k+'">'+k+'</button>'; }).join('')+
@@ -798,6 +919,7 @@ function startGuidedLive(g){
   updateVoiceLabel();
   el('sosLive').onclick=function(){ doSOS(); };
   el('stopGuide').onclick=function(){ stopWatch(); openGuided(g); };
+  if(el('arBtn')) el('arBtn').onclick=function(){ openAR({ route:g }); };
   el('reportBtn').onclick=function(){ var r=el('reprow'); r.classList.toggle('open'); };
   $$('[data-rep]',v).forEach(function(c){ c.onclick=function(){ addReport(c.getAttribute('data-rep')); el('reprow').classList.remove('open'); }; });
   var spoken={};
@@ -829,6 +951,7 @@ function updateGuided(g, spoken){
   else if(state._lastNext!==next.n){ speak((nextIdx===nearIdx?'At ':'Heading to ')+next.name+', '+fmtDist(dToNext)+'.'); }
   state._lastNext=next.n;
   if(nearIdx===wps.length-1 && nearD<30 && !spoken.done){ spoken.done=1; chime('arrive'); speak('You have reached '+wps[wps.length-1].name+'.', true); }
+  checkSpeedLimit();
 }
 
 /* ---------------- Alerts ---------------- */
@@ -918,6 +1041,11 @@ function addReport(kind){
   if(r.length>30) r=r.slice(0,30);
   try{ localStorage.setItem('lm_reports', JSON.stringify(r)); }catch(e){}
   toast(kind+' reported'+(state.pos?' here':''));
+  shareHazard(kind, state.pos);
+  // If we're actively navigating a Valhalla route, re-route around this hazard.
+  if(state.pos && LMap.map && LMap.driveLayer && LMap.from && LMap.dest && (kind==='Hazard'||kind==='Closure'||kind==='Animal')){
+    rerouteAvoiding(state.pos.lat, state.pos.lng);
+  }
 }
 function clearReports(){ try{ localStorage.removeItem('lm_reports'); }catch(e){} }
 
@@ -1067,18 +1195,91 @@ function loadFire(lat, lng, elId){
   }).catch(function(){ if(host) host.innerHTML=''; });
 }
 
+/* ---------------- Shared hazard layer (Cloudflare D1; dark until DB bound) ---------------- */
+function shareHazard(kind, pos){
+  if(!navigator.onLine || !pos) return;
+  fetch('/api/loadmaps/hazards', { method:'POST', headers:{ 'content-type':'application/json' },
+    body:JSON.stringify({ kind:kind, lat:pos.lat, lng:pos.lng }) }).catch(function(){});
+}
+function loadHazards(lat, lng){
+  if(!LMap.map || !navigator.onLine) return;
+  fetch('/api/loadmaps/hazards?lat='+lat+'&lng='+lng).then(function(r){ return r.json(); }).then(function(j){
+    if(!j || j.configured===false || !j.hazards) return; // not set up -> silent, local-only
+    if(LMap.hazardLayer){ LMap.map.removeLayer(LMap.hazardLayer); }
+    LMap.hazardLayer=L.layerGroup();
+    j.hazards.forEach(function(h){
+      if(h.lat==null||h.lng==null) return;
+      L.circleMarker([h.lat,h.lng], { radius:7, color:'#1a0d04', weight:2, fillColor:'#ffb023', fillOpacity:.95 })
+        .bindPopup('<b>'+esc(h.kind||'Hazard')+'</b>'+(h.ago?('<br>'+esc(h.ago)):'')).addTo(LMap.hazardLayer);
+    });
+    LMap.hazardLayer.addTo(LMap.map);
+  }).catch(function(){});
+}
+
 /* ---------------- AI assistant (Stage 5, via Cloudflare function) ---------------- */
 function renderAssistant(){
   var v=el('v-assistant');
   v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
     '<h2 class="sec">Ask Load Maps</h2>'+
     '<p class="muted small" style="margin:0 0 12px">Ask about a place, a route, or plan a trip. Needs a connection.</p>'+
-    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. plan a safe day trip near Porto"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div class="ask-row"><input id="askIn" type="text" autocomplete="off" placeholder="e.g. take me somewhere I can get fuel near the motorway"><button class="btn green" id="askBtn">Ask</button></div>'+
+    '<div class="ask-row2"><button class="btn ghost" id="findBtn">'+ICO.pin+' Find it on the map</button></div>'+
     '<div id="askOut" class="ask-out"></div>'+
-    '<div class="ask-eg"><b>Try:</b> "hidden waterfalls near me" · "avoid narrow mountain roads to Gerês" · "history of Coimbra"</div>';
+    '<div class="ask-eg"><b>Ask:</b> "history of Coimbra" · "avoid narrow mountain roads to Gerês"<br><b>Find:</b> "fuel on my route" · "nearest EV charging near Porto" · "take me to Sete Lagoas"</div>';
   bindBacks(v);
   el('askBtn').onclick=doAsk;
+  el('findBtn').onclick=smartFind;
   el('askIn').addEventListener('keydown', function(e){ if(e.key==='Enter') doAsk(); });
+}
+// Feature: natural-language "find" — one Haiku parse call, then plain logic acts on it.
+function smartFind(){
+  var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
+  var out=el('askOut');
+  if(!navigator.onLine){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Smart find needs a connection.</p></div>'; return; }
+  if(out) out.innerHTML='<p class="muted small">Working it out…</p>';
+  fetch('/api/loadmaps/ai', { method:'POST', headers:{ 'content-type':'application/json' }, body:JSON.stringify({ q:q, mode:'parse' }) })
+    .then(function(r){ return r.json(); }).then(function(j){
+      if(!j || j.configured===false){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Smart find needs an AI key in Cloudflare. Plain search still works.</p></div>'; return; }
+      var it=j.intent;
+      if(!it || it.action==='unknown' || j.error){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Not sure what to find. Try a place name, or "fuel on my route".</p></div>'; return; }
+      if(it.action==='category' && it.category){
+        var cat=null; for(var i=0;i<ROUTE_CATS.length;i++){ if(ROUTE_CATS[i].key===it.category) cat=ROUTE_CATS[i]; }
+        if(!cat){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not match that category.</p></div>'; return; }
+        if(routeCoords()){ if(out) out.innerHTML='<div class="ask-answer">Finding '+esc(cat.label.toLowerCase())+' on your open route…</div>'; nearestOnRoute(cat); return; }
+        geocodeOne(it.near||q, function(ctr){
+          if(!ctr && state.pos) ctr={ name:'you', lat:state.pos.lat, lng:state.pos.lng };
+          if(!ctr){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Tell me where — e.g. "fuel near Coimbra".</p></div>'; return; }
+          nearbyCategory(cat, ctr, out);
+        });
+        return;
+      }
+      geocodeOne(it.query||it.near||q, function(ctr){
+        if(!ctr){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not find that place.</p></div>'; return; }
+        if(out) out.innerHTML='<div class="ask-answer">Opening '+esc(ctr.name)+' on the map.</div>';
+        openMap({ place:{ name:ctr.name, lat:ctr.lat, lng:ctr.lng }, directions:true });
+      });
+    }).catch(function(){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not run smart find.</p></div>'; });
+}
+function geocodeOne(q, cb){
+  if(!q){ cb(null); return; }
+  fetch('https://photon.komoot.io/api/?limit=1&q='+encodeURIComponent(q)).then(function(r){ return r.json(); }).then(function(j){
+    var f=(j&&j.features&&j.features[0]); if(!f){ cb(null); return; }
+    var c=(f.geometry&&f.geometry.coordinates)||[], pr=f.properties||{};
+    if(c[1]==null||c[0]==null){ cb(null); return; }
+    cb({ name:pr.name||pr.city||q, lat:c[1], lng:c[0] });
+  }).catch(function(){ cb(null); });
+}
+function nearbyCategory(cat, ctr, out){
+  var box='(around:20000,'+ctr.lat+','+ctr.lng+')';
+  var body='[out:json][timeout:20];(node'+cat.q+box+';way'+cat.q+box+';);out center 60;';
+  fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:body }).then(function(r){ return r.json(); }).then(function(j){
+    var pts=parsePoi(j);
+    if(!pts.length){ if(out) out.innerHTML='<div class="info flat"><p class="muted">No '+esc(cat.label.toLowerCase())+' found near '+esc(ctr.name)+'.</p></div>'; return; }
+    pts.forEach(function(p){ p.d=haversine(ctr.lat,ctr.lng,p.lat,p.lng); }); pts.sort(function(a,b){ return a.d-b.d; });
+    var best=pts[0];
+    if(out) out.innerHTML='<div class="ask-answer">Nearest '+esc(cat.label.toLowerCase())+' to '+esc(ctr.name)+': '+esc(best.name||cat.label)+', '+fmtDist(best.d)+' away. Opening the map.</div>';
+    openMap({ place:{ name:best.name||cat.label, lat:best.lat, lng:best.lng }, directions:true });
+  }).catch(function(){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not search right now.</p></div>'; });
 }
 function doAsk(){
   var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;
@@ -1091,6 +1292,204 @@ function doAsk(){
       if(j.error || !j.answer){ out.innerHTML='<div class="info flat"><p class="muted">Could not answer right now. Try again.</p></div>'; return; }
       out.innerHTML='<div class="ask-answer">'+esc(j.answer).replace(/\n/g,'<br>')+'</div>';
     }).catch(function(){ out.innerHTML='<div class="info flat"><p class="muted">Could not reach the assistant.</p></div>'; });
+}
+
+/* ---------------- Offline map packs (PMTiles + OPFS, no cloud storage) ----------------
+   Import a .pmtiles map file (made once) — it is stored on THIS device via the
+   Origin Private File System (free, no Cloudflare storage). The live map can then
+   use it as the base with no signal. Raster .pmtiles render directly; vector packs
+   need a matching style, so raster packs are the supported offline base. */
+var LOffline = { mem:{} };
+function opfsOk(){ return !!(navigator.storage && navigator.storage.getDirectory && window.FileSystemWritableFileStream); }
+function opfsDir(){ if(!(navigator.storage && navigator.storage.getDirectory)) return Promise.resolve(null); return navigator.storage.getDirectory().catch(function(){ return null; }); }
+function fmtBytes(n){ if(n==null) return '—'; if(n<1024) return n+' B'; if(n<1048576) return (n/1024).toFixed(0)+' KB'; if(n<1073741824) return (n/1048576).toFixed(1)+' MB'; return (n/1073741824).toFixed(2)+' GB'; }
+function listPacks(){
+  return opfsDir().then(function(dir){
+    var out=[]; Object.keys(LOffline.mem).forEach(function(k){ out.push({ name:k, size:LOffline.mem[k].size, mem:true }); });
+    if(!dir || !dir.values) return out;
+    var it=dir.values(), acc=[];
+    function step(){
+      return it.next().then(function(res){
+        if(res.done) return acc;
+        var h=res.value;
+        if(h.kind==='file' && /\.pmtiles$/i.test(h.name)){
+          return h.getFile().then(function(f){ acc.push({ name:h.name, size:f.size }); return step(); });
+        }
+        return step();
+      });
+    }
+    return step().then(function(fromOpfs){ return out.concat(fromOpfs); });
+  });
+}
+function savePack(file){
+  return opfsDir().then(function(dir){
+    if(!dir){ LOffline.mem[file.name]=file; return { name:file.name, size:file.size, mem:true }; }
+    return dir.getFileHandle(file.name, { create:true }).then(function(fh){
+      return fh.createWritable().then(function(w){ return w.write(file).then(function(){ return w.close(); }); });
+    }).then(function(){ return { name:file.name, size:file.size }; });
+  });
+}
+function deletePack(name){
+  if(LOffline.mem[name]){ delete LOffline.mem[name]; return Promise.resolve(); }
+  return opfsDir().then(function(dir){ if(!dir) return; return dir.removeEntry(name).catch(function(){}); });
+}
+function packFile(name){
+  if(LOffline.mem[name]) return Promise.resolve(LOffline.mem[name]);
+  return opfsDir().then(function(dir){ if(!dir) return null; return dir.getFileHandle(name).then(function(fh){ return fh.getFile(); }).catch(function(){ return null; }); });
+}
+function renderOffline(){
+  var v=el('v-offline');
+  var support = opfsOk() ? '' : '<div class="info flat"><p class="muted">This device keeps imported maps for this session only (it does not support permanent on-device storage). They clear when you fully close the app.</p></div>';
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Offline maps</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Load a map file (.pmtiles) onto your device once. After that the live map works with no signal. Nothing is uploaded — it stays on your device. No cloud storage, no fees.</p>'+
+    support+
+    '<button class="btn green" id="offImport">'+ICO.download+' Import a map file</button>'+
+    '<div id="offStore" class="muted small" style="margin:10px 2px"></div>'+
+    '<div id="offList" style="margin-top:6px"></div>'+
+    '<div class="ask-eg" style="margin-top:14px"><b>How to make one:</b> a .pmtiles is a single-file map of a region you build once (raster tiles). Keep it on your device and Load Maps reads it offline. A road/satellite raster pack works best as the offline base.</div>';
+  bindBacks(v);
+  el('offImport').onclick=function(){ var fi=el('packFile'); if(fi){ fi.value=''; fi.click(); } };
+  if(navigator.storage && navigator.storage.estimate){
+    navigator.storage.estimate().then(function(est){
+      var s=el('offStore'); if(!s) return;
+      var used=fmtBytes(est.usage||0), quota=fmtBytes(est.quota||0);
+      s.textContent='On-device storage used: '+used+' of about '+quota+' available.';
+    }).catch(function(){});
+  }
+  refreshPackList();
+}
+function refreshPackList(){
+  var host=el('offList'); if(!host) return;
+  host.innerHTML='<p class="muted small">Checking your device…</p>';
+  listPacks().then(function(packs){
+    if(!packs.length){ host.innerHTML='<div class="info flat"><p class="muted">No offline maps yet. Import a .pmtiles file to get started.</p></div>'; return; }
+    host.innerHTML=packs.map(function(p){
+      return '<div class="card flat" style="display:flex;align-items:center;gap:10px;justify-content:space-between">'+
+        '<div><b>'+esc(p.name)+'</b><div class="muted small">'+fmtBytes(p.size)+(p.mem?' · session only':' · on device')+'</div></div>'+
+        '<div style="display:flex;gap:8px">'+
+          '<button class="btn green" data-usepack="'+esc(p.name)+'">Use on map</button>'+
+          '<button class="btn ghost" data-delpack="'+esc(p.name)+'">Delete</button>'+
+        '</div></div>';
+    }).join('');
+    $$('[data-usepack]',host).forEach(function(b){ b.onclick=function(){ openMapOffline(b.getAttribute('data-usepack')); }; });
+    $$('[data-delpack]',host).forEach(function(b){ b.onclick=function(){
+      var n=b.getAttribute('data-delpack');
+      deletePack(n).then(function(){ toast('Deleted '+n); refreshPackList(); });
+    }; });
+  }).catch(function(){ host.innerHTML='<div class="info flat"><p class="muted">Could not read device storage.</p></div>'; });
+}
+function ensurePmProtocol(){
+  if(typeof pmtiles==='undefined' || typeof maplibregl==='undefined') return false;
+  if(!LMap.pmProto){ try{ LMap.pmProto=new pmtiles.Protocol(); maplibregl.addProtocol('pmtiles', LMap.pmProto.tile); }catch(e){ return false; } }
+  return true;
+}
+function applyOfflineBase(file){
+  if(!ensurePmProtocol() || !L.maplibreGL){ toast('Offline maps need this device\'s map engine'); return false; }
+  try{
+    var pm=new pmtiles.PMTiles(new pmtiles.FileSource(file));
+    LMap.pmProto.add(pm);
+    var key=pm.source.getKey();
+    var style={ version:8, sources:{ lmoff:{ type:'raster', url:'pmtiles://'+key, tileSize:256, attribution:'Offline map (PMTiles)' } }, layers:[{ id:'lmoff', type:'raster', source:'lmoff' }] };
+    if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; }
+    try{ if(LMap.base) LMap.map.removeLayer(LMap.base); }catch(e){}
+    try{ if(LMap.cur==='sat' && LMap.sat) LMap.map.removeLayer(LMap.sat); }catch(e){}
+    LMap.offline=L.maplibreGL({ style:style }); LMap.offline.addTo(LMap.map); LMap.cur='offline';
+    pm.getHeader().then(function(h){ try{ var z=Math.max(h.minZoom||3, Math.min(h.maxZoom||14, 10)); LMap.map.setView([h.centerLat, h.centerLon], z); }catch(e){} }).catch(function(){});
+    return true;
+  }catch(e){ toast('That map file could not be opened'); return false; }
+}
+function openMapOffline(name){
+  packFile(name).then(function(f){
+    if(!f){ toast('Could not open that map'); return; }
+    openMap({});
+    setTimeout(function(){ if(applyOfflineBase(f)) toast('Offline map on — works with no signal'); }, 200);
+  });
+}
+
+/* ---------------- AR heads-up walk (camera + compass arrow, iPad-friendly) ----------------
+   Full-screen back-camera view with a big arrow that points to your next waypoint and
+   the live distance. Uses getUserMedia + DeviceOrientation (true compass on iOS) +
+   Geolocation. No WebXR (unsupported on iPad Safari) — works on the device you use. */
+var AR = { stream:null, watch:null, orient:null, target:null, route:null, heading:null, raf:null };
+function openAR(opts){
+  var w=el('arwrap'); if(!w) return;
+  AR.route=(opts&&opts.route)||null;
+  AR.target=(opts&&opts.point)||null;
+  AR.heading=null;
+  w.classList.add('open');
+  var c=el('arCal'); if(c) c.textContent='';
+  startAROrientation();
+  startARCamera();
+  if('geolocation' in navigator){
+    AR.watch=navigator.geolocation.watchPosition(function(p){
+      state.pos={ lat:p.coords.latitude, lng:p.coords.longitude, acc:p.coords.accuracy };
+    }, function(){}, { enableHighAccuracy:true, maximumAge:3000, timeout:15000 });
+  }
+  if(AR.raf) cancelAnimationFrame(AR.raf);
+  arTick();
+}
+function startARCamera(){
+  var v=el('arVideo');
+  if(!v || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ var c=el('arCal'); if(c) c.textContent='Camera not available — the arrow still points the way.'; return; }
+  navigator.mediaDevices.getUserMedia({ video:{ facingMode:{ ideal:'environment' } }, audio:false })
+    .then(function(s){ AR.stream=s; v.srcObject=s; var pl=v.play&&v.play(); if(pl&&pl.catch) pl.catch(function(){}); })
+    .catch(function(){ var c=el('arCal'); if(c) c.textContent='Camera is off — allow it in Settings, or use the arrow as-is.'; });
+}
+function startAROrientation(){
+  function handler(e){
+    var h=null;
+    if(typeof e.webkitCompassHeading==='number' && !isNaN(e.webkitCompassHeading)) h=e.webkitCompassHeading;
+    else if(typeof e.alpha==='number') h=360-e.alpha;
+    if(h!=null) AR.heading=(h+360)%360;
+  }
+  AR.orient=handler;
+  try{
+    if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(r){
+        if(r==='granted'){ window.addEventListener('deviceorientation', handler, true); }
+        else { var c=el('arCal'); if(c) c.textContent='Compass permission off — the arrow points north-up.'; }
+      }).catch(function(){});
+    } else {
+      window.addEventListener('deviceorientationabsolute', handler, true);
+      window.addEventListener('deviceorientation', handler, true);
+    }
+  }catch(e){}
+}
+function arCurrentTarget(){
+  if(AR.target) return AR.target;
+  if(AR.route && AR.route.waypoints && AR.route.waypoints.length && state.pos){
+    var wps=AR.route.waypoints, nearI=0, nearD=Infinity, i, d;
+    for(i=0;i<wps.length;i++){ d=haversine(state.pos.lat,state.pos.lng,wps[i].lat,wps[i].lng); if(d<nearD){ nearD=d; nearI=i; } }
+    var ni=nearI<wps.length-1?nearI+1:nearI; return wps[ni];
+  }
+  return null;
+}
+function arTick(){
+  var w=el('arwrap');
+  if(!w || !w.classList.contains('open')){ AR.raf=null; return; }
+  var t=arCurrentTarget();
+  if(t && state.pos){
+    var d=haversine(state.pos.lat,state.pos.lng,t.lat,t.lng);
+    var brg=bearing(state.pos.lat,state.pos.lng,t.lat,t.lng);
+    var tg=el('arTarget'); if(tg) tg.textContent=(t.name?('Next: '+t.name):'Waypoint')+' · '+compass(brg);
+    var di=el('arDist'); if(di) di.textContent=fmtDist(d);
+    var rot=(AR.heading!=null)?(brg-AR.heading):brg;
+    var ar=el('arArrow'); if(ar) ar.style.transform='rotate('+rot+'deg)';
+    var c=el('arCal'); if(c && AR.heading==null && !c.textContent) c.textContent='Hold the iPad flat and point its top where you face.';
+  } else {
+    var tg2=el('arTarget'); if(tg2) tg2.textContent='Turn on location to guide you';
+    var di2=el('arDist'); if(di2) di2.textContent='--';
+  }
+  AR.raf=requestAnimationFrame(arTick);
+}
+function closeAR(){
+  var w=el('arwrap'); if(w) w.classList.remove('open');
+  if(AR.stream){ try{ AR.stream.getTracks().forEach(function(tr){ tr.stop(); }); }catch(e){} AR.stream=null; }
+  if(AR.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(AR.watch); AR.watch=null; }
+  if(AR.orient){ try{ window.removeEventListener('deviceorientation', AR.orient, true); window.removeEventListener('deviceorientationabsolute', AR.orient, true); }catch(e){} AR.orient=null; }
+  if(AR.raf){ cancelAnimationFrame(AR.raf); AR.raf=null; }
+  var v=el('arVideo'); if(v){ try{ v.srcObject=null; }catch(e){} }
 }
 
 /* ---------------- online / offline ---------------- */
@@ -1116,6 +1515,7 @@ function init(){
   if(el('mapBack')) el('mapBack').onclick=closeMap;
   if(el('mapLayer')) el('mapLayer').onclick=function(){
     if(!LMap.map || !LMap.base) return;
+    if(LMap.offline){ try{ LMap.map.removeLayer(LMap.offline); }catch(e){} LMap.offline=null; LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; toast('Back to live tiles'); return; }
     if(LMap.cur!=='sat'){ LMap.map.removeLayer(LMap.base); LMap.sat.addTo(LMap.map); LMap.cur='sat'; el('mapLayer').textContent='Map'; }
     else { LMap.map.removeLayer(LMap.sat); LMap.base.addTo(LMap.map); LMap.cur=(LMap.base===LMap.vector?'vector':'streets'); el('mapLayer').textContent='Satellite'; }
   };
@@ -1137,6 +1537,17 @@ function init(){
   };
   if(el('mapRain')) el('mapRain').onclick=function(){ toggleRain(); };
   if(el('mapReach')) el('mapReach').onclick=function(){ toggleReach(); };
+  if(el('mapOnRoute')) el('mapOnRoute').onclick=function(){
+    var rt=el('mapRouteTools'); if(!rt) return;
+    if(rt.classList.contains('open')){ rt.classList.remove('open'); return; }
+    if(!routeCoords()){ toast('Open or draw a route first'); return; }
+    rt.innerHTML=ROUTE_CATS.map(function(c){ return '<button data-rcat="'+c.key+'">'+esc(c.label)+' on route</button>'; }).join('');
+    $$('[data-rcat]',rt).forEach(function(b){ b.onclick=function(){
+      var k=b.getAttribute('data-rcat'), cat=null; for(var i=0;i<ROUTE_CATS.length;i++){ if(ROUTE_CATS[i].key===k) cat=ROUTE_CATS[i]; }
+      rt.classList.remove('open'); if(cat) nearestOnRoute(cat);
+    }; });
+    rt.classList.add('open');
+  };
   if(el('mapGpx')) el('mapGpx').onclick=function(){
     var imp=false;
     try{ imp=window.confirm('Load a GPX file?\n\nOK = open a track file to view.\nCancel = save this route as GPX.'); }catch(e){ imp=false; }
@@ -1144,6 +1555,14 @@ function init(){
     else { gpxExport(); }
   };
   if(el('gpxFile')) el('gpxFile').onchange=function(){ if(this.files && this.files[0]) gpxImport(this.files[0]); };
+  if(el('arBack')) el('arBack').onclick=function(){ closeAR(); };
+  if(el('packFile')) el('packFile').onchange=function(){
+    var f=this.files && this.files[0]; if(!f) return;
+    if(!/\.pmtiles$/i.test(f.name)){ toast('Please pick a .pmtiles file'); return; }
+    toast('Saving map to your device…');
+    savePack(f).then(function(){ toast('Map saved'); if(state.view==='offline') refreshPackList(); })
+      .catch(function(){ toast('Could not save that map'); });
+  };
 }
 init();
 
