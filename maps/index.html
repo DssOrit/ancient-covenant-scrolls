@@ -11,13 +11,8 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="icon" href="./icon.png">
-<!-- Leaflet (CDN) -->
+<!-- Leaflet CSS only in head — JS loaded at end of body to avoid blocking render -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<!-- MapLibre GL (CDN — used as vector-tile adapter under Leaflet, falls back to raster) -->
-<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js"></script>
 <style>
 /* ── RESET & TOKENS ─────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -562,6 +557,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
+<!-- Leaflet JS here so the gate screen HTML/CSS renders before any script loads -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 /* ── STATE ─────────────────────────────────────────────────── */
 var map = null;
@@ -766,64 +763,16 @@ function openApp() {
 
 /* ── MAP INIT ───────────────────────────────────────────────── */
 function initMap() {
-  map = L.map('map', {
-    center: [15, 10],
-    zoom: 2,
-    zoomControl: false,
-    attributionControl: false
-  });
-  L.control.attribution({ compact: true, position: 'bottomleft' }).addTo(map);
-
-  var raster = L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; CARTO' }
-  );
-
-  var vectorLayer = null;
-  var vectorLoaded = false;
-
-  if (window.maplibregl && maplibregl.supported() && L.maplibreGL) {
-    try {
-      vectorLayer = L.maplibreGL({
-        style: 'https://tiles.openfreemap.org/styles/dark',
-        attribution: '&copy; <a href="https://openfreemap.org">OpenFreeMap</a> &copy; OpenStreetMap'
-      }).addTo(map);
-
-      setTimeout(function() {
-        if (vectorLoaded) return;
-        try {
-          var glMap = vectorLayer.getMaplibreMap ? vectorLayer.getMaplibreMap() : null;
-          if (!glMap || !glMap.loaded()) {
-            try { map.removeLayer(vectorLayer); } catch(_) {}
-            raster.addTo(map);
-          }
-        } catch(_) {
-          try { map.removeLayer(vectorLayer); } catch(__) {}
-          raster.addTo(map);
-        }
-      }, 7000);
-
-      vectorLayer.on('add', function() {
-        try {
-          var glMap = vectorLayer.getMaplibreMap ? vectorLayer.getMaplibreMap() : null;
-          if (!glMap) return;
-          glMap.on('load', function() { vectorLoaded = true; });
-          glMap.on('error', function() {
-            if (!vectorLoaded) {
-              try { map.removeLayer(vectorLayer); } catch(_) {}
-              raster.addTo(map);
-            }
-          });
-        } catch(_) {}
-      });
-    } catch(e) {
-      vectorLayer = null;
-      raster.addTo(map);
-    }
-  } else {
-    raster.addTo(map);
+  if (typeof L === 'undefined') {
+    document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">Map requires a connection on first load. Tap the region pills to browse places.</div>';
+    return;
   }
-
+  map = L.map('map', { center: [15, 10], zoom: 2, zoomControl: false, attributionControl: false });
+  L.control.attribution({ compact: true, position: 'bottomleft' }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19, subdomains: 'abcd',
+    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; CARTO'
+  }).addTo(map);
   setTimeout(function() { if (map) map.invalidateSize(); }, 100);
   addDisplacementTrailLayer();
   addGeneticCorridorLayers();
