@@ -58,6 +58,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   line-height:1.1;
   transition:opacity .4s ease,transform .4s ease;
   font-weight:400;
+  max-width:280px;text-align:center;
 }
 .g-name-form.fade-out{opacity:0;transform:translateY(-6px)}
 .g-name-form.fade-in{animation:nameIn .45s ease both}
@@ -414,11 +415,11 @@ var userMarker = null;
 /* ── NAME CYCLING ON GATE ───────────────────────────────────── */
 var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
 var NAME_FORMS = [
-  { text: PALEO_YHWH, label: 'Paleo Script',   color: '#c8971f', font: '\'Segoe UI Historic\',\'Noto Sans Phoenician\',\'Noto Serif\',serif' },
-  { text: 'יהוה', label: 'Square Hebrew',  color: '#e8751a', font: 'inherit', dir: 'rtl' },
-  { text: 'YHWH',         label: 'Romanized',      color: '#e63329', font: 'inherit', weight: '700', spacing: '.14em' },
-  { text: 'Yahweh',       label: 'Pronunciation',  color: '#3dbf5e', font: 'inherit', weight: '300' },
-  { text: 'The Creator',  label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '40px' }
+  { text: PALEO_YHWH, label: 'Paleo Script',   color: '#c8971f', font: '\'Segoe UI Historic\',\'Noto Sans Phoenician\',\'Noto Serif\',serif', size: '56px' },
+  { text: 'יהוה',    label: 'Square Hebrew',  color: '#e8751a', font: 'inherit', dir: 'rtl', size: '52px' },
+  { text: 'YHWH',    label: 'Romanized',      color: '#e63329', font: 'inherit', weight: '700', spacing: '.12em', size: '40px' },
+  { text: 'Yahweh',  label: 'Pronunciation',  color: '#3dbf5e', font: 'inherit', weight: '300', size: '42px' },
+  { text: 'The Creator', label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '30px' }
 ];
 var nameIdx = 0;
 var nameCycleTimer = null;
