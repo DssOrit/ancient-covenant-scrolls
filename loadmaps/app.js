@@ -49,6 +49,7 @@ ICO.pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width
 ICO.q='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .2c0 1.7-2.5 2-2.5 3.8"/><path d="M12 17v.4"/></svg>';
 ICO.x='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 ICO.download='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>';
+ICO.fuel='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V5a2 2 0 012-2h6a2 2 0 012 2v15"/><path d="M3 20h12"/><path d="M14 9h2.5A1.5 1.5 0 0118 10.5V16a2 2 0 004 0V8l-3-3"/></svg>';
 
 /* favorites (saved on the device) */
 function favs(){ try{ return JSON.parse(localStorage.getItem('lm_favs')||'[]'); }catch(e){ return []; } }
@@ -168,6 +169,7 @@ function navTo(key){
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
   else if(key==='assistant'){ renderAssistant(); showView('assistant','home'); }
   else if(key==='offline'){ renderOffline(); showView('offline','home'); }
+  else if(key==='fuel'){ renderFuel(); showView('fuel','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
@@ -184,6 +186,7 @@ function renderHome(){
       '<button class="hcard help" data-go="help"><div class="hi">'+ICO.q+'</div><b>How to use</b><span>Simple guide, with search</span></button>'+
       '<button class="hcard livemap wide" data-go="livemap"><div class="hi">'+ICO.pin+'</div><div class="ht"><b>Live map</b><span>Scrollable street &amp; satellite map, with your position</span></div></button>'+
       '<button class="hcard assistant wide" data-go="assistant"><div class="hi">'+ICO.q+'</div><div class="ht"><b>Ask Load Maps</b><span>Plan a trip or ask about a place (needs setup)</span></div></button>'+
+      '<button class="hcard fuel wide" data-go="fuel"><div class="hi">'+ICO.fuel+'</div><div class="ht"><b>Fuel prices</b><span>Live petrol and diesel prices near you (Spain, and Portugal where available)</span></div></button>'+
       '<button class="hcard offline wide" data-go="offline"><div class="hi">'+ICO.download+'</div><div class="ht"><b>Offline maps</b><span>Load a map file onto your device so the map works with no signal</span></div></button>'+
     '</div>';
   $$('[data-go]',v).forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-go'); if(k==='livemap'){ openMap({}); } else { navTo(k); } }; });
@@ -1358,6 +1361,54 @@ function nearbyCategory(cat, ctr, out){
     if(out) out.innerHTML='<div class="ask-answer">Nearest '+esc(cat.label.toLowerCase())+' to '+esc(ctr.name)+': '+esc(best.name||cat.label)+', '+fmtDist(best.d)+' away. Opening the map.</div>';
     openMap({ place:{ name:best.name||cat.label, lat:best.lat, lng:best.lng }, directions:true });
   }).catch(function(){ if(out) out.innerHTML='<div class="info flat"><p class="muted">Could not search right now.</p></div>'; });
+}
+/* ---------------- Fuel prices (government open data via Cloudflare function) ---------------- */
+var _fuel=[];
+function fuelPriceStr(p){ return p!=null ? ('€'+p.toFixed(3)) : '—'; }
+function renderFuel(){
+  var v=el('v-fuel');
+  v.innerHTML='<button class="back" data-back="home">'+ICO.left+' Home</button>'+
+    '<h2 class="sec">Fuel prices</h2>'+
+    '<p class="muted small" style="margin:0 0 12px">Live petrol and diesel prices near you, from government open data. Needs a connection and your location. Covers Spain now; Portugal where the feed is available.</p>'+
+    '<div id="fuelBody"><p class="muted small">Finding your location…</p></div>';
+  bindBacks(v);
+  if(!navigator.onLine){ el('fuelBody').innerHTML='<div class="info flat"><p class="muted">Fuel prices need a connection.</p></div>'; return; }
+  ensurePos(function(){
+    var host=el('fuelBody'); if(!host) return;
+    if(!state.pos){ host.innerHTML='<div class="info flat"><p class="muted">Turn on location to see prices near you.</p></div>'; return; }
+    host.innerHTML='<p class="muted small">Getting live prices…</p>';
+    fetch('/api/loadmaps/fuel?lat='+state.pos.lat+'&lng='+state.pos.lng).then(function(r){ return r.json(); }).then(function(j){
+      var list=(j && j.stations)||[];
+      if(!list.length){ fuelFallback(host); return; }
+      _fuel=list;
+      var cd=null, cp=null;
+      list.forEach(function(s){ if(s.diesel!=null && (cd==null||s.diesel<cd.diesel)) cd=s; if(s.petrol!=null && (cp==null||s.petrol<cp.petrol)) cp=s; });
+      var banner='';
+      if(cd) banner+='<div class="fuel-best"><b>Cheapest diesel</b> €'+cd.diesel.toFixed(3)+' · '+esc(cd.name)+' · '+fmtDist(cd.dist*1000)+'</div>';
+      if(cp) banner+='<div class="fuel-best petrol"><b>Cheapest petrol 95</b> €'+cp.petrol.toFixed(3)+' · '+esc(cp.name)+' · '+fmtDist(cp.dist*1000)+'</div>';
+      host.innerHTML=banner+'<p class="muted small" style="margin:10px 2px 8px">'+list.length+' station'+(list.length===1?'':'s')+' within 25 km'+(j.updated?(' · '+esc(String(j.updated))):'')+'</p>'+
+        list.map(function(s,i){
+          return '<button class="card place" data-fuel="'+i+'"><div class="top"><div class="thumb place">'+ICO.fuel+'</div>'+
+            '<div><h3>'+esc(s.name||'Station')+'</h3><div class="area">'+esc(s.address||'')+(s.address?' · ':'')+fmtDist(s.dist*1000)+'</div></div></div>'+
+            '<div class="fuel-prices"><span>Diesel <b>'+fuelPriceStr(s.diesel)+'</b></span><span>Petrol 95 <b>'+fuelPriceStr(s.petrol)+'</b></span></div></button>';
+        }).join('');
+      $$('[data-fuel]',host).forEach(function(b){ b.onclick=function(){ var s=_fuel[parseInt(b.getAttribute('data-fuel'),10)]; if(s) openMap({ place:{ name:s.name, lat:s.lat, lng:s.lng }, directions:true }); }; });
+    }).catch(function(){ fuelFallback(host); });
+  });
+}
+function fuelFallback(host){
+  if(!host) return;
+  host.innerHTML='<div class="info flat"><p class="muted">No live prices for your area yet. Live prices cover Spain (and Portugal where the feed is available). You can still find stations near you below.</p></div>'+
+    '<button class="btn ghost" id="fuelStations" style="margin-top:10px">Show fuel stations near me</button>';
+  if(el('fuelStations')) el('fuelStations').onclick=function(){
+    navTo('nearby');
+    setTimeout(function(){
+      var btn=document.querySelector('[data-cat="fuel"]');
+      if(btn) btn.classList.add('on');
+      var c=null; for(var i=0;i<CATS.length;i++){ if(CATS[i].key==='fuel') c=CATS[i]; }
+      if(c) runPoi(c);
+    }, 60);
+  };
 }
 function doAsk(){
   var q=((el('askIn')&&el('askIn').value)||'').trim(); if(!q) return;

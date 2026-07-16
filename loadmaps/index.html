@@ -303,6 +303,12 @@
   @keyframes spdpulse{0%,100%{box-shadow:0 4px 14px rgba(255,77,61,.4)}50%{box-shadow:0 4px 22px rgba(255,77,61,.85)}}
   .ask-row2{margin:8px 0 0}
   .ask-row2 .btn{width:100%;justify-content:center}
+  .fuel-best{background:rgba(47,216,95,.14);border:1px solid rgba(47,216,95,.4);border-radius:12px;padding:10px 13px;margin-bottom:8px;font-size:.92rem}
+  .fuel-best.petrol{background:rgba(61,139,255,.14);border-color:rgba(61,139,255,.4)}
+  .fuel-best b{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:2px}
+  .fuel-prices{display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+  .fuel-prices span{font-size:.82rem;color:var(--muted)}
+  .fuel-prices b{color:var(--text);font-size:1rem}
   #arwrap{position:fixed;inset:0;z-index:3000;display:none;background:#05070d}
   #arwrap.open{display:block}
   #arVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#05070d}
@@ -462,6 +468,8 @@
     <section class="view" id="v-assistant"></section>
 
     <section class="view" id="v-offline"></section>
+
+    <section class="view" id="v-fuel"></section>
 
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
