@@ -292,6 +292,23 @@
   .map-regions button{flex:0 0 auto;background:rgba(18,22,32,.92);border:1px solid var(--line);border-radius:20px;padding:9px 18px;font:inherit;font-weight:700;font-size:.88rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
   .map-regions button.on{background:rgba(200,151,31,.18);border-color:rgba(200,151,31,.7);color:#e6c05a}
   .cat-pin span{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;color:#fff;font-weight:800;font-size:.9rem;border:2px solid rgba(6,10,18,.92);box-shadow:0 3px 8px rgba(0,0,0,.55)}
+  .map-btn.icon.refresh{background:linear-gradient(135deg,#ffb023,#ff8f1f);border:none;color:#111;box-shadow:0 0 16px rgba(255,176,35,.4)}
+  .nav-backdrop{position:absolute;inset:0;z-index:2000;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s}
+  .nav-backdrop.on{opacity:1;pointer-events:auto}
+  .nav-drawer{position:absolute;top:0;right:0;bottom:0;width:min(84vw,340px);z-index:2001;background:rgba(12,16,26,.99);
+    border-left:1px solid var(--line);box-shadow:-8px 0 30px rgba(0,0,0,.6);transform:translateX(100%);transition:transform .24s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+  .nav-drawer.on{transform:translateX(0)}
+  .nd-head{display:flex;align-items:center;gap:12px;padding:20px 18px 16px;border-bottom:1px solid var(--line)}
+  .nd-logo{width:42px;height:42px;background:url(icon.png) center/contain no-repeat;flex:0 0 auto;filter:drop-shadow(0 0 8px rgba(47,216,95,.35))}
+  .nd-head b{display:block;font-size:1.1rem;color:var(--text)}
+  .nd-head span{font-size:.8rem;color:var(--muted)}
+  .nd-x{margin-left:auto;background:none;border:0;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer;padding:0 4px}
+  .nd-list{flex:1;overflow-y:auto;padding:8px}
+  .nd-list button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0;border-radius:12px;padding:14px 14px;font:inherit;font-size:1.02rem;font-weight:700;color:var(--text);cursor:pointer}
+  .nd-list button:active{background:rgba(255,255,255,.06)}
+  .nd-list button svg{width:22px;height:22px;flex:0 0 auto;color:var(--muted)}
+  .nd-list .nd-sub{font-weight:500;font-size:.78rem;color:var(--muted);display:block;margin-top:1px}
   .map-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:12px;
     padding:9px 13px;font:inherit;font-weight:700;font-size:.92rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
   .map-btn svg{width:19px;height:19px}
@@ -526,16 +543,27 @@
 <div id="mapwrap">
   <div id="map"></div>
   <div class="map-top">
-    <button class="map-btn icon" id="mapBack" aria-label="Back">
+    <button class="map-btn icon" id="mapMenu" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <button class="map-btn icon" id="mapBack" aria-label="Back" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
     <div class="map-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="mapSearch" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search places, cities, regions…">
     </div>
+    <button class="map-btn icon refresh" id="mapRefresh" aria-label="Refresh">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
     <div class="map-title" id="mapTitle" style="display:none">Map</div>
   </div>
   <div class="map-search-res" id="mapSearchRes"></div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+  <aside class="nav-drawer" id="navDrawer" aria-label="Menu">
+    <div class="nd-head"><div class="nd-logo"></div><div><b>Load Maps</b><span>Where do you want to go?</span></div><button class="nd-x" id="navClose" aria-label="Close">&times;</button></div>
+    <div class="nd-list" id="navList"></div>
+  </aside>
   <div class="map-modes" id="mapModes">
     <button data-mode="auto" class="on">Drive</button>
     <button data-mode="pedestrian">Walk</button>

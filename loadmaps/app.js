@@ -162,8 +162,11 @@ function showView(id, navKey){
 }
 function navTo(key){
   stopWatch();
-  if(key==='home'){ renderHome(); showView('home','home'); }
-  else if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
+  closeDrawer();
+  // Map-first: "home" IS the map. Every other section closes the map to show over it.
+  if(key==='home' || key==='map'){ openMap({}); return; }
+  closeMap();
+  if(key==='drive'){ renderRoutes('drive'); showView('guided','drive'); }
   else if(key==='hike'){ renderRoutes('hike'); showView('guided','hike'); }
   else if(key==='places'){ renderChips(); renderPlaces(); showView('places','places'); }
   else if(key==='nearby'){ renderNearby(); showView('nearby','home'); }
@@ -173,6 +176,28 @@ function navTo(key){
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
+/* ---------------- map-first menu drawer ---------------- */
+var NAV_ITEMS=[
+  { key:'drive',     label:'Drive',         sub:'Road routes with directions', ico:'car' },
+  { key:'hike',      label:'Hike',          sub:'Trail routes and safety', ico:'hiker' },
+  { key:'places',    label:'Explore places',sub:'Famous places to guide you to', ico:'pin' },
+  { key:'nearby',    label:'Near me',       sub:'Waterfalls, beaches, EV and more', ico:'pin' },
+  { key:'fuel',      label:'Fuel prices',   sub:'Live petrol and diesel near you', ico:'fuel' },
+  { key:'offline',   label:'Offline maps',  sub:'Use the map with no signal', ico:'download' },
+  { key:'alerts',    label:'Alerts',        sub:'Route notes and reports', ico:'warn' },
+  { key:'assistant', label:'Ask Load Maps', sub:'Plan a trip or ask about a place', ico:'q' },
+  { key:'help',      label:'How to use',    sub:'Simple guide, with search', ico:'q' }
+];
+function buildDrawer(){
+  var host=el('navList'); if(!host || host.getAttribute('data-built')) return;
+  host.setAttribute('data-built','1');
+  host.innerHTML=NAV_ITEMS.map(function(it){
+    return '<button data-navitem="'+it.key+'">'+(ICO[it.ico]||ICO.pin)+'<span>'+esc(it.label)+'<span class="nd-sub">'+esc(it.sub)+'</span></span></button>';
+  }).join('');
+  $$('[data-navitem]',host).forEach(function(b){ b.onclick=function(){ navTo(b.getAttribute('data-navitem')); }; });
+}
+function openDrawer(){ buildDrawer(); var d=el('navDrawer'), b=el('navBackdrop'); if(d) d.classList.add('on'); if(b) b.classList.add('on'); }
+function closeDrawer(){ var d=el('navDrawer'), b=el('navBackdrop'); if(d) d.classList.remove('on'); if(b) b.classList.remove('on'); }
 function renderHome(){
   var v=el('v-home');
   v.innerHTML=
@@ -265,6 +290,11 @@ function openMap(opts){
   el('mapwrap').classList.add('open');
   mapInit();
   buildMapChrome();
+  // Map-first: with no route/place this map IS the home screen -> show the ☰ menu, not Back.
+  var isHome=!(opts && (opts.route || opts.place || opts.directions));
+  var mMenu=el('mapMenu'), mBack=el('mapBack');
+  if(mMenu) mMenu.style.display=isHome?'':'none';
+  if(mBack) mBack.style.display=isHome?'none':'';
   if(LMap.searchMarker){ try{ LMap.map.removeLayer(LMap.searchMarker); }catch(e){} LMap.searchMarker=null; }
   var msb=el('mapSearch'); if(msb) msb.value=''; var msr=el('mapSearchRes'); if(msr){ msr.classList.remove('on'); msr.innerHTML=''; }
   clearMapCats();
@@ -1744,6 +1774,10 @@ function init(){
   window.addEventListener('offline', updateNet);
   // live map controls
   if(el('mapBack')) el('mapBack').onclick=closeMap;
+  if(el('mapMenu')) el('mapMenu').onclick=openDrawer;
+  if(el('navClose')) el('navClose').onclick=closeDrawer;
+  if(el('navBackdrop')) el('navBackdrop').onclick=closeDrawer;
+  if(el('mapRefresh')) el('mapRefresh').onclick=function(){ hardRefresh(); };
   if(el('mapSearch')) el('mapSearch').addEventListener('input', mapSearchRun);
   if(el('mapLayer')) el('mapLayer').onclick=function(){
     if(!LMap.map || !LMap.base) return;
@@ -1796,6 +1830,9 @@ function init(){
     savePack(f).then(function(){ toast('Map saved'); if(state.view==='offline') refreshPackList(); })
       .catch(function(){ toast('Could not save that map'); });
   };
+  buildDrawer();
+  // Map-first: launch straight into the dark map (falls back to the menu if the map engine is missing).
+  if(typeof L!=='undefined'){ openMap({}); }
 }
 init();
 

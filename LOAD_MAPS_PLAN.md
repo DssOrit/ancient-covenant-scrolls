@@ -161,6 +161,14 @@ hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_K
   "Ask Load Maps" screen shows "not set up yet".
 Both keep the key server-side; nothing sensitive is committed.
 
+**Map-first shell (2026-07-16, cache `loadmaps-v30`).** Load Maps now LAUNCHES
+straight into the dark map (ACR-Maps-style), not a card menu. The map is "home":
+top bar = ☰ menu + search + gold refresh; bottom = category legend + region pills.
+The old card menu moved into a right-side slide-out **drawer** (☰) listing Drive,
+Hike, Explore places, Near me, Fuel prices, Offline maps, Alerts, Ask, How to use.
+Selecting a section closes the map to show it; its Back returns to the map. When the
+map is opened from a place/route it shows Back instead of ☰. Bottom nav Home = the map.
+
 **Live map dark redesign (2026-07-16, cache `loadmaps-v29`).** The Live map now uses
 the **OpenFreeMap dark** vector style (matching the ACR Maps look the user asked for),
 with a **CARTO dark** raster fallback for no-WebGL. Added an ACR-Maps-style browser
