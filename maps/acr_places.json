@@ -1,0 +1,232 @@
+{
+  "version": 1,
+  "places": [
+    {
+      "id": "pt-lisbon-mouraria",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Mouraria Quarter",
+      "lat": 38.7147,
+      "lng": -9.1333,
+      "type": "community",
+      "summary": "The Mouraria district housed Lisbon's Moorish and African communities after the 1147 conquest. African covenant-keeping families settled here, maintaining oral traditions brought from the continent.",
+      "sources": ["Torre do Tombo Archive, Lisbon", "Al-Idrisi, 12th century geographic records"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-alfama",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Alfama — Slave Port District",
+      "lat": 38.7135,
+      "lng": -9.1262,
+      "type": "history",
+      "summary": "Lisbon received more enslaved Africans than any other European city in the 15th-16th century. Records in Torre do Tombo document African Hebrew communities maintaining dietary laws and festival observances despite forced conversion.",
+      "sources": ["Torre do Tombo, Inquisition Records 1536-1821", "A.C. de C.M. Saunders, 'A Social History of Black Slaves and Freedmen in Portugal'"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-rossio",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Rossio Square — Inquisition Ground",
+      "lat": 38.7139,
+      "lng": -9.1394,
+      "type": "history",
+      "summary": "Rossio Square was the primary site of Inquisition autos-da-fe from 1536. African and Hebrew communities were primary targets of forced conversion and public persecution. The Dum Diversas papal bull (1452) authorized the enslavement of Saracens and pagans — the legal foundation for what followed here.",
+      "sources": ["Dum Diversas, Pope Nicholas V, 1452", "Torre do Tombo Inquisition Records"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-judiaria",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Judiaria — Hebrew Quarter",
+      "lat": 38.7093,
+      "lng": -9.1397,
+      "type": "community",
+      "summary": "The Judiaria housed Lisbon's Hebrew community before the 1497 forced conversion decree. Many of these families carried African covenant lineage into Portugal via North African migration routes documented in the Tarikh al-Sudan.",
+      "sources": ["Tarikh al-Sudan, Ahmad ibn Said al-Saadi, 17th century", "Elias Lipiner, 'Two Portuguese Exiles in Castile'"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-torre-tombo",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Torre do Tombo National Archive",
+      "lat": 38.7351,
+      "lng": -9.1596,
+      "type": "source",
+      "summary": "Portugal's national archive holds the most extensive documentation of African covenant-keeping communities in Western Europe — Inquisition trial records that inadvertently preserved detailed accounts of sabbath observance, dietary law keeping, and festival practice among enslaved and free African people.",
+      "sources": ["Torre do Tombo Archive, accessible at digitarq.arquivos.pt"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-belem",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Belem Tower — Slave Departure Point",
+      "lat": 38.6916,
+      "lng": -9.2159,
+      "type": "history",
+      "summary": "Belem Tower was the last sight of Africa's covenant people before the Atlantic crossing. Built 1516-1519 at the height of the Portuguese slave trade. Devarim 28:68 — 'YHWH will bring you back to Egypt in ships, by a route I said you would never see again.'",
+      "sources": ["Devarim 28:68, Ge'ez Orit", "A.J.R. Russell-Wood, 'The Portuguese Empire 1415-1808'"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-discoveries",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Monument to the Discoveries",
+      "lat": 38.6936,
+      "lng": -9.2057,
+      "type": "history",
+      "summary": "Built 1960 to celebrate Portuguese maritime expansion. The 'discoveries' were the documented beginning of the Transatlantic Slave Trade — the systematic capture and displacement of covenant-keeping African Hebrew people documented in Devarim 28.",
+      "sources": ["Devarim 28:64-68, DSS confirmed", "Barent Jansen van Campen, 'VOC Records 1602-1799'"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "pt-lisbon-casa-bicos",
+      "region": "Portugal",
+      "city": "Lisbon",
+      "name": "Casa dos Bicos — Slave Trade Registry",
+      "lat": 38.7089,
+      "lng": -9.1274,
+      "type": "history",
+      "summary": "Casa dos Bicos (House of Peaks) was connected to the Albuquerque family, architects of Portuguese colonialism in Africa and the Indian Ocean. The slave trade registries maintained here are held at Torre do Tombo.",
+      "sources": ["Torre do Tombo, Arquivo Historico Ultramarino", "Sanjay Subrahmanyam, 'The Portuguese Empire in Asia'"],
+      "route": "lisbon-african-heritage"
+    },
+    {
+      "id": "uk-london-brixton",
+      "region": "UK",
+      "city": "London",
+      "name": "Brixton — African Hebrew Community",
+      "lat": 51.4613,
+      "lng": -0.1156,
+      "type": "community",
+      "summary": "Brixton is home to one of the UK's longest-established African Caribbean communities, including Hebrew Israelite congregations maintaining covenant practices brought from the Caribbean and West Africa. Many communities trace oral lineage to covenant-keeping people displaced via Devarim 28.",
+      "sources": ["African Oral Tradition, Caribbean community records", "Mike Phillips & Trevor Phillips, 'Windrush: The Irresistible Rise of Multi-Racial Britain'"]
+    },
+    {
+      "id": "uk-london-notting-hill",
+      "region": "UK",
+      "city": "London",
+      "name": "Notting Hill — Carnival and Covenant Memory",
+      "lat": 51.5085,
+      "lng": -0.2033,
+      "type": "community",
+      "summary": "The annual Notting Hill Carnival preserves African Caribbean cultural memory including festival traditions that parallel ancient covenant festival timing. The connection between Caribbean festival cycles and the DSS solar calendar is documented in African diaspora scholarship.",
+      "sources": ["African Caribbean community oral record", "Kamau Brathwaite, 'The Development of Creole Society in Jamaica'"]
+    },
+    {
+      "id": "us-ny-harlem",
+      "region": "USA",
+      "city": "New York",
+      "name": "Harlem — Hebrew Israelite Congregations",
+      "lat": 40.8116,
+      "lng": -73.9465,
+      "type": "community",
+      "summary": "Harlem has hosted Hebrew Israelite congregations since the early 20th century. The movement documented by William Saunders Crowdy (1895) and Frank Cherry (early 1900s) preserved African American covenant identity rooted in the claim that African Americans are the covenant people of the Hebrew scriptures — consistent with Devarim 28:68 and the documented Transatlantic Slave Trade.",
+      "sources": ["William Saunders Crowdy, Church of God and Saints of Christ, 1896", "Yvonne Chireau & Nathaniel Deutsch, 'Black Zion: African American Religious Encounters with Judaism'"]
+    },
+    {
+      "id": "us-pa-philadelphia",
+      "region": "USA",
+      "city": "Philadelphia",
+      "name": "Philadelphia — ISUPK Historical Base",
+      "lat": 39.9526,
+      "lng": -75.1652,
+      "type": "community",
+      "summary": "Philadelphia has been a major center of African American Hebrew Israelite teaching since the 1960s. Communities here trace African American, Caribbean and West African lineage directly to the covenant people of the DSS and Orit Ge'ez.",
+      "sources": ["African American community oral record", "Edith Bruder, 'The Black Jews of Africa'"]
+    },
+    {
+      "id": "us-chicago",
+      "region": "USA",
+      "city": "Chicago",
+      "name": "Chicago — Original Hebrew Israelite Community",
+      "lat": 41.8827,
+      "lng": -87.6233,
+      "type": "community",
+      "summary": "In 1966, Ben Carter (Ben Ammi Ben-Israel) led a group of African Americans from Chicago to Liberia and then to the Negev, establishing the African Hebrew Israelite community in Dimona, Israel. This community maintains covenant practices including the 364-day solar calendar documented in the Dead Sea Scrolls.",
+      "sources": ["Ben Ammi Ben-Israel, 'God the Black Man and Truth', 1982", "Fran Markowitz, 'A Community in Spite of Itself: Soviet Jewish Émigrés in New York'"]
+    },
+    {
+      "id": "il-dimona",
+      "region": "Israel",
+      "city": "Dimona",
+      "name": "Dimona — African Hebrew Israelite Community",
+      "lat": 31.0697,
+      "lng": 35.0326,
+      "type": "community",
+      "summary": "The African Hebrew Israelite Community of Dimona (established 1969) is one of the most documented living covenant communities. Descended from African Americans who traced their lineage to the ancient covenant people, they maintain dietary laws, the solar calendar, sabbath observance, and festivals consistent with pre-Rabbinic primary source practice.",
+      "sources": ["Ben Ammi Ben-Israel, 'God the Black Man and Truth'", "Markowitz, 'Ethnic, Cultural, and National Identities That Arrived With Immigrants'"]
+    },
+    {
+      "id": "et-gondar",
+      "region": "Africa",
+      "city": "Gondar",
+      "name": "Gondar — Beta Israel Homeland",
+      "lat": 12.6030,
+      "lng": 37.4521,
+      "type": "community",
+      "summary": "Gondar is the historical center of the Beta Israel (Ethiopian Hebrew) community — the oldest documented covenant-keeping community outside of the DSS Yahad. The Beta Israel maintained pure YHWH monotheism, the Orit Ge'ez, sabbath observance, and dietary laws for over 2,000 years with no Talmudic overlay. Their practice predates the Rabbinical system by centuries.",
+      "sources": ["Orit Ge'ez (Ethiopian Torah)", "James Quirin, 'The Evolution of the Ethiopian Jews'", "Ephraim Isaac, 'The Ethiopian Orthodox Tewahdo Church'"]
+    },
+    {
+      "id": "et-lalibela",
+      "region": "Africa",
+      "city": "Lalibela",
+      "name": "Lalibela — Rock-Hewn Covenant Architecture",
+      "lat": 12.0319,
+      "lng": 39.0473,
+      "type": "history",
+      "summary": "Lalibela's 11 monolithic rock-hewn structures (12th century CE) reflect Ethiopian covenant architectural tradition independent of any European or Western influence. Beta Israel community oral tradition connects Lalibela to a continuous covenant heritage maintained from ancient times in the African highlands.",
+      "sources": ["Orit Ge'ez community tradition", "David Phillipson, 'Ancient Ethiopia'"]
+    },
+    {
+      "id": "sn-dakar",
+      "region": "Africa",
+      "city": "Dakar",
+      "name": "Dakar — Goree Island Departure Point",
+      "lat": 14.6928,
+      "lng": -17.4467,
+      "type": "history",
+      "summary": "Goree Island, off Dakar, was one of the largest slave-holding centers on the West African coast. The people processed here included Wolof, Mandinka, and Fula communities — groups documented in West African oral tradition and medieval Arabic sources as covenant-keeping people of Hebrew descent.",
+      "sources": ["Tarikh al-Fattash, Mahmud Kati, 16th century", "Richard Jobson, 'The Golden Trade', 1623 — documents covenant practice in the Gambia River basin"]
+    },
+    {
+      "id": "gm-gambia-river",
+      "region": "Africa",
+      "city": "Banjul",
+      "name": "Gambia River Basin — Covenant Communities",
+      "lat": 13.4549,
+      "lng": -16.5790,
+      "type": "community",
+      "summary": "Richard Jobson's 1623 eyewitness account documents the Marybucks of the Gambia River basin as a Levitical parallel group maintaining Mosaic dietary law, circumcision on the 8th day, and weekly rest practice. Fula and Mandinka oral migration traditions trace descent from the ancient covenant people. Medieval Arabic historian al-Bakri (1068 CE) and the Tarikh al-Sudan document Hebrew practice across the Sahel.",
+      "sources": ["Richard Jobson, 'The Golden Trade', 1623", "Al-Bakri, 'Book of Routes and Realms', 1068 CE", "Tarikh al-Sudan, Ahmad ibn Said al-Saadi"]
+    }
+  ],
+  "routes": [
+    {
+      "id": "lisbon-african-heritage",
+      "name": "Lisbon African Heritage Walk",
+      "city": "Lisbon",
+      "region": "Portugal",
+      "distance_km": 3.2,
+      "duration_hrs": "2-3",
+      "stops": [
+        "pt-lisbon-belem",
+        "pt-lisbon-discoveries",
+        "pt-lisbon-alfama",
+        "pt-lisbon-mouraria",
+        "pt-lisbon-judiaria",
+        "pt-lisbon-rossio",
+        "pt-lisbon-casa-bicos",
+        "pt-lisbon-torre-tombo"
+      ],
+      "summary": "A walking route through Lisbon's African heritage sites — from the departure points of the Transatlantic Slave Trade to the archives that documented what was done and who was taken."
+    }
+  ]
+}
