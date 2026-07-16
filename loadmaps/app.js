@@ -323,6 +323,23 @@ function renderPins(){
   LMap.pinLayer.addTo(LMap.map);
 }
 function closeMap(){ el('mapwrap').classList.remove('open'); var mm=el('mapModes'); if(mm) mm.classList.remove('on'); if(LMap.watch!=null && navigator.geolocation){ navigator.geolocation.clearWatch(LMap.watch); LMap.watch=null; } }
+function toggleRain(){
+  if(!LMap.map) return;
+  var btn=el('mapRain');
+  if(LMap.rainLayer){ LMap.map.removeLayer(LMap.rainLayer); LMap.rainLayer=null; if(btn) btn.classList.remove('on'); return; }
+  if(!navigator.onLine){ toast('Rain radar needs a connection'); return; }
+  toast('Loading rain radar…');
+  fetch('https://api.rainviewer.com/public/weather-maps.json').then(function(r){ return r.json(); }).then(function(j){
+    var frames=(j && j.radar && j.radar.past) || [];
+    if(j && j.radar && j.radar.nowcast && j.radar.nowcast.length) frames=frames.concat(j.radar.nowcast);
+    if(!frames.length){ toast('No radar available right now'); return; }
+    var f=frames[frames.length-1], host=j.host || 'https://tilecache.rainviewer.com';
+    var url=host + f.path + '/256/{z}/{x}/{y}/2/1_1.png';
+    LMap.rainLayer=L.tileLayer(url, { opacity:0.6, attribution:'Radar &copy; RainViewer' }).addTo(LMap.map);
+    if(btn) btn.classList.add('on');
+    toast('Rain radar on');
+  }).catch(function(){ toast('Could not load radar'); });
+}
 function startMapLocate(){
   if(LMap.watch!=null || !navigator.geolocation) return;
   LMap.watch=navigator.geolocation.watchPosition(function(pos){
@@ -994,6 +1011,7 @@ function init(){
     if(name===null) name='My spot';
     addPin(c.lat, c.lng, name.trim()||'My spot'); renderPins(); toast('Pin saved to My pins');
   };
+  if(el('mapRain')) el('mapRain').onclick=function(){ toggleRain(); };
 }
 init();
 

@@ -276,6 +276,7 @@
   .map-btn svg{width:19px;height:19px}
   .map-btn.round{border-radius:12px}
   .map-btn.icon{width:46px;height:46px;padding:0;justify-content:center}
+  .map-btn.on{background:rgba(43,110,255,.92);border-color:rgba(120,170,255,.9);color:#fff;box-shadow:0 4px 16px rgba(43,110,255,.5)}
   .map-modes{position:absolute;top:calc(58px + env(safe-area-inset-top));left:12px;z-index:1000;display:none;gap:8px}
   .map-modes.on{display:flex}
   .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
@@ -470,6 +471,7 @@
     <button data-mode="bicycle">Cycle</button>
   </div>
   <div class="map-side">
+    <button class="map-btn round" id="mapRain">Rain</button>
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
     <button class="map-btn round icon" id="mapRecenter" aria-label="Recenter">
