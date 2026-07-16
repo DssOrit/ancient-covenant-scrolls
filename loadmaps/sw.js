@@ -1,5 +1,5 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v22';
+var CACHE = 'loadmaps-v23';
 var CORE = [
   'index.html',
   'app.js',
@@ -18,6 +18,7 @@ var CORE = [
   'vendor/maplibre/maplibre-gl.js',
   'vendor/maplibre/maplibre-gl.css',
   'vendor/maplibre/leaflet-maplibre-gl.js',
+  'vendor/pmtiles/pmtiles.js',
   'splash/splash-1284x2778.png',
   'splash/splash-1668x2388.png'
 ];

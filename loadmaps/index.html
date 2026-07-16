@@ -447,6 +447,8 @@
     <!-- ============ ASSISTANT (AI) ============ -->
     <section class="view" id="v-assistant"></section>
 
+    <section class="view" id="v-offline"></section>
+
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
       <h2 class="sec">How to Use</h2>
@@ -507,10 +509,12 @@
   <div class="map-elev" id="mapElev"></div>
   <input type="file" id="gpxFile" accept=".gpx,application/gpx+xml" style="display:none">
 </div>
+<input type="file" id="packFile" accept=".pmtiles" style="display:none">
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="vendor/maplibre/maplibre-gl.js"></script>
 <script src="vendor/maplibre/leaflet-maplibre-gl.js"></script>
+<script src="vendor/pmtiles/pmtiles.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>
