@@ -167,6 +167,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   flex-shrink:0;
 }
 .tb-btn:active{background:rgba(255,255,255,.12)}
+.tb-refresh{background:#c8971f;border-color:#c8971f;color:#05050b}
+.tb-refresh:active{background:#e8a800;border-color:#e8a800}
 
 /* ── SEARCH BAR ─────────────────────────────────────────────── */
 #searchbar{
@@ -484,6 +486,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="tb-cal" id="cal-chip" onclick="showCalendar()" title="DSS Covenant Calendar">
           <div class="tb-cal-date" id="cal-date-label">—</div>
           <div class="tb-cal-era">364-Day</div>
+        </button>
+        <button class="tb-btn tb-refresh" onclick="hardRefresh()" title="Clear cache and reload">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M3.5 10a6.5 6.5 0 1 0 6.5-6.5"/><polyline points="1 4.5 3.5 10 9 10"/></svg>
         </button>
         <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
       </div>
@@ -1257,6 +1262,25 @@ function navTo(lat, lng) {
 function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── HARD REFRESH ───────────────────────────────────────────── */
+function hardRefresh() {
+  var btn = document.querySelector('.tb-refresh');
+  if (btn) { btn.style.opacity = '.4'; btn.style.pointerEvents = 'none'; }
+  var reload = function() { location.reload(); };
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); })
+      .then(function() {
+        return 'caches' in window
+          ? caches.keys().then(function(keys) { return Promise.all(keys.map(function(k) { return caches.delete(k); })); })
+          : Promise.resolve();
+      })
+      .then(reload).catch(reload);
+  } else {
+    reload();
+  }
 }
 
 /* ── SERVICE WORKER ─────────────────────────────────────────── */
