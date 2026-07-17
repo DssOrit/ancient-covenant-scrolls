@@ -264,15 +264,8 @@ function mapInit(){
   L.control.zoom({ position:'bottomleft' }).addTo(LMap.map);
   LMap.raster = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom:19, subdomains:'abcd', attribution:'&copy; OpenStreetMap &copy; CARTO' });
   LMap.sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics' });
-  LMap.base=null;
-  // OpenFreeMap vector via MapLibre (keyless, unlimited); fall back to OSM raster
-  try{
-    if(L.maplibreGL && typeof maplibregl!=='undefined'){
-      LMap.vector = L.maplibreGL({ style:'https://tiles.openfreemap.org/styles/dark', attribution:'&copy; OpenFreeMap &copy; OpenStreetMap' });
-      LMap.vector.addTo(LMap.map); LMap.base=LMap.vector; LMap.cur='vector';
-    }
-  }catch(e){ LMap.vector=null; LMap.base=null; }
-  if(!LMap.base){ LMap.raster.addTo(LMap.map); LMap.base=LMap.raster; LMap.cur='streets'; }
+  LMap.vector=null;
+  LMap.raster.addTo(LMap.map); LMap.base=LMap.raster; LMap.cur='streets';
   LMap.map.setView([39.5,-8], 6);
 }
 function decodePoly(str, precision){
