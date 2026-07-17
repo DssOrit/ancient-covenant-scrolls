@@ -1,3 +1,7 @@
+> **STALE (v44).** Live code is `loadstudio-complete-v251` as of 2026-07-17. For
+> current versions/status see `MASTER_BACKLOG.md` → "2026-07-17 STATUS REFRESH".
+> Kept for its shipped-item detail and the LS-1…LS-7 pending list.
+
 # LoadStudio v44 — Handoff Reference
 
 ## Verified Live Status
