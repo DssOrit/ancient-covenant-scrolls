@@ -332,6 +332,28 @@ These have been re-locked on 2026-05-04 after repeated violations.
     If there is ANY doubt whether a content file matches this standard, STOP
     and show a preview before writing anything.
 
+21. **HARD REFRESH FUNCTIONS MUST BE SCOPED — LOCKED 2026-07-17 by user.**
+    Every hard refresh function across every PWA in this repo must isolate
+    its cache and SW cleanup to that app only. Global wipes are forbidden —
+    they destroy other apps' service workers and caches on the same origin.
+    Specific rules:
+    - `caches.keys()` results MUST be filtered to only the app's own cache
+      prefix before deletion (e.g. `k.indexOf('loadstudio-') === 0`).
+    - `navigator.serviceWorker.getRegistrations()` results MUST be filtered
+      to only SWs whose scope contains the app's own path before unregister
+      (e.g. `r.scope.indexOf('/loadstudio/') >= 0`).
+    - This applies to inline onclick handlers, named functions, and any other
+      pattern that touches caches or service workers.
+    - When building any hard refresh for a new or existing app, use the
+      standard scoped template from HANDOFF.md — "Standard Scoped Hard
+      Refresh Template" — and fill in the correct prefix and path.
+    - Before shipping any hard refresh function, verify: (a) cache filter
+      uses the correct prefix, (b) SW filter uses the correct scope path,
+      (c) neither filter is missing or empty.
+    This rule exists because a global-wipe hard refresh in maps/index.html
+    silently destroyed ACR Reader's SW and cache on 2026-07-17, taking the
+    app offline on iPhone. Never let one app's refresh touch another app.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
