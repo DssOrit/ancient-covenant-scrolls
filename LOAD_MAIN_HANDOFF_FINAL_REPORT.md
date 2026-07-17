@@ -1,3 +1,7 @@
+> **STALE (dated ~2026-05-06, cache v17g6).** Live code is `load-v17g81` as of
+> 2026-07-17. For current versions/status see `MASTER_BACKLOG.md` → "2026-07-17
+> STATUS REFRESH". This report is kept for its shipped-item detail and pending list.
+
 # Load Main — Handoff Report Final Verification
 
 **For:** `Load_Main_Claude_Handoff_Report.zip` (Sections 18-19 follow-up)

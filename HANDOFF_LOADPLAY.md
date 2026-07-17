@@ -1,3 +1,8 @@
+> **STALE (~v43).** Live code is `loadplay-v61` as of 2026-07-17 — Autopilot &
+> content-connector tiers the doc calls "NOT STARTED" are already in the code. For
+> current versions/status see `MASTER_BACKLOG.md` → "2026-07-17 STATUS REFRESH".
+> Kept for its pending list and outstanding decisions.
+
 # LoadPlay — Build Handoff
 
 Pick-up doc for the LoadPlay sub-app inside the
