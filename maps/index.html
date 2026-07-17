@@ -1218,10 +1218,16 @@ function hardRefresh() {
   var reload = function() { location.reload(); };
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations()
-      .then(function(regs) { return Promise.all(regs.map(function(r) { return r.unregister(); })); })
+      .then(function(regs) {
+        var own = regs.filter(function(r) { return r.scope.indexOf('/maps/') >= 0; });
+        return Promise.all(own.map(function(r) { return r.unregister(); }));
+      })
       .then(function() {
         return 'caches' in window
-          ? caches.keys().then(function(keys) { return Promise.all(keys.map(function(k) { return caches.delete(k); })); })
+          ? caches.keys().then(function(keys) {
+              var own = keys.filter(function(k) { return k.indexOf('acr-maps-') === 0; });
+              return Promise.all(own.map(function(k) { return caches.delete(k); }));
+            })
           : Promise.resolve();
       })
       .then(reload).catch(reload);
