@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "places": [
     {
       "id": "pt-lisbon-mouraria",
@@ -1094,6 +1094,137 @@
       "on_this_ground": "You are on the island where the oldest European building in sub-Saharan Africa still stands — built to control the East African trade that sent people from this coast to Arabia, India, Brazil, and the Indian Ocean islands. The Fort São Sebastião was built in 1558. The community it was built to control was here long before that.",
       "before": "Mozambique Island (Mwaze) was a Swahili trading settlement connected to the Indian Ocean commercial network — the dhow routes linking East Africa to Arabia, India, and China. The island had its own political structure, its own merchants, its own calendar. When Vasco da Gama arrived in 1498, the Sultan of Mozambique Island sent out a delegation. The Portuguese fired on them.",
       "excerpt": "\"On this island... there is a Moor who is the lord and who has much influence over all the other Moors of this coast... When we arrived he sent his officers to welcome us and to offer us water and wood and all that we might need, and he came himself in his boats to trade with us. But when he saw that we had not the goods he expected to receive... he became hostile and refused to speak with us further, and shot arrows at our boats, and we fired on them with bombards.\" — Vasco da Gama's fleet chronicle, Roteiro da Primeira Viagem de Vasco da Gama, 1498. The first Portuguese encounter with the sovereign of Mozambique Island — and the first military engagement. The pattern that followed everywhere."
+    },
+    {
+      "id": "sd-meroe-kush",
+      "region": "Africa",
+      "city": "Meroe, Sudan",
+      "name": "Meroe — Seat of the Kingdom of Kush",
+      "lat": 16.9333,
+      "lng": 33.7167,
+      "type": "history",
+      "summary": "Meroe was the capital of the Kingdom of Kush — the African civilization whose rulers became the 25th Dynasty of Egypt (c.747–656 BCE), with Taharqa as its most documented king. Kush held the Nile Valley from the Fourth Cataract to the Delta for a century. The Kushite kingdom predated and outlasted most of the events recorded in the covenant scrolls. The people of Kush are the Africans documented in the covenant texts as neighbors, kin, and covenant participants — not as outsiders. Meroe's iron-smelting, its pyramid fields, and its Meroitic script document an African civilization of the first order, independent of any European frame.",
+      "sources": [
+        "Taharqa stele, c.690 BCE, Kawa, Sudan",
+        "Derek Welsby, 'The Kingdom of Kush', 1996",
+        "Timothy Kendall, Nubian archaeology, Kerma and Meroe surveys",
+        "2 Kings 19:9; Isaiah 37:9 (Taharqa named in the covenant texts)"
+      ],
+      "on_this_ground": "You are at the royal capital of Kush — the African kingdom whose pharaoh Taharqa is named in the covenant scrolls (Isaiah 37:9). The pyramids behind you are the burial sites of the same dynasty. This is not peripheral to covenant history. It is its African context.",
+      "excerpt": "\"And he [Sennacherib] heard say concerning Tirhakah king of Ethiopia: Behold, he is come out to fight against thee.\" — Isaiah 37:9, referencing Taharqa (Tirhakah), Kushite pharaoh, c.690 BCE. The covenant scrolls name this African king by name.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "eg-goshen",
+      "region": "Africa",
+      "city": "Eastern Nile Delta, Egypt",
+      "name": "Goshen — Covenant People's Land in Egypt",
+      "lat": 30.7833,
+      "lng": 31.8167,
+      "type": "history",
+      "summary": "Goshen — called 'the land of Goshen' in Shemot (Exodus) — is the region of the eastern Nile Delta where the covenant people lived in Egypt. Tell el-Dab'a in the Wadi Tumilat corridor has yielded archaeological evidence of a large Semitic-African population in the eastern Delta during the Second Intermediate Period. This is the land the Ge'ez Orit records as the place of the covenant people's sojourn before the departure. The covenant people in Egypt were Africans among Africans — not strangers entering a foreign continent.",
+      "sources": [
+        "Ge'ez Orit, Shemot (Exodus) 8:22; 9:26; 47:6",
+        "Manfred Bietak, Tell el-Dab'a excavations, Austrian Archaeological Institute",
+        "James Hoffmeier, 'Israel in Egypt', 1997"
+      ],
+      "on_this_ground": "You are in the land the Ge'ez Orit calls Goshen — the eastern Nile Delta where the covenant people lived before the departure from Egypt. The earth here has been excavated. It holds the remains of that community.",
+      "excerpt": "\"And Pharaoh said unto his brothers, The land of Egypt is before thee; in the best of the land make thy father and brothers to dwell; in the land of Goshen let them dwell.\" — Ge'ez Orit, Bereshit (Genesis) 47:6. The covenant people's granted land in Africa.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "eg-cairo-geniza",
+      "region": "Africa",
+      "city": "Fustat (Old Cairo), Egypt",
+      "name": "Cairo Geniza — Ben Ezra Synagogue Archive",
+      "lat": 30.0041,
+      "lng": 31.2303,
+      "type": "archive",
+      "summary": "The Ben Ezra Synagogue in Fustat (Old Cairo) held a geniza — a sealed storage chamber for sacred manuscripts — that accumulated approximately 300,000 manuscript fragments over roughly 1,000 years (c.870–1890 CE). Discovered by Solomon Schechter in 1896, the collection includes fragments of the Damascus Document (a DSS-related covenant text), medieval Hebrew, Aramaic, and Judeo-Arabic manuscripts, and documents of daily life in the Egyptian African Hebrew community. The Geniza documents African covenant continuity in Egypt — in Africa — sustained through the medieval period.",
+      "sources": [
+        "Cairo Geniza Collection, Cambridge University Library (Taylor-Schechter collection, 193,000 fragments)",
+        "Solomon Schechter, 'Documents of Jewish Sectaries', 1910",
+        "Damascus Document (CD), Cairo Geniza + Cave 4 Qumran manuscripts",
+        "Stefan Reif, 'A Jewish Archive from Old Cairo', 2000"
+      ],
+      "on_this_ground": "You are at the Ben Ezra Synagogue in Old Cairo — the site where 300,000 manuscript fragments were stored for 1,000 years, including the oldest known copy of the Damascus Document. The covenant community preserved its texts in Africa. The archive was in Africa. The people were in Africa.",
+      "excerpt": "\"...and at the end of the period of wrath, 390 years after He had given them into the hand of Nebuchadnezzar king of Babylon, He remembered them, and He caused a plant root to spring from Israel and Aaron...\" — Damascus Document (CD I), recovered from the Cairo Geniza, c.10th century CE copy of a DSS-era text, Ben Ezra Synagogue, Fustat, Egypt.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "il-qumran-cave4",
+      "region": "Israel",
+      "city": "Qumran",
+      "name": "Qumran Cave 4 — Primary Scroll Repository",
+      "lat": 31.7445,
+      "lng": 35.4623,
+      "type": "discovery",
+      "summary": "Cave 4 at Qumran is the most important single cave in the Dead Sea Scrolls discovery. Approximately 15,000 manuscript fragments from over 200 documents were recovered — representing the largest single deposit of covenant texts ever found. Cave 4 contained fragments of Enoch, Jubilees, the Damascus Document, 4QMMT (the Halakic Letter — the clearest statement of the Yahad community's legal differences from the Jerusalem Temple establishment), multiple Isaiah copies, and Deuteronomy fragments. The 364-day solar calendar, the covenant law structure, and the community's self-identification as the remnant covenant people are all documented in Cave 4 texts.",
+      "sources": [
+        "4QMMT (Miqsat Ma'ase Ha-Torah), Cave 4, c.150 BCE",
+        "4Q201-212, Book of Enoch fragments, Cave 4",
+        "4Q216-228, Jubilees fragments, Cave 4",
+        "Emanuel Tov (ed.), 'Discoveries in the Judaean Desert', Oxford University Press"
+      ],
+      "on_this_ground": "You are at the mouth of Cave 4 — where 15,000 manuscript fragments were found in 1952. The Enoch calendar, the Jubilees covenant law, and 4QMMT are all from this cave. The Yahad sealed their primary archive here before Rome came in 68 CE.",
+      "excerpt": "\"...These are some of our rulings concerning the Law of YHWH relating to...\" — 4QMMT opening, Cave 4, Qumran, c.150 BCE. The Yahad community's direct address to the Jerusalem establishment — documenting their 364-day calendar and covenant law disagreements in their own words.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "il-masada",
+      "region": "Israel",
+      "city": "Masada, Dead Sea",
+      "name": "Masada — Last Covenant Resistance",
+      "lat": 31.3159,
+      "lng": 35.3535,
+      "type": "resistance",
+      "summary": "Masada fell to Rome in 73 CE — three years after Rome burned Jerusalem in 70 CE. The Sicarii community at Masada, under Eleazar ben Yair, held the desert fortress against the Roman Tenth Legion's siege. According to Josephus's account, approximately 960 people — men, women, and children — chose death over enslavement when the Roman siege ramp was completed. Masada is the documented end of large-scale armed covenant resistance on the land. After 73 CE, the covenant people dispersed — to Egypt, to North Africa, to the eastern diaspora, and eventually across the Atlantic as documented in the Transatlantic Slave Trade records on this map. Masada is where the covenant people's armed resistance on the land ends. The Devarim 28 dispersion begins here.",
+      "sources": [
+        "Josephus Flavius, 'The Jewish War', Book VII, c.75 CE",
+        "Yigael Yadin, 'Masada: Herod's Fortress and the Zealots' Last Stand', 1966",
+        "Dead Sea Scroll fragments found at Masada, including a Psalms scroll and Songs of the Sabbath Sacrifice"
+      ],
+      "on_this_ground": "You are on the plateau where the last armed resistance ended in 73 CE. The Roman siege ramp is still visible on the western face. Scroll fragments matching the DSS were found here — the Masada community read from the same texts as the Qumran Yahad.",
+      "excerpt": "\"Since we long ago resolved never to be servants to the Romans, nor to any other than to YHWH himself — for he alone is man's true and just Lord — the time is now come that obliges us to make that resolution true in practice.\" — Eleazar ben Yair's speech, Masada, 73 CE, recorded by Josephus, The Jewish War VII.8.6.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "iq-babylon",
+      "region": "Mesopotamia",
+      "city": "Babylon (modern Al-Hillah, Iraq)",
+      "name": "Babylon — Site of the Covenant Exile",
+      "lat": 32.5355,
+      "lng": 44.4275,
+      "type": "history",
+      "summary": "Babylon under Nebuchadnezzar II became the site of the covenant people's exile after the destruction of Jerusalem in 587 BCE. The exile lasted approximately 70 years (587–539 BCE) until Cyrus of Persia took Babylon and issued the decree permitting the exiles to return. The books of Daniel and Ezekiel were produced in Babylon. The Babylonian exile is the event that created the conditions for the Masoretic text tradition — the post-exilic scribal and later Rabbinic layer that replaced the pre-exilic covenant texts. The Ge'ez Orit and the Dead Sea Scrolls preserve the pre-exilic text tradition; the Masoretic tradition represents the post-exilic reconstruction.",
+      "sources": [
+        "Nebuchadnezzar II palace inscriptions, Babylon, c.600 BCE",
+        "Cyrus Cylinder, c.539 BCE, British Museum",
+        "Ge'ez Orit, Yirmeyahu (Jeremiah) 29; Daniel 1–6",
+        "2 Kings 24–25"
+      ],
+      "on_this_ground": "You are in the ruins of the city where the covenant people were taken after 587 BCE. Nebuchadnezzar's Ishtar Gate stood here. The exiles who came here and returned brought back a transformed text tradition — Babylon is where the post-exilic layer of the text begins.",
+      "excerpt": "\"By the rivers of Babylon, there we sat down and wept when we remembered Zion.\" — Tehillim (Psalm) 137:1. The exile documented in the covenant texts. The rivers are the Euphrates and the Tigris — the geography of this site.",
+      "route": "ancient-covenant-geography"
+    },
+    {
+      "id": "iq-nineveh",
+      "region": "Mesopotamia",
+      "city": "Nineveh (modern Mosul, Iraq)",
+      "name": "Nineveh — Assyrian Exile Capital",
+      "lat": 36.3614,
+      "lng": 43.1564,
+      "type": "history",
+      "summary": "Nineveh was the capital of the Assyrian Empire under Sennacherib and Ashurbanipal. In 722 BCE, the Assyrian king Sargon II conquered Samaria and deported the ten northern tribes of the covenant people — the event recorded in 2 Kings 17 as the dispersion of the Northern Kingdom. These ten tribes, taken to Assyria, are the documented origin of the 'lost tribes' tradition. Nineveh itself fell to the Babylonian-Median coalition in 612 BCE — the fulfillment of the Nahum prophecy in the covenant scrolls. Sennacherib's invasion of Judah in 701 BCE (recorded in both the Assyrian annals and 2 Kings 18–19) and his encounter with the Kushite pharaoh Taharqa are documented in both the covenant texts and Assyrian inscriptions.",
+      "sources": [
+        "Sargon II annals, 722 BCE, Assyrian royal inscriptions",
+        "Sennacherib's prism (Taylor Prism), c.691 BCE, British Museum",
+        "2 Kings 17 — Northern Kingdom exile account",
+        "Nahum 1–3, Ge'ez Orit — prophecy of Nineveh's fall"
+      ],
+      "on_this_ground": "You are at the ruins of the city that destroyed the Northern Kingdom in 722 BCE and took the ten tribes into exile. The Taylor Prism recording Sennacherib's invasion of Judah and his encounter with Taharqa of Kush sits in the British Museum — this city produced it.",
+      "excerpt": "\"In the ninth year of Hoshea the king of Assyria took Samaria, and carried Israel away into Assyria, and placed them in Halah and in Habor by the river of Gozan, and in the cities of the Medes.\" — 2 Kings 17:6, Ge'ez Orit text tradition. The Assyrian exile of the Northern Kingdom documented in the covenant scrolls.",
+      "route": "ancient-covenant-geography"
     }
   ],
   "routes": [
@@ -1258,6 +1389,24 @@
         "mz-mozambique-island"
       ],
       "summary": "The physical infrastructure of the Portuguese Atlantic Slave Trade — from the planning centre at Sagres to the first conquest at Ceuta (1415), the first slave factory at Arguin (1445), the Guinea coast at Cacheu, the first colonial city in sub-Saharan Africa at Cidade Velha, the first industrial plantation colony at São Tomé, the largest embarkation point in history at Luanda, and the East African gateway at Mozambique Island. This is the skeleton of the machine — each stop is a specific documented node in the infrastructure that moved 5+ million covenant people across the Atlantic."
+    },
+    {
+      "id": "ancient-covenant-geography",
+      "name": "Ancient Covenant Geography — Primary Sites",
+      "city": "Africa, Mesopotamia & Israel",
+      "region": "Global",
+      "distance_km": 0,
+      "duration_hrs": "self-guided",
+      "stops": [
+        "eg-goshen",
+        "sd-meroe-kush",
+        "iq-nineveh",
+        "iq-babylon",
+        "il-qumran-cave4",
+        "il-masada",
+        "eg-cairo-geniza"
+      ],
+      "summary": "The full arc of ancient covenant geography — from the covenant people's African land in Egypt through both exiles, into the Yahad scroll archive, through the last armed resistance, and back to African covenant continuity in the Cairo Geniza. Goshen is where the Ge'ez Orit places the covenant people in Africa. Meroe is the African kingdom whose pharaoh Taharqa is named in Isaiah 37:9. Nineveh is where the Northern Kingdom's ten tribes were taken in 722 BCE. Babylon is where the Southern Kingdom's exile began in 587 BCE — and where the post-exilic text layer was constructed. Cave 4 at Qumran is where the Yahad sealed their primary archive — 15,000 fragments, 200 manuscripts — before Rome arrived in 68 CE. Masada is where armed covenant resistance ended in 73 CE, beginning the Devarim 28 dispersion. The Cairo Geniza documents that the covenant community survived in Africa — preserving texts in Egypt for 1,000 years after Masada."
     }
   ],
   "displacement_trail": {

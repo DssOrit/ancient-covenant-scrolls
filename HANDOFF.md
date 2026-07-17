@@ -574,3 +574,61 @@ Declared `riskLevel` must match auto-classification or all phases block.
 - 2C2: `08fdfa0b` PR #39 (fixes: PR #40, #41, #42)
 - 2C3: `6b1f56e8` PR #43 (fixes: PR #44, #45)
 - 2D: `a77f9b1a` PR #47
+
+---
+
+## Standard Scoped Hard Refresh Template
+
+**Locked 2026-07-17.** Use this pattern verbatim when adding a hard refresh
+button or function to any PWA. Replace `YOUR_APP_PREFIX-` and `/your-app-path/`
+with the app's own values. Never use the global (unfiltered) form.
+
+### Named function version (e.g. in a .js file)
+
+```js
+async function hardRefresh() {
+  try {
+    var keys = await caches.keys();
+    await Promise.all(
+      keys
+        .filter(function(k) { return k.indexOf('YOUR_APP_PREFIX-') === 0; })
+        .map(function(k) { return caches.delete(k); })
+    );
+    var regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(
+      regs
+        .filter(function(r) { return r.scope.indexOf('/your-app-path/') >= 0; })
+        .map(function(r) { return r.unregister(); })
+    );
+  } catch (e) {}
+  location.reload(true);
+}
+```
+
+### Inline onclick version (e.g. in index.html)
+
+```html
+onclick="(async()=>{try{
+  const ks=await caches.keys();
+  await Promise.all(ks.filter(k=>k.indexOf('YOUR_APP_PREFIX-')===0).map(k=>caches.delete(k)));
+  const rs=await navigator.serviceWorker.getRegistrations();
+  await Promise.all(rs.filter(r=>r.scope.indexOf('/your-app-path/')>=0).map(r=>r.unregister()));
+}catch(e){}location.reload(true);})()"
+```
+
+### Per-app values
+
+| App         | Cache prefix      | SW scope path   |
+|-------------|-------------------|-----------------|
+| ACR Maps    | `acr-maps-`       | `/maps/`        |
+| Load        | `load-`           | `/load/`        |
+| Load Maps   | `loadmaps-`       | `/loadmaps/`    |
+| Load Studio | `loadstudio-`     | `/loadstudio/`  |
+| Attain      | `attain-`         | `/attain/`      |
+| Attain Jr   | `attain-jr-`      | `/attain-jr/`   |
+| Study       | `acr-study-`      | `/study/`       |
+| ACR Reader  | `acr-`            | `/` (root)      |
+
+**Never** call `caches.keys()` and delete all results. **Never** call
+`getRegistrations()` and unregister all results. One app's refresh must
+never touch another app's cache or service worker.
