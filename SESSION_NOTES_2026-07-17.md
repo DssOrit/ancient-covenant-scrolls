@@ -12,12 +12,13 @@ Both map sites are current and merged to `main`:
 
 Per user: **all fixes are up to date for the Map sites.**
 
-### One open review item (not a confirmed fix — flagged, awaiting user go)
-- Hard-refresh scope: the other session flagged that `maps/index.html`'s hard refresh
-  may clear service workers/caches across the whole `acrscrolls.com` origin, and noted
-  the "same" concern for `loadmaps/app.js` / `load/load.js`. Load Maps' refresh was
-  written scoped (deletes only `loadmaps-` caches, uses `.update()` not unregister), so
-  it may not apply there. No code touched — logged for review only, pending user approval.
+### Hard-refresh scope bug — FIXED (verified on main 2026-07-17)
+The origin-wide hard-refresh bug is resolved. Each app's refresh now scopes to its own
+service worker + caches, so a refresh in one app no longer wipes the others:
+- **ACR Maps** (`maps/index.html`): unregisters only its own `/maps/` SW and deletes
+  only `acr-maps-` caches.
+- **Load** (`load/load.js`): deletes only `load-` caches (uses `.update()`, not unregister).
+- **Load Maps** (`loadmaps/app.js`): only `loadmaps-` caches — was already scoped.
 
 ### Cross-suite status
 - Full 2026-07-17 status refresh (all Load apps, live versions) lives in
