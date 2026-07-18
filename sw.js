@@ -5,7 +5,7 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v84';
+const CACHE = 'acr-v85';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
@@ -17,7 +17,7 @@ const DATA_FILES = (function () {
   for (let i = 1; i <= 111; i++) { if (i !== 108) arr.push('data/file_' + i + '.json'); }
   arr.push('data/file 112.json');
   arr.push('data/file_113.json');
-  arr.push('data/file_114.json');
+  arr.push('data/file_115.json');
   return arr;
 })();
 
