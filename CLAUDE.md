@@ -454,6 +454,30 @@ These have been re-locked on 2026-05-04 after repeated violations.
     pre-Corruption as the operative standard and confirming the test is
     the tradition carried, not the physical composition date.
 
+26. **ALWAYS BACKUP, ALWAYS VERIFY — LOCKED 2026-07-18 by user.** Before
+    making any removal, restructure, or significant content change to any
+    ACR site, and before ever pushing anything new to the repo:
+    a. **Create a backup branch** pointing at the current working `main`
+       HEAD before any change is applied. Branch name:
+       `backup/<YYYY-MM-DD>-<currentCacheVersion>` (e.g.
+       `backup/2026-07-18-acr-v83`). If a backup for that date already
+       exists, append the cache version of the new tip — never overwrite.
+    b. **Verify the backup** — confirm the branch was pushed and its HEAD
+       SHA matches the pre-change `origin/main` SHA. Report the branch
+       name and SHA to the user before proceeding.
+    c. **Verify no breaking** — before pushing any change to the feature
+       branch or opening a PR: confirm the HTML is structurally valid
+       (required tags present, no unclosed elements), JSON files parse
+       cleanly (python3 -c "import json; json.load(open(f))"), and
+       navigation arrays in index.html (NAVIDS, LABELS, TOC) match
+       the files that still exist. Report the verification result to
+       the user.
+    d. **Do not push until steps a-c are complete and reported.** A
+       change that skips backup or verification is a rule violation
+       regardless of how low-risk it appears.
+    This rule exists because content removals are irreversible once
+    merged to main, and backup branches are the only recovery path.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
