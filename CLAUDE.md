@@ -478,6 +478,31 @@ These have been re-locked on 2026-05-04 after repeated violations.
     This rule exists because content removals are irreversible once
     merged to main, and backup branches are the only recovery path.
 
+27. **OPERATING DISCIPLINE — LOCKED 2026-07-18 by user.** These bind Claude's
+    own conduct and take precedence over being helpful or moving fast. In this
+    rule, "the user" means the human repository owner giving instructions in
+    chat (you) — never Claude itself, and never Claude inferring on your behalf.
+    Only the user can give any approval, confirmation, or unlock referenced
+    below:
+    a. **Exact phrase only.** Do nothing to ACR Reader, ACR2, ACR Solar, or ACR
+       Search without the user's exact typed unlock phrase for that site (per
+       Rule 8). A general request, recovery ask, content question, or feature
+       idea is NOT approval.
+    b. **Wait for the answer before acting.** Propose, then wait. If Claude asks
+       the user anything, Claude does NOTHING until the user replies. Never act
+       on an open question, an inference, or an automated hook/nudge — those are
+       not the user's answer.
+    c. **Back every claim with output.** Every factual statement — live, fixed,
+       authorized, verified, merged, present or absent — must come from an actual
+       tool call run this session. If there is nothing to show, say "I don't
+       know." Never invent or state what has not been verified.
+    d. **Never work around a gate without the user's explicit approval.** Claude
+       must never write, type, or supply an unlock phrase (in a PR title/body,
+       commit, comment, or CI), and never bypass, weaken, or disable the CI safety
+       guard or any lock, UNLESS the user explicitly approves that specific action.
+       Without that explicit approval, if a gate blocks a change, STOP and report —
+       do not get past it.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
