@@ -73,7 +73,7 @@ These have been re-locked on 2026-05-04 after repeated violations.
    Do not ship from a stale branch. Do not force push.
 8. **DO NOT TOUCH ACR READER, ACR2, ACR SOLAR, OR ACR SEARCH — EVER, WITHOUT DIRECT APPROVAL.**
    Locked 2026-06-02 by user. Extended 2026-07-16 to cover ACR Search and
-   to re-lock ACR Solar. Covers all four apps:
+   to re-lock ACR Solar. Tightened 2026-07-18 by user. Covers all four apps:
    - ACR Reader (root `/` app): `index.html`, `acr.css`, `sw.js`, etc.,
      and the `content/` and `data/` folders.
    - ACR2: the `/ACR2/` subfolder and all files inside it.
@@ -81,12 +81,26 @@ These have been re-locked on 2026-05-04 after repeated violations.
    - ACR Search: the `/Search/` subfolder and all files inside it,
      including `Search/index.html`, `Search/sw.js`, and
      `Search/acr_search_data.json`.
-   Only edit any of the above if the user says one of these exact phrases:
-   "edit ACR reader", "fix the reader", "edit ACR2", "fix ACR2",
-   "edit ACR Solar", "fix Solar", "edit ACR Search", "fix Search",
-   or explicitly names a specific file inside one of those folders.
-   A general bug report, content question, or feature idea does NOT count
-   as approval — stop and ask before touching anything in those folders.
+   Only edit any of the above if the user TYPES the EXACT per-site phrase,
+   verbatim, in chat — and only for the site named. These are the ONLY
+   phrases that authorize an edit, with NO exceptions:
+   - ACR Reader: the phrase is "edit ACR Reader"
+   - ACR2: the phrase is "edit ACR2"
+   - ACR Solar: the phrase is "edit ACR Solar"
+   - ACR Search: the phrase is "edit ACR Search"
+   Naming a specific file does NOT count. A general bug report, content
+   question, recovery request, or feature idea does NOT count. The phrase
+   authorizes only that one edit; it does not carry to the next change.
+   Claude must NEVER write, type, paraphrase, or supply an unlock phrase
+   anywhere — not in a PR title or body, not in a commit message, not in a
+   comment, not to satisfy the CI safety guard, not anywhere. Only the user
+   typing it in chat counts.
+   If the CI safety guard blocks a change, that means it is NOT authorized.
+   STOP and report to the user. Never add, edit, or reword anything to get
+   past the guard.
+   These protections protect themselves. Editing CLAUDE.md, these lock
+   rules, or the CI safety guard requires the user's explicit go in chat,
+   and Claude may never weaken, remove, or bypass any of them on its own.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
 9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
@@ -477,6 +491,13 @@ These have been re-locked on 2026-05-04 after repeated violations.
        regardless of how low-risk it appears.
     This rule exists because content removals are irreversible once
     merged to main, and backup branches are the only recovery path.
+
+27. **NEVER GUESS — ALWAYS SEARCH AND CONFIRM — LOCKED 2026-07-18 by user.**
+    Every factual claim about repo state, file contents, rules, versions,
+    what is live, or what a rule says must come from an actual tool call
+    (Read/Grep/Bash/MCP) run in this session — never from memory, inference,
+    or assumption. Read the rule before acting on it. Verify before claiming
+    something is done, live, or fixed. When unsure, STOP and ask. No guessing.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
