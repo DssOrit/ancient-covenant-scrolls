@@ -354,6 +354,59 @@ These have been re-locked on 2026-05-04 after repeated violations.
     silently destroyed ACR Reader's SW and cache on 2026-07-17, taking the
     app offline on iPhone. Never let one app's refresh touch another app.
 
+22. **NO MASORETIC NIQQUD IN PRE-RABBINIC CITATIONS — LOCKED 2026-07-18
+    by user.** When citing any pre-Rabbinic text (DSS, Ge'ez Orit, ancient
+    inscriptions), Hebrew and Aramaic must appear in unpointed consonantal
+    form only. Masoretic vowel pointing (niqqud — the dots and dashes added
+    by the Masoretes 6th-10th century CE) must never appear in citations of
+    ancient texts. When the Masoretic text is being documented as a
+    manipulation layer, it must be explicitly labeled "Masoretic Text (MT)"
+    and never presented as the original. Using niqqud in a citation of a
+    DSS-era text is a rule 13 violation — it imposes a Rabbinic-era
+    editorial layer onto a pre-Rabbinic source.
+
+23. **GE'EZ ORIT HAS EQUAL STANDING WITH ARAMAIC DSS — LOCKED 2026-07-18
+    by user.** The Ge'ez Orit and the Aramaic Dead Sea Scrolls are co-equal
+    primary sources under rule 13. A Western academic "no Aramaic DSS
+    fragments found" argument does NOT disqualify a text preserved in the
+    Ge'ez tradition. Applying a DSS-fragment-only evidentiary standard to
+    exclude or downgrade Ge'ez-preserved sections is a rule 15 violation.
+    The Beta Israel and Ethiopian covenant community's preservation of a
+    text is evidence of African Hebrew continuity with that tradition — it
+    carries primary source standing, not secondary status. Specific
+    prohibitions:
+    - Never rank Aramaic archaeological finds above Ge'ez transmission.
+    - Never label Ge'ez-only sections as "unverifiable," "contested," or
+      "cannot be confirmed" solely on the basis of missing DSS fragments.
+    - Never require Western archaeological confirmation before accepting
+      a text the African covenant tradition has preserved.
+    Rule 13 still governs: if a text contains demonstrable post-Christian
+    content additions visible inside the text itself (not merely the absence
+    of DSS fragments), that is a separate question addressed by rule 13.
+    The DSS-fragment-absence argument alone is never sufficient to exclude.
+
+24. **SOURCE DIRECTION: ANCIENT COVENANT TEXTS ARE THE ORIGIN — LOCKED
+    2026-07-18 by user.** When comparing ancient covenant texts (1 Enoch,
+    DSS, Ge'ez Orit) to NT content, the direction is always stated plainly:
+    the ancient text is the original; the NT borrowed, adapted, or corrupted
+    from it. Never frame ancient texts as "NT-like" or "similar to NT" —
+    that framing inverts the chronology and grants the NT precedence it does
+    not have. Specific rules:
+    - The NT's fire and judgment language is Enoch-like — Enoch is the
+      source.
+    - The NT's spirit language is Orit-like — the Orit is the source.
+    - The NT's Son of Man language is Daniel-like — Daniel is the source.
+    - State the borrowing direction correctly in every comparison, every
+      critical note, and every research response.
+    - Western academic scholars (Milik, Cross, Vermes, or any other) are
+      not authorities on whether ancient covenant texts predate the NT. The
+      manuscript evidence and the African preservation tradition are the
+      record. A Western scholar's dating opinion does not override the
+      Ge'ez transmission record.
+    If there is ANY doubt about whether a comparison frames an ancient text
+    as derivative of the NT rather than the NT as derivative of the ancient
+    text, STOP and correct the framing before continuing.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
