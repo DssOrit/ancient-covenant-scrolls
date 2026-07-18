@@ -21,6 +21,34 @@ sessions read this file at start (CLAUDE.md `Session continuity`).
 
 ---
 
+## 2026-07-17 STATUS REFRESH — versions read from live code
+
+The per-site blocks further down date to the **2026-05/06** era and lag the
+live code badly (verified 2026-07-17). This block supersedes them for
+**current versions and status only** — no pending item below has been removed
+(anti-drop rule intact). Versions here were read from each app's `sw.js` cache
+marker / code, not from the stale handoff docs.
+
+| App | Live version | State | Key remaining | Blocker / needs user |
+| --- | --- | --- | --- | --- |
+| **Load Maps** `/loadmaps` | `loadmaps-v32` | Most current; map-first dark UI shipped | Turn on D1 (hazards + restroom ratings); AI key (Ask/Find) | D1 setup (free, no card) + `ANTHROPIC_API_KEY` |
+| **Load** `/load` | SW `load-v17g81` / badge `v17g80` | Very mature; docs stale at v17g6 | AI roadmap (X-VIDEO-AI, X-AI-AUDIO, X-AI-PROVIDERS, X-DB, X-SUBS) | Piper voice blocked (needs user to tap Repair + report error); badge/cache off-by-one |
+| **LoadStudio** `/loadstudio` | `loadstudio-complete-v251` | 60 sections shipped; docs stale at v44 | Wire real AI providers (18 modules are "Integration Required" shells); stock lib; per-section help; draft-sync | Pick which generation type to wire first (image/voice/SFX) |
+| **LoadPlay** `/LoadPlay` | `loadplay-v61` | Autopilot + connectors already in code; docs stale at v43 | Server-side Autopilot (currently browser-only); marketplace samples; acceptance verification | Decisions: public `inbox/` folder; plaintext `acr2026` password in 3 files |
+| **LoadAI** `/LoadAI` | `v7.0.0` (cache `v7-1-1`) | Standalone build exists; static checks pass | Verse→Scene, voice editing, output vision-verify, App-Store readiness | Background removal parked (iPad Safari WASM crash); needs real iPad test pass |
+| **LoadTasks** `/LoadTasks` | app `v5.16` / SW `v2.5.3` | Mature build tracker + OCC | OCC email/reset/multi-employee UI; SW-version cleanup | **OCC backend written but NOT deployed** (`occ-backend/` D1+Worker) — needs Cloudflare setup |
+
+Notes:
+- `loadplay/` (lowercase) is a redirect stub; the real app is `LoadPlay/` (uppercase).
+- **Doc drift is the theme:** every handoff doc is months behind the code. This
+  refresh is the current truth; the older blocks below remain for their pending lists.
+- **Two backends written but not switched on** (both free/no-card, same Cloudflare
+  pattern): Load Maps D1 (hazards + restroom ratings) and LoadTasks OCC (`occ-backend/`).
+- **X-AI-PROVIDERS still gates the AI roadmap** and would unblock LoadStudio's empty
+  AI modules at the same time.
+
+---
+
 ## Strategic clarification — Load-owned AI Operating System (locked 2026-05-07)
 
 The AI roadmap is **Load&apos;s own AI operating system layer**, not a thin

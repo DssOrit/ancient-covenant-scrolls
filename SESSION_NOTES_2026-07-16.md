@@ -68,7 +68,40 @@ Waiting for user approval before touching anything.
 - Live deployed URL (`dssorit.github.io`) not reachable from sandbox.
 - GitHub MCP `list_pull_requests` returned 503 briefly.
 
-## Today's commit log (oneline)
+## Continuation (same day, evening) — Load Maps map-first redesign + fixes + restrooms
+
+Shipped after the morning block (Load Maps cache v20 -> **v32**, now **v33** on main):
+
+- **v25** hard-refresh circle now clears cache + updates (like other Load apps) (#663)
+- **v26** cleaner tab favicon (emblem, no text) (#665)
+- **v27** speed cameras (Overpass) + real elevation on any route (Open-Meteo) (#670)
+- **v28** live fuel prices — Spain live, Portugal best-effort, keyless server fn (#673)
+- **v29** dark live-map redesign in the ACR Maps style: OpenFreeMap dark + on-map
+  search + region pills + category legend pins (#676)
+- **v30** map-first shell: app opens straight into the dark map; menu moved to a
+  slide-out drawer; sections return to the map (#677)
+- **v31** fix stale-version loading (SW network-first for the app shell) + one-time
+  reload on SW update + dark/repositioned zoom buttons (#679) — user-verified "fixed"
+- **v32** clean-restrooms finder (OSM badges: baby-change/step-free/free/women's;
+  + D1 star ratings dark) + iPhone loading safeguard (SW 3.5s network timeout ->
+  cache fallback, stops "server stopped responding" on VPN) (#683)
+
+### Load Maps outstanding
+- **Set up Cloudflare D1**: `npx wrangler d1 create loadmaps` -> bind as `DB` in Pages
+  Functions -> apply `functions/api/loadmaps/schema.sql`. Turns on BOTH hazards and
+  restroom ratings. Free, no credit card.
+- Still dark until AI key: Ask Load Maps + smart Find (`ANTHROPIC_API_KEY`).
+- Location + on-device storage need a **non-Private** Safari tab; category/camera/
+  restroom pins load for the **current map view** (zoom in first).
+- **2026-07-17:** other session flagged a hard-refresh scope bug in `maps/index.html`
+  and (per its note) `loadmaps/app.js` / `load/load.js` — verify Load Maps' refresh
+  only clears its own `loadmaps-` caches (it was written scoped) before any change.
+
+### Backups
+- `backup/2026-07-16-loadmaps-v31` (verified-working state).
+- `backup/2026-07-16-loadmaps-v32` (latest after restrooms + safeguard).
+
+## Today's commit log (oneline, combined — Load Maps + ACR Maps)
 ```
 ef91b07 fix(maps): isolate Leaflet stacking context structurally (v13) (#686)
 cb52106 fix(maps): raise UI z-indices to 9000+ to clear Leaflet stacking context (#685)
@@ -77,6 +110,8 @@ cb52106 fix(maps): raise UI z-indices to 9000+ to clear Leaflet stacking context
 c744052 ACR Maps: Fix white screen — move Leaflet JS to end of body, drop adapter (#682)
 6bad1be ACR Maps: Add gold hard-refresh button to topbar (#681)
 23e1518 ACR Maps: Switch to Leaflet — fixes map on iPhone (#680)
+(Load Maps evening also: #663 refresh, #665 favicon, #670 cameras, #673 fuel,
+ #676 dark redesign, #677 map-first, #679 loading fix — see continuation above)
 94ec605 ACR Maps: Fix map tiles not loading on iPhone (#678)
 052d44a Load Maps: AR heads-up walk (camera + compass arrow) (#660)
 a2ac1da Load Maps: offline map packs (PMTiles + OPFS) (#659)
