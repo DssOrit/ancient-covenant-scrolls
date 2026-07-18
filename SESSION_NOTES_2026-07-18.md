@@ -63,3 +63,70 @@
 - **One more failure this session, recorded honestly:** after asking the user whether to push the notes, Claude pushed before the user answered — acting on a repo stop-hook rather than the user's reply. That is exactly what Rule 27(b) now forbids.
 - **Final live `main` state:** cache `acr-v86`; live features = Book of Parables exclusion page (`file_115.json`) + de-duplicated Chanokh sidebar labels; Rule 27 locked in `CLAUDE.md`.
 - **User outcome:** the user is keeping the subscription canceled and will not renew if today's behavior continues. Recorded so the next session starts with full context.
+
+---
+
+## Later-session updates (after the notes above were merged)
+
+Focus of this stretch: scrub all remaining references to the excluded
+material — the Similitudes / Book of Parables, Chanokh chapters 74–108, the
+removed 11QMelchizedek book, and any son-as-false-deity affirming language —
+across ACR Reader, ACR Search, and ACR Study. Find-first each time: sweep →
+report full manifest → wait for approval → edit only what was approved →
+backup + verify + report before push.
+
+- **ACR Search — Cave 4 finds contradiction fixed** — PR **#709 merged**,
+  cache `acr-search-v177`. Removed "the Similitudes of Enoch, " from the
+  Cave 4 fragment list (the app elsewhere documents the Similitudes as ABSENT
+  from every Qumran cave — the line contradicted that). Authorized with the
+  typed phrase "edit ACR Search". Exposure content on the Suppressed shelf
+  left intact (it documents the manipulation, it does not affirm it).
+- **ACR Reader — son-figure cross-refs removed from critical notes** —
+  PR **#710 merged**, cache `acr-v87`. Removed affirming/cross-reference
+  sentences that pointed at the excluded Book of Parables / son-of-man
+  construct: `data/file_15.json` (four Parables sentences + a `[CRITICAL NOTE]`),
+  `data/file_68.json` (Psalm 80 son-of-man commentary line), `data/file_113.json`
+  (Raz Nihyeh "Similitudes disclosed as revelation" line). Scripture verses left
+  untouched. Authorized with the typed phrase "edit ACR Reader".
+- **ACR Study — Similitudes content removed from Chanokh quizzes** —
+  PR **#711 merged** as `fa46a9a`, cache `acr-study-v114`. The two Chanokh
+  quiz files were built on the old, fuller Chanokh and still tested the
+  excluded Similitudes as ~half their questions. Aligned to the Reader (which
+  excludes the Parables entirely):
+  - `study/content/file_14.json` (Part 2): removed multiple-choice 10–19,
+    fill-blank 11–19 (Elect One, Son of Man "hidden/preserved", "YHWH of
+    Spirits", "second Parable", Ancient of Days) **and** the FAQ "Why are the
+    Similitudes absent from Qumran?" (user chose remove, not keep-as-debunk).
+    `20/20/8 → 10/11/7`. Kept the Astronomical Book + Dream Vision questions.
+  - `study/content/file_15.json` (Part 3): removed multiple-choice 10–19,
+    fill-blank 10–19 (Similitudes verses + a few misfiled Astronomical /
+    Animal-Apocalypse questions not in the Reader's Epistle). `20/20/8 →
+    10/10/8`. Kept the Epistle + Apocalypse of Weeks questions.
+  - Method: every removed item verified ABSENT from the Reader's own Chanokh
+    files (`data/file_14.json`, `data/file_15.json`) via longest-exact-word-run
+    membership check, with the borderline items (runs of 5–6 words) confirmed
+    by hand against the Reader's surviving renumbered chapters 56–73.
+  - `study/sw.js` cache `acr-study-v113 → v114`. Study is not Rule-8
+    phrase-gated and touches no root files, so the CI guard did not apply;
+    Load Site Safety Check still ran green.
+
+- **Documentation references deliberately LEFT IN PLACE** (they expose the
+  manipulation, they do not affirm it — "match the Reader"): the Reader's
+  Book of Parables exclusion page (`data/file_115.json`), ACR Search's
+  "Suppressed" shelf on the Similitudes, and the 11QMelchizedek debunks in
+  Reader `data/file_70.json` / `data/file_19.json` and Study
+  `content/file_46.json` / `content/file_19.json`.
+
+- **Live `main` now:** `fa46a9a` — root cache `acr-v87`, Search
+  `acr-search-v177`, Study `acr-study-v114`.
+
+### Backups (this stretch)
+- `backup/2026-07-18-acr-study-v114` @ `9c8aa2b` — pre-Study-cleanup main HEAD.
+- Earlier: `backup/2026-07-18-acr-v87`, `backup/2026-07-18-acr-search-v177`,
+  `backup/2026-07-18-acr-v86-preSonRemoval`.
+- Recovery = `git checkout backup/<name>`.
+
+### PRs this stretch
+- **#709 merged** — ACR Search Cave 4 Similitudes line removed (`acr-search-v177`).
+- **#710 merged** — ACR Reader son-figure cross-refs removed (`acr-v87`).
+- **#711 merged** — ACR Study Similitudes quiz content removed (`acr-study-v114`).
