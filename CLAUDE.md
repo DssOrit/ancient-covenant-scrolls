@@ -407,6 +407,53 @@ These have been re-locked on 2026-05-04 after repeated violations.
     as derivative of the NT rather than the NT as derivative of the ancient
     text, STOP and correct the framing before continuing.
 
+25. **PRE-CORRUPTION STANDARD — LOCKED 2026-07-18 by user.** All content
+    across ACR sites must carry a pre-Second Temple, pre-Corruption
+    tradition. This standard applies regardless of when the text was
+    physically written down — the test is the TRADITION the content carries,
+    not the date the scribe put ink to leather. This rule was always
+    required and is locked permanently.
+    - **Pre-Second Temple tradition required.** Content must carry First
+      Temple covenant memory: the 364-day solar covenant calendar, the
+      unsanitized Divine Council, covenant accountability language, YHWH as
+      the unsubstituted name, and Sheol as the neutral dust of the dead.
+      The Enochic corpus qualifies because it preserves and transmits First
+      Temple core memory even though its physical written form is Second
+      Temple period Aramaic — the tradition predates the corruption.
+    - **Corrupt Second Temple priesthood theology is excluded.** Content
+      that reflects the corrupt Second Temple priestly establishment is
+      not a valid source: priestly hierarchy claims serving the Jerusalem
+      temple institution over the covenant community; theological
+      accommodations made to Hellenistic Greek imperial rule; calendar
+      modifications imported from Babylonian or Greek systems; any
+      tradition that elevated the post-exile temple institution above the
+      ancient covenant people.
+    - **Hellenistic institutional manipulation is excluded.** Greek
+      philosophical frameworks imposed onto Hebrew tradition — Platonic
+      dualism, Logos theology, Greek cosmological overlay, Greek afterlife
+      frameworks replacing Sheol — are not authoritative sources in ACR
+      content.
+    - **Pre-Corruption covers all four disqualifying layers:** Rabbinic
+      manipulation, Christian theological construction, corrupt Second
+      Temple priesthood theology, and Hellenistic Greek institutional
+      overlay. Content shaped by any of these four layers does not qualify
+      as a primary source regardless of how ancient the physical document is.
+    - **The Ge'ez Orit and the DSS both qualify** because they carry
+      pre-Corruption First Temple covenant tradition. The Ge'ez Orit's
+      108-chapter preservation of Chanokh by Beta Israel is the living
+      African transmission of that First Temple memory. The DSS qualify
+      because they carry pre-Rabbinic, pre-Christian covenant tradition
+      regardless of their physical copy date. Neither requires Western
+      academic validation to establish this standing.
+    - **Physical writing date does not determine standing.** A text
+      physically composed in 200 BCE that carries corrupt Second Temple
+      priesthood theology fails this standard. A text physically composed
+      in 200 BCE that carries First Temple covenant memory passes it. The
+      content determines the standing, not the carbon date.
+    Rule 13 remains in full force. Rule 25 extends it by naming
+    pre-Corruption as the operative standard and confirming the test is
+    the tradition carried, not the physical composition date.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
