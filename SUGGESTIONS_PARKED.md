@@ -115,3 +115,56 @@ not scheduled. To make sure these resurface, do one of:
 2. Each new session, look at `CLAUDE.md` — I added a
    "**Active reminders**" section that lists this file's review date
    so future sessions surface it automatically.
+
+---
+
+## Crossing Over — ACR Search transition content — parked 2026-07-21, REVIEW BY 2026-08-21
+
+User asked (2026-07-21) to save this plan to possibly add later, and to be
+reminded next month. A one-shot reminder trigger was also created. **Do not
+build until the user explicitly requests it. Per the standing rule, verify
+every section against the ACR Reader source + DSS + Orit (pre-Second-Temple,
+pre-Rabbinic, pre-Christian) BEFORE drafting any wording.**
+
+### The gap (from a full structural scan of ACR Search)
+The site is deep on (1) deconstruction (NT Lookup, Paganism, Rome/Canon,
+Contradictions, Suppressed, Rabbinic record, Masoretic-vs-DSS) and (2)
+identity/evidence (African Hebrew record, DNA, calendar, covenant chain,
+practices). The gaps are on the CONSTRUCTIVE / PASTORAL / TRANSITION side —
+the "I believe you, now what?" journey for people crossing over from a
+Christian or Rabbinic background.
+
+### The 9 gaps
+1. Atonement / how sin is forgiven now (biggest — only debunk of the cross exists, no constructive replacement). [Both]
+2. No background-specific on-ramp ("Start Here" is generic). [Both]
+3. Fear deprogramming (afterlife is descriptive, not pastoral). [Both]
+4. "What to do now" transition guide (stop/start at your pace). [Both]
+5. Grief / family / community loss (the human cost). [Both]
+6. The "relationship with Jesus" constructive replacement. [Christian]
+7. "Grace vs law" reframed — the law as the path of life. [Christian]
+8. "If not the rabbis/Talmud, how do I practice?" — DSS/Orit/Beta Israel as the replacement system. [Rabbinic]
+9. Consolidated "what your pastor/rabbi will say" rebuttal toolkit. [Both]
+
+### Placement plan — one new "Crossing Over" pill
+A single new top-level pill houses all nine as sections (kept together,
+fully searchable via buildSiteIndex). Gap 9 can double as Beliefs Q&A cards.
+
+### Wiring mechanism (how any ACR Search addition is made)
+1. New pill: mpill + `-view` div + `-panel` div + `render...Panel()` + initApp call + setMode views array + PANEL_LABELS + buildSiteIndex tabs + goToSiteEntry handler. Bump SW cache.
+2. New section in an existing pill: subhead + td-items in a render function.
+3. New Beliefs Q&A card: object pushed into BELIEFS_QA.
+4. Guide step: guide-step in "How to Use".
+
+### VERIFIED FLAGSHIP CONTENT (ready to ship as-is) — "How Sin Is Atoned — Return to YHWH, Not a Dying Savior"
+All anchors verified in the ACR Reader corpus on 2026-07-21:
+- Return/teshuvah: Devarim 30 (file_12); Yechezkel 33:11 "no pleasure in the death of the wicked, but that the wicked turn from his way and live" (file_58); 18:32 "no pleasure in the death of anyone, so turn and live" (file_55).
+- Heart over sacrifice: Hoshea 6:6 (in Search); Tehillim 51 "a broken and contrite heart, O Creator, you will not despise" (file_67); Micah 6:8 "do justice, love kindness, walk humbly with your Creator" (file_62).
+- Yom Kippur covering, goat sent away alive: Vayikra 16:22.
+- DSS Yahad atonement, no temple/no dying messiah: 1QS Community Rule "by the spirit of true counsel of the Creator are atoned the paths of a man, all his iniquities, so that he may look upon the light of life" (file_98).
+- Christian-facing close: return directly with a whole/broken heart; the "forgiveness requires the invented figure's blood" teaching is the manipulation over the covenant.
+Five td-items drafted (see scratchpad atonement_preview.html at draft time). Divine name rendered YHWH / Creator.
+
+### Still to verify before drafting (do NOT draft from memory)
+Sections for gaps 2-9 each need their own primary-source verification pass
+against the ACR corpus + DSS + Orit before any wording is written or previewed.
+Suggested next: the two on-ramps (the front door).
