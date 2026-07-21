@@ -118,13 +118,19 @@ not scheduled. To make sure these resurface, do one of:
 
 ---
 
-## Crossing Over — ACR Search transition content — parked 2026-07-21, REVIEW BY 2026-08-21
+## Crossing Over — ACR Search transition content — parked 2026-07-21 (SAVED REFERENCE)
+
+NOTE TO FUTURE SESSIONS: This is a passive saved reference. The user does NOT
+want it surfaced each session. A single one-time reminder is scheduled via a
+trigger for ~2026-08-14; that is the only reminder. Do NOT auto-surface this
+entry on session start, and do not treat it as an active "review by" item.
 
 User asked (2026-07-21) to save this plan to possibly add later, and to be
-reminded next month. A one-shot reminder trigger was also created. **Do not
-build until the user explicitly requests it. Per the standing rule, verify
-every section against the ACR Reader source + DSS + Orit (pre-Second-Temple,
-pre-Rabbinic, pre-Christian) BEFORE drafting any wording.**
+reminded once in a few weeks (handled by the one-time trigger, not by
+per-session surfacing). **Do not build until the user explicitly requests it.
+Per the standing rule, verify every section against the ACR Reader source +
+DSS + Orit (pre-Second-Temple, pre-Rabbinic, pre-Christian) BEFORE drafting
+any wording.**
 
 ### The gap (from a full structural scan of ACR Search)
 The site is deep on (1) deconstruction (NT Lookup, Paganism, Rome/Canon,
