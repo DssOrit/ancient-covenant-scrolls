@@ -118,7 +118,9 @@ not scheduled. To make sure these resurface, do one of:
 
 ---
 
-## Crossing Over — ACR Search transition content — parked 2026-07-21 (SAVED REFERENCE)
+## Waking Up — ACR Search transition content — parked 2026-07-21 (SAVED REFERENCE)
+
+(Pill working name: "Waking Up". Was "Crossing Over" — renamed by user 2026-07-21.)
 
 NOTE TO FUTURE SESSIONS: This is a passive saved reference. The user does NOT
 want it surfaced each session. A single one-time reminder is scheduled via a
@@ -151,7 +153,7 @@ Christian or Rabbinic background.
 8. "If not the rabbis/Talmud, how do I practice?" — DSS/Orit/Beta Israel as the replacement system. [Rabbinic]
 9. Consolidated "what your pastor/rabbi will say" rebuttal toolkit. [Both]
 
-### Placement plan — one new "Crossing Over" pill
+### Placement plan — one new "Waking Up" pill
 A single new top-level pill houses all nine as sections (kept together,
 fully searchable via buildSiteIndex). Gap 9 can double as Beliefs Q&A cards.
 
