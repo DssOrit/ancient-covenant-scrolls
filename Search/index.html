@@ -754,6 +754,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .vb-vol-num.acr2{color:var(--red)}
 .vb-vol-count{font-size:10px;color:var(--tx3)}
 .vb-section-header{grid-column:1/-1;font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:0.08em;padding:14px 2px 5px;border-top:1px solid #1e1e1e;margin-top:4px}
+.vb-section-note{grid-column:1/-1;font-size:10px;color:var(--red);padding:0 2px 8px;line-height:1.5}
 /* CHRONOLOGICAL ORDER */
 .vb-chron-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(200,151,31,0.08);border:1px solid rgba(200,151,31,0.35);border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;margin-bottom:12px;transition:background 0.15s,border-color 0.15s;letter-spacing:0.03em}
 .vb-chron-pill:active{background:rgba(200,151,31,0.18)}
@@ -2100,7 +2101,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     <!-- VOLUME BROWSER -->
     <div id="volumebrowser-view" style="display:none">
       <div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:3px">Volume Browser</div>
-      <div class="vb-intro">48 primary volumes (gold) and 13 secondary scrolls from ACR2 (red). Tap any card to browse passages.</div>
+      <div class="vb-intro">The ACR Reader canon volumes (gold). The Second Temple and later additions (red) are held under warning — documented, not canonical. Tap any card to browse passages.</div>
       <div class="vb-chron-pill" onclick="toggleChronOrder(this)"><i class="ri-sort-asc"></i> Chronological Reading Order</div>
       <div class="vb-chron-panel" id="vb-chron-panel"></div>
       <div id="vb-grid" class="vb-grid"></div>
@@ -6303,26 +6304,45 @@ function buildVolumeIndex() {
   });
   renderVolumeGrid();
 }
+// Volumes excluded from the primary canon today, relocated to the warning section.
+var VB_EXCLUDED_VOLS = [7, 8, 9, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48];
+var VB_EXCLUDED_NAMES = {
+  7: 'Yovelim (Jubilees)', 8: 'Book of Giants', 9: 'Visions of Amram',
+  32: '4Q246 Aramaic Apocalypse', 33: 'War Scroll 1QM', 34: '4QMMT',
+  35: 'Damascus Document', 36: 'Community Rule 1QS', 37: 'Rule of the Congregation',
+  38: 'Rule of Blessings', 39: 'Words of the Luminaries', 40: 'Pesher Nahum',
+  41: 'Hodayot', 42: 'Pesher Habakkuk', 43: 'Songs of Sabbath Sacrifice',
+  44: 'Genesis Apocryphon', 46: 'Temple Scroll', 47: 'Book of Mysteries', 48: 'Raz Nihyeh'
+};
 function renderVolumeGrid() {
   var grid = document.getElementById('vb-grid');
   if (!grid) return;
   var vols = Object.keys(VOLUME_INDEX).map(Number).sort(function(a, b) { return a - b; });
-  var main = vols.map(function(v) {
+  var main = vols.filter(function(v) { return VB_EXCLUDED_VOLS.indexOf(v) < 0; }).map(function(v) {
     var count = VOLUME_INDEX[v].length;
     return '<div class="vb-card" onclick="openVolume(' + v + ')">' +
       '<div class="vb-vol-num">Vol ' + v + '</div>' +
       '<div class="vb-vol-count">' + count + ' passages</div>' +
       '</div>';
   }).join('');
-  var acr2Header = '<div class="vb-section-header">Secondary Scrolls, ACR2</div>';
+  var warnHeader = '<div class="vb-section-header">Second Temple &amp; Later Additions</div>' +
+    '<div class="vb-section-note">Held under warning — documented, not canonical.</div>';
+  var excluded = vols.filter(function(v) { return VB_EXCLUDED_VOLS.indexOf(v) >= 0; }).map(function(v) {
+    var count = VOLUME_INDEX[v].length;
+    var nm = VB_EXCLUDED_NAMES[v] || ('Vol ' + v);
+    return '<div class="vb-card acr2" onclick="openVolume(' + v + ')">' +
+      '<div class="vb-vol-num acr2">Vol ' + v + '</div>' +
+      '<div class="vb-vol-count">' + esc(nm) + ' · ' + count + ' passages</div>' +
+      '</div>';
+  }).join('');
   var acr2 = ACR2_VOLUMES.map(function(v) {
     var safeLabel = v.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
     return '<div class="vb-card acr2" onclick="openACR2Volume(' + v.file + ',\'' + safeLabel + '\')">' +
       '<div class="vb-vol-num acr2">' + v.name + '</div>' +
-      '<div class="vb-vol-count">ACR2 · secondary scroll</div>' +
+      '<div class="vb-vol-count">ACR2 library</div>' +
       '</div>';
   }).join('');
-  grid.innerHTML = main + acr2Header + acr2;
+  grid.innerHTML = main + warnHeader + excluded + acr2;
 }
 var CHRON_ORDER = [
   {era:'Creation to the Flood', items:[
@@ -6336,10 +6356,10 @@ var CHRON_ORDER = [
     {vols:[9], label:'Visions of Amram (4QAmram)', sub:'Moshe\'s father'}
   ]},
   {era:'Egypt and the Wilderness', items:[
-    {vols:[1], label:'Shemot (Exodus) Parts 1–2', sub:''},
-    {vols:[1], label:'Vayikra (Leviticus) Parts 1–2', sub:''},
-    {vols:[1], label:'Bamidbar (Numbers) Parts 1–2', sub:''},
-    {vols:[1], label:'Devarim (Deuteronomy) Parts 1–2', sub:''}
+    {vols:[2], label:'Shemot (Exodus) Parts 1–2', sub:''},
+    {vols:[3], label:'Vayikra (Leviticus) Parts 1–2', sub:''},
+    {vols:[4], label:'Bamidbar (Numbers) Parts 1–2', sub:''},
+    {vols:[5], label:'Devarim (Deuteronomy) Parts 1–2', sub:''}
   ]},
   {era:'Entering the Land', items:[
     {vols:[10], label:'Yehoshua (Joshua) Parts 1–3', sub:''}
