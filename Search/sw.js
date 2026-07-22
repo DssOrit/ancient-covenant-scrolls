@@ -1,4 +1,4 @@
-var CACHE = 'acr-search-v182';
+var CACHE = 'acr-search-v183';
 var FILES = [
   './',
   './index.html',
@@ -29,6 +29,15 @@ function clean(res){
   if (!res || !res.redirected) return Promise.resolve(res);
   return res.blob().then(function(b){ return new Response(b, { status: res.status, statusText: res.statusText, headers: res.headers }); });
 }
+// Network, but never hang: if it doesn't answer within `ms`, reject so we fall back to cache.
+function timeoutFetch(req, ms){
+  return new Promise(function(resolve, reject){
+    var settled=false;
+    var timer=setTimeout(function(){ if(!settled){ settled=true; reject(new Error('timeout')); } }, ms);
+    fetch(req).then(function(res){ if(!settled){ settled=true; clearTimeout(timer); resolve(res); } },
+                    function(err){ if(!settled){ settled=true; clearTimeout(timer); reject(err); } });
+  });
+}
 self.addEventListener('fetch', function(e) {
   var req = e.request;
   var url;
@@ -41,7 +50,7 @@ self.addEventListener('fetch', function(e) {
     url.pathname.endsWith('daily_brief.json');
   if (isCore) {
     e.respondWith(
-      fetch(req).then(function(res){
+      timeoutFetch(req, 3500).then(function(res){
         return clean(res).then(function(c){
           if (c && c.ok) { var cl = c.clone(); caches.open(CACHE).then(function(cache){ cache.put(req, cl); }).catch(function(){}); }
           return c;

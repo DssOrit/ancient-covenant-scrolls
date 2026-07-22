@@ -5,7 +5,7 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v87';
+const CACHE = 'acr-v88';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
@@ -65,6 +65,22 @@ function prefetchAllChapters() {
   );
 }
 
+// Rebuild a redirected response as a plain 200 so iOS Safari accepts it for a
+// navigation (iOS refuses a service-worker response that still carries a redirect).
+function clean(res) {
+  if (!res || !res.redirected) return Promise.resolve(res);
+  return res.blob().then(b => new Response(b, { status: res.status, statusText: res.statusText, headers: res.headers }));
+}
+// Network, but never hang: if it doesn't answer within ms, reject so we fall back to cache.
+function timeoutFetch(request, ms) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => { if (!settled) { settled = true; reject(new Error('timeout')); } }, ms);
+    fetch(request).then(res => { if (!settled) { settled = true; clearTimeout(timer); resolve(res); } },
+                        err => { if (!settled) { settled = true; clearTimeout(timer); reject(err); } });
+  });
+}
+
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
@@ -109,7 +125,7 @@ self.addEventListener('fetch', e => {
       cache: 'no-store'
     });
     e.respondWith(
-      fetch(fresh).then(res => {
+      timeoutFetch(fresh, 3500).then(res => clean(res)).then(res => {
         // Cache under the original (un-busted) request key so future
         // matches still find it. NEVER cache failure responses — a
         // 404 cached here can resurface later (during transient
