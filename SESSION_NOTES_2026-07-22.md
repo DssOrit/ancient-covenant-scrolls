@@ -33,16 +33,19 @@ The reclassification created a site-wide contradiction: the Volume Browser label
 - [ ] **#2 — Reader dangling footers.** Two clean factual fixes ready: `file_12` "All 108 Chapters — Five Sections" → "Chapters 1 through 49…"; `file_13` "Chapters 37 Through 55" → "Chapters 37 Through 49…". NEEDS: "edit acr reader" + OK to put that phrase in the PR body (CI guard).
 - [ ] **#5 — Search Volume Browser numbering.** Relabel gold cards to the Reader's own Vol 1–28 + book names (fixes "more than 28 volumes"). Preview already built. NEEDS: "edit ACR Search".
 
-## The decision that unblocks everything
-- [ ] **#1 — Scope call.** Which Tier-2 texts (Jubilees, Community Rule, War Scroll, Damascus Document, Temple Scroll, Hodayot…) are truly excluded AS SOURCES vs. just reorganized in the browser? (Calendar already settled — stays.) This unblocks #3, #6, #7, #8, #10, #11.
+## #1 — SCOPE DECISION: RESOLVED (user, 2026-07-22)
+"We removed the chapters, therefore nothing should contradict this move." Scope = reconcile every reference to the ACTUALLY-REMOVED content ONLY: the **Animal Apocalypse** (Chanokh 50–55), the **Epistle / Apocalypse of Weeks** (56–73), and the already-excluded **Similitudes**. NO locked-rule conflict — those are the genuine composition-date exclusions already shipped.
+- The **19 DSS scrolls** (Jubilees, Community Rule, War Scroll, Temple Scroll, Damascus Document, etc.) were REORGANIZED in the browser, NOT removed. They stay VALID Second-Temple witnesses (Rules 23/25), stay cited. LABELING only — soften "held under warning / not canonical" to "supplementary Second-Temple witness."
+- Calendar stays (retained Astronomical Book). Curse-of-Ham / African-origins content on Jubilees KEPT (Rules 15–17).
+- This shrinks the work massively: ~11 removed-chapter refs in Search (not ~640), 2 Study units (not 24), the Reader file_65/68 Epistle refs. Genesis Apocryphon / Yovelim citations are now FINE (valid sources).
 
-## After the decision
-- [ ] **#3 — Reader:** fix 10 authority citations + 4 ambiguous Yovelim + the file_65/68 Epistle refs.
-- [ ] **#6 — Search:** add the exclusion-evidence section (example ready — pick placement).
-- [ ] **#7 — Search:** reconcile the ~640 authority references (re-anchor calendar to Enoch; feasts/Shabbat per-topic; keep protected Curse-of-Ham/Jubilees content).
-- [ ] **#8 — Search:** removed-Chanokh concordance — KEEP the Astronomical Book (part 2 is mixed); decide on the Animal Apocalypse passages + the Epistle (part 3).
-- [ ] **#10 — Study `study/`:** 24 units + code.
-- [ ] **#11 — Study `GESTUDY/`:** 7 chapters + Primary Source Hierarchy prose.
+## Removed-chapter reconciliation (the real remaining work)
+- [ ] **#3 — Reader:** reconcile file_65 & file_68 Epistle references (re-anchor file_68 to retained Psalm 69:28).
+- [ ] **#6 — Search:** add exclusion-evidence panel for Animal Apoc + Epistle + Similitudes ONLY (example ready).
+- [ ] **#7 — Search:** reconcile the ~11 Animal-Apoc/Epistle/Apocalypse-of-Weeks refs; RELABEL the 19 scrolls to "supplementary witness"; re-anchor the 364-calendar citation to Enoch. (The ~640 Jubilees/DSS citations STAY.)
+- [ ] **#8 — Search:** concordance — KEEP the Astronomical Book (part 2 is mixed); handle only the Animal Apocalypse passages + the Epistle (part 3).
+- [ ] **#10 — Study `study/`:** only the 2 removed-chapter units (file_14 Animal Apoc, file_15 Epistle). The other 22 units STAY as valid supplementary study material.
+- [ ] **#11 — Study `GESTUDY/`:** only the removed-chapter refs. The Jubilees/DSS "Primary Source Hierarchy" prose STAYS.
 
 ## Other / optional
 - [ ] **#4 — Reader:** stop SW prefetching deleted `file_15` (needs "edit acr reader").
