@@ -8,6 +8,34 @@ the next step aloud (default voice **Samantha**), warns about hazards, and works
 
 App folder: `/loadmaps`. Worldwide by design — Portugal is simply the first content.
 
+## Done — clean restrooms finder (2026-07-16, cache `loadmaps-v32`)
+
+Built both layers. Menu item **Clean restrooms** + a **Restrooms** pin category on the
+dark map. Layer 1 lists nearest `amenity=toilets` from Overpass (keyless) with badges
+(baby change, step-free, free/fee, women's/unisex, drinking water, hours), nearest-first,
+tap to route. Layer 2 (`functions/api/loadmaps/restrooms.js` + `restroom_ratings` table
+in `schema.sql`) adds 1-5 star cleanliness ratings on Cloudflare D1 — average + count,
+tap a star to rate — **dark until the `DB` binding exists** (badges show meanwhile).
+
+Also shipped in v32: a **loading safeguard** — the service worker's network-first shell
+now falls back to the cached app after 3.5s instead of hanging on a flaky connection
+(was causing "server stopped responding" on iPhone over a VPN).
+
+### Original plan (kept for reference)
+
+**Clean restrooms finder (user idea 2026-07-16).** For parents/women needing clean,
+child-friendly restrooms.
+- **Layer 1 (keyless, build first):** a Restrooms screen listing nearest `amenity=toilets`
+  from OpenStreetMap via Overpass (no key), with badges straight from OSM tags:
+  **baby changing** (`changing_table=yes`), **step-free/accessible** (`wheelchair=yes`),
+  **free vs fee** (`fee`), **women's/unisex** (`female`/`unisex`), **opening hours**.
+  Distance + open-on-map to route there. Also add a Restrooms pin category to the dark map.
+- **Layer 2 (Cloudflare D1, ready-but-dark):** community **cleanliness ratings** (1-5 stars)
+  stored in the same D1 as hazards. Show average stars + count; sort by cleanest nearby.
+  `functions/api/loadmaps/restrooms.js` (GET ratings near lat/lng, POST a rating). Dark
+  until the `DB` binding exists. Honest note: ratings are thin until users contribute;
+  the OSM badges carry it meanwhile.
+
 ## Core principles
 
 - **Offline-first, online when available.** Nothing core needs a signal. Live extras
@@ -70,8 +98,70 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
   markers, auto-fit, elevation profile if the track carries ele); elevation profile
   panel for guided routes (uses each route's own waypoint elevations — climb, range,
   distance + inline area sparkline). Cache `loadmaps-v21`.
-- Next: weather + fire overlays (Open-Meteo, NASA FIRMS), offline map packs
-  (Protomaps on Cloudflare R2) for full offline maps.
+- Done (smart tranche, 2026-07-16, cache `loadmaps-v22`):
+  - **Nearest-on-route** ("On route" button): in-browser spatial math (point-to-
+    segment distance, no library) finds the nearest fuel / EV / food / water /
+    rest / toilets along the open route and marks the closest + how far off-route.
+  - **Speed-limit warning**: throttled Overpass `maxspeed` lookup vs GPS speed;
+    the speed pill turns red and Samantha says "slow down" when over. Works on
+    guided routes and live map navigation. Pure logic, no AI.
+  - **Live ETA**: a map ETA pill recomputes remaining time + distance from the
+    drawn route as you move; nudges to re-route when you drift off it.
+  - **Reroute around a hazard**: reporting a Hazard/Closure/Animal while navigating
+    re-runs Valhalla with that point excluded (`exclude_locations`).
+  - **Shared hazard layer (Cloudflare D1, dark)**: `functions/api/loadmaps/hazards.js`
+    + `schema.sql`. Reads/writes a D1 table bound as `DB`; until the binding exists
+    it returns `{configured:false}` and the app stays local-only, silently. When on,
+    reports post to the shared layer and nearby hazards show as pins on the map.
+  - **Natural-language find (one Haiku call, dark)**: `ai.js` gains a `mode:'parse'`
+    that returns a small JSON intent; the client ("Find it on the map") acts on it
+    with plain logic — geocode a place via Photon and open it, or find a facility
+    category on the route / near a place. Dark until `ANTHROPIC_API_KEY` is set.
+- Done (offline packs, 2026-07-16, cache `loadmaps-v23`): **Offline maps** screen
+  (Home card). Import a `.pmtiles` map file once; it is stored on the device via
+  OPFS (free — no Cloudflare storage, nothing uploaded). The live map then uses it
+  as the base with no signal, via a vendored `pmtiles` protocol on MapLibre
+  (`loadmaps/vendor/pmtiles/pmtiles.js`). Manage packs (size, use, delete), storage
+  estimate shown, graceful session-only fallback where OPFS is unavailable. Raster
+  `.pmtiles` are the supported offline base (vector needs a matching style). The
+  "Satellite/Map" button returns to live tiles when an offline base is active.
+  Verified: library loads + exposes PMTiles/Protocol/FileSource, app boots clean,
+  pack-list + byte-format + OPFS-fallback logic pass; live WebGL tile render proves
+  out on device with a real pack.
+- Done (AR walk, 2026-07-16, cache `loadmaps-v24`): **AR heads-up walk** — an
+  "AR walk (camera)" button on the live guide opens a full-screen back-camera view
+  with a large arrow that points to your next waypoint plus the live distance and
+  compass label. Uses getUserMedia + DeviceOrientation (true compass heading on iOS
+  via `webkitCompassHeading`, alpha fallback elsewhere) + Geolocation. **No WebXR** —
+  the planned WebXR/A-Frame path does not render on iPad/iPhone Safari, so this is
+  the iPad-first equivalent (user chose this, 2026-07-16). Graceful fallbacks: no
+  camera -> arrow still points; no compass permission -> north-up arrow. Verified:
+  bearing/rotation math, next-waypoint selection, heading conversion, and a clean
+  app boot with the AR overlay; live camera + compass prove out on device.
+
+**Roadmap 1-6 complete.** Two features are "dark" pending your setup: shared
+hazards (Cloudflare D1 binding `DB`) and natural-language find (`ANTHROPIC_API_KEY`).
+
+- Done (keyless extras, 2026-07-16, cache `loadmaps-v27`):
+  - **Speed cameras** ("Cameras" map button): OpenStreetMap via Overpass (same
+    keyless endpoint already used), shows `highway=speed_camera`/`enforcement`
+    nodes in view as red markers, plus a voice "speed camera ahead" warning when
+    driving within ~220 m of one during live navigation.
+  - **Real elevation on ANY route**: after a Valhalla route is drawn, ~40 points
+    are sampled and sent to the Open-Meteo elevation API (same keyless host as the
+    weather) to build the elevation profile — so driving/cycling/walking routes get
+    a climb graph too, not just the pre-baked guided trails.
+  - Both keyless, no new accounts. Earlier tab-favicon cleanup shipped at v26.
+- Done (fuel prices, 2026-07-16, cache `loadmaps-v28`): **Fuel prices** Home card /
+  screen. Live petrol + diesel prices near you from government open data, keyless.
+  Fetched server-side via `functions/api/loadmaps/fuel.js` (the gov feeds send no
+  CORS headers, so a browser can't read them directly; the function is keyless and
+  edge-caches the feed). **Spain** = Ministerio (Minetur) official feed, live.
+  **Portugal** = DGEG best-effort; if its feed is unreachable/changed the screen
+  falls back to keyless Overpass stations (no price) with a clear note. Cheapest
+  diesel/petrol banners, nearest-15 within 25 km, tap to route. NOTE: the gov feeds
+  can't be reached from the build sandbox, so ES prices verify on the live Cloudflare
+  deploy; the parser + filter + cheapest logic are unit-tested.
 
 **Stage 3 sources (need a signal)** — researched, see below.
 
@@ -83,6 +173,25 @@ self-hosted MapLibre, with an OSM-raster fallback if WebGL is unavailable) +
   The function is `functions/api/loadmaps/ai.js`; until the key is set the
   "Ask Load Maps" screen shows "not set up yet".
 Both keep the key server-side; nothing sensitive is committed.
+
+**Map-first shell (2026-07-16, cache `loadmaps-v30`).** Load Maps now LAUNCHES
+straight into the dark map (ACR-Maps-style), not a card menu. The map is "home":
+top bar = ☰ menu + search + gold refresh; bottom = category legend + region pills.
+The old card menu moved into a right-side slide-out **drawer** (☰) listing Drive,
+Hike, Explore places, Near me, Fuel prices, Offline maps, Alerts, Ask, How to use.
+Selecting a section closes the map to show it; its Back returns to the map. When the
+map is opened from a place/route it shows Back instead of ☰. Bottom nav Home = the map.
+
+**Live map dark redesign (2026-07-16, cache `loadmaps-v29`).** The Live map now uses
+the **OpenFreeMap dark** vector style (matching the ACR Maps look the user asked for),
+with a **CARTO dark** raster fallback for no-WebGL. Added an ACR-Maps-style browser
+chrome on the map, driven by Load Maps' OWN content (not ACR's): an **on-map search
+bar** (Photon; tap a result to drop a marker + offer Drive/Walk/Cycle), **region pills**
+(All · Portugal · Spain · France · Italy · Greece · United Kingdom — jump the view), and
+a **category legend** (Fuel · EV · Waterfalls · Beaches · Camping · Viewpoints) that
+toggles coloured lettered pins loaded in the current view via keyless Overpass. All
+keyless. The existing Rain/Reach/Cameras/etc. buttons remain (raised to clear the new
+bottom bars).
 
 **Revised direction (2026-07-15, user): no Groq, limited AI.** Almost everything
 is pure open-source logic (zero AI): predictive rerouting around reported hazards

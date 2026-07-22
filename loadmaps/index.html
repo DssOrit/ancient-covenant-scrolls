@@ -271,13 +271,51 @@
     background:linear-gradient(180deg,rgba(5,7,13,.9),rgba(5,7,13,.5) 70%,transparent);pointer-events:none}
   .map-top>*{pointer-events:auto}
   .map-title{font-weight:800;font-size:1.02rem;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .map-search{flex:1;display:flex;align-items:center;gap:9px;background:rgba(18,22,32,.94);border:1px solid var(--line);border-radius:14px;padding:0 14px;height:46px;backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  .map-search svg{width:19px;height:19px;color:var(--muted);flex:0 0 auto}
+  .map-search input{flex:1;background:none;border:0;outline:0;font:inherit;font-size:.98rem;color:var(--text);min-width:0}
+  .map-search input::placeholder{color:var(--muted)}
+  .map-search-res{position:absolute;top:calc(62px + env(safe-area-inset-top));left:64px;right:12px;z-index:1001;display:none;
+    background:rgba(14,18,28,.98);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,.6);max-height:52vh;overflow-y:auto}
+  .map-search-res.on{display:block}
+  .map-search-res button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.06);padding:11px 14px;font:inherit;color:var(--text);cursor:pointer}
+  .map-search-res button:last-child{border-bottom:0}
+  .map-search-res button b{display:block;font-size:.95rem}
+  .map-search-res button span{font-size:.78rem;color:var(--muted)}
+  .map-legend{position:absolute;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom));z-index:1000;display:flex;gap:9px;overflow-x:auto;padding:0 12px 2px;-webkit-overflow-scrolling:touch}
+  .map-legend::-webkit-scrollbar{display:none}
+  .map-legend button{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:rgba(18,22,32,.92);border:1px solid var(--line);border-radius:16px;padding:8px 14px;font:inherit;font-weight:700;font-size:.86rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);opacity:.6}
+  .map-legend button.on{opacity:1;border-color:rgba(255,255,255,.35)}
+  .map-legend .ldot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+  .map-regions{position:absolute;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom));z-index:1000;display:flex;gap:9px;overflow-x:auto;padding:0 12px;-webkit-overflow-scrolling:touch}
+  .map-regions::-webkit-scrollbar{display:none}
+  .map-regions button{flex:0 0 auto;background:rgba(18,22,32,.92);border:1px solid var(--line);border-radius:20px;padding:9px 18px;font:inherit;font-weight:700;font-size:.88rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
+  .map-regions button.on{background:rgba(200,151,31,.18);border-color:rgba(200,151,31,.7);color:#e6c05a}
+  .cat-pin span{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;color:#fff;font-weight:800;font-size:.9rem;border:2px solid rgba(6,10,18,.92);box-shadow:0 3px 8px rgba(0,0,0,.55)}
+  .map-btn.icon.refresh{background:linear-gradient(135deg,#ffb023,#ff8f1f);border:none;color:#111;box-shadow:0 0 16px rgba(255,176,35,.4)}
+  .nav-backdrop{position:absolute;inset:0;z-index:2000;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s}
+  .nav-backdrop.on{opacity:1;pointer-events:auto}
+  .nav-drawer{position:absolute;top:0;right:0;bottom:0;width:min(84vw,340px);z-index:2001;background:rgba(12,16,26,.99);
+    border-left:1px solid var(--line);box-shadow:-8px 0 30px rgba(0,0,0,.6);transform:translateX(100%);transition:transform .24s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+  .nav-drawer.on{transform:translateX(0)}
+  .nd-head{display:flex;align-items:center;gap:12px;padding:20px 18px 16px;border-bottom:1px solid var(--line)}
+  .nd-logo{width:42px;height:42px;background:url(icon.png) center/contain no-repeat;flex:0 0 auto;filter:drop-shadow(0 0 8px rgba(47,216,95,.35))}
+  .nd-head b{display:block;font-size:1.1rem;color:var(--text)}
+  .nd-head span{font-size:.8rem;color:var(--muted)}
+  .nd-x{margin-left:auto;background:none;border:0;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer;padding:0 4px}
+  .nd-list{flex:1;overflow-y:auto;padding:8px}
+  .nd-list button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0;border-radius:12px;padding:14px 14px;font:inherit;font-size:1.02rem;font-weight:700;color:var(--text);cursor:pointer}
+  .nd-list button:active{background:rgba(255,255,255,.06)}
+  .nd-list button svg{width:22px;height:22px;flex:0 0 auto;color:var(--muted)}
+  .nd-list .nd-sub{font-weight:500;font-size:.78rem;color:var(--muted);display:block;margin-top:1px}
   .map-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:12px;
     padding:9px 13px;font:inherit;font-weight:700;font-size:.92rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
   .map-btn svg{width:19px;height:19px}
   .map-btn.round{border-radius:12px}
   .map-btn.icon{width:46px;height:46px;padding:0;justify-content:center}
   .map-btn.on{background:rgba(43,110,255,.92);border-color:rgba(120,170,255,.9);color:#fff;box-shadow:0 4px 16px rgba(43,110,255,.5)}
-  .map-elev{position:absolute;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:1000;display:none;
+  .map-elev{position:absolute;left:12px;right:12px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:1000;display:none;
     background:rgba(12,17,30,.94);border:1px solid var(--line);border-radius:14px;padding:10px 12px 8px;backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.5)}
   .map-elev.on{display:block}
   .map-elev .el-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -289,9 +327,59 @@
   .map-modes.on{display:flex}
   .map-modes button{background:rgba(15,21,36,.92);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font:inherit;font-weight:700;font-size:.85rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px)}
   .map-modes button.on{background:rgba(61,139,255,.2);border-color:rgba(61,139,255,.5);color:var(--blue)}
-  .map-side{position:absolute;right:12px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .map-side{position:absolute;right:12px;bottom:calc(120px + env(safe-area-inset-bottom));z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .map-route-tools{position:absolute;right:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;flex-direction:column;gap:7px;align-items:flex-end}
+  .map-route-tools.open{display:flex}
+  .map-route-tools button{background:rgba(15,21,36,.94);border:1px solid var(--line);border-radius:11px;padding:7px 13px;font:inherit;font-weight:700;font-size:.84rem;color:var(--text);cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 3px 12px rgba(0,0,0,.4)}
+  .map-route-tools button:active{background:rgba(61,139,255,.25)}
+  .map-eta{position:absolute;left:12px;top:calc(58px + env(safe-area-inset-top));z-index:1000;display:none;
+    background:rgba(43,110,255,.95);border:1px solid rgba(120,170,255,.8);border-radius:13px;padding:7px 14px;color:#fff;box-shadow:0 5px 18px rgba(43,110,255,.45);align-items:baseline;gap:6px}
+  .map-eta.on{display:inline-flex}
+  .map-eta b{font-size:1.25rem;font-weight:800;line-height:1}
+  .map-eta span{font-size:.66rem;font-weight:700;letter-spacing:.04em;opacity:.92}
+  .speedpill.over{background:rgba(255,77,61,.92)!important;border-color:rgba(255,150,140,.9)!important;color:#fff!important;animation:spdpulse 1s ease-in-out infinite}
+  @keyframes spdpulse{0%,100%{box-shadow:0 4px 14px rgba(255,77,61,.4)}50%{box-shadow:0 4px 22px rgba(255,77,61,.85)}}
+  .ask-row2{margin:8px 0 0}
+  .ask-row2 .btn{width:100%;justify-content:center}
+  .fuel-best{background:rgba(47,216,95,.14);border:1px solid rgba(47,216,95,.4);border-radius:12px;padding:10px 13px;margin-bottom:8px;font-size:.92rem}
+  .fuel-best.petrol{background:rgba(61,139,255,.14);border-color:rgba(61,139,255,.4)}
+  .fuel-best b{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:2px}
+  .fuel-prices{display:flex;gap:16px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+  .fuel-prices span{font-size:.82rem;color:var(--muted)}
+  .fuel-prices b{color:var(--text);font-size:1rem}
+  .rr-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .rr-badge{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;font-weight:700;padding:4px 9px;border-radius:9px;border:1px solid var(--line);color:var(--muted)}
+  .rr-badge.baby{background:rgba(47,216,95,.14);border-color:rgba(47,216,95,.4);color:#8ff0b4}
+  .rr-badge.acc{background:rgba(61,139,255,.14);border-color:rgba(61,139,255,.4);color:#9dc0ff}
+  .rr-badge.free{background:rgba(200,151,31,.14);border-color:rgba(200,151,31,.4);color:#e6c05a}
+  .rr-rate{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
+  .rr-stars{display:inline-flex;gap:3px}
+  .rr-stars button{background:none;border:0;padding:0 1px;cursor:pointer;font-size:1.3rem;line-height:1;color:#3a4152}
+  .rr-stars button.lit{color:#ffc53d}
+  .rr-avg{font-size:.82rem;color:var(--muted)}
+  .rr-avg b{color:var(--text);font-size:.95rem}
+  #arwrap{position:fixed;inset:0;z-index:3000;display:none;background:#05070d}
+  #arwrap.open{display:block}
+  #arVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#05070d}
+  .ar-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    padding:calc(14px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,rgba(0,0,0,.55))}
+  .ar-overlay #arBack{position:absolute;left:14px;top:calc(14px + env(safe-area-inset-top))}
+  .ar-target{margin-top:6px;background:rgba(8,12,22,.7);border:1px solid var(--line);border-radius:12px;
+    padding:8px 16px;font-weight:800;font-size:1rem;color:#fff;backdrop-filter:blur(6px);max-width:80%;text-align:center}
+  .ar-arrow{margin:auto;width:min(56vw,240px);height:min(56vw,240px);transition:transform .12s linear;filter:drop-shadow(0 6px 20px rgba(0,0,0,.6))}
+  .ar-arrow svg{width:100%;height:100%;display:block}
+  .ar-dist{background:rgba(43,110,255,.92);border:1px solid rgba(120,170,255,.8);border-radius:14px;
+    padding:9px 22px;font-weight:800;font-size:1.5rem;color:#fff;box-shadow:0 6px 20px rgba(43,110,255,.45)}
+  .ar-cal{margin-top:10px;min-height:18px;color:#dbe4f5;font-size:.82rem;font-weight:600;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.8)}
   .leaflet-control-attribution{background:rgba(10,16,32,.7)!important;color:#95a0b6!important}
   .leaflet-control-attribution a{color:#8fb6ff!important}
+  /* dark zoom buttons, lifted clear of the region pills */
+  .leaflet-bottom.leaflet-left{bottom:calc(128px + env(safe-area-inset-bottom));left:6px}
+  .leaflet-control-zoom{border:none!important;box-shadow:0 4px 14px rgba(0,0,0,.4)!important;border-radius:12px!important;overflow:hidden}
+  .leaflet-control-zoom a{background:rgba(15,21,36,.94)!important;color:#e9eef7!important;border:1px solid var(--line)!important;width:38px!important;height:38px!important;line-height:36px!important;font-size:20px!important;backdrop-filter:blur(8px)}
+  .leaflet-control-zoom a.leaflet-control-zoom-in{border-bottom:none!important}
+  .leaflet-control-zoom a:hover{background:rgba(30,40,60,.97)!important}
 
   /* auto-generated route map (drawn from the real coordinates) */
   .routemap{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px;background:#0a1020}
@@ -434,6 +522,12 @@
     <!-- ============ ASSISTANT (AI) ============ -->
     <section class="view" id="v-assistant"></section>
 
+    <section class="view" id="v-offline"></section>
+
+    <section class="view" id="v-fuel"></section>
+
+    <section class="view" id="v-restrooms"></section>
+
     <!-- ============ HOW TO USE ============ -->
     <section class="view" id="v-help">
       <h2 class="sec">How to Use</h2>
@@ -468,11 +562,27 @@
 <div id="mapwrap">
   <div id="map"></div>
   <div class="map-top">
-    <button class="map-btn" id="mapBack" aria-label="Back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back
+    <button class="map-btn icon" id="mapMenu" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <div class="map-title" id="mapTitle">Map</div>
+    <button class="map-btn icon" id="mapBack" aria-label="Back" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="map-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input id="mapSearch" type="search" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Search places, cities, regions…">
+    </div>
+    <button class="map-btn icon refresh" id="mapRefresh" aria-label="Refresh">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+    <div class="map-title" id="mapTitle" style="display:none">Map</div>
   </div>
+  <div class="map-search-res" id="mapSearchRes"></div>
+  <div class="nav-backdrop" id="navBackdrop"></div>
+  <aside class="nav-drawer" id="navDrawer" aria-label="Menu">
+    <div class="nd-head"><div class="nd-logo"></div><div><b>Load Maps</b><span>Where do you want to go?</span></div><button class="nd-x" id="navClose" aria-label="Close">&times;</button></div>
+    <div class="nd-list" id="navList"></div>
+  </aside>
   <div class="map-modes" id="mapModes">
     <button data-mode="auto" class="on">Drive</button>
     <button data-mode="pedestrian">Walk</button>
@@ -481,6 +591,8 @@
   <div class="map-side">
     <button class="map-btn round" id="mapRain">Rain</button>
     <button class="map-btn round" id="mapReach">Reach</button>
+    <button class="map-btn round" id="mapCam">Cameras</button>
+    <button class="map-btn round" id="mapOnRoute">On route</button>
     <button class="map-btn round" id="mapGpx">GPX</button>
     <button class="map-btn round" id="mapDrop">Drop pin</button>
     <button class="map-btn round" id="mapLayer">Satellite</button>
@@ -488,17 +600,43 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
     </button>
   </div>
+  <div class="map-route-tools" id="mapRouteTools"></div>
+  <div class="map-eta" id="mapEta"></div>
+  <div class="map-legend" id="mapLegend"></div>
+  <div class="map-regions" id="mapRegions"></div>
   <div class="map-elev" id="mapElev"></div>
   <input type="file" id="gpxFile" accept=".gpx,application/gpx+xml" style="display:none">
+</div>
+<input type="file" id="packFile" accept=".pmtiles" style="display:none">
+
+<!-- AR heads-up walk (camera + compass arrow to the next waypoint) -->
+<div id="arwrap">
+  <video id="arVideo" playsinline autoplay muted></video>
+  <div class="ar-overlay">
+    <button class="map-btn" id="arBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back
+    </button>
+    <div class="ar-target" id="arTarget">Finding waypoint…</div>
+    <div class="ar-arrow" id="arArrow" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><path d="M50 6 L82 78 L50 62 L18 78 Z" fill="#2fd85f" stroke="#04140a" stroke-width="3" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ar-dist" id="arDist">--</div>
+    <div class="ar-cal" id="arCal"></div>
+  </div>
 </div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="vendor/maplibre/maplibre-gl.js"></script>
 <script src="vendor/maplibre/leaflet-maplibre-gl.js"></script>
+<script src="vendor/pmtiles/pmtiles.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+if('serviceWorker' in navigator){
+  var _swReloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',function(){ if(_swReloading) return; _swReloading=true; window.location.reload(); });
+  window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').then(function(reg){ if(reg && reg.update) reg.update(); }).catch(function(){}); });
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ACR Maps">
+<meta name="theme-color" content="#05050b">
+<title>ACR Maps</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" href="./icon.png">
+<!-- Leaflet — vendored locally, no CDN dependency -->
+<link rel="stylesheet" href="./vendor/leaflet.css">
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#05050b;
+  --s1:#0d0d1a;
+  --s2:#121220;
+  --border:rgba(255,255,255,.07);
+  --gold:#c8971f;
+  --amber:#e8751a;
+  --red:#e63329;
+  --green:#3dbf5e;
+  --blue:#2b7de9;
+  --text:#f0ede8;
+  --tx2:#9a9080;
+  --tx3:#4a4460;
+  --r:10px;
+  --rainbow:linear-gradient(90deg,var(--red),var(--amber),#e8c81a,var(--green),var(--blue));
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Helvetica Neue',sans-serif}
+
+/* ── GATE SCREEN ────────────────────────────────────────────── */
+#gate{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;padding:40px 24px 36px;
+  transition:opacity .5s ease;
+}
+#gate.hiding{opacity:0;pointer-events:none}
+#gate.hidden{display:none}
+
+/* large cycling name form — mirrors ACR Search paleo glyph */
+.g-name-display{
+  text-align:center;
+  min-height:90px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin-bottom:10px;
+}
+.g-name-form{
+  font-size:56px;
+  line-height:1.1;
+  transition:opacity .4s ease,transform .4s ease;
+  font-weight:400;
+  max-width:280px;text-align:center;
+}
+.g-name-form.fade-out{opacity:0;transform:translateY(-6px)}
+.g-name-form.fade-in{animation:nameIn .45s ease both}
+.g-name-label{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  margin-top:6px;opacity:.5;
+  transition:opacity .4s ease;
+}
+.g-name-label.fade-out{opacity:0}
+
+.g-appname{
+  text-align:center;margin-top:20px;margin-bottom:5px;
+  animation:nameIn .5s .3s ease both;opacity:0;
+}
+.g-appname .acr{font-size:14px;font-weight:300;letter-spacing:.22em;color:#aaa}
+.g-appname .maps{
+  font-size:14px;font-weight:800;letter-spacing:.26em;
+  background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.g-sub{
+  font-size:11px;color:var(--tx3);letter-spacing:.1em;text-align:center;
+  margin-bottom:32px;animation:nameIn .5s .45s ease both;opacity:0;
+}
+
+.g-btn{
+  position:relative;padding:10px 0;border-radius:8px;border:none;
+  font-size:15px;font-weight:400;letter-spacing:.10em;color:var(--text);
+  width:100%;max-width:220px;
+  background:rgba(255,255,255,.04);cursor:pointer;
+  animation:nameIn .5s .6s ease both;opacity:0;
+}
+.g-btn::before{
+  content:'';position:absolute;inset:-1.5px;border-radius:32px;
+  background:var(--rainbow);z-index:-1;opacity:.6;
+}
+.g-btn::after{
+  content:'';position:absolute;inset:1px;border-radius:29px;
+  background:#08080e;z-index:-1;
+}
+
+@keyframes nameIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── LOADING SCREEN ─────────────────────────────────────────── */
+#loading{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--bg);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;padding:40px 24px;
+}
+#loading.show{display:flex}
+#loading.hiding{opacity:0;pointer-events:none;transition:opacity .5s ease}
+#loading.hidden{display:none}
+
+.ld-wordmark{text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:.2em}
+.ld-wordmark .acr{color:#fff}
+.ld-wordmark .maps{background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ld-sub{font-size:.7rem;color:var(--tx3);letter-spacing:.15em;text-align:center}
+
+.ld-spinner{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:var(--red);
+  border-right-color:var(--amber);
+  border-bottom-color:var(--green);
+  border-left-color:var(--blue);
+  animation:spin 1.1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.ld-msg{font-size:.72rem;color:var(--tx3);letter-spacing:.1em;min-height:1em;text-align:center}
+
+/* ── APP SHELL ──────────────────────────────────────────────── */
+#app{height:100%;display:flex;flex-direction:column;position:relative}
+#app.hidden{display:none}
+
+/* ── MAP CONTAINER ──────────────────────────────────────────── */
+#map{flex:1 1 0%;min-height:0;width:100%;position:relative;background:#0a0a14;isolation:isolate}
+
+/* ── TOPBAR ─────────────────────────────────────────────────── */
+#topbar{
+  position:absolute;top:0;left:0;right:0;z-index:9000;
+  padding:env(safe-area-inset-top,0) 12px 0;
+  background:linear-gradient(180deg,rgba(5,5,11,.95) 0%,rgba(5,5,11,.7) 80%,transparent 100%);
+  pointer-events:none;
+}
+.tb-inner{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0 8px;
+  pointer-events:all;
+}
+.tb-logo{
+  width:34px;height:34px;border-radius:9px;object-fit:cover;
+  box-shadow:0 0 12px rgba(200,151,31,.2);
+}
+.tb-titles{flex:1;min-width:0}
+.tb-name{font-size:.82rem;font-weight:700;letter-spacing:.08em;color:var(--text)}
+.tb-sub{font-size:.62rem;color:var(--tx2);letter-spacing:.06em}
+.tb-btn{
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:8px;width:34px;height:34px;color:var(--tx2);
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.tb-btn:active{background:rgba(255,255,255,.12)}
+.tb-refresh{background:#c8971f;border-color:#c8971f;color:#05050b}
+.tb-refresh:active{background:#e8a800;border-color:#e8a800}
+
+/* ── SEARCH BAR ─────────────────────────────────────────────── */
+#searchbar{
+  position:absolute;top:calc(env(safe-area-inset-top,0px) + 58px);left:12px;right:12px;z-index:9000;
+  pointer-events:all;
+}
+.sb-wrap{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(13,13,26,.92);border:1px solid var(--border);
+  border-radius:12px;padding:0 12px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.sb-icon{font-size:16px;color:var(--tx3);flex-shrink:0}
+.sb-input{
+  flex:1;background:none;border:none;outline:none;
+  font-size:.85rem;color:var(--text);padding:11px 0;
+  font-family:inherit;
+}
+.sb-input::placeholder{color:var(--tx3)}
+.sb-clear{background:none;border:none;color:var(--tx3);font-size:18px;cursor:pointer;padding:0;line-height:1;display:none}
+
+/* ── BOTTOM SHEET ───────────────────────────────────────────── */
+#sheet{
+  position:absolute;bottom:0;left:0;right:0;z-index:9200;
+  background:var(--s1);
+  border-radius:20px 20px 0 0;
+  border-top:1px solid var(--border);
+  max-height:70vh;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom,0);
+}
+#sheet.open{transform:translateY(0)}
+
+.sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,.15);
+  margin:10px auto 14px;flex-shrink:0;
+}
+.sheet-scroll{flex:1;overflow-y:auto;padding:0 16px 20px}
+.sheet-title{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin-bottom:12px}
+.sheet-close{
+  position:absolute;top:12px;right:14px;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:6px;width:28px;height:28px;color:var(--tx2);
+  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── PLACE CARD ─────────────────────────────────────────────── */
+.place-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.place-name{font-size:1.1rem;font-weight:700;margin-bottom:4px;line-height:1.3}
+.place-meta{font-size:.72rem;color:var(--tx2);margin-bottom:12px}
+.place-body{font-size:.8rem;color:var(--tx2);line-height:1.7;margin-bottom:14px}
+.place-sources{
+  border-top:1px solid var(--border);padding-top:12px;margin-bottom:14px;
+}
+.place-sources-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px}
+.place-sources-list{font-size:.72rem;color:var(--tx3);line-height:1.7;font-style:italic}
+.place-nav-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  color:#fff;font-size:.85rem;font-weight:700;letter-spacing:.06em;cursor:pointer;
+}
+
+/* ── ROUTE CARD ─────────────────────────────────────────────── */
+.route-hdr{margin-bottom:14px}
+.route-tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.route-name{font-size:1rem;font-weight:700;margin-bottom:3px}
+.route-meta{font-size:.72rem;color:var(--tx2)}
+.route-summary{font-size:.78rem;color:var(--tx2);line-height:1.7;margin:10px 0 14px}
+.stop-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.stop-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;
+  cursor:pointer;
+}
+.stop-num{
+  min-width:22px;height:22px;border-radius:50%;
+  background:var(--rainbow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px;
+}
+.stop-info{flex:1;min-width:0}
+.stop-name{font-size:.8rem;font-weight:600;margin-bottom:2px}
+.stop-summary{font-size:.68rem;color:var(--tx2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.route-start-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;
+}
+
+/* ── REGION PILLS ───────────────────────────────────────────── */
+#region-bar{
+  position:absolute;bottom:0;left:0;right:0;z-index:9000;
+  padding:0 12px calc(env(safe-area-inset-bottom,0px) + 10px);
+  display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;
+  background:linear-gradient(transparent,rgba(5,5,11,.9) 35%);
+}
+#region-bar::-webkit-scrollbar{display:none}
+.rpill{
+  pointer-events:all;
+  padding:8px 14px;border-radius:20px;
+  background:rgba(13,13,26,.88);border:1px solid var(--border);
+  font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:background .15s,color .15s,border-color .15s;
+  flex-shrink:0;
+}
+.rpill.active{
+  background:rgba(200,151,31,.15);border-color:var(--gold);color:var(--gold);
+}
+.rpill:active{background:rgba(255,255,255,.1)}
+
+/* ── MAP MARKERS ────────────────────────────────────────────── */
+.mk{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid #05050b;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;color:#fff;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.6);
+  transition:transform .15s;
+}
+.mk:active{transform:scale(1.2)}
+.mk-community{background:var(--green)}
+.mk-history{background:var(--red)}
+.mk-archive{background:var(--gold)}
+.mk-inscription{background:#c8971f;border-color:#e8c81a}
+.mk-resistance{background:#9b27d4}
+.mk-discovery{background:var(--blue)}
+
+/* ── VERSE BANNER ───────────────────────────────────────────── */
+.verse-banner{
+  background:rgba(200,151,31,.08);border:1px solid rgba(200,151,31,.2);
+  border-left:3px solid var(--gold);border-radius:8px;
+  padding:10px 12px;margin-bottom:14px;
+}
+.verse-ref{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.verse-text{font-size:.78rem;color:var(--tx2);line-height:1.6;font-style:italic}
+
+/* ── LAYER BAR ──────────────────────────────────────────────── */
+#layer-bar{
+  position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 50px);left:0;right:0;z-index:9000;
+  padding:0 12px;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+}
+#layer-bar::-webkit-scrollbar{display:none}
+.lpill{
+  pointer-events:all;
+  padding:6px 11px;border-radius:16px;
+  background:rgba(13,13,26,.88);border:1px solid var(--border);
+  font-size:.65rem;font-weight:600;letter-spacing:.05em;color:var(--tx2);
+  cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  transition:background .15s,color .15s,border-color .15s;flex-shrink:0;
+}
+.lpill.active{background:rgba(155,39,212,.15);border-color:#9b27d4;color:#c97ef7}
+.lpill .ldot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lpill-trail.active{background:rgba(230,51,41,.1);border-color:var(--red);color:#ff8080}
+.lpill-living.active{background:rgba(61,191,94,.12);border-color:var(--green);color:#6de990}
+.lpill-genetic.active{background:rgba(200,151,31,.12);border-color:var(--gold);color:#e8c050}
+.lpill-oral.active{background:rgba(155,39,212,.12);border-color:#9b27d4;color:#c97ef7}
+
+/* ── TOPBAR CALENDAR CHIP ────────────────────────────────────── */
+.tb-cal{
+  background:rgba(200,151,31,.1);border:1px solid rgba(200,151,31,.3);
+  border-radius:7px;padding:4px 9px;
+  font-size:.6rem;font-weight:700;letter-spacing:.05em;color:var(--gold);
+  cursor:pointer;flex-shrink:0;line-height:1.4;text-align:center;white-space:nowrap;
+  display:flex;flex-direction:column;align-items:center;
+}
+.tb-cal:active{background:rgba(200,151,31,.2)}
+.tb-cal-date{font-size:.76rem;font-weight:700;color:var(--gold)}
+.tb-cal-era{font-size:.54rem;color:rgba(200,151,31,.55);letter-spacing:.08em;text-transform:uppercase}
+
+/* ── MUSEUM PLACE CARD ───────────────────────────────────────── */
+.place-otg-wrap{
+  background:rgba(200,151,31,.05);border-left:2px solid rgba(200,151,31,.5);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-otg-lbl{
+  font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(200,151,31,.45);margin-bottom:4px;
+}
+.place-otg-text{font-size:.8rem;color:var(--text);line-height:1.65;font-style:italic}
+.living-badge{
+  display:inline-block;padding:2px 7px;border-radius:4px;
+  background:rgba(61,191,94,.1);border:1px solid rgba(61,191,94,.3);
+  font-size:.56rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);margin-left:6px;vertical-align:middle;
+}
+
+/* ── CALENDAR SHEET ──────────────────────────────────────────── */
+.cal-header{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cal-date-big{font-size:1.5rem;font-weight:700;color:var(--gold);line-height:1.2;margin-bottom:3px}
+.cal-date-sub{font-size:.72rem;color:var(--tx2);margin-bottom:4px}
+.cal-section{margin-bottom:14px}
+.cal-section-lbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3);margin-bottom:6px}
+.cal-section-text{font-size:.78rem;color:var(--tx2);line-height:1.7}
+.cal-month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:8px}
+.cal-month-item{
+  background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;
+  padding:6px 8px;text-align:center;
+}
+.cal-month-item.current{border-color:rgba(200,151,31,.5);background:rgba(200,151,31,.07)}
+.cal-month-name{font-size:.66rem;font-weight:600;color:var(--text)}
+.cal-month-days{font-size:.56rem;color:var(--tx3)}
+
+/* ── GPS BUTTON ─────────────────────────────────────────────── */
+#gps-btn{
+  position:absolute;bottom:66px;right:14px;z-index:9000;
+  width:42px;height:42px;border-radius:12px;
+  background:rgba(13,13,26,.92);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--tx2);font-size:20px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+#gps-btn.active{color:var(--blue);border-color:var(--blue)}
+
+/* ── BEFORE / ORAL RECORD / DOCUMENT EXCERPT BLOCKS ─────────── */
+.place-before-wrap{
+  background:rgba(43,125,233,.05);border-left:2px solid rgba(43,125,233,.35);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-before-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,125,233,.45);margin-bottom:4px}
+.place-before-text{font-size:.78rem;color:var(--tx2);line-height:1.65}
+.place-oral-wrap{
+  background:rgba(155,39,212,.05);border-left:2px solid rgba(155,39,212,.35);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-oral-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(155,39,212,.45);margin-bottom:4px}
+.place-oral-text{font-size:.78rem;color:var(--tx2);line-height:1.65;font-style:italic}
+.place-excerpt-wrap{
+  background:rgba(255,255,255,.02);border:1px solid var(--border);border-left:2px solid rgba(200,151,31,.3);
+  border-radius:0 6px 6px 0;padding:9px 11px;margin-bottom:12px;
+}
+.place-excerpt-lbl{font-size:.54rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,151,31,.4);margin-bottom:4px}
+.place-excerpt-text{font-size:.75rem;color:var(--tx3);line-height:1.7;font-style:italic}
+
+/* ── SEARCH RESULTS OVERLAY ─────────────────────────────────── */
+#search-results{
+  position:absolute;top:calc(env(safe-area-inset-top,0px) + 108px);left:12px;right:12px;z-index:9100;
+  background:rgba(13,13,26,.97);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;display:none;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  max-height:50vh;overflow-y:auto;
+}
+#search-results.show{display:block}
+.sr-item{
+  padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;
+}
+.sr-item:last-child{border-bottom:none}
+.sr-item:active{background:rgba(255,255,255,.04)}
+.sr-region{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:2px}
+.sr-name{font-size:.85rem;font-weight:600;color:var(--text)}
+.sr-city{font-size:.72rem;color:var(--tx2)}
+
+/* ── LEAFLET OVERRIDES ──────────────────────────────────────── */
+/* Isolate all Leaflet z-indices from our UI controls (z-index:100+) */
+.leaflet-map-pane{z-index:1 !important}
+.leaflet-container{background:#0a0a14;font-family:inherit}
+.leaflet-control-attribution{
+  background:rgba(5,5,11,.8)!important;color:var(--tx3)!important;
+  font-size:10px!important;border-radius:4px!important;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.leaflet-control-attribution a{color:var(--tx3)!important}
+</style>
+</head>
+<body>
+
+<!-- ══ GATE SCREEN ════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="g-name-display">
+    <div class="g-name-form" id="g-name-form" style="color:#c8971f;font-family:'Segoe UI Historic','Noto Sans Phoenician','Noto Serif',serif">𐤉𐤄𐤅𐤄</div>
+    <div class="g-name-label" id="g-name-label" style="color:#c8971f">Paleo Script</div>
+  </div>
+
+  <div class="g-appname">
+    <span class="acr">ACR&nbsp;</span><span class="maps">MAPS</span>
+  </div>
+  <div class="g-sub">The Covenant Diaspora</div>
+
+  <button class="g-btn" onclick="doEnter()">Enter</button>
+</div>
+
+<!-- ══ LOADING SCREEN ════════════════════════════════════════ -->
+<div id="loading">
+  <div class="ld-wordmark"><span class="acr">ACR</span> <span class="maps">MAPS</span></div>
+  <div class="ld-sub">The Covenant Diaspora</div>
+  <div class="ld-spinner"></div>
+  <div class="ld-msg" id="ld-msg">Opening covenant map...</div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════ -->
+<div id="app" class="hidden">
+  <div id="map"></div>
+
+  <!-- Topbar -->
+    <div id="topbar">
+      <div class="tb-inner">
+        <img class="tb-logo" src="./icon-192.png" alt="">
+        <div class="tb-titles">
+          <div class="tb-name">ACR Maps</div>
+          <div class="tb-sub">Covenant Diaspora</div>
+        </div>
+        <button class="tb-cal" id="cal-chip" onclick="showCalendar()" title="DSS Covenant Calendar">
+          <div class="tb-cal-date" id="cal-date-label">—</div>
+          <div class="tb-cal-era">364-Day</div>
+        </button>
+        <button class="tb-btn tb-refresh" onclick="hardRefresh()" title="Clear cache and reload">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M3.5 10a6.5 6.5 0 1 0 6.5-6.5"/><polyline points="1 4.5 3.5 10 9 10"/></svg>
+        </button>
+        <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <div id="searchbar">
+      <div class="sb-wrap">
+        <span class="sb-icon">&#128269;</span>
+        <input class="sb-input" id="sb-input" type="text" placeholder="Search places, cities, regions..." autocomplete="off" oninput="onSearch(this.value)" onfocus="onSearchFocus()" onblur="setTimeout(hideSearch,200)">
+        <button class="sb-clear" id="sb-clear" onclick="clearSearch()">&#215;</button>
+      </div>
+    </div>
+
+    <!-- Search results -->
+    <div id="search-results"></div>
+
+    <!-- GPS button -->
+    <button id="gps-btn" onclick="locateMe()" title="My location">&#9678;</button>
+
+    <!-- Layer bar -->
+    <div id="layer-bar">
+      <div class="lpill lpill-trail" id="trail-pill" onclick="toggleTrail()">
+        <span class="ldot" style="background:var(--red)"></span> Displacement Trail
+      </div>
+      <div class="lpill" id="inscription-pill" onclick="toggleTypeFilter('inscription')">
+        <span class="ldot" style="background:var(--gold)"></span> YHWH Inscriptions
+      </div>
+      <div class="lpill" id="resistance-pill" onclick="toggleTypeFilter('resistance')">
+        <span class="ldot" style="background:#9b27d4"></span> Resistance Sites
+      </div>
+      <div class="lpill" id="discovery-pill" onclick="toggleTypeFilter('discovery')">
+        <span class="ldot" style="background:var(--blue)"></span> DSS Discovery
+      </div>
+      <div class="lpill" id="archive-pill" onclick="toggleTypeFilter('archive')">
+        <span class="ldot" style="background:var(--amber)"></span> Archives
+      </div>
+      <div class="lpill lpill-living" id="living-pill" onclick="toggleLivingFilter()">
+        <span class="ldot" style="background:var(--green)"></span> Living Communities
+      </div>
+      <div class="lpill lpill-genetic" id="genetic-pill" onclick="toggleGeneticCorridors()">
+        <span class="ldot" style="background:var(--gold)"></span> Genetic Corridors
+      </div>
+      <div class="lpill lpill-oral" id="oral-pill" onclick="toggleOralFilter()">
+        <span class="ldot" style="background:#9b27d4"></span> Oral Record
+      </div>
+    </div>
+
+    <!-- Region pills -->
+    <div id="region-bar">
+      <div class="rpill active" data-region="all" onclick="filterRegion(this)">All</div>
+      <div class="rpill" data-region="Africa" onclick="filterRegion(this)">Africa</div>
+      <div class="rpill" data-region="Spain" onclick="filterRegion(this)">Spain</div>
+      <div class="rpill" data-region="Portugal" onclick="filterRegion(this)">Portugal</div>
+      <div class="rpill" data-region="Cape Verde" onclick="filterRegion(this)">Cape Verde</div>
+      <div class="rpill" data-region="São Tomé" onclick="filterRegion(this)">São Tomé</div>
+      <div class="rpill" data-region="Caribbean" onclick="filterRegion(this)">Caribbean</div>
+      <div class="rpill" data-region="South America" onclick="filterRegion(this)">S. America</div>
+      <div class="rpill" data-region="USA" onclick="filterRegion(this)">USA</div>
+      <div class="rpill" data-region="UK" onclick="filterRegion(this)">UK</div>
+      <div class="rpill" data-region="Israel" onclick="filterRegion(this)">Israel</div>
+      <div class="rpill" data-region="Mesopotamia" onclick="filterRegion(this)">Mesopotamia</div>
+    </div>
+
+    <!-- Bottom sheet -->
+    <div id="sheet">
+      <div class="sheet-handle"></div>
+      <button class="sheet-close" onclick="closeSheet()">&#215;</button>
+      <div class="sheet-scroll" id="sheet-body"></div>
+    </div>
+
+</div>
+
+<script src="./vendor/leaflet.js"></script>
+<script>
+/* ── STATE ─────────────────────────────────────────────────── */
+var map = null;
+var places = [];
+var markers = [];
+var activeRegion = 'all';
+var activeTypeFilter = null;
+var activeLivingFilter = false;
+var activeOralFilter = false;
+var geneticVisible = false;
+var trailVisible = false;
+var userMarker = null;
+var placesData = null;
+var trailLayer = null;
+var trailGlowLayer = null;
+var corridorLayers = {};
+
+/* ── NAME CYCLING ON GATE ───────────────────────────────────── */
+var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
+var NAME_FORMS = [
+  { text: PALEO_YHWH, label: 'Paleo Script',   color: '#c8971f', font: '\'Segoe UI Historic\',\'Noto Sans Phoenician\',\'Noto Serif\',serif', size: '56px' },
+  { text: 'יהוה',    label: 'Square Hebrew',  color: '#e8751a', font: 'inherit', dir: 'rtl', size: '52px' },
+  { text: 'YHWH',    label: 'Romanized',      color: '#e63329', font: 'inherit', weight: '700', spacing: '.12em', size: '40px' },
+  { text: 'Yahweh',  label: 'Pronunciation',  color: '#3dbf5e', font: 'inherit', weight: '300', size: '42px' },
+  { text: 'The Creator', label: 'Covenant Title', color: '#2b7de9', font: 'inherit', size: '30px' }
+];
+var nameIdx = 0;
+var nameCycleTimer = null;
+
+function startNameCycle() {
+  applyNameForm(NAME_FORMS[0]);
+  nameCycleTimer = setInterval(function() {
+    var el = document.getElementById('g-name-form');
+    var lb = document.getElementById('g-name-label');
+    if (!el) { clearInterval(nameCycleTimer); return; }
+    el.classList.add('fade-out');
+    lb.classList.add('fade-out');
+    setTimeout(function() {
+      nameIdx = (nameIdx + 1) % NAME_FORMS.length;
+      applyNameForm(NAME_FORMS[nameIdx]);
+      el.classList.remove('fade-out');
+      el.classList.add('fade-in');
+      lb.classList.remove('fade-out');
+      setTimeout(function() { el.classList.remove('fade-in'); }, 450);
+    }, 400);
+  }, 2000);
+}
+
+function applyNameForm(f) {
+  var el = document.getElementById('g-name-form');
+  var lb = document.getElementById('g-name-label');
+  if (!el) return;
+  el.textContent = f.text;
+  el.style.color = f.color;
+  el.style.fontFamily = f.font || 'inherit';
+  el.style.fontWeight = f.weight || '400';
+  el.style.letterSpacing = f.spacing || 'normal';
+  el.style.fontSize = f.size || '64px';
+  el.style.direction = f.dir || 'ltr';
+  lb.textContent = f.label;
+  lb.style.color = f.color;
+}
+
+// Start cycling on page load; init calendar chip
+window.addEventListener('DOMContentLoaded', function() {
+  startNameCycle();
+  initCalendarChip();
+});
+
+/* ── COVENANT CALENDAR (364-day DSS Solar) ──────────────────── */
+var CAL_MONTHS = [
+  {name:'Abib', days:30}, {name:'Ziv', days:30}, {name:'Sivan', days:31},
+  {name:'Tammuz', days:30}, {name:'Av', days:30}, {name:'Elul', days:31},
+  {name:'Tishri', days:30}, {name:'Marheshvan', days:30}, {name:'Kislev', days:31},
+  {name:'Tevet', days:30}, {name:'Shevat', days:30}, {name:'Adar', days:31}
+];
+
+function findAbib1(yr) {
+  var march20 = new Date(yr, 2, 20);
+  var dow = march20.getDay();
+  var daysToWed = (3 - dow + 7) % 7;
+  return new Date(yr, 2, 20 + daysToWed);
+}
+
+function covenantDate() {
+  var now = new Date();
+  var yr = now.getFullYear();
+  var abib1 = findAbib1(yr);
+  var dayIdx = Math.floor((now - abib1) / 86400000);
+  if (dayIdx < 0) {
+    abib1 = findAbib1(yr - 1);
+    dayIdx = Math.floor((now - abib1) / 86400000);
+  }
+  dayIdx = ((dayIdx % 364) + 364) % 364;
+  var running = 0;
+  for (var i = 0; i < CAL_MONTHS.length; i++) {
+    if (dayIdx < running + CAL_MONTHS[i].days) {
+      return { month: CAL_MONTHS[i].name, day: dayIdx - running + 1, monthIdx: i };
+    }
+    running += CAL_MONTHS[i].days;
+  }
+  return { month: 'Adar', day: 31, monthIdx: 11 };
+}
+
+function initCalendarChip() {
+  var cd = covenantDate();
+  var el = document.getElementById('cal-date-label');
+  if (el) el.textContent = cd.day + ' ' + cd.month;
+}
+
+function showCalendar() {
+  var cd = covenantDate();
+  var monthsHtml = CAL_MONTHS.map(function(m, i) {
+    var cls = i === cd.monthIdx ? 'cal-month-item current' : 'cal-month-item';
+    return '<div class="' + cls + '"><div class="cal-month-name">' + m.name + '</div><div class="cal-month-days">' + m.days + ' days</div></div>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="cal-header">' +
+      '<div class="cal-date-big">' + cd.day + ' ' + cd.month + '</div>' +
+      '<div class="cal-date-sub">Covenant Calendar — 364-Day Solar Year</div>' +
+    '</div>' +
+    '<div class="cal-section">' +
+      '<div class="cal-section-lbl">The DSS Solar Calendar</div>' +
+      '<div class="cal-section-text">The Dead Sea Scrolls preserve a 364-day solar calendar — exactly 52 weeks, anchored to Wednesday (Day 4 of creation, when YHWH set the luminaries in place). The year begins on 1 Abib: the first Wednesday on or after the spring equinox (March 20). Four quarters of 91 days each (30 + 30 + 31) divide the year. Because 364 divides evenly by 7, every appointed time falls on the same day of the week, every year. There are no moveable feasts. The calendar is fixed in creation itself.</div>' +
+    '</div>' +
+    '<div class="cal-section">' +
+      '<div class="cal-section-lbl">Primary Sources</div>' +
+      '<div class="cal-section-text">1 Enoch 72-82 (Astronomical Book, Ge\'ez Orit) — the earliest written record of this calendar. 4QEn (Dead Sea Scrolls fragment, Qumran Cave 4). Songs of the Sabbath Sacrifice (4Q400-407, 11Q17). Book of Jubilees 6:30-32 — "all the days of the commandment will be fifty-two weeks of days." The calendar predates both the Rabbinical lunar calendar and the Gregorian system — it was the covenant calendar of the Yahad community.</div>' +
+    '</div>' +
+    '<div class="cal-section">' +
+      '<div class="cal-section-lbl">12 Months</div>' +
+      '<div class="cal-month-grid">' + monthsHtml + '</div>' +
+    '</div>' +
+    '<div class="cal-section">' +
+      '<div class="cal-section-lbl">The Rabbinical Calendar</div>' +
+      '<div class="cal-section-text">The Rabbinical lunar calendar (introduced by Hillel II, c. 359 CE) replaced the solar calendar after the destruction of the Second Temple. Months vary between 29 and 30 days; leap months are added in 7 of every 19 years. This calendar does not appear in the Dead Sea Scrolls. The solar calendar documented here is the original covenant calendar, not the later Rabbinical replacement.</div>' +
+    '</div>';
+  openSheet();
+}
+
+/* ── LOADING MESSAGES ───────────────────────────────────────── */
+var LD_MSGS = [
+  'Opening covenant map...',
+  'Loading covenant places...',
+  'Placing diaspora markers...',
+  'Reading sources...',
+  'Ready...'
+];
+
+/* ── GATE → LOADING ─────────────────────────────────────────── */
+function doEnter() {
+  if (nameCycleTimer) { clearInterval(nameCycleTimer); nameCycleTimer = null; }
+  var gate = document.getElementById('gate');
+  gate.classList.add('hiding');
+  setTimeout(function() {
+    gate.classList.add('hidden');
+    startLoading();
+  }, 500);
+}
+
+function startLoading() {
+  var ld = document.getElementById('loading');
+  ld.classList.add('show');
+  var i = 0;
+  var iv = setInterval(function() {
+    document.getElementById('ld-msg').textContent = LD_MSGS[i] || '';
+    i++;
+    if (i >= LD_MSGS.length) {
+      clearInterval(iv);
+      loadPlaces();
+    }
+  }, 480);
+}
+
+/* ── LOAD PLACES DATA ───────────────────────────────────────── */
+function loadPlaces() {
+  fetch('./acr_places.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      placesData = data;
+      places = data.places || [];
+      openApp();
+    })
+    .catch(function() {
+      placesData = null;
+      places = [];
+      openApp();
+    });
+}
+
+/* ── OPEN APP ───────────────────────────────────────────────── */
+function openApp() {
+  var ld = document.getElementById('loading');
+  ld.classList.add('hiding');
+  setTimeout(function() {
+    ld.classList.add('hidden');
+    var app = document.getElementById('app');
+    app.classList.remove('hidden');
+    initMap();
+  }, 500);
+}
+
+/* ── MAP INIT ───────────────────────────────────────────────── */
+function initMap() {
+  if (typeof L === 'undefined') {
+    document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4a4460;font-size:.85rem;padding:32px;text-align:center;">Map requires a connection on first load. Tap the region pills to browse places.</div>';
+    return;
+  }
+  map = L.map('map', { center: [15, 10], zoom: 2, zoomControl: false, attributionControl: false });
+  L.control.attribution({ compact: true, position: 'bottomleft' }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19, subdomains: 'abcd',
+    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; CARTO'
+  }).addTo(map);
+  setTimeout(function() { if (map) map.invalidateSize(); }, 100);
+  addDisplacementTrailLayer();
+  addGeneticCorridorLayers();
+  placeMarkers(places);
+  map.on('click', function() { closeSheet(); });
+}
+
+/* ── DISPLACEMENT TRAIL ─────────────────────────────────────── */
+function addDisplacementTrailLayer() {
+  if (!map || !placesData || !placesData.displacement_trail) return;
+  var raw = placesData.displacement_trail.coordinates;
+  var coords = raw.map(function(c) { return [c[1], c[0]]; }); // GeoJSON [lng,lat] -> Leaflet [lat,lng]
+  trailGlowLayer = L.polyline(coords, { color: '#e63329', weight: 6, opacity: 0.12, interactive: false });
+  trailLayer = L.polyline(coords, { color: '#e63329', weight: 2, opacity: 0.7, dashArray: '5 7', interactive: false });
+}
+
+function toggleTrail() {
+  trailVisible = !trailVisible;
+  var pill = document.getElementById('trail-pill');
+  if (pill) pill.classList.toggle('active', trailVisible);
+  if (!trailLayer) return;
+  if (trailVisible) {
+    trailGlowLayer.addTo(map);
+    trailLayer.addTo(map);
+    map.flyTo([15, 0], 2.0);
+    showRoute('devarim-28-trail');
+  } else {
+    if (map.hasLayer(trailGlowLayer)) map.removeLayer(trailGlowLayer);
+    if (map.hasLayer(trailLayer)) map.removeLayer(trailLayer);
+  }
+}
+
+/* ── GENETIC CORRIDORS ──────────────────────────────────────── */
+function addGeneticCorridorLayers() {
+  if (!map || !placesData || !placesData.genetic_corridors) return;
+  corridorLayers = {};
+  placesData.genetic_corridors.forEach(function(corridor) {
+    var coords = corridor.coordinates.map(function(c) { return [c[1], c[0]]; });
+    corridorLayers[corridor.id] = {
+      glow: L.polyline(coords, { color: corridor.color, weight: 8, opacity: 0.07, interactive: false }),
+      line: L.polyline(coords, { color: corridor.color, weight: 1.5, opacity: 0.65, dashArray: '6 3', interactive: false })
+    };
+  });
+}
+
+function toggleGeneticCorridors() {
+  geneticVisible = !geneticVisible;
+  var pill = document.getElementById('genetic-pill');
+  if (pill) pill.classList.toggle('active', geneticVisible);
+  Object.keys(corridorLayers).forEach(function(id) {
+    var cl = corridorLayers[id];
+    if (geneticVisible) {
+      cl.glow.addTo(map);
+      cl.line.addTo(map);
+    } else {
+      if (map.hasLayer(cl.glow)) map.removeLayer(cl.glow);
+      if (map.hasLayer(cl.line)) map.removeLayer(cl.line);
+    }
+  });
+  if (geneticVisible) {
+    map.flyTo([20, 20], 2.2);
+    showGeneticInfo();
+  }
+}
+
+function showGeneticInfo() {
+  var corridors = (placesData && placesData.genetic_corridors) || [];
+  var itemsHtml = corridors.map(function(c) {
+    return '<div class="stop-row" style="border-left:3px solid ' + c.color + ';padding-left:14px">' +
+      '<div class="stop-info">' +
+        '<div class="stop-name" style="color:' + c.color + '">' + esc(c.name) + '</div>' +
+        '<div class="stop-summary">' + esc(c.description) + '</div>' +
+        '<div class="stop-summary" style="margin-top:4px;color:var(--tx3)">' + (c.sources || []).map(function(s){return esc(s);}).join(' &middot; ') + '</div>' +
+      '</div></div>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="route-hdr">' +
+      '<div class="route-tag">Primary Evidence Layer</div>' +
+      '<div class="route-name">African Genetic Corridors</div>' +
+      '<div class="route-meta">3 corridors &middot; E1b1a / E1b1b lineages &middot; Primary sources named</div>' +
+    '</div>' +
+    '<div class="route-summary">The covenant people\'s documented movement across the African continent — traced through population genetics, ancient inscriptions, and primary source texts. E1b1a (E-M2) is the dominant lineage in West Africa and the African American population. E1b1b (E-M78) traces the Horn of Africa and Red Sea corridor. Both are indigenous African lineages. Neither is European or Ashkenazi.</div>' +
+    '<div class="place-sources" style="margin-bottom:14px"><div class="place-sources-lbl">Evidence Standard</div><div class="place-sources-list">No European or Ashkenazi lineage is referenced here. African-origin haplogroups are the record. Western academic validation is not required — the inscriptions, the manuscripts, and the oral tradition predate the academic institutions that would claim to evaluate them.</div></div>' +
+    '<div class="stop-list">' + itemsHtml + '</div>';
+  openSheet();
+}
+
+/* ── ORAL RECORD FILTER ─────────────────────────────────────── */
+function toggleOralFilter() {
+  activeOralFilter = !activeOralFilter;
+  var pill = document.getElementById('oral-pill');
+  if (pill) pill.classList.toggle('active', activeOralFilter);
+  if (activeOralFilter) {
+    activeTypeFilter = null;
+    activeLivingFilter = false;
+    activeRegion = 'all';
+    document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+    var allPill = document.querySelector('.rpill[data-region="all"]');
+    if (allPill) allPill.classList.add('active');
+    document.querySelectorAll('.lpill:not(.lpill-trail):not(.lpill-oral)').forEach(function(p) { p.classList.remove('active'); });
+  }
+  var filtered = getFilteredPlaces();
+  if (map) placeMarkers(filtered);
+  else showRegionList();
+}
+
+/* ── TYPE FILTER ────────────────────────────────────────────── */
+function toggleTypeFilter(type) {
+  if (activeTypeFilter === type) {
+    activeTypeFilter = null;
+  } else {
+    activeTypeFilter = type;
+    activeRegion = 'all';
+    document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelector('.rpill[data-region="all"]').classList.add('active');
+  }
+  document.querySelectorAll('.lpill:not(.lpill-trail)').forEach(function(p) { p.classList.remove('active'); });
+  if (activeTypeFilter) {
+    var pid = activeTypeFilter + '-pill';
+    var el = document.getElementById(pid);
+    if (el) el.classList.add('active');
+  }
+  var filtered = getFilteredPlaces();
+  if (map) placeMarkers(filtered);
+  else showRegionList();
+}
+
+function getFilteredPlaces() {
+  var list = places;
+  if (activeRegion !== 'all') {
+    list = list.filter(function(p) { return p.region === activeRegion; });
+  }
+  if (activeTypeFilter) {
+    list = list.filter(function(p) { return p.type === activeTypeFilter; });
+  }
+  if (activeLivingFilter) {
+    list = list.filter(function(p) { return p.living === true; });
+  }
+  if (activeOralFilter) {
+    list = list.filter(function(p) { return !!p.oral_tradition; });
+  }
+  return list;
+}
+
+function toggleLivingFilter() {
+  activeLivingFilter = !activeLivingFilter;
+  var pill = document.getElementById('living-pill');
+  if (pill) pill.classList.toggle('active', activeLivingFilter);
+  if (activeLivingFilter) {
+    activeTypeFilter = null;
+    activeOralFilter = false;
+    activeRegion = 'all';
+    document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+    var allPill = document.querySelector('.rpill[data-region="all"]');
+    if (allPill) allPill.classList.add('active');
+    document.querySelectorAll('.lpill:not(.lpill-trail):not(.lpill-living)').forEach(function(p) { p.classList.remove('active'); });
+  }
+  var filtered = getFilteredPlaces();
+  if (map) placeMarkers(filtered);
+  else showRegionList();
+}
+
+/* ── PLACE MARKERS ──────────────────────────────────────────── */
+var MK_LABELS = { community:'C', history:'H', archive:'A', inscription:'Y', resistance:'R', discovery:'D' };
+function placeMarkers(list) {
+  markers.forEach(function(m) { m.remove(); });
+  markers = [];
+  list.forEach(function(pl) {
+    var t = pl.type || 'community';
+    var lbl = MK_LABELS[t] || 'C';
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="mk mk-' + t + '" title="' + esc(pl.name) + '">' + lbl + '</div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14]
+    });
+    var m = L.marker([pl.lat, pl.lng], { icon: icon });
+    m.on('click', function(e) {
+      L.DomEvent.stopPropagation(e);
+      showPlace(pl);
+    });
+    m.addTo(map);
+    markers.push(m);
+  });
+}
+
+/* ── FILTER BY REGION ───────────────────────────────────────── */
+function filterRegion(el) {
+  document.querySelectorAll('.rpill').forEach(function(p) { p.classList.remove('active'); });
+  el.classList.add('active');
+  activeRegion = el.dataset.region;
+  var filtered = getFilteredPlaces();
+  if (map) {
+    placeMarkers(filtered);
+    if (filtered.length && activeRegion !== 'all') {
+      var lngs = filtered.map(function(p) { return p.lng; });
+      var lats = filtered.map(function(p) { return p.lat; });
+      map.fitBounds([
+        [Math.min.apply(null,lats)-2, Math.min.apply(null,lngs)-2],
+        [Math.max.apply(null,lats)+2, Math.max.apply(null,lngs)+2]
+      ], { padding: [60, 60] });
+    }
+  } else {
+    showRegionList(activeRegion);
+  }
+}
+
+/* ── SHOW PLACE ─────────────────────────────────────────────── */
+var TYPE_LABELS = { community:'Covenant Community', history:'Historical Site', archive:'Primary Archive', inscription:'YHWH Inscription', resistance:'Resistance Site', discovery:'DSS Discovery Site' };
+var VERSE_TEXTS = {
+  'Devarim 28:68': 'YHWH will bring you back to Egypt in ships, by a route I said you would never see again. There you will offer yourselves for sale to your enemies as male and female slaves, but no one will buy you.',
+  'Devarim 28:64': 'YHWH will scatter you among all nations, from one end of the earth to the other. There you will worship other gods — gods of wood and stone, which neither you nor your ancestors have known.',
+  'Devarim 28:65': 'Among those nations you will find no repose, no resting place for the sole of your foot. There YHWH will give you an anxious mind, eyes weary with longing, and a despairing heart.',
+  'Yesha\'yahu 11:11': 'In that day YHWH will reach out his hand a second time to reclaim the surviving remnant of his people — from Assyria, from Lower Egypt, from Upper Egypt, from Kush, from Elam, from Shinar, from Hamath, and from the islands of the sea.'
+};
+
+function showPlace(pl) {
+  if (map) {
+    map.flyTo([pl.lat, pl.lng], pl.type === 'inscription' ? 10 : 13);
+  }
+  var typeLabel = TYPE_LABELS[pl.type] || 'Covenant Site';
+  var src = (pl.sources || []).map(function(s) { return '<div>' + esc(s) + '</div>'; }).join('');
+
+  var livingBadge = pl.living ? '<span class="living-badge">Active Community</span>' : '';
+
+  var otgHtml = '';
+  if (pl.on_this_ground) {
+    otgHtml = '<div class="place-otg-wrap">' +
+      '<div class="place-otg-lbl">On This Ground</div>' +
+      '<div class="place-otg-text">' + esc(pl.on_this_ground) + '</div>' +
+      '</div>';
+  }
+
+  var oralHtml = '';
+  if (pl.oral_tradition) {
+    oralHtml = '<div class="place-oral-wrap">' +
+      '<div class="place-oral-lbl">Oral Record</div>' +
+      '<div class="place-oral-text">' + esc(pl.oral_tradition) + '</div>' +
+      '</div>';
+  }
+
+  var verseBanner = '';
+  if (pl.verse && VERSE_TEXTS[pl.verse]) {
+    verseBanner = '<div class="verse-banner"><div class="verse-ref">' + esc(pl.verse) + ' — Ge\'ez Orit, DSS Confirmed</div><div class="verse-text">' + esc(VERSE_TEXTS[pl.verse]) + '</div></div>';
+  }
+
+  var beforeHtml = '';
+  if (pl.before) {
+    beforeHtml = '<div class="place-before-wrap">' +
+      '<div class="place-before-lbl">What Was Here Before</div>' +
+      '<div class="place-before-text">' + esc(pl.before) + '</div>' +
+      '</div>';
+  }
+
+  var excerptHtml = '';
+  if (pl.excerpt) {
+    excerptHtml = '<div class="place-excerpt-wrap">' +
+      '<div class="place-excerpt-lbl">Primary Document</div>' +
+      '<div class="place-excerpt-text">' + esc(pl.excerpt) + '</div>' +
+      '</div>';
+  }
+
+  var routeBtn = pl.route ? '<button class="place-nav-btn" style="margin-bottom:10px;background:linear-gradient(90deg,var(--amber),var(--gold));color:#05050b" onclick="showRoute(\'' + pl.route + '\')">View Full Route</button>' : '';
+
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="place-tag">' + esc(pl.region) + ' &middot; ' + esc(pl.city) + livingBadge + '</div>' +
+    '<div class="place-name">' + esc(pl.name) + '</div>' +
+    '<div class="place-meta">' + typeLabel + '</div>' +
+    otgHtml +
+    oralHtml +
+    '<div class="place-body">' + esc(pl.summary) + '</div>' +
+    verseBanner +
+    beforeHtml +
+    excerptHtml +
+    '<div class="place-sources"><div class="place-sources-lbl">Primary Evidence</div><div class="place-sources-list">' + src + '</div></div>' +
+    routeBtn +
+    '<button class="place-nav-btn" onclick="navTo(' + pl.lat + ',' + pl.lng + ')">Navigate Here</button>';
+  openSheet();
+}
+
+/* ── SHOW ROUTE ─────────────────────────────────────────────── */
+function showRoute(routeId) {
+  var data = placesData;
+  if (!data) return;
+  var route = (data.routes || []).find(function(r) { return r.id === routeId; });
+  if (!route) return;
+  var stops = (route.stops || []).map(function(id) {
+    return data.places.find(function(p) { return p.id === id; });
+  }).filter(Boolean);
+
+  var isGlobal = route.distance_km === 0;
+  var stopsHtml = stops.map(function(pl, i) {
+    return '<div class="stop-row" onclick="showPlace(' + JSON.stringify(pl).replace(/"/g,'&quot;') + ')">' +
+      '<div class="stop-num" style="background:' + typeColor(pl.type) + '">' + (i + 1) + '</div>' +
+      '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
+      '<div class="stop-summary">' + esc(pl.city) + ', ' + esc(pl.region) + ' &mdash; ' + esc((pl.summary||'').substring(0,80)) + '...</div></div>' +
+      '</div>';
+  }).join('');
+
+  var metaLine = stops.length + ' stops';
+  if (!isGlobal) metaLine += ' &middot; ' + route.distance_km + ' km &middot; ' + route.duration_hrs + ' hrs';
+  else metaLine += ' &middot; ' + route.duration_hrs;
+
+  var navBtn = stops.length && !isGlobal
+    ? '<button class="route-start-btn" onclick="navTo(' + stops[0].lat + ',' + stops[0].lng + ')">Start Route</button>'
+    : '';
+
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="route-hdr">' +
+      '<div class="route-tag">' + esc(route.region) + ' &middot; ' + esc(route.city) + '</div>' +
+      '<div class="route-name">' + esc(route.name) + '</div>' +
+      '<div class="route-meta">' + metaLine + '</div>' +
+    '</div>' +
+    '<div class="route-summary">' + esc(route.summary) + '</div>' +
+    '<div class="stop-list">' + stopsHtml + '</div>' +
+    navBtn;
+  openSheet();
+
+  if (map && stops.length) {
+    var lngs = stops.map(function(p) { return p.lng; });
+    var lats = stops.map(function(p) { return p.lat; });
+    var pad = isGlobal ? 20 : 0.05;
+    map.fitBounds([
+      [Math.min.apply(null,lats)-pad, Math.min.apply(null,lngs)-pad],
+      [Math.max.apply(null,lats)+pad, Math.max.apply(null,lngs)+pad]
+    ], { padding: [60, 60] });
+  }
+}
+
+/* ── SHOW REGION LIST (no map fallback) ─────────────────────── */
+function showRegionList(region) {
+  var list = region && region !== 'all' ? places.filter(function(p) { return p.region === region; }) : places;
+  if (!list.length) { closeSheet(); return; }
+  var items = list.map(function(pl) {
+    return '<div class="stop-row" onclick=\'showPlace(' + JSON.stringify(pl).replace(/'/g,"&#39;") + ')\'>' +
+      '<div class="stop-num" style="background:' + typeColor(pl.type) + '">' + typeIconChar(pl.type) + '</div>' +
+      '<div class="stop-info"><div class="stop-name">' + esc(pl.name) + '</div>' +
+      '<div class="sr-city">' + esc(pl.city) + ', ' + esc(pl.region) + '</div></div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="sheet-title">Covenant Places' + (region && region !== 'all' ? ' — ' + region : '') + '</div>' +
+    '<div class="stop-list">' + items + '</div>';
+  openSheet();
+}
+
+function typeColor(t) {
+  var colors = { community:'var(--green)', history:'var(--red)', archive:'var(--gold)', inscription:'#c8971f', resistance:'#9b27d4', discovery:'var(--blue)' };
+  return colors[t] || 'var(--green)';
+}
+
+function typeIconChar(t) {
+  return MK_LABELS[t] || 'C';
+}
+
+/* ── SEARCH ─────────────────────────────────────────────────── */
+function onSearch(val) {
+  document.getElementById('sb-clear').style.display = val ? 'block' : 'none';
+  if (!val.trim()) { hideSearch(); return; }
+  var q = val.toLowerCase();
+  var res = places.filter(function(p) {
+    return p.name.toLowerCase().indexOf(q) > -1 ||
+      (p.city || '').toLowerCase().indexOf(q) > -1 ||
+      (p.region || '').toLowerCase().indexOf(q) > -1 ||
+      (p.summary || '').toLowerCase().indexOf(q) > -1;
+  }).slice(0, 10);
+  var sr = document.getElementById('search-results');
+  if (!res.length) { hideSearch(); return; }
+  sr.innerHTML = res.map(function(p) {
+    return '<div class="sr-item" onclick="selectSearch(\'' + p.id + '\')">' +
+      '<div class="sr-region">' + esc(p.region) + '</div>' +
+      '<div class="sr-name">' + esc(p.name) + '</div>' +
+      '<div class="sr-city">' + esc(p.city) + '</div>' +
+      '</div>';
+  }).join('');
+  sr.classList.add('show');
+}
+
+function onSearchFocus() {
+  var val = document.getElementById('sb-input').value;
+  if (val) onSearch(val);
+}
+
+function selectSearch(id) {
+  hideSearch();
+  document.getElementById('sb-input').value = '';
+  document.getElementById('sb-clear').style.display = 'none';
+  var pl = places.find(function(p) { return p.id === id; });
+  if (pl) showPlace(pl);
+}
+
+function clearSearch() {
+  document.getElementById('sb-input').value = '';
+  document.getElementById('sb-clear').style.display = 'none';
+  hideSearch();
+}
+
+function hideSearch() {
+  document.getElementById('search-results').classList.remove('show');
+}
+
+/* ── SHEET ──────────────────────────────────────────────────── */
+function openSheet() { document.getElementById('sheet').classList.add('open'); }
+function closeSheet() { document.getElementById('sheet').classList.remove('open'); }
+
+/* ── GPS ─────────────────────────────────────────────────────── */
+function locateMe() {
+  if (!navigator.geolocation) return;
+  var btn = document.getElementById('gps-btn');
+  btn.classList.add('active');
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    if (map) {
+      if (userMarker) map.removeLayer(userMarker);
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(43,125,233,.3)"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+      userMarker = L.marker([pos.coords.latitude, pos.coords.longitude], { icon: icon }).addTo(map);
+      map.flyTo([pos.coords.latitude, pos.coords.longitude], 13);
+    }
+    setTimeout(function(){ btn.classList.remove('active'); }, 2000);
+  }, function() {
+    btn.classList.remove('active');
+  });
+}
+
+/* ── NAVIGATE ───────────────────────────────────────────────── */
+function navTo(lat, lng) {
+  var url = 'https://maps.apple.com/?daddr=' + lat + ',' + lng + '&dirflg=w';
+  window.open(url, '_blank');
+}
+
+/* ── UTILS ──────────────────────────────────────────────────── */
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── HARD REFRESH ───────────────────────────────────────────── */
+function hardRefresh() {
+  var btn = document.querySelector('.tb-refresh');
+  if (btn) { btn.style.opacity = '.4'; btn.style.pointerEvents = 'none'; }
+  var reload = function() { location.reload(); };
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(function(regs) {
+        var own = regs.filter(function(r) { return r.scope.indexOf('/maps/') >= 0; });
+        return Promise.all(own.map(function(r) { return r.unregister(); }));
+      })
+      .then(function() {
+        return 'caches' in window
+          ? caches.keys().then(function(keys) {
+              var own = keys.filter(function(k) { return k.indexOf('acr-maps-') === 0; });
+              return Promise.all(own.map(function(k) { return caches.delete(k); }));
+            })
+          : Promise.resolve();
+      })
+      .then(reload).catch(reload);
+  } else {
+    reload();
+  }
+}
+
+/* ── SERVICE WORKER ─────────────────────────────────────────── */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>

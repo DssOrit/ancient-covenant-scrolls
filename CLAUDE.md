@@ -332,6 +332,177 @@ These have been re-locked on 2026-05-04 after repeated violations.
     If there is ANY doubt whether a content file matches this standard, STOP
     and show a preview before writing anything.
 
+21. **HARD REFRESH FUNCTIONS MUST BE SCOPED — LOCKED 2026-07-17 by user.**
+    Every hard refresh function across every PWA in this repo must isolate
+    its cache and SW cleanup to that app only. Global wipes are forbidden —
+    they destroy other apps' service workers and caches on the same origin.
+    Specific rules:
+    - `caches.keys()` results MUST be filtered to only the app's own cache
+      prefix before deletion (e.g. `k.indexOf('loadstudio-') === 0`).
+    - `navigator.serviceWorker.getRegistrations()` results MUST be filtered
+      to only SWs whose scope contains the app's own path before unregister
+      (e.g. `r.scope.indexOf('/loadstudio/') >= 0`).
+    - This applies to inline onclick handlers, named functions, and any other
+      pattern that touches caches or service workers.
+    - When building any hard refresh for a new or existing app, use the
+      standard scoped template from HANDOFF.md — "Standard Scoped Hard
+      Refresh Template" — and fill in the correct prefix and path.
+    - Before shipping any hard refresh function, verify: (a) cache filter
+      uses the correct prefix, (b) SW filter uses the correct scope path,
+      (c) neither filter is missing or empty.
+    This rule exists because a global-wipe hard refresh in maps/index.html
+    silently destroyed ACR Reader's SW and cache on 2026-07-17, taking the
+    app offline on iPhone. Never let one app's refresh touch another app.
+
+22. **NO MASORETIC NIQQUD IN PRE-RABBINIC CITATIONS — LOCKED 2026-07-18
+    by user.** When citing any pre-Rabbinic text (DSS, Ge'ez Orit, ancient
+    inscriptions), Hebrew and Aramaic must appear in unpointed consonantal
+    form only. Masoretic vowel pointing (niqqud — the dots and dashes added
+    by the Masoretes 6th-10th century CE) must never appear in citations of
+    ancient texts. When the Masoretic text is being documented as a
+    manipulation layer, it must be explicitly labeled "Masoretic Text (MT)"
+    and never presented as the original. Using niqqud in a citation of a
+    DSS-era text is a rule 13 violation — it imposes a Rabbinic-era
+    editorial layer onto a pre-Rabbinic source.
+
+23. **GE'EZ ORIT HAS EQUAL STANDING WITH ARAMAIC DSS — LOCKED 2026-07-18
+    by user.** The Ge'ez Orit and the Aramaic Dead Sea Scrolls are co-equal
+    primary sources under rule 13. A Western academic "no Aramaic DSS
+    fragments found" argument does NOT disqualify a text preserved in the
+    Ge'ez tradition. Applying a DSS-fragment-only evidentiary standard to
+    exclude or downgrade Ge'ez-preserved sections is a rule 15 violation.
+    The Beta Israel and Ethiopian covenant community's preservation of a
+    text is evidence of African Hebrew continuity with that tradition — it
+    carries primary source standing, not secondary status. Specific
+    prohibitions:
+    - Never rank Aramaic archaeological finds above Ge'ez transmission.
+    - Never label Ge'ez-only sections as "unverifiable," "contested," or
+      "cannot be confirmed" solely on the basis of missing DSS fragments.
+    - Never require Western archaeological confirmation before accepting
+      a text the African covenant tradition has preserved.
+    Rule 13 still governs: if a text contains demonstrable post-Christian
+    content additions visible inside the text itself (not merely the absence
+    of DSS fragments), that is a separate question addressed by rule 13.
+    The DSS-fragment-absence argument alone is never sufficient to exclude.
+
+24. **SOURCE DIRECTION: ANCIENT COVENANT TEXTS ARE THE ORIGIN — LOCKED
+    2026-07-18 by user.** When comparing ancient covenant texts (1 Enoch,
+    DSS, Ge'ez Orit) to NT content, the direction is always stated plainly:
+    the ancient text is the original; the NT borrowed, adapted, or corrupted
+    from it. Never frame ancient texts as "NT-like" or "similar to NT" —
+    that framing inverts the chronology and grants the NT precedence it does
+    not have. Specific rules:
+    - The NT's fire and judgment language is Enoch-like — Enoch is the
+      source.
+    - The NT's spirit language is Orit-like — the Orit is the source.
+    - The NT's Son of Man language is Daniel-like — Daniel is the source.
+    - State the borrowing direction correctly in every comparison, every
+      critical note, and every research response.
+    - Western academic scholars (Milik, Cross, Vermes, or any other) are
+      not authorities on whether ancient covenant texts predate the NT. The
+      manuscript evidence and the African preservation tradition are the
+      record. A Western scholar's dating opinion does not override the
+      Ge'ez transmission record.
+    If there is ANY doubt about whether a comparison frames an ancient text
+    as derivative of the NT rather than the NT as derivative of the ancient
+    text, STOP and correct the framing before continuing.
+
+25. **PRE-CORRUPTION STANDARD — LOCKED 2026-07-18 by user.** All content
+    across ACR sites must carry a pre-Second Temple, pre-Corruption
+    tradition. This standard applies regardless of when the text was
+    physically written down — the test is the TRADITION the content carries,
+    not the date the scribe put ink to leather. This rule was always
+    required and is locked permanently.
+    - **Pre-Second Temple tradition required.** Content must carry First
+      Temple covenant memory: the 364-day solar covenant calendar, the
+      unsanitized Divine Council, covenant accountability language, YHWH as
+      the unsubstituted name, and Sheol as the neutral dust of the dead.
+      The Enochic corpus qualifies because it preserves and transmits First
+      Temple core memory even though its physical written form is Second
+      Temple period Aramaic — the tradition predates the corruption.
+    - **Corrupt Second Temple priesthood theology is excluded.** Content
+      that reflects the corrupt Second Temple priestly establishment is
+      not a valid source: priestly hierarchy claims serving the Jerusalem
+      temple institution over the covenant community; theological
+      accommodations made to Hellenistic Greek imperial rule; calendar
+      modifications imported from Babylonian or Greek systems; any
+      tradition that elevated the post-exile temple institution above the
+      ancient covenant people.
+    - **Hellenistic institutional manipulation is excluded.** Greek
+      philosophical frameworks imposed onto Hebrew tradition — Platonic
+      dualism, Logos theology, Greek cosmological overlay, Greek afterlife
+      frameworks replacing Sheol — are not authoritative sources in ACR
+      content.
+    - **Pre-Corruption covers all four disqualifying layers:** Rabbinic
+      manipulation, Christian theological construction, corrupt Second
+      Temple priesthood theology, and Hellenistic Greek institutional
+      overlay. Content shaped by any of these four layers does not qualify
+      as a primary source regardless of how ancient the physical document is.
+    - **The Ge'ez Orit and the DSS both qualify** because they carry
+      pre-Corruption First Temple covenant tradition. The Ge'ez Orit's
+      108-chapter preservation of Chanokh by Beta Israel is the living
+      African transmission of that First Temple memory. The DSS qualify
+      because they carry pre-Rabbinic, pre-Christian covenant tradition
+      regardless of their physical copy date. Neither requires Western
+      academic validation to establish this standing.
+    - **Physical writing date does not determine standing.** A text
+      physically composed in 200 BCE that carries corrupt Second Temple
+      priesthood theology fails this standard. A text physically composed
+      in 200 BCE that carries First Temple covenant memory passes it. The
+      content determines the standing, not the carbon date.
+    Rule 13 remains in full force. Rule 25 extends it by naming
+    pre-Corruption as the operative standard and confirming the test is
+    the tradition carried, not the physical composition date.
+
+26. **ALWAYS BACKUP, ALWAYS VERIFY — LOCKED 2026-07-18 by user.** Before
+    making any removal, restructure, or significant content change to any
+    ACR site, and before ever pushing anything new to the repo:
+    a. **Create a backup branch** pointing at the current working `main`
+       HEAD before any change is applied. Branch name:
+       `backup/<YYYY-MM-DD>-<currentCacheVersion>` (e.g.
+       `backup/2026-07-18-acr-v83`). If a backup for that date already
+       exists, append the cache version of the new tip — never overwrite.
+    b. **Verify the backup** — confirm the branch was pushed and its HEAD
+       SHA matches the pre-change `origin/main` SHA. Report the branch
+       name and SHA to the user before proceeding.
+    c. **Verify no breaking** — before pushing any change to the feature
+       branch or opening a PR: confirm the HTML is structurally valid
+       (required tags present, no unclosed elements), JSON files parse
+       cleanly (python3 -c "import json; json.load(open(f))"), and
+       navigation arrays in index.html (NAVIDS, LABELS, TOC) match
+       the files that still exist. Report the verification result to
+       the user.
+    d. **Do not push until steps a-c are complete and reported.** A
+       change that skips backup or verification is a rule violation
+       regardless of how low-risk it appears.
+    This rule exists because content removals are irreversible once
+    merged to main, and backup branches are the only recovery path.
+
+27. **OPERATING DISCIPLINE — LOCKED 2026-07-18 by user.** These bind Claude's
+    own conduct and take precedence over being helpful or moving fast. In this
+    rule, "the user" means the human repository owner giving instructions in
+    chat (you) — never Claude itself, and never Claude inferring on your behalf.
+    Only the user can give any approval, confirmation, or unlock referenced
+    below:
+    a. **Exact phrase only.** Do nothing to ACR Reader, ACR2, ACR Solar, or ACR
+       Search without the user's exact typed unlock phrase for that site (per
+       Rule 8). A general request, recovery ask, content question, or feature
+       idea is NOT approval.
+    b. **Wait for the answer before acting.** Propose, then wait. If Claude asks
+       the user anything, Claude does NOTHING until the user replies. Never act
+       on an open question, an inference, or an automated hook/nudge — those are
+       not the user's answer.
+    c. **Back every claim with output.** Every factual statement — live, fixed,
+       authorized, verified, merged, present or absent — must come from an actual
+       tool call run this session. If there is nothing to show, say "I don't
+       know." Never invent or state what has not been verified.
+    d. **Never work around a gate without the user's explicit approval.** Claude
+       must never write, type, or supply an unlock phrase (in a PR title/body,
+       commit, comment, or CI), and never bypass, weaken, or disable the CI safety
+       guard or any lock, UNLESS the user explicitly approves that specific action.
+       Without that explicit approval, if a gate blocks a change, STOP and report —
+       do not get past it.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.

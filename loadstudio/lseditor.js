@@ -4163,7 +4163,7 @@ window.LoadAudioFix = {
  }
  if ('caches' in window) {
  var keys = await caches.keys();
- await Promise.all(keys.map(function (k) { return caches.delete(k); }));
+ await Promise.all(keys.filter(function (k) { return k.indexOf('loadstudio-') === 0; }).map(function (k) { return caches.delete(k); }));
  }
  } catch (e) {}
  location.replace(location.pathname + '?_=' + Date.now());
@@ -13153,7 +13153,7 @@ window.LoadAudioFix = {
  }
  if ('caches' in window) {
  var keys = await caches.keys();
- await Promise.all(keys.map(function (k) { return caches.delete(k); }));
+ await Promise.all(keys.filter(function (k) { return k.indexOf('loadstudio-') === 0; }).map(function (k) { return caches.delete(k); }));
  }
  } catch (e) {}
  location.replace(location.pathname + '?_=' + Date.now());
