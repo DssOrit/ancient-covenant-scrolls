@@ -127,3 +127,13 @@ per-volume debunk wording from that file — do NOT ask the user to re-paste.
 ## Capability notes (this session)
 - GitHub MCP dropped/reconnected once mid-session; recovered via ToolSearch.
 - Live Pages URL (dssorit.github.io) not fetchable from sandbox; verified via `git show origin/main:...` and user screenshots.
+
+## Update — detailed debunk tabs finalized (PR #746, cache v223→v229)
+- **v228 — Rule 28 softening pass:** hardened the last soft/neutral words in the debunk detail: "sectarian innovations"→"fabrications" (x3), "Iranian-influenced development"→"import", "Its own contribution is"→"What it manufactures is", "shift access away"→"wrench access away". Softening audit clean (only allowed direct quotes + hard "could NOT have been" remain).
+- **v229 — non-circular independent checks:** added "Independent check — no excluded text cited" outside-witness section to the 6 ACR2 tabs missing it (Aramaic Levi/Qahat, New Jerusalem, Apocryphon of Joshua, Words of Michael, Birth of Noah, Pseudo-Jubilees). Each anchor web-verified this session: Ketef Hinnom c.600 BCE; Tel Beersheba oval-ring vs Hippodamus c.480-408 BCE; Hasmonean Jericho palaces (Tulul Abu el-Alayiq, 134-76 BCE); Persian Amesha-Spentas archangel court (canon-safe, no Daniel claim); earliest natal horoscope 410 BCE Babylon + Devarim 18:10-11; retained Bereshit 22 (no adversary). All 32 detailed tabs now carry: hard-accusation lead + "under warning" verdict + non-circular verification.
+- **State:** PR #746 open, base main v223, head `6be119f` v229. Awaiting user merge (Rule 9 — no self-merge). Files: Search/index.html, Search/sw.js.
+
+## Update — folded user's Jubilees/GenAp/Temple Scroll paste into tabs (cache v230)
+- Weighed the user's new 3-text forensic paste against the live tabs: ~90% already shipped, no contradictions with our line.
+- Applied 4 additions: Jubilees Angel-of-Presence framing + 49-yr/7-yr grid mechanic; GenAp faked-firsthand-memoir framing + two-tier date (copy c.25 BCE-50 CE vs composition mid-2nd-1st c BCE, web-verified); Temple Scroll ~65-67 column length.
+- Kept Name rule (did not adopt paste's "Lord your God"). On PR #746, head now v230.
