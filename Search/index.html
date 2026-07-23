@@ -1049,6 +1049,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .dbk-verdict{background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-top:18px}
 .dbk-verdict-h{color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .dbk-verdict-t{color:#e8caca;font-size:12.5px;line-height:1.62}
+.dbk-mech{background:#12100b;border:1px solid #24201a;border-left:2px solid rgba(200,151,31,.4);border-radius:10px;padding:11px 14px;margin-top:16px}
+.dbk-mech-h{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--gold2,#E8B83F);margin-bottom:5px}
+.dbk-mech-t{font-size:12px;color:#9c968b;line-height:1.6}
 </style>
 </head>
 <body>
@@ -6519,8 +6522,17 @@ var VB_EXCLUDED_DETAIL = {
     '<div class="dbk-p">The writer declares the sect will not enter the Jerusalem temple because the mainstream priests are corrupting the purity laws. The body lists roughly twenty hyper-specific halakhot — liquid streams, bone purity, animal slaughter. The text dates and identifies itself as one faction\'s manifesto.</div>' +
     '<div class="dbk-flow"><div class="dbk-flow-lbl">The claim</div><div class="dbk-flow-real">A timeless national code of Torah law for all Israel, from the mouth of Moshe.</div><div class="dbk-arrow">▼ what the text actually is</div><div class="dbk-flow-over">A localized administrative argument drawing a hard border between a small legalistic splinter group and the nation — an internal factional manifesto, not an ancient universal covenant.</div></div>' +
     '<div class="dbk-p"><b>Note on the calendar:</b> 4QMMT opens with the 364-day calendar, which is itself authentic and independently attested (4Q208-4Q209). The exclusion is the sectarian legal-separation content, not the calendar.</div>' +
-    '<div class="dbk-verdict"><div class="dbk-verdict-h">Archival verdict</div><div class="dbk-verdict-t">A mid-2nd-century-BCE factional legal letter recording the sect\'s self-separation from Israel, not the covenant baseline. Held under warning.</div></div>'
+    '<div class="dbk-verdict"><div class="dbk-verdict-h">Archival verdict</div><div class="dbk-verdict-t">A mid-2nd-century-BCE factional legal letter recording the sect\'s self-separation from Israel, not the covenant baseline. Held under warning.</div></div>',
+  39: '<div class="dbk-lead">Words of the Luminaries (4Q504-506) is not covenant scripture but a deliberate liturgical manipulation — a substitution engine built to replace the First Temple\'s physical sacrifice with an elite, privatized prayer system. It fakes no ancient author; the manipulation is structural.</div>' +
+    '<div class="dbk-sec">I. The sacrificial substitution — the smoking gun</div>' +
+    '<div class="dbk-flow"><div class="dbk-flow-lbl">The authentic First Temple covenant</div><div class="dbk-flow-real">National atonement is bound to physical sacrifice offered by the Aaronic priesthood at the central altar — an open, inclusive assembly.</div><div class="dbk-arrow">▼ the sectarian re-routing</div><div class="dbk-flow-over">4Q504-506 bypasses the physical temple entirely, treating stylized daily verbal prayers as the legal equivalent of animal offerings — decoupling national covenant obedience from the historic temple infrastructure and privatizing it inside an elite cell.</div></div>' +
+    '<div class="dbk-sec">II. The cognitive hijack — weaponizing the exile</div>' +
+    '<div class="dbk-q">"Remember, O YHWH, that You brought us out of Egypt… but we sinned… and You cast us out into the lands of our enemies." <span style="color:#777">(4Q504 frag 1-2, col II)</span></div>' +
+    '<div class="dbk-p">The prayers loop the worshipper through the nation\'s failures and lock them in perpetual survival-panic, framing all Israel as permanently broken and offering escape only by joining the elite circle reciting these newly manufactured prayers. A trauma-weaponizing prayer engine, not covenant worship.</div>' +
+    '<div class="dbk-verdict"><div class="dbk-verdict-h">Archival verdict</div><div class="dbk-verdict-t">Whether a text fakes a name or keeps an honest one, a structural manipulation is still a manipulation. 4Q504-506 re-routes the national, physical covenant of Moshe into an isolated verbal matrix. Documented, never the covenant baseline. Held under warning.</div></div>'
 };
+// Standing closing block shown at the bottom of every detailed debunk tab.
+var DBK_MECHANISM = '<div class="dbk-mech"><div class="dbk-mech-h">How these pass as "truth"</div><div class="dbk-mech-t">They counterfeit the surface of genuine First Temple writing — ancestral names, archaic Aramaic and Hebrew formatting, poetic cadence — to mimic its signature. Strip the mask and they are late secondary mutations: the foreign sciences and political anxieties of the Hellenistic-Roman world retrofitted backward into ancient history to hand modern innovations a false pedigree.</div></div>';
 function openExcludedDebunk(v) {
   var nm = VB_EXCLUDED_NAMES[v] || ('Vol ' + v);
   var why = VB_EXCLUDED_WHY[v] || 'A Second Temple or later composition, held under warning.';
@@ -6532,6 +6544,7 @@ function openExcludedDebunk(v) {
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
+    (detail ? DBK_MECHANISM : '') +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
   '</div>';
   openTextOverlay(nm + ' — why excluded', html);
@@ -6631,6 +6644,7 @@ function openACR2Debunk(file) {
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
+    (detail ? DBK_MECHANISM : '') +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
   '</div>';
   openTextOverlay(nm + ' — why excluded', html);
