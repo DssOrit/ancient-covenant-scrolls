@@ -4002,6 +4002,18 @@ function renderSolarCalPanel() {
     + '<div class="cal-cmp-col lunar"><div class="cal-cmp-lbl">RABBINIC LUNAR (354–355 DAYS)</div>'
     + '<div class="cal-cmp-txt">Pesach: can fall Monday, Wednesday, Friday, or Shabbat — shifts year to year<br>Shavuot: shifts with the lunar drift<br>Yom Teruah: variable weekday<br>Correction: a 13th month (Adar II) inserted 7 times per 19 years to prevent full drift from the solar year<br><br>The Rabbinic calendar cannot produce the fixed-weekday structure the primary sources specify.</div>'
     + '</div></div></div>';
+  html += '<div class="cal-compare" style="margin-top:14px">'
+    + '<div class="cal-cmp-hdr">Independent Verification — the 364-day system predates every sect</div>'
+    + '<div class="cal-source-note" style="margin:0 0 10px">Verified without the excluded texts (no circular argument). The calendar\'s antiquity rests on two clean, non-sectarian outside witnesses.</div>'
+    + '<div class="cal-cmp-row">'
+    + '<div class="cal-cmp-col solar"><div class="cal-cmp-lbl">WITNESS A — 4Q208 / 4Q209</div>'
+    + '<div class="cal-cmp-txt">The oldest Aramaic Astronomical Book fragments, in archaic script of the late Persian / earliest Hellenistic transition. No sect, no monastic rules, no anti-lunar polemic — only raw mathematical data tracking the sun through six horizon gates. The 364-day model existed as a respected astronomical system long before any sect could weaponize it.</div>'
+    + '</div>'
+    + '<div class="cal-cmp-col solar"><div class="cal-cmp-lbl">WITNESS B — MUL.APIN (cuneiform)</div>'
+    + '<div class="cal-cmp-txt">Iron Age Babylonian clay tablets (early 1st millennium BCE) already lay out a schematic 364-day solar year split into geometric gates and equal mathematical quarters. Tracking an idealized 364-day solar model was standard ancient Near Eastern practice centuries before the Second Temple period began.</div>'
+    + '</div></div>'
+    + '<div class="cal-source-note" style="margin:10px 0 0"><b>11Q5 Column XXVII:</b> the Great Psalms Scroll records David composing 364 daily songs, 52 for the Sabbath offerings, and 30 for the New Moons — the monarchy\'s own liturgy built on the 364-day solar engine. <b>The math is closed:</b> 52 × 7 = 364; 4 quarters × 91 = 364; 12 months × 30 + 4 signposts = 364. Because 364 divides by 7 exactly, every appointed time keeps a fixed weekday, forever.</div>'
+    + '</div>';
   panel.innerHTML = html;
 }
 function calOpen(id) {
