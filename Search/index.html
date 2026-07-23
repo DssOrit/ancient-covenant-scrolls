@@ -1024,9 +1024,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .dna-sep{border:none;border-top:1px solid #1e1e1e;margin:12px 0}
 .dna-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0}
 /* Detailed debunk-tab evidence layout (excluded-text overlays) */
-/* The text-overlay body is cream (#f5f5f0); the detail is light-on-dark, so it
-   renders inside its own dark panel to stay readable regardless of that surface. */
-.dbk-panel{background:#0b0906;border:1px solid #1a1a1a;border-radius:12px;padding:16px}
+/* The text-overlay body is cream (#f5f5f0); every debunk overlay renders on a
+   full-bleed dark surface (see openExcludedDebunk/openACR2Debunk) so no light
+   background shows and the light-on-dark detail stays readable. */
 .dbk-lead{font-size:13.5px;color:#e8e4dd;line-height:1.7;margin-bottom:16px}
 .dbk-sec{font-size:12px;font-weight:800;color:var(--gold2, #E8B83F);text-transform:uppercase;letter-spacing:.04em;margin:20px 0 9px;border-bottom:1px solid #2a2a2a;padding-bottom:6px}
 .dbk-sub{font-size:12.5px;font-weight:700;color:#d8d2c8;margin:14px 0 5px}
@@ -6376,7 +6376,37 @@ var VB_EXCLUDED_WHY = {
 };
 // Optional long-form forensic evidence per excluded text (trusted HTML, not esc'd).
 // When a volume has a detail entry it renders in place of the one-line summary.
+// The four sectarian-constitution scrolls (35-38) share one integrated suite writeup.
+var VB_SECT_SUITE = '<div class="dbk-lead">The four cornerstone legislative scrolls of the Qumran library — the Damascus Document, the Community Rule, the Rule of the Congregation, and the Rule of Blessings — are not ancient covenant law but a tightly integrated pipeline of scribal manipulation. Under strict, un-softened forensic text-criticism they read as active, evolving constitutional drafts engineered between 150 BCE and 68 CE, built to dismantle the universal national covenant of Israel and replace it with a hyper-isolated, authoritarian tribal monopoly. Later Christian apologists and Western historians then mined the same texts to manufacture an artificial origin story for Christian monasticism and the New Testament sacraments. <b>This record covers all four documents as one integrated set.</b></div>' +
+  '<div class="dbk-sec">The sectarian constitutional evolution</div>' +
+  '<div class="dbk-flow"><div class="dbk-flow-lbl">1 · The separatist seed — Damascus Document (CD)</div><div class="dbk-flow-real">Establishes the rural "camps" and the breakaway "New Covenant" split from national Israel.</div><div class="dbk-arrow">▼</div><div class="dbk-flow-lbl">2 · The desert monastic shift — Community Rule (1QS)</div><div class="dbk-flow-real">Moves the group into Dead Sea isolation; scribes caught changing the rules in real time.</div><div class="dbk-arrow">▼</div><div class="dbk-flow-lbl">3 · The military future plots — Rule of the Congregation &amp; Blessings (1QSa / 1QSb)</div><div class="dbk-flow-real">Forge an apocalyptic war-ritual layout and seating charts for the sect\'s two invented messiahs.</div></div>' +
+  '<div class="dbk-sec">I. Individual manuscript deconstruction</div>' +
+  '<div class="dbk-sub">1. The Damascus Document (CD / 4Q266-273)</div>' +
+  '<div class="dbk-p"><b>The claim:</b> that a private, strict legal faction living in "the land of Damascus" is the only true remnant of Israel left on earth.</div>' +
+  '<div class="dbk-p"><b>The forensic reality:</b> preserved in eight Cave 4 copies (4Q266-273) plus two medieval Cairo Genizah manuscripts recovered by Schechter in 1896. The text runs an elaborate historical fiction, claiming that 390 years after the fall of Babylon YHWH raised a "Teacher of Righteousness" to lead a blind generation into a "New Covenant" in Damascus.</div>' +
+  '<div class="dbk-p"><b>The manipulation:</b> it rewrites property and marriage law into an ultra-strict, micro-managed regime policed by a sectarian overseer, the Mebaqqer — no selling property to a Gentile, no travel past a fixed Sabbath cubit-limit, no casual speech without formal penalty. It strips away the broad national framework of the Torah to build a closed, fearful ideological trap.</div>' +
+  '<div class="dbk-sub">2. The Community Rule (1QS / 4Q255-264)</div>' +
+  '<div class="dbk-p"><b>The claim:</b> a permanent, unchanging holy rule of celibacy, shared property, and communal perfection for the desert elite (the Yahad).</div>' +
+  '<div class="dbk-p"><b>The forensic reality:</b> comparing the older textual layer in 4Q258 against the finalized Cave 1 scroll (1QS) catches the scribes in a real-time political forgery.</div>' +
+  '<div class="dbk-p"><b>The splicing proof:</b> in 4Q258 authority is distributed — major financial and disciplinary decisions belong to the general assembly (the Rabbim). In the 1QS revision, scribes physically inserted new blocks of text that stripped that power from the members and handed absolute veto to the Sons of Zadok, the ruling priests. A late power grab executed through scribal editing, caught on the leather.</div>' +
+  '<div class="dbk-sub">3. The Rule of the Congregation (1QSa)</div>' +
+  '<div class="dbk-p"><b>The claim:</b> a permanent, divinely-ordained assembly code to govern all future Israel at the end of the age.</div>' +
+  '<div class="dbk-p"><b>The forensic reality:</b> physically sewn as an appendix onto the end of the 1QS scroll in an early Herodian block script (1st century BCE).</div>' +
+  '<div class="dbk-p"><b>The manipulation:</b> it bars the disabled, the blind, the lame, and the aged from the sacred council — directly violating the inclusion principle of the older prophets — and lays out a hyper-militarized, purity-obsessed seating chart for an imminent apocalyptic war.</div>' +
+  '<div class="dbk-sub">4. The Rule of Blessings (1QSb)</div>' +
+  '<div class="dbk-p"><b>The claim:</b> timeless heavenly blessings validating the supreme cosmic authority of the sect\'s leadership.</div>' +
+  '<div class="dbk-p"><b>The forensic reality:</b> appended next to 1QSa on the final sheets of the Cave 1 hide, its vocabulary leaning on late Second Temple military titles — chiefly blessings over a figure called the Prince of the Congregation (נשיא העדה).</div>' +
+  '<div class="dbk-p"><b>The manipulation:</b> that title did not exist in the First Temple period. The scribe manufactured these blessings to legitimize a contemporary 1st-century-BCE warlord the sect expected to arise and slaughter the Gentile nations — a localized wartime cheerleading script forced onto ancestral parchment.</div>' +
+  '<div class="dbk-sec">II. The Christian grafting — fabricating a sacramental lineage</div>' +
+  '<div class="dbk-p">The claim that these four Rules prove a continuous divine link to the New Testament is a textual fabrication that ignores the documents\' own content.</div>' +
+  '<div class="dbk-cmp"><div class="dbk-cmp-col base"><div class="dbk-cmp-h">The original sectarian reality</div><div class="dbk-cmp-li">• Authority: Zadokite priests</div><div class="dbk-cmp-li">• Entry: 3-year probation + asset seizure</div><div class="dbk-cmp-li">• The meal: elite purity-law execution</div><div class="dbk-cmp-li">• The law: hyper-strict halakha</div></div><div class="dbk-cmp-col graft"><div class="dbk-cmp-h">The later Christian grafting</div><div class="dbk-cmp-li">• Authority: universal apostles</div><div class="dbk-cmp-li">• Entry: immediate grace / free will</div><div class="dbk-cmp-li">• The meal: sacramental bread and wine (the invented figure)</div><div class="dbk-cmp-li">• The law: freedom from Moshe</div></div></div>' +
+  '<div class="dbk-sub">1. The fake communion pedigree</div>' +
+  '<div class="dbk-p">Apologists quote 1QSa Column II, lines 17-21 — a meal where a priest blesses bread and wine before the Messiah of Israel eats — as the blueprint for the Christian Last Supper. Forensically that meal is an ultra-exclusive Zadokite purity ritual: no one could touch the bread and wine without completing a three-year probation, surrendering all their wealth to the sect\'s accountant, and passing a bodily inspection for blemishes. Grafting the New Testament\'s open, grace-based invitation onto this closed monastic purity trial is a gross distortion of the record.</div>' +
+  '<div class="dbk-sub">2. The false monastic pedigree</div>' +
+  '<div class="dbk-p">Later church narratives framed the Community Rule and Damascus Document as the roots of Christian monasticism and baptism. But the ritual washings of 1QS (mikvaot) are daily, repetitive legal cleansings from physical contact with ordinary people — they have zero connection to the one-time spiritual baptism the New Testament constructs. Christianity stripped away the entire legalistic backbone of these manuals to build an anti-Mosaic Gentile institution, then borrowed their desert pedigree for its invented 1st-century-CE doctrines.</div>' +
+  '<div class="dbk-verdict"><div class="dbk-verdict-h">Archival verdict</div><div class="dbk-verdict-t">The Damascus Document, Community Rule, Rule of the Congregation, and Rule of Blessings are a unified suite of late, evolving political constitutions — engineered by a radical priestly cell to replace national Israel with an authoritarian splinter group. Alien to pre-exilic Israel and incompatible with the later Christian claims grafted onto them. Documented as the manipulation, never the covenant baseline. Held under warning.</div></div>';
 var VB_EXCLUDED_DETAIL = {
+  35: VB_SECT_SUITE, 36: VB_SECT_SUITE, 37: VB_SECT_SUITE, 38: VB_SECT_SUITE,
   41: '<div class="dbk-lead">The Hodayot (1QHᵃ) is not covenant scripture but an advanced Second Temple mechanism of ideological mythologizing: a highly specific, local 2nd-century-BCE political defeat systematically reconstructed into an apocalyptic cosmic drama. Strict, un-softened forensic philology exposes two distinct layers of manipulation — first the Qumran sect\'s own construction of their leader\'s persona, then the later Western and Christian attempt to graft New Testament Christology onto this pre-Christian parchment to manufacture an artificial pedigree.</div>' +
     '<div class="dbk-sec">I. The Original Sectarian Layer — mythologizing a defeated priest</div>' +
     '<div class="dbk-p">The Hodayot (Thanksgiving Psalms) was not written as an objective historical log. It is a collection of liturgical poems in Late Sectarian Hebrew. Internal textual analysis identifies the primary author as a specific historical human leader: a deposed Zadokite priest the scrolls call the Moreh ha-Ṣedek (מורה הצדק, "the Teacher of Righteousness").</div>' +
@@ -6473,14 +6503,14 @@ function openExcludedDebunk(v) {
   var why = VB_EXCLUDED_WHY[v] || 'A Second Temple or later composition, held under warning.';
   var detail = VB_EXCLUDED_DETAIL[v];
   var bodyHtml = detail ? detail : ('<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>');
-  var html = (detail ? '<div style="padding:14px"><div class="dbk-panel">' : '<div style="padding:16px">') +
+  var html = '<div style="margin:-22px -18px -40px;padding:20px 16px 44px;min-height:100%;background:#0d0b08">' +
     '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
       '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
-  (detail ? '</div></div>' : '</div>');
+  '</div>';
   openTextOverlay(nm + ' — why excluded', html);
 }
 var ACR2_EXCLUDED_WHY = {
@@ -6518,14 +6548,14 @@ function openACR2Debunk(file) {
   var why = ACR2_EXCLUDED_WHY[file] || 'A Second Temple or later composition, held under warning.';
   var detail = ACR2_EXCLUDED_DETAIL[file];
   var bodyHtml = detail ? detail : ('<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>');
-  var html = (detail ? '<div style="padding:14px"><div class="dbk-panel">' : '<div style="padding:16px">') +
+  var html = '<div style="margin:-22px -18px -40px;padding:20px 16px 44px;min-height:100%;background:#0d0b08">' +
     '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
       '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
-  (detail ? '</div></div>' : '</div>');
+  '</div>';
   openTextOverlay(nm + ' — why excluded', html);
 }
 // Maps the concordance's internal volume numbers (which skip the excluded 7,8,9)
