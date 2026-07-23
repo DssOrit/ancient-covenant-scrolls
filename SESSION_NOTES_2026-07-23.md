@@ -59,6 +59,14 @@
 - Confirmed excluded set = 19 concordance vols (7,8,9,32-44,46,47,48) + 13 ACR2 scrolls
   + 3 removed Chanokh sections (Similitudes 37-71, Animal Apoc 85-90, Epistle/Weeks 91-105).
 
+## STANDING RULE (user, 2026-07-23): ALWAYS CHECK WHAT'S PASTED
+When the user pastes content, before acting: (1) read all of it; (2) check it
+against the locked rules (Name rule 18, Rule 14 invented figure, Rule 22 niqqud,
+no-softening, sourcing) and state up front any wording that must change + why;
+(3) web-verify factual claims; (4) flag any discrepancy/internal contradiction
+ONCE and wait (do not silently "fix"); (5) confirm back exactly what was captured
+and what was changed before shipping. Never build from a paste without this pass.
+
 ## >>> READ FIRST NEXT SESSION: `EXCLUDED_TEXTS_DOSSIER.md` (repo root)
 ALL of the user's warning / exclusion / debunk texts (12 transcript sections:
 the Warning Placards, Forensic Exclusion Registry, Master Evidence Checklist,
