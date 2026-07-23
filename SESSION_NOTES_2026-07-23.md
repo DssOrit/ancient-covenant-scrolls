@@ -1,9 +1,18 @@
 # Session Notes — 2026-07-23
 
-## Current state
-- Branch: `claude/session-continuation-setup-2zkame`
-- `origin/main` HEAD: `ac6ba5f` (PR #733 merge). Live cache on main: `acr-search-v199`.
-- **PR #734 OPEN, not merged** (user went to bed): replaces all 32 overlays with the user's verbatim dossier prose; cache v200. Merge link: https://github.com/DssOrit/ancient-covenant-scrolls/pull/734
+## Current state (updated after PR #736)
+- Branch: `claude/session-continuation-setup-2zkame` (reset onto merged main)
+- `origin/main` HEAD: `624f030` (PR #736 merge). **Live cache: `acr-search-v202`.**
+- LIVE now: all 32 overlays verdict-first debunk framing; Solar Calendar Independent
+  Verification block (4Q208/4Q209 + MUL.APIN + 11Q5); `FORENSIC_PROTOCOL.md` +
+  `EXCLUDED_TEXTS_DOSSIER.md` on main; CLAUDE.md wired to read both first.
+- NOTE: PR #735 merged early (only dossier landed, v200); PR #736 carried the rest.
+- Backups: `backup/2026-07-23-acr-search-v202` (current stable) + earlier v188..v201.
+- **NEXT: feasts panel pass** — the 8 feast `source:` lines still cite excluded texts
+  (Jubilees / 11QT / 4QMMT / 1QM). Drop those, re-anchor to Torah + Astronomical Book
+  (1 En 72-82) + canon prophets. Awaiting user confirm of the excluded list first.
+- Confirmed excluded set = 19 concordance vols (7,8,9,32-44,46,47,48) + 13 ACR2 scrolls
+  + 3 removed Chanokh sections (Similitudes 37-71, Animal Apoc 85-90, Epistle/Weeks 91-105).
 
 ## >>> READ FIRST NEXT SESSION: `EXCLUDED_TEXTS_DOSSIER.md` (repo root)
 ALL of the user's warning / exclusion / debunk texts (12 transcript sections:
