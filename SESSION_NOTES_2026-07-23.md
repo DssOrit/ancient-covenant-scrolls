@@ -3,12 +3,19 @@
 ## Current state (updated after PR #737 opened)
 - Branch: `claude/session-continuation-setup-2zkame` @ `b51ea84` (feasts pass; pushed, PR open)
 - `origin/main` HEAD: `624f030` (PR #736 merge). **Live cache: `acr-search-v202`; branch/PR = `v203`.**
-- **PR #737 OPEN (awaiting user merge, Rule 9):** re-anchored all 8 feast panels
-  off Jubilees/11QT/1QM/4QMMT onto Vayikra 23 + Fourth-Gate Solar Matrix
-  (Māṣḥafa Hēnok 72 / 4Q208–4Q209). Cache v202→v203. Flagged: Pesach 14th =
-  Tuesday (the Wednesday/creation anchor kept on the 15th/Matzot), matching the
-  grid + Calendar Comparison block; all other feast weekdays verified exact.
-  Backup before this change: `backup/2026-07-23-acr-search-v202b` @ `624f0306`.
+- **PR #737 OPEN (awaiting user merge, Rule 9):** now carries TWO passes, cache v202→v204:
+  1. Feasts (`b51ea84`, v203): all 8 panels off Jubilees/11QT/1QM/4QMMT onto
+     Vayikra 23 + Fourth-Gate Solar Matrix. Pesach 14th=Tue confirmed by user's
+     calibration audit; Wednesday/creation anchor on 15th/Matzot. All weekdays verified.
+  2. Debunk overlays (`3466018`, v204): swept all 32 for cards stating an excluded
+     text's internal content as FACT. Fixed 6 — Vol 41 Hodayot (Teacher-of-
+     Righteousness/Man-of-Lies reframed as sect construct + exposed later Christian
+     retrojection of the NT invented Son figure, Rules 14/24); ACR2 #5 Nabonidus
+     ("correction patch"→forgery); ACR2 #10 Pseudo-Jubilees ("secondary commentary"
+     →forgery stacked on forgery, Mastema as invented demon-prince); ACR2 #1/#2
+     4QInstruction + #8 Words of Michael (soft verdict nouns→"fabrication"). Other
+     26 already debunk-framed, left as-is.
+  Backup before these changes: `backup/2026-07-23-acr-search-v202b` @ `624f0306`.
 - LIVE now: all 32 overlays verdict-first debunk framing; Solar Calendar Independent
   Verification block (4Q208/4Q209 + MUL.APIN + 11Q5); `FORENSIC_PROTOCOL.md` +
   `EXCLUDED_TEXTS_DOSSIER.md` on main; CLAUDE.md wired to read both first.
