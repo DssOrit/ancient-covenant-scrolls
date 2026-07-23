@@ -3965,11 +3965,11 @@ function renderSolarCalPanel() {
   var panel = document.getElementById('solarcal-panel');
   if (!panel) return;
   var html = '<div class="cal-structure">'
-    + '<div class="cal-struct-card"><div class="cal-struct-num">364</div><div class="cal-struct-lbl">Days in the year<br>Source: 1 Enoch 72–82; Jubilees 6:32</div></div>'
+    + '<div class="cal-struct-card"><div class="cal-struct-num">364</div><div class="cal-struct-lbl">Days in the year<br>Source: 1 Enoch 72–82 (the Astronomical Book)</div></div>'
     + '<div class="cal-struct-card"><div class="cal-struct-num">4</div><div class="cal-struct-lbl">Quarters of 91 days<br>3 months per quarter (30+30+31)</div></div>'
     + '<div class="cal-struct-card"><div class="cal-struct-num">8</div><div class="cal-struct-lbl">Appointed times (Mo\'edim)<br>Fixed weekday, every year</div></div>'
     + '</div>'
-    + '<div class="cal-source-note">Jubilees 6:29–30: "And all the days of the commandment will be 52 Sabbaths of days... and they will not disturb a single festival from its day." The 364-day solar calendar is divisible by 7 exactly — 52 weeks — so no appointed time can drift to a different day of the week. The Rabbinic lunar year of 354–355 days is not divisible by 7 and cannot produce this fixed structure.</div>';
+    + '<div class="cal-source-note">The Astronomical Book fixes the year at 364 days — twelve 30-day months plus four intercalary days at the equinoxes and solstices (1 Enoch 74:12; 82:4–6), the four days "those who do not reckon them correctly" leave out. 364 divides by 7 exactly — 52 weeks — so every appointed time keeps the same day of the week, year after year. The Rabbinic lunar year of 354–355 days is not divisible by 7 and cannot produce this fixed structure.</div>';
   SOLAR_QUARTERS.forEach(function(q) {
     var qMonths = SOLAR_MONTHS.filter(function(m) { return m.q === q.num; });
     html += '<div class="cal-quarter">';
@@ -3997,7 +3997,7 @@ function renderSolarCalPanel() {
     + '<div class="cal-cmp-hdr">Calendar Comparison — Fixed Days vs. Lunar Drift</div>'
     + '<div class="cal-cmp-row">'
     + '<div class="cal-cmp-col solar"><div class="cal-cmp-lbl">364-DAY SOLAR (DSS / GE\'EZ ORIT)</div>'
-    + '<div class="cal-cmp-txt">Pesach: always 3rd day (Tuesday)<br>Shavuot: always 1st day (Sunday)<br>Yom Teruah: always 4th day (Wednesday)<br>Yom Kippur: always 6th day (Friday)<br>Sukkot: always 4th day (Wednesday)<br><br>Source: 1 Enoch 72–82; Jubilees 6:29–30; 4QMMT</div>'
+    + '<div class="cal-cmp-txt">Pesach: always 3rd day (Tuesday)<br>Shavuot: always 1st day (Sunday)<br>Yom Teruah: always 4th day (Wednesday)<br>Yom Kippur: always 6th day (Friday)<br>Sukkot: always 4th day (Wednesday)<br><br>Source: 1 Enoch 72–82 (the Astronomical Book); festival dates from Vayikra 23; Bamidbar 28–29</div>'
     + '</div>'
     + '<div class="cal-cmp-col lunar"><div class="cal-cmp-lbl">RABBINIC LUNAR (354–355 DAYS)</div>'
     + '<div class="cal-cmp-txt">Pesach: can fall Monday, Wednesday, Friday, or Shabbat — shifts year to year<br>Shavuot: shifts with the lunar drift<br>Yom Teruah: variable weekday<br>Correction: a 13th month (Adar II) inserted 7 times per 19 years to prevent full drift from the solar year<br><br>The Rabbinic calendar cannot produce the fixed-weekday structure the primary sources specify.</div>'
