@@ -6379,15 +6379,31 @@ function openACR2Debunk(file) {
   '</div>';
   openTextOverlay(nm + ' — why excluded', html);
 }
+// Maps the concordance's internal volume numbers (which skip the excluded 7,8,9)
+// to the Reader's own continuous Vol 1–28 plus book name, so the browser shows
+// 28 volumes, not a gappy count climbing to 31.
+var VB_VOL_META = {
+  1:{n:1,name:'Bereshit'}, 2:{n:2,name:'Shemot'}, 3:{n:3,name:'Vayikra'},
+  4:{n:4,name:'Bamidbar'}, 5:{n:5,name:'Devarim'}, 6:{n:6,name:'Chanokh'},
+  10:{n:7,name:'Yehoshua'}, 11:{n:8,name:'Shofetim'}, 12:{n:9,name:'Shemu\'el Aleph'},
+  13:{n:10,name:'Shemu\'el Bet'}, 14:{n:11,name:'Melakhim Aleph'}, 15:{n:12,name:'Melakhim Bet'},
+  16:{n:13,name:'Yesha\'yahu'}, 17:{n:14,name:'Yirmeyahu'}, 18:{n:15,name:'Yehezkel'},
+  19:{n:16,name:'The Twelve'}, 20:{n:17,name:'Tehillim'}, 21:{n:18,name:'Mishlei'},
+  22:{n:19,name:'Iyov'}, 23:{n:20,name:'Shir HaShirim'}, 24:{n:21,name:'Ruth'},
+  25:{n:22,name:'Eikha'}, 26:{n:23,name:'Kohelet'}, 27:{n:24,name:'Esther'},
+  28:{n:25,name:'Daniyel'}, 29:{n:26,name:'Ezra-Nekhemyah'}, 30:{n:27,name:'Divrei HaYamim Aleph'},
+  31:{n:28,name:'Divrei HaYamim Bet'}
+};
 function renderVolumeGrid() {
   var grid = document.getElementById('vb-grid');
   if (!grid) return;
   var vols = Object.keys(VOLUME_INDEX).map(Number).sort(function(a, b) { return a - b; });
   var main = vols.filter(function(v) { return VB_EXCLUDED_VOLS.indexOf(v) < 0; }).map(function(v) {
     var count = VOLUME_INDEX[v].length;
+    var meta = VB_VOL_META[v] || {n:v,name:''};
     return '<div class="vb-card" onclick="openVolume(' + v + ')">' +
-      '<div class="vb-vol-num">Vol ' + v + '</div>' +
-      '<div class="vb-vol-count">' + count + ' passages</div>' +
+      '<div class="vb-vol-num">Vol ' + meta.n + '</div>' +
+      '<div class="vb-vol-count">' + (meta.name ? esc(meta.name) + ' · ' : '') + count + ' passages</div>' +
       '</div>';
   }).join('');
   var warnHeader = '<div class="vb-section-header">Second Temple &amp; Later Additions</div>' +
@@ -6536,7 +6552,8 @@ function openVolume(volNum) {
     '</div>';
   }).join('');
   var more = passages.length > 50 ? '<div style="font-size:12px;color:var(--tx3);text-align:center;padding:12px 0">Showing 50 of ' + passages.length + ', use Search to narrow further.</div>' : '';
-  openTextOverlay('Volume ' + volNum + ', ' + passages.length + ' passages',
+  var vmeta = VB_VOL_META[volNum] || {n:volNum,name:''};
+  openTextOverlay((vmeta.name ? vmeta.name + ' — ' : '') + 'Vol ' + vmeta.n + ', ' + passages.length + ' passages',
     '<div style="padding:14px">' + items + more + '</div>');
 }
 function openACR2Volume(fileIdx, label) {
