@@ -1,8 +1,14 @@
 # Session Notes — 2026-07-23
 
-## Current state (updated after PR #736)
-- Branch: `claude/session-continuation-setup-2zkame` (reset onto merged main)
-- `origin/main` HEAD: `624f030` (PR #736 merge). **Live cache: `acr-search-v202`.**
+## Current state (updated after PR #737 opened)
+- Branch: `claude/session-continuation-setup-2zkame` @ `b51ea84` (feasts pass; pushed, PR open)
+- `origin/main` HEAD: `624f030` (PR #736 merge). **Live cache: `acr-search-v202`; branch/PR = `v203`.**
+- **PR #737 OPEN (awaiting user merge, Rule 9):** re-anchored all 8 feast panels
+  off Jubilees/11QT/1QM/4QMMT onto Vayikra 23 + Fourth-Gate Solar Matrix
+  (Māṣḥafa Hēnok 72 / 4Q208–4Q209). Cache v202→v203. Flagged: Pesach 14th =
+  Tuesday (the Wednesday/creation anchor kept on the 15th/Matzot), matching the
+  grid + Calendar Comparison block; all other feast weekdays verified exact.
+  Backup before this change: `backup/2026-07-23-acr-search-v202b` @ `624f0306`.
 - LIVE now: all 32 overlays verdict-first debunk framing; Solar Calendar Independent
   Verification block (4Q208/4Q209 + MUL.APIN + 11Q5); `FORENSIC_PROTOCOL.md` +
   `EXCLUDED_TEXTS_DOSSIER.md` on main; CLAUDE.md wired to read both first.
