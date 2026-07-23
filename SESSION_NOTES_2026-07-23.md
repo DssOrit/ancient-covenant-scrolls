@@ -15,7 +15,18 @@
      →forgery stacked on forgery, Mastema as invented demon-prince); ACR2 #1/#2
      4QInstruction + #8 Words of Michael (soft verdict nouns→"fabrication"). Other
      26 already debunk-framed, left as-is.
+  3. Detailed evidence tabs (`4e39edb`, v205): new structured long-form debunk
+     layout (.dbk-* CSS) — lead verdict, section headers, quoted manuscript
+     receipts, historical-vs-overlay flow, baseline-vs-graft comparison, verdict
+     box. openExcludedDebunk + openACR2Debunk render optional per-text detail
+     (VB_EXCLUDED_DETAIL / ACR2_EXCLUDED_DETAIL), fall back to one-line summary.
+     FIRST detailed tab: Vol 41 Hodayot (user-supplied two-layer forensic debunk,
+     1QHa Col XV/XI receipts + Christian-graft exposure). Remaining 31 to follow
+     in reviewed BATCHES (user approved: format=this, scope=Hodayot now then batches).
   Backup before these changes: `backup/2026-07-23-acr-search-v202b` @ `624f0306`.
+  Detailed-tab format preview: scratchpad/hodayot_detail_preview.html (user approved).
+  NEXT: batch-expand the other 31 excluded-text tabs to the detailed .dbk-* format,
+  pulling evidence from EXCLUDED_TEXTS_DOSSIER.md + web-verifying, previewing each batch.
 - LIVE now: all 32 overlays verdict-first debunk framing; Solar Calendar Independent
   Verification block (4Q208/4Q209 + MUL.APIN + 11Q5); `FORENSIC_PROTOCOL.md` +
   `EXCLUDED_TEXTS_DOSSIER.md` on main; CLAUDE.md wired to read both first.
