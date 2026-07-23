@@ -137,3 +137,8 @@ per-volume debunk wording from that file — do NOT ask the user to re-paste.
 - Weighed the user's new 3-text forensic paste against the live tabs: ~90% already shipped, no contradictions with our line.
 - Applied 4 additions: Jubilees Angel-of-Presence framing + 49-yr/7-yr grid mechanic; GenAp faked-firsthand-memoir framing + two-tier date (copy c.25 BCE-50 CE vs composition mid-2nd-1st c BCE, web-verified); Temple Scroll ~65-67 column length.
 - Kept Name rule (did not adopt paste's "Lord your God"). On PR #746, head now v230.
+
+## MERGED — PR #746 live on main (cache v230)
+- origin/main @ `277f011`, cache `acr-search-v230`. All 32 detailed debunk tabs are now live: hard-accusation lead + "under warning" verdict + non-circular independent check on every one.
+- Included: batch 9 (Book of Mysteries, 4QInstruction, Songs of Sabbath), Rule 28 softening pass, 6 ACR2 independent-check sections, Jubilees/GenAp/Temple Scroll paste fold-in.
+- Backup: `backup/2026-07-23-acr-search-v230` @ `277f011` (== main HEAD, verified). Recovery: `git checkout backup/2026-07-23-acr-search-v230`.
