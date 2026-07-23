@@ -20,6 +20,9 @@
   - Words of the Luminaries + Hodayot rewritten to **pure debunk** (removed validating descriptions; dropped the unsupported 364-day-substitution claim; marked Hodayot's Teacher-of-Righteousness authorship as contested).
   - Chronological Order view relabeled through `VB_VOL_META`: canon shows Vol 1–28, excluded/orphan items show no raw number (fixes "Vol 39/41" appearing).
 
+- **PR #732 (merged, `6f89fcd`)** — rewrote all 19 concordance excluded-text overlays in a debunk-first voice (verdict → two proof-of-forgery lines framed as exposure → "Held under warning"), after user feedback that the descriptive versions read as *confirming* the texts as authentic. Jubilees / Amram / Temple Scroll expanded to three proofs; War Scroll's Roman-gear proof spelled out (scutum, acies triplex, intervalla). Cache v196→v198.
+- **PR #733 (merged, `ac6ba5f`)** — same debunk-first voice applied to the 13 ACR2 library-scroll overlays (4QInstruction x2, Aramaic Levi, New Jerusalem, Nabonidus, 4QBeatitudes, Apoc. Joshua, Words of Michael, Birth of Noah, Pseudo-Jubilees, Angels of Mastemah, Wicked and Holy, Book of War). Cache v198→v199. **All 32 excluded overlays now debunk-first.**
+
 ## Verification catches (verify-before-adding held)
 - Words of the Luminaries (4Q504–506): dossier's "364-day calendar substitution" claim is NOT supported — it is a mid-2nd-c-BCE weekday prayer cycle. Used the verified version.
 - Hodayot (1QH): "biographical diary of the Teacher of Righteousness" is contested (Harkins et al.) — marked as traditional reading, not fact.
@@ -39,8 +42,9 @@
 ## Backups
 - `backup/2026-07-23-acr-search-v188` @ `8fa43c9` (pre-#730 main)
 - `backup/2026-07-23-acr-search-v191` @ `5cbcb83` (post-#730 / pre-#731 main)
-- `backup/2026-07-23-acr-search-v195` @ `d06bb32` (post-#731 main — current stable)
-- Recovery: `git checkout backup/2026-07-23-acr-search-v195`
+- `backup/2026-07-23-acr-search-v195` @ `d06bb32` (post-#731 main)
+- `backup/2026-07-23-acr-search-v199` @ `ac6ba5f` (post-#733 main — current stable, all 32 overlays debunk-first)
+- Recovery: `git checkout backup/2026-07-23-acr-search-v199`
 
 ## Capability notes (this session)
 - GitHub MCP dropped/reconnected once mid-session; recovered via ToolSearch.
