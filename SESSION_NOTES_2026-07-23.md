@@ -41,6 +41,7 @@
   Rule, 1QSa, 1QSb): pipeline diagram, per-doc deconstruction, Christian-grafting
   section, verdict. All four tabs open the same suite (offered to split if wanted).
   Progress: 14 of 32 tabs detailed. Backup backup/2026-07-23-acr-search-v208 @ 5a3df04.
+- **PR #742 OPEN** (v211): detailed tabs batch 5 — Vol 32 4Q246 'Son of God', Vol 34 4QMMT, ACR2 #6 4QBeatitudes. Web-verified. 17 of 32 tabs detailed. Backup backup/2026-07-23-acr-search-v210 @ f9f5549.
   KEY LEARNING: text-overlay body = cream #f5f5f0 (lines 660-661); debunk detail is
   light-on-dark, so it MUST render on its own dark surface. Previews must simulate
   the cream overlay, not a dark page.
