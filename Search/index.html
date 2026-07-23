@@ -6517,8 +6517,10 @@ function toggleChronOrder(pill) {
         html += '<div class="vb-chron-era">' + era.era + '</div>';
         era.items.forEach(function(item) {
           var volNum = item.vols[0];
+          var cmeta = VB_VOL_META[volNum];
+          var cnum = cmeta ? ('Vol ' + cmeta.n) : '';
           html += '<div class="vb-chron-item" onclick="openVolume(' + volNum + ');toggleChronOrder(document.querySelector(\'.vb-chron-pill\'))">' +
-            '<span class="vb-chron-num">Vol ' + volNum + '</span>' +
+            '<span class="vb-chron-num">' + cnum + '</span>' +
             '<span class="vb-chron-name">' + item.label + '</span>' +
             (item.sub ? '<span class="vb-chron-sub">' + item.sub + '</span>' : '') +
             '</div>';
