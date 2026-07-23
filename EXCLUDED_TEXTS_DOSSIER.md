@@ -984,3 +984,65 @@ To verify the ancient validity of the 364-day solar calendar, do NOT use any of 
 ## The Verdict
 The argument for the calendar's legitimacy is completely clean: it relies strictly on archaic Persian-era fragments (4Q208/4Q209) and ancient Iron Age clay tablets (MUL.APIN), ignoring the late, politically altered texts entirely. The 364-day calendar stays TRUE and the STANDARD.
 ```
+
+
+## FEAST CALIBRATION — sect-clean authority (4Q208-211 Astronomical Book + Ge'ez Orit)
+
+REFERENCE NOTE: Use this to calibrate the ancient feasts using ONLY the approved
+authorities, with zero dependency on the 19 excluded texts. Feast source lines and
+calendar content re-anchor here: (1) the archaic Aramaic Astronomical Book
+(4Q208-4Q211 / Ge'ez Mashafa Henok 72:6-11) as the solar engine; (2) the Ge'ez
+Orit / Torah (Vayikra 23; Bereshit 1:14-19) for the festival commands. Anchor =
+the sun entering the Fourth Gate at the spring equinox; Day 1 of Month 1 = the
+Wednesday after the equinox (luminaries set on the 4th day of creation). On the
+closed 364-day grid: Pesach always Wednesday (Vayikra 23:5, 14th of Month 1);
+Wave Sheaf/Omer always Sunday (Vayikra 23:11, Month 1 Day 26); Shavuot always
+Sunday (Vayikra 23:15-16, 15th of Month 3); Yom Kippur always Friday (Vayikra
+23:27, 10th of Month 7); Sukkot always Wednesday (Vayikra 23:34, 15th of Month 7).
+Drop Jubilees / 11QT / 4QMMT / 1QM. Divine name = the Creator / YHWH (Rule 18).
+The 364-day calendar stays TRUE/standard.
+
+```
+## Forensic Verification Matrix: Feast Calibration
+
+                       THE SECT-CLEAN AUTHORITY AXIS
+
+  [PRIMARY ARTIFACT LAYER]    ──► 4Q208–4Q211 (Archaic Aramaic Astronomical Core)
+                                  * Found physically sealed at Qumran.
+                                  * Contains zero sectarian code names or manifestos.
+  [PRIMARY MANUSCRIPT LAYER]  ──► Ge'ez Orit / Maṣḥafa Hēnok (Ethiopian Stream)
+                                  * Preserves complete unbroken textual sequences.
+                                  * Completely isolated from post-70 CE Rabbinic edits.
+
+## I. The Material Base: Isolate the Approved Authorities
+1. DSS Primary Layer: archaic Aramaic copies of The Astronomical Book (4Q208–4Q211) — raw geometric descriptions of the sun through six horizon portals; free of sectarian terms (Teacher of Righteousness, Kittim, penalty codes).
+2. Ge'ez Transmission Layer (Maṣḥafa Hēnok & Orit): the Ethiopian Orthodox Tewahedo living tradition — the complete unbroken solar-year numbers (Maṣḥafa Hēnok 72) and the raw festival commands of the Pentateuch (Orit); split away before Western canonical settlements, bypassing post-Nicene and Rabbinic revisions.
+
+## II. Step-by-Step Feast Calculation
+Step 1 — Universal Cosmic Anchor: per 4Q209 Fragment 7 and Ge'ez 1 Enoch 72:6–11, the astronomical year tracks the sun across six geometric gates (שערים) on the horizon. It starts when the sun enters the Fourth Gate — "the day becomes equal to the night" (Spring Vernal Equinox).
+  [Gate 6] Summer Solstice / [Gate 4] SPRING EQUINOX RESET (Day = Night) / [Gate 1] Winter Solstice
+Step 2 — Day One of Month One: per the creation layout in the DSS Bereshit fragments and Ge'ez Orit (Bereshit 1:14–19), the luminaries were set to mark seasons and days on the Fourth Day of Creation (Wednesday). Day 1 of Month 1 is locked to the Wednesday immediately following the Spring Equinox.
+Step 3 — Unbroken Festival Sequence (Ge'ez Orit / Vayikra 23 on the 364-day layout; dates never shift weekday):
+  * Pesach: Vayikra 23:5 — 14th of Month 1; 14 days from Wednesday = always Wednesday.
+  * Wave Sheaf / Omer: Vayikra 23:11 — day after the Sabbath; first Sunday after Pesach week = always Month 1, Day 26.
+  * Shavuot: Vayikra 23:15–16 — 50 days from the Wave Sheaf Sunday = 15th of Month 3; always Sunday.
+  * Yom Kippur: Vayikra 23:27 — 10th of Month 7; each quarter = 91 days (13 weeks) so Month 7 mirrors Month 1; Day 1 of Month 7 = Wednesday, so Day 10 = always Friday (never clashes with the weekly Sabbath).
+  * Sukkot: Vayikra 23:34 — 15th of Month 7; always Wednesday, mirroring Pesach.
+
+## WARNING PLACARD 06 — AUTHENTIC ARCHIVAL CALIBRATION
+SOURCE AUTHORITY: The Unified Qumran Aramaic Core (4Q208–211) & the Living Ge'ez Textual Stream (Maṣḥafa Orit / Hēnok). RETAINED as bedrock history (pre-sectarian solar grid).
+1. Zero Dependency: functions with total structural independence from the 19 excluded texts — needs no knowledge of the Temple Scroll's pronoun rewrites or Jubilees' political polemics; relies purely on astronomy and primal law.
+2. Linguistic Purity: the Aramaic morphemes of 4Q208 and the ancient Ethiopic roots of Maṣḥafa Hēnok preserve standard Near Eastern geometric science, with none of the late Mishnaic legal developments or Roman military terms that compromise the excluded documents.
+Final Verdict: lock the dates to the Spring Equinox (sun in the Fourth Gate) as preserved in the oldest Aramaic and Ge'ez texts; the calendar stays secure, accurate, and clean of late Second Temple or Rabbinic manipulation.
+
+## Forensic Contrast Matrix
+  PRE-SECOND TEMPLE BASELINE            vs   LATER SYSTEMATIC ALTERATIONS
+  Authority: 4Q208 / Ge'ez Orit             Authority: Later Rabbinic / Western
+  Engine: 364-Day Geometric Solar Grid      Engine: Variable Lunar Sightings / Metonic
+  Human Input: ZERO (locked to equinox)     Human Input: High (priestly declarations)
+  Feast Days: PERPETUALLY FIXED WEEKDAYS    Feast Days: Floating / variable weekdays
+1. Lunar Infiltration: the ancient texts have no floating lunar calendar; in 4Q209 the moon is observed only for illumination fractions, not as the festival anchor. The lunar shift was a late Hellenistic corruption (Greek Metonic cycles).
+2. Erasure of Weekday Fixation: later Rabbinic tradition had to invent rules (Lo Badu Pesach) to keep festivals off the Sabbath; the 364-day matrix needs none — Yom Kippur always Friday, Pesach always Wednesday.
+
+Math template: 1 year = 364 days = exactly 52 weeks; 4 quarters × 91 days (13 weeks); quarter = 30+30+31 days; 364 ÷ 7 = 52, so Day 1 of Month 1 lands on the same weekday every year, in perpetuity. The pristine calendar of the Creator is a closed mathematical grid engine that operates without human sightings or lunar phases.
+```
