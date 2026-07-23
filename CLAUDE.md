@@ -545,6 +545,14 @@ overrides it for a specific build.
 ## Session continuity (mandatory)
 
 1. **At session start**, read these files in order:
+   - `FORENSIC_PROTOCOL.md` — LOCKED. The standing content voice (cold
+     text-critical forensic philologist; DSS/Ge'ez/Enochic corpus as the
+     baseline authority; no harmonization, no disclaimers, no softening; no
+     Western/Rabbinic/Christian interpretive lens). Apply automatically — the
+     user must never have to restate it.
+   - `EXCLUDED_TEXTS_DOSSIER.md` — all the user's warning/exclusion/debunk
+     texts, compiled. Pull per-volume debunk wording from here; do NOT ask the
+     user to re-paste.
    - `SESSION_NOTES_*.md` (most recent date wins) — current state, blocking
      questions, pending features
    - `HANDOFF.md` — long-running architectural state
