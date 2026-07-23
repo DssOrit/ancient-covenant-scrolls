@@ -6349,6 +6349,36 @@ function openExcludedDebunk(v) {
   '</div>';
   openTextOverlay(nm + ' — why excluded', html);
 }
+var ACR2_EXCLUDED_WHY = {
+  1: '4QInstruction (Musar le-Mevin, 4Q415–418) — the largest wisdom text in the library, in late Second Temple script. It directs a student (the Mevin) to study the Raz Nihyeh, the "mystery of existence" — a Hellenistic-era concept that decouples salvation from national Mosaic covenant obedience. Its grammar and vocabulary postdate the Hellenistic penetration of Judea.',
+  2: '4QInstruction, Part 2 (4Q415–418) — the same late Second Temple sapiential composition: built on the Raz Nihyeh, Hellenistic in vocabulary and worldview, not a pre-Corruption primary source.',
+  3: 'The Aramaic Levi Document (4Q213–214) — a late Middle Aramaic "testament" fabricated for the ancestor of the tribe of Levi, filled with specialized vocabulary absent from any First Temple record. Part of the 2nd-century-BCE trilogy (with the Visions of Amram and Testament of Qahat) engineered to validate the Hasmonean high-priestly monopoly.',
+  4: 'The New Jerusalem Scroll (4Q554–555, 11Q18) — a Middle Aramaic guided tour of an idealized city, recording streets, gates and blocks down to the cubit on a symmetrical planned grid built on the Hellenistic city model. A 2nd-century-BCE architectural dream, disconnected from the historical First Temple.',
+  5: 'The Prayer of Nabonidus (4Q242) — an Aramaic monologue that acts as a correction patch to Daniyel 4: it names the king who went mad in exile at the oasis of Teima as Nabonidus, the last king of Babylon, healed by an anonymous Jewish diviner. A late Persian / early Hellenistic editing layer composed long after Babylon fell.',
+  6: '4QBeatitudes (4Q525) — a Hebrew wisdom text using the "Blessed is the one who…" (אשרי) formula. Not the source of the later Greek Sermon on the Mount but an ultra-strict halakhic composition: blessing belongs only to those who walk within the sect\'s hidden interpretations of Torah. A late Second Temple legal text in Hellenistic-era wisdom form.',
+  7: 'The Apocryphon of Joshua (4Q378–379) — expands Yehoshua\'s final speeches with a hyper-focused curse on Mount Gerizim and Shechem: a direct anti-Samaritan polemic matching the Hasmonean king John Hyrcanus, who destroyed the Samaritan temple c. 111 BCE. Yehoshua used as a mouthpiece for a 2nd-century-BCE land grab.',
+  8: 'The Words of Michael (4Q529) — a short Aramaic vision of a conversation between the archangels Michael and Gabriel, operating within a named, ranked angelic hierarchy foreign to the First Temple period. A late Hellenistic mystical addition.',
+  9: 'The Birth of Noah (4Q534–536) — an Aramaic physiognomic and astrological fragment recording the infant Noakh\'s birthmarks and bodily features mapped onto horoscope matrices. Mixing patriarchal lineage with Hellenistic zodiac calculation, composed after Greek astrology entered the Judean scribal world.',
+  10: 'Pseudo-Jubilees (4Q225–227) — Hebrew rewrites running parallel to the Book of Jubilees on late Hasmonean hide, introducing an even more aggressive demonic structure (the command hierarchy of Prince Mastema). Secondary commentaries built on top of the already-late 2nd-century-BCE Jubilees matrix.',
+  11: 'Angels of Mastemah (4Q390) — a Second Temple apocryphal composition invoking the demonic prince Mastema and a scheme of jubilees of wickedness. Late sectarian demonology, not a First Temple baseline source.',
+  12: 'The Wicked and the Holy / Ages of Creation (4Q181) — a deterministic fragment sorting humanity into two unalterable pre-ordained lots, the Wicked and the Holy. It eliminates the Iron Age prophetic call to repentance, replacing it with a fatalistic cosmic dualism that seals destinies before birth — the marker of late Qumran sectarian theology.',
+  13: 'The Book of War (4Q285, 11Q14) — the final-battle sequel to the War Scroll, extending the sectarian war against the Kittim. A 1st-century-BCE apocalyptic-military composition, not covenant scripture.',
+};
+function openACR2Debunk(file) {
+  var v = null, i;
+  for (i = 0; i < ACR2_VOLUMES.length; i++) { if (ACR2_VOLUMES[i].file === file) { v = ACR2_VOLUMES[i]; break; } }
+  var nm = v ? v.name : ('Scroll ' + file);
+  var why = ACR2_EXCLUDED_WHY[file] || 'A Second Temple or later composition, held under warning.';
+  var html = '<div style="padding:16px">' +
+    '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
+      '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
+      '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
+    '</div>' +
+    '<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>' +
+    '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
+  '</div>';
+  openTextOverlay(nm + ' — why excluded', html);
+}
 function renderVolumeGrid() {
   var grid = document.getElementById('vb-grid');
   if (!grid) return;
@@ -6371,9 +6401,9 @@ function renderVolumeGrid() {
   }).join('');
   var acr2 = ACR2_VOLUMES.map(function(v) {
     var safeLabel = v.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-    return '<div class="vb-card acr2" onclick="openACR2Volume(' + v.file + ',\'' + safeLabel + '\')">' +
+    return '<div class="vb-card acr2" onclick="openACR2Debunk(' + v.file + ')">' +
       '<div class="vb-vol-num acr2">' + v.name + '</div>' +
-      '<div class="vb-vol-count">ACR2 library</div>' +
+      '<div class="vb-vol-count">why excluded &rsaquo;</div>' +
       '</div>';
   }).join('');
   grid.innerHTML = main + warnHeader + excluded + acr2;
