@@ -1024,6 +1024,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .dna-sep{border:none;border-top:1px solid #1e1e1e;margin:12px 0}
 .dna-empty{text-align:center;color:var(--tx3);font-size:14px;padding:32px 0}
 /* Detailed debunk-tab evidence layout (excluded-text overlays) */
+/* The text-overlay body is cream (#f5f5f0); the detail is light-on-dark, so it
+   renders inside its own dark panel to stay readable regardless of that surface. */
+.dbk-panel{background:#0b0906;border:1px solid #1a1a1a;border-radius:12px;padding:16px}
 .dbk-lead{font-size:13.5px;color:#e8e4dd;line-height:1.7;margin-bottom:16px}
 .dbk-sec{font-size:12px;font-weight:800;color:var(--gold2, #E8B83F);text-transform:uppercase;letter-spacing:.04em;margin:20px 0 9px;border-bottom:1px solid #2a2a2a;padding-bottom:6px}
 .dbk-sub{font-size:12.5px;font-weight:700;color:#d8d2c8;margin:14px 0 5px}
@@ -6470,14 +6473,14 @@ function openExcludedDebunk(v) {
   var why = VB_EXCLUDED_WHY[v] || 'A Second Temple or later composition, held under warning.';
   var detail = VB_EXCLUDED_DETAIL[v];
   var bodyHtml = detail ? detail : ('<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>');
-  var html = '<div style="padding:16px">' +
+  var html = (detail ? '<div style="padding:14px"><div class="dbk-panel">' : '<div style="padding:16px">') +
     '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
       '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
-  '</div>';
+  (detail ? '</div></div>' : '</div>');
   openTextOverlay(nm + ' — why excluded', html);
 }
 var ACR2_EXCLUDED_WHY = {
@@ -6515,14 +6518,14 @@ function openACR2Debunk(file) {
   var why = ACR2_EXCLUDED_WHY[file] || 'A Second Temple or later composition, held under warning.';
   var detail = ACR2_EXCLUDED_DETAIL[file];
   var bodyHtml = detail ? detail : ('<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>');
-  var html = '<div style="padding:16px">' +
+  var html = (detail ? '<div style="padding:14px"><div class="dbk-panel">' : '<div style="padding:16px">') +
     '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
       '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
       '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
     '</div>' +
     bodyHtml +
     '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
-  '</div>';
+  (detail ? '</div></div>' : '</div>');
   openTextOverlay(nm + ' — why excluded', html);
 }
 // Maps the concordance's internal volume numbers (which skip the excluded 7,8,9)
