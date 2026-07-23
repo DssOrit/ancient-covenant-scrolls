@@ -27,6 +27,16 @@
   Detailed-tab format preview: scratchpad/hodayot_detail_preview.html (user approved).
   NEXT: batch-expand the other 31 excluded-text tabs to the detailed .dbk-* format,
   pulling evidence from EXCLUDED_TEXTS_DOSSIER.md + web-verifying, previewing each batch.
+- **PR #738 MERGED** (`2ac8853`, v206): detailed tabs batch 1 — Vol 7 Jubilees,
+  Vol 44 Genesis Apocryphon, Vol 46 Temple Scroll. Backup `backup/2026-07-23-acr-search-v206` @ `2ac8853`.
+- **PR #739 OPEN** (v208, awaiting merge): detailed tabs batches 2 AND 3 —
+  batch 2: Vol 8 Book of Giants, Vol 9 Visions of Amram, ACR2 #10 Pseudo-Jubilees;
+  batch 3: Vol 33 War Scroll, Vol 40 Pesher Nahum, Vol 42 Pesher Habakkuk. Web-verified.
+  Progress: 10 of 32 tabs detailed (41 + 7/44/46 live; 8/9/ACR2-10/33/40/42 in #739). 22 remain.
+  Detail mechanism: VB_EXCLUDED_DETAIL (concordance) + ACR2_EXCLUDED_DETAIL (scrolls),
+  render via .dbk-* CSS, fall back to one-line VB_EXCLUDED_WHY/ACR2_EXCLUDED_WHY.
+  Thin-dossier texts to ask user about later: Songs of Sabbath Sacrifice (43),
+  Rule of Blessings 1QSb (38), Rule of Congregation 1QSa (37), Book of Mysteries (47).
 - LIVE now: all 32 overlays verdict-first debunk framing; Solar Calendar Independent
   Verification block (4Q208/4Q209 + MUL.APIN + 11Q5); `FORENSIC_PROTOCOL.md` +
   `EXCLUDED_TEXTS_DOSSIER.md` on main; CLAUDE.md wired to read both first.
