@@ -33,6 +33,17 @@
   batch 2: Vol 8 Book of Giants, Vol 9 Visions of Amram, ACR2 #10 Pseudo-Jubilees;
   batch 3: Vol 33 War Scroll, Vol 40 Pesher Nahum, Vol 42 Pesher Habakkuk. Web-verified.
   Progress: 10 of 32 tabs detailed (41 + 7/44/46 live; 8/9/ACR2-10/33/40/42 in #739). 22 remain.
+- **PR #739 MERGED** (batch 2+3, v208 live).
+- **PR #740 OPEN** (v210): (a) FIX — debunk overlays now render full-bleed dark
+  surface (#0d0b08) so no cream shows (text-overlay body is #f5f5f0 cream; light
+  detail text was washing out). Superseded the dark-panel approach. (b) BATCH 4 —
+  VB_SECT_SUITE integrated writeup mapped to Vols 35/36/37/38 (Damascus, Community
+  Rule, 1QSa, 1QSb): pipeline diagram, per-doc deconstruction, Christian-grafting
+  section, verdict. All four tabs open the same suite (offered to split if wanted).
+  Progress: 14 of 32 tabs detailed. Backup backup/2026-07-23-acr-search-v208 @ 5a3df04.
+  KEY LEARNING: text-overlay body = cream #f5f5f0 (lines 660-661); debunk detail is
+  light-on-dark, so it MUST render on its own dark surface. Previews must simulate
+  the cream overlay, not a dark page.
   Detail mechanism: VB_EXCLUDED_DETAIL (concordance) + ACR2_EXCLUDED_DETAIL (scrolls),
   render via .dbk-* CSS, fall back to one-line VB_EXCLUDED_WHY/ACR2_EXCLUDED_WHY.
   Thin-dossier texts to ask user about later: Songs of Sabbath Sacrifice (43),
