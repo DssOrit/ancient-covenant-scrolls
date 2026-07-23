@@ -3965,11 +3965,11 @@ function renderSolarCalPanel() {
   var panel = document.getElementById('solarcal-panel');
   if (!panel) return;
   var html = '<div class="cal-structure">'
-    + '<div class="cal-struct-card"><div class="cal-struct-num">364</div><div class="cal-struct-lbl">Days in the year<br>Source: 1 Enoch 72–82; Jubilees 6:32</div></div>'
+    + '<div class="cal-struct-card"><div class="cal-struct-num">364</div><div class="cal-struct-lbl">Days in the year<br>Source: 1 Enoch 72–82 (the Astronomical Book)</div></div>'
     + '<div class="cal-struct-card"><div class="cal-struct-num">4</div><div class="cal-struct-lbl">Quarters of 91 days<br>3 months per quarter (30+30+31)</div></div>'
     + '<div class="cal-struct-card"><div class="cal-struct-num">8</div><div class="cal-struct-lbl">Appointed times (Mo\'edim)<br>Fixed weekday, every year</div></div>'
     + '</div>'
-    + '<div class="cal-source-note">Jubilees 6:29–30: "And all the days of the commandment will be 52 Sabbaths of days... and they will not disturb a single festival from its day." The 364-day solar calendar is divisible by 7 exactly — 52 weeks — so no appointed time can drift to a different day of the week. The Rabbinic lunar year of 354–355 days is not divisible by 7 and cannot produce this fixed structure.</div>';
+    + '<div class="cal-source-note">The Astronomical Book fixes the year at 364 days — twelve 30-day months plus four intercalary days at the equinoxes and solstices (1 Enoch 74:12; 82:4–6), the four days "those who do not reckon them correctly" leave out. 364 divides by 7 exactly — 52 weeks — so every appointed time keeps the same day of the week, year after year. The Rabbinic lunar year of 354–355 days is not divisible by 7 and cannot produce this fixed structure.</div>';
   SOLAR_QUARTERS.forEach(function(q) {
     var qMonths = SOLAR_MONTHS.filter(function(m) { return m.q === q.num; });
     html += '<div class="cal-quarter">';
@@ -3997,7 +3997,7 @@ function renderSolarCalPanel() {
     + '<div class="cal-cmp-hdr">Calendar Comparison — Fixed Days vs. Lunar Drift</div>'
     + '<div class="cal-cmp-row">'
     + '<div class="cal-cmp-col solar"><div class="cal-cmp-lbl">364-DAY SOLAR (DSS / GE\'EZ ORIT)</div>'
-    + '<div class="cal-cmp-txt">Pesach: always 3rd day (Tuesday)<br>Shavuot: always 1st day (Sunday)<br>Yom Teruah: always 4th day (Wednesday)<br>Yom Kippur: always 6th day (Friday)<br>Sukkot: always 4th day (Wednesday)<br><br>Source: 1 Enoch 72–82; Jubilees 6:29–30; 4QMMT</div>'
+    + '<div class="cal-cmp-txt">Pesach: always 3rd day (Tuesday)<br>Shavuot: always 1st day (Sunday)<br>Yom Teruah: always 4th day (Wednesday)<br>Yom Kippur: always 6th day (Friday)<br>Sukkot: always 4th day (Wednesday)<br><br>Source: 1 Enoch 72–82 (the Astronomical Book); festival dates from Vayikra 23; Bamidbar 28–29</div>'
     + '</div>'
     + '<div class="cal-cmp-col lunar"><div class="cal-cmp-lbl">RABBINIC LUNAR (354–355 DAYS)</div>'
     + '<div class="cal-cmp-txt">Pesach: can fall Monday, Wednesday, Friday, or Shabbat — shifts year to year<br>Shavuot: shifts with the lunar drift<br>Yom Teruah: variable weekday<br>Correction: a 13th month (Adar II) inserted 7 times per 19 years to prevent full drift from the solar year<br><br>The Rabbinic calendar cannot produce the fixed-weekday structure the primary sources specify.</div>'
@@ -4124,15 +4124,15 @@ var LIB_SCROLLS = [
     body:'The Torah in Ge\'ez — Bereshit, Shemot, Vayikra, Bamidbar, Devarim — part of the Ethiopian biblical canon that also includes Jubilees, 1 Enoch, and other texts excluded from the Western canon. Preserved in a continuous textual tradition outside the Masoretic and Rabbinic transmission lines.',
     finding:'The Ge\'ez Orit represents a pre-Rabbinic textual tradition that was never subject to the Masoretic vocalization decisions, the Rabbinic canonical selections, or the later European theological overlay. It carries 1 Enoch and Jubilees as canonical — books the Qumran community treated as authoritative (multiple copies in multiple caves) but which Rabbinic Judaism and Protestant Christianity excluded.'
   },
-  { id:13, shelf:4, type:'suppressed', short:'Similitudes', ref:'1 Enoch 37–71', title:'The Similitudes of Enoch — The Missing Section',
-    loc:'Complete in Ge\'ez only. ABSENT from all Qumran caves. Every other section of 1 Enoch is represented at Qumran. The Similitudes are not. No satisfactory explanation has been produced.',
-    body:'Three parables (similitudes) describing the Son of Man figure, the judgment of the Watchers and the kings of the earth, and the final state. The Son of Man in the Similitudes is a pre-existent heavenly figure who sits on the throne of glory and judges the powerful of the earth. This is the most theologically significant figure in any pre-Christian Jewish text.',
-    finding:'The Similitudes contain the most developed pre-Christian "Son of Man" theology in existence. They are absent from Qumran — the site that preserved every other section of 1 Enoch in multiple copies. The absence is not explained by date or discovery conditions. What the Similitudes contain — a heavenly judge figure, pre-existence, cosmic authority — is the precise theological territory that later became contested between Judaism, Christianity, and the primary-source tradition. The Ge\'ez Orit preserved it. The Dead Sea Scrolls archive did not.'
+  { id:13, shelf:4, type:'suppressed', short:'Similitudes', ref:'1 Enoch 37–71', title:'The Book of Parables / Similitudes — A Late Insertion, Absent from Qumran (1 Enoch 37–71)',
+    loc:'Stratigraphic layer: late 1st century BCE to early 1st century CE. Qumran deposited eleven distinct copies of the Enochic collection across Caves 1–11 — the Book of Watchers (4Q201), the Astronomical Book (4Q208), the Book of Giants — yet across thousands of recovered scraps not a single letter of the Book of Parables exists. It was absent from the community\'s inventory because it had not yet been anthologized into the Enochic corpus when the library was sealed in 68 CE.',
+    body:'Three "parables" that lift the vague phrase "one like a son of man" from Daniyel 7:13 and blow it up into a hyper-developed, pre-existent, celestial cosmic judge seated on the "Throne of Glory." At 1 Enoch 71:14 the manipulation reaches its climax: the angel tells Chanokh, "You are the Son of Man who is born unto righteousness" — Chanokh himself recast as a divine, pre-existent savior figure. A late post-exilic apocalyptic expansion, engineered to comfort communities crushed under Roman-era vassal rule.',
+    finding:'Two hard markers date it and expose it. First, the material absence blackout: eleven Enochic copies survived at Qumran and not one scrap of the Parables — a physical-layout exclusion, not an accident of preservation. Second, the geopolitical marker shock: 1 Enoch 56:5 stages angels thrusting "to the east at the Parthians and Medes," an explicit report of the Parthian invasion of Judea in 40 BCE, mapped as fake prophecy centuries after the Persian and early Hellenistic eras closed. The developed divine-Son theology appears in no confirmed pre-70 CE source; the NT figure was later built on it. It entered the corpus here — documented as the manipulation, never the covenant baseline.'
   },
-  { id:14, shelf:4, type:'suppressed', short:'Book of Giants', ref:'4QEnGiants', title:'The Book of Giants',
-    loc:'Cave 4, Qumran. Fragments: 4Q203, 4Q530–532, 4Q556. Published in DJD XXXI. Also: Manichaean version preserved in Central Asian manuscripts (Turfan collection, Berlin).',
-    body:'Expands the Watcher narrative of 1 Enoch 6–16: the giants born from the union of the Watchers with human women. Names the giants — Ohya, Hahya, Gilgamesh — and describes their violence and destruction before the flood. The giants have prophetic dreams about their coming judgment.',
-    finding:'The Book of Giants was excluded from both Jewish and Christian canons but preserved at Qumran in multiple fragments and in the Manichaean tradition transmitted through Central Asia. Gilgamesh appears by name — placing the giants in the same narrative world as Mesopotamian tradition. The book documents that the pre-flood Watcher tradition was widely known and considered authoritative in the Second Temple period before canonical selection excluded it.'
+  { id:14, shelf:4, type:'suppressed', short:'Book of Giants', ref:'4QEnGiants', title:'The Book of Giants — A Hellenistic-Era Mesopotamian Mashup (4Q203, 4Q530–532)',
+    loc:'Cave 4, Qumran. Fragments: 4Q203, 4Q530–532, 4Q556. Also preserved in a later Manichaean version in Central Asian manuscripts (Turfan collection, Berlin) — a 3rd-century CE Persian religion, showing how far and how late the text traveled.',
+    body:'A late Second Temple splice of Mesopotamian myth onto the four-verse Nephilim mention at Bereshit 6:1–4. It expands the Watcher narrative into named giants — Ohya, Hahya, and Gilgamesh — who have prophetic dreams of their own destruction before the flood.',
+    finding:'The tell is the name Gilgamesh (גלגמיש). In 4Q530–531 one of the pre-flood giants is called Gilgamesh — the hero-king of the Akkadian epic dropped straight into the flood world of Bereshit. That anachronistic insertion exposes the book as a Hellenistic-era literary mashup, not primeval covenant history. It was not "suppressed" ancient memory; it is a late composition welding Babylonian legend onto four verses of Bereshit — documented here as the manipulation.'
   },
   { id:15, shelf:4, type:'suppressed', short:'Extra Psalms', ref:'11Q5 Additional Compositions', title:'The Non-Canonical Psalms of 11Q5',
     loc:'Cave 11, Qumran, 1956. The Psalms Scroll (11Q5) contains seven compositions not in the Masoretic Psalter. Shrine of the Book, Israel Museum.',
@@ -4569,7 +4569,7 @@ function renderOneCreatorPanel() {
   h += "<div style='font-size:12.5px;line-height:1.6;color:var(--tx)'>The pre-Christian, pre-Rabbinic record has YHWH alone as Creator and sole object of worship. There is no trinity, and no Yeshua, Jesus, or Christ deity to be worshipped, in any ancient Hebrew source. Worship belongs to YHWH alone.</div></div>";
   h += sec("No Trinity");
   h += point("The texts are one-Creator throughout", "The Torah, the Dead Sea Scrolls, Chanokh, Yovelim, and the Orit are strictly monotheistic. The Shema states it plainly: YHWH is our Creator, YHWH alone (Devarim 6:4).");
-  h += point("The divine council is not a trinity", "The sons of the Creator (benei Elohim) and principal-agent figures such as the Chosen One or the Son of Man are subordinate created beings who serve YHWH. They are never co-equal, and never a three-person Godhead.");
+  h += point("The divine council is not a trinity", "The benei Elohim (the sons of the Creator) and every agent the texts name — an anointed king, a messenger, a chosen servant — are subordinate created beings who serve YHWH. Not one is co-equal with YHWH. There is no three-person Godhead and no pre-existent divine Son anywhere in the council. That Son was invented later and forced onto the text; the primary record does not contain him.");
   h += point("The trinity is a later construction", "The three-co-equal-persons doctrine was built at the Council of Nicaea (325 CE) and completed at Constantinople (381 CE) by imperial councils, centuries after the ancient texts.");
   h += point("The Logos is Greek philosophy", "The pre-existent divine Word people cite is Philo of Alexandria (about 20 BCE to 50 CE) drawing on Greek thought, not an ancient Hebrew source. It is the borrowed Greco-Roman framework, not the covenant record.");
   h += sec("No Worshipped Yeshua, Jesus, or Christ");
@@ -6314,6 +6314,71 @@ var VB_EXCLUDED_NAMES = {
   41: 'Hodayot', 42: 'Pesher Habakkuk', 43: 'Songs of Sabbath Sacrifice',
   44: 'Genesis Apocryphon', 46: 'Temple Scroll', 47: 'Book of Mysteries', 48: 'Raz Nihyeh'
 };
+// Debunk rationale shown when an excluded volume is tapped — documented, not validated.
+var VB_EXCLUDED_WHY = {
+  7: 'The Book of Jubilees (Maṣḥäfä Kufale) — a Second Temple retelling of Bereshit forced into a rigid 364-day calendar grid. Multiple Hebrew copies survive at Qumran; the Cave 4 set (4Q216–224) is dated by handwriting and ink to the Hasmonean period, the earliest (4Q216) c. 125–100 BCE. Jubilees 6:32–38 puts an anti-lunar calendar polemic in Noah\'s mouth — a fictional speech matching the 2nd-century-BCE calendar wars between the Qumran faction and the Jerusalem priests. An ancient patriarch\'s name weaponized for a Hellenistic-era calendar code.',
+  8: 'The Book of Giants (1Q23–24, 4Q203, 4Q530–533) — a late Second Temple splice of Mesopotamian myth onto the four-verse Nephilim mention at Bereshit 6:1–4. In 4Q530–531 it names one pre-flood giant Gilgamesh (גלגמיש), the king of the Akkadian epic — proof it is a Hellenistic-era literary mashup, not primeval history.',
+  9: 'The Visions of Amram (4Q543–547) — a manufactured visionary encounter for Moshe\'s father, written in Middle Aramaic on Hasmonean leather (c. 150–30 BCE). 4Q544 forces a cosmic dualism split evenly between Melchizedek (Light) and Melchiresha (Darkness) — post-exilic, Persian-influenced thought unknown to the pre-exilic strata of Bereshit and Shemot. Engineered to give the Aaronic priesthood an exclusive divine right to rule.',
+  32: 'The 4Q246 Aramaic Apocalypse (the "Son of God" text) — a single two-column Aramaic fragment from Cave 4 in early formal Herodian script, dated by Milik and Puech to the last third of the 1st century BCE. It predicts a coming ruler explicitly titled ברה די אל ("son of God") and בר עליון ("son of the Most High") — late apocalyptic savior-titulature that mirrors the imperial titles of the same era, when Augustus carried Divi Filius ("son of the deified one"). A 1st-century-BCE counter-imperial messiah text, cut off from any pre-exilic national framework — held under warning.',
+  33: 'The War Scroll (1QM) — a 1st-century-BCE Qumran sectarian war rule: the community\'s own coded battle manual, not covenant scripture.',
+  34: '4QMMT (Some Works of the Torah) — a Qumran sectarian halakhic letter arguing the community\'s own legal positions against the Jerusalem establishment. A Second Temple community document.',
+  35: 'The Damascus Document (CD, 4Q266–273) — a regional sectarian rule and penal code composed in late Second Temple sectarian Hebrew, filled with terms for local administrative punishments. A highly localized community manifesto, not the covenant baseline.',
+  36: 'The Community Rule (1QS, 4Q255–264) — a private sectarian constitution in Late Sectarian Hebrew. Comparing the shorter, older layer of 4Q258 against the finalized 1QS exposes real-time editing: scribes stripped power from the general assembly and handed absolute veto to the Sons of Zadok. An evolving political draft caught on the leather, built to run a breakaway desert commune.',
+  37: 'The Rule of the Congregation (1QSa) — a Qumran sectarian appendix to the Community Rule, projecting the sect\'s own order onto an imagined end-time assembly. Second Temple.',
+  38: 'The Rule of Blessings (1QSb) — a Qumran sectarian collection of blessings for the community\'s leaders. Second Temple.',
+  39: 'The Words of the Luminaries (4QDibHam) — a Qumran liturgical composition. Second Temple.',
+  40: 'Pesher Nahum (4Q169) — a Qumran sectarian commentary that drops the ancient prophet\'s setting and inserts real Hasmonean-era names: it names the Seleucid king Demetrius (Demetrius III Eukairos, 95–88 BCE) and Antiochus outright, reworking Nahum\'s words to score the 1st-century-BCE civil wars and local priestly rivalries as if they were prophecy. An interpretive war-pamphlet layer, not the base text.',
+  41: 'The Hodayot (1QH, Thanksgiving Hymns) — the Qumran community\'s own sectarian hymns. A Second Temple composition.',
+  42: 'Pesher Habakkuk (1QpHab) — a Qumran sectarian commentary that bends Habakkuk\'s ancient words to track the real-time march of the Kittim, the Roman legions: it has them sacrificing to their standards (col. VI) and conquering nations — the invasion that took Jerusalem under Pompey in 63 BCE. A time-bound political pamphlet, not the base text.',
+  43: 'The Songs of the Sabbath Sacrifice — a Qumran liturgical cycle for the sect\'s own worship. A Second Temple composition.',
+  44: 'The Genesis Apocryphon (1QapGen) — a Qumran Aramaic retelling and expansion of Bereshit. A Second Temple paraphrase, not the base text.',
+  46: 'The Temple Scroll (11Q19 / 11Q20) — merges Shemot, Vayikra, and Devarim into an unauthorized single volume, presenting new laws and temple blueprints as an original wilderness command. Where Devarim speaks about YHWH in the third person ("the place YHWH will choose"), 11Q19 systematically changes the verbs and pronouns to the first-person divine singular ("the place that I will choose to put My name") — a direct pronoun forgery. A 2019 Science Advances study found its skin coated with an atypical inorganic sulfate-salt glaze for a prestige-white finish. Late-2nd-century-BCE priestly architecture put in YHWH\'s mouth.',
+  47: 'The Book of Mysteries (1Q27, 4Q299–301) — a Qumran wisdom-apocalyptic composition built on the Raz (רז, "mystery"), a knowledge held only by revelation to a sectarian elite that believed it alone grasped YHWH\'s plan while "the wicked" could not. It fuses esoteric hidden knowledge with end-time reckoning, making possession of the mystery — not the ancient prophetic call to return — the axis of salvation. A late Second Temple sapiential layer, not a pre-Corruption source.',
+  48: 'Raz Nihyeh (the "mystery of existence") — a Qumran wisdom motif from the 4QInstruction tradition. Second Temple.',
+};
+function openExcludedDebunk(v) {
+  var nm = VB_EXCLUDED_NAMES[v] || ('Vol ' + v);
+  var why = VB_EXCLUDED_WHY[v] || 'A Second Temple or later composition, held under warning.';
+  var html = '<div style="padding:16px">' +
+    '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
+      '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
+      '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
+    '</div>' +
+    '<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>' +
+    '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
+  '</div>';
+  openTextOverlay(nm + ' — why excluded', html);
+}
+var ACR2_EXCLUDED_WHY = {
+  1: '4QInstruction (Musar le-Mevin, 4Q415–418) — the largest wisdom text in the library, in late Second Temple script. It directs a student (the Mevin) to study the Raz Nihyeh, the "mystery of existence" — a Hellenistic-era concept that decouples salvation from national Mosaic covenant obedience. Its grammar and vocabulary postdate the Hellenistic penetration of Judea.',
+  2: '4QInstruction, Part 2 (4Q415–418) — the same late Second Temple sapiential composition: built on the Raz Nihyeh, Hellenistic in vocabulary and worldview, not a pre-Corruption primary source.',
+  3: 'The Aramaic Levi Document (4Q213–214) — a late Middle Aramaic "testament" fabricated for the ancestor of the tribe of Levi, filled with specialized vocabulary absent from any First Temple record. Part of the 2nd-century-BCE trilogy (with the Visions of Amram and Testament of Qahat) engineered to validate the Hasmonean high-priestly monopoly.',
+  4: 'The New Jerusalem Scroll (4Q554–555, 11Q18) — a Middle Aramaic guided tour of an idealized city, recording streets, gates and blocks down to the cubit on a symmetrical planned grid built on the Hellenistic city model. A 2nd-century-BCE architectural dream, disconnected from the historical First Temple.',
+  5: 'The Prayer of Nabonidus (4Q242) — an Aramaic monologue that acts as a correction patch to Daniyel 4: it names the king who went mad in exile at the oasis of Teima as Nabonidus, the last king of Babylon, healed by an anonymous Jewish diviner. A late Persian / early Hellenistic editing layer composed long after Babylon fell.',
+  6: '4QBeatitudes (4Q525) — a Hebrew wisdom text using the "Blessed is the one who…" (אשרי) formula. Not the source of the later Greek Sermon on the Mount but an ultra-strict halakhic composition: blessing belongs only to those who walk within the sect\'s hidden interpretations of Torah. A late Second Temple legal text in Hellenistic-era wisdom form.',
+  7: 'The Apocryphon of Joshua (4Q378–379) — expands Yehoshua\'s final speeches with a hyper-focused curse on Mount Gerizim and Shechem: a direct anti-Samaritan polemic matching the Hasmonean king John Hyrcanus, who destroyed the Samaritan temple c. 111 BCE. Yehoshua used as a mouthpiece for a 2nd-century-BCE land grab.',
+  8: 'The Words of Michael (4Q529) — a short Aramaic vision of a conversation between the archangels Michael and Gabriel, operating within a named, ranked angelic hierarchy foreign to the First Temple period. A late Hellenistic mystical addition.',
+  9: 'The Birth of Noah (4Q534–536) — an Aramaic physiognomic and astrological fragment recording the infant Noakh\'s birthmarks and bodily features mapped onto horoscope matrices. Mixing patriarchal lineage with Hellenistic zodiac calculation, composed after Greek astrology entered the Judean scribal world.',
+  10: 'Pseudo-Jubilees (4Q225–227) — Hebrew rewrites running parallel to the Book of Jubilees on late Hasmonean hide, introducing an even more aggressive demonic structure (the command hierarchy of Prince Mastema). Secondary commentaries built on top of the already-late 2nd-century-BCE Jubilees matrix.',
+  11: 'Angels of Mastemah (4Q390) — a Second Temple apocryphal composition invoking the demonic prince Mastema and a scheme of jubilees of wickedness. Late sectarian demonology, not a First Temple baseline source.',
+  12: 'The Wicked and the Holy / Ages of Creation (4Q181) — a deterministic fragment sorting humanity into two unalterable pre-ordained lots, the Wicked and the Holy. It eliminates the Iron Age prophetic call to repentance, replacing it with a fatalistic cosmic dualism that seals destinies before birth — the marker of late Qumran sectarian theology.',
+  13: 'The Book of War (4Q285, 11Q14) — the final-battle sequel to the War Scroll, extending the sectarian war against the Kittim. A 1st-century-BCE apocalyptic-military composition, not covenant scripture.',
+};
+function openACR2Debunk(file) {
+  var v = null, i;
+  for (i = 0; i < ACR2_VOLUMES.length; i++) { if (ACR2_VOLUMES[i].file === file) { v = ACR2_VOLUMES[i]; break; } }
+  var nm = v ? v.name : ('Scroll ' + file);
+  var why = ACR2_EXCLUDED_WHY[file] || 'A Second Temple or later composition, held under warning.';
+  var html = '<div style="padding:16px">' +
+    '<div style="background:#2a0f0f;border:1px solid var(--red);border-radius:10px;padding:13px 15px;margin-bottom:13px">' +
+      '<div style="color:#ff8f8f;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Second Temple &amp; Later Addition — held under warning</div>' +
+      '<div style="color:#e8caca;font-size:12.5px;line-height:1.6">Documented, not canonical. Not a pre-Corruption primary source; preserved only as the record of a later layer, never the covenant baseline.</div>' +
+    '</div>' +
+    '<div style="font-size:13px;color:var(--tx2);line-height:1.75">' + esc(why) + '</div>' +
+    '<div style="font-size:11px;color:var(--tx3);margin-top:14px;border-top:1px solid #222;padding-top:10px">Its text is not indexed in this concordance as covenant authority.</div>' +
+  '</div>';
+  openTextOverlay(nm + ' — why excluded', html);
+}
 function renderVolumeGrid() {
   var grid = document.getElementById('vb-grid');
   if (!grid) return;
@@ -6326,20 +6391,19 @@ function renderVolumeGrid() {
       '</div>';
   }).join('');
   var warnHeader = '<div class="vb-section-header">Second Temple &amp; Later Additions</div>' +
-    '<div class="vb-section-note">Held under warning — documented, not canonical.</div>';
-  var excluded = vols.filter(function(v) { return VB_EXCLUDED_VOLS.indexOf(v) >= 0; }).map(function(v) {
-    var count = VOLUME_INDEX[v].length;
+    '<div class="vb-section-note">Held under warning — documented, not canonical. Not indexed as covenant authority.</div>';
+  var excluded = VB_EXCLUDED_VOLS.map(function(v) {
     var nm = VB_EXCLUDED_NAMES[v] || ('Vol ' + v);
-    return '<div class="vb-card acr2" onclick="openVolume(' + v + ')">' +
-      '<div class="vb-vol-num acr2">Vol ' + v + '</div>' +
-      '<div class="vb-vol-count">' + esc(nm) + ' · ' + count + ' passages</div>' +
+    return '<div class="vb-card acr2" onclick="openExcludedDebunk(' + v + ')">' +
+      '<div class="vb-vol-num acr2">' + esc(nm) + '</div>' +
+      '<div class="vb-vol-count">why excluded &rsaquo;</div>' +
       '</div>';
   }).join('');
   var acr2 = ACR2_VOLUMES.map(function(v) {
     var safeLabel = v.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-    return '<div class="vb-card acr2" onclick="openACR2Volume(' + v.file + ',\'' + safeLabel + '\')">' +
+    return '<div class="vb-card acr2" onclick="openACR2Debunk(' + v.file + ')">' +
       '<div class="vb-vol-num acr2">' + v.name + '</div>' +
-      '<div class="vb-vol-count">ACR2 library</div>' +
+      '<div class="vb-vol-count">why excluded &rsaquo;</div>' +
       '</div>';
   }).join('');
   grid.innerHTML = main + warnHeader + excluded + acr2;
@@ -6451,6 +6515,7 @@ function toggleChronOrder(pill) {
   }
 }
 function openVolume(volNum) {
+  if (VB_EXCLUDED_VOLS.indexOf(volNum) >= 0) { openExcludedDebunk(volNum); return; }
   if (!CONCORDANCE) return;
   var ids = VOLUME_INDEX[volNum] || [];
   var passages = ids.map(getPassageById).filter(Boolean);
