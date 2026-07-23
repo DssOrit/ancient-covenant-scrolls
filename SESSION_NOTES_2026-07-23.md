@@ -1,10 +1,15 @@
 # Session Notes — 2026-07-23
 
 ## Current state
-- Branch: `claude/session-continuation-setup-2zkame` (reset onto `origin/main` after each merge)
-- `origin/main` HEAD: `d06bb32` (PR #731 merge)
-- Live cache marker: `acr-search-v195` (confirmed on `origin/main`)
-- Working tree: clean
+- Branch: `claude/session-continuation-setup-2zkame`
+- `origin/main` HEAD: `ac6ba5f` (PR #733 merge). Live cache on main: `acr-search-v199`.
+- **PR #734 OPEN, not merged** (user went to bed): replaces all 32 overlays with the user's verbatim dossier prose; cache v200. Merge link: https://github.com/DssOrit/ancient-covenant-scrolls/pull/734
+
+## >>> READ FIRST NEXT SESSION: `EXCLUDED_TEXTS_DOSSIER.md` (repo root)
+All of the user's warning / exclusion / debunk texts for the excluded volumes
+are saved there VERBATIM. Pull per-volume debunk wording from that file — do NOT
+ask the user to re-paste, and do NOT paraphrase into a new voice without their
+say-so. The user was frustrated by repeated re-pasting; this file is the fix.
 
 ## Built today (chronological, all Search-only, all merged to main + deployed)
 - **PR #730 (merged, `5cbcb83`)** — made the 19 excluded texts + 13 ACR2 scrolls debunk-only:
