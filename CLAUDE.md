@@ -503,6 +503,34 @@ These have been re-locked on 2026-05-04 after repeated violations.
        Without that explicit approval, if a gate blocks a change, STOP and report —
        do not get past it.
 
+28. **NO SOFTENING — LOCKED 2026-07-23 by user.** All debunk / exclusion /
+    forensic content is blunt and verdict-first. The accusation comes first and
+    stays. Specific prohibitions (this list is the enforceable test):
+    - **No hedges:** "may / might / could" used as a qualifier, "seems",
+      "appears", "arguably", "possibly", "probably", "generally", "often",
+      "usually", "typically", "somewhat", "relatively", "largely", "essentially",
+      "mostly", "in a sense", "to a degree".
+    - **No scholarly qualifiers / conciliation:** "some scholars", "is thought",
+      "is believed", "traditionally", "considered", "regarded", "contested",
+      "debated", "disputed", "widely", disclaimers, "for many believers", "while
+      faith traditions view".
+    - **No attribution-as-mere-opinion:** "in its view", "so-called", "claims to
+      be", "what it regards as" — when the site's own framing already treats the
+      thing as fact, state it as fact.
+    - **No neutral genre nouns as the primary label.** Every excluded-text lead
+      AND verdict must carry a hard accusation up front — forgery, fabrication,
+      manufactured, counterfeit, fraud, rewrite, hijack, masquerading,
+      propaganda, pseudepigraph. Never let "a composition / document / text /
+      letter / tract / wisdom text / commentary" stand alone as the verdict noun.
+    - **Allowed (not softening):** direct quotes of the text being exposed (which
+      may contain "may", etc.), and hard impossibility statements ("could NOT
+      have been", "cannot belong to").
+    - **Before shipping ANY excluded-text content**, run the softening audit:
+      grep the added/edited detail for the hedge list above, and confirm every
+      lead and verdict carries a hard accusation. Do not push until clean.
+    This rule was locked after repeated softening slips. It takes precedence over
+    sounding measured, balanced, or academic.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
