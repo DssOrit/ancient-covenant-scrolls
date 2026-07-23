@@ -59,6 +59,10 @@
 - Confirmed excluded set = 19 concordance vols (7,8,9,32-44,46,47,48) + 13 ACR2 scrolls
   + 3 removed Chanokh sections (Similitudes 37-71, Animal Apoc 85-90, Epistle/Weeks 91-105).
 
+## STANDING RULE (user, 2026-07-23): CLEAR COMMUNICATION — USER HAS DYSLEXIA
+Always write short, plain, one point at a time. No walls of text. Simple words,
+clear structure, the next step stated plainly. This is mandatory every reply.
+
 ## STANDING RULE (user, 2026-07-23): ALWAYS CHECK WHAT'S PASTED
 When the user pastes content, before acting: (1) read all of it; (2) check it
 against the locked rules (Name rule 18, Rule 14 invented figure, Rule 22 niqqud,
