@@ -6,10 +6,16 @@
 - **PR #734 OPEN, not merged** (user went to bed): replaces all 32 overlays with the user's verbatim dossier prose; cache v200. Merge link: https://github.com/DssOrit/ancient-covenant-scrolls/pull/734
 
 ## >>> READ FIRST NEXT SESSION: `EXCLUDED_TEXTS_DOSSIER.md` (repo root)
-All of the user's warning / exclusion / debunk texts for the excluded volumes
-are saved there VERBATIM. Pull per-volume debunk wording from that file — do NOT
-ask the user to re-paste, and do NOT paraphrase into a new voice without their
-say-so. The user was frustrated by repeated re-pasting; this file is the fix.
+ALL of the user's warning / exclusion / debunk texts (12 transcript sections:
+the Warning Placards, Forensic Exclusion Registry, Master Evidence Checklist,
+Deconstruction, and the exclusion registries) are compiled there. Pull the
+per-volume debunk wording from that file — do NOT ask the user to re-paste.
+- Name rule (Rule 18) already applied inside the file: quoted "Lord/God" for the
+  covenant deity -> YHWH / Creator; the documented "Son of God" title (4Q246 /
+  Augustus Divi Filius) is kept.
+- Overlay framing is verdict-first debunk (see file header). Keep the user's
+  evidence; frame as false/later-manipulation, never neutral description.
+- The debunk overlays (32) were restored to this framing in PR #735 (cache v201).
 
 ## Built today (chronological, all Search-only, all merged to main + deployed)
 - **PR #730 (merged, `5cbcb83`)** — made the 19 excluded texts + 13 ACR2 scrolls debunk-only:
