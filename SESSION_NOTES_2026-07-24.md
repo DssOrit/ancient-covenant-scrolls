@@ -53,3 +53,17 @@
 ## Today's commit log
 - `8331fcf` Merge pull request #753 (Card 5 afterlife evidence + diagrams)
 - `fb45865` Search: Card 5 (hell-heaven) afterlife evidence + diagrams in DSS panel
+
+## Update — PR #754 MERGED (festival corrections, v256)
+- Shemini Atzeret: cut Rabbinic "70 nations" midrash -> primary sacrifice count (Bamidbar 29:12-36).
+- Sukkot: removed Zekharyah 14 (post-exilic) -> Vayikra 23:39-43 + Bamidbar 29 + 1 Enoch 72:19 solar grid.
+- Bikkurim: wave-sheaf wording fixed (Shabbat that FOLLOWS Chag HaMatzot -> 1/26 Sunday).
+- Yom Kippur: dropped unverifiable "Ge'ez Orit Zalavit 23:27" citation.
+- origin/main HEAD: f51c4e3. Backup: backup/2026-07-24-acr-search-v256 @ f51c4e3.
+
+## In progress — softening (Rule 28) review
+- 32 hedge hits found live; walking one at a time. Most are honest notes about
+  genuinely uncertain things (place locations, word roots, manuscript dates) or
+  are quotes; a few soften a verdict. Currently at item 1/32.
+- Also parked: strict pre-Second-Temple pass on post-exilic prophets cited
+  elsewhere (Zekharyah 14 in final-days section, Chaggai/Malakhi/Daniyel).
