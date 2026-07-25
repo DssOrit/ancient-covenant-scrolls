@@ -67,3 +67,35 @@
   are quotes; a few soften a verdict. Currently at item 1/32.
 - Also parked: strict pre-Second-Temple pass on post-exilic prophets cited
   elsewhere (Zekharyah 14 in final-days section, Chaggai/Malakhi/Daniyel).
+
+## Pending-review list COMPLETE — all 6 items live (main @ v262)
+Walked the 07-22/07-23 review list one by one, no-softening + non-biased African
+Hebrew historian lens throughout. All merged to main:
+- Item 1 Geography/tectonic — de-softened; Jordan/whole covenant land affirmed as
+  Alkebulan/African, separation named man-made colonial. PR #755 (v257).
+- Item 2 War Scroll — dropped Roman/triarii Western-classical framing + the
+  self-contradicting 'army that did not exist in antiquity'. PR #756 (v258).
+  Temple Scroll sulfate line: user chose NO fix (left as-is).
+- Item 3 Belial/Mastema — reviewed; internally consistent (Watchers/Nephilim real
+  vs invented demon-king). Words of Michael tab: user chose leave as is.
+- Item 4 'Middle East'/1902 — reframed: Alkebulan is the true name (Rome renamed it
+  'Africa'); Middle East/Near East/Western Asia/Levant all named Western labels.
+  PR #757 (v259).
+- Item 5 Curse of Ham — reframed on documented blessing (Amos 9:7, Tehillim 68:31);
+  all Ham's sons African; removed the middle 'curse never touches them' block.
+  PR #758 (v262).
+- Item 6 Calendar sourcing — removed every Mishmarot (4Q319-330) and MUL.APIN
+  reference; anchored on 1 Enoch 72-82 (4Q208-211) + Bereshit 8:22; dropped the
+  MUL.APIN witness column. PR #759 (v261).
+
+Merge order note: items merged slightly out of order (#759 before #758); #758 was
+re-synced onto main and bumped to v262 to keep the cache forward.
+
+main HEAD: 7f5d8ba (v262). Backup: backup/2026-07-24-acr-search-v262 @ 7f5d8ba.
+
+## Parked / open threads (not done, flagged during the review)
+- Search hardRefresh() (index.html ~2941) is an unscoped global cache wipe (Rule 21) — pre-existing, not fixed.
+- Card 5 keySrc still lists 1QS IV / 1QH (excluded) — flagged, not changed.
+- Strict pre-Second-Temple pass on post-exilic prophets cited elsewhere (Zekharyah 14 final-days, Chaggai/Malakhi/Daniyel).
+- Site-wide 'Africa'->'Alkebulan' and 'Levant' reconciliation (user deferred as a separate big pass).
+- Softening (Rule 28) hedge sweep: 32 hits found; most benign (place/date/root uncertainties, quotes) — not walked to completion.
