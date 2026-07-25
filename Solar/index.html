@@ -695,6 +695,15 @@ select.form-input option { background: var(--surface2); }
 
 </head>
 <body>
+<!-- ACR Solar candidate modules (Stage 2, rebased onto current main). Loaded as
+     globals only; the production scheduler is unchanged and still drives prayer times. -->
+<script src="solar-engine.js"></script>
+<script src="timezone-manager.js"></script>
+<script src="location-manager.js"></script>
+<script src="prayer-engine.js"></script>
+<script src="notification-provider.js"></script>
+<script src="solar-diagnostics.js"></script>
+<script src="solar-selector.js"></script>
 
 <!-- SUNSET ALERT BANNER -->
 <div id="sunset-alert">
