@@ -1836,7 +1836,7 @@ function getSunTimes(date, lat, lon, utcOffset) {
   var lonCorr = lon / 15;
   var tzOffset = (utcOffset !== undefined && utcOffset !== null) ? utcOffset : (function() { var jan1 = new Date(date.getFullYear(), 0, 15); return -jan1.getTimezoneOffset() / 60; })();
 
-  var noon = 12 - lonCorr + EqT/60 + tzOffset;
+  var noon = 12 - lonCorr - EqT/60 + tzOffset;
   var sunriseH = noon - HA/15;
   var sunsetH = noon + HA/15;
 
