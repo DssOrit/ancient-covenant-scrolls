@@ -43,6 +43,7 @@
 <div class="card"><table id="prayers"></table>
   <div class="note" id="limit"></div>
 </div>
+<div class="card"><div style="color:var(--gold);font-weight:700;margin-bottom:6px">Engine compare (legacy vs NOAA)</div><table id="compare"></table><div class="note" id="cmp-note"></div></div>
 
 <script src="solar-engine.js"></script>
 <script src="timezone-manager.js"></script>
@@ -50,6 +51,7 @@
 <script src="prayer-engine.js"></script>
 <script src="notification-provider.js"></script>
 <script src="solar-diagnostics.js"></script>
+<script src="solar-selector.js"></script>
 <script>
 (function(){
   'use strict';
@@ -121,6 +123,18 @@
       'iOS Safari cannot fire prayer alarms while the app is closed (no web API). '+
       'This page notifies only while open. A future native provider would add background alarms '+
       'with no change to the engine.';
+    // Engine compare (legacy vs NOAA). Read-only; does not change production.
+    var ct=document.getElementById('compare'); ct.innerHTML='';
+    if(window.SolarEngine){
+      var cmp=window.SolarEngine.compare(ymd.y,ymd.m,ymd.d,active.lat,active.lon,active.tz,0);
+      row(ct,'Active engine mode',window.SolarEngine.getMode());
+      row(ct,'Sunrise legacy / NOAA',cmp.legacy.sunrise+' / '+cmp.noaa.sunrise+'  ['+cmp.diffMin.sunrise+' min]','ev');
+      row(ct,'Solar noon legacy / NOAA',cmp.legacy.solarNoon+' / '+cmp.noaa.solarNoon+'  ['+cmp.diffMin.solarNoon+' min]','ev');
+      row(ct,'Sunset legacy / NOAA',cmp.legacy.sunset+' / '+cmp.noaa.sunset+'  ['+cmp.diffMin.sunset+' min]','ev');
+      row(ct,'Civil dawn (NOAA only)',cmp.noaa.civilDawn||'-','ev');
+      row(ct,'Civil dusk (NOAA only)',cmp.noaa.civilDusk||'-','ev');
+      document.getElementById('cmp-note').textContent='Displayed-time difference in minutes. Legacy has no civil dawn/dusk. Compare never changes the production display.';
+    }
     tick();
   }
 

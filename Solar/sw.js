@@ -3,7 +3,7 @@ var SOLAR_CACHE_PREFIX = 'acr-solar-';  // Solar owns only caches with this pref
 var FILES = ['./', './index.html', './manifest.json',
   './solar-engine.js', './timezone-manager.js', './location-manager.js',
   './prayer-engine.js', './notification-provider.js', './solar-diagnostics.js',
-  './diagnostics.html'];
+  './diagnostics.html', './solar-selector.js'];
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(FILES); }));
   self.skipWaiting();
