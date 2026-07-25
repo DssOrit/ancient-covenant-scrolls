@@ -33,9 +33,9 @@ per EXCLUDED_TEXTS_DOSSIER.md lines 87-90. Kept = Book of Watchers (1-36), Astro
   keeps its 3 existing cards (Similitudes, Book of Giants, Extra Psalms). Draft wording for the
   two cards is set aside (recorded in chat if revived).
 
-## Outstanding / to verify (user, on iPad)
-- Confirm live: https://dssorit.github.io/ancient-covenant-scrolls/Search/sw.js should show
-  CACHE 'acr-search-v263'; hard-refresh Search once Cloudflare/Pages deploys.
+## Live status
+- CONFIRMED LIVE by user (2026-07-25): "v263 up". acr-search-v263 deployed and serving.
+  ACR Search Enoch reconciliation + Revelation verdict debunk pass are live.
 
 ## Pending / parked (NOT requested this session)
 - "Problem 1" from the scan: Second Temple sectarian texts (1QS, 1QH, CD, Pesharim, 1QM, 11QT,
