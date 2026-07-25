@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><script>(function(){if(location.hostname==='dssorit.github.io'){location.replace('https://acrscrolls.com'+location.pathname.replace('/ancient-covenant-scrolls',''));}})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ACR Solar — Diagnostics</title>
+<style>
+  :root{--bg:#0D0B07;--card:#15130d;--gold:#C8971F;--tx:#f0ede8;--tx2:#aaa;--line:#2a2620;--red:#C0392B;--green:#1E8449}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--tx);font-family:Arial,system-ui,sans-serif;font-size:15px;padding:16px;padding-top:calc(16px + env(safe-area-inset-top))}
+  h1{color:var(--gold);font-size:19px;margin-bottom:2px}
+  .sub{color:var(--tx2);font-size:12px;margin-bottom:14px}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  button,select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px;cursor:pointer}
+  button:active{border-color:var(--gold)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:12px}
+  .cd{text-align:center;font-family:'Courier New',monospace;font-size:26px;color:var(--gold);font-weight:700}
+  .cd small{display:block;color:var(--tx2);font-size:12px;font-weight:400;font-family:Arial}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.k{color:var(--tx2);width:46%}
+  td.v{color:var(--tx);font-weight:600}
+  .ev{color:var(--gold);font-weight:700}
+  .note{color:var(--tx2);font-size:11.5px;line-height:1.5;margin-top:6px}
+  .warn{color:var(--red)}
+</style>
+</head>
+<body>
+<h1>ACR Solar — Diagnostics</h1>
+<div class="sub">Candidate NOAA engine · offline · deterministic · no AI. Production scheduler is separate and unaffected by this page.</div>
+
+<div class="btns">
+  <button id="b-home">Home (Coimbra)</button>
+  <button id="b-gps">Use My Location</button>
+  <select id="b-manual"><option value="">Manual city…</option></select>
+  <button id="b-update">Update Current Location</button>
+  <button id="b-restore">Restore Coimbra</button>
+</div>
+
+<div class="card cd" id="countdown">—<small id="cd-label">next prayer</small></div>
+<div class="card"><table id="events"></table></div>
+<div class="card"><table id="diag"></table></div>
+<div class="card"><table id="prayers"></table>
+  <div class="note" id="limit"></div>
+</div>
+
+<script src="solar-engine.js"></script>
+<script src="timezone-manager.js"></script>
+<script src="location-manager.js"></script>
+<script src="prayer-engine.js"></script>
+<script src="notification-provider.js"></script>
+<script src="solar-diagnostics.js"></script>
+<script>
+(function(){
+  'use strict';
+  var E=window.ACRSolarEngine, TZ=window.ACRTimezoneManager, LOC=window.ACRLocationManager,
+      PE=window.ACRPrayerEngine, NP=window.ACRNotificationProvider, DG=window.ACRSolarDiagnostics;
+
+  // Preset cities for Manual mode (deterministic IANA zones).
+  var CITIES=[
+    ['Lisbon','Portugal',38.7223,-9.1393,'Europe/Lisbon'],
+    ['Porto','Portugal',41.1579,-8.6291,'Europe/Lisbon'],
+    ['Madrid','Spain',40.4168,-3.7038,'Europe/Madrid'],
+    ['London','UK',51.5074,-0.1278,'Europe/London'],
+    ['New York','USA',40.7128,-74.0060,'America/New_York'],
+    ['Accra','Ghana',5.6037,-0.1870,'Africa/Accra'],
+    ['Nairobi','Kenya',-1.2921,36.8219,'Africa/Nairobi'],
+    ['Sydney','Australia',-33.8688,151.2093,'Australia/Sydney']
+  ];
+  var sel=document.getElementById('b-manual');
+  CITIES.forEach(function(c,i){var o=document.createElement('option');o.value=i;o.textContent=c[0]+', '+c[1];sel.appendChild(o);});
+
+  var state={ homeLocation:LOC.HOME, manualLocation:null, gpsLocation:null,
+              autoTravelEnabled:false, gpsAccuracy:null };
+  var schedule=[], lastYMD='';
+
+  function localYMD(tz){
+    var p={}; new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'})
+      .formatToParts(new Date()).forEach(function(x){p[x.type]=x.value;});
+    return {y:+p.year,m:+p.month,d:+p.day,iso:p.year+'-'+p.month+'-'+p.day};
+  }
+  function row(t,k,v,cls){var tr=t.insertRow();var a=tr.insertCell();a.className='k';a.textContent=k;var b=tr.insertCell();b.className='v'+(cls?' '+cls:'');b.textContent=(v==null?'—':v);}
+
+  function recompute(){
+    var active=LOC.resolveActive(state);
+    var ymd=localYMD(active.tz); lastYMD=ymd.iso;
+    var u=E.solarEventsUTC(ymd.y,ymd.m,ymd.d,active.lat,active.lon,0);
+    schedule=PE.buildSchedule(u,active,ymd.iso,TZ.format);
+    var cn=PE.currentAndNext(schedule,Date.now());
+    var runtime={
+      gpsAccuracy: state.gpsAccuracy!=null ? (Math.round(state.gpsAccuracy)+' m') : 'not requested',
+      notificationStatus: ('Notification' in window)? Notification.permission : 'unsupported',
+      swStatus: (navigator.serviceWorker && navigator.serviceWorker.controller)? 'active' : 'none',
+      offline: navigator.onLine? 'online' : 'offline'
+    };
+    var dg=DG.build(active,ymd.iso,u,schedule,cn,Date.now(),{engine:E,tzm:TZ},runtime);
+
+    var et=document.getElementById('events'); et.innerHTML='';
+    row(et,'Civil dawn',u.polar?('['+u.polar+']'):dg.civilDawn,'ev');
+    row(et,'Sunrise',u.polar?('['+u.polar+']'):dg.sunrise,'ev');
+    row(et,'Solar noon',dg.solarNoon,'ev');
+    row(et,'Sunset',u.polar?('['+u.polar+']'):dg.sunset,'ev');
+    row(et,'Civil dusk',u.polar?('['+u.polar+']'):dg.civilDusk,'ev');
+
+    var dt=document.getElementById('diag'); dt.innerHTML='';
+    row(dt,'Mode',dg.currentMode); row(dt,'Home',dg.homeLocation);
+    row(dt,'Current location',dg.currentLocation);
+    row(dt,'Latitude',dg.latitude); row(dt,'Longitude',dg.longitude);
+    row(dt,'Timezone',dg.timezone); row(dt,'DST',dg.dstStatus);
+    row(dt,'Device timezone',TZ.deviceZone());
+    row(dt,'Engine',dg.engineVersion); row(dt,'Calc version',dg.calcVersion);
+    row(dt,'Calc time (UTC)',dg.calcTime);
+    row(dt,'GPS accuracy',dg.gpsAccuracy);
+    row(dt,'Notifications',dg.notificationStatus);
+    row(dt,'Service worker',dg.serviceWorkerStatus);
+    row(dt,'Network',dg.offlineStatus);
+
+    var pt=document.getElementById('prayers'); pt.innerHTML='';
+    schedule.forEach(function(p){row(pt,p.name+' ('+p.anchor+')',p.displayTime,'ev');});
+    document.getElementById('limit').innerHTML=
+      'iOS Safari cannot fire prayer alarms while the app is closed (no web API). '+
+      'This page notifies only while open. A future native provider would add background alarms '+
+      'with no change to the engine.';
+    tick();
+  }
+
+  function tick(){
+    var cn=PE.currentAndNext(schedule,Date.now());
+    var el=document.getElementById('countdown'), lb=document.getElementById('cd-label');
+    if(cn.next && cn.secondsToNext!=null){
+      var s=cn.secondsToNext,h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
+      el.firstChild.nodeValue=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(ss<10?'0':'')+ss;
+      lb.textContent='until '+cn.next.name+' ('+cn.next.displayTime+')';
+    } else { el.firstChild.nodeValue='—'; lb.textContent=(cn.current?'last: '+cn.current.name:'no prayers today'); }
+    // auto-recalc when the local date rolls over (midnight)
+    var active=LOC.resolveActive(state);
+    if(localYMD(active.tz).iso!==lastYMD) recompute();
+  }
+
+  document.getElementById('b-home').onclick=function(){state.autoTravelEnabled=false;state.manualLocation=null;recompute();};
+  document.getElementById('b-restore').onclick=function(){state.autoTravelEnabled=false;state.manualLocation=null;state.gpsLocation=null;state.gpsAccuracy=null;sel.value='';recompute();};
+  sel.onchange=function(){var i=sel.value;if(i===''){return;}var c=CITIES[+i];state.autoTravelEnabled=false;state.manualLocation={name:c[0],country:c[1],lat:c[2],lon:c[3],tz:c[4]};recompute();};
+  function getGPS(){
+    if(!navigator.geolocation){alert('Geolocation not available.');return;}
+    navigator.geolocation.getCurrentPosition(function(pos){
+      state.gpsLocation={name:'Current Location',country:'',lat:pos.coords.latitude,lon:pos.coords.longitude,tz:TZ.deviceZone()};
+      state.gpsAccuracy=pos.coords.accuracy; state.autoTravelEnabled=true; sel.value=''; recompute();
+    },function(err){alert('GPS unavailable: '+err.message+'\\nStaying on current location.');},
+    {enableHighAccuracy:true,timeout:15000,maximumAge:300000});
+  }
+  document.getElementById('b-gps').onclick=getGPS;
+  document.getElementById('b-update').onclick=getGPS;
+
+  recompute();
+  setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
