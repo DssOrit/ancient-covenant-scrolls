@@ -1,12 +1,19 @@
-var CACHE = 'acr-solar-v32';
-var FILES = ['./', './index.html', './manifest.json'];
+var CACHE = 'acr-solar-v34';
+var SOLAR_CACHE_PREFIX = 'acr-solar-';  // Solar owns only caches with this prefix
+var FILES = ['./', './index.html', './manifest.json',
+  './solar-engine.js', './timezone-manager.js', './location-manager.js',
+  './prayer-engine.js', './notification-provider.js', './solar-diagnostics.js',
+  './diagnostics.html', './solar-selector.js'];
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(FILES); }));
   self.skipWaiting();
 });
 self.addEventListener('activate', function(e) {
   e.waitUntil(caches.keys().then(function(keys) {
-    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
+    return Promise.all(keys.filter(function(k){
+      // Solar may clean ONLY its own caches. Never touch other apps' caches.
+      return k.indexOf(SOLAR_CACHE_PREFIX) === 0 && k !== CACHE;
+    }).map(function(k){return caches.delete(k);}));
   }));
   self.clients.claim();
 });

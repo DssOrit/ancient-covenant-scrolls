@@ -1,55 +1,83 @@
 # Session Notes — 2026-07-25
 
 ## Current state
-- main HEAD: bcbc301 (Merge PR #760, merged by DssOrit)
-- Search cache: acr-search-v263 (on main)
-- Designated branch: claude/session-continuation-setup-2zkame (synced to main)
-- Backup: backup/2026-07-25-acr-search-v263 @ d65e536
+- main HEAD: 3ce2a03 (Merge PR #763).
+- ACR Solar candidate modular engine is on main as DISABLED candidate
+  infrastructure. Selector default mode is legacy. NOAA is OFF. Production
+  prayer times still come from the existing getSunTimes scheduler in
+  Solar/index.html. No production calculation was changed.
+- Nothing uncommitted of substance beyond this notes file.
 
-## Built today — merged via PR #760 (Enoch excluded-chapter reconciliation of ACR Search)
-Excluded Enoch = Similitudes (37-71), Book of Dreams (83-90), Epistle/Apocalypse of Weeks (91-108)
-per EXCLUDED_TEXTS_DOSSIER.md lines 87-90. Kept = Book of Watchers (1-36), Astronomical Book (72-82).
+## Built today (chronological)
+- PR #722 (merged): ACR Reader + ACR Search service workers hardened with a
+  3.5s network timeout + redirect-strip, matching Load Maps. Fixes iPhone
+  "server stopped responding" white-screen on open.
+- PR #761 (merged, device-verified): ACR Solar equation-of-time sign fix.
+  Solar-noon line changed from + EqT/60 to - EqT/60. Coimbra sunrise now
+  06:25 (was ~06:12). Sign-fix only; no NOAA cutover combined in.
+- PR #764 (merged, device-verified): ACR Solar service-worker cache cleanup
+  scoped to the acr-solar- prefix so the activate step can no longer delete
+  other apps' caches.
+- PR #763 (merged): ACR Solar Stage 2 + Phase 2 — decoupled candidate modules
+  (solar-engine, timezone-manager, location-manager, prayer-engine,
+  notification-provider, solar-diagnostics), the diagnostics.html test page,
+  SOLAR_ARCHITECTURE.md, and solar-selector.js (the single legacy/compare/noaa
+  engine-selection layer). Additive only: index.html gained 7 module script
+  tags + a comment; sw.js bumped acr-solar-v33 -> v34 and precaches the new
+  files. Preserves the #761 minus-EqT line and the #764 scoped cleanup.
+  NOAA disabled; default legacy.
 
-- Group A: 10 excluded-Enoch reference/quote removals across the Revelation cross-reference
-  entries and concordance blocks; in-canon and non-Enoch sources kept.
-- Group B: 4 Revelation entries — excluded Enoch removed, verdicts de-softened.
-- Verdict pass: all 42 Revelation cross-reference verdicts reframed to the debunk voice
-  (Revelation borrowed from the older primary source; no compare-as-valid framing).
-- Group C — 3 whole-block replacements:
-  - "Those Who Fabricated Texts" -> Yirmeyahu 8:8 + 16:19
-  - "Chanokh 93:1-2" verse entry -> Bereshit 15:13-14 + Yeshayahu 65:9
-  - "1 Enoch 62-63" Judgment Record -> in-canon 1 Enoch 1:9/5:6-7 + Yirmeyahu 22:13,
-    Yeshayahu 10:1-3, Devarim 32:35 (modern-application paragraph + Reader pointer kept)
-- Group D:
-  - Book of Enoch library card body -> evidence-first exposure of the three sections as
-    text manipulation (user's exact words)
-  - Similitudes-debunk "What Was Found at Qumran" -> no longer frames Dreams/Epistle as
-    authoritative; contrasts the Similitudes absence against the kept Watchers + Astronomical Book
-- Cache bump acr-search-v262 -> v263.
+## Phase 3 verification (real browser, puppeteer-core + bundled Chromium)
+- 0 page errors; only benign console noise (a 404 for a missing icon asset and
+  blocked external font CDNs). No JS exceptions.
+- All 7 module globals load as objects; production getSunTimes still present.
+- Selector default = legacy; invalid setMode ignored; no localStorage /
+  sessionStorage writes.
+- Legacy vs NOAA displayed-time deviation = 0 min across Coimbra, Singapore,
+  Sydney, New York today. Far-longitude day-shift flag behaves as designed
+  (correct time-of-day; raw-UTC calendar-day artifact is legacy-only).
+- diagnostics.html renders fully (events, diagnostics, prayers, compare
+  tables). Countdown updates on a single 1s interval. GPS-denial handled
+  gracefully (alert shown, schedule survived). Manual city switch recomputes.
+- SW: 1 registration, cache acr-solar-v34 holds all 11 candidate resources.
+  Seeded foreign cache (acr-reader-test-CANARY) survived activation — scoped
+  cleanup deletes only acr-solar-* caches.
 
-## Decisions logged
-- Verdict standard: every Revelation verdict debunks (borrowed-from-source), never compare-as-valid; no softening.
-- User declined adding Book of Dreams / Epistle exclusion cards to the Suppressed shelf. Shelf
-  keeps its 3 existing cards (Similitudes, Book of Giants, Extra Psalms). Draft wording for the
-  two cards is set aside (recorded in chat if revived).
+## Outstanding / device-verification-pending
+- Real iOS GPS acquisition / watchPosition on device.
+- Notification delivery on device (iOS Safari cannot fire background alarms
+  while closed — documented, not worked around).
+- Offline cold launch on device.
+- iPad Safari rendering + timezone/DST behavior for production index.html
+  (getDSTHours reads the device timezone).
+- These do NOT block the merged candidate (it is dormant), but MUST be verified
+  on iPad before any future NOAA cutover.
 
-## Live status
-- CONFIRMED LIVE by user (2026-07-25): "v263 up". acr-search-v263 deployed and serving.
-  ACR Search Enoch reconciliation + Revelation verdict debunk pass are live.
+## Pending / parked
+- NOAA cutover: NOT approved. Selector stays on legacy until the user
+  explicitly approves enabling NOAA after device verification.
 
-## Pending / parked (NOT requested this session)
-- "Problem 1" from the scan: Second Temple sectarian texts (1QS, 1QH, CD, Pesharim, 1QM, 11QT,
-  4QMMT) are used as authoritative "primary source" in many Search spots while also being debunked
-  as "held under warning" — a large internal contradiction. Left untouched; user scoped this
-  session to Enoch chapters only.
-- Card 5 keySrc still lists 1QS IV / 1QH.
-- Search hardRefresh() global cache-wipe scoping (Rule 21, pre-existing).
-- The two set-aside exclusion cards (Dreams, Epistle).
+## Content work earlier in session
+- ACR Study: removed Similitudes / Book of Parables / chapters 74-108 /
+  removed-Melchizedek / false-deity quiz content from study/content/file_14.json
+  and file_15.json, and removed the matching debunk FAQ (PR #711, merged).
 
 ## Capability gaps this session
-- Cannot reach live dssorit.github.io or the GitHub Pages API from this environment. Verified main
-  state via git fetch + GitHub MCP (pull_request_read) instead.
+- Live Pages URL (dssorit.github.io) not directly fetchable; verified via git /
+  GitHub MCP and raw content instead.
+- Browser runtime verification required installing puppeteer-core in /tmp and
+  driving the bundled Chromium at /opt/pw-browsers/chromium-1194.
 
 ## Backups
-- backup/2026-07-25-acr-search-v263 @ d65e536 (branch tip before merge). Recovery:
-  git checkout backup/2026-07-25-acr-search-v263
+- backup/2026-07-25-pre-solar-stage2 @ 1746161
+- backup/2026-07-25-pre-763-rebase
+
+## Today's commit log (oneline)
+- 3ce2a03 Merge pull request #763 (ACR Solar Stage 2 candidate modules)
+- e2e967b ACR Solar Phase 2: engine-selection layer (legacy/compare/noaa)
+- f70e8ad ACR Solar Stage 2 (rebased): candidate modules, production intact
+- c0bd6a6 Merge pull request #764 (SW cache isolation)
+- 314d055 ACR Solar: scope service-worker cache cleanup to Solar caches only
+- 4d7d665 Merge pull request #761 (equation-of-time sign fix)
+- 16ed0e5 ACR Solar: fix equation-of-time sign error
+- 1746161 Merge pull request #762 (lock all repo sites behind unlock phrases)

@@ -695,6 +695,15 @@ select.form-input option { background: var(--surface2); }
 
 </head>
 <body>
+<!-- ACR Solar candidate modules (Stage 2, rebased onto current main). Loaded as
+     globals only; the production scheduler is unchanged and still drives prayer times. -->
+<script src="solar-engine.js"></script>
+<script src="timezone-manager.js"></script>
+<script src="location-manager.js"></script>
+<script src="prayer-engine.js"></script>
+<script src="notification-provider.js"></script>
+<script src="solar-diagnostics.js"></script>
+<script src="solar-selector.js"></script>
 
 <!-- SUNSET ALERT BANNER -->
 <div id="sunset-alert">
@@ -1836,7 +1845,7 @@ function getSunTimes(date, lat, lon, utcOffset) {
   var lonCorr = lon / 15;
   var tzOffset = (utcOffset !== undefined && utcOffset !== null) ? utcOffset : (function() { var jan1 = new Date(date.getFullYear(), 0, 15); return -jan1.getTimezoneOffset() / 60; })();
 
-  var noon = 12 - lonCorr + EqT/60 + tzOffset;
+  var noon = 12 - lonCorr - EqT/60 + tzOffset;
   var sunriseH = noon - HA/15;
   var sunsetH = noon + HA/15;
 

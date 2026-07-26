@@ -71,22 +71,48 @@ These have been re-locked on 2026-05-04 after repeated violations.
    This is also the first thing to do at session start. If a direct
    push to `main` fails, fall back to the PR workflow in rule 6.
    Do not ship from a stale branch. Do not force push.
-8. **DO NOT TOUCH ACR READER, ACR2, ACR SOLAR, OR ACR SEARCH — EVER, WITHOUT DIRECT APPROVAL.**
+8. **DO NOT TOUCH ANY SITE — EVER, WITHOUT DIRECT APPROVAL.**
    Locked 2026-06-02 by user. Extended 2026-07-16 to cover ACR Search and
-   to re-lock ACR Solar. Covers all four apps:
+   ACR Solar. Extended 2026-07-25 to cover ALL sites in the repo.
+   Every deployable site requires an exact unlock phrase before any file
+   inside it may be touched. Covers all sites:
    - ACR Reader (root `/` app): `index.html`, `acr.css`, `sw.js`, etc.,
      and the `content/` and `data/` folders.
-   - ACR2: the `/ACR2/` subfolder and all files inside it.
-   - ACR Solar: the `/Solar/` subfolder and all files inside it.
-   - ACR Search: the `/Search/` subfolder and all files inside it,
+     Unlock: "edit ACR reader" or "fix the reader"
+   - ACR2 (`/ACR2/`): all files inside it.
+     Unlock: "edit ACR2" or "fix ACR2"
+   - ACR Solar (`/Solar/`): all files inside it.
+     Unlock: "edit ACR Solar" or "fix Solar"
+   - ACR Search (`/Search/`): all files inside it,
      including `Search/index.html`, `Search/sw.js`, and
      `Search/acr_search_data.json`.
-   Only edit any of the above if the user says one of these exact phrases:
-   "edit ACR reader", "fix the reader", "edit ACR2", "fix ACR2",
-   "edit ACR Solar", "fix Solar", "edit ACR Search", "fix Search",
-   or explicitly names a specific file inside one of those folders.
+     Unlock: "edit ACR Search" or "fix Search"
+   - GESTUDY (`/GESTUDY/`): all files inside it.
+     Unlock: "edit GESTUDY" or "fix GESTUDY"
+   - GreatE (`/GreatE/`): all files inside it.
+     Unlock: "edit GreatE" or "fix GreatE"
+   - LoadAI (`/LoadAI/`): all files inside it.
+     Unlock: "edit LoadAI" or "fix LoadAI"
+   - LoadPlay (`/LoadPlay/` and `/loadplay/`): all files inside either folder.
+     Unlock: "edit LoadPlay" or "fix LoadPlay"
+   - LoadTasks (`/LoadTasks/` and `/loadtasks-inbox/`): all files inside either folder.
+     Unlock: "edit LoadTasks" or "fix LoadTasks"
+   - WSA (`/WSA/`): all files inside it.
+     Unlock: "edit WSA" or "fix WSA"
+   - Attain (`/attain/`): all files inside it.
+     Unlock: "edit Attain" or "fix Attain"
+   - Attain Jr (`/attain-jr/`): all files inside it.
+     Unlock: "edit Attain Jr" or "fix Attain Jr"
+   - Load (`/load/`): all files inside it.
+     Unlock: "edit Load" or "fix Load"
+   - Load Maps (`/loadmaps/` and `/maps/`): all files inside either folder.
+     Unlock: "edit Load Maps" or "fix Load Maps"
+   - LoadStudio (`/loadstudio/`): all files inside it.
+     Unlock: "edit LoadStudio" or "fix LoadStudio"
+   - Study (`/study/`): all files inside it.
+     Unlock: "edit Study" or "fix Study"
    A general bug report, content question, or feature idea does NOT count
-   as approval — stop and ask before touching anything in those folders.
+   as approval — stop and ask before touching anything in any site folder.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
 9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
