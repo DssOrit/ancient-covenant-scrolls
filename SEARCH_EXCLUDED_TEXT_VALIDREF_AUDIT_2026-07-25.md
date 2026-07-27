@@ -251,3 +251,18 @@ These are ALL occurrences (validating + debunk + mention). Per text, classify ea
 - [ ] L1397, L1648, L2777, L2799, L2800, L5899, L6348, L6370, L6407, L6408, L6412, L6413, L6415, L6552, L6591, L6592, L6853, L7694, L7695, L7696
 
 TOTAL occurrences across 12 texts: 312 (most are debunk-zone; validating subset is smaller).
+
+## PROGRESS LOG
+- #1 Community Rule (1QS): DONE (cards + covenant-word glossary; live at v265).
+- #14 Book of Jubilees: DONE (books entry aligned to forgery dossier; 5 audit spots all debunk/excluded; verified).
+- #2 Hodayot (1QH): DONE 2026-07-27. 13 validating spots re-sourced to covenant record:
+  L2777 raz -> Persian-loanword debunk; L3711 -> Daniel 12:2 + Isaiah 26:19; L3712 -> Tehillim;
+  L4126 -> moved to shelf 4 (Manipulated Additions), debunk reframe; L4425 -> 1 Kings 8:54/Nechemiah 8:6/Bereshit 17:3;
+  L4811 -> Devarim 4:7; L7355/56 -> Tehillim 116:4 + Shemot 3:15; L7391/92 -> full covenant-record prayer re-source
+  (posture/times/language/direction, direction corrected to toward-Jerusalem); L7680 -> Tehillim 90/86 (tefillah titles);
+  L7716 -> Devarim 30:19-20; L10254 -> Nechemiah 9:20. 18 debunk/mention/dossier spots left as-is.
+- Also this session: shelf 4 renamed "Manipulated Additions — Not Covenant Scripture"; standard exclusion stamp
+  reworded site-wide (60 spots) to "Not found in the authentic record. A later addition of manipulation texts.";
+  6 "excludes/excluded" agent-word spots aligned.
+- REMAINING (Bucket 1): #3 CD, #4 1QpHab, #5 11QT, #6 1QM, #7 4Q285, #8 4QMMT, #9 1QSa, #10 Words of Luminaries,
+  #11 Songs of Sabbath, #12 Book of Giants, #13 Raz Nihyeh/4QInstruction (raz lexicon already handled at L2777).
