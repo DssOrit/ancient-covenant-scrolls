@@ -209,3 +209,60 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 ## Section C — Already handled this session (live at v263)
 - 1 Enoch 37-71 (Similitudes)
 - 1 Enoch 83-108 (Book of Dreams + Epistle / Apocalypse of Weeks)
+
+## FROZEN COMPLETE SCAN — 2026-07-27 (deterministic, exhaustive; supersedes the heuristic candidate lists above)
+Method: grep every identifier for each of the 12 remaining texts against Search/index.html on this branch.
+These are ALL occurrences (validating + debunk + mention). Per text, classify each line VALIDATING (fix) vs DEBUNK/MENTION (leave) when reviewed. No new TEXT will be added; this is the closed superset of spots.
+
+### Hodayot (1QH): 31 occurrences
+- [ ] L2777, L3711, L3712, L4126, L4425, L4707, L4811, L6347, L6364, L6422, L6424, L6425, L6427, L6431, L6435, L6436, L6438, L6440, L6441, L6846, L7355, L7356, L7391, L7392, L7680, L7716, L7783, L7796, L9463, L10253, L10254
+
+### Damascus Document (CD): 60 occurrences
+- [ ] L1532, L1824, L2793, L3769, L3804, L3877, L4446, L4577, L4707, L4877, L4899, L5095, L5096, L5247, L5263, L5909, L6345, L6358, L6375, L6377, L6379, L6382, L6384, L6385, L6405, L6406, L6840, L7364, L7365, L7382, L7383, L7385, L7427, L7428, L7463, L7464, L7472, L7473, L7662, L7665, L7668, L7700, L7708, L7715, L7721, L7728, L7756, L7770, L7780, L7782, L7793, L7803, L7826, L7828, L9491, L9492, L9496, L9498, L9499, L10297
+
+### Pesher Habakkuk (1QpHab): 18 occurrences
+- [ ] L4121, L4577, L4585, L4707, L4961, L6347, L6365, L6508, L6512, L6847, L7203, L7373, L7374, L7791, L7800, L7826, L7827, L9463
+
+### Temple Scroll (11QT): 35 occurrences
+- [ ] L2790, L3785, L4141, L4144, L6348, L6368, L6461, L6463, L6468, L6851, L7347, L7364, L7463, L7464, L7472, L7473, L7662, L7681, L7704, L7705, L7723, L7751, L7752, L7767, L7779, L7780, L7782, L7787, L7795, L8203, L9531, L9533, L9534, L10321, L10362
+
+### War Scroll (1QM): 56 occurrences
+- [ ] L1530, L1631, L1751, L2789, L3501, L3747, L3785, L3804, L4116, L4707, L4877, L4965, L5035, L5056, L6344, L6356, L6489, L6603, L6701, L6703, L6838, L6850, L7136, L7166, L7347, L7373, L7374, L7409, L7410, L7427, L7428, L7491, L7670, L7686, L7698, L7700, L7702, L7717, L7724, L7738, L7781, L7786, L7794, L7820, L8203, L9463, L10121, L10122, L10123, L10131, L10212, L10234, L10237, L10253, L10297, L10337
+
+### Book of War (4Q285): 8 occurrences
+- [ ] L2811, L6356, L6603, L6701, L6703, L6705, L6708, L10131
+
+### 4QMMT: 14 occurrences
+- [ ] L4136, L4137, L6344, L6357, L6529, L6532, L6539, L6839, L7383, L7385, L9484, L9678, L9679, L9680
+
+### Rule of Congregation (1QSa): 11 occurrences
+- [ ] L4938, L6360, L6377, L6391, L6397, L6403, L6842, L7365, L7464, L7472, L7473
+
+### Words of the Luminaries (4Q504-506): 19 occurrences
+- [ ] L3709, L4425, L4898, L5151, L5152, L6346, L6362, L6541, L6543, L6545, L6547, L6844, L7356, L7391, L7392, L10146, L10147, L10205, L10353
+
+### Songs of Sabbath Sacrifice (4Q400-407): 12 occurrences
+- [ ] L1585, L6347, L6366, L6559, L6562, L6848, L7383, L7677, L7701, L7787, L10204, L10247
+
+### Book of Giants: 28 occurrences
+- [ ] L1435, L2473, L2479, L2486, L2488, L2490, L3785, L4167, L4171, L4172, L4174, L4924, L4925, L4928, L4932, L4933, L6343, L6353, L6470, L6474, L6780, L7699, L7806, L7824, L7825, L9484, L9498, L10241
+
+### Raz Nihyeh / 4QInstruction: 20 occurrences
+- [ ] L1397, L1648, L2777, L2799, L2800, L5899, L6348, L6370, L6407, L6408, L6412, L6413, L6415, L6552, L6591, L6592, L6853, L7694, L7695, L7696
+
+TOTAL occurrences across 12 texts: 312 (most are debunk-zone; validating subset is smaller).
+
+## PROGRESS LOG
+- #1 Community Rule (1QS): DONE (cards + covenant-word glossary; live at v265).
+- #14 Book of Jubilees: DONE (books entry aligned to forgery dossier; 5 audit spots all debunk/excluded; verified).
+- #2 Hodayot (1QH): DONE 2026-07-27. 13 validating spots re-sourced to covenant record:
+  L2777 raz -> Persian-loanword debunk; L3711 -> Daniel 12:2 + Isaiah 26:19; L3712 -> Tehillim;
+  L4126 -> moved to shelf 4 (Manipulated Additions), debunk reframe; L4425 -> 1 Kings 8:54/Nechemiah 8:6/Bereshit 17:3;
+  L4811 -> Devarim 4:7; L7355/56 -> Tehillim 116:4 + Shemot 3:15; L7391/92 -> full covenant-record prayer re-source
+  (posture/times/language/direction, direction corrected to toward-Jerusalem); L7680 -> Tehillim 90/86 (tefillah titles);
+  L7716 -> Devarim 30:19-20; L10254 -> Nechemiah 9:20. 18 debunk/mention/dossier spots left as-is.
+- Also this session: shelf 4 renamed "Manipulated Additions — Not Covenant Scripture"; standard exclusion stamp
+  reworded site-wide (60 spots) to "Not found in the authentic record. A later addition of manipulation texts.";
+  6 "excludes/excluded" agent-word spots aligned.
+- REMAINING (Bucket 1): #3 CD, #4 1QpHab, #5 11QT, #6 1QM, #7 4Q285, #8 4QMMT, #9 1QSa, #10 Words of Luminaries,
+  #11 Songs of Sabbath, #12 Book of Giants, #13 Raz Nihyeh/4QInstruction (raz lexicon already handled at L2777).
