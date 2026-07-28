@@ -264,5 +264,13 @@ TOTAL occurrences across 12 texts: 312 (most are debunk-zone; validating subset 
 - Also this session: shelf 4 renamed "Manipulated Additions — Not Covenant Scripture"; standard exclusion stamp
   reworded site-wide (60 spots) to "Not found in the authentic record. A later addition of manipulation texts.";
   6 "excludes/excluded" agent-word spots aligned.
-- REMAINING (Bucket 1): #3 CD, #4 1QpHab, #5 11QT, #6 1QM, #7 4Q285, #8 4QMMT, #9 1QSa, #10 Words of Luminaries,
-  #11 Songs of Sabbath, #12 Book of Giants, #13 Raz Nihyeh/4QInstruction (raz lexicon already handled at L2777).
+- #3 Damascus Document (CD): NEARLY DONE 2026-07-28 (live at v273). Validating spots re-sourced to covenant record:
+  L1532/L1824/L5909, L4446, L4899, L5095, L5096, L5247, L5263 (Shabbat cluster); L7364/L7365 (women-men, also 11QT+1QSa);
+  L10297 (800-doc counter-record, retitled); L7382/L7383 (Shabbat-timing, also 4QMMT+4Q400-407); L7385 (Shabbat-violations,
+  also 4QMMT); L7427/L7428 (racism, also 1QM); L7463/L7464 (same-sex, also 11QT+1QSa); L3804 (Dividing Line, also 1QS+1QM,
+  retitled); L7668 (Shabbat lexicon); L7803 (Cain lexicon); L2793 (mishpat); L3769 (brit source tag); L3877 (Fabrication One
+  citation); L4577 Teacher-of-Righteousness feature (also 1QpHab; full reframe + law-breaking verdict + 3 headings).
+  STILL LEFT (2 validating): L2784 (tzedek entry), L4615 (mashiach point). All other CD occurrences are debunk/dossier/leave.
+- REMAINING (Bucket 1): finish #3 CD (L2784, L4615); then #4 1QpHab, #5 11QT, #6 1QM, #7 4Q285, #8 4QMMT, #9 1QSa,
+  #10 Words of Luminaries, #11 Songs of Sabbath, #12 Book of Giants, #13 Raz Nihyeh/4QInstruction (raz lexicon handled at L2777).
+  Note: 11QT, 1QM, 4QMMT, 1QSa, 4Q400-407 each already partially cleared incidentally during the CD pass.
