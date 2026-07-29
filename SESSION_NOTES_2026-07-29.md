@@ -1,14 +1,49 @@
 # Session Notes — 2026-07-29
 
 ## Current state
-- Working branch: `claude/session-continuation-setup-2zkame`, pushed to origin at `edf3e0b`.
-- **PR #784 OPEN, NOT merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/784
-  (branch -> main). User merges; Claude did not merge (locked rule 9).
-- Cache on branch: **acr-search-v281** (bumped from v280). Not live until #784 is merged.
+- Working branch: `claude/session-continuation-setup-2zkame`.
+- **PR #784 MERGED** to main (`bd1cac7`), cache **acr-search-v281** LIVE. Verified on origin/main.
+- Backup: `backup/2026-07-29-acr-search-v281` @ `bd1cac7` (recovery: git checkout that branch).
+- **TWO consistency fixes committed on branch AFTER the merge, NOT shipped (user chose to hold
+  and batch with issue 3 next session):** `05a361e` (L7691 soul/nefesh) and `1a19c76` (L4116 War
+  Scroll card -> shelf 4). These are ahead of main by 2 commits. No cache bump yet; NO PR opened.
+  Next session: bump cache -> v282, open a NEW PR (do NOT reuse merged #784), batch with issue-3 work.
 - git identity: Claude / noreply@anthropic.com. The stop-hook "Unverified (N)" nag is the
   missing GPG signature only (this env cannot sign); commits carry the correct email. Harmless.
 - Continuing the excluded-text reconciliation of ACR Search: no excluded text used as a
   validating/authoritative reference; excluded texts appear only in debunk/exclusion context.
+
+## Post-merge consistency assessment (this session, after #784)
+User asked to assess the site for inconsistency/contradiction after the partial War Scroll pass.
+Three issues found; two fixed (held, unshipped), one logged.
+- **Issue 1 — state of the dead (FIXED, `05a361e`, held).** L7717 (fixed earlier today) removed
+  the "unconscious Sheol" claim per the Shmuel/En-dor account (1 Shmuel 28 — Shmuel roused, knew
+  Saul, foretold his death). L7691 (soul/nefesh) still said "unconscious waiting" — contradicted
+  L7717 and the site's own L7311 ("rest, not conscious glory," Shmuel "disturbed from rest").
+  Fixed L7691: dropped "unconscious," dropped "in DSS," added 1 Shmuel 28:15 rousable ref. All
+  three dead-state entries (L7311, L7691, L7717) now agree: rest in Sheol, not heaven, not
+  oblivion, rousable.
+- **Issue 2 — War Scroll card vs debunk cards (FIXED, `1a19c76`, held).** L4116 catalog card was
+  shelf 1 / type dss, presenting the War Scroll neutrally-positive ("YHWH's army fights alongside
+  the covenant community"), while L6356/L6489 call it "a sectarian forgery." User approved
+  Option A. IMPORTANT method note: user asked "did you search the included chapters to see if this
+  links" FIRST — the answer was YES it links (Devarim 20:4; Yehoshua 5:14 commander of YHWH's army;
+  Bamidbar 10:9 war-trumpet; Bamidbar 14:33 forty years; Ovadyah 1:19,21 Edom/Pelishtim; Yoel 3;
+  Zecharyah 14). So the reframe does NOT claim the themes are "absent from the covenant record"
+  (that would be false/overstated). Card moved to shelf 4 / type manipulated, reframed as a "late
+  sectarian rewrite of the covenant war": covenant themes are real and link; the OVERLAY (Roman-era
+  battle drill, Kittim=Rome dating tell, Persian Sons-of-Light/Darkness dualism, personified
+  Belial) is the manipulation. LESSON: always search included chapters before writing an "absent /
+  fabricated" verdict.
+- **Issue 3 — partial 1QM pass (LOGGED, not started).** ~a dozen validating War Scroll spots
+  remain and now openly contradict the shelf-4 card. Do these next session, one by one, with the
+  same check-first method (search included chapters, re-source accurately, don't overstate).
+  Biggest first: **L5056** (whole section "The War Scroll Names What This Is — The Primary Source
+  the Covenant Community Sealed"); **L10121-10123** (section "The War Scroll (1QM)... YHWH Fights
+  Directly in the Seventh Phase"); **L1530** ("the primary source the covenant community sealed in
+  Cave 1"); **L10337** (War Scroll and Gog). Smaller: L1751, L7724 (melekh/king), L7781, L7786
+  (Yehoshua), L10212, L10253. Triage each: validate=re-source, debunk=leave, neutral nav/label=leave
+  (L6344/L6838/L6850 vol labels; L7347 exclusion list; L3501/L7702 are 11QMelch not 1QM).
 
 ## Working method (LOCKED — unchanged)
 One spot at a time: full BEFORE, full AFTER, contradiction yes/no, wait for user "go", then
