@@ -2,12 +2,14 @@
 
 ## Current state
 - Working branch: `claude/session-continuation-setup-2zkame`.
-- **PR #784 MERGED** to main (`bd1cac7`), cache **acr-search-v281** LIVE. Verified on origin/main.
-- Backup: `backup/2026-07-29-acr-search-v281` @ `bd1cac7` (recovery: git checkout that branch).
-- **TWO consistency fixes committed on branch AFTER the merge, NOT shipped (user chose to hold
-  and batch with issue 3 next session):** `05a361e` (L7691 soul/nefesh) and `1a19c76` (L4116 War
-  Scroll card -> shelf 4). These are ahead of main by 2 commits. No cache bump yet; NO PR opened.
-  Next session: bump cache -> v282, open a NEW PR (do NOT reuse merged #784), batch with issue-3 work.
+- **PR #784 MERGED** (`bd1cac7`, cache v281) — War Scroll re-source pass (7 spots).
+- **PR #785 MERGED** to main (`d4f2fda`), cache **acr-search-v282** — CONFIRMED LIVE ON IPAD by user.
+  Consistency fixes: L7691 (soul/nefesh dead-state) + L4116 (War Scroll card -> shelf 4).
+- Backups: `backup/2026-07-29-acr-search-v282` @ `d4f2fda` (latest verified-live);
+  `backup/2026-07-29-acr-search-v281` @ `bd1cac7`. Recovery: git checkout <branch>.
+- Both post-merge contradictions (issues 1 & 2 below) are now RESOLVED and LIVE. Issue 3 remains.
+- Next session: continue issue 3 (remaining ~dozen validating 1QM spots). Branch is even with
+  main after #785; start fresh work from latest origin/main, new PR when shipping.
 - git identity: Claude / noreply@anthropic.com. The stop-hook "Unverified (N)" nag is the
   missing GPG signature only (this env cannot sign); commits carry the correct email. Harmless.
 - Continuing the excluded-text reconciliation of ACR Search: no excluded text used as a
