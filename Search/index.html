@@ -4092,8 +4092,8 @@ function libOpen(id) {
   if (el) el.classList.add('lib-active');
   var det = document.getElementById('lib-s' + sc.shelf + '-detail');
   if (!det) return;
-  var suppCls = sc.type === 'suppressed' ? ' lib-suppressed-detail' : '';
-  var findCls = sc.type === 'suppressed' ? ' lib-suppressed-find' : '';
+  var suppCls = sc.type === 'manipulated' ? ' lib-suppressed-detail' : '';
+  var findCls = sc.type === 'manipulated' ? ' lib-suppressed-find' : '';
   det.innerHTML = '<div class="lib-d-title">' + sc.title + '</div>'
     + '<div class="lib-d-ref">' + sc.ref + '</div>'
     + '<div class="lib-d-loc">' + sc.loc + '</div>'
@@ -4118,12 +4118,12 @@ var LIB_SCROLLS = [
     body:'19 columns describing a 40-year eschatological war between the Sons of Light and the Sons of Darkness. Detailed battle formations, weapons, trumpets, and priestly duties during combat. Copied ~1st century BCE.',
     finding:'The scroll documents a military theology entirely absent from the received canon. The war is cosmic and human simultaneously — YHWH\'s army fights alongside the covenant community. The 40-year duration mirrors the wilderness period. Seven nations are named as enemies: Edom, Moab, Ammon, Philistia, Kittim (Rome), and the violators of the covenant.'
   },
-  { id:4, shelf:1, type:'dss', short:'Pesher Habakkuk', ref:'1QpHab', title:'Pesher Habakkuk',
+  { id:4, shelf:4, type:'manipulated', short:'Pesher Habakkuk', ref:'1QpHab', title:'Pesher Habakkuk (1QpHab) — Late Sectarian Coded Commentary',
     loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem.',
-    body:'13 columns of running commentary on the book of Habakkuk. The method — pesher — applies every verse of Habakkuk as a coded reference to the Qumran community\'s own era: the Teacher of Righteousness, the Wicked Priest, and the Kittim (Rome). Copied ~1st century BCE.',
-    finding:'The Wicked Priest is described as a Jerusalem high priest who initially walked in truth then turned corrupt — most likely a Hasmonean priest. The Teacher of Righteousness led the community in opposition. This conflict is entirely absent from the received canon — the community kept its own historical record in code.'
+    body:'13 columns that hijack the prophet Chavakuk, decoding every verse as a coded reference to one breakaway faction\'s own era — its founder-legend the "Teacher of Righteousness," its enemy the "Wicked Priest," and the "Kittim." A 1st-century-BCE sectarian pamphlet imposed on a covenant prophet, not covenant scripture. Copied ~1st century BCE.',
+    finding:'The pesher method rewrites Chavakuk\'s prophecy into the internal politics of one Qumran faction, then passes it off as the meaning of the text. Later Christian claim-making seized on the "Teacher" figure to prop up the NT\'s invented figure — a fabrication stacked on a fabrication. Not found in the authentic record. A later addition of manipulation texts.'
   },
-  { id:5, shelf:4, type:'suppressed', short:'Thanksgiving Hymns', ref:'1QH', title:'The Thanksgiving Hymns (1QH) — Late Sectarian Devotional Poetry',
+  { id:5, shelf:4, type:'manipulated', short:'Thanksgiving Hymns', ref:'1QH', title:'The Thanksgiving Hymns (1QH) — Late Sectarian Devotional Poetry',
     loc:'Cave 1, Qumran, 1947. Shrine of the Book, Israel Museum, Jerusalem. Copied ~1st century BCE to 1st century CE — Late Sectarian Hebrew.',
     body:'28+ first-person hymns built around the Qumran sect\'s founder-figure, the Teacher of Righteousness — laments of suffering, election, and deliverance from enemies. A mid-2nd-century-BCE sectarian self-portrait in stylized Sectarian Hebrew, not covenant scripture.',
     finding:'The hymns are the internal devotional record of one breakaway faction, engineered around its own leader-legend. Later Christian claim-making seized on the "Teacher" figure to retroject the NT\'s invented Son figure onto it — a fabrication stacked on a fabrication. Not found in the authentic record. A later addition of manipulation texts.'
@@ -4163,17 +4163,17 @@ var LIB_SCROLLS = [
     body:'The Torah in Ge\'ez — Bereshit, Shemot, Vayikra, Bamidbar, Devarim — part of the Ethiopian biblical canon that also includes 1 Enoch and other texts excluded from the Western canon. Preserved in a continuous textual tradition outside the Masoretic and Rabbinic transmission lines.',
     finding:'The Ge\'ez Orit represents a pre-Rabbinic textual tradition that was never subject to the Masoretic vocalization decisions, the Rabbinic canonical selections, or the later European theological overlay. It carries 1 Enoch as canonical — books the Qumran community treated as authoritative (multiple copies in multiple caves) but which Rabbinic Judaism and Protestant Christianity excluded.'
   },
-  { id:13, shelf:4, type:'suppressed', short:'Similitudes', ref:'1 Enoch 37–71', title:'The Book of Parables / Similitudes — A Late Insertion, Absent from Qumran (1 Enoch 37–71)',
+  { id:13, shelf:4, type:'manipulated', short:'Similitudes', ref:'1 Enoch 37–71', title:'The Book of Parables / Similitudes — A Late Insertion, Absent from Qumran (1 Enoch 37–71)',
     loc:'Stratigraphic layer: late 1st century BCE to early 1st century CE. Qumran deposited eleven distinct copies of the Enochic collection across Caves 1–11 — the Book of Watchers (4Q201), the Astronomical Book (4Q208), the Book of Giants — yet across thousands of recovered scraps not a single letter of the Book of Parables exists. It was absent from the community\'s inventory because it had not yet been anthologized into the Enochic corpus when the library was sealed in 68 CE.',
     body:'Three "parables" that lift the vague phrase "one like a son of man" from Daniyel 7:13 and blow it up into a hyper-developed, pre-existent, celestial cosmic judge seated on the "Throne of Glory." At 1 Enoch 71:14 the manipulation reaches its climax: the angel tells Chanokh, "You are the Son of Man who is born unto righteousness" — Chanokh himself recast as a divine, pre-existent savior figure. A late post-exilic apocalyptic expansion, engineered to comfort communities crushed under Roman-era vassal rule.',
     finding:'Two hard markers date it and expose it. First, the material absence blackout: eleven Enochic copies survived at Qumran and not one scrap of the Parables — a physical-layout exclusion, not an accident of preservation. Second, the geopolitical marker shock: 1 Enoch 56:5 stages angels thrusting "to the east at the Parthians and Medes," an explicit report of the Parthian invasion of Judea in 40 BCE, mapped as fake prophecy centuries after the Persian and early Hellenistic eras closed. The developed divine-Son theology appears in no confirmed pre-70 CE source; the NT figure was later built on it. It entered the corpus here — documented as the manipulation, never the covenant baseline.'
   },
-  { id:14, shelf:4, type:'suppressed', short:'Book of Giants', ref:'4QEnGiants', title:'The Book of Giants — A Hellenistic-Era Mesopotamian Mashup (4Q203, 4Q530–532)',
+  { id:14, shelf:4, type:'manipulated', short:'Book of Giants', ref:'4QEnGiants', title:'The Book of Giants — A Hellenistic-Era Mesopotamian Mashup (4Q203, 4Q530–532)',
     loc:'Cave 4, Qumran. Fragments: 4Q203, 4Q530–532, 4Q556. Also preserved in a later Manichaean version in Central Asian manuscripts (Turfan collection, Berlin) — a 3rd-century CE Persian religion, showing how far and how late the text traveled.',
     body:'A late Second Temple splice of Mesopotamian myth onto the four-verse Nephilim mention at Bereshit 6:1–4. It expands the Watcher narrative into named giants — Ohya, Hahya, and Gilgamesh — who have prophetic dreams of their own destruction before the flood.',
     finding:'The tell is the name Gilgamesh (גלגמיש). In 4Q530–531 one of the pre-flood giants is called Gilgamesh — the hero-king of the Akkadian epic dropped straight into the flood world of Bereshit. That anachronistic insertion exposes the book as a Hellenistic-era literary mashup, not primeval covenant history. It was not "suppressed" ancient memory; it is a late composition welding Babylonian legend onto four verses of Bereshit — documented here as the manipulation.'
   },
-  { id:15, shelf:4, type:'suppressed', short:'Extra Psalms', ref:'11Q5 Additional Compositions', title:'The Non-Canonical Psalms of 11Q5',
+  { id:15, shelf:4, type:'manipulated', short:'Extra Psalms', ref:'11Q5 Additional Compositions', title:'The Non-Canonical Psalms of 11Q5',
     loc:'Cave 11, Qumran, 1956. The Psalms Scroll (11Q5) contains seven compositions not in the Masoretic Psalter. Shrine of the Book, Israel Museum.',
     body:'The additional compositions include: the Hymn to the Creator, the Apostrophe to Zion, the Apostrophe to Judah, Psalm 151 (known in the LXX), Psalm 154–155 (known in Syriac), and a prose account of David\'s compositions. These texts show every formal feature of a canonical psalm.',
     finding:'The presence of these compositions in the Psalms Scroll alongside canonical psalms — without any indication that they were considered secondary — confirms that the Masoretic Psalter\'s 150-psalm boundary was a later editorial decision, not the state of the collection in the 1st century BCE. The Qumran community\'s psalm collection was larger. Who drew the line at 150, when, and why, is not documented in the primary sources.'
@@ -4196,7 +4196,7 @@ function renderLibraryPanel() {
     html += '<div class="lib-shelf-lbl">' + shelf.label + '</div>';
     html += '<div class="lib-shelf">';
     scrolls.forEach(function(sc) {
-      var scSuppCls = sc.type === 'suppressed' ? ' lib-suppressed' : '';
+      var scSuppCls = sc.type === 'manipulated' ? ' lib-suppressed' : '';
       html += '<div class="lib-scroll' + scSuppCls + '" id="lib-sc-' + sc.id + '" onclick="libOpen(' + sc.id + ')">';
       html += '<div class="lib-rod"></div>';
       html += '<div class="lib-body"><span class="lib-body-txt">' + sc.short + '</span></div>';
