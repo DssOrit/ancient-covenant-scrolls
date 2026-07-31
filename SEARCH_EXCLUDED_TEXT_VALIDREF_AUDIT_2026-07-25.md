@@ -9,13 +9,16 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll (11QT). All validating spots re-sourced.
+- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll, #7 Book of War, #8 4QMMT, #9 1QSa. All validating spots re-sourced.
+  #9 1QSa (6677993): the "Two Human Figures" card (L4938) AND its section header ("What the DSS Mashiach Actually Was" / "the primary source texts...two Messiahs") used excluded 1QS/1QSa as the messianic authority, contradicting the debunk section (L6360/L6403 call 1QSa a sectarian appendix). Card + header re-sourced to the covenant record: Zecharyah 4:14 (two anointed ones = Zerubbavel + Yehoshua high priest); office-separation enforced (Uziyahu leprosy 2 Divrei HaYamim Bet 26:18-19; Sha'ul's throne lost, Shemu'el Aleph 13:13); Tehillim 110:1 keeps YHWH and the anointed king two, 110:4 the man is priest after Melki-Tzedek not a god; Devarim 6:4, Yeshayahu 43:11. Prior draft's Zecharyah 6:13 (a king-priest FUSION text) dropped as self-undercutting per user "fact check, inconsistent". All quotes verified verbatim in acr_concordance.json. 1QSa remains only in debunk/dossier/nav (L6360/L6375-6406/L6842 — no-touch).
+  #8 4QMMT: card (L4136) moved shelf 2 -> shelf 4 / manifesto reframe (7ae2395); Exhibit E finding reframed off 4QMMT (f19c15e); 364-day calendar truth kept, sourced to Enochic order not 4QMMT. Shabbat cards done earlier (CD pass).
+  #7: no validating spots — appears only as dossier debunk, no-touch zones, and one neutral nav label (excluded-texts viewer). Nothing to fix.
   #5: catalog card + glossary + marriage/same-sex cards were debunk/done in prior passes; the 4 neutral Temple Scroll mentions in the Shemot/Vayikra/Devarim/Yechezkel book entries were DELETED per user (co-mentioned CD/Community Rule + Songs-of-Sabbath 4Q400-407 note also removed from Yechezkel). Florilegium (4Q174) David/Nathan done with messianic-deity refutation.
   #4 done: Adam (Bereshit), Amos (9:11), Caleb (Yehoshua 14:9), 666 card (Daniyel 11:30 + Yirmeyahu atbash
   Sheshach 51:41 / Lev-Kamai 51:1); reframed to debunk: Pesher-genre lexicon, Wicked Priest, Man of the Lie.
   #4 leave: Pesher Habakkuk catalog card (shelf 4), ToR lexicon entry (debunk), raz entry (debunk), CD book
   entry (debunk), cave-find timeline + argument-from-absence (neutral), no-touch zones.
-  NEXT (strict order): #7 Book of War (4Q285) -> #8 4QMMT -> #9 1QSa -> #10 Words of
+  NEXT (strict order): #10 Words of
   Luminaries -> #11 Songs of Sabbath -> #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
