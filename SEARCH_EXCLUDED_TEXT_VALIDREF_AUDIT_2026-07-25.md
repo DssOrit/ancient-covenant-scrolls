@@ -29,7 +29,26 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
   Sheshach 51:41 / Lev-Kamai 51:1); reframed to debunk: Pesher-genre lexicon, Wicked Priest, Man of the Lie.
   #4 leave: Pesher Habakkuk catalog card (shelf 4), ToR lexicon entry (debunk), raz entry (debunk), CD book
   entry (debunk), cave-find timeline + argument-from-absence (neutral), no-touch zones.
-  NEXT (strict order): #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
+  #12 Book of Giants IN PROGRESS (2026-07-31): 6 validating spots identified (all guard-SAFE, outside no-touch zones).
+  Direction (user): Option A strengthened - cut Book of Giants out of the authority role, re-source the giants to the
+  covenant record's own giant-chain, use EVERY giant verse found. The Book of Giants stays excluded (site dossier already
+  calls it a late fabrication); the giants/Nephilim are a TRUE covenant theme - affirm them, do not deny them.
+  SHIPPED (PR pending, cache v288): Spot 1 header+sub L4925-4926 (8a4963b: 'The Watchers & the Giants, DSS and Covenant
+  Record'); Spot 2 Noach Tamim L4928 (f510c9c: Bereshit 6:4 + Bamidbar 13:33, dropped Book of Giants, kept Book of Watchers);
+  Spot 3 the 'Confirmed' card L4932 (375b003: FLIPPED to covenant giant-record - Bereshit 6:4, Bamidbar 13:33, Yehoshua
+  15:14/14:15/11:21-22, Shofetim 1:20, Devarim 3:11, 2 Shemuel 21:20-22, 1 Shemuel 17:4; Option 2 - NO Gilgamesh fragment
+  claim, only the app's general exclusion verdict, because Gilgamesh is 0 in the concordance and the fragment claim is
+  dossier-sourced not concordance-verifiable); Spot 4 suppression card L4933 (836787f: unbundled Giants from the
+  Watchers/1 Chanokh suppression argument).
+  PENDING TOMORROW - 2 spots, both presented & approved-pending-go (BEFORE/AFTER ready):
+   - Spot 5 Abel-Main place card L2479-2490: re-source the 4 'Book of Giants 4Q203' refs to 1 CHANOKH 13:9 (Book of the
+     Watchers, VALID, in the Ge'ez Orit/concordance as Chanokh v9: '...weeping in Abelsjail, which is between Lebanon and
+     Seneser, with their faces covered.'). Abelsjail = Abel-Main; covenant place = Avel Beit-Ma'akhah (1 Melachim 15:20;
+     2 Melachim 15:29). Keep the card, re-source only. SEPARATE FLAG (not this task): status box credits Western scholars
+     Milik/Stuckenbruck for the modern-site ID - rule-0/24 concern, leave for user's call.
+   - Spot 6 Watcher/ir glossary L7699: cites '1 Enoch 6-11 and the Book of Giants (4Q203)' - drop the Book of Giants, keep
+     the valid 1 Enoch 6-11 Watchers source.
+  After Spots 5-6: #12 complete -> #13 Raz Nihyeh (last text). (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
 - METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
