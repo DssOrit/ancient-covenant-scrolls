@@ -18,7 +18,7 @@
 - #10 Words of the Luminaries — verified clean, no edits (all refs debunk/nav in the dossier zone).
 
 ## Shipped today (PR open, awaiting user merge)
-- **PR #<FILL> — #12 Book of Giants (partial, Spots 1-4), cache acr-search-v288.**
+- **PR #791 — #12 Book of Giants (partial, Spots 1-4), cache acr-search-v288.**
   Branch commits since v287: `8a4963b`, `f510c9c`, `375b003`, `836787f`, plus cache bump + docs.
   - Spot 1 L4925-4926: header -> "The Watchers & the Giants, DSS and Covenant Record"; sub
     re-sourced (covenant giant-chain; Book of the Watchers kept).
