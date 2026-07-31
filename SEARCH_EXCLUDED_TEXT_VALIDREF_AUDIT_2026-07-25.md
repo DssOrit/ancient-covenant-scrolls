@@ -5,6 +5,29 @@ List basis: EXCLUDED_TEXTS_DOSSIER.md removal registry.
 Purpose: walk each text one at a time, view the full current text at each spot, decide the fix.
 NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify the full text of each when reviewed.
 
+<!-- ============================================================= -->
+<!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
+<!-- ============================================================= -->
+## OPERATING STATE (update on every edit)
+- WORKING TEXT: #6 War Scroll (1QM). Finishing it first (already half-live), THEN strict order:
+  #3 CD (L2784, L4615) -> #4 Pesher (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+- METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
+  (VALIDATING=fix vs DEBUNK/MENTION/NO-TOUCH=leave). User approves the validating set; the rest
+  is logged no-touch. No cherry-picking, no ad-hoc lists, no out-of-order jumps.
+- NEXT ACTION: present the full War Scroll validating split for approval, then work each approved
+  spot one by one (full BEFORE/AFTER, contradiction y/n, wait for "go", guard-check, apply,
+  node --check, commit).
+
+## NO-TOUCH GUARD (mechanical — run before EVERY edit)
+Prose rules kept failing. Before editing ANY line in Search/index.html, run:
+    python3 tools/reconciliation_guard.py "<unique snippet of the line>"
+  BLOCKED = inside a no-touch zone (dossier / cave-discovery / origin-of-cruelty) -> do NOT edit.
+  WARN    = carries debunk-verdict language -> confirm it is a VALIDATING fix, not a debunk line.
+  SAFE    = outside every zone, no debunk signature.
+List current zones: python3 tools/reconciliation_guard.py --zones
+The guard is read-only and never touches the site. NO-TOUCH ZONES (leave, per plan): the excluded-
+texts dossier, the cave-discovery cards, and the Origin-of-Cruelty (renderFinalDaysPanel) section.
+
 ## Section A — Referenced as valid (need review), 14 texts
 
 ### [ ] Community Rule (1QS)  (30 candidate spot(s))
@@ -274,3 +297,20 @@ TOTAL occurrences across 12 texts: 312 (most are debunk-zone; validating subset 
 - REMAINING (Bucket 1): finish #3 CD (L2784, L4615); then #4 1QpHab, #5 11QT, #6 1QM, #7 4Q285, #8 4QMMT, #9 1QSa,
   #10 Words of Luminaries, #11 Songs of Sabbath, #12 Book of Giants, #13 Raz Nihyeh/4QInstruction (raz lexicon handled at L2777).
   Note: 11QT, 1QM, 4QMMT, 1QSa, 4Q400-407 each already partially cleared incidentally during the CD pass.
+- #6 War Scroll (1QM): IN PROGRESS (out of order — being finished first per user 2026-07-31, then back to strict order).
+  DONE (validating spots re-sourced to covenant record; live at v282, PRs #784/#785):
+  L7670 mishpat; L7698 goral (lot + lot-of-light, not denounced); L7738 milchamah; L7820 Michael (kept 1 Enoch);
+  L7794 War Scroll book entry RETITLED "the final war / Milchemet YHWH" (theme presented serious, not denounced);
+  L7166 144,000 card (origin off 1QM -> Bamidbar 1/2, quoted verse text, NT-borrowing verdict kept);
+  L7717 death/mavet (dropped unconscious-Sheol claim contradicted by 1 Shmuel 28; re-sourced);
+  L4116 War Scroll CATALOG CARD moved shelf 1 -> shelf 4 / manipulated, reframed accurately (covenant themes link:
+  Devarim 20:4/Yehoshua 5:14/Bamidbar 10:9/Ovadyah 1:19,21/Yoel 3/Zecharyah 14; overlay = manipulation).
+  Also L7691 soul/nefesh (consistency fix, NOT on frozen 1QM list — soul-sleep contradiction; user-approved).
+  Earlier (CD pass): L3804, L7427, L7428, L10297.
+  NO-TOUCH confirmed (guarded): dossier L6344/6356/6489/6603/6701/6703/6838/6850; cave-disc L9463;
+  origin-of-cruelty L10121/10122/10123/10131/10212/10234/10237/10253/10337. Already-debunk glossary: L2789/7686/7700.
+  Not 1QM (11QMelch): L3501, L7702.
+  STILL TO REVIEW (validating candidates, full split pending user approval): L1530, L1631, L1751, L3747, L3785,
+  L4707, L4877, L4965, L5035, L5056, L7136, L7373/L7374, L7409/L7410, L7491, L7724, L7781, L7786, L8203.
+  OPEN FLAG for user: some origin-of-cruelty lines read validating but sit in the no-touch zone — user decides.
+- Guard added 2026-07-31: tools/reconciliation_guard.py (run before every edit). See OPERATING STATE block at top.
