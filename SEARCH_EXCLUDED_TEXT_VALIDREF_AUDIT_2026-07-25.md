@@ -9,8 +9,13 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- WORKING TEXT: #6 War Scroll (1QM) COMPLETE (2026-07-31). All validating spots re-sourced.
-  NEXT: strict order — #3 CD (L2784, L4615) -> #4 Pesher (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk (1QpHab). All validating spots re-sourced.
+  #4 done: Adam (Bereshit), Amos (9:11), Caleb (Yehoshua 14:9), 666 card (Daniyel 11:30 + Yirmeyahu atbash
+  Sheshach 51:41 / Lev-Kamai 51:1); reframed to debunk: Pesher-genre lexicon, Wicked Priest, Man of the Lie.
+  #4 leave: Pesher Habakkuk catalog card (shelf 4), ToR lexicon entry (debunk), raz entry (debunk), CD book
+  entry (debunk), cave-find timeline + argument-from-absence (neutral), no-touch zones.
+  NEXT (strict order): #5 Temple Scroll (11QT) -> #7 Book of War (4Q285) -> #8 4QMMT -> #9 1QSa -> #10 Words of
+  Luminaries -> #11 Songs of Sabbath -> #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
 - METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
