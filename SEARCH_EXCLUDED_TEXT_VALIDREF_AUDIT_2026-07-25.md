@@ -9,13 +9,14 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll (11QT). All validating spots re-sourced.
+- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll, #7 Book of War (4Q285). All validating spots re-sourced.
+  #7: no validating spots — appears only as dossier debunk, no-touch zones, and one neutral nav label (excluded-texts viewer). Nothing to fix.
   #5: catalog card + glossary + marriage/same-sex cards were debunk/done in prior passes; the 4 neutral Temple Scroll mentions in the Shemot/Vayikra/Devarim/Yechezkel book entries were DELETED per user (co-mentioned CD/Community Rule + Songs-of-Sabbath 4Q400-407 note also removed from Yechezkel). Florilegium (4Q174) David/Nathan done with messianic-deity refutation.
   #4 done: Adam (Bereshit), Amos (9:11), Caleb (Yehoshua 14:9), 666 card (Daniyel 11:30 + Yirmeyahu atbash
   Sheshach 51:41 / Lev-Kamai 51:1); reframed to debunk: Pesher-genre lexicon, Wicked Priest, Man of the Lie.
   #4 leave: Pesher Habakkuk catalog card (shelf 4), ToR lexicon entry (debunk), raz entry (debunk), CD book
   entry (debunk), cave-find timeline + argument-from-absence (neutral), no-touch zones.
-  NEXT (strict order): #7 Book of War (4Q285) -> #8 4QMMT -> #9 1QSa -> #10 Words of
+  NEXT (strict order): #8 4QMMT -> #9 1QSa -> #10 Words of
   Luminaries -> #11 Songs of Sabbath -> #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
