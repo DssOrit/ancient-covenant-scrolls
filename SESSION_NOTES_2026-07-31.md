@@ -17,8 +17,11 @@
   (header/card present, old validating text gone, v287).
 - #10 Words of the Luminaries — verified clean, no edits (all refs debunk/nav in the dossier zone).
 
-## Shipped today (PR open, awaiting user merge)
-- **PR #791 — #12 Book of Giants (partial, Spots 1-4), cache acr-search-v288.**
+## Shipped today (merged to main, verified)
+- **PR #791 MERGED** (merge commit `26e2439`), cache **acr-search-v288** — #12 Book of Giants
+  (partial, Spots 1-4). User confirmed "Merged"; verified on origin/main: Spot 1 header present,
+  Spot 3 flipped card present + old "Confirmed" card gone, Spot 4 unbundled. Spots 5/6 confirmed
+  still present on main (expected — saved for tomorrow).
   Branch commits since v287: `8a4963b`, `f510c9c`, `375b003`, `836787f`, plus cache bump + docs.
   - Spot 1 L4925-4926: header -> "The Watchers & the Giants, DSS and Covenant Record"; sub
     re-sourced (covenant giant-chain; Book of the Watchers kept).
