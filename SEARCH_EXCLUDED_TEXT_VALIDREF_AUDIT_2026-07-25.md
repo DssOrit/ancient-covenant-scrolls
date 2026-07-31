@@ -9,7 +9,18 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll, #7 Book of War, #8 4QMMT, #9 1QSa. All validating spots re-sourced.
+- COMPLETE so far (2026-07-31): #6 War Scroll, #3 CD, #4 Pesher Habakkuk, #5 Temple Scroll, #7 Book of War, #8 4QMMT, #9 1QSa, #10 Words of the Luminaries, #11 Songs of the Sabbath Sacrifice. All validating spots re-sourced.
+  #11 Songs of Sabbath (4Q400-407 / 11Q17): 5 validating spots fixed one-by-one, each user-approved -
+  L1585 frequency guide step -> Yeshayahu 6:3-4 (60d6223); L7677 kodesh glossary -> Vayikra 19:2 + Yeshayahu 6:3 (306de1d);
+  L7701 malach glossary -> covenant angelology, named angels + offices (Mikha'el Dan 10/12, Gavri'el Dan 8, commander Yeh 5:14,
+  guardians Shemot 23:20/Teh 91:11, judgment Shemot 12:23/Melakhim Bet 19:35, cherubim Ber 3:24, serafim Yesh 6:2-3,
+  host Teh 103:20/104:4/148, fallen Watchers 1 Chanokh) - resolves the fallen-angel contradiction the user flagged (a2a3a15);
+  L10204 Merkavah card + L10247 Ophanim card -> Yehezkel 10:20/10:9/10:1 (dac7b59, c7febb7). L10204/L10247 are inside the
+  Origin-of-Cruelty no-touch zone (guard BLOCKED) - edited ONLY under the user's explicit per-spot exception approval.
+  Remaining Songs of Sabbath refs (L6347 nav, L6366 dossier verdict, L6559/L6562 debunk, L6848 nav) all in dossier no-touch zone - leave.
+  Do NOT confuse with the valid "Book of Luminaries" (#10) or the 364-day calendar content.
+  #8+#9 SHIPPED: PR #789 merged to main (merge commit 3e8d2f8), cache acr-search-v286. Verified on origin/main: header + card present, old card gone, cache v286.
+  #10 Words of the Luminaries (4Q504-506): VERIFIED CLEAN — no validating spots, no edit. All 7 occurrences are debunk verdicts or neutral nav labels, ALL inside the dossier no-touch zone (L6340-6856, guard BLOCKED): L6346 nav, L6362 dossier verdict, L6541/6543/6545/6547 debunk flow, L6844 nav. Do NOT confuse with the VALID "Book of Luminaries" = 1 Enoch 72-82 / Astronomical Book (4Q208-211 / 4Q209-4Q211), the 364-day covenant calendar source at L3709/L4898/L5151-5152/L10146-10147/L10205/L10353 — leave untouched. Same clean state as #7.
   #9 1QSa (6677993): the "Two Human Figures" card (L4938) AND its section header ("What the DSS Mashiach Actually Was" / "the primary source texts...two Messiahs") used excluded 1QS/1QSa as the messianic authority, contradicting the debunk section (L6360/L6403 call 1QSa a sectarian appendix). Card + header re-sourced to the covenant record: Zecharyah 4:14 (two anointed ones = Zerubbavel + Yehoshua high priest); office-separation enforced (Uziyahu leprosy 2 Divrei HaYamim Bet 26:18-19; Sha'ul's throne lost, Shemu'el Aleph 13:13); Tehillim 110:1 keeps YHWH and the anointed king two, 110:4 the man is priest after Melki-Tzedek not a god; Devarim 6:4, Yeshayahu 43:11. Prior draft's Zecharyah 6:13 (a king-priest FUSION text) dropped as self-undercutting per user "fact check, inconsistent". All quotes verified verbatim in acr_concordance.json. 1QSa remains only in debunk/dossier/nav (L6360/L6375-6406/L6842 — no-touch).
   #8 4QMMT: card (L4136) moved shelf 2 -> shelf 4 / manifesto reframe (7ae2395); Exhibit E finding reframed off 4QMMT (f19c15e); 364-day calendar truth kept, sourced to Enochic order not 4QMMT. Shabbat cards done earlier (CD pass).
   #7: no validating spots — appears only as dossier debunk, no-touch zones, and one neutral nav label (excluded-texts viewer). Nothing to fix.
@@ -18,8 +29,7 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
   Sheshach 51:41 / Lev-Kamai 51:1); reframed to debunk: Pesher-genre lexicon, Wicked Priest, Man of the Lie.
   #4 leave: Pesher Habakkuk catalog card (shelf 4), ToR lexicon entry (debunk), raz entry (debunk), CD book
   entry (debunk), cave-find timeline + argument-from-absence (neutral), no-touch zones.
-  NEXT (strict order): #10 Words of
-  Luminaries -> #11 Songs of Sabbath -> #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
+  NEXT (strict order): #12 Book of Giants -> #13 Raz Nihyeh. (Done earlier: #1 1QS, #2 Hodayot, #14 Jubilees.)
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
 - METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
