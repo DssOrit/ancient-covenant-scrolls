@@ -9,8 +9,10 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- WORKING TEXT: #6 War Scroll (1QM). Finishing it first (already half-live), THEN strict order:
-  #3 CD (L2784, L4615) -> #4 Pesher (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+- WORKING TEXT: #6 War Scroll (1QM) COMPLETE (2026-07-31). All validating spots re-sourced.
+  NEXT: strict order — #3 CD (L2784, L4615) -> #4 Pesher (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+  NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
+  CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
 - METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
   (VALIDATING=fix vs DEBUNK/MENTION/NO-TOUCH=leave). User approves the validating set; the rest
   is logged no-touch. No cherry-picking, no ad-hoc lists, no out-of-order jumps.
@@ -314,3 +316,12 @@ TOTAL occurrences across 12 texts: 312 (most are debunk-zone; validating subset 
   L4707, L4877, L4965, L5035, L5056, L7136, L7373/L7374, L7409/L7410, L7491, L7724, L7781, L7786, L8203.
   OPEN FLAG for user: some origin-of-cruelty lines read validating but sit in the no-touch zone — user decides.
 - Guard added 2026-07-31: tools/reconciliation_guard.py (run before every edit). See OPERATING STATE block at top.
+- #6 War Scroll (1QM): COMPLETE 2026-07-31 (on branch, not yet shipped). Validating spots re-sourced this session:
+  L1530 (Orit guide-step opposition), L1751 (framework list), L3747/L5035 (Yavneh cards, full oppressor condemnation),
+  L4965 (Tel Arad Kittim, all 6 Kittim verses + Yechezkel 38/Tehillim 2), L5056 (flagship "Covenant Record Names the
+  Opposition", full re-source, documented middle kept), L7409/L7410 (rebuke card, battle-is-YHWH's), L7724 (melech,
+  expanded: YHWH-only-King + invented-Yeshua-deity debunk + idolatry), L7781 (Bamidbar census), L7786 (Yehoshua/Yericho).
+  All other current 1QM/War Scroll occurrences are LEAVE: reframed shelf-4 card (L4116); debunk (choshekh/Belial/satan-body
+  /exclusion-list); neutral mention (suppression-panel, cave-find timeline, DSS-Deut card, DSS-composed list, argument-from-
+  absence); not-1QM (11QMelchizedek x3); and the 3 no-touch zones. L7136/L7373-74 verified already clean (no 1QM).
+  Borderline L7491 = debunk (satan-card body exposes 1QS/1QM Belial), leave. #6 satan-card keySrc L7490 was cleaned 2026-07-26.
