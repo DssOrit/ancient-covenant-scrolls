@@ -9,8 +9,12 @@ NOTE: line numbers below are CANDIDATE validating spots from a heuristic; verify
 <!-- OPERATING STATE + GUARD — READ AND HONOR EVERY SESSION/EDIT   -->
 <!-- ============================================================= -->
 ## OPERATING STATE (update on every edit)
-- WORKING TEXT: #6 War Scroll (1QM) COMPLETE (2026-07-31). All validating spots re-sourced.
-  NEXT: strict order — #3 CD (L2784, L4615) -> #4 Pesher (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+- WORKING TEXT: #6 War Scroll COMPLETE + #3 CD COMPLETE (2026-07-31). tzedek entry re-sourced this session
+  (8e597a9); mashiach point was already fixed last week (bbc4df2). Both CD spots resolved.
+  NEXT (strict order): #4 Pesher Habakkuk (1QpHab) -> #5 Temple Scroll (11QT) -> #7 onward.
+  CARRY INTO #4: two live Teacher-of-Righteousness / pesher validating spots — Adam entry
+  ("The Teacher of Righteousness may have understood his community...") and Amos entry
+  ("4QpAmos applying his prophecies to the Teacher of Righteousness"; Florilegium 4Q174).
   NOTE: frozen line numbers have DRIFTED (this session's edits added many verses). Re-locate spots by
   CONTENT (grep), not the frozen L-numbers. Guard zones are content-anchored and stay correct.
 - METHOD (locked by user 2026-07-31): for each text, FIRST present the FULL frozen-line split
