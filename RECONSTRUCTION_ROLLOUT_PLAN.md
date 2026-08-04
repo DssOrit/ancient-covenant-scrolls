@@ -47,13 +47,24 @@ all still apply in full to every step below.
   corrected to the delivered numbering; the verse boundaries themselves
   are never adjusted to match the note.
 
+## Standing decision — backup before every addition, no exceptions
+
+**The current live state of the ACR Reader must be backed up immediately
+before adding any new volume's information — every single time, for every
+volume, with no exceptions.** This is not a one-time setup step; it repeats
+on every pass of the cycle below, right before Step 4 (Convert) touches
+anything. A backup branch is cut from the pre-change `main` HEAD, pushed,
+and its SHA verified to match pre-change `origin/main` before any content
+is written. The branch name and SHA are reported to the user every time.
+This is Rule 26 applied without exception to every volume delivery.
+
 ## The repeating cycle — one pass per volume-part
 
 | Step | What happens |
 |---|---|
 | 1. QA scan | Forensic scan on arrival: chapter/verse completeness, niqqud policy, old-wording check, every note checked against its verse. Reported before anything else happens. |
 | 2. User review | User decides whether findings (if any) need fixing before conversion. |
-| 3. Backup | Sync main, create and verify a backup branch at the pre-change HEAD, report branch and SHA. |
+| 3. Backup (every volume, every time) | Sync main, create and verify a backup branch at the pre-change HEAD, report branch and SHA. This step is never skipped, even if a backup was already made for a previous volume. |
 | 4. Convert | The docx's verses and notes are poured into the reader's exact existing style tokens for that volume's content file — never hand-typed, never restyled. |
 | 5. Preview | A full worked chapter rendered in the real reader CSS, shown before anything is written. User confirms look-and-feel is unchanged and all information is present. |
 | 6. Sync Study + Search | The same volume's text lives in three places. Study's quiz items/source quotes and Search's concordance + index entries are updated together with the reader. |
