@@ -67,10 +67,22 @@ This is Rule 26 applied without exception to every volume delivery.
 | 3. Backup (every volume, every time) | Sync main, create and verify a backup branch at the pre-change HEAD, report branch and SHA. This step is never skipped, even if a backup was already made for a previous volume. |
 | 4. Convert | The docx's verses and notes are poured into the reader's exact existing style tokens for that volume's content file — never hand-typed, never restyled. |
 | 5. Preview | A full worked chapter rendered in the real reader CSS, shown before anything is written. User confirms look-and-feel is unchanged and all information is present. |
-| 6. Sync Study + Search | The same volume's text lives in three places. Study's quiz items/source quotes and Search's concordance + index entries are updated together with the reader. |
-| 7. Verify | Verse counts and note counts per chapter match the docx exactly; JSON parses; HTML is structurally valid; navigation arrays (NAVIDS/LABELS/TOC) still match the files that exist. |
-| 8. Ship | Cache versions bumped forward (reader, Search, Study). Feature branch pushed, PR opened listing every changed file and the risk level. |
+| 6. Sync Study + Search | **DEFERRED as of 2026-08-05 — see standing decision below.** Not performed during the current phase. |
+| 7. Verify | Verse counts and note counts per chapter match the docx exactly; JSON parses; HTML is structurally valid; navigation arrays (NAVIDS/LABELS/TOC) still match the files that exist. Scoped to whichever surfaces were actually changed in the current phase. |
+| 8. Ship | Cache versions bumped forward for whichever surfaces changed. Feature branch pushed, PR opened listing every changed file and the risk level. |
 | 9. Merge | User merges. Claude only ever sends the link. |
+
+## Standing decision — ACR Reader only for now (confirmed by the user 2026-08-05)
+
+Volumes are being shipped to the **ACR Reader site only** for the current
+phase. Study and Search are intentionally left untouched — Step 6 (Sync
+Study + Search) is deferred and does not run per-volume right now. Search
+and Study will be brought back into sync in a separate, later phase covering
+all volumes shipped up to that point, not volume-by-volume alongside the
+Reader. Until that later phase, Study and Search legitimately diverge from
+the Reader for any volume shipped under this decision — that divergence is
+expected, not a defect. When that later phase begins, this plan will be
+updated to reactivate Step 6 and define the batch-sync procedure.
 
 ## Sequencing across volumes
 
