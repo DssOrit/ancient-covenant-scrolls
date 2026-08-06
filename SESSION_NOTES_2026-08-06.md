@@ -8,10 +8,10 @@ match.
 ## Current state
 
 - Branch: `main`, all shipping via PR
-- Latest commit: `eb179b61` — "Merge pull request #814 from DssOrit/claude/study-torah-sync"
-- Reader cache: `acr-v107` · Search cache: `acr-search-v290` · Study cache: `acr-study-v116`
+- Latest commit: `1a61a80b` — "Merge pull request #815 from DssOrit/claude/session-notes-2026-08-06"
+- Reader cache: `acr-v107` · Search cache: `acr-search-v291` · Study cache: `acr-study-v116`
 - Working tree: clean, nothing uncommitted
-- **The entire Torah (Bereshit through Devarim) is now fully reconstructed, shipped, and live on ACR Reader.** ACR Search and ACR Study are synced to match for every Torah passage they carry.
+- **The entire Torah (Bereshit through Devarim) is now fully reconstructed, shipped, and live on ACR Reader.** ACR Search and ACR Study are synced to match for every Torah passage they carry. ACR Search additionally carries 12 new scholarly entries from this session's research pass (see item 10 below).
 
 ## Built today
 
@@ -24,6 +24,7 @@ match.
 7. **ACR Study synced with the rebuilt Torah** (PR #814) — audited all 480 verse-tied quiz items (240 fill-blank, 240 multiple-choice) across 12 files. All 240 multiple-choice `source_quote` fields updated (question/options/correct untouched, they test theme not wording). Fill-blank: 198 auto-resolved (old blanked word verified present in new text), 42 hand-written one by one (blank+answer are carved from exact old wording, several sit in the Ten Commandments merge zone in Shemot 20 / Devarim 5 and needed a new question fitting the verse's actual current content). Per user direction: "Egypt" preserved throughout in Study (not synced to "Mitzrayim" like Reader/Search) — 173 occurrences confirmed kept; divine-name rule applied, 0 "Elohim" remaining anywhere, including a pre-existing duplicate quiz entry that still said "YHWH your Elohim".
 8. **`RECONSTRUCTION_ROLLOUT_PLAN.md` updated** (PR #806) — recorded the per-file style-token-discovery method, the part-boundary-change handling procedure, and the verse-by-verse verification method (not just counts) for future volumes.
 9. Every ship in today's session followed the full cycle: backup branch + SHA verified before any change, rendered preview shown and approved before writing content, PR opened with full file list, user-confirmed merge, then re-verified directly against `origin/main` after merge — no exceptions.
+10. **ACR Search: 12 new scholarly entries added** (PR #816) — evaluated six uploaded research documents (AI/Christian/Rabbinic, Converts/Khazar, Different People/Table of Nations, The Language, Ancient Africa, Why/racism) against the live site, external-sourced everything with named citations, then wrote 12 new purely-additive entries: Table of Nations (Sons of Yapheth genealogy), additional physical-description sources (Iyov 30:30, Eichah 4:7-8, Bereshit 42), Kerma, Aksum founding date (corrected from the source doc's 4th-century-BCE error to the archaeologically documented ~1st century BCE), Great Zimbabwe, Carthage, Ta-Seti/Havila/Berber-Ifri etymology/Egyptian-Hebrew sister-language evidence, "rabbi absent from the covenant record," Hanukkah/Purim covenant basis, Khazar conversion named primary sources (Kuzari, Ibn Fadlan), and a terminology note on "Torah" as a later narrowing of an older word. Nothing existing was replaced or removed — user's explicit standing rule for this task. The Ashkenazi/Elhaik genetics content already on the site was evaluated and left untouched per user decision. No Jubilees-sourced content added (site-internal contradiction flagged, left for user to resolve separately). Verified with `node --check` against the full enclosing script block and the isolated data array before and after merge.
 
 ## Outstanding / blocking
 
@@ -45,9 +46,10 @@ match.
 - `backup/2026-08-05-acr-v103-pre-bamidbar1`, `backup/2026-08-05-acr-v104-pre-bamidbar2` — pre-Bamidbar states
 - `backup/2026-08-05-acr-v105-pre-devarim1` — pre-Devarim state (covers both Devarim PRs, same base)
 - `backup/2026-08-05-acr-v107-pre-search-fix` — pre-Search-sync state
-- `backup/2026-08-06-acr-search-v290-pre-study-fix` — pre-Study-sync state, **current latest known-good**
+- `backup/2026-08-06-acr-search-v290-pre-study-fix` — pre-Study-sync state
+- `backup/2026-08-06-acr-search-v290` — pre-Search-scholarly-additions state, **current latest known-good**
 
-Recovery: `git checkout backup/2026-08-06-acr-search-v290-pre-study-fix` for the most recent pre-change snapshot; `git checkout main` for the current live state (Torah + Search + Study sync all complete).
+Recovery: `git checkout backup/2026-08-06-acr-search-v290` for the most recent pre-change snapshot; `git checkout main` for the current live state (Torah + Search + Study sync all complete, plus the 12 new Search scholarly entries).
 
 ## Today's commit log (oneline, oldest first)
 
@@ -78,4 +80,7 @@ cbdd2eef Search: sync Torah passages with the rebuilt Reader content
 12f1db27 Merge pull request #813 from DssOrit/claude/search-torah-sync
 c2ffd9e8 Study: sync Torah fill-blank and multiple-choice questions with Reader
 eb179b61 Merge pull request #814 from DssOrit/claude/study-torah-sync
+fdc16671 Add scholarly research content to ACR Search
+3ae96c9a Merge pull request #816 from DssOrit/claude/search-scholarly-additions-2026-08-06
+1a61a80b Merge pull request #815 from DssOrit/claude/session-notes-2026-08-06
 ```
