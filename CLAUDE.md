@@ -557,6 +557,41 @@ These have been re-locked on 2026-05-04 after repeated violations.
     This rule was locked after repeated softening slips. It takes precedence over
     sounding measured, balanced, or academic.
 
+29. **NEVER ADD FABRICATED TEXT — CONTENT SOURCE VERIFICATION LOCK —
+    LOCKED 2026-08-09 by user.** Locked after a same-day incident: a
+    delivered "reconstruction" docx contained invented verse text dressed
+    up with its own critical notes claiming it had been "restored."
+    Claude used that text on the live site without independently
+    verifying it, because the doc's own self-description was mistaken
+    for fact. Specific rules:
+    - **Never add fabricated text to any site, ever.** A source document
+      saying content was "missing" or has been "restored" is a claim,
+      not a fact. It must be verified against the site's own established
+      wording, or another independently reliable source, before any of
+      it is written to a live file — never taken on the document's own
+      word.
+    - **Generic or templated content anywhere in a source document is a
+      reliability red flag for the ENTIRE document, not a style quirk.**
+      If a document's notes (or any section) are identical boilerplate
+      copy-pasted across many chapters/entries instead of being
+      specific to each one, that is a signal the document's other
+      content — including its verse/body text — may also be unreliable.
+      Do not use content from that document until it has been
+      independently verified; do not use it selectively while noting
+      the red flag as a side observation.
+    - **Verify content, not just mechanics.** JSON validity, verse
+      counts, tag balance, and structural checks are necessary but not
+      sufficient. Before writing anything sourced from an external
+      document to a live file, the actual wording must be checked
+      against the site's own existing text or another independent
+      source — not just checked for internal consistency with itself.
+    - If a claim in a source document cannot be independently verified,
+      say so and ask — do not ship it and let the user catch it after
+      the fact.
+    This rule takes precedence over speed, over "the user gave me this
+    document so it must be right," and over any pressure to finish a
+    multi-step content task quickly.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
