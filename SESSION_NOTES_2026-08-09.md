@@ -169,7 +169,7 @@ final preview / ship once the unlock phrase is given.
 All Part 1 findings below were resolved, built, previewed, shipped, and
 merged. Kept for historical record only — nothing further pending here.
 
-## Chanokh Part 2 (Chapters 37-49) — SHIPPED, PR OPEN (#823)
+## Chanokh Part 2 (Chapters 37-49) — SHIPPED AND MERGED (PR #823)
 
 ### Source documents used
 - `For_checking_only_Chanokh_Part2_Ch37_55.docx` — reliable, chapter-specific
@@ -263,22 +263,30 @@ scheduled for a fix; raised to the user, no decision made either way.
 
 ## Outstanding / blocking
 
-1. **PR #823 merged and verified live** — no longer blocking, kept for
-   record: https://github.com/DssOrit/ancient-covenant-scrolls/pull/823
-2. Chapters 2-21, 23-24, 26, 33-36 (Part 1) and any chapters beyond 49 in
-   Part 2 not yet individually audited for the same missing/duplicate-verse
-   pattern — only done for chapters the user specifically flagged or that
-   surfaced during the note-citation check. Full-chapter audit still
-   pending if the user wants every remaining chapter checked.
-3. Site-wide paleo-glyph CSS font-family stack carries an extra
-   `"Noto Serif"` fallback not present in the user's stated `format.js`-
-   adjacent 4-item spec. Raised to user 2026-08-09, no decision made —
-   not scheduled for a fix. See Part 2 section above for detail.
+None. All items closed for now — see Pending / parked below for the two
+non-blocking items carried forward, and the record below for PRs #823/#824
+(both merged and verified live).
+
+- PR #823 (Chanokh Part 2 content) — merged and verified live:
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/823
+- PR #824 (session notes update) — merged and verified live:
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/824
 
 ## Pending / parked
 
 - Full retranslation of Ch.1-36 (the original ask) — superseded for now by
   the narrower missing/duplicate-verse scope. May resume after this pass.
+- Chapters 2-21, 23-24, 26, 33-36 (Part 1) and any chapters beyond 49 in
+  Part 2 not yet individually audited for the same missing/duplicate-verse
+  pattern — only done for chapters the user specifically flagged or that
+  surfaced during the note-citation check. Parked, not blocking. Resume
+  only if the user asks for a full-chapter audit.
+- Site-wide paleo-glyph CSS font-family stack carries an extra
+  `"Noto Serif"` fallback not present in the user's stated `format.js`-
+  adjacent 4-item spec (present identically in all 289 occurrences,
+  harmless in practice since the font has no Phoenician glyphs to serve).
+  **User decision 2026-08-09: "Just leave it."** Closed, no fix scheduled.
+  Do not re-raise unless the user asks.
 
 ## Capability gaps in this session
 
