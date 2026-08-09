@@ -1,5 +1,97 @@
 # Session Notes — 2026-08-09
 
+## In progress — Chanokh Part 2 (Astronomical Book, Ch.37-49) audit
+
+Two docs delivered for Part 2, same reliability split as Part 1:
+- `ACR_Chanokh_Part2_ACR3747_Astronomical_Book_RECONSTRUCTION_FOR_VERIFICATION.docx`
+  — chapter numbering (37-47) confirmed to align 1:1 with the site's own
+  numbering (verified via Ch.38 and Ch.42 content matching exactly).
+  Notes are boilerplate/templated (Rule 29 red flag) but verse TEXT
+  independently verified accurate against my own extraction of the file,
+  spot-checked twice, both exact matches.
+- `For_checking_only_Chanokh_Part2_Ch37_55.docx` — user's old pre-exclusion
+  Part 2 draft. Chapter-specific notes (reliable per Rule 29). Uses a
+  DIFFERENT internal chapter numbering than the site/reconstruction-doc —
+  do not cross-map numbers between this doc and the site directly.
+
+### Scope boundary confirmed via ACR2 cross-check
+
+- Chapters 50-55 (Animal Apocalypse, standard 1EN 85-90): confirmed
+  deliberately relocated to ACR2 Vol 13 ("RELOCATED FROM THE MAIN
+  RECORD... Held Under Warning"). Not missing, not in scope.
+- "Dwelling of Wisdom" (standard 1EN 42) and the "Head of Days/Fanuel"
+  scene (standard 1EN 71): both fall inside the range documented by the
+  site's own `file_115.json` ("The Book of Parables — Why It Is Excluded
+  — Chapters 37 through 71 in the Traditional Numbering"). Confirmed via
+  ACR2 search: this content has NOT been relocated anywhere (unlike the
+  Animal Apocalypse) — it's a leftover error with no home in the ACR
+  ecosystem, not an intentional relocation. **User confirmed: excluded
+  material (Parables, Animal Apocalypse, Epistle) is never added, no
+  matter which document it turns up in.**
+- ACR's own chapter numbers do NOT match standard 1 Enoch chapter
+  numbers 1:1 (e.g. ACR chapter 42 = standard 1 Enoch 77, not standard
+  42). Established via the reconstruction doc's own "Original 1 Enoch NN"
+  headers on each ACR chapter.
+
+### Confirmed fix — Ch.49 (settled, not yet built/shipped)
+
+Site's Ch.49 currently holds the wrong content (standard 1EN 71, Parables
+— "Head of Days," Mikha'el/Gavri'el/Rafa'el/Fanuel, "fear not... scribe
+of righteousness"). Title and notes already correctly describe "Chapter
+84" (the real content — Prayer After the First Vision) — only the verse
+text is wrong. Three-way verified (doc / site / ACR2). Fix: replace all
+6 verses with the checking-doc's real Ch.46 ("Prayer After the First
+Vision") text, register-adapted thee/thou/thy -> you/your. Title and
+notes untouched (already correct). Before/after text already shown and
+not objected to — awaiting grouped-fix approval below before building.
+
+### Full Ch.37-48 verse-level findings (site vs. reconstruction doc)
+
+| Ch | Finding | Type |
+|---|---|---|
+| 37 | Site cuts off mid-cycle (12v), missing the return journey through the gates + closing line that the doc's 37v version has | One-directional gap |
+| 38 | Matches, different wording only | No action |
+| 39 | v3 day-count math is broken (1,062/977/7,136 — internally impossible, 5yr < 3yr); doc gives 1,092/1,820/2,912 | Bug fix (not addition) |
+| 39 | v5 is a verbatim duplicate of Ch.40 v1 (intercalary-leaders sentence), doesn't belong in the moon chapter | Bug fix (dedupe) |
+| 40 | Doc's proposed v5 duplicates existing site v3 — do NOT add | Redundancy caught, no action |
+| 40 | Doc's v6-v9 (gate-by-gate specifics, "one circuit greater than others") look genuinely absent from site's 4 verses | One-directional gap (partial) |
+| 41 | Site (5v) is missing the entire gate-by-gate wind catalog (9v) that's the core of the chapter | One-directional gap (large) |
+| 41 | Site's v5 ("shown thee all the laws...") reads as a premature closing statement — may belong at Ch.44's end instead | Possible misplacement, flagged not resolved |
+| 42 | Doc has "seven great islands" (v8) absent from site | One-directional gap |
+| 42 | Site has "Yarden/Jordan -> Dead Sea" specific detail absent from doc | Two-way — site content must be preserved |
+| 43 | Site (7v) is missing the day-by-day waning sequence entirely; doc (17v) has full waxing+waning detail | One-directional gap (large) |
+| 44 | Site has specific portal-based waning detail (6th/1st portal, exact day counts) absent from doc | Two-way — site content must be preserved |
+| 44 | Doc has "5 days shorter" lunar/solar half-year comparison + closing line absent from site | One-directional gap (partial) |
+| 45 | Site has two unique passages absent from doc: sun's evening-chariot journey (v5), and the stars-mistaken-for-deities idolatry warning (v7) | Two-way — site content must be preserved |
+| 46 | **v5≈v7 and v6≈v8 are near-duplicate pairs within the site's own text** — internal bug, independent of the doc | Bug fix (dedupe) |
+| 46 | Site says "seven holy ones," doc says "three sacred messengers" — factual mismatch, not resolved which is correct | Discrepancy flagged, not resolved |
+| 46 | Doc's closing line (upright encourage one another, wrongdoers meet their outcome) absent from site | One-directional gap |
+| 47 | Site (7v) missing the doc's (20v) sequential leader-rotation detail and closing charge to Metushelakh | One-directional gap (large) |
+| 47 | Site has specific leader names (Melkiel, Tame'el, Hesfael, Keel, Peeel, Kerael) absent from doc entirely | Two-way — site content must be preserved |
+| 48 | Site (11v) has an extra v10 ("from heaven... great destruction") not in doc's (10v) version — restates v8, possible redundancy | Flagged, not confirmed as error |
+| 49 | Wrong content entirely (see confirmed fix above) | Whole-chapter replacement, settled |
+
+**Full sweep of Ch.37-49 complete at this level of scrutiny — every chapter
+checked, not just the ones with obvious problems.**
+
+### Outstanding — grouped by type, awaiting user approval before building
+
+1. **Clear one-directional additions** (safe to pull from doc, nothing
+   to lose): 37 (return journey), 40 (partial), 41 (gate catalog), 43
+   (waning sequence), 46 (closing line), 47 (leader-rotation detail).
+2. **Two-way merges** — both site and doc have unique content, neither
+   side gets overwritten: 42, 44, 45, 47 (names).
+3. **Bug fixes independent of either doc**: 39 (math + duplicate), 46
+   (internal duplicate pair v5/v7, v6/v8).
+4. **Discrepancies flagged, unresolved, need user call**: 46 ("seven
+   holy ones" vs "three sacred messengers"), 41's v5 possible
+   misplacement, 48's possible v10 redundancy.
+5. **Ch.49**: settled, whole-chapter content replacement (see above).
+
+Nothing written yet. Backup will be cut fresh immediately before any
+write, per Rule 26 — the last Part 2 backup point is whatever `main`
+currently is (unchanged since PR #822 merged).
+
 ## IMPORTANT — LOCKED 2026-08-09: never add fabricated text to this site
 
 User directive, verbatim: **"Never add fabricated text ever to this
