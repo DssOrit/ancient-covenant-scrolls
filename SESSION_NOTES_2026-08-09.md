@@ -10,6 +10,23 @@
   reporting per Rule 11 — waiting on the unlock phrase ("edit ACR reader"
   / "fix the reader") before any write to `data/file_13.json`.
 
+## IMPORTANT — paleo YHWH glyph is correct, do not "fix" it again
+
+Verified 2026-08-09: `data/file_13.json`'s title-block glyph still carries
+the exact codepoints corrected last week in PR #797/#799 —
+`0x10909 0x10904 0x10905 0x10904` (Yod-He-Waw-He). Confirmed directly
+against the live file, untouched by anything in this session.
+
+Any local/sandbox preview of this glyph (headless Chromium, no access to
+the proprietary "Segoe UI Historic" font the site's CSS asks for first)
+will render it using a substitute font (Noto Sans Phoenician, once
+installed via `apt-get install fonts-noto-extra`) and may look
+stroke-different from the real iPad rendering. **This is a font-
+substitution artifact of the preview environment, not a data or site
+defect.** Confirmed with user 2026-08-09 by comparing rendered variants —
+do not mistake this for a regression of the PR #797/#799 fix in any
+future session.
+
 ## In progress — Chanokh Part 1 (Chapters 1-36) verse audit
 
 User delivered `ACR_Chanokh_Part1_Ch136_RECONSTRUCTION_FOR_INDEPENDENT_VERIFICATION.docx`
@@ -41,7 +58,7 @@ User delivered `ACR_Chanokh_Part1_Ch136_RECONSTRUCTION_FOR_INDEPENDENT_VERIFICAT
 | 27 | v1-5, opens directly with Uriel's answer | v1 = Chanokh's opening question ("Why does this land of goodness...lie beside an accursed valley?"), then v2-5 the answer/blessing | Opening question genuinely missing on site | Attach question to the *start* of existing v1, before "Then Uriel answered me..." (no renumber) |
 | 27 (closing, v5 equiv.) | v5 = "Then I blessed YHWH of Glory..." | v5 = "Then I pronounced blessing over YHWH of Splendor..." | Already present on site, content matches | No action |
 | 22:9 note citation | CRITICAL NOTE cites "Verse 22:9" for the Hevel/Qa'in content, but that content is actually v8 on the site | — | Pre-existing citation bug, unrelated to the docx | **User decision: leave as-is** — content is present in the chapter, just under a different number; not to be touched |
-| 31/32 | Both chapters carry near-duplicate content (seven spice mountains -> Garden of Righteousness -> tree of wisdom -> Rafa'el's explanation). Site's own Ch.32 critical note already frames it as a documented manuscript-tradition doublet. | Docx keeps Ch.31 and Ch.32 as two *different* topics — Ch.31 is a distinct "trees of wisdom and other aromatics" passage (sarara/galbanum/aloe resin), Ch.32 is the Garden of Righteousness/tree-of-wisdom episode. | **User decision: treat as a duplication bug to resolve** (not a legitimate doublet) | **Not yet resolved.** Still owe the user a full explanation of how the fix will look on-site and how it affects numbering (this was interrupted mid-explanation and not yet re-delivered as of this note). Docx's real, distinct Ch.31 content (aromatic-tree mountains) looks like the correct replacement for the site's current duplicate Ch.31. |
+| 29-32 | Superseded finding, see below | Superseded finding, see below | **Root cause found: not a simple 31/32 doublet.** Chapter 29's real content (frankincense & myrrh) is missing from the site entirely. Site's current Ch.29 actually holds what should be Ch.30's content (valley of water/cinnamon); site's current Ch.30 holds what should be Ch.31's content (sarara/galbanum/aloe); site's current Ch.31 is a duplicate of Ch.32, backfilled because nothing else was left to put there. Ch.32 and Ch.33-36 are unaffected — confirmed no further drift past Ch.32. | **User decision: treat as a bug to resolve.** Fix = reslot content, not renumber chapters: Ch.30's slot gets the site's own existing Ch.29 text moved down (reused verbatim); Ch.31's slot gets the site's own existing Ch.30 text moved down (reused verbatim); Ch.29's slot needs genuinely new content adapted from the docx (never existed on site before); Ch.32 untouched. Each moved chapter's 4 notes move with its text. Ch.32's CRITICAL NOTE ("repetition... reflects manuscript tradition") becomes false once fixed and must be corrected — this is a factual-error fix, not a new documenting note, so it is NOT covered by the "no new notes for now" hold. Nothing outside Ch.29-31 is renumbered or touched. |
 
 ### Worked example approved so far
 
@@ -59,6 +76,26 @@ Do not add documenting text to the four comparative notes for this pass.
 Revisit after the fix is successfully shipped to the live site — user
 asked to be reminded then, not before.
 
+### Proposed new Chapter 29 content (draft, not yet approved)
+
+Only Ch.29 needs genuinely new text — Ch.30 and Ch.31 just receive the
+site's own existing text moved down one slot. Draft below, adapted from
+the docx's real Ch.29 to the site's archaic register, following the
+citation convention already used by the site for this exact section
+(Ch.28/29/30 all currently cite "4QEng (4Q212)"; MASORETIC VARIANT left
+blank throughout this section per the site's own existing pattern for
+Ch.28-36):
+
+- Title: `CHANOKH — CHAPTER 29` / subtitle: *The Fragrant Mountains — Frankincense and Myrrh*
+- v1: "And from thence I went to another region of the desert, and drew near unto the eastern side of that mountain range."
+- v2: "And there I saw fragrant trees which gave forth the smell of frankincense and myrrh, and the other trees among them resembled the almond tree."
+- [DSS]: "4QEng (4Q212) preserves a portion of Chapter 29."
+- [ORIT GE'EZ]: "The Orit Ge'ez preserves Chapter 29 in full."
+- [MASORETIC VARIANT]: (blank, matching the rest of this section)
+- [CRITICAL NOTE]: "The frankincense and myrrh trees of Chapter 29 continue the geography of the eastern paradise regions begun in Chapter 28. Both aromatics were sourced in antiquity from the Horn of Africa and southern Arabia, part of the same Afro-Asiatic trade network reflected throughout Chanokh's cosmic geography. The almond-like comparison echoes the same botanical shorthand used for the aloe trees of Chapter 31, part of this section's consistent vocabulary for describing unfamiliar aromatic species."
+
+**Awaiting user approval of this draft before building the full preview.**
+
 ## Outstanding / blocking
 
 1. Approve or amend the exact before/after wording for 22:13, 25:7, 27:1.
@@ -66,14 +103,15 @@ asked to be reminded then, not before.
    resolved: no new note clauses for now. **REMINDER: raise this again
    once the 22:13/25:7/27:1 fix is successfully shipped and confirmed
    live.**
-3. Still owe: full explanation of the Ch.31/32 duplication fix — what
-   replaces the current Ch.31, and confirmation it does not renumber
-   anything outside those two chapters.
+3. Approve or amend the draft new Chapter 29 content above. Once approved,
+   build the full Ch.29-32 before/after preview (real site chrome, per the
+   established process) before writing anything.
 4. Unlock phrase not yet given — nothing can be written to `data/file_13.json`
    until the user says "edit ACR reader" or "fix the reader".
-5. Chapters 2-21, 23-24, 26, 28-30, 33-36 not yet individually audited for
-   the same missing/duplicate-verse pattern — this was only done for the
-   chapters the user specifically flagged. Full-chapter audit still
+5. Chapters 2-21, 23-24, 26, 33-36 not yet individually audited for the
+   same missing/duplicate-verse pattern — this was only done for the
+   chapters the user specifically flagged, plus the 29-32 block found
+   while checking notes for citation impact. Full-chapter audit still
    pending if the user wants every chapter checked before shipping.
 
 ## Pending / parked
