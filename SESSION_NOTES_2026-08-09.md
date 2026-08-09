@@ -52,16 +52,20 @@ before Chapter 1 was formally signed off.
 
 Before/after text for the three attach-fixes (22:13, 25:7, 27:1) was
 presented in adapted register — **awaiting explicit approval of the exact
-wording**, and awaiting a decision on whether to add a short documenting
-clause to each chapter's existing CRITICAL NOTE (site's current notes for
-these three chapters say nothing about a missing/attached line — nothing
-to reword, would need new text if the user wants it documented at all).
+wording**.
+
+**User decision (2026-08-09): no new CRITICAL NOTE clauses for now.**
+Do not add documenting text to the four comparative notes for this pass.
+Revisit after the fix is successfully shipped to the live site — user
+asked to be reminded then, not before.
 
 ## Outstanding / blocking
 
 1. Approve or amend the exact before/after wording for 22:13, 25:7, 27:1.
-2. Decide: add a short note clause documenting each attachment, or leave
-   the four comparative notes completely untouched?
+2. ~~Decide: add a short note clause documenting each attachment~~ —
+   resolved: no new note clauses for now. **REMINDER: raise this again
+   once the 22:13/25:7/27:1 fix is successfully shipped and confirmed
+   live.**
 3. Still owe: full explanation of the Ch.31/32 duplication fix — what
    replaces the current Ch.31, and confirmation it does not renumber
    anything outside those two chapters.
