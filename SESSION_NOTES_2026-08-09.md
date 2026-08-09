@@ -76,25 +76,34 @@ Do not add documenting text to the four comparative notes for this pass.
 Revisit after the fix is successfully shipped to the live site — user
 asked to be reminded then, not before.
 
-### Proposed new Chapter 29 content (draft, not yet approved)
+### FINAL approach for Ch.29-31 (user corrected course 2026-08-09 — simpler than the draft above)
 
-Only Ch.29 needs genuinely new text — Ch.30 and Ch.31 just receive the
-site's own existing text moved down one slot. Draft below, adapted from
-the docx's real Ch.29 to the site's archaic register, following the
-citation convention already used by the site for this exact section
-(Ch.28/29/30 all currently cite "4QEng (4Q212)"; MASORETIC VARIANT left
-blank throughout this section per the site's own existing pattern for
-Ch.28-36):
+User flagged the reslotting/move-content-between-chapters idea above as
+scope drift and too complicated to follow. **Replaced with the simple
+version**, same pattern as the 22/25/27 fixes:
 
-- Title: `CHANOKH — CHAPTER 29` / subtitle: *The Fragrant Mountains — Frankincense and Myrrh*
-- v1: "And from thence I went to another region of the desert, and drew near unto the eastern side of that mountain range."
-- v2: "And there I saw fragrant trees which gave forth the smell of frankincense and myrrh, and the other trees among them resembled the almond tree."
-- [DSS]: "4QEng (4Q212) preserves a portion of Chapter 29."
-- [ORIT GE'EZ]: "The Orit Ge'ez preserves Chapter 29 in full."
-- [MASORETIC VARIANT]: (blank, matching the rest of this section)
-- [CRITICAL NOTE]: "The frankincense and myrrh trees of Chapter 29 continue the geography of the eastern paradise regions begun in Chapter 28. Both aromatics were sourced in antiquity from the Horn of Africa and southern Arabia, part of the same Afro-Asiatic trade network reflected throughout Chanokh's cosmic geography. The almond-like comparison echoes the same botanical shorthand used for the aloe trees of Chapter 31, part of this section's consistent vocabulary for describing unfamiliar aromatic species."
+- Site Ch.29 verses -> replaced with docx's own Chapter 29 verses (frankincense/myrrh), adapted to site register.
+- Site Ch.30 verses -> replaced with docx's own Chapter 30 verses (valley of water/cinnamon), adapted to site register.
+- Site Ch.31 verses -> replaced with docx's own Chapter 31 verses (sarara/galbanum/aloe), adapted to site register. Fixes the Ch.32 duplicate.
+- Site Ch.32 -> untouched, verses and notes both.
+- Same chapter number keeps the same chapter number. Nothing moves between chapters, nothing renumbered.
 
-**Awaiting user approval of this draft before building the full preview.**
+Built the real-site-chrome preview with only verse text swapped, notes
+left untouched. **Result: the notes for 29/30/31 now visibly describe the
+wrong content** (e.g. Ch.31's CRITICAL NOTE still talks about the Garden
+of Righteousness/tree of wisdom, which is no longer that chapter's
+content). Screenshot shown to user as proof.
+
+Offered to pull matching notes from the docx for 29/30/31 instead.
+**User declined — "Just don't add that part of the notes to those."**
+Final decision: **verse text only changes for Ch.29/30/31. The four
+comparative notes for Ch.29, 30, and 31 stay exactly as they currently
+are on the site, mismatch accepted for now, not fixed in this pass.**
+Same treatment as the "no new note clauses" decision for 22/25/27 —
+consistent policy: this pass only touches verse text, never notes.
+
+**This is the final, approved shape of the Ch.29-32 fix.** Ready to build
+final preview / ship once the unlock phrase is given.
 
 ## Outstanding / blocking
 
