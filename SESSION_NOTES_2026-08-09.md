@@ -25,12 +25,11 @@ can themselves contain invented content (see incident below).
   document that exposed the fabrication. Note count unchanged (144),
   verse count 229, chapters 1-36 intact.
 - PR **#823**: "Chanokh Part 2: restore missing Astronomical Book content
-  (Ch.37-49)" — open, branch `claude/chanokh-part2-fixes`, awaiting user
-  merge confirmation per Rule 9. Not merged by Claude. See Part 2 section
-  below for full detail.
+  (Ch.37-49)" — **merged by user**, confirmed live at cache `acr-v111`,
+  `main` HEAD `90a294e`. See Part 2 section below for full detail.
 - Reader cache: `acr-v107` (session start) -> `acr-v108` (PR #821) ->
-  `acr-v109` (fabrication fix) -> `acr-v110` (notes added, both in PR
-  #822, merged/live) -> `acr-v111` (Part 2 restoration, PR #823, open).
+  `acr-v109` (fabrication fix) -> `acr-v110` (notes added, PR #822,
+  merged/live) -> `acr-v111` (Part 2 restoration, PR #823, merged/live).
 
 ## INCIDENT — fabricated text shipped to live site, same-day catch and fix
 
@@ -235,21 +234,46 @@ legitimate distinct positions in the sequence; no change made there.
 ### Shipped
 - Cache bumped `acr-v110` -> `acr-v111`.
 - Committed and pushed to `claude/chanokh-part2-fixes`.
-- **PR #823 opened, NOT merged.** Awaiting explicit user merge
-  confirmation per Rule 9 ("Never merge always send merge link to me
-  first").
+- **PR #823 merged by user.** Verified live: `main` HEAD `90a294e`, cache
+  `acr-v111`, `data/file_14.json` JSON valid, tags balanced (223 `<p>`,
+  398 `<span>`), chapters 37-49 intact, 52 notes unchanged, verse counts
+  per chapter match exactly (37:23, 38:7, 39:4, 40:8, 41:14, 42:8, 43:9,
+  44:7, 45:7, 46:7, 47:12, 48:11, 49:6), Ch.46 reads "three sacred
+  messengers" (not "seven holy ones"), Ch.49 carries "The Prayer After
+  the First Dream" content.
+
+### Paleo YHWH glyph re-raised and re-closed (same day, post-ship)
+User flagged the paleo glyph in the Ch.49 preview screenshot as
+"incorrect" and referenced a `format.js` note. User then supplied the
+actual `format.js` build-engine source (the Word-doc generator used to
+build the reconstruction source docs). Its `paleo` constant —
+`\u{10909}\u{10904}\u{10905}\u{10904}` — was compared directly against
+`data/file_14.json` and matched byte-for-byte, all 3 occurrences,
+confirming (again) the codepoints are correct and unaffected by this
+build. User then confirmed the concern was with the appearance in the
+*scratchpad preview screenshot* specifically (sandbox font substitution,
+already documented above), not the live site. **No site file was
+touched by this exchange.** One real, still-open, low-priority item
+surfaced during this check: the site's CSS paleo font-family stack
+carries an extra `"Noto Serif"` fallback not present in the user's
+stated 4-item spec (`'Segoe UI Historic', 'Noto Sans Phoenician',
+'Arial Unicode MS', serif`) — present identically in all 289 paleo-glyph
+occurrences site-wide, not specific to this PR. Not yet approved or
+scheduled for a fix; raised to the user, no decision made either way.
 
 ## Outstanding / blocking
 
-1. **PR #823 needs user merge confirmation.** Link:
-   https://github.com/DssOrit/ancient-covenant-scrolls/pull/823
-2. After merge: verify live against `origin/main` (fetch, confirm cache
-   `acr-v111`, spot-check rendered content), same as done for #821/#822.
-3. Chapters 2-21, 23-24, 26, 33-36 (Part 1) and any chapters beyond 49 in
+1. **PR #823 merged and verified live** — no longer blocking, kept for
+   record: https://github.com/DssOrit/ancient-covenant-scrolls/pull/823
+2. Chapters 2-21, 23-24, 26, 33-36 (Part 1) and any chapters beyond 49 in
    Part 2 not yet individually audited for the same missing/duplicate-verse
    pattern — only done for chapters the user specifically flagged or that
    surfaced during the note-citation check. Full-chapter audit still
    pending if the user wants every remaining chapter checked.
+3. Site-wide paleo-glyph CSS font-family stack carries an extra
+   `"Noto Serif"` fallback not present in the user's stated `format.js`-
+   adjacent 4-item spec. Raised to user 2026-08-09, no decision made —
+   not scheduled for a fix. See Part 2 section above for detail.
 
 ## Pending / parked
 
@@ -268,11 +292,16 @@ legitimate distinct positions in the sequence; no change made there.
   post-PR#821 state (includes the fabricated text later corrected in
   PR #822) — verified matching `origin/main` before PR #822's edits.
 - `backup/2026-08-09-acr-v110` — SHA `441bcb71a1584ed5ea052cb0773ba23eb61040a6`,
-  post-PR#822 merge state (Part 1 complete and correct) — this is the
-  pre-Part-2 snapshot; `claude/chanokh-part2-fixes` was branched from
-  this exact commit.
+  post-PR#822 merge state (Part 1 complete and correct) — pre-Part-2
+  snapshot; `claude/chanokh-part2-fixes` was branched from this exact
+  commit.
+- `backup/2026-08-09-acr-v111` — SHA `90a294ed98d6801fff06af36a83282c004a134a3`,
+  post-PR#823 merge state, current `main` HEAD — Part 1 and Part 2 both
+  complete, correct, and user-verified. Latest stable point.
 
-Recovery: `git checkout backup/2026-08-09-acr-v110` for the current
-pre-Part-2 stable state; `git checkout backup/2026-08-09-acr-v108` for
-the pre-correction snapshot; `git checkout backup/2026-08-09-acr-v107`
-to go all the way back to before any Chanokh work today.
+Recovery: `git checkout backup/2026-08-09-acr-v111` for the current
+stable state (Part 1 + Part 2 both shipped); `git checkout
+backup/2026-08-09-acr-v110` for the pre-Part-2 snapshot; `git checkout
+backup/2026-08-09-acr-v108` for the pre-correction snapshot; `git
+checkout backup/2026-08-09-acr-v107` to go all the way back to before
+any Chanokh work today.
