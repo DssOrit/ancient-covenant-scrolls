@@ -13,6 +13,11 @@ can themselves contain invented content (see incident below).
 
 ## Current state
 
+**Session end 2026-08-09.** Live `main` HEAD `3b037d4` (cache `acr-v111`).
+Chanokh Part 1 and Part 2 both fully shipped, merged, and verified live.
+PR #825 (final session-notes wrap-up) still open, awaiting merge next
+session or whenever the user returns — non-blocking, docs-only.
+
 - PR **#821** (merged by user) shipped 6 edits to Chanokh Part 1 —
   3 of them turned out to be **fabricated text**, sourced from an
   unreliable draft docx. **Corrected same day in PR #822**, see incident
@@ -285,8 +290,11 @@ non-blocking items carried forward, and the record below for PRs #823/#824
   `"Noto Serif"` fallback not present in the user's stated `format.js`-
   adjacent 4-item spec (present identically in all 289 occurrences,
   harmless in practice since the font has no Phoenician glyphs to serve).
-  **User decision 2026-08-09: "Just leave it."** Closed, no fix scheduled.
-  Do not re-raise unless the user asks.
+  A full scoped fix was prepared and shown (before/after examples,
+  289+4 occurrence count across `data/` and `index.html`) but the exact
+  ACR Reader unlock phrase was never given. **User re-confirmed at
+  session end: "Just leave it I'm done for now."** Closed, no fix
+  scheduled. Do not re-raise unless the user asks.
 
 ## Capability gaps in this session
 
