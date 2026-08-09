@@ -17,11 +17,18 @@ can themselves contain invented content (see incident below).
   3 of them turned out to be **fabricated text**, sourced from an
   unreliable draft docx. **Corrected same day in PR #822**, see incident
   writeup below. `main` HEAD after both: cache `acr-v109`.
-- PR **#822**: "Fix: remove fabricated text from Chanokh Ch.22/25/27
-  (corrects PR #821)" — open, branch `claude/chanokh-fabrication-fix`,
+- PR **#822**: "Fix fabricated text + add full comparative notes (Chanokh
+  Ch.22/25/27/29-32)" — open, branch `claude/chanokh-fabrication-fix`,
   awaiting user merge confirmation per Rule 9. Not merged by Claude.
+  Now contains two parts: (1) the fabrication fix, (2) full comparative
+  notes added for all 7 touched chapters, sourced from and verified
+  against `For_checking_only_Chanokh_Part1_Ch1_36.docx` — same document
+  that exposed the fabrication. Rendered preview (real site chrome,
+  Ch.31/32) confirmed visually before push. No verse text changed in
+  part 2; note count unchanged (144).
 - Reader cache: `acr-v107` (session start) -> `acr-v108` (PR #821,
-  merged) -> `acr-v109` (PR #822, pending).
+  merged) -> `acr-v109` (fabrication fix) -> `acr-v110` (notes added,
+  both pending in PR #822).
 
 ## INCIDENT — fabricated text shipped to live site, same-day catch and fix
 
