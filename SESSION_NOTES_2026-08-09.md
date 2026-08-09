@@ -292,9 +292,12 @@ non-blocking items carried forward, and the record below for PRs #823/#824
   harmless in practice since the font has no Phoenician glyphs to serve).
   A full scoped fix was prepared and shown (before/after examples,
   289+4 occurrence count across `data/` and `index.html`) but the exact
-  ACR Reader unlock phrase was never given. **User re-confirmed at
-  session end: "Just leave it I'm done for now."** Closed, no fix
-  scheduled. Do not re-raise unless the user asks.
+  ACR Reader unlock phrase was never given. **User: "Just leave it I'm
+  done for now,"** then explicitly: **"Stop I don't want it corrected or
+  closed."** Status: left exactly as-is, not touched, and NOT to be
+  marked closed/resolved — stays an open, unresolved, tracked item.
+  Do not fix without a future explicit instruction; do not describe this
+  item as closed in any future note or summary.
 
 ## Capability gaps in this session
 
