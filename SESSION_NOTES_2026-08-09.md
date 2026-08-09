@@ -16,19 +16,21 @@ can themselves contain invented content (see incident below).
 - PR **#821** (merged by user) shipped 6 edits to Chanokh Part 1 —
   3 of them turned out to be **fabricated text**, sourced from an
   unreliable draft docx. **Corrected same day in PR #822**, see incident
-  writeup below. `main` HEAD after both: cache `acr-v109`.
+  writeup below.
 - PR **#822**: "Fix fabricated text + add full comparative notes (Chanokh
-  Ch.22/25/27/29-32)" — open, branch `claude/chanokh-fabrication-fix`,
-  awaiting user merge confirmation per Rule 9. Not merged by Claude.
-  Now contains two parts: (1) the fabrication fix, (2) full comparative
-  notes added for all 7 touched chapters, sourced from and verified
-  against `For_checking_only_Chanokh_Part1_Ch1_36.docx` — same document
-  that exposed the fabrication. Rendered preview (real site chrome,
-  Ch.31/32) confirmed visually before push. No verse text changed in
-  part 2; note count unchanged (144).
-- Reader cache: `acr-v107` (session start) -> `acr-v108` (PR #821,
-  merged) -> `acr-v109` (fabrication fix) -> `acr-v110` (notes added,
-  both pending in PR #822).
+  Ch.22/25/27/29-32)" — **merged by user**, confirmed live at cache
+  `acr-v110`. Contained two parts: (1) the fabrication fix, (2) full
+  comparative notes added for all 7 touched chapters, sourced from and
+  verified against `For_checking_only_Chanokh_Part1_Ch1_36.docx` — same
+  document that exposed the fabrication. Note count unchanged (144),
+  verse count 229, chapters 1-36 intact.
+- PR **#823**: "Chanokh Part 2: restore missing Astronomical Book content
+  (Ch.37-49)" — open, branch `claude/chanokh-part2-fixes`, awaiting user
+  merge confirmation per Rule 9. Not merged by Claude. See Part 2 section
+  below for full detail.
+- Reader cache: `acr-v107` (session start) -> `acr-v108` (PR #821) ->
+  `acr-v109` (fabrication fix) -> `acr-v110` (notes added, both in PR
+  #822, merged/live) -> `acr-v111` (Part 2 restoration, PR #823, open).
 
 ## INCIDENT — fabricated text shipped to live site, same-day catch and fix
 
@@ -163,23 +165,91 @@ consistent policy: this pass only touches verse text, never notes.
 **This is the final, approved shape of the Ch.29-32 fix.** Ready to build
 final preview / ship once the unlock phrase is given.
 
+## Chanokh Part 1 — SHIPPED AND MERGED (PR #821 + #822)
+
+All Part 1 findings below were resolved, built, previewed, shipped, and
+merged. Kept for historical record only — nothing further pending here.
+
+## Chanokh Part 2 (Chapters 37-49) — SHIPPED, PR OPEN (#823)
+
+### Source documents used
+- `For_checking_only_Chanokh_Part2_Ch37_55.docx` — reliable, chapter-specific
+  notes, KJV-archaic register matches site.
+- `RECONSTRUCTION_FOR_...VERIFICATION` (Part 2) — boilerplate notes (red
+  flag per Rule 29) but verse text independently spot-checked accurate
+  (Ch.38, Ch.42 confirmed exact matches against own extraction).
+
+### Scope confirmed with user
+Excluded material: Book of Parables (traditional 1 Enoch 37-71, per
+`data/file_115.json`), Animal Apocalypse (relocated to ACR2, confirmed via
+`ACR2/data/file_15.json`), Epistle of Chanokh. None of the restored content
+falls in these ranges.
+
+### Fixes applied to `data/file_14.json`
+- **Ch.37**: appended v13-23, the sun's gate-cycle return journey.
+- **Ch.39**: fixed v3 arithmetic (was internally inconsistent — corrected
+  to "one thousand and ninety-two...one thousand eight hundred and
+  twenty...two thousand nine hundred and twelve"); removed v5, a verbatim
+  duplicate of Ch.40 v1.
+- **Ch.40**: appended v5-8 (eastern/western portals, chariots toward
+  gates).
+- **Ch.41**: appended v5-13 (twelve wind-gate catalog by direction);
+  repositioned the pre-existing closing statement to v14 so it follows
+  the catalog instead of interrupting it.
+- **Ch.42**: appended v8 (the seven great islands).
+- **Ch.43**: appended v8-9 (waning process, closing "law of her light"
+  statement).
+- **Ch.44**: appended v6-7 (5-day lunar/solar comparison, closing
+  statement).
+- **Ch.46**: corrected v5 — "three sacred messengers", not "seven holy
+  ones" (resolved via user's own traditional-numbering research: ACR
+  Ch.46 = traditional 1 Enoch 81, and 81:5 reads three, not seven);
+  removed a duplicated v7/v8 pair; added the correct closing v7.
+- **Ch.47**: appended v8-12 (sequential leader rotation, closing charge
+  to Metushelakh).
+- **Ch.49**: full 6-verse replacement — removed a misattributed 1EN71
+  "Head of Days/Fanuel" scene that did not belong here, replaced with the
+  correct "Prayer After the First Vision" (1EN84) content. Register
+  adapted (thee/thou/thy -> you/your) to match site voice.
+
+Ch.48's apparent v10 "great destruction" redundancy was investigated and
+resolved as NOT a duplicate — user's traditional-numbering research
+(ACR 48 = traditional 1 Enoch 83) confirmed both 48:7 and 48:9 are
+legitimate distinct positions in the sequence; no change made there.
+
+### Verification performed before shipping
+- JSON parses cleanly.
+- `<p>` tags 223/223 balanced, `<span>` tags 398/398 balanced.
+- Chapter sequence 37-49 intact, no gaps.
+- Note count unchanged at 52 (no notes added or removed).
+- Verse counts per chapter match corrected structure: 37:23, 38:7, 39:4,
+  40:8, 41:14, 42:8, 43:9, 44:7, 45:7, 46:7, 47:12, 48:11, 49:6.
+- Local preview built with real `index.html`/CSS/`sw.js` against the
+  patched data file, served locally, screenshotted via Playwright +
+  Chromium in real site chrome for Ch.37, 39, 41, 46, 47, 49 — all
+  confirmed rendering correctly (verse numbering, note colors, colophon,
+  paleo YHWH glyph all intact).
+- Branch `claude/chanokh-part2-fixes` cut fresh from `origin/main` at
+  `441bcb7` (post PR #822 merge) — confirmed no stale-branch risk.
+
+### Shipped
+- Cache bumped `acr-v110` -> `acr-v111`.
+- Committed and pushed to `claude/chanokh-part2-fixes`.
+- **PR #823 opened, NOT merged.** Awaiting explicit user merge
+  confirmation per Rule 9 ("Never merge always send merge link to me
+  first").
+
 ## Outstanding / blocking
 
-1. Approve or amend the exact before/after wording for 22:13, 25:7, 27:1.
-2. ~~Decide: add a short note clause documenting each attachment~~ —
-   resolved: no new note clauses for now. **REMINDER: raise this again
-   once the 22:13/25:7/27:1 fix is successfully shipped and confirmed
-   live.**
-3. Approve or amend the draft new Chapter 29 content above. Once approved,
-   build the full Ch.29-32 before/after preview (real site chrome, per the
-   established process) before writing anything.
-4. Unlock phrase not yet given — nothing can be written to `data/file_13.json`
-   until the user says "edit ACR reader" or "fix the reader".
-5. Chapters 2-21, 23-24, 26, 33-36 not yet individually audited for the
-   same missing/duplicate-verse pattern — this was only done for the
-   chapters the user specifically flagged, plus the 29-32 block found
-   while checking notes for citation impact. Full-chapter audit still
-   pending if the user wants every chapter checked before shipping.
+1. **PR #823 needs user merge confirmation.** Link:
+   https://github.com/DssOrit/ancient-covenant-scrolls/pull/823
+2. After merge: verify live against `origin/main` (fetch, confirm cache
+   `acr-v111`, spot-check rendered content), same as done for #821/#822.
+3. Chapters 2-21, 23-24, 26, 33-36 (Part 1) and any chapters beyond 49 in
+   Part 2 not yet individually audited for the same missing/duplicate-verse
+   pattern — only done for chapters the user specifically flagged or that
+   surfaced during the note-citation check. Full-chapter audit still
+   pending if the user wants every remaining chapter checked.
 
 ## Pending / parked
 
@@ -197,7 +267,12 @@ final preview / ship once the unlock phrase is given.
 - `backup/2026-08-09-acr-v108` — SHA `05f108ddaccdfac53742bc014bdf4392826c34f9`,
   post-PR#821 state (includes the fabricated text later corrected in
   PR #822) — verified matching `origin/main` before PR #822's edits.
+- `backup/2026-08-09-acr-v110` — SHA `441bcb71a1584ed5ea052cb0773ba23eb61040a6`,
+  post-PR#822 merge state (Part 1 complete and correct) — this is the
+  pre-Part-2 snapshot; `claude/chanokh-part2-fixes` was branched from
+  this exact commit.
 
-Recovery: `git checkout backup/2026-08-09-acr-v108` for the most recent
-pre-correction snapshot; `git checkout backup/2026-08-09-acr-v107` to go
-all the way back to before any Chanokh work today.
+Recovery: `git checkout backup/2026-08-09-acr-v110` for the current
+pre-Part-2 stable state; `git checkout backup/2026-08-09-acr-v108` for
+the pre-correction snapshot; `git checkout backup/2026-08-09-acr-v107`
+to go all the way back to before any Chanokh work today.
