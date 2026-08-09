@@ -2,13 +2,21 @@
 
 ## Current state
 
-- Branch: `main`, HEAD `3dbc3da4` — nothing shipped yet this session
-- Working branch for this task: `claude/acr-reader-text-additions-mo2b4k`
-- Reader cache: `acr-v107` (unchanged so far)
-- Working tree: clean
-- **No site file has been touched yet.** Everything below is find-first
-  reporting per Rule 11 — waiting on the unlock phrase ("edit ACR reader"
-  / "fix the reader") before any write to `data/file_13.json`.
+- `main` HEAD still `3dbc3da4` — not yet merged, awaiting user merge
+  confirmation per Rule 9.
+- Working branch: `claude/acr-reader-text-additions-mo2b4k`, pushed to
+  `origin`, PR **#821** open (title: "Chanokh Part 1: fix missing verses
+  (22:13, 25:7, 27:1) and Ch.31 duplicate").
+- Reader cache: bumped `acr-v107` -> `acr-v108` on the branch.
+- **Unlock phrase given 2026-08-09: "edit ACR reader."** Backup
+  (`backup/2026-08-09-acr-v107`, SHA `3dbc3da4`) re-verified current
+  against `origin/main` immediately before writing. All six edits applied
+  to `data/file_13.json`, verified (JSON parses, tag balance intact,
+  chapter sequence 1-36 intact, per-chapter verse counts match plan
+  exactly, note count unchanged at 144 confirming notes untouched,
+  `sw.js` passes `node --check`, `index.html` untouched). Pushed to the
+  branch, PR #821 updated with full change description. **Not merged —
+  awaiting explicit user merge confirmation (Rule 9).**
 
 ## IMPORTANT — paleo YHWH glyph is correct, do not "fix" it again
 
