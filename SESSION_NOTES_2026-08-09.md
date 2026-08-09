@@ -1,22 +1,65 @@
 # Session Notes — 2026-08-09
 
+## IMPORTANT — LOCKED 2026-08-09: never add fabricated text to this site
+
+User directive, verbatim: **"Never add fabricated text ever to this
+site."** Binding standing rule from this point forward, same weight as
+the CLAUDE.md locked rules. Applies to every future edit, every volume,
+every site. Do not port content from any source document without
+verifying it against the site's own established wording (or another
+independently reliable source) first — a document merely being
+delivered by the user is not proof its content is accurate; documents
+can themselves contain invented content (see incident below).
+
 ## Current state
 
-- `main` HEAD still `3dbc3da4` — not yet merged, awaiting user merge
-  confirmation per Rule 9.
-- Working branch: `claude/acr-reader-text-additions-mo2b4k`, pushed to
-  `origin`, PR **#821** open (title: "Chanokh Part 1: fix missing verses
-  (22:13, 25:7, 27:1) and Ch.31 duplicate").
-- Reader cache: bumped `acr-v107` -> `acr-v108` on the branch.
-- **Unlock phrase given 2026-08-09: "edit ACR reader."** Backup
-  (`backup/2026-08-09-acr-v107`, SHA `3dbc3da4`) re-verified current
-  against `origin/main` immediately before writing. All six edits applied
-  to `data/file_13.json`, verified (JSON parses, tag balance intact,
-  chapter sequence 1-36 intact, per-chapter verse counts match plan
-  exactly, note count unchanged at 144 confirming notes untouched,
-  `sw.js` passes `node --check`, `index.html` untouched). Pushed to the
-  branch, PR #821 updated with full change description. **Not merged —
-  awaiting explicit user merge confirmation (Rule 9).**
+- PR **#821** (merged by user) shipped 6 edits to Chanokh Part 1 —
+  3 of them turned out to be **fabricated text**, sourced from an
+  unreliable draft docx. **Corrected same day in PR #822**, see incident
+  writeup below. `main` HEAD after both: cache `acr-v109`.
+- PR **#822**: "Fix: remove fabricated text from Chanokh Ch.22/25/27
+  (corrects PR #821)" — open, branch `claude/chanokh-fabrication-fix`,
+  awaiting user merge confirmation per Rule 9. Not merged by Claude.
+- Reader cache: `acr-v107` (session start) -> `acr-v108` (PR #821,
+  merged) -> `acr-v109` (PR #822, pending).
+
+## INCIDENT — fabricated text shipped to live site, same-day catch and fix
+
+**What happened:** The docx originally used as the source for the
+22:13/25:7/27:1 "missing verse" fixes
+(`ACR_Chanokh_Part1_Ch136_RECONSTRUCTION_FOR_INDEPENDENT_VERIFICATION.docx`)
+contained invented content for those three spots that does not match
+the site's actual established text. This was shipped in PR #821 and
+merged before the error was caught.
+
+**How it was caught:** User provided a second, more reliable document
+(`For_checking_only_Chanokh_Part1_Ch1_36.docx`) to compare notes for
+Ch.29-32. Reading it closely (proper XML parse via `xml.etree`, not the
+looser regex-based extraction used earlier — that regex approach had
+already shown signs of unreliability and should be avoided in favor of
+proper XML parsing for any future docx work) showed its wording matches
+the site's own KJV-style register almost verbatim across every chapter
+checked (22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32). Verse-by-verse
+comparison against this source proved:
+- Ch.22's real missing content is NOT a closing blessing — it's a
+  distinct 4th category of the dead ("men who were not righteous but
+  sinners... complete in transgression... not raised from thence").
+- Ch.25 was never missing anything — the fabricated blessing invented
+  content that doesn't exist in the accurate source.
+- Ch.27 was never missing an opening question — the site's original
+  wording was already correct; the fabricated question invented content.
+- Ch.29/30/31 (the verse-swap fixes) were independently confirmed
+  correct against this same reliable source — no issue there.
+
+**Fix (PR #822):** Removed the three fabricated sentences. Added the
+real Ch.22 v13 continuation (verified word-for-word against the
+checking-only source) in place of the fabricated blessing. Ch.25 and
+Ch.27 reverted to their original site wording with nothing added.
+
+**Lesson, locked above:** verify any source document against the site's
+own established wording before trusting it — never assume a delivered
+docx is accurate just because it was delivered as a "reconstruction" or
+"verification" file.
 
 ## IMPORTANT — paleo YHWH glyph is correct, do not "fix" it again
 
@@ -143,7 +186,11 @@ final preview / ship once the unlock phrase is given.
 ## Backups
 
 - `backup/2026-08-09-acr-v107` — SHA `3dbc3da425910a3e0773c43416260b4a41d0828d`,
-  verified matching pre-change `origin/main`. Cut before any Chanokh audit
-  work touches the site (none has yet).
+  pre-PR#821 state (before the original 6-edit Chanokh fix).
+- `backup/2026-08-09-acr-v108` — SHA `05f108ddaccdfac53742bc014bdf4392826c34f9`,
+  post-PR#821 state (includes the fabricated text later corrected in
+  PR #822) — verified matching `origin/main` before PR #822's edits.
 
-Recovery: `git checkout backup/2026-08-09-acr-v107`.
+Recovery: `git checkout backup/2026-08-09-acr-v108` for the most recent
+pre-correction snapshot; `git checkout backup/2026-08-09-acr-v107` to go
+all the way back to before any Chanokh work today.
