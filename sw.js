@@ -5,7 +5,7 @@
 //   is available offline, not just the ones the user already visited.
 // - Leaves the /study/ sub-app's SW and cache alone.
 
-const CACHE = 'acr-v112';
+const CACHE = 'acr-v113';
 const SHELL = ['./', 'index.html', 'manifest.json', 'icon.png'];
 
 // All expected chapter files. file_65 and file_85 have historical
@@ -30,12 +30,18 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    // 1. Clean up our own old caches (leave acr-study-* alone).
+    // 1. Clean up our own old caches. Leave every other acr-*-prefixed
+    //    sub-site alone — acr-study-, acr-search-, acr-solar-, and
+    //    acr-maps- all share the acr- prefix with this app but are
+    //    separate sites with their own cache lifecycles.
     caches.keys().then(ks => Promise.all(
       ks.filter(k =>
         k !== CACHE &&
         k.indexOf('acr-') === 0 &&
-        k.indexOf('acr-study-') !== 0
+        k.indexOf('acr-study-') !== 0 &&
+        k.indexOf('acr-search-') !== 0 &&
+        k.indexOf('acr-solar-') !== 0 &&
+        k.indexOf('acr-maps-') !== 0
       ).map(k => caches.delete(k))
     ))
       // 2. Take control of any open clients.
