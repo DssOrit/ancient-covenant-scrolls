@@ -45,6 +45,20 @@
   open, awaiting merge; content is a subset of what's now in #827's
   merged version, may be safe to close without merging — flagged to
   user, not yet resolved either way.
+- **Cross-site check after PR #835 merged:** user asked whether the
+  contested Book of War content excluded from ACR2 was excluded
+  elsewhere too. Repo-wide search found: ACR2 clean (zero refs); ACR
+  Search already independently excludes it (different rationale —
+  labeled a Roman-era sectarian forgery); ACR Study cites 4Q285 once,
+  analytically, to show the DSS's own messianic expectation is a
+  mortal Davidic human, not a deity — user confirmed that use is fine,
+  no change needed; **ACR Solar** had it live and unflagged as
+  ordinary devotional/prayer material — user unlocked ACR Solar and
+  scoped the fix, see PR #836 below.
+- PR **#836**: "ACR Solar: remove Book of War (4Q285/11Q14)
+  references" — open, branch `claude/acr-solar-remove-book-of-war`,
+  awaiting user merge confirmation per Rule 9. Cache bumped
+  `acr-solar-v34` -> `acr-solar-v35`.
 
 ## Built today
 
@@ -264,9 +278,14 @@
 - **PR #829 needs user merge confirmation** (ACR Reader hard-refresh
   scoping):
   https://github.com/DssOrit/ancient-covenant-scrolls/pull/829
-- **PR #835 needs user merge confirmation** (ACR2: remove Book of War,
-  merge conflict now resolved):
-  https://github.com/DssOrit/ancient-covenant-scrolls/pull/835
+- PR #835 (ACR2: remove Book of War) — **merged and verified live**,
+  cache `acr2-v25`, labels relabeled Vol 12/13 with no gap.
+- **PR #836 needs user merge confirmation** (ACR Solar: remove Book of
+  War references):
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/836
+- **ACR Study still has one analytical citation of 4Q285** in
+  `study/content/file_31.json` — user reviewed and confirmed this use
+  (mortal Davidic human, not deity) is fine as-is, no action needed.
 - **Pre-existing bug found, not yet fixed: root `sw.js`'s own automatic
   activate-handler cache cleanup only excludes `acr-study-`, not
   `acr-search-`/`acr-solar-`/`acr-maps-`.** This means every SW
@@ -317,6 +336,9 @@
 - `backup/2026-08-11-acr2-v22` — SHA `b30001880377cee3469a85fbf9e99a16df498991`,
   `main` HEAD right after PR #830 merged, cut and verified before
   resolving PR #835's merge conflict.
+- `backup/2026-08-11-acr-solar-v34` — SHA `6d0e34a545b46b074c77686893296c96c71d3d62`,
+  `main` HEAD right after PR #835 merged, cut and verified before the
+  ACR Solar Book of War removal.
 
 Recovery: `git checkout backup/2026-08-11-acr2-v21` or
 `backup/2026-08-11-acr-v111` for the current pre-hard-refresh-fix state
