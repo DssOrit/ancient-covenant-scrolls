@@ -11,8 +11,8 @@
   surfaced that ACR Reader's own existing hard-refresh button was itself
   unscoped (violating locked Rule 21), so that got fixed too, explicitly
   scoped ("refresh circle ONLY").
-- `main` HEAD as of last merge: `59f819e` (PR #828, Rule 30 lock),
-  cache `acr-v111` / `acr2-v21`.
+- `main` HEAD as of last merge: `b300018` (PR #830 merged), cache
+  `acr2-v22`.
 - PR **#827** (ACR2 Qumran-attestation fix) — **merged and verified
   live**, cache `acr2-v21`.
 - PR **#828** (CLAUDE.md Rule 30 lock) — **merged and verified live**.
@@ -20,9 +20,27 @@
   cache and SW only" — open, branch
   `claude/acr-reader-scope-hard-refresh`, awaiting user merge
   confirmation per Rule 9. Cache bumped `acr-v111` -> `acr-v112`.
-- PR **#830**: "ACR2: add a scoped hard-refresh button" — open, branch
-  `claude/acr2-scoped-hard-refresh`, awaiting user merge confirmation
-  per Rule 9. Cache bumped `acr2-v21` -> `acr2-v22`.
+- PR **#830**: "ACR2: add a scoped hard-refresh button" — **merged and
+  verified live**, cache `acr2-v22`. Confirmed via `pull_request_read`
+  that the merge touched only `ACR2/index.html` (one line, the
+  `nav-refresh` button) and `ACR2/sw.js` (cache bump) — no other site's
+  files.
+- PR **#835**: "ACR2: remove Book of War (Vol 12) entirely" — open,
+  branch `claude/acr2-remove-book-of-war`. Went stale against `main`
+  after #830 merged (both touched `ACR2/index.html` and `ACR2/sw.js`),
+  GitHub showed "Unable to merge — Conflicts must be resolved before
+  merging." User gave the scoped unlock phrase **"edit ACR2 ONLY TO FIX
+  THE 835 merge."** Backup `backup/2026-08-11-acr2-v22` cut and verified
+  against `origin/main` before any write. Branch merged with current
+  `main`; only conflict was the `CACHE` version line in `ACR2/sw.js`
+  (this PR's `v23` vs. #830's already-live `v22`) — resolved forward to
+  `acr2-v24`. `ACR2/index.html`'s `NAVIDS`/`LABELS`/`TOC` auto-merged
+  cleanly, combining #830's refresh button with #835's Book of War
+  removal. Verified: no leftover conflict markers, zero remaining
+  references to Book of War/`file_13`, JSON valid, HTML tags balanced,
+  JS syntax valid. Pushed. `mergeable_state` now `unstable` (mergeable,
+  normal CI-pending state) instead of `dirty` — awaiting user merge
+  confirmation per Rule 9.
 - PR **#826** (session notes, docs-only, from earlier today) — still
   open, awaiting merge; content is a subset of what's now in #827's
   merged version, may be safe to close without merging — flagged to
@@ -246,9 +264,9 @@
 - **PR #829 needs user merge confirmation** (ACR Reader hard-refresh
   scoping):
   https://github.com/DssOrit/ancient-covenant-scrolls/pull/829
-- **PR #830 needs user merge confirmation** (ACR2 scoped hard-refresh
-  button):
-  https://github.com/DssOrit/ancient-covenant-scrolls/pull/830
+- **PR #835 needs user merge confirmation** (ACR2: remove Book of War,
+  merge conflict now resolved):
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/835
 - **Pre-existing bug found, not yet fixed: root `sw.js`'s own automatic
   activate-handler cache cleanup only excludes `acr-study-`, not
   `acr-search-`/`acr-solar-`/`acr-maps-`.** This means every SW
@@ -296,6 +314,9 @@
   same commit as above (main hadn't moved between the two fixes) — cut
   separately per the user's explicit "backup first" instruction for the
   ACR2 refresh-button addition specifically.
+- `backup/2026-08-11-acr2-v22` — SHA `b30001880377cee3469a85fbf9e99a16df498991`,
+  `main` HEAD right after PR #830 merged, cut and verified before
+  resolving PR #835's merge conflict.
 
 Recovery: `git checkout backup/2026-08-11-acr2-v21` or
 `backup/2026-08-11-acr-v111` for the current pre-hard-refresh-fix state
