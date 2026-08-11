@@ -180,7 +180,7 @@ body.dark #reader-footer{background:#0a0a0a}
   <button class="nb" onclick="doDark()" title="Dark/Light" id="dark-btn">◑</button>
   <button class="nb" onclick="doRead()" title="Reading mode" id="read-btn">⊡</button>
   <button class="nb" onclick="toggleVoice()" title="Voice" id="voice-btn">🔊</button>
-  <button class="nb" id="nav-refresh" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}catch(e){}location.reload(true);})()" title="Hard refresh — clear cache &amp; reload">&#x21BA;</button>
+  <button class="nb" id="nav-refresh" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.filter(k=>k.indexOf('acr-')===0&&k.indexOf('acr-search-')!==0&&k.indexOf('acr-solar-')!==0&&k.indexOf('acr-study-')!==0&&k.indexOf('acr-maps-')!==0).map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();const ownScope=new URL('./',location.href).href;await Promise.all(rs.filter(r=>r.scope===ownScope).map(r=>r.unregister()));}catch(e){}location.reload(true);})()" title="Hard refresh — clear cache &amp; reload">&#x21BA;</button>
 </div>
 
 <!-- SIDEBAR -->
