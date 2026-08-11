@@ -655,6 +655,33 @@ These have been re-locked on 2026-05-04 after repeated violations.
       If asked to verify this claim later, say so plainly rather than
       assuming it still holds without checking.
 
+31. **PALEO HEBREW FOR HEBREW, NATIVE SCRIPT FOR GREEK/ARAMAIC, ENGLISH
+    ALWAYS ALONGSIDE — LOCKED 2026-08-11 by user.** Applies going forward
+    across ACR Reader (root), ACR2, ACR Search, Study, and ACR Solar.
+    Confirmed via a worked example from another session (Bamidbar 20:12
+    / Devarim analysis, 2026-08-11): quoted Hebrew phrases, verbs, and
+    table entries rendered in paleo-Hebrew script inline, each followed
+    by its English translation.
+    - **Hebrew.** Any quoted Hebrew — a verse phrase, a verb, a name, a
+      table entry, anywhere in editorial voice or critical-note
+      material — is rendered in paleo-Hebrew script. Never square /
+      Aramaic-derived (Ashuri) Hebrew letters. Never niqqud. This
+      extends Rule 22's unpointed standard (previously scoped to
+      primary-source citation of DSS/Orit/ancient inscriptions) to
+      cover any Hebrew quotation in ACR's own editorial voice too, not
+      only primary-source citation.
+    - **Greek or Aramaic.** Rendered in their own native script — Greek
+      in Greek letters, Aramaic in Aramaic script. Never converted into
+      or substituted with paleo-Hebrew.
+    - **English always alongside.** Every instance of paleo-Hebrew,
+      Greek, or Aramaic script is accompanied by an English
+      translation/gloss next to it — script first, then English — so
+      the text is never left opaque to the reader.
+    - **Forward-looking only.** Nothing already published on any site
+      needs to be reworked to match this rule retroactively — per the
+      user's explicit instruction, this governs new content going
+      forward from 2026-08-11, not a mandate to revise existing pages.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
