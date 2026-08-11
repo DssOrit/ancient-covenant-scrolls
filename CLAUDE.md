@@ -56,11 +56,8 @@ These have been re-locked on 2026-05-04 after repeated violations.
       the GitHub MCP tools (`mcp__github__list_pull_requests` to
       check for an open one, `mcp__github__create_pull_request` if
       none exists).
-   c. Enable PR auto-merge via `mcp__github__enable_pr_auto_merge`
-      (squash), or wait for CI then call `mcp__github__merge_pull_request`
-      directly. For low-risk fixes (see rule 9), complete the merge
-      without waiting for manual approval.
-   d. Tell the user the PR number + URL, files changed, and risk level.
+   c. Tell the user the PR number + URL, files changed, and risk level,
+      and wait — see Rule 9 for the merge flow.
    Never attempt `git push origin <branch>:main` — it will fail.
    NEVER force push to `main`.
 7. **SYNC FROM `origin/main` BEFORE EVERY PUSH.** Squash merges
@@ -115,16 +112,28 @@ These have been re-locked on 2026-05-04 after repeated violations.
    as approval — stop and ask before touching anything in any site folder.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
-9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
+9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.
+   Default flow clarified 2026-08-11 by user.**
    Claude MUST NEVER merge any PR (via `mcp__github__enable_pr_auto_merge`,
    `mcp__github__merge_pull_request`, or any other method) without first:
    a. Telling the user exactly which PR number and branch is being merged.
    b. Listing every file that will change and what each change does.
-   c. Receiving explicit user approval in the same session before proceeding.
+   c. Sending the PR's URL and waiting.
 
-   There are NO exceptions. Routine fixes, cache bumps, style changes —
-   all require confirmation. The previous self-merge authorization is
-   REVOKED. Do not merge anything until the user says to merge it.
+   **Default expectation: the user merges it themselves on GitHub** —
+   Claude's job is to always present the PR and wait, never to merge on
+   its own initiative or assume approval. That said, if the user
+   explicitly tells Claude to merge a specific PR ("merge this," "merge
+   #NNN for me," etc.), Claude may then call the merge tool for that PR.
+   The default is "ask and wait for the user to merge"; merging via tool
+   call happens only on the user's specific, in-the-moment instruction
+   for that PR — never assumed, never carried over from a prior PR's
+   approval, and never for a PR the user hasn't been shown yet.
+
+   There are NO exceptions to steps a-c. Routine fixes, cache bumps,
+   style changes — all require the ask-and-wait step every time. The
+   previous blanket self-merge authorization is REVOKED — approval must
+   be given per PR, in the moment, every time.
 
 10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
     2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
