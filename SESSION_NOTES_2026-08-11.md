@@ -2,21 +2,31 @@
 
 ## Current state
 
-- **Direction changed mid-session.** Started as export + research/review
-  only ("Only review & research do not make changes to either sites").
-  User later had a separate Claude session independently verify the
-  research, then gave the unlock phrase **"edit ACR2 as planned do not
-  touch anything else but Chanokh"** — scoping the fix strictly to the
-  14-chapter correction plan already reviewed and approved (see below).
-- `main` HEAD at session start: `24a2d2f` ("Prophetic Watch brief
-  2026-08-11"), cache `acr-v111` / `acr2-v20`.
-- PR **#827**: "ACR2: correct Qumran-attestation claims in Animal
-  Apocalypse and Epistle notes" — open, branch
-  `claude/acr2-qumran-attestation-fixes`, awaiting user merge
-  confirmation per Rule 9. Not merged by Claude. ACR2 cache bumped
-  `acr2-v20` -> `acr2-v21`.
-- PR **#826** (session notes, docs-only) — still open from earlier
-  today, unrelated to the ACR2 fix, also awaiting merge.
+- **Direction changed mid-session, more than once.** Started as export +
+  research/review only ("Only review & research do not make changes to
+  either sites"). User had a separate Claude session independently
+  verify the research, then unlocked ACR2 scoped strictly to the
+  14-chapter Qumran-attestation fix. Later in the session, user noticed
+  ACR2 lacked a hard-refresh control and asked for one — investigating
+  surfaced that ACR Reader's own existing hard-refresh button was itself
+  unscoped (violating locked Rule 21), so that got fixed too, explicitly
+  scoped ("refresh circle ONLY").
+- `main` HEAD as of last merge: `59f819e` (PR #828, Rule 30 lock),
+  cache `acr-v111` / `acr2-v21`.
+- PR **#827** (ACR2 Qumran-attestation fix) — **merged and verified
+  live**, cache `acr2-v21`.
+- PR **#828** (CLAUDE.md Rule 30 lock) — **merged and verified live**.
+- PR **#829**: "ACR Reader: scope the hard-refresh button to its own
+  cache and SW only" — open, branch
+  `claude/acr-reader-scope-hard-refresh`, awaiting user merge
+  confirmation per Rule 9. Cache bumped `acr-v111` -> `acr-v112`.
+- PR **#830**: "ACR2: add a scoped hard-refresh button" — open, branch
+  `claude/acr2-scoped-hard-refresh`, awaiting user merge confirmation
+  per Rule 9. Cache bumped `acr2-v21` -> `acr2-v22`.
+- PR **#826** (session notes, docs-only, from earlier today) — still
+  open, awaiting merge; content is a subset of what's now in #827's
+  merged version, may be safe to close without merging — flagged to
+  user, not yet resolved either way.
 
 ## Built today
 
@@ -170,15 +180,85 @@
      8 Epistle chapters use an identical, already-verified replacement
      string, verified structurally rather than individually
      screenshotted.
-   - **PR #827 opened, NOT merged.** Awaiting explicit user merge
-     confirmation per Rule 9.
+   - **PR #827 opened, then merged and verified live.**
+
+4. **Rule 30 locked (PR #828), then refined same day.** User asked to
+   lock a new standing content rule (sole-Creator safeguard, reject or
+   quarantine polytheism/syncretism/deified intermediaries) across ACR
+   Reader, ACR2, ACR Search, Study, and ACR Solar. Locked as Rule 30 in
+   `CLAUDE.md`. User then sharpened the trigger test (framed as
+   LEGITIMATE is the trigger; neutral historical/comparative
+   documentation is not) and widened scope to editorial voice and note
+   apparatus, not just source documents — pushed as a second commit to
+   the same open PR before merge. **PR #828 merged and verified live.**
+   User's own assessment logged in the rule: nothing currently live on
+   any of the five sites violates it, as of lock time.
+
+5. **Hard-refresh scoping — ACR Reader (PR #829) and ACR2 (PR #830).**
+   User noticed ACR2 has no hard-refresh control at all and asked for
+   one, explicitly not touching any other site. Investigating the
+   reference implementation to copy (ACR Reader's own `nav-refresh`
+   button) found it was itself unscoped — `caches.keys()` and
+   `getRegistrations()` with no `.filter()` at all, deleting every
+   cache and unregistering every service worker on the whole origin on
+   a single tap. This is the exact global-wipe failure mode Rule 21 was
+   locked to prevent (the 2026-07-17 `maps/index.html` incident that
+   took ACR Reader's own SW offline), except here it was ACR Reader's
+   button capable of doing that to every other site. Flagged to user
+   before touching anything.
+
+   User authorized both fixes, separately, each with "backup first,
+   verify no break" (Rule 26): **"Edit ACR reader refresh circle ONLY...
+   Then edit acr2 under same directions."**
+
+   - Backup `backup/2026-08-11-acr-v111` cut before the ACR Reader fix,
+     verified against `origin/main`.
+   - **ACR Reader fix (PR #829):** scoped the cache-clear to the `acr-`
+     prefix — but a naive prefix filter would ALSO delete
+     `acr-search-*`, `acr-solar-*`, `acr-study-*`, and `acr-maps-*`
+     caches, since all four literally start with `acr-`. The existing
+     root `sw.js` activate handler was found to have this exact same
+     bug already — it only excludes `acr-study-`, meaning it silently
+     wipes ACR Search's, ACR Solar's, and ACR Maps's caches on every
+     activate cycle. **This is flagged as a separate, still-open,
+     pre-existing bug — NOT fixed in PR #829, since the user scoped
+     that PR to "refresh circle ONLY."** The new button code excludes
+     all four correctly. SW-unregister scoped to an exact match against
+     `new URL('./',location.href).href`, robust regardless of deploy
+     path. Cache bumped `acr-v111` -> `acr-v112`.
+   - Backup `backup/2026-08-11-acr2-v21` cut before the ACR2 fix,
+     verified against `origin/main` (unchanged from the prior backup's
+     SHA since no PR had merged in between).
+   - **ACR2 fix (PR #830):** added a new `nav-refresh` button, same
+     placement/style as ACR Reader's (gold `#C8971F` circular arrow,
+     end of toolbar), scoped to the `acr2-` cache prefix (confirmed no
+     collision with any other site's prefix) and an exact SW-scope
+     match. ACR2 had no refresh control at all before this. Cache
+     bumped `acr2-v21` -> `acr2-v22`.
+   - Both verified: exact file/line diffs confirmed minimal, HTML tag
+     counts balanced, extracted `onclick` JS validated with
+     `node --check`. Not yet tested on physical iPad Safari.
+   - **PR #829 and PR #830 both opened, NOT merged.** Awaiting explicit
+     user merge confirmation per Rule 9.
 
 ## Outstanding / blocking
 
-- **PR #827 needs user merge confirmation.** Link:
-  https://github.com/DssOrit/ancient-covenant-scrolls/pull/827
-- **PR #826 (session notes, unrelated) also still needs merge
-  confirmation.** Link:
+- **PR #829 needs user merge confirmation** (ACR Reader hard-refresh
+  scoping):
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/829
+- **PR #830 needs user merge confirmation** (ACR2 scoped hard-refresh
+  button):
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/830
+- **Pre-existing bug found, not yet fixed: root `sw.js`'s own automatic
+  activate-handler cache cleanup only excludes `acr-study-`, not
+  `acr-search-`/`acr-solar-`/`acr-maps-`.** This means every SW
+  activation on ACR Reader silently deletes ACR Search's, ACR Solar's,
+  and ACR Maps's caches. Out of scope for PR #829 per explicit user
+  instruction ("refresh circle ONLY") — needs its own separate unlock
+  and approval if the user wants it fixed.
+- PR #826 (session notes, docs-only) — content is now a subset of
+  #827's merged version; flagged to user as possibly safe to close
+  without merging, not yet resolved. Link:
   https://github.com/DssOrit/ancient-covenant-scrolls/pull/826
 - None else. The two citation gaps originally flagged are now the
   substance of PR #827, not a separate open item.
@@ -209,6 +289,15 @@
   pre-ACR2-fix state (before the 14-chapter Qumran-attestation
   correction), matches `origin/main` at the time. Cut and verified
   before any write, per Rule 26.
+- `backup/2026-08-11-acr-v111` — SHA `59f819eee40a9c72d4c8b58e5215d9912e4ecf98`,
+  pre-hard-refresh-fix state (before scoping ACR Reader's refresh
+  button), post PR #827/#828 merges. Cut and verified before any write.
+- `backup/2026-08-11-acr2-v21` — SHA `59f819eee40a9c72d4c8b58e5215d9912e4ecf98`,
+  same commit as above (main hadn't moved between the two fixes) — cut
+  separately per the user's explicit "backup first" instruction for the
+  ACR2 refresh-button addition specifically.
 
-Recovery: `git checkout backup/2026-08-11-acr2-v20` to go back to the
-state before today's ACR2 fix.
+Recovery: `git checkout backup/2026-08-11-acr2-v21` or
+`backup/2026-08-11-acr-v111` for the current pre-hard-refresh-fix state
+(same commit either way); `git checkout backup/2026-08-11-acr2-v20` to
+go back further, to before today's ACR2 Qumran-attestation fix.
