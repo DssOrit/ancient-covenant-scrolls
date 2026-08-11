@@ -120,6 +120,7 @@ body.dark #bnav{background:#111}
   <button class="nb" onclick="doDark()" title="Dark/Light" id="dark-btn">&#9680;</button>
   <button class="nb" onclick="doRead()" title="Reading mode" id="read-btn">&#8865;</button>
   <button class="nb" onclick="toggleVoice()" title="Voice" id="voice-btn"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5h2l3-3v9l-3-3H1z"/><path d="M9 3.5c.8.8 1.2 1.8 1.2 3s-.4 2.2-1.2 3"/></svg></button>
+  <button class="nb" id="nav-refresh" style="color:#C8971F" onclick="(async()=>{try{const ks=await caches.keys();await Promise.all(ks.filter(k=>k.indexOf('acr2-')===0).map(k=>caches.delete(k)));const rs=await navigator.serviceWorker.getRegistrations();const ownScope=new URL('./',location.href).href;await Promise.all(rs.filter(r=>r.scope===ownScope).map(r=>r.unregister()));}catch(e){}location.reload(true);})()" title="Hard refresh — clear cache &amp; reload">&#x21BA;</button>
 </div>
 <div id="sb"></div>
 <div id="main"><div id="content"><p style="padding:40px;color:#888;text-align:center">Loading…</p></div></div>
