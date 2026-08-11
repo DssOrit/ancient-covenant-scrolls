@@ -602,18 +602,24 @@ These have been re-locked on 2026-05-04 after repeated violations.
     divine-family structures, or any system that displaces YHWH as the
     sole Creator and covenant authority. Ancient writings that are not
     part of DSS or Orit are not to be ever included as part of this."
-    - Specific triggers requiring reject-or-quarantine-and-flag, never
-      silent inclusion:
-      - mythological cosmology presented as worship doctrine
-      - worship of multiple deities / polytheism
-      - syncretism (blending covenant theology with other religious
-        systems)
-      - deification of angels
-      - intermediary beings depicted as receiving worship
-      - divine-family structures (consort deities, divine offspring,
-        pantheons)
-      - any system that displaces YHWH as the sole Creator and covenant
-        authority
+    - **What trips the rule, precisely** (user's own tightening of the
+      trigger, 2026-08-11): any framing — ACR's own editorial voice, or
+      an imported source's — that presents intermediary beings as
+      legitimate objects of worship, treats YHWH as one member of a
+      divine family or pantheon, imports syncretistic worship systems,
+      or otherwise displaces YHWH's unique status as Creator and
+      covenant authority. The test is whether something is framed as
+      LEGITIMATE — presenting mythological cosmology, other deities,
+      deified angels, or worshipped intermediaries as ancient historical
+      or comparative fact (what a text/culture contained, documented
+      neutrally) is not itself a trigger; framing any of that as
+      legitimate devotional practice, or as compatible with or equal to
+      YHWH's covenant authority, is.
+    - **Scope: not just source documents.** This applies to editorial
+      voice (ACR's own commentary/critical-note framing), the note
+      apparatus (DSS / ORIT GE'EZ / MASORETIC VARIANT / CRITICAL NOTE
+      slots), and any comparative material brought in from outside —
+      not only whole new source texts being considered for inclusion.
     - **Source restriction.** Ancient writings that are not part of the
       DSS or the Ge'ez Orit are never to be included as sources for
       this content category — no exceptions, regardless of how
@@ -641,6 +647,13 @@ These have been re-locked on 2026-05-04 after repeated violations.
       the documented manipulation being exposed.
     - Each site's own Rule 8 unlock phrase still governs before any
       file in that site may be touched, regardless of this rule.
+    - **State at lock time, per user assessment (2026-08-11): nothing
+      currently on any of the five sites needs to be stripped out —
+      nothing presently live violates this rule.** This is the user's
+      own determination at the time the rule was written, not a
+      site-wide audit Claude has independently run against every file.
+      If asked to verify this claim later, say so plainly rather than
+      assuming it still holds without checking.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
