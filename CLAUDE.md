@@ -56,11 +56,10 @@ These have been re-locked on 2026-05-04 after repeated violations.
       the GitHub MCP tools (`mcp__github__list_pull_requests` to
       check for an open one, `mcp__github__create_pull_request` if
       none exists).
-   c. Enable PR auto-merge via `mcp__github__enable_pr_auto_merge`
-      (squash), or wait for CI then call `mcp__github__merge_pull_request`
-      directly. For low-risk fixes (see rule 9), complete the merge
-      without waiting for manual approval.
-   d. Tell the user the PR number + URL, files changed, and risk level.
+   c. Tell the user the PR number + URL, files changed, and risk level,
+      and send the PR link for the user to merge themselves — see
+      Rule 9. Never call `mcp__github__enable_pr_auto_merge` or
+      `mcp__github__merge_pull_request`.
    Never attempt `git push origin <branch>:main` — it will fail.
    NEVER force push to `main`.
 7. **SYNC FROM `origin/main` BEFORE EVERY PUSH.** Squash merges
@@ -115,16 +114,24 @@ These have been re-locked on 2026-05-04 after repeated violations.
    as approval — stop and ask before touching anything in any site folder.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
    Bug History & Fix Reference" before touching any code.
-9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.**
-   Claude MUST NEVER merge any PR (via `mcp__github__enable_pr_auto_merge`,
-   `mcp__github__merge_pull_request`, or any other method) without first:
-   a. Telling the user exactly which PR number and branch is being merged.
-   b. Listing every file that will change and what each change does.
-   c. Receiving explicit user approval in the same session before proceeding.
+9. **MERGE REQUIRES USER CONFIRMATION — locked 2026-06-06 by user.
+   Mechanism tightened 2026-08-11 by user: link only, never a Claude
+   merge call, not even after approval.**
+   Claude MUST NEVER merge any PR — via `mcp__github__enable_pr_auto_merge`,
+   `mcp__github__merge_pull_request`, or any other method — under any
+   circumstance, for any PR, regardless of risk level, even after the
+   user says "merge it" in chat. Instead, on every PR:
+   a. Tell the user exactly which PR number and branch is being merged.
+   b. List every file that will change and what each change does.
+   c. Send the PR's URL and wait for the user to click merge on GitHub
+      themselves.
 
    There are NO exceptions. Routine fixes, cache bumps, style changes —
-   all require confirmation. The previous self-merge authorization is
-   REVOKED. Do not merge anything until the user says to merge it.
+   all require the user's own merge action on GitHub, not a tool call
+   from Claude. The previous self-merge authorization is REVOKED, and
+   the earlier "approve, then Claude merges" flow is also REVOKED as of
+   2026-08-11 — approval now means "send the link," never "call the
+   merge tool."
 
 10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
     2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
