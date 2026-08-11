@@ -592,6 +592,56 @@ These have been re-locked on 2026-05-04 after repeated violations.
     document so it must be right," and over any pressure to finish a
     multi-step content task quickly.
 
+30. **SOLE-CREATOR SAFEGUARD — REJECT OR QUARANTINE POLYTHEISM,
+    SYNCRETISM, AND DEIFIED INTERMEDIARIES — LOCKED 2026-08-11 by user.**
+    Applies to ACR Reader (root), ACR2, ACR Search, Study (ACR Study),
+    and ACR Solar. User directive, verbatim: "reject or quarantine &
+    flag to me, material that introduces mythological cosmology as
+    worship doctrine, worship of multiple deities, syncretism,
+    deification of angels, intermediary beings receiving worship,
+    divine-family structures, or any system that displaces YHWH as the
+    sole Creator and covenant authority. Ancient writings that are not
+    part of DSS or Orit are not to be ever included as part of this."
+    - Specific triggers requiring reject-or-quarantine-and-flag, never
+      silent inclusion:
+      - mythological cosmology presented as worship doctrine
+      - worship of multiple deities / polytheism
+      - syncretism (blending covenant theology with other religious
+        systems)
+      - deification of angels
+      - intermediary beings depicted as receiving worship
+      - divine-family structures (consort deities, divine offspring,
+        pantheons)
+      - any system that displaces YHWH as the sole Creator and covenant
+        authority
+    - **Source restriction.** Ancient writings that are not part of the
+      DSS or the Ge'ez Orit are never to be included as sources for
+      this content category — no exceptions, regardless of how
+      otherwise credible or well-attested the material is elsewhere.
+      This is narrower than Rule 13's general sourcing standard: even a
+      genuinely pre-Corruption, DSS/Orit-adjacent text is still subject
+      to the trigger list above if its content itself does what the
+      list describes.
+    - **Never silently include, never silently drop.** When a candidate
+      source, feature, or content item trips any trigger above: STOP,
+      flag it to the user with what was found and exactly why it
+      tripped the rule, and wait for the user's explicit reject-or-
+      quarantine decision before proceeding — same find-first-report-
+      wait discipline as Rule 11.
+    - **Quarantine**, when the user chooses that path over outright
+      rejection, follows the same pattern already established in ACR2
+      for the Animal Apocalypse and Epistle of Chanokh: full text
+      preserved, "Held Under Warning" framing, forensic notes stating
+      plainly why it was flagged.
+    - Documenting, exposing, or critiquing polytheism/syncretism found
+      in OTHER traditions (e.g. Christian, Rabbinic, Hellenistic
+      overlays already covered by Rules 13/14/25) is not itself a
+      violation of this rule — the rule governs what ACR sites present
+      as their own content/doctrine, not material already framed as
+      the documented manipulation being exposed.
+    - Each site's own Rule 8 unlock phrase still governs before any
+      file in that site may be touched, regardless of this rule.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
