@@ -691,6 +691,40 @@ These have been re-locked on 2026-05-04 after repeated violations.
       user's explicit instruction, this governs new content going
       forward from 2026-08-11, not a mandate to revise existing pages.
 
+32. **DSS FORGERY SCREENING — LOCKED 2026-08-11 by user.** Before
+    treating any Dead Sea Scroll manuscript citation as evidence, verify
+    it has a clear **original 1Q–11Q cave excavation provenance** (the
+    official 1947–1956 finds, published through the DJD series). Do not
+    treat a citation as equivalent to an established find unless that
+    provenance is confirmed.
+    - **Elevated scrutiny required for:**
+      - **"Post-2002" market fragments** — roughly 70 small pieces that
+        appeared on the antiquities market from 2002 onward, mostly
+        sold via descendants of the original dealer Kando, lacking
+        excavation history. Tracked by the "Lying Pen of Scribes"
+        project (Årstein Justnes, University of Agder) — check there if
+        a citation's origin is unclear.
+      - **Museum of the Bible's pre-2020 collection** — all 16 of its
+        purported DSS fragments were confirmed forgeries by an
+        independent 2020 forensic report (Colette Loll, Art Fraud
+        Insights), including pieces claimed from Genesis, Jeremiah, and
+        Micah. Deliberately aged leather with modern ink, confirmed via
+        chemical/microscopic analysis.
+      - **Schøyen Collection fragments lacking clear excavation
+        history** — the "Schøyen Tobit" (sometimes cited as "XQTob")
+        was exposed as fake and withdrawn from circulation.
+    - **Rule:** any manuscript lacking a clear original-cave designation
+      (1Q, 4Q, 11Q, etc.) and documented excavation history gets flagged
+      **UNVERIFIED-PROVENANCE** — not cited as if it carries the same
+      weight as an established find — until independently checked.
+    - **Honesty caveat, keep it.** Emanuel Tov (the actual former
+      editor-in-chief of the official DSS publication series) has
+      publicly expressed some doubt that every Museum of the Bible
+      fragment is proven fake beyond question, since no equivalent
+      baseline testing exists on confirmed-authentic material. This is
+      genuine scholarly disagreement — disclose it, don't smooth it
+      over into false unanimity.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
