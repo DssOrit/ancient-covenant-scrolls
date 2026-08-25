@@ -725,6 +725,56 @@ These have been re-locked on 2026-05-04 after repeated violations.
       genuine scholarly disagreement — disclose it, don't smooth it
       over into false unanimity.
 
+33. **ALWAYS VERIFY CLAIMS — NEVER REPORT FALSE CLAIMS, FALSE ISSUES,
+    FALSE FIXES — LOCKED 2026-08-25 by user.** Locked after a session with
+    two false-positive findings reported as fact: Claude claimed Song of
+    Songs and Ruth were missing from ACR Study (real content existed, it
+    was just unreachable through navigation — not "missing"), then
+    separately claimed ACR Study's whole volume-numbering system was
+    cascading-broken across 30+ volumes, based on a hand-written script
+    with an undetected regex bug (it silently skipped four volume titles
+    written with double quotes because they contain an apostrophe —
+    Shemu'el, Yesha'yahu — and missed a second line appending one more
+    file to the list). Both were reported as confirmed findings before
+    being checked against the running app. The second one was only caught
+    because the user explicitly demanded verification against ground
+    truth instead of code-reading.
+    - **A claim about site behavior is not verified until it's checked
+      against the actual running system** — the live app in a browser,
+      an actual tool-call result, direct file content — not against
+      Claude's own re-implementation, regex extraction, or mental model
+      of what the code does. Rule 27c already requires every factual
+      claim to come from a tool call; this rule adds that when the claim
+      is about *behavior* (what a user would see, what breaks, what's
+      missing), the tool call must exercise the actual behavior, not just
+      read the source and reason about it.
+    - **Before reporting any "found a bug" / "this is missing" / "this is
+      broken" claim**, reproduce it against the real thing. For a live
+      app: run it (Playwright/headless browser is available in this
+      environment for exactly this) and observe the actual behavior. For
+      a data claim: query the actual file/API, not a cached or
+      hand-parsed copy. If reproducing it isn't practical in the moment,
+      say so explicitly ("I haven't verified this against the running
+      app, only against the source") rather than presenting an inference
+      as a finding.
+    - **Before proposing any fix**, confirm the underlying problem still
+      reproduces on current `main` — not on a stale local copy, not on
+      what an earlier audit found, not on memory from earlier in the
+      session. State has moved before; verify it hasn't moved again.
+    - **A "fix" is not confirmed working until it's re-verified against
+      the actual result** — re-run the check that found the problem and
+      confirm it now passes, don't just assert the edit should have
+      worked.
+    - **When a self-check turns up wrong, say so immediately and exactly**
+      — what was claimed, what the real answer is, and what specifically
+      caused the error (as this rule's own lock incident does). Do not
+      quietly correct course without naming the false claim out loud.
+    This applies to every claim about every site in this repo, not only
+    ACR Study. It sits alongside Rule 27c, not in place of it: 27c is
+    about sourcing factual claims from tool output at all; this rule is
+    about that tool output actually exercising the behavior being
+    claimed, not just reading code that describes it.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
