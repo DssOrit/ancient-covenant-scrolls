@@ -2,10 +2,9 @@
 
 ## Current state
 
-- `main` HEAD at time of writing: `b41625d` (PR #845 merged), cache `acr-v114`.
-- PR **#847** open: "ACR Reader: clean up redundant 'covenant' word-spam
-  in comparative notes" — awaiting user merge confirmation per Rule 9.
-  Cache bumped `acr-v114` -> `acr-v115`.
+- `main` HEAD at time of writing: `200f8ae` (PR #847 merged), cache `acr-v115`.
+- PR **#847** — **merged and verified by user on iPad.** Cache bumped
+  `acr-v114` -> `acr-v115`.
 
 ## Built today
 
@@ -75,8 +74,14 @@
      Total "covenant" mentions across the 40 files: 11,832 -> 1,991
      (roughly one meaningful mention per note box). Cache bumped
      `acr-v114` -> `acr-v115`.
-   - **PR #847 opened, presented per Rule 9, NOT merged by Claude** —
-     awaiting user merge confirmation.
+   - **PR #847 opened, presented per Rule 9, merged by user
+     (`merged_by: DssOrit`).** Verified merge live on `main` directly
+     (not just from PR metadata): `main` HEAD `200f8ae`, `sw.js` shows
+     `acr-v115`, pulled the real Nehemiah Chapter 1 notes off `main` and
+     confirmed each of the four notes now carries exactly one natural
+     "covenant" mention. **User confirmed "Verified."** Stable-state
+     backup `backup/2026-08-26-acr-v115` cut immediately per the
+     mandatory backup-on-verified-working rule.
 
 3. **Fixed and shipped: TTS misreads verses starting with "May" as a
    calendar date (PR #845, merged).** User found the bug live in Psalm
@@ -121,9 +126,6 @@
 
 ## Outstanding / blocking
 
-- **PR #847 needs user merge confirmation** (covenant-word-spam
-  cleanup, 40 files):
-  https://github.com/DssOrit/ancient-covenant-scrolls/pull/847
 - The 5 not-currently-linked files with the same corruption (Damascus
   Document x2, Community Rule, Temple Scroll x2) were NOT touched —
   out of scope since they're unreachable on the live site. One of them
@@ -142,13 +144,12 @@
 ## Today's commit log (newest first)
 
 ```
+200f8ae Merge pull request #847 from DssOrit/claude/acr-reader-covenant-spam-cleanup
 49eb83b ACR Reader: clean up redundant 'covenant' word-spam in comparative notes
 b41625d Merge pull request #845 from DssOrit/claude/acr-reader-fix-may-verse-tts
 2c01a2f ACR Reader: fix TTS misreading verses starting with 'May' as a date
 396fba6 Prophetic Watch brief 2026-08-26
 ```
-
-(the covenant-spam commit is on open branch `claude/acr-reader-covenant-spam-cleanup`, not yet merged to `main`)
 
 ## Backups
 
@@ -163,8 +164,13 @@ b41625d Merge pull request #845 from DssOrit/claude/acr-reader-fix-may-verse-tts
   same commit as above (main hadn't moved) — cut and verified
   separately per the user's explicit "backup first" instruction before
   the covenant-spam write.
+- `backup/2026-08-26-acr-v115` — SHA `200f8ae94e6591a9f45daaa8d65a1b91a489104b`,
+  `main` HEAD after PR #847 merged and the user confirmed "Verified."
+  Cut and verified immediately per the mandatory stable-state backup
+  rule. This is tonight's final state.
 
-Recovery: `git checkout backup/2026-08-26-pre-covenant-fix` (or
-`backup/2026-08-26-acr-v114`, same commit) to go back to just before
-today's covenant-spam fix; `git checkout backup/2026-08-26-acr-v113` to
-go back further, to before the May-verse TTS fix.
+Recovery: `git checkout backup/2026-08-26-acr-v115` for tonight's final
+verified-working state; `git checkout backup/2026-08-26-pre-covenant-fix`
+to go back to just before the covenant-spam fix; `git checkout
+backup/2026-08-26-acr-v113` to go back further, to before the
+May-verse TTS fix.
