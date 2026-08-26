@@ -3,7 +3,9 @@
 ## Current state
 
 - `main` HEAD at time of writing: `b41625d` (PR #845 merged), cache `acr-v114`.
-- No open PRs from this session.
+- PR **#847** open: "ACR Reader: clean up redundant 'covenant' word-spam
+  in comparative notes" — awaiting user merge confirmation per Rule 9.
+  Cache bumped `acr-v114` -> `acr-v115`.
 
 ## Built today
 
@@ -21,9 +23,9 @@
    content through verse 9. Finding stands: chapter is complete. No
    change made.
 
-2. **Found, reported, and left alone (user's explicit instruction): a
-   "covenant"-word-spam bug in the comparative notes apparatus.** While
-   checking Nehemiah 1, noticed its `[DSS]`/`[ORIT GE'EZ]`/`[MASORETIC
+2. **Found, scoped, and fixed: a "covenant"-word-spam bug in the
+   comparative notes apparatus (PR #847, open).** While checking
+   Nehemiah 1, noticed its `[DSS]`/`[ORIT GE'EZ]`/`[MASORETIC
    VARIANT]`/`[CRITICAL NOTE]` text was corrupted with the word
    "covenant" repeated nonsensically (e.g. "Covenant action is preceded
    by covenant genuine covenant grief"). Scanned every content file on
@@ -35,9 +37,46 @@
    parts), 2 Chronicles Pt.1. Confirmed the corruption is confined to
    the editorial notes only — spot-checked actual scripture verse text
    in several affected files and it is clean/legitimate in every case
-   checked. **User said "leave it" — nothing touched, no unlock given.**
-   This remains an open, known issue for a future session if the user
-   wants to tackle it.
+   checked.
+
+   User initially said "leave it" for the session; came back later and
+   asked for the exact issue plus a planned fix. **User's key framing
+   correction: "The word is important. It just should not be redundant
+   in one note"** — i.e. the fix is not to purge "covenant" from the
+   notes (the word is core to the site's own theme), but to collapse
+   redundant repeats within a single note down to one natural mention.
+
+   - **Draft-tested before writing anything**, per "backup first &
+     verify no breaking." Built the fix, then deliberately tried to
+     break it. Caught and fixed 4 separate bugs in the fix logic itself
+     before it was safe: (1) triple/stacked "covenant covenant covenant
+     X" repeats didn't fully collapse in one regex pass; (2) an
+     over-eager strip rule broke a genuine, correct phrase — "profaning
+     the covenant of our fathers" became "profaning the of our
+     fathers" — fixed by protecting "covenant of/with/between/before/
+     among/and" as legitimate constructions; (3) stripping a
+     sentence-initial "Covenant" left the next word lowercase — fixed
+     with a capitalization carry-over; (4) found after re-running the
+     full batch: a literal "covenant covenant X" double-duplicate (2
+     files: Daniel, Nehemiah) corrupted a closing `</span>` tag because
+     two overlapping edit decisions collided — fixed with a two-step
+     approach (collapse literal stacked duplicates first, then apply
+     the keep-first-strip-redundant logic).
+   - **Backup:** `backup/2026-08-26-pre-covenant-fix` cut and verified
+     against `origin/main` before any write.
+   - User gave the ACR Reader unlock phrase ("edit ACR reader") for
+     this task specifically before any write, per the site's per-task
+     unlock discipline.
+   - **Final verification, done directly against `git HEAD`** (not just
+     the draft): every one of the 40 files' non-note content (verses,
+     titles, colophons) is byte-for-byte unchanged; HTML tag counts and
+     note-box counts unchanged in every file; zero broken-grammar
+     patterns; zero capitalization slips; all 40 files valid JSON.
+     Total "covenant" mentions across the 40 files: 11,832 -> 1,991
+     (roughly one meaningful mention per note box). Cache bumped
+     `acr-v114` -> `acr-v115`.
+   - **PR #847 opened, presented per Rule 9, NOT merged by Claude** —
+     awaiting user merge confirmation.
 
 3. **Fixed and shipped: TTS misreads verses starting with "May" as a
    calendar date (PR #845, merged).** User found the bug live in Psalm
@@ -82,12 +121,15 @@
 
 ## Outstanding / blocking
 
-- **Covenant-word-spam bug (45 files, 40 live)** — reported in full,
-  user said leave it for now. No unlock given, nothing touched. Revisit
-  whenever the user wants to scope a fix; per today's finding, a fix
-  would need each note sentence rewritten properly, not a mechanical
-  strip of the word "covenant" (that would leave broken grammar in
-  places where the word legitimately belongs).
+- **PR #847 needs user merge confirmation** (covenant-word-spam
+  cleanup, 40 files):
+  https://github.com/DssOrit/ancient-covenant-scrolls/pull/847
+- The 5 not-currently-linked files with the same corruption (Damascus
+  Document x2, Community Rule, Temple Scroll x2) were NOT touched —
+  out of scope since they're unreachable on the live site. One of them
+  (Temple Scroll, higher part) also has the corruption bleeding into
+  actual verse text, unlike every live file — flagged, not fixed, no
+  unlock given for it.
 
 ## Pending / parked
 
@@ -100,10 +142,13 @@
 ## Today's commit log (newest first)
 
 ```
+49eb83b ACR Reader: clean up redundant 'covenant' word-spam in comparative notes
 b41625d Merge pull request #845 from DssOrit/claude/acr-reader-fix-may-verse-tts
 2c01a2f ACR Reader: fix TTS misreading verses starting with 'May' as a date
 396fba6 Prophetic Watch brief 2026-08-26
 ```
+
+(the covenant-spam commit is on open branch `claude/acr-reader-covenant-spam-cleanup`, not yet merged to `main`)
 
 ## Backups
 
@@ -114,7 +159,12 @@ b41625d Merge pull request #845 from DssOrit/claude/acr-reader-fix-may-verse-tts
   `main` HEAD after PR #845 merged and the user confirmed it verified
   working on iPad. Cut and verified immediately per the mandatory
   stable-state backup rule.
+- `backup/2026-08-26-pre-covenant-fix` — SHA `b41625d9e0f04552532f7761d2998a296ebff27d`,
+  same commit as above (main hadn't moved) — cut and verified
+  separately per the user's explicit "backup first" instruction before
+  the covenant-spam write.
 
-Recovery: `git checkout backup/2026-08-26-acr-v114` for the current
-verified-working state; `git checkout backup/2026-08-26-acr-v113` to go
-back to just before today's fix.
+Recovery: `git checkout backup/2026-08-26-pre-covenant-fix` (or
+`backup/2026-08-26-acr-v114`, same commit) to go back to just before
+today's covenant-spam fix; `git checkout backup/2026-08-26-acr-v113` to
+go back further, to before the May-verse TTS fix.
