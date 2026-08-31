@@ -498,12 +498,14 @@ Every target listed below has been completely stripped of modern theological spi
 * The Material Blueprint: A 2019 scientific study published in Science Advances proved that the skin of 11Q19 was manufactured using an unusual chemical process, coated with an atypical inorganic glaze made of sulfate salts to give it a brilliant white, prestige appearance.
 * The Extraction Reason: The author committed a direct pronoun forgery to make late 2nd-century BCE priestly architecture and isolation rules look like they came directly out of YHWH's mouth.
 
-## 2. The Book of Jubilees (Mashafa Kufale / 4Q216–224)
+## 2. The Book of Jubilees (Mashafa Kufale / 4Q216–224) — RESTORED, 2026-08-31, no longer excluded
 
-* The Deception: Forcing the natural narrative timeline of Genesis into a rigid mathematical calendar grid and erasing the moral mistakes of the patriarchs.
-* The Archaeological Evidence: 14 distinct Hebrew copies were recovered from Qumran (4Q216–224). Handwriting and ink analysis date these physical skins to the Hasmonean period (c. 125 BCE–50 CE).
-* The Textual "Smoking Gun": In Jubilees 6:32–38, the text inserts a fictional speech where Noah rants against people who "look at the moon" to determine calendar dates, commanding strict adherence to a 364-day solar calendar.
-* The Extraction Reason: This intense anti-lunar polemic matches the historical calendar wars that occurred between the breakaway Qumran faction and the Jerusalem high priests in the 2nd century BCE. Noah could not have been involved in Hellenistic priestly politics. The author hijacked an ancient patriarch's name to weaponize a calendar code.
+Reversed after reinvestigation. This entry previously called for full exclusion; that call is withdrawn for the reasons below, and the book is restored to ACR Reader Vol 7.
+
+* What the original case rested on: 14 Hebrew copies from Qumran (4Q216–224), physically dated Hasmonean (c. 125 BCE–50 CE), and one flagged passage — Jubilees 6:32–38, Noah's anti-lunar-calendar speech — read as a 2nd-century-BCE calendar-war polemic retrojected onto an ancient patriarch.
+* Why that doesn't support full exclusion: the case targeted one passage, not the book, and never applied the surgical standard already used for Enoch (where only the Similitudes, Animal Apocalypse, and Epistle were excised, not the whole corpus). It also never addressed the Ge'ez transmission — Jubilees survives complete as the Mashafa Kufale, canonical to both the Ethiopian Orthodox Tewahedo Church and, independently, Beta Israel (Rule 23: Ge'ez transmission and Beta Israel preservation carry primary-source standing, not secondary status). Composition date alone isn't disqualifying under Rule 25 — the same 364-day solar calendar Jubilees defends is the calendar Enoch 72–82 is kept specifically to preserve.
+* Checked directly against this site's own rules before restoring: both content files scanned in full for Trinity, Yeshua, Christ, Theotokos, divine-incarnation, or any other false-deity language — none found. Every "worship" reference in the text is directed at YHWH the Creator specifically. Mastema is handled as a subordinate adversary petitioning YHWH, never worshipped, the same role Belial and HaSatan already carry elsewhere on this site. No niqqud. Title block and comparative-note apparatus (DSS / Orit Ge'ez / Critical Note) already conform to the Rule 20 standard. Every occurrence of "moon" in both files was read directly — the book is emphatically pro-solar, anti-lunar ("the sun — not the moon — governs the covenant calendar"); "new moon of the Nth month" is inherited Hebrew date-naming idiom for a fixed solar month, not lunar reckoning.
+* The 6:32–38 passage itself was not independently re-verified as an insertion — that claim was never checked against a critical edition, only repeated from the original dossier entry. It has not been removed. If it's confirmed as a later insertion on independent grounds, it should be excised on its own, not used to justify excluding the other 49 chapters.
 
 ------------------------------
 ## ❌ CATEGORY 2: The Apocalyptic Timeline Codes & Coded War Pamphlets
@@ -583,9 +585,9 @@ Every target listed below has been completely stripped of modern theological spi
 
 ------------------------------
 ## 🛡️ THE COLLECTIVE ARCHIVAL STATUS
-ALL 11 ENTRIES DEFINITIVIVELY EXCLUDED. These documents do not represent pristine, ancient memory. They are a brilliant monument to Second Temple crises engineering.
+10 OF THE 11 ENTRIES ABOVE REMAIN EXCLUDED. Entry 2, the Book of Jubilees, was reversed on 2026-08-31 — see its entry above for why — and is restored to ACR Reader Vol 7. The remaining 10 do not represent pristine, ancient memory. They are a brilliant monument to Second Temple crises engineering.
 When these communities were pushed to the brink of religious and political erasure by foreign empires, their scribes weaponized the names of ancient ancestors (Avraham, Sarai, Noah, Moshe, Enoch) to write highly localized, time-bound war propaganda, alternative calendar grids, and self-legitimatizing manifestos.
-To force these texts into the Main Canon corrupts the historical and linguistic truth of the pre-exilic baseline. They must remain quarantined within this supplementary collection as historical witnesses to how ancient texts were later altered.
+To force these remaining 10 texts into the Main Canon corrupts the historical and linguistic truth of the pre-exilic baseline. They must remain quarantined within this supplementary collection as historical witnesses to how ancient texts were later altered.
 ------------------------------
 The auxiliary archive is fully cross-referenced.
 ```
