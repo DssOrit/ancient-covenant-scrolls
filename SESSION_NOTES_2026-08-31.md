@@ -186,6 +186,19 @@ user asked whether that removal was actually correct.
   date's weekday label and the Shabbat grid highlight all shift by the
   same fixed 3 days. `Solar/sw.js` cache bumped `acr-solar-v39` ->
   `v40`.
+- **User confirmed with "merged"; verified directly against `origin/main`**
+  (PR #862, `merged: true`, merged by DssOrit at 22:33:01 UTC 2026-08-31):
+  `Solar/sw.js` shows `acr-solar-v40`, `Solar/index.html` shows the
+  corrected `weekDay = ((dayOfSolarYear + 3) % 7) + 1` formula, both
+  read straight from `origin/main`, not from PR metadata.
+- **Follow-up check, also verified against the live running formula
+  (not just reasoned about):** user asked "does Yom Kippur always land
+  on Friday" — ran `solarToGregorian`/`gregorianToSolar` in a real
+  headless browser across 16 years (2020-2035). Every single year
+  computes Yom Kippur (7/10) as Friday, with zero exceptions, even
+  though the real Gregorian date it lands on varies year to year. This
+  is the structural "never drifts" property (364 = 52 x 7), confirmed
+  computationally rather than asserted from the math alone.
 
 ## Pending / parked
 
@@ -235,3 +248,12 @@ before the Reader restoration; `git checkout
 backup/2026-08-31-acr-search-v296` to go back to before any of the
 Search fixes (Reader restoration would still be in place at that
 point, since it's a later commit on `main`).
+
+- `backup/2026-08-31-acr-solar-v39` — SHA `5b6af555eab1c746d19cd60fa37d29d0d5e37a7b`,
+  `main` HEAD right before the Solar weekday-anchor fix (PR #862). Cut
+  and verified before any write, per Rule 26.
+- `backup/2026-08-31-acr-solar-v40` — SHA `c413bb53afda2eb49b1696f66d1f6c7ae1f32240`,
+  `main` HEAD right after PR #862 merged and verified live (the current
+  verified-working state — user confirmed "merged" and it was checked
+  directly against `origin/main`). Recovery: `git checkout
+  backup/2026-08-31-acr-solar-v40`.
