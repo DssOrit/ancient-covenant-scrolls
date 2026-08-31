@@ -184,26 +184,20 @@ These have been re-locked on 2026-05-04 after repeated violations.
     anything. Commit and push the notes update after each trigger above.
 
 13. **SOURCE INTEGRITY — LOCKED 2026-07-04 by user. Extended 2026-08-31
-    to state the three-part test explicitly.** All content, references,
-    data, and features in ACR sites must draw exclusively from
-    pre-Rabbinic, pre-colonial, pre-Christian primary sources — the Dead
-    Sea Scrolls, the Ge'ez Orit, and equivalent ancient texts that
-    predate later institutional manipulation. All three conditions must
-    hold; a text failing any one of them is not a valid source
-    regardless of how it fares on the other two. Specific prohibitions:
+    to add pre-colonial.** All content, references, data, and features
+    in ACR sites must draw exclusively from pre-Rabbinic, pre-colonial,
+    pre-Christian primary sources — the Dead Sea Scrolls, the Ge'ez
+    Orit, and equivalent ancient texts that predate later institutional
+    manipulation. Specific prohibitions:
     - Do NOT use Rabbinic tradition, Talmudic overlay, or Masoretic text
       decisions as authoritative sources when building any content or feature.
     - Do NOT introduce Christian theology, New Testament framing, or any
       post-first-century institutional interpretation as a source of
       authority for ancient Hebrew understanding.
-    - Do NOT use colonial-era or post-colonial-contact material —
-      European colonial administrative, missionary, or academic records
-      and framing from the age of European colonial expansion onward —
-      as a source of authority for ancient Hebrew or African Hebrew
-      understanding. This is a dating/provenance test (does the source
-      predate colonial contact), separate from and in addition to
-      Rule 0's framing/bias test (does content avoid Western or European
-      framing even when using otherwise-valid sources).
+    - Do NOT use colonial-era material — European colonial
+      administrative, missionary, or academic records and framing — as
+      a source of authority for ancient Hebrew or African Hebrew
+      understanding.
     - Do NOT treat later additions to texts (Masoretic vowel pointing,
       Rabbinic commentary layers, canonical selection decisions) as the
       original or authoritative form of the text.
