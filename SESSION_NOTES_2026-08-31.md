@@ -2,13 +2,25 @@
 
 ## Current state
 
-- `main` HEAD: `420b249` (PR #853 merged). Nothing uncommitted, no open
-  PRs left from today's work.
-- ACR Reader cache: `acr-v116`.
-- ACR Search cache: `acr-search-v298`.
-- `EXCLUDED_TEXTS_DOSSIER.md` entry 2 (Book of Jubilees) marked
-  RESTORED, 2026-08-31, no longer excluded. Collective status line
-  updated to "10 of 11 entries remain excluded."
+- `main` HEAD: `562996f` (PR #864 merged) before this round's ACR2 work;
+  an ACR2 restoration PR is open on top of it (see below) and not yet
+  merged.
+- ACR Reader cache: `acr-v118` (Vol 7 Jubilees + Vol 31 Book of Giants
+  restored, War Scroll at Vol 30).
+- ACR Search cache: `acr-search-v299` (Jubilees + War Scroll + Book of
+  Giants concordance/Volume Browser restored).
+- ACR Study cache: `acr-study-v118` (PR #863, merged — War Scroll/Book
+  of Giants quiz cross-wire fixed).
+- ACR Solar cache: `acr-solar-v40` (PR #862, merged — weekday-anchor fix).
+- ACR2 cache: `acr2-v26` on the open restoration branch (was `acr2-v25`
+  on `main`) — 12 texts (16 content files) added, Vol 14–25, not yet
+  merged.
+- `EXCLUDED_TEXTS_DOSSIER.md` entry 2 (Book of Jubilees) and entry 9
+  (Book of Giants) marked RESTORED, 2026-08-31, no longer excluded from
+  the Reader. Collective status line updated to "9 of 11 entries remain
+  excluded." Not touched by the ACR2 work below — those texts remain
+  correctly excluded from the Reader's main canon; what changed is
+  their availability in ACR2, a separate, lower-standard archive site.
 
 ## Built today
 
@@ -200,6 +212,111 @@ user asked whether that removal was actually correct.
   is the structural "never drifts" property (364 = 52 x 7), confirmed
   computationally rather than asserted from the math alone.
 
+## ACR Study — War Scroll / Book of Giants quiz cross-wire — found, fixed, merged
+
+- User asked where Jubilees/War Scroll/Book of Giants show up in
+  Study's games. Investigation found Study's `VOL_GROUPS` already had
+  the full pre-removal 47-volume structure (Study was never touched by
+  the July 22 removal), but `TRIAL_QUESTIONS['8']` held 5 real War
+  Scroll questions (1QM 1:1-2, 3:9, 6:9, 2:6, 4:10) mislabeled under
+  Book of Giants' vol slot, `TRIAL_QUESTIONS['33']` (War Scroll's real
+  vol) didn't exist, and `war_scroll_seal`'s achievement/`volSealMap`
+  entry, the `allTrials` "Ancient Seals" check, and `VOL_NAMES`/
+  `VOL_COLORS`/`VOL_ICONS` all still pointed at vol `'8'` instead of
+  `'33'` — so the study-session banner showed "War Scroll 1QM" over
+  actual Book of Giants content and a blank banner over actual War
+  Scroll content.
+- User approved the fix ("same process, backup first, confirm no
+  break, send me the link"). Backup `backup/2026-08-31-acr-study-v117`
+  cut and verified at `main` HEAD `25749cd` before any write, per
+  Rule 26.
+- Fixed all six references (`TRIAL_QUESTIONS` key, achievement `vol`,
+  `volSealMap` entry, `allTrials` array, `VOL_NAMES`/`VOL_COLORS`/
+  `VOL_ICONS`), leaving the 5 War Scroll questions' actual content
+  untouched and inventing nothing for Book of Giants (it has no quiz
+  content of its own, per Rule 29). `study/sw.js` cache bumped
+  `acr-study-v117` -> `v118`.
+- Verified via headless browser against the real `study.js`:
+  `TRIAL_QUESTIONS['8']` undefined, `TRIAL_QUESTIONS['33']` holds the 5
+  War Scroll questions, `TRIAL_QUESTIONS['7']` (Jubilees) unaffected,
+  achievement reads `vol:'33'`, zero page errors.
+- **PR #863 merged** (user confirmed).
+
+## ACR2 — 12 texts removed from Reader on 2026-07-22 restored (never relocated as originally planned)
+
+- User noticed Community Rule and several other Reader-removed texts
+  were never added to ACR2, despite the original removal commit
+  (`8a837ae`) stating explicitly: "The 24 removed content files are
+  left in data/ (unreferenced) for relocation to ACR2 in a follow-up
+  step; nothing is deleted." That follow-up only ever covered 13 of
+  the 24 files. Verified this claim directly against the commit
+  message (not from memory) before reporting it back.
+- Reported the gap in full per Rule 11 (13 texts genuinely missing:
+  4QMMT, Damascus Document, Community Rule, Rule of the Congregation,
+  Rule of Blessings, Words of the Luminaries, Pesher Nahum, Hodayot,
+  Pesher Habakkuk, Genesis Apocryphon, Temple Scroll, Sefer Ha-Razim,
+  Raz Nihyeh), excluding 4Q246/Songs of Sabbath Sacrifice/Visions of
+  Amram per the user's earlier explicit exclusion. User confirmed all
+  13, gave the Rule 8 unlock phrase ("edit ACR2"), and specified: use
+  the original text/notes as they were, backup first, confirm no
+  break, send the merge link.
+- **Backup `backup/2026-08-31-acr2-v25` cut and verified at `main` HEAD
+  `562996f` before any write, per Rule 26.**
+- **Finding requiring a scope adjustment, reported rather than silently
+  worked around:** Sefer Ha-Razim (Vol 46) could not be restored.
+  `data/file_112.json` never existed in the repository, even before the
+  July 22 removal — the pre-removal `index.html`'s own NAVIDS array had
+  a typo (`"file 112"` with a space, not `"file_112"`), meaning this
+  volume's nav entry was already broken and pointing at content that
+  was never on disk. There is no original text to restore for this one;
+  restoring it would mean inventing content, which Rule 29 forbids. All
+  other 12 texts (16 content files — Damascus Document, Hodayot, and
+  Temple Scroll are multi-part) had real, substantial original content
+  confirmed present in git history at `8a837ae^`.
+- **Rule 30 check before adding:** grepped all 16 restored files for
+  polytheism/deified-intermediary/divine-family red flags. Two hits,
+  both in Temple Scroll (covenant law *forbidding* worship of other
+  gods/false prophets — the opposite of a violation); no other hits.
+  All 12 texts confirmed clean.
+- **Content transformation, matching the exact pattern already used for
+  every other ACR2 volume** (verified against 4 existing ACR2 files,
+  e.g. Aramaic Levi Document): stripped only the original two-paragraph
+  Reader header (paleo-YHWH glyph + "THE ANCIENT COVENANT RECORD"
+  line), prepended the same site-wide standard ACR2 banner every other
+  non-quarantined volume already carries ("SECOND TEMPLE & LATER
+  ADDITIONS" / "HELD UNDER WARNING — DOCUMENTED, NOT CANONICAL" /
+  one-line disclaimer), and left every byte after that point —
+  "Volume X" line, book title, manuscript authorities, chapter text,
+  all four comparative notes — untouched. Verified programmatically:
+  the post-banner body of all 16 new files is byte-identical to the
+  original `8a837ae^` Reader content. This is the same standard tier
+  used for normal ACR2 volumes, not the fuller "Held Under
+  Warning"-with-forensic-essay tier used for the two Rule-30 quarantine
+  cases (Animal Apocalypse, Epistle of Chanokh) — these 12 don't carry
+  that kind of concern, they were excluded from the Reader for a dating
+  reason (Rule 25), not a doctrinal one.
+- Added as `ACR2/data/file_18.json` through `file_33.json` (Vol 14
+  through Vol 25 in ACR2's own numbering, continuing after its existing
+  Vol 13 — append-only, nothing renumbered). `ACR2/index.html`
+  NAVIDS/LABELS/TOC and `ACR2/data/nav.json` updated to match. `ACR2/
+  sw.js` cache bumped `acr2-v25` -> `v26`.
+- **Verified no break:** JSON validity on all touched/added files,
+  NAVIDS/LABELS length match (31/31), every NAVIDS entry resolves to an
+  existing data file, all TOC `idx` values in range, HTML tag balance
+  clean. Real headless-browser run: app loads, navigated to the new
+  Temple Scroll and 4QMMT volumes and confirmed the actual original
+  text renders correctly under the standard banner; zero page errors
+  beyond the same pre-existing, unrelated `addEventListener` null
+  warning already established as harmless noise in this app family.
+- **Did not touch `EXCLUDED_TEXTS_DOSSIER.md`'s numbered exclusion
+  entries** — the Reader's exclusion of these texts is unchanged and
+  still correct (Rule 25); only their ACR2 availability changed, and
+  the dossier's per-text forensic essays don't map cleanly onto a
+  single numbered list for all 12, so editing it risked introducing an
+  inaccuracy under time pressure rather than fixing one.
+- **Not merged — PR opened, link sent to user, awaiting explicit
+  merge instruction per Rule 9.**
+
 ## Pending / parked
 
 - **Pseudo-Jubilees (4Q225-227) and Angels of Mastemah (4Q390) remain
@@ -223,6 +340,11 @@ user asked whether that removal was actually correct.
 ## Today's commit log (newest first)
 
 ```
+562996f Merge pull request #864 from DssOrit/claude/acr-solar-session-notes-backup
+2b114a5 Merge pull request #863 from DssOrit/claude/study-war-scroll-giants-fix
+ef148b4 Fix War Scroll / Book of Giants quiz content cross-wire in ACR Study
+c413bb5 Merge pull request #862 from DssOrit/claude/acr-solar-weekday-anchor
+25749cd Merge pull request #861 from DssOrit/claude/acr-search-restore-war-scroll-giants
 420b249 Merge pull request #853 from DssOrit/claude/acr-search-fix-pseudo-jubilees-premise
 286db36 Merge pull request #851 from DssOrit/claude/acr-search-restore-jubilees
 603b573 Search: fix stale 'already-fabricated Book of Jubilees' premise in Pseudo-Jubilees and Angels of Mastemah debunk entries — cache v298
@@ -257,3 +379,11 @@ point, since it's a later commit on `main`).
   verified-working state — user confirmed "merged" and it was checked
   directly against `origin/main`). Recovery: `git checkout
   backup/2026-08-31-acr-solar-v40`.
+- `backup/2026-08-31-acr-study-v117` — SHA
+  `25749cd725ee513be2841658761f9da525adf636`, `main` HEAD right before
+  the Study War Scroll/Book of Giants quiz fix (PR #863, merged). Cut
+  and verified before any write, per Rule 26.
+- `backup/2026-08-31-acr2-v25` — SHA
+  `562996fe1009a47aee042434ada901d81c3c3e94`, `main` HEAD right before
+  the ACR2 12-text restoration. Cut and verified before any write, per
+  Rule 26. Recovery: `git checkout backup/2026-08-31-acr2-v25`.
