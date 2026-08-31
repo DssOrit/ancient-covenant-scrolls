@@ -10,8 +10,15 @@
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzA2MEIyMiIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjYiIGZpbGw9IiNGNUM4NDIiLz48bGluZSB4MT0iMTYiIHkxPSIzIiB4Mj0iMTYiIHkyPSI4IiBzdHJva2U9IiNGNUM4NDIiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTYiIHkxPSIyNCIgeDI9IjE2IiB5Mj0iMjkiIHN0cm9rZT0iI0Y1Qzg0MiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIzIiB5MT0iMTYiIHgyPSI4IiB5Mj0iMTYiIHN0cm9rZT0iI0Y1Qzg0MiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIyNCIgeTE9IjE2IiB4Mj0iMjkiIHkyPSIxNiIgc3Ryb2tlPSIjRjVDODQyIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjciIHkxPSI3IiB4Mj0iMTAuNSIgeTI9IjEwLjUiIHN0cm9rZT0iI0Y1Qzg0MiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMjEuNSIgeTE9IjIxLjUiIHgyPSIyNSIgeTI9IjI1IiBzdHJva2U9IiNGNUM4NDIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjI1IiB5MT0iNyIgeDI9IjIxLjUiIHkyPSIxMC41IiBzdHJva2U9IiNGNUM4NDIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjciIHkxPSIyNSIgeDI9IjEwLjUiIHkyPSIyMS41IiBzdHJva2U9IiNGNUM4NDIiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+">
 <title>ACR Solar</title>
+<!-- Loaded non-render-blocking: a slow/unreachable font or icon CDN must never
+     hold up parsing of the app's own script below, which is what left the
+     Volume of the Day card and top bar stuck on their placeholder text. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+</noscript>
 <style>
 
 :root {
@@ -862,6 +869,15 @@ select.form-input option { background: var(--surface2); }
       <div id="agenda-content"></div>
     </div>
 
+    <!-- HOLY DAYS VIEW -->
+    <div class="view" id="holidays-view">
+      <div style="margin-bottom:20px;">
+        <h2 style="font-size:22px;font-weight:800;">Holy Days</h2>
+        <p style="font-size:13px;color:var(--text3);margin-top:4px;">Every appointed time of the 364-day covenant calendar, with how to prepare and observe each one</p>
+      </div>
+      <div id="holidays-content"></div>
+    </div>
+
     <!-- SUN TIMES VIEW -->
     <div class="view" id="sun-view">
       <div style="margin-bottom:20px;">
@@ -1158,6 +1174,10 @@ select.form-input option { background: var(--surface2); }
       <i class="ri-list-check-3"></i>
       <span>Agenda</span>
     </div>
+    <div class="nav-item" id="nav-holidays" onclick="switchView('holidays')">
+      <i class="ri-calendar-check-line"></i>
+      <span>Holy Days</span>
+    </div>
     <div class="nav-item" id="nav-sun" onclick="switchView('sun')">
       <i class="ri-sun-line"></i>
       <span>Sun Times</span>
@@ -1391,28 +1411,28 @@ function solarToGregorian(solarYear, solarMonth, solarDay) {
 // ─── HOLIDAYS ─────────────────────────────────────────────────────────────────
 
 var HOLIDAYS = [
-  {month:1,day:1,name:'New Year — Rosh HaShanah',desc:'First day of the first month — Creation of Light — Beginning of the sacred year in the 364-day solar calendar. Attested in 4QCalendrical Text A.',source:'DSS',color:'#F5C842',icon:'ri-sun-rise-line'},
-  {month:1,day:14,name:'Pesach Eve',desc:'Preparation day — The 14th of the first month at evening. Slaughter of the Passover lamb. Confirmed in the Temple Scroll (11Q19) and 4QMMT.',source:'DSS/Orit',color:'#EF4444',icon:'ri-fire-line'},
-  {month:1,day:15,name:'Pesach — First Day',desc:'Passover — First day of the Festival of Unleavened Bread. The night of the Exodus from Egypt. Seven-day festival begins.',source:'DSS/Orit',color:'#EF4444',icon:'ri-leaf-line'},
-  {month:1,day:21,name:'Pesach — Seventh Day',desc:'Final day of Passover — Crossing of the Sea of Reeds. End of the Festival of Unleavened Bread. Confirmed in 4QCalendrical Text.',source:'DSS/Orit',color:'#EF4444',icon:'ri-water-flash-line'},
-  {month:1,day:26,name:'First Fruits of Barley',desc:'Wave sheaf offering — The Sunday after the full Pesach week. The 26th of the first month. Beginning of the count toward Shavuot. Confirmed in 11Q19 Temple Scroll.',source:'DSS',color:'#10B981',icon:'ri-seedling-line'},
-  {month:2,day:15,name:'Pesach Sheni',desc:'Second Passover — For those who were ritually impure or on a distant journey during the first Pesach. Attested in DSS calendrical texts.',source:'DSS/Orit',color:'#F97316',icon:'ri-repeat-line'},
-  {month:3,day:15,name:'Shavuot — Feast of Weeks',desc:'Feast of Weeks — 50 days from the First Fruits offering. Revelation at Sinai. First Fruits of the Wheat harvest. One of the three pilgrimage festivals. Confirmed in 4Q319-330.',source:'DSS/Orit',color:'#8B5CF6',icon:'ri-book-2-line'},
-  {month:3,day:31,name:'Summer Tekufah',desc:'Seasonal marker — 91st day of the solar year. The turning point into summer. Not counted in the weekly cycle. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
-  {month:4,day:1,name:'New Season — Summer',desc:'First day of the summer season. Beginning of the second quarter of the solar year.',source:'DSS',color:'#F59E0B',icon:'ri-sun-line'},
-  {month:5,day:3,name:'Festival of New Wine',desc:'New Wine offering — Festival of the first wine of the summer harvest. Fifty days after Shavuot in the Temple Scroll\'s (11Q19) sequential wave-offering count, falling on the 3rd of the 5th month.',source:'DSS',color:'#EC4899',icon:'ri-goblet-line'},
-  {month:6,day:22,name:'Festival of New Oil',desc:'New Oil offering — Festival of the first olive oil pressed from the summer harvest. Confirmed in 4Q327 Calendrical Text. Falls on the 22nd of the 6th month.',source:'DSS',color:'#F59E0B',icon:'ri-drop-line'},
-  {month:6,day:23,name:'Wood Offering — Day 1',desc:'Six-day Wood Offering festival begins. The community brings wood for the altar. Temple Scroll (11Q19) devotes extensive detail to this festival. Runs through the 28th of the 6th month.',source:'DSS',color:'#92400E',icon:'ri-home-3-line'},
-  {month:6,day:31,name:'Autumn Tekufah',desc:'Seasonal marker — 182nd day of the solar year. The turning point into autumn. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
-  {month:7,day:1,name:'Yom Teruah',desc:'Day of Trumpet Blasts — First day of the seventh month. Autumn New Year. Beginning of the third quarter of the solar year. Major festival of alarm and gathering.',source:'DSS/Orit',color:'#3B82F6',icon:'ri-alarm-warning-line'},
-  {month:7,day:10,name:'Yom Kippur',desc:'Day of Atonement — The tenth of the seventh month. The High Priest enters the Holy of Holies. Complete fast from sunset to sunset. The most solemn day of the sacred year. Confirmed across all DSS legal texts.',source:'DSS/Orit',color:'#1E3A8A',icon:'ri-shield-star-line'},
-  {month:7,day:15,name:'Sukkot — First Day',desc:'Feast of Tabernacles — First day of the seven-day harvest festival. Pilgrimage to the sanctuary. Construction of booths. Celebrated with great joy and abundant sacrifice.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
-  {month:7,day:21,name:'Sukkot — Seventh Day',desc:'Final day of Sukkot — The seventh day of the Feast of Tabernacles. Day of great ceremony and water libation.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
-  {month:7,day:22,name:'Shemini Atzeret',desc:'Eighth Day Assembly — The day after Sukkot. A closing solemn gathering distinct from the seven days of Tabernacles. Confirmed in DSS legal texts.',source:'DSS/Orit',color:'#6366F1',icon:'ri-group-line'},
-  {month:9,day:31,name:'Winter Tekufah',desc:'Seasonal marker — 273rd day of the solar year. The turning point into winter. Intercalary day unique to the 364-day DSS calendar.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
-  {month:10,day:1,name:'New Season — Winter',desc:'First day of the winter season. Beginning of the fourth and final quarter of the solar year.',source:'DSS',color:'#3B82F6',icon:'ri-snowy-line'},
-  {month:12,day:14,name:'Purim — Orit Ge\'ez',desc:'Festival of Lots — The 14th of the 12th month. Based on the Book of Esther as preserved in the Orit Ge\'ez Ethiopian canon. Celebration of deliverance.',source:'Orit',color:'#A855F7',icon:'ri-star-smile-line'},
-  {month:12,day:31,name:'Year End Tekufah',desc:'Seasonal marker — 364th and final day of the solar year. The turning point back to spring. Completes the full cycle. The new year begins with the spring equinox.',source:'DSS',color:'#64748B',icon:'ri-clockwise-line'},
+  {month:1,day:1,name:'New Year — Rosh HaShanah',desc:'First day of the first month — Creation of Light — Beginning of the sacred year in the 364-day solar calendar. Attested in 4QCalendrical Text A.',practice:'The DSS calendrical texts (4Q320-330) use this day only to fix the priestly course rotation and anchor the 364-day/52-week cycle - no distinct ritual for the day itself is attested beyond that reckoning. Prepare by confirming the new year\'s course assignments; there is no fast, feast, or work-prohibition specified in the primary sources for this day.',source:'DSS',color:'#F5C842',icon:'ri-sun-rise-line'},
+  {month:1,day:14,name:'Pesach Eve',desc:'Preparation day — The 14th of the first month at evening. Slaughter of the Passover lamb. Confirmed in the Temple Scroll (11Q19) and 4QMMT.',practice:'Temple Scroll 11Q19 col. 17 and 4QMMT place the lamb\'s slaughter at evening (twilight). Prepare beforehand by removing all leaven from the household (Shemot 12:15,19) so none remains once the seven days of Unleavened Bread begin at sunset.',source:'DSS/Orit',color:'#EF4444',icon:'ri-fire-line'},
+  {month:1,day:15,name:'Pesach — First Day',desc:'Passover — First day of the Festival of Unleavened Bread. The night of the Exodus from Egypt. Seven-day festival begins.',practice:'A sacred assembly with no ordinary work (Vayikra 23:7-8), elaborated in Temple Scroll\'s Temple-offering columns. Eat unleavened bread for the full seven days beginning this evening; the night itself commemorates the Exodus and is kept as a night of watching.',source:'DSS/Orit',color:'#EF4444',icon:'ri-leaf-line'},
+  {month:1,day:21,name:'Pesach — Seventh Day',desc:'Final day of Passover — Crossing of the Sea of Reeds. End of the Festival of Unleavened Bread. Confirmed in 4QCalendrical Text.',practice:'Closing sacred assembly of the Unleavened Bread week (Vayikra 23:8), attested in the DSS calendrical texts as the festival\'s formal end. No leaven is eaten through this day; ordinary work is again set aside for the assembly.',source:'DSS/Orit',color:'#EF4444',icon:'ri-water-flash-line'},
+  {month:1,day:26,name:'First Fruits of Barley',desc:'Wave sheaf offering — The Sunday after the full Pesach week. The 26th of the first month. Beginning of the count toward Shavuot. Confirmed in 11Q19 Temple Scroll.',practice:'The wave-sheaf offering (Vayikra 23:10-14), anchored by the Qumran calendar specifically to the Sunday following the Pesach week - the community\'s own reading of "the day after the Sabbath," distinct from later reckonings that count from the first Pesach day itself (11Q19). No new grain of the harvest may be eaten, parched, or crushed until this offering is made.',source:'DSS',color:'#10B981',icon:'ri-seedling-line'},
+  {month:2,day:15,name:'Pesach Sheni',desc:'Second Passover — For those who were ritually impure or on a distant journey during the first Pesach. Attested in DSS calendrical texts.',practice:'The Torah\'s provision for those ritually impure or on a distant journey during the first Pesach (Bamidbar 9:9-13) - the DSS calendrical texts fix it as a standing date in the 364-day scheme rather than an occasional exception. Those it applies to keep the Pesach meal on this night instead.',source:'DSS/Orit',color:'#F97316',icon:'ri-repeat-line'},
+  {month:3,day:15,name:'Shavuot — Feast of Weeks',desc:'Feast of Weeks — 50 days from the First Fruits offering. Revelation at Sinai. First Fruits of the Wheat harvest. One of the three pilgrimage festivals. Confirmed in 4Q319-330.',practice:'Firstfruits of the wheat harvest, fifty days from the wave-sheaf (Vayikra 23:15-21), confirmed at this fixed date in 4Q319-330. At Qumran this was also the day of the annual Covenant Renewal ceremony (1QS I:16-II:18, II:19): the community assembled, was ritually purified, and passed - member by member, by rank - into the renewed covenant, with blessings pronounced over "the men of the lot of the Creator" and curses on the lot of Belial, the whole assembly answering "Amen, Amen." Prepare through self-examination before the gathering; the day itself is kept as a pilgrimage assembly, not a private one.',source:'DSS/Orit',color:'#8B5CF6',icon:'ri-book-2-line'},
+  {month:3,day:31,name:'Summer Tekufah',desc:'Seasonal marker — 91st day of the solar year. The turning point into summer. Not counted in the weekly cycle. Intercalary day unique to the 364-day DSS calendar.',practice:'A structural turning-point, not a festival - the 91st day, marking the solar year\'s move into summer. It falls outside the seven-day week entirely (4Q319, the Otot text, tracks these four turning points precisely to keep the 364-day/52-week scheme aligned). No observance beyond the calendrical reckoning itself is attested.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:4,day:1,name:'New Season — Summer',desc:'First day of the summer season. Beginning of the second quarter of the solar year.',practice:'The start of the year\'s second quarter. Like the Tekufah before it, this is a calendrical marker in the DSS reckoning rather than a day with its own ritual requirement in the primary sources.',source:'DSS',color:'#F59E0B',icon:'ri-sun-line'},
+  {month:5,day:3,name:'Festival of New Wine',desc:'New Wine offering — Festival of the first wine of the summer harvest. Fifty days after Shavuot in the Temple Scroll\'s (11Q19) sequential wave-offering count, falling on the 3rd of the 5th month.',practice:'Fifty days after Shavuot, the second of the Temple Scroll\'s three sequential firstfruits festivals (11Q19 19:11-21:10). New wine is poured out as a libation at the altar; the sacred meal that follows is eaten first by the priests, then the Levites, then the laypeople, in that order.',source:'DSS',color:'#EC4899',icon:'ri-goblet-line'},
+  {month:6,day:22,name:'Festival of New Oil',desc:'New Oil offering — Festival of the first olive oil pressed from the summer harvest. Confirmed in 4Q327 Calendrical Text. Falls on the 22nd of the 6th month.',practice:'Fifty days after New Wine (11Q19 21:12-23:2). Each clan brings a half-hin of freshly pressed oil - part used to anoint the lampstand, part offered as atonement. No oil of the new harvest is used until this offering is made, mirroring the wave-sheaf\'s rule for grain.',source:'DSS',color:'#F59E0B',icon:'ri-drop-line'},
+  {month:6,day:23,name:'Wood Offering — Day 1',desc:'Six-day Wood Offering festival begins. The community brings wood for the altar. Temple Scroll (11Q19) devotes extensive detail to this festival. Runs through the 28th of the 6th month.',practice:'A six-day festival (11Q19 23:2-7) in which the community brings wood to keep the altar fire supplied, apportioned across the days by clan rotation. Prepare wood in advance of one\'s assigned day; the offering itself is the day\'s whole observance.',source:'DSS',color:'#92400E',icon:'ri-home-3-line'},
+  {month:6,day:31,name:'Autumn Tekufah',desc:'Seasonal marker — 182nd day of the solar year. The turning point into autumn. Intercalary day unique to the 364-day DSS calendar.',practice:'The 182nd day - the solar year\'s turning point into autumn, tracked the same way as the Summer Tekufah in 4Q319. A calendrical marker, not a day of its own ritual.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:7,day:1,name:'Yom Teruah',desc:'Day of Trumpet Blasts — First day of the seventh month. Autumn New Year. Beginning of the third quarter of the solar year. Major festival of alarm and gathering.',practice:'A day of trumpet blasts and gathering (Vayikra 23:24-25), marking the start of the year\'s third quarter and functioning as the autumn civil new year in the DSS reckoning. Ordinary work is set aside; the blasts themselves are the day\'s central act, calling the community to attention before the Day of Atonement ten days later.',source:'DSS/Orit',color:'#3B82F6',icon:'ri-alarm-warning-line'},
+  {month:7,day:10,name:'Yom Kippur',desc:'Day of Atonement — The tenth of the seventh month. The High Priest enters the Holy of Holies. Complete fast from sunset to sunset. The most solemn day of the sacred year. Confirmed across all DSS legal texts.',practice:'The most solemn day of the sacred year (Vayikra 16, 23:26-32), elaborated in Temple Scroll cols. 25-27: the High Priest enters the Holy of Holies, and the day is kept as a complete fast and total rest from evening to evening - the Torah\'s own phrase, self-affliction (inui nefesh). Pesher Habakkuk records that this day\'s date itself was a point of real conflict between the community and its opponents. Prepare by settling all ordinary matters before sunset; nothing is eaten, drunk, or worked at from sunset to the following sunset.',source:'DSS/Orit',color:'#1E3A8A',icon:'ri-shield-star-line'},
+  {month:7,day:15,name:'Sukkot — First Day',desc:'Feast of Tabernacles — First day of the seven-day harvest festival. Pilgrimage to the sanctuary. Construction of booths. Celebrated with great joy and abundant sacrifice.',practice:'Seven days dwelling in booths as a memorial of the wilderness years (Vayikra 23:40-43). Build the booth before the festival begins; live and eat in it, not merely visit it, for the full week. It is kept as a pilgrimage festival with sacrifice and rejoicing.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:21,name:'Sukkot — Seventh Day',desc:'Final day of Sukkot — The seventh day of the Feast of Tabernacles. Day of great ceremony and water libation.',practice:'The closing day of dwelling in booths. Leaven and ordinary residence do not resume until this day has passed; the primary sources describe it as the last of the seven days of joy, not a separate rite in itself.',source:'DSS/Orit',color:'#10B981',icon:'ri-community-line'},
+  {month:7,day:22,name:'Shemini Atzeret',desc:'Eighth Day Assembly — The day after Sukkot. A closing solemn gathering distinct from the seven days of Tabernacles. Confirmed in DSS legal texts.',practice:'An eighth day, kept as its own solemn assembly distinct from the seven days of Sukkot (Vayikra 23:36), confirmed as separately reckoned in the DSS legal texts. Booth-dwelling ends; the day itself is a closing gathering, not an extension of the festival before it.',source:'DSS/Orit',color:'#6366F1',icon:'ri-group-line'},
+  {month:9,day:31,name:'Winter Tekufah',desc:'Seasonal marker — 273rd day of the solar year. The turning point into winter. Intercalary day unique to the 364-day DSS calendar.',practice:'The 273rd day - the solar year\'s turning point into winter, tracked in 4Q319 alongside the other three. A calendrical marker only.',source:'DSS',color:'#64748B',icon:'ri-compass-3-line'},
+  {month:10,day:1,name:'New Season — Winter',desc:'First day of the winter season. Beginning of the fourth and final quarter of the solar year.',practice:'The start of the year\'s fourth and final quarter before the cycle completes and returns to spring.',source:'DSS',color:'#3B82F6',icon:'ri-snowy-line'},
+  {month:12,day:14,name:'Purim — Orit Ge\'ez',desc:'Festival of Lots — The 14th of the 12th month. Based on the Book of Esther as preserved in the Orit Ge\'ez Ethiopian canon. Celebration of deliverance.',practice:'Preserved through the Orit Ge\'ez Ethiopian canon\'s inclusion of Esther, not through the DSS - no Qumran fragment of Esther has ever been found, and this day is not part of the 364-day festival calendar attested in the Temple Scroll or the calendrical texts. Observance follows the Esther narrative itself (Esther 9): fasting beforehand, then feasting and rejoicing at deliverance.',source:'Orit',color:'#A855F7',icon:'ri-star-smile-line'},
+  {month:12,day:31,name:'Year End Tekufah',desc:'Seasonal marker — 364th and final day of the solar year. The turning point back to spring. Completes the full cycle. The new year begins with the spring equinox.',practice:'The 364th and final day, completing the solar cycle before it turns back to the spring equinox and a new year begins. Like the other three Tekufot, it is a structural marker with no ritual of its own attested in the primary sources.',source:'DSS',color:'#64748B',icon:'ri-clockwise-line'},
 ];
 
 // Shabbat check — in the solar calendar every 7th day from the equinox is Shabbat
@@ -1491,6 +1511,7 @@ function switchView(name) {
   if (name === 'sun') renderSunView();
   if (name === 'year') renderYear();
   if (name === 'settings') renderSettings();
+  if (name === 'holidays') renderHolidays();
 }
 
 // ─── MONTH VIEW ───────────────────────────────────────────────────────────────
@@ -1693,6 +1714,11 @@ function showEventDetail(evt, sd) {
       '<div class="detail-label">Description</div>' +
       '<div class="detail-text">' + evt.desc + '</div>' +
     '</div>' +
+    (evt.practice ?
+      '<div class="detail-section">' +
+        '<div class="detail-label">How to Prepare &amp; Observe</div>' +
+        '<div class="detail-text">' + evt.practice + '</div>' +
+      '</div>' : '') +
     '<div class="detail-section">' +
       '<div class="detail-label">Primary Source</div>' +
       '<span class="source-badge" style="background:' + sourceBg + ';color:' + evt.color + '">' +
@@ -1780,6 +1806,69 @@ function renderAgenda() {
           (settings.show_source && evt.source !== 'Reminder' ?
             '<div class="ai-source">' + evt.source + '</div>' : '') +
         '</div>';
+
+      sec.appendChild(item);
+    });
+
+    container.appendChild(sec);
+  }
+}
+
+// ─── HOLY DAYS VIEW ───────────────────────────────────────────────────────────
+
+function renderHolidays() {
+  var container = document.getElementById('holidays-content');
+  container.innerHTML = '';
+
+  var byMonth = {};
+  HOLIDAYS.forEach(function(h) {
+    if (!byMonth[h.month]) byMonth[h.month] = [];
+    byMonth[h.month].push(h);
+  });
+
+  var solToday = gregorianToSolar(today);
+
+  for (var m = 1; m <= 12; m++) {
+    var events = byMonth[m];
+    if (!events || events.length === 0) continue;
+
+    events.sort(function(a,b){ return a.day - b.day; });
+
+    var sec = document.createElement('div');
+    sec.className = 'month-section';
+
+    var mInfo = SOLAR_MONTHS[m-1];
+    var seasonColor = SEASON_COLORS[mInfo.season];
+    var isCurrent = (m === solToday.month);
+
+    sec.innerHTML =
+      '<div class="month-section-title" style="' + (isCurrent ? 'color:' + seasonColor : '') + '">' +
+        'Month ' + m + ' — ' + mInfo.name +
+        ' <span style="font-size:12px;color:var(--text3);font-weight:500;">(' + mInfo.season + ')</span>' +
+      '</div>';
+
+    events.forEach(function(evt) {
+      var item = document.createElement('div');
+      item.className = 'agenda-item';
+      item.style.cursor = 'pointer';
+
+      var greg = solarToGregorian(solToday.year, evt.month, evt.day);
+      var isToday = (greg.getTime() === today.getTime());
+
+      item.innerHTML =
+        '<div class="agenda-date" style="' + (isToday ? 'color:' + evt.color : '') + '">' +
+          '<div class="ad-day">' + evt.day + '</div>' +
+          '<div class="ad-dow">' + (mInfo.abbr || mInfo.name.substring(0,3)) + '</div>' +
+        '</div>' +
+        '<div class="agenda-dot" style="background:' + evt.color + ';min-height:48px;"></div>' +
+        '<div class="agenda-info">' +
+          '<div class="ai-name">' + evt.name + '</div>' +
+          '<div class="ai-desc">' + evt.desc.substring(0,120) + (evt.desc.length > 120 ? '...' : '') + '</div>' +
+          '<div class="ai-source">' + evt.source + '</div>' +
+        '</div>' +
+        '<i class="ri-arrow-right-s-line" style="color:var(--text3);font-size:20px;flex-shrink:0;align-self:center;"></i>';
+
+      item.addEventListener('click', function() { showEventDetail(evt, solToday); });
 
       sec.appendChild(item);
     });
@@ -2417,11 +2506,19 @@ function renderVolOfDay(){
 }
 function renderTopBar(){
   var bar=document.getElementById('topbar-scroll');if(!bar)return;
-  bar.innerHTML=[{i:'ri-focus-3-line',l:'Today',f:'goToday()'},{i:'ri-moon-clear-line',l:'Shabbat',f:'openShabbatMode()'},{i:'ri-text-snippet',l:'Shema',f:'openShema()'},{i:'ri-book-2-line',l:'Sabbath Prayers',f:"switchView('sabbath')"},{i:'ri-heart-2-line',l:'Prayers',f:"switchView('prayers')"},{i:'ri-add-circle-line',l:'Add Reminder',f:'openAddEvent()'},{i:'ri-notification-3-line',l:'Alerts',f:"switchView('sun')"}].map(function(b){return'<div class="tbs-pill" onclick="'+b.f+'"><i class="'+b.i+'"></i>'+b.l+'</div>';}).join('');
+  bar.innerHTML=[{i:'ri-focus-3-line',l:'Today',f:'goToday()'},{i:'ri-calendar-check-line',l:'Holy Days',f:"switchView('holidays')"},{i:'ri-moon-clear-line',l:'Shabbat',f:'openShabbatMode()'},{i:'ri-text-snippet',l:'Shema',f:'openShema()'},{i:'ri-book-2-line',l:'Sabbath Prayers',f:"switchView('sabbath')"},{i:'ri-heart-2-line',l:'Prayers',f:"switchView('prayers')"},{i:'ri-add-circle-line',l:'Add Reminder',f:'openAddEvent()'},{i:'ri-notification-3-line',l:'Alerts',f:"switchView('sun')"}].map(function(b){return'<div class="tbs-pill" onclick="'+b.f+'"><i class="'+b.i+'"></i>'+b.l+'</div>';}).join('');
 }
 function playTone(type){try{var ctx=new(window.AudioContext||window.webkitAudioContext)();var p={sunrise:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],shabbat:[[784,0,0.5],[659,0.6,0.7]],holyday:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],reminder:[[660,0,0.4]],midday:[[528,0,0.4],[528,0.5,0.4]]};var ns=p[type]||p.reminder;ns.forEach(function(n){var o=ctx.createOscillator();var g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=n[0];o.type='sine';g.gain.setValueAtTime(0,ctx.currentTime+n[1]);g.gain.linearRampToValueAtTime(0.3,ctx.currentTime+n[1]+0.05);g.gain.linearRampToValueAtTime(0,ctx.currentTime+n[1]+n[2]);o.start(ctx.currentTime+n[1]);o.stop(ctx.currentTime+n[1]+n[2]+0.1);});}catch(e){}}
 var _sw=switchView;switchView=function(n){_sw(n);if(n==='prayers')renderPrayersList();if(n==='month')renderVolOfDay();document.querySelectorAll('.nav-item').forEach(function(x){x.classList.toggle('active',x.id==='nav-'+n);});};
-window.addEventListener('load',function(){renderTopBar();renderVolOfDay();loadTPVoices();});
+// Run immediately rather than waiting on window 'load' - that event only
+// fires once every page resource settles, including the external Google
+// Fonts and remixicon CDN requests in <head>, which have nothing to do with
+// this app's own data. On a slow/flaky connection 'load' can be delayed for
+// a long time or never fire, leaving the Volume of the Day card and top bar
+// stuck on their placeholder text. This script block sits at the very end
+// of <body>, so every element these functions touch already exists in the
+// DOM by the time this line runs - no need to wait for anything else.
+renderTopBar();renderVolOfDay();loadTPVoices();
 
 </script>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
