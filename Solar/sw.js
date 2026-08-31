@@ -1,4 +1,4 @@
-var CACHE = 'acr-solar-v36';
+var CACHE = 'acr-solar-v37';
 var SOLAR_CACHE_PREFIX = 'acr-solar-';  // Solar owns only caches with this prefix
 var FILES = ['./', './index.html', './manifest.json',
   './solar-engine.js', './timezone-manager.js', './location-manager.js',
