@@ -261,18 +261,19 @@ if (lineFocusOn) document.body.classList.add('linefocus-on');
 // ---- Volume banner graphics (inline SVG, no external dependency) ----
 var VOL_ICONS = {
   '1': 'BR', '2': 'SH', '3': 'VY', '4': 'NM',
-  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'WR', 'SR': 'SR'
+  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'BG', '33': 'WR', 'SR': 'SR'
 };
 var VOL_COLORS = {
   '1': ['#2563eb','#1e40af'], '2': ['#dc2626','#991b1b'], '3': ['#059669','#065f46'],
   '4': ['#d97706','#92400e'], '5': ['#7c3aed','#5b21b6'], '6': ['#0891b2','#155e75'],
-  '7': ['#ea580c','#9a3412'], '8': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d']
+  '7': ['#ea580c','#9a3412'], '8': ['#57534e','#292524'], '33': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d']
 };
 var VOL_NAMES = {
   '1': 'Bereshit \u00B7 Genesis', '2': 'Shemot \u00B7 Exodus',
   '3': 'Vayikra \u00B7 Leviticus', '4': 'Bamidbar \u00B7 Numbers',
   '5': 'Devarim \u00B7 Deuteronomy', '6': 'Chanokh \u00B7 Book of Chanokh',
-  '7': 'Yovelim \u00B7 Book of Jubilees', '8': 'War Scroll 1QM',
+  '7': 'Yovelim \u00B7 Book of Jubilees', '8': 'Book of Giants \u00B7 Sefer HaNephilim',
+  '33': 'War Scroll 1QM',
   'SR': 'ACR Search Reference'
 };
 
@@ -945,7 +946,7 @@ var SEALS = [
   {id:'devarim_seal',    title:'Devarim Sealed',           desc:'Reach 80% mastery in Devarim', vol:'5'},
   {id:'chanokh_seal',    title:'Chanokh Sealed',           desc:'Reach 80% mastery in Chanokh', vol:'6'},
   {id:'yovelim_seal',    title:'Yovelim Sealed',           desc:'Reach 80% mastery in Yovelim', vol:'7'},
-  {id:'war_scroll_seal', title:'War Scroll Sealed',        desc:'Reach 80% mastery in the War Scroll', vol:'8'},
+  {id:'war_scroll_seal', title:'War Scroll Sealed',        desc:'Reach 80% mastery in the War Scroll', vol:'33'},
   {id:'covenant_keeper', title:'Covenant Keeper',          desc:'7-day study streak'},
   {id:'faithful_witness',title:'Faithful Witness',         desc:'14-day study streak'},
   {id:'walking_creator', title:'Walking with The Creator', desc:'30-day study streak'},
@@ -1001,12 +1002,12 @@ function checkAndAwardSeals() {
   if (trialVols.length >= 1) award('first_trial');
   var torahTrials = ['1','2','3','4','5'].filter(function(v){ return trialStats.completed && trialStats.completed[v]; });
   if (torahTrials.length >= 5) award('torah_complete');
-  var allTrials = ['1','2','3','4','5','6','7','8'].filter(function(v){ return trialStats.completed && trialStats.completed[v]; });
+  var allTrials = ['1','2','3','4','5','6','7','33'].filter(function(v){ return trialStats.completed && trialStats.completed[v]; });
   if (allTrials.length >= 8) award('ancient_seals');
 
   var volSealMap = {
     'bereshit_seal':'1','shemot_seal':'2','vayikra_seal':'3','bamidbar_seal':'4',
-    'devarim_seal':'5','chanokh_seal':'6','yovelim_seal':'7','war_scroll_seal':'8'
+    'devarim_seal':'5','chanokh_seal':'6','yovelim_seal':'7','war_scroll_seal':'33'
   };
   for (var sid in volSealMap) {
     if (isVolumeMastered(volSealMap[sid])) award(sid);
@@ -1124,7 +1125,7 @@ var TRIAL_QUESTIONS = {
     {question:'Yovelim records Avraham\'s age when he was circumcised, differing in presentation from Bereshit. At what age was Avraham circumcised according to Yovelim?',options:['85 years','90 years','99 years','100 years'],correct:2,source_quote:'And Abraham took Ishmael his son, and all that were born in his house, and all that were bought with his money, every male in his house, and circumcised the flesh of their foreskin on the very same day as God said unto him. And Abraham was ninety-nine years old when he was circumcised. — Yovelim 15:23'},
     {question:'Yovelim connects Shavuot to a specific covenant renewal. Which covenant does it say was renewed at that time?',options:['The covenant of circumcision with Avraham','The covenant of the rainbow with Noakh','The covenant of Sinai with Moshe','The covenant of salt with Aharon'],correct:1,source_quote:'For this reason it is ordained and written on the heavenly tablets, that they should celebrate the feast of weeks in this month once a year, to renew the covenant every year. — Yovelim 6:17'}
   ],
-  '8': [
+  '33': [
     {question:'The War Scroll opens by naming the enemies of the Sons of Light. Who are the chief adversaries listed first?',options:['The Egyptians and Philistines','The Kittim of Assyria and the violators of the covenant','The Edomites and Moabites','The fallen Watchers and their human allies'],correct:1,source_quote:'The first attack of the Sons of Light shall be undertaken against the forces of the Sons of Darkness, the army of Belial, the troops of Edom, Moab, the sons of Ammon... and of the Kittim of Assyria. — 1QM 1:1-2'},
     {question:'The trumpets in the War Scroll carry specific inscriptions. What is written on the trumpets of the ambush?',options:['The power of The Creator in battle','The mysteries of The Creator to destroy wickedness','People of The Creator — chosen for eternal covenant','The Creator has summoned His holy ones'],correct:1,source_quote:'On the trumpets of ambush they shall write: The mysteries of The Creator to destroy wickedness. — 1QM 3:9'},
     {question:'The high priest plays a specific role in the Covenant Trial battle. What does he do before the battle begins?',options:['He blows the first trumpet of advance','He places the tablets of the lots in the hand of the chief commander','He stands at the head of the battle line and calls out','He offers a burnt offering for the entire congregation'],correct:1,source_quote:'In the hand of the chief priest they shall place the tablets of the lots for the holy war. — 1QM 6:9'},
