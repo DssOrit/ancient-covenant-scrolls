@@ -120,8 +120,37 @@ user asked whether that removal was actually correct.
 
 ## Outstanding / blocking
 
-- None. All four PRs (#850, #851, #852, #853) are merged and verified
-  live on `main`.
+- **ACR Solar weekday-anchor bug — found, reported, NOT fixed. Awaiting
+  user approval + "edit ACR Solar" unlock (Rule 11).** User asked me to
+  check whether the 364-day solar calendar's day-of-week cycle is
+  correct, specifically citing that DSS calendrical texts fix Yom
+  Kippur (7/10) on the 6th day (Friday). Read `Solar/index.html`
+  `gregorianToSolar()`/`getSolarYearStart()` (lines ~1342-1398):
+  `weekDay = (dayOfSolarYear % 7) + 1` hardcodes month-1/day-1 (1 Aviv)
+  as weekDay=1=Sunday, with no citation. WebSearch confirmed (4Q320/
+  4Q321 Mishmarot, "Qumran Calendars and the Creation") the actual
+  scholarly reconstruction: the year begins on the *4th day of the
+  week* (Wednesday), tied to the creation of sun/moon/stars on day 4
+  (Gen 1:14-19) — not Sunday. Recomputed Yom Kippur's weekday using the
+  app's own `SOLAR_MONTHS` day-count array (dayOfYear 0-indexed = 191)
+  under both anchors: app's current Sunday anchor -> Tuesday; correct
+  Wednesday anchor -> **Friday**, matching the user's claim exactly and
+  matching well-documented Shavuot-always-Sunday reconstruction as a
+  cross-check (3/15, dayOfYear 74, Wednesday anchor -> Sunday). This is
+  a single shared constant (one anchor offset), so it is a small,
+  precise fix once approved, but it shifts every date's weekday by a
+  fixed 3-day offset app-wide (Shabbat marking, every festival's
+  weekday, priestly-rotation-adjacent logic) — not just Yom Kippur.
+  What is NOT part of this bug and remains genuine guesswork (per the
+  user's own framing, not something to "fix"): which real Gregorian
+  date corresponds to 1 Aviv in any given year (the equinox-anchoring
+  side, `getSolarYearStart` returning Gregorian March 20) — the scrolls
+  don't specify that alignment and neither the app nor anyone else can
+  derive it with certainty. Reported to user in full per Rule 11; no
+  code touched. `Solar/sw.js` still at `acr-solar-v39` (matches PR #858,
+  still open/unmerged as of this note).
+- Otherwise: all four Jubilees-restoration PRs (#850, #851, #852, #853)
+  are merged and verified live on `main`.
 
 ## Pending / parked
 
