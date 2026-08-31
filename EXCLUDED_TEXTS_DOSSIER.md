@@ -564,11 +564,13 @@ Reversed after reinvestigation. This entry previously called for full exclusion;
 * The Forensic Data: Written in Middle Aramaic block script. These texts are filled with late, specialized vocabulary and do not exist in any ancient First Temple epigraphic records.
 * The Extraction Reason: These two documents operate as the matching structural pieces to The Visions of Amram. Together, this 2nd-century BCE trilogy was manufactured by scribes to validate the genetic monopoly of the Hasmonean high priesthood during a severe civil leadership crisis.
 
-## 9. The Book of Giants (1Q23–24 / 4Q203 / 4Q530–533)
+## 9. The Book of Giants (1Q23–24 / 4Q203 / 4Q530–533) — RESTORED, 2026-08-31, no longer excluded
 
-* The Deception: Splicing foreign Mesopotamian mythologies directly onto the brief four-verse mention of the Nephilim in Genesis 6:1–4.
-* The Forensic Data: Found on late Second Temple fragments. In 4Q530 and 4Q531, the text explicitly breaks the historical timeline by naming one of the pre-flood giants as Gilgamesh (גלגמיש).
-* The Extraction Reason: The presence of the king from the Akkadian Epic of Gilgamesh proves this document is a late Hellenistic-era literary mashup. Scribes took popular secular myths of their time and forced them into the primeval history of Noah.
+Reversed after reinvestigation. Full text read directly: zero Christian content, no false-deity worship, complete note apparatus (unchanged from the original — the content file used to restore this is byte-for-byte identical to what was live before the July 22 removal, no notes rewritten). Manuscript authenticity confirmed on three fronts: (1) genuine Cave 1/2/4/6 provenance, one of the most widely-copied Enochic texts at Qumran (6-10 copies per Stuckenbruck's critical edition), no Rule 32 forgery concern; (2) sealed from composition (~100 BCE for the oldest copy, 4Q530) until its 1947-56 discovery, so no Rabbinic or Christian manipulation pathway ever existed; (3) content spot-checked against published scholarship — the named giants Mahway and Ohya/Hahya, and the dream-vision scene ("the ruler of heaven came down... you shall go into the pit of fire"), all confirmed present and accurately rendered, not fabricated.
+
+* What the original case rested on: the Gilgamesh name (גלגמיש) appearing in 4Q530-531, read as proof of a late Hellenistic literary mashup.
+* Why that doesn't support full exclusion: this is a real, documented, and honestly-noted detail — the site's own comparative note already frames it as the Qumran community's theological reinterpretation of the figure (a doomed giant, not a hero), not an uncritical borrowing. A shared ancient Near Eastern name is not a disqualifying Hellenistic overlay under this site's own rule 25 test.
+* Placement: added as Vol 31 at the end of the Reader (not inserted chronologically near Jubilees) to avoid renumbering any other volume. Its internal title block still reads "Volume Thirty-Three" — the exact original text, left untouched per the user's direction to reuse only what was originally on the site, rather than edited to match its new Vol 31 position.
 
 ------------------------------
 ## ❌ CATEGORY 4: The Localized Sectarian Manifestos## 10. The Community Rule (1QS / 4Q255–264)
@@ -585,9 +587,9 @@ Reversed after reinvestigation. This entry previously called for full exclusion;
 
 ------------------------------
 ## 🛡️ THE COLLECTIVE ARCHIVAL STATUS
-10 OF THE 11 ENTRIES ABOVE REMAIN EXCLUDED. Entry 2, the Book of Jubilees, was reversed on 2026-08-31 — see its entry above for why — and is restored to ACR Reader Vol 7. The remaining 10 do not represent pristine, ancient memory. They are a brilliant monument to Second Temple crises engineering.
+9 OF THE 11 ENTRIES ABOVE REMAIN EXCLUDED. Entry 2 (Book of Jubilees) and entry 9 (Book of Giants) were reversed on 2026-08-31 — see each entry above for why — and are restored to ACR Reader (Vol 7 and Vol 31). The remaining 9 do not represent pristine, ancient memory. They are a brilliant monument to Second Temple crises engineering.
 When these communities were pushed to the brink of religious and political erasure by foreign empires, their scribes weaponized the names of ancient ancestors (Avraham, Sarai, Noah, Moshe, Enoch) to write highly localized, time-bound war propaganda, alternative calendar grids, and self-legitimatizing manifestos.
-To force these remaining 10 texts into the Main Canon corrupts the historical and linguistic truth of the pre-exilic baseline. They must remain quarantined within this supplementary collection as historical witnesses to how ancient texts were later altered.
+To force these remaining 9 texts into the Main Canon corrupts the historical and linguistic truth of the pre-exilic baseline. They must remain quarantined within this supplementary collection as historical witnesses to how ancient texts were later altered.
 ------------------------------
 The auxiliary archive is fully cross-referenced.
 ```
