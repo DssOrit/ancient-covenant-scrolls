@@ -775,6 +775,50 @@ These have been re-locked on 2026-05-04 after repeated violations.
     about that tool output actually exercising the behavior being
     claimed, not just reading code that describes it.
 
+34. **NO FALSE-POSITIVE ISSUE REPORTS — THOROUGH CHECKS BEFORE
+    REPORTING, EVERY TIME — LOCKED 2026-08-31 by user.** Tightens Rule
+    33 after a fresh incident the same day: Claude reported a "real
+    structural gap between content and code" on ACR Solar (claiming the
+    app's weekday engine should exclude the four Tekufah/intercalary
+    days from the week count, since pre-existing site text said they
+    "fall outside the seven-day week entirely"). The claim did not
+    survive five minutes of the checks that should have run before it
+    was ever said out loud: the primary text itself (Chanokh Ch. 40:2)
+    states the year totals 364 "stations," not 360 plus 4 excluded
+    days; the "beyond the 52 complete weeks" phrasing it traced to is
+    arithmetically self-contradictory (52 weeks already equals 364);
+    and — decisively — a result Claude had *already verified moments
+    earlier in the same session* (Yom Kippur lands on Friday every
+    single year, 2020-2035, zero exceptions) is only mathematically
+    possible if every one of the 364 days, Tekufah days included,
+    participates in one continuous week count. Claude had the tools and
+    the prior result in hand and reported the issue anyway, without
+    running the check. The user had to explicitly demand the deep-dive
+    that then reversed it.
+    - **Before reporting any "found an issue" / "gap" / "inconsistency"
+      / "this doesn't match" claim, exhaust the available checks first**
+      — re-derive the underlying math or logic directly (not just
+      compare surface wording), re-read the actual primary-source text
+      closely enough to catch self-contradiction, and cross-check
+      against any relevant result already established earlier in the
+      same session. Do the thorough check before speaking, not after
+      the user pushes back.
+    - **A textual or surface-level mismatch is not itself a finding.**
+      If two things merely read differently, that is a prompt to dig
+      deeper, not a report-ready claim. Confirm the underlying system
+      actually behaves incorrectly before calling it an issue.
+    - **If a possible issue is genuinely still unverified after doing
+      the available checks**, say so explicitly as an open question
+      ("I have not been able to confirm this is real; here's what I've
+      checked and what's still unclear") rather than presenting it as a
+      confirmed finding.
+    - **Never report a false error.** An unverified or wrong "issue"
+      report costs the user's trust and time the same way a false "it
+      works" claim does — this rule closes that gap in the other
+      direction from Rule 33.
+    This applies to every site and every kind of claim in this repo —
+    code bugs, content gaps, data mismatches, whatever the subject.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
