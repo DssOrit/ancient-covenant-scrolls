@@ -249,18 +249,41 @@ user asked whether that removal was actually correct.
   pass confirms the Holidays view renders, the detail modal opens via
   the actual `showEventDetail()` function and contains the new Chanokh
   text, zero page errors.
-- **Discovered but NOT touched, flagged only:** the Summer/Winter
-  Tekufah entries' existing (pre-dating this session) `desc`/`practice`
-  text claims these days "fall outside the seven-day week entirely" —
-  which the actual Chanokh Ch. 40 text I just read directly supports
-  ("not reckoned in the reckoning of the year"). But the app's actual
-  `gregorianToSolar()` code does NOT implement this — it computes an
-  ordinary weekday for every day including the four Tekufah days, with
-  no special-casing to exclude them from the week count. This is a
-  real structural gap between the site's own content claim and its
-  code, separate from the weekday-anchor bug fixed earlier today (PR
-  #862) and NOT approved or touched — reported to the user for a
-  separate decision.
+- **Flagged a "gap" that turned out to be a false positive on my own
+  part — corrected, per Rule 33.** Originally reported: the Summer/
+  Winter Tekufah entries' pre-existing text claims these days "fall
+  outside the seven-day week entirely," but `gregorianToSolar()`
+  computes an ordinary weekday for them with no exclusion, calling this
+  a real content/code gap. User asked for deep research to rule out a
+  false positive before touching anything. On re-examination this does
+  NOT hold up:
+  - Chanokh Ch. 40:2 itself states the total year is accomplished
+    through "three hundred and sixty-four stations" — 364 total, not
+    360 with 4 additional/excluded days.
+  - The "outside the week" framing traces to ACR Reader's own
+    pre-existing critical note ("the extra days beyond the 52 complete
+    weeks of the solar year"), which is arithmetically self-
+    contradictory: 52 complete weeks = 364 days already; "beyond" that
+    would total 368, contradicting Ch. 40:2's own "364 stations."
+  - Decisive check: if the 4 Tekufah days were truly excluded from
+    weekday-counting, the weekday label would shift by 4 (mod 7) every
+    year and Yom Kippur could not land on the same weekday every year
+    — but the 16-year check (2020-2035) already run this session shows
+    zero exceptions, which is only possible if all 364 days, Tekufah
+    days included, participate in one continuous week count.
+  - The "Tekufah days never fall on Shabbat" claim found via WebSearch
+    is real but is a *consequence* of 91 (days/quarter) being a clean
+    multiple of 7 (91 mod 7 = 0), not evidence of exclusion from the
+    week — confirmed by computing all four Tekufah days' weekday under
+    the corrected anchor: all four land on the identical weekday
+    (Tuesday), never Shabbat, exactly as the arithmetic predicts.
+  - **Conclusion: `gregorianToSolar()` has no bug here and needs no
+    change.** The only real (much narrower) issue is that the site's
+    own pre-existing wording overstates a true, smaller fact — these
+    days aren't counted among the twelve *named months'* day-count,
+    but they are full week participants. That is a content-precision
+    question, not a code fix, and remains unactioned pending the user's
+    choice on whether it's worth a small wording pass.
 
 ## ACR Study — War Scroll / Book of Giants quiz cross-wire — found, fixed, merged
 
@@ -369,15 +392,15 @@ user asked whether that removal was actually correct.
 
 ## Pending / parked
 
-- **Tekufah days' week-exclusion claim vs. code, found 2026-08-31, not
-  yet actioned.** See note above — the four Tekufah entries' own text
-  says these days sit outside the 7-day week (matching Chanokh Ch. 40),
-  but `gregorianToSolar()` assigns them an ordinary weekday like any
-  other day. Whether to change the engine so Tekufah days are excluded
-  from weekday computation (a materially bigger change than today's
-  anchor fix — it would affect day-counting for every date after each
-  Tekufah in the year) needs the user's explicit direction before any
-  work starts.
+- **Tekufah "outside the week" wording — resolved as a false positive,
+  no code fix needed.** See the corrected note above: deep research
+  (primary text + the arithmetic + the already-verified 16-year
+  no-drift check) confirms `gregorianToSolar()` is correct as-is. The
+  only optional remaining item is a small content-wording pass on the
+  Summer/Winter Tekufah entries' pre-existing "falls outside the
+  seven-day week entirely" phrasing, to replace it with the accurate,
+  narrower fact (not counted among the twelve named months, but a full
+  week participant) — not urgent, not a bug, awaiting the user's choice.
 
 - **Pseudo-Jubilees (4Q225-227) and Angels of Mastemah (4Q390) remain
   excluded on their own separate merits** — this was never
