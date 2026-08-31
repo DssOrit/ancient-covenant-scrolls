@@ -1381,10 +1381,14 @@ function gregorianToSolar(date) {
   }
   if (solarMonth === 0) { solarMonth = 12; solarDay = SOLAR_MONTHS[11].days; }
 
-  // Day of solar week (starts Sunday = 1, Shabbat = 7)
+  // Day of solar week. 1 Aviv (dayOfYear 0) is the 4th day of the week
+  // (Wednesday) per 4Q320/4Q321 (Mishmarot calendrical texts), tied to
+  // the creation of the sun, moon and stars on day 4 (Gen 1:14-19).
+  // Because 364 = 52 x 7 exactly, this offset never drifts year to
+  // year - every solar month/day always falls on the same weekday.
   var dayOfSolarYear = dayOfYear;
-  var shabbat = ((dayOfSolarYear % 7) === 6); // every 7th day from equinox
-  var weekDay = (dayOfSolarYear % 7) + 1; // 1=Sun... 7=Shab
+  var weekDay = ((dayOfSolarYear + 3) % 7) + 1; // 1=Sun... 7=Shab
+  var shabbat = (weekDay === 7);
 
   return {
     year: year,

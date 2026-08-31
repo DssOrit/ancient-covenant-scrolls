@@ -120,8 +120,72 @@ user asked whether that removal was actually correct.
 
 ## Outstanding / blocking
 
-- None. All four PRs (#850, #851, #852, #853) are merged and verified
-  live on `main`.
+- None from the Jubilees thread. All four PRs (#850, #851, #852, #853)
+  are merged and verified live on `main`.
+- **Note:** this file's "Built today" section above only covers the
+  Jubilees-restoration thread. Later in the same session, substantial
+  ACR Solar holy-day work also shipped and merged (PRs #854 New Wine
+  date fix, #855 Volume-of-Day reliability fix + Holy Days tab +
+  DSS/Orit observance content, #856 modern preparation checklists,
+  #858 prayer/liturgy sourcing — cache now `acr-solar-v39` on `main`)
+  plus unrelated Reader/Search restorations (#857 War Scroll, #859
+  Book of Giants, #860 Search War Scroll/Giants restore) — none of
+  that was logged here in real time per Rule 12; flagging the gap
+  honestly rather than reconstructing full details from memory.
+
+## ACR Solar — weekday-anchor bug: found, reported, fixed
+
+- **User's report (verbatim claim):** the DSS calendrical texts fix
+  Yom Kippur (7/10) on the 6th day (Friday) — "Yom HaKippurim falls on
+  the sixth day" is written in the calendar texts — and the priestly
+  rotation only works if dates never move through the week. User was
+  explicit that Gregorian alignment (which real date is "1 Aviv" this
+  year) is genuine unattested guesswork and NOT part of this claim.
+- **Investigated (read-only) and confirmed the bug**, reported to user
+  in full before any write, per Rule 11: `Solar/index.html`
+  `gregorianToSolar()` hardcoded `weekDay = (dayOfSolarYear % 7) + 1`,
+  assigning 1 Aviv (dayOfYear 0) = Sunday with no citation. WebSearch
+  confirmed the actual scholarly reconstruction (4Q320/4Q321 Mishmarot
+  texts): the year begins on the *4th day* (Wednesday), tied to the
+  creation of sun/moon/stars on day 4 (Gen 1:14-19). Recomputed Yom
+  Kippur (dayOfYear 191) under both anchors using the app's own
+  `SOLAR_MONTHS` day-count table: old Sunday anchor -> Tuesday;
+  correct Wednesday anchor -> Friday, matching the user's claim.
+  Cross-checked Shavuot (dayOfYear 74) -> Sunday under the Wednesday
+  anchor, matching well-documented "Shavuot always falls on Sunday in
+  the Qumran calendar" scholarship.
+- **User approved with the exact unlock phrase ("edit ACR Solar").**
+  Backup branch `backup/2026-08-31-acr-solar-v39` cut at `main` HEAD
+  `5b6af55` and verified (SHA match confirmed) before any write.
+- **Fix applied** on branch `claude/acr-solar-weekday-anchor`: changed
+  the anchor offset from Sunday to Wednesday (`weekDay = ((dayOfSolarYear
+  + 3) % 7) + 1`), and derived `isShabbat` from the corrected `weekDay`
+  instead of a separate duplicate modulo calculation (removes a second
+  place the two could drift out of sync). Comment added citing
+  4Q320/4Q321 and the Gen 1:14-19 creation-of-luminaries basis.
+- **Verified no break:** `node --check` clean on all 11 inline script
+  blocks; HTML tag-balance check shows one pre-existing false-positive
+  pattern (confirmed identical on unmodified `origin/main` baseline via
+  direct diff, so not introduced by this change). Real headless-browser
+  (Playwright, iPad viewport) pass confirmed: Yom Kippur 2026 (Sep 27)
+  -> Friday, Shavuot 2026 (Jun 2) -> Sunday, 1 Aviv 2026 (Mar 20) ->
+  Wednesday; app still renders (bottom nav, Holy Days tab, month title,
+  solar month sub all present); zero page errors (one blocked external
+  font/icon CDN console warning, expected in this sandboxed
+  environment, unrelated to the change).
+- **Known residual limitation, disclosed to user, not fixed here:**
+  because `getSolarYearStart()` still re-anchors to Gregorian March 20
+  fresh every year (the "guesswork" the user themselves flagged as
+  out of scope), the `isShabbat` grid-highlight's alignment with the
+  *real* Gregorian Saturday can still vary by year depending on what
+  real weekday March 20 falls on that year. This fix corrects the
+  month/day -> weekday-*label* mapping (the documented, never-drifting
+  part) exactly as asked; it does not and was not asked to solve the
+  separate Gregorian-alignment question.
+- Scope: single shared constant, but the effect is app-wide — every
+  date's weekday label and the Shabbat grid highlight all shift by the
+  same fixed 3 days. `Solar/sw.js` cache bumped `acr-solar-v39` ->
+  `v40`.
 
 ## Pending / parked
 
