@@ -199,8 +199,68 @@ user asked whether that removal was actually correct.
   though the real Gregorian date it lands on varies year to year. This
   is the structural "never drifts" property (364 = 52 x 7), confirmed
   computationally rather than asserted from the math alone.
+- **User then asked how the ~1.25-day/year drift (364-day calendar vs.
+  the true ~365.24-day solar year) was handled in the ancient texts.**
+  Answered first via WebSearch (no established DSS/Orit correction
+  mechanism survives; modern scholarly proposals like Thiering's 17.5
+  days/14yr and VanderKam's 35 days/28yr are reconstructions, not
+  attested procedure), then went back and read the actual primary text
+  already on ACR Reader (`data/file_14.json`, Vol 6 Chanokh/1 Enoch
+  Astronomical Book, Ch. 37-49 internal numbering) instead of relying
+  only on secondary sources, per the user's direct challenge. Found the
+  real substance is different from what WebSearch alone suggested: Ch.
+  40 describes four "intercalary days" (360 = 12x30 months, plus these
+  four, "not reckoned in the reckoning of the year") — this is about
+  reaching 364 from 360, not a multi-year correction; Ch. 75 frames
+  skipping these days as covenant unfaithfulness ("men go wrong
+  therein"); Ch. 79:6 states the 364-day year "is accurately completed"
+  with no acknowledgment of further drift or any correction mechanism.
+  Also surfaced (not fixed, out of scope — different site, no unlock
+  given) that `GESTUDY/data/app_data.json` currently overstates this as
+  settled fact, misattributed to 4Q319 rather than the real 2018
+  Ratson/Ben-Dov 4Q324d decipherment, and without the "hypothesis, not
+  confirmed text" hedging the actual scholarship carries. Flagged to
+  user, no action taken.
+- **User approved adding this Chanokh content into ACR Solar's own four
+  Tekufah entries** (the only site being worked on), with the exact
+  unlock phrase. Backup `backup/2026-08-31-acr-solar-v40b` cut at `main`
+  HEAD `562996f`, verified matching `origin/main`, before any write.
+  Edited all four Tekufah `practice` fields in `HOLIDAYS`
+  (Summer/Autumn/Winter/Year End, `Solar/index.html`), distributing the
+  three points (intercalary-day definition, covenant-faithfulness
+  framing, "accurately completed"/no-correction-attested) one or two
+  per entry so the four don't read identically. Cache `acr-solar-v40`
+  -> `v41`.
+- **Verified no break:** `node --check` clean on all 11 script blocks;
+  `HOLIDAYS` array still parses via direct JS eval with all 22 entries
+  intact, 4 Tekufah entries confirmed updated; real headless-browser
+  pass confirms the Holidays view renders, the detail modal opens via
+  the actual `showEventDetail()` function and contains the new Chanokh
+  text, zero page errors.
+- **Discovered but NOT touched, flagged only:** the Summer/Winter
+  Tekufah entries' existing (pre-dating this session) `desc`/`practice`
+  text claims these days "fall outside the seven-day week entirely" —
+  which the actual Chanokh Ch. 40 text I just read directly supports
+  ("not reckoned in the reckoning of the year"). But the app's actual
+  `gregorianToSolar()` code does NOT implement this — it computes an
+  ordinary weekday for every day including the four Tekufah days, with
+  no special-casing to exclude them from the week count. This is a
+  real structural gap between the site's own content claim and its
+  code, separate from the weekday-anchor bug fixed earlier today (PR
+  #862) and NOT approved or touched — reported to the user for a
+  separate decision.
 
 ## Pending / parked
+
+- **Tekufah days' week-exclusion claim vs. code, found 2026-08-31, not
+  yet actioned.** See note above — the four Tekufah entries' own text
+  says these days sit outside the 7-day week (matching Chanokh Ch. 40),
+  but `gregorianToSolar()` assigns them an ordinary weekday like any
+  other day. Whether to change the engine so Tekufah days are excluded
+  from weekday computation (a materially bigger change than today's
+  anchor fix — it would affect day-counting for every date after each
+  Tekufah in the year) needs the user's explicit direction before any
+  work starts.
 
 - **Pseudo-Jubilees (4Q225-227) and Angels of Mastemah (4Q390) remain
   excluded on their own separate merits** — this was never
