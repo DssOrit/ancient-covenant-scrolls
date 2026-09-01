@@ -2,25 +2,28 @@
 
 ## Current state
 
-- `main` HEAD: `562996f` (PR #864 merged) before this round's ACR2 work;
-  an ACR2 restoration PR is open on top of it (see below) and not yet
-  merged.
+- `main` HEAD: `fd07fbf` (PR #869 merged, 2026-09-01 00:29 UTC). Verified
+  directly against `origin/main`, not PR metadata.
 - ACR Reader cache: `acr-v118` (Vol 7 Jubilees + Vol 31 Book of Giants
   restored, War Scroll at Vol 30).
 - ACR Search cache: `acr-search-v299` (Jubilees + War Scroll + Book of
   Giants concordance/Volume Browser restored).
 - ACR Study cache: `acr-study-v118` (PR #863, merged — War Scroll/Book
   of Giants quiz cross-wire fixed).
-- ACR Solar cache: `acr-solar-v40` (PR #862, merged — weekday-anchor fix).
-- ACR2 cache: `acr2-v26` on the open restoration branch (was `acr2-v25`
-  on `main`) — 12 texts (16 content files) added, Vol 14–25, not yet
-  merged.
+- ACR Solar cache: `acr-solar-v40` (PR #862, merged — weekday-anchor fix;
+  PR #866 also merged since, Tekufah/Chanokh content — not logged here,
+  outside this thread).
+- ACR2 cache: `acr2-v27` (PR #865 merged — 12 texts / 16 files restored,
+  Vol 14-25; PR #869 merged on top — 7 divine-naming fixes across 3 of
+  those files, see new section below).
 - `EXCLUDED_TEXTS_DOSSIER.md` entry 2 (Book of Jubilees) and entry 9
   (Book of Giants) marked RESTORED, 2026-08-31, no longer excluded from
   the Reader. Collective status line updated to "9 of 11 entries remain
   excluded." Not touched by the ACR2 work below — those texts remain
   correctly excluded from the Reader's main canon; what changed is
   their availability in ACR2, a separate, lower-standard archive site.
+- `CLAUDE.md` Rule 13 updated (PR #867, open, not yet merged) to name
+  "pre-colonial" explicitly alongside pre-Rabbinic/pre-Christian.
 
 ## Built today
 
@@ -387,8 +390,106 @@ user asked whether that removal was actually correct.
   the dossier's per-text forensic essays don't map cleanly onto a
   single numbered list for all 12, so editing it risked introducing an
   inaccuracy under time pressure rather than fixing one.
-- **Not merged — PR opened, link sent to user, awaiting explicit
-  merge instruction per Rule 9.**
+- **PR #865 merged** (user confirmed, verified directly against
+  `origin/main`: cache `acr2-v26`, all 12 texts present at Vol 14-25).
+
+## Rule 13 (`CLAUDE.md`) — added "pre-colonial" per user request, corrected once
+
+- Came up mid-discussion of Sefer Ha-Razim (see below). User said the
+  rule should explicitly require pre-Rabbinic, pre-colonial,
+  pre-Christian sourcing. First pass (commit `b816350`) reworded more
+  of the existing rule text than needed — user corrected: **"I never
+  said change rules, if what I said is not already in the rules just
+  add to what the rules already say."** Second commit (`ad74c59`)
+  trimmed it to a pure addition: one word in the summary line, one new
+  bullet in the same style as the existing two, one word in the
+  closing exception sentence. Nothing else touched.
+- **PR #867 — open, not yet merged.** Docs-only change, no cache bump
+  needed (no code touched).
+
+## Sefer Ha-Razim — researched, confirmed it can never qualify, explains the missing-file gap
+
+- User asked what Sefer Ha-Razim actually is, given it couldn't be
+  restored to ACR2 (source file never existed, see PR #865 section
+  above). WebSearch confirmed: a Jewish magical grimoire, 3rd-7th
+  century CE (Byzantine period), reconstructed from Cairo Geniza
+  fragments by Mordecai Margalioth in 1966 — no Qumran or DSS
+  provenance at all. Content: angel-invocation magic across seven
+  heavens, explicitly names pagan deities (Helios, Hermes, Aphrodite)
+  as functional powers, legendary origin story (given to Noah by the
+  angel Raziel).
+- Fails Rule 13/25 (centuries into the Rabbinic/Byzantine period, not
+  pre-Corruption), fails Rule 30 outright (angels invoked as objects of
+  command, real pagan deities treated as functional), fails Rule 32
+  (no Cave designation at all). Would have been excluded on content
+  grounds even if the file had existed. Distinguished clearly from
+  **Raz Nihyeh** (already restored, Vol 25) — a genuine, unrelated
+  Qumran wisdom term attested in 1QS 11:3-4 and 1Q27, no relation to
+  the Byzantine grimoire beyond a superficially similar English name.
+
+## ACR2 full audit — all 25 volumes checked, 7 real violations found and fixed, merged
+
+- User pushed for full verification rather than piecemeal claims,
+  multiple rounds: "did you check each ACR2 volume" (twice, for
+  content-safety and for sourcing), "no false positives," "verify
+  they're pre-Rabbinic/pre-colonial/pre-Christian before fixing." Each
+  round was actually executed, not just asserted:
+  - **Rule 30 scan (all 31 live files):** zero hits for worship-of-
+    angels/pantheon/divine-family language. "Sons of God" in Animal
+    Apocalypse correctly left alone (Rule 18's own keep-listed
+    divine-council phrase).
+  - **Rule 18 scan, corrected after an initial gap:** first pass used
+    a case-sensitive `\bLORD\b` regex that would never have caught
+    title-case "Lord" — caught and fixed, re-ran case-insensitive
+    across all 31 files for Lord/LORD/Adonai/standalone God.
+  - **Sourcing verification (Rule 13's three-part test), all 25
+    volumes:** WebSearched real paleographic dates and cave
+    designations for every volume not already covered, not just the
+    2-3 already checked. All 25 confirmed as genuine Cave 1/4/5/11
+    finds from the original 1947-1956 excavations, Second Temple
+    period composition (mostly 2nd c. BCE-1st c. CE), several among
+    the original seven Cave 1 scrolls (Genesis Apocryphon, Hodayot,
+    Pesher Habakkuk, Community Rule/1QSa/1QSb). Full table with dates
+    and sources given to user.
+  - **Result: 7 real violations found, all in primary verse text or a
+    note quoting one, all pre-existing (not introduced by this
+    session's restoration), none anywhere near Sefer Ha-Razim's
+    category of problem.**
+- **One false attribution caught and corrected, twice:** flagged
+  `file_7.json` as "Words of Michael" throughout the investigation and
+  the original PR title/commit message. It's actually **Apocryphon of
+  Joshua (Vol 6)** — Words of Michael is the separate `file_8.json`
+  (Vol 7), which was independently confirmed clean in the same audit
+  and left untouched. The fix itself (verse 1's "the God of Yisra'el"
+  -> "the Creator of Yisra'el") was applied to the correct file; only
+  the volume name attached to it in reporting was wrong. Corrected via
+  `mcp__github__update_pull_request` on the PR title/body rather than
+  rewriting git history, with the correction stated plainly at the top
+  of the PR body.
+- **Backup `backup/2026-09-01-acr2-v26` cut and verified at `main` HEAD
+  `5ba2ed9` before any edit, per Rule 26.**
+- **Fixes applied** (pure word substitutions, verified by reverting
+  each one programmatically and confirming byte-identical match to the
+  pre-fix file):
+  - `file_5.json` (Prayer of Nabonidus, Vol 4): "the/The Most High God"
+    -> "the/The Most High Creator", 5 instances, verses 3-6.
+  - `file_7.json` (Apocryphon of Joshua, Vol 6): "YHWH, the God of
+    Yisra'el" -> "YHWH, the Creator of Yisra'el", verse 1.
+  - `file_29.json` (Genesis Apocryphon, Vol 23): the [CRITICAL NOTE]
+    quoting verse 3 said "the great Lord" where the verse itself
+    already correctly says "the great Creator" -- corrected to match.
+  - Left alone, confirmed not a violation: `file_29.json`'s "O my lord
+    my brother" (Bathenosh addressing her husband Lamekh — the
+    standard ancient wife-to-husband address, not a divine-name
+    reference).
+  - `ACR2/sw.js` cache bumped `acr2-v26` -> `acr2-v27`.
+- **Verified live on `origin/main` directly** (not PR metadata) after
+  the user's "Merged": cache `acr2-v27`; `file_5.json` shows 5x "Most
+  High Creator", 0x "Most High God"; `file_7.json` shows "Creator of
+  Yisra" present, "God of Yisra" gone; `file_29.json` shows "great
+  Creator" in both instances, "great Lord" gone.
+- **PR #869 merged** (user confirmed "Merged", verified against
+  `origin/main`: `fd07fbf`, merged by DssOrit at 2026-09-01 00:29 UTC).
 
 ## Pending / parked
 
@@ -423,6 +524,10 @@ user asked whether that removal was actually correct.
 ## Today's commit log (newest first)
 
 ```
+fd07fbf Merge pull request #869 from DssOrit/claude/acr2-fix-divine-naming
+1e2a1a9 ACR2: fix divine-name violations in Prayer of Nabonidus, Apocryphon of Joshua, Genesis Apocryphon
+0d2422b Merge pull request #865 from DssOrit/claude/acr2-restore-sectarian-texts
+96aeb8f ACR2: restore 12 Second Temple sectarian texts never relocated from Reader
 562996f Merge pull request #864 from DssOrit/claude/acr-solar-session-notes-backup
 2b114a5 Merge pull request #863 from DssOrit/claude/study-war-scroll-giants-fix
 ef148b4 Fix War Scroll / Book of Giants quiz content cross-wire in ACR Study
@@ -470,3 +575,8 @@ point, since it's a later commit on `main`).
   `562996fe1009a47aee042434ada901d81c3c3e94`, `main` HEAD right before
   the ACR2 12-text restoration. Cut and verified before any write, per
   Rule 26. Recovery: `git checkout backup/2026-08-31-acr2-v25`.
+- `backup/2026-09-01-acr2-v26` — SHA
+  `5ba2ed9fec4a5b6403b68782f5dc8abec510234e`, `main` HEAD right before
+  the ACR2 divine-naming fix (PR #869, merged). Cut and verified before
+  any write, per Rule 26. Recovery: `git checkout
+  backup/2026-09-01-acr2-v26`.
