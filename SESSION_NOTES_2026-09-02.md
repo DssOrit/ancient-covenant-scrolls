@@ -118,12 +118,17 @@ file in `/Search/` is opened, per Rule 8 and Rule 11.
 
 - **ACR Search addition — see "Start here next session" above.** This
   is the main open item; nothing else is blocking.
-- **Rule 13's "pre-colonial" wording is not live** (see item 4 above) —
-  the PR was closed, not merged. If the user still wants that change,
-  it needs to be reopened or redone, not assumed done.
 - **War Scroll stays in the Reader** — settled, not open, but noting
   here since it was actively re-litigated today after being decided
   once already; no further action expected unless the user reopens it.
+
+## Resolved today, not open
+
+- **Rule 13's "pre-colonial" wording — user confirmed leave it as-is.**
+  Asked directly whether to reopen PR #867 (the pure-addition version);
+  user said "No leave the rule as is." Not reopening. Rule 13 on `main`
+  stays exactly as it reads today (pre-Rabbinic, pre-Christian, no
+  explicit "pre-colonial" line). This is settled, not pending.
 
 ## Pending / parked
 
