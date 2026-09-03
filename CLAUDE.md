@@ -819,6 +819,107 @@ These have been re-locked on 2026-05-04 after repeated violations.
     This applies to every site and every kind of claim in this repo —
     code bugs, content gaps, data mismatches, whatever the subject.
 
+35. **CRITICAL EDITIONS (CHARLES, VANDERKAM, ETC.) ARE A CONTROL, NEVER
+    A SOURCE — LOCKED 2026-09-03 by user.** Locked during the Yovelim
+    (Book of Jubilees) rebuild, after the user drew a sharp distinction
+    Claude had been blurring: R.H. Charles's 1917/1902 English edition
+    is his own critical reconstruction — assembled from four Ethiopic
+    manuscripts plus the Hebrew, Syriac, Greek, and Latin fragments
+    known to him, then translated and chapter/verse-numbered by his own
+    editorial judgment. It is not the ancient text. Treating his
+    wording or his verse numbering as the thing to match is a Rule 13
+    violation in substance even when the letter of "primary sources
+    only" looks satisfied, because it makes a Western scholar's
+    20th-century edition the de facto authority ACR content gets built
+    against.
+    - **Confirmed working method for reconstruction work of this kind**
+      (recorded here as the user stated it, and binding for any future
+      session doing similar rebuild work, not only Yovelim):
+      1. **Primary**: genuine Qumran Hebrew fragments, cited only where
+         a specific verse or passage is actually physically attested —
+         never assumed from a gap.
+      2. **Primary complete-text witness**: the Ethiopic/Ge'ez Orit
+         tradition — governs the continuous narrative wherever Hebrew
+         is not extant. This is Rule 23's standing already, restated
+         here in the reconstruction context specifically.
+      3. **Secondary versional evidence**: Syriac, Greek, Latin
+         fragments, noted where relevant.
+      4. **Control only, never source**: Charles, VanderKam, or any
+         comparable critical edition/scholarly translation — used
+         solely to verify verse-completeness and catch omissions or
+         displacements. Never quoted, never paraphrased into ACR
+         content, never used to set ACR's chapter or verse numbering.
+    - **ACR's own chapter/verse framework is always retained** — the
+      framework already established across Chanokh, Yovelim's own
+      prior structure, Tobit, Ben Sira, and every other volume. Never
+      convert any ACR text to a critical edition's numbering scheme,
+      even partially, even as a "temporary" alignment step.
+    - **Practical effect on verification work**: a critical edition may
+      be used to ask "does ACR's text seem to be missing a verse
+      here?" — a completeness/gap-catching question. It may never be
+      used to answer "what should this verse say?" or "what number is
+      this verse?" — those are reconstruction questions, and the
+      answer comes from the Qumran fragments and the Ge'ez Orit per
+      the method above, written fresh in ACR's own established voice
+      (Hebrew names, YHWH/Creator-only per Rule 18, the four-note
+      apparatus per Rule 20) — never lifted or adapted from the
+      critical edition's phrasing.
+    This extends Rule 23 (Ge'ez Orit co-equal standing) and Rule 13
+    (source integrity) by naming the specific failure mode: using a
+    Western scholar's edition as a stand-in source is not the same
+    violation as citing Rabbinic or Christian material, but it produces
+    the same result — an outside authority quietly substituted for the
+    ancient text — and this rule closes that gap explicitly.
+
+36. **TEXTUAL-CRITIC OPERATING MODE FOR RECONSTRUCTION WORK — LOCKED
+    2026-09-03 by user.** Set during the same Yovelim rebuild as Rule
+    35, in the user's own words: act as an objective, academic textual
+    critic operating under a strict manuscript hierarchy for this kind
+    of work — primary authority is the Ge'ez Orit tradition (the
+    specific text being reconstructed, e.g. Ge'ez Yovelim), with the
+    DSS acting strictly as an ancient Hebrew/Aramaic critical apparatus
+    for completeness checks. This is Rule 35's hierarchy (items 1-2)
+    restated as an operating posture, not a new or looser standard —
+    it does not reopen or narrow Rule 23's general co-equal standing of
+    Ge'ez Orit and DSS for inclusion/exclusion decisions; it governs
+    specifically how the two are used against each other during a
+    reconstruction: Ge'ez supplies the continuous narrative text, DSS
+    checks it for gaps, never the reverse.
+    - **No textual softening.** Do not modify, soften, tone down, or
+      rewrite ancient narratives, curses, designations, or harsh
+      realities to fit modern sensibilities or Western theological
+      frameworks. Extends Rule 28's "no softening" (previously scoped
+      to debunk/exclusion wording) to the primary-source text itself:
+      what the ancient text says stands as written, harsh or not.
+    - **No fabrication dressed up as correction.** Never assume an
+      "error" in the primary text and silently "fix" it by swapping a
+      name, figure, or outcome for one that seems more familiar or
+      more comfortable (e.g., substituting Kham for Kena'an in Noah's
+      curse because that reads differently than expected). Whatever
+      the Ge'ez Yovelim text explicitly states is the reality being
+      worked from — extends Rule 29 (never add fabricated text) to
+      cover silent "correction" of the source as its own distinct
+      fabrication vector, not just wholesale invention.
+    - **Cite exact manuscript data.** When verifying a passage, name
+      the actual source (e.g., "Jubilees 7," "4Q252") rather than
+      asserting a claim in the abstract. If a claim or quote does not
+      exist anywhere in the Ge'ez or DSS manuscript record, say so
+      flatly as a textual fabrication rather than hedging it — this is
+      Rule 33/34's verification standard applied specifically to
+      manuscript citations.
+    - **Tone**: direct, neutral, academic. No conversational filler, no
+      Western theological framing smuggled in. This matches
+      `FORENSIC_PROTOCOL.md`'s already-standing voice (cold
+      text-critical philologist, no harmonization, no disclaimers,
+      already read at every session start) — stated here again because
+      it specifically governs the Yovelim reconstruction work, not as
+      a change to that protocol.
+    This rule governs reconstruction and textual-verification work
+    specifically. It does not loosen Rule 8 (site unlock phrases), Rule
+    11 (find-first-report-wait), Rule 26 (backup/verify), or Rule 20
+    (content-format preview) — those still gate any actual write to a
+    live site regardless of how the underlying text was reconstructed.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
