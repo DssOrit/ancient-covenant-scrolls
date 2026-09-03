@@ -819,6 +819,58 @@ These have been re-locked on 2026-05-04 after repeated violations.
     This applies to every site and every kind of claim in this repo —
     code bugs, content gaps, data mismatches, whatever the subject.
 
+35. **CRITICAL EDITIONS (CHARLES, VANDERKAM, ETC.) ARE A CONTROL, NEVER
+    A SOURCE — LOCKED 2026-09-03 by user.** Locked during the Yovelim
+    (Book of Jubilees) rebuild, after the user drew a sharp distinction
+    Claude had been blurring: R.H. Charles's 1917/1902 English edition
+    is his own critical reconstruction — assembled from four Ethiopic
+    manuscripts plus the Hebrew, Syriac, Greek, and Latin fragments
+    known to him, then translated and chapter/verse-numbered by his own
+    editorial judgment. It is not the ancient text. Treating his
+    wording or his verse numbering as the thing to match is a Rule 13
+    violation in substance even when the letter of "primary sources
+    only" looks satisfied, because it makes a Western scholar's
+    20th-century edition the de facto authority ACR content gets built
+    against.
+    - **Confirmed working method for reconstruction work of this kind**
+      (recorded here as the user stated it, and binding for any future
+      session doing similar rebuild work, not only Yovelim):
+      1. **Primary**: genuine Qumran Hebrew fragments, cited only where
+         a specific verse or passage is actually physically attested —
+         never assumed from a gap.
+      2. **Primary complete-text witness**: the Ethiopic/Ge'ez Orit
+         tradition — governs the continuous narrative wherever Hebrew
+         is not extant. This is Rule 23's standing already, restated
+         here in the reconstruction context specifically.
+      3. **Secondary versional evidence**: Syriac, Greek, Latin
+         fragments, noted where relevant.
+      4. **Control only, never source**: Charles, VanderKam, or any
+         comparable critical edition/scholarly translation — used
+         solely to verify verse-completeness and catch omissions or
+         displacements. Never quoted, never paraphrased into ACR
+         content, never used to set ACR's chapter or verse numbering.
+    - **ACR's own chapter/verse framework is always retained** — the
+      framework already established across Chanokh, Yovelim's own
+      prior structure, Tobit, Ben Sira, and every other volume. Never
+      convert any ACR text to a critical edition's numbering scheme,
+      even partially, even as a "temporary" alignment step.
+    - **Practical effect on verification work**: a critical edition may
+      be used to ask "does ACR's text seem to be missing a verse
+      here?" — a completeness/gap-catching question. It may never be
+      used to answer "what should this verse say?" or "what number is
+      this verse?" — those are reconstruction questions, and the
+      answer comes from the Qumran fragments and the Ge'ez Orit per
+      the method above, written fresh in ACR's own established voice
+      (Hebrew names, YHWH/Creator-only per Rule 18, the four-note
+      apparatus per Rule 20) — never lifted or adapted from the
+      critical edition's phrasing.
+    This extends Rule 23 (Ge'ez Orit co-equal standing) and Rule 13
+    (source integrity) by naming the specific failure mode: using a
+    Western scholar's edition as a stand-in source is not the same
+    violation as citing Rabbinic or Christian material, but it produces
+    the same result — an outside authority quietly substituted for the
+    ancient text — and this rule closes that gap explicitly.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
