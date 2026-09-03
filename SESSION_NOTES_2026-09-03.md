@@ -174,6 +174,75 @@ still standing pending confirmation): verify content against this
 confirmed method (not Charles-matching), preview per Rule 20, backup
 per Rule 26, then write only what's approved.
 
+## CLAUDE.md Rules 35-36 locked and merged (PR #874)
+
+User's follow-up instruction ("But lock this rule about Charles")
+turned the confirmed rebuild method above into two locked rules:
+Rule 35 (critical editions are a control, never a source) and Rule 36
+(textual-critic operating mode for reconstruction work — no softening
+of harsh primary-source content, no silent "correction" of names/
+figures, exact manuscript citation, direct academic tone). Both
+written to cross-reference existing rules (23, 28, 29, 33, 34) rather
+than duplicate or conflict with them. User merged PR #874 directly;
+verified live on `origin/main` (`git show origin/main:CLAUDE.md`
+confirms both at lines 822 and 874).
+
+## Full ACR Reader audit — all 92 volumes checked for the same issue
+
+User asked, after the Yovelim gap findings: "Audit carefully all other
+ACR reader volumes one by one for same issues, no false reporting &
+thorough." Result: **Yovelim is the only volume with real
+verse-completeness gaps.** Full methodology and what was caught along
+the way, since this directly bears on the trust concern raised earlier
+today:
+
+- Built a chapter/verse extractor and ran it across all 92 files listed
+  in `index.html`'s NAVIDS/LABELS arrays (Genesis through Book of
+  Giants), checking for (a) verse numbers going backward or repeating
+  (real scrambling) and (b) verse numbers silently skipped within the
+  present range (real gaps).
+- **First pass silently returned empty results for 11 real volumes** —
+  all of Exodus, Leviticus, Numbers, Deuteronomy, and Genesis Parts
+  2-4 — because they use an older HTML markup convention
+  (`<p class="dp" style="">`) without the `data-ptype="verse"`
+  attribute my script was matching on. Caught only by spot-checking
+  Exodus 20 and getting zero verses back, which didn't make sense for
+  a live volume. This was a real risk of silently under-auditing 11
+  files and is logged here explicitly so it isn't repeated. Fixed the
+  extractor to be markup-agnostic and re-ran the full audit.
+- **Four more false alarms after the fix, each individually verified
+  against the raw file content before being ruled out** (per Rule 34 —
+  none of these were reported to the user as findings):
+  - "The Twelve" (minor prophets, files 61-64) and Ezra-Nehemiah
+    (files 87-88) initially flagged as "scrambled" — actually separate
+    books restarting at chapter 1 within the same file (e.g. Yoel then
+    Amos), which is correct structure; my first-pass script wasn't
+    book-aware.
+  - Psalm 119 (file_71) dropped out of one check because it's headed
+    as 22 "STANZA" sections (Aleph, Bet, ...) instead of the standard
+    "PSALM 119" format used elsewhere in the volume. Verified
+    separately: all 176 verses present, in order, matching the real
+    known length.
+  - Ecclesiastes Chapter 3 (file_83) looked "missing" because its
+    subtitle line is unusually long and pushed verse 1 nine characters
+    past an arbitrary 400-char distance cutoff in my own check.
+    Verified directly: chapter exists, all 12 chapters of Ecclesiastes
+    are complete, and every verse count (18, 26, 22, 16, 20, 12, 29,
+    17, 18, 20, 10, 14) matches real published totals.
+  - A handful of "phantom chapters" (Leviticus 16, Proverbs 30/31,
+    Genesis 17/22/24) were descriptive divider subtitles ("THE DAY OF
+    ATONEMENT," "THE WORDS OF AGUR") that mention a chapter number in
+    passing, not real headers — same pattern as a false positive
+    caught during the original Yovelim audit.
+- Cross-checked 6 well-known chapters' verse counts against real
+  published totals as an independent sanity check beyond internal
+  consistency: Exodus 20=22, Isaiah 53=12, Job 42=17, Ruth 1=22,
+  Proverbs 31=31, Ecclesiastes 1=18 — all matched exactly.
+- **Final result: zero real scrambling anywhere across all 92 volumes;
+  zero real completeness gaps anywhere except Yovelim** (already known,
+  already has a confirmed rebuild method awaiting the user's files).
+  Nothing else in ACR Reader needs the same treatment.
+
 ## Outstanding / blocking
 
 - Waiting on the user's reconstructed Yovelim files (built per the
