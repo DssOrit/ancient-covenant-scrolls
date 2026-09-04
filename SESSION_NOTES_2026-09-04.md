@@ -72,6 +72,30 @@
   — this was verified structurally/textually but not visually
   rendered in a browser this session.
 
+## Post-merge check: audio "verses only" mode on rebuilt Yovelim
+
+User asked after merge whether the audio (text-to-speech) "verses
+only" setting still correctly excludes the four comparative notes on
+the rebuilt Part One/Two, given the same bug was found and fixed
+earlier today (86 mistagged paragraphs, PR #878). Could not run a
+live browser test — `acrscrolls.com` and the Cloudflare Pages domain
+are both blocked from this sandbox's network policy (`curl` returned
+403 CONNECT tunnel failed on both). Verified instead at the data and
+code level, directly against the merged `main` content:
+
+- Grepped both `data/file_16.json` and `data/file_17.json` on `main`:
+  zero `data-ptype="verse"` paragraphs contain a note marker ([DSS],
+  [ORIT GE'EZ], etc.), zero `data-ptype="note"` paragraphs are
+  missing one. Both files land at exactly 100 note-tagged paragraphs
+  (25 chapters x 4 notes) — no stray tags.
+- Confirmed `index.html`'s `isVerseEl()`/`buildVP()` (lines 727-744)
+  were not touched by PR #879 (it only changed `data/file_16.json`,
+  `data/file_17.json`, `sw.js`) and branch on `data-ptype` before any
+  fallback heuristic, so the explicit tagging above is authoritative.
+- Told the user plainly this is a code/data-level confirmation, not a
+  literal live click-and-listen test — that would need to happen on
+  their end (iPad) or a session with different network access.
+
 ## Process note (read before the next PR touching a locked site)
 
 Mid-session, there was real back-and-forth over whether I should ever
