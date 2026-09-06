@@ -2,11 +2,15 @@
 
 ## Current state
 
-- `main` HEAD: `77b4575` (merge of PR #883).
+- `main` HEAD: `ec4bb27` (merge of PR #888).
 - ACR Search cache: `acr-search-v301`. ACR Search2 cache: `acr-search2-v3`.
-  (Both unchanged since PR #880 — the two follow-up fixes below were pure
-  file renames, no cache-version bump needed.)
+  (Unchanged since PR #880 — everything after that was either a
+  cache-bypassing rename, a brand-new image URL, or text-only, none of
+  which needed a version bump.)
 - Working tree clean, nothing uncommitted.
+- **All three original body-tab images user-reconfirmed correct** on
+  both `Search/` and `Search2/` after PR #883 (see item 4) — the
+  "not yet reconfirmed" flag from earlier in this file is now resolved.
 
 ## Built today
 
@@ -123,14 +127,116 @@
    semiconductor" appears, but only as text in an unrelated hair-care
    section with no image at all), and a full filename listing of
    `Search/images/`. **Confirmed: none of the three are on the site
-   anywhere.** Not added — user hadn't asked for that, just asked to
-   check. Worth following up if they want them added somewhere.
+   anywhere.** Not added yet at that point — user hadn't asked for that,
+   just asked to check. Added afterward, see item 5.
+
+4. **User reconfirmed the three original body-tab images** — said
+   "Merged" (PR #883, verified true via `pull_request_read` and
+   `merge-base --is-ancestor`, same pattern as before), then separately
+   confirmed via a live screenshot that all three images now display
+   correctly on both apps. Resolves the "not yet reconfirmed" item from
+   earlier in this file.
+
+5. **Added the three "Melanin: Nature's Organic Semiconductor" images**
+   (from item 3) to "Melanin, the Filter and the Antenna," appended
+   after the two images already there, in both apps. Filenames chosen:
+   `melanin-semiconductor-covenant-bloodline.webp`,
+   `melanin-semiconductor-bioelectric.webp`,
+   `melanin-lattice-cosmic-radiation.webp`. **Placement caveat flagged
+   to the user**: the covenant-bloodline image also carries an embedded
+   "Levitical Dietary Code" clean/unclean-food comparison baked into the
+   same graphic — no existing site section covers that specific Vayikra
+   11 topic (the site's one "Dietary Law" section covers a different
+   passage, the fat/blood prohibition), so that content rides along with
+   the image rather than being placed by topic match. **Shipped as PR
+   #885**, merged and verified the same way as prior PRs. Backup
+   `backup/2026-09-06-pre-melanin-images` at SHA `77b4575` before this
+   change.
+
+6. **User asked about two more images.** First, a "Phonon-Electron
+   Coupling in Melanin" graphic (sound converting to electrical current
+   via melanin, plus a "War Scroll's Geometric Activation" / collective
+   chanting-unity panel baked into the same image) — confirmed not on
+   the site (checked the closest visual match,
+   `melanin-lattice-cosmic-radiation.webp`, and a site-wide text search
+   for "phonon" — zero hits). User asked to add it "in another
+   appropriate section" after the melanin section was ruled out (its War
+   Scroll content doesn't fit there either) — found a genuinely good fit:
+   **"The Body Receives Sound as Physical Force"**, which had zero images
+   and is specifically about vibration/mechanotransduction, matching the
+   graphic's core content directly. Same War-Scroll-content-has-no-home
+   caveat flagged as with the dietary code. **Shipped as PR #886**,
+   merged and verified. Backup `backup/2026-09-06-pre-phonon-image` at
+   SHA `03606d8`.
+   - Note: an `Edit` attempt on this one initially failed because the
+     `old_string` was truncated mid-line (assumed a shorter line than
+     actually existed, since the file concatenates each `td-item` as one
+     unbroken line) — caught immediately by the tool's "not found" error,
+     retried with a shorter, safer anchor (through the `hr-sec-sub` line
+     only) rather than guessing further, and it worked cleanly.
+
+7. **Second image**: "Corporate Dietary System / Wireless Radiation Grid
+   / Pharmaceutical Interventions" toxin-exposure infographic. Confirmed
+   not on the site (no filename or text match for its distinctive terms).
+   **Flagged a real sourcing-standard mismatch per Rule 17** before
+   placing it anywhere: every other item in the Racism tab (where the
+   user first considered putting it) cites a named study, agency
+   finding, or document; this graphic's claims (fluoridated water
+   depositing heavy metals, a "wireless radiation grid," pharmaceutical
+   heavy-metal/nanoparticle "carriers") name none. User chose the Body
+   tab instead once this was raised. Placed as the final image in
+   "Melanin, the Filter and the Antenna," tying to that section's
+   existing "Corporate Food System" framing and toxin/calcification
+   themes. **Shipped as PR #887**, merged and verified. Backup
+   `backup/2026-09-06-pre-toxin-image` at SHA `fbc9c69`.
+
+8. **User asked whether the "true name of Africa," promised-land
+   boundary locations, and the twelve tribes' names were on the site**,
+   attaching `promisedlandmodernnames.docx` (the same document built and
+   delivered as a standalone file in the 2026-09-02 session, per that
+   day's notes). Checked all three against actual page content:
+   - **"Alkebulan" (true name of Africa): extensively covered already**
+     — three full `td-item`s in the Racism tab tracing it to Pan-African
+     scholarship (ben-Jochannan 1970, DeGraft-Johnson 1954), the Roman
+     "Africa Proconsularis" origin, and the Greek "Aphrike" etymology.
+   - **Boundary place names from the document: almost entirely
+     missing** — only 2 of ~17 ancient/modern pairs existed anywhere on
+     the site (Wadi el-Arish, Kadesh-Barnea), and those were in a
+     different feature (the "citywalker" journey map), not the
+     document's actual boundary content.
+   - **Twelve tribes' allotment modern-names: entirely missing** — none
+     of the ~20 pairs in the document were found anywhere.
+   - This tracked with the 2026-09-02 session notes: the document was
+     delivered as a file + external Artifact map at the time, never
+     committed into the actual site.
+   - **User asked to add it "there" (the Racism tab, near the Alkebulan
+     content).** Wrote two new sections — "The Covenant Land's
+     Boundaries, Named and Located Today" and "The Twelve Tribes'
+     Allotments, Ancient and Modern" — as 6 `td-item`s total, inserted
+     right after the existing Alkebulan content in both apps, preserving
+     the document's already-vetted modern-country labeling exactly
+     (Israel/West Bank/Jordan/Syria/Lebanon distinctions).
+   - **This was the first pure-text (no image) content change this
+     session** — verified differently as a result: confirmed both files'
+     new content byte-identical, scanned every apostrophe-containing
+     name (Ya'zer, Re'uven, Yehudah's, etc.) for correct JS-string
+     escaping, and — the decisive check — parsed every inline `<script>`
+     block in both `index.html` files with Node's `Function()`
+     constructor to confirm no syntax error was introduced anywhere in
+     either file, not just an eyeball read of the diff.
+   - **Shipped as PR #888**, merged and verified (`main` HEAD confirmed
+     at `ec4bb27`, commit confirmed an ancestor). Backup
+     `backup/2026-09-06-pre-promised-land-content` at SHA `2bf7775`.
 
 ## Outstanding / blocking
 
-- **Not yet reconfirmed**: whether all three body-tab images now display
-  correctly on both `Search/` and `Search2/` after PR #883. Ask at next
-  contact if the user hasn't already said so.
+- **PR #884 (the first half of this session-notes file) is still open,
+  unmerged.** The user attempted to merge it once and it didn't go
+  through — flagged to them, no retry attempted from this side since
+  merging is never done without the user's in-the-moment instruction
+  (Rule 9). This current update is stacked as further commits on that
+  same branch/PR rather than a new one, so merging PR #884 now picks up
+  everything through PR #888's summary in one shot.
 - **The Yovelim Part 1 sourcing-access blocker** from
   `SESSION_NOTES_2026-09-03.md` is presumably still open — worth
   checking at the start of next session whether it was picked up
@@ -140,12 +246,21 @@
 
 ## Pending / parked
 
-- The three "Melanin: Nature's Organic Semiconductor" images (see item 3
-  above) — not requested for addition yet, just confirmed absent.
+- Nothing newly parked — items 3's images were added (item 5), the War
+  Scroll/dietary-law content-fit caveats are noted above but not
+  something the user has asked to act on further.
 
 ## Today's commit log (newest first)
 
 ```
+ec4bb27 Merge pull request #888 from DssOrit/claude/acr-search-add-promised-land-content
+e49de86 ACR Search + Search2: add promised-land boundary and twelve-tribes-allotment content
+2bf7775 Merge pull request #887 from DssOrit/claude/acr-search-add-toxin-image
+6cdae01 ACR Search + Search2: add corporate-toxin-exposure-grid image to melanin/antenna section
+c80f13c Merge pull request #886 from DssOrit/claude/acr-search-add-phonon-image
+62ec632 ACR Search + Search2: add phonon-electron-melanin-coupling image to sound/frequency section
+03606d8 Merge pull request #885 from DssOrit/claude/acr-search-add-melanin-images
+90d48f0 ACR Search + Search2: add three melanin-semiconductor images to the antenna section
 77b4575 Merge pull request #883 from DssOrit/claude/acr-search-cachebust-pineal-melatonin
 1c3f309 ACR Search + Search2: rename pineal-melatonin image to bypass stuck CDN cache
 6c312ea Merge pull request #882 from DssOrit/claude/acr-search-cachebust-blue-light-exposure
@@ -167,5 +282,15 @@ c22b766 ACR Search + Search2: replace blue-light-exposure body-tab image (drops 
 - **`backup/2026-09-06-pre-pineal-cachebust`** — before PR #883's rename,
   at SHA `6c312ea`.
 - **`backup/2026-09-06-search-final`** — after PR #883 merged, at SHA
-  `77b4575` (current stable point). Recovery:
-  `git checkout backup/2026-09-06-search-final`.
+  `77b4575`.
+- **`backup/2026-09-06-pre-melanin-images`** — before PR #885, at SHA
+  `77b4575`.
+- **`backup/2026-09-06-pre-phonon-image`** — before PR #886, at SHA
+  `03606d8`.
+- **`backup/2026-09-06-pre-toxin-image`** — before PR #887, at SHA
+  `fbc9c69`.
+- **`backup/2026-09-06-pre-promised-land-content`** — before PR #888, at
+  SHA `2bf7775`.
+- **`backup/2026-09-06-search-final-2`** — after PR #888 merged, at SHA
+  `ec4bb27` (current stable point). Recovery:
+  `git checkout backup/2026-09-06-search-final-2`.
