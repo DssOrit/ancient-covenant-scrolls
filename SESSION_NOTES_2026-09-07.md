@@ -2,7 +2,7 @@
 
 ## Current state
 
-- Latest commit on `origin/main`: `b63eb1c` (Merge PR #891)
+- Latest commit on `origin/main`: `a14a805` (Merge PR #894)
 - Working tree: clean
 - No uncommitted work outstanding
 
@@ -39,11 +39,50 @@
      corrected to sunrise on the 15th.
    - Cache bumped `acr-solar-v42` → `acr-solar-v43`.
    - Backup: `backup/2026-09-07-acr-solar-v42` (SHA `68b1b2b`).
-   - Verification for both PRs: `node --check` on extracted inline JS (clean),
-     HTML tag-balance checked against the pre-change baseline (identical,
-     pre-existing false-positive only), and live verification in headless
-     Chromium (real DOM/text values read, not just source-reading) — no page
-     errors across Month / Holy Days / Sun Times / Year / Settings tabs.
+
+3. **ACR Solar — real step-by-step and supply-list sections (PR #893, merged)**
+   - User asked whether the site had exact step-by-step execution and detailed
+     supply lists for each holy day — it had the info (`practice`/`supplies`
+     prose) but not itemized/numbered.
+   - Added `steps` (ordered array) and `supplyList` (bulleted array, genuinely
+     empty where nothing is needed — e.g. Yom Kippur's fast) to all 22
+     `HOLIDAYS` entries, built only from facts already in each entry's existing
+     text — no new claims added.
+   - `showEventDetail()` now renders real numbered/bulleted lists; existing
+     prose sections kept intact below for full citations.
+   - Cache bumped `acr-solar-v43` → `acr-solar-v44`.
+   - Backup: `backup/2026-09-07-acr-solar-v43` (SHA `b63eb1c`).
+
+4. **ACR Solar — ancient consonantal names + Vayikra 23 structural categories, "Mo'adim" (PR #894, merged)**
+   - User argument: "holy" is a modern Germanic/English theological gloss not
+     present in the DSS/Orit consonantal text; the actual vocabulary is
+     Mo'ed (appointed time), Miqra Qodesh (set-apart assembly), and Shabbaton
+     (total cessation), plus each appointment's own specific ancient name
+     (Pesach, Chag HaMatzot, Yom Teru'ah, etc.).
+   - **Caught real transcription errors in user-supplied paleo Hebrew before
+     building anything**: a wrong letter substituted for Chet in "Pesach"
+     (should be 𐤇, was given as 𐤄), square-script ח mixed into paleo text in
+     three "Chag" instances, and two dropped Tsade (צ) characters (Hag
+     HaMatzot, Atzeret). Corrected forms verified letter-by-letter against
+     Unicode codepoints before use.
+   - **Verified every category assignment against actual quoted Leviticus 23
+     text via search** (not memory) before writing: e.g. confirmed Sukkot's
+     7th day (7:21) gets Mo'ed only — Vayikra 23:34-39 gives Miqra
+     Qodesh/Shabbaton to day 1 and day 8 specifically, not the days between.
+   - Added `CATEGORY_INFO` lookup + `ancientName`/`categories` fields on all
+     22 `HOLIDAYS` entries; `showEventDetail()` renders both as new sections.
+   - Renamed "Holy Days" → "Mo'adim" everywhere in the app (nav tab, section
+     header, top pill bar, "Mo'ed Alert" setting, "Upcoming Mo'adim") —
+     confirmed zero leftover "Holy Day" text anywhere in the file.
+   - Cache bumped `acr-solar-v44` → `acr-solar-v45`.
+   - Backup: `backup/2026-09-07-acr-solar-v44` (SHA `a177da6`).
+
+**Verification method used across all four PRs**: `node --check` on extracted
+inline JS (clean every time), HTML tag-balance checked against the pre-change
+baseline (identical each time, pre-existing false-positive only, confirmed not
+a regression), and live verification in headless Chromium reading real
+DOM/data values (not just source-reading) — no page errors across Month /
+Mo'adim / Sun Times / Year / Settings tabs on any of the four builds.
 
 ## Outstanding / blocking (carried over, not from today)
 
@@ -70,18 +109,23 @@
 - Rule 36 keep-or-remove — parked pending user decision.
 - Email vs. push reminder for holy days — parked pending user decision.
 
-## Capability gaps this session
+## Capability notes this session
 
-- Network egress in this sandbox blocks direct fetches to external primary-source
-  sites (confirmed as a deliberate organization-level proxy policy, not a
-  technical fault) — can't independently verify calendrical/manuscript claims
-  against outside sources from inside this session.
-- No physical iPad available — Solar changes were verified via headless
-  Chromium (real DOM/text assertions) instead of on-device Safari.
+- `WebSearch` (crawled-content synthesis) worked reliably this session for
+  verifying primary-text claims (Leviticus 23 verse text, Numbers 9 wording) —
+  used to confirm the Mo'adim/Miqra Qodesh/Shabbaton category mapping before
+  it was built into the site. Direct `WebFetch` to most external domains
+  remains blocked (confirmed a deliberate organization-level proxy policy
+  earlier this session, not a technical fault) — `WebSearch` is the working
+  path for text verification when direct fetch is unavailable.
+- No physical iPad available — all Solar changes were verified via headless
+  Chromium (real DOM/text/data assertions) instead of on-device Safari.
 
 ## Today's commit log
 
 ```
+ac1fe89 ACR Solar: add ancient consonantal names and Vayikra 23 structural categories
+3ca9536 ACR Solar: add real step-by-step and supply-list sections to every holy day
 f33d017 ACR Solar: correct alert logic and text to sunrise-to-sunrise throughout
 bbf788d ACR Solar: real equinox anchor, Gregorian dates on Holy Days, year-view badges
 ```
@@ -90,5 +134,7 @@ bbf788d ACR Solar: real equinox anchor, Gregorian dates on Holy Days, year-view 
 
 - `backup/2026-09-07-acr-solar-v41` — SHA `2275c42` (before PR #889)
 - `backup/2026-09-07-acr-solar-v42` — SHA `68b1b2b` (before PR #891)
+- `backup/2026-09-07-acr-solar-v43` — SHA `b63eb1c` (before PR #893)
+- `backup/2026-09-07-acr-solar-v44` — SHA `a177da6` (before PR #894)
 
 Recovery: `git checkout backup/<name>`
