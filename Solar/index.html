@@ -239,6 +239,7 @@ h1, h2, h3 { font-family: var(--font); font-weight: 700; letter-spacing: -0.02em
 }
 .agenda-date .ad-day { font-size: 22px; font-weight: 800; line-height: 1; }
 .agenda-date .ad-dow { font-size: 10px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.agenda-date .ad-greg { font-size: 9px; color: var(--text3); font-weight: 500; margin-top: 2px; font-variant-numeric: tabular-nums; }
 .agenda-dot { width: 3px; flex-shrink: 0; border-radius: 4px; min-height: 40px; margin-top: 4px; }
 .agenda-info { flex: 1; }
 .agenda-info .ai-name { font-size: 15px; font-weight: 600; }
@@ -492,7 +493,7 @@ select.form-input option { background: var(--surface2); }
 .mini-month-name { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 8px; display: flex; justify-content: space-between; }
 .mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
 .mini-cell { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--text3); }
-.mini-cell.has-event { background: var(--surface3); color: var(--text); }
+.mini-cell.has-event { border-radius: 50%; color: #fff; font-weight: 700; }
 .mini-cell.today-mini { background: var(--gold); color: var(--bg); font-weight: 700; }
 
 /* EVENT DETAIL MODAL */
@@ -1338,11 +1339,53 @@ var SEASON_COLORS = {
   Autumn: '#EF4444', Winter: '#3B82F6'
 };
 
-// Get solar year start (spring equinox) for a given Gregorian year
+// Mean March-equinox Julian Ephemeris Date for a Gregorian year (Meeus,
+// Astronomical Algorithms, table 27.b, valid 1000-3000 CE). Precision is
+// to within a fraction of a day, which is all that's needed here since we
+// only need the correct calendar day, not the exact UTC instant.
+function meanMarchEquinoxJDE(year) {
+  var Y = (year - 2000) / 1000;
+  return 2451623.80984 + 365242.37404 * Y + 0.05169 * Y * Y
+       - 0.00411 * Y * Y * Y - 0.00057 * Y * Y * Y * Y;
+}
+
+// Standard JD-to-Gregorian-calendar conversion (Meeus ch.7 / Fliegel-Van
+// Flandern). Returns a local Date whose y/m/d match the UTC calendar date
+// the given Julian Day falls on.
+function jdToGregorianDate(jd) {
+  var Z = Math.floor(jd + 0.5);
+  var A;
+  if (Z < 2299161) { A = Z; }
+  else {
+    var alpha = Math.floor((Z - 1867216.25) / 36524.25);
+    A = Z + 1 + alpha - Math.floor(alpha / 4);
+  }
+  var B = A + 1524;
+  var C = Math.floor((B - 122.1) / 365.25);
+  var D = Math.floor(365.25 * C);
+  var E = Math.floor((B - D) / 30.6001);
+  var day = B - D - Math.floor(30.6001 * E);
+  var month = (E < 14) ? E - 1 : E - 13;
+  var yr = (month > 2) ? C - 4716 : C - 4715;
+  return new Date(yr, month - 1, day);
+}
+
+// Get solar year start for a given Gregorian year: the Wednesday on or
+// after the true astronomical spring equinox. Per 4Q320/4Q321 (Mishmarot
+// calendrical texts), the DSS solar year begins on the 4th day of the
+// week (Wednesday), tied to the creation of the sun, moon and stars on
+// day 4 (Gen 1:14-19). The equinox itself is calculated, not assumed to
+// be a fixed Gregorian date, so 1 Aviv lands on the correct real day
+// every year. (The annual re-anchoring itself is an engineering
+// necessity, not something the primary sources spell out - they don't
+// address a drift-correction mechanism at all; see the Year End Tekufah
+// note below.)
 function getSolarYearStart(year) {
-  // Spring equinox is approx March 20-21
-  // For precision, use March 20 as the anchor
-  return new Date(year, 2, 20); // March 20
+  var eq = jdToGregorianDate(meanMarchEquinoxJDE(year));
+  var daysToWednesday = (3 - eq.getDay() + 7) % 7; // Wednesday = 3
+  var start = new Date(eq);
+  start.setDate(start.getDate() + daysToWednesday);
+  return start;
 }
 
 function getHebrewSolarYear(solarYear) {
@@ -1443,6 +1486,13 @@ var HOLIDAYS = [
 function isShabbat(date) {
   var s = gregorianToSolar(date);
   return s.isShabbat;
+}
+
+// Format a Date as MM/DD/YYYY
+function fmtMDY(date) {
+  var mm = ('0' + (date.getMonth() + 1)).slice(-2);
+  var dd = ('0' + date.getDate()).slice(-2);
+  return mm + '/' + dd + '/' + date.getFullYear();
 }
 
 // Get holidays for a given solar month and day
@@ -1869,6 +1919,7 @@ function renderHolidays() {
         '<div class="agenda-date" style="' + (isToday ? 'color:' + evt.color : '') + '">' +
           '<div class="ad-day">' + evt.day + '</div>' +
           '<div class="ad-dow">' + (mInfo.abbr || mInfo.name.substring(0,3)) + '</div>' +
+          '<div class="ad-greg">' + fmtMDY(greg) + '</div>' +
         '</div>' +
         '<div class="agenda-dot" style="background:' + evt.color + ';min-height:48px;"></div>' +
         '<div class="agenda-info">' +
@@ -2143,10 +2194,13 @@ function renderYear() {
       cell.className = 'mini-cell';
       var cDate = new Date(year, m, dd);
       var csd = gregorianToSolar(cDate);
-      var hasHol = getHolidays(csd.month, csd.day).length > 0;
+      var holsHere = getHolidays(csd.month, csd.day);
       var isToday = cDate.getTime() === today.getTime();
       if (isToday) cell.classList.add('today-mini');
-      else if (hasHol) cell.classList.add('has-event');
+      else if (holsHere.length > 0) {
+        cell.classList.add('has-event');
+        cell.style.background = holsHere[0].color;
+      }
       cell.textContent = dd;
       mg.appendChild(cell);
     }
