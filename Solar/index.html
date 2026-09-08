@@ -1395,24 +1395,39 @@ function getHebrewSolarYear(solarYear) {
   return solarYear + 3760;
 }
 
+// Number of calendar days between two Date objects, counted by their
+// local Y/M/D fields alone (via Date.UTC), never by raw millisecond
+// difference. A viewer in a timezone that observes Daylight Saving Time
+// (e.g. Portugal, WET/WEST) has a real elapsed time between two local
+// midnights that is short or long by exactly one hour whenever a DST
+// transition falls in between - raw ms math (a legitimate calendar-day
+// span divided by 86400000) then floors to the wrong day, shifting every
+// date on the far side of the transition by one full day. Comparing
+// calendar fields directly sidesteps DST entirely.
+function calendarDaysBetween(a, b) {
+  var utcA = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utcB = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((utcB - utcA) / 86400000);
+}
+
 // Convert Gregorian date to solar calendar date
 function gregorianToSolar(date) {
   var year = date.getFullYear();
   var yearStart = getSolarYearStart(year);
-  var dayOfYear = Math.floor((date - yearStart) / 86400000);
+  var dayOfYear = calendarDaysBetween(yearStart, date);
 
   // If before this year's equinox, use previous year
   if (dayOfYear < 0) {
     year -= 1;
     yearStart = getSolarYearStart(year);
-    dayOfYear = Math.floor((date - yearStart) / 86400000);
+    dayOfYear = calendarDaysBetween(yearStart, date);
   }
 
   // Solar year is 364 days; day 364+ is next year
   if (dayOfYear >= 364) {
     year += 1;
     yearStart = getSolarYearStart(year);
-    dayOfYear = Math.floor((date - yearStart) / 86400000);
+    dayOfYear = calendarDaysBetween(yearStart, date);
   }
 
   var remaining = dayOfYear;
@@ -1455,7 +1470,9 @@ function solarToGregorian(solarYear, solarMonth, solarDay) {
     daysOffset += SOLAR_MONTHS[i].days;
   }
   daysOffset += solarDay - 1;
-  return new Date(yearStart.getTime() + daysOffset * 86400000);
+  var result = new Date(yearStart);
+  result.setDate(result.getDate() + daysOffset);
+  return result;
 }
 
 // ─── HOLIDAYS ─────────────────────────────────────────────────────────────────
