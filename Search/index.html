@@ -1101,6 +1101,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="paganism" onclick="setMode('paganism')"><i class="ri-fire-line"></i> Paganism</div>
       <div class="mpill" data-mode="racism" onclick="setMode('racism')"><i class="ri-scales-3-line"></i> Racism</div>
       <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
+      <div class="mpill" data-mode="figures" onclick="setMode('figures')"><i class="ri-user-search-line"></i> Tribes &amp; Territory</div>
       <div class="mpill" data-mode="explore" onclick="setMode('explore')"><i class="ri-compass-discover-line"></i> Explore</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
@@ -1307,6 +1308,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- TRIBES & TERRITORY -->
+    <div id="figures-view" style="display:none">
+      <div class="sv-hdr">Tribes and Territory</div>
+      <div class="sv-sub">Named figures from the DSS and Orit, matched to their tribe and territory where the text states it, and marked plainly where it does not. Every entry cites the exact chapter and verse. Search a name above, or browse the cards below.</div>
+      <div id="figures-panel"></div>
     </div>
 
     <!-- ANCIENT CITY WALKER -->
@@ -2900,6 +2908,7 @@ function initApp() {
   renderPaganismPanel();
   renderRacismPanel();
   renderBodyPanel();
+  renderFiguresPanel();
   renderUncoverPanel();
   renderLibraryPanel();
   renderSolarCalPanel();
@@ -2952,7 +2961,7 @@ function hardRefresh() {
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers'];
+  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2981,6 +2990,7 @@ var PANEL_LABELS = {
   paganism:'Paganism',
   racism:'Racism and the Covenant',
   body:'The Body',
+  figures:'Tribes and Territory',
   origins:'Origins Record',
   orit:'Orit Record',
   covenant:'Covenant Record',
@@ -3002,7 +3012,7 @@ var PANEL_LABELS = {
 function buildSiteIndex() {
   if (SITE_INDEX) return;
   SITE_INDEX = [];
-  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','finaldays','watchers'];
+  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','figures','finaldays','watchers'];
   tabs.forEach(function(tab) {
     var panel = document.getElementById(tab + '-panel');
     if (!panel) return;
@@ -3027,6 +3037,8 @@ function goToSiteEntry(tab, topic) {
     setMode('racism');
   } else if (tab === 'body') {
     setMode('body');
+  } else if (tab === 'figures') {
+    setMode('figures');
   } else if (tab === 'uncover') {
     setMode('uncover');
   } else if (tab === 'library') {
@@ -4635,6 +4647,198 @@ function renderBodyPanel() {
   '<div class="hr-sec-head">The Finding, Stated Plainly</div>' +
   '<div class="td-item"><div class="td-topic">The Through-Line</div><div class="td-text">The body is a receiver of frequency by design. Light enters the eye and sets the inner clock and the pineal, tuned to the blue band; melanin absorbs light across the spectrum and, in the laboratory, turns it into electrical charge; the whole body converts the force of sound into cellular signal. The primary sources knew the register even without the instruments, creation by voice, the covenant given in sound at Sinai, walls falling to the shofar, heaven ordered by song, and the ancients cutting stone to a resonant pitch on three continents. The modern world floods the body with the wrong light at the wrong hour and calls it normal. The measured body and the primary sources say the same thing: frequency is real, it is sacred, and it was built into us from the start.</div></div>' +
   '';
+}
+
+// ── TRIBES & TERRITORY ──────────────────────────────────────────────────────────
+var FIGURES = [
+  {name:'Moshe', tribe:'Levi',
+   status:'confirmed',
+   territory:'No allotted land — Levi\'s 48 cities sit scattered inside the other tribes\' territory instead of a single block.',
+   modern:'Choreb / Sinai (the burning bush, the Name revealed); raised in Pharaoh\'s household in Mitzrayim, modern Egypt.',
+   text:'"A man of the house of Levi went and took a daughter of Levi as his wife" places Moshe\'s own tribe as Levi. His wife is called "the Kushite woman" twice in one verse — the one figure in the text with a direct, named Kush tie.',
+   refs:['Shemot 2:1','Bamidbar 12:1','Yehoshua 18:7, 21']},
+  {name:'Yosef', tribe:'Not a tribe himself — father of Efrayim and Menasheh',
+   status:'confirmed',
+   territory:'Efrayim: Shekhem, modern Nablus (West Bank). Menasheh split east/west — east in Gil\'ad and Bashan, modern Jordan.',
+   modern:'Mitzrayim, modern Egypt — given the name Tzafenat-Pane\'ach and a wife, Osnat, daughter of the priest of On.',
+   text:'Ya\'akov adopted Yosef\'s two sons as his own, splitting Yosef\'s line into two tribal allotments rather than one — why Efrayim and Menasheh appear in the allotment lists instead of "Yosef."',
+   refs:['Bereshit 41','Bereshit 48','Yehoshua 20:7']},
+  {name:'Daniyel', tribe:'Yehudah',
+   status:'confirmed',
+   territory:'Yehudah\'s land centers on Yerushalayim, modern Jerusalem (Israel).',
+   modern:'Taken into Shinar / Bavel, modern Iraq, near Baghdad.',
+   text:'"Daniyel, Hananyah, Misha\'el, and Azaryah of the tribe of Yehudah" — taken "of the royal family and of the nobility" out of Yerushalayim into captivity.',
+   refs:['Daniyel 1:6']},
+  {name:'Dawid', tribe:'Yehudah',
+   status:'confirmed',
+   territory:'Beit-Lekhem, modern Bethlehem (West Bank); later reigned from Yerushalayim, modern Jerusalem (Israel).',
+   modern:'Bethlehem and Jerusalem, both West Bank / Israel.',
+   text:'"Now Dawid was the son of an Efrathite of Beit-Lekhem in Yehudah, named Yishai" — the text names both his hometown and his tribe in one verse.',
+   refs:['Shemu\'el Aleph 17:12']},
+  {name:'Ya\'akov', tribe:'Father of all twelve tribes — not a member of one',
+   status:'not-a-tribe',
+   territory:'Kena\'an (Be\'er-Sheva / Chevron area, Israel / West Bank); years in Paddan-Aram for Lavan, near modern Harran (Turkey/Syria border); died in Mitzrayim, modern Egypt; buried at Machpelah in Chevron, modern Hebron.',
+   modern:'Israel / West Bank, Turkey / Syria border, Egypt.',
+   text:'Renamed Yisra\'el at Peni\'el, Transjordan — "for you have striven with the Creator and with men, and have prevailed." His twelve sons become the twelve tribes; asking which tribe Ya\'akov belonged to is asking about a category that starts one generation after him.',
+   refs:['Bereshit 32:28']},
+  {name:'Noach', tribe:'Pre-tribal — before Avraham and the twelve tribes exist',
+   status:'not-a-tribe',
+   territory:'The ark rested "upon the mountains of Ararat" — modern Mount Ararat, Turkey.',
+   modern:'Eastern Turkey.',
+   text:'"Noach was in his generations a righteous man, blameless; Noach walked with the Creator... And Noach begot three sons: Shem, Cham, and Yefet" — father of all nations after the flood, not a Hebrew tribal figure. The tribal category does not exist yet in his generation.',
+   refs:['Bereshit 6:9-10','Bereshit 8:4']},
+  {name:'Chanokh', tribe:'Pre-tribal — seventh from Adam, before the Flood',
+   status:'not-a-tribe',
+   territory:'No territory given in the primary text at all.',
+   modern:'Not stated.',
+   text:'"Chanokh walked with the Creator, and he was not, for the Creator took him." Even further from the tribal era than Noach — this is the Adam-to-Noach line, generations before the Flood.',
+   refs:['Bereshit 5:21-24']},
+  {name:'Sarah', tribe:'Pre-tribal — Avraham\'s generation',
+   status:'not-a-tribe',
+   territory:'Ur Kasdim (modern southern Iraq); Charan (modern Turkey / Syria border) — the same ground Ya\'akov later crosses; later Kena\'an.',
+   modern:'Southern Iraq, then the Turkey / Syria border region.',
+   text:'"She is indeed my sister, the daughter of my father, but not the daughter of my mother" — Avraham\'s own words identifying Sarah as his half-sister. One generation before the twelve tribes exist.',
+   refs:['Bereshit 11:28-31','Bereshit 20:12']},
+  {name:'Rut', tribe:'Moabite by birth — incorporated into Yehudah by marriage',
+   status:'incorporated',
+   territory:'Beit-Lekhem, modern Bethlehem (West Bank) — the town she moved to and where her descendants ruled.',
+   modern:'Bethlehem, West Bank.',
+   text:'"These took Moabite wives. The name of the one was Orpah and the name of the other Ruth" — not Hebrew by birth. She married first an Efratite of Beit-Lekhem, then Boaz; her son Oved was "the father of Yishai, the father of Dawid" — she is Dawid\'s great-grandmother. A mirror to Moshe\'s Kushite-wife case: a non-Hebrew-by-birth figure entering the covenant lineage.',
+   refs:['Rut 1:4','Rut 4:17-21']},
+  {name:'Yesha\'yahu', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Prophesied "concerning Yehudah and Yerushalayim" — modern Jerusalem, Israel — but this names his audience, not his own tribe.',
+   modern:'Jerusalem, Israel (as his prophetic subject).',
+   text:'"The vision of Yesha\'yahu the son of Amoz, which he saw concerning Yehudah and Yerushalayim" — only his father\'s name and his prophetic subject are given. His own tribe is never stated.',
+   refs:['Yesha\'yahu 1:1']},
+  {name:'Yirmeyahu', tribe:'Levi (priestly)',
+   status:'confirmed',
+   territory:'Anatot, in the land of Binyamin — one of the Levitical cities scattered inside another tribe\'s territory, the same pattern as Moshe.',
+   modern:'Anatot, near Jerusalem, West Bank / Israel.',
+   text:'"Yirmeyahu the son of Khilkiyahu, one of the priests who were in Anatot in the land of Binyamin" — "priests" ties him to Levi; Anatot is where that Levitical family lived, inside Binyamin\'s allotment, not his own tribe.',
+   refs:['Yirmeyahu 1:1']},
+  {name:'Elisha', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Avel-Mekholah, in the Jordan Valley.',
+   modern:'Jordan Valley, Israel / West Bank.',
+   text:'"Elisha the son of Shafat of Avel-Mekholah" — only his father\'s name and hometown are given. His tribe is never stated.',
+   refs:['Melakhim Aleph 19:16-19']},
+  {name:'Yonah', tribe:'Not stated — hometown ties to Zevulun',
+   status:'not-stated',
+   territory:'Gat-Khefer, confirmed inside Zevulun\'s boundary description.',
+   modern:'Lower Galilee, Israel.',
+   text:'The book of Yonah gives only "the son of Amittai." Melakhim Bet adds his hometown — "Yonah the son of Amittai, the prophet, who was from Gat-Khefer" — and Yehoshua\'s Zevulun boundary list names Gat-Khefer directly, tying his hometown (not an explicit tribe statement) to Zevulun\'s territory.',
+   refs:['Yonah 1:1','Melakhim Bet 14:25','Yehoshua 19:13']},
+  {name:'Sha\'ul', tribe:'Binyamin',
+   status:'confirmed',
+   territory:'Binyamin\'s territory, centered near Giv\'ah and Yerushalayim.',
+   modern:'West Bank / Israel.',
+   text:'"There was a man of Binyamin whose name was Kish... a Binyaminite... he had a son whose name was Sha\'ul" — his tribe is named directly through his father.',
+   refs:['Shemu\'el Aleph 9:1-2']},
+  {name:'Shemu\'el', tribe:'Levi (Kohathite) — not Efrayim, despite living there',
+   status:'confirmed',
+   territory:'Ramatayim-Tzofim in the hill country of Efrayim — a Levitical family\'s residence, not their tribe.',
+   modern:'Hill country of Efrayim, West Bank.',
+   text:'Shemu\'el Aleph calls his father Elkanah "an Efrathite" — residence in Efrayim\'s hill country. But Divrei HaYamim Aleph traces that same Elkanah directly through Kohath, one of the three Levite clans, and names "the sons of Shemu\'el: Yo\'el... Aviyah" in that Levitical genealogy — matching Shemu\'el\'s sons\' names in Shemu\'el Aleph 8:2. Same pattern as Yirmeyahu: a Levite living inside another tribe\'s territory.',
+   refs:['Shemu\'el Aleph 1:1','Divrei HaYamim Aleph 6:22-28']},
+  {name:'Nechemyah', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Shushan the citadel (Persia) at the time of the account; concerned with Yerushalayim.',
+   modern:'Shush, Iran (Shushan); Jerusalem, Israel.',
+   text:'"The words of Nekhemyah the son of Hakhalyahu... as I was in Shushan the citadel" — only his father\'s name is given. His brother arrives "with certain men from Yehudah" reporting on Yerushalayim, a plausible but not explicit Yehudah tie.',
+   refs:['Nekhemyah 1:1-2']},
+  {name:'Hoshea', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Prophesied mainly to the Northern Kingdom, Yisra\'EL.',
+   modern:'Northern Israel / West Bank region.',
+   text:'"The word of YHWH that came to Hoshea the son of Be\'eri" — only his father\'s name is given.',
+   refs:['Hoshea 1:1']},
+  {name:'Yoel', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Not stated.',
+   modern:'Not stated.',
+   text:'"The word of YHWH that came to Yoel, the son of Petu\'el" — father\'s name only, nothing else.',
+   refs:['Yoel 1:1']},
+  {name:'Amos', tribe:'Not stated — hometown ties to Yehudah',
+   status:'not-stated',
+   territory:'Tekoa, referenced alongside "Yehudah and inhabitants of Yerushalayim."',
+   modern:'Tekoa, West Bank.',
+   text:'"The words of Amos, who was among the shepherds of Tekoa... which he saw concerning Yisra\'EL" — a Judahite hometown, sent to prophesy against the Northern Kingdom. His tribe itself is never named.',
+   refs:['Amos 1:1','Divrei HaYamim Bet 20:20']},
+  {name:'Ovadyah', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Not stated.',
+   modern:'Not stated.',
+   text:'"The vision of Ovadyah" — the barest introduction of any figure in this record. No father, no hometown, no tribe.',
+   refs:['Ovadyah 1:1']},
+  {name:'Mikhah', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Moreshet — its tribal territory could not be confirmed directly against ACR\'s own city lists.',
+   modern:'Not confirmed.',
+   text:'"The word of YHWH that came to Mikhah of Moreshet... which he saw concerning Samaria and Yerushalayim" — hometown given, tribe never stated.',
+   refs:['Mikhah 1:1']},
+  {name:'Nakhum', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Elkosh — location not otherwise identified in the text.',
+   modern:'Not identified.',
+   text:'"The book of the vision of Nakhum of Elkosh" — hometown named, but Elkosh itself is not identified further anywhere in the text.',
+   refs:['Nakhum 1:1']},
+  {name:'Havakuk', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Not stated.',
+   modern:'Not stated.',
+   text:'"The oracle that Havakuk the prophet saw" — no father, no hometown, no tribe. Nothing beyond his name.',
+   refs:['Havakuk 1:1']},
+  {name:'Tzefanyah', tribe:'Not stated — father named "Kushi"',
+   status:'not-stated',
+   territory:'Prophesied "in the days of Yoshiyahu... king of Yehudah."',
+   modern:'Jerusalem, Israel (as his prophetic setting).',
+   text:'"The word of YHWH that came to Tzefanyahu the son of Kushi, son of Gedalyahu, son of Amaryahu, son of Hizkiyahu" — his own father is named Kushi, the Hebrew word for "Cushite." Whether this is a personal name passed down or a direct ethnic identifier is genuinely ambiguous in the text; both readings are held open here rather than asserted. No tribe is stated.',
+   refs:['Tzefanyah 1:1']},
+  {name:'Khagai', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Addressed Zerubbavel, "governor of Yehudah," during the Second Temple\'s rebuilding.',
+   modern:'Jerusalem, Israel (as his prophetic setting).',
+   text:'"The word of YHWH came by the hand of Khagai the prophet to Zerubbavel" — no father, no hometown, no tribe given for Khagai himself.',
+   refs:['Khagai 1:1']},
+  {name:'Zekharyah', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Not stated.',
+   modern:'Not stated.',
+   text:'"Zekhariyahu the son of Berekhyahu, son of Iddo, the prophet" — two generations of father\'s names given, no tribe or hometown.',
+   refs:['Zekharyah 1:1']},
+  {name:'Malakhi', tribe:'Not stated',
+   status:'not-stated',
+   territory:'Not stated.',
+   modern:'Not stated.',
+   text:'"The burden of the word of YHWH to Yisra\'EL by Malakhi" — no father, no hometown, no tribe. Nothing beyond the name itself.',
+   refs:['Malakhi 1:1']}
+];
+function renderFiguresPanel() {
+  var panel = document.getElementById('figures-panel');
+  if (!panel) return;
+  var html =
+    '<div class="hr-sec-head">Tribes and Territory, Named Figures</div>' +
+    '<div class="hr-sec-sub">Each figure checked directly against the chapter and verse cited — tribe, territory, and the modern name of the ground they stood on. Where the text does not state a tribe, that is said plainly rather than filled in.</div>';
+  FIGURES.forEach(function(f) {
+    var badgeMap = {
+      'confirmed':    {label:'TRIBE CONFIRMED',        color:'#7fb3d5', bg:'#1e2c33'},
+      'not-a-tribe':  {label:'NOT A TRIBE MEMBER',      color:'#d4bc63', bg:'#332b17'},
+      'not-stated':   {label:'TRIBE NOT STATED',        color:'#999999', bg:'#2a2a2a'},
+      'incorporated': {label:'INCORPORATED BY MARRIAGE', color:'#7fd5a8', bg:'#1e332a'}
+    };
+    var bInfo = badgeMap[f.status] || badgeMap['not-stated'];
+    var badge = '<span style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.03em;padding:2px 7px;border-radius:3px;color:' + bInfo.color + ';background:' + bInfo.bg + ';margin-left:8px;vertical-align:middle">' + bInfo.label + '</span>';
+    var refsHTML = f.refs.map(function(r) {
+      var q = r.split(' ')[0];
+      return '<span class="mo-ref-chip" onclick="searchFromTool(\'' + q.replace(/'/g,"\\'") + '\')">' + r + '</span>';
+    }).join(' ');
+    html += '<div class="td-item"><div class="td-topic">' + f.name + ' — ' + f.tribe + badge + '</div>' +
+      '<div class="td-text">' + f.text + '<br><br><strong>Territory:</strong> ' + f.territory +
+      '<br><strong>Modern ground:</strong> ' + f.modern +
+      '<br><strong>Sources:</strong> ' + refsHTML + '</div></div>';
+  });
+  panel.innerHTML = html;
 }
 
 function renderPaganismPanel() {
