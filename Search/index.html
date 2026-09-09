@@ -237,6 +237,16 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .acr-lb.open{display:flex}
 .acr-lb img{max-width:100%;max-height:96vh;border-radius:6px}
 .acr-lb-x{position:fixed;top:12px;right:16px;color:#fff;font-size:26px;font-weight:700;background:rgba(0,0,0,.5);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.acr-map-lb-content{max-width:640px;width:100%;background:#161310;border-radius:8px;padding:16px}
+.acr-map-lb-content svg{width:100%;height:auto;display:block}
+.acr-map-lb-caption{margin-top:10px;font-size:12px;color:var(--tx2);line-height:1.5;text-align:center}
+.map-tribe-g polygon,.map-tribe-g text{transition:fill-opacity .5s ease,stroke-width .5s ease,opacity .5s ease}
+.map-tribe-g{opacity:.4}
+.map-tribe-g.hi{opacity:1}
+.map-tribe-g.hi polygon{fill-opacity:.92;stroke-width:3.5}
+.map-city-g circle{transition:r .4s ease}
+.map-city-g.hi circle{r:5.5}
+.map-city-g.hi text{font-weight:800}
 
 /* ROME & DSS SUPPRESSION */
 .rome-doctrine{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:10px;overflow:hidden}
@@ -4874,11 +4884,14 @@ function renderFiguresPanel() {
       var q = r.split(' ')[0];
       return '<span class="mo-ref-chip" onclick="searchFromTool(\'' + q.replace(/'/g,"\\'") + '\')">' + r + '</span>';
     }).join(' ');
+    var mapBtn = figureMapPlan(f)
+      ? '<div style="margin-top:9px"><button style="background:none;border:1px solid var(--gold);color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:0.03em;padding:4px 10px;border-radius:4px;cursor:pointer" onclick="showFigureMap(\'' + f.name.replace(/'/g,"\\'") + '\')">VIEW ON MAP</button></div>'
+      : '';
     html += '<div class="td-item"><div class="td-topic">' + f.name + ' — ' + f.tribe + badge + '</div>' +
       '<div class="td-text">' + f.text + '<br><br><strong>Territory:</strong> ' + f.territory +
       '<br><strong>Modern ground:</strong> ' + f.modern +
       '<br><strong>Sources:</strong> ' + refsHTML +
-      '<div data-figure-news="' + f.name.replace(/"/g,'&quot;') + '"></div></div></div>';
+      '<div data-figure-news="' + f.name.replace(/"/g,'&quot;') + '"></div>' + mapBtn + '</div></div>';
   });
   panel.innerHTML = html;
   attachFigureNews();
@@ -4911,6 +4924,118 @@ function attachFigureNews() {
       }).join('') +
       '</div>';
   });
+}
+
+// ── MAP TRACE ────────────────────────────────────────────────────────────────
+// Two schematic maps, reused as-is rather than drawn fresh: the twelve tribal
+// allotments (Yehoshua 13-19 west of the Yarden, Bamidbar 32 east of it) and
+// the Genesis 15 / Numbers 34 boundary comparison. Each tribe polygon and
+// each city pin is wrapped in its own <g data-tribe="..."> / <g data-city="...">
+// so a figure's own already-established tribe or places data can highlight
+// the right shape -- no new geometry, no fabricated ties.
+var TRIBAL_MAP_SVG = '<svg viewBox="0 0 300 340" role="img" aria-label="Schematic map of the twelve tribal allotments">' +
+  '<rect x="0" y="0" width="300" height="340" style="fill:#3a3226"></rect>' +
+  '<path d="M0,0 L118,42 L116,61 L103,74 L91,117 L72,171 L48,226 L35,247 L0,247 Z" style="fill:#223634"></path>' +
+  '<ellipse cx="182" cy="78" rx="10" ry="16" style="fill:#223634"></ellipse>' +
+  '<path d="M164,204 L176,206 L172,255 L162,312 L150,300 L156,247 Z" style="fill:#223634"></path>' +
+  '<polyline points="182,94 175,140 169,204" style="fill:none;stroke:#5e8983;stroke-width:2.5"></polyline>' +
+  '<g class="map-tribe-g" data-tribe="asher"><polygon points="95,18 150,18 160,55 145,80 108,78 92,55" style="fill:#83b596;fill-opacity:.55;stroke:#83b596;stroke-width:1.5"></polygon><text x="118" y="48" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#ecdfc4">Asher</text></g>' +
+  '<g class="map-tribe-g" data-tribe="naphtali"><polygon points="150,18 200,15 205,60 178,95 160,55" style="fill:#7aa8c2;fill-opacity:.55;stroke:#7aa8c2;stroke-width:1.5"></polygon><text x="178" y="48" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#ecdfc4">Naphtali</text></g>' +
+  '<g class="map-tribe-g" data-tribe="zevulun"><polygon points="108,78 145,80 165,100 150,135 105,128 95,100" style="fill:#bb9868;fill-opacity:.55;stroke:#bb9868;stroke-width:1.5"></polygon><text x="128" y="106" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#ecdfc4">Zevulun</text></g>' +
+  '<g class="map-tribe-g" data-tribe="yissaskhar"><polygon points="150,135 165,100 178,95 190,150 168,168" style="fill:#d4ac5f;fill-opacity:.55;stroke:#d4ac5f;stroke-width:1.5"></polygon><text x="169" y="130" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#ecdfc4">Issachar</text></g>' +
+  '<g class="map-tribe-g" data-tribe="menasheh"><polygon points="95,100 105,128 150,135 168,168 135,192 92,185 85,140" style="fill:#a996c2;fill-opacity:.55;stroke:#a996c2;stroke-width:1.5"></polygon><text x="120" y="158" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#ecdfc4">Menasheh (west)</text></g>' +
+  '<g class="map-tribe-g" data-tribe="efrayim"><polygon points="92,185 135,192 148,205 130,222 90,218 80,200" style="fill:#cf8058;fill-opacity:.55;stroke:#cf8058;stroke-width:1.5"></polygon><text x="112" y="205" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#ecdfc4">Efrayim</text></g>' +
+  '<g class="map-tribe-g" data-tribe="dan"><polygon points="58,165 82,168 80,200 60,196 52,178" style="fill:#68b3ac;fill-opacity:.55;stroke:#68b3ac;stroke-width:1.5"></polygon><text x="66" y="184" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#ecdfc4">Dan</text></g>' +
+  '<g class="map-tribe-g" data-tribe="binyamin"><polygon points="130,222 148,205 165,208 160,228 138,232" style="fill:#c38392;fill-opacity:.55;stroke:#c38392;stroke-width:1.5"></polygon><text x="146" y="222" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#ecdfc4">Binyamin</text></g>' +
+  '<g class="map-tribe-g" data-tribe="yehudah"><polygon points="60,196 90,218 138,232 148,260 120,300 60,300 45,255" style="fill:#c0716b;fill-opacity:.55;stroke:#c0716b;stroke-width:1.5"></polygon><text x="95" y="255" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:#ecdfc4">Yehudah</text></g>' +
+  '<g class="map-tribe-g" data-tribe="shimon"><polygon points="60,265 100,270 92,298 58,296" style="fill:#c7ab6d;fill-opacity:.6;stroke:#c7ab6d;stroke-width:1.5;stroke-dasharray:3,2"></polygon><text x="78" y="285" text-anchor="middle" style="font-size:8.5px;font-weight:700;fill:#ecdfc4">Shim’on</text></g>' +
+  '<g class="map-tribe-g" data-tribe="menasheh"><polygon points="185,20 260,25 258,80 220,112 190,95 178,55" style="fill:#a996c2;fill-opacity:.55;stroke:#a996c2;stroke-width:1.5"></polygon><text x="222" y="60" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#ecdfc4">Menasheh (east)</text></g>' +
+  '<g class="map-tribe-g" data-tribe="gad"><polygon points="190,95 220,112 232,165 200,190 172,170 172,120" style="fill:#7ab38c;fill-opacity:.55;stroke:#7ab38c;stroke-width:1.5"></polygon><text x="200" y="145" text-anchor="middle" style="font-size:11px;font-weight:700;fill:#ecdfc4">Gad</text></g>' +
+  '<g class="map-tribe-g" data-tribe="reuven"><polygon points="172,170 200,190 215,220 195,255 170,240 165,205" style="fill:#c0925f;fill-opacity:.55;stroke:#c0925f;stroke-width:1.5"></polygon><text x="190" y="220" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#ecdfc4">Re’uven</text></g>' +
+  '<g style="fill:#ecdfc4"><circle cx="134" cy="211" r="2.4"></circle><text x="123" y="208" text-anchor="end" style="font-size:8.5px">Yerushalayim</text><circle cx="140" cy="153" r="2"></circle><text x="140" y="150" text-anchor="middle" style="font-size:8px;fill:#a89a80">Shechem</text><circle cx="117" cy="243" r="2"></circle><text x="112" y="240" text-anchor="end" style="font-size:8px;fill:#a89a80">Hevron</text></g>' +
+  '</svg>';
+var BOUNDARY_MAP_SVG = '<svg viewBox="0 0 760 350" role="img" aria-label="Schematic map of the Genesis 15 and Numbers 34 covenant boundaries">' +
+  '<rect x="0" y="0" width="760" height="350" style="fill:#3a3226"></rect>' +
+  '<path d="M0,8 L175,26 L187,60 L180,98 L168,125 L162,142 L156,156 L139,166 L101,161 L40,152 L0,132 Z" style="fill:#223634"></path>' +
+  '<path d="M84,196 L100,161 L113,163 L99,236 Z" style="fill:#223634"></path>' +
+  '<path d="M158,169 L172,169 L177,229 L162,224 Z" style="fill:#223634"></path>' +
+  '<polyline points="77,192 90,175 101,161" style="fill:none;stroke:#5e8983;stroke-width:2"></polyline>' +
+  '<polyline points="295,65 340,90 394,113 440,150 492,192" style="fill:none;stroke:#5e8983;stroke-width:2"></polyline>' +
+  '<polyline points="330,72 368,100 394,113" style="fill:none;stroke:#5e8983;stroke-width:2"></polyline>' +
+  '<polyline points="182,125 180,156" style="fill:none;stroke:#5e8983;stroke-width:2"></polyline>' +
+  '<polygon points="178,168 139,166 162,142 180,98 187,60 295,65 394,113 350,160" style="fill:#86adc4;fill-opacity:.08;stroke:#86adc4;stroke-width:2.5;stroke-dasharray:7,5"></polygon>' +
+  '<polygon points="154,175 139,166 162,142 168,125 180,98 210,68 228,92 202,85 182,125 180,156 167,190" style="fill:#d3736a;fill-opacity:.14;stroke:#d3736a;stroke-width:3"></polygon>' +
+  '<g class="map-city-g" data-city="cairo"><circle cx="77" cy="192" r="2.6" style="fill:#ecdfc4"></circle><text x="82" y="196" style="font-size:11px;fill:#ecdfc4">Cairo</text></g>' +
+  '<g class="map-city-g" data-city="jerusalem"><circle cx="173" cy="149" r="2.8" style="fill:#ecdfc4"></circle><text x="178" y="147" style="font-size:11px;font-weight:600;fill:#ecdfc4">Jerusalem</text></g>' +
+  '<g class="map-city-g" data-city="beirut"><circle cx="180" cy="98" r="2.6" style="fill:#ecdfc4"></circle><text x="185" y="96" style="font-size:11px;fill:#ecdfc4">Beirut</text></g>' +
+  '<g class="map-city-g" data-city="damascus"><circle cx="199" cy="108" r="2.6" style="fill:#ecdfc4"></circle><text x="204" y="112" style="font-size:11px;fill:#ecdfc4">Damascus</text></g>' +
+  '<g class="map-city-g" data-city="hama"><circle cx="210" cy="68" r="2.6" style="fill:#ecdfc4"></circle><text x="215" y="66" style="font-size:11px;fill:#ecdfc4">Hama (Hamath)</text></g>' +
+  '<g class="map-city-g" data-city="amman"><circle cx="190" cy="145" r="2.4" style="fill:#ecdfc4"></circle><text x="195" y="150" style="font-size:10.5px;fill:#a89a80">Amman</text></g>' +
+  '<g class="map-city-g" data-city="baghdad"><circle cx="394" cy="113" r="2.6" style="fill:#ecdfc4"></circle><text x="399" y="111" style="font-size:11px;fill:#ecdfc4">Baghdad</text></g>' +
+  '<text x="300" y="58" style="font-size:10.5px;fill:#a89a80">Euphrates</text><text x="345" y="82" style="font-size:10.5px;fill:#a89a80">Tigris</text>' +
+  '</svg>';
+
+var MAP_TRIBE_KEYS = ['asher','naphtali','zevulun','yissaskhar','menasheh','efrayim','dan','binyamin','yehudah','shimon','gad','reuven'];
+var MAP_PIN_LOOKUP = {'egypt':'cairo','israel':'jerusalem','jerusalem':'jerusalem','lebanon':'beirut','syria':'damascus','jordan':'amman','iraq':'baghdad'};
+
+// Decide which map (if any) applies to a figure, using only what's already
+// in their own approved card -- the tribe field's own text, or the places
+// list built for the news tie-in. Never invents a tie the card doesn't have.
+function figureMapPlan(f) {
+  var tribeText = f.tribe.toLowerCase().replace(/[’']/g, '');
+  if (tribeText.indexOf('levi') !== -1) {
+    return {type: 'tribal', tribes: [], levi: true};
+  }
+  var tribes = MAP_TRIBE_KEYS.filter(function(k) { return tribeText.indexOf(k) !== -1; });
+  if (tribes.length) return {type: 'tribal', tribes: tribes, levi: false};
+  if (f.places && f.places.length) {
+    for (var i = 0; i < f.places.length; i++) {
+      var pin = MAP_PIN_LOOKUP[f.places[i]];
+      if (pin) return {type: 'boundary', city: pin};
+    }
+  }
+  return null;
+}
+function showFigureMap(figureName) {
+  var f = FIGURES.filter(function(x) { return x.name === figureName; })[0];
+  if (!f) return;
+  var plan = figureMapPlan(f);
+  if (!plan) return;
+  var svg, caption;
+  if (plan.type === 'tribal') {
+    svg = TRIBAL_MAP_SVG;
+    caption = plan.levi
+      ? f.name + ' — Levi received no territorial allotment, only forty-eight cities scattered among the other tribes’ land (Yehoshua 21).'
+      : f.name + ' — ' + f.tribe;
+  } else {
+    svg = BOUNDARY_MAP_SVG;
+    caption = f.name + ' — ' + f.modern;
+  }
+  var lb = document.getElementById('acr-map-lb');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'acr-map-lb';
+    lb.className = 'acr-lb';
+    lb.innerHTML = '<div class="acr-lb-x">&times;</div><div class="acr-map-lb-content"></div>';
+    lb.addEventListener('click', function(e) {
+      if (e.target === lb || e.target.className === 'acr-lb-x') lb.classList.remove('open');
+    });
+    document.body.appendChild(lb);
+  }
+  var content = lb.querySelector('.acr-map-lb-content');
+  content.innerHTML = svg + '<div class="acr-map-lb-caption"></div>';
+  content.querySelector('.acr-map-lb-caption').textContent = caption;
+  lb.classList.add('open');
+  setTimeout(function() {
+    if (plan.type === 'tribal' && !plan.levi) {
+      plan.tribes.forEach(function(t) {
+        content.querySelectorAll('[data-tribe="' + t + '"]').forEach(function(g) { g.classList.add('hi'); });
+      });
+    } else if (plan.type === 'boundary') {
+      var g = content.querySelector('[data-city="' + plan.city + '"]');
+      if (g) g.classList.add('hi');
+    }
+  }, 30);
 }
 
 function renderPaganismPanel() {
