@@ -2265,7 +2265,9 @@ function renderYear() {
       mg.appendChild(cell);
     }
 
-    var m2 = m; // closure
+    let m2 = m; // let creates a real per-iteration binding; var did not,
+                // so every tile's click ended up sharing the loop's final
+                // value (December) once the loop finished
     mini.addEventListener('click', function() {
       viewDate = new Date(year, m2, 1);
       switchView('month');
