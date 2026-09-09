@@ -1,9 +1,9 @@
 # Session Notes — 2026-09-09
 
 ## Current state
-- Latest commit on `main`: `c677b17` (Merge pull request #908).
-- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `c677b17`.
-- ACR Search cache (`Search/sw.js`): `acr-search-v304`.
+- Latest commit on `main`: `a5ca36b` (Merge pull request #909).
+- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `a5ca36b`.
+- ACR Search cache (`Search/sw.js`): `acr-search-v305`.
 
 ## Built today
 - **PR #901 — Rule 16: true name Hebrew, not the Roman-derived label "African"** (merged, squashed into `main` at `08446e2`).
@@ -41,6 +41,13 @@
   - Caught and corrected two of my own test-timing artifacts during verification (the 300ms search debounce, and a prior highlight's un-cleared 2500ms timeout bleeding into the next check) rather than reporting either as a false finding — documented in the PR per Rule 33/34.
   - Backup: `backup/2026-09-09-acr-search-v303-lineage-web` at pre-change SHA `d23988a`.
 
+- **PR #909 — ACR Search: live-news tie-in for Tribes and Territory cards** (merged into `main`, commit `05afce2`).
+  - The live-news-tie-in phase. Each figure card now shows up to three today's-news headlines from the Prophetic Watch daily brief when one matches that figure's own already-established modern ground.
+  - Added a `places:[...]` keyword array to each of the 29 FIGURES entries, derived strictly from place names already present in that figure's own approved `territory`/`modern` fields — no new claims. Matches by scanning `DAILY_BRIEF.items`' headline text directly (not the broader theme tags, which span too many countries to tie to one figure).
+  - **Process miss, self-flagged**: skipped creating the pre-change backup branch before starting this edit — the first break in the backup-first pattern held every other time this session. Caught it after pushing, created `backup/2026-09-09-acr-search-v304-news-tiein` after the fact pointing at the correct pre-change SHA (`c677b17`, already independently confirmed matching `origin/main` before the edit started). Recovery point is accurate; the order was wrong. Flagged to the user directly in the PR body and in chat, not silently corrected.
+  - Verified end-to-end against the real running app and against the actual live `daily_brief.json` (18 of 29 figures matched real headlines).
+  - Backups: pre-change `backup/2026-09-09-acr-search-v304-news-tiein` (created late) at SHA `c677b175811284d110e592fdc7f306dba4b95e3d`; post-merge `backup/2026-09-09-acr-search-v305-news-tiein` at SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65`.
+
 - **PR #900 — ACR Solar: fix Year view month tiles all opening December** (merged into `main` at `a2bd26f`) — not this session's work; noted here only because it landed on `main` during today's timeline and is reflected in the commit log below.
 
 ## Outstanding / blocking
@@ -49,8 +56,7 @@
 - **Mikhah's (Micah's) hometown territory**: could not confirm which tribe's land Moreshet sits in against ACR's own city lists this session — presented as "not confirmed" rather than guessed.
 
 ## Pending / parked
-- **Live-news tie-in** — next planned phase: connect a figure's territory to `daily_brief.json`'s Covenant Land tags (data already exists from PRs #902/#904; this is a UI hook, no new research). Not started.
-- **Animated boundary-map trace** — final planned phase, deferred until after the live-news tie-in, since it's real new asset/animation work. Not started.
+- **Animated boundary-map trace** — final planned phase of the Tribes and Territory feature (trace-the-line map, real new asset/animation work, deliberately deferred until last). Not started. This is the only phase left from the original four-idea brainstorm (trace-the-line map, lineage web [done, PR #908], forensic evidence-cards [done as the badge system, PRs #906/#907], live-news tie-in [done, PR #909]).
 
 ## Capability gaps this session
 - GitHub Actions `workflow_dispatch` is not accessible to this session's integration (see Outstanding above) — confirmed via a direct failed call, not assumed.
@@ -65,6 +71,8 @@
 - `backup/2026-09-09-acr-search-v303-figures-batch2` — post-merge state after PR #907, SHA `d23988a24e396c98d4104920a1c2c3d31788845e`.
 - `backup/2026-09-09-acr-search-v303-lineage-web` — pre-PR-908-change state, SHA `d23988a24e396c98d4104920a1c2c3d31788845e`.
 - `backup/2026-09-09-acr-search-v304-lineage-web` — post-merge state after PR #908, SHA `c677b175811284d110e592fdc7f306dba4b95e3d`.
+- `backup/2026-09-09-acr-search-v304-news-tiein` — pre-PR-909-change state, SHA `c677b175811284d110e592fdc7f306dba4b95e3d` (created late, after push — see process note above).
+- `backup/2026-09-09-acr-search-v305-news-tiein` — post-merge state after PR #909, SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65`.
 - All verified matching `origin/main` at the time of creation. Recovery: `git checkout backup/<name>`.
 
 ## Today's commit log (main, chronological)
@@ -86,4 +94,6 @@ d143b31 Merge pull request #906 from DssOrit/claude/acr-search-figures-batch1
 d23988a Merge pull request #907 from DssOrit/claude/acr-search-figures-batch2
 2d19949 ACR Search: link Tribes and Territory into the Lineage Explorer
 c677b17 Merge pull request #908 from DssOrit/claude/acr-search-lineage-web
+05afce2 ACR Search: live-news tie-in for Tribes and Territory cards
+a5ca36b Merge pull request #909 from DssOrit/claude/acr-search-news-tiein
 ```
