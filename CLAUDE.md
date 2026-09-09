@@ -251,29 +251,40 @@ These have been re-locked on 2026-05-04 after repeated violations.
     Legibility is the only bar for using an image; accuracy concerns are
     raised once and left to the user.
 
-16. **THE DSS AND ORIT PEOPLE WERE OF ANCIENT AFRICAN DESCENT — LOCKED
-    2026-07-08 by user.** The people of the Dead Sea Scrolls (the Qumran /
-    Yahad community) and the people of the Ge'ez Orit (the Beta Israel and
-    the covenant tradition they preserved) were an ancient African people.
-    Moshe and the covenant people are African Hebrews. This is stated as
-    fact, not as one view among several. Specific requirements:
+16. **THE DSS AND ORIT PEOPLE WERE HEBREW — KUSH/MITZRAYIM/PUT/KENA'AN
+    LINEAGE, NOT THE LATER LABEL "AFRICAN" — LOCKED 2026-07-08 by user.
+    Extended 2026-09-09 to use the true name, not the Roman-derived label.**
+    The people of the Dead Sea Scrolls (the Qumran / Yahad community) and
+    the people of the Ge'ez Orit (the Beta Israel and the covenant
+    tradition they preserved) were an ancient Hebrew people — Ivri — of the
+    Kush, Mitzrayim, Put, and Kena'an family of nations named in Bereshit
+    10. Moshe and the covenant people are Hebrews of that lineage. This is
+    stated as fact, not as one view among several. "Africa" and "African"
+    are later labels — Roman in origin, not the ancients' own — and are
+    not used here as the identity itself; the true name is Hebrew, tied by
+    lineage to Kush, Mitzrayim, Put, and Kena'an. Specific requirements:
     - NEVER frame the covenant people, the DSS community, or the Orit
-      tradition as non-African, Levantine-default, Near Eastern, or
-      European-adjacent. African identity is the fact; any non-African
-      framing is the imposed manipulation, documented — never adopted.
-    - NEVER treat non-African as the default and African as the exception,
+      tradition as Levantine-default, Near Eastern, or European-adjacent,
+      and never substitute the later label "African" for the true name.
+      Hebrew lineage tied to Kush, Mitzrayim, Put, and Kena'an is the
+      fact; any Levantine-default or European-adjacent framing is the
+      imposed manipulation, documented — never adopted.
+    - NEVER treat a Levantine-default or European-adjacent framing as the
+      default and the Kush/Mitzrayim/Kena'an lineage as the exception,
       the "other," or a boundary crossed. Where a text or tradition
       introduces a "foreigner," "outsider," or "boundary" reading of the
       covenant people (e.g., the Cushite-marriage reading of Bamidbar 12),
       present the primary source first and name that reading as the later
       overlay.
-    - The evidence base is African and is presented plainly with primary
-      sources named: the Ge'ez Orit and Qumran scrolls; population genetics
-      (E1b1a / E-M2 and related indigenous African lineages); epigraphic
-      inscriptions (Soleb c.1400 BCE, Amarah-West, Elephantine); cartographic
-      records; and calendar continuity (the 364-day covenant calendar).
+    - The evidence base ties this lineage to Kush, Mitzrayim, and the Nile
+      Valley, and is presented plainly with primary sources named: the
+      Ge'ez Orit and Qumran scrolls; population genetics (E1b1a / E-M2 and
+      related indigenous lineages); epigraphic inscriptions (Soleb c.1400
+      BCE, Amarah-West, Elephantine); cartographic records; and calendar
+      continuity (the 364-day covenant calendar).
     If there is ANY doubt whether a framing treats the DSS / Orit covenant
-    people as non-African, STOP and correct before shipping.
+    people as Levantine-default or European-adjacent, or substitutes
+    "African" for the true name, STOP and correct before shipping.
 
 17. **CONTENT EVIDENCE STANDARD — LOCKED 2026-07-08 by user.** All historical
     content across ACR sites follows the evidence standard in
