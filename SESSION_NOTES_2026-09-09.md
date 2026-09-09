@@ -1,9 +1,9 @@
 # Session Notes — 2026-09-09
 
 ## Current state
-- Latest commit on `main`: `a5ca36b` (Merge pull request #909).
-- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `a5ca36b`.
-- ACR Search cache (`Search/sw.js`): `acr-search-v305`.
+- Latest commit on `main`: `758d6ee` (Merge pull request #910).
+- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `758d6ee`.
+- ACR Search cache (`Search/sw.js`): `acr-search-v306`.
 
 ## Built today
 - **PR #901 — Rule 16: true name Hebrew, not the Roman-derived label "African"** (merged, squashed into `main` at `08446e2`).
@@ -48,6 +48,13 @@
   - Verified end-to-end against the real running app and against the actual live `daily_brief.json` (18 of 29 figures matched real headlines).
   - Backups: pre-change `backup/2026-09-09-acr-search-v304-news-tiein` (created late) at SHA `c677b175811284d110e592fdc7f306dba4b95e3d`; post-merge `backup/2026-09-09-acr-search-v305-news-tiein` at SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65`.
 
+- **PR #910 — ACR Search: map trace for Tribes and Territory cards** (merged into `main`, commit `a17f4a2`).
+  - The final planned phase. Adds a "VIEW ON MAP" button to 21 of the 29 figure cards, opening a lightbox with one of two schematic maps (reused as inline SVG from earlier session work found in the scratchpad, not drawn fresh) and a brief CSS-transition highlight — tribal-allotments map for tribe-confirmed figures (or Levi, shown with no highlight and the map's own "no allotment" note), boundary map (Genesis 15/Numbers 34) for everyone else with a places-keyword match to one of its six city pins. The other 8 figures (no tribe or ground match) correctly get no button.
+  - Bonus finding during build: Yonah and Amos's tribe-field text ("hometown ties to Zevulun"/"...to Yehudah") gets picked up by the same tribe-name scan used for confirmed tribes, giving them a more precise tribal-map highlight than the boundary-map fallback originally planned.
+  - Backup created correctly this time, before any edit: `backup/2026-09-09-acr-search-v305-map-trace` at pre-change SHA `a5ca36b`.
+  - Verified against the real running app; all 29 classifications checked, highlight timing (another setTimeout-vs-test-read pitfall, same pattern as batch 1/lineage-web) caught and corrected during verification, not reported as a false bug.
+  - This completes all four originally brainstormed phases (trace-the-line map, lineage web, forensic evidence-cards/badges, live-news tie-in).
+
 - **PR #900 — ACR Solar: fix Year view month tiles all opening December** (merged into `main` at `a2bd26f`) — not this session's work; noted here only because it landed on `main` during today's timeline and is reflected in the commit log below.
 
 ## Outstanding / blocking
@@ -56,7 +63,8 @@
 - **Mikhah's (Micah's) hometown territory**: could not confirm which tribe's land Moreshet sits in against ACR's own city lists this session — presented as "not confirmed" rather than guessed.
 
 ## Pending / parked
-- **Animated boundary-map trace** — final planned phase of the Tribes and Territory feature (trace-the-line map, real new asset/animation work, deliberately deferred until last). Not started. This is the only phase left from the original four-idea brainstorm (trace-the-line map, lineage web [done, PR #908], forensic evidence-cards [done as the badge system, PRs #906/#907], live-news tie-in [done, PR #909]).
+- Nothing pending from the original Tribes and Territory four-phase plan — all four phases shipped (PRs #906/#907 figures + badges, #908 lineage web, #909 live-news tie-in, #910 map trace).
+- Not yet decided: whether to grow the figures dataset further (batch 3 — more names beyond the original brainstorm list) or extend to other sites.
 
 ## Capability gaps this session
 - GitHub Actions `workflow_dispatch` is not accessible to this session's integration (see Outstanding above) — confirmed via a direct failed call, not assumed.
@@ -73,6 +81,8 @@
 - `backup/2026-09-09-acr-search-v304-lineage-web` — post-merge state after PR #908, SHA `c677b175811284d110e592fdc7f306dba4b95e3d`.
 - `backup/2026-09-09-acr-search-v304-news-tiein` — pre-PR-909-change state, SHA `c677b175811284d110e592fdc7f306dba4b95e3d` (created late, after push — see process note above).
 - `backup/2026-09-09-acr-search-v305-news-tiein` — post-merge state after PR #909, SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65`.
+- `backup/2026-09-09-acr-search-v305-map-trace` — pre-PR-910-change state, SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65` (created correctly before the edit this time).
+- `backup/2026-09-09-acr-search-v306-map-trace` — post-merge state after PR #910, SHA `758d6ee7a866627f2c92e1bba3e06eba14a29aba`.
 - All verified matching `origin/main` at the time of creation. Recovery: `git checkout backup/<name>`.
 
 ## Today's commit log (main, chronological)
@@ -96,4 +106,6 @@ d23988a Merge pull request #907 from DssOrit/claude/acr-search-figures-batch2
 c677b17 Merge pull request #908 from DssOrit/claude/acr-search-lineage-web
 05afce2 ACR Search: live-news tie-in for Tribes and Territory cards
 a5ca36b Merge pull request #909 from DssOrit/claude/acr-search-news-tiein
+a17f4a2 ACR Search: map trace for Tribes and Territory cards
+758d6ee Merge pull request #910 from DssOrit/claude/acr-search-map-trace
 ```
