@@ -1101,6 +1101,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="paganism" onclick="setMode('paganism')"><i class="ri-fire-line"></i> Paganism</div>
       <div class="mpill" data-mode="racism" onclick="setMode('racism')"><i class="ri-scales-3-line"></i> Racism</div>
       <div class="mpill" data-mode="body" onclick="setMode('body')"><i class="ri-pulse-line"></i> The Body</div>
+      <div class="mpill" data-mode="figures" onclick="setMode('figures')"><i class="ri-user-search-line"></i> Tribes &amp; Territory</div>
       <div class="mpill" data-mode="explore" onclick="setMode('explore')"><i class="ri-compass-discover-line"></i> Explore</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
@@ -1307,6 +1308,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">The Body, Receiver of Light and Sound</div>
       <div class="sv-sub">The Creator built the human body to take in frequency: light through the eye to the pineal, and sound and vibration through the whole body. This is documented biology, and it runs straight back to the primary sources, where creation itself begins with a voice and the covenant is marked by sound. Melanin is both the filter and the antenna.</div>
       <div id="body-panel"></div>
+    </div>
+
+    <!-- TRIBES & TERRITORY -->
+    <div id="figures-view" style="display:none">
+      <div class="sv-hdr">Tribes and Territory</div>
+      <div class="sv-sub">Named figures from the DSS and Orit, matched to their tribe and territory where the text states it, and marked plainly where it does not. Every entry cites the exact chapter and verse. Search a name above, or browse the cards below.</div>
+      <div id="figures-panel"></div>
     </div>
 
     <!-- ANCIENT CITY WALKER -->
@@ -2900,6 +2908,7 @@ function initApp() {
   renderPaganismPanel();
   renderRacismPanel();
   renderBodyPanel();
+  renderFiguresPanel();
   renderUncoverPanel();
   renderLibraryPanel();
   renderSolarCalPanel();
@@ -2952,7 +2961,7 @@ function hardRefresh() {
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers'];
+  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -2981,6 +2990,7 @@ var PANEL_LABELS = {
   paganism:'Paganism',
   racism:'Racism and the Covenant',
   body:'The Body',
+  figures:'Tribes and Territory',
   origins:'Origins Record',
   orit:'Orit Record',
   covenant:'Covenant Record',
@@ -3002,7 +3012,7 @@ var PANEL_LABELS = {
 function buildSiteIndex() {
   if (SITE_INDEX) return;
   SITE_INDEX = [];
-  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','finaldays','watchers'];
+  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','figures','finaldays','watchers'];
   tabs.forEach(function(tab) {
     var panel = document.getElementById(tab + '-panel');
     if (!panel) return;
@@ -3027,6 +3037,8 @@ function goToSiteEntry(tab, topic) {
     setMode('racism');
   } else if (tab === 'body') {
     setMode('body');
+  } else if (tab === 'figures') {
+    setMode('figures');
   } else if (tab === 'uncover') {
     setMode('uncover');
   } else if (tab === 'library') {
@@ -4635,6 +4647,61 @@ function renderBodyPanel() {
   '<div class="hr-sec-head">The Finding, Stated Plainly</div>' +
   '<div class="td-item"><div class="td-topic">The Through-Line</div><div class="td-text">The body is a receiver of frequency by design. Light enters the eye and sets the inner clock and the pineal, tuned to the blue band; melanin absorbs light across the spectrum and, in the laboratory, turns it into electrical charge; the whole body converts the force of sound into cellular signal. The primary sources knew the register even without the instruments, creation by voice, the covenant given in sound at Sinai, walls falling to the shofar, heaven ordered by song, and the ancients cutting stone to a resonant pitch on three continents. The modern world floods the body with the wrong light at the wrong hour and calls it normal. The measured body and the primary sources say the same thing: frequency is real, it is sacred, and it was built into us from the start.</div></div>' +
   '';
+}
+
+// ── TRIBES & TERRITORY ──────────────────────────────────────────────────────────
+var FIGURES = [
+  {name:'Moshe', tribe:'Levi',
+   status:'confirmed',
+   territory:'No allotted land — Levi\'s 48 cities sit scattered inside the other tribes\' territory instead of a single block.',
+   modern:'Choreb / Sinai (the burning bush, the Name revealed); raised in Pharaoh\'s household in Mitzrayim, modern Egypt.',
+   text:'"A man of the house of Levi went and took a daughter of Levi as his wife" places Moshe\'s own tribe as Levi. His wife is called "the Kushite woman" twice in one verse — the one figure in the text with a direct, named Kush tie.',
+   refs:['Shemot 2:1','Bamidbar 12:1','Yehoshua 18:7, 21']},
+  {name:'Yosef', tribe:'Not a tribe himself — father of Efrayim and Menasheh',
+   status:'confirmed',
+   territory:'Efrayim: Shekhem, modern Nablus (West Bank). Menasheh split east/west — east in Gil\'ad and Bashan, modern Jordan.',
+   modern:'Mitzrayim, modern Egypt — given the name Tzafenat-Pane\'ach and a wife, Osnat, daughter of the priest of On.',
+   text:'Ya\'akov adopted Yosef\'s two sons as his own, splitting Yosef\'s line into two tribal allotments rather than one — why Efrayim and Menasheh appear in the allotment lists instead of "Yosef."',
+   refs:['Bereshit 41','Bereshit 48','Yehoshua 20:7']},
+  {name:'Daniyel', tribe:'Yehudah',
+   status:'confirmed',
+   territory:'Yehudah\'s land centers on Yerushalayim, modern Jerusalem (Israel).',
+   modern:'Taken into Shinar / Bavel, modern Iraq, near Baghdad.',
+   text:'"Daniyel, Hananyah, Misha\'el, and Azaryah of the tribe of Yehudah" — taken "of the royal family and of the nobility" out of Yerushalayim into captivity.',
+   refs:['Daniyel 1:6']},
+  {name:'Dawid', tribe:'Yehudah',
+   status:'confirmed',
+   territory:'Beit-Lekhem, modern Bethlehem (West Bank); later reigned from Yerushalayim, modern Jerusalem (Israel).',
+   modern:'Bethlehem and Jerusalem, both West Bank / Israel.',
+   text:'"Now Dawid was the son of an Efrathite of Beit-Lekhem in Yehudah, named Yishai" — the text names both his hometown and his tribe in one verse.',
+   refs:['Shemu\'el Aleph 17:12']},
+  {name:'Ya\'akov', tribe:'Father of all twelve tribes — not a member of one',
+   status:'not-a-tribe',
+   territory:'Kena\'an (Be\'er-Sheva / Chevron area, Israel / West Bank); years in Paddan-Aram for Lavan, near modern Harran (Turkey/Syria border); died in Mitzrayim, modern Egypt; buried at Machpelah in Chevron, modern Hebron.',
+   modern:'Israel / West Bank, Turkey / Syria border, Egypt.',
+   text:'Renamed Yisra\'el at Peni\'el, Transjordan — "for you have striven with the Creator and with men, and have prevailed." His twelve sons become the twelve tribes; asking which tribe Ya\'akov belonged to is asking about a category that starts one generation after him.',
+   refs:['Bereshit 32:28']}
+];
+function renderFiguresPanel() {
+  var panel = document.getElementById('figures-panel');
+  if (!panel) return;
+  var html =
+    '<div class="hr-sec-head">Tribes and Territory, Named Figures</div>' +
+    '<div class="hr-sec-sub">Each figure checked directly against the chapter and verse cited — tribe, territory, and the modern name of the ground they stood on. Where the text does not state a tribe, that is said plainly rather than filled in.</div>';
+  FIGURES.forEach(function(f) {
+    var badge = f.status === 'confirmed'
+      ? '<span style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.03em;padding:2px 7px;border-radius:3px;color:#7fb3d5;background:#1e2c33;margin-left:8px;vertical-align:middle">TRIBE CONFIRMED</span>'
+      : '<span style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.03em;padding:2px 7px;border-radius:3px;color:#d4bc63;background:#332b17;margin-left:8px;vertical-align:middle">NOT A TRIBE MEMBER</span>';
+    var refsHTML = f.refs.map(function(r) {
+      var q = r.split(' ')[0];
+      return '<span class="mo-ref-chip" onclick="searchFromTool(\'' + q.replace(/'/g,"\\'") + '\')">' + r + '</span>';
+    }).join(' ');
+    html += '<div class="td-item"><div class="td-topic">' + f.name + ' — ' + f.tribe + badge + '</div>' +
+      '<div class="td-text">' + f.text + '<br><br><strong>Territory:</strong> ' + f.territory +
+      '<br><strong>Modern ground:</strong> ' + f.modern +
+      '<br><strong>Sources:</strong> ' + refsHTML + '</div></div>';
+  });
+  panel.innerHTML = html;
 }
 
 function renderPaganismPanel() {
