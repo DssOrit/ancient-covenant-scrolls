@@ -1,9 +1,9 @@
 # Session Notes — 2026-09-09
 
 ## Current state
-- Latest commit on `main`: `758d6ee` (Merge pull request #910).
-- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `758d6ee`.
-- ACR Search cache (`Search/sw.js`): `acr-search-v306`.
+- Latest commit on `main`: `2a0d40b` (Merge pull request #911).
+- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `2a0d40b`.
+- ACR Search cache (`Search/sw.js`): `acr-search-v307`.
 
 ## Built today
 - **PR #901 — Rule 16: true name Hebrew, not the Roman-derived label "African"** (merged, squashed into `main` at `08446e2`).
@@ -57,6 +57,16 @@
 
 - **PR #900 — ACR Solar: fix Year view month tiles all opening December** (merged into `main` at `a2bd26f`) — not this session's work; noted here only because it landed on `main` during today's timeline and is reflected in the commit log below.
 
+- **PR #911 — ACR Search: Geʽez Foundation letters + provisional Lev 22:21-27 parallel reading** (merged into `main`, commit `2a0d40b`).
+  - Unlocked via exact phrase: "Edit ACR search, but backup site first, then confirm no break risk, then apply fix & then send me the merge link."
+  - Origin: user asked to bring parts of an uploaded "Load Paleo v1 Locked Spec" PWA concept into ACR Search rather than building it standalone — scoped down to "everything except stroke tracing," split into Phase 1 (Name Explorer modes — not yet built, see Pending below) and Phase 2 (Geʽez content — this PR). A separate AI chat session did the Ge'ez/manuscript-sourcing research this session relayed and I evaluated/pushed back on piece by piece, including holding the line that generated letterforms are not the same claim as an attested manuscript reading (Rule 29).
+  - New "Geʽez Foundation & Parallel Reading" view (Useful Tools hub): 24-letter inherited teaching foundation, classification sourced to Azeb Amha, "On Loans and Additions to the Fidäl (Ethiopic) Writing System" (Brill, 2009/2010) and Edward Ullendorff, "Studies in the Ethiopic Syllabary" (*Africa* 21.3, 1951) — I had explicitly held this citation as a blocker in an earlier turn; the user's relayed chat supplied it before I wrote any code, so the block cleared before implementation, not after.
+  - ጰ/ፐ kept in a separate "Secondary Geʽez Additions" section per the citation correction: never labeled Amharic-only/modern/illegitimate/non-Geʽez/prohibited/foreign; Greek-loanword claim softened to "associated particularly with foreign loan vocabulary" per the user's explicit wording correction; "unattested in early inscriptions" deliberately kept OUT of the public UI (not tied to a directly-checked primary source yet).
+  - 4 merged-sound groups (Ḥa/Sa/A/Tsa) kept visually distinct; 7 vowel orders.
+  - Orit Leviticus 22:21-27 in Geʽez (source: EthiopicBible.com, provenance vs. Dillmann/Boyd NOT established), labeled **PROVISIONAL GEʽEZ READING** throughout, no "verified"/"certified"/"final" language anywhere — verified by direct grep against the pushed file, not memory. Verse 22's editorial-completion brackets (`[ረ]`) preserved in the displayed text. Verse 24 uses the corrected ዘጽንጵው reading with an internal audit flag (ዘጽንጵው/ዘጽንጰው adjudication still pending direct Dillmann-image collation) — both open items kept live in the data per the user's explicit "must NOT disappear from the audit ledger" instruction.
+  - Verified: `node --check` on the full inline script; `<div>` tag balance diffed byte-for-byte against pre-change `main` (unchanged, no new mismatch); Playwright functional pass (24 foundation letters excluding the 2 secondary ones, 2 secondary letters in their own section, 4 group rows, 7 vowel pills, all 7 verses, brackets/audit flag intact, status text exact, no prohibited certainty phrases anywhere in the new markup). NOT verified on an actual iPad Safari device — flagged as unchecked in the PR.
+  - Backups: pre-change `backup/2026-09-09-acr-search-v306-geez-pre` at SHA `758d6ee7a866627f2c92e1bba3e06eba14a29aba`; post-merge `backup/2026-09-09-acr-search-v307` at SHA `2a0d40b3a18007f04c49fd4b256e58a225a25706`.
+
 ## Outstanding / blocking
 - **Rule 0 vs. Rule 16 consistency**: Rule 0 (No Western/European Bias) still uses "African"/"African Hebrew" terminology, while Rule 16 now says "Hebrew, from Kush, Mitzrayim, Put, and Kena'an." Flagged, not resolved — awaiting explicit user direction.
 - **`daily_brief.yml` workflow-dispatch permission**: attempted to manually trigger the daily news-brief workflow so today's keyword changes (PRs #902/#904) would show up immediately instead of waiting for tomorrow's 6 AM UTC cron run. The call failed: `403 Resource not accessible by integration`. This session's GitHub integration cannot dispatch workflows — the user would need to trigger it manually from the repo's Actions tab, or wait for the scheduled run. Not something I can work around from here.
@@ -65,6 +75,10 @@
 ## Pending / parked
 - Nothing pending from the original Tribes and Territory four-phase plan — all four phases shipped (PRs #906/#907 figures + badges, #908 lineage web, #909 live-news tie-in, #910 map trace).
 - Not yet decided: whether to grow the figures dataset further (batch 3 — more names beyond the original brainstorm list) or extend to other sites.
+- **Load Paleo Phase 1 — not yet built**: Transliteration mode and Concept-lookup mode for a Name Explorer tool (the latter reuses the existing, already-sourced `HR_WORDS` data), a paleo-Hebrew alphabet data upgrade (numeric value + pictographic origin, `PALEO_ALPHA` currently only has glyph/name/transliteration), paleo-Hebrew confusable-pair duels, and TTS wiring (`speakText()` already exists and works, just not yet hooked to this feature). Scoped and approved by the user ("everything except stroke tracing") but no unlock phrase requested or given for this specific piece yet, and no code written.
+- **Load Paleo Phase 2 — remaining pieces**: Attested-genealogy names lexicon for Name Explorer (needs a real sourced names/etymology dataset — reclassified out of Phase 1 mid-session because it's a data-sourcing task, not an algorithm) and any additional Parallel Reading entries beyond Leviticus 22:21-27 — no other passages have been researched/sourced yet.
+- **Two audit items open on the shipped Leviticus 22:21-27 entry** (PR #911) — direct character-by-character Dillmann collation, and final adjudication of ዘጽንጵው vs. ዘጽንጰው at 22:24. Tracked live in the app's own metadata (`criticalEditionCollation: pending`, per-verse `auditFlag`), not just here. Passage must stay labeled PROVISIONAL GEʽEZ READING until resolved.
+- **"Unattested in early inscriptions" claim for ጰ/ፐ** — deliberately withheld from any UI text per the user's explicit citation correction, pending a directly-checked primary scholarly passage (not yet supplied).
 
 ## Capability gaps this session
 - GitHub Actions `workflow_dispatch` is not accessible to this session's integration (see Outstanding above) — confirmed via a direct failed call, not assumed.
@@ -83,6 +97,8 @@
 - `backup/2026-09-09-acr-search-v305-news-tiein` — post-merge state after PR #909, SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65`.
 - `backup/2026-09-09-acr-search-v305-map-trace` — pre-PR-910-change state, SHA `a5ca36bafdb0175bcc2473308f1bbd2fb33efd65` (created correctly before the edit this time).
 - `backup/2026-09-09-acr-search-v306-map-trace` — post-merge state after PR #910, SHA `758d6ee7a866627f2c92e1bba3e06eba14a29aba`.
+- `backup/2026-09-09-acr-search-v306-geez-pre` — pre-PR-911-change state, SHA `758d6ee7a866627f2c92e1bba3e06eba14a29aba`.
+- `backup/2026-09-09-acr-search-v307` — post-merge state after PR #911, SHA `2a0d40b3a18007f04c49fd4b256e58a225a25706`.
 - All verified matching `origin/main` at the time of creation. Recovery: `git checkout backup/<name>`.
 
 ## Today's commit log (main, chronological)
@@ -108,4 +124,6 @@ c677b17 Merge pull request #908 from DssOrit/claude/acr-search-lineage-web
 a5ca36b Merge pull request #909 from DssOrit/claude/acr-search-news-tiein
 a17f4a2 ACR Search: map trace for Tribes and Territory cards
 758d6ee Merge pull request #910 from DssOrit/claude/acr-search-map-trace
+4a25fa3 Add Geʽez Foundation letters and provisional Lev 22:21-27 parallel reading
+2a0d40b Merge pull request #911 from DssOrit/claude/geez-foundation-v307
 ```
