@@ -176,3 +176,62 @@ Five td-items drafted (see scratchpad atonement_preview.html at draft time). Div
 Sections for gaps 2-9 each need their own primary-source verification pass
 against the ACR corpus + DSS + Orit before any wording is written or previewed.
 Suggested next: the two on-ramps (the front door).
+
+---
+
+## ACR Reader — workout-ready audio (parked by user 2026-09-09, revisit 2026-09-16)
+
+User wants to listen to ACR Reader volumes hands-free (working out /
+doing other things), which the site can't currently do — "Play Verses"
+uses the browser's built-in `speechSynthesis`, which stops when the
+screen locks or the app backgrounds (verified against
+`HANDOFF.md`'s Audio section: it's a live in-browser read-aloud, not a
+file). Constraint from the user: **must be free** — no paid TTS API,
+no per-character billing, ever.
+
+**Landed on, after research + a real technical test (not just discussion):**
+record the audio *as it plays* in the browser, then let the user opt to
+save it as a local file on their device — no server hosting, no
+pre-rendering the whole corpus, no CDN storage cost. This fits "free"
+better than the original pre-hosted-files idea, since nothing is stored
+anywhere except on the user's own device after they choose to save it.
+
+**What's actually verified, not just theorized:**
+- Free/offline TTS engine choice: **Piper** (neural, natural-sounding,
+  no API key, no cost, runs fully offline) beats **espeak-ng** (also
+  free/offline, but robotic/dated) for anything meant to be listened to
+  at length. Both installed and tested in-session; two real sample WAV
+  files generated from actual site text (Bereshit 1:1-5) and sent to
+  the user for a side-by-side listen.
+- The record-and-save mechanism itself is real, not speculative: built
+  and ran an actual test page — decoded a real audio file through the
+  Web Audio API, routed it into a `MediaRecorder`-capturable stream,
+  and produced a genuine downloadable blob (25s source captured clean,
+  zero errors) — confirmed in headless Chromium via Playwright.
+
+**What's still open before this could ship:**
+1. **The site's current `speechSynthesis`-based playback cannot be
+   captured this way** — confirmed as a known platform limitation
+   (browser TTS output doesn't route through the Web Audio API in any
+   browser), not something to re-test. This means the recordable
+   version needs a *different* generation path than what "Play Verses"
+   uses today: Piper (or a similar free engine) compiled to WASM,
+   generating audio inside the page's own `AudioContext` directly, fed
+   into the same capture mechanism already verified above. That's a
+   real build, not a small tweak to the existing feature.
+2. **iOS Safari is unverified.** Everything tested so far was in
+   headless Chromium (this sandbox has zero TTS voices registered and
+   no real iOS device access, so nothing here could confirm iPad
+   behavior either way). iPad Safari — the site's actual primary
+   target device — has historically been the least reliable browser for
+   `MediaRecorder`. This needs a real on-device test before committing
+   to the approach, not an assumption that it carries over from
+   Chromium.
+3. Not yet tested: how Piper's output holds up on the site's own
+   trickier transliterated Hebrew names (Yehoshua, Kena'ani, etc.) at
+   volume/chapter length, rather than the short sample already sent.
+
+**Do not implement until the user explicitly says go** — this is
+research + one working proof-of-concept, not a build. Sample files
+(`sample_bereshit_piper.wav`, `sample_bereshit_espeak.wav`) were sent
+directly to the user, not committed to the repo.
