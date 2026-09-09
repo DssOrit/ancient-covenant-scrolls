@@ -9,13 +9,14 @@ const path = require('path');
 // ── KEYWORD GROUPS ─────────────────────────────────────────────────────────────
 // Each group maps headlines to a covenant section and theme label.
 const KEYWORD_GROUPS = [
-  {theme:'Covenant Land',        section:1, keywords:['israel','jerusalem','canaan','judah','judea','zion','temple mount','west bank','gaza','palestine','golan','sinai','euphrates','jordan river']},
+  {theme:'Covenant Land',        section:1, keywords:['israel','jerusalem','canaan','judah','judea','zion','temple mount','west bank','gaza','palestine','golan','sinai','euphrates','jordan river','egypt','lebanon','syria','damascus','dead sea','sea of galilee','kinneret','nile','hamath','hama','homs','tyre','sidon','negev','red sea','gulf of aqaba','eilat','hebron','bethlehem','beqaa valley','mount hermon']},
   {theme:'War and Conflict',     section:1, keywords:['war','warfare','missile','airstrike','air strike','bombardment','invasion','occupation','military','ceasefire','cease-fire','attack','strike','troops','battalion','offensive','siege','blockade','drone']},
   {theme:'Iran and Axis',        section:1, keywords:['iran','iranian','hezbollah','hamas','houthi','proxies','axis of resistance','islamic republic']},
   {theme:'Lebanon and Syria',    section:1, keywords:['lebanon','lebanese','syria','syrian','damascus','beirut','aleppo','idlib','euphrates']},
   {theme:'Diaspora',             section:2, keywords:['diaspora','exile','slavery','slave trade','ships','transatlantic','captive','captivity','deportation','trafficking','displaced','displacement','refugees','stateless']},
+  {theme:'400-Year Prophecy',    section:2, keywords:['1619','400 years','four hundred years','400-year','juneteenth','reparations commission','reparations task force','reparations bill','slavery reparations','gravest crime against humanity','transatlantic slave trade','un general assembly resolution','durban declaration']},
   {theme:'Diaspora — Africa',    section:2, keywords:['west africa','nigeria','benin','ghana','togo','senegal','cameroon','congo','ivory coast','cote d\'ivoire','niger','mali','burkina faso']},
-  {theme:'Awakening',            section:3, keywords:['reparations','repatriation','heritage','ancestry','indigenous rights','identity','afro','african american','black history','hebrew','israelite','covenant','prophecy','biblical']},
+  {theme:'Awakening',            section:3, keywords:['reparations','repatriation','heritage','ancestry','indigenous rights','identity','afro','african american','black history','hebrew','israelite','covenant','prophecy','biblical','mercator','equal earth','true size','correct the map']},
   {theme:'New Heart',            section:4, keywords:['revival','spiritual','repentance','return to faith','covenant renewal','religious awakening','scripture','torah','sacred']},
   {theme:'Gathering',            section:5, keywords:['return','aliyah','migration','immigration','gathering','reunification','repatriation','ethiopia','eritrea','somalia','horn of africa','east africa','african union','pan-african']},
   {theme:'Abundance',            section:6, keywords:['famine','drought','food crisis','food insecurity','sanctions','embargo','economic crisis','poverty','starvation','inflation','currency collapse','wealth transfer']},
