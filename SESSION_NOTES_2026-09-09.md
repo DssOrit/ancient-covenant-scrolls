@@ -1,9 +1,9 @@
 # Session Notes — 2026-09-09
 
 ## Current state
-- Latest commit on `main`: `d23988a` (Merge pull request #907).
-- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `d23988a`.
-- ACR Search cache (`Search/sw.js`): `acr-search-v303`.
+- Latest commit on `main`: `c677b17` (Merge pull request #908).
+- Working tree clean, local branch `claude/session-notes-2026-09-09` synced to `origin/main` at `c677b17`.
+- ACR Search cache (`Search/sw.js`): `acr-search-v304`.
 
 ## Built today
 - **PR #901 — Rule 16: true name Hebrew, not the Roman-derived label "African"** (merged, squashed into `main` at `08446e2`).
@@ -34,6 +34,13 @@
   - Added two new honest UI badge states alongside "confirmed" and "not-a-tribe": "not-stated" (grey) and "incorporated" (green).
   - Backup: `backup/2026-09-09-acr-search-v302-figures-batch2` at pre-change SHA `d143b31`.
 
+- **PR #908 — ACR Search: link Tribes and Territory into the Lineage Explorer** (merged into `main`, commit `2d19949`).
+  - The lineage-web phase. The existing Lineage Explorer (Adam-to-twelve-tribes chain + tribe chips, previously every click just ran a generic corpus search) now jumps straight to a figure's Tribes & Territory card and highlights it, where one exists; falls back to the old search behavior unchanged otherwise.
+  - Added Avraham and Yitzhak to FIGURES (both pre-tribal, verified: Bereshit 12:1-4/17:5 and 21:2-5) — both were missing even though they anchor the Lineage Explorer's central chain. FIGURES now totals 29.
+  - New helpers `findFigureByName()` (explicit alias map for known transliteration mismatches between the two pre-existing datasets — Ya'aqov/Ya'akov, Yitshaq/Yitzhak, Noakh/Noach, Lewi/Levi — rather than fuzzy matching), `highlightFigureCards()`, `goToLineageName()`, `goToLineageTribe()`. Tribe chips highlight every confirmed member at once (e.g. "Levi" → Moshe, Yirmeyahu, Shemu'el together); "Yosef" (a person name in this array's older tribe-chip convention) jumps to Yosef's own card.
+  - Caught and corrected two of my own test-timing artifacts during verification (the 300ms search debounce, and a prior highlight's un-cleared 2500ms timeout bleeding into the next check) rather than reporting either as a false finding — documented in the PR per Rule 33/34.
+  - Backup: `backup/2026-09-09-acr-search-v303-lineage-web` at pre-change SHA `d23988a`.
+
 - **PR #900 — ACR Solar: fix Year view month tiles all opening December** (merged into `main` at `a2bd26f`) — not this session's work; noted here only because it landed on `main` during today's timeline and is reflected in the commit log below.
 
 ## Outstanding / blocking
@@ -42,9 +49,8 @@
 - **Mikhah's (Micah's) hometown territory**: could not confirm which tribe's land Moreshet sits in against ACR's own city lists this session — presented as "not confirmed" rather than guessed.
 
 ## Pending / parked
-- **Lineage-web piece** — next planned phase for the Tribes and Territory feature. The existing "Lineage Explorer" tool (`LINEAGE` array / `lin-container`, already live under Useful Tools) is the natural home; batch-1/2 figures need to be linked into it. Not started yet.
-- **Live-news tie-in** — third planned phase: connect a figure's territory to `daily_brief.json`'s Covenant Land tags (data already exists from PRs #902/#904; this is a UI hook, no new research). Not started.
-- **Animated boundary-map trace** — fourth planned phase, deferred until after the figures dataset and lineage-web are further along, since it's real new asset/animation work that pays off more with a larger dataset. Not started.
+- **Live-news tie-in** — next planned phase: connect a figure's territory to `daily_brief.json`'s Covenant Land tags (data already exists from PRs #902/#904; this is a UI hook, no new research). Not started.
+- **Animated boundary-map trace** — final planned phase, deferred until after the live-news tie-in, since it's real new asset/animation work. Not started.
 
 ## Capability gaps this session
 - GitHub Actions `workflow_dispatch` is not accessible to this session's integration (see Outstanding above) — confirmed via a direct failed call, not assumed.
@@ -57,6 +63,8 @@
 - `backup/2026-09-09-acr-search-v301-figures-batch1` — pre-PR-906-change state, SHA `a2bd26f6f7c9d3d3417aa1d9fa9a2c3d89d23fcf`.
 - `backup/2026-09-09-acr-search-v302-figures-batch2` — pre-PR-907-change state, SHA `d143b3183f4153660c33c3275a43f6516fce03c7`.
 - `backup/2026-09-09-acr-search-v303-figures-batch2` — post-merge state after PR #907, SHA `d23988a24e396c98d4104920a1c2c3d31788845e`.
+- `backup/2026-09-09-acr-search-v303-lineage-web` — pre-PR-908-change state, SHA `d23988a24e396c98d4104920a1c2c3d31788845e`.
+- `backup/2026-09-09-acr-search-v304-lineage-web` — post-merge state after PR #908, SHA `c677b175811284d110e592fdc7f306dba4b95e3d`.
 - All verified matching `origin/main` at the time of creation. Recovery: `git checkout backup/<name>`.
 
 ## Today's commit log (main, chronological)
@@ -76,4 +84,6 @@ a2bd26f Merge pull request #900 from DssOrit/claude/acr-solar-year-click-fix-202
 46ea81d ACR Search: Tribes and Territory batch 2 -- 22 more figures
 d143b31 Merge pull request #906 from DssOrit/claude/acr-search-figures-batch1
 d23988a Merge pull request #907 from DssOrit/claude/acr-search-figures-batch2
+2d19949 ACR Search: link Tribes and Territory into the Lineage Explorer
+c677b17 Merge pull request #908 from DssOrit/claude/acr-search-lineage-web
 ```
