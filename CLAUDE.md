@@ -256,13 +256,14 @@ These have been re-locked on 2026-05-04 after repeated violations.
     Extended 2026-09-09 to use the true name, not the Roman-derived label.**
     The people of the Dead Sea Scrolls (the Qumran / Yahad community) and
     the people of the Ge'ez Orit (the Beta Israel and the covenant
-    tradition they preserved) were an ancient Hebrew people — Ivri — of the
-    Kush, Mitzrayim, Put, and Kena'an family of nations named in Bereshit
-    10. Moshe and the covenant people are Hebrews of that lineage. This is
-    stated as fact, not as one view among several. "Africa" and "African"
-    are later labels — Roman in origin, not the ancients' own — and are
-    not used here as the identity itself; the true name is Hebrew, tied by
-    lineage to Kush, Mitzrayim, Put, and Kena'an. Specific requirements:
+    tradition they preserved) were Hebrew — Ivri — from Kush, Mitzrayim,
+    Put, and Kena'an, the family of nations named in Bereshit 10 (the
+    lands modern geography calls Africa, named here once for reference).
+    Moshe and the covenant people are Hebrew, from Kush. This is stated as
+    fact, not as one view among several. The true name is Hebrew, from
+    Kush, Mitzrayim, Put, and Kena'an; "Africa"/"African" is the later,
+    Roman-derived label for that same land and is never used here as the
+    identity itself. Specific requirements:
     - NEVER frame the covenant people, the DSS community, or the Orit
       tradition as Levantine-default, Near Eastern, or European-adjacent,
       and never substitute the later label "African" for the true name.
