@@ -9,7 +9,7 @@ const path = require('path');
 // ── KEYWORD GROUPS ─────────────────────────────────────────────────────────────
 // Each group maps headlines to a covenant section and theme label.
 const KEYWORD_GROUPS = [
-  {theme:'Covenant Land',        section:1, keywords:['israel','jerusalem','canaan','judah','judea','zion','temple mount','west bank','gaza','palestine','golan','sinai','euphrates','jordan river','egypt','lebanon','syria','damascus','dead sea','sea of galilee','kinneret','nile','hamath','hama','homs','tyre','sidon','negev','red sea','gulf of aqaba','eilat','hebron','bethlehem','beqaa valley','mount hermon']},
+  {theme:'Covenant Land',        section:1, keywords:['israel','jerusalem','canaan','judah','judea','zion','temple mount','west bank','gaza','palestine','golan','sinai','euphrates','jordan river','egypt','lebanon','syria','damascus','dead sea','sea of galilee','kinneret','nile','hamath','hama','homs','tyre','sidon','negev','red sea','gulf of aqaba','eilat','hebron','bethlehem','beqaa valley','mount hermon','jordan','amman','mediterranean','beersheba','nablus','jericho','jaffa','nazareth','sadad','orontes']},
   {theme:'War and Conflict',     section:1, keywords:['war','warfare','missile','airstrike','air strike','bombardment','invasion','occupation','military','ceasefire','cease-fire','attack','strike','troops','battalion','offensive','siege','blockade','drone']},
   {theme:'Iran and Axis',        section:1, keywords:['iran','iranian','hezbollah','hamas','houthi','proxies','axis of resistance','islamic republic']},
   {theme:'Lebanon and Syria',    section:1, keywords:['lebanon','lebanese','syria','syrian','damascus','beirut','aleppo','idlib','euphrates']},
