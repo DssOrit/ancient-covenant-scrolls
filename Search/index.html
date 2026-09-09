@@ -2609,7 +2609,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           </div>
           <div class="ut-card" onclick="setMode('lineage')">
             <div class="ut-card-name">Lineage Explorer</div>
-            <div class="ut-card-desc">The covenant bloodline from Adam through the twelve tribes. Tap any name to search.</div>
+            <div class="ut-card-desc">The covenant bloodline from Adam through the twelve tribes. Tap a name for their Tribes &amp; Territory card, where one exists.</div>
           </div>
           <div class="ut-card" onclick="setMode('moedim')">
             <div class="ut-card-name">Mo'edim</div>
@@ -2662,7 +2662,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="tool-view-wrap">
         <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
         <div class="tool-view-hdr">Lineage Explorer</div>
-        <div class="tool-view-sub">The covenant bloodline from Adam through the twelve tribes, drawn from Bereshit. Tap any name to search the corpus.</div>
+        <div class="tool-view-sub">The covenant bloodline from Adam through the twelve tribes, drawn from Bereshit. Tap a name to jump to their Tribes &amp; Territory card, or a tribe to see its confirmed members — falls back to a corpus search where no card exists yet.</div>
         <div id="lin-container"></div>
       </div>
     </div>
@@ -4812,7 +4812,19 @@ var FIGURES = [
    territory:'Not stated.',
    modern:'Not stated.',
    text:'"The burden of the word of YHWH to Yisra\'EL by Malakhi" — no father, no hometown, no tribe. Nothing beyond the name itself.',
-   refs:['Malakhi 1:1']}
+   refs:['Malakhi 1:1']},
+  {name:'Avraham', tribe:'Pre-tribal — before the twelve tribes exist',
+   status:'not-a-tribe',
+   territory:'Called out of Ur Kasdim (modern southern Iraq) and Charan (modern Turkey / Syria border) to Kena\'an.',
+   modern:'Southern Iraq, then the Turkey / Syria border region, then Israel / West Bank.',
+   text:'"Now YHWH said to Avram: Go from your country, and from your kindred, and from your father\'s house, to the land that I will show you." Renamed from Avram to Avraham: "your name shall be Avraham; for I have made you a father of a multitude of nations." Two generations before Ya\'akov\'s twelve sons become the twelve tribes.',
+   refs:['Bereshit 12:1-4','Bereshit 17:5']},
+  {name:'Yitzhak', tribe:'Pre-tribal — before the twelve tribes exist',
+   status:'not-a-tribe',
+   territory:'Kena\'an — born and lived in the same hill country as his father, Israel / West Bank today.',
+   modern:'Israel / West Bank.',
+   text:'"Sarah conceived, and bore Avraham a son in his old age... And Avraham called the name of his son... Yitzhak." Avraham\'s son, Ya\'akov\'s father — one generation before the twelve tribes exist.',
+   refs:['Bereshit 21:2-5']}
 ];
 function renderFiguresPanel() {
   var panel = document.getElementById('figures-panel');
@@ -8477,20 +8489,83 @@ var LINEAGE = [
    note:'Ya\'aqov\'s twelve sons became the twelve tribes:',
    tribes:['Re\'uven','Shim\'on','Lewi','Yehudah','Yissaskhar','Zevulun','Dan','Naphtali','Gad','Asher','Yosef','Binyamin']}
 ];
+// Cross-navigation between the Lineage Explorer and the Tribes & Territory
+// figures panel. Known transliteration variants between the two datasets
+// (this array predates FIGURES and uses a different convention) are handled
+// with a small explicit alias map rather than fuzzy matching, so a lookup
+// either finds a real match or falls back to the existing corpus search --
+// never a false positive.
+var LIN_NAME_ALIASES = {'yaaqov':'yaakov','yitshaq':'yitzhak','noakh':'noach'};
+var LIN_TRIBE_ALIASES = {'lewi':'levi'};
+function linCleanToken(name){
+  return name.replace(/['"()]/g,'').split(' ')[0].toLowerCase();
+}
+function findFigureByName(name){
+  var key = linCleanToken(name);
+  key = LIN_NAME_ALIASES[key] || key;
+  for (var i=0;i<FIGURES.length;i++){
+    if (linCleanToken(FIGURES[i].name) === key) return FIGURES[i];
+  }
+  return null;
+}
+function highlightFigureCards(names){
+  var panel = document.getElementById('figures-panel');
+  if (!panel) return false;
+  var items = panel.querySelectorAll('.td-item');
+  var firstEl = null;
+  for (var i=0;i<items.length;i++){
+    var topicEl = items[i].querySelector('.td-topic');
+    if (!topicEl) continue;
+    var isMatch = names.some(function(n){ return topicEl.textContent.indexOf(n) === 0; });
+    if (isMatch){
+      if (!firstEl) firstEl = items[i];
+      (function(el){
+        el.style.outline = '2px solid var(--gold)';
+        setTimeout(function(){ el.style.outline = ''; }, 2500);
+      })(items[i]);
+    }
+  }
+  if (firstEl) firstEl.scrollIntoView({behavior:'smooth',block:'center'});
+  return !!firstEl;
+}
+function goToLineageName(name){
+  var f = findFigureByName(name);
+  if (f){
+    setMode('figures');
+    if (highlightFigureCards([f.name])) return;
+  }
+  searchFromTool(linCleanToken(name));
+}
+function goToLineageTribe(tribeName){
+  var clean = linCleanToken(tribeName);
+  clean = LIN_TRIBE_ALIASES[clean] || clean;
+  var byName = findFigureByName(tribeName);
+  var matches = FIGURES.filter(function(f){
+    return f.status === 'confirmed' && f.tribe.toLowerCase().indexOf(clean) === 0;
+  });
+  if (byName && matches.indexOf(byName) === -1) matches = [byName].concat(matches);
+  if (matches.length === 0){
+    searchFromTool(linCleanToken(tribeName));
+    return;
+  }
+  setMode('figures');
+  if (!highlightFigureCards(matches.map(function(f){ return f.name; }))){
+    searchFromTool(linCleanToken(tribeName));
+  }
+}
 function buildLineage(){
   var container=document.getElementById('lin-container');
   if(!container) return;
   container.innerHTML=LINEAGE.map(function(branch){
     var chainHTML=branch.chain.map(function(name,i){
-      var clean=name.replace(/['"()]/g,'').split(' ')[0];
       return (i>0?'<span class="lin-sep">&#8594;</span>':'')
-        +'<span class="lin-name" onclick="searchFromTool(\''+clean+'\')">'+name+'</span>';
+        +'<span class="lin-name" onclick="goToLineageName(\''+name.replace(/'/g,"\\'")+'\')">'+name+'</span>';
     }).join('');
     var tribesHTML='';
     if(branch.tribes){
       tribesHTML='<div style="font-size:11px;color:var(--tx3);margin:10px 0 6px">'+branch.note+'</div>'
         +'<div class="lin-tribes">'+branch.tribes.map(function(t){
-          return '<div class="lin-tribe" onclick="searchFromTool(\''+t.replace(/[\']/g,'').split(' ')[0]+'\')">'+t+'</div>';
+          return '<div class="lin-tribe" onclick="goToLineageTribe(\''+t.replace(/'/g,"\\'")+'\')">'+t+'</div>';
         }).join('')+'</div>';
     }
     return '<div class="lin-branch">'
