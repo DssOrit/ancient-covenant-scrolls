@@ -845,6 +845,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .pe-note{font-size:10.5px;color:var(--tx3);font-style:italic;margin-bottom:14px}
 .pe-speak-btn{display:inline-flex;align-items:center;gap:5px;background:var(--s1);border:1px solid #1e1e1e;border-radius:20px;padding:6px 13px;font-size:11px;color:var(--tx2);cursor:pointer;margin-bottom:14px}
 .pe-speak-btn.speaking{border-color:var(--gold);color:var(--gold)}
+.pe-chart-hdr{font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--tx2);margin:16px 0 6px}
+.pe-chart-wrap{overflow-x:auto;margin-bottom:6px}
+.pe-chart-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.pe-chart-table th{text-align:left;color:var(--tx3);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.03em;padding:6px 8px;border-bottom:1px solid #1e1e1e;white-space:nowrap}
+.pe-chart-table td{padding:7px 8px;border-bottom:1px solid #1a1a1a;color:var(--tx2);white-space:nowrap}
+.pe-chart-table td:first-child{color:#fff;font-weight:600}
+.pe-stacked{font-size:11.5px;color:var(--tx2);background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:10px 12px;margin-bottom:8px}
 .pe-lookup-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
 .pe-lookup-top{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
 .pe-lookup-glyph{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:26px;color:var(--gold)}
@@ -8657,14 +8664,26 @@ function paleoByName(name){
   return l ? l.g : '';
 }
 // Digraphs checked first (longest match), then single letters. Word-initial vowel
-// becomes Aleph; a non-initial i/e becomes Yod and o/u becomes Waw (mater lectionis
-// approximation); a non-initial 'a' is dropped, matching the consonantal-writing
-// convention. This is a phonetic approximation for study, not an attested spelling.
+// becomes Aleph. A non-initial i/e becomes Yod and o/u becomes Waw (mater lectionis
+// approximation). A non-initial, non-final 'a' is silent and merges into the
+// preceding consonant's segment (dropped from the written skeleton). A WORD-FINAL
+// 'a' becomes He — the standard mater lectionis for a final "-ah" sound (e.g. Torah,
+// Sarah) — rather than being dropped like a mid-word 'a'. This is a phonetic
+// approximation for study, not an attested spelling.
 var PE_DIGRAPHS = [['sh','Shin'],['ch','Het'],['th','Taw'],['ts','Tsade'],['ph','Pe'],['ck','Kaph'],['qu','Qoph']];
 var PE_SINGLES = {a:'Aleph',e:'Yod',i:'Yod',o:'Waw',u:'Waw',y:'Yod',b:'Bet',v:'Bet',g:'Gimel',d:'Dalet',h:'He',w:'Waw',z:'Zayin',t:'Taw',k:'Kaph',c:'Kaph',l:'Lamed',m:'Mem',n:'Nun',s:'Samekh',p:'Pe',f:'Pe',q:'Qoph',r:'Resh',j:'Yod',x:'Kaph'};
-function transliterateToPaleo(input){
+var PE_DIGRAPH_SOUND = {sh:'"sh"',ch:'"ch"',th:'"th"',ts:'"ts"',ph:'"f"',ck:'"k"',qu:'"kw"'};
+function peFormatSegment(chars, isFirstToken, isLastToken){
+  if (isFirstToken) return chars.charAt(0).toUpperCase() + chars.slice(1) + '-';
+  if (isLastToken) return '-' + chars;
+  return '-' + chars + '-';
+}
+// Returns one row per rendered letter: {segment, sound, name, role}. A mid-word
+// silent 'a' is merged into the preceding consonant's segment label rather than
+// getting its own row, matching how it's actually written (unwritten).
+function analyzeTransliteration(input){
   var s = input.toLowerCase().replace(/[^a-z]/g,'');
-  var out = [];
+  var rows = [];
   var i = 0, first = true;
   while (i < s.length) {
     var matched = null;
@@ -8673,43 +8692,74 @@ function transliterateToPaleo(input){
       if (s.substr(i, dg.length) === dg) { matched = PE_DIGRAPHS[d]; break; }
     }
     if (matched) {
-      out.push(matched[1]);
+      var dgLast = (i + matched[0].length - 1) === s.length - 1;
+      rows.push({ segment: peFormatSegment(matched[0], first, dgLast), sound: PE_DIGRAPH_SOUND[matched[0]] || matched[0].toUpperCase(), name: matched[1], role: 'consonant' });
       i += matched[0].length;
       first = false;
       continue;
     }
     var ch = s[i];
+    var isLast = (i === s.length - 1);
     if ('aeiou'.indexOf(ch) !== -1) {
-      if (first) out.push('Aleph');
-      else if (ch === 'i' || ch === 'e') out.push('Yod');
-      else if (ch === 'o' || ch === 'u') out.push('Waw');
-      // mid-word 'a' is silent in the consonantal skeleton, dropped
+      if (first) {
+        rows.push({ segment: peFormatSegment(ch, true, isLast), sound: 'open vowel', name: 'Aleph', role: 'vowel-carrier' });
+      } else if (isLast && ch === 'a') {
+        rows.push({ segment: 'final -a', sound: '"-ah"', name: 'He', role: 'vowel-carrier' });
+      } else if (ch === 'i' || ch === 'e') {
+        rows.push({ segment: peFormatSegment(ch, false, isLast), sound: 'long "ee"', name: 'Yod', role: 'vowel-carrier' });
+      } else if (ch === 'o' || ch === 'u') {
+        rows.push({ segment: peFormatSegment(ch, false, isLast), sound: '"oh"/"oo"', name: 'Waw', role: 'vowel-carrier' });
+      }
+      // a non-initial, non-final 'a' is silent — merged into the preceding
+      // consonant's segment above (see the lookahead below), no row of its own
+      i += 1;
     } else if (PE_SINGLES[ch]) {
-      out.push(PE_SINGLES[ch]);
+      var mergeSilentA = (s[i + 1] === 'a' && (i + 1) !== s.length - 1);
+      var segChars = ch + (mergeSilentA ? 'a' : '');
+      var segIsLast = (i + segChars.length - 1) === s.length - 1;
+      rows.push({ segment: peFormatSegment(segChars, first, segIsLast), sound: ch.toUpperCase(), name: PE_SINGLES[ch], role: 'consonant' });
+      i += segChars.length;
+    } else {
+      i += 1;
     }
     first = false;
-    i += 1;
   }
-  var collapsed = [];
-  out.forEach(function(n){ if (collapsed[collapsed.length-1] !== n) collapsed.push(n); });
-  return collapsed;
+  return rows;
 }
 function runTransliterate(){
   var input = document.getElementById('pe-translit-input').value.trim();
   var out = document.getElementById('pe-translit-result');
   if (!input) { out.innerHTML = ''; return; }
-  var names = transliterateToPaleo(input);
-  if (!names.length) { out.innerHTML = '<div class="pe-note">No mappable letters found.</div>'; return; }
-  var glyphs = names.map(paleoByName).join('');
-  var chips = names.map(function(n){
-    var l = PALEO_ALPHA.find(function(x){ return x.name === n; });
-    return '<div class="pe-translit-chip"><span class="g">' + l.g + '</span>' + l.name + '</div>';
+  var rows = analyzeTransliteration(input);
+  if (!rows.length) { out.innerHTML = '<div class="pe-note">No mappable letters found.</div>'; return; }
+  var glyphs = rows.map(function(r){ return paleoByName(r.name); }).join('');
+  var spelling = rows.map(function(r){ return r.name; }).join(' – ');
+
+  var translitRows = rows.map(function(r){
+    return '<tr><td>' + esc(r.segment) + '</td><td>' + esc(r.sound) + '</td><td>' + paleoByName(r.name) + ' ' + esc(r.name) + '</td><td>' + esc(r.role) + '</td></tr>';
   }).join('');
+
+  var pictoRows = rows.map(function(r){
+    var l = PALEO_ALPHA.find(function(x){ return x.name === r.name; });
+    var roleLabel = r.role === 'consonant' ? 'consonant' : 'vowel-carrier only';
+    return '<tr><td>' + paleoByName(r.name) + ' ' + esc(r.name) + '</td><td>' + esc(l ? l.picto : '') + '</td><td>' + esc(roleLabel) + '</td></tr>';
+  }).join('');
+
+  var consonantPictos = rows.filter(function(r){ return r.role === 'consonant'; }).map(function(r){
+    var l = PALEO_ALPHA.find(function(x){ return x.name === r.name; });
+    return r.name + ' (' + (l ? l.picto : '') + ')';
+  }).join(' → ');
+
   out.innerHTML =
     '<div class="pe-translit-glyphs">' + glyphs + '</div>' +
-    '<div class="pe-translit-breakdown">' + chips + '</div>' +
-    '<div class="pe-note">Phonetic approximation for study — not a manuscript-attested spelling.</div>' +
-    '<div class="pe-speak-btn" onclick="speakText(\'' + esc(input).replace(/'/g,"\\'") + '\')"><i class="ri-volume-up-line"></i> Hear it</div>';
+    '<div class="pe-note">Spelling: ' + esc(spelling) + '</div>' +
+    '<div class="pe-speak-btn" onclick="speakText(\'' + esc(input).replace(/'/g,"\\'") + '\')"><i class="ri-volume-up-line"></i> Hear it</div>' +
+    '<div class="pe-chart-hdr">Transliteration</div>' +
+    '<div class="pe-chart-wrap"><table class="pe-chart-table"><thead><tr><th>Segment</th><th>Sound</th><th>Paleo-Hebrew letter</th><th>Role</th></tr></thead><tbody>' + translitRows + '</tbody></table></div>' +
+    '<div class="pe-chart-hdr">Pictographic reading</div>' +
+    '<div class="pe-chart-wrap"><table class="pe-chart-table"><thead><tr><th>Letter</th><th>Traditional pictograph</th><th>Role in this word</th></tr></thead><tbody>' + pictoRows + '</tbody></table></div>' +
+    (consonantPictos ? '<div class="pe-stacked">Consonant chain: ' + esc(consonantPictos) + '</div>' : '') +
+    '<div class="pe-note">Phonetic approximation for study, and one illustrative way to read the consonant pictographs together — not a manuscript-attested spelling and not a scholarly claim about the word\'s real historical origin or meaning.</div>';
 }
 function runWordLookup(){
   var q = document.getElementById('pe-lookup-input').value.trim().toLowerCase();
