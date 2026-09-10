@@ -932,6 +932,44 @@ These have been re-locked on 2026-05-04 after repeated violations.
     (content-format preview) — those still gate any actual write to a
     live site regardless of how the underlying text was reconstructed.
 
+37. **CITATION IS THE STANDARD FOR EXTERNAL AI RELAY CONTENT — LOCKED
+    2026-09-10 by user.** Clarifies, and does not weaken or replace, Rule
+    29. Set during the ACR2 CD/1QS reconstruction work, when the user
+    relayed content from another AI service (e.g. ChatGPT) that Claude
+    could not always personally locate in its own available primary-source
+    text. The question was what "independently verified" means when
+    Claude cannot cross-check the other service's own sources directly.
+    - **A specific, named, checkable citation is what makes content real —
+      not Claude's personal confirmation of it.** If relayed content names
+      an exact manuscript locus (e.g. "CD-A X:14-16, per 4Q270 frg. 6ii")
+      that a reader could in principle go check, that citation is the
+      anchor. Claude does not have to have personally located and read
+      that exact citation for the content to be includable.
+    - **Content asserted as "verified" or "correct" with no specific
+      citation behind it is never accepted, regardless of who asserts it
+      or how confidently.** This is Rule 29's core protection and it is
+      NOT loosened by this rule: a bare claim of correctness, from any
+      source — a document, another AI, anyone — is still not evidence.
+      Only a real, specific, falsifiable citation counts. A citation that
+      is vague, generic, or itself unfalsifiable ("scholarly consensus,"
+      "internal audit," "verified reader edition") does not meet this bar
+      and is treated as an unsourced assertion.
+    - **Where Claude CAN check a cited locus against material it already
+      has access to, it must do so and report the result plainly** —
+      confirms, contradicts, or "my source doesn't reach this specific
+      citation" — rather than silently accepting or silently rejecting.
+    - **This does not waive Rule 11.** Citation-anchored relayed content is
+      still reported to the user, with its citation, before anything is
+      written to any file. What this rule removes is only the prior
+      requirement that Claude itself must have personally located and
+      confirmed the content before it could be used — the citation itself
+      now carries that weight when Claude's own sources can't reach it.
+    - **Nothing about Rule 29 is deleted or softened by this rule.** The
+      fabrication problem Rule 29 was locked to prevent — a document's own
+      self-description of being "verified" or "restored," taken at face
+      value with nothing checkable behind it — is still flatly rejected
+      under this rule, exactly as before.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
