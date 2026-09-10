@@ -46,6 +46,31 @@
   the ancientName field, and the Settings disclosure text; full 22-entry
   round-trip regression check, zero mismatches, zero page errors.
 
+## Investigated today (no code change — decided to leave as-is)
+
+- **ACR Search daily-brief pipeline: "Africa map vote" not appearing.**
+  User asked why yesterday's new Mercator/Equal Earth/"Correct the Map"
+  keywords (added to `.github/scripts/build_daily_brief.js`'s "Awakening"
+  theme on 2026-09-09) showed nothing in today's brief. Investigated
+  directly, not guessed:
+  - Confirmed the keywords are correctly present in the script.
+  - Confirmed today's `Search/daily_brief.json` (generated 2026-09-10
+    11:00 UTC) genuinely ran with the updated script.
+  - Confirmed via web search the real UN "Correct the Map" vote happened
+    **September 4, 2026** — six days before the keywords were added
+    (Sept 9) and the brief that should catch it ran (Sept 10). The
+    pipeline only scores each RSS source's current ~40 most-recent
+    headlines per run; it can't retroactively reach back into a news
+    cycle that already scrolled off those feeds before the keyword
+    existed. Not a wiring bug — a structural limit of the daily-snapshot
+    design.
+  - Offered two options: leave it (catches only future/follow-up
+    coverage) or do a one-time manual backfill of the Sept 4 vote itself
+    into today's brief. **User's decision: leave it** — no backfill, no
+    code change. Future coverage of this story will be caught correctly
+    since the keywords are live; the original vote-day coverage stays
+    uncaptured by design.
+
 ## Outstanding / blocking (carried over, not from today)
 
 - **Yovelim `data/file_16.json` fix is still paused.** Chapters 7, 11, 12,
