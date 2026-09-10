@@ -2,9 +2,10 @@
 
 ## Current state
 
-- Latest commit on `origin/main`: `231ec21` (Merge PR #913)
+- Latest commit on `origin/main`: `b17a336` (Merge PR #912)
 - Working tree: clean
 - No uncommitted work outstanding
+- ACR Search cache (`Search/sw.js`): `acr-search-v309`
 
 ## Built today
 
@@ -46,6 +47,60 @@
   the ancientName field, and the Settings disclosure text; full 22-entry
   round-trip regression check, zero mismatches, zero page errors.
 
+**ACR Search — Paleo-Hebrew Explorer built, then a real bug fixed against a user-supplied reference example (PR #912, merged)**
+
+- Carryover from yesterday: PR #911 (Geʽez Foundation letters + provisional
+  Lev 22:21-27 parallel reading) had already merged. This is the separate
+  Phase 1 scope agreed yesterday ("everything except stroke tracing"),
+  built today under the exact unlock phrase, explicitly told NOT to be
+  named after the outside PWA concept it was inspired by anywhere in the
+  app, code, or commits — confirmed it isn't.
+- Added to the existing Paleo-Hebrew Alphabet view: a "Explore a Name or
+  Word" tool (Transliterate mode + Word Lookup mode reusing the existing
+  sourced `HR_WORDS` corpus), an alphabet-card upgrade (gematria numeric
+  value + pictographic origin on all 22 letters), and a Confusable Pairs
+  Practice duel (Dalet/Resh, Bet/Kaph, Waw/Zayin, He/Het). TTS reuses the
+  existing `speakText()`.
+- **User caught a real bug the next morning**, not by re-reading code but
+  by handing over a worked reference example (name "Sabrina" transliterated
+  to a two-table chart: Segment/Sound/Letter/Role, then
+  Letter/Pictograph/Role, spelling Samekh-Bet-Resh-Yod-Nun-He) and asking
+  whether our tool matched it. It didn't, on two counts: (1) the tool only
+  produced a flat chip row, nothing chart-shaped; (2) actually running
+  "Sabrina" through the real tool (Playwright, not a hand-trace) showed it
+  silently dropped the word-final "a" instead of rendering it as He, the
+  standard mater lectionis for a final "-ah" sound (Torah, Sarah use the
+  same convention) — a genuine, reproducible algorithm gap, confirmed
+  before saying anything, per the session's verify-before-reporting rule.
+- Reported both gaps and waited; user said "fix ACR search" the next
+  message. Fixed on the same branch/PR rather than opening a competing one:
+  word-final `a` now maps to He; mid-word `a` still silently merges into
+  the preceding consonant. Rebuilt the output as two tables (Transliteration,
+  Pictographic reading) driven from one shared per-letter analysis so they
+  can't disagree with each other. Deliberately did NOT auto-generate poetic
+  "stacked reading" prose like the reference example's own hand-written
+  line — flagged as unreliable to produce honestly for arbitrary input
+  words — used a plain consonant-chain pictograph summary instead, with an
+  explicit disclaimer that it's illustrative wordplay, not a scholarly
+  claim about a word's real historical origin.
+- Verified against the actual running tool both times (initial build and
+  the fix): "Sabrina" now reproduces the user's reference chart exactly,
+  row for row. Checked "David" (word ending in a consonant) and "Anna"
+  (vowel at both word-start and word-end) as edge cases for the new
+  lookahead logic. Regression-checked the alphabet grid, Word Lookup mode,
+  the duel, and the separate Geʽez Foundation view from PR #911 — all
+  unaffected. Two of my own test-harness artifacts (an unrelated
+  pre-existing splash/auth overlay intercepting headless clicks, and a bad
+  `eval()`-based click simulation) caught and corrected during verification
+  rather than reported as app bugs.
+- Cache bumped `acr-search-v307` → `v308` (initial build) → `v309` (fix).
+- Backups: pre-build `backup/2026-09-09-acr-search-v307-explorer-pre` (SHA
+  `2a0d40b3a18007f04c49fd4b256e58a225a25706`); pre-fix
+  `backup/2026-09-10-acr-search-v308-explorer-fix-pre` (SHA
+  `231ec219ce7822878aa3205b21424a8e6f770e34`); post-merge
+  `backup/2026-09-10-acr-search-v309` (SHA
+  `b17a3368fe44336733f916b5e7fc624df888d5d7`).
+
 ## Outstanding / blocking (carried over, not from today)
 
 - **Yovelim `data/file_16.json` fix is still paused.** Chapters 7, 11, 12,
@@ -68,16 +123,32 @@
 - Rule 36 keep-or-remove — parked pending user decision.
 - Email vs. push reminder for holy days — parked pending user decision.
 - Jubilees-based year numbering — parked, named as an option, not requested yet.
+- **Load Paleo Phase 2 remainder — still not built**: Attested-genealogy
+  names lexicon (needs a real sourced names/etymology dataset), and any
+  Parallel Reading entries beyond Leviticus 22:21-27 (no other passages
+  sourced yet).
+- **Two audit items still open on the shipped Lev 22:21-27 entry** (PR
+  #911): direct Dillmann-image collation, and final adjudication of
+  ዘጽንጵው vs. ዘጽንጰው at 22:24. Tracked live in the app's own metadata.
+  Passage must stay labeled PROVISIONAL GEʽEZ READING until resolved.
+- **"Unattested in early inscriptions" claim for ጰ/ፐ** — still deliberately
+  withheld from the UI pending a directly-checked primary source.
 
 ## Today's commit log
 
 ```
 0e4fe7a ACR Solar: rename New Year to Rosh Chodashim, disclose the Hebrew Year epoch
+f485262 Fix Transliterate mode: word-final -a to He, render as a chart
+346aaf6 Merge remote-tracking branch 'origin/main' into claude/acr-search-paleo-explorer
+b17a336 Merge pull request #912 from DssOrit/claude/acr-search-paleo-explorer
 ```
 
 ## Backups
 
 - `backup/2026-09-10-acr-solar-v47` — SHA `14e4d88` (before PR #913)
 - `backup/2026-09-10-acr-solar-v48` — SHA `231ec21` (current stable state)
+- `backup/2026-09-09-acr-search-v307-explorer-pre` — SHA `2a0d40b3a18007f04c49fd4b256e58a225a25706` (before PR #912's initial build)
+- `backup/2026-09-10-acr-search-v308-explorer-fix-pre` — SHA `231ec219ce7822878aa3205b21424a8e6f770e34` (before PR #912's fix commit)
+- `backup/2026-09-10-acr-search-v309` — SHA `b17a3368fe44336733f916b5e7fc624df888d5d7` (current stable state, after PR #912)
 
 Recovery: `git checkout backup/<name>`
