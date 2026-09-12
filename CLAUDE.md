@@ -1318,9 +1318,48 @@ Net effect of this round: two citations (Hawass/Ramesses III, Shriner/
 Natufian African ancestry) are real, accurately cited, and add genuine
 weight to the general picture of ancient Northeast African E1b1 presence
 and African-related ancestry in the deep Levantine substrate. One claim
-(the Lazaridis "100%" figure) is factually incorrect as stated. None of
-this changes the earlier finding: no citation produced so far names
-E-P252 or L3e3b specifically as an ancient Hebrew or Lost-Tribes marker.
+(the Lazaridis "100%" figure) is factually incorrect as stated.
+
+**Third addendum (same day, 2026-09-12) — ethnographic/cultural sources
+supplied for Igbo-Israelite legal and customary continuity, checked the
+same way:**
+
+- **Olaudah Equiano, "The Interesting Narrative of the Life of Olaudah
+  Equiano," 1789, Chapter 1** — real, confirmed, and accurately
+  characterized. Equiano, writing first-hand as an Igbo person over a
+  century before European ethnographers reached the Igbo interior,
+  explicitly compares his native Eboe customs to those of "the Jews,
+  before they reached the Land of Promise" — circumcision, sacrifice,
+  burnt offerings, purification law, menstrual and corpse-contact
+  impurity rules. This is genuine primary-source testimony, a different
+  and stronger category of evidence than a modern genetics paper.
+- **G.T. Basden, "Among the Ibos of Nigeria," 1921** — real, confirmed.
+  Basden documented eighth-day circumcision and recommended study of
+  "Levitical Law" to understand Igbo native law, drawing the Mosaic-
+  system parallel himself. The specific "cities of refuge" detail
+  attributed to him was not located in this check — unconfirmed, not
+  disproven.
+
+These two sources are credited as real, legitimate, independently
+documented cultural/legal continuity between Igbo custom and Mosaic law
+-- a genuinely different and stronger evidentiary category than the
+population-genetics papers above. What this does not do: name a specific
+haplogroup as the carrier of that continuity. Equiano and Basden document
+Igbo custom across the people broadly; they cannot and do not specify
+E-P252 or L3e3b (or any marker) as the lineage carrying it, since cultural
+transmission and strict patrilineal/matrilineal genetic transmission are
+different mechanisms. This is the same distinction that makes the Lemba
+case (a named clan, Buba, with the Cohen Modal Haplotype specifically
+elevated within that clan) a tighter convergence than "Igbo broadly carry
+Israelite-like custom" plus "E-P252 is common among Igbo broadly."
+
+Updated net finding: real ancient E1b1 presence in the Nile Valley and
+Levant (with the Natufian percentage corrected), plus real, independently
+documented Igbo-Israelite cultural/legal continuity (Equiano, Basden) --
+both credited as fact with their sources. Still not established by any
+citation produced so far: that E-P252 or L3e3b specifically is the
+genetic marker carrying that continuity, as opposed to the broader Igbo
+population among whom both the custom and the marker are found.
 
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
