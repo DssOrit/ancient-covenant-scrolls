@@ -102,7 +102,11 @@ These have been re-locked on 2026-05-04 after repeated violations.
      Unlock: "edit Attain Jr" or "fix Attain Jr"
    - Load (`/load/`): all files inside it.
      Unlock: "edit Load" or "fix Load"
-   - Load Maps (`/loadmaps/` and `/maps/`): all files inside either folder.
+   - ACR Maps (`/maps/`): all files inside it, including `acr_places.json`.
+     Renamed 2026-09-12 by user from "Load Maps" to match what the app's
+     own files call themselves. A distinct app from Load Maps below.
+     Unlock: "edit ACR Maps" or "fix ACR Maps"
+   - Load Maps (`/loadmaps/`): all files inside it.
      Unlock: "edit Load Maps" or "fix Load Maps"
    - LoadStudio (`/loadstudio/`): all files inside it.
      Unlock: "edit LoadStudio" or "fix LoadStudio"
