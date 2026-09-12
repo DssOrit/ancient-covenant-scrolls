@@ -494,7 +494,7 @@
       "lat": 16.7666,
       "lng": -3.0026,
       "type": "archive",
-      "summary": "The Sankore mosque library at Timbuktu held an estimated 700,000 manuscripts before colonial disruption. The Kati Archive — named for the family of Mahmud Kati, author of the Tarikh al-Fattash (c.1519) — documents West African Hebrew communities, their practices, migrations, and oral histories. The Tarikh al-Fattash and Tarikh al-Sudan are the primary written sources for West African covenant lineage. This is the African equivalent of the Vatican Library — and it predates colonial contact.",
+      "summary": "The Sankore mosque library at Timbuktu, in Alkebulan (Africa's pre-colonial name), held an estimated 700,000 manuscripts before colonial disruption. The Kati Archive — named for the family of Mahmud Kati, author of the Tarikh al-Fattash (c.1519) — documents West African Hebrew communities, their practices, migrations, and oral histories. The Tarikh al-Fattash and Tarikh al-Sudan are the primary written sources for West African covenant lineage. This is the African equivalent of the Vatican Library — and it predates colonial contact.",
       "sources": [
         "Tarikh al-Fattash, Mahmud Kati, c.1519",
         "Tarikh al-Sudan, Ahmad ibn Said al-Saadi, 17th century",
@@ -1103,7 +1103,7 @@
       "lat": 16.9333,
       "lng": 33.7167,
       "type": "history",
-      "summary": "Meroe was the capital of the Kingdom of Kush — the African civilization whose rulers became the 25th Dynasty of Egypt (c.747–656 BCE), with Taharqa as its most documented king. Kush held the Nile Valley from the Fourth Cataract to the Delta for a century. The Kushite kingdom predated and outlasted most of the events recorded in the covenant scrolls. The people of Kush are the Africans documented in the covenant texts as neighbors, kin, and covenant participants — not as outsiders. Meroe's iron-smelting, its pyramid fields, and its Meroitic script document an African civilization of the first order, independent of any European frame.",
+      "summary": "Meroe was the capital of the Kingdom of Kush — in Alkebulan (Africa's pre-colonial name), the Nile Valley civilization whose rulers became the 25th Dynasty of Egypt (c.747-656 BCE), with Taharqa as its most documented king. Kush held the Nile Valley from the Fourth Cataract to the Delta for a century. The 9th-century account of Eldad ha-Dani places the exiled tribes of Dan, Naphtali, Asher, and Gad here specifically, having traveled from Mesopotamia by way of Egypt and up the Nile to found a kingdom in Kush -- an account his contemporaries received with both excitement and skepticism, since his own described customs diverged from the Talmudic norms of his day. Meroe's iron-smelting, its pyramid fields, and its Meroitic script document a Kushite civilization of the first order, independent of any European frame.",
       "sources": [
         "Taharqa stele, c.690 BCE, Kawa, Sudan",
         "Derek Welsby, 'The Kingdom of Kush', 1996",
@@ -1118,7 +1118,7 @@
       "id": "eg-goshen",
       "region": "Africa",
       "city": "Eastern Nile Delta, Egypt",
-      "name": "Goshen — Covenant People's Land in Egypt",
+      "name": "Goshen — Covenant People's Land in Mitzrayim",
       "lat": 30.7833,
       "lng": 31.8167,
       "type": "history",
@@ -1623,6 +1623,20 @@
         "Yehoshua 15:13-19",
         "Yehoshua 14:6-15"
       ]
+    },
+    {
+      "id": "td-lake-chad",
+      "region": "Africa",
+      "city": "Lake Chad Basin",
+      "name": "Lake Chad Basin — Sahel Corridor Waypoint",
+      "lat": 13.0,
+      "lng": 14.0,
+      "type": "covenant_land",
+      "summary": "The Tarikh al-Fattash and Tarikh al-Sudan (17th century, Timbuktu) document a Semitic/Israelite community of Egyptian origin traveling by way of the Sahel corridor through Chad into Mali — one of two named medieval routes tracing the exiled tribes' movement into Alkebulan (Africa's pre-colonial name). This is a documented tradition recorded centuries after the events it describes, not an excavated waypoint.",
+      "sources": [
+        "Tarikh al-Fattash, Mahmud Kati, c. 1665",
+        "Tarikh al-Sudan, al-Sa'di, c. 1655"
+      ]
     }
   ],
   "routes": [
@@ -1805,6 +1819,36 @@
         "eg-cairo-geniza"
       ],
       "summary": "The full arc of ancient covenant geography — from the covenant people's African land in Egypt through both exiles, into the Yahad scroll archive, through the last armed resistance, and back to African covenant continuity in the Cairo Geniza. Goshen is where the Ge'ez Orit places the covenant people in Africa. Meroe is the African kingdom whose pharaoh Taharqa is named in Isaiah 37:9. Nineveh is where the Northern Kingdom's ten tribes were taken in 722 BCE. Babylon is where the Southern Kingdom's exile began in 587 BCE — and where the post-exilic text layer was constructed. Cave 4 at Qumran is where the Yahad sealed their primary archive — 15,000 fragments, 200 manuscripts — before Rome arrived in 68 CE. Masada is where armed covenant resistance ended in 73 CE, beginning the Devarim 28 dispersion. The Cairo Geniza documents that the covenant community survived in Africa — preserving texts in Egypt for 1,000 years after Masada."
+    },
+    {
+      "id": "tribes-pushed-out-of-the-land",
+      "name": "The Tribes Pushed Out — Promised Land to Alkebulan to the Americas",
+      "city": "Global",
+      "region": "Global",
+      "distance_km": 0,
+      "duration_hrs": "self-guided",
+      "stops": [
+        "cl-yerushalayim",
+        "iq-nineveh",
+        "iq-babylon",
+        "eg-goshen",
+        "sd-meroe-kush",
+        "td-lake-chad",
+        "ml-timbuktu",
+        "gm-gambia-river",
+        "sn-dakar",
+        "gh-elmina",
+        "gh-cape-coast",
+        "jm-accompong",
+        "jm-moore-town",
+        "br-palmares",
+        "sr-saramaka",
+        "gy-berbice",
+        "us-ny-harlem",
+        "us-chicago",
+        "uk-london-brixton"
+      ],
+      "summary": "The full traced arc: forced out of the covenant land at Yerushalayim by the Assyrian exile (Nineveh, 722 BCE) and the Babylonian exile (Babylon, 587 BCE); into Mitzrayim (Goshen); and from there into Alkebulan (Africa's pre-colonial name) by two documented medieval routes -- up the Nile into Kush (Meroe, per Eldad ha-Dani, c.880 CE, whose own account was received with contemporary skepticism) and via the Sahel through Chad into the Songhai Empire (Timbuktu, per the Tarikh al-Fattash and Tarikh al-Sudan, 17th-century Timbuktu chronicles naming the tribe of Dan directly). From West Africa, the Transatlantic Slave Trade carried the covenant people onward into the Caribbean, South America, and North America -- the Devarim 28:64-68 dispersion in its final, most heavily documented stage. This route connects what the primary sources describe as one continuous displacement, not three separate stories."
     }
   ],
   "displacement_trail": {
@@ -1884,7 +1928,7 @@
       "id": "nile-valley-corridor",
       "name": "Nile Valley Covenant Corridor",
       "color": "#c8971f",
-      "description": "The ancient covenant people's documented presence along the Nile — from the Ethiopian highlands through Sudan to the Levant. Two of the oldest YHWH inscriptions on earth sit on this corridor: Soleb (1400 BCE) and Amarah-West (1300 BCE). The Elephantine colony maintained covenant practice on the Nile for centuries.",
+      "description": "The ancient covenant people's documented presence along the Nile, in Alkebulan (Africa's pre-colonial name), — from the Ethiopian highlands through Sudan to the Levant. Two of the oldest YHWH inscriptions on earth sit on this corridor: Soleb (1400 BCE) and Amarah-West (1300 BCE). The Elephantine colony maintained covenant practice on the Nile for centuries.",
       "sources": [
         "Soleb inscription c.1400 BCE",
         "Amarah-West inscription c.1300 BCE",
@@ -1933,7 +1977,7 @@
       "id": "west-african-covenant-network",
       "name": "West African Covenant Network",
       "color": "#e8751a",
-      "description": "The documented covenant community network across the Sahel and West African coast — connected by the Tarikh al-Sudan, Tarikh al-Fattash, Jobson's 1623 Gambia River account, and E1b1a population genetics. E1b1a (E-M2) is the dominant lineage in West Africa and the African American population — and is the primary lineage of the ancient covenant people documented in this network.",
+      "description": "The documented covenant community network across the Sahel and West African coast, in Alkebulan (Africa's pre-colonial name), — connected by the Tarikh al-Sudan, Tarikh al-Fattash, Jobson's 1623 Gambia River account, and E1b1a population genetics. E1b1a (E-M2) is the dominant lineage in West Africa and the African American population — and is the primary lineage of the ancient covenant people documented in this network.",
       "sources": [
         "Tarikh al-Fattash, Mahmud Kati, 1519",
         "Richard Jobson, The Golden Trade, 1623",
