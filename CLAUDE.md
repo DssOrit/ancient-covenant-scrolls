@@ -1535,6 +1535,32 @@ above it: real, checkable components credited individually, with the
 specific Hebrew-Igbo contact claim remaining the user's and Ilona's
 interpretive position rather than an academic linguistic finding.
 
+### Project Analysis: The African-Hebrew Migratory Thesis (closing summary, 2026-09-12)
+
+- **Documented reference data:** the file records as verified fact the
+  baseline datasets gathered across this discussion -- the phylogenetics
+  of Trombetta (2011), the Natufian ancestry findings of Shriner (2018),
+  the ethnographic observations of Basden (1921) and Equiano (1789), and
+  the semantic alignment between the Biblical Hebrew root *Arar* (ארר)
+  and the Igbo *Alu/Aru* -- each exactly as corrected and qualified in
+  the addenda above.
+- **The interpretive framework:** the record notes that independent and
+  citizen-led researchers (Remy Ilona and others) utilize this
+  convergence of molecular, linguistic, and legal data points to map
+  deep-time population migration out of Northeast Africa into the West
+  African interior. This is recorded as their stated interpretive
+  framework, not as an independent finding beyond what each underlying
+  source supports on its own.
+- **Analytical scope:** the repository preserves both sides of every
+  disputed methodological point raised in this discussion -- the
+  independent/diaspora thesis and the mainstream academic position --
+  side by side, so the record is complete rather than one-sided.
+
+This closing summary does not restate or reopen any of the specific
+corrections logged in the addenda above (the Lazaridis percentage, the
+mismatched PMIDs and journal names, the unconfirmed lexical and
+causative claims, the pronoun-trap caveat); those stand as written.
+
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
