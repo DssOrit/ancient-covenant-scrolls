@@ -302,6 +302,36 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .mk-inscription{background:#c8971f;border-color:#e8c81a}
 .mk-resistance{background:#9b27d4}
 .mk-discovery{background:var(--blue)}
+.mk.visited{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 2px 8px rgba(0,0,0,.6)}
+.mk-visit-dot{
+  position:absolute;top:-3px;right:-3px;width:10px;height:10px;border-radius:50%;
+  background:var(--gold);border:1.5px solid #05050b;
+}
+
+/* ── JOURNEY / PASSPORT PANEL ──────────────────────────────────── */
+.journey-hdr{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx2);margin-bottom:4px}
+.journey-title{font-size:20px;font-weight:800;margin-bottom:14px}
+.journey-bar-track{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:6px}
+.journey-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--amber));border-radius:4px;transition:width .4s ease}
+.journey-count{font-size:12px;color:var(--tx2);margin-bottom:20px}
+.journey-section-lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin:18px 0 10px}
+.journey-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 12px;border-radius:10px;background:var(--s2);border:1px solid var(--border);
+  margin-bottom:6px;font-size:13px;
+}
+.journey-row-name{color:var(--text)}
+.journey-row-frac{color:var(--tx2);font-size:12px;flex-shrink:0}
+.journey-stamp{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--border);color:var(--tx3);font-size:12px;font-weight:800;
+}
+.journey-stamp.claimed{background:var(--gold);border-color:var(--gold);color:#05050b}
+.journey-tribe-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:var(--s2);border:1px solid var(--border);margin-bottom:6px}
+.journey-tribe-name{font-size:13px;flex:1}
+.journey-tribe-name.claimed{color:var(--gold);font-weight:600}
+.journey-empty{font-size:12px;color:var(--tx3);padding:10px 0}
 
 /* ── VERSE BANNER ───────────────────────────────────────────── */
 .verse-banner{
@@ -485,6 +515,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="tb-btn tb-refresh" onclick="hardRefresh()" title="Clear cache and reload">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M3.5 10a6.5 6.5 0 1 0 6.5-6.5"/><polyline points="1 4.5 3.5 10 9 10"/></svg>
         </button>
+        <button class="tb-btn" onclick="showJourney()" title="My Journey">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M10 2l2.2 4.6 5 .7-3.6 3.6.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.6 5-.7z"/></svg>
+        </button>
         <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
       </div>
     </div>
@@ -578,6 +611,23 @@ var placesData = null;
 var trailLayer = null;
 var trailGlowLayer = null;
 var corridorLayers = {};
+var visitedIds = loadVisited();
+
+/* ── JOURNEY TRACKING (localStorage, per-device, no server) ───── */
+function loadVisited() {
+  try {
+    var raw = localStorage.getItem('acr-maps-visited');
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  } catch (e) { return new Set(); }
+}
+function saveVisited() {
+  try { localStorage.setItem('acr-maps-visited', JSON.stringify(Array.from(visitedIds))); } catch (e) {}
+}
+function markVisited(id) {
+  if (!id || visitedIds.has(id)) return;
+  visitedIds.add(id);
+  saveVisited();
+}
 
 /* ── NAME CYCLING ON GATE ───────────────────────────────────── */
 var PALEO_YHWH = '𐤉𐤄𐤅𐤄';
@@ -946,9 +996,11 @@ function placeMarkers(list) {
   list.forEach(function(pl) {
     var t = pl.type || 'community';
     var lbl = MK_LABELS[t] || 'C';
+    var visitedCls = visitedIds.has(pl.id) ? ' visited' : '';
+    var visitedDot = visitedIds.has(pl.id) ? '<div class="mk-visit-dot"></div>' : '';
     var icon = L.divIcon({
       className: '',
-      html: '<div class="mk mk-' + t + '" title="' + esc(pl.name) + '">' + lbl + '</div>',
+      html: '<div class="mk mk-' + t + visitedCls + '" style="position:relative" title="' + esc(pl.name) + '">' + lbl + visitedDot + '</div>',
       iconSize: [28, 28],
       iconAnchor: [14, 14]
     });
@@ -993,6 +1045,9 @@ var VERSE_TEXTS = {
 };
 
 function showPlace(pl) {
+  var wasVisited = visitedIds.has(pl.id);
+  markVisited(pl.id);
+  if (!wasVisited) placeMarkers(getFilteredPlaces());
   if (map) {
     map.flyTo([pl.lat, pl.lng], pl.type === 'inscription' ? 10 : 13);
   }
@@ -1125,6 +1180,76 @@ function showRegionList(region) {
 function typeColor(t) {
   var colors = { community:'var(--green)', history:'var(--red)', archive:'var(--gold)', inscription:'#c8971f', resistance:'#9b27d4', discovery:'var(--blue)', covenant_land:'var(--teal)' };
   return colors[t] || 'var(--green)';
+}
+
+/* ── MY JOURNEY (passport + territory claim, local device only) ─ */
+/* Explicit list of the twelve tribal names (per Bamidbar 34's allotment,
+   Menasheh split east/west) -- NOT a generic possessive-pattern match,
+   so boundary/neighboring-people references (e.g. "the Chiti's Territory",
+   the Hittites named as a boundary marker, not an Israelite tribe) are
+   never mistaken for a tribal allotment. */
+var TRIBE_NAMES = ["Re'uven","Shim'on","Gad","Yehudah","Yissachar","Zevulun",
+  "Efrayim","Half-Menasheh","Menasheh","Binyamin","Dan","Naphtali","Asher","Levi"];
+function extractTribe(name) {
+  if (!name) return null;
+  for (var i = 0; i < TRIBE_NAMES.length; i++) {
+    if (name.indexOf(TRIBE_NAMES[i] + "'s") >= 0) return TRIBE_NAMES[i];
+  }
+  return null;
+}
+
+function showJourney() {
+  var all = places;
+  var totalVisited = all.filter(function(p) { return visitedIds.has(p.id); }).length;
+  var pct = all.length ? Math.round(100 * totalVisited / all.length) : 0;
+
+  var regions = {};
+  all.forEach(function(p) {
+    var r = p.region || 'Unknown';
+    if (!regions[r]) regions[r] = { total: 0, visited: 0 };
+    regions[r].total++;
+    if (visitedIds.has(p.id)) regions[r].visited++;
+  });
+  var regionRows = Object.keys(regions).sort().map(function(r) {
+    var d = regions[r];
+    var claimed = d.visited === d.total;
+    return '<div class="journey-row">' +
+      '<div class="journey-stamp' + (claimed ? ' claimed' : '') + '">' + (claimed ? '&#10003;' : '') + '</div>' +
+      '<div class="journey-row-name" style="flex:1">' + esc(r) + '</div>' +
+      '<div class="journey-row-frac">' + d.visited + ' / ' + d.total + '</div>' +
+      '</div>';
+  }).join('');
+
+  var tribes = {};
+  all.filter(function(p) { return p.type === 'covenant_land'; }).forEach(function(p) {
+    var tribe = extractTribe(p.name);
+    if (!tribe) return;
+    if (!tribes[tribe]) tribes[tribe] = { total: 0, visited: 0 };
+    tribes[tribe].total++;
+    if (visitedIds.has(p.id)) tribes[tribe].visited++;
+  });
+  var tribeNames = Object.keys(tribes).sort();
+  var tribesClaimed = tribeNames.filter(function(t) { return tribes[t].visited === tribes[t].total; }).length;
+  var tribeRows = tribeNames.length ? tribeNames.map(function(t) {
+    var d = tribes[t];
+    var claimed = d.visited === d.total;
+    return '<div class="journey-tribe-row">' +
+      '<div class="journey-stamp' + (claimed ? ' claimed' : '') + '">' + (claimed ? '&#10003;' : '') + '</div>' +
+      '<div class="journey-tribe-name' + (claimed ? ' claimed' : '') + '">' + esc(t) + '</div>' +
+      '<div class="journey-row-frac">' + d.visited + ' / ' + d.total + '</div>' +
+      '</div>';
+  }).join('') : '<div class="journey-empty">No tribal territory sites found.</div>';
+
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="journey-hdr">My Journey</div>' +
+    '<div class="journey-title">' + totalVisited + ' of ' + all.length + ' Places Explored</div>' +
+    '<div class="journey-bar-track"><div class="journey-bar-fill" style="width:' + pct + '%"></div></div>' +
+    '<div class="journey-count">' + pct + '% of the covenant record explored</div>' +
+    '<div class="journey-section-lbl">Tribal Territories Claimed (' + tribesClaimed + ' of ' + tribeNames.length + ')</div>' +
+    tribeRows +
+    '<div class="journey-section-lbl">By Region</div>' +
+    regionRows;
+  openSheet();
 }
 
 function typeIconChar(t) {
