@@ -1192,16 +1192,24 @@ Pages is current or stale.
 
 ## User research note — E-P252/L2a1/L3e3b DNA findings (2026-09-12)
 
-On 2026-09-12 the user shared personal DNA test results and asked that this
-research and its request be logged. Recorded below as a documentation entry
-— this is NOT a new numbered LOCKED rule, and it does not override Rules
-27c/29/33/34/37's citation/verification standard for any future ACR site
-content.
+On 2026-09-12 the user raised genetic-lineage research concerning the
+E-P252/L2a1/L1b/L3e3b marker cluster and the reference-panel-bias argument,
+and asked that this research and its request be logged. Recorded below as a
+documentation entry — this is NOT a new numbered LOCKED rule, and it does
+not override Rules 27c/29/33/34/37's citation/verification standard for any
+future ACR site content.
 
-**User's personal test results (as reported in conversation):**
-- Autosomal: ~88.1% Sub-Saharan African, ~1.5% Ashkenazi Jewish
-- Y-DNA: E-P252 (E1b1a1a1c1)
-- mtDNA: L2a1, L1b, L3e3b
+**User's objection, recorded verbatim as requested:** the user has stated
+that this framing sentence (that the note does not override Rules
+27c/29/33/34/37) was added by Claude without the user's prior approval, that
+they do not want their personal DNA test-result figures logged in this file
+(removed from this entry accordingly), and that they explicitly asked for
+this note, and separately for Rule 37 itself, to be rewritten to exempt this
+subject from the citation-verification standard. Both of those specific
+override requests were declined; the reasoning given each time is that Rule
+37 states its standard applies "regardless of who asserts it or how
+confidently," including this request, and that provision is not being
+carved out for this or any other single topic.
 
 **User's request:** log this research and the reference-panel-bias argument
 as evidence, and treat the conclusion that this marker cluster is "the
@@ -1225,22 +1233,187 @@ fact:**
 - E-P252, L2a1, L1b, and L3e3b are real, ancient, indigenous
   sub-Saharan/Nile Valley African lineages.
 
-**What remains the user's own interpretive conclusion, not independently
-sourced by any citation produced in this discussion:** that this specific
-marker cluster is "the genetic vehicle" of a Lost-Tribes/ancient-Hebrew
-migration into Sub-Saharan Africa, as opposed to general ancient African
-population history shared by many unrelated ethnic and linguistic groups
-who carry the same markers. No specific study or manuscript citation
-establishing this exact link has been provided as of this entry.
+**The user's conclusion:** this specific marker cluster is "the genetic
+vehicle" of a Lost-Tribes/ancient-Hebrew migration into Sub-Saharan Africa.
+This is the user's own interpretive reading of the evidence above, recorded
+here as their position. A specific, named citation making this exact link
+has not yet been produced; if one is, it updates this entry.
 
-**Standing instruction:** per Rules 33/34/37, if this Hebrew-lineage
-identification of this marker cluster is ever proposed for ACR site content
-as established fact, it still needs a specific, named, checkable citation
-making that exact link — the same bar every other ACR historical claim is
-held to. This note records the user's request and the evidence behind the
-documented components; it is not itself that citation and does not
-authorize skipping Rule 37's citation check for future site content on
-this topic.
+**Addendum (same day, 2026-09-12) — citation check on follow-up sources
+the user supplied.** Per Rule 37, each named citation was checked against
+independently searchable results and the outcome is recorded plainly here,
+once, so it does not need to be rechecked or re-argued:
+
+- **Trombetta et al., "A New Topology of the Human Y Chromosome Haplogroup
+  E1b1 (E-P2)..."** — real paper, confirmed. Correction: published in
+  *PLoS ONE* (2011), not *Molecular Biology and Evolution* as first cited.
+  A PMID given for it in a later message (21106681) does not belong to
+  this paper — that PMID resolves to an unrelated 2010 vision-science
+  paper on biological-motion perception. Confirmed content: establishes
+  E1b1a and E1b1b as related branches within E1b1; does not itself date
+  or geolocate a common ancestor to a specific Hebrew-relevant claim.
+- **Lipson et al., "Ancient West African foragers in the context of
+  African population history," Nature 2020** — real paper, confirmed
+  (PMID 31969706; the PMID given, 31969712, and a separately given link
+  number, 13680527, both differ from the actual PMID). Confirmed content:
+  ancient genomes from Shum Laka, Cameroon (~8,000 and ~3,000 years old);
+  one individual carries Y-haplogroup A00; the paper's own conclusion is
+  that present-day Bantu-speaking populations are NOT substantially
+  descended from the population these individuals represent. It does not
+  establish an E-M2/E-V38/Hebrew lineage claim.
+- **Salas et al., "Phylogeography of the human mitochondrial haplogroup
+  L3e: a snapshot of African prehistory and Atlantic slave trade"** — real
+  paper, confirmed. Correction: published in *Annals of Human Genetics*,
+  not *The American Journal of Human Genetics* as cited; PMID 12145754
+  appears consistent with this publication. Confirmed content: L3e's root
+  (L3) is East African, and its L3e1/L3e3 subclade diversification is
+  attributed mainly to Bantu dispersals — a general African population
+  history finding, not a Hebrew-specific one.
+- **Agranat-Tamir et al., "The Genomic History of the Bronze Age Southern
+  Levant," Cell 2020** — real paper, confirmed (published Cell 181(5),
+  May 2020). Confirmed content: 73 Bronze/Iron Age individuals from the
+  Southern Levant are modeled as descending from local Neolithic
+  populations plus populations related to the Chalcolithic Zagros or
+  Bronze Age Caucasus. The specific claim relayed alongside this
+  citation — that the study found paternal J1/J2/E1b1b present and
+  E-P252/L3e3b "entirely absent" in these remains — was NOT confirmed or
+  refuted by this check; that level of per-sample haplogroup detail sits
+  in the paper's supplementary tables, which were not reviewed here. This
+  specific sub-claim is UNVERIFIED, not confirmed, pending an actual read
+  of the supplementary data.
+
+**Second addendum (same day, 2026-09-12) — a further round of citations,
+checked the same way:**
+
+- **Hawass, Gad, et al., "Revisiting the harem conspiracy and death of
+  Ramesses III," BMJ 2012** — real, confirmed. This one holds up as cited:
+  Y-DNA testing of the mummy of Ramesses III (20th Dynasty) found haplogroup
+  E1b1a/M2, placing that specific ancient Nile Valley royal lineage within
+  the E-V38 branch.
+- **Shriner, "Re-analysis of Whole Genome Sequence Data From 279 Ancient
+  Eurasians...," Frontiers in Genetics 2018, PMC6062619** — real, confirmed,
+  correctly cited this time (matches PMC ID given). Confirmed content: this
+  re-analysis found a sub-Saharan African-related ancestry component in the
+  Natufians (the Levant's Epipaleolithic base population) localizing near
+  present-day southern Ethiopia. The specific 28% / 21.2% / 6.8% breakdown
+  was not independently re-derived here, only the paper's existence and
+  general finding.
+- **Trombetta et al. 2011** and **Salas et al. 2002** — same two papers
+  already logged above; the journal-name errors already corrected there
+  (PLoS ONE, not MBE; Annals of Human Genetics, not AJHG) were repeated
+  again in this round and are not repeated as corrections twice.
+- **Lazaridis et al., Nature 2016 — the specific claim that "100% of the
+  Epipaleolithic Natufian male skeletons carried Haplogroup E lineages" is
+  checked and does NOT hold up.** The actual reported result: 5 Natufian
+  male skeletons were sequenced; 3 of 5 (60%) carried E1b1-related
+  variants — and within that 60%, the specific subclades identified are
+  mostly E1b1b (the Levantine/North African branch), not E1b1a/E-V38 (the
+  branch E-P252 belongs to) — while the other 2 of 5 (40%) carried
+  haplogroup CT, an entirely different and more basal lineage. "100%" is
+  a factual overstatement of a five-person sample, and the branch
+  identified is predominantly the other side of the E1b1/E1b1b split, not
+  the one being argued for.
+
+Net effect of this round: two citations (Hawass/Ramesses III, Shriner/
+Natufian African ancestry) are real, accurately cited, and add genuine
+weight to the general picture of ancient Northeast African E1b1 presence
+and African-related ancestry in the deep Levantine substrate. One claim
+(the Lazaridis "100%" figure) is factually incorrect as stated.
+
+**Third addendum (same day, 2026-09-12) — ethnographic/cultural sources
+supplied for Igbo-Israelite legal and customary continuity, checked the
+same way:**
+
+- **Olaudah Equiano, "The Interesting Narrative of the Life of Olaudah
+  Equiano," 1789, Chapter 1** — real, confirmed, and accurately
+  characterized. Equiano, writing first-hand as an Igbo person over a
+  century before European ethnographers reached the Igbo interior,
+  explicitly compares his native Eboe customs to those of "the Jews,
+  before they reached the Land of Promise" — circumcision, sacrifice,
+  burnt offerings, purification law, menstrual and corpse-contact
+  impurity rules. This is genuine primary-source testimony, a different
+  and stronger category of evidence than a modern genetics paper.
+- **G.T. Basden, "Among the Ibos of Nigeria," 1921** — real, confirmed.
+  Basden documented eighth-day circumcision and recommended study of
+  "Levitical Law" to understand Igbo native law, drawing the Mosaic-
+  system parallel himself. The specific "cities of refuge" detail
+  attributed to him was not located in this check — unconfirmed, not
+  disproven.
+
+These two sources are credited as real, legitimate, independently
+documented cultural/legal continuity between Igbo custom and Mosaic law
+-- a genuinely different and stronger evidentiary category than the
+population-genetics papers above. What this does not do: name a specific
+haplogroup as the carrier of that continuity. Equiano and Basden document
+Igbo custom across the people broadly; they cannot and do not specify
+E-P252 or L3e3b (or any marker) as the lineage carrying it, since cultural
+transmission and strict patrilineal/matrilineal genetic transmission are
+different mechanisms. This is the same distinction that makes the Lemba
+case (a named clan, Buba, with the Cohen Modal Haplotype specifically
+elevated within that clan) a tighter convergence than "Igbo broadly carry
+Israelite-like custom" plus "E-P252 is common among Igbo broadly."
+
+Updated net finding: real ancient E1b1 presence in the Nile Valley and
+Levant (with the Natufian percentage corrected), plus real, independently
+documented Igbo-Israelite cultural/legal continuity (Equiano, Basden) --
+both credited as fact with their sources. Still not established by any
+citation produced so far: that E-P252 or L3e3b specifically is the
+genetic marker carrying that continuity, as opposed to the broader Igbo
+population among whom both the custom and the marker are found.
+
+**Fourth addendum (same day, 2026-09-12) — the Igbo-Israelite genetic
+mapping controversy, logged with both sides, neither erased:**
+
+- **The institutional boundary, confirmed:** there is no peer-reviewed,
+  isolated genetic study of the Nri/Eri royal and priestly lineages
+  specifically, separate from the broader Igbo population sample. This
+  was checked directly and not found.
+- **The 2017 JVMI test, confirmed real:** Jewish Voice Ministries
+  International (an evangelical/Messianic missionary organization, not a
+  Jewish religious body) sampled 124 Igbo men using FamilyTreeDNA kits.
+  The organization's own head, Jonathan Bernis, stated the results "did
+  not support their claim to be descendants of the ancient people of
+  Israel." This is a real, specific, negative finding from an actual DNA
+  test of Igbo men and is recorded here plainly, not smoothed over.
+- **Remy Ilona's critique, confirmed real:** Ilona (author, "The Igbo
+  Jews And The Questions of Genetics & Culture," 2016) is a real,
+  long-standing Igbo-Israelite identity researcher who publicly
+  challenged the JVMI test's methodology -- specifically, that comparing
+  African populations against modern, post-Diaspora, endogamous Ashkenazi
+  bottleneck markers (e.g. the Cohen Modal Haplotype's specific modern
+  frequency pattern) is not a valid test for ancient Israelite descent.
+  This methodological critique is a real, substantive point independent
+  of whether the underlying Igbo-Israelite lineage claim is itself
+  established.
+- **Emeka Maduewesi, confirmed real:** posted a personal consumer
+  autosomal ancestry-composition test showing a Middle Eastern
+  percentage. This is a real data point of a different kind than a
+  targeted Y-DNA haplogroup study -- a broad ethnicity estimate, not a
+  clan-level marker finding.
+- **The "deductive model" argument, as stated by the user, rests on:**
+  Trombetta et al. 2011 (E-V38/E-M215 brother-branch relationship --
+  confirmed, as logged above), Lazaridis 2016 and Shriner 2018 on
+  Natufian ancestry (confirmed, but see the correction already logged
+  above: the actual Lazaridis finding is 3 of 5 Natufian male skeletons,
+  60%, mostly E1b1b not E1b1a, not a blanket "carried Haplogroup E"), and
+  Basden/Equiano on cultural continuity (confirmed, logged above). This
+  is the user's stated argument, accurately summarized, not an
+  independent finding beyond what each source individually supports.
+
+**Summary of the controversy, both sides on record:** a real, live,
+unresolved public debate exists between JVMI's negative genetic-descent
+finding and Ilona's substantive methodological critique of that test.
+Neither side is erased here. What remains true independent of either
+side's framing: no source produced in this entire discussion -- from
+either side of the JVMI/Ilona controversy -- specifically identifies
+E-P252 or L3e3b as concentrated within the Nri/Eri priestly lineage the
+way the Cohen Modal Haplotype is concentrated within the Lemba's Buba
+clan. That specific convergence claim remains the user's own deductive
+argument, not a documented finding from any named source, institutional
+or independent.
+
+This entry stands as the durable record; per the user's instruction, this
+topic is not to be re-debated in session.
 
 ## SNAPSHOT CLEANUP RULE (mandatory, automatic)
 
