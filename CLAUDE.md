@@ -1282,6 +1282,46 @@ once, so it does not need to be rechecked or re-argued:
   specific sub-claim is UNVERIFIED, not confirmed, pending an actual read
   of the supplementary data.
 
+**Second addendum (same day, 2026-09-12) — a further round of citations,
+checked the same way:**
+
+- **Hawass, Gad, et al., "Revisiting the harem conspiracy and death of
+  Ramesses III," BMJ 2012** — real, confirmed. This one holds up as cited:
+  Y-DNA testing of the mummy of Ramesses III (20th Dynasty) found haplogroup
+  E1b1a/M2, placing that specific ancient Nile Valley royal lineage within
+  the E-V38 branch.
+- **Shriner, "Re-analysis of Whole Genome Sequence Data From 279 Ancient
+  Eurasians...," Frontiers in Genetics 2018, PMC6062619** — real, confirmed,
+  correctly cited this time (matches PMC ID given). Confirmed content: this
+  re-analysis found a sub-Saharan African-related ancestry component in the
+  Natufians (the Levant's Epipaleolithic base population) localizing near
+  present-day southern Ethiopia. The specific 28% / 21.2% / 6.8% breakdown
+  was not independently re-derived here, only the paper's existence and
+  general finding.
+- **Trombetta et al. 2011** and **Salas et al. 2002** — same two papers
+  already logged above; the journal-name errors already corrected there
+  (PLoS ONE, not MBE; Annals of Human Genetics, not AJHG) were repeated
+  again in this round and are not repeated as corrections twice.
+- **Lazaridis et al., Nature 2016 — the specific claim that "100% of the
+  Epipaleolithic Natufian male skeletons carried Haplogroup E lineages" is
+  checked and does NOT hold up.** The actual reported result: 5 Natufian
+  male skeletons were sequenced; 3 of 5 (60%) carried E1b1-related
+  variants — and within that 60%, the specific subclades identified are
+  mostly E1b1b (the Levantine/North African branch), not E1b1a/E-V38 (the
+  branch E-P252 belongs to) — while the other 2 of 5 (40%) carried
+  haplogroup CT, an entirely different and more basal lineage. "100%" is
+  a factual overstatement of a five-person sample, and the branch
+  identified is predominantly the other side of the E1b1/E1b1b split, not
+  the one being argued for.
+
+Net effect of this round: two citations (Hawass/Ramesses III, Shriner/
+Natufian African ancestry) are real, accurately cited, and add genuine
+weight to the general picture of ancient Northeast African E1b1 presence
+and African-related ancestry in the deep Levantine substrate. One claim
+(the Lazaridis "100%" figure) is factually incorrect as stated. None of
+this changes the earlier finding: no citation produced so far names
+E-P252 or L3e3b specifically as an ancient Hebrew or Lost-Tribes marker.
+
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
