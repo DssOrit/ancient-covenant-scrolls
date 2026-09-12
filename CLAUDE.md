@@ -1412,6 +1412,129 @@ clan. That specific convergence claim remains the user's own deductive
 argument, not a documented finding from any named source, institutional
 or independent.
 
+**Fifth addendum (same day, 2026-09-12) — Hebrew-Igbo linguistic parallel
+claims, checked the same way as the genetic citations:**
+
+A separate set of claims was raised proposing linguistic evidence for
+Hebrew-Igbo contact: agglutinative verb structure, Igbo *Chukwu* as a
+retention of Tetragrammaton vowels, and four lexical pairs (*Kano*, *Av*/
+*Obi*, *Aru*/*Alu*, *Tua*).
+
+- **Chukwu -- real Igbo word, fully explained within Igbo:** confirmed as
+  a compound of *chi* ("spiritual being/personal spirit") + *ukwu*
+  ("great"). No linguistic source found connects it to Tetragrammaton
+  vowels, and the Tetragrammaton's own original vowels are not
+  historically attested ("Yahweh" is itself a scholarly reconstruction),
+  so there is nothing fixed for a claimed retention to point to. This
+  specific claim is unsupported by any named source and is not logged as
+  fact.
+- **The first lexical set (*Aru*=abomination, *Tua*=spit, *Av*/*Obi*)
+  did not check out as stated:** no Hebrew word "Aru" meaning
+  abomination was found (the real Hebrew term, *to'evah*, is
+  phonetically unrelated to Igbo *alu/aru*); no Hebrew word "Tua"
+  meaning spit was found (the real Hebrew terms are *yaraq* and *roq*,
+  used narrowly as gestures of contempt in Numbers 12:14, Deuteronomy
+  25:9, and Leviticus 15:8); Hebrew *av* (father) is real but Igbo *obi*
+  (primarily "heart," also a chieftaincy title) does not phonetically
+  match it. "Kano" was not independently checked.
+- **A revised pairing, Hebrew *Arar/Arur* (ארר/ארור, "to curse" / "cursed,
+  bound, cut off" -- Genesis 3:14, the Deuteronomy 27 covenant curses) to
+  Igbo *Alu/Aru* (a covenant-law breach that binds/isolates until Nri-
+  priest purification), is the most specific and best-grounded pairing
+  produced in this discussion.** The semantic match (a legal state of
+  being bound/isolated pending ritual resolution, not merely an abstract
+  "disgusting thing") is more precise than the first attempt. This is
+  logged as the strongest single pairing raised, not as a confirmed
+  finding.
+- **Language family and typology, confirmed:** Igbo is classified
+  Niger-Congo (Volta-Niger/Igboid) and is tonal and agglutinative in its
+  verbal morphology. Hebrew is Afro-Asiatic (Semitic) and uses a
+  root-and-pattern (templatic) verbal system, a different typological
+  category from agglutination. "Both differ from Indo-European" is true
+  but shared by most of the world's languages, so it does not by itself
+  link these two specifically.
+- **On the Afro-Asiatic methodology argument:** it is accurate that
+  Proto-Afro-Asiatic vocabulary reconstruction (Ehret vs. Orel &
+  Stolbova) is more contested than Proto-Indo-European's, and that
+  shared grammatical morphology (pronoun paradigms, certain verbal
+  markers) carries significant weight in establishing Afro-Asiatic unity,
+  alongside vocabulary. This is a real, documented feature of the field
+  and is logged as accurate. It does not, however, transfer to validate
+  the Hebrew-Igbo case: no shared grammatical morphology or pronoun
+  paradigm between Hebrew and Igbo has been proposed or shown -- the
+  Hebrew-Igbo case rests entirely on individual vocabulary resemblance,
+  which is the category of evidence this same argument identifies as the
+  weaker one even within Afro-Asiatic's own contested classification.
+  Chadic languages (e.g. Hausa) being Afro-Asiatic and located in West
+  Africa is accurate, but Hausa-land (Lake Chad Basin) and Igboland
+  (Southeastern Nigeria) are documented as separate peoples and zones;
+  this establishes that Afro-Asiatic languages reached part of West
+  Africa, not that this specific vocabulary reached Igbo specifically.
+- **Both readings recorded, neither erased:** mainstream linguistics
+  treats an isolated word-pair resemblance between unrelated language
+  families as requiring multiple, regular, corroborating correspondences
+  before ruling out coincidence -- a standard independent of whether the
+  broader family tree being invoked is itself cleanly or messily
+  reconstructed. The user's and Remy Ilona's position, recorded as their
+  position: individual fossilized lexical/conceptual pairs (Arar/Alu
+  foremost) are read as oral remnants of deep-time Nile-to-Niger
+  migration and trans-Saharan population contact, independent of formal
+  academic sound-law confirmation.
+
+Net finding: Chukwu's Tetragrammaton-vowel claim and three of the four
+original lexical pairs did not check out as stated. The Arar/Alu pairing
+is real, better-grounded, and logged as the strongest specific claim
+raised in this discussion -- still a single pairing, not a corroborated
+correspondence set, and still the user's and Ilona's interpretive
+reading rather than an academic linguistic finding.
+
+**Sixth addendum (same day, 2026-09-12) — final unified entry, the
+Hebrew-Igbo Linguistic Matrix, both frameworks balanced:**
+
+- **Pronoun check, confirmed real, resemblance explained:** Igbo *gị*
+  (2sg), *ọ* (3sg subject), *ya* (3sg object), and *anyị* (1pl) are all
+  genuine, confirmed pronoun forms. The nasal resemblance between Hebrew
+  *anachnu/-nu* and Igbo *anyị* is real at the surface level, but
+  historical linguistics catalogs this class of resemblance under the
+  documented "pronoun trap": nasal consonants recur in first/second-
+  person pronouns across unrelated language families worldwide (WALS's
+  named "N-M" and "M-T" pronoun patterns) because they are among the
+  earliest sounds children acquire, independent of contact or common
+  ancestry. This is why pronoun resemblance alone is treated with
+  specific caution in the field, not evidence excluded by convenience.
+- **Causative check, corrected:** Hebrew's Hiphil is a prefixed/templatic
+  causative stem (*akal* -> *he'ekil*, "eat" -> "feed"). Standard Igbo
+  causation is expressed through suffixation or analytic compounding
+  (e.g. *na-eme ka*, "makes that"), not prefixing. The earlier "Mē-ri
+  causative prefix" claim is not an established structural rule of
+  Niger-Congo morphosyntax; it is an interpretive oral paradigm.
+- **Lexical alignment, standing:** the Hebrew *Arar/Arur* (ארר/ארור --
+  covenant curse / binding state that cuts one off from the community)
+  to Igbo *Alu/Aru* (a taboo breach requiring priestly purification)
+  pairing remains the most specific, best-grounded single semantic
+  parallel produced across this whole linguistic discussion.
+
+**The structural debate, both positions recorded:**
+- *Mainstream position:* comparative linguistics does not recognize a
+  genetic or contact-stratum relationship between Hebrew and Igbo;
+  individual vocabulary resemblances are treated as accidental cognates
+  absent multiple regular sound correspondences; the pronoun overlap is
+  attributed to the documented cross-linguistic "pronoun trap"; Semitic
+  templatic morphology and Niger-Congo suffixing/compounding are
+  classified as distinct typological systems.
+- *Independent/diaspora position (Remy Ilona and others):* these
+  parallels -- centered on the Arar/Alu covenant-law pairing and the
+  ancestral-monotheism structure of Chukwu -- are read as the localized
+  fossilization of an Afro-Asiatic superstratum carried by Nile Valley
+  migrants into the Niger River basin over millennia.
+
+Both positions are recorded as stated by each side; neither is presented
+as the settled conclusion of the other. This closes the linguistic
+sub-discussion at the same evidentiary line as the genetic discussion
+above it: real, checkable components credited individually, with the
+specific Hebrew-Igbo contact claim remaining the user's and Ilona's
+interpretive position rather than an academic linguistic finding.
+
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
