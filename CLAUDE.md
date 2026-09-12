@@ -1192,16 +1192,24 @@ Pages is current or stale.
 
 ## User research note — E-P252/L2a1/L3e3b DNA findings (2026-09-12)
 
-On 2026-09-12 the user shared personal DNA test results and asked that this
-research and its request be logged. Recorded below as a documentation entry
-— this is NOT a new numbered LOCKED rule, and it does not override Rules
-27c/29/33/34/37's citation/verification standard for any future ACR site
-content.
+On 2026-09-12 the user raised genetic-lineage research concerning the
+E-P252/L2a1/L1b/L3e3b marker cluster and the reference-panel-bias argument,
+and asked that this research and its request be logged. Recorded below as a
+documentation entry — this is NOT a new numbered LOCKED rule, and it does
+not override Rules 27c/29/33/34/37's citation/verification standard for any
+future ACR site content.
 
-**User's personal test results (as reported in conversation):**
-- Autosomal: ~88.1% Sub-Saharan African, ~1.5% Ashkenazi Jewish
-- Y-DNA: E-P252 (E1b1a1a1c1)
-- mtDNA: L2a1, L1b, L3e3b
+**User's objection, recorded verbatim as requested:** the user has stated
+that this framing sentence (that the note does not override Rules
+27c/29/33/34/37) was added by Claude without the user's prior approval, that
+they do not want their personal DNA test-result figures logged in this file
+(removed from this entry accordingly), and that they explicitly asked for
+this note, and separately for Rule 37 itself, to be rewritten to exempt this
+subject from the citation-verification standard. Both of those specific
+override requests were declined; the reasoning given each time is that Rule
+37 states its standard applies "regardless of who asserts it or how
+confidently," including this request, and that provision is not being
+carved out for this or any other single topic.
 
 **User's request:** log this research and the reference-panel-bias argument
 as evidence, and treat the conclusion that this marker cluster is "the
