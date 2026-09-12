@@ -1488,6 +1488,53 @@ raised in this discussion -- still a single pairing, not a corroborated
 correspondence set, and still the user's and Ilona's interpretive
 reading rather than an academic linguistic finding.
 
+**Sixth addendum (same day, 2026-09-12) — final unified entry, the
+Hebrew-Igbo Linguistic Matrix, both frameworks balanced:**
+
+- **Pronoun check, confirmed real, resemblance explained:** Igbo *gị*
+  (2sg), *ọ* (3sg subject), *ya* (3sg object), and *anyị* (1pl) are all
+  genuine, confirmed pronoun forms. The nasal resemblance between Hebrew
+  *anachnu/-nu* and Igbo *anyị* is real at the surface level, but
+  historical linguistics catalogs this class of resemblance under the
+  documented "pronoun trap": nasal consonants recur in first/second-
+  person pronouns across unrelated language families worldwide (WALS's
+  named "N-M" and "M-T" pronoun patterns) because they are among the
+  earliest sounds children acquire, independent of contact or common
+  ancestry. This is why pronoun resemblance alone is treated with
+  specific caution in the field, not evidence excluded by convenience.
+- **Causative check, corrected:** Hebrew's Hiphil is a prefixed/templatic
+  causative stem (*akal* -> *he'ekil*, "eat" -> "feed"). Standard Igbo
+  causation is expressed through suffixation or analytic compounding
+  (e.g. *na-eme ka*, "makes that"), not prefixing. The earlier "Mē-ri
+  causative prefix" claim is not an established structural rule of
+  Niger-Congo morphosyntax; it is an interpretive oral paradigm.
+- **Lexical alignment, standing:** the Hebrew *Arar/Arur* (ארר/ארור --
+  covenant curse / binding state that cuts one off from the community)
+  to Igbo *Alu/Aru* (a taboo breach requiring priestly purification)
+  pairing remains the most specific, best-grounded single semantic
+  parallel produced across this whole linguistic discussion.
+
+**The structural debate, both positions recorded:**
+- *Mainstream position:* comparative linguistics does not recognize a
+  genetic or contact-stratum relationship between Hebrew and Igbo;
+  individual vocabulary resemblances are treated as accidental cognates
+  absent multiple regular sound correspondences; the pronoun overlap is
+  attributed to the documented cross-linguistic "pronoun trap"; Semitic
+  templatic morphology and Niger-Congo suffixing/compounding are
+  classified as distinct typological systems.
+- *Independent/diaspora position (Remy Ilona and others):* these
+  parallels -- centered on the Arar/Alu covenant-law pairing and the
+  ancestral-monotheism structure of Chukwu -- are read as the localized
+  fossilization of an Afro-Asiatic superstratum carried by Nile Valley
+  migrants into the Niger River basin over millennia.
+
+Both positions are recorded as stated by each side; neither is presented
+as the settled conclusion of the other. This closes the linguistic
+sub-discussion at the same evidentiary line as the genetic discussion
+above it: real, checkable components credited individually, with the
+specific Hebrew-Igbo contact claim remaining the user's and Ilona's
+interpretive position rather than an academic linguistic finding.
+
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
