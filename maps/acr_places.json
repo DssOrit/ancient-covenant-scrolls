@@ -1637,6 +1637,58 @@
         "Tarikh al-Fattash, Mahmud Kati, c. 1665",
         "Tarikh al-Sudan, al-Sa'di, c. 1655"
       ]
+    },
+    {
+      "id": "cl-yam-hagadol",
+      "region": "Covenant Land",
+      "city": "Israel's Mediterranean coast",
+      "name": "Yam HaGadol — The Great Sea, Western Boundary",
+      "lat": 32.32,
+      "lng": 34.85,
+      "type": "covenant_land",
+      "summary": "Yam HaGadol (the Great Sea) is the Mediterranean, forming the covenant land's western boundary along its entire length (Bamidbar 34:6) -- represented here at a central point on the coast, not a single fixed marker.",
+      "sources": [
+        "Bamidbar 34:6"
+      ]
+    },
+    {
+      "id": "cl-chiti-territory",
+      "region": "Covenant Land",
+      "city": "Northern Syria",
+      "name": "The Chiti's Territory — Northern Boundary",
+      "lat": 36.2,
+      "lng": 37.16,
+      "type": "covenant_land",
+      "summary": "The Chiti's (Hittite) territory named on the covenant land's northern boundary description sits in northern Syria, represented here near Aleppo -- a general region reference, not a single excavated point.",
+      "sources": [
+        "Bamidbar 34:7-9 (boundary context)"
+      ]
+    },
+    {
+      "id": "cl-yazer",
+      "region": "Covenant Land",
+      "city": "Jordan",
+      "name": "Ya'zer — Gad's Territory",
+      "lat": 31.98,
+      "lng": 35.83,
+      "type": "covenant_land",
+      "summary": "Gad received Ya'zer (near Khirbet es-Sar), in modern Jordan, as part of the tribal allotment east of the Yarden (Bamidbar 32).",
+      "sources": [
+        "Bamidbar 32:35"
+      ]
+    },
+    {
+      "id": "cl-yogbhah",
+      "region": "Covenant Land",
+      "city": "Jordan",
+      "name": "Yogb'hah — Gad's Territory",
+      "lat": 32.02,
+      "lng": 35.87,
+      "type": "covenant_land",
+      "summary": "Gad received Yogb'hah (modern Jubeiha), in modern Jordan, as part of the tribal allotment east of the Yarden (Bamidbar 32).",
+      "sources": [
+        "Bamidbar 32:35"
+      ]
     }
   ],
   "routes": [
