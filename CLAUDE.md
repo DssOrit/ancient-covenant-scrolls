@@ -1361,6 +1361,57 @@ citation produced so far: that E-P252 or L3e3b specifically is the
 genetic marker carrying that continuity, as opposed to the broader Igbo
 population among whom both the custom and the marker are found.
 
+**Fourth addendum (same day, 2026-09-12) — the Igbo-Israelite genetic
+mapping controversy, logged with both sides, neither erased:**
+
+- **The institutional boundary, confirmed:** there is no peer-reviewed,
+  isolated genetic study of the Nri/Eri royal and priestly lineages
+  specifically, separate from the broader Igbo population sample. This
+  was checked directly and not found.
+- **The 2017 JVMI test, confirmed real:** Jewish Voice Ministries
+  International (an evangelical/Messianic missionary organization, not a
+  Jewish religious body) sampled 124 Igbo men using FamilyTreeDNA kits.
+  The organization's own head, Jonathan Bernis, stated the results "did
+  not support their claim to be descendants of the ancient people of
+  Israel." This is a real, specific, negative finding from an actual DNA
+  test of Igbo men and is recorded here plainly, not smoothed over.
+- **Remy Ilona's critique, confirmed real:** Ilona (author, "The Igbo
+  Jews And The Questions of Genetics & Culture," 2016) is a real,
+  long-standing Igbo-Israelite identity researcher who publicly
+  challenged the JVMI test's methodology -- specifically, that comparing
+  African populations against modern, post-Diaspora, endogamous Ashkenazi
+  bottleneck markers (e.g. the Cohen Modal Haplotype's specific modern
+  frequency pattern) is not a valid test for ancient Israelite descent.
+  This methodological critique is a real, substantive point independent
+  of whether the underlying Igbo-Israelite lineage claim is itself
+  established.
+- **Emeka Maduewesi, confirmed real:** posted a personal consumer
+  autosomal ancestry-composition test showing a Middle Eastern
+  percentage. This is a real data point of a different kind than a
+  targeted Y-DNA haplogroup study -- a broad ethnicity estimate, not a
+  clan-level marker finding.
+- **The "deductive model" argument, as stated by the user, rests on:**
+  Trombetta et al. 2011 (E-V38/E-M215 brother-branch relationship --
+  confirmed, as logged above), Lazaridis 2016 and Shriner 2018 on
+  Natufian ancestry (confirmed, but see the correction already logged
+  above: the actual Lazaridis finding is 3 of 5 Natufian male skeletons,
+  60%, mostly E1b1b not E1b1a, not a blanket "carried Haplogroup E"), and
+  Basden/Equiano on cultural continuity (confirmed, logged above). This
+  is the user's stated argument, accurately summarized, not an
+  independent finding beyond what each source individually supports.
+
+**Summary of the controversy, both sides on record:** a real, live,
+unresolved public debate exists between JVMI's negative genetic-descent
+finding and Ilona's substantive methodological critique of that test.
+Neither side is erased here. What remains true independent of either
+side's framing: no source produced in this entire discussion -- from
+either side of the JVMI/Ilona controversy -- specifically identifies
+E-P252 or L3e3b as concentrated within the Nri/Eri priestly lineage the
+way the Cohen Modal Haplotype is concentrated within the Lemba's Buba
+clan. That specific convergence claim remains the user's own deductive
+argument, not a documented finding from any named source, institutional
+or independent.
+
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
