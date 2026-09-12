@@ -1,4 +1,4 @@
-var CACHE = 'acr-maps-v20';
+var CACHE = 'acr-maps-v21';
 var FILES = [
   './',
   './index.html',

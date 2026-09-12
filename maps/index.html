@@ -333,6 +333,48 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .journey-tribe-name.claimed{color:var(--gold);font-weight:600}
 .journey-empty{font-size:12px;color:var(--tx3);padding:10px 0}
 
+/* ── GAMES ──────────────────────────────────────────────────── */
+.game-card{
+  display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;
+  background:var(--s2);border:1px solid var(--border);margin-bottom:10px;cursor:pointer;
+}
+.game-card:active{background:rgba(255,255,255,.08)}
+.game-card-icon{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));color:#05050b;
+}
+.game-card-name{font-size:14px;font-weight:700}
+.game-card-desc{font-size:12px;color:var(--tx2);margin-top:2px}
+.game-clue-lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.game-clue-text{font-size:15px;line-height:1.5;color:var(--text);margin-bottom:16px}
+.game-choice{
+  display:block;width:100%;text-align:left;padding:12px 14px;border-radius:10px;
+  background:var(--s2);border:1px solid var(--border);color:var(--text);
+  font-size:14px;margin-bottom:8px;cursor:pointer;
+}
+.game-choice:active{background:rgba(255,255,255,.08)}
+.game-choice.correct{background:rgba(61,191,94,.18);border-color:var(--green)}
+.game-choice.wrong{background:rgba(230,51,41,.18);border-color:var(--red)}
+.game-feedback{font-size:13px;padding:12px;border-radius:10px;margin-bottom:14px}
+.game-feedback.ok{background:rgba(61,191,94,.12);color:var(--green)}
+.game-feedback.no{background:rgba(230,51,41,.12);color:#ff8f87}
+.game-toast{
+  position:absolute;top:70px;left:50%;transform:translateX(-50%) translateY(-10px);
+  background:var(--s1);border:1px solid var(--gold);border-radius:10px;padding:10px 16px;
+  font-size:13px;z-index:9500;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;
+  max-width:80vw;text-align:center;
+}
+.game-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.game-next-btn{
+  width:100%;padding:12px;border-radius:10px;border:none;margin-top:6px;
+  background:linear-gradient(90deg,var(--amber),var(--gold));color:#05050b;font-weight:700;font-size:14px;
+}
+.game-back-btn{
+  width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);margin-top:6px;
+  background:transparent;color:var(--tx2);font-size:13px;
+}
+
 /* ── VERSE BANNER ───────────────────────────────────────────── */
 .verse-banner{
   background:rgba(200,151,31,.08);border:1px solid rgba(200,151,31,.2);
@@ -518,6 +560,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="tb-btn" onclick="showJourney()" title="My Journey">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M10 2l2.2 4.6 5 .7-3.6 3.6.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.6 5-.7z"/></svg>
         </button>
+        <button class="tb-btn" onclick="showGamesMenu()" title="Games">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2"/><path d="M7 9v4M5 11h4"/><circle cx="13" cy="9" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="11" r=".6" fill="currentColor" stroke="none"/></svg>
+        </button>
         <button class="tb-btn" onclick="showRegionList()" title="Browse regions">&#9776;</button>
       </div>
     </div>
@@ -536,6 +581,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
     <!-- GPS button -->
     <button id="gps-btn" onclick="locateMe()" title="My location">&#9678;</button>
+
+    <!-- Game hunt toast -->
+    <div id="game-toast" class="game-toast"></div>
 
     <!-- Layer bar -->
     <div id="layer-bar">
@@ -612,6 +660,7 @@ var trailLayer = null;
 var trailGlowLayer = null;
 var corridorLayers = {};
 var visitedIds = loadVisited();
+var activeHunt = null;
 
 /* ── JOURNEY TRACKING (localStorage, per-device, no server) ───── */
 function loadVisited() {
@@ -1007,6 +1056,14 @@ function placeMarkers(list) {
     var m = L.marker([pl.lat, pl.lng], { icon: icon });
     m.on('click', function(e) {
       L.DomEvent.stopPropagation(e);
+      if (activeHunt) {
+        if (pl.id === activeHunt.targetId) {
+          showToast('Correct! You found it.', 2500);
+          activeHunt = null;
+        } else {
+          showToast('Not quite — keep looking', 1800);
+        }
+      }
       showPlace(pl);
     });
     m.addTo(map);
@@ -1175,6 +1232,142 @@ function showRegionList(region) {
     '<div class="sheet-title">Covenant Places' + (region && region !== 'all' ? ' — ' + region : '') + '</div>' +
     '<div class="stop-list">' + items + '</div>';
   openSheet();
+}
+
+/* ── COVENANT GAMES ─────────────────────────────────────────── */
+function showToast(msg, ms) {
+  var t = document.getElementById('game-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(function() { t.classList.remove('show'); }, ms || 2200);
+}
+
+function showGamesMenu() {
+  activeHunt = null;
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="journey-hdr">Covenant Games</div>' +
+    '<div class="journey-title" style="margin-bottom:16px">Play &amp; Learn</div>' +
+    '<div class="game-card" onclick="startRiddleHunt()">' +
+      '<div class="game-card-icon">?</div>' +
+      '<div><div class="game-card-name">Find the Hidden Place</div><div class="game-card-desc">Read the clue, close this panel, tap the right marker</div></div>' +
+    '</div>' +
+    '<div class="game-card" onclick="startRegionGuess()">' +
+      '<div class="game-card-icon">R</div>' +
+      '<div><div class="game-card-name">Guess the Region</div><div class="game-card-desc">Read the record, pick where it happened</div></div>' +
+    '</div>' +
+    '<div class="game-card" onclick="startTrueNameGame()">' +
+      '<div class="game-card-icon">N</div>' +
+      '<div><div class="game-card-name">Spot the True Name</div><div class="game-card-desc">The imposed label vs. the name before it</div></div>' +
+    '</div>';
+  openSheet();
+}
+
+/* Game 1: Find the Hidden Place -- a clue built from the place's own
+   summary (name masked), find the matching marker on the map. */
+function startRiddleHunt() {
+  var pool = getFilteredPlaces().filter(function(p) { return !visitedIds.has(p.id) && p.summary; });
+  if (!pool.length) pool = getFilteredPlaces().filter(function(p) { return p.summary; });
+  if (!pool.length) pool = places.filter(function(p) { return p.summary; });
+  if (!pool.length) { showGamesMenu(); return; }
+  var target = pool[Math.floor(Math.random() * pool.length)];
+  activeHunt = { targetId: target.id };
+  var escName = target.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  var masked = target.summary.replace(new RegExp(escName, 'gi'), '███');
+  var clueText = esc(target.city) + ', ' + esc(target.region) + ' &mdash; ' +
+    esc(masked.substring(0, 200)) + (masked.length > 200 ? '...' : '');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="journey-hdr">Find the Hidden Place</div>' +
+    '<div class="game-clue-lbl">Close this panel, then tap the marker on the map that matches</div>' +
+    '<div class="game-clue-text">' + clueText + '</div>' +
+    '<button class="game-back-btn" onclick="stopHunt()">End Hunt</button>';
+  openSheet();
+}
+
+function stopHunt() {
+  activeHunt = null;
+  closeSheet();
+}
+
+/* Game 2: Guess the Region -- multiple choice from the real region list. */
+var REGION_OPTIONS = ['Alkebulan (Africa)','Spain','Portugal','Cape Verde','São Tomé','Caribbean','South America','USA','UK','Israel','Mesopotamia','Covenant Land'];
+
+function startRegionGuess() {
+  var pool = places.filter(function(p) { return REGION_OPTIONS.indexOf(p.region) >= 0 && p.summary; });
+  if (!pool.length) { showGamesMenu(); return; }
+  var target = pool[Math.floor(Math.random() * pool.length)];
+  var choices = [target.region];
+  var others = REGION_OPTIONS.filter(function(r) { return r !== target.region; });
+  while (choices.length < 4 && others.length) {
+    var idx = Math.floor(Math.random() * others.length);
+    choices.push(others.splice(idx, 1)[0]);
+  }
+  choices.sort(function() { return Math.random() - 0.5; });
+  var choiceHtml = choices.map(function(r) {
+    return '<button class="game-choice" onclick=\'answerRegionGuess(this,' + JSON.stringify(r).replace(/'/g,'&#39;') + ',' + JSON.stringify(target.region).replace(/'/g,'&#39;') + ')\'>' + esc(r) + '</button>';
+  }).join('');
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="journey-hdr">Guess the Region</div>' +
+    '<div class="game-clue-lbl">' + esc(target.name) + '</div>' +
+    '<div class="game-clue-text">' + esc(target.summary.substring(0, 220)) + '...</div>' +
+    choiceHtml +
+    '<div id="region-guess-result"></div>';
+  openSheet();
+}
+
+function answerRegionGuess(btn, chosen, correct) {
+  var buttons = document.querySelectorAll('.game-choice');
+  buttons.forEach(function(b) { b.onclick = null; });
+  if (chosen === correct) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    buttons.forEach(function(b) { if (b.textContent === correct) b.classList.add('correct'); });
+  }
+  document.getElementById('region-guess-result').innerHTML =
+    (chosen === correct ? '<div class="game-feedback ok">Correct — ' : '<div class="game-feedback no">Not quite — ') +
+    'this record is from ' + esc(correct) + '.</div>' +
+    '<button class="game-next-btn" onclick="startRegionGuess()">Next</button>' +
+    '<button class="game-back-btn" onclick="showGamesMenu()">Back to Games</button>';
+}
+
+/* Game 3: Spot the True Name -- Alkebulan vs. the Roman-imposed "Africa"
+   label, using the region field already established by Rule 38. */
+function startTrueNameGame() {
+  var pool = places.filter(function(p) { return p.region === 'Alkebulan (Africa)' && p.summary; });
+  if (!pool.length) { showGamesMenu(); return; }
+  var target = pool[Math.floor(Math.random() * pool.length)];
+  var trueFirst = Math.random() < 0.5;
+  var optA = trueFirst ? 'Alkebulan' : 'Africa';
+  var optB = trueFirst ? 'Africa' : 'Alkebulan';
+  document.getElementById('sheet-body').innerHTML =
+    '<div class="journey-hdr">Spot the True Name</div>' +
+    '<div class="game-clue-lbl">' + esc(target.city) + '</div>' +
+    '<div class="game-clue-text">' + esc(target.summary.substring(0, 220)) + '...</div>' +
+    '<div class="game-clue-lbl">Which is the land&rsquo;s true, pre-colonial name?</div>' +
+    '<button class="game-choice" onclick=\'answerTrueName(this,' + JSON.stringify(optA).replace(/'/g,'&#39;') + ')\'>' + esc(optA) + '</button>' +
+    '<button class="game-choice" onclick=\'answerTrueName(this,' + JSON.stringify(optB).replace(/'/g,'&#39;') + ')\'>' + esc(optB) + '</button>' +
+    '<div id="true-name-result"></div>';
+  openSheet();
+}
+
+function answerTrueName(btn, chosen) {
+  var buttons = document.querySelectorAll('.game-choice');
+  buttons.forEach(function(b) { b.onclick = null; });
+  var correct = chosen === 'Alkebulan';
+  if (correct) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    buttons.forEach(function(b) { if (b.textContent === 'Alkebulan') b.classList.add('correct'); });
+  }
+  document.getElementById('true-name-result').innerHTML =
+    (correct
+      ? '<div class="game-feedback ok">Correct &mdash; Alkebulan is the land&rsquo;s name before Rome&rsquo;s conquest of Carthage (146 BCE) imposed &quot;Africa&quot; as a provincial label.</div>'
+      : '<div class="game-feedback no">Not quite &mdash; Alkebulan is the true, pre-colonial name. &quot;Africa&quot; comes from Rome&rsquo;s province name after 146 BCE.</div>') +
+    '<button class="game-next-btn" onclick="startTrueNameGame()">Next</button>' +
+    '<button class="game-back-btn" onclick="showGamesMenu()">Back to Games</button>';
 }
 
 function typeColor(t) {
