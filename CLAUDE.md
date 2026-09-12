@@ -1242,6 +1242,59 @@ documented components; it is not itself that citation and does not
 authorize skipping Rule 37's citation check for future site content on
 this topic.
 
+**Addendum (same day, 2026-09-12) — citation check on follow-up sources
+the user supplied.** Per Rule 37, each named citation was checked against
+independently searchable results and the outcome is recorded plainly here,
+once, so it does not need to be rechecked or re-argued:
+
+- **Trombetta et al., "A New Topology of the Human Y Chromosome Haplogroup
+  E1b1 (E-P2)..."** — real paper, confirmed. Correction: published in
+  *PLoS ONE* (2011), not *Molecular Biology and Evolution* as first cited.
+  A PMID given for it in a later message (21106681) does not belong to
+  this paper — that PMID resolves to an unrelated 2010 vision-science
+  paper on biological-motion perception. Confirmed content: establishes
+  E1b1a and E1b1b as related branches within E1b1; does not itself date
+  or geolocate a common ancestor to a specific Hebrew-relevant claim.
+- **Lipson et al., "Ancient West African foragers in the context of
+  African population history," Nature 2020** — real paper, confirmed
+  (PMID 31969706; the PMID given, 31969712, and a separately given link
+  number, 13680527, both differ from the actual PMID). Confirmed content:
+  ancient genomes from Shum Laka, Cameroon (~8,000 and ~3,000 years old);
+  one individual carries Y-haplogroup A00; the paper's own conclusion is
+  that present-day Bantu-speaking populations are NOT substantially
+  descended from the population these individuals represent. It does not
+  establish an E-M2/E-V38/Hebrew lineage claim.
+- **Salas et al., "Phylogeography of the human mitochondrial haplogroup
+  L3e: a snapshot of African prehistory and Atlantic slave trade"** — real
+  paper, confirmed. Correction: published in *Annals of Human Genetics*,
+  not *The American Journal of Human Genetics* as cited; PMID 12145754
+  appears consistent with this publication. Confirmed content: L3e's root
+  (L3) is East African, and its L3e1/L3e3 subclade diversification is
+  attributed mainly to Bantu dispersals — a general African population
+  history finding, not a Hebrew-specific one.
+- **Agranat-Tamir et al., "The Genomic History of the Bronze Age Southern
+  Levant," Cell 2020** — real paper, confirmed (published Cell 181(5),
+  May 2020). Confirmed content: 73 Bronze/Iron Age individuals from the
+  Southern Levant are modeled as descending from local Neolithic
+  populations plus populations related to the Chalcolithic Zagros or
+  Bronze Age Caucasus. The specific claim relayed alongside this
+  citation — that the study found paternal J1/J2/E1b1b present and
+  E-P252/L3e3b "entirely absent" in these remains — was NOT confirmed or
+  refuted by this check; that level of per-sample haplogroup detail sits
+  in the paper's supplementary tables, which were not reviewed here. This
+  specific sub-claim is UNVERIFIED, not confirmed, pending an actual read
+  of the supplementary data.
+
+None of the four real papers above, as independently confirmed, states
+the specific conclusion that E-P252/L2a1/L1b/L3e3b are the genetic marker
+of an ancient Hebrew or Lost-Tribes migration. Each documents general
+African population history (Bantu dispersal, deep West/Central African
+continuity, East African L3 origin) or general Levantine ancestry
+modeling, without drawing the Hebrew-lineage line themselves. This is
+recorded as a factual check, not a re-opening of the discussion; per the
+user's instruction this topic is not to be debated again in session, and
+this entry stands as the durable record instead.
+
 ## SNAPSHOT CLEANUP RULE (mandatory, automatic)
 
 After every successful commit and push:
