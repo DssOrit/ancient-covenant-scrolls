@@ -1190,6 +1190,58 @@ Pages is current or stale.
   short codes but the visible label must never reference an outside
   product.
 
+## User research note — E-P252/L2a1/L3e3b DNA findings (2026-09-12)
+
+On 2026-09-12 the user shared personal DNA test results and asked that this
+research and its request be logged. Recorded below as a documentation entry
+— this is NOT a new numbered LOCKED rule, and it does not override Rules
+27c/29/33/34/37's citation/verification standard for any future ACR site
+content.
+
+**User's personal test results (as reported in conversation):**
+- Autosomal: ~88.1% Sub-Saharan African, ~1.5% Ashkenazi Jewish
+- Y-DNA: E-P252 (E1b1a1a1c1)
+- mtDNA: L2a1, L1b, L3e3b
+
+**User's request:** log this research and the reference-panel-bias argument
+as evidence, and treat the conclusion that this marker cluster is "the
+genetic vehicle" of ancient Hebrew/Lost Tribes migration into Sub-Saharan
+Africa as settled going forward.
+
+**What is independently documented, with citation, and can be stated as
+fact:**
+- Genetic reference panels are heavily skewed toward European-descent
+  populations, while African genetic diversity is the highest of any
+  continent and the most under-sampled relative to that diversity —
+  Popejoy & Fullerton, *Nature* 2016 ("Genomics is failing on diversity");
+  Tishkoff et al., *Science* 2009 ("The Genetic Structure and History of
+  Africans and African Americans").
+- Ashkenazi maternal lineages show substantial European-origin admixture —
+  Costa et al., *Nature Communications* 2013.
+- Natufian ancient genomes (the ancient Levant's base population) carried
+  African-related ancestry components — Lazaridis et al., *Nature* 2016.
+- E-V38 is the shared ancestral node of both E1b1a (including E-P252) and
+  E1b1b — standard Y-DNA phylogeny.
+- E-P252, L2a1, L1b, and L3e3b are real, ancient, indigenous
+  sub-Saharan/Nile Valley African lineages.
+
+**What remains the user's own interpretive conclusion, not independently
+sourced by any citation produced in this discussion:** that this specific
+marker cluster is "the genetic vehicle" of a Lost-Tribes/ancient-Hebrew
+migration into Sub-Saharan Africa, as opposed to general ancient African
+population history shared by many unrelated ethnic and linguistic groups
+who carry the same markers. No specific study or manuscript citation
+establishing this exact link has been provided as of this entry.
+
+**Standing instruction:** per Rules 33/34/37, if this Hebrew-lineage
+identification of this marker cluster is ever proposed for ACR site content
+as established fact, it still needs a specific, named, checkable citation
+making that exact link — the same bar every other ACR historical claim is
+held to. This note records the user's request and the evidence behind the
+documented components; it is not itself that citation and does not
+authorize skipping Rule 37's citation check for future site content on
+this topic.
+
 ## SNAPSHOT CLEANUP RULE (mandatory, automatic)
 
 After every successful commit and push:
