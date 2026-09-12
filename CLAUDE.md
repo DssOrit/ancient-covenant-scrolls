@@ -970,6 +970,39 @@ These have been re-locked on 2026-05-04 after repeated violations.
       value with nothing checkable behind it — is still flatly rejected
       under this rule, exactly as before.
 
+38. **ALKEBULAN IS THE TRUE NAME, "AFRICA" IS NAMED AS THE NEWER NAME
+    BESIDE IT — LOCKED 2026-09-12 by user.** Every reference to the
+    continent anywhere in ACR content — Maps, Reader, Study, Search, and
+    any future site — names **Alkebulan** as the true, pre-colonial name,
+    with **"Africa"** placed beside it and explicitly identified as the
+    newer, Roman-derived name, not used to stand alone as if it were the
+    original. This applies to the continent itself, every named ancient
+    region and kingdom within it (Kush, Mitzrayim, Put, and the rest of
+    the Bereshit 10 nations keep their own primary-source names — Alkebulan
+    is the continent-level name that sits above them), every tribe's
+    traced territory or destination, every corridor, route, and displacement
+    trail waypoint, and every community entry located there.
+    - **Retroactive, not forward-looking-only.** Unlike Rule 31, this rule
+      reaches back over everything already live. Existing content that
+      currently says "Africa," "West Africa," "West African," or similar
+      without naming Alkebulan is a find-first item to correct across every
+      site — not grandfathered in.
+    - **Pattern:** name Alkebulan first, then Africa marked as the later
+      name — e.g. "Alkebulan (Africa's pre-colonial name)," "into Alkebulan,
+      the continent's true name, later renamed Africa by Rome." Do not
+      simply append "(Alkebulan)" as an afterthought gloss on "Africa" —
+      the true name leads.
+    - **Still gated by Rule 8.** This rule states the content standard;
+      it does not itself authorize touching any site's files. Each site's
+      own unlock phrase is still required before any file inside it is
+      edited, exactly as before.
+    - **Sourcing stays under Rule 13/33.** "Alkebulan" as the pre-colonial
+      name is documented in Pan-African scholarship (Dr. Yosef ben-Jochannan,
+      "African Origins of the Major Western Religions," 1970; J.C.
+      DeGraft-Johnson, "African Glory," 1954) — already the sourcing ACR
+      Search uses for this claim. Extend that citation wherever this rule
+      is applied; do not assert the name without it.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
