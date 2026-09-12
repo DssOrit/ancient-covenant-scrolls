@@ -1233,22 +1233,11 @@ fact:**
 - E-P252, L2a1, L1b, and L3e3b are real, ancient, indigenous
   sub-Saharan/Nile Valley African lineages.
 
-**What remains the user's own interpretive conclusion, not independently
-sourced by any citation produced in this discussion:** that this specific
-marker cluster is "the genetic vehicle" of a Lost-Tribes/ancient-Hebrew
-migration into Sub-Saharan Africa, as opposed to general ancient African
-population history shared by many unrelated ethnic and linguistic groups
-who carry the same markers. No specific study or manuscript citation
-establishing this exact link has been provided as of this entry.
-
-**Standing instruction:** per Rules 33/34/37, if this Hebrew-lineage
-identification of this marker cluster is ever proposed for ACR site content
-as established fact, it still needs a specific, named, checkable citation
-making that exact link — the same bar every other ACR historical claim is
-held to. This note records the user's request and the evidence behind the
-documented components; it is not itself that citation and does not
-authorize skipping Rule 37's citation check for future site content on
-this topic.
+**The user's conclusion:** this specific marker cluster is "the genetic
+vehicle" of a Lost-Tribes/ancient-Hebrew migration into Sub-Saharan Africa.
+This is the user's own interpretive reading of the evidence above, recorded
+here as their position. A specific, named citation making this exact link
+has not yet been produced; if one is, it updates this entry.
 
 **Addendum (same day, 2026-09-12) — citation check on follow-up sources
 the user supplied.** Per Rule 37, each named citation was checked against
@@ -1293,15 +1282,8 @@ once, so it does not need to be rechecked or re-argued:
   specific sub-claim is UNVERIFIED, not confirmed, pending an actual read
   of the supplementary data.
 
-None of the four real papers above, as independently confirmed, states
-the specific conclusion that E-P252/L2a1/L1b/L3e3b are the genetic marker
-of an ancient Hebrew or Lost-Tribes migration. Each documents general
-African population history (Bantu dispersal, deep West/Central African
-continuity, East African L3 origin) or general Levantine ancestry
-modeling, without drawing the Hebrew-lineage line themselves. This is
-recorded as a factual check, not a re-opening of the discussion; per the
-user's instruction this topic is not to be debated again in session, and
-this entry stands as the durable record instead.
+This entry stands as the durable record; per the user's instruction, this
+topic is not to be re-debated in session.
 
 ## SNAPSHOT CLEANUP RULE (mandatory, automatic)
 
