@@ -26,6 +26,7 @@
   --red:#e63329;
   --green:#3dbf5e;
   --blue:#2b7de9;
+  --teal:#0e8f7f;
   --text:#f0ede8;
   --tx2:#9a9080;
   --tx3:#4a4460;
@@ -520,6 +521,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="lpill" id="archive-pill" onclick="toggleTypeFilter('archive')">
         <span class="ldot" style="background:var(--amber)"></span> Archives
       </div>
+      <div class="lpill" id="covenant_land-pill" onclick="toggleTypeFilter('covenant_land')">
+        <span class="ldot" style="background:var(--teal)"></span> Covenant Land Boundaries
+      </div>
       <div class="lpill lpill-living" id="living-pill" onclick="toggleLivingFilter()">
         <span class="ldot" style="background:var(--green)"></span> Living Communities
       </div>
@@ -545,6 +549,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="rpill" data-region="UK" onclick="filterRegion(this)">UK</div>
       <div class="rpill" data-region="Israel" onclick="filterRegion(this)">Israel</div>
       <div class="rpill" data-region="Mesopotamia" onclick="filterRegion(this)">Mesopotamia</div>
+      <div class="rpill" data-region="Covenant Land" onclick="filterRegion(this)">Covenant Land</div>
     </div>
 
     <!-- Bottom sheet -->
@@ -934,7 +939,7 @@ function toggleLivingFilter() {
 }
 
 /* ── PLACE MARKERS ──────────────────────────────────────────── */
-var MK_LABELS = { community:'C', history:'H', archive:'A', inscription:'Y', resistance:'R', discovery:'D' };
+var MK_LABELS = { community:'C', history:'H', archive:'A', inscription:'Y', resistance:'R', discovery:'D', covenant_land:'L' };
 function placeMarkers(list) {
   markers.forEach(function(m) { m.remove(); });
   markers = [];
@@ -1118,7 +1123,7 @@ function showRegionList(region) {
 }
 
 function typeColor(t) {
-  var colors = { community:'var(--green)', history:'var(--red)', archive:'var(--gold)', inscription:'#c8971f', resistance:'#9b27d4', discovery:'var(--blue)' };
+  var colors = { community:'var(--green)', history:'var(--red)', archive:'var(--gold)', inscription:'#c8971f', resistance:'#9b27d4', discovery:'var(--blue)', covenant_land:'var(--teal)' };
   return colors[t] || 'var(--green)';
 }
 
