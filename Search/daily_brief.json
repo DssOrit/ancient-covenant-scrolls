@@ -1,36 +1,100 @@
 {
-  "date": "2026-09-14",
-  "updated": "2026-09-14T12:22:59.075Z",
+  "date": "2026-09-15",
+  "updated": "2026-09-15T11:28:37.148Z",
   "count": 25,
   "items": [
     {
-      "headline": "Russia strikes Ukraine with drones as Poland warns of 'escalation'",
-      "source": "France 24",
-      "url": "https://www.france24.com/en/video/20260914-russia-strikes-ukraine-with-drones-as-poland-warns-of-escalation",
+      "headline": "Iran war live: 54 Saudi air strikes target Houthis as Yemen fighting rages",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/liveblog/2026/9/15/iran-war-live-centcom-refutes-iran-claim-supertanker-hit-hormuz-mines?traffic_source=rss",
       "themes": [
-        "War and Conflict"
+        "War and Conflict",
+        "Iran and Axis"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 5,
+      "pub": "Tue, 15 Sep 2026 00:00:00 +0000"
+    },
+    {
+      "headline": "Houthis say air strikes hit Yemen after Saudi Arabia vows ‘firm’ response",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/15/houthis-report-air-strikes-in-yemen-after-saudi-arabia-vows-firm-response?traffic_source=rss",
+      "themes": [
+        "War and Conflict",
+        "Iran and Axis"
       ],
       "sections": [
         1
       ],
       "score": 3,
-      "pub": "Mon, 14 Sep 2026 11:37:33 GMT"
+      "pub": "Tue, 15 Sep 2026 08:11:09 +0000"
     },
     {
-      "headline": "Somalia: Somali Pirates Release Hijacked Ship and 17-Member Crew After Ransom Payment",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140093.html",
+      "headline": "Palestine weekly: Settlement sanctions spark diplomatic crisis",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/15/palestine-weekly-settlement-sanctions-spark-diplomatic-crisis?traffic_source=rss",
       "themes": [
-        "Diaspora — Africa",
-        "Gathering",
+        "Covenant Land",
+        "Abundance",
+        "Judgment of Nations"
+      ],
+      "sections": [
+        1,
+        6,
+        7
+      ],
+      "score": 3,
+      "pub": "Tue, 15 Sep 2026 06:53:50 +0000"
+    },
+    {
+      "headline": "Russia resupplies military bases in Syria for first time under new deal",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/15/russia-resupplies-military-bases-in-syria-for-first-time-under-new-deal?traffic_source=rss",
+      "themes": [
+        "Covenant Land",
+        "War and Conflict",
+        "Lebanon and Syria"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 3,
+      "pub": "Tue, 15 Sep 2026 00:43:47 +0000"
+    },
+    {
+      "headline": "Egypt: Sudanese Journalist Arrested Over Alleged Social Media Post",
+      "source": "AllAfrica",
+      "url": "https://allafrica.com/stories/202609150290.html",
+      "themes": [
+        "Covenant Land",
+        "Egypt and North Africa",
         "Cush and East Africa"
       ],
       "sections": [
-        2,
+        1,
         5
       ],
       "score": 3,
-      "pub": "Mon, 14 Sep 2026 05:30:27 GMT"
+      "pub": "Tue, 15 Sep 2026 10:58:16 GMT"
+    },
+    {
+      "headline": "Sudan: UN Agencies Warn Humanitarian System in Sudan 'Could Collapse'",
+      "source": "AllAfrica",
+      "url": "https://allafrica.com/stories/202609150003.html",
+      "themes": [
+        "War and Conflict",
+        "Cush and East Africa",
+        "Judgment of Nations"
+      ],
+      "sections": [
+        1,
+        5,
+        7
+      ],
+      "score": 3,
+      "pub": "Tue, 15 Sep 2026 04:34:33 GMT"
     },
     {
       "headline": "Africa: NITDA, NDPC and Galaxy Backbone Back CyFrica 2026 as Nigeria's Leading Cybersecurity Summit Returns",
@@ -48,52 +112,134 @@
       "pub": "Tue, 08 Sep 2026 16:23:11 GMT"
     },
     {
-      "headline": "Nigeria: Four Killed in Fresh Plateau Attacks",
+      "headline": "Somalia: Trump Appoints New U.S. Ambassador to Somalia",
       "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140175.html",
+      "url": "https://allafrica.com/stories/202609150317.html",
+      "themes": [
+        "Diaspora — Africa",
+        "Gathering",
+        "Cush and East Africa"
+      ],
+      "sections": [
+        2,
+        5
+      ],
+      "score": 3,
+      "pub": "Tue, 15 Sep 2026 11:17:57 GMT"
+    },
+    {
+      "headline": "Somalia: South West Leader Madobe Meets Hariin Clan Elders and Politicians in Baidoa",
+      "source": "AllAfrica",
+      "url": "https://allafrica.com/stories/202609150315.html",
+      "themes": [
+        "Diaspora — Africa",
+        "Gathering",
+        "Cush and East Africa"
+      ],
+      "sections": [
+        2,
+        5
+      ],
+      "score": 3,
+      "pub": "Tue, 15 Sep 2026 11:17:01 GMT"
+    },
+    {
+      "headline": "Denmark says Russian warship fired flares at military helicopter",
+      "source": "BBC World",
+      "url": "https://www.bbc.co.uk/news/articles/cwn8mjl31p5yo?at_medium=RSS&amp;at_campaign=rss",
+      "themes": [
+        "War and Conflict"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Tue, 15 Sep 2026 10:12:49 GMT"
+    },
+    {
+      "headline": "Israeli minister threatens to revoke filmmakers' citizenship over Gaza documentary",
+      "source": "BBC World",
+      "url": "https://www.bbc.co.uk/news/articles/c9vgy8d8256go?at_medium=RSS&amp;at_campaign=rss",
+      "themes": [
+        "Covenant Land"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Mon, 14 Sep 2026 18:26:20 GMT"
+    },
+    {
+      "headline": "Trump administration suffers double legal setback over immigration policy",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/15/trump-administration-suffers-double-legal-setback-over-immigration-rules?traffic_source=rss",
+      "themes": [
+        "Gathering"
+      ],
+      "sections": [
+        5
+      ],
+      "score": 2,
+      "pub": "Tue, 15 Sep 2026 02:31:18 +0000"
+    },
+    {
+      "headline": "Iran war exposes US munitions shortfall, industrial bottlenecks, Pentagon report says",
+      "source": "France 24",
+      "url": "https://www.france24.com/en/americas/20260915-iran-war-exposes-us-munitions-shortfall-industrial-bottlenecks-pentagon-report-says",
       "themes": [
         "War and Conflict",
+        "Iran and Axis"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Tue, 15 Sep 2026 06:07:23 GMT"
+    },
+    {
+      "headline": "🔴 Middle East live: Pentagon report says Iran war has led to munitions shortfall",
+      "source": "France 24",
+      "url": "https://www.france24.com/en/middle-east/20260915-middle-east-live-houthi-attacks-wound-13-civilians-in-southern-saudi-arabia",
+      "themes": [
+        "War and Conflict",
+        "Iran and Axis"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Tue, 15 Sep 2026 05:28:45 GMT"
+    },
+    {
+      "headline": "Ukraine war live: NATO downs drone over Lithuania, Russian frigate fires flares at Danish helicopter",
+      "source": "France 24",
+      "url": "https://www.france24.com/en/europe/20260915-nato-fighter-jets-shoot-down-drone-over-lithuania-after-latest-incursion",
+      "themes": [
+        "War and Conflict"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Tue, 15 Sep 2026 02:19:11 GMT"
+    },
+    {
+      "headline": "Nigeria's Dangote refinery launches biggest African IPO",
+      "source": "France 24",
+      "url": "https://www.france24.com/en/africa/20260915-nigeria-s-dangote-refinery-launches-biggest-african-ipo-for-retail-investors",
+      "themes": [
         "Diaspora — Africa"
       ],
       "sections": [
-        1,
         2
       ],
-      "score": 3,
-      "pub": "Mon, 14 Sep 2026 09:05:39 GMT"
-    },
-    {
-      "headline": "Iran war reshapes Brics ties but also exposes divisions",
-      "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ce8767g4jdpo?at_medium=RSS&amp;at_campaign=rss",
-      "themes": [
-        "War and Conflict",
-        "Iran and Axis"
-      ],
-      "sections": [
-        1
-      ],
       "score": 2,
-      "pub": "Sun, 13 Sep 2026 11:23:42 GMT"
+      "pub": "Tue, 15 Sep 2026 00:05:32 GMT"
     },
     {
-      "headline": "Yemen gov’t forces advance in Taiz as Houthis claim attack on Saudi Arabia",
-      "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/9/14/yemen-govt-forces-advance-in-taiz-as-houthis-claim-attack-on-saudi-arabia?traffic_source=rss",
-      "themes": [
-        "War and Conflict",
-        "Iran and Axis"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 09:21:56 +0000"
-    },
-    {
-      "headline": "Animated map shows spread of illegal Israeli settlements across Palestine",
-      "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/9/14/animated-map-shows-spread-of-illegal-israeli-settlements-across-palestine?traffic_source=rss",
+      "headline": "Rights group accuses Israel of dismantling 'Palestinian existence' in West Bank",
+      "source": "France 24",
+      "url": "https://www.france24.com/en/rights-group-accuses-israel-of-dismantling-palestinian-existence-in-west-bank",
       "themes": [
         "Covenant Land"
       ],
@@ -101,39 +247,12 @@
         1
       ],
       "score": 2,
-      "pub": "Mon, 14 Sep 2026 05:56:36 +0000"
+      "pub": "Mon, 14 Sep 2026 21:26:29 GMT"
     },
     {
-      "headline": "Protests break out across Syria over fuel price increases",
-      "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/9/14/protests-break-out-across-syria-over-fuel-price-increases?traffic_source=rss",
-      "themes": [
-        "Covenant Land",
-        "Lebanon and Syria"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 04:50:25 +0000"
-    },
-    {
-      "headline": "Israeli minister threatens to revoke filmmakers’ citizenship over Gaza film",
-      "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/9/14/israeli-minister-threatens-to-revoke-filmmakers-citizenship-over-gaza-film?traffic_source=rss",
-      "themes": [
-        "Covenant Land"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 03:50:25 +0000"
-    },
-    {
-      "headline": "Mideast live: Yemen’s Houthis say they targeted military facilities in Saudi Arabia",
+      "headline": "Yemen: Fact-checking videos claiming to show Houthi rebel attacks",
       "source": "France 24",
-      "url": "https://www.france24.com/en/middle-east/20260914-middle-east-live-houthis-say-hit-saudi-base-after-renewed-fighting-with-yemeni-forces",
+      "url": "https://www.france24.com/en/yemen-fact-checking-videos-claiming-to-show-houthi-rebel-attacks-1",
       "themes": [
         "War and Conflict",
         "Iran and Axis"
@@ -142,102 +261,89 @@
         1
       ],
       "score": 2,
-      "pub": "Mon, 14 Sep 2026 03:39:12 GMT"
+      "pub": "Mon, 14 Sep 2026 21:10:30 GMT"
     },
     {
-      "headline": "Iranian cargo vessel struck near Qeshm Island as Oman delays Tehran-Gulf talks",
+      "headline": "Nigeria's Dangote refinery kicks off blockbuster IPO",
       "source": "France 24",
-      "url": "https://www.france24.com/en/middle-east/20260914-iranian-ship-qeshm-island-tehran-hormuz",
+      "url": "https://www.france24.com/en/tv-shows/business/20260914-nigeria-s-dangote-refinery-kicks-off-blockbuster-ipo",
       "themes": [
-        "Iran and Axis"
+        "Diaspora — Africa"
       ],
       "sections": [
-        1
+        2
       ],
       "score": 2,
-      "pub": "Mon, 14 Sep 2026 02:35:36 GMT"
+      "pub": "Mon, 14 Sep 2026 20:46:19 GMT"
     },
     {
-      "headline": "US hosts G20 energy talks in Texas as Iran war disrupts global fuel markets",
+      "headline": "Nigerian oil refinery Dangote aims to raise 1.6 billion dollars",
       "source": "France 24",
-      "url": "https://www.france24.com/en/americas/20260914-us-g20-energy-talks-iran-war",
+      "url": "https://www.france24.com/en/nigerian-oil-refinery-dangote-aims-to-raise-1-6-billion-dollars",
       "themes": [
-        "War and Conflict",
-        "Iran and Axis"
+        "Diaspora — Africa"
       ],
       "sections": [
-        1
+        2
       ],
       "score": 2,
-      "pub": "Mon, 14 Sep 2026 01:42:29 GMT"
+      "pub": "Mon, 14 Sep 2026 20:31:28 GMT"
     },
     {
-      "headline": "Russia&#039;s drone war comes to Moldova and Romania",
+      "headline": "Africa&#039;s richest man Dangote&#039;s IPO out of reach in Nigeria",
       "source": "DW World",
-      "url": "https://www.dw.com/en/russia-s-drone-war-comes-to-moldova-and-romania/a-79239591?maca=en-rss-en-world-4025-xml-mrss",
+      "url": "https://www.dw.com/en/africa-s-richest-man-dangote-s-ipo-out-of-reach-in-nigeria/a-79263398?maca=en-rss-en-world-4025-xml-mrss",
       "themes": [
-        "War and Conflict"
+        "Diaspora — Africa"
       ],
       "sections": [
-        1
+        2
       ],
       "score": 2,
-      "pub": "Sat, 12 Sep 2026 06:27:00 GMT"
+      "pub": "Mon, 14 Sep 2026 14:12:00 GMT"
     },
     {
-      "headline": "Iranian cargo ship is struck, and talks between Tehran and its neighbors are postponed",
+      "headline": "News Wrap: Kennedy Center warns of 'fiscal collapse' without Trump's name on building",
       "source": "PBS NewsHour",
-      "url": "https://www.pbs.org/newshour/world/strike-on-iranian-cargo-ship-in-the-strait-of-hormuz-kills-1-iranian-media-say",
-      "themes": [
-        "Iran and Axis"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Sun, 13 Sep 2026 13:58:51 -0400"
-    },
-    {
-      "headline": "Trump calls on Ukraine to halt strikes on Russian diesel fuel, saying attacks are causing a shortage",
-      "source": "PBS NewsHour",
-      "url": "https://www.pbs.org/newshour/world/trump-calls-on-ukraine-to-halt-strikes-on-russian-diesel-saying-attacks-are-causing-a-shortage",
-      "themes": [
-        "War and Conflict"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Sun, 13 Sep 2026 11:58:37 -0400"
-    },
-    {
-      "headline": "Fighting in Yemen intensifies, and Houthis launch more attacks on Saudi Arabia",
-      "source": "PBS NewsHour",
-      "url": "https://www.pbs.org/newshour/world/iran-backed-houthis-in-yemen-claim-new-attacks-on-saudi-arabia",
+      "url": "https://www.pbs.org/newshour/show/news-wrap-kennedy-center-warns-of-fiscal-collapse-without-trumps-name-on-building",
       "themes": [
         "War and Conflict",
-        "Iran and Axis"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 2,
-      "pub": "Sun, 13 Sep 2026 11:28:36 -0400"
-    },
-    {
-      "headline": "BRICS leaders voice concern over Middle East, condemn unilateral sanctions at India summit",
-      "source": "PBS NewsHour",
-      "url": "https://www.pbs.org/newshour/world/brics-leaders-voice-concern-over-middle-east-condemn-unilateral-sanctions-at-india-summit",
-      "themes": [
-        "Abundance",
         "Judgment of Nations"
       ],
       "sections": [
-        6,
+        1,
         7
       ],
       "score": 2,
-      "pub": "Sat, 12 Sep 2026 12:28:01 -0400"
+      "pub": "Mon, 14 Sep 2026 18:45:46 -0400"
+    },
+    {
+      "headline": "Houthi gains in Yemen, attack on Saudi pipeline compound pressure on oil markets",
+      "source": "PBS NewsHour",
+      "url": "https://www.pbs.org/newshour/show/houthi-gains-in-yemen-attack-on-saudi-pipeline-compound-pressure-on-oil-markets",
+      "themes": [
+        "War and Conflict",
+        "Iran and Axis"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Mon, 14 Sep 2026 18:40:45 -0400"
+    },
+    {
+      "headline": "Houthis seize 2 strategic Red Sea islands, and other Mideast developments",
+      "source": "PBS NewsHour",
+      "url": "https://www.pbs.org/newshour/world/houthis-seize-2-strategic-red-sea-islands-and-other-mideast-developments",
+      "themes": [
+        "Covenant Land",
+        "Iran and Axis"
+      ],
+      "sections": [
+        1
+      ],
+      "score": 2,
+      "pub": "Mon, 14 Sep 2026 16:19:30 -0400"
     },
     {
       "headline": "Kenya: Can Kenya Turn Its Cotton Comeback Into A Genuine Industrial Revival?",
@@ -253,101 +359,6 @@
       ],
       "score": 2,
       "pub": "Mon, 14 Sep 2026 12:11:43 GMT"
-    },
-    {
-      "headline": "South Sudan: Unicef Reaches Communities Cut Off By Conflict in Jonglei State",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140427.html",
-      "themes": [
-        "Cush and East Africa"
-      ],
-      "sections": [
-        5
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 12:06:05 GMT"
-    },
-    {
-      "headline": "Kenya: Police Warns Against Revenge, Hatred Ahead of 2027 Polls",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140426.html",
-      "themes": [
-        "War and Conflict",
-        "Cush and East Africa"
-      ],
-      "sections": [
-        1,
-        5
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 12:02:18 GMT"
-    },
-    {
-      "headline": "Eritrea: Eritrea Accuses UAE of Port-Based Colonialism in Africa",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140092.html",
-      "themes": [
-        "Gathering",
-        "Cush and East Africa"
-      ],
-      "sections": [
-        5
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 05:30:13 GMT"
-    },
-    {
-      "headline": "Nigeria: Tinubu, Atiku, Obi, 15 Others Make Final Presidential Candidates' List",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140097.html",
-      "themes": [
-        "Diaspora — Africa"
-      ],
-      "sections": [
-        2
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 06:36:19 GMT"
-    },
-    {
-      "headline": "Ethiopia: 18th BRICS Summit Concludes With Adoption of New Delhi Declaration",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609140073.html",
-      "themes": [
-        "Gathering",
-        "Cush and East Africa"
-      ],
-      "sections": [
-        5
-      ],
-      "score": 2,
-      "pub": "Mon, 14 Sep 2026 05:16:18 GMT"
-    },
-    {
-      "headline": "China criticises idea it is in 'malicious competition' over AI",
-      "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cn8me133119o?at_medium=RSS&amp;at_campaign=rss",
-      "themes": [
-        "Diaspora — Africa"
-      ],
-      "sections": [
-        2
-      ],
-      "score": 1,
-      "pub": "Mon, 14 Sep 2026 11:31:39 GMT"
-    },
-    {
-      "headline": "Zambians warned not to eat dead wildlife after anthrax kills dozens of animals",
-      "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ce8en6v3601o?at_medium=RSS&amp;at_campaign=rss",
-      "themes": [
-        "War and Conflict"
-      ],
-      "sections": [
-        1
-      ],
-      "score": 1,
-      "pub": "Mon, 14 Sep 2026 11:35:08 GMT"
     }
   ]
 }
