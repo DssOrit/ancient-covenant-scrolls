@@ -941,6 +941,59 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .lin-tribes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
 .lin-tribe{background:var(--s1);border:1px solid #1e1e1e;border-radius:8px;padding:7px 6px;font-size:11px;color:#fff;cursor:pointer;text-align:center;transition:border-color 0.15s}
 .lin-tribe:active{border-color:var(--gold);color:var(--gold)}
+/* LINEAGE TREE (cinematic Adam-to-Moshe chart) */
+.lt-fallcolor{--ltfall:#C0392B;--ltfall2:#E8695F}
+.lt-acts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.lt-act-btn{font-family:var(--font);font-size:11.5px;font-weight:700;color:var(--tx2);background:var(--s1);border:1px solid #1e1e1e;border-radius:999px;padding:7px 13px;cursor:pointer}
+.lt-act-btn.on{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.lt-progress-track{height:5px;background:var(--s2);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.lt-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .35s ease;width:0%}
+.lt-progress-label{font-size:10.5px;color:var(--tx3);margin:-16px 0 20px;text-align:right}
+.lt-chapter{text-align:center;margin:34px 0 22px;padding-top:6px}
+.lt-chapter:first-child{margin-top:0}
+.lt-chapter-num{font-size:11px;font-weight:800;letter-spacing:0.28em;color:var(--gold);margin-bottom:8px}
+.lt-chapter h3{font-size:clamp(19px,5vw,26px);font-weight:800;color:#fff;letter-spacing:-0.01em;margin:0}
+.lt-chapter-sub{font-size:12.5px;color:var(--tx2);margin-top:8px;max-width:44ch;margin-inline:auto;font-style:italic;line-height:1.6}
+.lt-chapter-rule{width:48px;height:2px;background:var(--gold);margin:14px auto 0;opacity:0.6}
+.lt-chapter.lt-fall .lt-chapter-num,.lt-chapter.lt-fall .lt-chapter-rule{color:var(--ltfall);background:var(--ltfall)}
+.lt-chapter.lt-fall h3{color:var(--ltfall2)}
+.lt-timeline{position:relative;padding-left:30px}
+.lt-timeline::before{content:'';position:absolute;left:12px;top:6px;bottom:6px;width:2px;background:#1e1e1e}
+.lt-node{position:relative;margin-bottom:12px}
+.lt-dot{position:absolute;left:-30px;top:16px;width:24px;height:24px;border-radius:50%;background:var(--s1);border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;z-index:2}
+.lt-node.lt-fall .lt-dot{border-color:var(--ltfall);color:var(--ltfall2)}
+.lt-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:12px 14px;cursor:pointer}
+.lt-node.lt-fall .lt-card{background:#1e100d;border-color:rgba(192,57,43,0.32)}
+.lt-scene{font-size:9.5px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--ltfall2);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.lt-scene::before{content:'';width:12px;height:1px;background:var(--ltfall2);opacity:0.6}
+.lt-top{display:flex;align-items:center;gap:11px}
+.lt-glyph{font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:20px;color:var(--gold);flex-shrink:0;line-height:1}
+.lt-node.lt-fall .lt-glyph{color:var(--ltfall2)}
+.lt-head{flex:1;min-width:0}
+.lt-nname{font-size:14px;font-weight:700;color:#fff}
+.lt-fact{font-size:11.5px;color:var(--tx2);margin-top:2px}
+.lt-year{flex-shrink:0;font-size:10px;font-weight:700;color:var(--tx3);text-align:right;white-space:nowrap}
+.lt-year b{display:block;color:var(--gold);font-size:12px}
+.lt-node.lt-fall .lt-year b{color:var(--ltfall2)}
+.lt-chev{flex-shrink:0;color:var(--tx3);font-size:12px;transition:transform .2s}
+.lt-node.open .lt-chev{transform:rotate(90deg)}
+.lt-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #1e1e1e}
+.lt-node.open .lt-detail{display:block}
+.lt-quote{font-size:12.5px;color:var(--tx);line-height:1.65;padding:9px 11px;background:var(--s2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0}
+.lt-node.lt-fall .lt-quote{border-left-color:var(--ltfall2)}
+.lt-cite{font-size:10.5px;color:var(--tx3);margin-top:7px}
+.lt-cite b{color:var(--tx2)}
+.lt-tribes-wrap{margin:10px 0 4px 0}
+.lt-tribes-note{font-size:11px;color:var(--tx3);margin-bottom:8px}
+.lt-epilogue{text-align:center;padding:26px 14px;margin:30px 0 4px;border-top:1px solid #1e1e1e;border-bottom:1px solid #1e1e1e}
+.lt-epilogue-tag{font-size:10.5px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)}
+.lt-epilogue-quote{font-size:15.5px;line-height:1.55;color:#fff;margin-top:12px;font-weight:600}
+.lt-epilogue-cite{font-size:11px;color:var(--tx3);margin-top:10px}
+.lt-variant-note{font-size:11px;color:var(--tx3);background:var(--s1);border:1px solid #1e1e1e;border-radius:10px;padding:11px 13px;line-height:1.55;margin-top:18px}
+.lt-variant-note b{color:var(--gold)}
+.lt-reveal{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
+.lt-reveal.in{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion: reduce){.lt-reveal{transition:none}}
 /* MO'EDIM */
 .mo-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);margin-bottom:8px;overflow:hidden}
 .mo-card-hdr{padding:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
@@ -2725,7 +2778,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           </div>
           <div class="ut-card" onclick="setMode('lineage')">
             <div class="ut-card-name">Lineage Explorer</div>
-            <div class="ut-card-desc">The covenant bloodline from Adam through the twelve tribes. Tap a name for their Tribes &amp; Territory card, where one exists.</div>
+            <div class="ut-card-desc">The covenant bloodline from Adam to Moshe, generation by generation — including the falling-away in Ur of the Chaldees.</div>
           </div>
           <div class="ut-card" onclick="setMode('moedim')">
             <div class="ut-card-name">Mo'edim</div>
@@ -2782,7 +2835,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="tool-view-wrap">
         <button class="tool-back" onclick="setMode('tools')"><i class="ri-arrow-left-s-line"></i> Useful Tools</button>
         <div class="tool-view-hdr">Lineage Explorer</div>
-        <div class="tool-view-sub">The covenant bloodline from Adam through the twelve tribes, drawn from Bereshit. Tap a name to jump to their Tribes &amp; Territory card, or a tribe to see its confirmed members — falls back to a corpus search where no card exists yet.</div>
+        <div class="tool-view-sub">The covenant bloodline from Adam to Moshe — every generation, the falling-away in Ur of the Chaldees, and the promise carried forward. Tap any card to open it.</div>
         <div id="lin-container"></div>
       </div>
     </div>
@@ -9150,19 +9203,49 @@ function filterHNNames(){
   }).join('');
 }
 
-// LINEAGE EXPLORER
-var LINEAGE = [
-  {title:'Before the Flood — Adam to Noakh (Bereshit 5)',
-   chain:['Adam','Sheth','Enosh','Qeynan','Mahalal\'el','Yered','Chanokh','Metushelakh','Lamekh','Noakh'],
-   note:''},
-  {title:'Noakh to Avraham (Bereshit 11)',
-   chain:['Noakh','Shem','Arpakhshad','Shelakh','Ever','Peleg','Re\'u','Serug','Nakhor','Terakh','Avraham'],
-   note:''},
-  {title:'The Covenant Line — Avraham to the Twelve Tribes',
-   chain:['Avraham','Yitshaq','Ya\'aqov (Yisra\'EL)'],
-   note:'Ya\'aqov\'s twelve sons became the twelve tribes:',
-   tribes:['Re\'uven','Shim\'on','Lewi','Yehudah','Yissaskhar','Zevulun','Dan','Naphtali','Gad','Asher','Yosef','Binyamin']}
+// LINEAGE EXPLORER — Adam to Moshe, cinematic chapter-based chart.
+// Sources: Yovelim (Jubilees) ch. 4-12 for the generation chain and the
+// falling-away narrative (jubilee/week/year markers -> Anno Mundi, 49 years
+// per jubilee, 7 per week); Bereshit 12:1, 15:13-16; Yehoshua 24:2-6;
+// Shemot 3:6, 6:16-20 for the promise carried forward through Moshe.
+var LINEAGE_TREE = [
+  {type:'chapter',act:1,num:'I',label:'In the Beginning',sub:'Ten generations, before the Flood — from the first man to the one who found favor.'},
+  {type:'gen',id:'adam',act:1,gen:1,glyph:'𐤀𐤃𐤌',name:'Adam',fact:'Formed from the dust; made in the Creator\'s image',year:'1',quote:'So the Creator created man in his own image, in the image of the Creator he created him — male and female he created them.',cite:'Bereshit 1:27'},
+  {type:'gen',id:'shet',act:1,gen:2,glyph:'𐤔𐤕',name:'Shet (Seth)',fact:'Born after Hevel\'s murder — the line continues through him, not Kayin',year:'~130',quote:'YHWH has raised up a second seed to us on the earth instead of Hevel, for Kayin slew him.',cite:'Yovelim 4:7'},
+  {type:'gen',id:'enosh',act:1,gen:3,glyph:'𐤀𐤍𐤅𐤔',name:'Enosh',fact:'The first to call on the Name of YHWH',year:'235',quote:'He began to call on the name of YHWH on the earth.',cite:'Yovelim 4:13'},
+  {type:'gen',id:'kenan',act:1,gen:4,glyph:'𐤒𐤉𐤍𐤍',name:'Kenan',fact:'Son of Enosh and Noam — a quiet link in the chain',year:'325',quote:'Enosh took Noam his sister to be his wife; she bore him a son in the third year of the fifth week; he called his name Kenan.',cite:'Yovelim 4:14'},
+  {type:'gen',id:'mahalalel',act:1,gen:5,glyph:'𐤌𐤄𐤋𐤋𐤀𐤋',name:'Mahalalel',fact:'Son of Kenan — the fifth generation from Adam',year:'395',quote:'Kenan took Mualeleth his sister to be his wife; she bore him a son... he called his name Mahalalel.',cite:'Yovelim 4:15'},
+  {type:'gen',id:'yered',act:1,gen:6,glyph:'𐤉𐤓𐤃',name:'Yered (Jared)',fact:'Named for the moment the Watchers descended in his days',year:'461',quote:'He called his name Yered — for in his days the angels of YHWH descended on the earth, those who are named the Watchers.',cite:'Yovelim 4:16'},
+  {type:'gen',id:'chanokh',act:1,gen:7,glyph:'𐤇𐤍𐤅𐤊',name:'Chanokh (Enoch)',fact:'First to write the calendar and testimony; walked with YHWH; taken up',year:'522',quote:'He was taken from amongst the children of men; we conducted him into the Garden of Eden in majesty and honor.',cite:'Yovelim 4:23-24'},
+  {type:'gen',id:'metushelach',act:1,gen:8,glyph:'𐤌𐤕𐤅𐤔𐤋𐤇',name:'Metushelach',fact:'Son of Chanokh — carried his father\'s writings forward',year:'587',quote:'Metushelach took to himself a wife... he fathered a son and called his name Lamekh.',cite:'Yovelim 4:28'},
+  {type:'gen',id:'lemech',act:1,gen:9,glyph:'𐤋𐤌𐤊',name:'Lemech',fact:'Named his son Noach in hope of relief from the cursed ground',year:'652',quote:'He called his name Noakh, saying: This one will comfort me for my trouble and all my work; for the ground which YHWH has cursed.',cite:'Yovelim 4:29'},
+  {type:'gen',id:'noach',act:1,gen:10,glyph:'𐤍𐤇',name:'Noach (Noah)',fact:'Preserved through the Flood; prayed for his sons to be shielded from evil spirits',year:'~707',quote:'Creator of the spirits of all flesh, who has shown mercy to me; saved me and my sons from the waters of the flood.',cite:'Yovelim 10:3'},
+  {type:'chapter',act:2,num:'II',label:'The Line Continues',sub:'Ten more generations, through Shem — and the household it finally reaches in Ur of the Chaldees.'},
+  {type:'gen',id:'shem',act:2,gen:11,glyph:'𐤔𐤌',name:'Shem',fact:'Noach\'s eldest, given the blessed central portion of the earth',year:'—',quote:'This is the land that came forth for Shem and his sons... it is blessed, for on it is the Garden of Eden.',cite:'Yovelim 8:18-19'},
+  {type:'gen',id:'arpakhshad',act:2,gen:12,glyph:'𐤀𐤓𐤐𐤊𐤔𐤃',name:'Arpakhshad',fact:'Shem\'s son, born after the Flood — the post-Flood line begins here',year:'—',quote:'Arpakhshad took to himself a wife... she bore him a son; he called his name Kainam.',cite:'Yovelim 8:1'},
+  {type:'gen',id:'kainam',act:2,gen:13,glyph:'𐤒𐤉𐤍𐤍',name:'Kainam',fact:'The extra name Yovelim keeps that the Masoretic Bereshit 11 leaves out',year:'1375',quote:'He found a writing which former generations had carved on the rock... it contained the teaching of the Watchers.',cite:'Yovelim 8:2-3'},
+  {type:'gen',id:'shelach',act:2,gen:14,glyph:'𐤔𐤋𐤇',name:'Shelach',fact:'His name means “sent” — “Truly I have been sent,” his father said',year:'1432',quote:'He begot a son; called his name Shelach, for he said: Truly I have been sent.',cite:'Yovelim 8:5'},
+  {type:'gen',id:'ever',act:2,gen:15,glyph:'𐤏𐤁𐤓',name:'Ever (Eber)',fact:'Traditionally the root of the name “Ivri” — Hebrew',year:'1503',quote:'Shelach grew up and took to himself a wife... she bore him a son; he called his name Ever.',cite:'Yovelim 8:6-7'},
+  {type:'gen',id:'peleg',act:2,gen:16,glyph:'𐤐𐤋𐤂',name:'Peleg',fact:'Named because the earth was divided among Noach\'s sons in his days',year:'1567',quote:'He called his name Peleg, for in the days when he was born the children of Noakh began dividing the earth among themselves.',cite:'Yovelim 8:8'},
+  {type:'gen',id:'reu',act:2,gen:17,glyph:'𐤓𐤏𐤅',name:'Reu',fact:'An honest gap — his own birth isn\'t narrated; the text moves straight to his marriage',year:'—',quote:'Reu took to himself a wife; her name was Ora, the daughter of Ur, the son of Kesed.',cite:'Yovelim 11:1'},
+  {type:'gen',id:'serug',act:2,gen:18,glyph:'𐤔𐤓𐤅𐤂',name:'Serug',fact:'Grew up in Ur of the Chaldees, worshiping idols',year:'1687',quote:'He grew up and lived in Ur of the Chaldees, near the father of his wife\'s mother; he worshiped idols.',cite:'Yovelim 11:1-6'},
+  {type:'gen',id:'nachor',act:2,gen:19,glyph:'𐤍𐤇𐤅𐤓',name:'Nachor',fact:'Taught the Chaldean arts of divination by his father',year:'1744',quote:'He grew and lived in Ur of the Chaldees; his father taught him the studies of the Chaldees, to divine and augur according to the signs of heaven.',cite:'Yovelim 11:8'},
+  {type:'gen',id:'terach',act:2,gen:20,glyph:'𐤕𐤓𐤇',name:'Terach',fact:'Avraham\'s father — named plainly in Torah as one who served other gods',year:'1806',quote:'Long ago, your fathers lived beyond the Euphrates, Terakha, the father of Avraham and of Nakhor, and they served other gods.',cite:'Yehoshua 24:2'},
+  {type:'gen',id:'avram',act:2,gen:21,glyph:'𐤀𐤁𐤓𐤀𐤌',name:'Avram (later Avraham)',fact:'Born into that same household, in Ur of the Chaldees',year:'1876',quote:'She bore him a son; he called his name Avram after the father of his mother, for he had died before his daughter\'s son was conceived.',cite:'Yovelim 11:14-15'},
+  {type:'chapter',act:2,num:'—',label:'The Falling Away',sub:'The bloodline never broke. Covenant faithfulness did — and one young man had to choose it for himself.',fall:true},
+  {type:'fall',id:'ur',act:2,glyph:'𐤒𐤓',name:'A House Full of Idols',fact:'The household Avram grew up in — idols, astrology, and inherited silence',year:'',quote:'He grew up and lived in Ur of the Chaldees... he worshiped idols. His father taught him... to divine and augur according to the signs of heaven.',cite:'Yovelim 11:6, 11:8',scene:'Ur of the Chaldees — by night'},
+  {type:'fall',id:'confront',act:2,glyph:'𐤀𐤋',name:'The Confrontation',fact:'Avram challenges his father — and Terach admits he already knows',year:'',quote:'What help and profit have we from those idols which you do worship? They are dumb forms; a misleading of the heart. — Terach answered: I also know it, my son, but what will I do with a people who have made me to serve before them? If I tell them the truth, they will kill me.',cite:'Yovelim 12:2-7',scene:'Inside Terach\'s house'},
+  {type:'fall',id:'burning',act:2,glyph:'𐤇𐤀',name:'The Breaking Point',fact:'Avram burns the house of idols. His brother Haran dies trying to save them',year:'',quote:'Avram arose by night; burned the house of the idols. He awoke Haran, his brother; Haran arose and sought to save the idols from the fire. The fire flamed over him; he was burnt in the fire; he died in Ur of the Chaldees before Terah his father.',cite:'Yovelim 12:12-14',scene:'The house of idols — that same night'},
+  {type:'fall',id:'thecall',act:2,glyph:'𐤉𐤄𐤅𐤄',name:'The Call',fact:'Terach relocates with Avram as far as Haran. Then YHWH calls Avram the rest of the way, alone',year:'',quote:'Now YHWH said to Avram: Go from your country, and from your kindred, and from your father\'s house, to the land that I will show you. — Then I took your father Avraham from beyond the River and led him through all the land of Kena\'an.',cite:'Bereshit 12:1; Yehoshua 24:3',scene:'The road to Kena\'an'},
+  {type:'chapter',act:3,num:'III',label:'The Promise Carried Forward',sub:'Six more generations — the same promise, inherited on purpose, down to the man who leads it out of Mitzrayim.'},
+  {type:'gen',id:'yitzchak',act:3,gen:22,glyph:'𐤉𐤑𐤇𐤒',name:'Yitzchak (Isaac)',fact:'The promise renewed to him by name — not just inherited, sworn again',year:'',quote:'To Yitzhak I gave Yaakov and Esav.',cite:'Yehoshua 24:4'},
+  {type:'gen',id:'yaakov',act:3,gen:23,glyph:'𐤉𐤏𐤒𐤁',name:'Yaakov (Israel)',fact:'Renamed Yisra\'el; his twelve sons become the twelve tribes',year:'',quote:'Yaakov and his children went down to Egypt.',cite:'Yehoshua 24:4',tribes:true},
+  {type:'gen',id:'levi',act:3,gen:24,glyph:'𐤋𐤅𐤉',name:'Levi',fact:'Yaakov\'s third son — not the firstborn line, but the one that carries the next name forward',year:'',quote:'And these are the names of the sons of Levi according to their generations: Gershon, Kehat, and Merari.',cite:'Shemot 6:16'},
+  {type:'gen',id:'kehat',act:3,gen:25,glyph:'𐤒𐤄𐤕',name:'Kehat',fact:'Levi\'s son — grandfather of Moshe and Aharon',year:'',quote:'And the sons of Kehat: Amram, Yitzhar, Hevron, and Uzzi\'el.',cite:'Shemot 6:18'},
+  {type:'gen',id:'amram',act:3,gen:26,glyph:'𐤏𐤌𐤓𐤌',name:'Amram',fact:'Father of Moshe and Aharon, four generations after Levi',year:'',quote:'Amram took Yokheved his father\'s sister as his wife, and she bore him Aharon and Moshe.',cite:'Shemot 6:20'},
+  {type:'gen',id:'moshe',act:3,gen:27,glyph:'𐤌𐤔𐤄',name:'Moshe (Moses)',fact:'The 7th generation from Avraham — through Levi, not the firstborn line',year:'',quote:'I am the Creator of your father, the Creator of Avraham, the Creator of Yitzhak, and the Creator of Ya\'akov.',cite:'Shemot 3:6'},
 ];
+var LINEAGE_TRIBES = ['Re\'uven','Shim\'on','Lewi','Yehudah','Yissaskhar','Zevulun','Dan','Naphtali','Gad','Asher','Yosef','Binyamin'];
 // Cross-navigation between the Lineage Explorer and the Tribes & Territory
 // figures panel. Known transliteration variants between the two datasets
 // (this array predates FIGURES and uses a different convention) are handled
@@ -9227,27 +9310,103 @@ function goToLineageTribe(tribeName){
     searchFromTool(linCleanToken(tribeName));
   }
 }
+var LT_STATE = {act:'all'};
+function ltEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setLinAct(act){
+  LT_STATE.act = act;
+  document.querySelectorAll('.lt-act-btn').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-lt-act')===act);
+  });
+  buildLineage();
+}
 function buildLineage(){
   var container=document.getElementById('lin-container');
   if(!container) return;
-  container.innerHTML=LINEAGE.map(function(branch){
-    var chainHTML=branch.chain.map(function(name,i){
-      return (i>0?'<span class="lin-sep">&#8594;</span>':'')
-        +'<span class="lin-name" onclick="goToLineageName(\''+name.replace(/'/g,"\\'")+'\')">'+name+'</span>';
-    }).join('');
-    var tribesHTML='';
-    if(branch.tribes){
-      tribesHTML='<div style="font-size:11px;color:var(--tx3);margin:10px 0 6px">'+branch.note+'</div>'
-        +'<div class="lin-tribes">'+branch.tribes.map(function(t){
-          return '<div class="lin-tribe" onclick="goToLineageTribe(\''+t.replace(/'/g,"\\'")+'\')">'+t+'</div>';
-        }).join('')+'</div>';
+  var filter = LT_STATE.act;
+  var acts = '<div class="lt-acts">'
+    + ['all','1','2','3'].map(function(a){
+        var label = a==='all' ? 'Whole Story' : (a==='1' ? 'I \u00b7 Adam to Noach' : (a==='2' ? 'II \u00b7 The Falling Away' : 'III \u00b7 Yitzchak to Moshe'));
+        return '<div class="lt-act-btn'+(filter===a?' on':'')+'" data-lt-act="'+a+'" onclick="setLinAct(\''+a+'\')">'+label+'</div>';
+      }).join('')
+    + '</div>';
+  var progress = '<div class="lt-progress-track"><div class="lt-progress-fill" id="lt-progress-fill"></div></div>'
+    + '<div class="lt-progress-label" id="lt-progress-label">0 opened</div>';
+
+  var body = LINEAGE_TREE.map(function(item, idx){
+    if (item.type === 'chapter'){
+      if (filter !== 'all' && filter !== String(item.act)) return '';
+      return '<div class="lt-chapter'+(item.fall?' lt-fall':'')+'">'
+        +'<div class="lt-chapter-num">Chapter '+item.num+'</div>'
+        +'<h3>'+ltEsc(item.label)+'</h3>'
+        +'<div class="lt-chapter-sub">'+ltEsc(item.sub)+'</div>'
+        +'<div class="lt-chapter-rule"></div>'
+        +'</div>';
     }
-    return '<div class="lin-branch">'
-      +'<div class="lin-branch-title">'+branch.title+'</div>'
-      +'<div class="lin-chain">'+chainHTML+'</div>'
-      +tribesHTML
-      +'</div>';
+    if (filter !== 'all' && filter !== String(item.act)) return '';
+    var isFall = item.type === 'fall';
+    var fig = !isFall ? findFigureByName(item.name) : null;
+    var figLink = fig ? '<span class="lin-name" style="margin-top:8px;display:inline-block" onclick="event.stopPropagation();goToLineageName(\''+item.name.replace(/'/g,"\\'")+'\')">View Tribes &amp; Territory card</span>' : '';
+    var tribesBlock = '';
+    if (item.tribes){
+      tribesBlock = '<div class="lt-tribes-wrap"><div class="lt-tribes-note">His twelve sons became the twelve tribes:</div>'
+        + '<div class="lin-tribes">' + LINEAGE_TRIBES.map(function(t){
+            return '<div class="lin-tribe" onclick="event.stopPropagation();goToLineageTribe(\''+t.replace(/'/g,"\\'")+'\')">'+t+'</div>';
+          }).join('') + '</div></div>';
+    }
+    return '<div class="lt-node lt-reveal'+(isFall?' lt-fall':'')+'" id="lt-node-'+item.id+'" onclick="toggleLTNode(\''+item.id+'\')">'
+      +'<div class="lt-dot">'+(isFall?'&#33;':item.gen)+'</div>'
+      +'<div class="lt-card">'
+        +(isFall?'<div class="lt-scene">'+ltEsc(item.scene)+'</div>':'')
+        +'<div class="lt-top">'
+          +'<div class="lt-glyph">'+item.glyph+'</div>'
+          +'<div class="lt-head"><div class="lt-nname">'+ltEsc(item.name)+'</div><div class="lt-fact">'+ltEsc(item.fact)+'</div></div>'
+          +(item.year?'<div class="lt-year"><b>'+ltEsc(item.year)+'</b>AM</div>':'')
+          +'<div class="lt-chev">&#9656;</div>'
+        +'</div>'
+        +'<div class="lt-detail"><div class="lt-quote">'+ltEsc(item.quote)+'</div><div class="lt-cite"><b>Source:</b> '+ltEsc(item.cite)+'</div>'+figLink+'</div>'
+      +tribesBlock
+      +'</div>'
+    +'</div>';
   }).join('');
+
+  var epilogue = (filter==='all'||filter==='3') ? (
+    '<div class="lt-epilogue lt-reveal">'
+    +'<div class="lt-epilogue-tag">Four Hundred Years Later</div>'
+    +'<div class="lt-epilogue-quote">&ldquo;I am the Creator of your father, the Creator of Avraham, the Creator of Yitzchak, and the Creator of Ya\'akov.&rdquo;</div>'
+    +'<div class="lt-epilogue-cite">What YHWH says to Moshe at the burning bush — Shemot 3:6. The same three names, the same promise, now standing at the edge of the Exodus.</div>'
+    +'</div>'
+  ) : '';
+
+  var variantNote = '<div class="lt-variant-note"><b>A real textual variant, not an error:</b> Yovelim names Kainam between Arpakhshad and Shelach — a generation the Masoretic Bereshit 11 genealogy leaves out. Both traditions are shown as themselves, not reconciled into one count.</div>';
+
+  container.innerHTML = acts + progress + '<div class="lt-timeline">' + body + '</div>' + epilogue + variantNote;
+  ltUpdateProgress();
+  ltArmReveal();
+}
+function toggleLTNode(id){
+  var node = document.getElementById('lt-node-'+id);
+  if (node) node.classList.toggle('open');
+  ltUpdateProgress();
+}
+function ltUpdateProgress(){
+  var total = LINEAGE_TREE.filter(function(d){ return d.type !== 'chapter'; }).length;
+  var open = document.querySelectorAll('#lin-container .lt-node.open').length;
+  var fill = document.getElementById('lt-progress-fill');
+  var label = document.getElementById('lt-progress-label');
+  if (fill) fill.style.width = (total ? (open/total*100) : 0) + '%';
+  if (label) label.textContent = open + ' of ' + total + ' opened';
+}
+var LT_REDUCE_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var LT_IO = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('in'); });
+}, {threshold:0.1}) : null;
+function ltArmReveal(){
+  var targets = document.querySelectorAll('#lin-container .lt-reveal:not(.in)');
+  if (LT_REDUCE_MOTION || !LT_IO){
+    targets.forEach(function(t){ t.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(t){ LT_IO.observe(t); });
 }
 
 // MO'EDIM
