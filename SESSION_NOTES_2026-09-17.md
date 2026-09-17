@@ -138,12 +138,46 @@
   "articulate") before pushing. Cache bumped to `loadwords-v5`.
 - PR #943 was still open (not yet merged) when this round finished, so no
   new branch restart or backup was needed — pushed straight onto it as an
-  additional commit.
+  additional commit. PR #943 later merged (confirmed via API + 309-word
+  count check on `main`); a small follow-up PR #944 was opened just to log
+  that confirmation in these notes.
+
+**Load Words — scoped hard-refresh button (pushed onto open PR #944)**
+
+- User asked for a refresh button like ACR Search and other sites have,
+  explicitly requiring it stay scoped to Load Words only.
+- Read ACR Search's actual `hardRefresh()` implementation before copying
+  it, and found it does NOT follow Rule 21 — it calls `caches.keys()` and
+  deletes every result with no prefix filter, the exact global-wipe
+  pattern that already took down ACR Reader's cache once (documented in
+  this same file, "maps/index.html" incident). Did not copy it, and did
+  not touch Search itself (would need its own unlock phrase) — flagged
+  this finding to the user instead of silently fixing or silently
+  ignoring it.
+- Built Load Words' own `hardRefresh()` from HANDOFF.md's "Standard Scoped
+  Hard Refresh Template" instead: filters `caches.keys()` to the
+  `loadwords-` prefix and `getRegistrations()` to the `/loadwords/` scope
+  before touching anything. Added a gold refresh icon button to the top
+  bar (matching the repo-wide `#C8971F` hard-refresh color convention).
+- Added Load Words to HANDOFF.md's per-app cache-prefix/SW-scope
+  reference table.
+- Verified live, not just read: seeded four simulated caches on the page
+  (`loadwords-v6`, plus `acr-`, `attain-jr-`, `load-` standing in for
+  other apps), called the function, and confirmed only the `loadwords-`
+  one was deleted while the other three survived untouched. Also clicked
+  the actual button in the UI and confirmed it triggers a real page
+  reload. Cache bumped to `loadwords-v6`.
 
 ## Outstanding / blocking
 
-- **None.** PR #943 merged. Nothing left waiting on the user for Load Words
-  as of this entry.
+- **PR #944 needs user review and explicit merge instruction** (now
+  carries the session-notes confirmation commit plus the scoped
+  hard-refresh button). Files changed: `HANDOFF.md` + 3 files in
+  `loadwords/`. Risk: low.
+- Separate from Load Words: **ACR Search's own hard-refresh button is
+  unscoped** (a pre-existing bug, not something touched today) — flagged
+  here for the user's awareness and decision; fixing it would need the
+  "edit ACR Search" unlock phrase per Rule 8.
 - Not verified on an actual iPad Safari across any of today's PRs —
   flagged explicitly each time rather than claimed. Splash screen, the
   navy chrome, the new word count, and the thesaurus links should be
@@ -179,6 +213,9 @@
 ## Today's commit log
 
 ```
+67a5ddb Load Words: add scoped hard-refresh button
+c3339f0 Update session notes: PR #943 merged
+12a4ddc Update session notes for 2026-09-17
 c4d5fdf Load Words: remove basic-tier words, add 76 more advanced words, thesaurus
 d89a515 Load Words: add 133 advanced words, new Super Advanced category
 f16d944 Load Words: dark activity-tile cards matching ACR Study's grid
