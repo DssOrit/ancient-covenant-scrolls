@@ -321,6 +321,21 @@ input[type=range]{ flex:1; accent-color:var(--accent); }
 <div id="splash"><div class="sp-img"></div></div>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
+<script>
+// Safety net, independent of app.js/wordbank.js: if those scripts are ever
+// slow to load, blocked, or fail (a stale/racing service worker, a flaky
+// connection, anything), the boot-intro/splash overlays must never be able
+// to hide the app forever. This alone force-reveals them after a generous
+// wait, regardless of whether app.js's own nicer, animated sequence ever runs.
+(function(){
+  setTimeout(function(){
+    var intro = document.getElementById('boot-intro');
+    var splash = document.getElementById('splash');
+    if(intro) intro.classList.add('gone');
+    if(splash) splash.classList.add('gone');
+  }, 10000);
+})();
+</script>
 <script src="wordbank.js"></script>
 <script src="app.js"></script>
 </body>
