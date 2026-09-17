@@ -2,9 +2,9 @@
 
 ## Current state
 
-- Branch restarted from `origin/main` four times today, per the merged-PR
+- Branch restarted from `origin/main` five times today, per the merged-PR
   rule — after PR #941 merged, after PR #942 merged, after PR #943 merged,
-  and after PR #945 merged.
+  after PR #945 merged, and after PR #946 merged.
 - PR #941: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/941
 - PR #942: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/942
 - PR #943: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
@@ -19,11 +19,16 @@
   fix, and the Confusing-Pairs/Upgrade-Ladders trim). Confirmed via API:
   `merged: true`, `merged_by: DssOrit`, head SHA `b9fbf19` matching what
   was pushed.
-- PR #946: **open, awaiting user merge** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/946
-  (1 commit: the 63-word C1/C2 replacement batch for the content trimmed
-  in PR #945)
-- Latest commit on the branch: `929303c` — "Load Words: add 63 C1/C2
-  words to replace the trimmed content". Pushed, not yet merged.
+- PR #946: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/946
+  (2 commits: the 63-word C1/C2 replacement batch, then theme tagging +
+  31 more words + the Context Quiz test mode). Confirmed via API:
+  `merged: true`, `merged_by: DssOrit`, head SHA `d51627b` matching what
+  was pushed.
+- PR #947: **open, awaiting user merge** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/947
+  (1 commit: 156 more words to reach exactly 500 total, plus the new
+  Daily Upgrade scenario quiz)
+- Latest commit on the branch: `ee6716c` — "Load Words: reach 500 words,
+  add Daily Upgrade scenario quiz". Pushed, not yet merged.
 - Working tree: clean (this commit is pushed)
 
 ## Built today
@@ -351,12 +356,61 @@
 - Bank now totals 344 words (cp:16, up:10, ad:60, ce:15, li:15, sa:228),
   all tagged with one of 7 themes.
 
+**Load Words — 500 words total, Daily Upgrade scenario quiz (PR #947, open)**
+
+- User asked for the bank to reach exactly 500 CEFR C1/C2 words, and
+  described the same four vocabulary categories (low-frequency, high-level
+  synonyms, literary/aesthetic, analytical/abstract) as the target.
+- Compiled 238 candidate C1/C2 words, checked programmatically against
+  the current 344-word bank (zero collisions), and took the first 156
+  to land on exactly 500. Wrote full entries (definition, example,
+  conversation, syllables/stress, theme, synonyms) for each rather than
+  reusing generic content.
+- User separately shared a screenshot of a quiz question and asked to
+  add `historicism` and `presupposition`. Added both — genuine C1/C2
+  academic terms. Declined to add three other words from the same
+  message (`philosopher`, `epoch` — too common for this bank's
+  advanced-only standard; `unarticulated` — redundant with the existing
+  `articulate` entry) and said so rather than adding them silently.
+- User then described a second, easier quiz style: a "Context-Matching
+  & Scenario-Based Quiz" that drops a word into a relatable daily
+  situation (a messy roommate, a blunt friend) with a "casual thought"
+  and an "advanced upgrade" phrasing, and gave 4 worked examples.
+- Built this as a new **Daily Upgrade** test mode, backed by a new
+  hand-curated `SCENARIOS` array (24 entries: id, wordId, situation,
+  casual, upgrade) rather than trying to auto-generate scenario prose
+  for all 500 words, which would need real authored content per entry.
+  Reused the user's 4 given examples (byzantine, taciturn, meticulous,
+  ephemeral) plus 20 more drawn from existing relatable-register words
+  in the bank (cantankerous, pragmatic, candid, nonchalant, gregarious,
+  laconic, apathetic, resilient, articulate, prudent, garrulous,
+  frivolous, diligent, haughty, affable, banal, mundane, insipid,
+  malleable, and others).
+- Same 4-option multiple-choice mechanic as the existing Context Quiz,
+  reusing its click-handler and grading logic (extended, not
+  duplicated) — after answering, the correct option shows the
+  scenario's own authored "upgrade" sentence rather than a bare
+  definition, matching the reference format's flavor more closely.
+- Verified programmatically (exactly 500 total words, zero duplicate
+  ids/words, zero missing/invalid fields, every `SCENARIOS.wordId`
+  resolves to a real word) and live via headless Chromium (opened the
+  Daily Upgrade quiz, confirmed the situation/casual-thought prompt and
+  4 options render, answered correctly and confirmed the authored
+  upgrade sentence appears, answered incorrectly on the next question
+  and confirmed both explanations appear together, screenshot compared
+  against the reference layout). Zero console/page errors. Cache
+  bumped to `loadwords-v12`.
+- Bank now totals exactly 500 words (cp:16, up:10, ad:60, ce:15, li:15,
+  sa:384). Branch restarted from `origin/main` again (PR #946 had
+  merged), new backup `backup/2026-09-17-loadwords-v11` created and
+  SHA-verified. PR #947 opened, presented for merge.
+
 ## Outstanding / blocking
 
-- **PR #946 is open, not yet merged** — contains the 63-word C1/C2
-  replacement batch, the theme-tagging system + filter, 31 more
-  scholarly words, and the new Context Quiz test mode. Presented to the
-  user; awaiting explicit merge instruction per Rule 9.
+- **PR #947 is open, not yet merged** — contains the 156-word batch that
+  brings the bank to exactly 500 words, plus the new Daily Upgrade
+  scenario quiz. Presented to the user; awaiting explicit merge
+  instruction per Rule 9.
 - Separate from Load Words: **ACR Search's own hard-refresh button is
   unscoped** (a pre-existing bug, not something touched today) — flagged
   for the user's awareness and decision; fixing it would need the
@@ -364,13 +418,19 @@
 - Not verified on an actual iPad Safari across any of today's PRs —
   flagged explicitly each time rather than claimed. The boot-intro/splash
   timing, the navy chrome, the word count, audio/TTS output, the
-  thesaurus links, the theme filter, and the new Context Quiz should be
-  spot-checked on-device.
+  thesaurus links, the theme filter, and both new quiz modes (Context
+  Quiz, Daily Upgrade) should be spot-checked on-device.
 
 ## Pending / parked
 
-- None from today's approved work — everything requested has shipped to
-  PR #946, awaiting the user's merge decision.
+- The Daily Upgrade scenario quiz currently draws from a hand-curated
+  set of 24 scenarios (`SCENARIOS` in `wordbank.js`), not all 500 words
+  — expanding that set is a slower, manual authoring process (each
+  needs a real situation + casual phrasing + upgrade sentence) distinct
+  from the Context Quiz's auto-generated approach. Parked as a known
+  scope limit, not an oversight — flagged in the PR body.
+- Otherwise none from today's approved work — everything requested has
+  shipped to PR #947, awaiting the user's merge decision.
 
 ## Capability gaps in this session
 
@@ -397,7 +457,9 @@
 ## Today's commit log
 
 ```
-(pending) Load Words: theme tagging, 31 more words, Context Quiz test mode
+(pending) Load Words: reach 500 words, add Daily Upgrade scenario quiz
+6b8cadf Merge pull request #946 from claude/load-words-pwa-setup-nf1pcn
+d51627b Load Words: theme tagging, 31 more scholarly words, Context Quiz mode
 929303c Load Words: add 63 C1/C2 words to replace the trimmed content
 0dd3ba1 Merge pull request #945 from claude/load-words-pwa-setup-nf1pcn
 b9fbf19 Update session notes: stuck-splash fix, word-bank trim, PR #945 status
