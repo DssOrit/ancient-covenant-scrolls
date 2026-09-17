@@ -2,10 +2,11 @@
 
 ## Current state
 
-- Latest commit on `claude/load-words-pwa-setup-nf1pcn`: `d89a515` ("Load
-  Words: add 133 advanced words, new Super Advanced category")
+- Latest commit on `claude/load-words-pwa-setup-nf1pcn`: `c4d5fdf` ("Load
+  Words: remove basic-tier words, add 76 more advanced words, thesaurus")
 - Branch restarted from `origin/main` twice today, per the merged-PR rule —
-  once after PR #941 merged, once after PR #942 merged
+  once after PR #941 merged, once after PR #942 merged. PR #943 stayed open
+  through this round, so no third restart was needed — pushed straight onto it.
 - PR #941: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/941
 - PR #942: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/942
 - PR #943 open: https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
@@ -97,17 +98,54 @@
   README's stale word count and "splash not wired" note corrected.
 - Branch restarted from `origin/main` again (PR #942 had merged), new
   backup `backup/2026-09-17-loadwords-v3` created and SHA-verified. PR #943
-  opened, presented for merge, waiting on the user.
+  opened, presented for merge.
+
+**Load Words — remove basic words, 76 more advanced words, thesaurus feature (pushed onto open PR #943)**
+
+- Before user merged PR #943, they sent five more rounds of vocabulary
+  infographics and three explicit instructions: find more words at this
+  advanced level, remove the basic words from the site, and add a
+  thesaurus option for every word.
+- Pulled the exact current 243-word list from the repo first (not memory)
+  to dedupe the new batch against.
+- **Removed** the 10 literal basic-tier words from Upgrade Ladders (help,
+  buy, ask, show, start, think, try, fast, happy, old) via script, keeping
+  the intermediate/advanced rungs; reworded their notes since several
+  referenced the now-deleted basic word by name ("Mid-level upgrade of
+  'help'" -> "A more formal way to offer help").
+- **Added 76 more words** (36 Super Advanced, 40 Advanced) from the new
+  infographics — e.g. byzantine, contumacious, grandiloquent, quixotic,
+  vituperative, zeitgeist, hubris, meticulous, discrepancy. Skipped
+  anything illegible in the low-resolution images (a couple of -phile/
+  -phobia coinages) rather than guessing at an OCR read, per the
+  never-fabricate-content standard.
+- **Added a thesaurus.** Every one of the 309 words now has a `syn` field
+  (2 synonyms) — wrote all 233 for the pre-existing words directly, the 76
+  new ones got synonyms authored alongside their definitions. Built a new
+  "Thesaurus" block on every word card: a synonym chip that exactly
+  matches another word already in the bank is clickable and jumps to that
+  word's page (verified this actually navigates, not just that it
+  renders); a synonym with no match in the bank renders as plain text.
+- Verified programmatically (309 words, zero duplicate ids/words, every
+  `related` and thesaurus link resolves) and live via headless-browser
+  (home shows "309", Upgrade Ladders list no longer contains "help",
+  clicking a live thesaurus chip on "eloquent" actually navigated to
+  "articulate") before pushing. Cache bumped to `loadwords-v5`.
+- PR #943 was still open (not yet merged) when this round finished, so no
+  new branch restart or backup was needed — pushed straight onto it as an
+  additional commit.
 
 ## Outstanding / blocking
 
-- **PR #943 needs user review and explicit merge instruction.** Files
-  changed: 4, all inside `loadwords/` (`app.js`, `wordbank.js`,
-  `service-worker.js`, `README.md`). Risk: low — content-only addition, no
-  existing words modified or removed, no other site touched.
-- Not verified on an actual iPad Safari across any of today's three PRs —
-  flagged explicitly each time rather than claimed. Splash screen, the navy
-  chrome, and the new word count should be spot-checked on-device.
+- **PR #943 needs user review and explicit merge instruction** (now
+  carries three commits: the 133-word addition, plus this round's
+  basic-word removal / 76-word addition / thesaurus feature). Files
+  changed: 5, all inside `loadwords/`. Risk: low — content and one UI
+  feature, no other site touched.
+- Not verified on an actual iPad Safari across any of today's PRs —
+  flagged explicitly each time rather than claimed. Splash screen, the
+  navy chrome, the new word count, and the thesaurus links should be
+  spot-checked on-device.
 
 ## Pending / parked
 
@@ -139,6 +177,7 @@
 ## Today's commit log
 
 ```
+c4d5fdf Load Words: remove basic-tier words, add 76 more advanced words, thesaurus
 d89a515 Load Words: add 133 advanced words, new Super Advanced category
 f16d944 Load Words: dark activity-tile cards matching ACR Study's grid
 8970edf Load Words: fix missing iOS splash, re-theme to match ACR Study
