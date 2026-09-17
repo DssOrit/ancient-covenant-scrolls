@@ -1,6 +1,6 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v3';
+const APP_VERSION = 'v4';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 

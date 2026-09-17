@@ -9,11 +9,11 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (110 words to start, across 5 categories)
+wordbank.js          — the core word bank (243 words across 6 categories)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
-assets/               — splash art (branding, not wired into the manifest)
+assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
 **Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill), and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
