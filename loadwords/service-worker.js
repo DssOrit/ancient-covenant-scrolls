@@ -3,7 +3,7 @@
 // Bump CACHE_NAME whenever app.js / wordbank.js / index.html change materially,
 // so returning users get the new version instead of a stale cache.
 
-const CACHE_NAME = 'loadwords-v7';
+const CACHE_NAME = 'loadwords-v9';
 const APP_SHELL = [
   './',
   './index.html',
@@ -46,8 +46,26 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Everything else (app.js, wordbank.js, icons, fonts): cache-first,
-  // and quietly refresh the cache in the background for next time.
+  // Core app code (app.js, wordbank.js): network-first, same as the HTML
+  // shell above. These are small text files, so the network round-trip is
+  // cheap, and this guarantees a fresh cache-version bump is never masked
+  // by a stale cache-first script from a previous deploy. Falls back to
+  // the cache when offline.
+  if (req.url.indexOf('/app.js') !== -1 || req.url.indexOf('/wordbank.js') !== -1) {
+    event.respondWith(
+      fetch(req).then((res) => {
+        if (res && res.status === 200) {
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, res.clone()));
+        }
+        return res;
+      }).catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Everything else (icons, splash art, manifest): cache-first, and
+  // quietly refresh the cache in the background for next time. These are
+  // large/binary and change far less often than the app code.
   event.respondWith(
     caches.match(req).then((cached) => {
       const fetchPromise = fetch(req).then((res) => {
