@@ -628,6 +628,7 @@ onclick="(async()=>{try{
 | Attain Jr   | `attain-jr-`      | `/attain-jr/`   |
 | Study       | `acr-study-`      | `/study/`       |
 | ACR Reader  | `acr-`            | `/` (root)      |
+| Load Words  | `loadwords-`      | `/loadwords/`   |
 
 **Never** call `caches.keys()` and delete all results. **Never** call
 `getRegistrations()` and unregister all results. One app's refresh must

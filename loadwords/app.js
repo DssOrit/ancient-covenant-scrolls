@@ -1,6 +1,6 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v5';
+const APP_VERSION = 'v6';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -34,7 +34,8 @@ const ICONS = {
   heart:'<path d="M12 20s-7-4.35-9.5-9C.8 7.2 3 4 6.3 4c2 0 3.4 1.1 4.2 2.3C11.3 5.1 12.7 4 14.7 4 18 4 20.2 7.2 18.5 11 16 15.65 12 20 12 20z"/>',
   headphones:'<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="7" rx="1.5"/><rect x="17" y="13" width="4" height="7" rx="1.5"/>',
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
-  compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>'
+  compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>'
 };
 function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
@@ -350,6 +351,28 @@ function toast(msg){
   toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
 }
 
+// ---------------- hard refresh (scoped to this app only) ----------------
+// Only ever touches caches prefixed 'loadwords-' and the service worker
+// registered at /loadwords/ — never a site-wide wipe. See HANDOFF.md's
+// "Standard Scoped Hard Refresh Template".
+async function hardRefresh(){
+  try{
+    if('caches' in window){
+      const keys = await caches.keys();
+      await Promise.all(
+        keys.filter(k=>k.indexOf('loadwords-')===0).map(k=>caches.delete(k))
+      );
+    }
+    if('serviceWorker' in navigator){
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(
+        regs.filter(r=>r.scope.indexOf('/loadwords/')>=0).map(r=>r.unregister())
+      );
+    }
+  }catch(e){ console.warn('hard refresh cleanup failed', e); }
+  location.reload(true);
+}
+
 // ---------------- image tile ----------------
 function imageTile(word, size){
   const url = State.images[word.id];
@@ -391,7 +414,10 @@ function topbarHtml(){
       <div class="brand-mark">${ic('book',{})}</div>
       <div class="brand-name">Load <b>Words</b></div>
     </div>
-    <button class="icon-btn" data-nav="settings" aria-label="Settings">${ic('gear')}</button>
+    <div class="topbar-actions">
+      <button class="icon-btn refresh-btn" id="hardRefreshBtn" aria-label="Refresh app" title="Refresh app">${ic('refresh')}</button>
+      <button class="icon-btn" data-nav="settings" aria-label="Settings">${ic('gear')}</button>
+    </div>
   </div>`;
 }
 
@@ -1032,6 +1058,14 @@ function renderSettings(){
 
 // ================= EVENTS =================
 function bindEvents(){
+  const hardRefreshBtn = document.getElementById('hardRefreshBtn');
+  if(hardRefreshBtn){
+    hardRefreshBtn.addEventListener('click', ()=>{
+      hardRefreshBtn.classList.add('spinning');
+      toast('Refreshing Load Words...');
+      hardRefresh();
+    });
+  }
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.addEventListener('click', ()=>{
       const v = el.getAttribute('data-nav');

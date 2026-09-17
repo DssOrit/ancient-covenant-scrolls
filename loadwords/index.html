@@ -85,6 +85,10 @@ a{ color:var(--accent); }
 .icon-btn{ width:40px; height:40px; border-radius:12px; border:none; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; cursor:pointer; }
 .icon-btn svg{ width:19px; height:19px; stroke:#fff; }
 .icon-btn:active{ transform:scale(0.95); }
+.topbar-actions{ display:flex; align-items:center; gap:8px; }
+.icon-btn.refresh-btn svg{ stroke:#C8971F; }
+.icon-btn.refresh-btn.spinning svg{ animation:spin 0.7s linear; }
+@keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 main{ flex:1; padding:6px 20px 30px; }
 
