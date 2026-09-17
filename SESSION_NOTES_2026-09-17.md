@@ -2,15 +2,20 @@
 
 ## Current state
 
-- Latest commit on `claude/load-words-pwa-setup-nf1pcn`: `c4d5fdf` ("Load
-  Words: remove basic-tier words, add 76 more advanced words, thesaurus")
-- Branch restarted from `origin/main` twice today, per the merged-PR rule —
-  once after PR #941 merged, once after PR #942 merged. PR #943 stayed open
-  through this round, so no third restart was needed — pushed straight onto it.
+- Branch restarted from `origin/main` three times today, per the merged-PR
+  rule — after PR #941 merged, after PR #942 merged, and after PR #943
+  merged.
 - PR #941: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/941
 - PR #942: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/942
-- PR #943 open: https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
-  — waiting on user review/merge, per Rule 9 (never merged automatically)
+- PR #943: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
+  (4 commits: the 133-word addition, then the basic-word-removal /
+  76-word addition / thesaurus round pushed onto the same open PR)
+- Confirmed post-merge (Rule 33 — checked the actual state, not assumed):
+  PR #943 shows `merged: true`, `merged_by: DssOrit`; `main`'s
+  `loadwords/wordbank.js` contains exactly 309 word entries via
+  `raw.githubusercontent.com`.
+- All three Load Words PRs today (#941, #942, #943) are now merged. Nothing
+  outstanding on this branch.
 - Working tree: clean
 
 ## Built today
@@ -137,11 +142,8 @@
 
 ## Outstanding / blocking
 
-- **PR #943 needs user review and explicit merge instruction** (now
-  carries three commits: the 133-word addition, plus this round's
-  basic-word removal / 76-word addition / thesaurus feature). Files
-  changed: 5, all inside `loadwords/`. Risk: low — content and one UI
-  feature, no other site touched.
+- **None.** PR #943 merged. Nothing left waiting on the user for Load Words
+  as of this entry.
 - Not verified on an actual iPad Safari across any of today's PRs —
   flagged explicitly each time rather than claimed. Splash screen, the
   navy chrome, the new word count, and the thesaurus links should be
