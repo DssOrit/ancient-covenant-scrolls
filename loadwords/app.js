@@ -1,6 +1,6 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v3';
+const APP_VERSION = 'v5';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -543,6 +543,18 @@ function wordCardHtml(w, revealed){
   const soundLabel = soundActive ? (s.index < w.syllables.length ? 'Next sound' : 'Hear whole word') : 'Sound it out';
   const trickyHtml = hasTrickyPattern(w.word) ? `<div class="spell-pattern">${trickySpellingHtml(w.word)}</div>` : '';
   const relatedWords = (w.related||[]).map(id=>State.words.find(x=>x.id===id)).filter(Boolean);
+  const thesaurusHtml = (w.syn && w.syn.length) ? `
+    <div class="wblock">
+      <div class="row-h"><h4>Thesaurus</h4></div>
+      <div class="chip-row">
+        ${w.syn.map(s=>{
+          const match = findWordByExactText(s);
+          return match
+            ? `<div class="chip syn-live" data-syn-id="${match.id}">${escapeHtml(s)}</div>`
+            : `<div class="chip syn-static">${escapeHtml(s)}</div>`;
+        }).join('')}
+      </div>
+    </div>` : '';
   return `<div class="wcard">
     <div class="badge-row">
       <span class="badge reg">${w.register}</span>
@@ -575,6 +587,7 @@ function wordCardHtml(w, revealed){
         <div class="line b"><p id="conv1Text">${wordSpansHtml(w.conv[1])}</p><div class="mini-spk" data-speak="${escapeAttr(w.conv[1])}" data-target="conv1Text">${ic('speakerSm')}</div></div>
       </div>
     </div>
+    ${thesaurusHtml}
     ${relatedWords.length ? `
     <div class="wblock">
       <div class="row-h"><h4>Sounds similar to</h4></div>
@@ -1080,6 +1093,14 @@ function bindEvents(){
       if(w) playPairContrast(w);
     });
   }
+  document.querySelectorAll('.syn-live').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      State.detailId = el.getAttribute('data-syn-id');
+      State.view = 'wordDetail';
+      render();
+      window.scrollTo(0,0);
+    });
+  });
   document.querySelectorAll('.mini-spk').forEach(el=>{
     el.addEventListener('click', ()=>{
       const targetId = el.getAttribute('data-target');
@@ -1250,6 +1271,11 @@ function bindEvents(){
   }
   const testRateBtn = document.getElementById('testRateBtn');
   if(testRateBtn){ testRateBtn.addEventListener('click', ()=>speak('This is how words will sound.')); }
+}
+
+function findWordByExactText(text){
+  const t = String(text).toLowerCase().trim();
+  return State.words.find(w=>w.word.toLowerCase()===t) || null;
 }
 
 function currentDisplayedWord(){
