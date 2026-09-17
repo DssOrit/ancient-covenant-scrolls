@@ -100,16 +100,15 @@ main{ flex:1; padding:6px 20px 30px; }
 .stat .lbl{ font-size:calc(var(--fs-base) * 0.74); color:var(--text-soft); margin-top:2px; }
 
 .action-row{ display:flex; flex-direction:column; gap:10px; }
-.action{ display:flex; align-items:center; gap:14px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; cursor:pointer; text-align:left; width:100%; }
+.action{ display:flex; align-items:center; gap:14px; background:#1a1a2e; border:2px solid var(--c, var(--accent)); border-radius:var(--radius); padding:16px; cursor:pointer; text-align:left; width:100%; box-shadow:0 2px 10px rgba(0,0,0,.3); transition:transform .15s, box-shadow .15s; }
+.action:hover{ transform:translateY(-2px); box-shadow:0 4px 20px rgba(0,0,0,.4); }
 .action:active{ transform:scale(0.98); }
-.action .a-ic{ width:44px; height:44px; border-radius:12px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.action .a-ic svg{ width:21px; height:21px; stroke:var(--accent); }
-.action.alt .a-ic{ background:var(--accent-2-soft); }
-.action.alt .a-ic svg{ stroke:var(--accent-2); }
-.action .a-txt b{ display:block; font-family:var(--font-head); font-size:calc(var(--fs-base) * 0.94); font-weight:600; }
-.action .a-txt span{ font-size:calc(var(--fs-base) * 0.79); color:var(--text-soft); }
+.action .a-ic{ width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.action .a-ic svg{ width:21px; height:21px; stroke:var(--c, var(--accent)); }
+.action .a-txt b{ display:block; font-family:var(--font-head); font-size:calc(var(--fs-base) * 0.94); font-weight:700; color:var(--c, var(--accent)); }
+.action .a-txt span{ font-size:calc(var(--fs-base) * 0.79); color:#a8a8c8; }
 .action .a-chev{ margin-left:auto; }
-.action .a-chev svg{ width:16px; height:16px; stroke:var(--text-soft); }
+.action .a-chev svg{ width:16px; height:16px; stroke:#a8a8c8; }
 
 /* category chips */
 .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }

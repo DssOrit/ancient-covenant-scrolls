@@ -436,22 +436,22 @@ function renderHome(){
   ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div></div>` : ''}
   <div class="section-title">Jump in</div>
   <div class="action-row">
-    <button class="action" data-nav="study">
+    <button class="action" data-nav="study" style="--c:#059669">
       <div class="a-ic">${ic('book')}</div>
       <div class="a-txt"><b>Study due words</b><span>${due} word${due===1?'':'s'} ready for review</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action alt" data-nav="listen">
+    <button class="action" data-nav="listen" style="--c:#4F46E5">
       <div class="a-ic">${ic('headphones')}</div>
       <div class="a-txt"><b>Listen mode</b><span>Hands-free audio: word, meaning, example &amp; usage on a loop</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action" data-nav="test">
+    <button class="action" data-nav="test" style="--c:#7C3AED">
       <div class="a-ic">${ic('test')}</div>
       <div class="a-txt"><b>Take a test</b><span>Meaning match, sentence fill, typed recall &amp; more</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action" data-nav="add">
+    <button class="action" data-nav="add" style="--c:#D97706">
       <div class="a-ic">${ic('plus')}</div>
       <div class="a-txt"><b>Add a word</b><span>Build your own list, with images</span></div>
       <div class="a-chev">${ic('chevR')}</div>
@@ -500,9 +500,9 @@ function renderWordDetail(){
   const isCustom = w.category==='custom';
   return `<div class="pagehead"><button class="back" data-nav="list">${ic('chevL')}</button><h2>${escapeHtml(w.word)}</h2></div>
   <div class="action-row" style="margin-bottom:16px;">
-    <button class="action" id="addImgBtn"><div class="a-ic">${ic('image')}</div><div class="a-txt"><b>${State.images[w.id]?'Change image':'Add an image'}</b><span>Paste a link to a photo for this word</span></div></button>
-    ${isCustom?`<button class="action alt" id="editWordBtn"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Edit this word</b><span>Update meaning, example or conversation</span></div></button>`:''}
-    <button class="action" id="exportImgBtn"><div class="a-ic">${ic('download')}</div><div class="a-txt"><b>Save as image</b><span>Download a card with the word, meaning &amp; example</span></div></button>
+    <button class="action" id="addImgBtn" style="--c:#2563EB"><div class="a-ic">${ic('image')}</div><div class="a-txt"><b>${State.images[w.id]?'Change image':'Add an image'}</b><span>Paste a link to a photo for this word</span></div></button>
+    ${isCustom?`<button class="action" id="editWordBtn" style="--c:#7C3AED"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Edit this word</b><span>Update meaning, example or conversation</span></div></button>`:''}
+    <button class="action" id="exportImgBtn" style="--c:#D97706"><div class="a-ic">${ic('download')}</div><div class="a-txt"><b>Save as image</b><span>Download a card with the word, meaning &amp; example</span></div></button>
   </div>
   ${wordCardHtml(w, true)}`;
 }
@@ -856,10 +856,10 @@ function renderTest(){
     <div class="pagehead"><h2>Take a Test</h2></div>
     <p class="sub">Pick a test type. Every question is speakable — tap the speaker to hear it read aloud.</p>
     <div class="action-row">
-      <button class="action" data-testtype="meaning"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Meaning match</b><span>See the word, pick the right meaning</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action alt" data-testtype="word"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word match</b><span>See the meaning, pick the right word</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-testtype="sentence"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action alt" data-testtype="spelling"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="meaning" style="--c:#7C3AED"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Meaning match</b><span>See the word, pick the right meaning</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="word" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word match</b><span>See the meaning, pick the right word</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="sentence" style="--c:#EA580C"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="spelling" style="--c:#DC2626"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
