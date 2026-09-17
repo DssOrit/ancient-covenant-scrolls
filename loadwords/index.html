@@ -85,6 +85,10 @@ a{ color:var(--accent); }
 .icon-btn{ width:40px; height:40px; border-radius:12px; border:none; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; cursor:pointer; }
 .icon-btn svg{ width:19px; height:19px; stroke:#fff; }
 .icon-btn:active{ transform:scale(0.95); }
+.topbar-actions{ display:flex; align-items:center; gap:8px; }
+.icon-btn.refresh-btn svg{ stroke:#C8971F; }
+.icon-btn.refresh-btn.spinning svg{ animation:spin 0.7s linear; }
+@keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 main{ flex:1; padding:6px 20px 30px; }
 
@@ -288,9 +292,33 @@ input[type=range]{ flex:1; accent-color:var(--accent); }
 @media (min-width:600px){
   .stat-grid{ gap:14px; }
 }
+
+/* ============ AUTO LOADING INTRO (matches other Load apps) ============ */
+#boot-intro{ position:fixed; inset:0; z-index:100000; background:#1a1a2e; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; }
+#boot-intro.gone{ opacity:0; visibility:hidden; pointer-events:none; transition:opacity .45s ease; }
+#boot-intro .bi-logo{ display:flex; align-items:center; gap:13px; animation:biIn .7s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes biIn{ from{opacity:0; transform:scale(.7);} to{opacity:1; transform:none;} }
+#boot-intro .bi-icon{ width:52px; height:52px; border-radius:14px; background:url(icons/icon-192.png) center/contain no-repeat; filter:drop-shadow(0 0 14px rgba(37,99,235,.45)); }
+#boot-intro .bi-word{ font-family:'Inter', sans-serif; font-size:2.1rem; font-weight:800; letter-spacing:-1px; color:#fff; }
+#boot-intro .bi-word span{ background:linear-gradient(90deg,#2563EB,#7C3AED); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+#boot-intro .bi-bar{ width:168px; height:3px; background:rgba(255,255,255,.14); border-radius:3px; overflow:hidden; }
+#boot-intro .bi-fill{ height:100%; width:0; border-radius:3px; background:linear-gradient(90deg,#2563EB,#7C3AED); animation:biLoad 1.6s ease forwards; }
+@keyframes biLoad{ from{width:0;} to{width:100%;} }
+
+/* ============ SPLASH (appears after the intro, then reveals the app) ============ */
+#splash{ position:fixed; inset:0; z-index:99999; background:#1a1a2e; overflow:hidden; }
+#splash.gone{ opacity:0; visibility:hidden; pointer-events:none; transition:opacity .5s ease; }
+#splash .sp-img{ position:absolute; inset:0; background:#1a1a2e url(assets/splash.jpg) center/contain no-repeat; animation:spFadeIn .5s ease both; }
+@keyframes spFadeIn{ from{opacity:0;} to{opacity:1;} }
+@media (prefers-reduced-motion:reduce){ #boot-intro .bi-fill{ animation-duration:.3s; } }
 </style>
 </head>
 <body data-theme="cream" data-size="m" data-spacing="normal">
+<div id="boot-intro">
+  <div class="bi-logo"><div class="bi-icon"></div><div class="bi-word">Load <span>Words</span></div></div>
+  <div class="bi-bar"><div class="bi-fill"></div></div>
+</div>
+<div id="splash"><div class="sp-img"></div></div>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
 <script src="wordbank.js"></script>
