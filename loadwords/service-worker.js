@@ -3,7 +3,7 @@
 // Bump CACHE_NAME whenever app.js / wordbank.js / index.html change materially,
 // so returning users get the new version instead of a stale cache.
 
-const CACHE_NAME = 'loadwords-v2';
+const CACHE_NAME = 'loadwords-v3';
 const APP_SHELL = [
   './',
   './index.html',
@@ -12,6 +12,8 @@ const APP_SHELL = [
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/icon-180.png',
+  './assets/splash.jpg',
 ];
 
 self.addEventListener('install', (event) => {

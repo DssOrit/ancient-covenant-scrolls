@@ -1,6 +1,6 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v2';
+const APP_VERSION = 'v3';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -36,7 +36,7 @@ const ICONS = {
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
   compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>'
 };
-function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
+function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
 // ---------------- storage helpers (browser localStorage — works standalone, no backend needed) ----------------
 const LS_PREFIX = 'loadwords:';
@@ -270,11 +270,11 @@ function exportWordCardImage(w){
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   const isDark = State.settings.theme === 'dark';
-  const bg = isDark ? '#1B1D24' : '#F6F1E7';
-  const card = isDark ? '#242631' : '#FCFAF5';
-  const text = isDark ? '#EDEAE2' : '#2E2A24';
-  const soft = isDark ? '#B7B2A4' : '#5B5548';
-  const accent = isDark ? '#8C9EFF' : '#33418F';
+  const bg = isDark ? '#0A1628' : '#FAF6F0';
+  const card = isDark ? '#142040' : '#FFFFFF';
+  const text = isDark ? '#D0E0F8' : '#1A1A2E';
+  const soft = isDark ? '#8098C0' : '#5A5A6E';
+  const accent = isDark ? '#5B8DEF' : '#2563EB';
   ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
   ctx.fillStyle = card;
   roundRect(ctx,40,40,W-80,H-80,24); ctx.fill();
@@ -370,7 +370,7 @@ function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
 function tileColor(id){
-  const colors = ['#33418F','#6D4E9E','#3F7D5C','#B24C3C','#A9762F'];
+  const colors = ['#2563EB','#7C3AED','#0891B2','#DC2626','#D97706'];
   let h=0; for(const c of id) h = (h*31 + c.charCodeAt(0))>>>0;
   return colors[h % colors.length];
 }
@@ -436,22 +436,22 @@ function renderHome(){
   ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div></div>` : ''}
   <div class="section-title">Jump in</div>
   <div class="action-row">
-    <button class="action" data-nav="study">
+    <button class="action" data-nav="study" style="--c:#059669">
       <div class="a-ic">${ic('book')}</div>
       <div class="a-txt"><b>Study due words</b><span>${due} word${due===1?'':'s'} ready for review</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action alt" data-nav="listen">
+    <button class="action" data-nav="listen" style="--c:#4F46E5">
       <div class="a-ic">${ic('headphones')}</div>
       <div class="a-txt"><b>Listen mode</b><span>Hands-free audio: word, meaning, example &amp; usage on a loop</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action" data-nav="test">
+    <button class="action" data-nav="test" style="--c:#7C3AED">
       <div class="a-ic">${ic('test')}</div>
       <div class="a-txt"><b>Take a test</b><span>Meaning match, sentence fill, typed recall &amp; more</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
-    <button class="action" data-nav="add">
+    <button class="action" data-nav="add" style="--c:#D97706">
       <div class="a-ic">${ic('plus')}</div>
       <div class="a-txt"><b>Add a word</b><span>Build your own list, with images</span></div>
       <div class="a-chev">${ic('chevR')}</div>
@@ -500,9 +500,9 @@ function renderWordDetail(){
   const isCustom = w.category==='custom';
   return `<div class="pagehead"><button class="back" data-nav="list">${ic('chevL')}</button><h2>${escapeHtml(w.word)}</h2></div>
   <div class="action-row" style="margin-bottom:16px;">
-    <button class="action" id="addImgBtn"><div class="a-ic">${ic('image')}</div><div class="a-txt"><b>${State.images[w.id]?'Change image':'Add an image'}</b><span>Paste a link to a photo for this word</span></div></button>
-    ${isCustom?`<button class="action alt" id="editWordBtn"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Edit this word</b><span>Update meaning, example or conversation</span></div></button>`:''}
-    <button class="action" id="exportImgBtn"><div class="a-ic">${ic('download')}</div><div class="a-txt"><b>Save as image</b><span>Download a card with the word, meaning &amp; example</span></div></button>
+    <button class="action" id="addImgBtn" style="--c:#2563EB"><div class="a-ic">${ic('image')}</div><div class="a-txt"><b>${State.images[w.id]?'Change image':'Add an image'}</b><span>Paste a link to a photo for this word</span></div></button>
+    ${isCustom?`<button class="action" id="editWordBtn" style="--c:#7C3AED"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Edit this word</b><span>Update meaning, example or conversation</span></div></button>`:''}
+    <button class="action" id="exportImgBtn" style="--c:#D97706"><div class="a-ic">${ic('download')}</div><div class="a-txt"><b>Save as image</b><span>Download a card with the word, meaning &amp; example</span></div></button>
   </div>
   ${wordCardHtml(w, true)}`;
 }
@@ -856,10 +856,10 @@ function renderTest(){
     <div class="pagehead"><h2>Take a Test</h2></div>
     <p class="sub">Pick a test type. Every question is speakable — tap the speaker to hear it read aloud.</p>
     <div class="action-row">
-      <button class="action" data-testtype="meaning"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Meaning match</b><span>See the word, pick the right meaning</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action alt" data-testtype="word"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word match</b><span>See the meaning, pick the right word</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-testtype="sentence"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action alt" data-testtype="spelling"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="meaning" style="--c:#7C3AED"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Meaning match</b><span>See the word, pick the right meaning</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="word" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word match</b><span>See the meaning, pick the right word</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="sentence" style="--c:#EA580C"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="spelling" style="--c:#DC2626"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -978,11 +978,11 @@ async function saveWordFromForm(){
 function renderSettings(){
   const s = State.settings;
   const themes = [
-    {k:'cream', c:'#F6F1E7', label:'Cream'},
+    {k:'cream', c:'#FAF6F0', label:'Cream'},
     {k:'bluegrey', c:'#EDF1F5', label:'Blue-grey'},
     {k:'turquoise', c:'#E9F5F3', label:'Turquoise'},
     {k:'white', c:'#FFFFFF', label:'White'},
-    {k:'dark', c:'#1B1D24', label:'Dark'},
+    {k:'dark', c:'#0A1628', label:'Dark'},
   ];
   return `
   <div class="pagehead"><h2>Settings</h2></div>
