@@ -14,14 +14,17 @@
   (4 commits: session-notes confirmation of #943, the scoped hard-refresh
   button, and the boot-intro/splash sequence, all pushed onto the same
   open PR)
+- PR #945: **open, awaiting user merge** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/945
+  (3 commits so far: session-notes confirmation of #944, the stuck-boot-
+  splash fix, and this round's Confusing-Pairs/Upgrade-Ladders trim)
 - Confirmed post-merge (Rule 33 — checked the actual state, not assumed):
   PR #944 shows `merged: true`, `merged_by: DssOrit`; `main`'s
   `loadwords/index.html` contains the `boot-intro` markup and
   `loadwords/service-worker.js` shows `CACHE_NAME = 'loadwords-v7'` via
   `raw.githubusercontent.com`.
-- All four Load Words PRs today (#941, #942, #943, #944) are now merged.
-  Nothing outstanding on this branch.
-- Working tree: clean
+- Latest commit on the branch: `6ca264c` — "Load Words: trim Confusing
+  Pairs and Upgrade Ladders to advanced-only". Pushed, not yet merged.
+- Working tree: clean (this commit is pushed)
 
 ## Built today
 
@@ -195,26 +198,93 @@
   transitions actually fire, not just that the CSS was written. Sent the
   intro and splash screenshots to the user. Cache bumped to `loadwords-v7`.
 
+**Load Words — fix app permanently stuck on boot splash (pushed onto open PR #945)**
+
+- User sent a live iPad screenshot showing the app frozen on the
+  `#boot-intro` loading bar, and separately reported "no audio" and asked
+  whether the scoped refresh button was in place.
+- Root cause: the code that removes the `#boot-intro`/`#splash` overlay
+  classes lived entirely inside `app.js`, loaded cache-first by the
+  service worker. With five cache-version bumps shipped in one day
+  (v941 through v945), a slow/blocked/stale `app.js` load meant the
+  reveal logic never ran and the user was stuck forever with no way out
+  (the in-app refresh button is itself rendered by the never-executing
+  app.js).
+- Fixed with two independent layers: (1) `service-worker.js` now serves
+  `app.js`/`wordbank.js` network-first instead of cache-first, so a
+  fresh cache-version bump is never masked by a stale script; (2) an
+  inline safety-net `<script>` in `index.html`, independent of app.js,
+  force-removes both overlay classes after 10 seconds no matter what.
+- Verified by reproducing the actual failure, not just reading the fix:
+  used Playwright to abort every `app.js` network request, confirmed the
+  boot-intro was still stuck at t=500ms, then confirmed the safety net
+  fired and both overlays cleared by t~11s. Also confirmed a normal,
+  unblocked load still completes on its regular ~4.6s schedule,
+  unaffected by the new safety net. Cache bumped to `loadwords-v8`.
+- Audio (TTS) and the scoped refresh button could not be independently
+  re-verified on the user's actual device from this sandbox — flagged
+  explicitly rather than claimed working.
+
+**Load Words — trim Confusing Pairs and Upgrade Ladders to advanced-only (pushed onto open PR #945)**
+
+- User pushed back again with a live screenshot (Listen Mode, the word
+  "site" tagged CASUAL/CONFUSING PAIRS) and said "Only ultra advanced
+  words."
+- Used `AskUserQuestion` before deleting anything, since removing whole
+  category content is a bigger decision than adding words: confirmed
+  "keep Confusing Pairs but only the harder pairs" and "keep only the
+  advanced half of Upgrade Ladders."
+- Removed 49 of 65 Confusing Pairs entries (capital/capitol, site/cite/
+  sight, dear/deer, dairy/diary, aisle/isle, etc. — the plainly everyday
+  ones) and 10 of 20 Upgrade Ladders entries (assist, purchase, begin,
+  inquire, display, believe, attempt, quick, glad, aged). Kept 8 pairs
+  (climactic/climatic, elicit/illicit, eminent/imminent, allusion/
+  illusion, dependant/dependent, envelope/envelop, economic/economical,
+  emigrate/immigrate) and 10 advanced Upgrade Ladders words (facilitate,
+  procure, interrogate, demonstrate, commence, contemplate, endeavor,
+  rapid, delighted, elderly).
+- Fixed 5 dangling text references in surviving Upgrade Ladders entries
+  that mentioned now-deleted sibling words by name (e.g. commence's
+  synonym list referenced "begin," now removed).
+- Verified programmatically (250 total words, zero duplicate ids, exact
+  per-category counts `{cp:16, up:10, ad:60, ce:15, li:15, sa:134}`, no
+  dangling `related` references) and live via headless-browser (app
+  still boots and renders, Study mode opens, `CORE_WORDS.length` reads
+  250 in the live page) before shipping. Cache bumped to `loadwords-v9`.
+- User then asked to replace the 59 removed words with new scholarly
+  words. Asked whether those replacements should come from the user's
+  earlier Instagram vocabulary infographic screenshots — those images
+  aren't retrievable from this session's earlier (now-summarized)
+  context, only their text descriptions carried forward — rather than
+  silently drafting a batch from general knowledge and presenting it as
+  matching those specific sources. Awaiting the user's answer before
+  writing any replacement words.
+
 ## Outstanding / blocking
 
-- **None.** PR #944 merged (confirmed via API: `merged: true`,
-  `merged_by: DssOrit`; `main`'s `loadwords/index.html` contains the
-  `boot-intro` markup and `service-worker.js` shows
-  `CACHE_NAME = 'loadwords-v7'`). Nothing left waiting on the user for
-  Load Words as of this entry.
+- **Awaiting user decision**: whether the ~59 replacement words (for the
+  trimmed Confusing Pairs/Upgrade Ladders content) should be drawn from
+  the user's earlier Instagram infographic screenshots (would need
+  re-sharing, since the images aren't retrievable from this session's
+  compacted context) or drafted fresh. Nothing written for this yet.
+- **PR #945 is open, not yet merged** — contains the session-notes
+  confirmation of #944, the stuck-splash fix, and this round's word-bank
+  trim. Presented to the user; awaiting explicit merge instruction per
+  Rule 9.
 - Separate from Load Words: **ACR Search's own hard-refresh button is
   unscoped** (a pre-existing bug, not something touched today) — flagged
   for the user's awareness and decision; fixing it would need the
   "edit ACR Search" unlock phrase per Rule 8.
 - Not verified on an actual iPad Safari across any of today's PRs —
   flagged explicitly each time rather than claimed. The boot-intro/splash
-  timing, the navy chrome, the new word count, and the thesaurus links
-  should be spot-checked on-device.
+  timing, the navy chrome, the trimmed word count, audio/TTS output, and
+  the thesaurus links should be spot-checked on-device.
 
 ## Pending / parked
 
-- None from today — all approved work is in PR #941, #942, #943, and #944
-  (all merged).
+- Replacement words for the 59 trimmed from Confusing Pairs/Upgrade
+  Ladders — parked pending the user's answer on sourcing (see
+  Outstanding above).
 
 ## Capability gaps in this session
 
@@ -241,6 +311,9 @@
 ## Today's commit log
 
 ```
+6ca264c Load Words: trim Confusing Pairs and Upgrade Ladders to advanced-only
+6886db4 Load Words: fix app getting permanently stuck on the boot splash
+dab9fbe Update session notes: PR #944 merged
 d1c1e74 Load Words: add boot-intro + full splash screen like other Load apps
 aae2f1a Update session notes: scoped hard-refresh button, ACR Search finding
 67a5ddb Load Words: add scoped hard-refresh button
