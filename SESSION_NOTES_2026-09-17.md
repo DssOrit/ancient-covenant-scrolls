@@ -2,9 +2,9 @@
 
 ## Current state
 
-- Branch restarted from `origin/main` three times today, per the merged-PR
-  rule — after PR #941 merged, after PR #942 merged, and after PR #943
-  merged.
+- Branch restarted from `origin/main` four times today, per the merged-PR
+  rule — after PR #941 merged, after PR #942 merged, after PR #943 merged,
+  and after PR #945 merged.
 - PR #941: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/941
 - PR #942: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/942
 - PR #943: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
@@ -14,16 +14,16 @@
   (4 commits: session-notes confirmation of #943, the scoped hard-refresh
   button, and the boot-intro/splash sequence, all pushed onto the same
   open PR)
-- PR #945: **open, awaiting user merge** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/945
-  (3 commits so far: session-notes confirmation of #944, the stuck-boot-
-  splash fix, and this round's Confusing-Pairs/Upgrade-Ladders trim)
-- Confirmed post-merge (Rule 33 — checked the actual state, not assumed):
-  PR #944 shows `merged: true`, `merged_by: DssOrit`; `main`'s
-  `loadwords/index.html` contains the `boot-intro` markup and
-  `loadwords/service-worker.js` shows `CACHE_NAME = 'loadwords-v7'` via
-  `raw.githubusercontent.com`.
-- Latest commit on the branch: `6ca264c` — "Load Words: trim Confusing
-  Pairs and Upgrade Ladders to advanced-only". Pushed, not yet merged.
+- PR #945: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/945
+  (3 commits: session-notes confirmation of #944, the stuck-boot-splash
+  fix, and the Confusing-Pairs/Upgrade-Ladders trim). Confirmed via API:
+  `merged: true`, `merged_by: DssOrit`, head SHA `b9fbf19` matching what
+  was pushed.
+- PR #946: **open, awaiting user merge** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/946
+  (1 commit: the 63-word C1/C2 replacement batch for the content trimmed
+  in PR #945)
+- Latest commit on the branch: `929303c` — "Load Words: add 63 C1/C2
+  words to replace the trimmed content". Pushed, not yet merged.
 - Working tree: clean (this commit is pushed)
 
 ## Built today
@@ -257,34 +257,120 @@
   aren't retrievable from this session's earlier (now-summarized)
   context, only their text descriptions carried forward — rather than
   silently drafting a batch from general knowledge and presenting it as
-  matching those specific sources. Awaiting the user's answer before
-  writing any replacement words.
+  matching those specific sources. User clarified the goal instead:
+  cultivating an elevated lexicon / grandiloquence for speaking style —
+  CEFR C1/C2-level lexical items — which the already-drafted batch
+  matched, so it shipped as-is (see next entry).
+
+**Load Words — 63 C1/C2 replacement words (PR #946, open)**
+
+- Drafted 59 CEFR C1/C2-tier words (abstemious, acrimony, aggrandize,
+  cogent, complacent, conciliatory, debacle, denigrate, dissemble,
+  dogmatic, ebullient, effete, etc.) as replacements for the content
+  trimmed above.
+- User then pasted a themed vocabulary breakdown (Intellectual & Mental
+  States / Character & Personal Behavior / Emotions & Human Experience /
+  Analytical & Academic Concepts) and asked to check it against the
+  site. Checked programmatically rather than assuming: 18 of 19 named
+  words already existed in the bank; only `despondent` was missing.
+  Added it, plus `evanescent`, `efficacy`, `disparity`, `causality` from
+  an earlier reference list, after confirming those four were genuinely
+  absent.
+- Verified programmatically (313 total words at that point, zero
+  duplicate ids/words, zero missing/invalid fields) and live via
+  headless Chromium (`CORE_WORDS.length` reads 313, `evanescent` entry
+  resolves, no console errors) before shipping. Cache bumped to
+  `loadwords-v10`. Backup `backup/2026-09-17-loadwords-v9` created and
+  SHA-verified at `0dd3ba1` (post-PR-#945-merge `origin/main` HEAD)
+  before pushing, since PR #945 had merged in the meantime. PR #946
+  opened, presented for merge.
+
+**Load Words — theme tagging, 31 more scholarly words, Context Quiz test mode (pushed onto open PR #946)**
+
+- User asked whether the app groups words thematically (e.g.
+  "Intellectual & Mental States," "Emotions & Human Experience") like a
+  reference breakdown they shared. Checked directly rather than assumed:
+  confirmed the app only had difficulty-tier categories, no thematic
+  field existed anywhere in the data model. User approved adding real
+  theme tagging + a filter.
+- User then shared two screenshots of a Google Gemini vocabulary quiz
+  (sentence-with-blank, 4 lettered options, green/red highlight with an
+  inline explanation per answer, a collapsible hint, a segmented
+  progress bar) and asked for "quizzes like this" as a new Test mode.
+- User separately relayed two more vocabulary lists from another AI
+  session ("words not present anywhere in your screenshots" /
+  "ultra-high-tier" academic terms) and asked to add any not already on
+  the site, plus make them explorable via the new quiz.
+- **Theme tagging**: classified all 313 existing words (at the time)
+  into 7 themes — Intellectual & Mental States, Character & Personal
+  Behavior, Emotions & Human Experience, Analytical & Academic Concepts,
+  Communication & Rhetoric, Conflict & Social Dynamics, and Usage &
+  Precision (for the Confusing Pairs / Upgrade Ladders categories, which
+  are about correct usage rather than a concept) — added a `theme` field
+  to every entry plus a `THEME_META` block, and a "Browse by theme"
+  chip-row on Home and the All Words list (reusing the existing
+  category-filter click-handling via a `th:` prefix on `State.listFilter`,
+  no new event wiring needed).
+- **New scholarly words**: checked the two relayed vocabulary lists
+  against the current bank programmatically before adding anything:
+  8 of the first list's 20 words and 1 of the second list's 19 were
+  already present (capricious, ostentatious, venerable, quintessential,
+  juxtaposition, obfuscate, vicissitude, etc.), so those were skipped.
+  Also skipped two items as not fit for this app's format rather than
+  adding them uncritically: `sub specie aeternitatis` (a multi-word Latin
+  phrase, not a single lexical item the syllable/pronunciation schema
+  can represent) and `apallage` (could not verify this as a real
+  English/rhetorical term — the description given matches the
+  well-documented term "enallage," not "apallage," so it was left out as
+  likely a garbled or fabricated term rather than silently included).
+  Added the remaining 31 words (epistemology, solipsism, acumen,
+  esoteric, hermeneutics, synecdoche, sesquipedalian, weltanschauung,
+  quiddity, heuristic, etc.), each with an original definition/example/
+  conversation pair and a theme tag, since these are well-established
+  dictionary words I could define accurately without needing external
+  verification.
+- **Context Quiz test mode**: built as a fully generic engine (not
+  hand-authored per word) so it works across the whole bank automatically
+  — blanks the word out of its own `example` sentence, picks 3 distractor
+  options (preferring same part-of-speech, excluding `related` pairs),
+  shows lettered A–D options, and after answering shows an inline
+  explanation under the correct option (always) and the chosen option
+  (if wrong) built from each option's own `definition` field — plus a
+  collapsible native `<details>` hint using the target word's definition.
+  Wired into the existing Test flow's grading/scoring, no changes to the
+  other four test types.
+- Verified live via headless Chromium: clicked into a real Context Quiz
+  question, confirmed 4 lettered options render, confirmed the hint text
+  matches the word's definition, answered correctly and confirmed one
+  green explanation appears, advanced and answered incorrectly and
+  confirmed both a red explanation (chosen) and green explanation
+  (correct) appear together, and confirmed the theme filter on the All
+  Words list returns exactly the words tagged with that theme (42 for
+  "Intellectual & Mental States," matching a direct count of the data).
+  Zero console/page errors. Cache bumped to `loadwords-v11`.
+- Bank now totals 344 words (cp:16, up:10, ad:60, ce:15, li:15, sa:228),
+  all tagged with one of 7 themes.
 
 ## Outstanding / blocking
 
-- **Awaiting user decision**: whether the ~59 replacement words (for the
-  trimmed Confusing Pairs/Upgrade Ladders content) should be drawn from
-  the user's earlier Instagram infographic screenshots (would need
-  re-sharing, since the images aren't retrievable from this session's
-  compacted context) or drafted fresh. Nothing written for this yet.
-- **PR #945 is open, not yet merged** — contains the session-notes
-  confirmation of #944, the stuck-splash fix, and this round's word-bank
-  trim. Presented to the user; awaiting explicit merge instruction per
-  Rule 9.
+- **PR #946 is open, not yet merged** — contains the 63-word C1/C2
+  replacement batch, the theme-tagging system + filter, 31 more
+  scholarly words, and the new Context Quiz test mode. Presented to the
+  user; awaiting explicit merge instruction per Rule 9.
 - Separate from Load Words: **ACR Search's own hard-refresh button is
   unscoped** (a pre-existing bug, not something touched today) — flagged
   for the user's awareness and decision; fixing it would need the
   "edit ACR Search" unlock phrase per Rule 8.
 - Not verified on an actual iPad Safari across any of today's PRs —
   flagged explicitly each time rather than claimed. The boot-intro/splash
-  timing, the navy chrome, the trimmed word count, audio/TTS output, and
-  the thesaurus links should be spot-checked on-device.
+  timing, the navy chrome, the word count, audio/TTS output, the
+  thesaurus links, the theme filter, and the new Context Quiz should be
+  spot-checked on-device.
 
 ## Pending / parked
 
-- Replacement words for the 59 trimmed from Confusing Pairs/Upgrade
-  Ladders — parked pending the user's answer on sourcing (see
-  Outstanding above).
+- None from today's approved work — everything requested has shipped to
+  PR #946, awaiting the user's merge decision.
 
 ## Capability gaps in this session
 
@@ -311,6 +397,10 @@
 ## Today's commit log
 
 ```
+(pending) Load Words: theme tagging, 31 more words, Context Quiz test mode
+929303c Load Words: add 63 C1/C2 words to replace the trimmed content
+0dd3ba1 Merge pull request #945 from claude/load-words-pwa-setup-nf1pcn
+b9fbf19 Update session notes: stuck-splash fix, word-bank trim, PR #945 status
 6ca264c Load Words: trim Confusing Pairs and Upgrade Ladders to advanced-only
 6886db4 Load Words: fix app getting permanently stuck on the boot splash
 dab9fbe Update session notes: PR #944 merged

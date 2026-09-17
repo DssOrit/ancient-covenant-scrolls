@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v10';
+const APP_VERSION = 'v11';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -503,13 +503,22 @@ function renderHome(){
     ${Object.keys(CATEGORY_META).map(k=>`<div class="chip" data-nav="list" data-cat="${k}">${CATEGORY_META[k].label}</div>`).join('')}
     <div class="chip" data-nav="list" data-cat="all">All words</div>
     ${State.difficultWords.length?`<div class="chip" data-nav="list" data-cat="difficult">Difficult (${State.difficultWords.length})</div>`:''}
+  </div>
+  <div class="section-title">Browse by theme</div>
+  <div class="chip-row">
+    ${Object.keys(THEME_META).map(k=>`<div class="chip" data-nav="list" data-cat="th:${k}">${THEME_META[k].label}</div>`).join('')}
   </div>`;
 }
 
 // ---------------- LIST ----------------
 function renderList(){
+  const isThemeFilter = State.listFilter.indexOf('th:')===0;
+  const themeKey = isThemeFilter ? State.listFilter.slice(3) : null;
   const words = State.words.filter(w=>{
-    const catOk = State.listFilter==='all' || (State.listFilter==='difficult' ? State.difficultWords.includes(w.id) : w.category===State.listFilter);
+    const catOk = State.listFilter==='all' ? true
+      : State.listFilter==='difficult' ? State.difficultWords.includes(w.id)
+      : isThemeFilter ? w.theme===themeKey
+      : w.category===State.listFilter;
     const s = State.listSearch.toLowerCase();
     const searchOk = !s || w.word.toLowerCase().includes(s) || w.definition.toLowerCase().includes(s);
     return catOk && searchOk;
@@ -518,17 +527,22 @@ function renderList(){
   return `
   <div class="pagehead"><h2>All Words</h2></div>
   <div class="search-box">${ic('search')}<input id="searchInput" type="text" placeholder="Search words or meanings" value="${escapeAttr(State.listSearch)}"></div>
-  <div class="chip-row" style="margin-bottom:16px;">
+  <div class="chip-row" style="margin-bottom:10px;">
     <div class="chip ${State.listFilter==='all'?'on':''}" data-filter="all">All</div>
     ${Object.keys(CATEGORY_META).map(k=>`<div class="chip ${State.listFilter===k?'on':''}" data-filter="${k}">${CATEGORY_META[k].label}</div>`).join('')}
     ${State.difficultWords.length?`<div class="chip ${State.listFilter==='difficult'?'on':''}" data-filter="difficult">Difficult</div>`:''}
   </div>
+  <div class="chip-row" style="margin-bottom:16px;">
+    ${Object.keys(THEME_META).map(k=>`<div class="chip ${State.listFilter==='th:'+k?'on':''}" data-filter="th:${k}">${THEME_META[k].label}</div>`).join('')}
+  </div>
   <div class="card" style="padding:8px 16px;">
     ${words.length? words.map(w=>{
       const p = getProgress(w.id);
+      const catLabel = CATEGORY_META[w.category]? CATEGORY_META[w.category].label : 'Your word';
+      const themeLabel = w.theme && THEME_META[w.theme] ? ' · ' + THEME_META[w.theme].label : '';
       return `<div class="wlist-item" data-word="${w.id}">
         <div class="tile" style="background:${tileColor(w.id)}">${w.word[0].toUpperCase()}</div>
-        <div class="wtxt"><b>${escapeHtml(w.word)}</b><span>${CATEGORY_META[w.category]? CATEGORY_META[w.category].label : 'Your word'} · Box ${p.box}/5</span></div>
+        <div class="wtxt"><b>${escapeHtml(w.word)}</b><span>${catLabel}${themeLabel} · Box ${p.box}/5</span></div>
       </div>`;
     }).join('') : `<div class="empty" style="padding:30px 10px;"><p>No words match. Try a different search.</p></div>`}
   </div>`;
@@ -596,11 +610,13 @@ function wordCardHtml(w, revealed){
         }).join('')}
       </div>
     </div>` : '';
+  const themeMeta = w.theme && THEME_META[w.theme] ? THEME_META[w.theme] : null;
   return `<div class="wcard">
     <div class="badge-row">
       <span class="badge reg">${w.register}</span>
       <span class="badge pos">${w.pos}</span>
       <span class="badge cat">${catLabel}</span>
+      ${themeMeta ? `<span class="badge cat" style="background:${themeMeta.color}22;color:${themeMeta.color}">${themeMeta.label}</span>` : ''}
     </div>
     ${imageTile(w)}
     <div class="syll-row" id="syllRow">
@@ -903,6 +919,13 @@ function startTest(type){
 }
 function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
 function sample(arr,n,excludeId){ return shuffle(arr.filter(w=>w.id!==excludeId)).slice(0,n); }
+function contextDistractors(w,n){
+  const excludeIds = new Set([w.id, ...(w.related||[])]);
+  const pool = State.words.filter(x=>!excludeIds.has(x.id) && x.definition && x.example && x.word.toLowerCase()!==w.word.toLowerCase());
+  const samePos = pool.filter(x=>x.pos===w.pos);
+  const base = samePos.length>=n ? samePos : pool;
+  return shuffle(base).slice(0,n);
+}
 
 function renderTest(){
   if(!State.testQueue.length){
@@ -914,6 +937,7 @@ function renderTest(){
       <button class="action" data-testtype="word" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word match</b><span>See the meaning, pick the right word</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="sentence" style="--c:#EA580C"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="spelling" style="--c:#DC2626"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="context" style="--c:#059669"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Context quiz</b><span>Fill the blank, see why each answer fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -939,6 +963,23 @@ function renderTest(){
     <div class="test-footer">
       ${State.testAnswered? `<button class="big-btn" id="nextQ">Next</button>` : `<button class="big-btn" id="submitSpellBtn">Check</button>`}
     </div>`;
+  }
+
+  if(State.testType==='context'){
+    const blanked = w.example.replace(new RegExp(w.word + '\\w*', 'i'), '<span class="blank">____</span>');
+    const optionWords = shuffle([w, ...contextDistractors(w,3)]);
+    const hintText = w.definition.replace(/\.$/,'');
+    return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+    <div class="test-q">Question ${State.testIndex+1} of ${State.testQueue.length} — Context Quiz</div>
+    <div class="test-prompt">${blanked}</div>
+    <div class="test-sub">Pick the word that best fits the blank.
+      <span class="mini-spk" data-speak="${escapeAttr(w.example)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="opt-grid" id="optGrid">
+      ${optionWords.map((o,i)=>`<button class="opt" data-answer="${escapeAttr(o.word)}" data-correct="${escapeAttr(w.word)}" data-def="${escapeAttr(o.definition)}"><span class="opt-letter">${String.fromCharCode(65+i)}.</span> ${escapeHtml(o.word)}</button>`).join('')}
+    </div>
+    <details class="hint-details"><summary>Show hint</summary><div class="hint">Hint: this word means "${escapeHtml(hintText)}."</div></details>
+    <div class="test-footer"><button class="big-btn" id="nextQ" disabled>Next</button></div>`;
   }
 
   let prompt, options, correctText;
@@ -1210,10 +1251,27 @@ function bindEvents(){
       const chosen = el.getAttribute('data-answer');
       const correct = el.getAttribute('data-correct');
       const isCorrect = chosen===correct;
+      let correctEl = null, wrongEl = null;
       document.querySelectorAll('.opt').forEach(o=>{
-        if(o.getAttribute('data-answer')===correct) o.classList.add('correct');
-        else if(o===el) o.classList.add('wrong');
+        if(o.getAttribute('data-answer')===correct){ o.classList.add('correct'); correctEl = o; }
+        else if(o===el){ o.classList.add('wrong'); wrongEl = o; }
       });
+      if(!inListenQuiz && State.testType==='context'){
+        if(correctEl){
+          const def = correctEl.getAttribute('data-def') || '';
+          const p = document.createElement('div');
+          p.className = 'opt-explain';
+          p.textContent = 'Correct — means: ' + def;
+          correctEl.appendChild(p);
+        }
+        if(wrongEl){
+          const def = wrongEl.getAttribute('data-def') || '';
+          const p = document.createElement('div');
+          p.className = 'opt-explain';
+          p.textContent = "Doesn't fit here — means: " + def;
+          wrongEl.appendChild(p);
+        }
+      }
       if(inListenQuiz){
         State.listen.quiz.answered = true;
         if(isCorrect) State.listen.quiz.score++;
