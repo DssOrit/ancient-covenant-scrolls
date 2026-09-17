@@ -9,7 +9,7 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (243 words across 6 categories)
+wordbank.js          — the core word bank (309 words across 6 categories)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
