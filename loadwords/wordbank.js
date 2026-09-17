@@ -126,9 +126,9 @@ const CORE_WORDS = [
 ];
 
 const CATEGORY_META = {
-  cp: {label:"Confusing Pairs", color:"#B24C3C"},
-  up: {label:"Upgrade Ladders", color:"#33418F"},
-  ad: {label:"Advanced", color:"#6D4E9E"},
-  ce: {label:"C2 / Elite", color:"#3F7D5C"},
-  li: {label:"Literary", color:"#A9762F"},
+  cp: {label:"Confusing Pairs", color:"#DC2626"},
+  up: {label:"Upgrade Ladders", color:"#2563EB"},
+  ad: {label:"Advanced", color:"#7C3AED"},
+  ce: {label:"C2 / Elite", color:"#0891B2"},
+  li: {label:"Literary", color:"#D97706"},
 };

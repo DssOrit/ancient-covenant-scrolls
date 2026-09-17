@@ -1,6 +1,6 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v2';
+const APP_VERSION = 'v3';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -36,7 +36,7 @@ const ICONS = {
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
   compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>'
 };
-function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
+function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
 // ---------------- storage helpers (browser localStorage — works standalone, no backend needed) ----------------
 const LS_PREFIX = 'loadwords:';
@@ -270,11 +270,11 @@ function exportWordCardImage(w){
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   const isDark = State.settings.theme === 'dark';
-  const bg = isDark ? '#1B1D24' : '#F6F1E7';
-  const card = isDark ? '#242631' : '#FCFAF5';
-  const text = isDark ? '#EDEAE2' : '#2E2A24';
-  const soft = isDark ? '#B7B2A4' : '#5B5548';
-  const accent = isDark ? '#8C9EFF' : '#33418F';
+  const bg = isDark ? '#0A1628' : '#FAF6F0';
+  const card = isDark ? '#142040' : '#FFFFFF';
+  const text = isDark ? '#D0E0F8' : '#1A1A2E';
+  const soft = isDark ? '#8098C0' : '#5A5A6E';
+  const accent = isDark ? '#5B8DEF' : '#2563EB';
   ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
   ctx.fillStyle = card;
   roundRect(ctx,40,40,W-80,H-80,24); ctx.fill();
@@ -370,7 +370,7 @@ function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
 
 function tileColor(id){
-  const colors = ['#33418F','#6D4E9E','#3F7D5C','#B24C3C','#A9762F'];
+  const colors = ['#2563EB','#7C3AED','#0891B2','#DC2626','#D97706'];
   let h=0; for(const c of id) h = (h*31 + c.charCodeAt(0))>>>0;
   return colors[h % colors.length];
 }
@@ -978,11 +978,11 @@ async function saveWordFromForm(){
 function renderSettings(){
   const s = State.settings;
   const themes = [
-    {k:'cream', c:'#F6F1E7', label:'Cream'},
+    {k:'cream', c:'#FAF6F0', label:'Cream'},
     {k:'bluegrey', c:'#EDF1F5', label:'Blue-grey'},
     {k:'turquoise', c:'#E9F5F3', label:'Turquoise'},
     {k:'white', c:'#FFFFFF', label:'White'},
-    {k:'dark', c:'#1B1D24', label:'Dark'},
+    {k:'dark', c:'#0A1628', label:'Dark'},
   ];
   return `
   <div class="pagehead"><h2>Settings</h2></div>
