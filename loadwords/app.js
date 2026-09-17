@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v11';
+const APP_VERSION = 'v12';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -911,8 +911,8 @@ function renderListenQuiz(){
 
 // ---------------- TEST ----------------
 function startTest(type){
-  const pool = State.words.filter(w=>w.definition);
   State.testType = type || 'meaning';
+  const pool = State.testType==='scenario' ? SCENARIOS : State.words.filter(w=>w.definition);
   State.testQueue = shuffle(pool).slice(0, Math.min(10, pool.length));
   State.testIndex = 0; State.testScore = 0; State.testAnswered=false;
   State.spellAttempt = ''; State.spellCorrect = false;
@@ -924,6 +924,12 @@ function contextDistractors(w,n){
   const pool = State.words.filter(x=>!excludeIds.has(x.id) && x.definition && x.example && x.word.toLowerCase()!==w.word.toLowerCase());
   const samePos = pool.filter(x=>x.pos===w.pos);
   const base = samePos.length>=n ? samePos : pool;
+  return shuffle(base).slice(0,n);
+}
+function scenarioDistractors(targetWordId,n){
+  const otherWordIds = SCENARIOS.filter(s=>s.wordId!==targetWordId).map(s=>s.wordId);
+  const pool = State.words.filter(w=>otherWordIds.includes(w.id));
+  const base = pool.length>=n ? pool : State.words.filter(w=>w.id!==targetWordId && w.definition);
   return shuffle(base).slice(0,n);
 }
 
@@ -938,6 +944,7 @@ function renderTest(){
       <button class="action" data-testtype="sentence" style="--c:#EA580C"><div class="a-ic">${ic('edit')}</div><div class="a-txt"><b>Sentence fill</b><span>Choose the word that completes the sentence</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="spelling" style="--c:#DC2626"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="context" style="--c:#059669"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Context quiz</b><span>Fill the blank, see why each answer fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="scenario" style="--c:#4F46E5"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Daily upgrade</b><span>Everyday situations — pick the advanced word</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -948,8 +955,27 @@ function renderTest(){
       <button class="big-btn" style="margin-top:20px;" id="testAgain">Take another test</button>
     </div>`;
   }
-  const w = State.testQueue[State.testIndex];
   const pct = Math.round((State.testIndex/State.testQueue.length)*100);
+
+  if(State.testType==='scenario'){
+    const scen = State.testQueue[State.testIndex];
+    const target = State.words.find(x=>x.id===scen.wordId);
+    const optionWords = shuffle([target, ...scenarioDistractors(scen.wordId,3)]);
+    const hintText = target.definition.replace(/\.$/,'');
+    return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+    <div class="test-q">Question ${State.testIndex+1} of ${State.testQueue.length} — Daily Upgrade</div>
+    <div class="test-prompt" style="font-size:calc(var(--fs-base) * 1.05);">${escapeHtml(scen.situation)}</div>
+    <div class="test-sub">Casual thought: "${escapeHtml(scen.casual)}"<br>Pick the word for the advanced upgrade.
+      <span class="mini-spk" data-speak="${escapeAttr(scen.situation)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="opt-grid" id="optGrid">
+      ${optionWords.map((o,i)=>`<button class="opt" data-answer="${escapeAttr(o.word)}" data-correct="${escapeAttr(target.word)}" data-def="${escapeAttr(o.definition)}" ${o.id===target.id?`data-upgrade="${escapeAttr(scen.upgrade)}"`:''}><span class="opt-letter">${String.fromCharCode(65+i)}.</span> ${escapeHtml(o.word)}</button>`).join('')}
+    </div>
+    <details class="hint-details"><summary>Show hint</summary><div class="hint">Hint: this word means "${escapeHtml(hintText)}."</div></details>
+    <div class="test-footer"><button class="big-btn" id="nextQ" disabled>Next</button></div>`;
+  }
+
+  const w = State.testQueue[State.testIndex];
 
   if(State.testType==='spelling'){
     return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
@@ -1256,12 +1282,13 @@ function bindEvents(){
         if(o.getAttribute('data-answer')===correct){ o.classList.add('correct'); correctEl = o; }
         else if(o===el){ o.classList.add('wrong'); wrongEl = o; }
       });
-      if(!inListenQuiz && State.testType==='context'){
+      if(!inListenQuiz && (State.testType==='context' || State.testType==='scenario')){
         if(correctEl){
+          const upgrade = correctEl.getAttribute('data-upgrade');
           const def = correctEl.getAttribute('data-def') || '';
           const p = document.createElement('div');
           p.className = 'opt-explain';
-          p.textContent = 'Correct — means: ' + def;
+          p.textContent = upgrade ? ('Correct — ' + upgrade) : ('Correct — means: ' + def);
           correctEl.appendChild(p);
         }
         if(wrongEl){
@@ -1282,8 +1309,9 @@ function bindEvents(){
       } else {
         State.testAnswered = true;
         if(isCorrect) State.testScore++;
-        const w = State.testQueue[State.testIndex];
-        gradeWord(w.id, isCorrect?2:0);
+        const q = State.testQueue[State.testIndex];
+        const gradedId = State.testType==='scenario' ? q.wordId : q.id;
+        gradeWord(gradedId, isCorrect?2:0);
         const nextBtn = document.getElementById('nextQ');
         if(nextBtn) nextBtn.disabled = false;
       }

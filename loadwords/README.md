@@ -9,16 +9,18 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (344 words across 6 categories, tagged with 7 themes)
+wordbank.js          — the core word bank (500 words across 6 categories, tagged with 7 themes)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz), and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade), and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
+
+**Daily upgrade quiz:** a smaller, hand-curated set (`SCENARIOS` in `wordbank.js`) of relatable everyday situations paired with a "casual thought" and an "advanced upgrade" — e.g. a messy roommate's room → "byzantine." Same 4-option format and inline explanation as the context quiz, but scoped to situations rather than bare definitions. Add more by appending to `SCENARIOS`: `{id, wordId, situation, casual, upgrade}`.
 
 **Themes:** every word also carries a `theme` tag (Intellectual & Mental States, Character & Personal Behavior, Emotions & Human Experience, Analytical & Academic Concepts, Communication & Rhetoric, Conflict & Social Dynamics, Usage & Precision) — browsable from Home or the All Words list, alongside the existing difficulty-tier categories.
 
