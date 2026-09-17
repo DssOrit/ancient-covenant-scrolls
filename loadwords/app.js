@@ -1,6 +1,21 @@
 // ================= Load Words — app logic =================
 
-const APP_VERSION = 'v6';
+// ---------------- splash sequencing (intro -> splash -> app) ----------------
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var intro = document.getElementById('boot-intro');
+  var splash = document.getElementById('splash');
+  var t1 = reduce ? 300 : 1700;   // how long the auto loader shows
+  var t2 = reduce ? 500 : 2500;   // how long the splash shows after that
+  function reveal(){
+    if(intro) intro.classList.add('gone');
+    setTimeout(function(){ if(splash) splash.classList.add('gone'); }, t2);
+  }
+  setTimeout(reveal, t1);
+  if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
+})();
+
+const APP_VERSION = 'v7';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
