@@ -10,12 +10,17 @@
 - PR #943: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/943
   (4 commits: the 133-word addition, then the basic-word-removal /
   76-word addition / thesaurus round pushed onto the same open PR)
+- PR #944: **merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/944
+  (4 commits: session-notes confirmation of #943, the scoped hard-refresh
+  button, and the boot-intro/splash sequence, all pushed onto the same
+  open PR)
 - Confirmed post-merge (Rule 33 — checked the actual state, not assumed):
-  PR #943 shows `merged: true`, `merged_by: DssOrit`; `main`'s
-  `loadwords/wordbank.js` contains exactly 309 word entries via
+  PR #944 shows `merged: true`, `merged_by: DssOrit`; `main`'s
+  `loadwords/index.html` contains the `boot-intro` markup and
+  `loadwords/service-worker.js` shows `CACHE_NAME = 'loadwords-v7'` via
   `raw.githubusercontent.com`.
-- All three Load Words PRs today (#941, #942, #943) are now merged. Nothing
-  outstanding on this branch.
+- All four Load Words PRs today (#941, #942, #943, #944) are now merged.
+  Nothing outstanding on this branch.
 - Working tree: clean
 
 ## Built today
@@ -168,25 +173,48 @@
   the actual button in the UI and confirmed it triggers a real page
   reload. Cache bumped to `loadwords-v6`.
 
+**Load Words — boot-intro + full splash screen (pushed onto open PR #944)**
+
+- User reported the app "isn't opening to a large splash page like the
+  other Load sites" and pointed at Load Maps as the reference.
+- Read Load Maps' actual boot sequence (`loadmaps/index.html` +
+  `loadmaps/app.js`) instead of guessing: a two-stage sequence — a brief
+  branded `#boot-intro` overlay (icon + gradient wordmark + animated
+  loading bar, ~1.7s), then a full-screen `#splash` overlay showing the
+  brand splash artwork (~2.5s more, or dismissed early on tap), then both
+  fade to reveal the app underneath. This is separate from the native iOS
+  `apple-touch-startup-image` mechanism wired up earlier today — that one
+  only fires for an installed home-screen app and Apple doesn't reliably
+  honor it; this in-app sequence shows every time, in any browser tab.
+- Ported the same two-stage pattern into Load Words, in its own navy/
+  blue/purple colors, reusing the `assets/splash.jpg` art already in the
+  repo (previously only linked to the iOS-only mechanism).
+- Verified live: screenshotted all three stages on a timer (intro visible
+  at t=0, splash visible at t=1.8s once the intro faded, app revealed at
+  t~4.4s once the splash faded) and confirmed the timed class
+  transitions actually fire, not just that the CSS was written. Sent the
+  intro and splash screenshots to the user. Cache bumped to `loadwords-v7`.
+
 ## Outstanding / blocking
 
-- **PR #944 needs user review and explicit merge instruction** (now
-  carries the session-notes confirmation commit plus the scoped
-  hard-refresh button). Files changed: `HANDOFF.md` + 3 files in
-  `loadwords/`. Risk: low.
+- **None.** PR #944 merged (confirmed via API: `merged: true`,
+  `merged_by: DssOrit`; `main`'s `loadwords/index.html` contains the
+  `boot-intro` markup and `service-worker.js` shows
+  `CACHE_NAME = 'loadwords-v7'`). Nothing left waiting on the user for
+  Load Words as of this entry.
 - Separate from Load Words: **ACR Search's own hard-refresh button is
   unscoped** (a pre-existing bug, not something touched today) — flagged
-  here for the user's awareness and decision; fixing it would need the
+  for the user's awareness and decision; fixing it would need the
   "edit ACR Search" unlock phrase per Rule 8.
 - Not verified on an actual iPad Safari across any of today's PRs —
-  flagged explicitly each time rather than claimed. Splash screen, the
-  navy chrome, the new word count, and the thesaurus links should be
-  spot-checked on-device.
+  flagged explicitly each time rather than claimed. The boot-intro/splash
+  timing, the navy chrome, the new word count, and the thesaurus links
+  should be spot-checked on-device.
 
 ## Pending / parked
 
-- None from today — all approved work is in PR #941 (merged), PR #942
-  (merged), and PR #943 (open).
+- None from today — all approved work is in PR #941, #942, #943, and #944
+  (all merged).
 
 ## Capability gaps in this session
 
@@ -213,6 +241,8 @@
 ## Today's commit log
 
 ```
+d1c1e74 Load Words: add boot-intro + full splash screen like other Load apps
+aae2f1a Update session notes: scoped hard-refresh button, ACR Search finding
 67a5ddb Load Words: add scoped hard-refresh button
 c3339f0 Update session notes: PR #943 merged
 12a4ddc Update session notes for 2026-09-17
