@@ -353,6 +353,20 @@ main{ flex:1; padding:6px 20px 30px; }
 .hl-word-card{ text-align:center; padding:32px 16px; border-radius:16px; background:linear-gradient(135deg,#1a1a2e 0%,#2a2a4e 100%); color:#fff; font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.6); font-weight:800; margin-bottom:16px; }
 .hl-word-card .mini-spk{ display:inline-flex; vertical-align:middle; margin-left:8px; }
 .hl-word-card .mini-spk svg{ stroke:#fff; }
+
+/* The Imposter Card Flip */
+.imposter-cards{ display:flex; flex-direction:column; gap:10px; }
+.imposter-card{ text-align:left; padding:16px; border-radius:14px; border:1.5px solid var(--border); background:var(--bg-card); cursor:pointer; }
+.imposter-card:disabled{ cursor:default; }
+.imposter-label{ display:block; font-size:calc(var(--fs-base) * 0.68); font-weight:800; letter-spacing:.05em; color:var(--text-soft); margin-bottom:4px; }
+.imposter-text{ display:block; font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.02); font-weight:700; }
+.imposter-card.imposter{ border-color:var(--warn); background:var(--warn-soft); }
+.imposter-card.imposter .imposter-text{ color:var(--warn); }
+.imposter-card.wrong-pick{ border-color:var(--text-soft); opacity:.6; }
+.imposter-cards.shuffling .imposter-card{ animation:impShuffle .5s ease-in-out infinite; background:linear-gradient(135deg,#1a1a2e 0%,#2a2a4e 100%); }
+.imposter-cards.shuffling .imposter-label{ color:#fff; text-align:center; font-size:calc(var(--fs-base) * 1.1); }
+@keyframes impShuffle{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(6px); } }
+@media (prefers-reduced-motion:reduce){ .imposter-cards.shuffling .imposter-card{ animation:none; } }
 .memory-stats{ display:flex; justify-content:space-around; margin-top:18px; text-align:center; }
 .memory-stats div{ display:flex; flex-direction:column; }
 .memory-stats b{ font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.2); font-weight:800; }

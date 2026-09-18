@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v18';
+const APP_VERSION = 'v19';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -89,6 +89,7 @@ const State = {
   memory:{ cards:[], flipped:[], moves:0, matches:0, lock:false, pairCount:0, streak:0, decayPool:50, decayClaimed:false, roundScore:0, lastGain:0 },
   memoryScore:{ total:0, lastDate:null },
   higherLower:{ pool:[], index:0, word:null, options:[], streak:0, roundPoints:0, bankedTotal:0, phase:'guess', chosen:null },
+  imposter:{ pool:[], round:0, score:0, cards:[], imposterSlot:null, chosenSlot:null, phase:'shuffling' },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -472,6 +473,7 @@ function renderView(){
     case 'deal': return renderDeal();
     case 'memory': return renderMemory();
     case 'higherlower': return renderHigherLower();
+    case 'imposter': return renderImposter();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -969,6 +971,7 @@ function renderTest(){
       <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1496,6 +1499,75 @@ function renderHigherLower(){
   </div>`;
 }
 
+// ---------------- THE IMPOSTER CARD FLIP ----------------
+function imposterCardText(w, slot){
+  if(slot==='simple') return (w.syn && w.syn[0]) ? w.syn[0] : w.definition;
+  if(slot==='advanced') return w.word;
+  return w.example;
+}
+function startImposter(){
+  const pool = State.words.filter(w=>w.definition && w.example);
+  State.imposter = { pool, round:0, score:0, cards:[], imposterSlot:null, chosenSlot:null, phase:'shuffling' };
+  imposterNextRound();
+}
+function imposterNextRound(){
+  const I = State.imposter;
+  const slots = ['simple','advanced','example'];
+  const base = shuffle(I.pool)[0];
+  const distractor = shuffle(I.pool.filter(w=>w.id!==base.id))[0];
+  const imposterSlot = Math.floor(Math.random()*3);
+  I.cards = slots.map((slot,i)=>({ slot, text: imposterCardText(i===imposterSlot ? distractor : base, slot) }));
+  I.imposterSlot = imposterSlot;
+  I.chosenSlot = null;
+  I.phase = 'shuffling';
+  setTimeout(()=>{
+    if(State.view!=='imposter') return;
+    State.imposter.phase = 'guess';
+    render();
+  }, 700);
+}
+function imposterGuess(slot){
+  const I = State.imposter;
+  if(I.phase!=='guess') return;
+  I.chosenSlot = slot;
+  I.phase = 'result';
+  if(slot===I.imposterSlot) I.score += 100;
+  I.round++;
+}
+function renderImposter(){
+  const I = State.imposter;
+  if(!I.cards.length){
+    return `<div class="empty"><p>Loading The Imposter…</p></div>`;
+  }
+  if(I.round >= 8){
+    return `<div class="empty">
+      <div class="score-ring"><div class="n">${I.score.toLocaleString()}</div></div>
+      <h3>Round complete</h3><p>${I.round} sets checked</p>
+      <button class="big-btn" style="margin-top:20px;" id="impAgainBtn">Play again</button>
+    </div>`;
+  }
+  const labels = { simple:'SIMPLE CONCEPT', advanced:'ADVANCED UPGRADE', example:'EXAMPLE SENTENCE' };
+  const shuffling = I.phase==='shuffling';
+  return `<div class="pagehead"><h2>The Imposter</h2></div>
+  <p class="sub">One of these three cards doesn't belong. Find it.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${I.score.toLocaleString()}</b><span>Score</span></div>
+    <div>${ic('layers')}<b>${I.round}/8</b><span>Round</span></div>
+  </div>
+  <div class="imposter-cards ${shuffling?'shuffling':''}">
+    ${I.cards.map((c,i)=>{
+      const isImposter = I.phase==='result' && i===I.imposterSlot;
+      const isWrongPick = I.phase==='result' && i===I.chosenSlot && I.chosenSlot!==I.imposterSlot;
+      return `<button class="imposter-card ${isImposter?'imposter':''} ${isWrongPick?'wrong-pick':''}" data-imp-slot="${i}" ${I.phase!=='guess'?'disabled':''}>
+        <span class="imposter-label">${shuffling?'?':labels[c.slot]}</span>
+        <span class="imposter-text">${shuffling?'':escapeHtml(c.text)}</span>
+      </button>`;
+    }).join('')}
+  </div>
+  ${I.phase==='result' ? `<div class="note-box" style="background:${I.chosenSlot===I.imposterSlot?'var(--good-soft)':'var(--warn-soft)'};color:${I.chosenSlot===I.imposterSlot?'var(--good)':'var(--warn)'}">${ic(I.chosenSlot===I.imposterSlot?'check':'x')}<span>${I.chosenSlot===I.imposterSlot?'Found it! ':'Not quite — '}the "${labels[I.cards[I.imposterSlot].slot]}" card was the imposter.</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="impNextBtn">Next set</button>` : ''}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1622,6 +1694,7 @@ function bindEvents(){
       if(v==='deal'){ startDeal(); }
       if(v==='memory'){ startMemory(); }
       if(v==='higherlower'){ startHigherLower(); }
+      if(v==='imposter'){ startImposter(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1961,6 +2034,17 @@ function bindEvents(){
   if(hlBankBtn){ hlBankBtn.addEventListener('click', ()=>{ higherLowerBank(); render(); }); }
   const hlContinueBtn = document.getElementById('hlContinueBtn');
   if(hlContinueBtn){ hlContinueBtn.addEventListener('click', ()=>{ higherLowerContinue(); render(); }); }
+
+  document.querySelectorAll('[data-imp-slot]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      imposterGuess(parseInt(el.getAttribute('data-imp-slot'),10));
+      render();
+    });
+  });
+  const impNextBtn = document.getElementById('impNextBtn');
+  if(impNextBtn){ impNextBtn.addEventListener('click', ()=>{ imposterNextRound(); render(); }); }
+  const impAgainBtn = document.getElementById('impAgainBtn');
+  if(impAgainBtn){ impAgainBtn.addEventListener('click', ()=>{ startImposter(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
