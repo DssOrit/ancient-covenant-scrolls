@@ -1,0 +1,584 @@
+{
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "See LICENSE and CONTENT_LICENSE.md at the repository root.",
+  "_rights": "Content sourced verbatim from ACR Search's nt_database (Search/acr_search_data.json). No wording altered, softened, or paraphrased.",
+  "id": "file_201",
+  "label": "NT Lookup Reference — Primary Source Comparison",
+  "volume": "NTL",
+  "content_version": "2026-09-18",
+  "summary_plain": "25 New Testament passages compared directly against the Dead Sea Scrolls and Ge'ez Orit primary source record. Each entry gives the oldest manuscript evidence, authorship note, primary-source connection status, and verdict, exactly as documented in ACR Search's NT Lookup tool -- reproduced here verbatim, not summarized.",
+  "key_terms": [
+    {
+      "term": "John 1:1",
+      "definition": "Constructed from Greek Logos philosophy. No DSS or Orit Ge'ez source. Directly contradicted by the primary source absolute monotheism of Yeshayahu 43:10-11 confirmed in 1QIsa-a Cave 1."
+    },
+    {
+      "term": "Matthew 1:23",
+      "definition": "Built on a Greek mistranslation of almah to parthenos. The DSS primary source 1QIsa-a says young woman. No virgin birth exists in any primary source manuscript."
+    },
+    {
+      "term": "John 3:16",
+      "definition": "No primary source. Constructed in Greco-Roman world with direct parallels to pre-existing Mediterranean dying-rising son theology. Directly contradicted by the absolute monotheism of the DSS and Orit Ge'ez primary sources."
+    },
+    {
+      "term": "1 John 5:7",
+      "definition": "Documented insertion. Not in earliest manuscripts. Not in earliest church writings. Added by scribes under institutional pressure. Directly contradicted by the absolute monotheism confirmed in 1QIsa-a Cave 1 and the DSS Nash Papyrus."
+    },
+    {
+      "term": "Matthew 27:46",
+      "definition": "Taken from Tehillim 22:1 in 11QPs Cave 11. The surrounding context suppressed. The psalm itself contradicts the abandonment narrative in verse 24."
+    },
+    {
+      "term": "Isaiah 53",
+      "definition": "Taken from 1QIsa-a Cave 1 and reframed from collective national servant to individual. The surrounding literary context which identifies the servant as Yisra'el collectively was suppressed."
+    },
+    {
+      "term": "Hebrews 1:3",
+      "definition": "No primary source. Constructed from Platonic and Philonic Greek philosophy. Directly contradicted by primary source monotheism."
+    },
+    {
+      "term": "Revelation 22:16",
+      "definition": "Built from misapplication of two primary source passages. Both passages in their DSS context refer to human figures. The divine morning star claim is not in any primary source."
+    },
+    {
+      "term": "Matthew 28:19",
+      "definition": "No primary source. Trinitarian formula contradicted by earlier NT texts. Likely inserted post-Nicaea 325 CE. Directly contradicted by primary source monotheism of Devarim 6:4."
+    },
+    {
+      "term": "Luke 1:35",
+      "definition": "No primary source. Directly parallels pre-existing Greco-Roman divine conception traditions that predate this text by centuries. No DSS or Orit Ge'ez basis."
+    },
+    {
+      "term": "Romans 5:12",
+      "definition": "The doctrine of original sin built from this verse rests entirely on Jerome's mistranslation of the Greek eph ho as in whom rather than because. The DSS Community Rule and 4QInstruction confirm individual moral responsibility not inherited guilt. Augustine's doctrine has no primary source basis."
+    },
+    {
+      "term": "John 14:6",
+      "definition": "No primary source. Concept of exclusive divine intermediary contradicts the direct access to YHWH stated throughout the DSS corpus. YHWH is near to all who call on Him in truth — no qualifying intermediary appears anywhere in the primary sources."
+    },
+    {
+      "term": "Colossians 1:15-16",
+      "definition": "Deutero-Pauline — not written by Paul. Built from Platonic and Philonic Greek philosophy. Directly contradicted by Yeshayahu 44:24 in 1QIsa-a which states YHWH created alone by Himself with no divine intermediary."
+    },
+    {
+      "term": "Philippians 2:6",
+      "definition": "No primary source. The concept of equality with YHWH is explicitly impossible within the absolute monotheism of the DSS. Yeshayahu 43:10 in 1QIsa-a is an absolute statement that allows no equal divine figure."
+    },
+    {
+      "term": "Hebrews 7:3",
+      "definition": "Built on an argument from silence in Bereshit. The primary source presents Malkitzedeq as a human king and priest of Shalem, not an eternal divine person, and reserves eternity for YHWH alone (Yeshayahu 43:10-11, 1QIsa-a Cave 1). The Hebrews claim has no primary source support."
+    },
+    {
+      "term": "Acts 2:38",
+      "definition": "No primary source. YHWH forgives directly in every DSS and Orit Ge'ez text. No one-time ritual immersion in a personal name appears anywhere in the primary corpus."
+    },
+    {
+      "term": "Revelation 1:8",
+      "definition": "The YHWH uniqueness declaration from 1QIsa-a is applied to a second figure. This use directly contradicts the original statement which declares YHWH alone is first and last with no other beside Him."
+    },
+    {
+      "term": "Matthew 5:17",
+      "definition": "No primary source for the fulfil and thereby complete concept. The DSS community studied Torah as an ongoing communal practice with no concept of a single person's fulfilment replacing that practice."
+    },
+    {
+      "term": "Mark 16:16",
+      "definition": "A scribal insertion not present in the oldest manuscripts. Not part of the original Mark text. No primary source basis for the salvation formula it presents."
+    },
+    {
+      "term": "Luke 2:11",
+      "definition": "No primary source. Roman imperial birth announcement formula applied to a religious figure. Directly contradicted by Yeshayahu 43:11 in 1QIsa-a which states YHWH alone is Saviour."
+    },
+    {
+      "term": "John 20:28",
+      "definition": "No primary source. The divine address applied to a human figure directly contradicts the absolute monotheism of Devarim 6:4 and Yeshayahu 42:8 confirmed in the DSS Nash Papyrus and 1QIsa-a Cave 1."
+    },
+    {
+      "term": "Galatians 3:13",
+      "definition": "A practical legal provision about burial of executed criminals reframed as cosmic redemption theology. The Temple Scroll in the DSS addresses the same passage in its correct legal context. No primary source supports substitutionary atonement."
+    },
+    {
+      "term": "1 Corinthians 15:3-4",
+      "definition": "Claimed to be according to the scriptures but no DSS primary source supports the individual substitutionary death narrative or the third day resurrection claim in its primary source context. The pattern mirrors pre-existing Greco-Roman dying and rising deity traditions."
+    },
+    {
+      "term": "Ephesians 1:4",
+      "definition": "Deutero-Pauline. The concept of election through a divine human intermediary has no DSS basis. Pre-temporal election in the DSS is YHWH's direct action with no intermediary."
+    },
+    {
+      "term": "2 Timothy 3:16",
+      "definition": "Deutero-Pauline. Used to claim authority for the NT canon which was not assembled until 397 CE. The DSS establishes authority through specific manuscript provenance not through blanket inspiration claims applied to anonymous documents."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does the primary source record show for John 1:1?",
+      "answer": "NT text: In the beginning was the Word, and the Word was with God, and the Word was God. | Oldest manuscript evidence: Papyrus 66 (P66) — approximately 200 CE — 170 years after events described | Authorship: Anonymous. The name John was assigned by Irenaeus of Lyon approximately 180 CE for theological reasons stated explicitly in his writing Adversus Haereses. The manuscript itself carries no author name. | Primary source connection: NONE | Greco-Roman parallel: Logos theology — Greek philosophical concept developed by Heraclitus (500 BCE) and Philo of Alexandria (20 BCE-50 CE). Philo explicitly used the term Logos as a divine intermediary figure in Greek philosophical Judaism. The opening of John replicates Philo's Logos framework, not any DSS or Orit Ge'ez concept. | DSS / Orit record: Bereshit 1:1 — DSS Genesis scrolls Cave 4: In the beginning The Creator created the heavens and the earth. YHWH acts directly. There is no pre-existent divine Word figure anywhere in the primary source corpus. Yeshayahu 43:10-11 — 1QIsa-a Cave 1: Before Me no god was formed nor shall there be any after Me. I YHWH am the only one and besides Me there is no saviour. This is an absolute statement. No divine Word co-equal with YHWH exists in any DSS or Orit Ge'ez text. | Verdict: Constructed from Greek Logos philosophy. No DSS or Orit Ge'ez source. Directly contradicted by the primary source absolute monotheism of Yeshayahu 43:10-11 confirmed in 1QIsa-a Cave 1. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Matthew 1:23?",
+      "answer": "NT text: Behold, a virgin shall be with child, and shall bring forth a son, and they shall call his name Emmanuel. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Matthew assigned by Irenaeus of Lyon 180 CE. No manuscript carries this name in original form. | Primary source connection: Yeshayahu 7:14 — claimed source | Original DSS reading: Yeshayahu 7:14 — 1QIsa-a Cave 1 — the Great Isaiah Scroll, oldest complete biblical manuscript in existence, dated 125-100 BCE: Behold the almah shall conceive and bear a son and shall call his name Immanuel. | Manipulation record: FABRICATED FROM MISTRANSLATION. The Hebrew word in 1QIsa-a is almah — young woman of marriageable age. The ancient Hebrew word for virgin is betulah — a completely different word that does not appear in this verse in any ancient manuscript. The Greek Septuagint translated almah as parthenos — virgin — a translation decision made approximately 200 BCE. Matthew's author used the Greek Septuagint reading, not the Hebrew original. The DSS primary witness — written before the Septuagint translation became standard — confirms almah not betulah. | Historical context: Yeshayahu 7:14 in its original context is addressed to King Ahaz of Yehudah during the Syro-Ephraimite crisis approximately 735 BCE. The young woman was contemporary to Ahaz. The child's birth was a sign to Ahaz about events happening in his lifetime. It is not a prediction about a birth 700 years later. The DSS context confirms this historical reading. | Verdict: Built on a Greek mistranslation of almah to parthenos. The DSS primary source 1QIsa-a says young woman. No virgin birth exists in any primary source manuscript. | Category code: F"
+    },
+    {
+      "question": "What does the primary source record show for John 3:16?",
+      "answer": "NT text: For God so loved the world that he gave his only begotten Son, that whosoever believeth in him should not perish but have everlasting life. | Oldest manuscript evidence: Papyrus 66 — approximately 200 CE | Authorship: Anonymous. Name John assigned 180 CE. | Primary source connection: NONE | Greco-Roman parallel: The dying and rising divine son sent by a divine father is documented in Osiris-Horus tradition (Egyptian), Dionysus tradition (Greek), and Mithras tradition (Persian-Roman). All predate this text by centuries. The concept of salvation through the blood of a divine son was present in multiple Greco-Roman mystery religion traditions operating simultaneously in the Mediterranean world where this text was written. | DSS / Orit record: Yeshayahu 43:11 — 1QIsa-a Cave 1: I YHWH am the only one and besides Me there is no saviour. Daniyyel 2:22 — DSS Daniyyel Cave 4: He reveals deep and hidden things. YHWH is the direct actor. Chanokh 41:9 — Orit Ge'ez: YHWH does not need an intermediary. He knows all things before they happen. No intermediary divine son figure exists anywhere in the primary source corpus. | Verdict: No primary source. Constructed in Greco-Roman world with direct parallels to pre-existing Mediterranean dying-rising son theology. Directly contradicted by the absolute monotheism of the DSS and Orit Ge'ez primary sources. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for 1 John 5:7?",
+      "answer": "NT text: For there are three that bear record in heaven, the Father, the Word, and the Holy Ghost: and these three are one. | Oldest manuscript evidence: This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure. | Authorship: Anonymous. Name John assigned 180 CE. This specific verse was added by unknown scribes centuries after the base text was written. | Primary source connection: NONE | Manipulation record: INSERTION. Erasmus of Rotterdam compiled the Greek NT in 1516 and omitted this verse because it appeared in no Greek manuscript he could find. Church authorities pressured him to include it. He stated he would include it if a single Greek manuscript could be found containing it. A manuscript was produced — now identified as Codex Montfortianus, written specifically to pressure Erasmus. He included it under protest. Modern textual scholars universally identify this verse as a late insertion. It is absent from all modern critical Greek NT editions. | DSS / Orit record: Yeshayahu 43:10-11 — 1QIsa-a Cave 1: Before Me no god was formed nor shall there be any after Me. I YHWH am the only one. Devarim 6:4 — DSS Nash Papyrus and 4Q fragments: Hear O Yisra'el YHWH is our Creator YHWH is One. The Trinity formulation of three co-equal divine persons was formalized at Nicaea 325 CE by political vote under Emperor Constantine. It contradicts the absolute monotheism of the primary sources at every point. | Verdict: Documented insertion. Not in earliest manuscripts. Not in earliest church writings. Added by scribes under institutional pressure. Directly contradicted by the absolute monotheism confirmed in 1QIsa-a Cave 1 and the DSS Nash Papyrus. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Matthew 27:46?",
+      "answer": "NT text: My God, my God, why hast thou forsaken me? | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Matthew assigned 180 CE. | Primary source connection: Tehillim 22:1 — 11QPs Cave 11 | Original DSS reading: Tehillim 22:1 — 11QPs Great Psalms Scroll Cave 11: My El, my El, why have you forsaken me? Far from my salvation are the words of my cry. | Manipulation record: PHRASE EXTRACTION with suppression of context. Tehillim 22 is a communal lament psalm that ends in vindication and praise. Verse 24 states explicitly: He has not despised nor scorned the suffering of the afflicted one. He has not hidden His face from him but has listened to his cry for help. The psalm resolves in YHWH answering. The NT narrative extracts only the opening cry of abandonment and presents it as the final word. The resolution — YHWH hears and answers — was suppressed because it contradicted the theological narrative being constructed. The full psalm in 11QPs contradicts the abandonment theology built from the extracted phrase. | Verdict: Taken from Tehillim 22:1 in 11QPs Cave 11. The surrounding context suppressed. The psalm itself contradicts the abandonment narrative in verse 24. | Category code: A"
+    },
+    {
+      "question": "What does the primary source record show for Isaiah 53?",
+      "answer": "NT text: Applied throughout NT as prophecy of individual suffering saviour figure. | Oldest manuscript evidence: 1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness | Primary source connection: Yeshayahu 52:13-53:12 — 1QIsa-a Cave 1 | Original DSS reading: The servant in Yeshayahu 40-55 is identified as Yisra'el explicitly and repeatedly in the surrounding text. Yeshayahu 41:8: But you Yisra'el are My servant. Yeshayahu 44:1: But now hear O Yaakov My servant and Yisra'el whom I have chosen. Yeshayahu 49:3: And He said to me You are My servant O Yisra'el in whom I will be glorified. The servant is a collective national figure throughout the entire literary unit. Chapter 53 is part of this continuous literary unit. | Manipulation record: FULL PASSAGE REFRAME. The collective national servant of the surrounding 15 chapters was individualized into a single person. The literary context was severed. The surrounding chapters which identify the servant as Yisra'el explicitly were ignored. The NT application of this passage to an individual required removing it from its literary context entirely. | DSS / Orit record: 1QIsa-a contains no individual messianic figure in chapter 53. The DSS pesher tradition does not interpret Isaiah 53 as predicting an individual saviour. The Qumran community who wrote and preserved the DSS did not make this connection. The individual suffering saviour interpretation was constructed by later communities operating outside the primary source tradition. | Verdict: Taken from 1QIsa-a Cave 1 and reframed from collective national servant to individual. The surrounding literary context which identifies the servant as Yisra'el collectively was suppressed. | Category code: A"
+    },
+    {
+      "question": "What does the primary source record show for Hebrews 1:3?",
+      "answer": "NT text: Who being the brightness of his glory, and the express image of his person, and upholding all things by the word of his power. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Anonymous. Hebrews explicitly does not claim Pauline authorship in its text. The church assigned it to Paul despite significant differences in vocabulary, style, and theology from the undisputed Pauline letters. Origen of Alexandria (185-254 CE) wrote: who actually wrote the epistle only YHWH knows. The book is anonymous. | Primary source connection: NONE | Greco-Roman parallel: The image of a divine being as the exact imprint or radiance of a divine father is Platonic philosophy. Philo of Alexandria used identical language — apaugasma (radiance) and charakter (exact imprint) — to describe the Logos figure in his philosophical writings. These are Greek philosophical terms, not Hebrew covenantal terms. The author of Hebrews was demonstrably operating in the Philonic philosophical tradition, not the DSS tradition. | DSS / Orit record: No divine radiance figure exists in any DSS or Orit Ge'ez text. YHWH has no divine son who upholds all things in the primary source corpus. Yeshayahu 43:10-11 — 1QIsa-a: I YHWH am the only saviour. Devarim 6:4 — DSS Nash Papyrus: YHWH is One. | Verdict: No primary source. Constructed from Platonic and Philonic Greek philosophy. Directly contradicted by primary source monotheism. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Revelation 22:16?",
+      "answer": "NT text: I am the root and the offspring of David, and the bright and morning star. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. The name John was assigned. The text itself claims to be written by one called John in exile on Patmos. No external evidence confirms this is the same John as any gospel. | Primary source connection: Bamidbar 24:17 — claimed — a star shall come out of Yaakov and a scepter shall rise out of Yisra'el | Original DSS reading: Bamidbar 24:17 — DSS Numbers scrolls: A star shall come out of Yaakov and a scepter shall rise out of Yisra'el. In the DSS corpus this verse is interpreted in the War Scroll 1QM and the Damascus Document as referring to a human royal leader of the covenant community — not a divine figure. The morning star designation in the primary source tradition refers to Babylon in Yeshayahu 14:12 — how you have fallen from heaven O morning star son of the dawn — a taunt against the king of Babylon. | Manipulation record: FABRICATED FROM REFRAMING. The morning star in Yeshayahu 14:12 in the DSS tradition refers to Babylon's king brought low. The scepter of Bamidbar 24:17 in the DSS War Scroll is a human military leader. The NT appropriates both and merges them into a divine figure claim. | Verdict: Built from misapplication of two primary source passages. Both passages in their DSS context refer to human figures. The divine morning star claim is not in any primary source. | Category code: F"
+    },
+    {
+      "question": "What does the primary source record show for Matthew 28:19?",
+      "answer": "NT text: Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Matthew assigned 180 CE. | Primary source connection: NONE | Manipulation record: The Trinitarian baptismal formula — Father, Son, and Holy Ghost — does not appear in the earlier Acts of the Apostles which describes baptism in the name of Yeshua only. The two formulas contradict each other within the NT itself. Church historian Eusebius of Caesarea — writing before 325 CE — quotes this verse more than 20 times in his writings and consistently quotes it without the Trinitarian formula. His pre-Nicaea version reads: Go and make disciples of all nations in my name. The Trinitarian formula appears to have been inserted after Nicaea 325 CE when the Trinity was formalized as doctrine. | DSS / Orit record: Devarim 6:4 — DSS Nash Papyrus: YHWH is One. No Trinitarian formula exists anywhere in the DSS or Orit Ge'ez corpus. The divine name used in covenant initiation throughout the primary sources is YHWH alone. | Verdict: No primary source. Trinitarian formula contradicted by earlier NT texts. Likely inserted post-Nicaea 325 CE. Directly contradicted by primary source monotheism of Devarim 6:4. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Luke 1:35?",
+      "answer": "NT text: The Holy Ghost shall come upon thee, and the power of the Highest shall overshadow thee: therefore also that holy thing which shall be born of thee shall be called the Son of God. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Luke assigned by church tradition. The text itself is anonymous. | Primary source connection: NONE — the divine conception claim has no DSS or Orit Ge'ez source | Greco-Roman parallel: Divine conception — a god impregnating a human woman to produce a divine-human offspring — is one of the most common motifs in Greco-Roman religion. Zeus and Semele produced Dionysus. Zeus and Alcmene produced Heracles. Osiris and Isis produced Horus. The Romans deified Julius Caesar and Augustus as sons of gods. The concept was culturally dominant in the Mediterranean world where Luke was written. | DSS / Orit record: The DSS contain no divine conception narrative anywhere. The Orit Ge'ez contains no divine conception narrative anywhere. Devarim 18:20-22 — DSS Torah: the prophet who speaks what YHWH has not commanded shall die. Yeshayahu 7:14 — 1QIsa-a Cave 1: the almah — young woman — conceives by natural means. The primary sources describe no supernatural human conception at any point. | Verdict: No primary source. Directly parallels pre-existing Greco-Roman divine conception traditions that predate this text by centuries. No DSS or Orit Ge'ez basis. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Romans 5:12?",
+      "answer": "NT text: Wherefore, as by one man sin entered into the world, and death by sin; and so death passed upon all men, for that all have sinned. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: The letter claims Pauline authorship and is among the undisputed Pauline letters stylistically. However the theological conclusion drawn from verse 12 by Augustine of Hippo in 397 CE is not in the Greek original. | Primary source connection: NONE for the original sin doctrine built from this verse | Greco-Roman parallel: None directly. The doctrine of original sin is Augustine's 4th century CE construction from a Latin translation error. It has no parallel in Greek philosophy or Greco-Roman religion and no basis in the DSS or Orit Ge'ez. | Manipulation record: FABRICATED FROM MISTRANSLATION. The Greek text reads: eph ho pantes hemarton meaning because all sinned or in that all sinned. Jerome's Latin Vulgate translated this as in quo omnes peccaverunt meaning in whom all sinned — projecting inherited guilt from Adam onto all humanity. Augustine built the entire doctrine of original sin from Jerome's Latin mistranslation. The Greek original says death spread because all sin individually. The Vulgate says death spread because all sinned in Adam. Completely different meaning from a single translation decision. | DSS / Orit record: Community Rule 1QS Column 3 — Cave 1: YHWH appointed two spirits within human beings. Each person walks in the spirit they have been given. The DSS framework is individual moral responsibility not inherited guilt. 4QInstruction 4Q417 — Cave 4: You are responsible for the spirit placed within you. Guard it. This is individual accountability not collective inherited sin. | Verdict: The doctrine of original sin built from this verse rests entirely on Jerome's mistranslation of the Greek eph ho as in whom rather than because. The DSS Community Rule and 4QInstruction confirm individual moral responsibility not inherited guilt. Augustine's doctrine has no primary source basis. | Category code: F"
+    },
+    {
+      "question": "What does the primary source record show for John 14:6?",
+      "answer": "NT text: I am the way, the truth, and the life: no man cometh unto the Father, but by me. | Oldest manuscript evidence: Papyrus 66 — approximately 200 CE | Authorship: Anonymous. Name John assigned by Irenaeus 180 CE. No manuscript carries this name in original form. | Primary source connection: NONE | Greco-Roman parallel: The concept of a divine intermediary as the exclusive path to the divine father is present in multiple Greco-Roman mystery religion traditions. Mithraism presented Mithras as the mediator between humanity and Ahura Mazda. The Hermetic tradition presented Hermes as the guide to divine knowledge. None of these predate the NT claim with identical language but the mediator-as-exclusive-path concept was culturally dominant. | DSS / Orit record: Yeshayahu 55:6 — 1QIsa-a Cave 1: Seek YHWH while He may be found. Call upon Him while He is near. YHWH is directly accessible. No intermediary required. Tehillim 145:18 — 11QPs Cave 11: YHWH is near to all who call on Him, to all who call on Him in truth. Near to all. No qualifying intermediary stated. Devarim 4:29 — DSS Deuteronomy: You will seek YHWH your Creator and you will find Him if you search after Him with all your heart and soul. Direct access. No intermediary. | Verdict: No primary source. Concept of exclusive divine intermediary contradicts the direct access to YHWH stated throughout the DSS corpus. YHWH is near to all who call on Him in truth — no qualifying intermediary appears anywhere in the primary sources. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Colossians 1:15-16?",
+      "answer": "NT text: Who is the image of the invisible God, the firstborn of every creature: For by him were all things created. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Deutero-Pauline. Colossians is one of six letters attributed to Paul that stylometric analysis identifies as written by a different author after Paul's death. The vocabulary, sentence structure, and Christology are inconsistent with the undisputed Pauline letters. Most NT scholars do not attribute Colossians to Paul. | Primary source connection: NONE | Greco-Roman parallel: Image of the invisible God — this is Platonic philosophical language. Philo of Alexandria used eikon tou theou — image of God — to describe the Logos figure in identical terms. This is Greek metaphysics applied to a Jewish figure, not anything from the DSS or Orit Ge'ez tradition. Firstborn of all creation as a divine creative agent parallels the Logos of Philo and the Sophia figure of Hellenistic Jewish wisdom literature. | DSS / Orit record: Bereshit 1:1 — DSS Genesis: In the beginning The Creator created. YHWH creates directly. No pre-existent divine agent creates on His behalf in any DSS or Orit Ge'ez text. Yeshayahu 44:24 — 1QIsa-a Cave 1: I am YHWH who made all things, who alone stretched out the heavens, who spread out the earth by Myself. By Myself. No creative intermediary. | Verdict: Deutero-Pauline — not written by Paul. Built from Platonic and Philonic Greek philosophy. Directly contradicted by Yeshayahu 44:24 in 1QIsa-a which states YHWH created alone by Himself with no divine intermediary. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Philippians 2:6?",
+      "answer": "NT text: Who, being in the form of God, thought it not robbery to be equal with God. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: This letter is among the undisputed Pauline letters but the Christological hymn in verses 6-11 is widely identified by scholars as a pre-Pauline liturgical fragment Paul incorporated. The hymn predates the letter itself. | Primary source connection: NONE | Greco-Roman parallel: Divine beings who temporarily take human form and then return to divine status is a standard motif in Greco-Roman mythology. Zeus, Dionysus, and multiple other deities appear in human form in the literature of the period. The concept of a divine being emptying himself of divine prerogatives to take human form has no parallel in any DSS or Orit Ge'ez text. | DSS / Orit record: Yeshayahu 43:10 — 1QIsa-a Cave 1: Before Me no god was formed nor shall there be any after Me. No figure equal with YHWH exists in any form. Devarim 4:35 — DSS Deuteronomy: YHWH He is The Creator. There is no other besides Him. No second divine person equal with YHWH appears anywhere in the primary sources. | Verdict: No primary source. The concept of equality with YHWH is explicitly impossible within the absolute monotheism of the DSS. Yeshayahu 43:10 in 1QIsa-a is an absolute statement that allows no equal divine figure. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Hebrews 7:3?",
+      "answer": "NT text: Without father, without mother, without descent, having neither beginning of days, nor end of life; but made like unto the Son of God; abideth a priest continually. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Anonymous. Hebrews does not claim Pauline authorship in the text. Origen stated explicitly that only YHWH knows who wrote it. The church assigned it to Paul without manuscript evidence. | Primary source connection: Bereshit 14:18-20 — Malkitzedeq — claimed | Original DSS reading: Bereshit 14:18-20 — DSS Genesis: Malkitzedeq king of Shalem brought out bread and wine. He was a priest of El Elyon. He blessed Avram. The primary text presents Malkitzedeq as a man — a king and a priest — not as an eternal being. It does not say he was without father, without mother, or without beginning or end. Hebrews reads those claims into the silence of the text. | Manipulation record: FULL PASSAGE REFRAME. The Hebrews author takes the silence of the Bereshit text about Malkitzedeq's genealogy — the text simply does not mention his parents — and constructs a theological argument that this silence means he had no parents and no beginning or end. This is an argument from silence elevated into a theological claim. Silence about a man's lineage is not a statement that he had none. Bereshit presents Malkitzedeq as a human king and priest, not as an eternal divine person without origin. | DSS / Orit record: Bereshit 14:18-20 — DSS Genesis Cave 4: Malkitzedeq is a king of Shalem and a priest of El Elyon — a man who blesses Avram. The primary source never calls him eternal or without beginning. Yeshayahu 43:10-11 — 1QIsa-a Cave 1: Before Me no god was formed nor shall there be any after Me. YHWH alone is eternal; no created being is eternal or equal to YHWH. The Hebrews claim that Malkitzedeq had no beginning and abides a priest continually contradicts the primary source, which makes eternity YHWH's alone. | Verdict: Built on an argument from silence in Bereshit. The primary source presents Malkitzedeq as a human king and priest of Shalem, not an eternal divine person, and reserves eternity for YHWH alone (Yeshayahu 43:10-11, 1QIsa-a Cave 1). The Hebrews claim has no primary source support. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Acts 2:38?",
+      "answer": "NT text: Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Luke-Acts is a two-part work by the same anonymous author. The name Luke was assigned by tradition. | Primary source connection: NONE — the concept of remission of sins through baptism in a personal name has no DSS or Orit Ge'ez basis | DSS / Orit record: Tehillim 103:3 — 11QPs Cave 11: He forgives all your transgressions. YHWH forgives directly. No ritual water immersion in a personal name is required in any primary source text. The DSS community practiced ritual immersion — mikveh — for purity purposes but this was repeated purification not a one-time remission of sins through a personal name. Words of the Luminaries 4QDibHam — Cave 4: Direct prayer of confession to YHWH for forgiveness. No intermediary ritual required. | Verdict: No primary source. YHWH forgives directly in every DSS and Orit Ge'ez text. No one-time ritual immersion in a personal name appears anywhere in the primary corpus. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Revelation 1:8?",
+      "answer": "NT text: I am Alpha and Omega, the beginning and the ending, saith the Lord, which is, and which was, and which is to come, the Almighty. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. The text claims to be written by a John in exile on Patmos. No external evidence confirms identity. | Primary source connection: Yeshayahu 44:6 — claimed — I am the first and I am the last | Original DSS reading: Yeshayahu 44:6 — 1QIsa-a Cave 1: I am the first and I am the last and besides Me there is no god. This statement is made by YHWH about YHWH alone. It is an absolute monotheism statement. The surrounding context in Yeshayahu 44 is an extended argument against idolatry. | Manipulation record: APPROPRIATED and reapplied. The first and last declaration of YHWH from 1QIsa-a is applied to the figure described in Revelation. The Greek Alpha and Omega replaces the Hebrew first and last. The original statement is a declaration of YHWH's absolute uniqueness with no equal. The Revelation application transfers this uniqueness declaration to a second figure — which directly contradicts the meaning of the original statement which denies the existence of any other such figure. | Verdict: The YHWH uniqueness declaration from 1QIsa-a is applied to a second figure. This use directly contradicts the original statement which declares YHWH alone is first and last with no other beside Him. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Matthew 5:17?",
+      "answer": "NT text: Think not that I am come to destroy the law, or the prophets: I am not come to destroy, but to fulfil. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Matthew assigned 180 CE. | Primary source connection: NONE | DSS / Orit record: The concept of a single person fulfilling the Torah and thereby completing or superseding it is not in any DSS or Orit Ge'ez text. Community Rule 1QS Column 1 — Cave 1: to walk perfectly in all His ways as He commanded through Moshe and through all His servants the prophets. The covenant community studies and walks in Torah. No single person fulfils it on behalf of others. Yovelim 2:33 — Orit Ge'ez: The Sabbath is for all generations forever. Not until a person fulfils it. Forever. | Verdict: No primary source for the fulfil and thereby complete concept. The DSS community studied Torah as an ongoing communal practice with no concept of a single person's fulfilment replacing that practice. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Mark 16:16?",
+      "answer": "NT text: He that believeth and is baptized shall be saved; but he that believeth not shall be damned. | Oldest manuscript evidence: This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this. | Authorship: Anonymous. Name Mark assigned by tradition. This specific passage is a scribal addition not in the original text. | Primary source connection: NONE | Manipulation record: INSERTION. The two oldest complete manuscripts of Mark end at 16:8 with an empty tomb and frightened women. The Long Ending containing this verse was added by later scribes. This is not disputed. It is noted in footnotes of modern translations including the NIV, ESV, and NRSV. The verse presents a salvation formula that does not appear in the original Mark text. | DSS / Orit record: No salvation formula requiring belief in a specific person plus ritual water immersion appears anywhere in the DSS or Orit Ge'ez corpus. Tehillim 34:8 — 11QPs: Taste and see that YHWH is good. Blessed is the man who takes refuge in Him. Refuge in YHWH directly. No qualifying belief statement or ritual. | Verdict: A scribal insertion not present in the oldest manuscripts. Not part of the original Mark text. No primary source basis for the salvation formula it presents. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Luke 2:11?",
+      "answer": "NT text: For unto you is born this day in the city of David a Saviour, which is Christ the Lord. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Anonymous. Name Luke assigned by tradition. | Primary source connection: NONE — a divine saviour born in human history has no DSS or Orit Ge'ez source | Greco-Roman parallel: The birth announcement of a divine saviour figure was a standard Roman imperial formula. Augustus Caesar was called Soter — Saviour — and his birth was announced as bringing peace and salvation to the world. The Roman imperial cult used identical language for the emperor. The announcement formula in Luke 2 mirrors Roman imperial birth announcements that were publicly displayed across the empire at the time of writing. | DSS / Orit record: Yeshayahu 43:11 — 1QIsa-a Cave 1: I YHWH am the only Saviour. Absolute. No human saviour born in any city. Tehillim 27:1 — 11QPs Cave 11: YHWH is my light and my salvation. YHWH is salvation directly. No birth announcement of a human saviour figure appears anywhere in the primary source corpus. | Verdict: No primary source. Roman imperial birth announcement formula applied to a religious figure. Directly contradicted by Yeshayahu 43:11 in 1QIsa-a which states YHWH alone is Saviour. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for John 20:28?",
+      "answer": "NT text: And Thomas answered and said unto him, My Lord and my God. | Oldest manuscript evidence: Papyrus 66 — approximately 200 CE | Authorship: Anonymous. Name John assigned 180 CE. | Primary source connection: NONE | DSS / Orit record: Devarim 6:4 — DSS Nash Papyrus: YHWH is our Creator YHWH is One. Calling a human figure My God is a direct violation of the absolute monotheism of the primary sources. Yeshayahu 42:8 — 1QIsa-a Cave 1: I am YHWH that is My name. I will not give My glory to another. My name cannot be applied to another being. The divine address My God applied to a human figure is impossible within the primary source theological framework. | Verdict: No primary source. The divine address applied to a human figure directly contradicts the absolute monotheism of Devarim 6:4 and Yeshayahu 42:8 confirmed in the DSS Nash Papyrus and 1QIsa-a Cave 1. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Galatians 3:13?",
+      "answer": "NT text: Christ hath redeemed us from the curse of the law, being made a curse for us: for it is written, Cursed is every one that hangeth on a tree. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Among the undisputed Pauline letters. | Primary source connection: Devarim 21:22-23 — claimed | Original DSS reading: Devarim 21:22-23 — DSS Deuteronomy: If a man has committed a sin worthy of death and he is put to death and you hang him on a tree his corpse shall not hang overnight on the tree but you shall surely bury him on the same day for he who is hanged is accursed of The Creator. This passage governs the post-execution hanging of a criminal's body as a public deterrent. It is not a redemption theology. | Manipulation record: FULL PASSAGE REFRAME. A practical legal provision about the post-execution display of a criminal's body is reframed as a mechanism for cosmic redemption. The original context is about the dignity of burial and the defilement of the land by leaving a body exposed. Paul applies it to construct a substitutionary atonement theology that has no basis in the primary source context. | DSS / Orit record: Tehillim 103:3 — 11QPs: YHWH forgives all transgressions directly. Temple Scroll 11Q19 — Cave 11 addresses the same Devarim passage in its legal context about hanging criminals. The Temple Scroll does not apply this passage to redemption theology. No substitutionary atonement through a curse-bearer appears anywhere in the primary sources. | Verdict: A practical legal provision about burial of executed criminals reframed as cosmic redemption theology. The Temple Scroll in the DSS addresses the same passage in its correct legal context. No primary source supports substitutionary atonement. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for 1 Corinthians 15:3-4?",
+      "answer": "NT text: Christ died for our sins according to the scriptures; And that he was buried, and that he rose again the third day according to the scriptures. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Among the undisputed Pauline letters. This passage is identified by scholars as a pre-Pauline creedal formula Paul received and passed on — it predates the letter. | Primary source connection: Claimed to be according to the scriptures but no specific DSS text supports the death for sins narrative or the third day resurrection claim | Original DSS reading: The texts most commonly cited as supporting these claims: Yeshayahu 53 (collective servant, not individual), Tehillim 22 (lament with vindication, not death prediction), Hoshea 6:2 (national restoration in two days and on the third day, not individual resurrection). None of these in their DSS primary source context support the specific claims made. | Greco-Roman parallel: Death and resurrection on the third day is documented in the Osiris tradition — killed, three days in the underworld, resurrected by Isis. The dying and rising deity pattern that repeats across Osiris, Dionysus, Tammuz, and Adonis traditions all involve a period of death followed by resurrection. The third day specifically appears in Dionysian tradition. | Verdict: Claimed to be according to the scriptures but no DSS primary source supports the individual substitutionary death narrative or the third day resurrection claim in its primary source context. The pattern mirrors pre-existing Greco-Roman dying and rising deity traditions. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for Ephesians 1:4?",
+      "answer": "NT text: According as he hath chosen us in him before the foundation of the world. | Oldest manuscript evidence: Papyrus 46 — approximately 200 CE | Authorship: Deutero-Pauline. Ephesians is identified by most NT scholars as written by a disciple of Paul after Paul's death. Vocabulary, sentence structure, and ecclesiology differ significantly from undisputed Pauline letters. | Primary source connection: NONE — chosen in a divine human figure before creation has no DSS basis | DSS / Orit record: Wicked and the Holy 4Q181 — Cave 4: The pre-temporal election of the righteous is established by YHWH directly. YHWH chooses His people. No divine human intermediary through whom election occurs appears in any DSS text. The pre-temporal election in 4Q181 is YHWH acting directly not through a chosen human figure. | Verdict: Deutero-Pauline. The concept of election through a divine human intermediary has no DSS basis. Pre-temporal election in the DSS is YHWH's direct action with no intermediary. | Category code: N"
+    },
+    {
+      "question": "What does the primary source record show for 2 Timothy 3:16?",
+      "answer": "NT text: All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness. | Oldest manuscript evidence: Codex Sinaiticus — 4th century CE | Authorship: Deutero-Pauline. 2 Timothy is one of the Pastoral Epistles identified by scholars as written after Paul's death by someone using Paul's name. Vocabulary and concerns are inconsistent with undisputed Pauline letters. | Primary source connection: NONE — the claim of divine inspiration for scripture as a category concept | DSS / Orit record: The irony of this verse is that it is used to claim authority for texts including itself which are demonstrably late anonymous compositions. The DSS Community Rule 1QS describes the authority of the Torah of Moshe and the words of the prophets — specific identified primary sources. The blanket scripture inspiration claim applied to anonymous 2nd century CE Greek documents has no DSS basis. The primary sources distinguish between the Torah, the prophets, and other writings by specific provenance criteria not by a blanket inspiration claim. | Verdict: Deutero-Pauline. Used to claim authority for the NT canon which was not assembled until 397 CE. The DSS establishes authority through specific manuscript provenance not through blanket inspiration claims applied to anonymous documents. | Category code: N"
+    }
+  ],
+  "multiple_choice": [
+    {
+      "ref": "John 1:1",
+      "question": "What is the oldest manuscript evidence for John 1:1?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described"
+    },
+    {
+      "ref": "Matthew 1:23",
+      "question": "What is the oldest manuscript evidence for Matthew 1:23?",
+      "options": [
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 — approximately 200 CE",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 3,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "John 3:16",
+      "question": "What is the oldest manuscript evidence for John 3:16?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 — approximately 200 CE",
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described"
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 66 — approximately 200 CE"
+    },
+    {
+      "ref": "1 John 5:7",
+      "question": "What is the oldest manuscript evidence for 1 John 5:7?",
+      "options": [
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 2,
+      "source_quote": "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure."
+    },
+    {
+      "ref": "Matthew 27:46",
+      "question": "What is the oldest manuscript evidence for Matthew 27:46?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "Papyrus 66 — approximately 200 CE",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness"
+      ],
+      "correct": 0,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Isaiah 53",
+      "question": "What is the oldest manuscript evidence for Isaiah 53?",
+      "options": [
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 66 — approximately 200 CE",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 1,
+      "source_quote": "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness"
+    },
+    {
+      "ref": "Hebrews 1:3",
+      "question": "What is the oldest manuscript evidence for Hebrews 1:3?",
+      "options": [
+        "Papyrus 46 — approximately 200 CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 66 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "Revelation 22:16",
+      "question": "What is the oldest manuscript evidence for Revelation 22:16?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Matthew 28:19",
+      "question": "What is the oldest manuscript evidence for Matthew 28:19?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Luke 1:35",
+      "question": "What is the oldest manuscript evidence for Luke 1:35?",
+      "options": [
+        "Papyrus 66 — approximately 200 CE",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described"
+      ],
+      "correct": 2,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Romans 5:12",
+      "question": "What is the oldest manuscript evidence for Romans 5:12?",
+      "options": [
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 — approximately 200 CE",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this."
+      ],
+      "correct": 0,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "John 14:6",
+      "question": "What is the oldest manuscript evidence for John 14:6?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 66 — approximately 200 CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure."
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 66 — approximately 200 CE"
+    },
+    {
+      "ref": "Colossians 1:15-16",
+      "question": "What is the oldest manuscript evidence for Colossians 1:15-16?",
+      "options": [
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Codex Sinaiticus — 4th century CE",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 3,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "Philippians 2:6",
+      "question": "What is the oldest manuscript evidence for Philippians 2:6?",
+      "options": [
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 46 — approximately 200 CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "Hebrews 7:3",
+      "question": "What is the oldest manuscript evidence for Hebrews 7:3?",
+      "options": [
+        "Papyrus 66 — approximately 200 CE",
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure."
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "Acts 2:38",
+      "question": "What is the oldest manuscript evidence for Acts 2:38?",
+      "options": [
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 — approximately 200 CE",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 3,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Revelation 1:8",
+      "question": "What is the oldest manuscript evidence for Revelation 1:8?",
+      "options": [
+        "Papyrus 66 — approximately 200 CE",
+        "Codex Sinaiticus — 4th century CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure."
+      ],
+      "correct": 1,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Matthew 5:17",
+      "question": "What is the oldest manuscript evidence for Matthew 5:17?",
+      "options": [
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Papyrus 46 — approximately 200 CE",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 3,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "Mark 16:16",
+      "question": "What is the oldest manuscript evidence for Mark 16:16?",
+      "options": [
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Codex Sinaiticus — 4th century CE"
+      ],
+      "correct": 2,
+      "source_quote": "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this."
+    },
+    {
+      "ref": "Luke 2:11",
+      "question": "What is the oldest manuscript evidence for Luke 2:11?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Papyrus 66 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    },
+    {
+      "ref": "John 20:28",
+      "question": "What is the oldest manuscript evidence for John 20:28?",
+      "options": [
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 66 — approximately 200 CE",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "Papyrus 46 — approximately 200 CE"
+      ],
+      "correct": 1,
+      "source_quote": "Papyrus 66 — approximately 200 CE"
+    },
+    {
+      "ref": "Galatians 3:13",
+      "question": "What is the oldest manuscript evidence for Galatians 3:13?",
+      "options": [
+        "Papyrus 46 — approximately 200 CE",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Papyrus 66 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "1 Corinthians 15:3-4",
+      "question": "What is the oldest manuscript evidence for 1 Corinthians 15:3-4?",
+      "options": [
+        "Papyrus 46 — approximately 200 CE",
+        "Codex Sinaiticus — 4th century CE",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure."
+      ],
+      "correct": 0,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "Ephesians 1:4",
+      "question": "What is the oldest manuscript evidence for Ephesians 1:4?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "1QIsa-a Cave 1 — the Great Isaiah Scroll — 125-100 BCE — primary DSS witness",
+        "Papyrus 46 — approximately 200 CE",
+        "Papyrus 66 (P66) — approximately 200 CE — 170 years after events described"
+      ],
+      "correct": 2,
+      "source_quote": "Papyrus 46 — approximately 200 CE"
+    },
+    {
+      "ref": "2 Timothy 3:16",
+      "question": "What is the oldest manuscript evidence for 2 Timothy 3:16?",
+      "options": [
+        "Codex Sinaiticus — 4th century CE",
+        "This verse does not appear in any Greek manuscript before the 4th century CE. It does not appear in any early church father writing before the 4th century CE. It first appears in a Latin manuscript — Codex Fuldensis — approximately 546 CE. It was inserted into the Greek text by scribes under institutional pressure.",
+        "This verse is part of the Long Ending of Mark (16:9-20) which does not appear in Codex Sinaiticus or Codex Vaticanus — the two oldest and most complete manuscripts. It was added by scribes. Modern translations footnote this.",
+        "Papyrus 66 — approximately 200 CE"
+      ],
+      "correct": 0,
+      "source_quote": "Codex Sinaiticus — 4th century CE"
+    }
+  ],
+  "fill_blank": [
+    {
+      "ref": "John 1:1",
+      "prompt": "Constructed from ___ Logos philosophy.",
+      "answer": "Greek",
+      "source_quote": "Constructed from Greek Logos philosophy. No DSS or Orit Ge'ez source. Directly contradicted by the primary source absolute monotheism of Yeshayahu 43:10-11 confirmed in 1QIsa-a Cave 1."
+    },
+    {
+      "ref": "Matthew 1:23",
+      "prompt": "Built on a ___ mistranslation of almah to parthenos.",
+      "answer": "Greek",
+      "source_quote": "Built on a Greek mistranslation of almah to parthenos. The DSS primary source 1QIsa-a says young woman. No virgin birth exists in any primary source manuscript."
+    },
+    {
+      "ref": "Matthew 27:46",
+      "prompt": "Taken from ___ 22:1 in 11QPs Cave 11.",
+      "answer": "Tehillim",
+      "source_quote": "Taken from Tehillim 22:1 in 11QPs Cave 11. The surrounding context suppressed. The psalm itself contradicts the abandonment narrative in verse 24."
+    },
+    {
+      "ref": "Isaiah 53",
+      "prompt": "Taken from 1QIsa-a ___ 1 and reframed from collective national servant to individual.",
+      "answer": "Cave",
+      "source_quote": "Taken from 1QIsa-a Cave 1 and reframed from collective national servant to individual. The surrounding literary context which identifies the servant as Yisra'el collectively was suppressed."
+    },
+    {
+      "ref": "Romans 5:12",
+      "prompt": "The doctrine of original sin built from this verse rests entirely on ___ mistranslation of the Greek eph ho as in whom rather than because.",
+      "answer": "Jerome's",
+      "source_quote": "The doctrine of original sin built from this verse rests entirely on Jerome's mistranslation of the Greek eph ho as in whom rather than because. The DSS Community Rule and 4QInstruction confirm individual moral responsibility not inherited guilt. Augustine's doctrine has no primary source basis."
+    },
+    {
+      "ref": "Colossians 1:15-16",
+      "prompt": "___ — not written by Paul.",
+      "answer": "Deutero-Pauline",
+      "source_quote": "Deutero-Pauline — not written by Paul. Built from Platonic and Philonic Greek philosophy. Directly contradicted by Yeshayahu 44:24 in 1QIsa-a which states YHWH created alone by Himself with no divine intermediary."
+    },
+    {
+      "ref": "Hebrews 7:3",
+      "prompt": "Built on an argument from silence in ___",
+      "answer": "Bereshit",
+      "source_quote": "Built on an argument from silence in Bereshit. The primary source presents Malkitzedeq as a human king and priest of Shalem, not an eternal divine person, and reserves eternity for YHWH alone (Yeshayahu 43:10-11, 1QIsa-a Cave 1). The Hebrews claim has no primary source support."
+    },
+    {
+      "ref": "Revelation 1:8",
+      "prompt": "The ___ uniqueness declaration from 1QIsa-a is applied to a second figure.",
+      "answer": "YHWH",
+      "source_quote": "The YHWH uniqueness declaration from 1QIsa-a is applied to a second figure. This use directly contradicts the original statement which declares YHWH alone is first and last with no other beside Him."
+    },
+    {
+      "ref": "1 Corinthians 15:3-4",
+      "prompt": "___ to be according to the scriptures but no DSS primary source supports the individual substitutionary death narrative or the third day resurrection claim in its primary source context.",
+      "answer": "Claimed",
+      "source_quote": "Claimed to be according to the scriptures but no DSS primary source supports the individual substitutionary death narrative or the third day resurrection claim in its primary source context. The pattern mirrors pre-existing Greco-Roman dying and rising deity traditions."
+    },
+    {
+      "ref": "Ephesians 1:4",
+      "prompt": "___",
+      "answer": "Deutero-Pauline",
+      "source_quote": "Deutero-Pauline. The concept of election through a divine human intermediary has no DSS basis. Pre-temporal election in the DSS is YHWH's direct action with no intermediary."
+    },
+    {
+      "ref": "2 Timothy 3:16",
+      "prompt": "___",
+      "answer": "Deutero-Pauline",
+      "source_quote": "Deutero-Pauline. Used to claim authority for the NT canon which was not assembled until 397 CE. The DSS establishes authority through specific manuscript provenance not through blanket inspiration claims applied to anonymous documents."
+    }
+  ]
+}
