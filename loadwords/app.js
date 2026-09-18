@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v17';
+const APP_VERSION = 'v18';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -88,6 +88,7 @@ const State = {
   deal:{ phase:'pick', words:[], caseMap:[], myCase:null, openedCases:[], eliminatedIds:[], lastReveal:null, offerAmount:0, offerStep:0, finalResult:null },
   memory:{ cards:[], flipped:[], moves:0, matches:0, lock:false, pairCount:0, streak:0, decayPool:50, decayClaimed:false, roundScore:0, lastGain:0 },
   memoryScore:{ total:0, lastDate:null },
+  higherLower:{ pool:[], index:0, word:null, options:[], streak:0, roundPoints:0, bankedTotal:0, phase:'guess', chosen:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -470,6 +471,7 @@ function renderView(){
     case 'dragdrop': return renderDragDrop();
     case 'deal': return renderDeal();
     case 'memory': return renderMemory();
+    case 'higherlower': return renderHigherLower();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -966,6 +968,7 @@ function renderTest(){
       <button class="action" data-nav="dragdrop" style="--c:#7C3AED"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Drag &amp; Drop</b><span>Drag the right word chip into the blank</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1411,6 +1414,88 @@ function renderMemory(){
   ${allMatched ? `<button class="big-btn" style="margin-top:16px;" id="memAgainBtn">Play again</button>` : ''}`;
 }
 
+// ---------------- HIGHER OR LOWER CONFIDENCE DECK ----------------
+function startHigherLower(){
+  const pool = shuffle(State.words.filter(w=>w.definition));
+  State.higherLower = { pool, index:0, word:null, options:[], streak:0, roundPoints:0, bankedTotal:0, phase:'guess', chosen:null };
+  higherLowerNextCard();
+}
+function higherLowerNextCard(){
+  const H = State.higherLower;
+  if(H.index >= H.pool.length){ H.index = 0; H.pool = shuffle(H.pool); }
+  const w = H.pool[H.index];
+  H.index++;
+  H.word = w;
+  H.options = shuffle([w.definition, ...contextDistractors(w,2).map(d=>d.definition)]);
+  H.phase = 'guess';
+  H.chosen = null;
+}
+function higherLowerGuess(def){
+  const H = State.higherLower;
+  H.chosen = def;
+  const isCorrect = def === H.word.definition;
+  if(isCorrect){
+    H.streak++;
+    H.roundPoints = 100 * H.streak;
+    gradeWord(H.word.id, 2);
+    H.phase = 'correct';
+  } else {
+    gradeWord(H.word.id, 0);
+    H.streak = 0;
+    H.roundPoints = 0;
+    H.phase = 'wrong';
+  }
+}
+function higherLowerBank(){
+  const H = State.higherLower;
+  H.bankedTotal += H.roundPoints;
+  H.roundPoints = 0;
+  H.streak = 0;
+  higherLowerNextCard();
+}
+function higherLowerContinue(){
+  higherLowerNextCard();
+}
+function renderHigherLower(){
+  const H = State.higherLower;
+  if(!H.word){
+    return `<div class="empty"><p>Loading Higher or Lower…</p></div>`;
+  }
+  const scoreboard = `<div class="memory-scoreboard">
+    <div>${ic('star')}<b>${H.bankedTotal.toLocaleString()}</b><span>Banked</span></div>
+    <div>${ic('fire')}<b>x${H.streak}</b><span>Streak</span></div>
+    <div>${ic('target')}<b>${H.roundPoints.toLocaleString()}</b><span>At risk</span></div>
+  </div>`;
+  if(H.phase==='wrong'){
+    return `<div class="pagehead"><h2>Higher or Lower</h2></div>
+    ${scoreboard}
+    <div class="hl-word-card">${escapeHtml(H.word.word)}</div>
+    <div class="note-box" style="background:var(--warn-soft);color:var(--warn)">${ic('x')}<span>Not quite — "${escapeHtml(H.word.word)}" means: ${escapeHtml(H.word.definition)}</span></div>
+    <p class="sub" style="margin-top:8px;">Your risked points for this streak are gone, but your banked total is safe.</p>
+    <button class="big-btn" style="margin-top:8px;" id="hlContinueBtn">Next card</button>`;
+  }
+  if(H.phase==='correct'){
+    return `<div class="pagehead"><h2>Higher or Lower</h2></div>
+    ${scoreboard}
+    <div class="hl-word-card">${escapeHtml(H.word.word)}</div>
+    <div class="note-box" style="background:var(--good-soft);color:var(--good)">${ic('check')}<span>Correct! ${escapeHtml(H.word.definition)}</span></div>
+    <p class="sub" style="margin-top:8px;">Bank your ${H.roundPoints.toLocaleString()} points now, or risk it all on the next card for even more.</p>
+    <div class="test-footer" style="display:flex;gap:10px;">
+      <button class="big-btn" id="hlBankBtn" style="flex:1;">Bank ${H.roundPoints.toLocaleString()}</button>
+      <button class="big-btn" id="hlContinueBtn" style="flex:1;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;">Risk it — next card</button>
+    </div>`;
+  }
+  return `<div class="pagehead"><h2>Higher or Lower</h2></div>
+  ${scoreboard}
+  <div class="hl-word-card">${escapeHtml(H.word.word)}
+    <span class="mini-spk" data-speak="${escapeAttr(H.word.word)}">${ic('speakerSm')}</span>
+  </div>
+  <p class="sub">Which meaning is hiding behind this word?</p>
+  <div class="opt-grid">
+    ${H.options.map(def=>`<button class="opt hl-guess" data-hl-guess="${escapeAttr(def)}">${escapeHtml(def)}</button>`).join('')}
+  </div>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1536,6 +1621,7 @@ function bindEvents(){
       if(v==='dragdrop'){ startDragDrop(); }
       if(v==='deal'){ startDeal(); }
       if(v==='memory'){ startMemory(); }
+      if(v==='higherlower'){ startHigherLower(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1649,7 +1735,7 @@ function bindEvents(){
     el.addEventListener('click', ()=>{ startTest(el.getAttribute('data-testtype')); render(); });
   });
   const inListenQuiz = State.view==='listen' && State.listen.quiz;
-  document.querySelectorAll('.opt').forEach(el=>{
+  document.querySelectorAll('.opt:not([data-hl-guess])').forEach(el=>{
     el.addEventListener('click', ()=>{
       const answeredFlag = inListenQuiz ? State.listen.quiz.answered : State.testAnswered;
       if(answeredFlag) return;
@@ -1864,6 +1950,17 @@ function bindEvents(){
   });
   const memAgainBtn = document.getElementById('memAgainBtn');
   if(memAgainBtn){ memAgainBtn.addEventListener('click', ()=>{ startMemory(); render(); }); }
+
+  document.querySelectorAll('[data-hl-guess]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      higherLowerGuess(el.getAttribute('data-hl-guess'));
+      render();
+    });
+  });
+  const hlBankBtn = document.getElementById('hlBankBtn');
+  if(hlBankBtn){ hlBankBtn.addEventListener('click', ()=>{ higherLowerBank(); render(); }); }
+  const hlContinueBtn = document.getElementById('hlContinueBtn');
+  if(hlContinueBtn){ hlContinueBtn.addEventListener('click', ()=>{ higherLowerContinue(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
