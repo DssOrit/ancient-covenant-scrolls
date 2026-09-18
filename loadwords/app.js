@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v22';
+const APP_VERSION = 'v23';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -93,6 +93,7 @@ const State = {
   thread:{ words:[], left:[], right:[], connections:{}, locked:{}, rightLocked:{}, flashWrong:null },
   feud:{ themeKey:null, themeLabel:'', boardWords:[], pool:[], strikes:0, score:0, phase:'playing', lastWrong:null },
   stack:{ cols:4, rows:5, grid:[[],[],[],[]], queue:[], totalPairs:0, clearedPairs:0, score:0, phase:'playing' },
+  blockPuzzle:{ words:[], placed:[], pool:[], score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -480,6 +481,7 @@ function renderView(){
     case 'thread': return renderThread();
     case 'feud': return renderFeud();
     case 'stack': return renderStack();
+    case 'blocks': return renderBlockPuzzle();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -981,6 +983,7 @@ function renderTest(){
       <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1803,6 +1806,75 @@ function renderStack(){
   <button class="big-btn" style="margin-top:8px;" id="stackAgainBtn">Play again</button>` : ''}`;
 }
 
+// ---------------- WORD BLOCKS (block puzzle) ----------------
+function startBlockPuzzle(){
+  const pool = State.words.filter(w=>w.definition && w.syllables && w.syllables.length>=2 && w.syllables.length<=4);
+  const chosen = shuffle(pool).slice(0,4);
+  const words = chosen.map(w=>({ id:w.id, word:w.word, definition:w.definition, syllables:w.syllables, value:wordPointValue(w) }));
+  const placed = words.map(w=>new Array(w.syllables.length).fill(null));
+  let chipId = 0;
+  const chipPool = [];
+  words.forEach(w=>{ w.syllables.forEach(s=>{ chipPool.push({ id:'c'+(chipId++), text:s }); }); });
+  State.blockPuzzle = { words, placed, pool: shuffle(chipPool), score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null };
+}
+function blockPlaceChip(chipId, wordIdx, cellIdx){
+  const B = State.blockPuzzle;
+  if(B.phase!=='playing') return false;
+  B.wrongFlashChip = null;
+  B.justSolved = null;
+  const word = B.words[wordIdx];
+  if(!word || B.placed[wordIdx][cellIdx]) return false;
+  const chipIdx = B.pool.findIndex(c=>c.id===chipId);
+  if(chipIdx===-1) return false;
+  const chip = B.pool[chipIdx];
+  if(chip.text.toLowerCase() !== word.syllables[cellIdx].toLowerCase()){
+    B.wrongFlashChip = chipId;
+    return false;
+  }
+  B.pool.splice(chipIdx, 1);
+  B.placed[wordIdx][cellIdx] = chip.text;
+  if(B.placed[wordIdx].every(c=>c!==null)){
+    B.score += word.value;
+    B.clearedWords += 1;
+    B.justSolved = wordIdx;
+    gradeWord(word.id, 2);
+    if(B.clearedWords >= B.words.length){ B.phase = 'won'; }
+  }
+  return true;
+}
+function renderBlockPuzzle(){
+  const B = State.blockPuzzle;
+  if(!B.words.length){
+    return `<div class="empty"><p>Loading Word Blocks…</p></div>`;
+  }
+  const done = B.phase!=='playing';
+  return `<div class="pagehead"><h2>Word Blocks</h2></div>
+  <p class="sub">Drag each chunk onto its word to spell it out. A completed word shatters and reveals its meaning.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${B.score.toLocaleString()}</b><span>Score</span></div>
+    <div>${ic('layers')}<b>${B.clearedWords}/${B.words.length}</b><span>Solved</span></div>
+  </div>
+  <div class="block-grid">
+    ${B.words.map((w,wi)=>{
+      const solved = B.placed[wi].every(c=>c!==null);
+      return `<div class="block-row ${solved?'solved':''} ${B.justSolved===wi?'shatter':''}">
+        <div class="block-cells">
+          ${w.syllables.map((s,ci)=>{
+            const filled = B.placed[wi][ci];
+            return `<div class="block-cell ${filled?'filled':''}" ${filled?'':`data-block-cell="${wi}:${ci}"`}>${filled?escapeHtml(filled):''}</div>`;
+          }).join('')}
+        </div>
+        ${solved ? `<div class="block-def">${escapeHtml(w.definition)}</div>` : ''}
+      </div>`;
+    }).join('')}
+  </div>
+  ${!done ? `<div class="block-pool">
+    ${B.pool.map(c=>`<div class="block-chip ${B.wrongFlashChip===c.id?'wrong':''}" data-block-chip="${escapeAttr(c.id)}">${escapeHtml(c.text)}</div>`).join('')}
+  </div>` : ''}
+  ${done ? `<div class="note-box" style="background:var(--good-soft);color:var(--good)">${ic('check')}<span>All words assembled! Final score: ${B.score.toLocaleString()}.</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="blockAgainBtn">Play again</button>` : ''}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1933,6 +2005,7 @@ function bindEvents(){
       if(v==='thread'){ startThread(); }
       if(v==='feud'){ startFeud(); }
       if(v==='stack'){ startStack(); }
+      if(v==='blocks'){ startBlockPuzzle(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2356,6 +2429,49 @@ function bindEvents(){
   });
   const stackAgainBtn = document.getElementById('stackAgainBtn');
   if(stackAgainBtn){ stackAgainBtn.addEventListener('click', ()=>{ startStack(); render(); }); }
+
+  document.querySelectorAll('.block-chip').forEach(chip=>{
+    chip.style.touchAction = 'none';
+    chip.addEventListener('pointerdown', (e)=>{
+      const chipId = chip.getAttribute('data-block-chip');
+      const rect = chip.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left, offsetY = e.clientY - rect.top;
+      chip.setPointerCapture(e.pointerId);
+      chip.classList.add('dragging');
+      chip.style.position = 'fixed';
+      chip.style.width = rect.width + 'px';
+      chip.style.left = rect.left + 'px';
+      chip.style.top = rect.top + 'px';
+      chip.style.zIndex = 50;
+      const move = (ev)=>{
+        chip.style.left = (ev.clientX - offsetX) + 'px';
+        chip.style.top = (ev.clientY - offsetY) + 'px';
+      };
+      const up = (ev)=>{
+        chip.removeEventListener('pointermove', move);
+        chip.removeEventListener('pointerup', up);
+        chip.removeEventListener('pointercancel', up);
+        const cellEls = Array.from(document.querySelectorAll('[data-block-cell]'));
+        const hitEl = cellEls.find(c=>{
+          const cr = c.getBoundingClientRect();
+          return ev.clientX>=cr.left && ev.clientX<=cr.right && ev.clientY>=cr.top && ev.clientY<=cr.bottom;
+        });
+        if(hitEl){
+          const [wi, ci] = hitEl.getAttribute('data-block-cell').split(':').map(Number);
+          blockPlaceChip(chipId, wi, ci);
+          render();
+        } else {
+          chip.classList.remove('dragging');
+          chip.style.position = ''; chip.style.left = ''; chip.style.top = ''; chip.style.width = ''; chip.style.zIndex = '';
+        }
+      };
+      chip.addEventListener('pointermove', move);
+      chip.addEventListener('pointerup', up);
+      chip.addEventListener('pointercancel', up);
+    });
+  });
+  const blockAgainBtn = document.getElementById('blockAgainBtn');
+  if(blockAgainBtn){ blockAgainBtn.addEventListener('click', ()=>{ startBlockPuzzle(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
