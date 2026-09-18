@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v29';
+const APP_VERSION = 'v31';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -99,6 +99,7 @@ const State = {
   quest:{ chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions:[], checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null },
   debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
   grammar:{ index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null },
+  mystery:{ candidates:[], culpritId:null, clues:[], revealedCount:1, eliminated:{}, phase:'clues', guessId:null, correct:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -503,6 +504,7 @@ function renderView(){
     case 'vault': return renderVault();
     case 'debate': return renderDebate();
     case 'grammar': return renderGrammar();
+    case 'mystery': return renderMystery();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -1017,6 +1019,7 @@ function renderTest(){
       <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="mystery" style="--c:#6E2F8A"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Word Mystery</b><span>Use the clues to deduce the mystery word, then accuse</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1988,7 +1991,10 @@ function renderQuest(){
   const header = `<div class="pagehead"><h2>${escapeHtml(STORY_QUEST.title)}</h2></div>
     <p class="sub">Chapter ${Q.chapterIndex+1} of ${totalChapters}: ${escapeHtml(chapter.title)}</p>`;
   if(Q.phase==='intro'){
+    const chapterScenes = ['storm','candle','beacon'];
+    const sceneName = chapterScenes[Q.chapterIndex] || 'storm';
     return header + `
+    <div class="scene scene-${sceneName}"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
     <div class="quest-passage">${questParagraphs(chapter.intro)}</div>
     <p class="quest-choice-prompt">${escapeHtml(chapter.choicePrompt)}</p>
     <div class="quest-choice-opts">
@@ -2121,6 +2127,7 @@ function renderDebate(){
   <div class="memory-scoreboard">
     <div>${ic('star')}<b>${D.score}/${DEBATE_SCENARIOS.length}</b><span>Score</span></div>
   </div>
+  <div class="scene scene-meeting"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
   <div class="debate-stage">
     <div class="debate-bubble">
       <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleA)}</span></div>
@@ -2202,6 +2209,72 @@ function renderGrammar(){
   <p class="quest-choice-prompt">${escapeHtml(topic.prompt)}</p>
   <div class="note-box" style="background:${G.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${G.correctPick?'var(--good)':'var(--warn)'}">${ic(G.correctPick?'check':'x')}<span>${G.correctPick?'Correct. ':'Not quite. '}${escapeHtml(topic.explanation)}</span></div>
   <button class="big-btn" style="margin-top:8px;" id="grammarNextBtn">${G.index+1<total?'Next rule':'See results'}</button>`;
+}
+
+// ---------------- WORD MYSTERY ----------------
+function mysteryGenerateClues(w){
+  const pos = w.pos.split(' / ')[0].trim();
+  const article = /^[aeiou]/i.test(pos) ? 'an' : 'a';
+  const clues = [
+    `The word has ${w.syllables.length} syllable${w.syllables.length===1?'':'s'}.`,
+    `The word is ${article} ${pos}.`,
+    `The word belongs to the "${CATEGORY_META[w.category].label}" difficulty tier.`,
+    `The word starts with the letter "${w.word[0].toUpperCase()}".`,
+    `The word's theme is "${THEME_META[w.theme].label}".`,
+  ];
+  if(w.syn && w.syn.length) clues.push(`One of its synonyms is "${w.syn[0]}".`);
+  return shuffle(clues).slice(0,5);
+}
+function startMystery(){
+  const pool = State.words.filter(w=>w.definition && w.syn && w.syn.length && w.pos);
+  const candidates = shuffle(pool).slice(0,6);
+  const culprit = candidates[Math.floor(Math.random()*candidates.length)];
+  State.mystery = { candidates, culpritId: culprit.id, clues: mysteryGenerateClues(culprit), revealedCount:1, eliminated:{}, phase:'clues', guessId:null, correct:null };
+}
+function mysteryRevealNext(){
+  const M = State.mystery;
+  if(M.revealedCount < M.clues.length) M.revealedCount += 1;
+}
+function mysteryToggle(wordId){
+  const M = State.mystery;
+  M.eliminated[wordId] = !M.eliminated[wordId];
+}
+function mysteryAccuse(wordId){
+  const M = State.mystery;
+  if(M.eliminated[wordId]) return;
+  M.guessId = wordId;
+  M.correct = wordId === M.culpritId;
+  M.phase = 'result';
+  gradeWord(M.culpritId, M.correct?2:0);
+}
+function renderMystery(){
+  const M = State.mystery;
+  if(!M.candidates.length){
+    return `<div class="empty"><p>Loading Word Mystery…</p></div>`;
+  }
+  if(M.phase==='result'){
+    const culprit = M.candidates.find(w=>w.id===M.culpritId);
+    return `<div class="pagehead"><h2>Word Mystery</h2></div>
+    <div class="note-box" style="background:${M.correct?'var(--good-soft)':'var(--warn-soft)'};color:${M.correct?'var(--good)':'var(--warn)'}">${ic(M.correct?'check':'x')}<span>${M.correct?'Case solved! ':'Wrong word. '}The mystery word was "${escapeHtml(culprit.word)}": ${escapeHtml(culprit.definition)}</span></div>
+    <button class="big-btn" style="margin-top:16px;" id="mysteryAgainBtn">New case</button>`;
+  }
+  const revealedClues = M.clues.slice(0, M.revealedCount);
+  return `<div class="pagehead"><h2>Word Mystery</h2></div>
+  <p class="sub">One of these 6 words is the mystery word. Use the clues to cross off suspects, then make your accusation.</p>
+  <div class="scene scene-scan"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
+  <div class="mystery-clues">
+    ${revealedClues.map((c,i)=>`<div class="mystery-clue"><span class="mystery-clue-num">Clue ${i+1}</span><p>${escapeHtml(c)}</p></div>`).join('')}
+  </div>
+  ${M.revealedCount < M.clues.length ? `<button class="big-btn" style="margin-top:10px;" id="mysteryNextClueBtn">Reveal next clue</button>` : `<p class="hint" style="margin-top:10px;">All clues revealed. Time to accuse!</p>`}
+  <div class="mystery-suspects">
+    ${M.candidates.map(w=>`<div class="mystery-suspect ${M.eliminated[w.id]?'eliminated':''}">
+      <span class="mystery-suspect-word">${escapeHtml(w.word)}</span>
+      <div class="mystery-suspect-actions">
+        <button class="mystery-toggle-btn" data-mystery-toggle="${escapeAttr(w.id)}">${M.eliminated[w.id]?'Restore':'Cross off'}</button>
+        <button class="mystery-accuse-btn" data-mystery-accuse="${escapeAttr(w.id)}" ${M.eliminated[w.id]?'disabled':''}>Accuse</button>
+      </div>
+    </div>`).join('')}
+  </div>`;
 }
 
 // ---------------- ADD WORD ----------------
@@ -2339,6 +2412,7 @@ function bindEvents(){
       if(v==='vault'){ vaultClosePack(); }
       if(v==='debate'){ startDebate(); }
       if(v==='grammar'){ startGrammar(); }
+      if(v==='mystery'){ startMystery(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2848,6 +2922,17 @@ function bindEvents(){
   if(grammarNextBtn){ grammarNextBtn.addEventListener('click', ()=>{ grammarNext(); render(); }); }
   const grammarAgainBtn = document.getElementById('grammarAgainBtn');
   if(grammarAgainBtn){ grammarAgainBtn.addEventListener('click', ()=>{ startGrammar(); render(); }); }
+
+  const mysteryNextClueBtn = document.getElementById('mysteryNextClueBtn');
+  if(mysteryNextClueBtn){ mysteryNextClueBtn.addEventListener('click', ()=>{ mysteryRevealNext(); render(); }); }
+  document.querySelectorAll('[data-mystery-toggle]').forEach(el=>{
+    el.addEventListener('click', ()=>{ mysteryToggle(el.getAttribute('data-mystery-toggle')); render(); });
+  });
+  document.querySelectorAll('[data-mystery-accuse]').forEach(el=>{
+    el.addEventListener('click', ()=>{ mysteryAccuse(el.getAttribute('data-mystery-accuse')); render(); });
+  });
+  const mysteryAgainBtn = document.getElementById('mysteryAgainBtn');
+  if(mysteryAgainBtn){ mysteryAgainBtn.addEventListener('click', ()=>{ startMystery(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
