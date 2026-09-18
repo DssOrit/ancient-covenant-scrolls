@@ -1406,7 +1406,7 @@ function showFaqMode(fid) {
       var secLabel = secIdx >= 0 ? LBL[secIdx].split(' \u2014 ')[0] : fid;
       var h = '<div class="study-view">';
       h += '<h2 class="sv-title" style="border-left-color:var(--vol1)">FAQ \u2014 ' + secLabel + '</h2>';
-      h += '<div class="sv-sec"><p class="study-na">Curated FAQ for this section will be added in a future session. Use Listen &amp; Learn to hear the full text, or try Fill in the Blank and Flashcards which work now.</p></div>';
+      h += '<div class="sv-sec"><p class="study-na">A meticulously curated FAQ for this section will be added in a future session. Use Listen &amp; Learn to hear the full text, or try Fill in the Blank and Flashcards which work now.</p></div>';
       h += '<button class="study-btn" id="b-back-grid">Back to activities</button></div>';
       document.getElementById('content').innerHTML = h;
       document.getElementById('b-back-grid').addEventListener('click', function () { go(fid); });
@@ -6029,7 +6029,7 @@ function showStudyMode(fid) {
       var h = '<div class="study-view">';
       h += '<h2 class="sv-title">' + secLabel + '</h2>';
       h += '<div class="sv-sec"><h3>Preview</h3><div class="sv-text">' + preview + '</div></div>';
-      h += '<div class="sv-sec"><p class="study-na">Full curated summary, key terms, and FAQ will be added in a future session.</p></div>';
+      h += '<div class="sv-sec"><p class="study-na">A full, meticulously curated summary, key terms, and FAQ will be added in a future session.</p></div>';
       h += '<button class="study-btn" id="b-back-na">Back to activities</button></div>';
       document.getElementById('content').innerHTML = h;
       document.getElementById('b-back-na').addEventListener('click', function () { go(fid); });
