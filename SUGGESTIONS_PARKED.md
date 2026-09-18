@@ -1,4 +1,4 @@
-# Suggestions parked — review by 2026-05-25
+# Suggestions parked — review by 2026-10-09
 
 User direction 2026-05-04: capture and revisit in a few weeks. **Do not
 implement until the user explicitly requests one of these.**
@@ -107,14 +107,16 @@ Host/Join entry point.
 
 ## Reminder logistics
 
-I can't actually wake up on a specific date — my session is reactive,
-not scheduled. To make sure these resurface, do one of:
+A scheduled trigger (`trig_01DrKj8B4PyFq8JsZy33hwNh`) is set to fire into
+this session on **2026-10-09** and resurface this file's contents
+automatically — set at the user's request on 2026-09-18. No calendar
+reminder needed this time. If a future session doesn't see it fire,
+fall back to:
 
-1. Set a calendar reminder on your iPad for **2026-05-25** that says
-   "Open `SUGGESTIONS_PARKED.md` in the repo and ask Claude to revisit."
-2. Each new session, look at `CLAUDE.md` — I added a
-   "**Active reminders**" section that lists this file's review date
-   so future sessions surface it automatically.
+1. Set a calendar reminder on your iPad for the review date above.
+2. Each new session, look at `CLAUDE.md` — the "**Active reminders**"
+   section lists this file's review date so future sessions can surface
+   it manually.
 
 ---
 
