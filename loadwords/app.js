@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v27';
+const APP_VERSION = 'v28';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -1336,10 +1336,11 @@ function renderDeal(){
       <button class="big-btn" style="margin-top:20px;" id="dealAgainBtn">Play again</button>
     </div>`;
   }
+  const lastOpened = D.openedCases[D.openedCases.length-1];
   const casesHtml = `<div class="deal-cases-grid">
     ${D.caseMap.map((wordIdx,i)=>{
       if(i===D.myCase) return `<div class="deal-case mine">${i+1}<span>Yours</span></div>`;
-      if(D.openedCases.includes(i)) return `<div class="deal-case opened">${i+1}</div>`;
+      if(D.openedCases.includes(i)) return `<div class="deal-case opened ${i===lastOpened?'just-opened':''}">${i+1}</div>`;
       return `<button class="deal-case" data-open-case="${i}" ${D.phase==='offer'?'disabled':''}>${i+1}</button>`;
     }).join('')}
   </div>`;
@@ -1349,12 +1350,16 @@ function renderDeal(){
     ${wordsHtml}
     ${casesHtml}
     ${revealHtml}
-    <div class="banker-offer">
-      <div class="banker-title">${ic('speakerSm')} The Banker calls…</div>
-      <div class="banker-amount">${D.offerAmount.toLocaleString()} points</div>
-      <div class="test-footer" style="display:flex;gap:10px;">
-        <button class="big-btn" id="dealBtn" style="flex:1;">Deal</button>
-        <button class="big-btn" id="noDealBtn" style="flex:1;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;">No Deal</button>
+    <div class="banker-modal-backdrop">
+      <div class="banker-modal-card">
+        <div class="banker-modal-icon">${ic('speaker')}</div>
+        <div class="banker-title">The Banker calls…</div>
+        <p class="banker-sub">The words still on the board are valuable. Take the guaranteed points, or keep going.</p>
+        <div class="banker-amount">${D.offerAmount.toLocaleString()} points</div>
+        <div class="banker-modal-actions">
+          <button class="big-btn" id="dealBtn">Deal</button>
+          <button class="big-btn banker-nodeal-btn" id="noDealBtn">No Deal</button>
+        </div>
       </div>
     </div>`;
   }
@@ -1738,8 +1743,11 @@ function renderFeud(){
     <div>${ic('x')}<b>${F.strikes}/3</b><span>Strikes</span></div>
   </div>
   <div class="feud-board">
-    ${F.boardWords.map(w=>`<div class="feud-slot ${w.revealed?'revealed':''}">
-      ${w.revealed ? `<span class="feud-slot-word">${escapeHtml(w.word)}</span><span class="feud-slot-val">${w.value.toLocaleString()}</span>` : `<span class="feud-slot-blank">?</span>`}
+    ${F.boardWords.map((w,i)=>`<div class="feud-slot ${w.revealed?'flipped':''}">
+      <div class="feud-slot-inner">
+        <div class="feud-slot-back"><span class="feud-slot-blank">${i+1}</span></div>
+        <div class="feud-slot-front"><span class="feud-slot-word">${escapeHtml(w.word)}</span><span class="feud-slot-val">${w.value.toLocaleString()}</span></div>
+      </div>
     </div>`).join('')}
   </div>
   ${done ? `<div class="note-box" style="background:${F.phase==='won'?'var(--good-soft)':'var(--warn-soft)'};color:${F.phase==='won'?'var(--good)':'var(--warn)'}">${ic(F.phase==='won'?'check':'x')}<span>${F.phase==='won'?`Board cleared! Final score: ${F.score.toLocaleString()}.` : `Out of strikes. The board's words: ${F.boardWords.map(w=>escapeHtml(w.word)).join(', ')}.`}</span></div>
