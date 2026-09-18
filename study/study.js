@@ -888,6 +888,10 @@ function go(fid) {
   h += actCard(lbIcon('puzzle',        32), 'Verse Builder', '#e91e90', 'versebuild', fid);
   h += actCard(lbIcon('puzzle',        32), 'Word Match', '#6d28d9', 'wordmatch', fid);
   h += actCard(lbIcon('shield',        32), 'Challenge', '#b91c1c', 'challenge', fid);
+  h += actCard(lbIcon('scroll',        32), 'Scroll Trade', '#0d9488', 'scrolltrade', fid);
+  h += actCard(lbIcon('mountain',      32), 'Term Stack', '#b45309', 'termstack', fid);
+  h += actCard(lbIcon('search',        32), 'The Imposter', '#991b1b', 'imposter', fid);
+  h += actCard(lbIcon('compass',       32), 'Clue', '#0369a1', 'clue', fid);
   var remixN = getRemixCount(fid);
   if (remixN > 0) {
     h += '<div class="act-card act-card-remix" data-mode="remix" role="button" tabindex="0" aria-label="Remix Round activity, ' + remixN + ' due">' +
@@ -1265,6 +1269,10 @@ function openActivity(mode, fid) {
   if (mode === 'conceptweb') { showConceptWeb(fid); return; }
   if (mode === 'timeline') { showChapterTimeline(fid); return; }
   if (mode === 'remix') { showRemix(fid); return; }
+  if (mode === 'scrolltrade') { showScrollTrade(fid); return; }
+  if (mode === 'termstack') { showTermStack(fid); return; }
+  if (mode === 'imposter') { showImposter(fid); return; }
+  if (mode === 'clue') { showClueRound(fid); return; }
   // Fallback: mode-specific "not enough content" message
   showStubForMode(fid, mode);
 }
@@ -1296,7 +1304,11 @@ function showStubForMode(fid, mode) {
     challenge: 'Challenge',
     terms: 'Key Terms',
     faq: 'FAQ',
-    'audio-filblank': 'Audio Fill the Gap'
+    'audio-filblank': 'Audio Fill the Gap',
+    scrolltrade: 'Scroll Trade',
+    termstack: 'Term Stack',
+    imposter: 'The Imposter',
+    clue: 'Clue'
   };
   var modeReasons = {
     whosaidit: 'needs at least 2 lines of attributed dialogue (X said: ...).',
@@ -1319,7 +1331,11 @@ function showStubForMode(fid, mode) {
     challenge: 'needs fill-in-blank or multiple-choice items.',
     terms: 'does not list key terms for this section yet.',
     faq: 'does not have FAQ entries for this section yet.',
-    'audio-filblank': 'needs fill-in-blank items in this section.'
+    'audio-filblank': 'needs fill-in-blank items in this section.',
+    scrolltrade: 'needs at least 4 key terms with definitions.',
+    termstack: 'needs at least 4 key terms with definitions.',
+    imposter: 'needs at least 3 key terms here and 1 elsewhere in the volume set.',
+    clue: 'needs at least 5 key terms with definitions.'
   };
   var friendly = modeLabels[mode] || (mode.charAt(0).toUpperCase() + mode.slice(1));
   var reason = modeReasons[mode] || 'does not have enough content in this section yet.';
@@ -3068,6 +3084,494 @@ function showWordMatch(fid) {
     }
     render();
   });
+}
+
+// ---- Shared term-set resolver for the games below (Scroll Trade, Term
+// Stack, The Imposter, Clue) — same key_terms-or-verse-fallback pattern
+// already used by Memory Match and Word Match, factored out for reuse.
+function resolveGameTerms(fid, minCount, cb) {
+  loadContent(fid).then(function (data) {
+    if (data && data.key_terms && data.key_terms.length >= minCount) {
+      cb(data.key_terms.slice()); return;
+    }
+    var verses = getVerses(fid);
+    if (!verses.length) {
+      fetch('../data/' + fid + '.json').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d) { CHAPTER_CACHE[fid] = d; resolveGameTerms(fid, minCount, cb); }
+          else cb(null);
+        }).catch(function () { cb(null); });
+      return;
+    }
+    var usable = shuffle(verses.filter(function (v) { return v.length > 30 && v.length < 150; })).slice(0, 8);
+    if (usable.length < minCount) { cb(null); return; }
+    cb(usable.map(function (v) {
+      var words = v.split(/\s+/);
+      var half = Math.ceil(words.length / 2);
+      return { term: words.slice(0, half).join(' '), definition: words.slice(half).join(' ') + '.' };
+    }));
+  });
+}
+
+// ---- Scroll Trade (Go Fish reskin) — trade the Scribe bot for matching
+// term/definition pairs drawn from this section's own key terms ----
+function showScrollTrade(fid) {
+  resolveGameTerms(fid, 4, function (all) {
+    if (!all) { showStubForMode(fid, 'scrolltrade'); return; }
+    var terms = shuffle(all).slice(0, 6);
+    var deck = [];
+    terms.forEach(function (t, i) {
+      deck.push({ side: 'term', text: t.term, pairId: i });
+      deck.push({ side: 'def', text: t.definition.length > 90 ? t.definition.slice(0, 87) + '…' : t.definition, pairId: i });
+    });
+    deck = shuffle(deck);
+    var hand = deck.splice(0, 5);
+    var botHand = deck.splice(0, 5);
+    var pile = deck;
+    var collected = 0, botCollected = 0, turn = 'player';
+    var log = 'Tap a scroll from your hand to ask the Scribe for its match.';
+
+    function pairIn(list, pairId, side) {
+      for (var i = 0; i < list.length; i++) if (list[i].pairId === pairId && list[i].side !== side) return i;
+      return -1;
+    }
+    function autoPair(list) {
+      for (var i = 0; i < list.length; i++) {
+        var j = pairIn(list, list[i].pairId, list[i].side);
+        if (j > i) { list.splice(j, 1); list.splice(i, 1); return true; }
+      }
+      return false;
+    }
+
+    function render() {
+      var h = '<div class="st-view">';
+      h += '<div class="st-header">Scroll Trade</div>';
+      h += '<div class="st-stats">Your scrolls: ' + collected + '/' + terms.length +
+        ' &nbsp; Scribe’s scrolls: ' + botCollected + '/' + terms.length +
+        ' &nbsp; Pile: ' + pile.length + '</div>';
+      h += '<div class="st-log">' + log + '</div>';
+      h += '<div class="st-sec">Your hand — tap a scroll to ask for its match</div><div class="st-hand">';
+      hand.forEach(function (c, i) {
+        h += '<button class="wm-item st-chip st-' + c.side + '" data-i="' + i + '"' + (turn !== 'player' ? ' disabled' : '') + '>' + c.text + '</button>';
+      });
+      h += '</div>';
+      h += '<button class="study-btn" id="b-st-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-st-back').addEventListener('click', function () { go(fid); });
+      if (turn === 'player') {
+        document.querySelectorAll('.st-chip').forEach(function (b) {
+          b.addEventListener('click', function () { playerAsk(parseInt(this.getAttribute('data-i'))); });
+        });
+      }
+    }
+
+    function playerAsk(i) {
+      var asked = hand[i];
+      var botIdx = pairIn(botHand, asked.pairId, asked.side);
+      if (botIdx >= 0) {
+        hand.splice(i, 1);
+        botHand.splice(botIdx, 1);
+        collected++;
+        log = 'The Scribe hands over the match — you collected a scroll pair.';
+        speakText(asked.text);
+      } else if (pile.length) {
+        hand.push(pile.shift());
+        log = 'The Scribe has none to trade — you draw from the scroll pile.';
+        while (autoPair(hand)) collected++;
+        turn = 'bot';
+      } else {
+        turn = 'bot';
+      }
+      render();
+      if (collected + botCollected >= terms.length) { setTimeout(showEnd, 500); return; }
+      if (turn === 'bot') setTimeout(botTurn, 900);
+    }
+
+    function botTurn() {
+      if (botHand.length) {
+        var ask = botHand[Math.floor(Math.random() * botHand.length)];
+        var pIdx = pairIn(hand, ask.pairId, ask.side);
+        if (pIdx >= 0) {
+          hand.splice(pIdx, 1);
+          botHand.splice(botHand.indexOf(ask), 1);
+          botCollected++;
+          log = 'The Scribe asked for a match — and found one in your hand.';
+        } else if (pile.length) {
+          botHand.push(pile.shift());
+          log = 'The Scribe drew from the pile.';
+          while (autoPair(botHand)) botCollected++;
+        }
+      }
+      turn = 'player';
+      render();
+      if (collected + botCollected >= terms.length) setTimeout(showEnd, 500);
+    }
+
+    function showEnd() {
+      var xp = recordSession(fid, 'scrolltrade', collected, terms.length);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">' + (collected >= botCollected ? 'Well Traded' : 'Good Effort') + '</div>';
+      h += '<div class="cr-score">' + collected + ' / ' + terms.length + '</div>';
+      h += '<div class="cr-pct">Scribe collected ' + botCollected + '</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-st-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-st-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-st-retry').addEventListener('click', function () { showScrollTrade(fid); });
+      document.getElementById('b-st-done').addEventListener('click', function () { go(fid); });
+    }
+
+    render();
+  });
+}
+
+// ---- Term Stack (Stack & Match reskin) — drop scrolls into columns; land a
+// term beside its matching definition (any side) and both clear ----
+function showTermStack(fid) {
+  resolveGameTerms(fid, 4, function (all) {
+    if (!all) { showStubForMode(fid, 'termstack'); return; }
+    var terms = shuffle(all).slice(0, 6);
+    var queue = [];
+    terms.forEach(function (t, i) {
+      queue.push({ side: 'term', text: t.term, pairId: i });
+      queue.push({ side: 'def', text: t.definition.length > 70 ? t.definition.slice(0, 67) + '…' : t.definition, pairId: i });
+    });
+    queue = shuffle(queue);
+    var COLS = 4, MAXROWS = 5;
+    var grid = []; for (var c0 = 0; c0 < COLS; c0++) grid.push([]);
+    var cleared = 0, moves = 0, ended = false;
+
+    function neighborsOf(col, row) {
+      return [[col, row - 1], [col, row + 1], [col - 1, row], [col + 1, row]]
+        .filter(function (p) { return p[0] >= 0 && p[0] < COLS && p[1] >= 0; });
+    }
+    function checkClears(col, row) {
+      var block = grid[col][row];
+      if (!block) return;
+      var nbrs = neighborsOf(col, row);
+      for (var i = 0; i < nbrs.length; i++) {
+        var nc = nbrs[i][0], nr = nbrs[i][1];
+        var other = grid[nc] && grid[nc][nr];
+        if (other && other.pairId === block.pairId && other.side !== block.side) {
+          grid[col][row] = null; grid[nc][nr] = null;
+          cleared++;
+          return;
+        }
+      }
+    }
+    function boardFull() {
+      for (var c = 0; c < COLS; c++) if (grid[c].length < MAXROWS) return false;
+      return true;
+    }
+
+    function drop(col) {
+      if (ended || !queue.length || grid[col].length >= MAXROWS) return;
+      var block = queue.shift();
+      var row = grid[col].length;
+      grid[col].push(block);
+      moves++;
+      checkClears(col, row);
+      render();
+      if (cleared === terms.length) { ended = true; setTimeout(showEnd, 500); return; }
+      // No more drops possible either way: the queue is spent, or every
+      // column is full while scrolls remain.
+      if (!queue.length || boardFull()) { ended = true; setTimeout(showEnd, 500); }
+    }
+
+    function render() {
+      var h = '<div class="ts-view">';
+      h += '<div class="ts-header">Drop a scroll into a column — land it beside its match to clear both</div>';
+      h += '<div class="ts-stats">Cleared: ' + cleared + '/' + terms.length + ' &nbsp; Scrolls left: ' + queue.length + '</div>';
+      if (queue.length) h += '<div class="ts-next">Next: <span class="ts-next-chip ts-' + queue[0].side + '">' + queue[0].text + '</span></div>';
+      h += '<div class="ts-grid">';
+      for (var c = 0; c < COLS; c++) {
+        var full = grid[c].length >= MAXROWS;
+        h += '<div class="ts-col" data-col="' + c + '"' + (!queue.length || full ? ' disabled' : '') + '>';
+        var cells = [];
+        for (var r = MAXROWS - 1; r >= 0; r--) {
+          var b = grid[c][r];
+          cells.push(b ? '<div class="ts-block ts-' + b.side + '">' + b.text + '</div>' : '<div class="ts-empty"></div>');
+        }
+        h += cells.join('') + '</div>';
+      }
+      h += '</div>';
+      h += '<button class="study-btn" id="b-ts-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-ts-back').addEventListener('click', function () { go(fid); });
+      document.querySelectorAll('.ts-col:not([disabled])').forEach(function (el) {
+        el.addEventListener('click', function () { drop(parseInt(this.getAttribute('data-col'))); });
+      });
+    }
+
+    function showEnd() {
+      var xp = recordSession(fid, 'termstack', cleared, terms.length);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">' + (cleared === terms.length ? 'Board Cleared' : 'Round Over') + '</div>';
+      h += '<div class="cr-score">' + cleared + ' / ' + terms.length + '</div>';
+      h += '<div class="cr-pct">in ' + moves + ' drops</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-ts-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-ts-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-ts-retry').addEventListener('click', function () { showTermStack(fid); });
+      document.getElementById('b-ts-done').addEventListener('click', function () { go(fid); });
+    }
+
+    render();
+  });
+}
+
+// ---- The Imposter — 3 real facts from this section + 1 fact swapped in
+// from elsewhere in the volume set; tap the one that doesn't belong ----
+function showImposter(fid) {
+  resolveGameTerms(fid, 3, function (mine) {
+    if (!mine) { showStubForMode(fid, 'imposter'); return; }
+    var others = shuffle(IDS.filter(function (x) { return x !== fid; })).slice(0, 4);
+    var loads = others.map(function (o) { return loadContent(o).catch(function () { return null; }); });
+    Promise.all(loads).then(function (all) {
+      var outside = [];
+      all.forEach(function (d) { if (d && d.key_terms) outside = outside.concat(d.key_terms); });
+      var pool = shuffle(mine.slice());
+      var outsidePool = shuffle(outside.slice());
+      var n = Math.min(5, Math.floor(pool.length / 3), outsidePool.length);
+      if (n < 1) { showStubForMode(fid, 'imposter'); return; }
+      var rounds = [];
+      for (var i = 0; i < n; i++) {
+        var real = pool.splice(0, 3);
+        var fake = outsidePool.shift();
+        var cards = real.map(function (t) { return { term: t.term, definition: t.definition, real: true }; });
+        cards.push({ term: fake.term, definition: fake.definition, real: false });
+        rounds.push(shuffle(cards));
+      }
+
+      var idx = 0, correct = 0;
+      function render() {
+        var cards = rounds[idx];
+        var h = '<div class="imp-view">';
+        h += '<div class="imp-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — one of these doesn’t belong to this section</div>';
+        h += '<div class="imp-grid">';
+        cards.forEach(function (c, i) {
+          h += '<button class="imp-card" data-i="' + i + '"><div class="imp-term">' + c.term + '</div><div class="imp-def">' +
+            (c.definition.length > 90 ? c.definition.slice(0, 87) + '…' : c.definition) + '</div></button>';
+        });
+        h += '</div><div id="imp-fb" class="cloze-feedback"></div>';
+        h += '<button class="study-btn" id="b-imp-back" style="margin-top:16px">Back to activities</button>';
+        h += '</div>';
+        document.getElementById('content').innerHTML = h;
+        injectGameBack(fid);
+        document.getElementById('b-imp-back').addEventListener('click', function () { go(fid); });
+        document.querySelectorAll('.imp-card').forEach(function (b, bi) {
+          b.addEventListener('click', function () { pick(parseInt(this.getAttribute('data-i')), cards); });
+        });
+      }
+      function pick(i, cards) {
+        var c = cards[i];
+        document.querySelectorAll('.imp-card').forEach(function (b, bi) {
+          b.setAttribute('disabled', 'true');
+          if (!cards[bi].real) b.classList.add('imp-reveal-fake');
+        });
+        if (!c.real) { correct++; document.getElementById('imp-fb').innerHTML = '<span class="fb-correct">Right — that one’s from elsewhere.</span>'; }
+        else { document.getElementById('imp-fb').innerHTML = '<span class="fb-try">Not quite — the imposter is highlighted.</span>'; }
+        setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1600);
+      }
+      function showEnd() {
+        var xp = recordSession(fid, 'imposter', correct, rounds.length);
+        var h = '<div class="cloze-results">';
+        h += '<div class="cr-emoji">' + (correct === rounds.length ? 'Sharp Eye' : 'Good Try') + '</div>';
+        h += '<div class="cr-score">' + correct + ' / ' + rounds.length + '</div>';
+        h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+        h += '<div class="cr-btns">';
+        h += '<button class="study-btn sb-pri" id="b-imp-retry">Play Again</button>';
+        h += '<button class="study-btn" id="b-imp-done">Back to activities</button>';
+        h += '</div></div>';
+        document.getElementById('content').innerHTML = h;
+        document.getElementById('b-imp-retry').addEventListener('click', function () { showImposter(fid); });
+        document.getElementById('b-imp-done').addEventListener('click', function () { go(fid); });
+      }
+      render();
+    });
+  });
+}
+
+// ---- Clue — a name-it deduction round; clues reveal progressively from a
+// term's own definition text, fewer clues used scores more ----
+function showClueRound(fid) {
+  resolveGameTerms(fid, 5, function (all) {
+    if (!all) { showStubForMode(fid, 'clue'); return; }
+    var rounds = shuffle(all.slice()).slice(0, 5);
+    var names = all.map(function (t) { return t.term; });
+
+    function splitClues(text) {
+      var parts = (text.match(/[^.;,]+[.;,]?/g) || [text]).map(function (p) { return p.trim(); }).filter(Boolean);
+      if (parts.length < 3) {
+        var words = text.split(/\s+/);
+        var third = Math.max(1, Math.ceil(words.length / 3));
+        parts = [words.slice(0, third).join(' '), words.slice(third, third * 2).join(' '), words.slice(third * 2).join(' ')].filter(Boolean);
+      }
+      return parts.slice(0, 3);
+    }
+
+    var idx = 0, score = 0, cluesShown = 1;
+    function render() {
+      var t = rounds[idx];
+      var clues = splitClues(t.definition);
+      cluesShown = Math.min(cluesShown, clues.length);
+      var options = shuffle([t.term].concat(shuffle(names.filter(function (nm) { return nm !== t.term; })).slice(0, 3)));
+      var h = '<div class="clue-view">';
+      h += '<div class="clue-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — name it before the clues run out</div>';
+      h += '<div class="clue-list">';
+      for (var i = 0; i < cluesShown; i++) h += '<div class="clue-item">Clue ' + (i + 1) + ': ' + clues[i] + '</div>';
+      h += '</div>';
+      h += '<div class="clue-opts">';
+      options.forEach(function (o) { h += '<button class="wm-item st-chip" data-o="' + tuEsc(o) + '">' + o + '</button>'; });
+      h += '</div>';
+      if (cluesShown < clues.length) h += '<button class="study-btn" id="b-clue-more">One more clue</button>';
+      h += '<button class="study-btn" id="b-clue-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-clue-back').addEventListener('click', function () { go(fid); });
+      var moreBtn = document.getElementById('b-clue-more');
+      if (moreBtn) moreBtn.addEventListener('click', function () { cluesShown++; render(); });
+      document.querySelectorAll('.clue-opts button').forEach(function (b) {
+        b.addEventListener('click', function () { guess(this.getAttribute('data-o'), t); });
+      });
+    }
+    function guess(picked, t) {
+      var pts = picked === t.term ? Math.max(1, 4 - cluesShown) : 0;
+      score += pts;
+      document.querySelectorAll('.clue-opts button').forEach(function (b) { b.setAttribute('disabled', 'true'); });
+      var fb = document.createElement('div');
+      fb.className = 'cloze-feedback';
+      fb.innerHTML = pts > 0 ? '<span class="fb-correct">Right — +' + pts + '</span>' : '<span class="fb-try">It was: ' + t.term + '</span>';
+      document.querySelector('.clue-view').appendChild(fb);
+      cluesShown = 1;
+      setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1400);
+    }
+    function showEnd() {
+      var xp = recordSession(fid, 'clue', score, rounds.length * 3);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">Case Closed</div>';
+      h += '<div class="cr-score">' + score + ' pts</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-clue-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-clue-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-clue-retry').addEventListener('click', function () { showClueRound(fid); });
+      document.getElementById('b-clue-done').addEventListener('click', function () { go(fid); });
+    }
+    render();
+  });
+}
+
+// ---- Vocabulary Builder — standalone practice area, not tied to any
+// volume/section, built on VOCAB_WORDS (vocab-words.js, reused from the
+// Load Words app) so users meet these words on their own, alongside the
+// study material rather than mixed into it. ----
+function showVocabHome() {
+  document.getElementById('tb').textContent = 'Vocabulary Builder';
+  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
+  var h = '<div class="vb-home">';
+  h += '<div class="vb-home-title">Vocabulary Builder</div>';
+  h += '<div class="vb-home-sub">' + words.length + ' words, on their own — practice them here any time.</div>';
+  h += '<div class="vb-home-actions">';
+  h += '<button class="study-btn sb-pri" id="b-vocab-quiz">Start Practice</button>';
+  h += '<button class="study-btn" id="b-vocab-browse">Browse Words</button>';
+  h += '</div>';
+  h += '<button class="study-btn" id="b-vocab-home-back" style="margin-top:20px">Back to ACR Study</button>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('b-vocab-quiz').addEventListener('click', function () { showVocabQuiz(); });
+  document.getElementById('b-vocab-browse').addEventListener('click', function () { showVocabBrowse(); });
+  document.getElementById('b-vocab-home-back').addEventListener('click', goHome);
+}
+
+function showVocabBrowse() {
+  document.getElementById('tb').textContent = 'Vocabulary Builder';
+  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
+  var h = '<div class="vb-browse">';
+  h += '<div class="vb-home-title">Browse Words</div>';
+  h += '<div class="vb-list">';
+  words.forEach(function (w, i) {
+    h += '<div class="vb-item" data-i="' + i + '">';
+    h += '<div class="vb-word">' + w.word + (w.pos ? ' <span class="vb-pos">' + w.pos + '</span>' : '') + '</div>';
+    h += '<div class="vb-def">' + w.definition + '</div>';
+    h += '<div class="vb-ex">“' + w.example + '”</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+  h += '<button class="study-btn" id="b-vocab-browse-back" style="margin-top:16px">Back to Vocabulary Builder</button>';
+  h += '</div>';
+  document.getElementById('content').innerHTML = h;
+  document.getElementById('b-vocab-browse-back').addEventListener('click', showVocabHome);
+  document.querySelectorAll('.vb-item').forEach(function (el) {
+    el.addEventListener('click', function () { speakText(words[parseInt(this.getAttribute('data-i'))].word); });
+  });
+}
+
+function showVocabQuiz() {
+  document.getElementById('tb').textContent = 'Vocabulary Builder';
+  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
+  if (words.length < 4) { showVocabHome(); return; }
+  var rounds = shuffle(words.slice()).slice(0, 10);
+  var idx = 0, score = 0;
+
+  function render() {
+    var w = rounds[idx];
+    var distractors = shuffle(words.filter(function (x) { return x.word !== w.word; })).slice(0, 3);
+    var options = shuffle([w].concat(distractors));
+    var h = '<div class="vb-quiz">';
+    h += '<div class="vb-quiz-progress">Word ' + (idx + 1) + ' of ' + rounds.length + '</div>';
+    h += '<div class="vb-quiz-word">' + w.word + (w.pos ? ' <span class="vb-pos">' + w.pos + '</span>' : '') + '</div>';
+    h += '<div class="vb-quiz-ex">' + w.example.replace(new RegExp(w.word, 'i'), '_____') + '</div>';
+    h += '<div class="vb-quiz-opts">';
+    options.forEach(function (o) { h += '<button class="wm-item st-chip" data-w="' + tuEsc(o.word) + '">' + o.definition + '</button>'; });
+    h += '</div><div id="vb-quiz-fb" class="cloze-feedback"></div>';
+    h += '<button class="study-btn" id="b-vocab-quiz-back" style="margin-top:16px">Back to Vocabulary Builder</button>';
+    h += '</div>';
+    document.getElementById('content').innerHTML = h;
+    document.getElementById('b-vocab-quiz-back').addEventListener('click', showVocabHome);
+    document.querySelectorAll('.vb-quiz-opts button').forEach(function (b) {
+      b.addEventListener('click', function () { pick(this.getAttribute('data-w'), w); });
+    });
+    speakText(w.word);
+  }
+  function pick(picked, w) {
+    document.querySelectorAll('.vb-quiz-opts button').forEach(function (b) { b.setAttribute('disabled', 'true'); });
+    if (picked === w.word) {
+      score++;
+      document.getElementById('vb-quiz-fb').innerHTML = '<span class="fb-correct">Right.</span>';
+    } else {
+      document.getElementById('vb-quiz-fb').innerHTML = '<span class="fb-try">That was ' + w.word + '.</span>';
+    }
+    setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1400);
+  }
+  function showEnd() {
+    var xp = Math.round(score * 10);
+    addXP(xp);
+    var h = '<div class="cloze-results">';
+    h += '<div class="cr-emoji">' + (score === rounds.length ? 'Word Master' : 'Nice Work') + '</div>';
+    h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
+    h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+    h += '<div class="cr-btns">';
+    h += '<button class="study-btn sb-pri" id="b-vocab-quiz-retry">Play Again</button>';
+    h += '<button class="study-btn" id="b-vocab-quiz-done">Back to Vocabulary Builder</button>';
+    h += '</div></div>';
+    document.getElementById('content').innerHTML = h;
+    document.getElementById('b-vocab-quiz-retry').addEventListener('click', showVocabQuiz);
+    document.getElementById('b-vocab-quiz-done').addEventListener('click', showVocabHome);
+  }
+  render();
 }
 
 // ---- Challenge (Family Feud) mode — 4-6 player competitive quiz ----
@@ -5828,6 +6332,8 @@ function bindUI() {
     if (v) { try { localStorage.setItem('acr_study_voice', v.name); } catch (e) {} }
   });
   document.getElementById('vm').addEventListener('change', function () {});
+
+  document.getElementById('b-vocab').addEventListener('click', function () { showVocabHome(); });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
