@@ -899,23 +899,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .tool-back{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--tx2);font-size:11px;font-family:var(--font);cursor:pointer;padding:0 0 14px;letter-spacing:0.02em}
 .tool-back:active{color:var(--gold)}
 .tool-view-wrap{padding:16px}
-.voc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.voc-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
-.voc-item{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color 0.15s}
-.voc-item:active{border-color:var(--gold)}
-.voc-word{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.voc-pos{font-size:9px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em}
-.voc-def{font-size:11.5px;color:var(--tx);line-height:1.55;margin-bottom:4px}
-.voc-ex{font-size:10.5px;color:var(--tx3);font-style:italic}
-.voc-quiz-progress{font-size:10px;font-weight:700;color:var(--tx3);letter-spacing:.05em;margin-bottom:10px}
-.voc-quiz-word{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
-.voc-quiz-ex{font-size:12px;color:var(--tx2);font-style:italic;margin-bottom:16px;line-height:1.5}
-.voc-quiz-opts{display:flex;flex-direction:column;gap:8px}
-.voc-opt{width:100%;text-align:left;font-family:var(--font);color:var(--tx)}
-.voc-opt:disabled{opacity:.5}
-.voc-fb{margin-top:12px;font-size:12px;font-weight:700}
-.voc-fb-right{color:var(--orit)}
-.voc-fb-wrong{color:var(--red)}
 .tool-view-hdr{font-size:17px;font-weight:800;color:#fff;margin-bottom:3px}
 .tool-view-sub{font-size:11px;color:var(--tx3);margin-bottom:14px;line-height:1.5}
 /* COVENANT PROMISES */
@@ -1255,7 +1238,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
       <div class="mpill" data-mode="tools" onclick="setMode('tools')"><i class="ri-tools-line"></i> Useful Tools</div>
-      <div class="mpill" data-mode="vocab" onclick="setMode('vocab')"><i class="ri-book-open-line"></i> Vocabulary</div>
     </div>
   </div>
 
@@ -1563,7 +1545,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="guide-intro">
         <div class="guide-intro-paleo">&#x10909;&#x10904;&#x10905;&#x10904;</div>
         <div class="guide-intro-title">How to Use ACR Search</div>
-        <div class="guide-intro-text">This is a research tool built on the primary ancient texts, the Dead Sea Scrolls and the Orit Ge'ez. Every result traces back to physical manuscript evidence. Use the sections below to learn each feature. Tap the speaker button on any section to hear it read aloud.</div>
+        <div class="guide-intro-text">This is a research tool built on the primary ancient texts, the Dead Sea Scrolls and the Orit Ge'ez. Every result traces back, with meticulous precision, to physical manuscript evidence. Use the sections below to learn each feature. Tap the speaker button on any section to hear it read aloud.</div>
         <div class="guide-intro-welcome">People arrive here from every background and tradition. These texts are not the property of any institution or lineage. They were written for those with eyes to find them. The search bar is the most direct path to that knowledge — type any question and the primary source answers directly, with no institutional filter between you and the text. Wherever you are starting from, you are welcome at the primary source.</div>
       </div>
 
@@ -2788,37 +2770,29 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="ut-grid">
           <div class="ut-card" onclick="setMode('promises')">
             <div class="ut-card-name">Covenant Promises</div>
-            <div class="ut-card-desc">Every specific promise YHWH made — to whom, the condition, and the covenant category.</div>
+            <div class="ut-card-desc">Every specific promise YHWH made, gathered in erudite detail — to whom, the condition, and the covenant category.</div>
           </div>
           <div class="ut-card" onclick="setMode('names')">
             <div class="ut-card-name">Hebrew Names</div>
-            <div class="ut-card-desc">Root meanings of covenant names from the scrolls. Tap any name to search the corpus.</div>
+            <div class="ut-card-desc">Root meanings of covenant names from the scrolls, drawn out with perspicacious care. Tap any name to search the corpus.</div>
           </div>
           <div class="ut-card" onclick="setMode('lineage')">
             <div class="ut-card-name">Lineage Explorer</div>
-            <div class="ut-card-desc">The covenant bloodline from Adam to Moshe, generation by generation — including the falling-away in Ur of the Chaldees.</div>
+            <div class="ut-card-desc">The covenant bloodline from Adam to Moshe, generation by generation — a trenchant account that includes the falling-away in Ur of the Chaldees.</div>
           </div>
           <div class="ut-card" onclick="setMode('moedim')">
             <div class="ut-card-name">Mo'edim</div>
-            <div class="ut-card-desc">The seven appointed times as defined in the ancient texts — timing, meaning, and sources.</div>
+            <div class="ut-card-desc">The seven appointed times, defined with sagacious clarity in the ancient texts — timing, meaning, and sources.</div>
           </div>
           <div class="ut-card" onclick="setMode('timeline')">
             <div class="ut-card-name">Event Timeline</div>
-            <div class="ut-card-desc">Key events from Creation through the DSS period in narrative order.</div>
+            <div class="ut-card-desc">Key events from Creation through the DSS period, laid out in cogent narrative order.</div>
           </div>
           <div class="ut-card" onclick="setMode('geez')">
             <div class="ut-card-name">Geʽez Foundation &amp; Parallel Reading</div>
             <div class="ut-card-desc">The 24 inherited Geʽez foundation letters, the two secondary additions, and a provisional Orit passage in Geʽez.</div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- VOCABULARY BUILDER — general English vocabulary, kept as its own
-         standalone section, separate from the DSS/Orit-sourced tools above -->
-    <div id="vocab-view" style="display:none">
-      <div class="ut-wrap">
-        <div id="vocab-content"></div>
       </div>
     </div>
 
@@ -2957,7 +2931,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
   <div class="ov-body" id="dna-body"></div>
 </div>
 
-<script src="vocab-words.js"></script>
 <script>
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
 var THREAD_ORDER = ['Cosmological','Temporal','Moral','Historical','Eschatological'];
@@ -3161,7 +3134,7 @@ function hardRefresh() {
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez','vocab'];
+  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -3179,7 +3152,6 @@ function setMode(mode) {
   });
   document.getElementById('main').scrollTop = 0;
   if (mode === 'journal') renderJournal(document.getElementById('jn-search').value);
-  if (mode === 'vocab') renderVocabHome();
 }
 
 // ── SITE INDEX ────────────────────────────────────────────────────────────────
@@ -11789,86 +11761,6 @@ function renderWatchersPanel() {
   '<div class="hr-sec-sub">The pre-Rabbinic, pre-Second-Temple standing of Yom Kippur, and the later overlay laid on top of it. This continues the Azazel and Dudael thread above.</div>' +
   '<div class="td-item"><div class="td-topic">Yom Kippur Is Pre-Rabbinic and Pre-Second-Temple, and the Later Overlay Added on Top</div><div class="td-text">The Day of Atonement itself is genuinely ancient. It predates both the Second Temple and the Rabbinic period. The instruction is Torah wilderness law, not a later addition: Vayikra 16 sets the two-goat ritual, with Vayikra 23:26-32 and Bamidbar 29:7-11 fixing the day. This is First Temple covenant memory, centuries before the Second Temple (built about 516 BCE) and long before the Rabbinic period after 70 CE. The pre-Rabbinic Alkebulan (African) covenant sources keep it: the covenant record itself details the Day of Atonement offerings (Vayikra 16; 23:26-32; Bamidbar 29:7-11), the Qumran calendar texts fix it on the 10th of the seventh month, always the sixth day of the week on the 364-day covenant calendar; the Ge\'ez Orit preserves the same Vayikra instruction. The primary-source ritual: two goats, one for YHWH, killed, its blood brought in for the cleansing of the sanctuary; one for Azazel, the sins confessed over it, and the goat sent away alive into the wilderness (Vayikra 16:22), returning the sin to its source (Chanokh 10:8). What is later overlay, not the original: the practice of hurling the scapegoat off a cliff to its death (Mishnah Yoma) reverses the primary source, which releases the goat alive; and the post-70 CE synagogue service that replaced the blood ritual with the fasting liturgy, Kol Nidre (medieval), and the recited Avodah. The Day of Atonement and its two-goat structure are pre-Rabbinic and pre-Second-Temple; the cliff-killing and the synagogue liturgy are the later layer laid on top.</div></div>'
 ;
-}
-
-// ---- Vocabulary Builder — standalone practice area, built on VOCAB_WORDS
-// (vocab-words.js, reused from the Load Words app). Kept as its own section,
-// separate from the DSS/Orit-sourced reference tools. ----
-function tuEscV(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function vocShuffle(arr) {
-  for (var i = arr.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
-  }
-  return arr;
-}
-function renderVocabHome() {
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  var h = '<div class="ut-hdr">Vocabulary Builder</div>';
-  h += '<div class="ut-sub">' + words.length + ' words, on their own — practice them here any time.</div>';
-  h += '<div class="voc-actions">';
-  h += '<button class="a-btn" id="voc-start-quiz" style="max-width:none">Start Practice</button>';
-  h += '<button class="a-btn" id="voc-browse" style="max-width:none">Browse Words</button>';
-  h += '</div>';
-  document.getElementById('vocab-content').innerHTML = h;
-  document.getElementById('voc-start-quiz').addEventListener('click', renderVocabQuiz);
-  document.getElementById('voc-browse').addEventListener('click', renderVocabBrowse);
-}
-function renderVocabBrowse() {
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  var h = '<button class="tool-back" onclick="renderVocabHome()"><i class="ri-arrow-left-s-line"></i> Vocabulary Builder</button>';
-  h += '<div class="ut-hdr">Browse Words</div><div class="voc-list">';
-  words.forEach(function (w, i) {
-    h += '<div class="voc-item" data-i="' + i + '">';
-    h += '<div class="voc-word">' + tuEscV(w.word) + (w.pos ? ' <span class="voc-pos">' + tuEscV(w.pos) + '</span>' : '') + '</div>';
-    h += '<div class="voc-def">' + tuEscV(w.definition) + '</div>';
-    h += '<div class="voc-ex">“' + tuEscV(w.example) + '”</div>';
-    h += '</div>';
-  });
-  h += '</div>';
-  document.getElementById('vocab-content').innerHTML = h;
-  document.querySelectorAll('.voc-item').forEach(function (el) {
-    el.addEventListener('click', function () { speakText(words[parseInt(this.getAttribute('data-i'))].word, 'Vocabulary'); });
-  });
-}
-function renderVocabQuiz() {
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  if (words.length < 4) { renderVocabHome(); return; }
-  var rounds = vocShuffle(words.slice()).slice(0, 10);
-  var idx = 0, score = 0;
-  function render() {
-    var w = rounds[idx];
-    var distractors = vocShuffle(words.filter(function (x) { return x.word !== w.word; })).slice(0, 3);
-    var options = vocShuffle([w].concat(distractors));
-    var h = '<button class="tool-back" onclick="renderVocabHome()"><i class="ri-arrow-left-s-line"></i> Vocabulary Builder</button>';
-    h += '<div class="voc-quiz-progress">Word ' + (idx + 1) + ' of ' + rounds.length + '</div>';
-    h += '<div class="voc-quiz-word">' + tuEscV(w.word) + (w.pos ? ' <span class="voc-pos">' + tuEscV(w.pos) + '</span>' : '') + '</div>';
-    h += '<div class="voc-quiz-ex">' + tuEscV(w.example.replace(new RegExp(w.word, 'i'), '_____')) + '</div>';
-    h += '<div class="voc-quiz-opts">';
-    options.forEach(function (o) { h += '<button class="voc-item voc-opt" data-w="' + tuEscV(o.word) + '">' + tuEscV(o.definition) + '</button>'; });
-    h += '</div><div id="voc-quiz-fb" class="voc-fb"></div>';
-    document.getElementById('vocab-content').innerHTML = h;
-    document.querySelectorAll('.voc-opt').forEach(function (b) {
-      b.addEventListener('click', function () { pick(this.getAttribute('data-w'), w); });
-    });
-    speakText(w.word, 'Vocabulary');
-  }
-  function pick(picked, w) {
-    document.querySelectorAll('.voc-opt').forEach(function (b) { b.setAttribute('disabled', 'true'); });
-    document.getElementById('voc-quiz-fb').innerHTML = picked === w.word ?
-      '<span class="voc-fb-right">Right.</span>' : '<span class="voc-fb-wrong">That was ' + tuEscV(w.word) + '.</span>';
-    if (picked === w.word) score++;
-    setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1400);
-  }
-  function showEnd() {
-    var h = '<button class="tool-back" onclick="renderVocabHome()"><i class="ri-arrow-left-s-line"></i> Vocabulary Builder</button>';
-    h += '<div class="ut-hdr">' + (score === rounds.length ? 'Word Master' : 'Nice Work') + '</div>';
-    h += '<div class="voc-quiz-word">' + score + ' / ' + rounds.length + '</div>';
-    h += '<div class="voc-actions"><button class="a-btn" id="voc-quiz-retry" style="max-width:none">Play Again</button></div>';
-    document.getElementById('vocab-content').innerHTML = h;
-    document.getElementById('voc-quiz-retry').addEventListener('click', renderVocabQuiz);
-  }
-  render();
 }
 
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});

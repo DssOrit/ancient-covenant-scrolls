@@ -10,7 +10,7 @@
 // Pre-caches the shell AND every chapter JSON the study app references,
 // so every section works offline after the first online install.
 
-const CACHE = 'acr-study-v122';
+const CACHE = 'acr-study-v123';
 
 const SHELL = [
   './',
@@ -18,7 +18,6 @@ const SHELL = [
   'study.css',
   'study.js',
   'lib-attain-quality.js',
-  'vocab-words.js',
   'manifest.json',
   'icon.png',
   'images/clue_deduction.png',

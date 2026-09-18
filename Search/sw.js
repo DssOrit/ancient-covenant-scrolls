@@ -1,9 +1,8 @@
-var CACHE = 'acr-search-v315';
+var CACHE = 'acr-search-v316';
 var FILES = [
   './',
   './index.html',
   './acr_search_data.json',
-  './vocab-words.js',
   './manifest.json',
   './icon.png',
   './icon-152.png',

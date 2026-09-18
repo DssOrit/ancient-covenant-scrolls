@@ -1316,26 +1316,6 @@ body.font-dyslexic .ts-block{font-family:var(--font-dyslexic)}
   padding:10px 14px;font-size:.92em;color:var(--text-main);line-height:1.5}
 .clue-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
 
-/* =========================================================================
-   Vocabulary Builder — standalone word-practice area
-   ========================================================================= */
-.vb-home,.vb-browse,.vb-quiz{padding:10px 4px}
-.vb-home-title{font-size:1.5em;font-weight:900;color:var(--text-main);margin-bottom:6px}
-.vb-home-sub{font-size:.95em;color:var(--text-muted);margin-bottom:22px}
-.vb-home-actions{display:flex;gap:12px;flex-wrap:wrap}
-.vb-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
-.vb-item{background:var(--bg-card);border-radius:12px;padding:14px 16px;cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .15s}
-.vb-item:hover{transform:scale(1.01)}
-.vb-word{font-weight:800;color:var(--text-main);font-size:1.05em;margin-bottom:4px}
-.vb-pos{font-size:.7em;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
-.vb-def{color:var(--text-main);font-size:.92em;margin-bottom:4px;line-height:1.5}
-.vb-ex{color:var(--text-muted);font-size:.85em;font-style:italic}
-.vb-quiz-progress{font-size:.8em;font-weight:800;color:var(--text-muted);letter-spacing:.04em;margin-bottom:10px}
-.vb-quiz-word{font-size:1.8em;font-weight:900;color:var(--text-main);margin-bottom:8px}
-.vb-quiz-ex{color:var(--text-muted);font-style:italic;margin-bottom:18px;line-height:1.5}
-.vb-quiz-opts{display:flex;flex-direction:column;gap:8px}
-
 .game-hero-img{display:block;width:100%;max-width:420px;margin:0 auto 16px;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .tu-show-img{display:block;width:100%;max-height:120px;object-fit:cover;border-radius:10px;margin-bottom:8px}
 

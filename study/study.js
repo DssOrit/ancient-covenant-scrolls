@@ -3212,7 +3212,7 @@ function showScrollTrade(fid) {
     function showEnd() {
       var xp = recordSession(fid, 'scrolltrade', collected, terms.length);
       var h = '<div class="cloze-results">';
-      h += '<div class="cr-emoji">' + (collected >= botCollected ? 'Well Traded' : 'Good Effort') + '</div>';
+      h += '<div class="cr-emoji">' + (collected >= botCollected ? 'A Sagacious Trade' : 'Stay Tenacious') + '</div>';
       h += '<div class="cr-score">' + collected + ' / ' + terms.length + '</div>';
       h += '<div class="cr-pct">Scribe collected ' + botCollected + '</div>';
       h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
@@ -3285,7 +3285,7 @@ function showTermStack(fid) {
     function render() {
       var h = '<div class="ts-view">';
       if (moves === 0) h += '<img class="game-hero-img" src="images/term_stack_blocks.png" alt="" aria-hidden="true">';
-      h += '<div class="ts-header">Drop a scroll into a column — land it beside its match to clear both</div>';
+      h += '<div class="ts-header">Drop a scroll into a column — a meticulous eye clears the board fastest</div>';
       h += '<div class="ts-stats">Cleared: ' + cleared + '/' + terms.length + ' &nbsp; Scrolls left: ' + queue.length + '</div>';
       if (queue.length) h += '<div class="ts-next">Next: <span class="ts-next-chip ts-' + queue[0].side + '">' + queue[0].text + '</span></div>';
       h += '<div class="ts-grid">';
@@ -3358,7 +3358,7 @@ function showImposter(fid) {
         var cards = rounds[idx];
         var h = '<div class="imp-view">';
         if (idx === 0) h += '<img class="game-hero-img" src="images/imposter_card_grid.png" alt="" aria-hidden="true">';
-        h += '<div class="imp-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — one of these doesn’t belong to this section</div>';
+        h += '<div class="imp-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — stay perspicacious: one of these doesn’t belong to this section</div>';
         h += '<div class="imp-grid">';
         cards.forEach(function (c, i) {
           h += '<button class="imp-card" data-i="' + i + '"><div class="imp-term">' + c.term + '</div><div class="imp-def">' +
@@ -3429,7 +3429,7 @@ function showClueRound(fid) {
       var options = shuffle([t.term].concat(shuffle(names.filter(function (nm) { return nm !== t.term; })).slice(0, 3)));
       var h = '<div class="clue-view">';
       if (idx === 0) h += '<img class="game-hero-img" src="images/clue_deduction.png" alt="" aria-hidden="true">';
-      h += '<div class="clue-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — name it before the clues run out</div>';
+      h += '<div class="clue-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — a sagacious guess needs fewer clues</div>';
       h += '<div class="clue-list">';
       for (var i = 0; i < cluesShown; i++) h += '<div class="clue-item">Clue ' + (i + 1) + ': ' + clues[i] + '</div>';
       h += '</div>';
@@ -3475,106 +3475,6 @@ function showClueRound(fid) {
     }
     render();
   });
-}
-
-// ---- Vocabulary Builder — standalone practice area, not tied to any
-// volume/section, built on VOCAB_WORDS (vocab-words.js, reused from the
-// Load Words app) so users meet these words on their own, alongside the
-// study material rather than mixed into it. ----
-function showVocabHome() {
-  document.getElementById('tb').textContent = 'Vocabulary Builder';
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  var h = '<div class="vb-home">';
-  h += '<div class="vb-home-title">Vocabulary Builder</div>';
-  h += '<div class="vb-home-sub">' + words.length + ' words, on their own — practice them here any time.</div>';
-  h += '<div class="vb-home-actions">';
-  h += '<button class="study-btn sb-pri" id="b-vocab-quiz">Start Practice</button>';
-  h += '<button class="study-btn" id="b-vocab-browse">Browse Words</button>';
-  h += '</div>';
-  h += '<button class="study-btn" id="b-vocab-home-back" style="margin-top:20px">Back to ACR Study</button>';
-  h += '</div>';
-  document.getElementById('content').innerHTML = h;
-  document.getElementById('b-vocab-quiz').addEventListener('click', function () { showVocabQuiz(); });
-  document.getElementById('b-vocab-browse').addEventListener('click', function () { showVocabBrowse(); });
-  document.getElementById('b-vocab-home-back').addEventListener('click', goHome);
-}
-
-function showVocabBrowse() {
-  document.getElementById('tb').textContent = 'Vocabulary Builder';
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  var h = '<div class="vb-browse">';
-  h += '<div class="vb-home-title">Browse Words</div>';
-  h += '<div class="vb-list">';
-  words.forEach(function (w, i) {
-    h += '<div class="vb-item" data-i="' + i + '">';
-    h += '<div class="vb-word">' + w.word + (w.pos ? ' <span class="vb-pos">' + w.pos + '</span>' : '') + '</div>';
-    h += '<div class="vb-def">' + w.definition + '</div>';
-    h += '<div class="vb-ex">“' + w.example + '”</div>';
-    h += '</div>';
-  });
-  h += '</div>';
-  h += '<button class="study-btn" id="b-vocab-browse-back" style="margin-top:16px">Back to Vocabulary Builder</button>';
-  h += '</div>';
-  document.getElementById('content').innerHTML = h;
-  document.getElementById('b-vocab-browse-back').addEventListener('click', showVocabHome);
-  document.querySelectorAll('.vb-item').forEach(function (el) {
-    el.addEventListener('click', function () { speakText(words[parseInt(this.getAttribute('data-i'))].word); });
-  });
-}
-
-function showVocabQuiz() {
-  document.getElementById('tb').textContent = 'Vocabulary Builder';
-  var words = (typeof VOCAB_WORDS !== 'undefined') ? VOCAB_WORDS : [];
-  if (words.length < 4) { showVocabHome(); return; }
-  var rounds = shuffle(words.slice()).slice(0, 10);
-  var idx = 0, score = 0;
-
-  function render() {
-    var w = rounds[idx];
-    var distractors = shuffle(words.filter(function (x) { return x.word !== w.word; })).slice(0, 3);
-    var options = shuffle([w].concat(distractors));
-    var h = '<div class="vb-quiz">';
-    h += '<div class="vb-quiz-progress">Word ' + (idx + 1) + ' of ' + rounds.length + '</div>';
-    h += '<div class="vb-quiz-word">' + w.word + (w.pos ? ' <span class="vb-pos">' + w.pos + '</span>' : '') + '</div>';
-    h += '<div class="vb-quiz-ex">' + w.example.replace(new RegExp(w.word, 'i'), '_____') + '</div>';
-    h += '<div class="vb-quiz-opts">';
-    options.forEach(function (o) { h += '<button class="wm-item st-chip" data-w="' + tuEsc(o.word) + '">' + o.definition + '</button>'; });
-    h += '</div><div id="vb-quiz-fb" class="cloze-feedback"></div>';
-    h += '<button class="study-btn" id="b-vocab-quiz-back" style="margin-top:16px">Back to Vocabulary Builder</button>';
-    h += '</div>';
-    document.getElementById('content').innerHTML = h;
-    document.getElementById('b-vocab-quiz-back').addEventListener('click', showVocabHome);
-    document.querySelectorAll('.vb-quiz-opts button').forEach(function (b) {
-      b.addEventListener('click', function () { pick(this.getAttribute('data-w'), w); });
-    });
-    speakText(w.word);
-  }
-  function pick(picked, w) {
-    document.querySelectorAll('.vb-quiz-opts button').forEach(function (b) { b.setAttribute('disabled', 'true'); });
-    if (picked === w.word) {
-      score++;
-      document.getElementById('vb-quiz-fb').innerHTML = '<span class="fb-correct">Right.</span>';
-    } else {
-      document.getElementById('vb-quiz-fb').innerHTML = '<span class="fb-try">That was ' + w.word + '.</span>';
-    }
-    setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1400);
-  }
-  function showEnd() {
-    var xp = Math.round(score * 10);
-    addXP(xp);
-    var h = '<div class="cloze-results">';
-    h += '<div class="cr-emoji">' + (score === rounds.length ? 'Word Master' : 'Nice Work') + '</div>';
-    h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
-    h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
-    h += '<div class="cr-btns">';
-    h += '<button class="study-btn sb-pri" id="b-vocab-quiz-retry">Play Again</button>';
-    h += '<button class="study-btn" id="b-vocab-quiz-done">Back to Vocabulary Builder</button>';
-    h += '</div></div>';
-    document.getElementById('content').innerHTML = h;
-    document.getElementById('b-vocab-quiz-retry').addEventListener('click', showVocabQuiz);
-    document.getElementById('b-vocab-quiz-done').addEventListener('click', showVocabHome);
-  }
-  render();
 }
 
 // ---- Challenge (Family Feud) mode — 4-6 player competitive quiz ----
@@ -6335,8 +6235,6 @@ function bindUI() {
     if (v) { try { localStorage.setItem('acr_study_voice', v.name); } catch (e) {} }
   });
   document.getElementById('vm').addEventListener('change', function () {});
-
-  document.getElementById('b-vocab').addEventListener('click', function () { showVocabHome(); });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -6431,7 +6329,7 @@ TU.teamCount = function (n) {
 };
 TU.setup = function () {
   var s = this.state, h = this._bar();
-  h += '<div class="tu-hero"><div class="tu-hero-t">Truth Uncovered</div><div class="tu-hero-s">' + tuEsc(this.bookLabel) + ' · play in teams around one screen, or tap TV and mirror to the big screen.</div></div>';
+  h += '<div class="tu-hero"><div class="tu-hero-t">Truth Uncovered</div><div class="tu-hero-s">' + tuEsc(this.bookLabel) + ' · play in teams around one screen — cogent answers win the board.</div></div>';
   h += '<div class="tu-sec">Teams</div><div class="tu-count">';
   [1, 2, 3, 4].forEach(function (n) { h += '<button class="tu-cbtn' + (s.teams.length === n ? ' on' : '') + '" data-tu="teamCount" data-arg="' + n + '">' + n + '</button>'; });
   h += '</div><div class="tu-teamset">';
