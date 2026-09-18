@@ -10,7 +10,7 @@
 // Pre-caches the shell AND every chapter JSON the study app references,
 // so every section works offline after the first online install.
 
-const CACHE = 'acr-study-v123';
+const CACHE = 'acr-study-v124';
 
 const SHELL = [
   './',
@@ -21,7 +21,7 @@ const SHELL = [
   'manifest.json',
   'icon.png',
   'images/clue_deduction.png',
-  'images/term_stack_blocks.png',
+  'images/term_stack_fragment.png',
   'images/imposter_card_grid.png',
   'images/evidence_board.png',
   'images/sealed_scrolls_cases.png'

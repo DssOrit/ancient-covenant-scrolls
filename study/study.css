@@ -1318,6 +1318,12 @@ body.font-dyslexic .ts-block{font-family:var(--font-dyslexic)}
 
 .game-hero-img{display:block;width:100%;max-width:420px;margin:0 auto 16px;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .tu-show-img{display:block;width:100%;max-height:120px;object-fit:cover;border-radius:10px;margin-bottom:8px}
+.ts-hero-wrap{position:relative;max-width:420px;margin:0 auto 16px}
+.ts-hero-wrap .ts-hero-img{margin:0}
+.ts-hero-word{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:"Segoe UI Historic","Noto Sans Phoenician",serif;font-size:2.4em;
+  color:#f5e6c8;text-shadow:0 0 3px #000,0 0 10px rgba(0,0,0,.8),0 2px 4px rgba(0,0,0,.9);
+  letter-spacing:.08em;cursor:help}
 
 /* =========================================================================
    Child mode — larger everything, encouraging, audio-first

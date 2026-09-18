@@ -3284,7 +3284,10 @@ function showTermStack(fid) {
 
     function render() {
       var h = '<div class="ts-view">';
-      if (moves === 0) h += '<img class="game-hero-img" src="images/term_stack_blocks.png" alt="" aria-hidden="true">';
+      if (moves === 0) {
+        h += '<div class="ts-hero-wrap"><img class="game-hero-img ts-hero-img" src="images/term_stack_fragment.png" alt="">' +
+          '<div class="ts-hero-word" lang="he" dir="rtl" title="ברית — brit — covenant">\u{10901}\u{10913}\u{10909}\u{10915}</div></div>';
+      }
       h += '<div class="ts-header">Drop a scroll into a column — a meticulous eye clears the board fastest</div>';
       h += '<div class="ts-stats">Cleared: ' + cleared + '/' + terms.length + ' &nbsp; Scrolls left: ' + queue.length + '</div>';
       if (queue.length) h += '<div class="ts-next">Next: <span class="ts-next-chip ts-' + queue[0].side + '">' + queue[0].text + '</span></div>';
