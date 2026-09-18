@@ -2,11 +2,14 @@
 
 ## Current state
 
-- Branch: `claude/load-words-pwa-setup-nf1pcn`
-- Latest commit: `72dd892` — "Load Words: add Story Quest branching narrative game"
-- Working tree: clean, all shipped work pushed.
-- Open PR: **#954** ("Load Words: add The Imposter card-flip game" — title is stale, now carries 7 commits: The Imposter, Thread-Link Board, Vocab Feud, Stack & Match, Word Blocks, session notes, Story Quest). Base `bbc0dce`, head `72dd892`. Still open — per CLAUDE.md Rule 9, presenting it and waiting for the user's explicit merge go-ahead before touching the merge tool.
-- `APP_VERSION` / `CACHE_NAME`: `v24` / `loadwords-v24`.
+- Branch: `claude/load-words-pwa-setup-nf1pcn`, restarted from `origin/main` after today's merge (`git checkout -B claude/load-words-pwa-setup-nf1pcn origin/main`).
+- **PR #954 is MERGED** — merged by the user (DssOrit) via the GitHub UI at 2026-09-18T03:17:31Z, confirmed via `pull_request_read`. New `main` HEAD: `1d60779`.
+- Working tree: clean.
+- `APP_VERSION` / `CACHE_NAME`: `v24` / `loadwords-v24` (now live on `main`).
+
+## Backups
+
+- `backup/2026-09-18-loadwords-v24` — pushed, SHA-verified equal to `origin/main` (`1d60779`) right after today's merge landed. Recovery: `git checkout backup/2026-09-18-loadwords-v24`.
 
 ## Built today
 
@@ -26,7 +29,6 @@ Continuing a long-running "advanced vocabulary games" build (user pasted a serie
 
 ## Outstanding / blocking
 
-- **PR #954 needs the user's review and explicit merge go-ahead.** Per Rule 9, only the user can say "merge #954" — not implied by "build and merge all once finished." Presenting: PR #954, https://github.com/DssOrit/ancient-covenant-scrolls/pull/954, files changed `loadwords/app.js`, `loadwords/index.html`, `loadwords/service-worker.js`, `loadwords/README.md`, `loadwords/wordbank.js`, `SESSION_NOTES_2026-09-18.md`; 7 commits (The Imposter, Thread-Link Board, Vocab Feud, Stack & Match, Word Blocks, session notes, Story Quest).
 - **Word-bank basicness audit still open.** Earlier in this multi-day build the user asked "Are all 500 words advanced lexical items, high-tier vocabulary?" The investigation (specifically re-screening the original 60-word `ad` category, which predates the later "ultra advanced only" standard) was interrupted by a rejected tool call and never resumed. Flagging again here so it isn't lost.
 
 ## Pending / parked
