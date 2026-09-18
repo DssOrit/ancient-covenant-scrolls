@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v25';
+const APP_VERSION = 'v26';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -1259,7 +1259,7 @@ function renderDragDrop(){
 
 // ---------------- VOCAB DEAL OR NO DEAL ----------------
 function wordPointValue(w){
-  const tierBase = {cp:1000, up:1500, ad:2500, ce:4000, li:4500, sa:6000};
+  const tierBase = {cp:1000, up:1500, ad:2500, ce:4000, li:4500, sa:6000, ph:6500};
   const base = tierBase[w.category] || 3000;
   return Math.round((base + w.word.length * 100) / 100) * 100;
 }

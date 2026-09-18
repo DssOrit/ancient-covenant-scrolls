@@ -9,14 +9,14 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (500 words across 6 categories, tagged with 7 themes)
+wordbank.js          — the core word bank (525 words across 7 categories, tagged with 7 themes)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, and Listen Mode. The Word Vault is a persistent rewards layer that runs alongside all of them. — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review. The Word Vault is a persistent rewards layer that runs alongside all of them.
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
 
@@ -79,6 +79,12 @@ Everything (word progress, spaced-repetition state, your added words, any images
 - It's private to that browser/device — nothing is sent anywhere.
 - It persists across visits, including offline.
 - Clearing Safari's site data for this app will reset it.
+
+## Word-bank tiers and the "ad" category rebuild
+
+The bank spans 7 difficulty categories (see `CATEGORY_META` in `wordbank.js`): Confusing Pairs, Upgrade Ladders, Advanced, C2/Elite, Literary, Super Advanced, and **Philosophical** — the newest, hardest tier (25 words spanning epistemology, metaphysics, linguistics, and system dynamics — e.g. `aporia`, `reification`, `nihilism`, `ataraxia`).
+
+The **Advanced** (`ad`) category was audited and rebuilt: 43 of its original 60 words were too close to everyday vocabulary for an advanced-learner app (e.g. `abundant`, `genuine`, `crucial`) and were replaced in place with genuinely C1/C2-level words (e.g. `magnanimous`, `temerity`, `officious`, `opprobrium`). 17 words that were already solidly advanced were kept as-is, along with `poignant` and `paradigm` specifically at the user's request. Every replacement was checked against the other 524 words first to avoid duplicating a word that already existed elsewhere in the bank under a different tier.
 
 ## Adding more words
 
