@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v21';
+const APP_VERSION = 'v22';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -92,6 +92,7 @@ const State = {
   imposter:{ pool:[], round:0, score:0, cards:[], imposterSlot:null, chosenSlot:null, phase:'shuffling' },
   thread:{ words:[], left:[], right:[], connections:{}, locked:{}, rightLocked:{}, flashWrong:null },
   feud:{ themeKey:null, themeLabel:'', boardWords:[], pool:[], strikes:0, score:0, phase:'playing', lastWrong:null },
+  stack:{ cols:4, rows:5, grid:[[],[],[],[]], queue:[], totalPairs:0, clearedPairs:0, score:0, phase:'playing' },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -478,6 +479,7 @@ function renderView(){
     case 'imposter': return renderImposter();
     case 'thread': return renderThread();
     case 'feud': return renderFeud();
+    case 'stack': return renderStack();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -978,6 +980,7 @@ function renderTest(){
       <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1717,6 +1720,89 @@ function renderFeud(){
   </div>`}`;
 }
 
+// ---------------- STACK & MATCH ----------------
+function startStack(){
+  const pool = State.words.filter(w=>w.definition);
+  const chosen = shuffle(pool).slice(0,6);
+  const blocks = [];
+  chosen.forEach((w,pairIdx)=>{
+    blocks.push({ pairIdx, kind:'word', id:w.id, text:w.word, value:wordPointValue(w) });
+    blocks.push({ pairIdx, kind:'def', id:w.id, text:w.definition, value:wordPointValue(w) });
+  });
+  State.stack = { cols:4, rows:5, grid:[[],[],[],[]], queue:shuffle(blocks), totalPairs:chosen.length, clearedPairs:0, score:0, phase:'playing' };
+}
+function stackDrop(colIndex){
+  const S = State.stack;
+  if(S.phase!=='playing' || !S.queue.length) return;
+  const col = S.grid[colIndex];
+  if(col.length >= S.rows) return;
+  const piece = S.queue.shift();
+  col.push(piece);
+  const row = col.length - 1;
+  const matches = [];
+  if(row > 0){
+    const below = col[row-1];
+    if(below && below.pairIdx===piece.pairIdx && below.kind!==piece.kind) matches.push({col:colIndex, row:row-1});
+  }
+  if(colIndex > 0){
+    const left = S.grid[colIndex-1][row];
+    if(left && left.pairIdx===piece.pairIdx && left.kind!==piece.kind) matches.push({col:colIndex-1, row});
+  }
+  if(colIndex < S.cols-1){
+    const right = S.grid[colIndex+1][row];
+    if(right && right.pairIdx===piece.pairIdx && right.kind!==piece.kind) matches.push({col:colIndex+1, row});
+  }
+  if(matches.length){
+    matches.push({col:colIndex, row});
+    const byCol = {};
+    matches.forEach(m=>{ (byCol[m.col]=byCol[m.col]||[]).push(m.row); });
+    Object.keys(byCol).forEach(c=>{
+      const rowsToRemove = [...new Set(byCol[c])].sort((a,b)=>b-a);
+      rowsToRemove.forEach(r=>{ S.grid[c].splice(r,1); });
+    });
+    S.score += piece.value;
+    S.clearedPairs += 1;
+    gradeWord(piece.id, 2);
+  }
+  if(S.clearedPairs >= S.totalPairs){
+    S.phase = 'won';
+  } else if(!S.queue.length){
+    S.phase = 'done';
+  } else if(S.grid.every(c=>c.length >= S.rows)){
+    S.phase = 'lost';
+  }
+}
+function renderStack(){
+  const S = State.stack;
+  if(!S.totalPairs){
+    return `<div class="empty"><p>Loading Stack &amp; Match…</p></div>`;
+  }
+  const done = S.phase!=='playing';
+  const next = S.queue[0];
+  return `<div class="pagehead"><h2>Stack &amp; Match</h2></div>
+  <p class="sub">Tap a column to drop the next block. Land a word next to its matching definition to clear both — no timer, take your time.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${S.score.toLocaleString()}</b><span>Score</span></div>
+    <div>${ic('layers')}<b>${S.clearedPairs}/${S.totalPairs}</b><span>Cleared</span></div>
+  </div>
+  ${!done && next ? `<div class="stack-next"><span class="stack-next-label">${next.kind==='word'?'WORD':'DEFINITION'}</span><span class="stack-next-text">${escapeHtml(next.text)}</span></div>` : ''}
+  <div class="stack-board">
+    ${S.grid.map((col,ci)=>{
+      const full = col.length >= S.rows;
+      const cellsTopDown = [];
+      for(let r=S.rows-1;r>=0;r--){ cellsTopDown.push(col[r]||null); }
+      return `<button class="stack-col ${(full||done)?'disabled':''}" data-stack-col="${ci}" ${(full||done)?'disabled':''}>
+        ${cellsTopDown.map(c=>c
+          ? `<div class="stack-block stack-${c.kind}">${escapeHtml(c.text)}</div>`
+          : `<div class="stack-cell-empty"></div>`
+        ).join('')}
+      </button>`;
+    }).join('')}
+  </div>
+  ${done ? `<div class="note-box" style="background:${S.phase==='won'?'var(--good-soft)':'var(--warn-soft)'};color:${S.phase==='won'?'var(--good)':'var(--warn)'}">${ic(S.phase==='won'?'check':'x')}<span>${S.phase==='won'?`Board cleared! Final score: ${S.score.toLocaleString()}.`:S.phase==='lost'?'The columns filled up before the board cleared.':`Round finished — ${S.clearedPairs} of ${S.totalPairs} pairs cleared.`}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="stackAgainBtn">Play again</button>` : ''}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1846,6 +1932,7 @@ function bindEvents(){
       if(v==='imposter'){ startImposter(); }
       if(v==='thread'){ startThread(); }
       if(v==='feud'){ startFeud(); }
+      if(v==='stack'){ startStack(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2259,10 +2346,16 @@ function bindEvents(){
   if(threadAgainBtn){ threadAgainBtn.addEventListener('click', ()=>{ startThread(); render(); }); }
 
   document.querySelectorAll('[data-feud-word]').forEach(el=>{
-    el.addEventListener('click', ()=>{ feudGuess(el.getAttribute('data-feud-word')); render(); bindEvents(); });
+    el.addEventListener('click', ()=>{ feudGuess(el.getAttribute('data-feud-word')); render(); });
   });
   const feudAgainBtn = document.getElementById('feudAgainBtn');
-  if(feudAgainBtn){ feudAgainBtn.addEventListener('click', ()=>{ startFeud(); render(); bindEvents(); }); }
+  if(feudAgainBtn){ feudAgainBtn.addEventListener('click', ()=>{ startFeud(); render(); }); }
+
+  document.querySelectorAll('[data-stack-col]').forEach(el=>{
+    el.addEventListener('click', ()=>{ stackDrop(Number(el.getAttribute('data-stack-col'))); render(); });
+  });
+  const stackAgainBtn = document.getElementById('stackAgainBtn');
+  if(stackAgainBtn){ stackAgainBtn.addEventListener('click', ()=>{ startStack(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
