@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v24';
+const APP_VERSION = 'v25';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -78,6 +78,7 @@ const State = {
   difficultWords:[],       // array of word ids the user flagged in Listen mode
   settings:{ theme:'cream', size:'m', spacing:'normal', rate:0.85 },
   streak:{ count:0, lastDate:null },
+  vault:{ keys:0, unlockedPacks:[], crownUnlocked:false, viewingPack:null },
   studyQueue:[], studyIndex:0, studyRevealed:false,
   testQueue:[], testIndex:0, testScore:0, testType:'meaning', testAnswered:false,
   spellAttempt:'', spellCorrect:false,
@@ -117,6 +118,8 @@ async function loadAll(){
   State.difficultWords = await sGet('difficultWords', []);
   State.streak = await sGet('streak', { count:0, lastDate:null });
   State.memoryScore = await sGet('memoryScore', { total:0, lastDate:null });
+  State.vault = await sGet('vault', { keys:0, unlockedPacks:[], crownUnlocked:false, viewingPack:null });
+  State.vault.viewingPack = null;
   const s = await sGet('settings', null);
   if(s) State.settings = Object.assign(State.settings, s);
   applyTheme();
@@ -344,6 +347,16 @@ async function bumpStreak(){
   st.count = (st.lastDate === yesterday) ? (st.count||0) + 1 : 1;
   st.lastDate = today;
   await sSet('streak', st);
+  await vaultAwardDaily(st.count);
+}
+async function vaultAwardDaily(streakCount){
+  const V = State.vault;
+  V.keys = (V.keys||0) + 1;
+  if(streakCount>0 && streakCount % 7 === 0){
+    V.keys += 5;
+    if(streakCount===7) V.crownUnlocked = true;
+  }
+  await sSet('vault', V);
 }
 
 // ---------------- spaced repetition ----------------
@@ -484,6 +497,7 @@ function renderView(){
     case 'stack': return renderStack();
     case 'blocks': return renderBlockPuzzle();
     case 'quest': return renderQuest();
+    case 'vault': return renderVault();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -501,9 +515,14 @@ function renderHome(){
     <div class="stat"><div class="num">${due}</div><div class="lbl">Due today</div></div>
     <div class="stat"><div class="num">${mastered}</div><div class="lbl">Mastered</div></div>
   </div>
-  ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div></div>` : ''}
+  ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div><button class="streak-pill vault-pill" data-nav="vault">${ic('star')}${State.vault.keys} key${State.vault.keys===1?'':'s'}</button></div>` : ''}
   <div class="section-title">Jump in</div>
   <div class="action-row">
+    <button class="action" data-nav="vault" style="--c:#B45309">
+      <div class="a-ic">${ic('star')}</div>
+      <div class="a-txt"><b>Word Vault</b><span>Spend keys you've earned to unlock themed word packs</span></div>
+      <div class="a-chev">${ic('chevR')}</div>
+    </button>
     <button class="action" data-nav="study" style="--c:#059669">
       <div class="a-ic">${ic('book')}</div>
       <div class="a-txt"><b>Study due words</b><span>${due} word${due===1?'':'s'} ready for review</span></div>
@@ -1983,6 +2002,52 @@ function renderQuest(){
   return `<div class="empty"><p>Loading…</p></div>`;
 }
 
+// ---------------- WORD VAULT ----------------
+async function vaultUnlockPack(packId){
+  const V = State.vault;
+  const pack = WORD_PACKS.find(p=>p.id===packId);
+  if(!pack || V.unlockedPacks.includes(packId) || V.keys < pack.cost) return false;
+  V.keys -= pack.cost;
+  V.unlockedPacks.push(packId);
+  await sSet('vault', V);
+  return true;
+}
+function vaultOpenPack(packId){
+  State.vault.viewingPack = packId;
+}
+function vaultClosePack(){
+  State.vault.viewingPack = null;
+}
+function renderVault(){
+  const V = State.vault;
+  if(V.viewingPack){
+    const pack = WORD_PACKS.find(p=>p.id===V.viewingPack);
+    const words = State.words.filter(w=>w.theme===pack.themeKey && w.definition).slice(0,8);
+    return `<div class="pagehead"><h2>${escapeHtml(pack.name)}</h2></div>
+    <p class="sub">${words.length} word${words.length===1?'':'s'} in this pack, from ${escapeHtml(THEME_META[pack.themeKey].label)}.</p>
+    <div class="vault-pack-words">
+      ${words.map(w=>`<div class="vault-word-card"><b>${escapeHtml(w.word)}</b><span>${escapeHtml(w.definition)}</span></div>`).join('')}
+    </div>
+    <button class="big-btn" style="margin-top:16px;" id="vaultBackBtn">Back to Vault</button>`;
+  }
+  return `<div class="pagehead"><h2>Word Vault</h2></div>
+  <p class="sub">Earn a key every day you practice — plus a bonus every 7-day streak. Spend keys to unlock themed word packs.</p>
+  <div class="vault-keys">${ic('star')}<b>${V.keys}</b><span>Keys</span>${V.crownUnlocked?`<span class="vault-crown">${ic('fire')}7-Day Crown earned</span>`:''}</div>
+  <div class="vault-packs">
+    ${WORD_PACKS.map(p=>{
+      const unlocked = V.unlockedPacks.includes(p.id);
+      const affordable = V.keys >= p.cost;
+      return `<div class="vault-pack ${unlocked?'unlocked':''}">
+        <div class="vault-pack-head"><b>${escapeHtml(p.name)}</b><span>${escapeHtml(THEME_META[p.themeKey].label)}</span></div>
+        ${unlocked
+          ? `<button class="vault-pack-btn" data-vault-view="${p.id}">View pack</button>`
+          : `<button class="vault-pack-btn ${affordable?'':'locked'}" data-vault-unlock="${p.id}">${affordable?`Unlock — ${p.cost} keys`:`${p.cost} keys needed`}</button>`
+        }
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2115,6 +2180,7 @@ function bindEvents(){
       if(v==='stack'){ startStack(); }
       if(v==='blocks'){ startBlockPuzzle(); }
       if(v==='quest'){ startQuest(); }
+      if(v==='vault'){ vaultClosePack(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2594,6 +2660,18 @@ function bindEvents(){
   if(questNextBtn){ questNextBtn.addEventListener('click', ()=>{ questNextChapter(); render(); }); }
   const questAgainBtn = document.getElementById('questAgainBtn');
   if(questAgainBtn){ questAgainBtn.addEventListener('click', ()=>{ startQuest(); render(); }); }
+
+  document.querySelectorAll('[data-vault-unlock]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      const ok = await vaultUnlockPack(el.getAttribute('data-vault-unlock'));
+      if(ok) render();
+    });
+  });
+  document.querySelectorAll('[data-vault-view]').forEach(el=>{
+    el.addEventListener('click', ()=>{ vaultOpenPack(el.getAttribute('data-vault-view')); render(); });
+  });
+  const vaultBackBtn = document.getElementById('vaultBackBtn');
+  if(vaultBackBtn){ vaultBackBtn.addEventListener('click', ()=>{ vaultClosePack(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

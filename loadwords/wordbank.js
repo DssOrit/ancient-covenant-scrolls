@@ -580,6 +580,16 @@ const MORPHEME_WORDS = [
   {wordId:"sa202",scene:"target",blocks:[{text:"telos",meaning:"purpose",type:"root"},{text:"logos",meaning:"study of",type:"root"}]},
 ];
 
+const WORD_PACKS = [
+  { id:"pack_intellect", themeKey:"intellect", name:"Sharp Minds", cost:5 },
+  { id:"pack_character", themeKey:"character", name:"Character Studies", cost:10 },
+  { id:"pack_emotion", themeKey:"emotion", name:"Felt Deeply", cost:15 },
+  { id:"pack_analytical", themeKey:"analytical", name:"The Analyst's Kit", cost:20 },
+  { id:"pack_rhetoric", themeKey:"rhetoric", name:"Rhetoric & Voice", cost:25 },
+  { id:"pack_conflict", themeKey:"conflict", name:"Friction Points", cost:30 },
+  { id:"pack_precision", themeKey:"precision", name:"Precision Cut", cost:35 },
+];
+
 const STORY_QUEST = {
   title: "The Lighthouse Keeper's Ledger",
   chapters: [

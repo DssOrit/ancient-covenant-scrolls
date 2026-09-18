@@ -157,8 +157,10 @@ main{ flex:1; padding:6px 20px 30px; }
 .spell-pattern{ text-align:center; font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.1); font-weight:600; margin:2px 0 8px; letter-spacing:0.02em; }
 .tricky{ color:var(--warn); text-decoration:underline; text-decoration-style:wavy; text-decoration-color:var(--warn); text-underline-offset:3px; }
 .wword.lit{ background:var(--accent-soft); color:var(--accent); border-radius:4px; box-shadow:0 0 0 2px var(--accent-soft); }
-.streak-pill{ display:inline-flex; align-items:center; gap:6px; background:var(--good-soft); color:var(--good); padding:6px 14px; border-radius:999px; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.79); margin-bottom:14px; }
+.streak-pill{ display:inline-flex; align-items:center; gap:6px; background:var(--good-soft); color:var(--good); padding:6px 14px; border-radius:999px; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.79); margin-bottom:14px; margin-right:8px; }
 .streak-pill svg{ width:14px; height:14px; stroke:var(--good); }
+.vault-pill{ background:var(--accent-soft); color:var(--accent); border:none; cursor:pointer; font:inherit; }
+.vault-pill svg{ stroke:var(--accent); }
 .spk-btn{ display:flex; align-items:center; gap:8px; background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); color:#fff; border:none; border-radius:999px; padding:11px 18px; font-family:var(--font-head); font-weight:600; font-size:calc(var(--fs-base) * 0.85); cursor:pointer; }
 .spk-btn.ghost{ background:var(--bg-card); border:1.5px solid var(--accent); color:var(--accent); }
 .spk-btn svg{ width:16px; height:16px; stroke:currentColor; }
@@ -429,6 +431,24 @@ main{ flex:1; padding:6px 20px 30px; }
 .quest-choice-prompt{ margin-top:16px; font-weight:700; font-size:calc(var(--fs-base) * 0.95); line-height:1.5; }
 .quest-choice-opts{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
 .quest-opt{ padding:14px 16px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); font-weight:700; font-size:calc(var(--fs-base) * 0.9); text-align:left; cursor:pointer; }
+
+/* Word Vault */
+.vault-keys{ display:flex; align-items:center; gap:8px; margin-top:14px; padding:14px 16px; border-radius:12px; background:var(--bg-card); border:1.5px solid var(--border); font-family:var(--font-head); font-weight:800; font-size:calc(var(--fs-base) * 1.1); }
+.vault-keys svg{ width:20px; height:20px; stroke:var(--accent); }
+.vault-crown{ margin-left:auto; display:flex; align-items:center; gap:4px; font-size:calc(var(--fs-base) * 0.7); font-weight:700; color:var(--warn); }
+.vault-crown svg{ width:14px; height:14px; stroke:var(--warn); }
+.vault-packs{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+.vault-pack{ padding:14px 16px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); }
+.vault-pack.unlocked{ border-color:var(--good); background:var(--good-soft); }
+.vault-pack-head{ display:flex; flex-direction:column; gap:2px; margin-bottom:10px; }
+.vault-pack-head b{ font-family:var(--font-head); font-size:calc(var(--fs-base) * 0.95); }
+.vault-pack-head span{ font-size:calc(var(--fs-base) * 0.72); color:var(--text-soft); }
+.vault-pack-btn{ width:100%; padding:10px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-weight:700; font-size:calc(var(--fs-base) * 0.85); cursor:pointer; }
+.vault-pack-btn.locked{ background:var(--border); color:var(--text-soft); cursor:default; }
+.vault-pack-words{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+.vault-word-card{ padding:14px 16px; border-radius:12px; border:1.5px solid var(--accent); background:var(--accent-soft); display:flex; flex-direction:column; gap:4px; }
+.vault-word-card b{ font-family:var(--font-head); font-size:calc(var(--fs-base) * 0.95); color:var(--accent); }
+.vault-word-card span{ font-size:calc(var(--fs-base) * 0.85); }
 .test-footer{ margin-top:20px; }
 .big-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); color:#fff; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.94); cursor:pointer; box-shadow:0 3px 12px rgba(37,99,235,.25); }
 .big-btn:disabled{ opacity:.4; box-shadow:none; }
