@@ -579,3 +579,50 @@ const MORPHEME_WORDS = [
   {wordId:"sa362",scene:"split",blocks:[{text:"dicha",meaning:"in two",type:"prefix"},{text:"tomia",meaning:"cutting",type:"root"}]},
   {wordId:"sa202",scene:"target",blocks:[{text:"telos",meaning:"purpose",type:"root"},{text:"logos",meaning:"study of",type:"root"}]},
 ];
+
+const STORY_QUEST = {
+  title: "The Lighthouse Keeper's Ledger",
+  chapters: [
+    {
+      id: "ch1",
+      title: "The Locked Door",
+      intro: "Rain hammers the cliff path as you climb toward the old lighthouse. Its door lock is a byzantine tangle of bolts and chains, like someone wanted to keep something in, not just visitors out.\n\nInside, dust covers a logbook left open on the desk.",
+      choiceWordId: "ad29",
+      choicePrompt: "The handwriting inside is ___ — every letter placed with obsessive care, as if one smudge would ruin everything.",
+      choiceDistractors: ["messy", "careless", "hurried"],
+      afterCorrect: "You run a finger down the neat columns. Whoever wrote this counted every storm, every ship, every light of the lantern — nothing was left to chance.\n\nNear the bottom, one entry is underlined twice: \"They will come for the record. I must not let them.\"",
+      afterWrong: "You skim the pages. The writing is careful enough to read, and the numbers seem to matter to whoever wrote them.\n\nNear the bottom, one line is underlined twice: \"They will come for the record. I must not let them.\"",
+      checkpointWordId: "sa100",
+      checkpointContext: "A moment ago you read about that byzantine lock on the door."
+    },
+    {
+      id: "ch2",
+      title: "Entries in the Margins",
+      intro: "The next pages are shorter, written fast. A name appears again and again: Inspector Hale. In the margin, the keeper has scrawled a single line about him: \"Says less each visit. Barely nods before he leaves.\"",
+      choiceWordId: "ce6",
+      choicePrompt: "The keeper describes Hale as ___ — a man who answers in as few words as possible.",
+      choiceDistractors: ["chatty", "nervous", "friendly"],
+      afterCorrect: "You picture the man: standing in the doorway, saying nothing, watching everything. The keeper clearly found his silence unsettling — worth writing down twice.\n\nFurther down, there's a different complaint: \"Cantankerous old goat at the harbor office, arguing about the schedule again, same as every week.\"",
+      afterWrong: "You picture the man standing in the doorway. Whatever kind of visitor he was, the keeper clearly didn't trust him — the same warning appears twice in the margins.\n\nFurther down, there's a different complaint: \"Cantankerous old goat at the harbor office, arguing about the schedule again, same as every week.\"",
+      checkpointWordId: "sa246",
+      checkpointContext: "The keeper just complained about a cantankerous harbor officer."
+    },
+    {
+      id: "ch3",
+      title: "The Final Entry",
+      intro: "The last page is dated the night of the big storm. The keeper's plan is right there in ink: row out to the wrecked supply boat alone, in the dark, before the tide turns.",
+      choiceWordId: "sa148",
+      choicePrompt: "It is an ___ plan — bold, risky, and against every rule of the lighthouse service.",
+      choiceDistractors: ["cautious", "ordinary", "official"],
+      afterCorrect: "You can almost feel the keeper's hand shaking as they wrote it. No backup, no permission — just a decision made alone, in the dark, because waiting felt worse than the risk.\n\nThe final line simply reads: \"The light held for one more night — ephemeral as it was, it was enough to bring them home.\"",
+      afterWrong: "Whatever the plan was, it clearly wasn't a safe one. The keeper wrote it in a hurry, like there wasn't time to think twice.\n\nThe final line simply reads: \"The light held for one more night — ephemeral as it was, it was enough to bring them home.\"",
+      checkpointWordId: "li5",
+      checkpointContext: "The keeper's last line called that final night ephemeral."
+    }
+  ],
+  endings: [
+    { minScore: 5, title: "Eloquent Reader", text: "You close the logbook, certain of every word. The keeper's story is clear now — someone who cared too much, in careful and complicated ways, right until the end." },
+    { minScore: 3, title: "Developing Reader", text: "You close the logbook with most of the pieces in place. A word or two slipped past you, but the shape of the keeper's story still comes through." },
+    { minScore: 0, title: "Just Beginning", text: "You close the logbook. Some of the keeper's words were new to you tonight — that's exactly how a bigger vocabulary starts. Read it again and see how many more you catch." }
+  ]
+};
