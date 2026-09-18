@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v23';
+const APP_VERSION = 'v24';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -94,6 +94,7 @@ const State = {
   feud:{ themeKey:null, themeLabel:'', boardWords:[], pool:[], strikes:0, score:0, phase:'playing', lastWrong:null },
   stack:{ cols:4, rows:5, grid:[[],[],[],[]], queue:[], totalPairs:0, clearedPairs:0, score:0, phase:'playing' },
   blockPuzzle:{ words:[], placed:[], pool:[], score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null },
+  quest:{ chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions:[], checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -482,6 +483,7 @@ function renderView(){
     case 'feud': return renderFeud();
     case 'stack': return renderStack();
     case 'blocks': return renderBlockPuzzle();
+    case 'quest': return renderQuest();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -984,6 +986,7 @@ function renderTest(){
       <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1875,6 +1878,111 @@ function renderBlockPuzzle(){
   <button class="big-btn" style="margin-top:8px;" id="blockAgainBtn">Play again</button>` : ''}`;
 }
 
+// ---------------- STORY QUEST ----------------
+function questParagraphs(text){
+  return text.split('\n\n').map(p=>`<p>${escapeHtml(p)}</p>`).join('');
+}
+function questBuildChoiceOptions(chapter){
+  const target = State.words.find(w=>w.id===chapter.choiceWordId);
+  return shuffle([target.word, ...chapter.choiceDistractors]);
+}
+function questBuildCheckpointOptions(chapter){
+  const target = State.words.find(w=>w.id===chapter.checkpointWordId);
+  const others = shuffle(State.words.filter(w=>w.id!==target.id && w.definition)).slice(0,2);
+  return shuffle([{ text: target.definition, correct:true }, ...others.map(o=>({ text:o.definition, correct:false }))]);
+}
+function startQuest(){
+  const chapter = STORY_QUEST.chapters[0];
+  State.quest = { chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions: questBuildChoiceOptions(chapter), checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null };
+}
+function questChoice(picked){
+  const Q = State.quest;
+  const chapter = STORY_QUEST.chapters[Q.chapterIndex];
+  const target = State.words.find(w=>w.id===chapter.choiceWordId);
+  const correct = picked === target.word;
+  Q.total += 1;
+  if(correct) Q.score += 1;
+  Q.lastCorrect = correct;
+  gradeWord(target.id, correct?2:0);
+  Q.phase = 'after';
+}
+function questContinueAfter(){
+  const Q = State.quest;
+  const chapter = STORY_QUEST.chapters[Q.chapterIndex];
+  Q.checkpointOptions = questBuildCheckpointOptions(chapter);
+  Q.phase = 'checkpoint';
+}
+function questCheckpointAnswer(optIndex){
+  const Q = State.quest;
+  const chapter = STORY_QUEST.chapters[Q.chapterIndex];
+  const opt = Q.checkpointOptions[optIndex];
+  Q.total += 1;
+  if(opt.correct) Q.score += 1;
+  Q.lastCorrect = opt.correct;
+  Q.checkpointChosenIndex = optIndex;
+  gradeWord(chapter.checkpointWordId, opt.correct?2:0);
+  Q.phase = 'checkpointResult';
+}
+function questNextChapter(){
+  const Q = State.quest;
+  if(Q.chapterIndex + 1 < STORY_QUEST.chapters.length){
+    Q.chapterIndex += 1;
+    Q.phase = 'intro';
+    Q.choiceOptions = questBuildChoiceOptions(STORY_QUEST.chapters[Q.chapterIndex]);
+  } else {
+    Q.phase = 'ending';
+  }
+}
+function renderQuest(){
+  const Q = State.quest;
+  const totalChapters = STORY_QUEST.chapters.length;
+  if(Q.phase==='ending'){
+    const ending = STORY_QUEST.endings.find(e=>Q.score>=e.minScore);
+    return `<div class="pagehead"><h2>${escapeHtml(STORY_QUEST.title)}</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${Q.score}/${Q.total}</div></div>
+      <h3>${escapeHtml(ending.title)}</h3>
+      <p>${escapeHtml(ending.text)}</p>
+      <button class="big-btn" style="margin-top:20px;" id="questAgainBtn">Read again</button>
+    </div>`;
+  }
+  const chapter = STORY_QUEST.chapters[Q.chapterIndex];
+  const header = `<div class="pagehead"><h2>${escapeHtml(STORY_QUEST.title)}</h2></div>
+    <p class="sub">Chapter ${Q.chapterIndex+1} of ${totalChapters}: ${escapeHtml(chapter.title)}</p>`;
+  if(Q.phase==='intro'){
+    return header + `
+    <div class="quest-passage">${questParagraphs(chapter.intro)}</div>
+    <p class="quest-choice-prompt">${escapeHtml(chapter.choicePrompt)}</p>
+    <div class="quest-choice-opts">
+      ${Q.choiceOptions.map(opt=>`<button class="quest-opt" data-quest-choice="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
+    </div>`;
+  }
+  if(Q.phase==='after'){
+    const target = State.words.find(w=>w.id===chapter.choiceWordId);
+    const passage = Q.lastCorrect ? chapter.afterCorrect : chapter.afterWrong;
+    return header + `
+    <div class="quest-passage">${questParagraphs(passage)}</div>
+    <div class="note-box" style="background:${Q.lastCorrect?'var(--good-soft)':'var(--warn-soft)'};color:${Q.lastCorrect?'var(--good)':'var(--warn)'}">${ic(Q.lastCorrect?'check':'x')}<span>${Q.lastCorrect?'Right word.':'Not quite — the word was "'+escapeHtml(target.word)+'."'}</span></div>
+    <button class="big-btn" style="margin-top:8px;" id="questContinueBtn">Continue</button>`;
+  }
+  if(Q.phase==='checkpoint'){
+    const target = State.words.find(w=>w.id===chapter.checkpointWordId);
+    return header + `
+    <div class="quest-passage"><p>${escapeHtml(chapter.checkpointContext)}</p></div>
+    <p class="quest-choice-prompt">What does "${escapeHtml(target.word)}" mean?</p>
+    <div class="quest-choice-opts">
+      ${Q.checkpointOptions.map((opt,i)=>`<button class="quest-opt" data-quest-checkpoint="${i}">${escapeHtml(opt.text)}</button>`).join('')}
+    </div>`;
+  }
+  if(Q.phase==='checkpointResult'){
+    const target = State.words.find(w=>w.id===chapter.checkpointWordId);
+    return header + `
+    <div class="note-box" style="background:${Q.lastCorrect?'var(--good-soft)':'var(--warn-soft)'};color:${Q.lastCorrect?'var(--good)':'var(--warn)'}">${ic(Q.lastCorrect?'check':'x')}<span>${Q.lastCorrect?'Correct. ':'Not quite. '}"${escapeHtml(target.word)}" means: ${escapeHtml(target.definition)}</span></div>
+    <button class="big-btn" style="margin-top:8px;" id="questNextBtn">${Q.chapterIndex+1 < totalChapters ? 'Next chapter' : 'Finish the story'}</button>`;
+  }
+  return `<div class="empty"><p>Loading…</p></div>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2006,6 +2114,7 @@ function bindEvents(){
       if(v==='feud'){ startFeud(); }
       if(v==='stack'){ startStack(); }
       if(v==='blocks'){ startBlockPuzzle(); }
+      if(v==='quest'){ startQuest(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2472,6 +2581,19 @@ function bindEvents(){
   });
   const blockAgainBtn = document.getElementById('blockAgainBtn');
   if(blockAgainBtn){ blockAgainBtn.addEventListener('click', ()=>{ startBlockPuzzle(); render(); }); }
+
+  document.querySelectorAll('[data-quest-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ questChoice(el.getAttribute('data-quest-choice')); render(); });
+  });
+  document.querySelectorAll('[data-quest-checkpoint]').forEach(el=>{
+    el.addEventListener('click', ()=>{ questCheckpointAnswer(Number(el.getAttribute('data-quest-checkpoint'))); render(); });
+  });
+  const questContinueBtn = document.getElementById('questContinueBtn');
+  if(questContinueBtn){ questContinueBtn.addEventListener('click', ()=>{ questContinueAfter(); render(); }); }
+  const questNextBtn = document.getElementById('questNextBtn');
+  if(questNextBtn){ questNextBtn.addEventListener('click', ()=>{ questNextChapter(); render(); }); }
+  const questAgainBtn = document.getElementById('questAgainBtn');
+  if(questAgainBtn){ questAgainBtn.addEventListener('click', ()=>{ startQuest(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

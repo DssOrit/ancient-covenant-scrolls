@@ -421,6 +421,14 @@ main{ flex:1; padding:6px 20px 30px; }
 .block-chip{ padding:10px 16px; border-radius:10px; border:1.5px solid var(--border); background:var(--bg-card); font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.85); cursor:grab; touch-action:none; }
 .block-chip.dragging{ box-shadow:0 8px 20px rgba(0,0,0,.2); }
 .block-chip.wrong{ background:var(--warn-soft); border-color:var(--warn); color:var(--warn); }
+
+/* Story Quest */
+.quest-passage{ margin-top:14px; }
+.quest-passage p{ font-size:calc(var(--fs-base) * 1.02); line-height:1.6; color:var(--text); margin:0 0 14px 0; }
+.quest-passage p:last-child{ margin-bottom:0; }
+.quest-choice-prompt{ margin-top:16px; font-weight:700; font-size:calc(var(--fs-base) * 0.95); line-height:1.5; }
+.quest-choice-opts{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+.quest-opt{ padding:14px 16px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); font-weight:700; font-size:calc(var(--fs-base) * 0.9); text-align:left; cursor:pointer; }
 .test-footer{ margin-top:20px; }
 .big-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); color:#fff; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.94); cursor:pointer; box-shadow:0 3px 12px rgba(37,99,235,.25); }
 .big-btn:disabled{ opacity:.4; box-shadow:none; }
