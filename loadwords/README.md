@@ -16,7 +16,7 @@ icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
 
@@ -37,6 +37,8 @@ assets/               — splash art, wired in via apple-touch-startup-image
 **Higher or Lower:** shows an advanced word; pick which of 3 plain-English definitions belongs to it. A correct guess builds a streak (100/200/300... points at risk) with a choice to Bank (keep the points, safe) or risk it on the next word for more. A wrong guess loses only the current streak's at-risk points — nothing already banked.
 
 **The Imposter:** shows a matching 3-card set (Simple Concept / Advanced Upgrade / Example Sentence) for one word, but one card has been secretly swapped for a different word's content. Cards briefly shuffle face-down, then reveal — tap the one that doesn't belong. Uses each word's `syn[0]` for the "Simple Concept" card where available, falling back to its definition.
+
+**Thread-Link Board:** 4 advanced words on the left, their 4 simpler matches (`syn[0]`) on the right, both shuffled independently. Drag from a left card to its match — a real line is drawn between them (Pointer Events + a live-updated SVG `<line>`, not native HTML5 drag-and-drop). A correct connection locks green and stays drawn; a wrong one flashes red and resets automatically, no separate "check" step needed.
 
 **Themes:** every word also carries a `theme` tag (Intellectual & Mental States, Character & Personal Behavior, Emotions & Human Experience, Analytical & Academic Concepts, Communication & Rhetoric, Conflict & Social Dynamics, Usage & Precision) — browsable from Home or the All Words list, alongside the existing difficulty-tier categories.
 

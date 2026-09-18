@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v19';
+const APP_VERSION = 'v20';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -90,6 +90,7 @@ const State = {
   memoryScore:{ total:0, lastDate:null },
   higherLower:{ pool:[], index:0, word:null, options:[], streak:0, roundPoints:0, bankedTotal:0, phase:'guess', chosen:null },
   imposter:{ pool:[], round:0, score:0, cards:[], imposterSlot:null, chosenSlot:null, phase:'shuffling' },
+  thread:{ words:[], left:[], right:[], connections:{}, locked:{}, rightLocked:{}, flashWrong:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -474,6 +475,7 @@ function renderView(){
     case 'memory': return renderMemory();
     case 'higherlower': return renderHigherLower();
     case 'imposter': return renderImposter();
+    case 'thread': return renderThread();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -972,6 +974,7 @@ function renderTest(){
       <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1568,6 +1571,92 @@ function renderImposter(){
   <button class="big-btn" style="margin-top:8px;" id="impNextBtn">Next set</button>` : ''}`;
 }
 
+// ---------------- THREAD-LINK BOARD ----------------
+function startThread(){
+  const pool = State.words.filter(w=>w.syn && w.syn[0] && w.definition);
+  const chosen = shuffle(pool).slice(0,4);
+  State.thread = {
+    words: chosen,
+    left: shuffle(chosen.map((w,i)=>i)),
+    right: shuffle(chosen.map((w,i)=>i)),
+    connections: {}, locked: {}, rightLocked: {}, flashWrong: null,
+  };
+}
+function threadBoardRect(){
+  const el = document.getElementById('threadBoard');
+  return el ? el.getBoundingClientRect() : { left:0, top:0 };
+}
+function threadCardCenter(el){
+  const r = el.getBoundingClientRect();
+  return { x: r.left + r.width/2, y: r.top + r.height/2, rect:r };
+}
+function threadConnectionPoint(el, side){
+  const r = el.getBoundingClientRect();
+  return { x: side==='left' ? r.right : r.left, y: r.top + r.height/2 };
+}
+function threadCompleteCheck(){
+  const T = State.thread;
+  return Object.keys(T.locked).length === T.words.length;
+}
+function renderThread(){
+  const T = State.thread;
+  if(!T.words.length){
+    return `<div class="empty"><p>Loading Thread-Link Board…</p></div>`;
+  }
+  if(threadCompleteCheck()){
+    return `<div class="pagehead"><h2>Thread-Link Board</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${T.words.length}/${T.words.length}</div></div>
+      <h3>All linked!</h3><p>Every advanced word connected to its match.</p>
+      <button class="big-btn" style="margin-top:20px;" id="threadAgainBtn">New board</button>
+    </div>`;
+  }
+  return `<div class="pagehead"><h2>Thread-Link Board</h2></div>
+  <p class="sub">Drag from an advanced word to its simpler match.</p>
+  <div class="thread-board" id="threadBoard">
+    <svg class="thread-lines" id="threadLines"></svg>
+    <div class="thread-col">
+      ${T.left.map((pairIdx,i)=>{
+        const locked = T.locked[i];
+        const wrong = T.flashWrong && T.flashWrong.leftIdx===i;
+        return `<div class="thread-card left ${locked?'locked':''} ${wrong?'wrong':''}" data-thread-left="${i}">${escapeHtml(T.words[pairIdx].word)}</div>`;
+      }).join('')}
+    </div>
+    <div class="thread-col">
+      ${T.right.map((pairIdx,j)=>{
+        const locked = T.rightLocked[j];
+        const wrong = T.flashWrong && T.flashWrong.rightIdx===j;
+        return `<div class="thread-card right ${locked?'locked':''} ${wrong?'wrong':''}" data-thread-right="${j}">${escapeHtml(T.words[pairIdx].syn[0])}</div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+function threadLayoutLines(){
+  const T = State.thread;
+  const svg = document.getElementById('threadLines');
+  const board = document.getElementById('threadBoard');
+  if(!svg || !board) return;
+  const boardRect = board.getBoundingClientRect();
+  svg.setAttribute('width', boardRect.width);
+  svg.setAttribute('height', boardRect.height);
+  svg.innerHTML = '';
+  Object.keys(T.locked).forEach(li=>{
+    const j = T.connections[li];
+    const leftEl = document.querySelector(`[data-thread-left="${li}"]`);
+    const rightEl = document.querySelector(`[data-thread-right="${j}"]`);
+    if(!leftEl || !rightEl) return;
+    const p1 = threadConnectionPoint(leftEl, 'left');
+    const p2 = threadConnectionPoint(rightEl, 'right');
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', p1.x - boardRect.left);
+    line.setAttribute('y1', p1.y - boardRect.top);
+    line.setAttribute('x2', p2.x - boardRect.left);
+    line.setAttribute('y2', p2.y - boardRect.top);
+    line.setAttribute('class','thread-line-solved');
+    svg.appendChild(line);
+  });
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1695,6 +1784,7 @@ function bindEvents(){
       if(v==='memory'){ startMemory(); }
       if(v==='higherlower'){ startHigherLower(); }
       if(v==='imposter'){ startImposter(); }
+      if(v==='thread'){ startThread(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2045,6 +2135,67 @@ function bindEvents(){
   if(impNextBtn){ impNextBtn.addEventListener('click', ()=>{ imposterNextRound(); render(); }); }
   const impAgainBtn = document.getElementById('impAgainBtn');
   if(impAgainBtn){ impAgainBtn.addEventListener('click', ()=>{ startImposter(); render(); }); }
+
+  if(State.view==='thread'){ threadLayoutLines(); }
+  document.querySelectorAll('.thread-card.left:not(.locked)').forEach(el=>{
+    el.style.touchAction = 'none';
+    el.addEventListener('pointerdown', (e)=>{
+      const T = State.thread;
+      const li = parseInt(el.getAttribute('data-thread-left'),10);
+      if(T.locked[li]) return;
+      el.setPointerCapture(e.pointerId);
+      const board = document.getElementById('threadBoard');
+      const svg = document.getElementById('threadLines');
+      const boardRect = board.getBoundingClientRect();
+      const start = threadConnectionPoint(el, 'left');
+      const dragLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+      dragLine.setAttribute('x1', start.x - boardRect.left);
+      dragLine.setAttribute('y1', start.y - boardRect.top);
+      dragLine.setAttribute('x2', start.x - boardRect.left);
+      dragLine.setAttribute('y2', start.y - boardRect.top);
+      dragLine.setAttribute('class','thread-line-drag');
+      svg.appendChild(dragLine);
+      const move = (ev)=>{
+        dragLine.setAttribute('x2', ev.clientX - boardRect.left);
+        dragLine.setAttribute('y2', ev.clientY - boardRect.top);
+      };
+      const up = (ev)=>{
+        el.removeEventListener('pointermove', move);
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+        dragLine.remove();
+        const rightEls = Array.from(document.querySelectorAll('.thread-card.right'));
+        const hitEl = rightEls.find(r=>{
+          const rr = r.getBoundingClientRect();
+          return ev.clientX>=rr.left && ev.clientX<=rr.right && ev.clientY>=rr.top && ev.clientY<=rr.bottom;
+        });
+        if(hitEl){
+          const rj = parseInt(hitEl.getAttribute('data-thread-right'),10);
+          if(!T.rightLocked[rj]){
+            if(T.left[li] === T.right[rj]){
+              T.locked[li] = true;
+              T.rightLocked[rj] = true;
+              T.connections[li] = rj;
+              gradeWord(T.words[T.left[li]].id, 2);
+              render();
+            } else {
+              T.flashWrong = { leftIdx: li, rightIdx: rj };
+              render();
+              setTimeout(()=>{
+                State.thread.flashWrong = null;
+                render();
+              }, 700);
+            }
+          }
+        }
+      };
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+    });
+  });
+  const threadAgainBtn = document.getElementById('threadAgainBtn');
+  if(threadAgainBtn){ threadAgainBtn.addEventListener('click', ()=>{ startThread(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

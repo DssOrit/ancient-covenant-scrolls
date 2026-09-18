@@ -367,6 +367,17 @@ main{ flex:1; padding:6px 20px 30px; }
 .imposter-cards.shuffling .imposter-label{ color:#fff; text-align:center; font-size:calc(var(--fs-base) * 1.1); }
 @keyframes impShuffle{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(6px); } }
 @media (prefers-reduced-motion:reduce){ .imposter-cards.shuffling .imposter-card{ animation:none; } }
+
+/* Thread-Link Board */
+.thread-board{ position:relative; display:flex; justify-content:space-between; gap:60px; }
+.thread-lines{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+.thread-line-solved{ stroke:var(--good); stroke-width:3; }
+.thread-line-drag{ stroke:var(--accent); stroke-width:3; stroke-dasharray:6 4; }
+.thread-col{ flex:1; display:flex; flex-direction:column; gap:14px; }
+.thread-card{ padding:14px 12px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.88); text-align:center; cursor:grab; position:relative; z-index:1; }
+.thread-card.right{ cursor:default; }
+.thread-card.locked{ background:var(--good-soft); border-color:var(--good); color:var(--good); cursor:default; }
+.thread-card.wrong{ background:var(--warn-soft); border-color:var(--warn); color:var(--warn); }
 .memory-stats{ display:flex; justify-content:space-around; margin-top:18px; text-align:center; }
 .memory-stats div{ display:flex; flex-direction:column; }
 .memory-stats b{ font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.2); font-weight:800; }
