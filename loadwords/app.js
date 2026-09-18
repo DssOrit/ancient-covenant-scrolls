@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v24';
+const APP_VERSION = 'v29';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -51,7 +51,8 @@ const ICONS = {
   headphones:'<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="7" rx="1.5"/><rect x="17" y="13" width="4" height="7" rx="1.5"/>',
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
   compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>',
-  refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>'
+  refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>'
 };
 function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
@@ -78,6 +79,7 @@ const State = {
   difficultWords:[],       // array of word ids the user flagged in Listen mode
   settings:{ theme:'cream', size:'m', spacing:'normal', rate:0.85 },
   streak:{ count:0, lastDate:null },
+  vault:{ keys:0, unlockedPacks:[], crownUnlocked:false, viewingPack:null },
   studyQueue:[], studyIndex:0, studyRevealed:false,
   testQueue:[], testIndex:0, testScore:0, testType:'meaning', testAnswered:false,
   spellAttempt:'', spellCorrect:false,
@@ -95,6 +97,8 @@ const State = {
   stack:{ cols:4, rows:5, grid:[[],[],[],[]], queue:[], totalPairs:0, clearedPairs:0, score:0, phase:'playing' },
   blockPuzzle:{ words:[], placed:[], pool:[], score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null },
   quest:{ chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions:[], checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null },
+  debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
+  grammar:{ index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -117,6 +121,8 @@ async function loadAll(){
   State.difficultWords = await sGet('difficultWords', []);
   State.streak = await sGet('streak', { count:0, lastDate:null });
   State.memoryScore = await sGet('memoryScore', { total:0, lastDate:null });
+  State.vault = await sGet('vault', { keys:0, unlockedPacks:[], crownUnlocked:false, viewingPack:null });
+  State.vault.viewingPack = null;
   const s = await sGet('settings', null);
   if(s) State.settings = Object.assign(State.settings, s);
   applyTheme();
@@ -344,6 +350,16 @@ async function bumpStreak(){
   st.count = (st.lastDate === yesterday) ? (st.count||0) + 1 : 1;
   st.lastDate = today;
   await sSet('streak', st);
+  await vaultAwardDaily(st.count);
+}
+async function vaultAwardDaily(streakCount){
+  const V = State.vault;
+  V.keys = (V.keys||0) + 1;
+  if(streakCount>0 && streakCount % 7 === 0){
+    V.keys += 5;
+    if(streakCount===7) V.crownUnlocked = true;
+  }
+  await sSet('vault', V);
 }
 
 // ---------------- spaced repetition ----------------
@@ -484,6 +500,9 @@ function renderView(){
     case 'stack': return renderStack();
     case 'blocks': return renderBlockPuzzle();
     case 'quest': return renderQuest();
+    case 'vault': return renderVault();
+    case 'debate': return renderDebate();
+    case 'grammar': return renderGrammar();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -501,9 +520,14 @@ function renderHome(){
     <div class="stat"><div class="num">${due}</div><div class="lbl">Due today</div></div>
     <div class="stat"><div class="num">${mastered}</div><div class="lbl">Mastered</div></div>
   </div>
-  ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div></div>` : ''}
+  ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div><button class="streak-pill vault-pill" data-nav="vault">${ic('star')}${State.vault.keys} key${State.vault.keys===1?'':'s'}</button></div>` : ''}
   <div class="section-title">Jump in</div>
   <div class="action-row">
+    <button class="action" data-nav="vault" style="--c:#B45309">
+      <div class="a-ic">${ic('star')}</div>
+      <div class="a-txt"><b>Word Vault</b><span>Spend keys you've earned to unlock themed word packs</span></div>
+      <div class="a-chev">${ic('chevR')}</div>
+    </button>
     <button class="action" data-nav="study" style="--c:#059669">
       <div class="a-ic">${ic('book')}</div>
       <div class="a-txt"><b>Study due words</b><span>${due} word${due===1?'':'s'} ready for review</span></div>
@@ -517,6 +541,11 @@ function renderHome(){
     <button class="action" data-nav="test" style="--c:#7C3AED">
       <div class="a-ic">${ic('test')}</div>
       <div class="a-txt"><b>Take a test</b><span>Meaning match, sentence fill, typed recall &amp; more</span></div>
+      <div class="a-chev">${ic('chevR')}</div>
+    </button>
+    <button class="action" data-nav="grammar" style="--c:#0D9488">
+      <div class="a-ic">${ic('edit')}</div>
+      <div class="a-txt"><b>Grammar Coach</b><span>Short rules with a practice question for each one</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
     <button class="action" data-nav="add" style="--c:#D97706">
@@ -987,6 +1016,7 @@ function renderTest(){
       <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1240,7 +1270,7 @@ function renderDragDrop(){
 
 // ---------------- VOCAB DEAL OR NO DEAL ----------------
 function wordPointValue(w){
-  const tierBase = {cp:1000, up:1500, ad:2500, ce:4000, li:4500, sa:6000};
+  const tierBase = {cp:1000, up:1500, ad:2500, ce:4000, li:4500, sa:6000, ph:6500};
   const base = tierBase[w.category] || 3000;
   return Math.round((base + w.word.length * 100) / 100) * 100;
 }
@@ -1313,10 +1343,11 @@ function renderDeal(){
       <button class="big-btn" style="margin-top:20px;" id="dealAgainBtn">Play again</button>
     </div>`;
   }
+  const lastOpened = D.openedCases[D.openedCases.length-1];
   const casesHtml = `<div class="deal-cases-grid">
     ${D.caseMap.map((wordIdx,i)=>{
       if(i===D.myCase) return `<div class="deal-case mine">${i+1}<span>Yours</span></div>`;
-      if(D.openedCases.includes(i)) return `<div class="deal-case opened">${i+1}</div>`;
+      if(D.openedCases.includes(i)) return `<div class="deal-case opened ${i===lastOpened?'just-opened':''}">${i+1}</div>`;
       return `<button class="deal-case" data-open-case="${i}" ${D.phase==='offer'?'disabled':''}>${i+1}</button>`;
     }).join('')}
   </div>`;
@@ -1326,12 +1357,16 @@ function renderDeal(){
     ${wordsHtml}
     ${casesHtml}
     ${revealHtml}
-    <div class="banker-offer">
-      <div class="banker-title">${ic('speakerSm')} The Banker calls…</div>
-      <div class="banker-amount">${D.offerAmount.toLocaleString()} points</div>
-      <div class="test-footer" style="display:flex;gap:10px;">
-        <button class="big-btn" id="dealBtn" style="flex:1;">Deal</button>
-        <button class="big-btn" id="noDealBtn" style="flex:1;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;">No Deal</button>
+    <div class="banker-modal-backdrop">
+      <div class="banker-modal-card">
+        <div class="banker-modal-icon">${ic('speaker')}</div>
+        <div class="banker-title">The Banker calls…</div>
+        <p class="banker-sub">The words still on the board are valuable. Take the guaranteed points, or keep going.</p>
+        <div class="banker-amount">${D.offerAmount.toLocaleString()} points</div>
+        <div class="banker-modal-actions">
+          <button class="big-btn" id="dealBtn">Deal</button>
+          <button class="big-btn banker-nodeal-btn" id="noDealBtn">No Deal</button>
+        </div>
       </div>
     </div>`;
   }
@@ -1715,8 +1750,11 @@ function renderFeud(){
     <div>${ic('x')}<b>${F.strikes}/3</b><span>Strikes</span></div>
   </div>
   <div class="feud-board">
-    ${F.boardWords.map(w=>`<div class="feud-slot ${w.revealed?'revealed':''}">
-      ${w.revealed ? `<span class="feud-slot-word">${escapeHtml(w.word)}</span><span class="feud-slot-val">${w.value.toLocaleString()}</span>` : `<span class="feud-slot-blank">?</span>`}
+    ${F.boardWords.map((w,i)=>`<div class="feud-slot ${w.revealed?'flipped':''}">
+      <div class="feud-slot-inner">
+        <div class="feud-slot-back"><span class="feud-slot-blank">${i+1}</span></div>
+        <div class="feud-slot-front"><span class="feud-slot-word">${escapeHtml(w.word)}</span><span class="feud-slot-val">${w.value.toLocaleString()}</span></div>
+      </div>
     </div>`).join('')}
   </div>
   ${done ? `<div class="note-box" style="background:${F.phase==='won'?'var(--good-soft)':'var(--warn-soft)'};color:${F.phase==='won'?'var(--good)':'var(--warn)'}">${ic(F.phase==='won'?'check':'x')}<span>${F.phase==='won'?`Board cleared! Final score: ${F.score.toLocaleString()}.` : `Out of strikes. The board's words: ${F.boardWords.map(w=>escapeHtml(w.word)).join(', ')}.`}</span></div>
@@ -1983,6 +2021,189 @@ function renderQuest(){
   return `<div class="empty"><p>Loading…</p></div>`;
 }
 
+// ---------------- WORD VAULT ----------------
+async function vaultUnlockPack(packId){
+  const V = State.vault;
+  const pack = WORD_PACKS.find(p=>p.id===packId);
+  if(!pack || V.unlockedPacks.includes(packId) || V.keys < pack.cost) return false;
+  V.keys -= pack.cost;
+  V.unlockedPacks.push(packId);
+  await sSet('vault', V);
+  return true;
+}
+function vaultOpenPack(packId){
+  State.vault.viewingPack = packId;
+}
+function vaultClosePack(){
+  State.vault.viewingPack = null;
+}
+function renderVault(){
+  const V = State.vault;
+  if(V.viewingPack){
+    const pack = WORD_PACKS.find(p=>p.id===V.viewingPack);
+    const words = State.words.filter(w=>w.theme===pack.themeKey && w.definition).slice(0,8);
+    return `<div class="pagehead"><h2>${escapeHtml(pack.name)}</h2></div>
+    <p class="sub">${words.length} word${words.length===1?'':'s'} in this pack, from ${escapeHtml(THEME_META[pack.themeKey].label)}.</p>
+    <div class="vault-pack-words">
+      ${words.map(w=>`<div class="vault-word-card"><b>${escapeHtml(w.word)}</b><span>${escapeHtml(w.definition)}</span></div>`).join('')}
+    </div>
+    <button class="big-btn" style="margin-top:16px;" id="vaultBackBtn">Back to Vault</button>`;
+  }
+  return `<div class="pagehead"><h2>Word Vault</h2></div>
+  <p class="sub">Earn a key every day you practice — plus a bonus every 7-day streak. Spend keys to unlock themed word packs.</p>
+  <div class="vault-keys">${ic('star')}<b>${V.keys}</b><span>Keys</span>${V.crownUnlocked?`<span class="vault-crown">${ic('fire')}7-Day Crown earned</span>`:''}</div>
+  <div class="vault-packs">
+    ${WORD_PACKS.map(p=>{
+      const unlocked = V.unlockedPacks.includes(p.id);
+      const affordable = V.keys >= p.cost;
+      return `<div class="vault-pack ${unlocked?'unlocked':''}">
+        <div class="vault-pack-head"><b>${escapeHtml(p.name)}</b><span>${escapeHtml(THEME_META[p.themeKey].label)}</span></div>
+        ${unlocked
+          ? `<button class="vault-pack-btn" data-vault-view="${p.id}">View pack</button>`
+          : `<button class="vault-pack-btn ${affordable?'':'locked'}" data-vault-unlock="${p.id}">${affordable?`Unlock — ${p.cost} keys`:`${p.cost} keys needed`}</button>`
+        }
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+// ---------------- DEBATE & MEETING ARENA ----------------
+function debateBuildOptions(idx){
+  const scen = DEBATE_SCENARIOS[idx];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  return shuffle([target.word, ...scen.distractors]);
+}
+function startDebate(){
+  State.debate = { index:0, score:0, phase:'guess', options: debateBuildOptions(0), chosen:null, correctPick:null };
+}
+function debateGuess(picked){
+  const D = State.debate;
+  if(D.phase!=='guess') return;
+  const scen = DEBATE_SCENARIOS[D.index];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  const correct = picked === target.word;
+  D.chosen = picked;
+  D.correctPick = correct;
+  if(correct) D.score += 1;
+  gradeWord(target.id, correct?2:0);
+  D.phase = 'result';
+}
+function debateNext(){
+  const D = State.debate;
+  if(D.index + 1 < DEBATE_SCENARIOS.length){
+    D.index += 1;
+    D.phase = 'guess';
+    D.options = debateBuildOptions(D.index);
+    D.chosen = null;
+    D.correctPick = null;
+  } else {
+    D.phase = 'done';
+  }
+}
+function renderDebate(){
+  const D = State.debate;
+  if(D.phase==='done'){
+    return `<div class="pagehead"><h2>Debate &amp; Meeting Arena</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${D.score}/${DEBATE_SCENARIOS.length}</div></div>
+      <h3>Round complete</h3><p>${D.score} of ${DEBATE_SCENARIOS.length} scenarios answered correctly.</p>
+      <button class="big-btn" style="margin-top:20px;" id="debateAgainBtn">Play again</button>
+    </div>`;
+  }
+  const scen = DEBATE_SCENARIOS[D.index];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  const result = D.phase==='result';
+  const filled = result
+    ? scen.blankSentence.replace('___', `<b class="debate-fill">${escapeHtml(target.word)}</b>`)
+    : scen.blankSentence.replace('___', '<span class="debate-blank">_____</span>');
+  return `<div class="pagehead"><h2>Debate &amp; Meeting Arena</h2></div>
+  <p class="sub">Scenario ${D.index+1} of ${DEBATE_SCENARIOS.length} — pick the word that fits the reply.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${D.score}/${DEBATE_SCENARIOS.length}</b><span>Score</span></div>
+  </div>
+  <div class="debate-stage">
+    <div class="debate-bubble">
+      <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleA)}</span></div>
+      <p>${escapeHtml(scen.textA)}</p>
+    </div>
+    <div class="debate-bubble debate-bubble-b">
+      <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleB)}</span></div>
+      <p>${escapeHtml(scen.textA)} ${filled}</p>
+    </div>
+  </div>
+  ${!result ? `
+  <details class="hint-details"><summary>Get hint</summary><div class="hint">Hint: this word means "${escapeHtml(target.definition.replace(/\.$/,''))}."</div></details>
+  <div class="debate-opts">
+    ${D.options.map(o=>`<button class="quest-opt" data-debate-choice="${escapeAttr(o)}">${escapeHtml(o)}</button>`).join('')}
+  </div>` : `
+  <div class="note-box" style="background:${D.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${D.correctPick?'var(--good)':'var(--warn)'}">${ic(D.correctPick?'check':'x')}<span>${D.correctPick?'Exactly right. ':'Not quite. '}"${escapeHtml(target.word)}" means: ${escapeHtml(target.definition)}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="debateNextBtn">${D.index+1<DEBATE_SCENARIOS.length?'Next scenario':'See results'}</button>`}`;
+}
+
+// ---------------- GRAMMAR COACH ----------------
+function startGrammar(){
+  State.grammar = { index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null };
+}
+function grammarStartPractice(){
+  State.grammar.phase = 'practice';
+}
+function grammarAnswer(optIndex){
+  const G = State.grammar;
+  const topic = GRAMMAR_TOPICS[G.index];
+  const correct = optIndex === topic.correctIndex;
+  G.chosen = optIndex;
+  G.correctPick = correct;
+  G.total += 1;
+  if(correct) G.score += 1;
+  G.phase = 'result';
+}
+function grammarNext(){
+  const G = State.grammar;
+  if(G.index + 1 < GRAMMAR_TOPICS.length){
+    G.index += 1;
+    G.phase = 'lesson';
+    G.chosen = null;
+    G.correctPick = null;
+  } else {
+    G.phase = 'done';
+  }
+}
+function renderGrammar(){
+  const G = State.grammar;
+  const total = GRAMMAR_TOPICS.length;
+  if(G.phase==='done'){
+    return `<div class="pagehead"><h2>Grammar Coach</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${G.score}/${G.total}</div></div>
+      <h3>All ${total} rules covered</h3><p>${G.score} of ${G.total} practice questions correct.</p>
+      <button class="big-btn" style="margin-top:20px;" id="grammarAgainBtn">Start over</button>
+    </div>`;
+  }
+  const topic = GRAMMAR_TOPICS[G.index];
+  const header = `<div class="pagehead"><h2>Grammar Coach</h2></div>
+    <p class="sub">Rule ${G.index+1} of ${total}: ${escapeHtml(topic.title)}</p>`;
+  if(G.phase==='lesson'){
+    return header + `
+    <div class="quest-passage">
+      <p>${escapeHtml(topic.rule)}</p>
+      <p><i>${escapeHtml(topic.example)}</i></p>
+    </div>
+    <button class="big-btn" style="margin-top:16px;" id="grammarPracticeBtn">Practice this rule</button>`;
+  }
+  if(G.phase==='practice'){
+    return header + `
+    <p class="quest-choice-prompt">${escapeHtml(topic.prompt)}</p>
+    <div class="quest-choice-opts">
+      ${topic.options.map((o,i)=>`<button class="quest-opt" data-grammar-choice="${i}">${escapeHtml(o)}</button>`).join('')}
+    </div>`;
+  }
+  // result
+  return header + `
+  <p class="quest-choice-prompt">${escapeHtml(topic.prompt)}</p>
+  <div class="note-box" style="background:${G.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${G.correctPick?'var(--good)':'var(--warn)'}">${ic(G.correctPick?'check':'x')}<span>${G.correctPick?'Correct. ':'Not quite. '}${escapeHtml(topic.explanation)}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="grammarNextBtn">${G.index+1<total?'Next rule':'See results'}</button>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2115,6 +2336,9 @@ function bindEvents(){
       if(v==='stack'){ startStack(); }
       if(v==='blocks'){ startBlockPuzzle(); }
       if(v==='quest'){ startQuest(); }
+      if(v==='vault'){ vaultClosePack(); }
+      if(v==='debate'){ startDebate(); }
+      if(v==='grammar'){ startGrammar(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2594,6 +2818,36 @@ function bindEvents(){
   if(questNextBtn){ questNextBtn.addEventListener('click', ()=>{ questNextChapter(); render(); }); }
   const questAgainBtn = document.getElementById('questAgainBtn');
   if(questAgainBtn){ questAgainBtn.addEventListener('click', ()=>{ startQuest(); render(); }); }
+
+  document.querySelectorAll('[data-vault-unlock]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      const ok = await vaultUnlockPack(el.getAttribute('data-vault-unlock'));
+      if(ok) render();
+    });
+  });
+  document.querySelectorAll('[data-vault-view]').forEach(el=>{
+    el.addEventListener('click', ()=>{ vaultOpenPack(el.getAttribute('data-vault-view')); render(); });
+  });
+  const vaultBackBtn = document.getElementById('vaultBackBtn');
+  if(vaultBackBtn){ vaultBackBtn.addEventListener('click', ()=>{ vaultClosePack(); render(); }); }
+
+  document.querySelectorAll('[data-debate-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ debateGuess(el.getAttribute('data-debate-choice')); render(); });
+  });
+  const debateNextBtn = document.getElementById('debateNextBtn');
+  if(debateNextBtn){ debateNextBtn.addEventListener('click', ()=>{ debateNext(); render(); }); }
+  const debateAgainBtn = document.getElementById('debateAgainBtn');
+  if(debateAgainBtn){ debateAgainBtn.addEventListener('click', ()=>{ startDebate(); render(); }); }
+
+  const grammarPracticeBtn = document.getElementById('grammarPracticeBtn');
+  if(grammarPracticeBtn){ grammarPracticeBtn.addEventListener('click', ()=>{ grammarStartPractice(); render(); }); }
+  document.querySelectorAll('[data-grammar-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ grammarAnswer(Number(el.getAttribute('data-grammar-choice'))); render(); });
+  });
+  const grammarNextBtn = document.getElementById('grammarNextBtn');
+  if(grammarNextBtn){ grammarNextBtn.addEventListener('click', ()=>{ grammarNext(); render(); }); }
+  const grammarAgainBtn = document.getElementById('grammarAgainBtn');
+  if(grammarAgainBtn){ grammarAgainBtn.addEventListener('click', ()=>{ startGrammar(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
