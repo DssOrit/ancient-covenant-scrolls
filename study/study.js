@@ -48,11 +48,12 @@ function lbIcon(name, sizePx) {
 }
 try { window.lbIcon = lbIcon; } catch (e) {}
 
-// All 46 volumes / 111 sections matching the ACR reader, plus SR, NTL, and HRR reference volumes
+// All 46 volumes / 111 sections matching the ACR reader, plus SR, NTL, HRR, and PAL reference volumes
 var IDS=[];for(var _i=1;_i<=111;_i++){if(_i!==108)IDS.push('file_'+_i);}
 IDS.push('file_200');
 IDS.push('file_201');
 IDS.push('file_202');
+IDS.push('file_203');
 
 var LBL = [
 'Bereshit (Genesis) \u2014 Part 1 \u2014 Ch 1\u201311',
@@ -167,7 +168,8 @@ var LBL = [
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366',
 'ACR Search Reference \u2014 Hebrew Roots, History & Research',
 'NT Lookup Reference \u2014 Primary Source Comparison',
-'Hebrew Roots Reference \u2014 Word & Root Meanings'
+'Hebrew Roots Reference \u2014 Word & Root Meanings',
+'Paleo Alphabet Reference \u2014 The 22 Letters'
 ];
 
 var VOL_GROUPS = [
@@ -218,7 +220,8 @@ var VOL_GROUPS = [
 {title:'Vol 45 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'45'},
 {title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'},
 {title:'NT Lookup Reference',eng:'Primary Source Comparison',count:1,vol:'NTL'},
-{title:'Hebrew Roots Reference',eng:'Word & Root Meanings',count:1,vol:'HRR'}
+{title:'Hebrew Roots Reference',eng:'Word & Root Meanings',count:1,vol:'HRR'},
+{title:'Paleo Alphabet Reference',eng:'The 22 Letters',count:1,vol:'PAL'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
 var lh = parseFloat(localStorage.getItem('acr_study_lh') || '1.65');
@@ -267,13 +270,13 @@ if (lineFocusOn) document.body.classList.add('linefocus-on');
 // ---- Volume banner graphics (inline SVG, no external dependency) ----
 var VOL_ICONS = {
   '1': 'BR', '2': 'SH', '3': 'VY', '4': 'NM',
-  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'BG', '33': 'WR', 'SR': 'SR', 'NTL': 'NT', 'HRR': 'HR'
+  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'BG', '33': 'WR', 'SR': 'SR', 'NTL': 'NT', 'HRR': 'HR', 'PAL': 'AB'
 };
 var VOL_COLORS = {
   '1': ['#2563eb','#1e40af'], '2': ['#dc2626','#991b1b'], '3': ['#059669','#065f46'],
   '4': ['#d97706','#92400e'], '5': ['#7c3aed','#5b21b6'], '6': ['#0891b2','#155e75'],
   '7': ['#ea580c','#9a3412'], '8': ['#57534e','#292524'], '33': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d'],
-  'NTL': ['#9a3412','#7c2d12'], 'HRR': ['#0d9488','#115e59']
+  'NTL': ['#9a3412','#7c2d12'], 'HRR': ['#0d9488','#115e59'], 'PAL': ['#a16207','#713f12']
 };
 var VOL_NAMES = {
   '1': 'Bereshit \u00B7 Genesis', '2': 'Shemot \u00B7 Exodus',
@@ -283,7 +286,8 @@ var VOL_NAMES = {
   '33': 'War Scroll 1QM',
   'SR': 'ACR Search Reference',
   'NTL': 'NT Lookup Reference',
-  'HRR': 'Hebrew Roots Reference'
+  'HRR': 'Hebrew Roots Reference',
+  'PAL': 'Paleo Alphabet Reference'
 };
 
 function getVolForFid(fid) {
