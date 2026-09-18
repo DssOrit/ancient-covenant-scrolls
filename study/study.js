@@ -1976,8 +1976,8 @@ function showFillBlank(fid, audioMode) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
+      var emoji = pct >= 80 ? 'Erudite' : pct >= 60 ? 'Sedulous' : 'Keep going';
+      var msg = pct >= 80 ? 'Truly erudite work!' : pct >= 60 ? 'Sedulous effort — good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -2146,8 +2146,8 @@ function showMC(fid) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
+      var emoji = pct >= 80 ? 'Perspicacious' : pct >= 60 ? 'Keen' : 'Keep going';
+      var msg = pct >= 80 ? 'A perspicacious run!' : pct >= 60 ? 'A keen eye — good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -2316,8 +2316,8 @@ function showFlashcards(fid) {
     function showSummary() {
       var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
       var xpEarned = recordSession(fid, 'flash', Math.ceil(avg), cards.length);
-      var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
-      var msg = avg >= 4 ? 'You know this well!' : avg >= 3 ? 'Getting there!' : 'Keep practicing!';
+      var emoji = avg >= 4 ? 'Indefatigable' : avg >= 3 ? 'Resilient' : 'Keep going';
+      var msg = avg >= 4 ? 'Indefatigable — you know this well!' : avg >= 3 ? 'Resilient work — getting there!' : 'Keep practicing!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
@@ -2975,7 +2975,7 @@ function showVerseBuild(fid) {
 
     function showResults() {
       var pct = Math.round(score / Math.min(verses.length, 5) * 100);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
+      var emoji = pct >= 80 ? 'Adroit' : pct >= 60 ? 'Meticulous' : 'Keep going';
       var xpEarned = recordSession(fid, 'versebuild', score, Math.min(verses.length, 5));
       var h = '<div class="cloze-results"><div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + Math.min(verses.length, 5) + '</div>';
@@ -3787,8 +3787,8 @@ function showWhoSaidIt(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'whosaidit', points, questions.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Listen closer!';
+      var emoji = pct >= 80 ? 'Insightful' : pct >= 60 ? 'Candid' : 'Keep going';
+      var msg = pct >= 80 ? 'Genuinely insightful!' : pct >= 60 ? 'A candid read — good work!' : 'Listen closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -3975,8 +3975,8 @@ function showTrueFalse(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'truefalse', points, questions.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Read closer!';
+      var emoji = pct >= 80 ? 'Trenchant' : pct >= 60 ? 'Cogent' : 'Keep going';
+      var msg = pct >= 80 ? 'Trenchant judgment!' : pct >= 60 ? 'Cogent reasoning — good work!' : 'Read closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -4124,7 +4124,7 @@ function showStorySequence(fid) {
             finished = true;
             var pts = attempts === 1 ? 1.0 : attempts === 2 ? 0.7 : 0.4;
             var xpEarned = recordSession(fid, 'sequence', pts, 1);
-            fb.innerHTML = '<div class="fb-correct">Perfect order! (+' + Math.round(pts * 10) + ' XP)</div>';
+            fb.innerHTML = '<div class="fb-correct">Intrepid ordering! (+' + Math.round(pts * 10) + ' XP)</div>';
             setTimeout(function () { go(fid); }, 2800);
           } else {
             if (attempts === 1) {
@@ -4442,8 +4442,8 @@ function showDictation(fid) {
     function showResults() {
       var pct = Math.round((totalPoints / sentences.length) * 100);
       var xpEarned = recordSession(fid, 'dictation', totalPoints, sentences.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Try more listens next time.';
+      var emoji = pct >= 80 ? 'Impeccable' : pct >= 60 ? 'Assiduous' : 'Keep going';
+      var msg = pct >= 80 ? 'Impeccable ear!' : pct >= 60 ? 'Assiduous listening — good work!' : 'Try more listens next time.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + pct + '% accuracy</div>';
@@ -4595,8 +4595,8 @@ function showWordMorph(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'morph', points, rounds.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Notice the letter shapes.';
+      var emoji = pct >= 80 ? 'Ingenious' : pct >= 60 ? 'Dauntless' : 'Keep going';
+      var msg = pct >= 80 ? 'Ingenious work!' : pct >= 60 ? 'Dauntless effort — good work!' : 'Notice the letter shapes.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
@@ -4771,8 +4771,8 @@ function showSyllableTap(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'syllable', points, rounds.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
+      var emoji = pct >= 80 ? 'Vivacious' : pct >= 60 ? 'Zealous' : 'Keep going';
+      var msg = pct >= 80 ? 'Vivacious command!' : pct >= 60 ? 'Zealous effort — good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
@@ -4925,8 +4925,8 @@ function showRhymeChain(fid) {
     function showResults() {
       var pct = Math.round(score / usable.length * 100);
       var xpEarned = recordSession(fid, 'rhyme', points, usable.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
+      var emoji = pct >= 80 ? 'Salient' : pct >= 60 ? 'Tenacious' : 'Keep going';
+      var msg = pct >= 80 ? 'A salient ear!' : pct >= 60 ? 'Tenacious effort — good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + usable.length + '</div>';
@@ -5712,7 +5712,7 @@ function showCrossReview() {
     var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
     var remaining = getAllDueCount();
     var xpEarned = recordSession('review', 'review', cards.length, cards.length);
-    var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
+    var emoji = avg >= 4 ? 'Venerable' : avg >= 3 ? 'Sagacious' : 'Keep going';
     var h = '<div class="cloze-results">';
     h += '<div class="cr-emoji">' + emoji + '</div>';
     h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
