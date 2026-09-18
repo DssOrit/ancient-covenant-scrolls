@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v28';
+const APP_VERSION = 'v29';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -98,6 +98,7 @@ const State = {
   blockPuzzle:{ words:[], placed:[], pool:[], score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null },
   quest:{ chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions:[], checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null },
   debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
+  grammar:{ index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -501,6 +502,7 @@ function renderView(){
     case 'quest': return renderQuest();
     case 'vault': return renderVault();
     case 'debate': return renderDebate();
+    case 'grammar': return renderGrammar();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -539,6 +541,11 @@ function renderHome(){
     <button class="action" data-nav="test" style="--c:#7C3AED">
       <div class="a-ic">${ic('test')}</div>
       <div class="a-txt"><b>Take a test</b><span>Meaning match, sentence fill, typed recall &amp; more</span></div>
+      <div class="a-chev">${ic('chevR')}</div>
+    </button>
+    <button class="action" data-nav="grammar" style="--c:#0D9488">
+      <div class="a-ic">${ic('edit')}</div>
+      <div class="a-txt"><b>Grammar Coach</b><span>Short rules with a practice question for each one</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
     <button class="action" data-nav="add" style="--c:#D97706">
@@ -2133,6 +2140,70 @@ function renderDebate(){
   <button class="big-btn" style="margin-top:8px;" id="debateNextBtn">${D.index+1<DEBATE_SCENARIOS.length?'Next scenario':'See results'}</button>`}`;
 }
 
+// ---------------- GRAMMAR COACH ----------------
+function startGrammar(){
+  State.grammar = { index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null };
+}
+function grammarStartPractice(){
+  State.grammar.phase = 'practice';
+}
+function grammarAnswer(optIndex){
+  const G = State.grammar;
+  const topic = GRAMMAR_TOPICS[G.index];
+  const correct = optIndex === topic.correctIndex;
+  G.chosen = optIndex;
+  G.correctPick = correct;
+  G.total += 1;
+  if(correct) G.score += 1;
+  G.phase = 'result';
+}
+function grammarNext(){
+  const G = State.grammar;
+  if(G.index + 1 < GRAMMAR_TOPICS.length){
+    G.index += 1;
+    G.phase = 'lesson';
+    G.chosen = null;
+    G.correctPick = null;
+  } else {
+    G.phase = 'done';
+  }
+}
+function renderGrammar(){
+  const G = State.grammar;
+  const total = GRAMMAR_TOPICS.length;
+  if(G.phase==='done'){
+    return `<div class="pagehead"><h2>Grammar Coach</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${G.score}/${G.total}</div></div>
+      <h3>All ${total} rules covered</h3><p>${G.score} of ${G.total} practice questions correct.</p>
+      <button class="big-btn" style="margin-top:20px;" id="grammarAgainBtn">Start over</button>
+    </div>`;
+  }
+  const topic = GRAMMAR_TOPICS[G.index];
+  const header = `<div class="pagehead"><h2>Grammar Coach</h2></div>
+    <p class="sub">Rule ${G.index+1} of ${total}: ${escapeHtml(topic.title)}</p>`;
+  if(G.phase==='lesson'){
+    return header + `
+    <div class="quest-passage">
+      <p>${escapeHtml(topic.rule)}</p>
+      <p><i>${escapeHtml(topic.example)}</i></p>
+    </div>
+    <button class="big-btn" style="margin-top:16px;" id="grammarPracticeBtn">Practice this rule</button>`;
+  }
+  if(G.phase==='practice'){
+    return header + `
+    <p class="quest-choice-prompt">${escapeHtml(topic.prompt)}</p>
+    <div class="quest-choice-opts">
+      ${topic.options.map((o,i)=>`<button class="quest-opt" data-grammar-choice="${i}">${escapeHtml(o)}</button>`).join('')}
+    </div>`;
+  }
+  // result
+  return header + `
+  <p class="quest-choice-prompt">${escapeHtml(topic.prompt)}</p>
+  <div class="note-box" style="background:${G.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${G.correctPick?'var(--good)':'var(--warn)'}">${ic(G.correctPick?'check':'x')}<span>${G.correctPick?'Correct. ':'Not quite. '}${escapeHtml(topic.explanation)}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="grammarNextBtn">${G.index+1<total?'Next rule':'See results'}</button>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2267,6 +2338,7 @@ function bindEvents(){
       if(v==='quest'){ startQuest(); }
       if(v==='vault'){ vaultClosePack(); }
       if(v==='debate'){ startDebate(); }
+      if(v==='grammar'){ startGrammar(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2766,6 +2838,16 @@ function bindEvents(){
   if(debateNextBtn){ debateNextBtn.addEventListener('click', ()=>{ debateNext(); render(); }); }
   const debateAgainBtn = document.getElementById('debateAgainBtn');
   if(debateAgainBtn){ debateAgainBtn.addEventListener('click', ()=>{ startDebate(); render(); }); }
+
+  const grammarPracticeBtn = document.getElementById('grammarPracticeBtn');
+  if(grammarPracticeBtn){ grammarPracticeBtn.addEventListener('click', ()=>{ grammarStartPractice(); render(); }); }
+  document.querySelectorAll('[data-grammar-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ grammarAnswer(Number(el.getAttribute('data-grammar-choice'))); render(); });
+  });
+  const grammarNextBtn = document.getElementById('grammarNextBtn');
+  if(grammarNextBtn){ grammarNextBtn.addEventListener('click', ()=>{ grammarNext(); render(); }); }
+  const grammarAgainBtn = document.getElementById('grammarAgainBtn');
+  if(grammarAgainBtn){ grammarAgainBtn.addEventListener('click', ()=>{ startGrammar(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

@@ -665,6 +665,89 @@ const STORY_QUEST = {
   ]
 };
 
+const GRAMMAR_TOPICS = [
+  {
+    id: "g1", title: "Who vs. Whom",
+    rule: "\"Who\" is the subject of a sentence — it performs the action. \"Whom\" is the object — it receives the action. Quick test: if you could answer with \"he\" or \"she,\" use who. If you'd answer with \"him\" or \"her,\" use whom.",
+    example: "Who called you? (She called.) — To whom should I address this? (Address it to him.)",
+    prompt: "___ did you give the report to?",
+    options: ["Who", "Whom"], correctIndex: 1,
+    explanation: "\"Whom\" is correct because the answer would be \"to him\" — whom is the object of \"to.\"",
+  },
+  {
+    id: "g2", title: "Its vs. It's",
+    rule: "\"It's\" is always a contraction for \"it is\" or \"it has.\" \"Its\" with no apostrophe shows possession, the same way \"his\" or \"her\" does.",
+    example: "The company changed its logo. — It's time to leave.",
+    prompt: "The dog wagged ___ tail.",
+    options: ["it's", "its"], correctIndex: 1,
+    explanation: "\"Its\" shows possession here — the tail belongs to the dog. \"It's\" would mean \"it is,\" which doesn't fit.",
+  },
+  {
+    id: "g3", title: "Affect vs. Effect",
+    rule: "\"Affect\" is almost always a verb meaning to influence something. \"Effect\" is almost always a noun meaning the result of something.",
+    example: "The rain didn't affect our plans. — The effect was immediate.",
+    prompt: "The new policy will ___ everyone in the office.",
+    options: ["affect", "effect"], correctIndex: 0,
+    explanation: "\"Affect\" is the verb here — the policy will influence (affect) everyone.",
+  },
+  {
+    id: "g4", title: "Fewer vs. Less",
+    rule: "Use \"fewer\" for things you can count one by one. Use \"less\" for amounts you can't count individually.",
+    example: "Fewer people attended this year. — There's less traffic today.",
+    prompt: "We have ___ time than we thought.",
+    options: ["fewer", "less"], correctIndex: 1,
+    explanation: "Time isn't counted individually, so \"less\" is correct here.",
+  },
+  {
+    id: "g5", title: "Lay vs. Lie",
+    rule: "\"Lay\" needs a direct object — you lay something down. \"Lie\" doesn't take an object — you (or something) simply lies down.",
+    example: "Lay the book on the table. — I need to lie down.",
+    prompt: "I'm going to ___ down for a nap.",
+    options: ["lay", "lie"], correctIndex: 1,
+    explanation: "No object follows — you're lying down yourself, so \"lie\" is correct.",
+  },
+  {
+    id: "g6", title: "Subject-Verb Agreement with \"Each\"",
+    rule: "Words like \"each,\" \"everyone,\" and \"neither\" always take a singular verb, even when followed by a plural-sounding phrase.",
+    example: "Each of the students has a laptop. (not \"have\")",
+    prompt: "Neither of the answers ___ correct.",
+    options: ["is", "are"], correctIndex: 0,
+    explanation: "\"Neither\" is singular, so it takes \"is\" even though \"answers\" is plural.",
+  },
+  {
+    id: "g7", title: "Comma Splices",
+    rule: "You can't join two complete sentences with just a comma. Use a period, a semicolon, or a conjunction like \"and,\" \"but,\" or \"so.\"",
+    example: "Wrong: I was tired, I went to bed. — Right: I was tired, so I went to bed.",
+    prompt: "Which sentence is correctly punctuated?",
+    options: ["The meeting ran long, we left early.", "The meeting ran long, so we left early."], correctIndex: 1,
+    explanation: "The first option splices two full sentences with just a comma. Adding \"so\" fixes it.",
+  },
+  {
+    id: "g8", title: "Dangling Modifiers",
+    rule: "A phrase at the start of a sentence should describe whatever comes right after it — otherwise the sentence ends up describing the wrong thing.",
+    example: "Wrong: Walking to the store, the rain started. — Right: Walking to the store, I got caught in the rain.",
+    prompt: "Which sentence is correct?",
+    options: ["Having finished the report, the printer jammed.", "Having finished the report, I sent it to print."], correctIndex: 1,
+    explanation: "The printer didn't finish the report — the second option correctly describes the person who did.",
+  },
+  {
+    id: "g9", title: "Parallel Structure",
+    rule: "When listing items or actions, keep the grammatical form the same throughout the list.",
+    example: "Wrong: She likes reading, to swim, and hiking. — Right: She likes reading, swimming, and hiking.",
+    prompt: "Which sentence is correctly parallel?",
+    options: ["He enjoys running, biking, and to swim.", "He enjoys running, biking, and swimming."], correctIndex: 1,
+    explanation: "All three items need matching -ing forms — \"swimming,\" not \"to swim.\"",
+  },
+  {
+    id: "g10", title: "Who's vs. Whose",
+    rule: "\"Who's\" is a contraction for \"who is\" or \"who has.\" \"Whose\" shows possession.",
+    example: "Who's coming to the party? — Whose jacket is this?",
+    prompt: "___ turn is it to present?",
+    options: ["Who's", "Whose"], correctIndex: 1,
+    explanation: "\"Whose\" shows possession here — the turn belongs to someone. \"Who's\" would mean \"who is.\"",
+  },
+];
+
 const DEBATE_SCENARIOS = [
   {
     roleA: "VP OF FINANCE", roleB: "STRATEGY DIRECTOR",
