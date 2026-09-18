@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v26';
+const APP_VERSION = 'v27';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -51,7 +51,8 @@ const ICONS = {
   headphones:'<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="7" rx="1.5"/><rect x="17" y="13" width="4" height="7" rx="1.5"/>',
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
   compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>',
-  refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>'
+  refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>'
 };
 function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
@@ -96,6 +97,7 @@ const State = {
   stack:{ cols:4, rows:5, grid:[[],[],[],[]], queue:[], totalPairs:0, clearedPairs:0, score:0, phase:'playing' },
   blockPuzzle:{ words:[], placed:[], pool:[], score:0, clearedWords:0, phase:'playing', wrongFlashChip:null, justSolved:null },
   quest:{ chapterIndex:0, phase:'intro', score:0, total:0, choiceOptions:[], checkpointOptions:[], checkpointChosenIndex:null, lastCorrect:null },
+  debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -498,6 +500,7 @@ function renderView(){
     case 'blocks': return renderBlockPuzzle();
     case 'quest': return renderQuest();
     case 'vault': return renderVault();
+    case 'debate': return renderDebate();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -1006,6 +1009,7 @@ function renderTest(){
       <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -2048,6 +2052,79 @@ function renderVault(){
   </div>`;
 }
 
+// ---------------- DEBATE & MEETING ARENA ----------------
+function debateBuildOptions(idx){
+  const scen = DEBATE_SCENARIOS[idx];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  return shuffle([target.word, ...scen.distractors]);
+}
+function startDebate(){
+  State.debate = { index:0, score:0, phase:'guess', options: debateBuildOptions(0), chosen:null, correctPick:null };
+}
+function debateGuess(picked){
+  const D = State.debate;
+  if(D.phase!=='guess') return;
+  const scen = DEBATE_SCENARIOS[D.index];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  const correct = picked === target.word;
+  D.chosen = picked;
+  D.correctPick = correct;
+  if(correct) D.score += 1;
+  gradeWord(target.id, correct?2:0);
+  D.phase = 'result';
+}
+function debateNext(){
+  const D = State.debate;
+  if(D.index + 1 < DEBATE_SCENARIOS.length){
+    D.index += 1;
+    D.phase = 'guess';
+    D.options = debateBuildOptions(D.index);
+    D.chosen = null;
+    D.correctPick = null;
+  } else {
+    D.phase = 'done';
+  }
+}
+function renderDebate(){
+  const D = State.debate;
+  if(D.phase==='done'){
+    return `<div class="pagehead"><h2>Debate &amp; Meeting Arena</h2></div>
+    <div class="empty">
+      <div class="score-ring"><div class="n">${D.score}/${DEBATE_SCENARIOS.length}</div></div>
+      <h3>Round complete</h3><p>${D.score} of ${DEBATE_SCENARIOS.length} scenarios answered correctly.</p>
+      <button class="big-btn" style="margin-top:20px;" id="debateAgainBtn">Play again</button>
+    </div>`;
+  }
+  const scen = DEBATE_SCENARIOS[D.index];
+  const target = State.words.find(w=>w.id===scen.wordId);
+  const result = D.phase==='result';
+  const filled = result
+    ? scen.blankSentence.replace('___', `<b class="debate-fill">${escapeHtml(target.word)}</b>`)
+    : scen.blankSentence.replace('___', '<span class="debate-blank">_____</span>');
+  return `<div class="pagehead"><h2>Debate &amp; Meeting Arena</h2></div>
+  <p class="sub">Scenario ${D.index+1} of ${DEBATE_SCENARIOS.length} — pick the word that fits the reply.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${D.score}/${DEBATE_SCENARIOS.length}</b><span>Score</span></div>
+  </div>
+  <div class="debate-stage">
+    <div class="debate-bubble">
+      <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleA)}</span></div>
+      <p>${escapeHtml(scen.textA)}</p>
+    </div>
+    <div class="debate-bubble debate-bubble-b">
+      <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleB)}</span></div>
+      <p>${escapeHtml(scen.textA)} ${filled}</p>
+    </div>
+  </div>
+  ${!result ? `
+  <details class="hint-details"><summary>Get hint</summary><div class="hint">Hint: this word means "${escapeHtml(target.definition.replace(/\.$/,''))}."</div></details>
+  <div class="debate-opts">
+    ${D.options.map(o=>`<button class="quest-opt" data-debate-choice="${escapeAttr(o)}">${escapeHtml(o)}</button>`).join('')}
+  </div>` : `
+  <div class="note-box" style="background:${D.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${D.correctPick?'var(--good)':'var(--warn)'}">${ic(D.correctPick?'check':'x')}<span>${D.correctPick?'Exactly right. ':'Not quite. '}"${escapeHtml(target.word)}" means: ${escapeHtml(target.definition)}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="debateNextBtn">${D.index+1<DEBATE_SCENARIOS.length?'Next scenario':'See results'}</button>`}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2181,6 +2258,7 @@ function bindEvents(){
       if(v==='blocks'){ startBlockPuzzle(); }
       if(v==='quest'){ startQuest(); }
       if(v==='vault'){ vaultClosePack(); }
+      if(v==='debate'){ startDebate(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2672,6 +2750,14 @@ function bindEvents(){
   });
   const vaultBackBtn = document.getElementById('vaultBackBtn');
   if(vaultBackBtn){ vaultBackBtn.addEventListener('click', ()=>{ vaultClosePack(); render(); }); }
+
+  document.querySelectorAll('[data-debate-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ debateGuess(el.getAttribute('data-debate-choice')); render(); });
+  });
+  const debateNextBtn = document.getElementById('debateNextBtn');
+  if(debateNextBtn){ debateNextBtn.addEventListener('click', ()=>{ debateNext(); render(); }); }
+  const debateAgainBtn = document.getElementById('debateAgainBtn');
+  if(debateAgainBtn){ debateAgainBtn.addEventListener('click', ()=>{ startDebate(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

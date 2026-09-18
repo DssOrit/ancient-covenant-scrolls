@@ -515,6 +515,8 @@ const CORE_WORDS = [
   {id:"sa382",word:"schism",syllables:["schism"],stress:0,pos:"noun",definition:"A split or division between strongly opposed factions caused by differing views.",example:"The disagreement over funding caused a lasting schism within the organization.",conv:["There's a real schism forming here.","Two clear camps, and neither is budging."],register:"formal",category:"sa",theme:"conflict",syn:["rift","split"]},
   {id:"sa383",word:"historicism",syllables:["his","tor","i","cism"],stress:1,pos:"noun",definition:"The theory that social and cultural phenomena are determined by history and change over time.",example:"The critic's historicism read the novel entirely through the politics of its era.",conv:["That's a historicist reading of the text.","Everything explained by its historical moment."],register:"academic",category:"sa",theme:"intellect",syn:["historism","contextualism"]},
   {id:"sa384",word:"presupposition",syllables:["pre","sup","po","si","tion"],stress:3,pos:"noun",definition:"A thing assumed beforehand to be true, often unstated, as the basis of an argument.",example:"The question rested on a presupposition that was never actually established.",conv:["That question has a hidden presupposition.","It assumes something we haven't proven yet."],register:"academic",category:"sa",theme:"intellect",syn:["assumption","premise"]},
+  {id:"sa385",word:"substantiate",syllables:["sub","stan","ti","ate"],stress:1,pos:"verb",definition:"To provide evidence to support or prove a claim.",example:"The board asked her to substantiate the growth projections before approving the budget.",conv:["Can you substantiate that figure?","Yes, I'll pull the source data."],register:"academic",category:"sa",theme:"analytical",syn:["prove","corroborate"]},
+  {id:"sa386",word:"capitulate",syllables:["ca","pit","u","late"],stress:1,pos:"verb",definition:"To stop resisting and give in to an opposing argument or demand.",example:"After a long negotiation, the supplier finally capitulated to the lower price.",conv:["Did they ever capitulate on the deadline?","Eventually, after a lot of pushback."],register:"formal",category:"sa",theme:"conflict",syn:["yield","concede"]},
   {id:"ph1",word:"ontology",syllables:["on","tol","o","gy"],stress:1,pos:"noun",definition:"The branch of philosophy concerned with the nature of being and existence.",example:"The seminar opened with a debate on ontology — what does it mean for something to exist?",conv:["This gets into pure ontology.","Yeah, what even counts as 'real' here."],register:"academic",category:"ph",theme:"intellect",syn:["metaphysics","being"]},
   {id:"ph2",word:"hypostasis",syllables:["hy","pos","ta","sis"],stress:1,pos:"noun",definition:"The underlying reality or fundamental essence that supports an apparent form.",example:"The theologian argued the concept had a single hypostasis beneath its many names.",conv:["What's the hypostasis behind this idea?","The one thing all the versions share."],register:"academic",category:"ph",theme:"intellect",syn:["essence","substrate"]},
   {id:"ph3",word:"apophatic",syllables:["ap","o","phat","ic"],stress:2,pos:"adjective",definition:"Describing something by stating what it is not, rather than what it is.",example:"The mystic used an apophatic approach, describing the divine only through negation.",conv:["That's a very apophatic definition.","Easier to say what it isn't."],register:"academic",category:"ph",theme:"intellect",syn:["negative-defined","by-negation"]},
@@ -662,3 +664,41 @@ const STORY_QUEST = {
     { minScore: 0, title: "Just Beginning", text: "You close the logbook. Some of the keeper's words were new to you tonight — that's exactly how a bigger vocabulary starts. Read it again and see how many more you catch." }
   ]
 };
+
+const DEBATE_SCENARIOS = [
+  {
+    roleA: "VP OF FINANCE", roleB: "STRATEGY DIRECTOR",
+    textA: "You claim this expansion will yield 40% growth, but you fail to provide reliable figures.",
+    blankSentence: "___ your growth projections with concrete market research data before moving forward.",
+    wordId: "sa385",
+    distractors: ["obfuscate", "capitulate", "equivocate"],
+  },
+  {
+    roleA: "SENIOR ENGINEER", roleB: "PRODUCT LEAD",
+    textA: "Your explanation of the caching layer left half the room confused.",
+    blankSentence: "Let's pause and ___ exactly how it handles concurrent writes before we move forward.",
+    wordId: "sa77",
+    distractors: ["obfuscate", "denigrate", "postulate"],
+  },
+  {
+    roleA: "HR DIRECTOR", roleB: "CHIEF OPERATING OFFICER",
+    textA: "The team lead publicly criticized the intern in front of the whole department over a minor typo.",
+    blankSentence: "We can't let managers ___ junior staff like that and call it feedback.",
+    wordId: "sa159",
+    distractors: ["elucidate", "propitiate", "substantiate"],
+  },
+  {
+    roleA: "MARKETING DIRECTOR", roleB: "LEGAL COUNSEL",
+    textA: "Our competitor keeps hinting our product copies theirs, without ever saying it outright.",
+    blankSentence: "Watch how carefully they ___ whenever a reporter asks them directly.",
+    wordId: "li13",
+    distractors: ["substantiate", "elucidate", "castigate"],
+  },
+  {
+    roleA: "BOARD CHAIR", roleB: "CHIEF EXECUTIVE OFFICER",
+    textA: "After two hours of pushback, the CFO finally agreed to the smaller budget without further argument.",
+    blankSentence: "I'm glad he chose to ___ rather than drag this into next quarter.",
+    wordId: "sa386",
+    distractors: ["substantiate", "elucidate", "denigrate"],
+  },
+];
