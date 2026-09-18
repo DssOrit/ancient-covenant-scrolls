@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v30';
+const APP_VERSION = 'v31';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -1991,7 +1991,10 @@ function renderQuest(){
   const header = `<div class="pagehead"><h2>${escapeHtml(STORY_QUEST.title)}</h2></div>
     <p class="sub">Chapter ${Q.chapterIndex+1} of ${totalChapters}: ${escapeHtml(chapter.title)}</p>`;
   if(Q.phase==='intro'){
+    const chapterScenes = ['storm','candle','beacon'];
+    const sceneName = chapterScenes[Q.chapterIndex] || 'storm';
     return header + `
+    <div class="scene scene-${sceneName}"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
     <div class="quest-passage">${questParagraphs(chapter.intro)}</div>
     <p class="quest-choice-prompt">${escapeHtml(chapter.choicePrompt)}</p>
     <div class="quest-choice-opts">
@@ -2124,6 +2127,7 @@ function renderDebate(){
   <div class="memory-scoreboard">
     <div>${ic('star')}<b>${D.score}/${DEBATE_SCENARIOS.length}</b><span>Score</span></div>
   </div>
+  <div class="scene scene-meeting"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
   <div class="debate-stage">
     <div class="debate-bubble">
       <div class="debate-role">${ic('person')}<span>${escapeHtml(scen.roleA)}</span></div>
@@ -2257,6 +2261,7 @@ function renderMystery(){
   const revealedClues = M.clues.slice(0, M.revealedCount);
   return `<div class="pagehead"><h2>Word Mystery</h2></div>
   <p class="sub">One of these 6 words is the mystery word. Use the clues to cross off suspects, then make your accusation.</p>
+  <div class="scene scene-scan"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
   <div class="mystery-clues">
     ${revealedClues.map((c,i)=>`<div class="mystery-clue"><span class="mystery-clue-num">Clue ${i+1}</span><p>${escapeHtml(c)}</p></div>`).join('')}
   </div>
