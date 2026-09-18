@@ -44,6 +44,13 @@
 
 - Nothing currently parked for this stream.
 
+## Session wrap-up
+
+- Scheduled reminder set (`trig_01DrKj8B4PyFq8JsZy33hwNh`, fires 2026-10-09) to resurface `SUGGESTIONS_PARKED.md` per user request; that file's own "review by" header updated to match and committed (`5fa1ca5`).
+- Final `main` HEAD this session: `5fa1ca5` — working tree clean, matches `origin/main`.
+- Backup branch for this stream: `backup/2026-09-18-study-v130` (see Backups section above) — still the correct recovery point; nothing shipped after it changed code.
+- Session closed at user's "Good night."
+
 ---
 
 # Load Words PWA build notes (separate stream, below)
