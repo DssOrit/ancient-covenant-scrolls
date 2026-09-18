@@ -3284,6 +3284,7 @@ function showTermStack(fid) {
 
     function render() {
       var h = '<div class="ts-view">';
+      if (moves === 0) h += '<img class="game-hero-img" src="images/term_stack_blocks.png" alt="" aria-hidden="true">';
       h += '<div class="ts-header">Drop a scroll into a column — land it beside its match to clear both</div>';
       h += '<div class="ts-stats">Cleared: ' + cleared + '/' + terms.length + ' &nbsp; Scrolls left: ' + queue.length + '</div>';
       if (queue.length) h += '<div class="ts-next">Next: <span class="ts-next-chip ts-' + queue[0].side + '">' + queue[0].text + '</span></div>';
@@ -3356,6 +3357,7 @@ function showImposter(fid) {
       function render() {
         var cards = rounds[idx];
         var h = '<div class="imp-view">';
+        if (idx === 0) h += '<img class="game-hero-img" src="images/imposter_card_grid.png" alt="" aria-hidden="true">';
         h += '<div class="imp-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — one of these doesn’t belong to this section</div>';
         h += '<div class="imp-grid">';
         cards.forEach(function (c, i) {
@@ -3426,6 +3428,7 @@ function showClueRound(fid) {
       cluesShown = Math.min(cluesShown, clues.length);
       var options = shuffle([t.term].concat(shuffle(names.filter(function (nm) { return nm !== t.term; })).slice(0, 3)));
       var h = '<div class="clue-view">';
+      if (idx === 0) h += '<img class="game-hero-img" src="images/clue_deduction.png" alt="" aria-hidden="true">';
       h += '<div class="clue-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — name it before the clues run out</div>';
       h += '<div class="clue-list">';
       for (var i = 0; i < cluesShown; i++) h += '<div class="clue-item">Clue ' + (i + 1) + ': ' + clues[i] + '</div>';
@@ -6434,8 +6437,8 @@ TU.setup = function () {
   h += '</div><div class="tu-teamset">';
   s.teams.forEach(function (t, i) { h += '<div class="tu-teamrow"><span class="tu-dot" style="background:' + t.color + '"></span><input class="tu-in" data-tu-name="' + i + '" value="' + tuEsc(t.name) + '" maxlength="16"></div>'; });
   h += '</div><div class="tu-sec">Choose a show</div><div class="tu-shows">';
-  h += '<button class="tu-show tu-showfeud" data-tu="startFeud"><div class="tu-show-t">Evidence Board</div><div class="tu-show-s">Name the top answers. Three strikes and the other team can steal.</div></button>';
-  h += '<button class="tu-show tu-showsealed" data-tu="startSealed"><div class="tu-show-t">Sealed Scrolls</div><div class="tu-show-s">Open sealed cases. Take the Scribe\'s offer, or hold.</div></button>';
+  h += '<button class="tu-show tu-showfeud" data-tu="startFeud"><img class="tu-show-img" src="images/evidence_board.png" alt="" aria-hidden="true"><div class="tu-show-t">Evidence Board</div><div class="tu-show-s">Name the top answers. Three strikes and the other team can steal.</div></button>';
+  h += '<button class="tu-show tu-showsealed" data-tu="startSealed"><img class="tu-show-img" src="images/sealed_scrolls_cases.png" alt="" aria-hidden="true"><div class="tu-show-t">Sealed Scrolls</div><div class="tu-show-s">Open sealed cases. Take the Scribe\'s offer, or hold.</div></button>';
   h += '</div>';
   this._wrap(h);
 };
