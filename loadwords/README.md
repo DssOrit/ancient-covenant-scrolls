@@ -9,11 +9,13 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (525 words across 7 categories, tagged with 7 themes)
+wordbank.js          — the core word bank (541 words across 7 categories, tagged with 7 themes)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
+assets/games/         — decorative banner art for Word Mystery, Vocab Feud,
+                         Deal or No Deal, Word Blocks, and The Imposter
 ```
 
 **Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, Debate &amp; Meeting Arena, Word Mystery, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review. The Word Vault is a persistent rewards layer that runs alongside all of them.
@@ -92,6 +94,8 @@ The bank spans 7 difficulty categories (see `CATEGORY_META` in `wordbank.js`): C
 
 The **Advanced** (`ad`) category was audited and rebuilt: 43 of its original 60 words were too close to everyday vocabulary for an advanced-learner app (e.g. `abundant`, `genuine`, `crucial`) and were replaced in place with genuinely C1/C2-level words (e.g. `magnanimous`, `temerity`, `officious`, `opprobrium`). 17 words that were already solidly advanced were kept as-is, along with `poignant` and `paradigm` specifically at the user's request. Every replacement was checked against the other 524 words first to avoid duplicating a word that already existed elsewhere in the bank under a different tier.
 
+A second pass removed 19 more words that were still too basic once flagged (e.g. `elderly`, `rapid`, `tedious`, `envelope`), moved 5 words down to the `ad` tier that were sitting too high for how commonly they're actually used (`keen`, `perceptible`, `monotonous`, `nominal`, `obsolete`), and added 33 genuinely obscure new words (e.g. `weltschmerz`, `tergiversate`, `phantasmagoria`, `asymptote`) split between the `sa` and `ph` tiers depending on whether they're literary/rhetorical or philosophical/abstract in nature.
+
 ## Adding more words
 
 Two ways:
@@ -110,6 +114,18 @@ Two ways:
 ```
 
 `stress` is the 0-based index into `syllables` for the stressed syllable. If you add a new `category` key, also add it to `CATEGORY_META` at the bottom of the file so it gets a label and color in the UI.
+
+## Game banner art
+
+Word Mystery, Vocab Feud, Deal or No Deal, Word Blocks, and The Imposter each
+open with a decorative illustration banner (`assets/games/*.png`) instead of
+the earlier CSS-shape scenes. Each image is cropped with plain CSS
+(`object-fit:cover` + a per-game `object-position` on `.game-banner img` in
+`index.html`) so only generic decorative content shows — no trademarked
+product names or logos are displayed anywhere in the app, matching the
+existing decision to name these games "Word Mystery" and "Vocab Feud" rather
+than any trademarked title. All five are precached by the service worker
+(`APP_SHELL` in `service-worker.js`) so they still load offline.
 
 ## Icons
 
