@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v20';
+const APP_VERSION = 'v21';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -91,6 +91,7 @@ const State = {
   higherLower:{ pool:[], index:0, word:null, options:[], streak:0, roundPoints:0, bankedTotal:0, phase:'guess', chosen:null },
   imposter:{ pool:[], round:0, score:0, cards:[], imposterSlot:null, chosenSlot:null, phase:'shuffling' },
   thread:{ words:[], left:[], right:[], connections:{}, locked:{}, rightLocked:{}, flashWrong:null },
+  feud:{ themeKey:null, themeLabel:'', boardWords:[], pool:[], strikes:0, score:0, phase:'playing', lastWrong:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -476,6 +477,7 @@ function renderView(){
     case 'higherlower': return renderHigherLower();
     case 'imposter': return renderImposter();
     case 'thread': return renderThread();
+    case 'feud': return renderFeud();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -975,6 +977,7 @@ function renderTest(){
       <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1657,6 +1660,63 @@ function threadLayoutLines(){
   });
 }
 
+// ---------------- VOCAB FEUD ----------------
+function startFeud(){
+  const themeKeys = Object.keys(THEME_META).filter(k=>State.words.some(w=>w.theme===k && w.definition));
+  const themeKey = themeKeys[Math.floor(Math.random()*themeKeys.length)];
+  const themePool = State.words.filter(w=>w.theme===themeKey && w.definition);
+  const boardWords = shuffle(themePool).slice(0,6).map(w=>({ id:w.id, word:w.word, definition:w.definition, value:wordPointValue(w), revealed:false }));
+  boardWords.sort((a,b)=>b.value-a.value);
+  const boardIds = boardWords.map(w=>w.id);
+  const distractorPool = State.words.filter(w=>w.theme!==themeKey && w.definition && !boardIds.includes(w.id));
+  const distractors = shuffle(distractorPool).slice(0,4).map(w=>({ id:w.id, word:w.word }));
+  const pool = shuffle([...boardWords.map(w=>({id:w.id,word:w.word})), ...distractors]);
+  State.feud = { themeKey, themeLabel: THEME_META[themeKey].label, boardWords, pool, strikes:0, score:0, phase:'playing', lastWrong:null };
+}
+function feudGuess(wordId){
+  const F = State.feud;
+  if(F.phase!=='playing') return;
+  const boardEntry = F.boardWords.find(w=>w.id===wordId && !w.revealed);
+  if(boardEntry){
+    boardEntry.revealed = true;
+    F.score += boardEntry.value;
+    F.lastWrong = null;
+    gradeWord(wordId, 2);
+    if(F.boardWords.every(w=>w.revealed)){
+      F.phase = 'won';
+    }
+  } else {
+    F.strikes += 1;
+    F.lastWrong = wordId;
+    if(F.strikes >= 3){
+      F.phase = 'lost';
+    }
+  }
+}
+function renderFeud(){
+  const F = State.feud;
+  if(!F.boardWords.length){
+    return `<div class="empty"><p>Loading Vocab Feud…</p></div>`;
+  }
+  const done = F.phase!=='playing';
+  return `<div class="pagehead"><h2>Vocab Feud</h2></div>
+  <p class="sub">Survey topic: <b>${escapeHtml(F.themeLabel)}</b> — tap the words that belong on the board.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${F.score.toLocaleString()}</b><span>Score</span></div>
+    <div>${ic('x')}<b>${F.strikes}/3</b><span>Strikes</span></div>
+  </div>
+  <div class="feud-board">
+    ${F.boardWords.map(w=>`<div class="feud-slot ${w.revealed?'revealed':''}">
+      ${w.revealed ? `<span class="feud-slot-word">${escapeHtml(w.word)}</span><span class="feud-slot-val">${w.value.toLocaleString()}</span>` : `<span class="feud-slot-blank">?</span>`}
+    </div>`).join('')}
+  </div>
+  ${done ? `<div class="note-box" style="background:${F.phase==='won'?'var(--good-soft)':'var(--warn-soft)'};color:${F.phase==='won'?'var(--good)':'var(--warn)'}">${ic(F.phase==='won'?'check':'x')}<span>${F.phase==='won'?`Board cleared! Final score: ${F.score.toLocaleString()}.` : `Out of strikes. The board's words: ${F.boardWords.map(w=>escapeHtml(w.word)).join(', ')}.`}</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="feudAgainBtn">Play again</button>` : `
+  <div class="feud-pool">
+    ${F.pool.filter(w=>!F.boardWords.some(b=>b.id===w.id && b.revealed)).map(w=>`<button class="feud-chip ${F.lastWrong===w.id?'wrong':''}" data-feud-word="${escapeAttr(w.id)}">${escapeHtml(w.word)}</button>`).join('')}
+  </div>`}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1785,6 +1845,7 @@ function bindEvents(){
       if(v==='higherlower'){ startHigherLower(); }
       if(v==='imposter'){ startImposter(); }
       if(v==='thread'){ startThread(); }
+      if(v==='feud'){ startFeud(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -2196,6 +2257,12 @@ function bindEvents(){
   });
   const threadAgainBtn = document.getElementById('threadAgainBtn');
   if(threadAgainBtn){ threadAgainBtn.addEventListener('click', ()=>{ startThread(); render(); }); }
+
+  document.querySelectorAll('[data-feud-word]').forEach(el=>{
+    el.addEventListener('click', ()=>{ feudGuess(el.getAttribute('data-feud-word')); render(); bindEvents(); });
+  });
+  const feudAgainBtn = document.getElementById('feudAgainBtn');
+  if(feudAgainBtn){ feudAgainBtn.addEventListener('click', ()=>{ startFeud(); render(); bindEvents(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

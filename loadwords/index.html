@@ -382,6 +382,17 @@ main{ flex:1; padding:6px 20px 30px; }
 .memory-stats div{ display:flex; flex-direction:column; }
 .memory-stats b{ font-family:var(--font-head); font-size:calc(var(--fs-base) * 1.2); font-weight:800; }
 .memory-stats span{ font-size:calc(var(--fs-base) * 0.72); color:var(--text-soft); text-transform:uppercase; letter-spacing:.04em; }
+
+/* Vocab Feud */
+.feud-board{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.feud-slot{ display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); min-height:26px; }
+.feud-slot-blank{ color:var(--text-soft); font-size:calc(var(--fs-base) * 0.9); letter-spacing:.1em; }
+.feud-slot-word{ font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.95); }
+.feud-slot.revealed{ background:var(--good-soft); border-color:var(--good); }
+.feud-slot-val{ font-family:var(--font-head); font-weight:800; color:var(--good); }
+.feud-pool{ display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.feud-chip{ padding:10px 16px; border-radius:20px; border:1.5px solid var(--border); background:var(--bg-card); font-weight:700; font-size:calc(var(--fs-base) * 0.85); cursor:pointer; }
+.feud-chip.wrong{ background:var(--warn-soft); border-color:var(--warn); color:var(--warn); }
 .test-footer{ margin-top:20px; }
 .big-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); color:#fff; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.94); cursor:pointer; box-shadow:0 3px 12px rgba(37,99,235,.25); }
 .big-btn:disabled{ opacity:.4; box-shadow:none; }
