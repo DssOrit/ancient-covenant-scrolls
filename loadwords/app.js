@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v12';
+const APP_VERSION = 'v13';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -81,6 +81,7 @@ const State = {
   testQueue:[], testIndex:0, testScore:0, testType:'meaning', testAnswered:false,
   spellAttempt:'', spellCorrect:false,
   soundItOut:{ active:false, wordId:null, index:0 },
+  etym:{ queue:[], index:0, score:0, pool:[], constructed:[], verified:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -457,6 +458,7 @@ function renderView(){
     case 'study': return renderStudy();
     case 'listen': return renderListen();
     case 'test': return renderTest();
+    case 'etymology': return renderEtymology();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -945,6 +947,7 @@ function renderTest(){
       <button class="action" data-testtype="spelling" style="--c:#DC2626"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Typed recall</b><span>Read the meaning, type the word yourself</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="context" style="--c:#059669"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Context quiz</b><span>Fill the blank, see why each answer fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="scenario" style="--c:#4F46E5"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Daily upgrade</b><span>Everyday situations — pick the advanced word</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="etymology" style="--c:#DB2777"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Builder</b><span>Tap roots &amp; suffixes to build the word, with audio for each piece</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1035,6 +1038,69 @@ function renderTest(){
     ${options.map(o=>`<button class="opt" data-answer="${escapeAttr(o)}" data-correct="${escapeAttr(correctText)}">${escapeHtml(o)}</button>`).join('')}
   </div>
   <div class="test-footer"><button class="big-btn" id="nextQ" disabled>Next</button></div>`;
+}
+
+// ---------------- WORD BUILDER (etymology / morphemes) ----------------
+function startEtymology(){
+  State.etym.queue = shuffle(MORPHEME_WORDS).slice(0, Math.min(8, MORPHEME_WORDS.length));
+  State.etym.index = 0; State.etym.score = 0;
+  beginEtymQuestion();
+}
+function beginEtymQuestion(){
+  const entry = State.etym.queue[State.etym.index];
+  if(!entry) return;
+  const correctTexts = entry.blocks.map(b=>b.text);
+  const otherTexts = MORPHEME_WORDS.filter(m=>m.wordId!==entry.wordId).flatMap(m=>m.blocks.map(b=>b.text));
+  const distractorPool = [...new Set(otherTexts)].filter(t=>!correctTexts.includes(t));
+  const distractors = shuffle(distractorPool).slice(0,3);
+  State.etym.pool = shuffle([...correctTexts, ...distractors]);
+  State.etym.constructed = [];
+  State.etym.verified = null;
+}
+function renderEtymology(){
+  const E = State.etym;
+  if(!E.queue.length){
+    return `<div class="empty"><p>Loading Word Builder…</p></div>`;
+  }
+  if(E.index >= E.queue.length){
+    const pct = Math.round((E.score/E.queue.length)*100);
+    return `<div class="empty">
+      <div class="score-ring"><div class="n">${pct}%</div></div>
+      <h3>Word Builder complete</h3><p>${E.score} of ${E.queue.length} built correctly</p>
+      <button class="big-btn" style="margin-top:20px;" id="etymAgain">Play again</button>
+    </div>`;
+  }
+  const entry = E.queue[E.index];
+  const w = State.words.find(x=>x.id===entry.wordId);
+  const pct = Math.round((E.index/E.queue.length)*100);
+  const typeLabel = {prefix:'PREFIX', root:'ROOT', suffix:'SUFFIX'};
+  const isFull = E.constructed.length === entry.blocks.length;
+  return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+  <div class="test-q">Word ${E.index+1} of ${E.queue.length} — Word Builder</div>
+  <div class="scene scene-${entry.scene}"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
+  <div class="test-sub" style="margin-top:14px;">Definition: ${escapeHtml(w.definition)}
+    <span class="mini-spk" data-speak="${escapeAttr(w.word)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+  </div>
+  <div class="etym-legend">
+    ${entry.blocks.map(b=>`<div class="etym-chip etym-${b.type}">
+      <span class="etym-chip-top"><span class="etym-chip-type">${typeLabel[b.type]}</span><span class="mini-spk" data-speak="${escapeAttr(b.text)}">${ic('speakerSm')}</span></span>
+      <b>${escapeHtml(b.text)}</b><i>${escapeHtml(b.meaning)}</i>
+    </div>`).join('')}
+  </div>
+  <div class="etym-build-label">Constructed word</div>
+  <div class="etym-build-area">
+    ${E.constructed.length ? E.constructed.map((t,i)=>`<button class="etym-piece placed" data-etym-placed="${i}">${escapeHtml(t)} ×</button>`).join('') : `<span class="etym-placeholder">Tap blocks below to assemble</span>`}
+  </div>
+  <div class="etym-build-label">Available blocks</div>
+  <div class="etym-pool">
+    ${E.pool.map((t,i)=>`<button class="etym-piece" data-etym-pool="${i}">${escapeHtml(t)}</button>`).join('')}
+  </div>
+  ${E.verified===true ? `<div class="note-box" style="background:var(--good-soft);color:var(--good)">${ic('check')}<span>Correct! ${escapeHtml(w.word)} — ${escapeHtml(w.definition)}</span></div>` : ''}
+  ${E.verified===false ? `<div class="note-box" style="background:var(--warn-soft);color:var(--warn)">${ic('x')}<span>Not quite — check the order against the legend above.</span></div>` : ''}
+  <div class="test-footer" style="display:flex;gap:10px;">
+    <button class="big-btn" id="etymVerifyBtn" ${isFull?'':'disabled'} style="flex:1;">Verify</button>
+    <button class="big-btn" id="etymNextBtn" style="flex:1;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;" ${E.verified===null?'disabled':''}>Next word</button>
+  </div>`;
 }
 
 // ---------------- ADD WORD ----------------
@@ -1157,6 +1223,7 @@ function bindEvents(){
       }
       if(v==='study'){ startStudy(); }
       if(v==='test'){ State.testQueue=[]; }
+      if(v==='etymology'){ startEtymology(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1337,6 +1404,48 @@ function bindEvents(){
       if(e.key==='Enter'){ const btn = document.getElementById('submitSpellBtn'); if(btn) btn.click(); }
     });
   }
+
+  document.querySelectorAll('[data-etym-pool]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const i = parseInt(el.getAttribute('data-etym-pool'),10);
+      const [taken] = State.etym.pool.splice(i,1);
+      State.etym.constructed.push(taken);
+      State.etym.verified = null;
+      render();
+    });
+  });
+  document.querySelectorAll('[data-etym-placed]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const i = parseInt(el.getAttribute('data-etym-placed'),10);
+      const [given] = State.etym.constructed.splice(i,1);
+      State.etym.pool.push(given);
+      State.etym.verified = null;
+      render();
+    });
+  });
+  const etymVerifyBtn = document.getElementById('etymVerifyBtn');
+  if(etymVerifyBtn){
+    etymVerifyBtn.addEventListener('click', ()=>{
+      const entry = State.etym.queue[State.etym.index];
+      const correct = entry.blocks.map(b=>b.text.toLowerCase());
+      const attempt = State.etym.constructed.map(t=>t.toLowerCase());
+      const isCorrect = correct.length===attempt.length && correct.every((t,i)=>t===attempt[i]);
+      State.etym.verified = isCorrect;
+      if(isCorrect) State.etym.score++;
+      gradeWord(entry.wordId, isCorrect?2:0);
+      render();
+    });
+  }
+  const etymNextBtn = document.getElementById('etymNextBtn');
+  if(etymNextBtn){
+    etymNextBtn.addEventListener('click', ()=>{
+      State.etym.index++;
+      beginEtymQuestion();
+      render();
+    });
+  }
+  const etymAgain = document.getElementById('etymAgain');
+  if(etymAgain){ etymAgain.addEventListener('click', ()=>{ startEtymology(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

@@ -3,7 +3,7 @@
 // Bump CACHE_NAME whenever app.js / wordbank.js / index.html change materially,
 // so returning users get the new version instead of a stale cache.
 
-const CACHE_NAME = 'loadwords-v12';
+const CACHE_NAME = 'loadwords-v13';
 const APP_SHELL = [
   './',
   './index.html',

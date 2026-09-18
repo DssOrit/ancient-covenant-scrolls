@@ -561,3 +561,21 @@ const SCENARIOS = [
   {id:"sc23",wordId:"sa254",situation:"You order a dish at a new restaurant that looks amazing on the menu, but it arrives with almost no seasoning and barely any taste at all.",casual:"This food is so bland and flavorless.",upgrade:"This food is honestly pretty insipid."},
   {id:"sc24",wordId:"sa313",situation:"Your boss agreed to one plan on Monday, then happily switched to a completely different plan the moment someone pushed back on Tuesday.",casual:"He's really easy to talk into changing his mind.",upgrade:"He's remarkably malleable once you push back."},
 ];
+const MORPHEME_WORDS = [
+  {wordId:"li5",scene:"bloom",blocks:[{text:"epi",meaning:"upon",type:"prefix"},{text:"hemera",meaning:"day",type:"root"},{text:"al",meaning:"pertaining to",type:"suffix"}]},
+  {wordId:"sa331",scene:"glow",blocks:[{text:"in",meaning:"intensifier",type:"prefix"},{text:"candesc",meaning:"to glow white-hot",type:"root"},{text:"ent",meaning:"in a state of",type:"suffix"}]},
+  {wordId:"sa164",scene:"scan",blocks:[{text:"circum",meaning:"around",type:"prefix"},{text:"spect",meaning:"to look",type:"root"}]},
+  {wordId:"ad11",scene:"heart",blocks:[{text:"bene",meaning:"good",type:"prefix"},{text:"vol",meaning:"will",type:"root"},{text:"ent",meaning:"having",type:"suffix"}]},
+  {wordId:"sa94",scene:"bubbles",blocks:[{text:"loqu",meaning:"to speak",type:"root"},{text:"acious",meaning:"full of",type:"suffix"}]},
+  {wordId:"ce6",scene:"mute",blocks:[{text:"tacit",meaning:"silent",type:"root"},{text:"urn",meaning:"inclined to",type:"suffix"}]},
+  {wordId:"sa350",scene:"cycle",blocks:[{text:"di",meaning:"day",type:"root"},{text:"urnal",meaning:"pertaining to",type:"suffix"}]},
+  {wordId:"ce10",scene:"cluster",blocks:[{text:"greg",meaning:"flock",type:"root"},{text:"arious",meaning:"inclined to",type:"suffix"}]},
+  {wordId:"sa285",scene:"beam",blocks:[{text:"trans",meaning:"through",type:"prefix"},{text:"luc",meaning:"light",type:"root"},{text:"ent",meaning:"in a state of",type:"suffix"}]},
+  {wordId:"sa342",scene:"grow",blocks:[{text:"verd",meaning:"green",type:"root"},{text:"ant",meaning:"having",type:"suffix"}]},
+  {wordId:"sa338",scene:"sparkle",blocks:[{text:"re",meaning:"intensifier",type:"prefix"},{text:"splend",meaning:"to shine",type:"root"},{text:"ent",meaning:"in a state of",type:"suffix"}]},
+  {wordId:"sa252",scene:"bubbles",blocks:[{text:"ef",meaning:"out",type:"prefix"},{text:"ferv",meaning:"to boil",type:"root"},{text:"escent",meaning:"becoming",type:"suffix"}]},
+  {wordId:"sa267",scene:"doze",blocks:[{text:"somn",meaning:"sleep",type:"root"},{text:"olent",meaning:"full of",type:"suffix"}]},
+  {wordId:"sa379",scene:"dominate",blocks:[{text:"hegemon",meaning:"leader",type:"root"},{text:"y",meaning:"state of",type:"suffix"}]},
+  {wordId:"sa362",scene:"split",blocks:[{text:"dicha",meaning:"in two",type:"prefix"},{text:"tomia",meaning:"cutting",type:"root"}]},
+  {wordId:"sa202",scene:"target",blocks:[{text:"telos",meaning:"purpose",type:"root"},{text:"logos",meaning:"study of",type:"root"}]},
+];
