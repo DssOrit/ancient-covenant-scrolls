@@ -1,5 +1,53 @@
 # Session Notes — 2026-09-18
 
+## Current state (ACR Study / ACR Search work, PR #962 — separate stream from the Load Words PWA notes below)
+
+- Branch: `claude/study-search-games-loadwords-2026-09-18` (merged; treated as finished).
+- **PR #962 is MERGED** (2026-09-18T20:05:39Z, confirmed via `pull_request_read`, merged by DssOrit) — 4 new ACR Study games (Scroll Trade, Term Stack, The Imposter, Clue), 5 new hero images, Load Words vocabulary woven into ~30 Study-only UI/result strings, and 4 new ACR Search-sourced content volumes (NT Lookup Reference, Hebrew Roots Reference, Paleo Alphabet Reference, Useful Tools Reference — 323 entries total, each verified field-by-field against live Search source data before shipping).
+- ACR Search itself was fully reverted mid-session back to its pre-session state (no Load Words vocabulary) per explicit user direction — confirmed 0-diff against `origin/main` before the PR was opened. `acr-search` cache unchanged at `v314`.
+- `study/sw.js` cache: `acr-study-v130` — live on `main`.
+- `origin/main` HEAD after merge: `a48d6297e455cf8fe9ff5a6612c23273f33fd1d4`. Local `main` fast-forwarded to match, verified.
+- Rule 8 unlock in force for this stream: "Edit study & edit ACR search" (given earlier this session, used as standing authorization for all Study/Search edits).
+
+## Backups (ACR Study / ACR Search stream)
+
+- `backup/2026-09-18-study-v118-search-v314-pre-games` — pre-existing, pre-dates this PR's content.
+- `backup/2026-09-18-study-v130` — pushed, SHA-verified equal to `main`/`origin/main` (`a48d629`) right after PR #962 merged. This is the current recovery point for the Study/Search stream. Recovery: `git checkout backup/2026-09-18-study-v130`.
+
+## Built today (ACR Study / ACR Search stream, PR #962)
+
+1. Four new ACR Study games — Scroll Trade (Go-Fish reskin), Term Stack (Columns/puzzle-blocks reskin), The Imposter, and a Clue-style deduction round — all built on the existing `resolveGameTerms`/key-terms/verse-fallback pattern so they work across every existing and new content volume.
+2. Original hero art for all 4 new games plus Truth Uncovered's Evidence Board / Sealed Scrolls sub-games, cropped from user-supplied original "ACR Study"-branded packs (no trademarked wordmarks). Term Stack's fragment art uses a live, Unicode-verified unpointed paleo-Hebrew text overlay (ברית / U+10901,10913,10909,10915) instead of the source pack's own AI-drawn glyphs, which failed a letter-by-letter accuracy check (wrong letterforms, wrong direction).
+3. Load Words vocabulary woven into ~30 Study-only UI/feedback strings (game headers, result-tier labels across 12 existing + 4 new games, a couple of "coming soon" messages) — never touching quiz content, chapter text, or verse citations. Confirmed via `git diff` that zero Load Words wording reached ACR Search.
+4. Four new content volumes added to Study, each generated programmatically from ACR Search's own live data (never hand-typed) and verified field-by-field before shipping:
+   - NT Lookup Reference (`file_201.json`, 25 entries, from Search's `nt_database`) — 199/199 fields verified.
+   - Hebrew Roots Reference (`file_202.json`, 180 entries, from Search's `HR_WORDS`) — 1347/1347 fields verified after fixing 2 real bugs (see below).
+   - Paleo Alphabet Reference (`file_203.json`, 22 entries, from Search's `PALEO_ALPHA`) — 110/110 fields verified, all glyphs confirmed valid Phoenician-block Unicode.
+   - Useful Tools Reference (`file_204.json`, 96 entries: Covenant Promises + Hebrew Names + Mo'edim + Event Timeline) — 353/353 fields verified.
+5. Standalone Vocabulary Builder feature was built earlier in the session, then fully removed per explicit user direction ("No stand alone vocab just emerge into sites" / "We will only include words within the ACR study") — vocabulary lives only inside existing text/UI, never a separate section.
+
+### Bugs caught and fixed before shipping (Study/Search stream)
+
+- **Duplicate multiple-choice option** (NT Lookup generator): `random.sample()` on a non-deduplicated distractor pool could produce a repeated option. Fixed by deduplicating the candidate pool before sampling.
+- **Silent data loss on duplicate source labels** (Hebrew Roots generator): Search's `HR_WORDS` has 2 pairs of entries sharing the same `en` key but different content; `.find()`-based matching only ever kept the first of each pair. Fixed by disambiguating with a `category + index` suffix so both entries' full content survives — this was a live Rule 29 ("never delete material") risk caught before it shipped.
+- **Dropped extra fields** (Hebrew Roots generator): some source entries carry `fig`/`stacked`/`person` fields beyond the original hardcoded field list; first draft silently omitted them. Fixed by iterating every field present on each entry generically. This lesson was applied from the start on the Useful Tools generator, which passed verification clean on the first attempt.
+
+### Major mid-session reversal (Study/Search stream)
+
+- ACR Search had ~21 Load Words vocabulary edits applied across many panels, then the user reversed course: "Correction, go back to the ACR search we started with today, no word inclusions" / "Revert ACR search back." Executed `git checkout origin/main -- Search/index.html Search/sw.js`, verified 0-diff against `origin/main`, committed, and pushed. Re-verified again later in the session on direct request ("Is ACR search back to where we started today") — confirmed 0-diff and cache value unchanged (`acr-search-v314`).
+
+## Outstanding / blocking (Study/Search stream)
+
+- Nothing outstanding. PR #962 is merged, local `main` fast-forwarded and matches `origin/main` (`a48d629`), backup branch created and SHA-verified.
+
+## Pending / parked (Study/Search stream)
+
+- Nothing currently parked for this stream.
+
+---
+
+# Load Words PWA build notes (separate stream, below)
+
 ## Current state
 
 - Branch: `claude/load-words-pwa-setup-nf1pcn`.
