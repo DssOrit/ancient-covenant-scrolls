@@ -30,6 +30,8 @@ assets/               — splash art, wired in via apple-touch-startup-image
 
 **Drag & Drop:** a touch-drag variant of the Context Quiz — same blanked-sentence data, but you drag a word chip onto the blank instead of tapping a multiple-choice button. Built with pointer events (not native HTML5 drag-and-drop, which iOS Safari doesn't support well for touch), so it works reliably on iPad.
 
+**Vocabulary Deal or No Deal:** pick 1 of 6 briefcases to keep, then open the other 5 one at a time — each reveals a definition and eliminates its matching word from the board. The Banker calls after the 2nd open (then after every open after that) with a points offer computed from the average value of the words still in play, scaled by an escalating "greed" factor. Deal takes the offer and ends the round; No Deal keeps going until either a deal is taken or all other cases are opened, revealing your own case's word. Word point values are computed from category tier + word length (`wordPointValue()` in `app.js`), not hand-authored.
+
 **Themes:** every word also carries a `theme` tag (Intellectual & Mental States, Character & Personal Behavior, Emotions & Human Experience, Analytical & Academic Concepts, Communication & Rhetoric, Conflict & Social Dynamics, Usage & Precision) — browsable from Home or the All Words list, alongside the existing difficulty-tier categories.
 
 No build step, no dependencies, no backend. It's plain HTML/CSS/JS — open `index.html` in any modern browser and it runs.

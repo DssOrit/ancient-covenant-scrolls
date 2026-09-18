@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v15';
+const APP_VERSION = 'v16';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -84,6 +84,7 @@ const State = {
   etym:{ queue:[], index:0, score:0, pool:[], constructed:[], verified:null },
   slider:{ queue:[], index:0 },
   dragdrop:{ queue:[], index:0, score:0, answered:false, chosen:null },
+  deal:{ phase:'pick', words:[], caseMap:[], myCase:null, openedCases:[], eliminatedIds:[], lastReveal:null, offerAmount:0, offerStep:0, finalResult:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -463,6 +464,7 @@ function renderView(){
     case 'etymology': return renderEtymology();
     case 'slider': return renderSlider();
     case 'dragdrop': return renderDragDrop();
+    case 'deal': return renderDeal();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -957,6 +959,7 @@ function renderTest(){
       <button class="action" data-testtype="pairs" style="--c:#DC2626"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Confusing Pairs sort</b><span>Sort each sentence to the word that fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="slider" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Upgrade Slider</b><span>Slide to watch a sentence turn advanced</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="dragdrop" style="--c:#7C3AED"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Drag &amp; Drop</b><span>Drag the right word chip into the blank</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1208,6 +1211,110 @@ function renderDragDrop(){
   <div class="test-footer"><button class="big-btn" id="dragNextBtn" ${D.answered?'':'disabled'}>Next</button></div>`;
 }
 
+// ---------------- VOCAB DEAL OR NO DEAL ----------------
+function wordPointValue(w){
+  const tierBase = {cp:1000, up:1500, ad:2500, ce:4000, li:4500, sa:6000};
+  const base = tierBase[w.category] || 3000;
+  return Math.round((base + w.word.length * 100) / 100) * 100;
+}
+function startDeal(){
+  const pool = State.words.filter(w=>w.definition);
+  const words = shuffle(pool).slice(0,6).map(w=>({ id:w.id, word:w.word, definition:w.definition, value:wordPointValue(w) }));
+  const caseMap = shuffle([0,1,2,3,4,5]);
+  State.deal = { phase:'pick', words, caseMap, myCase:null, openedCases:[], eliminatedIds:[], lastReveal:null, offerAmount:0, offerStep:0, finalResult:null };
+}
+function dealPickCase(caseIndex){
+  State.deal.myCase = caseIndex;
+  State.deal.phase = 'eliminate';
+}
+function dealOpenCase(caseIndex){
+  const D = State.deal;
+  const wordIdx = D.caseMap[caseIndex];
+  const w = D.words[wordIdx];
+  D.openedCases.push(caseIndex);
+  D.eliminatedIds.push(w.id);
+  D.lastReveal = { word:w.word, definition:w.definition };
+  gradeWord(w.id, 2);
+  const remainingOtherCases = 5 - D.openedCases.length;
+  if(remainingOtherCases <= 0){
+    dealEndGame(false);
+    return;
+  }
+  if(D.openedCases.length >= 2){
+    const greedSchedule = [0.55, 0.7, 0.82, 0.92, 1.05];
+    D.offerStep = Math.min(D.openedCases.length - 2, greedSchedule.length - 1);
+    const remainingValues = D.words.filter(w2=>!D.eliminatedIds.includes(w2.id)).map(w2=>w2.value);
+    const avg = remainingValues.reduce((a,b)=>a+b,0) / remainingValues.length;
+    D.offerAmount = Math.round((avg * greedSchedule[D.offerStep]) / 50) * 50;
+    D.phase = 'offer';
+  }
+}
+function dealAccept(){
+  dealEndGame(true);
+}
+function dealReject(){
+  State.deal.phase = 'eliminate';
+}
+function dealEndGame(tookDeal){
+  const D = State.deal;
+  const myWord = D.words[D.caseMap[D.myCase]];
+  gradeWord(myWord.id, 2);
+  D.finalResult = { deal:tookDeal, amount: tookDeal ? D.offerAmount : myWord.value, word:myWord.word, definition:myWord.definition };
+  D.phase = 'ended';
+}
+function renderDeal(){
+  const D = State.deal;
+  if(D.phase==='pick'){
+    return `<div class="pagehead"><h2>Vocabulary Deal or No Deal</h2></div>
+    <p class="sub">Pick a briefcase to keep. It holds your mystery word — try to eliminate the others and read the Banker's offers.</p>
+    <div class="deal-cases-grid">
+      ${[0,1,2,3,4,5].map(i=>`<button class="deal-case" data-pick-case="${i}">${i+1}</button>`).join('')}
+    </div>`;
+  }
+  const wordsHtml = `<div class="deal-words">
+    <div class="deal-words-title">Words remaining</div>
+    ${D.words.map(w=>`<div class="deal-word ${D.eliminatedIds.includes(w.id)?'eliminated':''}">${escapeHtml(w.word)}</div>`).join('')}
+  </div>`;
+  if(D.phase==='ended'){
+    const R = D.finalResult;
+    return `<div class="pagehead"><h2>Vocabulary Deal or No Deal</h2></div>
+    ${wordsHtml}
+    <div class="empty">
+      <div class="score-ring"><div class="n">${R.amount.toLocaleString()}</div></div>
+      <h3>${R.deal ? 'You took the deal!' : "You played to the end!"}</h3>
+      <p>Your case held <b>${escapeHtml(R.word)}</b> — ${escapeHtml(R.definition)}</p>
+      <button class="big-btn" style="margin-top:20px;" id="dealAgainBtn">Play again</button>
+    </div>`;
+  }
+  const casesHtml = `<div class="deal-cases-grid">
+    ${D.caseMap.map((wordIdx,i)=>{
+      if(i===D.myCase) return `<div class="deal-case mine">${i+1}<span>Yours</span></div>`;
+      if(D.openedCases.includes(i)) return `<div class="deal-case opened">${i+1}</div>`;
+      return `<button class="deal-case" data-open-case="${i}" ${D.phase==='offer'?'disabled':''}>${i+1}</button>`;
+    }).join('')}
+  </div>`;
+  const revealHtml = D.lastReveal ? `<div class="note-box" style="background:var(--good-soft);color:var(--good)">${ic('check')}<span>"${escapeHtml(D.lastReveal.definition)}" — that's <b>${escapeHtml(D.lastReveal.word)}</b>!</span></div>` : '';
+  if(D.phase==='offer'){
+    return `<div class="pagehead"><h2>Vocabulary Deal or No Deal</h2></div>
+    ${wordsHtml}
+    ${casesHtml}
+    ${revealHtml}
+    <div class="banker-offer">
+      <div class="banker-title">${ic('speakerSm')} The Banker calls…</div>
+      <div class="banker-amount">${D.offerAmount.toLocaleString()} points</div>
+      <div class="test-footer" style="display:flex;gap:10px;">
+        <button class="big-btn" id="dealBtn" style="flex:1;">Deal</button>
+        <button class="big-btn" id="noDealBtn" style="flex:1;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;">No Deal</button>
+      </div>
+    </div>`;
+  }
+  return `<div class="pagehead"><h2>Vocabulary Deal or No Deal</h2></div>
+  ${wordsHtml}
+  ${casesHtml}
+  ${revealHtml}
+  <p class="sub" style="margin-top:14px;">Tap a briefcase to open it and eliminate its word.</p>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1331,6 +1438,7 @@ function bindEvents(){
       if(v==='etymology'){ startEtymology(); }
       if(v==='slider'){ startSlider(); }
       if(v==='dragdrop'){ startDragDrop(); }
+      if(v==='deal'){ startDeal(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1631,6 +1739,25 @@ function bindEvents(){
   }
   const dragAgain = document.getElementById('dragAgain');
   if(dragAgain){ dragAgain.addEventListener('click', ()=>{ startDragDrop(); render(); }); }
+
+  document.querySelectorAll('[data-pick-case]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      dealPickCase(parseInt(el.getAttribute('data-pick-case'),10));
+      render();
+    });
+  });
+  document.querySelectorAll('[data-open-case]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      dealOpenCase(parseInt(el.getAttribute('data-open-case'),10));
+      render();
+    });
+  });
+  const dealBtn = document.getElementById('dealBtn');
+  if(dealBtn){ dealBtn.addEventListener('click', ()=>{ dealAccept(); render(); }); }
+  const noDealBtn = document.getElementById('noDealBtn');
+  if(noDealBtn){ noDealBtn.addEventListener('click', ()=>{ dealReject(); render(); }); }
+  const dealAgainBtn = document.getElementById('dealAgainBtn');
+  if(dealAgainBtn){ dealAgainBtn.addEventListener('click', ()=>{ startDeal(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
