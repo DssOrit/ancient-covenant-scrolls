@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v14';
+const APP_VERSION = 'v15';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -83,6 +83,7 @@ const State = {
   soundItOut:{ active:false, wordId:null, index:0 },
   etym:{ queue:[], index:0, score:0, pool:[], constructed:[], verified:null },
   slider:{ queue:[], index:0 },
+  dragdrop:{ queue:[], index:0, score:0, answered:false, chosen:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -461,6 +462,7 @@ function renderView(){
     case 'test': return renderTest();
     case 'etymology': return renderEtymology();
     case 'slider': return renderSlider();
+    case 'dragdrop': return renderDragDrop();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -954,6 +956,7 @@ function renderTest(){
       <button class="action" data-nav="etymology" style="--c:#DB2777"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Builder</b><span>Tap roots &amp; suffixes to build the word, with audio for each piece</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="pairs" style="--c:#DC2626"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Confusing Pairs sort</b><span>Sort each sentence to the word that fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="slider" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Upgrade Slider</b><span>Slide to watch a sentence turn advanced</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="dragdrop" style="--c:#7C3AED"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Drag &amp; Drop</b><span>Drag the right word chip into the blank</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1166,6 +1169,45 @@ function renderSlider(){
   <div class="test-footer"><button class="big-btn" id="sliderNextBtn">Next sentence</button></div>`;
 }
 
+// ---------------- CONTEXT DRAG & DROP ----------------
+function startDragDrop(){
+  const pool = State.words.filter(w=>w.definition && w.example);
+  State.dragdrop.queue = shuffle(pool).slice(0, Math.min(10, pool.length));
+  State.dragdrop.index = 0; State.dragdrop.score = 0;
+  State.dragdrop.answered = false; State.dragdrop.chosen = null;
+}
+function renderDragDrop(){
+  const D = State.dragdrop;
+  if(!D.queue.length){
+    return `<div class="empty"><p>Loading Drag &amp; Drop…</p></div>`;
+  }
+  if(D.index >= D.queue.length){
+    const pct = Math.round((D.score/D.queue.length)*100);
+    return `<div class="empty">
+      <div class="score-ring"><div class="n">${pct}%</div></div>
+      <h3>Drag &amp; Drop complete</h3><p>${D.score} of ${D.queue.length} correct</p>
+      <button class="big-btn" style="margin-top:20px;" id="dragAgain">Play again</button>
+    </div>`;
+  }
+  const w = D.queue[D.index];
+  const pct = Math.round((D.index/D.queue.length)*100);
+  const filledText = D.answered ? D.chosen : '';
+  const blanked = w.example.replace(new RegExp(w.word + '\\w*', 'i'),
+    `<span class="dropzone ${D.answered ? (D.chosen===w.word?'correct':'wrong') : ''}" id="dropzone">${filledText || '____'}</span>`);
+  const chips = shuffle([w, ...contextDistractors(w,3)]);
+  return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+  <div class="test-q">Word ${D.index+1} of ${D.queue.length} — Drag &amp; Drop</div>
+  <div class="test-prompt">${blanked}</div>
+  <div class="test-sub">Drag the word that fits into the blank.
+    <span class="mini-spk" data-speak="${escapeAttr(w.example)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+  </div>
+  ${D.answered ? '' : `<div class="drag-pool" id="dragPool">
+    ${chips.map(c=>`<div class="drag-chip" data-word="${escapeAttr(c.word)}" data-correct="${escapeAttr(w.word)}">${escapeHtml(c.word)}</div>`).join('')}
+  </div>`}
+  ${D.answered ? `<div class="note-box" style="background:${D.chosen===w.word?'var(--good-soft)':'var(--warn-soft)'};color:${D.chosen===w.word?'var(--good)':'var(--warn)'}">${ic(D.chosen===w.word?'check':'x')}<span>${D.chosen===w.word?'Correct! ':'Not quite. '}"${escapeHtml(w.word)}" means: ${escapeHtml(w.definition)}</span></div>` : ''}
+  <div class="test-footer"><button class="big-btn" id="dragNextBtn" ${D.answered?'':'disabled'}>Next</button></div>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1288,6 +1330,7 @@ function bindEvents(){
       if(v==='test'){ State.testQueue=[]; }
       if(v==='etymology'){ startEtymology(); }
       if(v==='slider'){ startSlider(); }
+      if(v==='dragdrop'){ startDragDrop(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1536,6 +1579,58 @@ function bindEvents(){
   }
   const sliderAgain = document.getElementById('sliderAgain');
   if(sliderAgain){ sliderAgain.addEventListener('click', ()=>{ startSlider(); render(); }); }
+
+  document.querySelectorAll('.drag-chip').forEach(chip=>{
+    chip.style.touchAction = 'none';
+    chip.addEventListener('pointerdown', (e)=>{
+      if(State.dragdrop.answered) return;
+      const rect = chip.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left, offsetY = e.clientY - rect.top;
+      chip.setPointerCapture(e.pointerId);
+      chip.classList.add('dragging');
+      chip.style.position = 'fixed';
+      chip.style.width = rect.width + 'px';
+      chip.style.left = rect.left + 'px';
+      chip.style.top = rect.top + 'px';
+      const move = (ev)=>{
+        chip.style.left = (ev.clientX - offsetX) + 'px';
+        chip.style.top = (ev.clientY - offsetY) + 'px';
+      };
+      const up = (ev)=>{
+        chip.removeEventListener('pointermove', move);
+        chip.removeEventListener('pointerup', up);
+        chip.removeEventListener('pointercancel', up);
+        const dz = document.getElementById('dropzone');
+        const dzRect = dz.getBoundingClientRect();
+        const hit = ev.clientX>=dzRect.left && ev.clientX<=dzRect.right && ev.clientY>=dzRect.top && ev.clientY<=dzRect.bottom;
+        if(hit){
+          const chosen = chip.getAttribute('data-word');
+          const correct = chip.getAttribute('data-correct');
+          const isCorrect = chosen===correct;
+          State.dragdrop.answered = true;
+          State.dragdrop.chosen = chosen;
+          if(isCorrect) State.dragdrop.score++;
+          gradeWord(State.dragdrop.queue[State.dragdrop.index].id, isCorrect?2:0);
+          render();
+        } else {
+          chip.classList.remove('dragging');
+          chip.style.position = ''; chip.style.left = ''; chip.style.top = ''; chip.style.width = '';
+        }
+      };
+      chip.addEventListener('pointermove', move);
+      chip.addEventListener('pointerup', up);
+      chip.addEventListener('pointercancel', up);
+    });
+  });
+  const dragNextBtn = document.getElementById('dragNextBtn');
+  if(dragNextBtn){
+    dragNextBtn.addEventListener('click', ()=>{
+      State.dragdrop.index++; State.dragdrop.answered = false; State.dragdrop.chosen = null;
+      render();
+    });
+  }
+  const dragAgain = document.getElementById('dragAgain');
+  if(dragAgain){ dragAgain.addEventListener('click', ()=>{ startDragDrop(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');

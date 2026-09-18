@@ -16,7 +16,7 @@ icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort), Upgrade Slider, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
 
@@ -27,6 +27,8 @@ assets/               — splash art, wired in via apple-touch-startup-image
 **Confusing Pairs sort:** a two-option version of the Context Quiz scoped to the Confusing Pairs category — a blanked sentence and two "Sort to X" buttons for the pair, with the distinguishing `note` (or definition) shown as the explanation after answering.
 
 **Upgrade Slider:** reuses the `SCENARIOS` data from the Daily Upgrade quiz. Drag a slider and watch a simple sentence crossfade into its advanced-vocabulary version, with the target word bolded once revealed — no right/wrong, pure recognition, untimed.
+
+**Drag & Drop:** a touch-drag variant of the Context Quiz — same blanked-sentence data, but you drag a word chip onto the blank instead of tapping a multiple-choice button. Built with pointer events (not native HTML5 drag-and-drop, which iOS Safari doesn't support well for touch), so it works reliably on iPad.
 
 **Themes:** every word also carries a `theme` tag (Intellectual & Mental States, Character & Personal Behavior, Emotions & Human Experience, Analytical & Academic Concepts, Communication & Rhetoric, Conflict & Social Dynamics, Usage & Precision) — browsable from Home or the All Words list, alongside the existing difficulty-tier categories.
 
