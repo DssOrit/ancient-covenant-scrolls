@@ -16,7 +16,7 @@ icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
 
@@ -31,6 +31,8 @@ assets/               — splash art, wired in via apple-touch-startup-image
 **Drag & Drop:** a touch-drag variant of the Context Quiz — same blanked-sentence data, but you drag a word chip onto the blank instead of tapping a multiple-choice button. Built with pointer events (not native HTML5 drag-and-drop, which iOS Safari doesn't support well for touch), so it works reliably on iPad.
 
 **Vocabulary Deal or No Deal:** pick 1 of 6 briefcases to keep, then open the other 5 one at a time — each reveals a definition and eliminates its matching word from the board. The Banker calls after the 2nd open (then after every open after that) with a points offer computed from the average value of the words still in play, scaled by an escalating "greed" factor. Deal takes the offer and ends the round; No Deal keeps going until either a deal is taken or all other cases are opened, revealing your own case's word. Word point values are computed from category tier + word length (`wordPointValue()` in `app.js`), not hand-authored.
+
+**Memory Match:** a 3x4 grid of face-down cards (6 words + their 6 definitions), flipped two at a time with a 3D CSS flip. A match locks both cards open; a mismatch flips them back after a short pause. Scoring: +100 per match, multiplied by a consecutive-match streak (1st=100, 2nd=200, 3rd=300...) that resets on any mismatch; a 50-point "efficiency" bonus pool loses 1 point per mismatch and pays out in full once the board is cleared. The running total persists as a daily score across sessions (`memoryScore` in localStorage, reset once the calendar date changes).
 
 **Themes:** every word also carries a `theme` tag (Intellectual & Mental States, Character & Personal Behavior, Emotions & Human Experience, Analytical & Academic Concepts, Communication & Rhetoric, Conflict & Social Dynamics, Usage & Precision) — browsable from Home or the All Words list, alongside the existing difficulty-tier categories.
 
