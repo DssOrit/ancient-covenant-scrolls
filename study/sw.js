@@ -10,7 +10,7 @@
 // Pre-caches the shell AND every chapter JSON the study app references,
 // so every section works offline after the first online install.
 
-const CACHE = 'acr-study-v118';
+const CACHE = 'acr-study-v130';
 
 const SHELL = [
   './',
@@ -19,7 +19,12 @@ const SHELL = [
   'study.js',
   'lib-attain-quality.js',
   'manifest.json',
-  'icon.png'
+  'icon.png',
+  'images/clue_deduction.png',
+  'images/term_stack_fragment.png',
+  'images/imposter_card_grid.png',
+  'images/evidence_board.png',
+  'images/sealed_scrolls_cases.png'
 ];
 
 // The 18 chapter files the study app uses — Bereshit, Shemot, Vayikra,

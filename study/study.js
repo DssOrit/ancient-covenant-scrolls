@@ -48,9 +48,13 @@ function lbIcon(name, sizePx) {
 }
 try { window.lbIcon = lbIcon; } catch (e) {}
 
-// All 46 volumes / 111 sections matching the ACR reader, plus SR reference
+// All 46 volumes / 111 sections matching the ACR reader, plus SR, NTL, HRR, PAL, and UTR reference volumes
 var IDS=[];for(var _i=1;_i<=111;_i++){if(_i!==108)IDS.push('file_'+_i);}
 IDS.push('file_200');
+IDS.push('file_201');
+IDS.push('file_202');
+IDS.push('file_203');
+IDS.push('file_204');
 
 var LBL = [
 'Bereshit (Genesis) \u2014 Part 1 \u2014 Ch 1\u201311',
@@ -163,7 +167,11 @@ var LBL = [
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 1 \u2014 Col 1\u201322',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 2 \u2014 Col 23\u201344',
 'Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 3 \u2014 Col 45\u201366',
-'ACR Search Reference \u2014 Hebrew Roots, History & Research'
+'ACR Search Reference \u2014 Hebrew Roots, History & Research',
+'NT Lookup Reference \u2014 Primary Source Comparison',
+'Hebrew Roots Reference \u2014 Word & Root Meanings',
+'Paleo Alphabet Reference \u2014 The 22 Letters',
+'Useful Tools Reference \u2014 Promises, Names, Mo\u2019edim, Timeline'
 ];
 
 var VOL_GROUPS = [
@@ -212,7 +220,11 @@ var VOL_GROUPS = [
 {title:'Vol 43 \u2014 Songs of Sabbath Sacrifice',eng:'',count:1,vol:'43'},
 {title:'Vol 44 \u2014 Genesis Apocryphon 1QapGen',eng:'',count:1,vol:'44'},
 {title:'Vol 45 \u2014 Temple Scroll 11Q19',eng:'All 66 Columns',count:3,vol:'45'},
-{title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'}
+{title:'ACR Search Reference',eng:'Hebrew Roots & Research',count:1,vol:'SR'},
+{title:'NT Lookup Reference',eng:'Primary Source Comparison',count:1,vol:'NTL'},
+{title:'Hebrew Roots Reference',eng:'Word & Root Meanings',count:1,vol:'HRR'},
+{title:'Paleo Alphabet Reference',eng:'The 22 Letters',count:1,vol:'PAL'},
+{title:'Useful Tools Reference',eng:'Promises, Names, Mo’edim, Timeline',count:1,vol:'UTR'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
 var lh = parseFloat(localStorage.getItem('acr_study_lh') || '1.65');
@@ -261,12 +273,14 @@ if (lineFocusOn) document.body.classList.add('linefocus-on');
 // ---- Volume banner graphics (inline SVG, no external dependency) ----
 var VOL_ICONS = {
   '1': 'BR', '2': 'SH', '3': 'VY', '4': 'NM',
-  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'BG', '33': 'WR', 'SR': 'SR'
+  '5': 'DV', '6': 'CH', '7': 'YV', '8': 'BG', '33': 'WR', 'SR': 'SR', 'NTL': 'NT', 'HRR': 'HR', 'PAL': 'AB', 'UTR': 'UT'
 };
 var VOL_COLORS = {
   '1': ['#2563eb','#1e40af'], '2': ['#dc2626','#991b1b'], '3': ['#059669','#065f46'],
   '4': ['#d97706','#92400e'], '5': ['#7c3aed','#5b21b6'], '6': ['#0891b2','#155e75'],
-  '7': ['#ea580c','#9a3412'], '8': ['#57534e','#292524'], '33': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d']
+  '7': ['#ea580c','#9a3412'], '8': ['#57534e','#292524'], '33': ['#b8860b','#78350f'], 'SR': ['#166534','#14532d'],
+  'NTL': ['#9a3412','#7c2d12'], 'HRR': ['#0d9488','#115e59'], 'PAL': ['#a16207','#713f12'],
+  'UTR': ['#4338ca','#312e81']
 };
 var VOL_NAMES = {
   '1': 'Bereshit \u00B7 Genesis', '2': 'Shemot \u00B7 Exodus',
@@ -274,7 +288,11 @@ var VOL_NAMES = {
   '5': 'Devarim \u00B7 Deuteronomy', '6': 'Chanokh \u00B7 Book of Chanokh',
   '7': 'Yovelim \u00B7 Book of Jubilees', '8': 'Book of Giants \u00B7 Sefer HaNephilim',
   '33': 'War Scroll 1QM',
-  'SR': 'ACR Search Reference'
+  'SR': 'ACR Search Reference',
+  'NTL': 'NT Lookup Reference',
+  'HRR': 'Hebrew Roots Reference',
+  'PAL': 'Paleo Alphabet Reference',
+  'UTR': 'Useful Tools Reference'
 };
 
 function getVolForFid(fid) {
@@ -888,6 +906,10 @@ function go(fid) {
   h += actCard(lbIcon('puzzle',        32), 'Verse Builder', '#e91e90', 'versebuild', fid);
   h += actCard(lbIcon('puzzle',        32), 'Word Match', '#6d28d9', 'wordmatch', fid);
   h += actCard(lbIcon('shield',        32), 'Challenge', '#b91c1c', 'challenge', fid);
+  h += actCard(lbIcon('scroll',        32), 'Scroll Trade', '#0d9488', 'scrolltrade', fid);
+  h += actCard(lbIcon('mountain',      32), 'Term Stack', '#b45309', 'termstack', fid);
+  h += actCard(lbIcon('search',        32), 'The Imposter', '#991b1b', 'imposter', fid);
+  h += actCard(lbIcon('compass',       32), 'Clue', '#0369a1', 'clue', fid);
   var remixN = getRemixCount(fid);
   if (remixN > 0) {
     h += '<div class="act-card act-card-remix" data-mode="remix" role="button" tabindex="0" aria-label="Remix Round activity, ' + remixN + ' due">' +
@@ -1265,6 +1287,10 @@ function openActivity(mode, fid) {
   if (mode === 'conceptweb') { showConceptWeb(fid); return; }
   if (mode === 'timeline') { showChapterTimeline(fid); return; }
   if (mode === 'remix') { showRemix(fid); return; }
+  if (mode === 'scrolltrade') { showScrollTrade(fid); return; }
+  if (mode === 'termstack') { showTermStack(fid); return; }
+  if (mode === 'imposter') { showImposter(fid); return; }
+  if (mode === 'clue') { showClueRound(fid); return; }
   // Fallback: mode-specific "not enough content" message
   showStubForMode(fid, mode);
 }
@@ -1296,7 +1322,11 @@ function showStubForMode(fid, mode) {
     challenge: 'Challenge',
     terms: 'Key Terms',
     faq: 'FAQ',
-    'audio-filblank': 'Audio Fill the Gap'
+    'audio-filblank': 'Audio Fill the Gap',
+    scrolltrade: 'Scroll Trade',
+    termstack: 'Term Stack',
+    imposter: 'The Imposter',
+    clue: 'Clue'
   };
   var modeReasons = {
     whosaidit: 'needs at least 2 lines of attributed dialogue (X said: ...).',
@@ -1319,7 +1349,11 @@ function showStubForMode(fid, mode) {
     challenge: 'needs fill-in-blank or multiple-choice items.',
     terms: 'does not list key terms for this section yet.',
     faq: 'does not have FAQ entries for this section yet.',
-    'audio-filblank': 'needs fill-in-blank items in this section.'
+    'audio-filblank': 'needs fill-in-blank items in this section.',
+    scrolltrade: 'needs at least 4 key terms with definitions.',
+    termstack: 'needs at least 4 key terms with definitions.',
+    imposter: 'needs at least 3 key terms here and 1 elsewhere in the volume set.',
+    clue: 'needs at least 5 key terms with definitions.'
   };
   var friendly = modeLabels[mode] || (mode.charAt(0).toUpperCase() + mode.slice(1));
   var reason = modeReasons[mode] || 'does not have enough content in this section yet.';
@@ -1390,7 +1424,7 @@ function showFaqMode(fid) {
       var secLabel = secIdx >= 0 ? LBL[secIdx].split(' \u2014 ')[0] : fid;
       var h = '<div class="study-view">';
       h += '<h2 class="sv-title" style="border-left-color:var(--vol1)">FAQ \u2014 ' + secLabel + '</h2>';
-      h += '<div class="sv-sec"><p class="study-na">Curated FAQ for this section will be added in a future session. Use Listen &amp; Learn to hear the full text, or try Fill in the Blank and Flashcards which work now.</p></div>';
+      h += '<div class="sv-sec"><p class="study-na">A meticulously curated FAQ for this section will be added in a future session. Use Listen &amp; Learn to hear the full text, or try Fill in the Blank and Flashcards which work now.</p></div>';
       h += '<button class="study-btn" id="b-back-grid">Back to activities</button></div>';
       document.getElementById('content').innerHTML = h;
       document.getElementById('b-back-grid').addEventListener('click', function () { go(fid); });
@@ -1960,8 +1994,8 @@ function showFillBlank(fid, audioMode) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
+      var emoji = pct >= 80 ? 'Erudite' : pct >= 60 ? 'Sedulous' : 'Keep going';
+      var msg = pct >= 80 ? 'Truly erudite work!' : pct >= 60 ? 'Sedulous effort — good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -2130,8 +2164,8 @@ function showMC(fid) {
       var stats = getStats();
       var lvl = getLevel(stats.xp || 0);
       var mastery = getSectionMastery(fid);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Keep studying!';
+      var emoji = pct >= 80 ? 'Perspicacious' : pct >= 60 ? 'Keen' : 'Keep going';
+      var msg = pct >= 80 ? 'A perspicacious run!' : pct >= 60 ? 'A keen eye — good work!' : 'Keep studying!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -2300,8 +2334,8 @@ function showFlashcards(fid) {
     function showSummary() {
       var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
       var xpEarned = recordSession(fid, 'flash', Math.ceil(avg), cards.length);
-      var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
-      var msg = avg >= 4 ? 'You know this well!' : avg >= 3 ? 'Getting there!' : 'Keep practicing!';
+      var emoji = avg >= 4 ? 'Indefatigable' : avg >= 3 ? 'Resilient' : 'Keep going';
+      var msg = avg >= 4 ? 'Indefatigable — you know this well!' : avg >= 3 ? 'Resilient work — getting there!' : 'Keep practicing!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
@@ -2959,7 +2993,7 @@ function showVerseBuild(fid) {
 
     function showResults() {
       var pct = Math.round(score / Math.min(verses.length, 5) * 100);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
+      var emoji = pct >= 80 ? 'Adroit' : pct >= 60 ? 'Meticulous' : 'Keep going';
       var xpEarned = recordSession(fid, 'versebuild', score, Math.min(verses.length, 5));
       var h = '<div class="cloze-results"><div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + Math.min(verses.length, 5) + '</div>';
@@ -3065,6 +3099,400 @@ function showWordMatch(fid) {
           }
         });
       }
+    }
+    render();
+  });
+}
+
+// ---- Shared term-set resolver for the games below (Scroll Trade, Term
+// Stack, The Imposter, Clue) — same key_terms-or-verse-fallback pattern
+// already used by Memory Match and Word Match, factored out for reuse.
+function resolveGameTerms(fid, minCount, cb) {
+  loadContent(fid).then(function (data) {
+    if (data && data.key_terms && data.key_terms.length >= minCount) {
+      cb(data.key_terms.slice()); return;
+    }
+    var verses = getVerses(fid);
+    if (!verses.length) {
+      fetch('../data/' + fid + '.json').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d) { CHAPTER_CACHE[fid] = d; resolveGameTerms(fid, minCount, cb); }
+          else cb(null);
+        }).catch(function () { cb(null); });
+      return;
+    }
+    var usable = shuffle(verses.filter(function (v) { return v.length > 30 && v.length < 150; })).slice(0, 8);
+    if (usable.length < minCount) { cb(null); return; }
+    cb(usable.map(function (v) {
+      var words = v.split(/\s+/);
+      var half = Math.ceil(words.length / 2);
+      return { term: words.slice(0, half).join(' '), definition: words.slice(half).join(' ') + '.' };
+    }));
+  });
+}
+
+// ---- Scroll Trade (Go Fish reskin) — trade the Scribe bot for matching
+// term/definition pairs drawn from this section's own key terms ----
+function showScrollTrade(fid) {
+  resolveGameTerms(fid, 4, function (all) {
+    if (!all) { showStubForMode(fid, 'scrolltrade'); return; }
+    var terms = shuffle(all).slice(0, 6);
+    var deck = [];
+    terms.forEach(function (t, i) {
+      deck.push({ side: 'term', text: t.term, pairId: i });
+      deck.push({ side: 'def', text: t.definition.length > 90 ? t.definition.slice(0, 87) + '…' : t.definition, pairId: i });
+    });
+    deck = shuffle(deck);
+    var hand = deck.splice(0, 5);
+    var botHand = deck.splice(0, 5);
+    var pile = deck;
+    var collected = 0, botCollected = 0, turn = 'player';
+    var log = 'Tap a scroll from your hand to ask the Scribe for its match.';
+
+    function pairIn(list, pairId, side) {
+      for (var i = 0; i < list.length; i++) if (list[i].pairId === pairId && list[i].side !== side) return i;
+      return -1;
+    }
+    function autoPair(list) {
+      for (var i = 0; i < list.length; i++) {
+        var j = pairIn(list, list[i].pairId, list[i].side);
+        if (j > i) { list.splice(j, 1); list.splice(i, 1); return true; }
+      }
+      return false;
+    }
+
+    function render() {
+      var h = '<div class="st-view">';
+      h += '<div class="st-header">Scroll Trade</div>';
+      h += '<div class="st-stats">Your scrolls: ' + collected + '/' + terms.length +
+        ' &nbsp; Scribe’s scrolls: ' + botCollected + '/' + terms.length +
+        ' &nbsp; Pile: ' + pile.length + '</div>';
+      h += '<div class="st-log">' + log + '</div>';
+      h += '<div class="st-sec">Your hand — tap a scroll to ask for its match</div><div class="st-hand">';
+      hand.forEach(function (c, i) {
+        h += '<button class="wm-item st-chip st-' + c.side + '" data-i="' + i + '"' + (turn !== 'player' ? ' disabled' : '') + '>' + c.text + '</button>';
+      });
+      h += '</div>';
+      h += '<button class="study-btn" id="b-st-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-st-back').addEventListener('click', function () { go(fid); });
+      if (turn === 'player') {
+        document.querySelectorAll('.st-chip').forEach(function (b) {
+          b.addEventListener('click', function () { playerAsk(parseInt(this.getAttribute('data-i'))); });
+        });
+      }
+    }
+
+    function playerAsk(i) {
+      var asked = hand[i];
+      var botIdx = pairIn(botHand, asked.pairId, asked.side);
+      if (botIdx >= 0) {
+        hand.splice(i, 1);
+        botHand.splice(botIdx, 1);
+        collected++;
+        log = 'The Scribe hands over the match — you collected a scroll pair.';
+        speakText(asked.text);
+      } else if (pile.length) {
+        hand.push(pile.shift());
+        log = 'The Scribe has none to trade — you draw from the scroll pile.';
+        while (autoPair(hand)) collected++;
+        turn = 'bot';
+      } else {
+        turn = 'bot';
+      }
+      render();
+      if (collected + botCollected >= terms.length) { setTimeout(showEnd, 500); return; }
+      if (turn === 'bot') setTimeout(botTurn, 900);
+    }
+
+    function botTurn() {
+      if (botHand.length) {
+        var ask = botHand[Math.floor(Math.random() * botHand.length)];
+        var pIdx = pairIn(hand, ask.pairId, ask.side);
+        if (pIdx >= 0) {
+          hand.splice(pIdx, 1);
+          botHand.splice(botHand.indexOf(ask), 1);
+          botCollected++;
+          log = 'The Scribe asked for a match — and found one in your hand.';
+        } else if (pile.length) {
+          botHand.push(pile.shift());
+          log = 'The Scribe drew from the pile.';
+          while (autoPair(botHand)) botCollected++;
+        }
+      }
+      turn = 'player';
+      render();
+      if (collected + botCollected >= terms.length) setTimeout(showEnd, 500);
+    }
+
+    function showEnd() {
+      var xp = recordSession(fid, 'scrolltrade', collected, terms.length);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">' + (collected >= botCollected ? 'A Sagacious Trade' : 'Stay Tenacious') + '</div>';
+      h += '<div class="cr-score">' + collected + ' / ' + terms.length + '</div>';
+      h += '<div class="cr-pct">Scribe collected ' + botCollected + '</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-st-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-st-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-st-retry').addEventListener('click', function () { showScrollTrade(fid); });
+      document.getElementById('b-st-done').addEventListener('click', function () { go(fid); });
+    }
+
+    render();
+  });
+}
+
+// ---- Term Stack (Stack & Match reskin) — drop scrolls into columns; land a
+// term beside its matching definition (any side) and both clear ----
+function showTermStack(fid) {
+  resolveGameTerms(fid, 4, function (all) {
+    if (!all) { showStubForMode(fid, 'termstack'); return; }
+    var terms = shuffle(all).slice(0, 6);
+    var queue = [];
+    terms.forEach(function (t, i) {
+      queue.push({ side: 'term', text: t.term, pairId: i });
+      queue.push({ side: 'def', text: t.definition.length > 70 ? t.definition.slice(0, 67) + '…' : t.definition, pairId: i });
+    });
+    queue = shuffle(queue);
+    var COLS = 4, MAXROWS = 5;
+    var grid = []; for (var c0 = 0; c0 < COLS; c0++) grid.push([]);
+    var cleared = 0, moves = 0, ended = false;
+
+    function neighborsOf(col, row) {
+      return [[col, row - 1], [col, row + 1], [col - 1, row], [col + 1, row]]
+        .filter(function (p) { return p[0] >= 0 && p[0] < COLS && p[1] >= 0; });
+    }
+    function checkClears(col, row) {
+      var block = grid[col][row];
+      if (!block) return;
+      var nbrs = neighborsOf(col, row);
+      for (var i = 0; i < nbrs.length; i++) {
+        var nc = nbrs[i][0], nr = nbrs[i][1];
+        var other = grid[nc] && grid[nc][nr];
+        if (other && other.pairId === block.pairId && other.side !== block.side) {
+          grid[col][row] = null; grid[nc][nr] = null;
+          cleared++;
+          return;
+        }
+      }
+    }
+    function boardFull() {
+      for (var c = 0; c < COLS; c++) if (grid[c].length < MAXROWS) return false;
+      return true;
+    }
+
+    function drop(col) {
+      if (ended || !queue.length || grid[col].length >= MAXROWS) return;
+      var block = queue.shift();
+      var row = grid[col].length;
+      grid[col].push(block);
+      moves++;
+      checkClears(col, row);
+      render();
+      if (cleared === terms.length) { ended = true; setTimeout(showEnd, 500); return; }
+      // No more drops possible either way: the queue is spent, or every
+      // column is full while scrolls remain.
+      if (!queue.length || boardFull()) { ended = true; setTimeout(showEnd, 500); }
+    }
+
+    function render() {
+      var h = '<div class="ts-view">';
+      if (moves === 0) {
+        h += '<div class="ts-hero-wrap"><img class="game-hero-img ts-hero-img" src="images/term_stack_fragment.png" alt="">' +
+          '<div class="ts-hero-word" lang="he" dir="rtl" title="ברית — brit — covenant">\u{10901}\u{10913}\u{10909}\u{10915}</div></div>';
+      }
+      h += '<div class="ts-header">Drop a scroll into a column — a meticulous eye clears the board fastest</div>';
+      h += '<div class="ts-stats">Cleared: ' + cleared + '/' + terms.length + ' &nbsp; Scrolls left: ' + queue.length + '</div>';
+      if (queue.length) h += '<div class="ts-next">Next: <span class="ts-next-chip ts-' + queue[0].side + '">' + queue[0].text + '</span></div>';
+      h += '<div class="ts-grid">';
+      for (var c = 0; c < COLS; c++) {
+        var full = grid[c].length >= MAXROWS;
+        h += '<div class="ts-col" data-col="' + c + '"' + (!queue.length || full ? ' disabled' : '') + '>';
+        var cells = [];
+        for (var r = MAXROWS - 1; r >= 0; r--) {
+          var b = grid[c][r];
+          cells.push(b ? '<div class="ts-block ts-' + b.side + '">' + b.text + '</div>' : '<div class="ts-empty"></div>');
+        }
+        h += cells.join('') + '</div>';
+      }
+      h += '</div>';
+      h += '<button class="study-btn" id="b-ts-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-ts-back').addEventListener('click', function () { go(fid); });
+      document.querySelectorAll('.ts-col:not([disabled])').forEach(function (el) {
+        el.addEventListener('click', function () { drop(parseInt(this.getAttribute('data-col'))); });
+      });
+    }
+
+    function showEnd() {
+      var xp = recordSession(fid, 'termstack', cleared, terms.length);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">' + (cleared === terms.length ? 'Board Cleared' : 'Round Over') + '</div>';
+      h += '<div class="cr-score">' + cleared + ' / ' + terms.length + '</div>';
+      h += '<div class="cr-pct">in ' + moves + ' drops</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-ts-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-ts-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-ts-retry').addEventListener('click', function () { showTermStack(fid); });
+      document.getElementById('b-ts-done').addEventListener('click', function () { go(fid); });
+    }
+
+    render();
+  });
+}
+
+// ---- The Imposter — 3 real facts from this section + 1 fact swapped in
+// from elsewhere in the volume set; tap the one that doesn't belong ----
+function showImposter(fid) {
+  resolveGameTerms(fid, 3, function (mine) {
+    if (!mine) { showStubForMode(fid, 'imposter'); return; }
+    var others = shuffle(IDS.filter(function (x) { return x !== fid; })).slice(0, 4);
+    var loads = others.map(function (o) { return loadContent(o).catch(function () { return null; }); });
+    Promise.all(loads).then(function (all) {
+      var outside = [];
+      all.forEach(function (d) { if (d && d.key_terms) outside = outside.concat(d.key_terms); });
+      var pool = shuffle(mine.slice());
+      var outsidePool = shuffle(outside.slice());
+      var n = Math.min(5, Math.floor(pool.length / 3), outsidePool.length);
+      if (n < 1) { showStubForMode(fid, 'imposter'); return; }
+      var rounds = [];
+      for (var i = 0; i < n; i++) {
+        var real = pool.splice(0, 3);
+        var fake = outsidePool.shift();
+        var cards = real.map(function (t) { return { term: t.term, definition: t.definition, real: true }; });
+        cards.push({ term: fake.term, definition: fake.definition, real: false });
+        rounds.push(shuffle(cards));
+      }
+
+      var idx = 0, correct = 0;
+      function render() {
+        var cards = rounds[idx];
+        var h = '<div class="imp-view">';
+        if (idx === 0) h += '<img class="game-hero-img" src="images/imposter_card_grid.png" alt="" aria-hidden="true">';
+        h += '<div class="imp-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — stay perspicacious: one of these doesn’t belong to this section</div>';
+        h += '<div class="imp-grid">';
+        cards.forEach(function (c, i) {
+          h += '<button class="imp-card" data-i="' + i + '"><div class="imp-term">' + c.term + '</div><div class="imp-def">' +
+            (c.definition.length > 90 ? c.definition.slice(0, 87) + '…' : c.definition) + '</div></button>';
+        });
+        h += '</div><div id="imp-fb" class="cloze-feedback"></div>';
+        h += '<button class="study-btn" id="b-imp-back" style="margin-top:16px">Back to activities</button>';
+        h += '</div>';
+        document.getElementById('content').innerHTML = h;
+        injectGameBack(fid);
+        document.getElementById('b-imp-back').addEventListener('click', function () { go(fid); });
+        document.querySelectorAll('.imp-card').forEach(function (b, bi) {
+          b.addEventListener('click', function () { pick(parseInt(this.getAttribute('data-i')), cards); });
+        });
+      }
+      function pick(i, cards) {
+        var c = cards[i];
+        document.querySelectorAll('.imp-card').forEach(function (b, bi) {
+          b.setAttribute('disabled', 'true');
+          if (!cards[bi].real) b.classList.add('imp-reveal-fake');
+        });
+        if (!c.real) { correct++; document.getElementById('imp-fb').innerHTML = '<span class="fb-correct">Right — that one’s from elsewhere.</span>'; }
+        else { document.getElementById('imp-fb').innerHTML = '<span class="fb-try">Not quite — the imposter is highlighted.</span>'; }
+        setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1600);
+      }
+      function showEnd() {
+        var xp = recordSession(fid, 'imposter', correct, rounds.length);
+        var h = '<div class="cloze-results">';
+        h += '<div class="cr-emoji">' + (correct === rounds.length ? 'Sharp Eye' : 'Good Try') + '</div>';
+        h += '<div class="cr-score">' + correct + ' / ' + rounds.length + '</div>';
+        h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+        h += '<div class="cr-btns">';
+        h += '<button class="study-btn sb-pri" id="b-imp-retry">Play Again</button>';
+        h += '<button class="study-btn" id="b-imp-done">Back to activities</button>';
+        h += '</div></div>';
+        document.getElementById('content').innerHTML = h;
+        document.getElementById('b-imp-retry').addEventListener('click', function () { showImposter(fid); });
+        document.getElementById('b-imp-done').addEventListener('click', function () { go(fid); });
+      }
+      render();
+    });
+  });
+}
+
+// ---- Clue — a name-it deduction round; clues reveal progressively from a
+// term's own definition text, fewer clues used scores more ----
+function showClueRound(fid) {
+  resolveGameTerms(fid, 5, function (all) {
+    if (!all) { showStubForMode(fid, 'clue'); return; }
+    var rounds = shuffle(all.slice()).slice(0, 5);
+    var names = all.map(function (t) { return t.term; });
+
+    function splitClues(text) {
+      var parts = (text.match(/[^.;,]+[.;,]?/g) || [text]).map(function (p) { return p.trim(); }).filter(Boolean);
+      if (parts.length < 3) {
+        var words = text.split(/\s+/);
+        var third = Math.max(1, Math.ceil(words.length / 3));
+        parts = [words.slice(0, third).join(' '), words.slice(third, third * 2).join(' '), words.slice(third * 2).join(' ')].filter(Boolean);
+      }
+      return parts.slice(0, 3);
+    }
+
+    var idx = 0, score = 0, cluesShown = 1;
+    function render() {
+      var t = rounds[idx];
+      var clues = splitClues(t.definition);
+      cluesShown = Math.min(cluesShown, clues.length);
+      var options = shuffle([t.term].concat(shuffle(names.filter(function (nm) { return nm !== t.term; })).slice(0, 3)));
+      var h = '<div class="clue-view">';
+      if (idx === 0) h += '<img class="game-hero-img" src="images/clue_deduction.png" alt="" aria-hidden="true">';
+      h += '<div class="clue-header">Round ' + (idx + 1) + ' of ' + rounds.length + ' — a sagacious guess needs fewer clues</div>';
+      h += '<div class="clue-list">';
+      for (var i = 0; i < cluesShown; i++) h += '<div class="clue-item">Clue ' + (i + 1) + ': ' + clues[i] + '</div>';
+      h += '</div>';
+      h += '<div class="clue-opts">';
+      options.forEach(function (o) { h += '<button class="wm-item st-chip" data-o="' + tuEsc(o) + '">' + o + '</button>'; });
+      h += '</div>';
+      if (cluesShown < clues.length) h += '<button class="study-btn" id="b-clue-more">One more clue</button>';
+      h += '<button class="study-btn" id="b-clue-back" style="margin-top:16px">Back to activities</button>';
+      h += '</div>';
+      document.getElementById('content').innerHTML = h;
+      injectGameBack(fid);
+      document.getElementById('b-clue-back').addEventListener('click', function () { go(fid); });
+      var moreBtn = document.getElementById('b-clue-more');
+      if (moreBtn) moreBtn.addEventListener('click', function () { cluesShown++; render(); });
+      document.querySelectorAll('.clue-opts button').forEach(function (b) {
+        b.addEventListener('click', function () { guess(this.getAttribute('data-o'), t); });
+      });
+    }
+    function guess(picked, t) {
+      var pts = picked === t.term ? Math.max(1, 4 - cluesShown) : 0;
+      score += pts;
+      document.querySelectorAll('.clue-opts button').forEach(function (b) { b.setAttribute('disabled', 'true'); });
+      var fb = document.createElement('div');
+      fb.className = 'cloze-feedback';
+      fb.innerHTML = pts > 0 ? '<span class="fb-correct">Right — +' + pts + '</span>' : '<span class="fb-try">It was: ' + t.term + '</span>';
+      document.querySelector('.clue-view').appendChild(fb);
+      cluesShown = 1;
+      setTimeout(function () { idx++; if (idx < rounds.length) render(); else showEnd(); }, 1400);
+    }
+    function showEnd() {
+      var xp = recordSession(fid, 'clue', score, rounds.length * 3);
+      var h = '<div class="cloze-results">';
+      h += '<div class="cr-emoji">Case Closed</div>';
+      h += '<div class="cr-score">' + score + ' pts</div>';
+      h += '<div class="cr-xp">+' + xp + ' XP earned</div>';
+      h += '<div class="cr-btns">';
+      h += '<button class="study-btn sb-pri" id="b-clue-retry">Play Again</button>';
+      h += '<button class="study-btn" id="b-clue-done">Back to activities</button>';
+      h += '</div></div>';
+      document.getElementById('content').innerHTML = h;
+      document.getElementById('b-clue-retry').addEventListener('click', function () { showClueRound(fid); });
+      document.getElementById('b-clue-done').addEventListener('click', function () { go(fid); });
     }
     render();
   });
@@ -3377,8 +3805,8 @@ function showWhoSaidIt(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'whosaidit', points, questions.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Listen closer!';
+      var emoji = pct >= 80 ? 'Insightful' : pct >= 60 ? 'Candid' : 'Keep going';
+      var msg = pct >= 80 ? 'Genuinely insightful!' : pct >= 60 ? 'A candid read — good work!' : 'Listen closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -3565,8 +3993,8 @@ function showTrueFalse(fid) {
     function showResults() {
       var pct = Math.round(score / questions.length * 100);
       var xpEarned = recordSession(fid, 'truefalse', points, questions.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Read closer!';
+      var emoji = pct >= 80 ? 'Trenchant' : pct >= 60 ? 'Cogent' : 'Keep going';
+      var msg = pct >= 80 ? 'Trenchant judgment!' : pct >= 60 ? 'Cogent reasoning — good work!' : 'Read closer!';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + questions.length + '</div>';
@@ -3714,7 +4142,7 @@ function showStorySequence(fid) {
             finished = true;
             var pts = attempts === 1 ? 1.0 : attempts === 2 ? 0.7 : 0.4;
             var xpEarned = recordSession(fid, 'sequence', pts, 1);
-            fb.innerHTML = '<div class="fb-correct">Perfect order! (+' + Math.round(pts * 10) + ' XP)</div>';
+            fb.innerHTML = '<div class="fb-correct">Intrepid ordering! (+' + Math.round(pts * 10) + ' XP)</div>';
             setTimeout(function () { go(fid); }, 2800);
           } else {
             if (attempts === 1) {
@@ -4032,8 +4460,8 @@ function showDictation(fid) {
     function showResults() {
       var pct = Math.round((totalPoints / sentences.length) * 100);
       var xpEarned = recordSession(fid, 'dictation', totalPoints, sentences.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Try more listens next time.';
+      var emoji = pct >= 80 ? 'Impeccable' : pct >= 60 ? 'Assiduous' : 'Keep going';
+      var msg = pct >= 80 ? 'Impeccable ear!' : pct >= 60 ? 'Assiduous listening — good work!' : 'Try more listens next time.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + pct + '% accuracy</div>';
@@ -4185,8 +4613,8 @@ function showWordMorph(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'morph', points, rounds.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Notice the letter shapes.';
+      var emoji = pct >= 80 ? 'Ingenious' : pct >= 60 ? 'Dauntless' : 'Keep going';
+      var msg = pct >= 80 ? 'Ingenious work!' : pct >= 60 ? 'Dauntless effort — good work!' : 'Notice the letter shapes.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
@@ -4361,8 +4789,8 @@ function showSyllableTap(fid) {
     function showResults() {
       var pct = Math.round(score / rounds.length * 100);
       var xpEarned = recordSession(fid, 'syllable', points, rounds.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
+      var emoji = pct >= 80 ? 'Vivacious' : pct >= 60 ? 'Zealous' : 'Keep going';
+      var msg = pct >= 80 ? 'Vivacious command!' : pct >= 60 ? 'Zealous effort — good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + rounds.length + '</div>';
@@ -4515,8 +4943,8 @@ function showRhymeChain(fid) {
     function showResults() {
       var pct = Math.round(score / usable.length * 100);
       var xpEarned = recordSession(fid, 'rhyme', points, usable.length);
-      var emoji = pct >= 80 ? 'Outstanding' : pct >= 60 ? 'Well done' : 'Keep going';
-      var msg = pct >= 80 ? 'Outstanding!' : pct >= 60 ? 'Good work!' : 'Say them aloud.';
+      var emoji = pct >= 80 ? 'Salient' : pct >= 60 ? 'Tenacious' : 'Keep going';
+      var msg = pct >= 80 ? 'A salient ear!' : pct >= 60 ? 'Tenacious effort — good work!' : 'Say them aloud.';
       var h = '<div class="cloze-results">';
       h += '<div class="cr-emoji">' + emoji + '</div>';
       h += '<div class="cr-score">' + score + ' / ' + usable.length + '</div>';
@@ -5302,7 +5730,7 @@ function showCrossReview() {
     var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
     var remaining = getAllDueCount();
     var xpEarned = recordSession('review', 'review', cards.length, cards.length);
-    var emoji = avg >= 4 ? 'Outstanding' : avg >= 3 ? 'Well done' : 'Keep going';
+    var emoji = avg >= 4 ? 'Venerable' : avg >= 3 ? 'Sagacious' : 'Keep going';
     var h = '<div class="cloze-results">';
     h += '<div class="cr-emoji">' + emoji + '</div>';
     h += '<div class="cr-score">' + cards.length + ' cards reviewed</div>';
@@ -5619,7 +6047,7 @@ function showStudyMode(fid) {
       var h = '<div class="study-view">';
       h += '<h2 class="sv-title">' + secLabel + '</h2>';
       h += '<div class="sv-sec"><h3>Preview</h3><div class="sv-text">' + preview + '</div></div>';
-      h += '<div class="sv-sec"><p class="study-na">Full curated summary, key terms, and FAQ will be added in a future session.</p></div>';
+      h += '<div class="sv-sec"><p class="study-na">A full, meticulously curated summary, key terms, and FAQ will be added in a future session.</p></div>';
       h += '<button class="study-btn" id="b-back-na">Back to activities</button></div>';
       document.getElementById('content').innerHTML = h;
       document.getElementById('b-back-na').addEventListener('click', function () { go(fid); });
@@ -5922,14 +6350,14 @@ TU.teamCount = function (n) {
 };
 TU.setup = function () {
   var s = this.state, h = this._bar();
-  h += '<div class="tu-hero"><div class="tu-hero-t">Truth Uncovered</div><div class="tu-hero-s">' + tuEsc(this.bookLabel) + ' · play in teams around one screen, or tap TV and mirror to the big screen.</div></div>';
+  h += '<div class="tu-hero"><div class="tu-hero-t">Truth Uncovered</div><div class="tu-hero-s">' + tuEsc(this.bookLabel) + ' · play in teams around one screen — cogent answers win the board.</div></div>';
   h += '<div class="tu-sec">Teams</div><div class="tu-count">';
   [1, 2, 3, 4].forEach(function (n) { h += '<button class="tu-cbtn' + (s.teams.length === n ? ' on' : '') + '" data-tu="teamCount" data-arg="' + n + '">' + n + '</button>'; });
   h += '</div><div class="tu-teamset">';
   s.teams.forEach(function (t, i) { h += '<div class="tu-teamrow"><span class="tu-dot" style="background:' + t.color + '"></span><input class="tu-in" data-tu-name="' + i + '" value="' + tuEsc(t.name) + '" maxlength="16"></div>'; });
   h += '</div><div class="tu-sec">Choose a show</div><div class="tu-shows">';
-  h += '<button class="tu-show tu-showfeud" data-tu="startFeud"><div class="tu-show-t">Evidence Board</div><div class="tu-show-s">Name the top answers. Three strikes and the other team can steal.</div></button>';
-  h += '<button class="tu-show tu-showsealed" data-tu="startSealed"><div class="tu-show-t">Sealed Scrolls</div><div class="tu-show-s">Open sealed cases. Take the Scribe\'s offer, or hold.</div></button>';
+  h += '<button class="tu-show tu-showfeud" data-tu="startFeud"><img class="tu-show-img" src="images/evidence_board.png" alt="" aria-hidden="true"><div class="tu-show-t">Evidence Board</div><div class="tu-show-s">Name the top answers. Three strikes and the other team can steal.</div></button>';
+  h += '<button class="tu-show tu-showsealed" data-tu="startSealed"><img class="tu-show-img" src="images/sealed_scrolls_cases.png" alt="" aria-hidden="true"><div class="tu-show-t">Sealed Scrolls</div><div class="tu-show-s">Open sealed cases. Take the Scribe\'s offer, or hold.</div></button>';
   h += '</div>';
   this._wrap(h);
 };
