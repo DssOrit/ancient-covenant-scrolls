@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" sizes="48x48" href="icons/icon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
-<link rel="apple-touch-startup-image" href="assets/splash.png">
+<link rel="apple-touch-startup-image" href="assets/splash.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Load Words">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -641,7 +641,7 @@ input[type=range]{ flex:1; accent-color:var(--accent); }
 /* ============ SPLASH (appears after the intro, then reveals the app) ============ */
 #splash{ position:fixed; inset:0; z-index:99999; background:#1a1a2e; overflow:hidden; }
 #splash.gone{ opacity:0; visibility:hidden; pointer-events:none; transition:opacity .5s ease; }
-#splash .sp-img{ position:absolute; inset:0; background:#1a1a2e url(assets/splash.png) center/contain no-repeat; animation:spFadeIn .5s ease both; }
+#splash .sp-img{ position:absolute; inset:0; background:#1a1a2e url(assets/splash.jpg) center/contain no-repeat; animation:spFadeIn .5s ease both; }
 @keyframes spFadeIn{ from{opacity:0;} to{opacity:1;} }
 @media (prefers-reduced-motion:reduce){ #boot-intro .bi-fill{ animation-duration:.3s; } }
 </style>
