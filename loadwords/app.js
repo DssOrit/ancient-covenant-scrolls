@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v16';
+const APP_VERSION = 'v17';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -38,6 +38,7 @@ const ICONS = {
   alert:'<path d="M12 3 2 20h20z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/>',
   fire:'<path d="M12 2c1 3-3 4-3 8a3 3 0 0 0 6 0c1 1 1.5 2.5 1.5 4a4.5 4.5 0 0 1-9 0C7.5 9 9 6 12 2z"/>',
   clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  target:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/>',
   layers:'<path d="M12 3 3 8l9 5 9-5z"/><path d="M3 13l9 5 9-5"/>',
   check:'<path d="M5 12.5l4.5 4.5L19 7"/>',
   photo:'<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.7"/><path d="M4 17l5-5 4 4 3-3 4 4"/>',
@@ -85,6 +86,8 @@ const State = {
   slider:{ queue:[], index:0 },
   dragdrop:{ queue:[], index:0, score:0, answered:false, chosen:null },
   deal:{ phase:'pick', words:[], caseMap:[], myCase:null, openedCases:[], eliminatedIds:[], lastReveal:null, offerAmount:0, offerStep:0, finalResult:null },
+  memory:{ cards:[], flipped:[], moves:0, matches:0, lock:false, pairCount:0, streak:0, decayPool:50, decayClaimed:false, roundScore:0, lastGain:0 },
+  memoryScore:{ total:0, lastDate:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -106,6 +109,7 @@ async function loadAll(){
   State.images = await sGet('images', {});
   State.difficultWords = await sGet('difficultWords', []);
   State.streak = await sGet('streak', { count:0, lastDate:null });
+  State.memoryScore = await sGet('memoryScore', { total:0, lastDate:null });
   const s = await sGet('settings', null);
   if(s) State.settings = Object.assign(State.settings, s);
   applyTheme();
@@ -465,6 +469,7 @@ function renderView(){
     case 'slider': return renderSlider();
     case 'dragdrop': return renderDragDrop();
     case 'deal': return renderDeal();
+    case 'memory': return renderMemory();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -960,6 +965,7 @@ function renderTest(){
       <button class="action" data-nav="slider" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Upgrade Slider</b><span>Slide to watch a sentence turn advanced</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="dragdrop" style="--c:#7C3AED"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Drag &amp; Drop</b><span>Drag the right word chip into the blank</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1315,6 +1321,96 @@ function renderDeal(){
   <p class="sub" style="margin-top:14px;">Tap a briefcase to open it and eliminate its word.</p>`;
 }
 
+// ---------------- MEMORY MATCH ----------------
+async function memorySyncScore(){
+  const today = todayStr();
+  if(State.memoryScore.lastDate !== today){
+    State.memoryScore = { total:0, lastDate:today };
+  }
+  await sSet('memoryScore', State.memoryScore);
+}
+function startMemory(){
+  const pool = shuffle(State.words.filter(w=>w.definition)).slice(0,6);
+  const cards = [];
+  pool.forEach((w,i)=>{
+    cards.push({ id:'w'+i, pairId:i, type:'word', text:w.word, wordId:w.id, matched:false });
+    cards.push({ id:'d'+i, pairId:i, type:'def', text:w.definition, wordId:w.id, matched:false });
+  });
+  State.memory = { cards: shuffle(cards), flipped:[], moves:0, matches:0, lock:false, pairCount: pool.length, streak:0, decayPool:50, decayClaimed:false, roundScore:0, lastGain:0 };
+  memorySyncScore();
+}
+function memoryFlip(idx){
+  const M = State.memory;
+  if(M.lock) return;
+  const card = M.cards[idx];
+  if(!card || card.matched || M.flipped.includes(idx) || M.flipped.length>=2) return;
+  M.flipped.push(idx);
+  if(M.flipped.length===2){
+    M.moves++;
+    const [a,b] = M.flipped;
+    if(M.cards[a].pairId === M.cards[b].pairId){
+      M.cards[a].matched = true; M.cards[b].matched = true;
+      M.matches++;
+      M.streak++;
+      const gained = 100 * M.streak;
+      M.lastGain = gained;
+      M.roundScore += gained;
+      State.memoryScore.total += gained;
+      sSet('memoryScore', State.memoryScore);
+      gradeWord(M.cards[a].wordId, 2);
+      M.flipped = [];
+      if(M.matches === M.pairCount && !M.decayClaimed){
+        M.decayClaimed = true;
+        M.roundScore += M.decayPool;
+        State.memoryScore.total += M.decayPool;
+        sSet('memoryScore', State.memoryScore);
+      }
+    } else {
+      M.streak = 0;
+      M.lastGain = 0;
+      M.decayPool = Math.max(0, M.decayPool - 1);
+      M.lock = true;
+      setTimeout(()=>{
+        State.memory.flipped = [];
+        State.memory.lock = false;
+        render();
+      }, 900);
+    }
+  }
+}
+function renderMemory(){
+  const M = State.memory;
+  if(!M.cards.length){
+    return `<div class="empty"><p>Loading Memory Match…</p></div>`;
+  }
+  const allMatched = M.matches === M.pairCount;
+  return `<div class="pagehead"><h2>Memory Match</h2></div>
+  <p class="sub">Flip two cards. Match each word to its meaning. Precision earns more than speed.</p>
+  <div class="memory-scoreboard">
+    <div>${ic('star')}<b>${State.memoryScore.total.toLocaleString()}</b><span>Daily score</span></div>
+    <div>${ic('fire')}<b>x${M.streak}</b><span>Streak</span></div>
+    <div>${ic('target')}<b>${M.decayPool}/50</b><span>Efficiency</span></div>
+  </div>
+  <div class="memory-grid">
+    ${M.cards.map((c,i)=>{
+      const faceUp = c.matched || M.flipped.includes(i);
+      return `<button class="memory-card ${faceUp?'flipped':''} ${c.matched?'matched':''}" data-mem-idx="${i}" ${M.lock?'disabled':''}>
+        <span class="memory-inner">
+          <span class="memory-back">?</span>
+          <span class="memory-front mem-${c.type}">${escapeHtml(c.text)}</span>
+        </span>
+      </button>`;
+    }).join('')}
+  </div>
+  ${M.lastGain>0 ? `<div class="memory-gain">+${M.lastGain} points${M.streak>1?` (x${M.streak} streak)`:''}</div>` : ''}
+  <div class="memory-stats">
+    <div><b>${M.matches}/${M.pairCount}</b><span>Matches</span></div>
+    <div><b>${M.moves}</b><span>Moves</span></div>
+    <div><b>${M.roundScore.toLocaleString()}</b><span>Round score</span></div>
+  </div>
+  ${allMatched ? `<button class="big-btn" style="margin-top:16px;" id="memAgainBtn">Play again</button>` : ''}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1439,6 +1535,7 @@ function bindEvents(){
       if(v==='slider'){ startSlider(); }
       if(v==='dragdrop'){ startDragDrop(); }
       if(v==='deal'){ startDeal(); }
+      if(v==='memory'){ startMemory(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1758,6 +1855,15 @@ function bindEvents(){
   if(noDealBtn){ noDealBtn.addEventListener('click', ()=>{ dealReject(); render(); }); }
   const dealAgainBtn = document.getElementById('dealAgainBtn');
   if(dealAgainBtn){ dealAgainBtn.addEventListener('click', ()=>{ startDeal(); render(); }); }
+
+  document.querySelectorAll('[data-mem-idx]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      memoryFlip(parseInt(el.getAttribute('data-mem-idx'),10));
+      render();
+    });
+  });
+  const memAgainBtn = document.getElementById('memAgainBtn');
+  if(memAgainBtn){ memAgainBtn.addEventListener('click', ()=>{ startMemory(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
