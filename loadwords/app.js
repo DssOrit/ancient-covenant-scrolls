@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v32';
+const APP_VERSION = 'v33';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -1326,6 +1326,7 @@ function renderDeal(){
   const D = State.deal;
   if(D.phase==='pick'){
     return `<div class="pagehead"><h2>Vocabulary Deal or No Deal</h2></div>
+    <div class="game-banner banner-deal"><img src="assets/games/deal.png" alt="Briefcase game show illustration" loading="lazy"></div>
     <p class="sub">Pick a briefcase to keep. It holds your mystery word — try to eliminate the others and read the Banker's offers.</p>
     <div class="deal-cases-grid">
       ${[0,1,2,3,4,5].map(i=>`<button class="deal-case" data-pick-case="${i}">${i+1}</button>`).join('')}
@@ -1602,6 +1603,7 @@ function renderImposter(){
   const labels = { simple:'SIMPLE CONCEPT', advanced:'ADVANCED UPGRADE', example:'EXAMPLE SENTENCE' };
   const shuffling = I.phase==='shuffling';
   return `<div class="pagehead"><h2>The Imposter</h2></div>
+  <div class="game-banner banner-imposter"><img src="assets/games/imposter.png" alt="Spot-the-imposter detective illustration" loading="lazy"></div>
   <p class="sub">One of these three cards doesn't belong. Find it.</p>
   <div class="memory-scoreboard">
     <div>${ic('star')}<b>${I.score.toLocaleString()}</b><span>Score</span></div>
@@ -1747,6 +1749,7 @@ function renderFeud(){
   }
   const done = F.phase!=='playing';
   return `<div class="pagehead"><h2>Vocab Feud</h2></div>
+  <div class="game-banner banner-feud"><img src="assets/games/feud.png" alt="Survey game show board illustration" loading="lazy"></div>
   <p class="sub">Survey topic: <b>${escapeHtml(F.themeLabel)}</b> — tap the words that belong on the board.</p>
   <div class="memory-scoreboard">
     <div>${ic('star')}<b>${F.score.toLocaleString()}</b><span>Score</span></div>
@@ -1893,6 +1896,7 @@ function renderBlockPuzzle(){
   }
   const done = B.phase!=='playing';
   return `<div class="pagehead"><h2>Word Blocks</h2></div>
+  <div class="game-banner banner-blocks"><img src="assets/games/blocks.png" alt="Colorful word-building puzzle blocks illustration" loading="lazy"></div>
   <p class="sub">Drag each chunk onto its word to spell it out. A completed word shatters and reveals its meaning.</p>
   <div class="memory-scoreboard">
     <div>${ic('star')}<b>${B.score.toLocaleString()}</b><span>Score</span></div>
@@ -2261,7 +2265,7 @@ function renderMystery(){
   const revealedClues = M.clues.slice(0, M.revealedCount);
   return `<div class="pagehead"><h2>Word Mystery</h2></div>
   <p class="sub">One of these 6 words is the mystery word. Use the clues to cross off suspects, then make your accusation.</p>
-  <div class="scene scene-scan"><span class="sc-el sc-a"></span><span class="sc-el sc-b"></span><span class="sc-el sc-c"></span></div>
+  <div class="game-banner banner-mystery"><img src="assets/games/mystery.png" alt="Detective mystery illustration" loading="lazy"></div>
   <div class="mystery-clues">
     ${revealedClues.map((c,i)=>`<div class="mystery-clue"><span class="mystery-clue-num">Clue ${i+1}</span><p>${escapeHtml(c)}</p></div>`).join('')}
   </div>

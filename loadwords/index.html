@@ -499,6 +499,15 @@ main{ flex:1; padding:6px 20px 30px; }
 .debate-fill{ color:var(--good); }
 .debate-opts{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
 
+/* Game visual banners (cropped photo/illustration panels, no image-editing tool available — cropped via CSS object-position instead of pixel-editing) */
+.game-banner{ position:relative; height:180px; border-radius:16px; overflow:hidden; margin-bottom:4px; background:#0f0f1a; }
+.game-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+.game-banner.banner-mystery img{ object-position:50% 32%; }
+.game-banner.banner-feud img{ object-position:50% 42%; }
+.game-banner.banner-deal img{ object-position:50% 42%; }
+.game-banner.banner-blocks img{ object-position:50% 46%; }
+.game-banner.banner-imposter img{ object-position:50% 46%; }
+
 /* Word Mystery */
 .mystery-clues{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
 .mystery-clue{ padding:12px 14px; border-radius:12px; border:1.5px solid var(--accent); background:var(--accent-soft); }
