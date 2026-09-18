@@ -131,7 +131,7 @@ than any trademarked title. All five are precached by the service worker
 
 ## Icons
 
-The icons in `/icons` (and the splash art in `/assets/splash.jpg`) are cropped directly from the original "Load Words PWA Icon Pack" design file — not placeholders. Sizes above roughly 380px are upscaled slightly since the source was a flattened preview composite, so if true full-resolution exports become available later, dropping them in under the same filenames is a straight swap.
+The icons in `/icons` (48 through 512px, plus a 384px "any"-purpose size) and the splash art in `/assets/splash.png` are the full-resolution "Load Words PWA Icon and Splash Pack" — a proper 1024px master export, not the earlier upscaled preview composite. The 192 and 512px slots reuse the same source for both their `any` and `maskable` manifest entries, since the pack doesn't ship dedicated maskable-safe-zone variants.
 
 ## Known v1 limits
 
