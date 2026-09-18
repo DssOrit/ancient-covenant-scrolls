@@ -5,13 +5,20 @@
 - Branch: `claude/load-words-pwa-setup-nf1pcn`.
 - **PR #954 is MERGED** (2026-09-18T03:17:31Z) — Vocab Feud, Stack & Match, Word Blocks, Story Quest, plus the carried-over Imposter/Thread-Link Board.
 - **PR #955 is MERGED** (2026-09-18T04:43:16Z) — session notes only.
-- **PR #956 is OPEN, not yet merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/956, head `71b4ed6`, 5 commits: Word Vault, the `ad`-tier rebuild + Philosophical tier, Debate & Meeting Arena, the Deal-or-No-Deal/Feud visual upgrades, and Grammar Coach. Waiting on the user's review + explicit merge go-ahead per Rule 9.
+- **PR #956 is MERGED** (2026-09-18T07:35:53Z, confirmed via `pull_request_read`) — 6 commits: Word Vault, the `ad`-tier rebuild + Philosophical tier, Debate & Meeting Arena, the Deal-or-No-Deal/Feud visual upgrades, and Grammar Coach. (The PR's own title/description only describe the first commit, Word Vault — later commits were pushed to the same open PR without updating its description; this note corrects that gap.)
+- **PR #957 is MERGED** (2026-09-18T07:45:51Z, confirmed via `pull_request_read`) — a separate PR opened after #956 merged: Word Mystery (Clue-style deduction game) plus scene illustrations for Story Quest/Debate/Mystery.
+- **PR #958 is MERGED** — the word-bank second pass (19 removed, 5 reclassified, 33 added — bank now 541 words) and 5 game banner illustrations (Word Mystery, Vocab Feud, Deal or No Deal, Word Blocks, The Imposter) cropped via CSS `object-position` so no trademarked logos/wordmarks from the user-supplied image pack are ever shown.
+- **PR #959 is MERGED** (2026-09-18T08:20:30Z, confirmed via `pull_request_read`) — Weekly Word Master: a Home-screen banner that picks one word a week (weighted toward words missed most in Study/Test) and walks through 4 mastery stages (spelling, definition, use in a sentence, function).
+- **PR #960 is MERGED** (2026-09-18T09:16:09Z, confirmed via `pull_request_read`) — session notes update, the full-resolution icon/splash pack (user-uploaded), and the splash-compression fix (see Round 4 below).
 - Working tree: clean.
-- `APP_VERSION` / `CACHE_NAME`: `v29` / `loadwords-v29` (on the PR #956 branch, not yet on `main`).
+- `APP_VERSION` / `CACHE_NAME`: `v36` / `loadwords-v36` — live on `main`.
+- `origin/main` HEAD: `35aad2ce6e40fe227da736a9d92d10469fd21555`.
 
 ## Backups
 
-- `backup/2026-09-18-loadwords-v24` — pushed, SHA-verified equal to `origin/main` (`1d60779`) right after today's merge landed. Recovery: `git checkout backup/2026-09-18-loadwords-v24`.
+- `backup/2026-09-18-loadwords-v24` — pushed, SHA-verified equal to `origin/main` (`1d60779`) after the PR #954/#955 merges.
+- `backup/2026-09-18-loadwords-v34` — pushed, SHA-verified equal to `origin/main` (`21b354d`) right after PR #959 (Weekly Word Master) merged.
+- `backup/2026-09-18-loadwords-v36` — pushed, SHA-verified equal to `origin/main` (`35aad2c`) right after PR #960 merged — this is the current recovery point. Recovery: `git checkout backup/2026-09-18-loadwords-v36`.
 
 ## Built today
 
@@ -40,22 +47,47 @@ After PR #954/#955 merged, the user gave the word-bank basicness audit's answer 
 - **Render-race bug (Word Blocks):** the shatter/wrong-flash cosmetic flags were cleared via a delayed `setTimeout(...) => render()`, which does a full DOM rebuild that could fire mid-drag and detach the chip a user was about to grab. Fixed by clearing both flags synchronously at the start of `blockPlaceChip()` instead of on a timer.
 - **`.note-box` icon color bug (app-wide, pre-existing):** `.note-box svg` had a hardcoded `stroke:var(--warn)`, so every "correct" (green) feedback box's checkmark rendered red/orange instead of green, across every game using that class — found via live screenshot review of Grammar Coach's result screen. Fixed to `stroke:currentColor` so the icon follows each instance's own inline color.
 
+## Round 3 — Word Mystery, word-bank round 2, image banners, Weekly Word Master (PRs #957, #958, #959, all merged)
+
+After PR #956 merged, three more shipping rounds landed:
+
+10. **Word Mystery** — a Clue/Cluedo-inspired deduction game (PR #957). 6 candidate words, one secretly the mystery word; up to 5 true clues revealed one at a time via `mysteryGenerateClues()` (syllable count, part of speech, tier, starting letter, theme, a synonym — all from existing fields, no new content). Player crosses off suspects manually (bookkeeping only, not engine-validated), then accuses.
+11. **Scene illustrations** (same PR #957) — CSS-animated `.scene-*` illustrations added to Story Quest (storm/candle/beacon per chapter), Debate Arena (meeting-room pulse), and Word Mystery (detective scan) — later the Mystery one was replaced by a real image banner in round 12.
+12. **Word-bank second pass** (PR #958) — user pasted a fresh review of the full word list. Removed 19 words still too basic (`ashen`, `wan`, `balmy`, `elderly`, `rapid`, `tedious`, etc.); reclassified 5 down to `ad` (`keen`, `perceptible`, `monotonous`, `nominal`, `obsolete` — verified against live data first: 9 of the user's 15 flagged words were already correctly tiered and didn't need to move); added 33 new words with user-supplied definitions, split 13 to `ph` and 20 to `sa` by character. Skipped `sycophoche` (not a real word, likely a typo). Bank is now **541 words**, zero duplicates, verified programmatically before and after writing.
+13. **5 game banner illustrations** (same PR #958) — the user uploaded a 5-game image-asset pack (`Load_Words_All_5_Game_Image_Packs.zip`). Flagged proactively that 3 of the 5 packs (Clue, Family Feud, Deal or No Deal) bake actual Hasbro/Fremantle/Sony-Endemol trademarked logos into the pixels — no image-editing tool was available (PIL/pip install both unavailable/declined), so the crop was done live in CSS (`object-fit:cover` + per-game `object-position`) instead of editing the source PNGs. User's final instruction: "Use images just don't use trademark names." All 5 banners (`assets/games/*.png`) verified via Playwright screenshot review — no trademarked text visible in any of them.
+14. **Weekly Word Master** (PR #959) — a new persistent Home-screen banner feature, requested after confirming Grammar Coach already covered "grammar usage." Picks one word a week (weighted toward words missed most in Study/Test via `State.progress[id].wrong`, never repeating the last 4 picks) and walks through 4 fixed mastery stages built from existing fields only: spelling (typed recall), definition (multiple choice), use in a sentence (fill the blank in the word's own example), and function (part of speech). Wrong answers never silently advance — "Try again" resets just that stage. Every answer feeds the same `gradeWord()` spaced-repetition grading as the rest of the app.
+
+## Round 4 — full-resolution icon/splash pack, splash compression fix (PR #960, merged)
+
+15. **Full-resolution icon & splash pack** — the user uploaded a proper "Load Words PWA Icon and Splash Pack" (1024px master, real 48-512px exports) to replace the earlier icon set, which the README had flagged as upscaled from a flattened preview composite. All 11 icon sizes swapped in; added a 384px "any" manifest entry the pack included but the app didn't have a slot for; the 192/512 `maskable` manifest entries reuse the same source as `any` since the pack has no dedicated maskable-safe-zone variants (noted in README, not silent).
+16. **Splash compression fix** — the pack's splash PNG came in at ~2.5MB, flagged plainly in review since no image-compression tool was available in this sandbox to shrink it (same gap as the earlier game-banner work). Explained the fix to the user (Squoosh/TinyPNG-style MozJPEG re-export); the user did exactly that and sent back a compressed version. Swapped in as `assets/splash.jpg` (282KB, visually identical, no artifacts) — kept the `.jpg` extension matching the actual file content (Cloudflare serves by extension) rather than saving a JPEG under a `.png` name. All 3 references (`apple-touch-startup-image`, boot/splash CSS, service-worker precache) updated back to `.jpg`.
+17. **Self-caught mistake, corrected same-turn:** the first `update_pull_request` call for PR #960 mistakenly wrapped the body text in a bash heredoc (`$(cat <<'EOF' ... EOF)`), which isn't valid for that tool's plain-string `body` parameter — the merged PR's description briefly carried the literal heredoc wrapper text. Caught it while verifying the merge via `pull_request_read`, and re-issued the update with clean markdown before writing this note.
+
 ## Outstanding / blocking
 
-- **PR #956 needs the user's review and explicit merge go-ahead** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/956, 5 commits, files `loadwords/app.js`, `loadwords/index.html`, `loadwords/wordbank.js`, `loadwords/service-worker.js`, `loadwords/README.md`.
+- Nothing outstanding — PRs #956 through #960 are all merged, `main` is current at `35aad2c`, backup branch created and SHA-verified.
 
 ## Pending / parked
 
-- Nothing currently parked — the game-concept queue, the word-bank audit, and the full follow-up request (images/redesign/grammar) are all resolved or shipped as of this round.
+- Nothing currently parked — the game-concept queue, both word-bank audit rounds, the image-banner work, Grammar Coach, Weekly Word Master, and the icon/splash refresh are all resolved or shipped as of this round.
 
 ## Capability gaps this session
 
-- No image-generation tool available (couldn't literally produce the user's photo prompts) — resolved by using the existing SVG icon-set approach instead, per the user's own choice.
+- No image-generation tool available (couldn't literally produce the user's photo prompts for the earlier SVG-illustration work) — resolved by using the existing SVG icon-set approach instead, per the user's own choice.
+- No image-editing/compression tool available at all in this sandbox (`identify`/PIL not installed, `pip3 install Pillow` declined, no `magick`/`cwebp`/`pngquant`/`sharp`) — hit this twice: for the game-banner pack (resolved with a CSS-only crop via `object-fit`/`object-position` instead of editing the source PNGs) and for the icon/splash pack's 2.5MB splash PNG (resolved by explaining the fix to the user, who compressed it externally with Squoosh/TinyPNG and sent back a 282KB JPEG).
 - No direct access to `dssorit.github.io` or the Pages API from this sandbox (pre-existing, documented in CLAUDE.md).
 
 ## Today's commit log
 
 ```
+e30f8ab Load Words: swap splash for user-compressed JPEG (2.5MB -> 282KB)
+cd2fbc9 Load Words: replace icons and splash with full-resolution brand pack
+45f20d1 Session notes: PR #959 merged, backup branch created, correct PR #956/#957 record
+170eaf0 Load Words: add Weekly Word Master
+69bad71 Load Words: add game banner illustrations for 5 games
+89a2ec4 Load Words: second word-bank pass — remove 19, reclassify 5, add 33
+7a68661 Load Words: add scene illustrations to Story Quest, Debate Arena, Word Mystery
+c431eb0 Load Words: add Word Mystery, a Clue-style deduction game
 71b4ed6 Load Words: add Grammar Coach, fix note-box icon color bug
 1401ff4 Load Words: Deal or No Deal case-pop + Banker modal, Feud flip reveal
 5513f4a Load Words: add Debate & Meeting Arena game

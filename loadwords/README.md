@@ -9,11 +9,13 @@ Part of the **Load** app family.
 ```
 index.html          — app shell (loads wordbank.js + app.js)
 app.js               — all app logic: rendering, spaced repetition, speech, storage
-wordbank.js          — the core word bank (525 words across 7 categories, tagged with 7 themes)
+wordbank.js          — the core word bank (541 words across 7 categories, tagged with 7 themes)
 manifest.json        — PWA install metadata
 service-worker.js    — offline app-shell caching
 icons/               — app icons (48–512px, plus maskable + favicon)
 assets/               — splash art, wired in via apple-touch-startup-image
+assets/games/         — decorative banner art for Word Mystery, Vocab Feud,
+                         Deal or No Deal, Word Blocks, and The Imposter
 ```
 
 **Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, Debate &amp; Meeting Arena, Word Mystery, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review. The Word Vault is a persistent rewards layer that runs alongside all of them.
@@ -49,6 +51,8 @@ assets/               — splash art, wired in via apple-touch-startup-image
 **Story Quest:** a short, hand-written 3-chapter mystery (`STORY_QUEST` in `wordbank.js`) — "The Lighthouse Keeper's Ledger." Each chapter is a few short paragraphs of atmospheric narrative with one inline vocabulary choice (a blanked sentence, pick the word that fits) that genuinely branches the next passage — pick right and the story continues with a more vivid follow-on paragraph; pick wrong and it continues plainer, then both paths rejoin. Each chapter ends with a recall checkpoint (multiple-choice: what does this word from the chapter mean?), pulling its correct definition and two random distractor definitions live from the word bank. A final score out of 6 selects one of three encouraging endings.
 
 **Word Mystery:** a Clue-inspired deduction game. 6 candidate words are drawn from the bank; one is secretly the "mystery word." Up to 5 true clues about it are revealed one at a time — syllable count, part of speech, difficulty tier, starting letter, theme, or a synonym (`mysteryGenerateClues()` in `app.js`, built entirely from each word's existing fields, no new content needed). Cross suspects off your own list as you deduce (bookkeeping only — the game doesn't validate your crossings), then tap "Accuse" on the word you believe is the culprit for an immediate right/wrong reveal with its full definition.
+
+**Weekly Word Master:** a persistent Home-screen banner picking one word a week — weighted toward words you've gotten wrong most often (`State.progress[id].wrong`), never repeating the last 4 picks — and walking you through 4 fixed mastery stages built entirely from fields every word already has: **Spelling** (typed recall from the definition, reusing the typed-recall test pattern), **Definition** (multiple choice among distractor definitions), **Use in a sentence** (fill the blank in the word's own example sentence), and **Function** (identify its part of speech among the bank's `noun`/`verb`/`adjective`/`verb / noun`/`phrase` values). Each stage must be answered correctly to mark it mastered — a wrong answer shows the right answer and offers Try again rather than skipping ahead. The banner shows a 4-dot progress readout and turns green once all 4 are cleared; a new word is picked automatically the following Monday. State (`wwm` in localStorage) persists across sessions the same way streak and Vault do, and every correct/incorrect answer feeds the same spaced-repetition grading (`gradeWord()`) as the rest of the app, so mastering a word here also counts toward its regular Study progress.
 
 **Grammar Coach:** 10 short, hand-written grammar lessons (`GRAMMAR_TOPICS` in `wordbank.js`) covering commonly-confused rules — who/whom, its/it's, affect/effect, fewer/less, lay/lie, subject-verb agreement, comma splices, dangling modifiers, parallel structure, who's/whose. Each rule shows a plain-English explanation and an example, then an immediate practice question testing that exact rule, with an explanation either way. Separate from the vocabulary games — reachable from its own Home-screen tile.
 
@@ -92,6 +96,8 @@ The bank spans 7 difficulty categories (see `CATEGORY_META` in `wordbank.js`): C
 
 The **Advanced** (`ad`) category was audited and rebuilt: 43 of its original 60 words were too close to everyday vocabulary for an advanced-learner app (e.g. `abundant`, `genuine`, `crucial`) and were replaced in place with genuinely C1/C2-level words (e.g. `magnanimous`, `temerity`, `officious`, `opprobrium`). 17 words that were already solidly advanced were kept as-is, along with `poignant` and `paradigm` specifically at the user's request. Every replacement was checked against the other 524 words first to avoid duplicating a word that already existed elsewhere in the bank under a different tier.
 
+A second pass removed 19 more words that were still too basic once flagged (e.g. `elderly`, `rapid`, `tedious`, `envelope`), moved 5 words down to the `ad` tier that were sitting too high for how commonly they're actually used (`keen`, `perceptible`, `monotonous`, `nominal`, `obsolete`), and added 33 genuinely obscure new words (e.g. `weltschmerz`, `tergiversate`, `phantasmagoria`, `asymptote`) split between the `sa` and `ph` tiers depending on whether they're literary/rhetorical or philosophical/abstract in nature.
+
 ## Adding more words
 
 Two ways:
@@ -111,9 +117,21 @@ Two ways:
 
 `stress` is the 0-based index into `syllables` for the stressed syllable. If you add a new `category` key, also add it to `CATEGORY_META` at the bottom of the file so it gets a label and color in the UI.
 
+## Game banner art
+
+Word Mystery, Vocab Feud, Deal or No Deal, Word Blocks, and The Imposter each
+open with a decorative illustration banner (`assets/games/*.png`) instead of
+the earlier CSS-shape scenes. Each image is cropped with plain CSS
+(`object-fit:cover` + a per-game `object-position` on `.game-banner img` in
+`index.html`) so only generic decorative content shows — no trademarked
+product names or logos are displayed anywhere in the app, matching the
+existing decision to name these games "Word Mystery" and "Vocab Feud" rather
+than any trademarked title. All five are precached by the service worker
+(`APP_SHELL` in `service-worker.js`) so they still load offline.
+
 ## Icons
 
-The icons in `/icons` (and the splash art in `/assets/splash.jpg`) are cropped directly from the original "Load Words PWA Icon Pack" design file — not placeholders. Sizes above roughly 380px are upscaled slightly since the source was a flattened preview composite, so if true full-resolution exports become available later, dropping them in under the same filenames is a straight swap.
+The icons in `/icons` (48 through 512px, plus a 384px "any"-purpose size) and the splash art in `/assets/splash.jpg` are the full-resolution "Load Words PWA Icon and Splash Pack" — a proper 1024px master export, not the earlier upscaled preview composite. The 192 and 512px slots reuse the same source for both their `any` and `maskable` manifest entries, since the pack doesn't ship dedicated maskable-safe-zone variants. The splash art is a compressed JPEG (~280KB, re-exported from the original PNG once the first pass came in at ~2.5MB) rather than the master PNG, since it's precached for offline use and doesn't need transparency.
 
 ## Known v1 limits
 
