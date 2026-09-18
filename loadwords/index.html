@@ -478,6 +478,21 @@ main{ flex:1; padding:6px 20px 30px; }
 .debate-blank{ display:inline-block; min-width:70px; border-bottom:2px solid var(--accent); }
 .debate-fill{ color:var(--good); }
 .debate-opts{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+
+/* Word Mystery */
+.mystery-clues{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+.mystery-clue{ padding:12px 14px; border-radius:12px; border:1.5px solid var(--accent); background:var(--accent-soft); }
+.mystery-clue-num{ font-family:var(--font-head); font-weight:800; font-size:calc(var(--fs-base) * 0.68); letter-spacing:.05em; text-transform:uppercase; color:var(--accent); }
+.mystery-clue p{ margin:4px 0 0 0; font-size:calc(var(--fs-base) * 0.9); line-height:1.4; }
+.mystery-suspects{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.mystery-suspect{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); }
+.mystery-suspect.eliminated{ opacity:.45; }
+.mystery-suspect.eliminated .mystery-suspect-word{ text-decoration:line-through; }
+.mystery-suspect-word{ font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.92); }
+.mystery-suspect-actions{ display:flex; gap:8px; flex-shrink:0; }
+.mystery-toggle-btn{ padding:8px 12px; border-radius:8px; border:1.5px solid var(--border); background:transparent; color:var(--text-soft); font-size:calc(var(--fs-base) * 0.76); font-weight:700; cursor:pointer; }
+.mystery-accuse-btn{ padding:8px 12px; border-radius:8px; border:none; background:var(--accent); color:#fff; font-size:calc(var(--fs-base) * 0.76); font-weight:700; cursor:pointer; }
+.mystery-accuse-btn:disabled{ background:var(--border); color:var(--text-soft); cursor:default; }
 .test-footer{ margin-top:20px; }
 .big-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); color:#fff; font-family:var(--font-head); font-weight:700; font-size:calc(var(--fs-base) * 0.94); cursor:pointer; box-shadow:0 3px 12px rgba(37,99,235,.25); }
 .big-btn:disabled{ opacity:.4; box-shadow:none; }
