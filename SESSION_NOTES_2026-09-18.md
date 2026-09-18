@@ -2,10 +2,12 @@
 
 ## Current state
 
-- Branch: `claude/load-words-pwa-setup-nf1pcn`, restarted from `origin/main` after today's merge (`git checkout -B claude/load-words-pwa-setup-nf1pcn origin/main`).
-- **PR #954 is MERGED** — merged by the user (DssOrit) via the GitHub UI at 2026-09-18T03:17:31Z, confirmed via `pull_request_read`. New `main` HEAD: `1d60779`.
+- Branch: `claude/load-words-pwa-setup-nf1pcn`.
+- **PR #954 is MERGED** (2026-09-18T03:17:31Z) — Vocab Feud, Stack & Match, Word Blocks, Story Quest, plus the carried-over Imposter/Thread-Link Board.
+- **PR #955 is MERGED** (2026-09-18T04:43:16Z) — session notes only.
+- **PR #956 is OPEN, not yet merged** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/956, head `71b4ed6`, 5 commits: Word Vault, the `ad`-tier rebuild + Philosophical tier, Debate & Meeting Arena, the Deal-or-No-Deal/Feud visual upgrades, and Grammar Coach. Waiting on the user's review + explicit merge go-ahead per Rule 9.
 - Working tree: clean.
-- `APP_VERSION` / `CACHE_NAME`: `v24` / `loadwords-v24` (now live on `main`).
+- `APP_VERSION` / `CACHE_NAME`: `v29` / `loadwords-v29` (on the PR #956 branch, not yet on `main`).
 
 ## Backups
 
@@ -20,29 +22,47 @@ Continuing a long-running "advanced vocabulary games" build (user pasted a serie
 3. **Word Blocks** — the block-puzzle spelling game, built entirely on each word's existing `syllables` field (446 eligible words, no new content authoring). 4 words each get a row of empty cells; drag syllable chunks from a shuffled pool onto the right cell. A completed row shatters, reveals the definition, and scores.
 4. **Story Quest** — a short, hand-written 3-chapter branching mystery ("The Lighthouse Keeper's Ledger", `STORY_QUEST` in `wordbank.js`). Each chapter has one inline vocabulary choice that genuinely branches the next passage, plus an end-of-chapter recall checkpoint built live from the word bank (real definition + 2 random distractors). Score out of 6 selects one of three encouraging endings. The only new authored content — the 6 vocabulary moments all reuse real existing words and definitions (meticulous, byzantine, taciturn, cantankerous, audacious, ephemeral).
 
-`README.md` updated after each feature; `APP_VERSION`/`CACHE_NAME` bumped each time (v21 → v22 → v23 → v24).
+`README.md` updated after each feature; `APP_VERSION`/`CACHE_NAME` bumped each time (v21 through v29 across the session).
 
-## Bugs found and fixed today (both caught by live Playwright verification, not just code review)
+## Round 2 — word-bank audit, new features, visual upgrades (still on open PR #956)
 
-- **Double-bind bug (Vocab Feud + Stack & Match):** both games' click handlers called `render(); bindEvents();`, but `render()` already calls `bindEvents()` internally — so every click after the first double-bound listeners, causing wrong guesses/drops to fire twice (Vocab Feud's strike counter jumped 0→2 on a single wrong tap). Fixed by dropping the redundant `bindEvents()` call, matching every other game's existing `render()`-only convention. Confirmed no other game in the codebase had this pattern.
-- **Render-race bug (Word Blocks):** the shatter/wrong-flash cosmetic flags were cleared via a delayed `setTimeout(...) => render()`. Since `render()` does a full `innerHTML` DOM rebuild, that timer could fire mid-drag and detach the exact chip a user (or the test) was about to grab — intermittently breaking a solve sequence a few chips from the end. Fixed by clearing both flags synchronously at the start of `blockPlaceChip()` instead of on a timer, removing the race entirely. Reran the full solve path 5x clean afterward.
+After PR #954/#955 merged, the user gave the word-bank basicness audit's answer plus a large follow-up request. Built and shipped, in order:
+
+5. **`ad`-tier rebuild + Philosophical tier.** Per the user's explicit reply ("Replace all basic & borderline except: poignant, paradigm"), 43 of the `ad` category's 60 words were replaced in place with genuinely C1/C2 words; 17 already-solid words plus poignant/paradigm were kept. Added a new 25-word "Philosophical" tier (`ph`) from the user's supplied word lists. Every word was cross-checked programmatically against the other 524 entries first — of the ~90 words across the user's three source lists, 59 already existed in the bank under other tiers and were left alone rather than duplicated; the 40 ad-tier replacement words beyond the 3 genuinely-new user-supplied ones were independently selected and verified non-duplicate, since the user's lists didn't have enough new content to fill all 43 slots. Bank is now 525 words / 7 categories.
+6. **Debate & Meeting Arena** — built from the user's reference screenshot: 5 workplace scenarios where a second speaker's reply needs the right high-tier verb filled in. Added 2 new words (substantiate, capitulate) to match the screenshot exactly; the other 3 scenarios reuse existing words.
+7. **Word Vault** — the 7-Day Streak Lock / persistent rewards system flagged as deferred during the Memory Match build. Daily key on any graded interaction, 5-key bonus + permanent crown badge at a 7-day streak, 7 themed word packs (5-35 keys) that unlock and reveal 8 real words each.
+8. **Deal or No Deal / Vocab Feud visual upgrades** — case-pop animation on opening a briefcase, the Banker's offer converted from an inline card to a proper modal overlay, and Vocab Feud's board slots now do a real 3D flip reveal (matching Memory Match's established flip technique) instead of a plain color swap. Per the user's explicit choice, kept the app's existing cream/light design system rather than adopting the alternate dark-slate mockup — same for imagery: custom SVG (existing icon-set technique) instead of live Unsplash/Pexels fetching, since that would need an API key and would break this PWA's offline-first design.
+9. **Grammar Coach** — a new, separate feature (not a vocabulary game): 10 short lessons on commonly-confused grammar rules (who/whom, its/it's, affect/effect, fewer/less, lay/lie, subject-verb agreement, comma splices, dangling modifiers, parallel structure, who's/whose), each with an immediate practice question.
+
+## Bugs found and fixed today (all caught by live Playwright verification, not just code review)
+
+- **Double-bind bug (Vocab Feud + Stack & Match):** both games' click handlers called `render(); bindEvents();`, but `render()` already calls `bindEvents()` internally — so every click after the first double-bound listeners, causing wrong guesses/drops to fire twice (Vocab Feud's strike counter jumped 0→2 on a single wrong tap). Fixed by dropping the redundant `bindEvents()` call, matching every other game's existing `render()`-only convention.
+- **Render-race bug (Word Blocks):** the shatter/wrong-flash cosmetic flags were cleared via a delayed `setTimeout(...) => render()`, which does a full DOM rebuild that could fire mid-drag and detach the chip a user was about to grab. Fixed by clearing both flags synchronously at the start of `blockPlaceChip()` instead of on a timer.
+- **`.note-box` icon color bug (app-wide, pre-existing):** `.note-box svg` had a hardcoded `stroke:var(--warn)`, so every "correct" (green) feedback box's checkmark rendered red/orange instead of green, across every game using that class — found via live screenshot review of Grammar Coach's result screen. Fixed to `stroke:currentColor` so the icon follows each instance's own inline color.
 
 ## Outstanding / blocking
 
-- **Word-bank basicness audit still open.** Earlier in this multi-day build the user asked "Are all 500 words advanced lexical items, high-tier vocabulary?" The investigation (specifically re-screening the original 60-word `ad` category, which predates the later "ultra advanced only" standard) was interrupted by a rejected tool call and never resumed. Flagging again here so it isn't lost.
+- **PR #956 needs the user's review and explicit merge go-ahead** — https://github.com/DssOrit/ancient-covenant-scrolls/pull/956, 5 commits, files `loadwords/app.js`, `loadwords/index.html`, `loadwords/wordbank.js`, `loadwords/service-worker.js`, `loadwords/README.md`.
 
 ## Pending / parked
 
-- **7-Day Streak Lock / "Word Vault" unlockable card-pack currency** — part of the original Memory Match scoring spec but explicitly flagged in that PR as a separate, larger persistent cross-session meta-progression feature. Not started, not yet re-requested standalone.
-- The full game-concept queue from the user's pasted AI-generated concepts is now built: Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack & Match (Word Tetris), Word Blocks (block puzzle), and Story Quest (the narrative quiz) all shipped across this and the prior session.
+- Nothing currently parked — the game-concept queue, the word-bank audit, and the full follow-up request (images/redesign/grammar) are all resolved or shipped as of this round.
 
 ## Capability gaps this session
 
-- No new gaps beyond what's already documented in CLAUDE.md (no direct access to `dssorit.github.io` or the Pages API from this sandbox).
+- No image-generation tool available (couldn't literally produce the user's photo prompts) — resolved by using the existing SVG icon-set approach instead, per the user's own choice.
+- No direct access to `dssorit.github.io` or the Pages API from this sandbox (pre-existing, documented in CLAUDE.md).
 
 ## Today's commit log
 
 ```
+71b4ed6 Load Words: add Grammar Coach, fix note-box icon color bug
+1401ff4 Load Words: Deal or No Deal case-pop + Banker modal, Feud flip reveal
+5513f4a Load Words: add Debate & Meeting Arena game
+35e2565 Load Words: rebuild Advanced tier, add Philosophical tier (25 words)
+044b1df Load Words: add Word Vault persistent rewards system
+aee683f Session notes: PR #954 merged, backup branch created
+9027bd8 Session notes: mark Story Quest complete, full game queue shipped
 72dd892 Load Words: add Story Quest branching narrative game
 5706caf Session notes: Load Words game build, 2026-09-18
 25fbef6 Load Words: add Word Blocks game
@@ -50,4 +70,4 @@ c988cdb Load Words: add Stack & Match game, fix double-bind bug
 6c2b05b Load Words: add Vocab Feud game
 ```
 
-(Thread-Link Board and The Imposter, `6c721a0` and `6b95338`, were the tail end of the prior session's build, carried over onto the same still-open PR.)
+(Thread-Link Board and The Imposter, `6c721a0` and `6b95338`, were the tail end of the prior session's build, carried over onto the same branch before this session started.)
