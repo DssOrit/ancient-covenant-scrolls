@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v33';
+const APP_VERSION = 'v34';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -100,6 +100,7 @@ const State = {
   debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
   grammar:{ index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null },
   mystery:{ candidates:[], culpritId:null, clues:[], revealedCount:1, eliminated:{}, phase:'clues', guessId:null, correct:null },
+  wwm:{ wordId:null, weekStart:null, history:[], stagesDone:{spelling:false,definition:false,usage:false,function:false}, phase:'overview', answered:false, correctPick:null, chosen:null, spellAttempt:'', options:[], correctValue:null },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -126,6 +127,8 @@ async function loadAll(){
   State.vault.viewingPack = null;
   const s = await sGet('settings', null);
   if(s) State.settings = Object.assign(State.settings, s);
+  State.wwm = await sGet('wwm', State.wwm);
+  ensureWeeklyWordMaster();
   applyTheme();
 }
 function applyTheme(){
@@ -505,6 +508,7 @@ function renderView(){
     case 'debate': return renderDebate();
     case 'grammar': return renderGrammar();
     case 'mystery': return renderMystery();
+    case 'wwm': return renderWWM();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -523,6 +527,7 @@ function renderHome(){
     <div class="stat"><div class="num">${mastered}</div><div class="lbl">Mastered</div></div>
   </div>
   ${State.streak.count>0 ? `<div style="text-align:center;"><div class="streak-pill">${ic('fire')}${State.streak.count}-day streak</div><button class="streak-pill vault-pill" data-nav="vault">${ic('star')}${State.vault.keys} key${State.vault.keys===1?'':'s'}</button></div>` : ''}
+  ${wwmBannerHtml()}
   <div class="section-title">Jump in</div>
   <div class="action-row">
     <button class="action" data-nav="vault" style="--c:#B45309">
@@ -2281,6 +2286,203 @@ function renderMystery(){
   </div>`;
 }
 
+// ---------------- WEEKLY WORD MASTER ----------------
+// One word a week, drawn with a bias toward words already missed most often
+// (State.progress[id].wrong), mastered through 4 fixed stages built entirely
+// from fields every word already has — no new content authoring needed.
+const WWM_STAGES = ['spelling','definition','usage','function'];
+const WWM_STAGE_META = {
+  spelling:{ label:'Spelling', desc:'Type the word from its meaning' },
+  definition:{ label:'Definition', desc:'Pick the correct meaning' },
+  usage:{ label:'Use in a sentence', desc:'Fill the blank in context' },
+  function:{ label:'Function', desc:'Name its part of speech' },
+};
+function wwmWeekStart(dateStr){
+  const d = new Date(dateStr+'T00:00:00');
+  const day = d.getDay();
+  const diff = day===0 ? -6 : 1-day; // shift back to Monday
+  d.setDate(d.getDate()+diff);
+  return d.toISOString().slice(0,10);
+}
+function wwmPickWord(){
+  const recentIds = new Set((State.wwm.history||[]).slice(-4));
+  let pool = State.words.filter(w=>w.definition && w.example && !recentIds.has(w.id));
+  if(!pool.length) pool = State.words.filter(w=>w.definition && w.example);
+  const weights = pool.map(w=>{
+    const p = State.progress[w.id];
+    return 1 + (p && p.wrong ? p.wrong*3 : 0);
+  });
+  const total = weights.reduce((a,b)=>a+b,0);
+  let r = Math.random()*total;
+  for(let i=0;i<pool.length;i++){ r -= weights[i]; if(r<=0) return pool[i]; }
+  return pool[pool.length-1];
+}
+function ensureWeeklyWordMaster(){
+  const ws = wwmWeekStart(todayStr());
+  const W = State.wwm;
+  const wordStillExists = W.wordId && State.words.some(w=>w.id===W.wordId);
+  if(!wordStillExists || W.weekStart !== ws){
+    const history = wordStillExists ? (W.history||[]).concat(W.wordId).slice(-8) : (W.history||[]);
+    const picked = wwmPickWord();
+    State.wwm = { wordId:picked.id, weekStart:ws, history, stagesDone:{spelling:false,definition:false,usage:false,function:false}, phase:'overview', answered:false, correctPick:null, chosen:null, spellAttempt:'', options:[], correctValue:null };
+    sSet('wwm', State.wwm);
+  }
+}
+function wwmStartStage(stage){
+  const W = State.wwm;
+  const w = State.words.find(x=>x.id===W.wordId);
+  W.phase = stage; W.answered = false; W.correctPick = null; W.chosen = null; W.spellAttempt = '';
+  if(stage==='definition'){
+    W.options = shuffle([w.definition, ...contextDistractors(w,3).map(x=>x.definition)]);
+    W.correctValue = w.definition;
+  } else if(stage==='usage'){
+    W.options = shuffle([w.word, ...contextDistractors(w,3).map(x=>x.word)]);
+    W.correctValue = w.word;
+  } else if(stage==='function'){
+    const allPos = [...new Set(State.words.map(x=>x.pos).filter(Boolean))];
+    W.options = shuffle([w.pos, ...shuffle(allPos.filter(p=>p!==w.pos)).slice(0,3)]);
+    W.correctValue = w.pos;
+  } else {
+    W.options = []; W.correctValue = null;
+  }
+  sSet('wwm', W);
+}
+function wwmBeginNext(){
+  const W = State.wwm;
+  const next = WWM_STAGES.find(s=>!W.stagesDone[s]);
+  if(!next){ W.phase = 'complete'; sSet('wwm', W); return; }
+  wwmStartStage(next);
+}
+function wwmAnswer(value){
+  const W = State.wwm;
+  if(W.answered) return;
+  const w = State.words.find(x=>x.id===W.wordId);
+  const correct = value === W.correctValue;
+  W.answered = true; W.correctPick = correct; W.chosen = value;
+  if(correct) W.stagesDone[W.phase] = true;
+  gradeWord(w.id, correct?2:0);
+  sSet('wwm', W);
+}
+function wwmSpellSubmit(){
+  const W = State.wwm;
+  if(W.answered) return;
+  const input = document.getElementById('wwmSpellInput');
+  const val = input ? input.value.trim() : '';
+  const w = State.words.find(x=>x.id===W.wordId);
+  const correct = val.toLowerCase()===w.word.toLowerCase();
+  W.answered = true; W.correctPick = correct; W.spellAttempt = val;
+  if(correct) W.stagesDone.spelling = true;
+  gradeWord(w.id, correct?2:0);
+  sSet('wwm', W);
+}
+function wwmBannerHtml(){
+  const W = State.wwm;
+  const w = State.words.find(x=>x.id===W.wordId);
+  if(!w) return '';
+  const doneCount = WWM_STAGES.filter(s=>W.stagesDone[s]).length;
+  const allDone = doneCount===WWM_STAGES.length;
+  return `<button class="wwm-banner ${allDone?'wwm-banner-done':''}" data-nav="wwm">
+    <div class="wwm-banner-top"><span class="wwm-banner-eyebrow">${ic('star')}This Week's Word</span><span class="wwm-banner-count">${doneCount}/4</span></div>
+    <div class="wwm-banner-word">${escapeHtml(w.word)}</div>
+    <div class="wwm-banner-dots">
+      ${WWM_STAGES.map(s=>`<span class="wwm-dot ${W.stagesDone[s]?'on':''}"></span>`).join('')}
+    </div>
+    <div class="wwm-banner-cta">${allDone?'Mastered — new word next week':'Continue mastering it'}</div>
+  </button>`;
+}
+function renderWWM(){
+  const W = State.wwm;
+  const w = State.words.find(x=>x.id===W.wordId);
+  if(!w) return renderHome();
+  const back = `<div class="pagehead"><button class="back" data-nav="home">${ic('chevL')}</button><h2>Weekly Word Master</h2></div>`;
+
+  if(W.phase==='overview'){
+    return back + `
+    <p class="sub">Master this word across 4 short stages: spelling, definition, use in a sentence, and its function.</p>
+    <div class="card" style="text-align:center;">
+      <div class="wwm-word-big">${escapeHtml(w.word)}
+        <span class="mini-spk" data-speak="${escapeAttr(w.word)}" style="display:inline-flex;vertical-align:middle;margin-left:8px;">${ic('speakerSm')}</span>
+      </div>
+      <p class="wwm-pos">${escapeHtml(w.pos)}</p>
+      <p>${escapeHtml(w.definition)}</p>
+      <p class="hint">"${escapeHtml(w.example)}"</p>
+    </div>
+    <div class="wwm-stage-list">
+      ${WWM_STAGES.map(s=>`<div class="wwm-stage-row ${W.stagesDone[s]?'done':''}">
+        ${ic(W.stagesDone[s]?'check':'clock')}
+        <div><b>${WWM_STAGE_META[s].label}</b><span>${WWM_STAGE_META[s].desc}</span></div>
+      </div>`).join('')}
+    </div>
+    <button class="big-btn" style="margin-top:16px;" id="wwmBeginBtn">${WWM_STAGES.some(s=>W.stagesDone[s])?'Continue':'Begin mastery'}</button>`;
+  }
+
+  if(W.phase==='complete'){
+    return back + `
+    <div class="empty">
+      <div>${ic('star')}</div>
+      <h3>"${escapeHtml(w.word)}" mastered</h3>
+      <p>You've cleared spelling, definition, usage, and function for this word. A new word starts next week.</p>
+      <button class="big-btn" style="margin-top:20px;" data-nav="home">Back home</button>
+    </div>`;
+  }
+
+  const stage = W.phase;
+  const stageIndex = WWM_STAGES.indexOf(stage);
+  const header = back + `<p class="sub">Stage ${stageIndex+1} of 4 — ${WWM_STAGE_META[stage].label}</p>`;
+
+  if(stage==='spelling'){
+    return header + `
+    <div class="test-prompt">${escapeHtml(w.definition)}</div>
+    <div class="test-sub">Type the word that matches this meaning.
+      <span class="mini-spk" data-speak="${escapeAttr(w.example)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="field"><input type="text" id="wwmSpellInput" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type the word" ${W.answered?'disabled':''} value="${escapeAttr(W.spellAttempt||'')}"></div>
+    ${W.answered? `<div class="note-box" style="background:${W.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${W.correctPick?'var(--good)':'var(--warn)'}">${ic(W.correctPick?'check':'x')}<span>${W.correctPick?'Correct!':'The word is: '+escapeHtml(w.word)}</span></div>` : ''}
+    <div class="test-footer">
+      ${W.answered
+        ? (W.correctPick ? `<button class="big-btn" id="wwmContinueBtn">Continue</button>` : `<button class="big-btn" id="wwmRetryBtn">Try again</button>`)
+        : `<button class="big-btn" id="wwmSpellSubmitBtn">Check</button>`}
+    </div>`;
+  }
+
+  if(stage==='definition'){
+    return header + `
+    <div class="test-prompt">${escapeHtml(w.word)}</div>
+    <div class="test-sub">Which meaning is correct?
+      <span class="mini-spk" data-speak="${escapeAttr(w.word)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="quest-choice-opts">
+      ${W.options.map(o=>`<button class="quest-opt" data-wwm-choice="${escapeAttr(o)}" ${W.answered?'disabled':''}>${escapeHtml(o)}</button>`).join('')}
+    </div>
+    ${W.answered? `<div class="note-box" style="background:${W.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${W.correctPick?'var(--good)':'var(--warn)'}">${ic(W.correctPick?'check':'x')}<span>${W.correctPick?'Correct!':'Not quite — it means: '+escapeHtml(w.definition)}</span></div>` : ''}
+    ${W.answered? `<button class="big-btn" style="margin-top:8px;" id="${W.correctPick?'wwmContinueBtn':'wwmRetryBtn'}">${W.correctPick?'Continue':'Try again'}</button>` : ''}`;
+  }
+
+  if(stage==='usage'){
+    const blanked = w.example.replace(new RegExp(w.word + '\\w*', 'i'), '<span class="blank">____</span>');
+    return header + `
+    <div class="test-prompt">${blanked}</div>
+    <div class="test-sub">Which word completes this sentence?
+      <span class="mini-spk" data-speak="${escapeAttr(w.example)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="quest-choice-opts">
+      ${W.options.map(o=>`<button class="quest-opt" data-wwm-choice="${escapeAttr(o)}" ${W.answered?'disabled':''}>${escapeHtml(o)}</button>`).join('')}
+    </div>
+    ${W.answered? `<div class="note-box" style="background:${W.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${W.correctPick?'var(--good)':'var(--warn)'}">${ic(W.correctPick?'check':'x')}<span>${W.correctPick?'Correct!':'The word is: '+escapeHtml(w.word)}</span></div>` : ''}
+    ${W.answered? `<button class="big-btn" style="margin-top:8px;" id="${W.correctPick?'wwmContinueBtn':'wwmRetryBtn'}">${W.correctPick?'Continue':'Try again'}</button>` : ''}`;
+  }
+
+  // function
+  return header + `
+  <div class="test-prompt">${escapeHtml(w.word)}</div>
+  <div class="test-sub">What part of speech is this word?</div>
+  <div class="quest-choice-opts">
+    ${W.options.map(o=>`<button class="quest-opt" data-wwm-choice="${escapeAttr(o)}" ${W.answered?'disabled':''}>${escapeHtml(o)}</button>`).join('')}
+  </div>
+  ${W.answered? `<div class="note-box" style="background:${W.correctPick?'var(--good-soft)':'var(--warn-soft)'};color:${W.correctPick?'var(--good)':'var(--warn)'}">${ic(W.correctPick?'check':'x')}<span>${W.correctPick?'Correct!':'"'+escapeHtml(w.word)+'" is a '+escapeHtml(w.pos)+'.'}</span></div>` : ''}
+  ${W.answered? `<button class="big-btn" style="margin-top:8px;" id="${W.correctPick?'wwmContinueBtn':'wwmRetryBtn'}">${W.correctPick?'Continue':'Try again'}</button>` : ''}`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -2937,6 +3139,24 @@ function bindEvents(){
   });
   const mysteryAgainBtn = document.getElementById('mysteryAgainBtn');
   if(mysteryAgainBtn){ mysteryAgainBtn.addEventListener('click', ()=>{ startMystery(); render(); }); }
+  const wwmBeginBtn = document.getElementById('wwmBeginBtn');
+  if(wwmBeginBtn){ wwmBeginBtn.addEventListener('click', ()=>{ wwmBeginNext(); render(); }); }
+  const wwmContinueBtn = document.getElementById('wwmContinueBtn');
+  if(wwmContinueBtn){ wwmContinueBtn.addEventListener('click', ()=>{ wwmBeginNext(); render(); }); }
+  const wwmRetryBtn = document.getElementById('wwmRetryBtn');
+  if(wwmRetryBtn){ wwmRetryBtn.addEventListener('click', ()=>{ wwmStartStage(State.wwm.phase); render(); }); }
+  const wwmSpellSubmitBtn = document.getElementById('wwmSpellSubmitBtn');
+  if(wwmSpellSubmitBtn){ wwmSpellSubmitBtn.addEventListener('click', ()=>{ wwmSpellSubmit(); render(); }); }
+  const wwmSpellInput = document.getElementById('wwmSpellInput');
+  if(wwmSpellInput){
+    wwmSpellInput.focus();
+    wwmSpellInput.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter'){ const btn = document.getElementById('wwmSpellSubmitBtn'); if(btn) btn.click(); }
+    });
+  }
+  document.querySelectorAll('[data-wwm-choice]').forEach(el=>{
+    el.addEventListener('click', ()=>{ wwmAnswer(el.getAttribute('data-wwm-choice')); render(); });
+  });
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
