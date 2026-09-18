@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v13';
+const APP_VERSION = 'v14';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -82,6 +82,7 @@ const State = {
   spellAttempt:'', spellCorrect:false,
   soundItOut:{ active:false, wordId:null, index:0 },
   etym:{ queue:[], index:0, score:0, pool:[], constructed:[], verified:null },
+  slider:{ queue:[], index:0 },
   listFilter:'all', listSearch:'',
   detailId:null,
   editingWord:null,
@@ -459,6 +460,7 @@ function renderView(){
     case 'listen': return renderListen();
     case 'test': return renderTest();
     case 'etymology': return renderEtymology();
+    case 'slider': return renderSlider();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
     default: return renderHome();
@@ -914,7 +916,9 @@ function renderListenQuiz(){
 // ---------------- TEST ----------------
 function startTest(type){
   State.testType = type || 'meaning';
-  const pool = State.testType==='scenario' ? SCENARIOS : State.words.filter(w=>w.definition);
+  const pool = State.testType==='scenario' ? SCENARIOS
+    : State.testType==='pairs' ? State.words.filter(w=>w.category==='cp' && w.related && w.related.length)
+    : State.words.filter(w=>w.definition);
   State.testQueue = shuffle(pool).slice(0, Math.min(10, pool.length));
   State.testIndex = 0; State.testScore = 0; State.testAnswered=false;
   State.spellAttempt = ''; State.spellCorrect = false;
@@ -948,6 +952,8 @@ function renderTest(){
       <button class="action" data-testtype="context" style="--c:#059669"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Context quiz</b><span>Fill the blank, see why each answer fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-testtype="scenario" style="--c:#4F46E5"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Daily upgrade</b><span>Everyday situations — pick the advanced word</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="etymology" style="--c:#DB2777"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Builder</b><span>Tap roots &amp; suffixes to build the word, with audio for each piece</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-testtype="pairs" style="--c:#DC2626"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Confusing Pairs sort</b><span>Sort each sentence to the word that fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
+      <button class="action" data-nav="slider" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Upgrade Slider</b><span>Slide to watch a sentence turn advanced</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -979,6 +985,24 @@ function renderTest(){
   }
 
   const w = State.testQueue[State.testIndex];
+
+  if(State.testType==='pairs'){
+    const partner = State.words.find(x=>x.id===(w.related && w.related[0]));
+    const blanked = w.example.replace(new RegExp(w.word + '\\w*', 'i'), '<span class="blank">____</span>');
+    const optionsPair = shuffle([w, partner]);
+    const hintText = w.note || `"${w.word}" means: ${w.definition}`;
+    return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+    <div class="test-q">Question ${State.testIndex+1} of ${State.testQueue.length} — Confusing Pairs</div>
+    <div class="test-prompt">${blanked}</div>
+    <div class="test-sub">Sort this sentence to the word that fits.
+      <span class="mini-spk" data-speak="${escapeAttr(w.example)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
+    </div>
+    <div class="opt-grid" id="optGrid">
+      ${optionsPair.map(o=>`<button class="opt pair-opt" data-answer="${escapeAttr(o.word)}" data-correct="${escapeAttr(w.word)}" data-def="${escapeAttr(o.note || o.definition)}">Sort to ${escapeHtml(o.word)}</button>`).join('')}
+    </div>
+    <details class="hint-details"><summary>Show hint</summary><div class="hint">Hint: ${escapeHtml(hintText)}</div></details>
+    <div class="test-footer"><button class="big-btn" id="nextQ" disabled>Next</button></div>`;
+  }
 
   if(State.testType==='spelling'){
     return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
@@ -1103,6 +1127,45 @@ function renderEtymology(){
   </div>`;
 }
 
+// ---------------- UPGRADE SLIDER ----------------
+function startSlider(){
+  State.slider.queue = shuffle(SCENARIOS);
+  State.slider.index = 0;
+}
+function renderSlider(){
+  const S = State.slider;
+  if(!S.queue.length){
+    return `<div class="empty"><p>Loading Upgrade Slider…</p></div>`;
+  }
+  if(S.index >= S.queue.length){
+    return `<div class="empty">
+      <h3>That's every sentence</h3><p>Slide through them again any time.</p>
+      <button class="big-btn" style="margin-top:20px;" id="sliderAgain">Play again</button>
+    </div>`;
+  }
+  const scen = S.queue[S.index];
+  const target = State.words.find(x=>x.id===scen.wordId);
+  const advancedHtml = scen.upgrade.replace(new RegExp(target.word, 'i'), `<b>${escapeHtml(target.word)}</b>`);
+  const pct = Math.round((S.index/S.queue.length)*100);
+  return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
+  <div class="test-q">Sentence ${S.index+1} of ${S.queue.length} — Upgrade Slider</div>
+  <div class="slider-sentence-wrap">
+    <p class="slider-sentence" id="sliderCasual" style="opacity:1">${escapeHtml(scen.casual)}
+      <span class="mini-spk" data-speak="${escapeAttr(scen.casual)}">${ic('speakerSm')}</span>
+    </p>
+    <p class="slider-sentence" id="sliderAdvanced" style="opacity:0">${advancedHtml}
+      <span class="mini-spk" data-speak="${escapeAttr(scen.upgrade)}">${ic('speakerSm')}</span>
+    </p>
+  </div>
+  <div class="slider-row">
+    <span class="slider-end">Casual</span>
+    <input type="range" id="upgradeSlider" min="0" max="100" value="0">
+    <span class="slider-end">Advanced</span>
+  </div>
+  <div class="slider-label" id="sliderLabel">Slide to reveal the advanced upgrade</div>
+  <div class="test-footer"><button class="big-btn" id="sliderNextBtn">Next sentence</button></div>`;
+}
+
 // ---------------- ADD WORD ----------------
 function renderAdd(){
   const e = State.editingWord;
@@ -1224,6 +1287,7 @@ function bindEvents(){
       if(v==='study'){ startStudy(); }
       if(v==='test'){ State.testQueue=[]; }
       if(v==='etymology'){ startEtymology(); }
+      if(v==='slider'){ startSlider(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -1349,7 +1413,7 @@ function bindEvents(){
         if(o.getAttribute('data-answer')===correct){ o.classList.add('correct'); correctEl = o; }
         else if(o===el){ o.classList.add('wrong'); wrongEl = o; }
       });
-      if(!inListenQuiz && (State.testType==='context' || State.testType==='scenario')){
+      if(!inListenQuiz && (State.testType==='context' || State.testType==='scenario' || State.testType==='pairs')){
         if(correctEl){
           const upgrade = correctEl.getAttribute('data-upgrade');
           const def = correctEl.getAttribute('data-def') || '';
@@ -1446,6 +1510,32 @@ function bindEvents(){
   }
   const etymAgain = document.getElementById('etymAgain');
   if(etymAgain){ etymAgain.addEventListener('click', ()=>{ startEtymology(); render(); }); }
+
+  const upgradeSlider = document.getElementById('upgradeSlider');
+  if(upgradeSlider){
+    const casualEl = document.getElementById('sliderCasual');
+    const advEl = document.getElementById('sliderAdvanced');
+    const label = document.getElementById('sliderLabel');
+    upgradeSlider.addEventListener('input', ()=>{
+      const v = upgradeSlider.value / 100;
+      casualEl.style.opacity = String(1 - v);
+      advEl.style.opacity = String(v);
+      label.textContent = v < 0.5 ? 'Slide to reveal the advanced upgrade' : 'Advanced upgrade';
+      if(v >= 0.8){
+        const scen = State.slider.queue[State.slider.index];
+        if(scen && !scen._graded){ scen._graded = true; gradeWord(scen.wordId, 1); }
+      }
+    });
+  }
+  const sliderNextBtn = document.getElementById('sliderNextBtn');
+  if(sliderNextBtn){
+    sliderNextBtn.addEventListener('click', ()=>{
+      State.slider.index++;
+      render();
+    });
+  }
+  const sliderAgain = document.getElementById('sliderAgain');
+  if(sliderAgain){ sliderAgain.addEventListener('click', ()=>{ startSlider(); render(); }); }
   const nextQ = document.getElementById('nextQ');
   if(nextQ){ nextQ.addEventListener('click', ()=>{ State.testIndex++; State.testAnswered=false; State.spellAttempt=''; State.spellCorrect=false; render(); }); }
   const testAgain = document.getElementById('testAgain');
