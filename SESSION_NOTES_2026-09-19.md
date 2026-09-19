@@ -4,15 +4,17 @@
 
 - **PR #963 is MERGED** (2026-09-19T14:09:49Z, confirmed via `pull_request_read`, merged by DssOrit). Cloudflare Pages auto-deploy confirmed successful via the bot comment on the PR (preview + branch URLs posted, no errors).
 - `origin/main` HEAD after merge: `789af7d`. Local `main` fast-forwarded to match, verified.
-- Root ACR Reader cache: `acr-v123` -> `acr-v124` (merged) -> `acr-v125` (on open PR #964, not yet merged).
-- Rule 8 unlock used: user said "Fix reader" (2026-09-19) — treated as the "fix the reader" unlock phrase, carried forward for all ACR Reader work this session (both the volume-label fix and the Masoretic-wording fix below), given unambiguous continued intent within the same session/topic.
-- **PR #964 open**: `claude/acr-reader-masoretic-primacy-fix-2026-09-19` -> `main`. Fixes 79 notes across 11 files that violated Rule 13 (Masoretic named "primary witness" instead of DSS/Orit). Not merged — presented to user, waiting.
+- Root ACR Reader cache: `acr-v123` -> `acr-v124` -> `acr-v125` — both merged, `acr-v125` confirmed live on `main`.
+- Rule 8 unlock used: user said "Fix reader" (2026-09-19) — treated as the "fix the reader" unlock phrase, carried forward for all ACR Reader work this session (both fixes below), given unambiguous continued intent within the same session/topic.
+- **PR #964 is MERGED** (2026-09-19T19:42:42Z, confirmed via `pull_request_read`, merged by DssOrit). Fixed 79 notes across 11 files that violated Rule 13 (Masoretic named "primary witness" instead of DSS/Orit).
+- `origin/main` HEAD after merge: `ee4868d`. Local `main` fast-forwarded to match, verified.
 
 ## Backups
 
 - `backup/2026-09-19-acr-v123-pre-volume-fix` — pushed, SHA-verified equal to pre-change `main` (`00183fb5`), created before any content file was touched.
 - `backup/2026-09-19-acr-v124` — pushed, SHA-verified equal to `main`/`origin/main` (`789af7d`) right after PR #963 merged.
-- `backup/2026-09-19-acr-v124-pre-masoretic-fix` — pushed, SHA-verified equal to pre-change `main` (`8d129986`), created before the Masoretic-wording fix. This is the current recovery point until PR #964 merges. Recovery: `git checkout backup/2026-09-19-acr-v124-pre-masoretic-fix`.
+- `backup/2026-09-19-acr-v124-pre-masoretic-fix` — pushed, SHA-verified equal to pre-change `main` (`8d129986`), created before the Masoretic-wording fix.
+- `backup/2026-09-19-acr-v125` — pushed, SHA-verified equal to `main`/`origin/main` (`ee4868d`) right after PR #964 merged. This is the current recovery point. Recovery: `git checkout backup/2026-09-19-acr-v125`.
 
 ## Built today
 
@@ -31,12 +33,12 @@
 13. **The fix was already grounded in the site's own data**: every single affected chapter's own `[ORIT GE'EZ]` note already said "preserves Chapter N in full" — so the correction just replaces the false claim with the fact already sitting next to it in the same note block.
 14. **Went through 3 wording rounds with the user** before writing anything (per Rule 11/20): first draft, tightened to explicitly frame Masoretic as agreement/divergence-only per the user's exact words, then re-explained in plain short form after the user said the first explanation was too dense.
 15. **Applied the fix**: same disciplined flow as the volume-label fix — backup branch first (SHA-verified), raw string replace (not `json.dump`, learned from the earlier mistake) so the diff stayed to exactly 1 line/file, all 79 replacements verified by exact count match per file, zero remaining violations re-confirmed with a precise (non-false-positive) regex check, live-rendered in headless Chromium and confirmed the corrected wording actually appears in the rendered page.
-16. **PR #964 opened**: `claude/acr-reader-masoretic-primacy-fix-2026-09-19` -> `main`. Not merged — presented to user, waiting.
+16. **PR #964 opened, then merged** (2026-09-19T19:42:42Z).
 
 ## Outstanding / blocking
 
-- PR #964 awaiting user review and merge.
-- Not verified on physical iPad Safari for either PR (sandbox has no device) — verified via headless Chromium instead. User should confirm on-device after merging (cache is network-first for the HTML shell, so no manual hard-refresh should be needed).
+- Nothing outstanding — both PR #963 and PR #964 are merged, `main` is current at `ee4868d`, backup branch created and SHA-verified.
+- Not verified on physical iPad Safari for either PR (sandbox has no device) — verified via headless Chromium instead. User should confirm on-device that Mishlei 21 (and the other affected chapters) now show the corrected Orit-Ge'ez-primary wording (cache is network-first for the HTML shell, so no manual hard-refresh should be needed).
 
 ## Pending / parked
 
