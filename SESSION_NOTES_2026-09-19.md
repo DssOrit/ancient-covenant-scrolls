@@ -2,14 +2,15 @@
 
 ## Current state
 
-- Branch: `claude/acr-reader-volume-label-fix-2026-09-19`, pushed. PR #963 open, awaiting user review/merge.
-- `origin/main` HEAD at session start: `00183fb` ("Prophetic Watch brief 2026-09-19" — automated, not from this session).
-- Root ACR Reader cache: `acr-v123` -> `acr-v124` (bumped in this branch, not yet merged).
+- **PR #963 is MERGED** (2026-09-19T14:09:49Z, confirmed via `pull_request_read`, merged by DssOrit). Cloudflare Pages auto-deploy confirmed successful via the bot comment on the PR (preview + branch URLs posted, no errors).
+- `origin/main` HEAD after merge: `789af7d`. Local `main` fast-forwarded to match, verified.
+- Root ACR Reader cache: `acr-v123` -> `acr-v124` — confirmed live on `main`.
 - Rule 8 unlock used: user said "Fix reader" (2026-09-19) — treated as the "fix the reader" unlock phrase for this specific finding, given unambiguous intent and explicit step-by-step instruction (backup, verify, fix, send merge link).
 
 ## Backups
 
 - `backup/2026-09-19-acr-v123-pre-volume-fix` — pushed, SHA-verified equal to pre-change `main` (`00183fb5`), created before any content file was touched.
+- `backup/2026-09-19-acr-v124` — pushed, SHA-verified equal to `main`/`origin/main` (`789af7d`) right after PR #963 merged. This is the current recovery point. Recovery: `git checkout backup/2026-09-19-acr-v124`.
 
 ## Built today
 
@@ -26,8 +27,8 @@
 
 ## Outstanding / blocking
 
-- PR #963 awaiting user review and merge (Rule 9 — user merges, or gives explicit per-PR instruction to merge).
-- Not verified on physical iPad Safari (sandbox has no device) — verified via headless Chromium instead, noted plainly in the PR.
+- Nothing outstanding — PR #963 is merged, `main` is current at `789af7d`, backup branch created and SHA-verified.
+- Not verified on physical iPad Safari (sandbox has no device) — verified via headless Chromium instead. User should confirm on-device that Vol 11 now reads "Volume Eleven" after a normal load (cache is network-first for the HTML shell, so no manual hard-refresh should be needed).
 
 ## Pending / parked
 
