@@ -3,16 +3,18 @@
 ## Current state
 
 - **PR #965 is MERGED** (2026-09-21T10:04:46Z, confirmed via `pull_request_read`, merged by DssOrit).
-- **PR #966 open**: `claude/acr-reader-verse-consistency-2026-09-21` -> `main`. Extends #965 — unifies verse-number *display* (not just audio) across 12 Torah/Yovelim files, and fixes the 31 other mistagged elements flagged but not fixed in #965. Not merged — presented to user, waiting.
-- `origin/main` HEAD after #965 merged: `c212762`. Local `main` fast-forwarded to match, verified.
-- Root ACR Reader cache: `acr-v125` -> `acr-v126` (merged) -> `acr-v127` (on open PR #966, not yet merged).
+- **PR #966 is MERGED** (2026-09-21T10:46:31Z, confirmed via `pull_request_read`, merged by DssOrit). Extends #965 — unifies verse-number *display* (not just audio) across 12 Torah/Yovelim files, and fixes the 31 other mistagged elements flagged but not fixed in #965.
+- `origin/main` HEAD after both merges: `09f9d7b`. Local `main` fast-forwarded to match, verified.
+- Root ACR Reader cache: `acr-v125` -> `acr-v126` -> `acr-v127` — all merged, `acr-v127` confirmed live on `main`.
 - Rule 8 unlock used: user said "Fix ACR reader" (2026-09-21) — treated as the "fix the reader" unlock phrase, carried forward for all ACR Reader work this session, with the usual explicit sequencing (backup, verify, fix, send merge link).
+- **Final full-corpus re-verification run against the actual merged `main` state** (not just the pre-merge working branch): all 92 volumes, 0 old-format "Chapter X, verse Y" announcements remaining, 0 non-numbered verse elements remaining, 0 anomalies, 0 console errors.
 
 ## Backups
 
 - `backup/2026-09-21-acr-v125-pre-audio-fix` — pushed, SHA-verified equal to pre-change `main` (`f8ef514d`), created before any file was touched.
 - `backup/2026-09-21-acr-v126` — pushed, SHA-verified equal to `main`/`origin/main` (`c212762`) right after PR #965 merged.
-- `backup/2026-09-21-acr-v126-pre-verse-format-fix` — pushed, SHA-verified equal to pre-change `main` (`c212762`), created before the verse-format consistency fix. This is the current recovery point until PR #966 merges. Recovery: `git checkout backup/2026-09-21-acr-v126-pre-verse-format-fix`.
+- `backup/2026-09-21-acr-v126-pre-verse-format-fix` — pushed, SHA-verified equal to pre-change `main` (`c212762`), created before the verse-format consistency fix.
+- `backup/2026-09-21-acr-v127` — pushed, SHA-verified equal to `main`/`origin/main` (`09f9d7b`) right after PR #966 merged. This is the current recovery point. Recovery: `git checkout backup/2026-09-21-acr-v127`.
 
 ## Built today
 
@@ -36,12 +38,15 @@
 15. **Applied both fixes**: the 12-file verse-number format unification, plus the 31-element mistagging fix (War Scroll x22, Book of Mysteries x3, DSS-only Psalms x1, 4 concern-flag notes x1 each) that was flagged but not fixed in PR #965.
 16. **Verified thoroughly**: all 92 files re-parse as valid JSON; live-tested `pronounce()` against every verse in all 92 volumes (25,155 verses) — 0 "Chapter X, verse Y" announcements remain anywhere, 0 non-numbered elements remain, 0 anomalies, 0 console errors; visually screenshotted Vayikra 19 to confirm it now renders identically to Psalm 119's style; confirmed War Scroll's column-intro text is still fully present and displaying correctly after removing its incorrect verse-tagging (content itself untouched, only the audio-relevant attribute changed).
 17. **Caught and fixed a process mistake before pushing**: the commit landed on local `main` instead of a feature branch. Caught before anything was pushed to `origin/main` — moved the commit to a new branch (`git branch <name>` at the commit, then `git reset --hard origin/main` to restore local `main`), verified no divergence, then pushed the branch properly. No harm done, logged here for the record.
-18. **PR #966 opened**: `claude/acr-reader-verse-consistency-2026-09-21` -> `main`. Not merged — presented to user, waiting.
+18. **PR #966 opened, then merged** (2026-09-21T10:46:31Z).
+19. **User asked why these weren't flagged before.** Checked `HANDOFF.md`'s "ACR Reader Audio — Bug History" section (dated 2026-06-02): the verse-number-display inconsistency was actually already known and documented 3.5 months ago as an "open follow-up (not a bug)" — a workaround made playback function, so it was deferred and never revisited. The mistagged-notes-as-verses issue has no prior record found (git history here only reaches back to 2026-08-17 due to squash merges; searched `HANDOFF.md` for any earlier mention — none). Read-only investigation, nothing touched.
+20. **User asked for full status verification of all of today's recommended fixes.** Confirmed via fresh `pull_request_read` calls (not memory) that PR #965 was merged but PR #966 was still open at that point — reported precisely which 2 of the 4 fixes were live vs. still pending.
+21. **User merged PR #966.** Synced local `main`, created the post-merge backup, and ran a final full-corpus re-verification against the actual merged state (not the pre-merge working branch) to close out the session: 0 old-format announcements, 0 non-numbered elements, 0 anomalies, 0 console errors across all 92 volumes.
 
 ## Outstanding / blocking
 
-- PR #966 awaiting user review and merge.
-- Not verified on physical iPad Safari (sandbox has no device, and this sandbox has zero TTS voices registered so actual audio playback can't be heard either) — verified via `pronounce()` text-output inspection and live DOM/console checks in headless Chromium instead.
+- Nothing outstanding — both PR #965 and PR #966 are merged, `main` is current at `09f9d7b`, backup branch created and SHA-verified.
+- Not verified on physical iPad Safari (sandbox has no device, and this sandbox has zero TTS voices registered so actual audio playback can't be heard either) — verified via `pronounce()` text-output inspection and live DOM/console checks in headless Chromium instead. Worth a real on-device check by the user when convenient.
 
 ## Pending / parked
 
@@ -56,5 +61,5 @@
 
 ```
 27fe0cb ACR Reader: fix Psalm 119 audio mistagging + announce verse numbers site-wide       [PR #965, merged]
-f788609 ACR Reader: unify verse-number display/audio site-wide, remove remaining mistagged  [PR #966, open]
+f788609 ACR Reader: unify verse-number display/audio site-wide, remove remaining mistagged  [PR #966, merged]
 ```
