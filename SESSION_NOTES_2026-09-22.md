@@ -1071,3 +1071,166 @@ confirmed 268 entries across seven groups and eighteen test queries returning
 correct results, including a prayer result opening that prayer's text page
 (label read back as "Healing and Physical Restoration"); zero real page errors.
 Cache `acr-solar-v60` -> `acr-solar-v61`.
+
+### PR #985 — verse behind every verdict, plus plain-language search terms
+
+User: "make sure to include pertinent verses that support each of the
+forbidden, not forbidden or not addressed" and "some users may not have learned
+the true term for holy day or holiday, make sure this is all searchable". Also
+restated the standing rule: **always send the merge link, only the user merges.**
+
+**1. Per-day verses.** Every row now names the verse behind its verdict,
+including the not-addressed rows, and each day carries its OWN work-rule verse
+instead of a shared sentence:
+
+| Day | Rule verse |
+|---|---|
+| Pesach Day 1 | Vayikra 23:7 |
+| Pesach Day 7 | Vayikra 23:8 |
+| Shavuot | Vayikra 23:21 |
+| Yom Teruah | Vayikra 23:25 |
+| Sukkot Day 1 | Vayikra 23:35 |
+| Shemini Atzeret | Vayikra 23:36 |
+| Yom Kippur | Vayikra 23:28, 31 + the fast at 23:27, 29, 32 |
+| Weekly Shabbat | Shemot 20:9; Vayikra 23:3 |
+| Tier-3 days | the verse establishing the day without a cessation command |
+
+A not-addressed row now reads in two parts: that no verse names the act, then
+the day's own rule and its verse. **Audited programmatically: 164 breakdown
+rows plus the Shabbat panel rows, zero without a verse reference.**
+
+**2. Search aliases.** `SS_DAY_WORDS` and `SS_NAME_WORDS` fold plain-language
+terms into each appointed day's searchable text and into its breakdown rows.
+Holiday, holy day, feast, festival, celebration, observance, appointed time,
+moed, miqra qodesh, convocation reach all the appointed days; trumpets reaches
+Yom Teruah, atonement Yom Kippur, tabernacles and booths Sukkot, pentecost
+Shavuot, firstfruits the barley offering, eighth day Shemini Atzeret.
+
+**These are search terms only** - never displayed, and in no content the site
+teaches from. The record still reads Yom Teruah while a search for trumpets
+finds it. **No Rabbinic festival names were added** (Rosh Hashanah and the like
+were deliberately left out; raise it with the user if it is ever wanted).
+
+**Backup:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, tr 41/41, td 123/123, table 3/3, all zero
+deltas; verse audit 164 rows + Shabbat rows, zero missing; index still 268
+entries; alias queries confirmed - holiday/holy day/feast/festival/moed each
+return 80 results, trumpets 21, tabernacles 24, pentecost 21, passover 47, and
+the combined "holiday microwave" returns 7; zero real page errors. Cache
+`acr-solar-v61` -> `acr-solar-v62`.
+
+All of this rides on **PR #985**, still open, for the user to merge.
+
+### PR #985 merged early too — PR #986 opened; covenant names now shown on results
+
+**Pattern to expect from this user:** they merge quickly, often before the last
+commit of a batch has landed. PR #984 and PR #985 both merged carrying only
+part of the branch. Verified each time by reading `origin/main` directly rather
+than trusting the PR state. After PR #985 merged, `main` had the search but not
+`SS_DAY_WORDS`, and the cache read `v61` not `v62`. Remaining commits moved to
+**PR #986**.
+
+### User instruction: pair any borrowed term with the true covenant term
+
+"For any rabbinic terms include the ancient paleo Hebrew &/or the ancient true
+pre Roman pre Christian, pre rabbinic terms."
+
+Implemented so that a person arriving by a borrowed word leaves with the
+covenant term: every appointed-day result, and every breakdown row belonging to
+a day, now renders that day's `ancientName` beneath the title - paleo-Hebrew
+then transliteration.
+
+| Search | Lands on | Shows |
+|---|---|---|
+| pentecost | Shavuot | 𐤇𐤂 𐤄𐤔𐤁𐤏𐤅𐤕 Chag HaShavuot |
+| trumpets | Yom Teruah | 𐤉𐤅𐤌 𐤕𐤓𐤅𐤏𐤄 Yom Teru'ah |
+| atonement | Yom Kippur | 𐤉𐤅𐤌 𐤄𐤊𐤐𐤅𐤓𐤉𐤌 Yom HaKippurim |
+| tabernacles, booths | Sukkot | 𐤇𐤂 𐤄𐤎𐤊𐤅𐤕 Chag HaSukkot |
+| eighth day | Shemini Atzeret | 𐤏𐤑𐤓𐤕 Atzeret |
+| unleavened | Pesach Day 1 | 𐤇𐤂 𐤄𐤌𐤑𐤅𐤕 Chag HaMatzot |
+
+Alias words are weighted like a title match so a borrowed term lands on its own
+day. Before that fix, "atonement" returned the Festival of New Oil first.
+
+**The borrowed words stay invisible search keys** - never displayed, in no
+content the site teaches from. No Rabbinic festival names were added.
+
+**Gap flagged, not invented:** 8 of the 80 "holiday" results carry no paleo
+name - the four tekufot, the two season markers, Pesach Sheni and Purim have no
+`ancientName` in `HOLIDAYS`. Left alone rather than fabricating names for them.
+Raise with the user if they ever want those filled in from source.
+
+### Merge rule - already locked, confirmed to user
+
+User: "The rule should be already set that only I merge the links." It is.
+CLAUDE.md **Rule 9**, locked 2026-06-06, clarified 2026-08-11: Claude must never
+merge any PR without naming the PR and branch, listing every file, sending the
+URL and waiting; the default expectation is that the user merges on GitHub.
+Quoted back to them rather than adding a duplicate rule.
+
+**Backups:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs` and
+`backup/2026-09-22-acr-solar-v62-pre-paleo-results`, both pushed and
+SHA-verified.
+
+**Verification:** node --check clean; tag balance div 526/526, table 3/3,
+style 1/1; verse audit zero missing across 164 rows plus Shabbat rows; index
+268 entries; every alias query lands on the right day with its paleo name
+rendered; zero real page errors. Cache `acr-solar-v62` -> `acr-solar-v63`.
+
+### Merge alarm raised by user — investigated, PR #986 was NOT merged
+
+User reported a merge link showing as merged that they had not merged, and
+re-locked the rule. Investigated before replying:
+
+- **PR #986** (the last link sent): `state: open`, `merged: false`. **Not
+  merged.** It is still waiting for the user.
+- **PR #985**: `merged: true`, **`merged_by: DssOrit`**, merged_at
+  2026-09-22T22:25:41Z. That is the repo owner's own account.
+- **PR #984**: merged earlier, same pattern.
+- `mcp__github__merge_pull_request` and `mcp__github__enable_pr_auto_merge`
+  were **never called** in this session.
+
+Most likely explanation: the user was looking at PR #985's page, which is
+genuinely merged, rather than #986. Reported as fact with the `merged_by`
+value, no argument.
+
+**CLAUDE.md Rule 9 re-locked** at the user's instruction, in their words: "DO
+NOT EVER MERGE WITHOUT MY EXPLICIT APPROVAL. ALWAYS SEND ME THE MERGE LINKS.
+LOCK THIS RULE." Four points added: Claude does not merge; every shipped item
+ends with the link handed over; the merge tools are never called unless the
+user names that specific PR in that same message; and if a PR appears merged
+when the user says otherwise, Claude reads `merged_by` and reports the actual
+account first, plainly.
+
+### Preparation sections — first pass audit, and a correction to my own finding
+
+User asked whether all verses and prayers that belong to the special days are
+in the preparation section. **This had not been audited before.** A first pass
+was run now.
+
+**My preliminary read was wrong and is corrected here.** A regex scan appeared
+to show three entries with no source at all - New Season Summer, New Season
+Winter, Year End Tekufah - and a possible mis-citation on Purim. Reading the
+actual entries disproved all four:
+
+- **Year End Tekufah** cites **Chanokh Ch. 79:6**. The regex missed it because
+  of the "Ch." between book and number.
+- **New Season Summer/Winter** state plainly: "a calendrical marker in the DSS
+  reckoning rather than a day with its own ritual requirement in the primary
+  sources. No prayer is attested for this day." That is the correct answer, not
+  a gap.
+- **Purim** cites the Book of Esther in the Orit Ge'ez and explicitly records
+  that no Qumran fragment of Esther exists and that the day is not part of the
+  364-day calendar. The "Temple Scroll" my scan caught came from that honest
+  disclaimer, not a false citation.
+
+**Current state:** every one of the 22 entries has a `practice` section and
+steps; the appointed days carry Torah/Prophets references and DSS sigla; the
+calendar markers say outright where nothing is attested rather than inventing
+a prayer.
+
+**Still not done:** a line-by-line audit of whether every verse or prayer that
+*should* belong to each day is present. Offered to the user, not started.
