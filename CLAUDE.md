@@ -152,6 +152,13 @@ These have been re-locked on 2026-05-04 after repeated violations.
      that performed the merge, plainly and without argument, before
      anything else.
 
+   **NOT drafts — reverted 2026-09-22 the same evening.** Claude briefly
+   opened PRs as drafts after the user reported merges they had not made.
+   The user did not ask for that and it added a step to their flow, so it
+   was removed. PRs open normally, with the Merge button available on the
+   first tap. The rule the user actually set stands unchanged: Claude
+   never merges, and always sends the link.
+
 10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
     2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
     so it must stay public and stay one repo. When suggesting or adding

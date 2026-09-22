@@ -2853,10 +2853,62 @@ function buildSolarSearchIndex(){
   return idx;
 }
 
+// Words a query can be corrected towards: the names and the aliases, nothing
+// from body text, so a typo lands on a day rather than on a stray word.
+var SS_VOCAB = null;
+function ssBuildVocab(){
+  var set = {};
+  // the plain-language words too, so a mistyped 'holliday' still corrects
+  SS_DAY_WORDS.toLowerCase().split(/[^a-z']+/).forEach(function(w){ if (w.length >= 4) set[w] = 1; });
+  (SS_INDEX || []).forEach(function(e){
+    ((e.title || '') + ' ' + (e.alias || '')).toLowerCase()
+      .split(/[^a-z\u0590-\u05ff']+/).forEach(function(w){
+        if (w.length >= 4) set[w] = 1;
+      });
+  });
+  SS_VOCAB = Object.keys(set);
+}
+// Edit distance, abandoned as soon as it exceeds the limit.
+function ssEdits(a, b, max){
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  var prev = [], cur = [], i, j;
+  for (j = 0; j <= b.length; j++) prev[j] = j;
+  for (i = 1; i <= a.length; i++) {
+    cur[0] = i; var best = cur[0];
+    for (j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j-1] + 1, prev[j-1] + (a.charAt(i-1) === b.charAt(j-1) ? 0 : 1));
+      if (cur[j] < best) best = cur[j];
+    }
+    if (best > max) return max + 1;
+    prev = cur.slice();
+  }
+  return prev[b.length];
+}
+// Nearest real word to a mistyped one, or null when nothing is close enough.
+function ssNearest(t){
+  if (!SS_VOCAB) ssBuildVocab();
+  if (t.length < 4) return null;
+  var max = t.length <= 5 ? 1 : 2, best = null, bestD = max + 1;
+  for (var i = 0; i < SS_VOCAB.length; i++) {
+    var w = SS_VOCAB[i];
+    if (w === t) return null;
+    var d = ssEdits(t, w, max);
+    if (d < bestD) { bestD = d; best = w; }
+  }
+  return bestD <= max ? best : null;
+}
+
 function runSolarSearch(q){
   if (!SS_INDEX) SS_INDEX = buildSolarSearchIndex();
   var terms = String(q || '').toLowerCase().split(/\s+/).filter(function(t){ return t.length > 1; });
   if (!terms.length) return [];
+  if (!SS_VOCAB) ssBuildVocab();
+  terms = terms.map(function(t){
+    var hit = false;
+    for (var i = 0; i < SS_VOCAB.length && !hit; i++) if (SS_VOCAB[i].indexOf(t) === 0) hit = true;
+    if (hit) return t;
+    return ssNearest(t) || t;
+  });
   var hits = [];
   SS_INDEX.forEach(function(e){
     var hay = ((e.title || '') + ' ' + (e.text || '')).toLowerCase();
@@ -2870,6 +2922,32 @@ function runSolarSearch(q){
     if (all) hits.push({ e:e, score:score });
   });
   hits.sort(function(a,b){ return b.score - a.score; });
+  if (!hits.length) {
+    // Every term has to match for a strict hit. One mistyped word should not
+    // make the whole search look broken, so fall back to any-term matching.
+    SS_INDEX.forEach(function(e){
+      var hay = ((e.title || '') + ' ' + (e.text || '')).toLowerCase();
+      var title = ((e.title || '') + ' ' + (e.alias || '')).toLowerCase();
+      var score = 0;
+      terms.forEach(function(t){
+        if (hay.indexOf(t) !== -1) {
+          score += 1;
+          if (title.indexOf(t) !== -1) score += 3;
+          return;
+        }
+        // A mistyped ending should still reach the word. Kippar finds Kippur.
+        if (t.length >= 4) {
+          var stem = t.slice(0, Math.max(4, t.length - 2));
+          if (hay.indexOf(stem) !== -1) {
+            score += 1;
+            if (title.indexOf(stem) !== -1) score += 3;
+          }
+        }
+      });
+      if (score) hits.push({ e:e, score:score });
+    });
+    hits.sort(function(a,b){ return b.score - a.score; });
+  }
   return hits.slice(0, 80).map(function(x){ return x.e; });
 }
 
@@ -2929,6 +3007,7 @@ function openSolarSearch(){
   if (!ov) return;
   SS_INDEX = buildSolarSearchIndex();
   ov.classList.add('on');
+  ssBindInput();
   var inp = document.getElementById('ss-input');
   if (inp) { inp.value = ''; renderSolarSearch(); setTimeout(function(){ try { inp.focus(); } catch(e){} }, 60); }
 }
@@ -2936,17 +3015,21 @@ function closeSolarSearch(){
   var ov = document.getElementById('solar-search-overlay');
   if (ov) ov.classList.remove('on');
 }
-(function(){
+// The overlay markup sits after this script in the document, so binding here
+// at parse time found nothing and typing did nothing. The handler is bound on
+// the element itself, and again when the overlay opens, so document order can
+// never break it.
+function ssBindInput(){
   var inp = document.getElementById('ss-input');
-  if (inp) inp.addEventListener('input', renderSolarSearch);
-})();
+  if (inp && !inp.__ssBound) { inp.addEventListener('input', renderSolarSearch); inp.__ssBound = true; }
+}
 
 renderTopBar();renderVolOfDay();loadTPVoices();
 
 </script>
 <div id="solar-search-overlay">
   <div class="ss-top">
-    <input id="ss-input" class="ss-input" type="search" placeholder="Search ACR Solar" autocomplete="off" autocorrect="off" spellcheck="false">
+    <input id="ss-input" class="ss-input" type="search" placeholder="Search ACR Solar" autocomplete="off" autocorrect="off" spellcheck="false" oninput="renderSolarSearch()" onsearch="renderSolarSearch()" onkeyup="renderSolarSearch()">
     <button class="ss-close" onclick="closeSolarSearch()" aria-label="Close search">&times;</button>
   </div>
   <div class="ss-body">

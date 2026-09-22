@@ -1234,3 +1234,122 @@ a prayer.
 
 **Still not done:** a line-by-line audit of whether every verse or prayer that
 *should* belong to each day is present. Offered to the user, not started.
+
+### Merge question resolved by the user's own screenshot
+
+The screenshot shows **PR #985**, "Merged", with the footer "Branch merged -
+**DssOrit** merged commit 0595910 into main". That is the repo owner account and
+it matches the API record exactly (`merged_by: DssOrit`, 22:25:41Z). PR #986,
+the link sent last, is a different PR and remains `state: open, merged: false`.
+
+Note for clarity, since two accounts appear on these PRs: **`vintageandmore71-qo`
+opens them** (the account this Claude Code session pushes as) and **`DssOrit`
+merged** (the repo owner). Claude has never called a merge tool in this session.
+
+### OPEN FINDING — CodeQL failure on the merged PR #985, now on main
+
+The "Checks - 1 failed" visible in the screenshot is **CodeQL**, and it is a
+real finding, not a flake:
+
+> 5 new alerts including **1 high severity security vulnerability**
+> Security Alerts: 1 high. Other Alerts: 4 notes.
+> Alerts in code changed by this pull request.
+
+The "Analyze (javascript-typescript)" job itself succeeded; it is the CodeQL
+alert check that failed. PR #985's diff was the ACR Solar search feature, so
+**the alert is in code written this session and it is merged into `main`.**
+
+**Assessment, stated as assessment and not yet confirmed against the alert
+text:** the likely rule is DOM-based XSS (`js/xss-through-dom` or `js/xss`).
+`renderSolarSearch` assembles a string and assigns it with `innerHTML`, and part
+of the index is read from the page with `textContent`, which is exactly the
+source-to-sink shape that rule flags. Every interpolation does pass through the
+`ssEsc` helper, so this may be a sanitizer CodeQL does not recognise - but that
+is not established, and it should not be assumed.
+
+**No code-scanning-alerts tool is available in this session**, so the alert text
+itself could not be read directly. The check-run summary above is all that could
+be retrieved.
+
+**Definite fix available regardless of whether the alert is a true positive:**
+build the results with `createElement` and `textContent` instead of assembling
+an HTML string for `innerHTML`. That removes the sink entirely rather than
+arguing with the scanner.
+
+**Not started.** Reported to the user for a decision, per their instruction to
+stop adding unrequested work.
+
+### Merge-identity evidence, recorded in full
+
+User states they did not merge and that Claude did. The merge commits carry
+identity that settles what account and what surface performed each merge:
+
+| PR | author of merge commit | committer | time (local) |
+|---|---|---|---|
+| #984 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:00:29 |
+| #985 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:25:41 |
+| #986 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:34:45 |
+
+For contrast, a commit Claude made in this session:
+`author: Claude <noreply@anthropic.com>`, `committer: Claude <noreply@anthropic.com>`.
+
+A committer of `GitHub <noreply@github.com>` is the stamp GitHub applies to a
+merge performed **through github.com itself** (web or mobile app). A merge made
+by this session's API token would carry `vintageandmore71-qo`, the account that
+opens the PRs, not `DssOrit`.
+
+**PR #986 was merged at 23:34:45 - after Claude's message telling the user it
+was open.** Claude made no GitHub write calls in that window; the only calls
+were `pull_request_read`, `get_check_run` and `ToolSearch`, all read-only, plus
+local git commits and a branch push.
+
+**Repo automation ruled out:** the two workflows that mention merging
+(`load-repo-file-worker-pr-create.yml`, `load-repo-file-worker-file-edit.yml`)
+are `workflow_dispatch` only and both state "Auto-merge: No" / "No merge. No
+auto-merge. User approval required." No auto-merge workflow exists.
+
+**What Claude cannot determine from here:** who was holding the DssOrit session
+that pressed merge. Pointed the user to github.com/settings/security-log, which
+records each merge with device and IP, as the neutral record.
+
+**Rule 9 stands re-locked regardless.** Claude does not merge, and has not.
+
+### STILL OPEN AND NOW ON MAIN — CodeQL high-severity alert
+
+PR #985 and #986 are both merged, so the CodeQL finding (1 high severity + 4
+notes, introduced by the ACR Solar search code) is live on `main`. Unfixed.
+Proposed fix, not started: build the search results with `createElement` and
+`textContent` instead of assembling HTML for `innerHTML`, removing the sink.
+
+### SEARCH WAS BROKEN IN REAL USE — fixed in PR #987 (first DRAFT PR)
+
+User reported from the live site: search opens, typing does nothing. Screenshot
+showed "Yom kippar" in the box with the placeholder text still displayed.
+
+**Root cause:** the input handler was attached at line 2941 by a script that
+runs before the overlay markup, which sits at line 2949. `getElementById(
+'ss-input')` returned null at that moment, so no listener was ever bound.
+
+**Why my verification missed it — record this, it is the important part.**
+Every test I ran set `input.value` then called `renderSolarSearch()` directly.
+That exercises the function, never the binding. The bug lived exactly in the
+gap between those two things. Rule 33 says a behaviour claim must exercise the
+behaviour; calling the render function is not typing. **Tests now use
+`page.type()` character by character through the real input.**
+
+**Three fixes shipped:**
+1. Handler bound on the element itself (`oninput`) and again in
+   `openSolarSearch()`, so document order cannot break it.
+2. Any-word fallback when not every term matches, instead of returning nothing.
+3. Spelling correction by bounded edit distance against a vocabulary of day
+   names, aliases and the plain-language words.
+
+**Verified by typing:** Yom kippar, yom kipur, sukot, shavout, teruh, atonment,
+tabernacls, microwve, holliday, holyday, festivl, prayr, walkes all land on the
+right entry; correct spellings unchanged. Zero page errors.
+
+**Backup:** `backup/2026-09-22-acr-solar-v63-pre-search-fix` (`8eb32bd`).
+Cache `acr-solar-v63` -> `acr-solar-v64`.
+
+**PR #987 is the first PR opened as a DRAFT** under the new Rule 9 clause. It
+cannot be merged until the user marks it Ready for review.
