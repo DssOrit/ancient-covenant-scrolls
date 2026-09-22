@@ -1123,3 +1123,59 @@ the combined "holiday microwave" returns 7; zero real page errors. Cache
 `acr-solar-v61` -> `acr-solar-v62`.
 
 All of this rides on **PR #985**, still open, for the user to merge.
+
+### PR #985 merged early too — PR #986 opened; covenant names now shown on results
+
+**Pattern to expect from this user:** they merge quickly, often before the last
+commit of a batch has landed. PR #984 and PR #985 both merged carrying only
+part of the branch. Verified each time by reading `origin/main` directly rather
+than trusting the PR state. After PR #985 merged, `main` had the search but not
+`SS_DAY_WORDS`, and the cache read `v61` not `v62`. Remaining commits moved to
+**PR #986**.
+
+### User instruction: pair any borrowed term with the true covenant term
+
+"For any rabbinic terms include the ancient paleo Hebrew &/or the ancient true
+pre Roman pre Christian, pre rabbinic terms."
+
+Implemented so that a person arriving by a borrowed word leaves with the
+covenant term: every appointed-day result, and every breakdown row belonging to
+a day, now renders that day's `ancientName` beneath the title - paleo-Hebrew
+then transliteration.
+
+| Search | Lands on | Shows |
+|---|---|---|
+| pentecost | Shavuot | 𐤇𐤂 𐤄𐤔𐤁𐤏𐤅𐤕 Chag HaShavuot |
+| trumpets | Yom Teruah | 𐤉𐤅𐤌 𐤕𐤓𐤅𐤏𐤄 Yom Teru'ah |
+| atonement | Yom Kippur | 𐤉𐤅𐤌 𐤄𐤊𐤐𐤅𐤓𐤉𐤌 Yom HaKippurim |
+| tabernacles, booths | Sukkot | 𐤇𐤂 𐤄𐤎𐤊𐤅𐤕 Chag HaSukkot |
+| eighth day | Shemini Atzeret | 𐤏𐤑𐤓𐤕 Atzeret |
+| unleavened | Pesach Day 1 | 𐤇𐤂 𐤄𐤌𐤑𐤅𐤕 Chag HaMatzot |
+
+Alias words are weighted like a title match so a borrowed term lands on its own
+day. Before that fix, "atonement" returned the Festival of New Oil first.
+
+**The borrowed words stay invisible search keys** - never displayed, in no
+content the site teaches from. No Rabbinic festival names were added.
+
+**Gap flagged, not invented:** 8 of the 80 "holiday" results carry no paleo
+name - the four tekufot, the two season markers, Pesach Sheni and Purim have no
+`ancientName` in `HOLIDAYS`. Left alone rather than fabricating names for them.
+Raise with the user if they ever want those filled in from source.
+
+### Merge rule - already locked, confirmed to user
+
+User: "The rule should be already set that only I merge the links." It is.
+CLAUDE.md **Rule 9**, locked 2026-06-06, clarified 2026-08-11: Claude must never
+merge any PR without naming the PR and branch, listing every file, sending the
+URL and waiting; the default expectation is that the user merges on GitHub.
+Quoted back to them rather than adding a duplicate rule.
+
+**Backups:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs` and
+`backup/2026-09-22-acr-solar-v62-pre-paleo-results`, both pushed and
+SHA-verified.
+
+**Verification:** node --check clean; tag balance div 526/526, table 3/3,
+style 1/1; verse audit zero missing across 164 rows plus Shabbat rows; index
+268 entries; every alias query lands on the right day with its paleo name
+rendered; zero real page errors. Cache `acr-solar-v62` -> `acr-solar-v63`.
