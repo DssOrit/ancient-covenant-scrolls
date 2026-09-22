@@ -192,3 +192,55 @@ missing content.
 
 Still awaiting the user's decision and the Rule 8 unlock phrase per site.
 Nothing has been changed.
+
+### Decision (user, 2026-09-22): leave ACR Solar as is — NO CHANGES MADE
+
+User reviewed the findings and decided: **"I think it's fine the way it is since
+we go by daily calculations."** No site file was touched this session. No unlock
+phrase was given for any site. Nothing is pending approval — this is a closed
+decision, not an open item.
+
+**What the user observes by:** the Sun Times screen, which is correct. Verified
+live against the user's own iPad screenshot (Coimbra default, 2026-09-22):
+sunrise 07:21, solar noon 13:27, sunset 19:32, nightfall 19:50 — matched to the
+minute. That path applies `getDSTHours()` (index.html line 2104) on top of the
+raw calculation.
+
+**Open behaviour items, deliberately left in place (do NOT "fix" these in a
+future session without the user asking):**
+
+1. **Shabbat panel prints a standard-time clock.** `updateShabbatDisplay`
+   (~line 2616) uses `st.sunriseStr` raw, with no `getDSTHours()` correction;
+   `userLocation.utcOffset` is hardcoded 0 (line 1551, "WET = UTC+0 standard").
+   During summer time it reads one hour early. Verified live, same page, same
+   second: Sun Times 07:21 vs Shabbat panel 06:25.
+   Not default-specific — "Use My Location" (line 2012) stores the offset
+   computed from January 15, i.e. standard time, so the gap persists with GPS
+   and at any DST-observing location. Berlin control: stored offset 1, real
+   offset 2, Sun Times 06:52, Shabbat panel 05:58.
+   Direction of error, which is why the user is comfortable leaving it: every
+   error but one runs long (more rest). The single short error is the Sunday
+   **end** time, printed 06:26 against a true 07:21 sunrise; the panel's own
+   `isNow` flag still reads "active" until 08:00, so flag and number disagree.
+2. **Covenant day rolls at civil midnight, not sunrise.** `gregorianToSolar()`
+   reads only year/month/date. Verified twice, including with no clock faking.
+   Error window on 2026-09-22 in Coimbra: midnight to 07:21.
+
+**Important finding for any future fix — do not treat the rollover as a
+one-liner.** The pre-sunrise holy-day alert is currently CORRECT *because* the
+rollover happens at midnight: at `alertAt` (30 min before sunrise)
+`gregorianToSolar(now)` returns the date whose sunrise is about to arrive, which
+is the day that needs announcing. The code comment at ~line 2421 states this was
+deliberate. Changing the rollover globally would break a working alert. Display
+and alert logic must be separated first.
+
+**Documentation state at close (no change needed, verified):** ACR Solar and ACR
+Search both already carry the sunrise-to-sunrise claim with the full citation
+set, both verified rendering live. ACR Reader, ACR2 and ACR Study do not carry
+it; the user did not ask for those to be filled in this session.
+
+**Also corrected this session, for the record:** an earlier report in these
+notes stated ACR2 carries no day-boundary documentation. That was wrong; ACR2
+Vol 25 (Raz Nihyeh) does. And a draft note prepared for ACR Reader would have
+called Vayikra 23:32 the only evening-to-evening clause in the Torah — Shemot
+12:18 is a second one. Caught before either reached a file.
