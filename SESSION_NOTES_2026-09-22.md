@@ -272,3 +272,79 @@ sourcing. In ACR Reader the Astronomical Book is renumbered: that text is
 `data/file_14.json` (nav index 14). A reader searching the Reader for chapter 72
 finds nothing. Navigational mismatch between sites, not a doctrinal gap. Left
 as is.
+
+---
+
+## SESSION CLOSE — user called a stop, 2026-09-22
+
+User: **"We will stop here, no further work or additions."** Work halted.
+**No site file was touched at any point in this session.** No Rule 8 unlock
+phrase was given for any site, and none was used.
+
+### Final state
+
+- `origin/main`: **`6cacdcd`** (moved during the session by PR #976 — ACR Study
+  tiers — not by this session's work).
+- Working branch `claude/acr-sites-sunrise-docs-sp1pwn` carries session-notes
+  commits only, no site changes. These notes are NOT on `main`; no PR was
+  opened, per the stop instruction.
+- Working tree clean.
+- Cache versions untouched: `acr-v128`, `acr-search-v318`, `acr-solar-v52`,
+  `acr2-v32`, `acr-study-v130`.
+
+### Backups
+
+- `backup/2026-09-22-pre-enoch-numbering-fix` — **`6cacdcd`**, pushed,
+  SHA-verified equal to `origin/main`. Current recovery point.
+  Recovery: `git checkout backup/2026-09-22-pre-enoch-numbering-fix`.
+- `backup/2026-09-22-acr-solar-v52` — `f91c464`, earlier point in the day.
+
+### Verification baseline taken before the stop (still valid)
+
+261 content JSON files parsed across `data/`, `ACR2/data/`, `study/content/` —
+**0 failures**.
+
+### Work that was scoped but NOT done (do not start it unasked)
+
+1. **Enoch chapter-numbering mismatch across sites.** Mapping confirmed exact:
+   **ACR Chanokh = standard 1 Enoch − 35**, verified title-by-title across all
+   13 chapters of Vol 6 Part 2 (`data/file_14.json`): ACR 37 = std 72 "The Sun —
+   Its Gates and Its Circuit", ACR 40 = std 75 "The Intercalary Days", ACR 45 =
+   std 80, ACR 46 = std 81, ACR 47 = std 82, ACR 48-49 = std 83-84.
+   Affected: Solar 3 citations; Search 34x72, 10x80, 3x81, 1x74, 1x99; ACR2
+   2x91; ~7 across content files. Roughly 60 edits.
+   **CRITICAL — do not bulk-replace.** The "1 Enoch 37 / 56 / 71" citations in
+   ACR Search are Parables/Similitudes *debunk* content. ACR excludes the
+   Parables and therefore never renumbers them, so those citations are correct
+   as written. Rewriting them would corrupt the exclusion argument.
+   Also noted: ACR2's own navigation already carries both schemes — volume
+   titles read "Chanokh 85–90" and "1 Enoch 91–105" while its TOC reads
+   "Chapters 50–55" and "Chapters 56–73". No dual-numbering convention exists
+   anywhere in the repo. A convention decision from the user is required before
+   any edit. Proposed but NOT approved: `1 Enoch 72 (ACR Chanokh 37)`.
+2. **Supporting-anchor citations into ACR Reader critical notes** — 8 files
+   (`file_1`, `file_5`, `file_6`, `file_7`, `file_8`, `file_9`, `file_11`,
+   plus optionally `file_16`/`file_17`/`file_88`). Rule 20 preview never
+   produced, never approved.
+3. **ACR Solar behaviour items** — user decided earlier in the session to leave
+   these as is; see the decision entry above. Not reopened here.
+
+### Capability gaps this session
+
+- No physical iPad (pre-existing). All live checks ran in headless Chromium.
+- `file://` breaks the apps' own `fetch()` of content JSON and renders empty —
+  a local HTTP server is required for any live ACR site verification.
+- ACR Search sits behind `doAuth()` plus a timed loader; a browser test that
+  skips `doAuth()` waits forever and falsely reads as missing content.
+- The sandbox proxy blocks cdn.jsdelivr.net and fonts.googleapis.com. Harmless
+  to the apps, but it fills the console with `ERR_TUNNEL_CONNECTION_FAILED` and
+  `ERR_CERT_AUTHORITY_INVALID`.
+
+### Today's commit log (this session)
+
+```
+499e9cc Session notes: log sunrise-to-sunrise audit findings (scan only, pending approval)
+e23cdad Session notes: verification pass on sunrise-to-sunrise audit, ACR2 finding corrected
+1a72b2c Session notes: user decision to leave ACR Solar as is, findings logged
+701d88e Session notes: correct file_113 framing, log 1 Enoch 72 numbering mismatch
+```
