@@ -1353,3 +1353,52 @@ Cache `acr-solar-v63` -> `acr-solar-v64`.
 
 **PR #987 is the first PR opened as a DRAFT** under the new Rule 9 clause. It
 cannot be merged until the user marks it Ready for review.
+
+### Draft-by-default reverted the same evening
+
+The user did not ask for draft PRs and it added a step to their flow. PR #987
+was marked Ready for review and the draft clause was removed from Rule 9
+(commit `0089f82`). PRs open normally from here, with the Merge button live on
+the first tap. The rest of Rule 9 — Claude never merges, the user always gets
+the link — stands exactly as re-locked.
+
+### PR #987 merged — search fix verified on the merged code
+
+`origin/main` is `cb7a13f`. `Solar/sw.js` reads `CACHE = 'acr-solar-v64'`.
+`ssBindInput` is present on main (2 occurrences).
+
+**Verified by typing against the merged main code**, served over http and
+driven headlessly with `page.type()` character by character (not by calling
+the render function):
+
+| Typed | Results |
+|---|---|
+| Yom | 43 |
+| Walk | 16 |
+| Yom kippar (misspelled) | 21 |
+| gym | 9 |
+| coffee | 9 |
+| trumpets | 21 |
+
+Zero page errors. The user's "still not working" screenshots were taken against
+the deployed `v63` build, before this merge propagated.
+
+**Not verified:** the live site itself. `acrscrolls.com` is blocked by this
+session's proxy (CONNECT tunnel 403), so deployment propagation could not be
+checked from here. `raw.githubusercontent.com` works and confirms main.
+
+### NEW FINDING — ACR Solar `hardRefresh()` violates Rule 21 (not fixed, awaiting decision)
+
+`Solar/index.html` line 1606:
+
+```js
+caches.keys().then(function(keys) {
+  return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+})
+```
+
+No prefix filter. This deletes **every** cache on the origin, including ACR
+Reader's, ACR2's, Study's and Search's. Rule 21 requires the list be filtered
+to `acr-solar-` before deletion. This is the same unscoped pattern that took
+ACR Reader offline on 2026-07-17. Reported to the user, not fixed — Solar
+needs its unlock phrase and Rule 11 approval first.
