@@ -414,3 +414,27 @@ replaced). It is referenced nowhere: not in `_redirects`, zero links from any
 site file, and it is not in CLAUDE.md Rule 8's site list. Cloudflare Pages
 serves by path, so `/Search2/` would resolve if typed directly.
 No action taken — awaiting the user's decision to delete or leave.
+
+### User direction recorded (not yet executed) — Solar Shabbat clock
+
+User reversed the earlier "leave as is" call and specified the approach:
+**"Both should use same code, the Sun times code"** and **"The solar clock for
+sabbath should match the sun times exactly. The current sun times, nothing
+else."**
+
+Agreed scope, awaiting the Rule 8 unlock phrase ("fix Solar") before any edit:
+
+1. Move `clockTimeStr` (currently `Solar/index.html` lines 2110-2115, declared
+   inside `renderSunView` so only that screen can reach it) out to top level,
+   beside `pad()` and `getDSTHours()`.
+2. Sun Times keeps calling it — its behaviour and output are unchanged.
+3. `updateShabbatDisplay` line 2616 (`if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;`)
+   calls the same shared function with `getDSTHours()`, so both screens print
+   identical times.
+4. Cache `acr-solar-v52` -> `acr-solar-v53`.
+
+**Explicitly OUT of scope** per "nothing else": the hardcoded 08:00 in the
+`isNow` Shabbat-active flag (line 2622) is NOT to be touched in this change.
+Note for whoever executes it: after the clock fix the panel will display the
+true sunrise while that flag still assumes 08:00, so the displayed time and the
+active flag will disagree by that margin. User has been told and chose clock-only.
