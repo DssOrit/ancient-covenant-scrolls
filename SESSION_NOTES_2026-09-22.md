@@ -1017,3 +1017,57 @@ correct results, and clicking a result closes search and opens the day modal;
 zero real page errors. Cache `acr-solar-v59` -> `acr-solar-v60`.
 
 PR #984 title and body updated to cover the whole of the work. Awaiting merge.
+
+### PR #984 MERGED EARLY — outstanding work moved to PR #985
+
+**Important for anyone reading this later:** PR #984 was merged at `de25703`
+when the branch carried only its **first** commit (`a2b773e`, the initial 5-row
+Activity Breakdown, cache `acr-solar-v55`). Everything after that stayed on
+`claude/acr-sites-sunrise-docs-sp1pwn` with no open PR tracking it. Verified by
+checking `origin/main` directly: `dayRules` present but only 13 occurrences,
+cache reading `v55`, `openSolarSearch` absent.
+
+A merged PR cannot track new work, so **PR #985** was opened for the remaining
+commits:
+
+```
+aafd0df  extend Activity Breakdown to the weekly Shabbat, clarify exercise row
+2b93fb4  add screens, artistic relaxation and schooling rows
+bf5a2ca  add twelve more Activity Breakdown rows
+75a5938  put an explicit status on every row
+b02cbe5  add a search across the whole app
+5653ec5  widen the search index to every part of the app
+```
+
+### Search index widened to all site content
+
+User: "The search should include any & all site pertinent information." The
+first index missed anything living in a data array or built on demand - a
+search for a prayer or a service returned nothing.
+
+Four sources added, each read from its own origin rather than copied:
+
+- **`PCATS`** - all 34 prayer categories, each indexed on its **own full text**
+  by calling `buildPrayer(id, title)` and stripping markup, so a phrase inside
+  a prayer is findable, not just its title. Destination: `openPrayer(id)`.
+- **The five Sabbath services** - indexed on the text `bS1`..`bS5` produce.
+  Destination: `openService(i)`.
+- **The Shema** - one entry with its Devarim 6:4-9 sourcing note. Destination:
+  `openShema()`.
+- **`SOLAR_MONTHS`** - the twelve months with season and day count.
+
+Every source is wrapped in try/catch so a failure in one cannot take down the
+whole index.
+
+**Index: 216 -> 268 entries.** 22 appointed days, 164 activity breakdown rows,
+10 weekly Shabbat, 21 pages, 34 prayers, 5 services, 12 months.
+
+**Backup:** `backup/2026-09-22-acr-solar-v60-pre-full-index`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, table 3/3, style 1/1, all zero deltas; live run
+confirmed 268 entries across seven groups and eighteen test queries returning
+correct results, including a prayer result opening that prayer's text page
+(label read back as "Healing and Physical Restoration"); zero real page errors.
+Cache `acr-solar-v60` -> `acr-solar-v61`.
