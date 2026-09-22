@@ -702,6 +702,21 @@ select.form-input option { background: var(--surface2); }
 .sm-steps li{counter-increment:sc;position:relative;padding:10px 10px 10px 42px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;color:var(--text);font-size:13px;line-height:1.5}
 .sm-steps li::before{content:counter(sc);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--bg);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .sm-close{background:var(--gold);color:var(--bg);border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;width:100%;cursor:pointer;margin-top:4px}
+/* ── SEARCH ─────────────────────────────────────────────────────────────── */
+#solar-search-overlay{position:fixed;inset:0;z-index:4200;display:none;flex-direction:column;background:#0D0B07;overflow-y:auto;}
+#solar-search-overlay.on{display:flex;}
+.ss-top{display:flex;gap:10px;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.12);position:sticky;top:0;background:#0D0B07;z-index:2;}
+.ss-input{flex:1;padding:11px 13px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:#15120C;color:#F5EFE2;font-family:Arial;font-size:15px;-webkit-appearance:none;}
+.ss-close{background:none;border:none;color:#C8971F;font-size:26px;line-height:1;cursor:pointer;padding:2px 8px;}
+.ss-body{padding:12px 16px 48px;}
+.ss-hint{font-family:Arial;font-size:12px;color:#8a8170;margin:4px 0 12px;font-style:italic;line-height:1.55;}
+.ss-group{font-family:Arial;font-size:11px;font-weight:700;letter-spacing:.06em;color:#C8971F;margin:18px 0 4px;text-transform:uppercase;}
+.ss-item{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer;}
+.ss-item-t{font-family:Arial;font-size:14px;font-weight:700;color:#F5EFE2;line-height:1.4;}
+.ss-item-s{font-family:Arial;font-size:12.5px;color:#b9b0a0;line-height:1.55;margin-top:3px;}
+.ss-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.02em;padding:1px 6px;border-radius:4px;margin-right:7px;}
+.ss-none{font-family:Arial;font-size:13px;color:#8a8170;padding:20px 0;line-height:1.6;}
+.ss-count{font-family:Arial;font-size:11px;color:#8a8170;margin-bottom:2px;}
 </style>
 
 </head>
@@ -2661,7 +2676,7 @@ function renderVolOfDay(){
 }
 function renderTopBar(){
   var bar=document.getElementById('topbar-scroll');if(!bar)return;
-  bar.innerHTML=[{i:'ri-focus-3-line',l:'Today',f:'goToday()'},{i:'ri-calendar-check-line',l:"Mo'adim",f:"switchView('holidays')"},{i:'ri-moon-clear-line',l:'Shabbat',f:'openShabbatMode()'},{i:'ri-text-snippet',l:'Shema',f:'openShema()'},{i:'ri-book-2-line',l:'Sabbath Prayers',f:"switchView('sabbath')"},{i:'ri-heart-2-line',l:'Prayers',f:"switchView('prayers')"},{i:'ri-add-circle-line',l:'Add Reminder',f:'openAddEvent()'},{i:'ri-notification-3-line',l:'Alerts',f:"switchView('sun')"}].map(function(b){return'<div class="tbs-pill" onclick="'+b.f+'"><i class="'+b.i+'"></i>'+b.l+'</div>';}).join('');
+  bar.innerHTML=[{i:'ri-search-line',l:'Search',f:'openSolarSearch()'},{i:'ri-focus-3-line',l:'Today',f:'goToday()'},{i:'ri-calendar-check-line',l:"Mo'adim",f:"switchView('holidays')"},{i:'ri-moon-clear-line',l:'Shabbat',f:'openShabbatMode()'},{i:'ri-text-snippet',l:'Shema',f:'openShema()'},{i:'ri-book-2-line',l:'Sabbath Prayers',f:"switchView('sabbath')"},{i:'ri-heart-2-line',l:'Prayers',f:"switchView('prayers')"},{i:'ri-add-circle-line',l:'Add Reminder',f:'openAddEvent()'},{i:'ri-notification-3-line',l:'Alerts',f:"switchView('sun')"}].map(function(b){return'<div class="tbs-pill" onclick="'+b.f+'"><i class="'+b.i+'"></i>'+b.l+'</div>';}).join('');
 }
 function playTone(type){try{var ctx=new(window.AudioContext||window.webkitAudioContext)();var p={sunrise:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],shabbat:[[784,0,0.5],[659,0.6,0.7]],holyday:[[523,0,0.3],[659,0.35,0.3],[784,0.7,0.5]],reminder:[[660,0,0.4]],midday:[[528,0,0.4],[528,0.5,0.4]]};var ns=p[type]||p.reminder;ns.forEach(function(n){var o=ctx.createOscillator();var g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=n[0];o.type='sine';g.gain.setValueAtTime(0,ctx.currentTime+n[1]);g.gain.linearRampToValueAtTime(0.3,ctx.currentTime+n[1]+0.05);g.gain.linearRampToValueAtTime(0,ctx.currentTime+n[1]+n[2]);o.start(ctx.currentTime+n[1]);o.stop(ctx.currentTime+n[1]+n[2]+0.1);});}catch(e){}}
 var _sw=switchView;switchView=function(n){_sw(n);if(n==='prayers')renderPrayersList();if(n==='month')renderVolOfDay();document.querySelectorAll('.nav-item').forEach(function(x){x.classList.toggle('active',x.id==='nav-'+n);});};
@@ -2673,9 +2688,190 @@ var _sw=switchView;switchView=function(n){_sw(n);if(n==='prayers')renderPrayersL
 // stuck on their placeholder text. This script block sits at the very end
 // of <body>, so every element these functions touch already exists in the
 // DOM by the time this line runs - no need to wait for anything else.
+// ─── SEARCH ───────────────────────────────────────────────────────────────────
+// One index, built at open time from what is already on the page: the HOLIDAYS
+// array, the weekly Shabbat panel's own DOM, and every view. Nothing is
+// duplicated into a second copy of the content, so the index can never drift
+// out of step with what the app actually shows.
+var SS_INDEX = null;
+
+function ssText(el){ return el ? String(el.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+function ssEsc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ssStatusColor(st){
+  if (st === 'FORBIDDEN') return '#B22222';
+  if (st === 'NOT FORBIDDEN') return '#1E7A3C';
+  if (st === 'NOT ADDRESSED') return '#7A6A2F';
+  return '';
+}
+
+function buildSolarSearchIndex(){
+  var idx = [];
+
+  // A. the appointed days, from the HOLIDAYS array itself
+  if (typeof HOLIDAYS !== 'undefined' && HOLIDAYS.length) {
+    HOLIDAYS.forEach(function(h){
+      var bits = [h.name, h.desc, h.practice, h.supplies];
+      if (h.steps) bits = bits.concat(h.steps);
+      if (h.supplyList) bits = bits.concat(h.supplyList);
+      if (h.categories) bits = bits.concat(h.categories);
+      if (h.ancientName && h.ancientName.gloss) bits.push(h.ancientName.gloss);
+      if (h.source) bits.push(h.source);
+      idx.push({ group:'Appointed days', kind:'holiday', month:h.month, day:h.day,
+                 title:h.name, sub:(h.desc || ''), text:bits.filter(Boolean).join(' ') });
+      if (h.dayRules) {
+        h.dayRules.forEach(function(r){
+          idx.push({ group:'Activity breakdown', kind:'holiday', month:h.month, day:h.day,
+                     title:r.a + ' — ' + h.name, status:r.s, sub:r.v,
+                     text:[r.a, r.s, r.v, h.name].join(' ') });
+        });
+      }
+    });
+  }
+
+  // B. the weekly Shabbat panel, read from its own markup
+  var so = document.getElementById('shabbat-overlay');
+  if (so) {
+    Array.prototype.forEach.call(so.querySelectorAll('table tr'), function(tr){
+      var td = tr.children;
+      if (td.length < 3) return;
+      idx.push({ group:'Activity breakdown', kind:'shabbat',
+                 title: ssText(td[0]) + ' — Weekly Shabbat',
+                 status: ssText(td[1]), sub: ssText(td[2]), text: ssText(tr) });
+    });
+    Array.prototype.forEach.call(so.querySelectorAll('.tp-section-header'), function(hd){
+      var body = '';
+      var n = hd.nextElementSibling;
+      while (n && !n.classList.contains('tp-section-header') && body.length < 700) {
+        body += ' ' + ssText(n); n = n.nextElementSibling;
+      }
+      idx.push({ group:'Weekly Shabbat', kind:'shabbat', title: ssText(hd),
+                 sub: body.trim().slice(0, 240), text: ssText(hd) + ' ' + body });
+    });
+    Array.prototype.forEach.call(so.querySelectorAll('.shab-rule-item'), function(it){
+      idx.push({ group:'Weekly Shabbat', kind:'shabbat', title:'Shabbat rule',
+                 sub: ssText(it), text: ssText(it) });
+    });
+  }
+
+  // C. every page of the app, keyed to the nav item that opens it
+  Array.prototype.forEach.call(document.querySelectorAll('.view'), function(v){
+    var name = v.id.replace(/-view$/, '');
+    var nav = document.getElementById('nav-' + name);
+    if (!nav) return;
+    var label = ssText(nav) || name;
+    var heads = v.querySelectorAll('.detail-label,.tp-section-header,.si-title,.setting-title,h1,h2,h3');
+    if (!heads.length) {
+      var whole = ssText(v);
+      if (whole) idx.push({ group:'Pages', kind:'view', view:name, title:label,
+                            sub: whole.slice(0,240), text: whole });
+      return;
+    }
+    Array.prototype.forEach.call(heads, function(hd){
+      var sib = hd.nextElementSibling;
+      idx.push({ group:'Pages', kind:'view', view:name,
+                 title: ssText(hd) + ' — ' + label,
+                 sub: ssText(sib).slice(0,240),
+                 text: ssText(hd) + ' ' + ssText(sib) });
+    });
+  });
+
+  return idx;
+}
+
+function runSolarSearch(q){
+  if (!SS_INDEX) SS_INDEX = buildSolarSearchIndex();
+  var terms = String(q || '').toLowerCase().split(/\s+/).filter(function(t){ return t.length > 1; });
+  if (!terms.length) return [];
+  var hits = [];
+  SS_INDEX.forEach(function(e){
+    var hay = ((e.title || '') + ' ' + (e.text || '')).toLowerCase();
+    var title = (e.title || '').toLowerCase();
+    var score = 0, all = true;
+    terms.forEach(function(t){
+      if (hay.indexOf(t) === -1) { all = false; return; }
+      score += 1;
+      if (title.indexOf(t) !== -1) score += 3;
+    });
+    if (all) hits.push({ e:e, score:score });
+  });
+  hits.sort(function(a,b){ return b.score - a.score; });
+  return hits.slice(0, 80).map(function(x){ return x.e; });
+}
+
+function renderSolarSearch(){
+  var box = document.getElementById('ss-results');
+  var inp = document.getElementById('ss-input');
+  if (!box || !inp) return;
+  var q = inp.value;
+  if (!q || q.trim().length < 2) {
+    box.innerHTML = '<div class="ss-none">Type at least two letters. Try a day name, an activity such as microwave or walks, a verse reference, or a word from any page.</div>';
+    return;
+  }
+  var res = runSolarSearch(q);
+  if (!res.length) {
+    box.innerHTML = '<div class="ss-none">Nothing found for &ldquo;' + ssEsc(q) + '&rdquo;.</div>';
+    return;
+  }
+  var html = '<div class="ss-count">' + res.length + ' result' + (res.length === 1 ? '' : 's') + '</div>';
+  var lastGroup = '';
+  res.forEach(function(e, i){
+    if (e.group !== lastGroup) { html += '<div class="ss-group">' + ssEsc(e.group) + '</div>'; lastGroup = e.group; }
+    var badge = '';
+    if (e.status) {
+      var c = ssStatusColor(e.status);
+      badge = '<span class="ss-badge" style="color:' + c + ';border:1px solid ' + c + ';">' + ssEsc(e.status) + '</span>';
+    }
+    html += '<div class="ss-item" onclick="ssGo(' + i + ')">' +
+              '<div class="ss-item-t">' + badge + ssEsc(e.title) + '</div>' +
+              (e.sub ? '<div class="ss-item-s">' + ssEsc(e.sub) + '</div>' : '') +
+            '</div>';
+  });
+  box.innerHTML = html;
+  window.__ssLast = res;
+}
+
+function ssGo(i){
+  var e = (window.__ssLast || [])[i];
+  if (!e) return;
+  closeSolarSearch();
+  if (e.kind === 'holiday' && typeof getHolidays === 'function' && typeof showEventDetail === 'function') {
+    var h = getHolidays(e.month, e.day)[0];
+    if (h) { showEventDetail(h, gregorianToSolar(new Date())); return; }
+  }
+  if (e.kind === 'shabbat' && typeof openShabbatMode === 'function') { openShabbatMode(); return; }
+  if (e.kind === 'view' && typeof switchView === 'function') { switchView(e.view); return; }
+}
+
+function openSolarSearch(){
+  var ov = document.getElementById('solar-search-overlay');
+  if (!ov) return;
+  SS_INDEX = buildSolarSearchIndex();
+  ov.classList.add('on');
+  var inp = document.getElementById('ss-input');
+  if (inp) { inp.value = ''; renderSolarSearch(); setTimeout(function(){ try { inp.focus(); } catch(e){} }, 60); }
+}
+function closeSolarSearch(){
+  var ov = document.getElementById('solar-search-overlay');
+  if (ov) ov.classList.remove('on');
+}
+(function(){
+  var inp = document.getElementById('ss-input');
+  if (inp) inp.addEventListener('input', renderSolarSearch);
+})();
+
 renderTopBar();renderVolOfDay();loadTPVoices();
 
 </script>
+<div id="solar-search-overlay">
+  <div class="ss-top">
+    <input id="ss-input" class="ss-input" type="search" placeholder="Search ACR Solar" autocomplete="off" autocorrect="off" spellcheck="false">
+    <button class="ss-close" onclick="closeSolarSearch()" aria-label="Close search">&times;</button>
+  </div>
+  <div class="ss-body">
+    <div class="ss-hint">Searches the appointed days, every activity breakdown, the weekly Shabbat panel and every page of this app.</div>
+    <div id="ss-results"></div>
+  </div>
+</div>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
 <div id="save-modal"><div class="sm-box"><h3>Save to your home screen</h3><p>No App Store. Works offline. Tap once from your home screen to open.</p><ol class="sm-steps"><li>Open this page in <strong>Safari</strong> (not Chrome or another browser).</li><li>Tap the <strong>Share</strong> button — the square with an arrow pointing up, at the top of Safari.</li><li>Scroll down and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong> in the top right. Done.</li></ol><p style="font-size:12px;background:rgba(245,200,66,.1);padding:10px;border-radius:8px;border-left:3px solid var(--gold);line-height:1.6;color:var(--text2)">Open it from your home screen and it works offline — just like any app.</p><button class="sm-close" id="sm-close">Got it</button></div></div>
 <script>(function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='solar_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();</script>
