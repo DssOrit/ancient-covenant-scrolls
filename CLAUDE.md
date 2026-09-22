@@ -1575,9 +1575,11 @@ here as the durable, settled position, per the same pattern already used
 for other closed topics in this file: not to be re-opened or re-argued in
 future sessions.
 
-**Primary-source basis — ten citations independently verified by directly
-reading the actual verse text in the ACR Reader's own `data/file_N.json`,
-not against any external document:**
+**Primary-source basis — ten citations confirmed by directly reading the
+actual verse text in the ACR Reader's own `data/file_N.json`.** This
+confirms the citation matches ACR's own stored text — it is a check
+against the ACR Reader only, not an independent check against the
+physical DSS/Orit manuscripts or any outside edition:
 - Yovelim 3:28 — Adam's first offering "in the morning with the rising of
   the sun" (confirmed in `data/file_16.json`).
 - Yovelim 21:10 — sunset is a deadline within a dated day, not the day's
@@ -1591,9 +1593,9 @@ not against any external document:**
 - Devarim 16:4 — names both boundaries in one verse: the evening
   offering must not remain until the following morning.
 
-**Two further citations, live on both sites, NOT independently verified
-against primary verse text — this is a correction to a false claim in
-this entry, caught by the user:**
+**Two further citations, live on both sites, NOT confirmed against
+primary verse text — this is a correction to a false claim in this
+entry, caught by the user:**
 - 4QCalendrical Texts 4Q320-330 — checked directly: the ACR Reader has no
   verse text for this DSS fragment anywhere. It exists only as a
   comparative-note reference in `data/file_113.json` ("the 364-day
@@ -1611,8 +1613,11 @@ confirmed. The user was told this already, earlier in this same session,
 about 4Q320-330 specifically ("unresolved as to whether its content
 claim is independently verifiable") and chose not to remove it ("No
 removal at this time, thanks") — that stands. It should not have been
-folded into a blanket "all independently verified" claim here; this
-entry now states plainly which citations were and were not confirmed.
+folded into a blanket "all independently verified" claim here — a claim
+that was false for two of the twelve, and used a word ("independently")
+that did not accurately describe checking ACR's own files against ACR's
+own files; this entry now states plainly which citations were and were
+not confirmed, and against what.
 
 Twelve Torah/DSS/Orit citations total are live on ACR Solar and ACR
 Search (PRs #970, #971, #972, #974 — merged 2026-09-22): ten with
