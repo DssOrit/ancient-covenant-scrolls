@@ -749,3 +749,637 @@ to pre-change `origin/main` (`b67b144`).
 
 Yom Teruah runs sunrise Wed 07:22 to sunrise Thu 07:23 (Coimbra default).
 Yom Kippur is Month 7 Day 10 — Friday 2 October 2026.
+
+### PR #979 MERGED — Yom Teruah note live
+
+Verified on `origin/main` (`073e6dc`): the teru'ah note is present in
+`Solar/index.html`, `Solar/sw.js` reads `acr-solar-v54`, `Search/sw.js` reads
+`acr-search-v319`.
+
+**Stable-state backup:** `backup/2026-09-22-acr-solar-v54` — pushed,
+SHA-verified equal to merged `origin/main` (`073e6dc`). This is now the current
+recovery point.
+Recovery: `git checkout backup/2026-09-22-acr-solar-v54`
+
+Shipped and merged today, in order: PR #978 (ACR Search Yom Kippur boundary
+wording + ACR Solar Shabbat clock DST match) and PR #979 (ACR Solar Yom Teruah
+teru'ah note). Live caches: `acr-search-v319`, `acr-solar-v54`.
+
+---
+
+## ADDENDUM — ACR Solar per-day Activity Breakdown (PR #984)
+
+User asked for the five activity categories (Gym, Money transactions, Cleaning,
+Cooking, Rides/Uber/bus) to be "clearly set in each of the days, broken down in
+activity allowances & forbidden", then approved the chart layout and said "Make
+the additions" with the standard backup/verify/apply/merge-link sequence.
+
+### Design decision that had to be settled first
+
+A two-state allowed/forbidden table was refused and the reason was put to the
+user before building: **gym, cleaning and rides are named nowhere in the
+covenant record.** A binary table would have manufactured rulings the sources do
+not make, which is the rabbinic-elaboration pattern the site exists to expose
+(Rule 13) and a Rule 29 fabrication risk. User accepted the three-state design:
+Forbidden (verse names it) / Permitted (verse permits it) / Not addressed.
+
+### The tier structure, verified across the whole of Vayikra 23
+
+Checked every work rule in the chapter; the split is exact, no exceptions:
+
+- **"No manner of work" (total) - 3 places:** v3 weekly Shabbat, v28 and v31
+  Yom Kippur.
+- **"No manner of servile work" (melekhet avodah) - 6 places, every one a
+  festival:** v7, v8 Unleavened Bread days 1 and 7; v21 Shavuot; v25 Yom
+  Teruah; v35 Sukkot day 1; v36 the eighth day.
+
+### Verses behind each verdict (all read from ACR Reader's own text)
+
+- Shemot 12:16 - "no work shall be done on them, except what every person must
+  eat, that alone may be prepared by you" (`data/file_5.json`)
+- Shemot 16:23 - bake and boil the day before (Shabbat)
+- Shemot 16:29 - "let no man go out of his place on the seventh day"
+- Shemot 35:3 - "You shall kindle no fire... on the Sabbath day"
+- Vayikra 23:27 - affliction of soul on Yom Kippur
+- Amos 8:5 (`data/file_61.json`) - "When will the new moon be over, that we may
+  sell grain? And the Shabbat..." - names BOTH the new moon and the Shabbat
+- Nechemyah 13:15-22 (`data/file_88.json`) - winepresses, loaded donkeys,
+  Tyrians selling fish, all on the Shabbat
+- Yirmeyahu 17:21-22 (`data/file_49.json`) - burdens through the gates and out
+  of houses
+- Yeshayahu 58:13 (`data/file_46.json`) - located and verified, not used in the
+  final rows
+
+**Search note for future sessions:** ACR's translations use "Sabbath", not
+"Shabbat", in Yirmeyahu 17 and Yeshayahu 58. A grep for "Shabbat" misses them.
+
+### Scope applied
+
+`Solar/index.html`: `dayRules` array added to **11 entries**; one conditional
+render section added to `showEventDetail` after the Description block.
+`Solar/sw.js`: cache `acr-solar-v54` -> `acr-solar-v55`.
+
+**Deliberately excluded** (11 entries, no breakdown): New Year M1 D1, the four
+Tekufot, the two New Season days, New Wine, New Oil, Wood Offering, Purim. They
+are calendar markers, not rest days; a table there would imply they are.
+
+### Backup
+
+`backup/2026-09-22-acr-solar-v54-pre-dayrules` - pushed, SHA-verified equal to
+pre-change `origin/main` (`dabe4f0`).
+
+### Verification before push
+
+- `node --check`: all 4 inline scripts plus all 6 sibling JS files - 0 failures
+- `HOLIDAYS` still 22 entries: 11 with `dayRules`, 11 without, as intended
+- Live render of the real modal via `showEventDetail` for four contrasting
+  days: Yom Teruah (5 rows, new-moon note present), Yom Kippur (5 rows, all
+  forbidden with verses), Pesach Eve (1 row, no work rule stated), Autumn
+  Tekufah (no section) - all correct
+- Zero real page errors
+
+**Testing lesson recorded:** an earlier verification run read `innerText` on the
+modal immediately after `showEventDetail` and got nothing, which looked like the
+section failing to render. It was a layout-flush artifact of the test, not a
+site fault. Use `textContent` or wait a tick after opening a modal.
+
+**PR #984** opened. Awaiting user merge.
+
+### PR #984 extended — weekly Shabbat added, exercise row clarified, two rows corrected
+
+User: "Yes, build it out. Gym is exercising, working out."
+
+**1. Weekly Shabbat now carries the breakdown.** It was the obvious gap: the
+day the five questions matter most, and it is not a `HOLIDAYS` entry, so the
+per-day render never reached it. The table was added as static HTML to **both
+copies** of the Shabbat panel (Solar has two, a known duplication also noted in
+PR #970's commit message).
+
+**2. Gym relabelled `Gym / exercise`** across all seven appointed days, wording
+now reads "exercising or working out" so the row is not read as only a
+commercial gym.
+
+**3. Two Yom Kippur rows corrected before merge.** They had read "Forbidden"
+for Cleaning and Gym. That was an inference, not a citation - neither act is
+named in any verse. Both now read "Not addressed by name" with the day's
+total-cessation rule and the fast stated. This restores the three-state design
+the user agreed to: **Forbidden only where a verse names the act.** Caught by
+re-reading my own shipped rows against the standard I had set, before the PR
+merged.
+
+**Backup:** `backup/2026-09-22-acr-solar-v55-pre-gym-shabbat`, pushed,
+SHA-verified equal to `origin/main` (`dabe4f0`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; HTML tag balance measured against pre-change main - div +7/+7, table
++3/+3, tr +11/+11, td +22/+22, every pair balanced; live render confirmed the
+Shabbat panel shows all five rows with its start time still working (07:25),
+and the modal rows are correct on Yom Teruah, Yom Kippur, Pesach Eve and
+Autumn Tekufah. Zero real page errors.
+
+Cache `acr-solar-v55` -> `acr-solar-v56`. PR #984 title and body updated to
+cover both commits. Awaiting user merge.
+
+### PR #984 extended again — screens, artistic relaxation, schooling
+
+User asked to add three more categories: watching TV / internet; artistic
+relaxation (drawing, reading, writing); school / college. Every breakdown goes
+from five rows to eight, on the seven appointed days with a stated work rule
+and on both copies of the weekly Shabbat panel.
+
+**Sources located and verified for the new rows (all read from ACR Reader):**
+
+- **Nechemyah 8:1-3, 9-12, 18** (`data/file_88.json`) - the assembly on **the
+  first day of the seventh month**, i.e. Yom Teruah itself. Ezra read the Torah
+  "from early morning until midday"; the people were told "Eat the fat and drink
+  sweet wine and send portions to anyone who has nothing ready, for this day is
+  holy." This does double duty: it anchors the reading row, and it corroborates
+  the cooking row independently of Shemot 12:16.
+- **Devarim 31:12** (`data/file_12.json`) - "Assemble the people, the men and
+  the women and the little ones... that they may hear, and that they may learn."
+  Cited on the schooling row for the assembly commanded to hear and learn.
+- **Yeshayahu 58:13** (`data/file_46.json`) - "from doing your pleasure on my
+  holy day... not going your own ways, or seeking your own pleasure, or talking
+  idly." Cited on the screens and reading rows for Shabbat only, since it is a
+  Sabbath text.
+
+**Standard held:** no row is marked Forbidden without a verse naming the act.
+Rabbinic melakhot categories - which do rule on writing and similar acts - were
+not used, per Rule 13.
+
+**Backup:** `backup/2026-09-22-acr-solar-v56-pre-extra-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 17/17, td 34/34, all balanced;
+live render confirmed 8 rows on each of the seven appointed days, 1 row on each
+of the four tier-3 days, 8 rows on the weekly Shabbat panel with its start time
+still working (07:25); zero real page errors.
+
+Cache `acr-solar-v56` -> `acr-solar-v57`. PR #984 carries all four commits.
+
+### PR #984 extended a third time — twenty rows; searchability raised as a separate question
+
+User added twelve more categories: leisurely walks, park, visiting/visitors,
+family games, entertainment, washing the body, getting dressed/makeup, washing
+machine & dryer, dishwasher, airfryer, microwave, coffee machine. Every
+breakdown now runs **20 rows** on the seven appointed days and on both copies of
+the weekly Shabbat panel.
+
+**Verdicts deliberately differentiated, not boilerplate** (Rule 29's
+repeated-boilerplate red flag): walks/parks carry Shemot 16:29 on Shabbat and
+Yom Kippur and note it is a Shabbat text on festivals; visiting is recorded as
+not a restriction, with Nechemyah 8:10, 12 on portions sent and great rejoicing
+on the first day of the seventh month; games and entertainment carry Yeshayahu
+58:13 on Shabbat only; washing the body on Yom Kippur records that the text
+commands affliction of soul (Vayikra 23:27) and states no washing rule; the
+cooking appliances follow each day's cooking verdict.
+
+**Rabbinic material deliberately excluded** (Rule 13): the Rabbinic melakhot
+categories do supply rulings on writing, appliances and washing on these days.
+None were used. The Shabbat washing-machine row states once that Shemot 35:3
+names kindling fire and that whether an electric appliance is that **is not
+settled by the text** - no ruling supplied where the text gives none.
+
+**Backup:** `backup/2026-09-22-acr-solar-v57-pre-more-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 41/41, td 82/82, all balanced;
+live render confirmed 20 rows on each of the seven appointed days, 1 row on each
+tier-3 day, 20 rows on the Shabbat panel with start time still working (07:25);
+zero real page errors. Cache `acr-solar-v57` -> `acr-solar-v58`.
+
+### OPEN — "all of the new additions should be searchable"
+
+**Verified: ACR Solar has no search function at all.** Grepped for search
+handlers, inputs and placeholders in `Solar/index.html` - zero hits. So this
+requirement cannot be met inside Solar as it stands.
+
+Two possible routes, neither started, awaiting the user's decision:
+1. **Put the breakdown data into ACR Search**, which is the search site. That is
+   a different site under Rule 8 and needs its own unlock; the "fix search"
+   phrase given earlier today was used for the Yom Kippur wording fix and should
+   not be stretched to cover new work.
+2. **Build a search into ACR Solar.** Larger job - Solar has no search
+   infrastructure to extend.
+
+Reported to the user; nothing built for this yet.
+
+### PR #984 — explicit status word on every row
+
+User: "Also include forbidden, not forbidden, not addressed on each to be
+perfectly clear."
+
+Each `dayRules` row gained an `s` field and renders as its own colour-coded
+column: **FORBIDDEN** (#B22222), **NOT FORBIDDEN** (#1E7A3C), **NOT ADDRESSED**
+(#7A6A2F). Both copies of the Shabbat panel table were rebuilt with the same
+column. All 11 `dayRules` arrays were regenerated rather than patched, so every
+row carries a status and none was missed.
+
+**Nothing was reclassified to make the table look tidier.** The resulting
+tallies are the honest shape of the evidence:
+
+| | Forbidden | Not forbidden | Not addressed |
+|---|---|---|---|
+| Weekly Shabbat | 6 | 0 | 14 |
+| Yom Kippur | 6 | 1 | 13 |
+| Each festival convocation | 0 | 5 | 15 |
+| Tier-3 appointed days | 0 | 0 | 1 |
+
+The single NOT FORBIDDEN on Yom Kippur is "Visiting, having visitors" - the day
+is a holy convocation (Vayikra 23:27) and no verse restricts receiving anyone.
+The five on each festival are cooking, visiting, and the three cooking
+appliances.
+
+**Backup:** `backup/2026-09-22-acr-solar-v58-pre-status-labels`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 513/513, tr 41/41, td 123/123, table 3/3, all zero
+deltas; live render confirmed the status column on the Yom Teruah modal and on
+the weekly Shabbat panel (20 rows, start time still 07:25); status tallies
+counted programmatically from the live arrays, zero rows missing a status; zero
+real page errors. Cache `acr-solar-v58` -> `acr-solar-v59`.
+
+**Testing note:** a verification run crashed on `closeEventDetail is not
+defined` - that function does not exist in Solar; it was my test script's
+error, not a site fault. The Shabbat panel was verified in a separate run.
+
+### PR #984 — search built into ACR Solar
+
+User: "Build a search into Solar, to make this & the rest of the site easier to
+locate information." Solar previously had no search of any kind (verified by
+grep: zero search handlers, inputs or placeholders).
+
+**Design choice that matters for maintenance:** the index is built at open time
+from what is already on the page - the `HOLIDAYS` array, the Shabbat overlay's
+own markup, and each `.view` element keyed to the nav item that opens it.
+**No content was duplicated into a second searchable copy**, so the index cannot
+drift out of step with the app. 216 entries across four groups on this build:
+Appointed days, Activity breakdown, Weekly Shabbat, Pages.
+
+**Self-validating:** a view is only offered as a destination when
+`document.getElementById('nav-' + name)` exists, so a renamed or removed view
+drops out of the index instead of producing a dead link.
+
+**What was added:** search CSS before `</style>`; the overlay markup before
+`#save-banner`; `buildSolarSearchIndex`, `runSolarSearch`, `renderSolarSearch`,
+`ssGo`, `openSolarSearch`, `closeSolarSearch` and helpers in the main script;
+one entry at the head of `renderTopBar`'s pill array.
+
+**Structural note recorded while working:** `Solar/index.html` contains **two
+copies of the Shabbat overlay markup**, both with `id="shabbat-overlay"`, and
+the stylesheet carries its rule block twice. `getElementById` returns the first,
+so the second copy is dead markup. Pre-existing, not introduced here, not fixed
+- flagged only so a future session is not surprised when an edit reports two
+matches. All Activity Breakdown edits this session were applied to both copies.
+
+**Backup:** `backup/2026-09-22-acr-solar-v59-pre-search`, pushed, SHA-verified
+equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 525/525, tr 41/41, td 123/123, table 3/3,
+style 1/1, all zero deltas; live run confirmed the Search pill renders, the
+overlay opens, the index builds to 216 entries, nine test queries (microwave,
+walks, teruah, money, sunrise, dishwasher, fast, visiting, prayer) all return
+correct results, and clicking a result closes search and opens the day modal;
+zero real page errors. Cache `acr-solar-v59` -> `acr-solar-v60`.
+
+PR #984 title and body updated to cover the whole of the work. Awaiting merge.
+
+### PR #984 MERGED EARLY — outstanding work moved to PR #985
+
+**Important for anyone reading this later:** PR #984 was merged at `de25703`
+when the branch carried only its **first** commit (`a2b773e`, the initial 5-row
+Activity Breakdown, cache `acr-solar-v55`). Everything after that stayed on
+`claude/acr-sites-sunrise-docs-sp1pwn` with no open PR tracking it. Verified by
+checking `origin/main` directly: `dayRules` present but only 13 occurrences,
+cache reading `v55`, `openSolarSearch` absent.
+
+A merged PR cannot track new work, so **PR #985** was opened for the remaining
+commits:
+
+```
+aafd0df  extend Activity Breakdown to the weekly Shabbat, clarify exercise row
+2b93fb4  add screens, artistic relaxation and schooling rows
+bf5a2ca  add twelve more Activity Breakdown rows
+75a5938  put an explicit status on every row
+b02cbe5  add a search across the whole app
+5653ec5  widen the search index to every part of the app
+```
+
+### Search index widened to all site content
+
+User: "The search should include any & all site pertinent information." The
+first index missed anything living in a data array or built on demand - a
+search for a prayer or a service returned nothing.
+
+Four sources added, each read from its own origin rather than copied:
+
+- **`PCATS`** - all 34 prayer categories, each indexed on its **own full text**
+  by calling `buildPrayer(id, title)` and stripping markup, so a phrase inside
+  a prayer is findable, not just its title. Destination: `openPrayer(id)`.
+- **The five Sabbath services** - indexed on the text `bS1`..`bS5` produce.
+  Destination: `openService(i)`.
+- **The Shema** - one entry with its Devarim 6:4-9 sourcing note. Destination:
+  `openShema()`.
+- **`SOLAR_MONTHS`** - the twelve months with season and day count.
+
+Every source is wrapped in try/catch so a failure in one cannot take down the
+whole index.
+
+**Index: 216 -> 268 entries.** 22 appointed days, 164 activity breakdown rows,
+10 weekly Shabbat, 21 pages, 34 prayers, 5 services, 12 months.
+
+**Backup:** `backup/2026-09-22-acr-solar-v60-pre-full-index`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, table 3/3, style 1/1, all zero deltas; live run
+confirmed 268 entries across seven groups and eighteen test queries returning
+correct results, including a prayer result opening that prayer's text page
+(label read back as "Healing and Physical Restoration"); zero real page errors.
+Cache `acr-solar-v60` -> `acr-solar-v61`.
+
+### PR #985 — verse behind every verdict, plus plain-language search terms
+
+User: "make sure to include pertinent verses that support each of the
+forbidden, not forbidden or not addressed" and "some users may not have learned
+the true term for holy day or holiday, make sure this is all searchable". Also
+restated the standing rule: **always send the merge link, only the user merges.**
+
+**1. Per-day verses.** Every row now names the verse behind its verdict,
+including the not-addressed rows, and each day carries its OWN work-rule verse
+instead of a shared sentence:
+
+| Day | Rule verse |
+|---|---|
+| Pesach Day 1 | Vayikra 23:7 |
+| Pesach Day 7 | Vayikra 23:8 |
+| Shavuot | Vayikra 23:21 |
+| Yom Teruah | Vayikra 23:25 |
+| Sukkot Day 1 | Vayikra 23:35 |
+| Shemini Atzeret | Vayikra 23:36 |
+| Yom Kippur | Vayikra 23:28, 31 + the fast at 23:27, 29, 32 |
+| Weekly Shabbat | Shemot 20:9; Vayikra 23:3 |
+| Tier-3 days | the verse establishing the day without a cessation command |
+
+A not-addressed row now reads in two parts: that no verse names the act, then
+the day's own rule and its verse. **Audited programmatically: 164 breakdown
+rows plus the Shabbat panel rows, zero without a verse reference.**
+
+**2. Search aliases.** `SS_DAY_WORDS` and `SS_NAME_WORDS` fold plain-language
+terms into each appointed day's searchable text and into its breakdown rows.
+Holiday, holy day, feast, festival, celebration, observance, appointed time,
+moed, miqra qodesh, convocation reach all the appointed days; trumpets reaches
+Yom Teruah, atonement Yom Kippur, tabernacles and booths Sukkot, pentecost
+Shavuot, firstfruits the barley offering, eighth day Shemini Atzeret.
+
+**These are search terms only** - never displayed, and in no content the site
+teaches from. The record still reads Yom Teruah while a search for trumpets
+finds it. **No Rabbinic festival names were added** (Rosh Hashanah and the like
+were deliberately left out; raise it with the user if it is ever wanted).
+
+**Backup:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, tr 41/41, td 123/123, table 3/3, all zero
+deltas; verse audit 164 rows + Shabbat rows, zero missing; index still 268
+entries; alias queries confirmed - holiday/holy day/feast/festival/moed each
+return 80 results, trumpets 21, tabernacles 24, pentecost 21, passover 47, and
+the combined "holiday microwave" returns 7; zero real page errors. Cache
+`acr-solar-v61` -> `acr-solar-v62`.
+
+All of this rides on **PR #985**, still open, for the user to merge.
+
+### PR #985 merged early too — PR #986 opened; covenant names now shown on results
+
+**Pattern to expect from this user:** they merge quickly, often before the last
+commit of a batch has landed. PR #984 and PR #985 both merged carrying only
+part of the branch. Verified each time by reading `origin/main` directly rather
+than trusting the PR state. After PR #985 merged, `main` had the search but not
+`SS_DAY_WORDS`, and the cache read `v61` not `v62`. Remaining commits moved to
+**PR #986**.
+
+### User instruction: pair any borrowed term with the true covenant term
+
+"For any rabbinic terms include the ancient paleo Hebrew &/or the ancient true
+pre Roman pre Christian, pre rabbinic terms."
+
+Implemented so that a person arriving by a borrowed word leaves with the
+covenant term: every appointed-day result, and every breakdown row belonging to
+a day, now renders that day's `ancientName` beneath the title - paleo-Hebrew
+then transliteration.
+
+| Search | Lands on | Shows |
+|---|---|---|
+| pentecost | Shavuot | 𐤇𐤂 𐤄𐤔𐤁𐤏𐤅𐤕 Chag HaShavuot |
+| trumpets | Yom Teruah | 𐤉𐤅𐤌 𐤕𐤓𐤅𐤏𐤄 Yom Teru'ah |
+| atonement | Yom Kippur | 𐤉𐤅𐤌 𐤄𐤊𐤐𐤅𐤓𐤉𐤌 Yom HaKippurim |
+| tabernacles, booths | Sukkot | 𐤇𐤂 𐤄𐤎𐤊𐤅𐤕 Chag HaSukkot |
+| eighth day | Shemini Atzeret | 𐤏𐤑𐤓𐤕 Atzeret |
+| unleavened | Pesach Day 1 | 𐤇𐤂 𐤄𐤌𐤑𐤅𐤕 Chag HaMatzot |
+
+Alias words are weighted like a title match so a borrowed term lands on its own
+day. Before that fix, "atonement" returned the Festival of New Oil first.
+
+**The borrowed words stay invisible search keys** - never displayed, in no
+content the site teaches from. No Rabbinic festival names were added.
+
+**Gap flagged, not invented:** 8 of the 80 "holiday" results carry no paleo
+name - the four tekufot, the two season markers, Pesach Sheni and Purim have no
+`ancientName` in `HOLIDAYS`. Left alone rather than fabricating names for them.
+Raise with the user if they ever want those filled in from source.
+
+### Merge rule - already locked, confirmed to user
+
+User: "The rule should be already set that only I merge the links." It is.
+CLAUDE.md **Rule 9**, locked 2026-06-06, clarified 2026-08-11: Claude must never
+merge any PR without naming the PR and branch, listing every file, sending the
+URL and waiting; the default expectation is that the user merges on GitHub.
+Quoted back to them rather than adding a duplicate rule.
+
+**Backups:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs` and
+`backup/2026-09-22-acr-solar-v62-pre-paleo-results`, both pushed and
+SHA-verified.
+
+**Verification:** node --check clean; tag balance div 526/526, table 3/3,
+style 1/1; verse audit zero missing across 164 rows plus Shabbat rows; index
+268 entries; every alias query lands on the right day with its paleo name
+rendered; zero real page errors. Cache `acr-solar-v62` -> `acr-solar-v63`.
+
+### Merge alarm raised by user — investigated, PR #986 was NOT merged
+
+User reported a merge link showing as merged that they had not merged, and
+re-locked the rule. Investigated before replying:
+
+- **PR #986** (the last link sent): `state: open`, `merged: false`. **Not
+  merged.** It is still waiting for the user.
+- **PR #985**: `merged: true`, **`merged_by: DssOrit`**, merged_at
+  2026-09-22T22:25:41Z. That is the repo owner's own account.
+- **PR #984**: merged earlier, same pattern.
+- `mcp__github__merge_pull_request` and `mcp__github__enable_pr_auto_merge`
+  were **never called** in this session.
+
+Most likely explanation: the user was looking at PR #985's page, which is
+genuinely merged, rather than #986. Reported as fact with the `merged_by`
+value, no argument.
+
+**CLAUDE.md Rule 9 re-locked** at the user's instruction, in their words: "DO
+NOT EVER MERGE WITHOUT MY EXPLICIT APPROVAL. ALWAYS SEND ME THE MERGE LINKS.
+LOCK THIS RULE." Four points added: Claude does not merge; every shipped item
+ends with the link handed over; the merge tools are never called unless the
+user names that specific PR in that same message; and if a PR appears merged
+when the user says otherwise, Claude reads `merged_by` and reports the actual
+account first, plainly.
+
+### Preparation sections — first pass audit, and a correction to my own finding
+
+User asked whether all verses and prayers that belong to the special days are
+in the preparation section. **This had not been audited before.** A first pass
+was run now.
+
+**My preliminary read was wrong and is corrected here.** A regex scan appeared
+to show three entries with no source at all - New Season Summer, New Season
+Winter, Year End Tekufah - and a possible mis-citation on Purim. Reading the
+actual entries disproved all four:
+
+- **Year End Tekufah** cites **Chanokh Ch. 79:6**. The regex missed it because
+  of the "Ch." between book and number.
+- **New Season Summer/Winter** state plainly: "a calendrical marker in the DSS
+  reckoning rather than a day with its own ritual requirement in the primary
+  sources. No prayer is attested for this day." That is the correct answer, not
+  a gap.
+- **Purim** cites the Book of Esther in the Orit Ge'ez and explicitly records
+  that no Qumran fragment of Esther exists and that the day is not part of the
+  364-day calendar. The "Temple Scroll" my scan caught came from that honest
+  disclaimer, not a false citation.
+
+**Current state:** every one of the 22 entries has a `practice` section and
+steps; the appointed days carry Torah/Prophets references and DSS sigla; the
+calendar markers say outright where nothing is attested rather than inventing
+a prayer.
+
+**Still not done:** a line-by-line audit of whether every verse or prayer that
+*should* belong to each day is present. Offered to the user, not started.
+
+### Merge question resolved by the user's own screenshot
+
+The screenshot shows **PR #985**, "Merged", with the footer "Branch merged -
+**DssOrit** merged commit 0595910 into main". That is the repo owner account and
+it matches the API record exactly (`merged_by: DssOrit`, 22:25:41Z). PR #986,
+the link sent last, is a different PR and remains `state: open, merged: false`.
+
+Note for clarity, since two accounts appear on these PRs: **`vintageandmore71-qo`
+opens them** (the account this Claude Code session pushes as) and **`DssOrit`
+merged** (the repo owner). Claude has never called a merge tool in this session.
+
+### OPEN FINDING — CodeQL failure on the merged PR #985, now on main
+
+The "Checks - 1 failed" visible in the screenshot is **CodeQL**, and it is a
+real finding, not a flake:
+
+> 5 new alerts including **1 high severity security vulnerability**
+> Security Alerts: 1 high. Other Alerts: 4 notes.
+> Alerts in code changed by this pull request.
+
+The "Analyze (javascript-typescript)" job itself succeeded; it is the CodeQL
+alert check that failed. PR #985's diff was the ACR Solar search feature, so
+**the alert is in code written this session and it is merged into `main`.**
+
+**Assessment, stated as assessment and not yet confirmed against the alert
+text:** the likely rule is DOM-based XSS (`js/xss-through-dom` or `js/xss`).
+`renderSolarSearch` assembles a string and assigns it with `innerHTML`, and part
+of the index is read from the page with `textContent`, which is exactly the
+source-to-sink shape that rule flags. Every interpolation does pass through the
+`ssEsc` helper, so this may be a sanitizer CodeQL does not recognise - but that
+is not established, and it should not be assumed.
+
+**No code-scanning-alerts tool is available in this session**, so the alert text
+itself could not be read directly. The check-run summary above is all that could
+be retrieved.
+
+**Definite fix available regardless of whether the alert is a true positive:**
+build the results with `createElement` and `textContent` instead of assembling
+an HTML string for `innerHTML`. That removes the sink entirely rather than
+arguing with the scanner.
+
+**Not started.** Reported to the user for a decision, per their instruction to
+stop adding unrequested work.
+
+### Merge-identity evidence, recorded in full
+
+User states they did not merge and that Claude did. The merge commits carry
+identity that settles what account and what surface performed each merge:
+
+| PR | author of merge commit | committer | time (local) |
+|---|---|---|---|
+| #984 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:00:29 |
+| #985 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:25:41 |
+| #986 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:34:45 |
+
+For contrast, a commit Claude made in this session:
+`author: Claude <noreply@anthropic.com>`, `committer: Claude <noreply@anthropic.com>`.
+
+A committer of `GitHub <noreply@github.com>` is the stamp GitHub applies to a
+merge performed **through github.com itself** (web or mobile app). A merge made
+by this session's API token would carry `vintageandmore71-qo`, the account that
+opens the PRs, not `DssOrit`.
+
+**PR #986 was merged at 23:34:45 - after Claude's message telling the user it
+was open.** Claude made no GitHub write calls in that window; the only calls
+were `pull_request_read`, `get_check_run` and `ToolSearch`, all read-only, plus
+local git commits and a branch push.
+
+**Repo automation ruled out:** the two workflows that mention merging
+(`load-repo-file-worker-pr-create.yml`, `load-repo-file-worker-file-edit.yml`)
+are `workflow_dispatch` only and both state "Auto-merge: No" / "No merge. No
+auto-merge. User approval required." No auto-merge workflow exists.
+
+**What Claude cannot determine from here:** who was holding the DssOrit session
+that pressed merge. Pointed the user to github.com/settings/security-log, which
+records each merge with device and IP, as the neutral record.
+
+**Rule 9 stands re-locked regardless.** Claude does not merge, and has not.
+
+### STILL OPEN AND NOW ON MAIN — CodeQL high-severity alert
+
+PR #985 and #986 are both merged, so the CodeQL finding (1 high severity + 4
+notes, introduced by the ACR Solar search code) is live on `main`. Unfixed.
+Proposed fix, not started: build the search results with `createElement` and
+`textContent` instead of assembling HTML for `innerHTML`, removing the sink.
+
+### SEARCH WAS BROKEN IN REAL USE — fixed in PR #987 (first DRAFT PR)
+
+User reported from the live site: search opens, typing does nothing. Screenshot
+showed "Yom kippar" in the box with the placeholder text still displayed.
+
+**Root cause:** the input handler was attached at line 2941 by a script that
+runs before the overlay markup, which sits at line 2949. `getElementById(
+'ss-input')` returned null at that moment, so no listener was ever bound.
+
+**Why my verification missed it — record this, it is the important part.**
+Every test I ran set `input.value` then called `renderSolarSearch()` directly.
+That exercises the function, never the binding. The bug lived exactly in the
+gap between those two things. Rule 33 says a behaviour claim must exercise the
+behaviour; calling the render function is not typing. **Tests now use
+`page.type()` character by character through the real input.**
+
+**Three fixes shipped:**
+1. Handler bound on the element itself (`oninput`) and again in
+   `openSolarSearch()`, so document order cannot break it.
+2. Any-word fallback when not every term matches, instead of returning nothing.
+3. Spelling correction by bounded edit distance against a vocabulary of day
+   names, aliases and the plain-language words.
+
+**Verified by typing:** Yom kippar, yom kipur, sukot, shavout, teruh, atonment,
+tabernacls, microwve, holliday, holyday, festivl, prayr, walkes all land on the
+right entry; correct spellings unchanged. Zero page errors.
+
+**Backup:** `backup/2026-09-22-acr-solar-v63-pre-search-fix` (`8eb32bd`).
+Cache `acr-solar-v63` -> `acr-solar-v64`.
+
+**PR #987 is the first PR opened as a DRAFT** under the new Rule 9 clause. It
+cannot be merged until the user marks it Ready for review.
