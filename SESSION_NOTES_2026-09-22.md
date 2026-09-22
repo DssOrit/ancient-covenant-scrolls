@@ -975,3 +975,45 @@ real page errors. Cache `acr-solar-v58` -> `acr-solar-v59`.
 **Testing note:** a verification run crashed on `closeEventDetail is not
 defined` - that function does not exist in Solar; it was my test script's
 error, not a site fault. The Shabbat panel was verified in a separate run.
+
+### PR #984 — search built into ACR Solar
+
+User: "Build a search into Solar, to make this & the rest of the site easier to
+locate information." Solar previously had no search of any kind (verified by
+grep: zero search handlers, inputs or placeholders).
+
+**Design choice that matters for maintenance:** the index is built at open time
+from what is already on the page - the `HOLIDAYS` array, the Shabbat overlay's
+own markup, and each `.view` element keyed to the nav item that opens it.
+**No content was duplicated into a second searchable copy**, so the index cannot
+drift out of step with the app. 216 entries across four groups on this build:
+Appointed days, Activity breakdown, Weekly Shabbat, Pages.
+
+**Self-validating:** a view is only offered as a destination when
+`document.getElementById('nav-' + name)` exists, so a renamed or removed view
+drops out of the index instead of producing a dead link.
+
+**What was added:** search CSS before `</style>`; the overlay markup before
+`#save-banner`; `buildSolarSearchIndex`, `runSolarSearch`, `renderSolarSearch`,
+`ssGo`, `openSolarSearch`, `closeSolarSearch` and helpers in the main script;
+one entry at the head of `renderTopBar`'s pill array.
+
+**Structural note recorded while working:** `Solar/index.html` contains **two
+copies of the Shabbat overlay markup**, both with `id="shabbat-overlay"`, and
+the stylesheet carries its rule block twice. `getElementById` returns the first,
+so the second copy is dead markup. Pre-existing, not introduced here, not fixed
+- flagged only so a future session is not surprised when an edit reports two
+matches. All Activity Breakdown edits this session were applied to both copies.
+
+**Backup:** `backup/2026-09-22-acr-solar-v59-pre-search`, pushed, SHA-verified
+equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 525/525, tr 41/41, td 123/123, table 3/3,
+style 1/1, all zero deltas; live run confirmed the Search pill renders, the
+overlay opens, the index builds to 216 entries, nine test queries (microwave,
+walks, teruah, money, sunrise, dishwasher, fast, visiting, prayer) all return
+correct results, and clicking a result closes search and opens the day modal;
+zero real page errors. Cache `acr-solar-v59` -> `acr-solar-v60`.
+
+PR #984 title and body updated to cover the whole of the work. Awaiting merge.
