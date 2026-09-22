@@ -1278,3 +1278,45 @@ arguing with the scanner.
 
 **Not started.** Reported to the user for a decision, per their instruction to
 stop adding unrequested work.
+
+### Merge-identity evidence, recorded in full
+
+User states they did not merge and that Claude did. The merge commits carry
+identity that settles what account and what surface performed each merge:
+
+| PR | author of merge commit | committer | time (local) |
+|---|---|---|---|
+| #984 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:00:29 |
+| #985 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:25:41 |
+| #986 | `DssOrit <oritqumran@gmail.com>` | `GitHub <noreply@github.com>` | 23:34:45 |
+
+For contrast, a commit Claude made in this session:
+`author: Claude <noreply@anthropic.com>`, `committer: Claude <noreply@anthropic.com>`.
+
+A committer of `GitHub <noreply@github.com>` is the stamp GitHub applies to a
+merge performed **through github.com itself** (web or mobile app). A merge made
+by this session's API token would carry `vintageandmore71-qo`, the account that
+opens the PRs, not `DssOrit`.
+
+**PR #986 was merged at 23:34:45 - after Claude's message telling the user it
+was open.** Claude made no GitHub write calls in that window; the only calls
+were `pull_request_read`, `get_check_run` and `ToolSearch`, all read-only, plus
+local git commits and a branch push.
+
+**Repo automation ruled out:** the two workflows that mention merging
+(`load-repo-file-worker-pr-create.yml`, `load-repo-file-worker-file-edit.yml`)
+are `workflow_dispatch` only and both state "Auto-merge: No" / "No merge. No
+auto-merge. User approval required." No auto-merge workflow exists.
+
+**What Claude cannot determine from here:** who was holding the DssOrit session
+that pressed merge. Pointed the user to github.com/settings/security-log, which
+records each merge with device and IP, as the neutral record.
+
+**Rule 9 stands re-locked regardless.** Claude does not merge, and has not.
+
+### STILL OPEN AND NOW ON MAIN — CodeQL high-severity alert
+
+PR #985 and #986 are both merged, so the CodeQL finding (1 high severity + 4
+notes, introduced by the ACR Solar search code) is live on `main`. Unfixed.
+Proposed fix, not started: build the search results with `createElement` and
+`textContent` instead of assembling HTML for `innerHTML`, removing the sink.
