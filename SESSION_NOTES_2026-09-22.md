@@ -94,17 +94,34 @@
 41. **All four PRs merged** (#976, #980, #981, #982). `origin/main` at `dabe4f02`; `backup/2026-09-22-acr-study-v134` created and SHA-verified.
 
 
+### ACR Study — blank-marker normalisation (PR #989, OPEN, not merged)
+
+42. **User approved fixing the 250 prompts that used a short `___` blank.** Backup taken first: `backup/2026-09-22-acr-study-v134-pre-blanks` at `cb7a13fc`, SHA-verified equal to `origin/main` (main had moved to `cb7a13fc` by then via PR #987, so the backup is of that HEAD, not the earlier one).
+43. **The cause, confirmed:** two blank markers were in use across the content and the renderer only ever looked for one (`prompt.split('______')`). The 615 prompts written with six underscores got a styled blank; the 250 written with three got a plain run of dashes. **Not only cosmetic** — three other paths search for the same literal marker and silently did nothing on those prompts: the spoken prompt (which reads "blank" at the gap) left the underscores to be read out as characters, and the two places a fill-blank is reused as a question in another game passed the prompt through untouched.
+44. **All 250 normalised across 8 files**, with four assertions per item (nothing changes but the blank width, blank count preserved, no malformed underscore run, no leak introduced). An assertion caught a real ambiguity again: two entries in `file_202` share an identical prompt string, so a one-match-per-entry rule fired rather than silently editing the wrong one; edits are now grouped by string with an occurrence-count check.
+45. **Verified**: 0 of 902 prompts carry a short blank and 0 carry no blank; live rounds in `file_13`, `file_203` and `file_204` each render exactly one styled blank with no raw dashes on screen; the spoken prompt now reads "has the numeric value blank"; 186 mode opens across 6 volumes with zero runtime errors; console output identical to unmodified `origin/main`. Cache `v134` -> `v135`. Field by field against main: 250 prompts differ, zero other fields, zero other changes.
+46. **PR #989 opened and handed to the user. NOT merged** — per Rule 9 as re-locked tonight, and per the user's explicit instruction that only they merge.
+
+### Process note — the drip-feed problem (raised by the user, 2026-09-22)
+
+47. **The user asked why each fix kept surfacing another one.** Answered plainly and the failure was owned rather than explained away. The mechanical cause is real: each fix's verification check scans all 902 prompts, so every round surfaced the next issue, and each one was confirmed pre-existing by running the identical check against a clean `origin/main` checkout. The underlying mess is one thing — the fill-blank content was built by different generators at different times with different conventions (`______` vs `___`, blank-the-first-word vs blank-a-chosen-word) and was never audited as a whole.
+48. **The part that was Claude's fault, recorded as such:** one full audit of the entire fill-blank corpus should have been run and reported at the start, before any fix. Instead the findings were drip-fed across four rounds, costing the user four separate backup/verify/PR/merge cycles where one would have done. **For the next session: run the single comprehensive audit — empty prompts, answer leaks, blank markers, thin context, answer quality — report everything at once, and let the user choose what to fix.** The user has not yet asked for it; it was offered and left with them.
+
+
 ## Outstanding / blocking
 
 - Nothing outstanding from this session's work — PR #967, #968, #976, #980, #981 and #982 are all merged, `main` is current at `dabe4f02`, all backup branches created and SHA-verified.
-- **20 pull requests are open repo-wide**, none from tonight. Five are the Alkebulan-era set from Sept 12-13 (#921 Rule 38 itself, #924 Reader, #925 Study, #922 Rule 8 Maps split, #937 Solar supply list); #701 is a real content change from 18 July (Remove Book of Parables ch.37-71); the rest are session-notes and a Dependabot bump. **Rule 38 is still not on `main`**, so the Alkebulan convention is live on Maps and Search but not on Reader or Study, and the rule that governs it was never merged. Flagged to the user; no decision given.
+- **PR #989 is OPEN and waiting on the user** — ACR Study, 250 blank markers normalised, cache `v134` -> `v135`. Built, verified and handed over; not merged, per Rule 9.
+- **This notes PR (#983) is also open** and was updated in place rather than opening a new one, since the user asked for nothing further tonight.
+- **20+ pull requests are open repo-wide.** Five are the Alkebulan-era set from Sept 12-13 (#921 Rule 38 itself, #924 Reader, #925 Study, #922 Rule 8 Maps split, #937 Solar supply list); #701 is a real content change from 18 July (Remove Book of Parables ch.37-71); the rest are session-notes and a Dependabot bump. **Rule 38 is still not on `main`**, so the Alkebulan convention is live on Maps and Search but not on Reader or Study, and the rule that governs it was never merged. Flagged to the user; no decision given.
 - ACR Study tier behaviour has not been seen on a physical iPad. Everything above was verified in headless Chromium against the running app, which is a real browser but not the target device. The typed Recall input in particular is worth a look on iPad Safari (it sets `autocapitalize="off"` and `autocorrect="off"`, which iOS honours inconsistently).
 
 ## Pending / parked
 
 - **Only 4 of 33 ACR Study modes record mastery** (`filblank`, `mc`, `whosaidit`, `truefalse`), so the other 29 games still contribute nothing to a section's tier. PR #976 fixed the tier system itself but deliberately did not widen the mastery net — that is a separate, larger change and was not in the approved scope. Parked for a future session, not forgotten.
 - ~~The teaching panel's note-matching is term-based, not positional.~~ **Resolved in PR #981** — the chapter files did carry the position all along, in document order; nothing needed adding to the content.
-- **250 fill-blank prompts use a short `___` blank the renderer never styles.** They read and answer correctly; the blank just renders as a plain dash instead of a highlighted one. Counted 258 before PR #982 and 250 after (the 8 fixed were part of a leak). Not in scope for any approved fix so far; a one-line normalisation would close it. Surfaced to the user, no decision given.
+- ~~250 fill-blank prompts use a short `___` blank the renderer never styles.~~ **Fixed in PR #989** (open, awaiting the user's merge).
+- **88 prompts carry three or fewer words of context around the blank** ("______ binding agreement." for *Covenant*). All reference gloss entries, all answerable as they stand, all pre-existing on `main`. Found while verifying #989; not in scope, not touched. This is the kind of item the single up-front audit in item 48 would have surfaced alongside everything else.
 
 ## Capability gaps this session
 
@@ -122,6 +139,7 @@
 73595fe ACR Study: add the Mo'edim observance volume, paleo names, sunrise rule    [PR #980, merged]
 6d5b615 ACR Study: rebuild 29 unanswerable prompts, match notes by position        [PR #981, merged]
 48fe30b ACR Study: close 44 prompts that printed their own answer                  [PR #982, merged]
+9659ffc ACR Study: normalise 250 unstyled blanks to the marker the app renders     [PR #989, OPEN]
 ```
 
 ---
