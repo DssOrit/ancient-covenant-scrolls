@@ -814,3 +814,38 @@ section failing to render. It was a layout-flush artifact of the test, not a
 site fault. Use `textContent` or wait a tick after opening a modal.
 
 **PR #984** opened. Awaiting user merge.
+
+### PR #984 extended — weekly Shabbat added, exercise row clarified, two rows corrected
+
+User: "Yes, build it out. Gym is exercising, working out."
+
+**1. Weekly Shabbat now carries the breakdown.** It was the obvious gap: the
+day the five questions matter most, and it is not a `HOLIDAYS` entry, so the
+per-day render never reached it. The table was added as static HTML to **both
+copies** of the Shabbat panel (Solar has two, a known duplication also noted in
+PR #970's commit message).
+
+**2. Gym relabelled `Gym / exercise`** across all seven appointed days, wording
+now reads "exercising or working out" so the row is not read as only a
+commercial gym.
+
+**3. Two Yom Kippur rows corrected before merge.** They had read "Forbidden"
+for Cleaning and Gym. That was an inference, not a citation - neither act is
+named in any verse. Both now read "Not addressed by name" with the day's
+total-cessation rule and the fast stated. This restores the three-state design
+the user agreed to: **Forbidden only where a verse names the act.** Caught by
+re-reading my own shipped rows against the standard I had set, before the PR
+merged.
+
+**Backup:** `backup/2026-09-22-acr-solar-v55-pre-gym-shabbat`, pushed,
+SHA-verified equal to `origin/main` (`dabe4f0`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; HTML tag balance measured against pre-change main - div +7/+7, table
++3/+3, tr +11/+11, td +22/+22, every pair balanced; live render confirmed the
+Shabbat panel shows all five rows with its start time still working (07:25),
+and the modal rows are correct on Yom Teruah, Yom Kippur, Pesach Eve and
+Autumn Tekufah. Zero real page errors.
+
+Cache `acr-solar-v55` -> `acr-solar-v56`. PR #984 title and body updated to
+cover both commits. Awaiting user merge.
