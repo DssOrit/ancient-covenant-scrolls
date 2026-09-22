@@ -645,3 +645,77 @@ Verified on `main` after merge: both strings present, both caches correct.
    never existed in `Search/index.html`.
 6. Quoted Shabbat-panel sunrise times (06:25 / 06:33) as if they were correct
    clock times. They came from the DST-less panel and were an hour early.
+
+---
+
+## ADDENDUM — ACR Solar Yom Teruah note (PR #979)
+
+User asked, ahead of Yom Teruah (Wed 23 Sep 2026, Month 7 Day 1), whether a
+mouthed/voiced sound would serve if no horn is available, then said "Yes please
+add to solar" with the standard backup/verify/apply/merge-link sequence.
+
+**Rule 8 note:** the user did not type the literal phrase "fix Solar" here
+either. The instruction named the site, named the content to add, and set the
+sequence, issued directly in reply to the research answer. Treated as site
+authorization for this specific addition only, same as the earlier clock fix.
+
+### What was added, and the sources behind each claim
+
+All verses read directly from ACR Reader's own text before use (Rule 29):
+
+- **Vayikra 23:24** — 𐤆𐤊𐤓𐤅𐤍 𐤕𐤓𐤅𐤏𐤄, zikhron teru'ah. ACR Reader English:
+  "a memorial proclaimed with the blast of horns". The Hebrew names no
+  instrument.
+- **Bamidbar 29:1** (`data/file_10.json`) — 𐤉𐤅𐤌 𐤕𐤓𐤅𐤏𐤄, yom teru'ah. ACR Reader
+  English: "it is a day of blowing the horn to you". Again no instrument in the
+  Hebrew.
+- **Bamidbar 10:2** (`data/file_9.json`) — "Make yourself two trumpets of
+  silver" — 𐤇𐤑𐤑𐤓𐤅𐤕, chatzotzrot, instrument named outright.
+- **Vayikra 25:9** (`data/file_8.json`) — "proclamation with the blast of the
+  horn" — 𐤔𐤅𐤐𐤓, shofar, named outright.
+- **Yehoshua 6:4** (`data/file_20.json`) — "seven trumpets of rams' horns",
+  named outright.
+- **Bamidbar 10:7** — "you shall blow, but you shall not sound an alarm" —
+  separates plain blowing from teru'ah, marking teru'ah as a kind of sound.
+- **Yehoshua 6:20** — "the people shouted, and the trumpets were blown" — both
+  sounds in one verse, distinct.
+- **Yehoshua 6:10** — "You shall not shout or make your voice heard" — the
+  shout is a voice act.
+- **Root** 𐤓𐤅𐤏, ruaʿ — to raise a loud noise, to shout an alarm.
+
+The entry states plainly that **no passage in the DSS or the Orit rules on a
+voiced teru'ah for this day.** Nothing asserts a permission the sources do not
+give. Rule 31 followed: paleo-Hebrew with English alongside throughout.
+
+### Scope
+
+`Solar/index.html` — the `practice` and `supplies` strings of the Yom Teruah
+`HOLIDAYS` entry. **Steps unchanged. No other entry touched. No code touched.**
+Cache `acr-solar-v53` -> `acr-solar-v54`.
+
+### Backup
+
+`backup/2026-09-22-acr-solar-v53-pre-teruah-note` — pushed, SHA-verified equal
+to pre-change `origin/main` (`b67b144`).
+
+### Verification before push
+
+- `node --check`: all 4 inline scripts plus all 6 sibling JS files — 0 failures
+- `git diff --stat`: 2 files, 1 line each
+- Live headless render: `HOLIDAYS` still 22 entries; Yom Kippur and Sukkot
+  entries intact; `getHolidays(7,1)` returns Yom Teruah with the full new
+  practice text; all paleo characters render; apostrophe escaping intact; zero
+  real page errors
+
+**PR #979** opened. Awaiting user merge.
+
+### Yom Teruah reference data, computed from ACR Solar's own functions
+
+| Date | Weekday | Solar | Day | Sunrise | Sunset |
+|---|---|---|---|---|---|
+| Sep 22 | Tuesday | Month 6 Day 31 | 182/364 | 07:21 | 19:32 | (Autumn Tekufah)
+| Sep 23 | Wednesday | Month 7 Day 1 | 183/364 | 07:22 | 19:31 | **Yom Teruah**
+| Sep 24 | Thursday | Month 7 Day 2 | 184/364 | 07:23 | 19:29 |
+
+Yom Teruah runs sunrise Wed 07:22 to sunrise Thu 07:23 (Coimbra default).
+Yom Kippur is Month 7 Day 10 — Friday 2 October 2026.
