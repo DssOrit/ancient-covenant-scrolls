@@ -887,3 +887,51 @@ of the four tier-3 days, 8 rows on the weekly Shabbat panel with its start time
 still working (07:25); zero real page errors.
 
 Cache `acr-solar-v56` -> `acr-solar-v57`. PR #984 carries all four commits.
+
+### PR #984 extended a third time — twenty rows; searchability raised as a separate question
+
+User added twelve more categories: leisurely walks, park, visiting/visitors,
+family games, entertainment, washing the body, getting dressed/makeup, washing
+machine & dryer, dishwasher, airfryer, microwave, coffee machine. Every
+breakdown now runs **20 rows** on the seven appointed days and on both copies of
+the weekly Shabbat panel.
+
+**Verdicts deliberately differentiated, not boilerplate** (Rule 29's
+repeated-boilerplate red flag): walks/parks carry Shemot 16:29 on Shabbat and
+Yom Kippur and note it is a Shabbat text on festivals; visiting is recorded as
+not a restriction, with Nechemyah 8:10, 12 on portions sent and great rejoicing
+on the first day of the seventh month; games and entertainment carry Yeshayahu
+58:13 on Shabbat only; washing the body on Yom Kippur records that the text
+commands affliction of soul (Vayikra 23:27) and states no washing rule; the
+cooking appliances follow each day's cooking verdict.
+
+**Rabbinic material deliberately excluded** (Rule 13): the Rabbinic melakhot
+categories do supply rulings on writing, appliances and washing on these days.
+None were used. The Shabbat washing-machine row states once that Shemot 35:3
+names kindling fire and that whether an electric appliance is that **is not
+settled by the text** - no ruling supplied where the text gives none.
+
+**Backup:** `backup/2026-09-22-acr-solar-v57-pre-more-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 41/41, td 82/82, all balanced;
+live render confirmed 20 rows on each of the seven appointed days, 1 row on each
+tier-3 day, 20 rows on the Shabbat panel with start time still working (07:25);
+zero real page errors. Cache `acr-solar-v57` -> `acr-solar-v58`.
+
+### OPEN — "all of the new additions should be searchable"
+
+**Verified: ACR Solar has no search function at all.** Grepped for search
+handlers, inputs and placeholders in `Solar/index.html` - zero hits. So this
+requirement cannot be met inside Solar as it stands.
+
+Two possible routes, neither started, awaiting the user's decision:
+1. **Put the breakdown data into ACR Search**, which is the search site. That is
+   a different site under Rule 8 and needs its own unlock; the "fix search"
+   phrase given earlier today was used for the Yom Kippur wording fix and should
+   not be stretched to cover new work.
+2. **Build a search into ACR Solar.** Larger job - Solar has no search
+   infrastructure to extend.
+
+Reported to the user; nothing built for this yet.
