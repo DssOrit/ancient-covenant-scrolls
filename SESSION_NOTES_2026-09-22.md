@@ -4,19 +4,26 @@
 
 - **PR #967 is MERGED** (ACR Reader tekufah wording fix). `main` fast-forwarded to `085c232` after merge.
 - **PR #968 is MERGED** (2026-09-22T02:32:54Z, confirmed via `pull_request_read`, merged by DssOrit) — ACR Search Shemini Atzeret Mo'edim entry.
-- `origin/main` HEAD now: `0ff2342`. Local `main` fast-forwarded to match, verified.
+- **PR #970 is MERGED** — ACR Solar + ACR Search sunrise-to-sunrise citation fix (removed excluded Damascus Document/Community Rule citations, replaced with admissible DSS/Orit/Torah sources).
+- **PR #971 is MERGED** — added Vayikra 7:15, 22:29-30 as supporting sunrise-to-sunrise citations (Solar + Search).
+- **PR #972 is MERGED** (confirmed directly against `origin/main`, `38a978e`) — added six further Torah "until morning" citations as supporting text for sunrise-to-sunrise: Shemot 12:10, 23:18, 29:34, 34:25; Bamidbar 9:12; Devarim 16:4 (Solar + Search).
+- `origin/main` HEAD now: `38a978e`. Local `main` matches, verified.
 - Root ACR Reader cache: `acr-v127` -> `acr-v128` (merged, live on `main`).
-- ACR Search cache: `acr-search-v314` -> `acr-search-v315` (merged, live on `main`).
+- ACR Search cache: `acr-search-v314` -> `v315` -> `v316` (PR #970) -> `v317` (PR #971) -> `v318` (PR #972), all merged, live on `main`.
+- ACR Solar cache: `acr-solar-v49` (PR #970) -> `v50` (PR #971) -> `v51` (PR #972), all merged, live on `main`.
 - Rule 8 unlocks used today:
   - ACR Reader: no new unlock phrase was given today; treated the still-active "Fix ACR reader" authorization from 2026-09-21 as continuing, since this session picked up directly from yesterday's calendar/audio investigation on the same site with no break in topic.
-  - ACR Search: user gave "Fix ACR search" — treated as the site's unlock phrase. Used for the Shemini Atzeret `MOEDIM` entry fix only.
+  - ACR Search: user gave "Fix ACR search" — treated as the site's unlock phrase. Used for the Shemini Atzeret `MOEDIM` entry fix. Later gave "Edit solar & search" (confirmed via AskUserQuestion) — treated as the unlock phrase for the sunrise-to-sunrise citation work (PRs #970-972).
+  - ACR Solar: unlocked via the same "Edit solar & search" confirmation, used for the same sunrise-to-sunrise citation work.
 
 ## Backups
 
 - `backup/2026-09-22-acr-v127-pre-tekufah-fix` — pushed, SHA-verified equal to pre-change `main` (`3ab1a221`), created before any file was touched.
 - `backup/2026-09-22-acr-v128` — pushed, SHA-verified equal to `main`/`origin/main` (`085c232`) right after PR #967 merged.
 - `backup/2026-09-22-acr-search-v314-pre-atzeret-fix` — pushed, SHA-verified equal to pre-change `main`/`origin/main` (`085c232`), created before touching `Search/index.html`.
-- `backup/2026-09-22-acr-search-v315` — pushed, SHA-verified equal to `main`/`origin/main` (`0ff2342`) right after PR #968 merged. This is the current recovery point. Recovery: `git checkout backup/2026-09-22-acr-search-v315`.
+- `backup/2026-09-22-acr-search-v315` — pushed, SHA-verified equal to `main`/`origin/main` (`0ff2342`) right after PR #968 merged.
+- `backup/2026-09-22-acr-solar-v50-acr-search-v317` — pushed, SHA-verified equal to pre-change `main`/`origin/main` (`d8bd50f`), created before the six-Torah-citation edit (PR #972) was applied.
+- `backup/2026-09-22-acr-solar-v51-acr-search-v318` — pushed, SHA-verified equal to `main`/`origin/main` (`38a978e`) right after PR #972 merged. This is the current recovery point. Recovery: `git checkout backup/2026-09-22-acr-solar-v51-acr-search-v318`.
 
 ## Built today
 
@@ -42,10 +49,23 @@
 16. **Verified no break risk before pushing**: `node --check` passed on all inline scripts in `Search/index.html` and on `Search/sw.js`; brace/entry count confirmed (9 balanced objects, was 8); `git diff --stat` confirmed only the 2 intended files changed; live headless-browser (Playwright/Chromium) render confirmed `buildMoedim()` — generic over array length, no code change needed — renders all 9 cards correctly with Shemini Atzeret last and complete; the only console errors were the sandbox's own network-proxy blocks (`ERR_TUNNEL_CONNECTION_FAILED`, `ERR_CERT_AUTHORITY_INVALID`), unrelated to this change.
 17. **PR #968 opened, then merged** (2026-09-22T02:32:54Z).
 18. **Post-merge sync and backup**: local `main` fast-forwarded to `origin/main` (`0ff2342`); `backup/2026-09-22-acr-search-v315` created and pushed, SHA-verified equal to `main`/`origin/main`.
+19. **User raised the ACR Solar/Search sunrise-to-sunrise sourcing question**: found the site's own prior directive in `SESSION_NOTES_2026-09-07.md` confirming sunrise-to-sunrise as the resolved policy; verified the citation panels on both sites were citing excluded texts (Damascus Document, Community Rule) against `EXCLUDED_TEXTS_DOSSIER.md`. User gave unlock "Edit solar & search" (confirmed via AskUserQuestion) and the standard backup/verify/fix/merge-link sequence.
+20. **PR #970 (backup -> fix -> merge)**: replaced the excluded-text citations in both sites' "Why Sunrise to Sunrise"/"Shabbat Rules" panels with admissible sources (Yovelim 3:28, 21:10; 4Q320-330; 1 Enoch 72). Caught and fixed a duplicate-panel gap on first pass (Solar has the panel twice; the first edit only caught one instance — re-swept and fixed the second). Merged.
+21. **User relayed several rounds of external "Deep Research" documents arguing sunset-to-sunset** (Ben-Dov/DJD XXI, VanderKam, Lauterbach, Finegan, and later Talmon/Ben-Dov/Doering discussing Jubilees/Damascus Document "evening or morning" reckoning). Evaluated each round against Rule 13 (source type: Western academic secondary scholarship, never admissible regardless of which conclusion it supports) and Rule 35/37 (critical editions/scholarship are control-only, never source; a citation needs a specific checkable location, not just author names). None of this material was added to either site. User pushed back twice ("But your Claude platform verified it," "I gave you what I as the ACR sites owner wants") — held firm both times, citing the standing DNA-research precedent already on file in `CLAUDE.md` (no topic-specific carve-outs from the citation standard, ever).
+22. **User stated the policy explicitly, closing the question**: "It's resolved, sunrise to sunrise, the rising of the sun," and separately, "We only want evidence that supports sunrise to sunrise" (scope-narrowing instruction going forward — still apply full verification rigor to anything proposed as supporting evidence).
+23. **PR #971 (backup -> fix -> merge)**: added Vayikra 7:15 and 22:29-30 as supporting citations after verifying both directly against `data/file_N.json` (the ACR Reader's own primary-source text). Merged.
+24. **User proposed removing 4Q320-330, 4Q503, and 1 Enoch 72-82 as non-probative** (from a "Case for Sunrise-to-Sunrise" dossier). Evaluated the proposal, did not act — **user explicitly declined**: "No removal at this time, thanks." Nothing was removed from either site.
+25. **User supplied a six-verse Torah "until morning" list** (Shemot 12:10, 23:18, 29:34, 34:25; Bamidbar 9:12; Devarim 16:4) and asked to add them as supporting text, with the standard sequence plus an explicit no-deletion constraint.
+26. **PR #972 (backup -> verify -> fix -> merge link -> merged)**: verified all six citations directly against `data/file_N.json` before writing anything. Applied additive-only edits to both duplicate "Why Sunrise to Sunrise" panel instances in `Solar/index.html`, the Search card, and the Solar Yom Kippur entry's citation parenthetical. Verified before pushing: `<div>` tag-balance matched the `origin/main` baseline exactly (Solar diff=0, Search diff=4 pre-existing); `node --check` passed on extracted inline scripts and both `sw.js` files; grep-confirmed zero deletions of prior citations. Cache bumped `acr-solar-v50`->`v51`, `acr-search-v317`->`v318`. Merged by user.
+27. **User asked "no softening of text"** — ran the Rule 28 hedge-word audit against everything the PR touched. The new six-citation sentence itself is clean (no hedges). Found two pre-existing "often" hedges in the Solar Yom Kippur entry's `practice` text (predating this PR, not introduced by it) — flagged to user, no action taken yet (open question, not yet answered).
+28. **User asked how sunrise-to-sunrise affects Yom Kippur specifically.** Answered directly from the site's own already-shipped content: Yom Kippur is not treated as an exception — the boundary is a property of the day generally (Bereshit 1's day-before-night order, the Torah-wide "until morning" deadline pattern), not a Sabbath-only rule. Noted Vayikra 23:32's "evening to evening" phrasing is the one explicit sunset-to-sunset wording in Torah for this holy day, and the site's existing resolution (already live, not changed today) treats it as superseded by the wider solar-day pattern.
+29. **User relayed one more round of external argument** (a "Jubilees is polemicizing against an older sunrise custom" reading, sourced to Talmon/Ben-Dov/Doering/VanderKam/DJD XXI). Same Rule 13/35/37 evaluation as step 21 — rejected on source-type grounds (regardless of which conclusion it supports) and on citation-specificity grounds (no page/location named). Nothing added to either site.
+30. **Post-PR#972-merge sync and backup**: verified merge directly against `origin/main` (`38a978e`, not from PR metadata alone, per the established verification method in this thread). `backup/2026-09-22-acr-solar-v51-acr-search-v318` created and pushed, SHA-verified equal to `main`/`origin/main`.
 
 ## Outstanding / blocking
 
-- Nothing outstanding — both PR #967 and PR #968 are merged, `main` is current at `0ff2342`, both backup branches created and SHA-verified.
+- **Open question, not yet answered by user**: whether to also tighten the two pre-existing "often" hedges in the Solar Yom Kippur entry's `practice` text (found during the step 27 audit; not part of any merged PR; no unlock scope issue since "Edit solar & search" already covers this site).
+- Otherwise nothing outstanding — PRs #967, #968, #970, #971, #972 are all merged, `main` is current at `38a978e`, all backup branches created and SHA-verified.
 - Not verified on physical iPad Safari (sandbox has no device).
 
 ## Pending / parked
@@ -62,4 +82,7 @@
 ```
 3dd9297 ACR Reader: correct tekufah/intercalary-day wording in Book of Mysteries   [PR #967, merged]
 901e180 ACR Search: add Shemini Atzeret as its own Mo'edim entry                   [PR #968, merged]
+3c162fe Sunrise-to-sunrise: drop excluded-text citations, add admissible support   [PR #970, merged]
+43b459e ACR Solar + Search: add Vayikra 7:15, 22:29-30 as supporting citations    [PR #971, merged]
+7f32424 ACR Solar + Search: add six Torah law-code citations (sunrise-to-sunrise) [PR #972, merged]
 ```
