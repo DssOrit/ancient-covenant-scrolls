@@ -1803,6 +1803,44 @@ function getChapterNotes(fid) {
   return out;
 }
 
+// The notes that actually govern a given verse.
+//
+// A chapter file runs in document order as a block of verses, then the notes
+// belonging to them, then the next block of verses, then its notes. So the
+// notes that follow a verse, before the next verse begins, are that verse's
+// own. Matching on a shared word instead can pull a note from a different
+// chapter of the same file that happens to use the word.
+function getNotesForVerse(fid, verseText) {
+  var data = CHAPTER_CACHE[fid];
+  if (!data || !data.html || !verseText) return [];
+  var div = document.createElement('div');
+  div.innerHTML = data.html;
+  var paras = div.querySelectorAll('p.dp');
+  var needle = String(verseText).replace(/\s+/g, ' ').trim().slice(0, 60);
+  if (needle.length < 12) return [];
+  var at = -1;
+  for (var i = 0; i < paras.length; i++) {
+    if (paras[i].getAttribute('data-ptype') !== 'verse') continue;
+    if (paras[i].textContent.replace(/\s+/g, ' ').indexOf(needle) >= 0) { at = i; break; }
+  }
+  if (at < 0) return [];
+  // Walk forward to the next run of notes. If another verse turns up before
+  // any note does, this verse's chapter carries none.
+  var out = [];
+  for (var j = at + 1; j < paras.length; j++) {
+    var pt = paras[j].getAttribute('data-ptype');
+    if (pt === 'verse') { if (out.length) break; else continue; }
+    if (pt !== 'note') continue;
+    var spans = paras[j].querySelectorAll('span');
+    if (spans.length < 2) continue;
+    var label = spans[0].textContent.replace(/[\[\]]/g, '').trim();
+    var body = spans[1].textContent.trim();
+    if (!label || body.length < 40) continue;
+    out.push({ label: label, body: body });
+  }
+  return out;
+}
+
 // Real scroll designations drawn from the note apparatus already in the
 // chapter files. Used only to pad the distractor list when a chapter's
 // own notes do not name enough other scrolls -- so a wrong answer is
@@ -1896,15 +1934,31 @@ function buildTeachPanel(fid, answer, sourceQuote, data) {
       }
     }
   }
-  if (a && a.length >= 4) {
+  // Prefer the notes that sit under this very passage. Only when the
+  // passage cannot be located do we fall back to matching on the answer
+  // word, and that fallback is labelled so it never reads as this verse's
+  // own note.
+  var picked = null, byWord = false;
+  var own = getNotesForVerse(fid, sourceQuote);
+  if (own.length) {
+    if (a && a.length >= 4) {
+      for (var o = 0; o < own.length; o++) {
+        if (own[o].body.toLowerCase().indexOf(a) >= 0) { picked = own[o]; break; }
+      }
+    }
+    if (!picked) picked = own[0];
+  } else if (a && a.length >= 4) {
     var notes = getChapterNotes(fid);
     for (var n = 0; n < notes.length; n++) {
       if (notes[n].body.toLowerCase().indexOf(a) < 0) continue;
-      var nb = notes[n].body;
-      if (nb.length > 340) nb = nb.slice(0, 337) + '…';
-      bits.push('<div class="teach-line"><span class="teach-tag">' + notes[n].label + '</span> ' + nb + '</div>');
-      break;
+      picked = notes[n]; byWord = true; break;
     }
+  }
+  if (picked) {
+    var nb = picked.body;
+    if (nb.length > 340) nb = nb.slice(0, 337) + '…';
+    bits.push('<div class="teach-line"><span class="teach-tag">' + picked.label +
+      (byWord ? ' — elsewhere in this volume' : '') + '</span> ' + nb + '</div>');
   }
   if (bits.length < 2) return '';
   return '<div class="teach-panel"><div class="teach-head">What this teaches</div>' + bits.join('') + '</div>';
