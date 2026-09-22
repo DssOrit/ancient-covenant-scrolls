@@ -536,3 +536,33 @@ that the day runs from morning to the following day." Its sources line reads:
 longer claims DSS-fragment confirmation for Yovelim and cites Yovelim 3:28;
 21:10, Vayikra 7:15; 22:29-30, Shemot 12:10; 23:18; 29:34; 34:25, Bamidbar 9:12
 and Devarim 16:4 instead.
+
+### STANDING INSTRUCTION — Search2 and the sunrise citations: LEAVE ALONE
+
+User, 2026-09-22: **"Leave it alone & stop suggesting dangerous edits that
+aren't necessary."**
+
+This is a closed decision, not a pending item. Applies to:
+- `Search2/` — do NOT delete, move, modify or wire it up. It stays exactly as
+  it is. An earlier suggestion in this session to delete it was based on a false
+  premise (see below) and is withdrawn.
+- The Yovelim "confirmed in DSS fragments" sentence — do NOT add it to Search or
+  Solar. Do not re-raise it.
+- Yovelim 2:9 and Damascus Document CD Columns 10-11 — do NOT restore them to
+  Solar. Do not re-raise them.
+
+**Correction that stands on the record:** this session twice described Search2
+as holding "the superseded wording PR #970 replaced". Both claims were wrong,
+verified against git history:
+- PR #970 (`3c162fe`) removed nothing from `Search/index.html`. It only ADDED
+  Yovelim 3:28 and 21:10 there.
+- The sentence "The Book of Yovelim (Jubilees), preserved in the Orit Ge'ez and
+  confirmed in DSS fragments" appears in ZERO commits of `Search/index.html`.
+  It exists only in `Search2/index.html`. Search2 is not an earlier draft of
+  Search; the two files were written differently.
+- What PR #970 actually removed was from **Solar**: Yovelim 2:9 (as a wrong
+  citation) and Damascus Document CD Columns 10-11 (as excluded sectarian text).
+
+**Behavioural note for future sessions:** the user has asked, explicitly, to
+stop proposing optional or speculative edits. Report findings when asked; do not
+append "you may also want to..." suggestions to a completed task.
