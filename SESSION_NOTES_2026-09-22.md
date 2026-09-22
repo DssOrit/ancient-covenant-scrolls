@@ -935,3 +935,43 @@ Two possible routes, neither started, awaiting the user's decision:
    infrastructure to extend.
 
 Reported to the user; nothing built for this yet.
+
+### PR #984 — explicit status word on every row
+
+User: "Also include forbidden, not forbidden, not addressed on each to be
+perfectly clear."
+
+Each `dayRules` row gained an `s` field and renders as its own colour-coded
+column: **FORBIDDEN** (#B22222), **NOT FORBIDDEN** (#1E7A3C), **NOT ADDRESSED**
+(#7A6A2F). Both copies of the Shabbat panel table were rebuilt with the same
+column. All 11 `dayRules` arrays were regenerated rather than patched, so every
+row carries a status and none was missed.
+
+**Nothing was reclassified to make the table look tidier.** The resulting
+tallies are the honest shape of the evidence:
+
+| | Forbidden | Not forbidden | Not addressed |
+|---|---|---|---|
+| Weekly Shabbat | 6 | 0 | 14 |
+| Yom Kippur | 6 | 1 | 13 |
+| Each festival convocation | 0 | 5 | 15 |
+| Tier-3 appointed days | 0 | 0 | 1 |
+
+The single NOT FORBIDDEN on Yom Kippur is "Visiting, having visitors" - the day
+is a holy convocation (Vayikra 23:27) and no verse restricts receiving anyone.
+The five on each festival are cooking, visiting, and the three cooking
+appliances.
+
+**Backup:** `backup/2026-09-22-acr-solar-v58-pre-status-labels`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 513/513, tr 41/41, td 123/123, table 3/3, all zero
+deltas; live render confirmed the status column on the Yom Teruah modal and on
+the weekly Shabbat panel (20 rows, start time still 07:25); status tallies
+counted programmatically from the live arrays, zero rows missing a status; zero
+real page errors. Cache `acr-solar-v58` -> `acr-solar-v59`.
+
+**Testing note:** a verification run crashed on `closeEventDetail is not
+defined` - that function does not exist in Solar; it was my test script's
+error, not a site fault. The Shabbat panel was verified in a separate run.
