@@ -5,8 +5,11 @@
 - **PR #967 is MERGED** (ACR Reader tekufah wording fix). `main` fast-forwarded to `085c232` after merge.
 - **PR #968 is MERGED** (2026-09-22T02:32:54Z, confirmed via `pull_request_read`, merged by DssOrit) — ACR Search Shemini Atzeret Mo'edim entry.
 - **PR #976 is MERGED** (ACR Study: answer-giveaway fixes, four difficulty tiers, teach-on-miss).
-- `origin/main` HEAD now: `6cacdcdd`. Local `main` reset to match, verified.
-- ACR Study cache: `acr-study-v130` -> `acr-study-v131` (merged, live on `main`).
+- **PR #980 is MERGED** (ACR Study: Mo'edim observance volume, paleo names, sunrise rule).
+- **PR #981 is MERGED** (ACR Study: 29 unanswerable prompts rebuilt, notes matched by position).
+- **PR #982 is MERGED** (ACR Study: 44 prompts that printed their own answer, closed).
+- `origin/main` HEAD now: `dabe4f02`. Local `main` reset to match, verified.
+- ACR Study cache: `acr-study-v130` -> `acr-study-v134` across four merged PRs (v131 tiers, v132 Mo'edim, v133 prompt/note fixes, v134 leak fixes).
 - Root ACR Reader cache: `acr-v127` -> `acr-v128` (merged, live on `main`).
 - ACR Search cache: `acr-search-v314` -> `acr-search-v315` (merged, live on `main`).
 - Rule 8 unlocks used today:
@@ -21,7 +24,11 @@
 - `backup/2026-09-22-acr-search-v314-pre-atzeret-fix` — pushed, SHA-verified equal to pre-change `main`/`origin/main` (`085c232`), created before touching `Search/index.html`.
 - `backup/2026-09-22-acr-search-v315` — pushed, SHA-verified equal to `main`/`origin/main` (`0ff2342`) right after PR #968 merged.
 - `backup/2026-09-22-acr-study-v130` — pushed, SHA-verified equal to pre-change `main`/`origin/main` (`f91c464f`), created before any file in `/study/` was touched.
-- `backup/2026-09-22-acr-study-v131` — pushed, SHA-verified equal to `main`/`origin/main` (`6cacdcdd`) right after PR #976 merged. **This is the current recovery point.** Recovery: `git checkout backup/2026-09-22-acr-study-v131`.
+- `backup/2026-09-22-acr-study-v131` — pushed, SHA-verified equal to `main`/`origin/main` (`6cacdcdd`) right after PR #976 merged.
+- `backup/2026-09-22-acr-study-v131-pre-moedim` — pre-change backup at `b67b144c`, before the Mo'edim volume work.
+- `backup/2026-09-22-acr-study-v132` — pre-change backup at `073e6dc9`, before the prompt/note fixes.
+- `backup/2026-09-22-acr-study-v133` — pre-change backup at `59e7ca9d`, before the leak fixes.
+- `backup/2026-09-22-acr-study-v134` — pushed, SHA-verified equal to `main`/`origin/main` (`dabe4f02`) right after PR #982 merged. **This is the current recovery point.** Recovery: `git checkout backup/2026-09-22-acr-study-v134`.
 
 ## Built today
 
@@ -69,15 +76,52 @@
 30. **PR #976 opened, then merged.** Post-merge: local `main` reset to `origin/main` (`6cacdcdd`); `backup/2026-09-22-acr-study-v131` created and pushed, SHA-verified equal to `main`.
 
 
+### ACR Study — Mo'edim observance volume (PR #980)
+
+31. **User asked whether the games taught the appointed times** — preparation, the reasons behind them, the true Hebrew names rather than "holy days", paleo-Hebrew, and the sunrise-to-sunrise Shabbat rule. Checked against the running app rather than the source: the eight Mo'edim were present in `file_204` with correct terminology and reasons, and 26 of 31 modes played on that volume, but **preparation was entirely absent** (zero occurrences of "supplies" anywhere in Study), **zero paleo characters rendered** on any Mo'ed name, the sunrise rule appeared only as a buried clause inside the "night / laylah" word entry, and "holy days" rendered on screen twice in the Key Terms game.
+32. **Found everything already existed in ACR Solar and had never crossed into Study**: all 22 `HOLIDAYS` entries carry `supplies`, `supplyList`, `steps`, `desc`, `practice`, `categories` and (for 11 of them) `ancientName` with paleo. The full sunrise-to-sunrise citation list was already written inside the Yom Kippur `practice` field.
+33. **User chose Option B for the missing paleo** (derive from the Paleo Alphabet Reference's own 22-letter table) after being shown a before/after worked example. Seven names derived against real Hebrew terms with sources: Pesach Sheni (Bamidbar 9:9-13), Tekufah x4 (Shemot 34:22), Purim (Esther 9:26, Orit Ge'ez), Qorban HaEtzim (Nechemyah 10:34; 11Q19 23:2-7). **Four deliberately left without paleo** — New Wine, New Oil, and the two New Season markers — because no ancient Hebrew name for them is attested in the DSS/Orit material, and none was invented (Rule 29). The build **asserts** the derivation: rebuilding Mo'ed, Miqra Qodesh and Shabbaton through the same table reproduces Solar's own shipped paleo character for character.
+34. **Shipped `study/content/file_205.json`** — 93 key terms, 54 fill-blank, 47 multiple choice, 22 FAQ. Also fixed the literal `(undefined)` on screen (323 of 810 key terms carry no phonetic field; fixed at both render sites in code rather than by editing four content files — measured 0 on screen after), replaced "other holy days" in `file_202`, and added the sunrise rule to the Shabbat entry in `file_204`.
+35. **Caught a real break before shipping**: the new chapter-note reader was named `getNotes`, already taken by the per-section user-notes feature. Function declarations hoist, so it would have silently shadowed the existing feature. Found by a live browser test failing with `notes.map is not a function`; renamed to `getChapterNotes`. Also caught two swapped variable-scope errors in the Remix teach panels, which would have failed silently rather than thrown.
+
+### ACR Study — prompt and note fixes (PRs #981, #982)
+
+36. **29 fill-blank prompts had no question in them** — the prompt was a bare `___`. Cause: those entries open with their own answer as the first word ("Light. First creation in Bereshit 1:3..."), and the generator blanked that first word, which was the whole first sentence. Rebuilt each around a real stem drawn from the entry itself, with three assertions enforced per item (one blank, answer nowhere else, enough text to read). Also found the originals used `___`, which the renderer never styles — the rebuilds use the six-underscore form.
+37. **The teaching panel showed notes that were not the verse's own.** It matched on a shared word across the whole file. Checked the actual file structure and found the answer was already in the data: chapters run verses -> their notes -> verses -> their notes in document order. New `getNotesForVerse` walks that order. **Measured: all 1,893 verses tried resolve to their own notes; the old word match would have picked an outside note in 57 of 112 comparable cases; teaching panels carrying a note went from 20 of 66 to 78 of 83, 77 of them the verse's own.** The word match survives only as a labelled fallback.
+38. **44 curated prompts printed their own answer** ("Let there be ______. And there was light."). Found while verifying #981 and confirmed pre-existing by running the identical check against a clean `origin/main` checkout — 44 and 2, same files. Fixed by blanking every occurrence of the answer, which required three render changes: both cloze render sites used `replace('______', ...)` and styled only the first blank; the curated filter **dropped** any multi-blank prompt rather than fixing the render; and the spoken prompt plus two reuse sites handled only the first gap. Removing that filter **restored two questions that were never reachable** — Yeshayahu 40:1 and Yirmeyahu 7:4, both of which repeat by design.
+39. **Caught a regex bug mid-build**: the short-blank normaliser `/_{2,5}(?!_)/` matched five of an existing six-underscore blank and turned it into seven. An assertion caught it before it reached a file; a permanent malformed-underscore check was added.
+40. **Content edits made against the raw file text rather than by re-serialising**, so the diff stayed at 44 changed strings across 22 files. Confirmed field by field against `origin/main`: 44 prompts differ, zero other fields differ, zero files carry a non-prompt change.
+41. **All four PRs merged** (#976, #980, #981, #982). `origin/main` at `dabe4f02`; `backup/2026-09-22-acr-study-v134` created and SHA-verified.
+
+
+### ACR Study — blank-marker normalisation (PR #989, OPEN, not merged)
+
+42. **User approved fixing the 250 prompts that used a short `___` blank.** Backup taken first: `backup/2026-09-22-acr-study-v134-pre-blanks` at `cb7a13fc`, SHA-verified equal to `origin/main` (main had moved to `cb7a13fc` by then via PR #987, so the backup is of that HEAD, not the earlier one).
+43. **The cause, confirmed:** two blank markers were in use across the content and the renderer only ever looked for one (`prompt.split('______')`). The 615 prompts written with six underscores got a styled blank; the 250 written with three got a plain run of dashes. **Not only cosmetic** — three other paths search for the same literal marker and silently did nothing on those prompts: the spoken prompt (which reads "blank" at the gap) left the underscores to be read out as characters, and the two places a fill-blank is reused as a question in another game passed the prompt through untouched.
+44. **All 250 normalised across 8 files**, with four assertions per item (nothing changes but the blank width, blank count preserved, no malformed underscore run, no leak introduced). An assertion caught a real ambiguity again: two entries in `file_202` share an identical prompt string, so a one-match-per-entry rule fired rather than silently editing the wrong one; edits are now grouped by string with an occurrence-count check.
+45. **Verified**: 0 of 902 prompts carry a short blank and 0 carry no blank; live rounds in `file_13`, `file_203` and `file_204` each render exactly one styled blank with no raw dashes on screen; the spoken prompt now reads "has the numeric value blank"; 186 mode opens across 6 volumes with zero runtime errors; console output identical to unmodified `origin/main`. Cache `v134` -> `v135`. Field by field against main: 250 prompts differ, zero other fields, zero other changes.
+46. **PR #989 opened and handed to the user. NOT merged** — per Rule 9 as re-locked tonight, and per the user's explicit instruction that only they merge.
+
+### Process note — the drip-feed problem (raised by the user, 2026-09-22)
+
+47. **The user asked why each fix kept surfacing another one.** Answered plainly and the failure was owned rather than explained away. The mechanical cause is real: each fix's verification check scans all 902 prompts, so every round surfaced the next issue, and each one was confirmed pre-existing by running the identical check against a clean `origin/main` checkout. The underlying mess is one thing — the fill-blank content was built by different generators at different times with different conventions (`______` vs `___`, blank-the-first-word vs blank-a-chosen-word) and was never audited as a whole.
+48. **The part that was Claude's fault, recorded as such:** one full audit of the entire fill-blank corpus should have been run and reported at the start, before any fix. Instead the findings were drip-fed across four rounds, costing the user four separate backup/verify/PR/merge cycles where one would have done. **For the next session: run the single comprehensive audit — empty prompts, answer leaks, blank markers, thin context, answer quality — report everything at once, and let the user choose what to fix.** The user has not yet asked for it; it was offered and left with them.
+
+
 ## Outstanding / blocking
 
-- Nothing outstanding — PR #967, #968 and #976 are merged, `main` is current at `6cacdcdd`, all backup branches created and SHA-verified.
+- Nothing outstanding from this session's work — PR #967, #968, #976, #980, #981 and #982 are all merged, `main` is current at `dabe4f02`, all backup branches created and SHA-verified.
+- **PR #989 is OPEN and waiting on the user** — ACR Study, 250 blank markers normalised, cache `v134` -> `v135`. Built, verified and handed over; not merged, per Rule 9.
+- **This notes PR (#983) is also open** and was updated in place rather than opening a new one, since the user asked for nothing further tonight.
+- **20+ pull requests are open repo-wide.** Five are the Alkebulan-era set from Sept 12-13 (#921 Rule 38 itself, #924 Reader, #925 Study, #922 Rule 8 Maps split, #937 Solar supply list); #701 is a real content change from 18 July (Remove Book of Parables ch.37-71); the rest are session-notes and a Dependabot bump. **Rule 38 is still not on `main`**, so the Alkebulan convention is live on Maps and Search but not on Reader or Study, and the rule that governs it was never merged. Flagged to the user; no decision given.
 - ACR Study tier behaviour has not been seen on a physical iPad. Everything above was verified in headless Chromium against the running app, which is a real browser but not the target device. The typed Recall input in particular is worth a look on iPad Safari (it sets `autocapitalize="off"` and `autocorrect="off"`, which iOS honours inconsistently).
 
 ## Pending / parked
 
 - **Only 4 of 33 ACR Study modes record mastery** (`filblank`, `mc`, `whosaidit`, `truefalse`), so the other 29 games still contribute nothing to a section's tier. PR #976 fixed the tier system itself but deliberately did not widen the mastery net — that is a separate, larger change and was not in the approved scope. Parked for a future session, not forgotten.
-- **The Witness tier's note-matching in the teaching panel is term-based, not positional.** It surfaces a note from the same chapter that *contains the answer word*, not necessarily the note governing that exact verse — the chapter files carry no verse-to-note mapping. Honest as built and described as such in the code comment; a real positional mapping would need a content-side change.
+- ~~The teaching panel's note-matching is term-based, not positional.~~ **Resolved in PR #981** — the chapter files did carry the position all along, in document order; nothing needed adding to the content.
+- ~~250 fill-blank prompts use a short `___` blank the renderer never styles.~~ **Fixed in PR #989** (open, awaiting the user's merge).
+- **88 prompts carry three or fewer words of context around the blank** ("______ binding agreement." for *Covenant*). All reference gloss entries, all answerable as they stand, all pre-existing on `main`. Found while verifying #989; not in scope, not touched. This is the kind of item the single up-front audit in item 48 would have surfaced alongside everything else.
 
 ## Capability gaps this session
 
@@ -92,6 +136,10 @@
 3dd9297 ACR Reader: correct tekufah/intercalary-day wording in Book of Mysteries   [PR #967, merged]
 901e180 ACR Search: add Shemini Atzeret as its own Mo'edim entry                   [PR #968, merged]
 873f1e2 ACR Study: close answer giveaways, add four real tiers, teach on miss      [PR #976, merged]
+73595fe ACR Study: add the Mo'edim observance volume, paleo names, sunrise rule    [PR #980, merged]
+6d5b615 ACR Study: rebuild 29 unanswerable prompts, match notes by position        [PR #981, merged]
+48fe30b ACR Study: close 44 prompts that printed their own answer                  [PR #982, merged]
+9659ffc ACR Study: normalise 250 unstyled blanks to the marker the app renders     [PR #989, OPEN]
 ```
 
 ---
