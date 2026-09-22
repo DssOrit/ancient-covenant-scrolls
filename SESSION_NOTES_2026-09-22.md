@@ -536,3 +536,186 @@ that the day runs from morning to the following day." Its sources line reads:
 longer claims DSS-fragment confirmation for Yovelim and cites Yovelim 3:28;
 21:10, Vayikra 7:15; 22:29-30, Shemot 12:10; 23:18; 29:34; 34:25, Bamidbar 9:12
 and Devarim 16:4 instead.
+
+### STANDING INSTRUCTION — Search2 and the sunrise citations: LEAVE ALONE
+
+User, 2026-09-22: **"Leave it alone & stop suggesting dangerous edits that
+aren't necessary."**
+
+This is a closed decision, not a pending item. Applies to:
+- `Search2/` — do NOT delete, move, modify or wire it up. It stays exactly as
+  it is. An earlier suggestion in this session to delete it was based on a false
+  premise (see below) and is withdrawn.
+- The Yovelim "confirmed in DSS fragments" sentence — do NOT add it to Search or
+  Solar. Do not re-raise it.
+- Yovelim 2:9 and Damascus Document CD Columns 10-11 — do NOT restore them to
+  Solar. Do not re-raise them.
+
+**Correction that stands on the record:** this session twice described Search2
+as holding "the superseded wording PR #970 replaced". Both claims were wrong,
+verified against git history:
+- PR #970 (`3c162fe`) removed nothing from `Search/index.html`. It only ADDED
+  Yovelim 3:28 and 21:10 there.
+- The sentence "The Book of Yovelim (Jubilees), preserved in the Orit Ge'ez and
+  confirmed in DSS fragments" appears in ZERO commits of `Search/index.html`.
+  It exists only in `Search2/index.html`. Search2 is not an earlier draft of
+  Search; the two files were written differently.
+- What PR #970 actually removed was from **Solar**: Yovelim 2:9 (as a wrong
+  citation) and Damascus Document CD Columns 10-11 (as excluded sectarian text).
+
+**Behavioural note for future sessions:** the user has asked, explicitly, to
+stop proposing optional or speculative edits. Report findings when asked; do not
+append "you may also want to..." suggestions to a completed task.
+
+---
+
+## FINAL SESSION CLOSE — 2026-09-22
+
+### Shipped and merged
+
+**PR #978 — MERGED.** Two site fixes, one per site:
+
+1. **ACR Search — Yom Kippur day boundary.** `Search/index.html`,
+   `SOLAR_MOEDIM`. "All work ceases from evening to evening" replaced with
+   wording matching Solar's established pattern: the verse documented as
+   rendered "evening to evening", the operative boundary stated as sunrise to
+   sunrise. Fixed a contradiction against the site's own Covenant Practices
+   panel. Cache `acr-search-v318` -> `v319`.
+2. **ACR Solar — Shabbat panel clock.** `Solar/index.html` lines 2614-2615,
+   `+getDSTHours()` added to the offset in both `getSunTimes` calls, so the
+   Shabbat panel and the Sun Times view use the same reckoning. Cache
+   `acr-solar-v52` -> `v53`.
+
+Verified on `main` after merge: both strings present, both caches correct.
+
+### Final state
+
+- `origin/main`: **`b67b144`**
+- Caches live: `acr-search-v319`, `acr-solar-v53`, `acr-v128`, `acr2-v32`,
+  `acr-study-v130`
+- Working tree clean
+
+### Backups
+
+- `backup/2026-09-22-acr-solar-v53-acr-search-v319` — **`b67b144`**, pushed,
+  SHA-verified equal to merged `origin/main`. **Current recovery point.**
+  Recovery: `git checkout backup/2026-09-22-acr-solar-v53-acr-search-v319`
+- `backup/2026-09-22-acr-solar-v52-pre-shabbat-clock-fix` — pre-Solar-fix
+- `backup/2026-09-22-acr-search-v318-pre-yomkippur-fix` — pre-Search-fix
+- `backup/2026-09-22-pre-enoch-numbering-fix`, `backup/2026-09-22-acr-solar-v52`,
+  and earlier same-day points
+
+### Closed decisions — do not reopen unasked
+
+- **Solar covenant-day midnight rollover:** leave as is. The pre-sunrise
+  holy-day alert is correct *because* of it.
+- **Solar `isNow` hardcoded 08:00 flag:** leave as is. Explicitly out of scope
+  per "no other changes on solar".
+- **Search2, the Yovelim "confirmed in DSS fragments" sentence, Yovelim 2:9 and
+  Damascus Document CD 10-11:** leave alone, all of it. See the standing
+  instruction above.
+- **Reader / ACR2 / Study sunrise documentation:** not wanted. User is concerned
+  only with Solar and Search.
+- **Enoch chapter-numbering mismatch:** not a Solar or Search problem. Not
+  pursued.
+
+### Capability gaps this session
+
+- No physical iPad. All live checks ran in headless Chromium.
+- `file://` breaks the apps' own `fetch()` of content JSON; a local HTTP server
+  is required for any live ACR site verification.
+- ACR Search sits behind `doAuth()` plus a timed loader. A browser test that
+  skips `doAuth()` waits forever and falsely reads as missing content.
+- Sandbox proxy blocks cdn.jsdelivr.net and fonts.googleapis.com. Harmless, but
+  fills the console with `ERR_TUNNEL_CONNECTION_FAILED` /
+  `ERR_CERT_AUTHORITY_INVALID`.
+
+### Corrections made to my own claims this session
+
+1. Said ACR2 carried no day-boundary documentation. False — ACR2 Vol 25 (Raz
+   Nihyeh) does.
+2. Drafted a Reader note calling Vayikra 23:32 the only evening-to-evening
+   clause in the Torah. False — Shemot 12:18 is a second. Caught before writing.
+3. Described `data/file_113.json` as a volume that had "fallen out" of Reader
+   navigation. False — it was never referenced in `index.html`.
+4. Said ACR Search does not mention the evening-to-evening clause. False — it
+   did, as an instruction in its own voice. That became the PR #978 Search fix.
+5. Described Search2 as holding "the superseded wording PR #970 replaced".
+   False on both counts — PR #970 removed nothing from Search, and that sentence
+   never existed in `Search/index.html`.
+6. Quoted Shabbat-panel sunrise times (06:25 / 06:33) as if they were correct
+   clock times. They came from the DST-less panel and were an hour early.
+
+---
+
+## ADDENDUM — ACR Solar Yom Teruah note (PR #979)
+
+User asked, ahead of Yom Teruah (Wed 23 Sep 2026, Month 7 Day 1), whether a
+mouthed/voiced sound would serve if no horn is available, then said "Yes please
+add to solar" with the standard backup/verify/apply/merge-link sequence.
+
+**Rule 8 note:** the user did not type the literal phrase "fix Solar" here
+either. The instruction named the site, named the content to add, and set the
+sequence, issued directly in reply to the research answer. Treated as site
+authorization for this specific addition only, same as the earlier clock fix.
+
+### What was added, and the sources behind each claim
+
+All verses read directly from ACR Reader's own text before use (Rule 29):
+
+- **Vayikra 23:24** — 𐤆𐤊𐤓𐤅𐤍 𐤕𐤓𐤅𐤏𐤄, zikhron teru'ah. ACR Reader English:
+  "a memorial proclaimed with the blast of horns". The Hebrew names no
+  instrument.
+- **Bamidbar 29:1** (`data/file_10.json`) — 𐤉𐤅𐤌 𐤕𐤓𐤅𐤏𐤄, yom teru'ah. ACR Reader
+  English: "it is a day of blowing the horn to you". Again no instrument in the
+  Hebrew.
+- **Bamidbar 10:2** (`data/file_9.json`) — "Make yourself two trumpets of
+  silver" — 𐤇𐤑𐤑𐤓𐤅𐤕, chatzotzrot, instrument named outright.
+- **Vayikra 25:9** (`data/file_8.json`) — "proclamation with the blast of the
+  horn" — 𐤔𐤅𐤐𐤓, shofar, named outright.
+- **Yehoshua 6:4** (`data/file_20.json`) — "seven trumpets of rams' horns",
+  named outright.
+- **Bamidbar 10:7** — "you shall blow, but you shall not sound an alarm" —
+  separates plain blowing from teru'ah, marking teru'ah as a kind of sound.
+- **Yehoshua 6:20** — "the people shouted, and the trumpets were blown" — both
+  sounds in one verse, distinct.
+- **Yehoshua 6:10** — "You shall not shout or make your voice heard" — the
+  shout is a voice act.
+- **Root** 𐤓𐤅𐤏, ruaʿ — to raise a loud noise, to shout an alarm.
+
+The entry states plainly that **no passage in the DSS or the Orit rules on a
+voiced teru'ah for this day.** Nothing asserts a permission the sources do not
+give. Rule 31 followed: paleo-Hebrew with English alongside throughout.
+
+### Scope
+
+`Solar/index.html` — the `practice` and `supplies` strings of the Yom Teruah
+`HOLIDAYS` entry. **Steps unchanged. No other entry touched. No code touched.**
+Cache `acr-solar-v53` -> `acr-solar-v54`.
+
+### Backup
+
+`backup/2026-09-22-acr-solar-v53-pre-teruah-note` — pushed, SHA-verified equal
+to pre-change `origin/main` (`b67b144`).
+
+### Verification before push
+
+- `node --check`: all 4 inline scripts plus all 6 sibling JS files — 0 failures
+- `git diff --stat`: 2 files, 1 line each
+- Live headless render: `HOLIDAYS` still 22 entries; Yom Kippur and Sukkot
+  entries intact; `getHolidays(7,1)` returns Yom Teruah with the full new
+  practice text; all paleo characters render; apostrophe escaping intact; zero
+  real page errors
+
+**PR #979** opened. Awaiting user merge.
+
+### Yom Teruah reference data, computed from ACR Solar's own functions
+
+| Date | Weekday | Solar | Day | Sunrise | Sunset |
+|---|---|---|---|---|---|
+| Sep 22 | Tuesday | Month 6 Day 31 | 182/364 | 07:21 | 19:32 | (Autumn Tekufah)
+| Sep 23 | Wednesday | Month 7 Day 1 | 183/364 | 07:22 | 19:31 | **Yom Teruah**
+| Sep 24 | Thursday | Month 7 Day 2 | 184/364 | 07:23 | 19:29 |
+
+Yom Teruah runs sunrise Wed 07:22 to sunrise Thu 07:23 (Coimbra default).
+Yom Kippur is Month 7 Day 10 — Friday 2 October 2026.
