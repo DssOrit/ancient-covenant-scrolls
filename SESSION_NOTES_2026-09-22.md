@@ -244,3 +244,31 @@ notes stated ACR2 carries no day-boundary documentation. That was wrong; ACR2
 Vol 25 (Raz Nihyeh) does. And a draft note prepared for ACR Reader would have
 called Vayikra 23:32 the only evening-to-evening clause in the Torah — Shemot
 12:18 is a second one. Caught before either reached a file.
+
+### Correction on `data/file_113.json` — do NOT wire it into the Reader
+
+Earlier in this session I described wiring `data/file_113.json` (Vol 47, Raz
+Nihyeh) into ACR Reader navigation as "restoring" a volume that had fallen out.
+That framing was wrong. Checked with `git log -S"file_113" -- index.html`:
+**it has never been referenced in `index.html` at all.** The Reader's copy was
+never part of Reader navigation.
+
+The same volume lives in ACR2 as Vol 25, reachable, and the ACR2 copy opens with
+"SECOND TEMPLE & LATER ADDITIONS — HELD UNDER WARNING — DOCUMENTED, NOT
+CANONICAL", sitting under ACR2's "RESTORED FROM THE MAIN RECORD — SECOND TEMPLE
+SECTARIAN TEXTS" section. The Reader's `data/file_113.json` carries no such
+banner — it reads as the unwarned leftover.
+
+Conclusion for future sessions: this volume belongs to ACR2 by design. Adding it
+to the Reader would place a Held-Under-Warning text into the main covenant
+record for the first time, not repair a regression. Do not do it without the
+user explicitly asking for that.
+
+### Minor finding, not acted on: "1 Enoch 72" does not resolve in the Reader
+
+ACR Solar and ACR Search both cite "1 Enoch 72" in their sunrise-to-sunrise
+sourcing. In ACR Reader the Astronomical Book is renumbered: that text is
+**Chanokh Chapter 37, "The Sun — Its Gates and Its Circuit"**, in
+`data/file_14.json` (nav index 14). A reader searching the Reader for chapter 72
+finds nothing. Navigational mismatch between sites, not a doctrinal gap. Left
+as is.
