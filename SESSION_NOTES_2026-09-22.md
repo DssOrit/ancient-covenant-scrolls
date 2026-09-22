@@ -814,3 +814,260 @@ section failing to render. It was a layout-flush artifact of the test, not a
 site fault. Use `textContent` or wait a tick after opening a modal.
 
 **PR #984** opened. Awaiting user merge.
+
+### PR #984 extended — weekly Shabbat added, exercise row clarified, two rows corrected
+
+User: "Yes, build it out. Gym is exercising, working out."
+
+**1. Weekly Shabbat now carries the breakdown.** It was the obvious gap: the
+day the five questions matter most, and it is not a `HOLIDAYS` entry, so the
+per-day render never reached it. The table was added as static HTML to **both
+copies** of the Shabbat panel (Solar has two, a known duplication also noted in
+PR #970's commit message).
+
+**2. Gym relabelled `Gym / exercise`** across all seven appointed days, wording
+now reads "exercising or working out" so the row is not read as only a
+commercial gym.
+
+**3. Two Yom Kippur rows corrected before merge.** They had read "Forbidden"
+for Cleaning and Gym. That was an inference, not a citation - neither act is
+named in any verse. Both now read "Not addressed by name" with the day's
+total-cessation rule and the fast stated. This restores the three-state design
+the user agreed to: **Forbidden only where a verse names the act.** Caught by
+re-reading my own shipped rows against the standard I had set, before the PR
+merged.
+
+**Backup:** `backup/2026-09-22-acr-solar-v55-pre-gym-shabbat`, pushed,
+SHA-verified equal to `origin/main` (`dabe4f0`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; HTML tag balance measured against pre-change main - div +7/+7, table
++3/+3, tr +11/+11, td +22/+22, every pair balanced; live render confirmed the
+Shabbat panel shows all five rows with its start time still working (07:25),
+and the modal rows are correct on Yom Teruah, Yom Kippur, Pesach Eve and
+Autumn Tekufah. Zero real page errors.
+
+Cache `acr-solar-v55` -> `acr-solar-v56`. PR #984 title and body updated to
+cover both commits. Awaiting user merge.
+
+### PR #984 extended again — screens, artistic relaxation, schooling
+
+User asked to add three more categories: watching TV / internet; artistic
+relaxation (drawing, reading, writing); school / college. Every breakdown goes
+from five rows to eight, on the seven appointed days with a stated work rule
+and on both copies of the weekly Shabbat panel.
+
+**Sources located and verified for the new rows (all read from ACR Reader):**
+
+- **Nechemyah 8:1-3, 9-12, 18** (`data/file_88.json`) - the assembly on **the
+  first day of the seventh month**, i.e. Yom Teruah itself. Ezra read the Torah
+  "from early morning until midday"; the people were told "Eat the fat and drink
+  sweet wine and send portions to anyone who has nothing ready, for this day is
+  holy." This does double duty: it anchors the reading row, and it corroborates
+  the cooking row independently of Shemot 12:16.
+- **Devarim 31:12** (`data/file_12.json`) - "Assemble the people, the men and
+  the women and the little ones... that they may hear, and that they may learn."
+  Cited on the schooling row for the assembly commanded to hear and learn.
+- **Yeshayahu 58:13** (`data/file_46.json`) - "from doing your pleasure on my
+  holy day... not going your own ways, or seeking your own pleasure, or talking
+  idly." Cited on the screens and reading rows for Shabbat only, since it is a
+  Sabbath text.
+
+**Standard held:** no row is marked Forbidden without a verse naming the act.
+Rabbinic melakhot categories - which do rule on writing and similar acts - were
+not used, per Rule 13.
+
+**Backup:** `backup/2026-09-22-acr-solar-v56-pre-extra-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 17/17, td 34/34, all balanced;
+live render confirmed 8 rows on each of the seven appointed days, 1 row on each
+of the four tier-3 days, 8 rows on the weekly Shabbat panel with its start time
+still working (07:25); zero real page errors.
+
+Cache `acr-solar-v56` -> `acr-solar-v57`. PR #984 carries all four commits.
+
+### PR #984 extended a third time — twenty rows; searchability raised as a separate question
+
+User added twelve more categories: leisurely walks, park, visiting/visitors,
+family games, entertainment, washing the body, getting dressed/makeup, washing
+machine & dryer, dishwasher, airfryer, microwave, coffee machine. Every
+breakdown now runs **20 rows** on the seven appointed days and on both copies of
+the weekly Shabbat panel.
+
+**Verdicts deliberately differentiated, not boilerplate** (Rule 29's
+repeated-boilerplate red flag): walks/parks carry Shemot 16:29 on Shabbat and
+Yom Kippur and note it is a Shabbat text on festivals; visiting is recorded as
+not a restriction, with Nechemyah 8:10, 12 on portions sent and great rejoicing
+on the first day of the seventh month; games and entertainment carry Yeshayahu
+58:13 on Shabbat only; washing the body on Yom Kippur records that the text
+commands affliction of soul (Vayikra 23:27) and states no washing rule; the
+cooking appliances follow each day's cooking verdict.
+
+**Rabbinic material deliberately excluded** (Rule 13): the Rabbinic melakhot
+categories do supply rulings on writing, appliances and washing on these days.
+None were used. The Shabbat washing-machine row states once that Shemot 35:3
+names kindling fire and that whether an electric appliance is that **is not
+settled by the text** - no ruling supplied where the text gives none.
+
+**Backup:** `backup/2026-09-22-acr-solar-v57-pre-more-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 41/41, td 82/82, all balanced;
+live render confirmed 20 rows on each of the seven appointed days, 1 row on each
+tier-3 day, 20 rows on the Shabbat panel with start time still working (07:25);
+zero real page errors. Cache `acr-solar-v57` -> `acr-solar-v58`.
+
+### OPEN — "all of the new additions should be searchable"
+
+**Verified: ACR Solar has no search function at all.** Grepped for search
+handlers, inputs and placeholders in `Solar/index.html` - zero hits. So this
+requirement cannot be met inside Solar as it stands.
+
+Two possible routes, neither started, awaiting the user's decision:
+1. **Put the breakdown data into ACR Search**, which is the search site. That is
+   a different site under Rule 8 and needs its own unlock; the "fix search"
+   phrase given earlier today was used for the Yom Kippur wording fix and should
+   not be stretched to cover new work.
+2. **Build a search into ACR Solar.** Larger job - Solar has no search
+   infrastructure to extend.
+
+Reported to the user; nothing built for this yet.
+
+### PR #984 — explicit status word on every row
+
+User: "Also include forbidden, not forbidden, not addressed on each to be
+perfectly clear."
+
+Each `dayRules` row gained an `s` field and renders as its own colour-coded
+column: **FORBIDDEN** (#B22222), **NOT FORBIDDEN** (#1E7A3C), **NOT ADDRESSED**
+(#7A6A2F). Both copies of the Shabbat panel table were rebuilt with the same
+column. All 11 `dayRules` arrays were regenerated rather than patched, so every
+row carries a status and none was missed.
+
+**Nothing was reclassified to make the table look tidier.** The resulting
+tallies are the honest shape of the evidence:
+
+| | Forbidden | Not forbidden | Not addressed |
+|---|---|---|---|
+| Weekly Shabbat | 6 | 0 | 14 |
+| Yom Kippur | 6 | 1 | 13 |
+| Each festival convocation | 0 | 5 | 15 |
+| Tier-3 appointed days | 0 | 0 | 1 |
+
+The single NOT FORBIDDEN on Yom Kippur is "Visiting, having visitors" - the day
+is a holy convocation (Vayikra 23:27) and no verse restricts receiving anyone.
+The five on each festival are cooking, visiting, and the three cooking
+appliances.
+
+**Backup:** `backup/2026-09-22-acr-solar-v58-pre-status-labels`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 513/513, tr 41/41, td 123/123, table 3/3, all zero
+deltas; live render confirmed the status column on the Yom Teruah modal and on
+the weekly Shabbat panel (20 rows, start time still 07:25); status tallies
+counted programmatically from the live arrays, zero rows missing a status; zero
+real page errors. Cache `acr-solar-v58` -> `acr-solar-v59`.
+
+**Testing note:** a verification run crashed on `closeEventDetail is not
+defined` - that function does not exist in Solar; it was my test script's
+error, not a site fault. The Shabbat panel was verified in a separate run.
+
+### PR #984 — search built into ACR Solar
+
+User: "Build a search into Solar, to make this & the rest of the site easier to
+locate information." Solar previously had no search of any kind (verified by
+grep: zero search handlers, inputs or placeholders).
+
+**Design choice that matters for maintenance:** the index is built at open time
+from what is already on the page - the `HOLIDAYS` array, the Shabbat overlay's
+own markup, and each `.view` element keyed to the nav item that opens it.
+**No content was duplicated into a second searchable copy**, so the index cannot
+drift out of step with the app. 216 entries across four groups on this build:
+Appointed days, Activity breakdown, Weekly Shabbat, Pages.
+
+**Self-validating:** a view is only offered as a destination when
+`document.getElementById('nav-' + name)` exists, so a renamed or removed view
+drops out of the index instead of producing a dead link.
+
+**What was added:** search CSS before `</style>`; the overlay markup before
+`#save-banner`; `buildSolarSearchIndex`, `runSolarSearch`, `renderSolarSearch`,
+`ssGo`, `openSolarSearch`, `closeSolarSearch` and helpers in the main script;
+one entry at the head of `renderTopBar`'s pill array.
+
+**Structural note recorded while working:** `Solar/index.html` contains **two
+copies of the Shabbat overlay markup**, both with `id="shabbat-overlay"`, and
+the stylesheet carries its rule block twice. `getElementById` returns the first,
+so the second copy is dead markup. Pre-existing, not introduced here, not fixed
+- flagged only so a future session is not surprised when an edit reports two
+matches. All Activity Breakdown edits this session were applied to both copies.
+
+**Backup:** `backup/2026-09-22-acr-solar-v59-pre-search`, pushed, SHA-verified
+equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 525/525, tr 41/41, td 123/123, table 3/3,
+style 1/1, all zero deltas; live run confirmed the Search pill renders, the
+overlay opens, the index builds to 216 entries, nine test queries (microwave,
+walks, teruah, money, sunrise, dishwasher, fast, visiting, prayer) all return
+correct results, and clicking a result closes search and opens the day modal;
+zero real page errors. Cache `acr-solar-v59` -> `acr-solar-v60`.
+
+PR #984 title and body updated to cover the whole of the work. Awaiting merge.
+
+### PR #984 MERGED EARLY — outstanding work moved to PR #985
+
+**Important for anyone reading this later:** PR #984 was merged at `de25703`
+when the branch carried only its **first** commit (`a2b773e`, the initial 5-row
+Activity Breakdown, cache `acr-solar-v55`). Everything after that stayed on
+`claude/acr-sites-sunrise-docs-sp1pwn` with no open PR tracking it. Verified by
+checking `origin/main` directly: `dayRules` present but only 13 occurrences,
+cache reading `v55`, `openSolarSearch` absent.
+
+A merged PR cannot track new work, so **PR #985** was opened for the remaining
+commits:
+
+```
+aafd0df  extend Activity Breakdown to the weekly Shabbat, clarify exercise row
+2b93fb4  add screens, artistic relaxation and schooling rows
+bf5a2ca  add twelve more Activity Breakdown rows
+75a5938  put an explicit status on every row
+b02cbe5  add a search across the whole app
+5653ec5  widen the search index to every part of the app
+```
+
+### Search index widened to all site content
+
+User: "The search should include any & all site pertinent information." The
+first index missed anything living in a data array or built on demand - a
+search for a prayer or a service returned nothing.
+
+Four sources added, each read from its own origin rather than copied:
+
+- **`PCATS`** - all 34 prayer categories, each indexed on its **own full text**
+  by calling `buildPrayer(id, title)` and stripping markup, so a phrase inside
+  a prayer is findable, not just its title. Destination: `openPrayer(id)`.
+- **The five Sabbath services** - indexed on the text `bS1`..`bS5` produce.
+  Destination: `openService(i)`.
+- **The Shema** - one entry with its Devarim 6:4-9 sourcing note. Destination:
+  `openShema()`.
+- **`SOLAR_MONTHS`** - the twelve months with season and day count.
+
+Every source is wrapped in try/catch so a failure in one cannot take down the
+whole index.
+
+**Index: 216 -> 268 entries.** 22 appointed days, 164 activity breakdown rows,
+10 weekly Shabbat, 21 pages, 34 prayers, 5 services, 12 months.
+
+**Backup:** `backup/2026-09-22-acr-solar-v60-pre-full-index`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, table 3/3, style 1/1, all zero deltas; live run
+confirmed 268 entries across seven groups and eighteen test queries returning
+correct results, including a prayer result opening that prayer's text page
+(label read back as "Healing and Physical Restoration"); zero real page errors.
+Cache `acr-solar-v60` -> `acr-solar-v61`.
