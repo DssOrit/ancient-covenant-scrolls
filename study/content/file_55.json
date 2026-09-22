@@ -13,8 +13,8 @@
   ],
   "fill_blank": [
     { "ref": "18:4", "prompt": "The soul that ______, it shall die.", "answer": "sins", "source_quote": "Behold, all souls are mine — the soul of the father as well as the soul of the son is mine. The soul that sins, it shall die." },
-    { "ref": "18:20", "prompt": "The son shall not bear the guilt of the ______, nor the father bear the guilt of the son.", "answer": "father", "source_quote": "The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son. The righteousness of the righteous shall be upon himself, and the wickedness of the wicked shall be upon himself." },
-    { "ref": "13:10", "prompt": "They have misled my people, saying ______ when there is no shalom.", "answer": "Shalom", "source_quote": "Because they have misled my people, saying Shalom when there is no shalom — and when the people build a wall, behold, they plaster it with whitewash." }
+    { "ref": "18:20", "prompt": "The son shall not bear the guilt of the ______, nor the ______ bear the guilt of the son.", "answer": "father", "source_quote": "The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son. The righteousness of the righteous shall be upon himself, and the wickedness of the wicked shall be upon himself." },
+    { "ref": "13:10", "prompt": "They have misled my people, saying ______ when there is no ______.", "answer": "Shalom", "source_quote": "Because they have misled my people, saying Shalom when there is no shalom — and when the people build a wall, behold, they plaster it with whitewash." }
   ],
   "multiple_choice": [
     { "ref": "18:20", "question": "According to Yehezkel 18, who bears the guilt of sin?", "options": ["All humanity inherits Adam's guilt", "The individual soul that sins", "The nation collectively", "The priesthood on behalf of the people"], "correct": 1, "source_quote": "The soul that sins, it shall die. The son shall not bear the guilt of the father, and the father shall not bear the guilt of the son." },
