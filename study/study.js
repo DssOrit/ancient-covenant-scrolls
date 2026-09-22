@@ -2029,8 +2029,9 @@ function showFillBlank(fid, audioMode) {
     // Easy tier: curated questions (prioritize unmastered)
     if (data && data.fill_blank && data.fill_blank.length) {
       var curated = data.fill_blank.filter(function (q) {
-        // Skip prompts with more than one blank — second blank stays empty on screen
-        return q.prompt && (q.prompt.match(/______/g) || []).length <= 1;
+        // Every blank is rendered now, so a prompt whose quoted text repeats
+        // the answer is kept rather than dropped from the game.
+        return !!q.prompt;
       });
       var unmastered = getUnmasteredQuestions(fid, 'filblank', curated);
       if (unmastered.length > 0 && tier === 'recognise') {
@@ -2194,7 +2195,7 @@ function showFillBlank(fid, audioMode) {
       }
       if (q.noteType) h += '<div class="note-source-tag">Comparative note \u2014 ' + q.noteType + '</div>';
       h += '<div class="cloze-prompt">' +
-        q.prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
+        q.prompt.split('______').join('<span class="cloze-blank">______</span>') + '</div>';
       h += '<button class="cloze-audio" id="b-cloze-hear">Listen</button>';
       h += '<button class="hint-btn" id="b-cloze-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="cloze-hint-display" role="status" aria-live="polite"></div>';
@@ -2220,12 +2221,12 @@ function showFillBlank(fid, audioMode) {
       injectGameBack(fid);
       document.getElementById('b-cloze-quit').addEventListener('click', function () { go(fid); });
       document.getElementById('b-cloze-hear').addEventListener('click', function () {
-        speakText(q.prompt.replace('______', 'blank'));
+        speakText(q.prompt.split('______').join('blank'));
       });
       if (audioMode) {
         // Auto-play the passage with "blank" spoken at the missing word
         setTimeout(function () {
-          speakText(q.prompt.replace('______', 'blank'));
+          speakText(q.prompt.split('______').join('blank'));
         }, 400);
       }
       wireHintLadder('b-cloze-hint', 'cloze-hint-display', correct, q.source_quote, function (n) { hintsUsed = n; });
@@ -3094,7 +3095,7 @@ function showProgress(fid) {
           var fbq = data.fill_blank[k];
           var opts = [fbq.answer];
           for (var l = 0; l < data.fill_blank.length && opts.length < 4; l++) if (l !== k) opts.push(data.fill_blank[l].answer);
-          pool.push({ question: fbq.prompt.replace('______', '___'), options: opts, correct: opts.indexOf(fbq.answer), source: fbq.source_quote || '' });
+          pool.push({ question: fbq.prompt.split('______').join('___'), options: opts, correct: opts.indexOf(fbq.answer), source: fbq.source_quote || '' });
         }
         var report = window.LoadAttainQuality.auditQuestionSet(pool);
         var html = '';
@@ -3862,7 +3863,7 @@ function showChallenge(fid) {
           others = shuffle(others).slice(0, 3);
           for (var i = 0; i < others.length; i++) opts.push(others[i].answer);
           opts = shuffle(opts);
-          var fbQ = { question: q.prompt.replace('______', '___'), options: opts, correct: opts.indexOf(q.answer), source: q.source_quote || '' };
+          var fbQ = { question: q.prompt.split('______').join('___'), options: opts, correct: opts.indexOf(q.answer), source: q.source_quote || '' };
           if (passesQualityGate(fbQ)) allQ.push(fbQ);
         });
       }
@@ -5869,7 +5870,7 @@ function showRemix(fid) {
       while (distractors2.length < 3) distractors2.push(distractors2[0] || '—');
       var opts2 = shuffle([answer2].concat(distractors2));
       var colors2 = ['#2563eb', '#059669', '#7c3aed', '#d97706'];
-      h += '<div class="cloze-prompt">' + prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
+      h += '<div class="cloze-prompt">' + prompt.split('______').join('<span class="cloze-blank">______</span>') + '</div>';
       h += '<button class="cloze-audio" id="b-rx-hear">Listen</button>';
       h += '<button class="hint-btn" id="b-rx-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="rx-hint-display" role="status" aria-live="polite"></div>';
@@ -6758,7 +6759,7 @@ TU.sealedBegin = function (team) {
   team = parseInt(team, 10);
   var facts = [];
   this.terms.forEach(function (k) { if (k.definition) facts.push(k.term + ': ' + k.definition); });
-  this.fills.forEach(function (q) { if (q.answer) facts.push('Fill the blank: ' + q.prompt.replace('______', '_____') + ' Answer: ' + q.answer); });
+  this.fills.forEach(function (q) { if (q.answer) facts.push('Fill the blank: ' + q.prompt.split('______').join('_____') + ' Answer: ' + q.answer); });
   facts = shuffle(facts.length ? facts : ['A sealed testimony of the record.']);
   var vals = shuffle(TU_VALUES.slice());
   var cases = vals.map(function (v, i) { return { i: i, value: v, fact: facts[i % facts.length], open: false }; });
