@@ -2696,6 +2696,7 @@ var _sw=switchView;switchView=function(n){_sw(n);if(n==='prayers')renderPrayersL
 var SS_INDEX = null;
 
 function ssText(el){ return el ? String(el.textContent || '').replace(/\s+/g, ' ').trim() : ''; }
+function ssStrip(h){ var d=document.createElement('div'); d.innerHTML=String(h==null?'':h); return String(d.textContent||'').replace(/\s+/g,' ').trim(); }
 function ssEsc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function ssStatusColor(st){
   if (st === 'FORBIDDEN') return '#B22222';
@@ -2775,6 +2776,56 @@ function buildSolarSearchIndex(){
     });
   });
 
+
+  // D. the prayer library - all categories, indexed on their own full text
+  try {
+    if (typeof PCATS !== 'undefined' && PCATS.length) {
+      PCATS.forEach(function(pc){
+        var body = '';
+        try { if (typeof buildPrayer === 'function') body = ssStrip(buildPrayer(pc.id, pc.title)); } catch(e){}
+        idx.push({ group:'Prayers', kind:'prayer', prayerId:pc.id,
+                   title:pc.title, sub:(pc.desc || body.slice(0,240)),
+                   text:[pc.title, pc.desc, body].filter(Boolean).join(' ') });
+      });
+    }
+  } catch(e){}
+
+  // E. the five Sabbath services, indexed on their own built text
+  try {
+    var svcTitles = ['Preparation for the Sabbath Service','Sabbath Sunrise Service','Midday Sabbath Service','Evening Watch Service','Sabbath Sunday Sunrise Closing'];
+    var svcBuilders = [typeof bS1==='function'?bS1:null, typeof bS2==='function'?bS2:null, typeof bS3==='function'?bS3:null, typeof bS4==='function'?bS4:null, typeof bS5==='function'?bS5:null];
+    svcBuilders.forEach(function(fn, i){
+      if (!fn) return;
+      var body = '';
+      try { body = ssStrip(fn()); } catch(e){}
+      idx.push({ group:'Sabbath services', kind:'service', serviceIndex:i,
+                 title:svcTitles[i], sub:body.slice(0,240),
+                 text:svcTitles[i] + ' ' + body });
+    });
+  } catch(e){}
+
+  // F. the Shema
+  try {
+    if (typeof openShema === 'function') {
+      idx.push({ group:'Pages', kind:'shema',
+                 title:'Shema — The Covenant Declaration',
+                 sub:'Devarim 6:4-9 — DSS Nash Papyrus and 4Q fragments. Presented as primary text, not as Rabbinic liturgy.',
+                 text:'Shema covenant declaration Devarim 6:4-9 Nash Papyrus 4Q fragments hear O Yisrael YHWH our Creator' });
+    }
+  } catch(e){}
+
+  // G. the twelve solar months
+  try {
+    if (typeof SOLAR_MONTHS !== 'undefined' && SOLAR_MONTHS.length) {
+      SOLAR_MONTHS.forEach(function(m){
+        idx.push({ group:'Solar calendar', kind:'view', view:'year',
+                   title:'Month ' + m.num + ' — ' + m.name,
+                   sub:m.season + ' season, ' + m.days + ' days',
+                   text:['Month', m.num, m.name, m.abbr, m.season, m.days, 'days'].join(' ') });
+      });
+    }
+  } catch(e){}
+
   return idx;
 }
 
@@ -2838,6 +2889,9 @@ function ssGo(i){
     var h = getHolidays(e.month, e.day)[0];
     if (h) { showEventDetail(h, gregorianToSolar(new Date())); return; }
   }
+  if (e.kind === 'prayer' && typeof openPrayer === 'function') { openPrayer(e.prayerId); return; }
+  if (e.kind === 'service' && typeof openService === 'function') { openService(e.serviceIndex); return; }
+  if (e.kind === 'shema' && typeof openShema === 'function') { openShema(); return; }
   if (e.kind === 'shabbat' && typeof openShabbatMode === 'function') { openShabbatMode(); return; }
   if (e.kind === 'view' && typeof switchView === 'function') { switchView(e.view); return; }
 }
