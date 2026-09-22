@@ -1179,3 +1179,58 @@ SHA-verified.
 style 1/1; verse audit zero missing across 164 rows plus Shabbat rows; index
 268 entries; every alias query lands on the right day with its paleo name
 rendered; zero real page errors. Cache `acr-solar-v62` -> `acr-solar-v63`.
+
+### Merge alarm raised by user — investigated, PR #986 was NOT merged
+
+User reported a merge link showing as merged that they had not merged, and
+re-locked the rule. Investigated before replying:
+
+- **PR #986** (the last link sent): `state: open`, `merged: false`. **Not
+  merged.** It is still waiting for the user.
+- **PR #985**: `merged: true`, **`merged_by: DssOrit`**, merged_at
+  2026-09-22T22:25:41Z. That is the repo owner's own account.
+- **PR #984**: merged earlier, same pattern.
+- `mcp__github__merge_pull_request` and `mcp__github__enable_pr_auto_merge`
+  were **never called** in this session.
+
+Most likely explanation: the user was looking at PR #985's page, which is
+genuinely merged, rather than #986. Reported as fact with the `merged_by`
+value, no argument.
+
+**CLAUDE.md Rule 9 re-locked** at the user's instruction, in their words: "DO
+NOT EVER MERGE WITHOUT MY EXPLICIT APPROVAL. ALWAYS SEND ME THE MERGE LINKS.
+LOCK THIS RULE." Four points added: Claude does not merge; every shipped item
+ends with the link handed over; the merge tools are never called unless the
+user names that specific PR in that same message; and if a PR appears merged
+when the user says otherwise, Claude reads `merged_by` and reports the actual
+account first, plainly.
+
+### Preparation sections — first pass audit, and a correction to my own finding
+
+User asked whether all verses and prayers that belong to the special days are
+in the preparation section. **This had not been audited before.** A first pass
+was run now.
+
+**My preliminary read was wrong and is corrected here.** A regex scan appeared
+to show three entries with no source at all - New Season Summer, New Season
+Winter, Year End Tekufah - and a possible mis-citation on Purim. Reading the
+actual entries disproved all four:
+
+- **Year End Tekufah** cites **Chanokh Ch. 79:6**. The regex missed it because
+  of the "Ch." between book and number.
+- **New Season Summer/Winter** state plainly: "a calendrical marker in the DSS
+  reckoning rather than a day with its own ritual requirement in the primary
+  sources. No prayer is attested for this day." That is the correct answer, not
+  a gap.
+- **Purim** cites the Book of Esther in the Orit Ge'ez and explicitly records
+  that no Qumran fragment of Esther exists and that the day is not part of the
+  364-day calendar. The "Temple Scroll" my scan caught came from that honest
+  disclaimer, not a false citation.
+
+**Current state:** every one of the 22 entries has a `practice` section and
+steps; the appointed days carry Torah/Prophets references and DSS sigla; the
+calendar markers say outright where nothing is attested rather than inventing
+a prayer.
+
+**Still not done:** a line-by-line audit of whether every verse or prayer that
+*should* belong to each day is present. Offered to the user, not started.
