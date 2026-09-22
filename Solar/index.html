@@ -2611,8 +2611,8 @@ function updateShabbatDisplay(){
   var sun=new Date(sat);sun.setDate(sat.getDate()+1);
   var st='06:00',en='06:00';
   if(typeof userLocation!=='undefined'&&userLocation){
-    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset);
-    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset);
+    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours());
+    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours());
     if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;
   }
   var el1=document.getElementById('shab-start-time');if(el1)el1.textContent=st;
