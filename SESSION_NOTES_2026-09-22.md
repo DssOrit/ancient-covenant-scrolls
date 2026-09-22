@@ -63,3 +63,69 @@
 3dd9297 ACR Reader: correct tekufah/intercalary-day wording in Book of Mysteries   [PR #967, merged]
 901e180 ACR Search: add Shemini Atzeret as its own Mo'edim entry                   [PR #968, merged]
 ```
+
+---
+
+## Sunrise-to-sunrise audit (scan only, 2026-09-22 later session) — PENDING USER APPROVAL
+
+User direction: "the ACR sites are supposed to observe sunrise to sunrise
+accompanied verses & documented on sites." Scan run under Rule 11 (find first,
+report, wait). **Nothing was edited. No Rule 8 unlock phrase was given.**
+
+### A. Documentation state, per site (grep-verified)
+
+| Site | Sunrise-to-sunrise documented? | Verses cited alongside |
+|---|---|---|
+| ACR Solar (`/Solar/`) | YES — "Why Sunrise to Sunrise" panel, 2 render paths | Yovelim 3:28; 21:10; Vayikra 7:15; 22:29-30; Shemot 12:10; 23:18; 29:34; 34:25; Bamidbar 9:12; Devarim 16:4; 4Q320-330; 1 Enoch 72 |
+| ACR Search (`/Search/`) | YES — "Why Sunrise to Sunrise, The Primary Source Day Boundary" + Shabbat section + laylah lexicon entry | same citation set as Solar |
+| ACR Reader (root `/`) | NO — zero occurrences of "sunrise to sunrise" in `index.html` or any `data/file_*.json` | none. Vayikra 23:32 ("from evening to evening") stands in `data/file_8.json` with no note on the covenant day boundary; the chapter's CRITICAL NOTE covers only the 23:11 "morrow after the sabbath" crux |
+| ACR2 (`/ACR2/`) | NO | none |
+| ACR Study (`/study/`) | PARTIAL — only incidental, inside the "night / laylah" lexicon entry in `content/file_202.json`. The Mo'edim reference entry for Shabbat (`content/file_204.json`) gives "Every 7th day" with Bereshit 2:2-3; Shemot 20:8-11 and states no day boundary | none of its own |
+| GESTUDY, GreatE, WSA | N/A — no calendar/day-boundary content; their "sunrise"/"sunset" hits are the Abu Simbel solar alignment and the idiom "no sunset provision" | — |
+
+### B. Behavior findings — ACR Solar only (verified against the running app, not code-reading)
+
+Method: headless Chromium (Playwright), `Solar/index.html` loaded with a faked
+clock and `timezoneId: Europe/Lisbon`, default location Coimbra. Rule 33/34
+ground-truth check, output captured.
+
+1. **The solar/covenant day advances at civil midnight, not at sunrise.**
+   - Fri 2026-09-25 23:00 local -> "Day 185 of 364".
+   - Sat 2026-09-26 02:00 local (sunrise that day is 06:25) -> already "Day 186 of 364".
+   - Sun 2026-09-27 02:00 local (sunrise 06:33) -> already "Day 187 of 364".
+   Under the site's own stated rule the day turns at sunrise, so 02:00 Saturday
+   is still Day 185. Every reading between local midnight and sunrise is one
+   covenant day ahead — roughly a 6-7 hour window every single day.
+   Cause: `var today = new Date()` (`Solar/index.html:1546`) feeding
+   `gregorianToSolar()`, which reads civil Y/M/D fields only. There is no
+   sunrise-rollover helper anywhere in `Solar/index.html` or `Solar/*.js`.
+   `Solar/SOLAR_ARCHITECTURE.md` records no decision to roll at midnight, so
+   this is an unaddressed gap, not a deliberate choice. PR #891 (2026-09-07)
+   corrected alert logic and wording but never touched the rollover itself.
+
+2. **The Shabbat "is active" window uses civil weekday plus a hardcoded 08:00,
+   not the computed sunrise** (`Solar/index.html:2622`,
+   `isNow=(dow===6)||(dow===0&&now.getHours()<8)`).
+   - Sat 02:00 local -> "Shabbat is active" while the same panel prints start
+     time 06:25. Roughly 6.4 hours early.
+   - Sun 07:00 local (27 Sep) -> "Shabbat is active" while the same panel
+     prints end time 06:33. Roughly 27 minutes late; the error runs to a full
+     hour-plus whenever sunrise is not near 08:00.
+   - Winter control (Sun 27 Dec, sunrise 07:56): 07:00 active, 08:30 over —
+     correct there only because the hardcoded 8 happens to sit near that day's
+     sunrise at this latitude.
+
+### C. Observation, no action taken
+
+`Search2/` holds an unlinked, unredirected older copy of ACR Search. Its
+"Why Sunrise to Sunrise" text is the pre-PR-#970 wording ("the Book of Yovelim
+... confirmed in DSS fragments"), i.e. the exact claim PR #970 replaced, and it
+carries none of the Vayikra/Shemot/Bamidbar/Devarim law-code citations added in
+PRs #971/#972. It is not in `_redirects` and nothing links to it, but the files
+exist in the repo. Not in Rule 8's site list. Flagged for the user's decision
+only.
+
+### Status
+
+Reported to the user. Awaiting explicit approval and the Rule 8 unlock phrase
+for any site before a single character is changed.
