@@ -1564,6 +1564,67 @@ causative claims, the pronoun-trap caveat); those stand as written.
 This entry stands as the durable record; per the user's instruction, this
 topic is not to be re-debated in session.
 
+## Settled — sunrise-to-sunrise governs Sabbath (and every dated day) — 2026-09-22
+
+The user has stated this explicitly, more than once, and closed the
+question: **sunrise to sunrise, the rising of the sun** is the governing
+day-boundary rule for Sabbath observance across ACR sites, not sunset to
+sunset. This applies to every dated day in the calendar, holy days
+included (Yom Kippur is not an exception — see below). This is recorded
+here as the durable, settled position, per the same pattern already used
+for other closed topics in this file: not to be re-opened or re-argued in
+future sessions.
+
+**Primary-source basis, all independently verified directly against the
+ACR Reader's own `data/file_N.json` text, not against any external
+document:**
+- Yovelim 3:28 — Adam's first offering "in the morning with the rising of
+  the sun."
+- Yovelim 21:10 — sunset is a deadline within a dated day, not the day's
+  own starting point.
+- Vayikra 7:15; 22:29-30 — the offering deadline is "until the morning,"
+  not until evening.
+- Shemot 12:10; 23:18; 29:34; 34:25 — the same "until morning" deadline,
+  repeated across four separate Torah law-codes (Passover, the Covenant
+  Code, priestly ordination, the renewed-covenant Passover).
+- Bamidbar 9:12 — the second Passover giving, same deadline.
+- Devarim 16:4 — names both boundaries in one verse: the evening
+  offering must not remain until the following morning.
+- 4QCalendrical Texts 4Q320-330; 1 Enoch 72 — the DSS/Orit calendar's own
+  day-reckoning.
+
+Eleven Torah/DSS/Orit citations total, across six separate law-codes,
+all marking the operative boundary at morning, none at evening. All are
+live on ACR Solar and ACR Search (PRs #970, #971, #972, #974 — merged
+2026-09-22).
+
+**Yom Kippur specifically**: Vayikra 23:32's "evening to evening" is the
+one explicit sunset-to-sunset phrase in Torah for any holy day. It is not
+treated as an exception. The boundary is a property of the day generally
+(Bereshit 1's day-before-night creation order; the Torah-wide "until
+morning" pattern above), not a Sabbath-only rule Yom Kippur sits outside
+of. This is already live on ACR Solar's Yom Kippur entry.
+
+**What was evaluated and rejected, and why it does not reopen this
+question:** multiple rounds of external "Deep Research" / other-AI-relay
+documents were relayed this session arguing for sunset-to-sunset,
+citing Ben-Dov/DJD XXI, VanderKam, Lauterbach, Finegan, Talmon, and
+Doering. All were rejected under Rule 13 (Western academic secondary
+scholarship is never an admissible source for ACR content, regardless of
+which conclusion it supports) and Rule 35/37 (critical editions and
+scholarly commentary are control-only, never source; a citation needs a
+specific, checkable manuscript location, not just author names). This
+holds even where such material happened to argue toward the same
+conclusion the site already holds — the source-type exclusion does not
+bend for agreement, per the same no-carve-out precedent already on
+record in the DNA-research entry above.
+
+Not currently added to either site, evaluated and left out on the user's
+own instruction ("No removal at this time, thanks" for existing DSS/1
+Enoch citations; a proposed Bereshit 19:33-34 narrative citation left out
+as not actually probative of a day-boundary claim, and because its
+quoted wording did not match ACR's own translation).
+
 ## SNAPSHOT CLEANUP RULE (mandatory, automatic)
 
 After every successful commit and push:
