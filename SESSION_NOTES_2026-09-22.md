@@ -129,3 +129,66 @@ only.
 
 Reported to the user. Awaiting explicit approval and the Rule 8 unlock phrase
 for any site before a single character is changed.
+
+### Verification pass (user asked: "Verify only & report back") — no files changed
+
+Re-ran every claim against the running apps over a local HTTP server
+(headless Chromium against 127.0.0.1), because `file://` blocks the apps' own
+`fetch()` of their content JSON and produces empty renders that look like
+missing content.
+
+**One earlier claim was wrong and is corrected here.**
+
+- **CORRECTION — ACR2 was reported as "No documentation, none." That is false.**
+  `ACR2/data/file_33.json` (Vol 25 — Raz Nihyeh, `NAVIDS` index 30, present in
+  the TOC) carries a DSS note that does document the reckoning: "day precedes
+  night, morning precedes evening. This establishes the solar reckoning — the
+  day begins with light, not with darkness. The 4QCalendrical Texts and the
+  Damascus Document build their Shabbat and festival timing directly on this
+  Bereshit framework." Verified by navigating to it in the running app
+  (`pos` reads "31 of 31", 80,873 body chars, phrase present). What ACR2 lacks
+  is the phrase "sunrise to sunrise" and the Yovelim/Vayikra/Shemot/Bamidbar/
+  Devarim citation set — not the principle.
+  Cause of the error: ACR2 was judged by grepping "sunrise". The note states
+  the principle in different words. Caught by a second sweep on alternate
+  phrasings ("day begins", "morning to morning", "first light", "solar
+  reckoning").
+
+**Confirmed, unchanged:**
+
+1. **Solar day rolls at civil midnight** — re-verified with no clock faking at
+   all, by calling the site's own `gregorianToSolar()` with explicit dates in
+   the live page: Fri 25 Sep 23:00 -> day 185 (month 7 day 3); Sat 26 Sep
+   00:05 -> day 186 (month 7 day 4), while `getSunTimes()` for that same date
+   returns sunrise 06:25. The function reads only `getFullYear/getMonth/
+   getDate`, so the hour cannot affect it. Two independent methods now agree
+   (faked clock, and direct function calls).
+2. **Shabbat "is active" uses a hardcoded 08:00** — Sat 02:00 shows "active"
+   beside a printed start of 06:25; Sun 07:00 shows "active" beside a printed
+   end of 06:33.
+3. **ACR Reader has no day-boundary statement anywhere reachable** — swept all
+   92 volumes in `NAVIDS` by fetching each data file inside the running app
+   and testing four phrasings. One hit only: `file_14` (Chanokh Astronomical
+   Book), and it reads "The Ethiopian calendar tradition also preserves
+   elements of the ancient solar reckoning" — not a day-boundary statement.
+   `file_113` (Raz Nihyeh), which does carry the note, is absent from `NAVIDS`
+   (`indexOf` returns -1) and unreachable in the Reader.
+4. **ACR Search documentation renders** — Covenant Practices tab, 37,582 chars,
+   "Why Sunrise to Sunrise, The Primary Source Day Boundary" present with the
+   full citation set. Note for future sessions: ACR Search is behind
+   `doAuth()` and then a timed loader; a test that does not call `doAuth()`
+   sits on the auth screen forever and falsely reads as "content missing."
+   The two failed CDN requests (remixicon, Google Fonts) are the sandbox proxy
+   and do not block the app.
+5. **ACR Solar documentation renders** — Shabbat mode shows the panel plus
+   "Source: Yovelim 3:28; 21:10 — Vayikra 7:15; 22:29-30 — Shemot 12:10;
+   23:18; 29:34; 34:25 — Bamidbar 9:12 — Devarim 16:4 — 4QCalendrical Texts
+   4Q320-330 — 1 Enoch 72".
+6. **ACR Study** — `file_202` is in `study.js`'s `IDS`, so the "night / laylah"
+   gloss is reachable. Across all 115 files in `study/content/` it is the only
+   one carrying any day-boundary wording.
+7. **Search2** — referenced nowhere in the repo except session notes; 0
+   occurrences of "Yovelim 3:28", confirming it holds the superseded wording.
+
+Still awaiting the user's decision and the Rule 8 unlock phrase per site.
+Nothing has been changed.
