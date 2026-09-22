@@ -1071,3 +1071,55 @@ confirmed 268 entries across seven groups and eighteen test queries returning
 correct results, including a prayer result opening that prayer's text page
 (label read back as "Healing and Physical Restoration"); zero real page errors.
 Cache `acr-solar-v60` -> `acr-solar-v61`.
+
+### PR #985 — verse behind every verdict, plus plain-language search terms
+
+User: "make sure to include pertinent verses that support each of the
+forbidden, not forbidden or not addressed" and "some users may not have learned
+the true term for holy day or holiday, make sure this is all searchable". Also
+restated the standing rule: **always send the merge link, only the user merges.**
+
+**1. Per-day verses.** Every row now names the verse behind its verdict,
+including the not-addressed rows, and each day carries its OWN work-rule verse
+instead of a shared sentence:
+
+| Day | Rule verse |
+|---|---|
+| Pesach Day 1 | Vayikra 23:7 |
+| Pesach Day 7 | Vayikra 23:8 |
+| Shavuot | Vayikra 23:21 |
+| Yom Teruah | Vayikra 23:25 |
+| Sukkot Day 1 | Vayikra 23:35 |
+| Shemini Atzeret | Vayikra 23:36 |
+| Yom Kippur | Vayikra 23:28, 31 + the fast at 23:27, 29, 32 |
+| Weekly Shabbat | Shemot 20:9; Vayikra 23:3 |
+| Tier-3 days | the verse establishing the day without a cessation command |
+
+A not-addressed row now reads in two parts: that no verse names the act, then
+the day's own rule and its verse. **Audited programmatically: 164 breakdown
+rows plus the Shabbat panel rows, zero without a verse reference.**
+
+**2. Search aliases.** `SS_DAY_WORDS` and `SS_NAME_WORDS` fold plain-language
+terms into each appointed day's searchable text and into its breakdown rows.
+Holiday, holy day, feast, festival, celebration, observance, appointed time,
+moed, miqra qodesh, convocation reach all the appointed days; trumpets reaches
+Yom Teruah, atonement Yom Kippur, tabernacles and booths Sukkot, pentecost
+Shavuot, firstfruits the barley offering, eighth day Shemini Atzeret.
+
+**These are search terms only** - never displayed, and in no content the site
+teaches from. The record still reads Yom Teruah while a search for trumpets
+finds it. **No Rabbinic festival names were added** (Rosh Hashanah and the like
+were deliberately left out; raise it with the user if it is ever wanted).
+
+**Backup:** `backup/2026-09-22-acr-solar-v61-pre-verse-refs`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance div 525/525, tr 41/41, td 123/123, table 3/3, all zero
+deltas; verse audit 164 rows + Shabbat rows, zero missing; index still 268
+entries; alias queries confirmed - holiday/holy day/feast/festival/moed each
+return 80 results, trumpets 21, tabernacles 24, pentecost 21, passover 47, and
+the combined "holiday microwave" returns 7; zero real page errors. Cache
+`acr-solar-v61` -> `acr-solar-v62`.
+
+All of this rides on **PR #985**, still open, for the user to merge.
