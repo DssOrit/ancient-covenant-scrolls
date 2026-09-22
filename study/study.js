@@ -55,6 +55,7 @@ IDS.push('file_201');
 IDS.push('file_202');
 IDS.push('file_203');
 IDS.push('file_204');
+IDS.push('file_205');
 
 var LBL = [
 'Bereshit (Genesis) \u2014 Part 1 \u2014 Ch 1\u201311',
@@ -171,7 +172,8 @@ var LBL = [
 'NT Lookup Reference \u2014 Primary Source Comparison',
 'Hebrew Roots Reference \u2014 Word & Root Meanings',
 'Paleo Alphabet Reference \u2014 The 22 Letters',
-'Useful Tools Reference \u2014 Promises, Names, Mo\u2019edim, Timeline'
+'Useful Tools Reference \u2014 Promises, Names, Mo\u2019edim, Timeline',
+'Mo\u2019edim Reference \u2014 Appointed Times, Preparation & Observance'
 ];
 
 var VOL_GROUPS = [
@@ -224,7 +226,8 @@ var VOL_GROUPS = [
 {title:'NT Lookup Reference',eng:'Primary Source Comparison',count:1,vol:'NTL'},
 {title:'Hebrew Roots Reference',eng:'Word & Root Meanings',count:1,vol:'HRR'},
 {title:'Paleo Alphabet Reference',eng:'The 22 Letters',count:1,vol:'PAL'},
-{title:'Useful Tools Reference',eng:'Promises, Names, Mo’edim, Timeline',count:1,vol:'UTR'}
+{title:'Useful Tools Reference',eng:'Promises, Names, Mo’edim, Timeline',count:1,vol:'UTR'},
+{title:'Mo’edim Reference',eng:'Appointed Times, Preparation & Observance',count:1,vol:'MOE'}
 ];
 var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
 var lh = parseFloat(localStorage.getItem('acr_study_lh') || '1.65');
@@ -292,7 +295,8 @@ var VOL_NAMES = {
   'NTL': 'NT Lookup Reference',
   'HRR': 'Hebrew Roots Reference',
   'PAL': 'Paleo Alphabet Reference',
-  'UTR': 'Useful Tools Reference'
+  'UTR': 'Useful Tools Reference',
+  'MOE': 'Mo’edim Reference'
 };
 
 function getVolForFid(fid) {
@@ -1414,7 +1418,9 @@ function showTermsMode(fid) {
     for (var t = 0; t < data.key_terms.length; t++) {
       var k = data.key_terms[t];
       h += '<div class="sv-term"><strong class="sv-tw">' + k.term + '</strong> ';
-      h += '<span class="sv-tp">(' + k.phonetic + ')</span> ';
+      // Not every key term carries a phonetic. Printing the bracket regardless
+      // put a literal "(undefined)" on screen in the reference volumes.
+      if (k.phonetic) h += '<span class="sv-tp">(' + k.phonetic + ')</span> ';
       h += '<span class="sv-td">' + k.definition + '</span></div>';
     }
     h += '</div><button class="study-btn" id="b-back-grid">Back to activities</button></div>';
@@ -6318,7 +6324,9 @@ function showStudyMode(fid) {
     for (var t = 0; t < data.key_terms.length; t++) {
       var k = data.key_terms[t];
       h += '<div class="sv-term"><strong class="sv-tw">' + k.term + '</strong> ';
-      h += '<span class="sv-tp">(' + k.phonetic + ')</span> ';
+      // Not every key term carries a phonetic. Printing the bracket regardless
+      // put a literal "(undefined)" on screen in the reference volumes.
+      if (k.phonetic) h += '<span class="sv-tp">(' + k.phonetic + ')</span> ';
       h += '<span class="sv-td">' + k.definition + '</span></div>';
     }
     h += '</div>';
