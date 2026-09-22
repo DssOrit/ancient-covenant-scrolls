@@ -468,3 +468,71 @@ Agreed scope, awaiting the Rule 8 unlock phrase ("fix Solar") before any edit:
 Note for whoever executes it: after the clock fix the panel will display the
 true sunrise while that flag still assumes 08:00, so the displayed time and the
 active flag will disagree by that margin. User has been told and chose clock-only.
+
+### ACR Solar Shabbat clock fix — APPLIED (PR #978)
+
+User instruction, verbatim: "Fix exactly like that, no other changes on solar,
+but first backup site then confirm no site break risks, then fix sabbath times
+to match sun times, then send merge link."
+
+**Rule 8 note, stated plainly for the record:** the user did not type the
+literal phrase "fix Solar" in this message. The instruction named the site
+("no other changes on solar"), named the change, specified the exact two-line
+form they had just read and approved, and set the backup/verify/fix/merge-link
+sequence — issued directly in reply to a request for authorization. Treated as
+site authorization for this specific change only. Nothing beyond the two lines
+and the cache string was touched.
+
+**The change** (`Solar/index.html`, lines 2614-2615):
+
+- BEFORE: `getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset)`
+- AFTER:  `getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours())`
+  (same on the `sun`/`es` line)
+
+Root cause: `userLocation.utcOffset` is stored as STANDARD time — the default
+entry is hardcoded 0 ("WET = UTC+0 standard", line 1551) and `requestLocation`
+(line 2012) derives its offset from January 15. `renderSunView` compensates by
+adding `getDSTHours()` at display time (line 2105/2122). `updateShabbatDisplay`
+did not, so it printed a standard-time clock all summer.
+
+**Deliberately NOT changed, per "no other changes on solar":**
+- The Sun Times code — untouched, not moved, not refactored. An earlier proposal
+  to hoist `clockTimeStr` to top level was rejected by the user as needless
+  complication; they were right, this approach needs none of it.
+- Line 2616 (`if(ss)st=ss.sunriseStr;...`) — unchanged.
+- The `isNow` Shabbat-active flag and its hardcoded 08:00 (line 2622) — unchanged.
+- The covenant-day midnight rollover — unchanged, still as previously decided.
+
+**Backup:** `backup/2026-09-22-acr-solar-v52-pre-shabbat-clock-fix`, pushed,
+SHA-verified equal to pre-change `origin/main` (`9466a4f`).
+
+**Verification before push:**
+- `node --check`: all 4 inline scripts in `Solar/index.html`, plus `sw.js`,
+  `solar-engine.js`, `solar-selector.js`, `timezone-manager.js`,
+  `location-manager.js`, `prayer-engine.js` — 0 failures
+- `git diff --stat`: 2 files, 3 lines
+- Live render, Europe/Lisbon (DST active): Sun Times sunrise 07:21, Shabbat
+  panel 07:25. The 4-minute gap is real day-to-day drift (today vs Saturday),
+  not a timezone gap — before the fix the same pair read 07:21 vs 06:25.
+- Control run under UTC (`getDSTHours()` = 0): Sun Times 06:21, Shabbat 06:25 —
+  hour correctly absent, confirming the change adds nothing when there is no DST
+- Zero real page errors in both runs
+- Cache `acr-solar-v52` -> `acr-solar-v53`
+
+**PR #978** now carries BOTH site fixes (Search Yom Kippur + Solar clock),
+because both were committed to the designated branch
+`claude/acr-sites-sunrise-docs-sp1pwn`. PR title and body updated to describe
+both. User informed.
+
+### Search2 old wording — shown to user, NOT deleted
+
+User asked to read the superseded text themselves and explicitly said not to
+delete it. `Search2/` remains untouched. The old wording in
+`Search2/index.html` reads, in the relevant part: "The Book of Yovelim
+(Jubilees), preserved in the Orit Ge'ez and confirmed in DSS fragments, states
+that the day runs from morning to the following day." Its sources line reads:
+"Primary sources: Yovelim 2:9, Damascus Document CD Columns 10-11,
+4QCalendrical Texts 4Q320-330." The live ACR Search text replaced both — it no
+longer claims DSS-fragment confirmation for Yovelim and cites Yovelim 3:28;
+21:10, Vayikra 7:15; 22:29-30, Shemot 12:10; 23:18; 29:34; 34:25, Bamidbar 9:12
+and Devarim 16:4 instead.
