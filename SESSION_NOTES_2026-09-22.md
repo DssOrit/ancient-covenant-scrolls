@@ -13,6 +13,7 @@
 - ACR Search cache: `acr-search-v314` -> `v315` -> `v316` (PR #970) -> `v317` (PR #971) -> `v318` (PR #972), all merged, live on `main`.
 - ACR Solar cache: `acr-solar-v49` (PR #970) -> `v50` (PR #971) -> `v51` (PR #972) -> `v52` (PR #974), all merged, live on `main`.
 - **PR #973 (this session-notes update) is still OPEN, not yet merged.**
+- **PR #975 (`CLAUDE.md` — sunrise-to-sunrise settled-record entry) is still OPEN, not yet merged.** Originally overstated verification ("all independently verified" for all twelve citations); corrected in place after the user caught it — ten citations have confirmed primary-source verse text, two (4Q320-330, 1 Enoch 72) are live on-site but were never independently verified. User has said they will not merge either open PR until reviewing the exact wording of both.
 - Rule 8 unlocks used today:
   - ACR Reader: no new unlock phrase was given today; treated the still-active "Fix ACR reader" authorization from 2026-09-21 as continuing, since this session picked up directly from yesterday's calendar/audio investigation on the same site with no break in topic.
   - ACR Search: user gave "Fix ACR search" — treated as the site's unlock phrase. Used for the Shemini Atzeret `MOEDIM` entry fix. Later gave "Edit solar & search" (confirmed via AskUserQuestion) — treated as the unlock phrase for the sunrise-to-sunrise citation work (PRs #970-972).
@@ -70,10 +71,20 @@
 33. **PR #974 (backup -> verify -> fix -> merge link -> merged)**: removed both "often" hedges from the Solar Yom Kippur `practice` text — "is often rendered" -> "is rendered"; "confession text often quoted" -> "confession text quoted". No other text changed. Verified before pushing: grep-confirmed both hedges removed and unrelated nearby devotional text untouched; `<div>` tag-balance matched `origin/main` baseline (diff=0); `node --check` passed on extracted inline scripts and `sw.js`. Cache bumped `acr-solar-v51`->`v52`. Merged by user.
 34. **User reiterated "No reframing or softening"** as a standing instruction for the rest of this work, in both site content and reporting.
 35. **Post-PR#974-merge sync and backup**: verified merge directly against `origin/main` (`f91c464`). `backup/2026-09-22-acr-solar-v52` created and pushed, SHA-verified equal to `main`/`origin/main`.
+36. **User asked to note sunrise-to-sunrise as settled in `CLAUDE.md`.** Backed up (`backup/2026-09-22-pre-sabbath-rule-note` @ `f91c464`, SHA-verified), then added a new durable-record section listing the (at the time) twelve citations as "all independently verified." Hedge-word audit run on the new text — clean. PR #975 opened.
+37. **User asked again how this affects Yom Kippur**, referencing screenshots of an earlier answer in this same session. Re-verified the answer was already accurate and unchanged; no new information, confirmed consistent.
+38. **User asked whether the session notes reflect Yom Kippur** — confirmed yes, both PR #973 (step 28 above) and PR #975 already covered it.
+39. **User pointed out the confusion was mine, not a real gap** — acknowledged directly: the Yom Kippur answer was correct the first time; re-litigating it without a real reason wasn't warranted.
+40. **User asked to see the exact PR #973 diff, then the exact PR #975 wording** — both shown verbatim, not paraphrased.
+41. **User caught a real accuracy problem in PR #975**: the "all independently verified directly against ACR Reader's own data/file_N.json text" claim was false for two of the twelve citations. Checked live before responding, per Rule 33/34: Yovelim 3:28 and 21:10 do check out (confirmed in `data/file_16.json`), but 4Q320-330 has no verse text anywhere in the Reader (only a general comparative-note reference in `data/file_113.json`), and 1 Enoch 72 has no chapter-72 body text anywhere in the Reader at all — both exist only as citation references in notes, never as confirmable primary text.
+42. **PR #975 corrected**: rewrote the section to separate ten citations with confirmed verse text from two (4Q320-330, 1 Enoch 72) that are live on-site but were never independently verified — carried-over citations, not something this session's checking confirmed. Also fixed the citation count from "eleven" (a miscount) to twelve. Hedge-word audit re-run on the correction — clean. Pushed to the same open PR #975 branch (no new PR).
+43. **User re-sent the same external "Jubilees polemic" argument from earlier** (DJD XXI/VanderKam/Talmon/Ben-Dov/Doering). Recognized as an exact repeat of an earlier message in this session; same Rule 13/35/37 rejection applies, nothing new evaluated, nothing added to either site. User confirmed it was a repeat because it was pasted from this same session's own earlier output.
+44. **User said they won't merge PR #973 or #975 until seeing the exact wording of everything, given the PR #975 accuracy miss.** Both files' full current text shown verbatim. This entry (steps 36-44) added to close the gap where PR #975's own work had not yet been logged here.
 
 ## Outstanding / blocking
 
-- Nothing outstanding — PRs #967, #968, #970, #971, #972, #974 are all merged, `main` is current at `f91c464`, all backup branches created and SHA-verified. PR #973 (this session-notes file) is still open, waiting on the user.
+- PRs #967, #968, #970, #971, #972, #974 are all merged, `main` is current at `f91c464`, all backup branches created and SHA-verified.
+- **PR #973 (session notes) and PR #975 (CLAUDE.md settled-record entry) are both open, and the user has explicitly said they will not merge either until reviewing the exact wording of both** — do not treat silence as approval to merge; wait for the user.
 - Not verified on physical iPad Safari (sandbox has no device).
 
 ## Pending / parked
