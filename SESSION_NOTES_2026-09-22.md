@@ -348,3 +348,69 @@ e23cdad Session notes: verification pass on sunrise-to-sunrise audit, ACR2 findi
 1a72b2c Session notes: user decision to leave ACR Solar as is, findings logged
 701d88e Session notes: correct file_113 framing, log 1 Enoch 72 numbering mismatch
 ```
+
+---
+
+## SESSION RESUMED — ACR Search Yom Kippur fix, 2026-09-22
+
+### User decisions this round
+
+1. **ACR Solar clock: MARKED AS IS — leave it, do not fix.** User: "Mark the
+   solar clock as is, we follow the daily sunrise & sunset for default Portugal
+   anyway." The Shabbat-panel DST gap (Sun Times 07:21 vs Shabbat panel 06:25)
+   stays as documented earlier in these notes. Do NOT open it again unasked.
+2. **ACR Search Yom Kippur wording: approved and fixed** (this entry).
+3. Reader, ACR2, Study: out of scope. User is concerned only with Solar and
+   Search.
+
+### The problem fixed
+
+`Search/index.html`, `SOLAR_MOEDIM` array, Yom Kippur entry (was line ~4156):
+
+- BEFORE: "All work ceases from evening to evening."
+- AFTER:  "All work ceases for the full day. Vayikra 23:32 is rendered
+  "evening to evening," but the day boundary followed here is sunrise to
+  sunrise, per the DSS/Orit solar reckoning — sunset-to-sunset reckoning
+  follows the Babylonian lunisolar calendar adopted by Rabbinic tradition
+  after the exile, which the DSS community and the Orit Ge'ez did not follow."
+
+Why: the old sentence stated an evening-to-evening observance in ACR Search's
+own voice, contradicting the site's own Covenant Practices panel ("The covenant
+day runs from sunrise to sunrise, not sunset to sunset"). ACR Solar's equivalent
+Yom Kippur entry was corrected in an earlier session; ACR Search never received
+the same pass. Wording deliberately mirrors Solar's established pattern.
+
+A full sweep of `Search/index.html` confirmed this was the ONLY evening-boundary
+observance statement in the site's own voice — every other evening/sunset
+mention either states the sunrise rule or documents Rabbinic sunset practice as
+the thing being critiqued.
+
+### Backup (Rule 26)
+
+`backup/2026-09-22-acr-search-v318-pre-yomkippur-fix` — pushed, SHA-verified
+equal to pre-change `origin/main` (`6cacdcd`), created before any file was
+touched. Recovery: `git checkout backup/2026-09-22-acr-search-v318-pre-yomkippur-fix`
+
+### Verification before push
+
+- `node --check` on both inline scripts in `Search/index.html`: 0 failures
+- `node --check Search/sw.js`: OK
+- `git diff --stat`: exactly 2 files, 1 line each
+- Live headless render (Chromium over local HTTP, `doAuth()` then
+  `setMode('solarcal')`): all 8 calendar badges render; `calOpen('kippur')`
+  shows the corrected body text in full, apostrophe escaping intact
+  ("Orit Ge'ez"); Covenant Practices panel still renders 37,582 chars with the
+  "Why Sunrise to Sunrise" topic intact; zero real page errors (only the
+  sandbox proxy's CDN blocks)
+- Cache bumped `acr-search-v318` -> `acr-search-v319`
+
+### Search2 — explained, no action taken
+
+`Search2/` contains `index.html`, a 23 MB `acr_concordance.json`, a
+`The_Covenant_Record_v2.docx` and a `.gitkeep`. It is an older copy of ACR
+Search carrying the SUPERSEDED sunrise wording (0 occurrences of "Yovelim 3:28";
+still says Yovelim is "confirmed in DSS fragments", the exact claim PR #970
+replaced). It is referenced nowhere: not in `_redirects`, zero links from any
+site file, and it is not in CLAUDE.md Rule 8's site list. Cloudflare Pages
+serves by path, so `/Search2/` would resolve if typed directly.
+No action taken — awaiting the user's decision to delete or leave.
