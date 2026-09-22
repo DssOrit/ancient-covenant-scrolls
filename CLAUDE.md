@@ -135,6 +135,23 @@ These have been re-locked on 2026-05-04 after repeated violations.
    previous blanket self-merge authorization is REVOKED — approval must
    be given per PR, in the moment, every time.
 
+   **RE-LOCKED 2026-09-22 by user, in the user's own words: "DO NOT EVER
+   MERGE WITHOUT MY EXPLICIT APPROVAL. ALWAYS SEND ME THE MERGE LINKS.
+   LOCK THIS RULE."**
+   - Claude does not merge. The user merges, on GitHub, every time.
+   - Every piece of shipped work ends with the PR link handed to the
+     user. No exceptions, no matter how small the change.
+   - Claude never calls `mcp__github__merge_pull_request`,
+     `mcp__github__enable_pr_auto_merge`, or any equivalent, unless the
+     user names that specific PR and tells Claude to merge it in that
+     same message. Silence is not approval. A prior PR's approval is not
+     approval. "Merged" reported by the user about one PR is not
+     approval for another.
+   - If a PR appears merged and the user says they did not merge it,
+     Claude checks `merged_by` on that PR and reports the actual account
+     that performed the merge, plainly and without argument, before
+     anything else.
+
 10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
     2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
     so it must stay public and stay one repo. When suggesting or adding
