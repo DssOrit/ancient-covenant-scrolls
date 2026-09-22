@@ -719,3 +719,18 @@ to pre-change `origin/main` (`b67b144`).
 
 Yom Teruah runs sunrise Wed 07:22 to sunrise Thu 07:23 (Coimbra default).
 Yom Kippur is Month 7 Day 10 — Friday 2 October 2026.
+
+### PR #979 MERGED — Yom Teruah note live
+
+Verified on `origin/main` (`073e6dc`): the teru'ah note is present in
+`Solar/index.html`, `Solar/sw.js` reads `acr-solar-v54`, `Search/sw.js` reads
+`acr-search-v319`.
+
+**Stable-state backup:** `backup/2026-09-22-acr-solar-v54` — pushed,
+SHA-verified equal to merged `origin/main` (`073e6dc`). This is now the current
+recovery point.
+Recovery: `git checkout backup/2026-09-22-acr-solar-v54`
+
+Shipped and merged today, in order: PR #978 (ACR Search Yom Kippur boundary
+wording + ACR Solar Shabbat clock DST match) and PR #979 (ACR Solar Yom Teruah
+teru'ah note). Live caches: `acr-search-v319`, `acr-solar-v54`.
