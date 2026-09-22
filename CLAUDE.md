@@ -1592,8 +1592,8 @@ not against any external document:**
   offering must not remain until the following morning.
 
 **Two further citations, live on both sites, NOT independently verified
-against primary verse text — this is a correction to an earlier
-overstatement in this entry, caught by the user:**
+against primary verse text — this is a correction to a false claim in
+this entry, caught by the user:**
 - 4QCalendrical Texts 4Q320-330 — checked directly: the ACR Reader has no
   verse text for this DSS fragment anywhere. It exists only as a
   comparative-note reference in `data/file_113.json` ("the 364-day
@@ -1620,7 +1620,7 @@ confirmed primary-source verse text, two carried over unconfirmed.
 
 **Yom Kippur specifically**: Vayikra 23:32's "evening to evening" is the
 one explicit sunset-to-sunset phrase in Torah for any holy day. It is not
-treated as an exception. The boundary is a property of the day generally
+treated as an exception. The boundary is a property of the day
 (Bereshit 1's day-before-night creation order; the Torah-wide "until
 morning" pattern above), not a Sabbath-only rule Yom Kippur sits outside
 of. This is already live on ACR Solar's Yom Kippur entry.
