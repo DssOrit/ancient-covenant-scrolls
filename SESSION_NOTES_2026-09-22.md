@@ -849,3 +849,41 @@ Autumn Tekufah. Zero real page errors.
 
 Cache `acr-solar-v55` -> `acr-solar-v56`. PR #984 title and body updated to
 cover both commits. Awaiting user merge.
+
+### PR #984 extended again — screens, artistic relaxation, schooling
+
+User asked to add three more categories: watching TV / internet; artistic
+relaxation (drawing, reading, writing); school / college. Every breakdown goes
+from five rows to eight, on the seven appointed days with a stated work rule
+and on both copies of the weekly Shabbat panel.
+
+**Sources located and verified for the new rows (all read from ACR Reader):**
+
+- **Nechemyah 8:1-3, 9-12, 18** (`data/file_88.json`) - the assembly on **the
+  first day of the seventh month**, i.e. Yom Teruah itself. Ezra read the Torah
+  "from early morning until midday"; the people were told "Eat the fat and drink
+  sweet wine and send portions to anyone who has nothing ready, for this day is
+  holy." This does double duty: it anchors the reading row, and it corroborates
+  the cooking row independently of Shemot 12:16.
+- **Devarim 31:12** (`data/file_12.json`) - "Assemble the people, the men and
+  the women and the little ones... that they may hear, and that they may learn."
+  Cited on the schooling row for the assembly commanded to hear and learn.
+- **Yeshayahu 58:13** (`data/file_46.json`) - "from doing your pleasure on my
+  holy day... not going your own ways, or seeking your own pleasure, or talking
+  idly." Cited on the screens and reading rows for Shabbat only, since it is a
+  Sabbath text.
+
+**Standard held:** no row is marked Forbidden without a verse naming the act.
+Rabbinic melakhot categories - which do rule on writing and similar acts - were
+not used, per Rule 13.
+
+**Backup:** `backup/2026-09-22-acr-solar-v56-pre-extra-rows`, pushed,
+SHA-verified equal to `origin/main` (`de25703`).
+
+**Verification:** node --check clean on 4 inline scripts and all 6 sibling JS
+files; tag balance against main - div 513/513, tr 17/17, td 34/34, all balanced;
+live render confirmed 8 rows on each of the seven appointed days, 1 row on each
+of the four tier-3 days, 8 rows on the weekly Shabbat panel with its start time
+still working (07:25); zero real page errors.
+
+Cache `acr-solar-v56` -> `acr-solar-v57`. PR #984 carries all four commits.
