@@ -152,6 +152,14 @@ These have been re-locked on 2026-05-04 after repeated violations.
      that performed the merge, plainly and without argument, before
      anything else.
 
+   **DRAFT-BY-DEFAULT — added 2026-09-22 after the user reported merges
+   they did not make.** Every PR Claude opens is created as a DRAFT
+   (`draft: true`). A draft PR cannot be merged by anyone until it is
+   explicitly marked "Ready for review". Claude never marks a PR ready;
+   only the user does, on GitHub. This makes an accidental or unnoticed
+   merge structurally impossible rather than a matter of trust.
+   Claude still sends the link every time, and still never merges.
+
 10. **SECURITY MUST NEVER LOCK CLAUDE OUT OR BREAK SITES — locked
     2026-06-30 by user.** This repo is PUBLIC and hosts every ACR site,
     so it must stay public and stay one repo. When suggesting or adding
