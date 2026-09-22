@@ -1320,3 +1320,36 @@ PR #985 and #986 are both merged, so the CodeQL finding (1 high severity + 4
 notes, introduced by the ACR Solar search code) is live on `main`. Unfixed.
 Proposed fix, not started: build the search results with `createElement` and
 `textContent` instead of assembling HTML for `innerHTML`, removing the sink.
+
+### SEARCH WAS BROKEN IN REAL USE — fixed in PR #987 (first DRAFT PR)
+
+User reported from the live site: search opens, typing does nothing. Screenshot
+showed "Yom kippar" in the box with the placeholder text still displayed.
+
+**Root cause:** the input handler was attached at line 2941 by a script that
+runs before the overlay markup, which sits at line 2949. `getElementById(
+'ss-input')` returned null at that moment, so no listener was ever bound.
+
+**Why my verification missed it — record this, it is the important part.**
+Every test I ran set `input.value` then called `renderSolarSearch()` directly.
+That exercises the function, never the binding. The bug lived exactly in the
+gap between those two things. Rule 33 says a behaviour claim must exercise the
+behaviour; calling the render function is not typing. **Tests now use
+`page.type()` character by character through the real input.**
+
+**Three fixes shipped:**
+1. Handler bound on the element itself (`oninput`) and again in
+   `openSolarSearch()`, so document order cannot break it.
+2. Any-word fallback when not every term matches, instead of returning nothing.
+3. Spelling correction by bounded edit distance against a vocabulary of day
+   names, aliases and the plain-language words.
+
+**Verified by typing:** Yom kippar, yom kipur, sukot, shavout, teruh, atonment,
+tabernacls, microwve, holliday, holyday, festivl, prayr, walkes all land on the
+right entry; correct spellings unchanged. Zero page errors.
+
+**Backup:** `backup/2026-09-22-acr-solar-v63-pre-search-fix` (`8eb32bd`).
+Cache `acr-solar-v63` -> `acr-solar-v64`.
+
+**PR #987 is the first PR opened as a DRAFT** under the new Rule 9 clause. It
+cannot be merged until the user marks it Ready for review.
