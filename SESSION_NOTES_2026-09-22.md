@@ -1234,3 +1234,47 @@ a prayer.
 
 **Still not done:** a line-by-line audit of whether every verse or prayer that
 *should* belong to each day is present. Offered to the user, not started.
+
+### Merge question resolved by the user's own screenshot
+
+The screenshot shows **PR #985**, "Merged", with the footer "Branch merged -
+**DssOrit** merged commit 0595910 into main". That is the repo owner account and
+it matches the API record exactly (`merged_by: DssOrit`, 22:25:41Z). PR #986,
+the link sent last, is a different PR and remains `state: open, merged: false`.
+
+Note for clarity, since two accounts appear on these PRs: **`vintageandmore71-qo`
+opens them** (the account this Claude Code session pushes as) and **`DssOrit`
+merged** (the repo owner). Claude has never called a merge tool in this session.
+
+### OPEN FINDING — CodeQL failure on the merged PR #985, now on main
+
+The "Checks - 1 failed" visible in the screenshot is **CodeQL**, and it is a
+real finding, not a flake:
+
+> 5 new alerts including **1 high severity security vulnerability**
+> Security Alerts: 1 high. Other Alerts: 4 notes.
+> Alerts in code changed by this pull request.
+
+The "Analyze (javascript-typescript)" job itself succeeded; it is the CodeQL
+alert check that failed. PR #985's diff was the ACR Solar search feature, so
+**the alert is in code written this session and it is merged into `main`.**
+
+**Assessment, stated as assessment and not yet confirmed against the alert
+text:** the likely rule is DOM-based XSS (`js/xss-through-dom` or `js/xss`).
+`renderSolarSearch` assembles a string and assigns it with `innerHTML`, and part
+of the index is read from the page with `textContent`, which is exactly the
+source-to-sink shape that rule flags. Every interpolation does pass through the
+`ssEsc` helper, so this may be a sanitizer CodeQL does not recognise - but that
+is not established, and it should not be assumed.
+
+**No code-scanning-alerts tool is available in this session**, so the alert text
+itself could not be read directly. The check-run summary above is all that could
+be retrieved.
+
+**Definite fix available regardless of whether the alert is a true positive:**
+build the results with `createElement` and `textContent` instead of assembling
+an HTML string for `innerHTML`. That removes the sink entirely rather than
+arguing with the scanner.
+
+**Not started.** Reported to the user for a decision, per their instruction to
+stop adding unrequested work.
