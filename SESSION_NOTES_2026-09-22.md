@@ -734,3 +734,83 @@ Recovery: `git checkout backup/2026-09-22-acr-solar-v54`
 Shipped and merged today, in order: PR #978 (ACR Search Yom Kippur boundary
 wording + ACR Solar Shabbat clock DST match) and PR #979 (ACR Solar Yom Teruah
 teru'ah note). Live caches: `acr-search-v319`, `acr-solar-v54`.
+
+---
+
+## ADDENDUM — ACR Solar per-day Activity Breakdown (PR #984)
+
+User asked for the five activity categories (Gym, Money transactions, Cleaning,
+Cooking, Rides/Uber/bus) to be "clearly set in each of the days, broken down in
+activity allowances & forbidden", then approved the chart layout and said "Make
+the additions" with the standard backup/verify/apply/merge-link sequence.
+
+### Design decision that had to be settled first
+
+A two-state allowed/forbidden table was refused and the reason was put to the
+user before building: **gym, cleaning and rides are named nowhere in the
+covenant record.** A binary table would have manufactured rulings the sources do
+not make, which is the rabbinic-elaboration pattern the site exists to expose
+(Rule 13) and a Rule 29 fabrication risk. User accepted the three-state design:
+Forbidden (verse names it) / Permitted (verse permits it) / Not addressed.
+
+### The tier structure, verified across the whole of Vayikra 23
+
+Checked every work rule in the chapter; the split is exact, no exceptions:
+
+- **"No manner of work" (total) - 3 places:** v3 weekly Shabbat, v28 and v31
+  Yom Kippur.
+- **"No manner of servile work" (melekhet avodah) - 6 places, every one a
+  festival:** v7, v8 Unleavened Bread days 1 and 7; v21 Shavuot; v25 Yom
+  Teruah; v35 Sukkot day 1; v36 the eighth day.
+
+### Verses behind each verdict (all read from ACR Reader's own text)
+
+- Shemot 12:16 - "no work shall be done on them, except what every person must
+  eat, that alone may be prepared by you" (`data/file_5.json`)
+- Shemot 16:23 - bake and boil the day before (Shabbat)
+- Shemot 16:29 - "let no man go out of his place on the seventh day"
+- Shemot 35:3 - "You shall kindle no fire... on the Sabbath day"
+- Vayikra 23:27 - affliction of soul on Yom Kippur
+- Amos 8:5 (`data/file_61.json`) - "When will the new moon be over, that we may
+  sell grain? And the Shabbat..." - names BOTH the new moon and the Shabbat
+- Nechemyah 13:15-22 (`data/file_88.json`) - winepresses, loaded donkeys,
+  Tyrians selling fish, all on the Shabbat
+- Yirmeyahu 17:21-22 (`data/file_49.json`) - burdens through the gates and out
+  of houses
+- Yeshayahu 58:13 (`data/file_46.json`) - located and verified, not used in the
+  final rows
+
+**Search note for future sessions:** ACR's translations use "Sabbath", not
+"Shabbat", in Yirmeyahu 17 and Yeshayahu 58. A grep for "Shabbat" misses them.
+
+### Scope applied
+
+`Solar/index.html`: `dayRules` array added to **11 entries**; one conditional
+render section added to `showEventDetail` after the Description block.
+`Solar/sw.js`: cache `acr-solar-v54` -> `acr-solar-v55`.
+
+**Deliberately excluded** (11 entries, no breakdown): New Year M1 D1, the four
+Tekufot, the two New Season days, New Wine, New Oil, Wood Offering, Purim. They
+are calendar markers, not rest days; a table there would imply they are.
+
+### Backup
+
+`backup/2026-09-22-acr-solar-v54-pre-dayrules` - pushed, SHA-verified equal to
+pre-change `origin/main` (`dabe4f0`).
+
+### Verification before push
+
+- `node --check`: all 4 inline scripts plus all 6 sibling JS files - 0 failures
+- `HOLIDAYS` still 22 entries: 11 with `dayRules`, 11 without, as intended
+- Live render of the real modal via `showEventDetail` for four contrasting
+  days: Yom Teruah (5 rows, new-moon note present), Yom Kippur (5 rows, all
+  forbidden with verses), Pesach Eve (1 row, no work rule stated), Autumn
+  Tekufah (no section) - all correct
+- Zero real page errors
+
+**Testing lesson recorded:** an earlier verification run read `innerText` on the
+modal immediately after `showEventDetail` and got nothing, which looked like the
+section failing to render. It was a layout-flush artifact of the test, not a
+site fault. Use `textContent` or wait a tick after opening a modal.
+
+**PR #984** opened. Awaiting user merge.
