@@ -451,8 +451,15 @@ function recordQuestionResult(fid, mode, qIndex, correct) {
   var key = fid + ':' + mode + ':' + qIndex;
   if (!m[key]) m[key] = { correct: 0, attempts: 0, mastered: false };
   m[key].attempts++;
-  if (correct) m[key].correct++;
-  if (m[key].correct >= 3) m[key].mastered = true;
+  if (correct) {
+    m[key].correct++;
+  } else if (m[key].correct > 0) {
+    // Mastery is not a one-way ratchet. A miss on a question that had
+    // already been banked gives the credit back, so the tier a section
+    // sits in tracks current accuracy instead of a best-ever score.
+    m[key].correct--;
+  }
+  m[key].mastered = m[key].correct >= 3;
   saveQuizMastery(m);
 }
 
@@ -1621,12 +1628,17 @@ function smartBlank(verse) {
     if (NUMBERS_PATTERN.test(w)) { score += 7; NUMBERS_PATTERN.lastIndex = 0; }
     if (IMPORTANT_WORDS.test(w)) { score += 5; IMPORTANT_WORDS.lastIndex = 0; }
     if (w.length >= 5) score += 2;
-    if (score >= 3) targets.push({ idx: i, word: w, score: score });
+    if (score < 3) continue;
+    // Only blank a word that occurs once in the verse. Blanking the first
+    // of two copies leaves the second one on screen and hands the answer
+    // to the reader.
+    if ((verse.match(new RegExp('\\b' + escRe(w) + '\\b', 'g')) || []).length !== 1) continue;
+    targets.push({ idx: i, word: w, score: score });
   }
   if (!targets.length) return null;
   targets.sort(function (a, b) { return b.score - a.score; });
   var pick = targets[Math.floor(Math.random() * Math.min(3, targets.length))];
-  var prompt = verse.replace(new RegExp('\\b' + pick.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b'), '______');
+  var prompt = verse.replace(new RegExp('\\b' + escRe(pick.word) + '\\b'), '______');
   if (prompt === verse) return null;
   return { ref: '', prompt: prompt, answer: pick.word, source_quote: verse, difficulty: pick.score >= 8 ? 'hard' : pick.score >= 5 ? 'medium' : 'easy' };
 }
@@ -1673,8 +1685,12 @@ function generateSmartMC(fid, count) {
     var placeMatches = usable[i].match(PLACES_PATTERN);
     if (nameMatches && nameMatches.length > 0) {
       var name = nameMatches[0];
-      var snippet = words.slice(0, Math.min(10, words.length)).join(' ');
-      if (snippet.length > 60) snippet = snippet.slice(0, 57) + '...';
+      // The old form quoted the first ten words of the verse and asked who
+      // was mentioned in them -- and the name was usually inside those ten
+      // words, so the prompt printed its own answer. Quote a window around
+      // the name instead, with the name itself blanked out.
+      var snippet = blankedWindow(usable[i], name, 14);
+      if (!snippet) continue;
       var allNames = [];
       for (var v = 0; v < usable.length; v++) {
         var m = usable[v].match(NAMES_PATTERN);
@@ -1682,12 +1698,12 @@ function generateSmartMC(fid, count) {
       }
       var opts = [name].concat(shuffle(allNames).slice(0, 3));
       opts = shuffle(opts);
-      var nameQ = { ref: '', question: 'Who is mentioned in: "' + snippet + '"?', options: opts, correct: opts.indexOf(name), source_quote: usable[i], difficulty: 'medium' };
+      var nameQ = { ref: '', question: 'Who belongs in the blank? \u201C' + snippet + '\u201D', options: opts, correct: opts.indexOf(name), source_quote: usable[i], difficulty: 'medium' };
       if (passesQualityGate(nameQ)) questions.push(nameQ);
     } else if (placeMatches && placeMatches.length > 0) {
       var place = placeMatches[0];
-      var snippet = words.slice(0, Math.min(10, words.length)).join(' ');
-      if (snippet.length > 60) snippet = snippet.slice(0, 57) + '...';
+      var snippet = blankedWindow(usable[i], place, 14);
+      if (!snippet) continue;
       var allPlaces = [];
       for (var v = 0; v < usable.length; v++) {
         var m = usable[v].match(PLACES_PATTERN);
@@ -1695,7 +1711,7 @@ function generateSmartMC(fid, count) {
       }
       var opts = [place].concat(shuffle(allPlaces).slice(0, 3));
       opts = shuffle(opts);
-      var placeQ = { ref: '', question: 'Which place appears in: "' + snippet + '"?', options: opts, correct: opts.indexOf(place), source_quote: usable[i], difficulty: 'medium' };
+      var placeQ = { ref: '', question: 'Which place belongs in the blank? \u201C' + snippet + '\u201D', options: opts, correct: opts.indexOf(place), source_quote: usable[i], difficulty: 'medium' };
       if (passesQualityGate(placeQ)) questions.push(placeQ);
     } else {
       // Number-based question for genealogy / measurement sections
@@ -1731,12 +1747,191 @@ function generateSmartMC(fid, count) {
   return questions;
 }
 
+
+// ---- Shared helpers for question construction ----
+
+// Escape a literal string for use inside a RegExp.
+function escRe(str) {
+  return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Quote a window of `verse` centred on `term`, with every occurrence of
+// the term inside that window replaced by a blank. Used so a "who is
+// named here" question never prints the name it is asking for.
+function blankedWindow(verse, term, span) {
+  var words = String(verse).split(/\s+/);
+  var hit = new RegExp('\\b' + escRe(term) + '\\b');
+  var at = -1;
+  for (var i = 0; i < words.length; i++) { if (hit.test(words[i])) { at = i; break; } }
+  if (at < 0) return null;
+  var half = Math.floor((span || 12) / 2);
+  var start = Math.max(0, at - half);
+  var end = Math.min(words.length, at + half + 1);
+  var win = words.slice(start, end).join(' ');
+  var blanked = win.replace(new RegExp('\\b' + escRe(term) + '\\b', 'g'), '_____');
+  if (blanked === win) return null;
+  return (start > 0 ? '… ' : '') + blanked + (end < words.length ? ' …' : '');
+}
+
+// ---- Comparative manuscript notes ----
+// Every chapter file carries the four-note apparatus at the end of each
+// chapter -- [DSS], [ORIT GE'EZ], [MASORETIC VARIANT], [CRITICAL NOTE].
+// Until now the only line in this file that touched them was the
+// text-to-speech pronunciation fixer. At the Witness tier the notes
+// themselves become the material, and on a miss they do the teaching.
+function getChapterNotes(fid) {
+  var data = CHAPTER_CACHE[fid];
+  if (!data || !data.html) return [];
+  var div = document.createElement('div');
+  div.innerHTML = data.html;
+  var paras = div.querySelectorAll('p.dp[data-ptype="note"]');
+  var out = [];
+  for (var i = 0; i < paras.length; i++) {
+    var spans = paras[i].querySelectorAll('span');
+    if (spans.length < 2) continue;
+    var label = spans[0].textContent.replace(/[\[\]]/g, '').trim();
+    var body = spans[1].textContent.trim();
+    if (!label || body.length < 40) continue;
+    out.push({ label: label, body: body });
+  }
+  return out;
+}
+
+// Real scroll designations drawn from the note apparatus already in the
+// chapter files. Used only to pad the distractor list when a chapter's
+// own notes do not name enough other scrolls -- so a wrong answer is
+// still a real manuscript, never an invented one.
+var SIGLA_RE = /\b\d{1,2}Q[A-Za-z0-9]+\b/g;
+var SIGLA_POOL = ['1QIsa', '11Q19', '4QXII', '11QPsa', '11Q5', '4QSama', '4QPsa', '4Q83',
+  '4Q27', '4QNumb', '1QM', '4QJosha', '4Q47', '4Q14', '4Q22', '4QJudga', '4Q49', '4Q51',
+  '4Q13', '4QpaleoExodm', '4QPsb', '4Q84', '4QExodb', '4QJer', '1QS', '4Q1', '4QD',
+  '4QGen', '4QExodc', '4QEng', '4Q212', '4QMMT', '1QH', '4QEna', '4QEnastr', '4Q223'];
+
+// Witness tier, type 1: name the scroll this chapter's DSS note cites.
+function getSiglaQuestions(fid, count) {
+  var notes = getChapterNotes(fid);
+  var qs = [];
+  var local = [];
+  for (var n = 0; n < notes.length; n++) {
+    if (notes[n].label !== 'DSS') continue;
+    var found = notes[n].body.match(SIGLA_RE);
+    if (found) for (var f = 0; f < found.length; f++) if (local.indexOf(found[f]) < 0) local.push(found[f]);
+  }
+  if (!local.length) return qs;
+  var picks = shuffle(local.slice()).slice(0, count);
+  for (var p = 0; p < picks.length; p++) {
+    var answer = picks[p];
+    var others = shuffle(SIGLA_POOL.concat(local).filter(function (x) { return x !== answer; }));
+    var seen = {}, opts = [answer];
+    for (var o = 0; o < others.length && opts.length < 4; o++) {
+      if (!seen[others[o]]) { seen[others[o]] = 1; opts.push(others[o]); }
+    }
+    if (opts.length < 4) continue;
+    opts = shuffle(opts);
+    // Find the note that names it, so the teaching panel can quote it.
+    var src = '';
+    for (var k = 0; k < notes.length; k++) {
+      if (notes[k].label === 'DSS' && notes[k].body.indexOf(answer) >= 0) { src = notes[k].body; break; }
+    }
+    qs.push({
+      ref: '', question: 'Which scroll does the Dead Sea Scrolls note cite for this chapter?',
+      options: opts, correct: opts.indexOf(answer), source_quote: src,
+      difficulty: 'witness', noteType: 'DSS'
+    });
+  }
+  return qs;
+}
+
+// Witness tier, type 2: a blank inside a critical note. The critical
+// notes never name their own note type, so unlike the other three they
+// cannot be answered by spotting a giveaway word.
+function getNoteClozeQuestions(fid, count) {
+  var notes = shuffle(getChapterNotes(fid).filter(function (n) { return n.label === 'CRITICAL NOTE'; }));
+  var out = [];
+  for (var i = 0; i < notes.length && out.length < count; i++) {
+    var body = notes[i].body;
+    if (body.length > 360) {
+      var cut = body.indexOf('. ', 80);
+      body = cut > 0 ? body.slice(0, cut + 1) : body.slice(0, 300);
+    }
+    var q = smartBlank(body);
+    if (!q) continue;
+    q.noteType = 'CRITICAL NOTE';
+    q.difficulty = 'witness';
+    out.push(q);
+  }
+  return out;
+}
+
+// ---- Teach on miss ----
+// A wrong answer used to say "try another" and nothing else. This builds
+// the short teaching panel shown underneath it: the passage the answer
+// came from, the term's own definition when the content file carries
+// one, and a comparative note that speaks to the same term when one
+// exists. Nothing here is generated -- every line is lifted from the
+// content files as written.
+function buildTeachPanel(fid, answer, sourceQuote, data) {
+  var a = String(answer || '').trim().toLowerCase();
+  var bits = [];
+  if (a) bits.push('<div class="teach-line"><span class="teach-tag">Answer</span> <strong>' + answer + '</strong></div>');
+  if (sourceQuote) {
+    var sq = String(sourceQuote);
+    if (sq.length > 400) sq = sq.slice(0, 397) + '…';
+    bits.push('<div class="teach-line"><span class="teach-tag">Passage</span> ' + sq + '</div>');
+  }
+  if (data && data.key_terms && a) {
+    for (var i = 0; i < data.key_terms.length; i++) {
+      var t = data.key_terms[i];
+      var term = String(t.term || '').toLowerCase();
+      if (!term || !t.definition) continue;
+      if (term === a || term.indexOf(a) >= 0 || a.indexOf(term) >= 0) {
+        bits.push('<div class="teach-line"><span class="teach-tag">Term</span> <strong>' + t.term + '</strong> — ' + t.definition + '</div>');
+        break;
+      }
+    }
+  }
+  if (a && a.length >= 4) {
+    var notes = getChapterNotes(fid);
+    for (var n = 0; n < notes.length; n++) {
+      if (notes[n].body.toLowerCase().indexOf(a) < 0) continue;
+      var nb = notes[n].body;
+      if (nb.length > 340) nb = nb.slice(0, 337) + '…';
+      bits.push('<div class="teach-line"><span class="teach-tag">' + notes[n].label + '</span> ' + nb + '</div>');
+      break;
+    }
+  }
+  if (bits.length < 2) return '';
+  return '<div class="teach-panel"><div class="teach-head">What this teaches</div>' + bits.join('') + '</div>';
+}
+
 // ---- Difficulty Tiers ----
+// Four tiers, and what changes between them is the TASK, not just the
+// size of the question pool:
+//   Recognise - four options, drawn from this section
+//   Recall    - no options; the answer is typed from memory
+//   Connect   - questions reach across neighbouring sections
+//   Witness   - questions come from the comparative manuscript notes
+// A section moves up as its questions are banked and falls back when
+// accuracy drops, because mastery can now be lost again.
+var TIER_LABEL = { recognise: 'Recognise', recall: 'Recall', connect: 'Connect', witness: 'Witness' };
+var TIER_COLOR = { recognise: '#6abf8a', recall: '#c9a84c', connect: '#d97070', witness: '#8B0000' };
+var TIER_BLURB = {
+  recognise: 'Four options, from this section.',
+  recall: 'No options \u2014 type the answer.',
+  connect: 'Reaching across nearby sections.',
+  witness: 'From the comparative manuscript notes.'
+};
 function getDifficultyTier(fid) {
   var m = getSectionMastery(fid);
-  if (m.pct >= 80) return 'hard';
-  if (m.pct >= 40) return 'medium';
-  return 'easy';
+  if (m.pct >= 90) return 'witness';
+  if (m.pct >= 70) return 'connect';
+  if (m.pct >= 40) return 'recall';
+  return 'recognise';
+}
+function tierBadge(tier) {
+  var t = TIER_LABEL[tier] ? tier : 'recognise';
+  return '<span class="tier-badge" style="color:' + TIER_COLOR[t] + '">\u25CF ' + TIER_LABEL[t] +
+    '</span><span class="tier-blurb">' + TIER_BLURB[t] + '</span>';
 }
 
 function getCrossReferenceQuestions(fid, count) {
@@ -1778,7 +1973,7 @@ function showFillBlank(fid, audioMode) {
         return q.prompt && (q.prompt.match(/______/g) || []).length <= 1;
       });
       var unmastered = getUnmasteredQuestions(fid, 'filblank', curated);
-      if (unmastered.length > 0 && tier === 'easy') {
+      if (unmastered.length > 0 && tier === 'recognise') {
         questions = shuffle(unmastered.map(function (u) { return u.q; }));
       } else {
         questions = shuffle(curated);
@@ -1786,8 +1981,8 @@ function showFillBlank(fid, audioMode) {
       allAns = data.fill_blank.map(function (q) { return q.answer; });
     }
 
-    // Medium tier: add smart algorithmic questions from same section
-    if (tier !== 'easy' || questions.length < 5) {
+    // Recall tier and up: add smart algorithmic questions from this section
+    if (tier !== 'recognise' || questions.length < 5) {
       var verses = getVerses(fid);
       if (!verses.length) {
         fetch('../data/' + fid + '.json').then(function(r){return r.ok?r.json():null;}).then(function(d){
@@ -1795,15 +1990,15 @@ function showFillBlank(fid, audioMode) {
         }).catch(function(){if(!questions.length) showStubForMode(fid,'stub');});
         if (!questions.length) return;
       }
-      var smartQ = generateSmartQuestions(fid, tier === 'hard' ? 30 : 20);
+      var smartQ = generateSmartQuestions(fid, (tier === 'connect' || tier === 'witness') ? 30 : 20);
       for (var sq = 0; sq < smartQ.length; sq++) {
         questions.push(smartQ[sq]);
         if (allAns.indexOf(smartQ[sq].answer) < 0) allAns.push(smartQ[sq].answer);
       }
     }
 
-    // Hard tier: add cross-reference questions from nearby sections
-    if (tier === 'hard') {
+    // Connect tier and up: reach into the neighbouring sections
+    if (tier === 'connect' || tier === 'witness') {
       var crossQ = getCrossReferenceQuestions(fid, 5);
       for (var cq = 0; cq < crossQ.length; cq++) {
         questions.push(crossQ[cq]);
@@ -1811,8 +2006,17 @@ function showFillBlank(fid, audioMode) {
       }
     }
 
+    // Witness tier: blanks taken from the chapter's own critical notes
+    if (tier === 'witness') {
+      var noteQ = getNoteClozeQuestions(fid, 8);
+      for (var nq = 0; nq < noteQ.length; nq++) {
+        questions.push(noteQ[nq]);
+        if (allAns.indexOf(noteQ[nq].answer) < 0) allAns.push(noteQ[nq].answer);
+      }
+    }
+
     if (!questions.length) { showStubForMode(fid, audioMode ? 'audio-filblank' : 'filblank'); return; }
-    questions = shuffle(questions).slice(0, tier === 'hard' ? 30 : 20);
+    questions = shuffle(questions).slice(0, (tier === 'connect' || tier === 'witness') ? 30 : 20);
     var qi = 0, score = 0, points = 0, firstAttempt = true, hintsUsed = 0;
 
     // Pre-compute type-matched distractor pools once before any question renders
@@ -1917,29 +2121,37 @@ function showFillBlank(fid, audioMode) {
       }
       var opts = shuffle([correct].concat(others));
       var OPTLBLS = ['A', 'B', 'C', 'D'];
+      // Recall tier and up: no option list. The answer is typed.
+      var typed = !audioMode && !childMode && tier !== 'recognise';
 
       var h = '<div class="cloze-view">';
-      var tierNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-      var tierColors = { easy: '#6abf8a', medium: '#c9a84c', hard: '#d97070' };
-      h += '<div class="cloze-progress">' + (qi + 1) + ' of ' + questions.length +
-        ' <span style="color:' + (tierColors[tier] || '#6abf8a') + ';font-size:.85em">\u25CF ' + (tierNames[tier] || 'Easy') + '</span></div>';
+      h += '<div class="cloze-progress">' + (qi + 1) + ' of ' + questions.length + ' ' + tierBadge(tier) + '</div>';
       var clozeIdx = IDS.indexOf(fid);
       var clozeLabel = clozeIdx >= 0 ? LBL[clozeIdx].split(' \u2014 ')[0] : fid;
       h += '<div class="cloze-ref">' + clozeLabel + (q.ref ? ' ' + q.ref : '') + '</div>';
       if (audioMode) {
         h += '<div class="audio-gap-banner">Listen and tap the missing word</div>';
       }
+      if (q.noteType) h += '<div class="note-source-tag">Comparative note \u2014 ' + q.noteType + '</div>';
       h += '<div class="cloze-prompt">' +
         q.prompt.replace('______', '<span class="cloze-blank">______</span>') + '</div>';
       h += '<button class="cloze-audio" id="b-cloze-hear">Listen</button>';
       h += '<button class="hint-btn" id="b-cloze-hint" aria-label="Get a hint">Hint</button>';
       h += '<div class="hint-display" id="cloze-hint-display" role="status" aria-live="polite"></div>';
-      h += '<div class="cloze-opts">';
-      for (var o = 0; o < opts.length; o++) {
-        h += '<button class="cloze-opt opt-' + OPTLBLS[o % 4].toLowerCase() + '" data-val="' + opts[o] +
-          '" aria-label="Answer option ' + OPTLBLS[o % 4] + ': ' + opts[o] + '"><span class="opt-letter">' + OPTLBLS[o % 4] + '</span>' + opts[o] + '</button>';
+      if (typed) {
+        h += '<div class="cloze-typed">';
+        h += '<input type="text" id="cloze-input" class="cloze-input" autocomplete="off" autocorrect="off" ' +
+          'autocapitalize="off" spellcheck="false" aria-label="Type the missing word" placeholder="Type the missing word">';
+        h += '<button class="study-btn sb-pri" id="b-cloze-check">Check</button>';
+        h += '</div>';
+      } else {
+        h += '<div class="cloze-opts">';
+        for (var o = 0; o < opts.length; o++) {
+          h += '<button class="cloze-opt opt-' + OPTLBLS[o % 4].toLowerCase() + '" data-val="' + opts[o] +
+            '" aria-label="Answer option ' + OPTLBLS[o % 4] + ': ' + opts[o] + '"><span class="opt-letter">' + OPTLBLS[o % 4] + '</span>' + opts[o] + '</button>';
+        }
+        h += '</div>';
       }
-      h += '</div>';
       h += '<div class="cloze-feedback" id="cloze-fb" role="status" aria-live="polite"></div>';
       h += '<button class="study-btn" id="b-cloze-quit" style="margin-top:18px">Back to activities</button>';
       h += '</div>';
@@ -1957,34 +2169,68 @@ function showFillBlank(fid, audioMode) {
         }, 400);
       }
       wireHintLadder('b-cloze-hint', 'cloze-hint-display', correct, q.source_quote, function (n) { hintsUsed = n; });
-      var btns = document.querySelectorAll('.cloze-opt');
-      for (var b = 0; b < btns.length; b++) {
-        btns[b].addEventListener('click', function () {
-          var val = this.getAttribute('data-val');
-          var fb = document.getElementById('cloze-fb');
-          if (val.toLowerCase() === correct.toLowerCase()) {
-            this.classList.add('cloze-correct');
-            fb.innerHTML = '<span class="fb-correct">\u2714 Correct!</span>' +
-              '<div class="cloze-source">' + (q.source_quote || '') + '</div>';
-            if (firstAttempt) { score++; points += hintMultiplier(hintsUsed); }
-            recordQuestionResult(fid, 'filblank', qi, firstAttempt);
-            var all = document.querySelectorAll('.cloze-opt');
-            for (var x = 0; x < all.length; x++) all[x].disabled = true;
-            setTimeout(function () { qi++; renderQ(); }, 2200);
-          } else {
-            if (firstAttempt) {
-              pushToRemixQueue({
-                fid: fid, missedInMode: 'filblank', qIndex: qi,
-                ref: q.ref || '', prompt: q.prompt, answer: correct,
-                source_quote: q.source_quote || ''
-              });
-            }
-            firstAttempt = false;
-            this.classList.add('cloze-wrong');
-            this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Try another \u2192</span>';
-          }
-        });
+
+      function clozeRight(el) {
+        var fb = document.getElementById('cloze-fb');
+        if (el) el.classList.add('cloze-correct');
+        fb.innerHTML = '<span class="fb-correct">\u2714 Correct!</span>' +
+          '<div class="cloze-source">' + (q.source_quote || '') + '</div>';
+        if (firstAttempt) { score++; points += hintMultiplier(hintsUsed); }
+        // A hint past the first stage shows the passage, which for a blank
+        // is the answer. That still counts as correct, but it no longer
+        // banks the question as mastered.
+        recordQuestionResult(fid, 'filblank', qi, firstAttempt && hintsUsed < 2);
+        var all = document.querySelectorAll('.cloze-opt');
+        for (var x = 0; x < all.length; x++) all[x].disabled = true;
+        var inp = document.getElementById('cloze-input');
+        if (inp) inp.disabled = true;
+        var chk = document.getElementById('b-cloze-check');
+        if (chk) chk.disabled = true;
+        setTimeout(function () { qi++; renderQ(); }, 2200);
+      }
+
+      function clozeWrong(el, allowRetry) {
+        var fb = document.getElementById('cloze-fb');
+        if (firstAttempt) {
+          pushToRemixQueue({
+            fid: fid, missedInMode: 'filblank', qIndex: qi,
+            ref: q.ref || '', prompt: q.prompt, answer: correct,
+            source_quote: q.source_quote || ''
+          });
+        }
+        firstAttempt = false;
+        if (el) { el.classList.add('cloze-wrong'); if (allowRetry) el.disabled = true; }
+        fb.innerHTML = '<span class="fb-try">' + (allowRetry ? 'Try another \u2192' : 'Not that one \u2014 try again \u2192') + '</span>' +
+          buildTeachPanel(fid, correct, q.source_quote, data);
+      }
+
+      if (typed) {
+        var inputEl = document.getElementById('cloze-input');
+        var checkEl = document.getElementById('b-cloze-check');
+        var submitTyped = function () {
+          if (!inputEl || inputEl.disabled) return;
+          var val = inputEl.value.replace(/[.,;:!?"\u201C\u201D]/g, '').trim();
+          if (!val) return;
+          if (val.toLowerCase() === correct.toLowerCase()) { clozeRight(inputEl); }
+          else { clozeWrong(inputEl, false); inputEl.select(); }
+        };
+        if (checkEl) checkEl.addEventListener('click', submitTyped);
+        if (inputEl) {
+          inputEl.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter') { ev.preventDefault(); submitTyped(); }
+          });
+          inputEl.addEventListener('input', function () { this.classList.remove('cloze-wrong'); });
+          setTimeout(function () { try { inputEl.focus(); } catch (_) {} }, 80);
+        }
+      } else {
+        var btns = document.querySelectorAll('.cloze-opt');
+        for (var b = 0; b < btns.length; b++) {
+          btns[b].addEventListener('click', function () {
+            var val = this.getAttribute('data-val');
+            if (val.toLowerCase() === correct.toLowerCase()) { clozeRight(this); }
+            else { clozeWrong(this, true); }
+          });
+        }
       }
     }
 
@@ -2035,15 +2281,15 @@ function showMC(fid) {
     if (data && data.multiple_choice && data.multiple_choice.length) {
       var curated = data.multiple_choice.slice();
       var unmastered = getUnmasteredQuestions(fid, 'mc', curated);
-      if (unmastered.length > 0 && tier === 'easy') {
+      if (unmastered.length > 0 && tier === 'recognise') {
         questions = shuffle(unmastered.map(function (u) { return u.q; }));
       } else {
         questions = shuffle(curated);
       }
     }
 
-    // Medium tier: add smart algorithmic MC from same section
-    if (tier !== 'easy' || questions.length < 5) {
+    // Recall tier and up: add smart algorithmic MC from this section
+    if (tier !== 'recognise' || questions.length < 5) {
       var verses = getVerses(fid);
       if (!verses.length) {
         fetch('../data/'+fid+'.json').then(function(r){return r.ok?r.json():null;}).then(function(d){
@@ -2051,12 +2297,12 @@ function showMC(fid) {
         }).catch(function(){if(!questions.length) showStubForMode(fid,'stub');});
         if (!questions.length) return;
       }
-      var smartMC = generateSmartMC(fid, tier === 'hard' ? 10 : 8);
+      var smartMC = generateSmartMC(fid, (tier === 'connect' || tier === 'witness') ? 10 : 8);
       for (var sm = 0; sm < smartMC.length; sm++) questions.push(smartMC[sm]);
     }
 
-    // Hard tier: cross-reference MC from nearby sections
-    if (tier === 'hard') {
+    // Connect tier and up: cross-reference MC from neighbouring sections
+    if (tier === 'connect' || tier === 'witness') {
       var idx = IDS.indexOf(fid);
       var nearby = [];
       for (var ni = Math.max(0, idx - 3); ni <= Math.min(IDS.length - 1, idx + 3); ni++) {
@@ -2065,14 +2311,20 @@ function showMC(fid) {
       for (var nn = 0; nn < nearby.length && questions.length < 20; nn++) {
         var crossMC = generateSmartMC(nearby[nn], 2);
         for (var cm = 0; cm < crossMC.length; cm++) {
-          crossMC[cm].difficulty = 'hard';
+          crossMC[cm].difficulty = 'connect';
           questions.push(crossMC[cm]);
         }
       }
     }
 
+    // Witness tier: the manuscript record itself becomes the question
+    if (tier === 'witness') {
+      var sigQ = getSiglaQuestions(fid, 6);
+      for (var sg = 0; sg < sigQ.length; sg++) questions.push(sigQ[sg]);
+    }
+
     if (!questions.length) { showStubForMode(fid, 'mc'); return; }
-    questions = shuffle(questions).slice(0, tier === 'hard' ? 30 : 20);
+    questions = shuffle(questions).slice(0, (tier === 'connect' || tier === 'witness') ? 30 : 20);
     var qi = 0, score = 0, points = 0, mcFirstAttempt = true, mcHintsUsed = 0;
     var OPTLBLS = ['A', 'B', 'C', 'D'];
 
@@ -2084,13 +2336,11 @@ function showMC(fid) {
       mcHintsUsed = 0;
 
       var h = '<div class="mc-view">';
-      var tierNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-      var tierColors = { easy: '#6abf8a', medium: '#c9a84c', hard: '#d97070' };
-      h += '<div class="mc-progress">' + (qi + 1) + ' of ' + questions.length +
-        ' <span style="color:' + (tierColors[tier] || '#059669') + ';font-size:.85em">\u25CF ' + (tierNames[tier] || 'Easy') + '</span></div>';
+      h += '<div class="mc-progress">' + (qi + 1) + ' of ' + questions.length + ' ' + tierBadge(tier) + '</div>';
       var mcIdx = IDS.indexOf(fid);
       var mcLabel = mcIdx >= 0 ? LBL[mcIdx].split(' \u2014 ')[0] : fid;
       h += '<div class="mc-ref">' + mcLabel + (q.ref ? ' ' + q.ref : '') + '</div>';
+      if (q.noteType) h += '<div class="note-source-tag">Comparative note \u2014 ' + q.noteType + '</div>';
       h += '<div class="mc-question">' + q.question + '</div>';
       h += '<button class="cloze-audio" id="b-mc-hear">Listen</button>';
       h += '<button class="hint-btn" id="b-mc-hint" aria-label="Get a hint">Hint</button>';
@@ -2136,7 +2386,7 @@ function showMC(fid) {
             fb.innerHTML = '<span class="fb-correct">' + (childMode ? 'Great job!' : '\u2714 Correct!') + '</span>' +
               '<div class="cloze-source">' + (q.source_quote || '') + '</div>';
             if (mcFirstAttempt) { score++; points += hintMultiplier(mcHintsUsed); }
-            recordQuestionResult(fid, 'mc', qi, mcFirstAttempt);
+            recordQuestionResult(fid, 'mc', qi, mcFirstAttempt && mcHintsUsed < 2);
             var all = document.querySelectorAll('.mc-opt');
             for (var x = 0; x < all.length; x++) all[x].disabled = true;
             setTimeout(function () { qi++; renderQ(); }, 2200);
@@ -2152,7 +2402,8 @@ function showMC(fid) {
             mcFirstAttempt = false;
             this.classList.add('mc-wrong');
             this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>';
+            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>' +
+              buildTeachPanel(fid, mcCorrectText, q.source_quote, data);
           }
         });
       }
@@ -3780,7 +4031,7 @@ function showWhoSaidIt(fid) {
             fb.innerHTML = '<span class="fb-correct">\u2714 Correct!</span>' +
               '<div class="cloze-source">\u201C' + q.quote + '\u201D \u2014 ' + q.speaker + '</div>';
             if (firstAttempt) { score++; points += hintMultiplier(hintsUsed); }
-            recordQuestionResult(fid, 'whosaidit', qi, firstAttempt);
+            recordQuestionResult(fid, 'whosaidit', qi, firstAttempt && hintsUsed < 2);
             var all = document.querySelectorAll('.mc-opt');
             for (var x = 0; x < all.length; x++) all[x].disabled = true;
             setTimeout(function () { qi++; renderQ(); }, 2200);
@@ -3796,7 +4047,8 @@ function showWhoSaidIt(fid) {
             firstAttempt = false;
             this.classList.add('mc-wrong');
             this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>';
+            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>' +
+              buildTeachPanel(fid, q.speaker, q.quote, data);
           }
         });
       }
@@ -3984,7 +4236,8 @@ function showTrueFalse(fid) {
             firstAttempt = false;
             this.classList.add('mc-wrong');
             this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try the other one.</span>';
+            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try the other one.</span>' +
+              buildTeachPanel(fid, q.originalTerm || '', q.source, data);
           }
         });
       }
@@ -5537,7 +5790,8 @@ function showRemix(fid) {
             firstAttempt = false;
             this.classList.add('mc-wrong');
             this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>';
+            fb.innerHTML = '<span class="fb-try">Not quite \u2014 try another \u2192</span>' +
+              buildTeachPanel(item.fid || fid, answer, item.source_quote || '', null);
           }
         });
       }
@@ -5589,7 +5843,8 @@ function showRemix(fid) {
             firstAttempt = false;
             this.classList.add('cloze-wrong');
             this.disabled = true;
-            fb.innerHTML = '<span class="fb-try">Try another \u2192</span>';
+            fb.innerHTML = '<span class="fb-try">Try another \u2192</span>' +
+              buildTeachPanel(item.fid || fid, answer2, quote || '', null);
           }
         });
       }

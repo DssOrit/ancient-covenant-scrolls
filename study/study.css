@@ -1710,3 +1710,62 @@ body .tu-wrap.tu-stage{max-width:1100px;font-size:1.2rem}
 .tu-stage .tu-case{font-size:1.6rem}
 .tu-stage .tu-cand{font-size:1rem;padding:12px 18px}
 .tu-stage .tu-prompt{font-size:1.4rem}
+
+/* ---- Difficulty tiers, typed recall, and teach-on-miss ---- */
+
+.tier-badge{font-size:.85em;font-weight:700;white-space:nowrap}
+.tier-blurb{
+  display:block;color:var(--text-muted);font-size:12px;
+  font-weight:500;margin-top:2px;letter-spacing:.01em;
+}
+
+/* Marks a question drawn from the comparative manuscript apparatus */
+.note-source-tag{
+  display:inline-block;margin:0 0 10px 0;padding:3px 10px;border-radius:12px;
+  background:rgba(139,0,0,.10);color:#8B0000;
+  font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+}
+body.theme-parchment .note-source-tag,
+body.theme-navy .note-source-tag,
+body.theme-amber .note-source-tag{background:rgba(255,255,255,.10);color:#d99a9a}
+
+/* Recall tier and up: the answer is typed, not chosen */
+.cloze-typed{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.cloze-input{
+  width:100%;box-sizing:border-box;padding:16px 18px;
+  font-family:inherit;font-size:1.15rem;font-weight:600;
+  color:var(--text-main);background:var(--bg-card);
+  border:2px solid rgba(128,128,128,.35);border-radius:14px;
+  -webkit-appearance:none;appearance:none;
+}
+body.font-dyslexic .cloze-input{font-family:var(--font-dyslexic)}
+.cloze-input:focus{outline:none;border-color:#c9a84c;box-shadow:0 0 0 3px rgba(201,168,76,.22)}
+.cloze-input.cloze-wrong{border-color:#d97070;box-shadow:0 0 0 3px rgba(217,112,112,.20)}
+.cloze-input.cloze-correct{border-color:#6abf8a;box-shadow:0 0 0 3px rgba(106,191,138,.22)}
+.cloze-input:disabled{opacity:.6}
+
+/* Shown under a wrong answer: passage, term, and governing note */
+.teach-panel{
+  margin-top:14px;padding:14px 16px;border-radius:14px;
+  background:var(--bg-card);border-left:4px solid #c9a84c;text-align:left;
+}
+.teach-head{
+  font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:10px;
+}
+.teach-line{
+  font-size:.95rem;line-height:1.65;color:var(--text-main);
+  margin-bottom:10px;
+}
+.teach-line:last-child{margin-bottom:0}
+.teach-tag{
+  display:inline-block;margin-right:8px;padding:2px 9px;border-radius:10px;
+  background:rgba(128,128,128,.18);color:var(--text-muted);
+  font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  vertical-align:1px;
+}
+@media (max-width:420px){
+  .teach-panel{padding:12px 13px}
+  .teach-line{font-size:.9rem}
+  .cloze-input{font-size:1.05rem;padding:14px 15px}
+}
