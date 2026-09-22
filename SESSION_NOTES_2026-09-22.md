@@ -566,3 +566,82 @@ verified against git history:
 **Behavioural note for future sessions:** the user has asked, explicitly, to
 stop proposing optional or speculative edits. Report findings when asked; do not
 append "you may also want to..." suggestions to a completed task.
+
+---
+
+## FINAL SESSION CLOSE — 2026-09-22
+
+### Shipped and merged
+
+**PR #978 — MERGED.** Two site fixes, one per site:
+
+1. **ACR Search — Yom Kippur day boundary.** `Search/index.html`,
+   `SOLAR_MOEDIM`. "All work ceases from evening to evening" replaced with
+   wording matching Solar's established pattern: the verse documented as
+   rendered "evening to evening", the operative boundary stated as sunrise to
+   sunrise. Fixed a contradiction against the site's own Covenant Practices
+   panel. Cache `acr-search-v318` -> `v319`.
+2. **ACR Solar — Shabbat panel clock.** `Solar/index.html` lines 2614-2615,
+   `+getDSTHours()` added to the offset in both `getSunTimes` calls, so the
+   Shabbat panel and the Sun Times view use the same reckoning. Cache
+   `acr-solar-v52` -> `v53`.
+
+Verified on `main` after merge: both strings present, both caches correct.
+
+### Final state
+
+- `origin/main`: **`b67b144`**
+- Caches live: `acr-search-v319`, `acr-solar-v53`, `acr-v128`, `acr2-v32`,
+  `acr-study-v130`
+- Working tree clean
+
+### Backups
+
+- `backup/2026-09-22-acr-solar-v53-acr-search-v319` — **`b67b144`**, pushed,
+  SHA-verified equal to merged `origin/main`. **Current recovery point.**
+  Recovery: `git checkout backup/2026-09-22-acr-solar-v53-acr-search-v319`
+- `backup/2026-09-22-acr-solar-v52-pre-shabbat-clock-fix` — pre-Solar-fix
+- `backup/2026-09-22-acr-search-v318-pre-yomkippur-fix` — pre-Search-fix
+- `backup/2026-09-22-pre-enoch-numbering-fix`, `backup/2026-09-22-acr-solar-v52`,
+  and earlier same-day points
+
+### Closed decisions — do not reopen unasked
+
+- **Solar covenant-day midnight rollover:** leave as is. The pre-sunrise
+  holy-day alert is correct *because* of it.
+- **Solar `isNow` hardcoded 08:00 flag:** leave as is. Explicitly out of scope
+  per "no other changes on solar".
+- **Search2, the Yovelim "confirmed in DSS fragments" sentence, Yovelim 2:9 and
+  Damascus Document CD 10-11:** leave alone, all of it. See the standing
+  instruction above.
+- **Reader / ACR2 / Study sunrise documentation:** not wanted. User is concerned
+  only with Solar and Search.
+- **Enoch chapter-numbering mismatch:** not a Solar or Search problem. Not
+  pursued.
+
+### Capability gaps this session
+
+- No physical iPad. All live checks ran in headless Chromium.
+- `file://` breaks the apps' own `fetch()` of content JSON; a local HTTP server
+  is required for any live ACR site verification.
+- ACR Search sits behind `doAuth()` plus a timed loader. A browser test that
+  skips `doAuth()` waits forever and falsely reads as missing content.
+- Sandbox proxy blocks cdn.jsdelivr.net and fonts.googleapis.com. Harmless, but
+  fills the console with `ERR_TUNNEL_CONNECTION_FAILED` /
+  `ERR_CERT_AUTHORITY_INVALID`.
+
+### Corrections made to my own claims this session
+
+1. Said ACR2 carried no day-boundary documentation. False — ACR2 Vol 25 (Raz
+   Nihyeh) does.
+2. Drafted a Reader note calling Vayikra 23:32 the only evening-to-evening
+   clause in the Torah. False — Shemot 12:18 is a second. Caught before writing.
+3. Described `data/file_113.json` as a volume that had "fallen out" of Reader
+   navigation. False — it was never referenced in `index.html`.
+4. Said ACR Search does not mention the evening-to-evening clause. False — it
+   did, as an instruction in its own voice. That became the PR #978 Search fix.
+5. Described Search2 as holding "the superseded wording PR #970 replaced".
+   False on both counts — PR #970 removed nothing from Search, and that sentence
+   never existed in `Search/index.html`.
+6. Quoted Shabbat-panel sunrise times (06:25 / 06:33) as if they were correct
+   clock times. They came from the DST-less panel and were an hour early.
