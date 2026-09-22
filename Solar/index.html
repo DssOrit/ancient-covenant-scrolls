@@ -715,6 +715,9 @@ select.form-input option { background: var(--surface2); }
 .ss-item-t{font-family:Arial;font-size:14px;font-weight:700;color:#F5EFE2;line-height:1.4;}
 .ss-item-s{font-family:Arial;font-size:12.5px;color:#b9b0a0;line-height:1.55;margin-top:3px;}
 .ss-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.02em;padding:1px 6px;border-radius:4px;margin-right:7px;}
+.ss-item-p{margin-top:4px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.ss-paleo{font-family:'Segoe UI Historic','Noto Sans Phoenician',serif;font-size:15px;color:#C8971F;letter-spacing:.04em;}
+.ss-gloss{font-family:Arial;font-size:11.5px;color:#9b9280;font-style:italic;}
 .ss-none{font-family:Arial;font-size:13px;color:#8a8170;padding:20px 0;line-height:1.6;}
 .ss-count{font-family:Arial;font-size:11px;color:#8a8170;margin-bottom:2px;}
 </style>
@@ -2737,10 +2740,12 @@ function buildSolarSearchIndex(){
       if (h.ancientName && h.ancientName.gloss) bits.push(h.ancientName.gloss);
       if (h.source) bits.push(h.source);
       idx.push({ group:'Appointed days', kind:'holiday', month:h.month, day:h.day,
+                 paleo:(h.ancientName && h.ancientName.paleo) || '', gloss:(h.ancientName && h.ancientName.gloss) || '', alias:(SS_NAME_WORDS[h.name] || ''),
                  title:h.name, sub:(h.desc || ''), text:bits.filter(Boolean).join(' ') + ' ' + ssDayWords(h.name) });
       if (h.dayRules) {
         h.dayRules.forEach(function(r){
           idx.push({ group:'Activity breakdown', kind:'holiday', month:h.month, day:h.day,
+                     paleo:(h.ancientName && h.ancientName.paleo) || '', gloss:(h.ancientName && h.ancientName.gloss) || '', alias:(SS_NAME_WORDS[h.name] || ''),
                      title:r.a + ' — ' + h.name, status:r.s, sub:r.v,
                      text:[r.a, r.s, r.v, h.name, ssDayWords(h.name)].join(' ') });
         });
@@ -2855,7 +2860,7 @@ function runSolarSearch(q){
   var hits = [];
   SS_INDEX.forEach(function(e){
     var hay = ((e.title || '') + ' ' + (e.text || '')).toLowerCase();
-    var title = (e.title || '').toLowerCase();
+    var title = ((e.title || '') + ' ' + (e.alias || '')).toLowerCase();
     var score = 0, all = true;
     terms.forEach(function(t){
       if (hay.indexOf(t) === -1) { all = false; return; }
@@ -2891,8 +2896,12 @@ function renderSolarSearch(){
       var c = ssStatusColor(e.status);
       badge = '<span class="ss-badge" style="color:' + c + ';border:1px solid ' + c + ';">' + ssEsc(e.status) + '</span>';
     }
+    var covenant = e.paleo
+      ? '<div class="ss-item-p"><span class="ss-paleo">' + ssEsc(e.paleo) + '</span>'
+        + (e.gloss ? '<span class="ss-gloss">' + ssEsc(e.gloss) + '</span>' : '') + '</div>'
+      : '';
     html += '<div class="ss-item" onclick="ssGo(' + i + ')">' +
-              '<div class="ss-item-t">' + badge + ssEsc(e.title) + '</div>' +
+              '<div class="ss-item-t">' + badge + ssEsc(e.title) + '</div>' + covenant +
               (e.sub ? '<div class="ss-item-s">' + ssEsc(e.sub) + '</div>' : '') +
             '</div>';
   });
@@ -2941,7 +2950,7 @@ renderTopBar();renderVolOfDay();loadTPVoices();
     <button class="ss-close" onclick="closeSolarSearch()" aria-label="Close search">&times;</button>
   </div>
   <div class="ss-body">
-    <div class="ss-hint">Searches the appointed days, every activity breakdown, the weekly Shabbat panel and every page of this app.</div>
+    <div class="ss-hint">Searches the appointed days, every activity breakdown, the prayers, the Sabbath services and every page. Common words such as holiday, feast, trumpets or atonement will find the day — and the result carries its covenant name in paleo-Hebrew.</div>
     <div id="ss-results"></div>
   </div>
 </div>
