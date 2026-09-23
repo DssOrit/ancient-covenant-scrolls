@@ -1621,6 +1621,19 @@ var NUMBERS_PATTERN = /\b(one|two|three|four|five|six|seven|eight|nine|ten|eleve
 
 var PLACES_PATTERN = /\b(Egypt|Mitsrayim|Babylon|Bavel|Sinai|Horev|Yerushalayim|Tziyon|Shekhem|Hevron|Beit.El|Gilgal|Yericho|Shiloh|Midyan|Negev|Yarden|Kedar|Lebanon|Karmel|Seir|Edom|Mo.av|Ammon|Aram|Asshur|Kena.an|En.Gedi|Ophir|Beersheva|Ramah|Giv.on|Ai|Nevo|Pisgah|Ararat|Nod|Havilah|Eden|Gihon|Pishon|Tigris|Hiddekel|Euphrates|Shinar|Nineveh|Akkad|Erech|Resen|Goshen|Marah|Elim|Rephidim|Taberah|Kadesh|Meribah|Qumran|Babel|Ur|Paddan.Aram|Penuel|Peniel|Sukkot|Mahanaim|Dothan|Pithom|Rameses|Tzin|Paran|Tzova|Dammesek|Gerar|Tzor|Tzidon|Ashkelon|Gaza|Ekron|Ashdod|Azekah|Lakhish|Khevron|Timna|Adulam|Yavesh|Gilead|Bashan|Hermon|Tabor|Yizre.el|Karmiel|Akko|Tsarfat|Yaffa|Asher|Zevulun|Naftali)\b/g;
 
+// Rough grammatical class for a plain English word -- used only to keep
+// multiple-choice distractors in the same class as the answer, so a noun
+// blank is not offered a verb (or the reverse) as a wrong answer. This is
+// a coarse suffix heuristic, not a real part-of-speech tagger; it is a
+// tiebreaker for sorting candidates, never a hard filter, so a sparse
+// chapter never runs out of distractors because of it.
+function wordClass(w) {
+  var lw = String(w).toLowerCase().replace(/[.,;:!?"'()]/g, '');
+  if (/(ing|ed)$/.test(lw)) return 'verb';
+  if (/s$/.test(lw) && !/ss$/.test(lw)) return 'plural';
+  return 'other';
+}
+
 function smartBlank(verse) {
   var words = verse.split(/\s+/);
   if (words.length < 5) return null;
@@ -2155,13 +2168,29 @@ function showFillBlank(fid, audioMode) {
           return a.toLowerCase() !== correct.toLowerCase();
         }));
       } else {
-        // Common word: exclude digits and proper nouns so distractors are plausible
+        // Common word: exclude digits, proper nouns, AND words already
+        // reserved for the important-word bucket -- "sword" or "teach"
+        // answer their own questions elsewhere in the important-word
+        // branch above and must not double as filler for an unrelated
+        // plain-word blank like "hands". Without this, a body-part noun
+        // could be offered a verb as one of its wrong answers, which a
+        // reader can rule out on grammar alone without knowing the verse.
         candidates = allAns.filter(function (a) {
           if (/^\d+$/.test(a)) return false;
           if (/^[A-Z]/.test(a)) return false;
+          var _iw = IMPORTANT_WORDS.test(a); IMPORTANT_WORDS.lastIndex = 0;
+          if (_iw) return false;
           return a.toLowerCase() !== correct.toLowerCase();
         });
+        // Prefer distractors in the same rough grammatical class as the
+        // answer (see wordClass) before falling back to length/spelling
+        // similarity, so a plural noun is not out-ranked by a verb just
+        // because the verb happens to be the same length.
+        var _correctClass = wordClass(correct);
         candidates.sort(function (a, b) {
+          var aMiss = wordClass(a) === _correctClass ? 0 : 1;
+          var bMiss = wordClass(b) === _correctClass ? 0 : 1;
+          if (aMiss !== bMiss) return aMiss - bMiss;
           var aDiff = Math.abs(a.length - correct.length);
           var bDiff = Math.abs(b.length - correct.length);
           if (aDiff !== bDiff) return aDiff - bDiff;
@@ -2176,7 +2205,8 @@ function showFillBlank(fid, audioMode) {
           if (others.indexOf(a) >= 0) return false;
           if (_isDigit) return /^\d+$/.test(a);
           if (_isName || _isPlace || _isProper) return /^[A-Z]/.test(a);
-          return !/^\d+$/.test(a) && !/^[A-Z]/.test(a);
+          var _iwFb = IMPORTANT_WORDS.test(a); IMPORTANT_WORDS.lastIndex = 0;
+          return !/^\d+$/.test(a) && !/^[A-Z]/.test(a) && !_iwFb;
         });
         others = others.concat(shuffle(_fbPool)).slice(0, 3);
       }
@@ -5785,12 +5815,26 @@ function showRemix(fid) {
         });
       }
     } else {
-      // Common word: exclude digits and proper nouns
+      // Common word: exclude digits, proper nouns, and words already
+      // reserved for the important-word bucket above, so a plain-word
+      // answer (e.g. "hands") does not draw an important theological
+      // word (often a verb, e.g. "speak") as filler -- that mismatch is
+      // ruled out on grammar alone, without needing to know the verse.
       filtered = rawPool.filter(function (a) {
         if (/^\d+$/.test(a)) return false;
         if (/^[A-Z]/.test(a)) return false;
+        var _iw = IMPORTANT_WORDS.test(a); IMPORTANT_WORDS.lastIndex = 0;
+        if (_iw) return false;
         return a.toLowerCase() !== ans.toLowerCase();
       });
+      // Prefer distractors in the same rough grammatical class as the
+      // answer (see wordClass), shuffled within each class group so the
+      // preference doesn't just reproduce a fixed pool order -- the
+      // caller takes the first 3 of whatever this returns.
+      var _ansClass = wordClass(ans);
+      var _matched = shuffle(filtered.filter(function (a) { return wordClass(a) === _ansClass; }));
+      var _other = shuffle(filtered.filter(function (a) { return wordClass(a) !== _ansClass; }));
+      return _matched.concat(_other);
     }
     return shuffle(filtered);
   }
