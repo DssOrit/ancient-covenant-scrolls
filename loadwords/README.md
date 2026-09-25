@@ -18,7 +18,9 @@ assets/games/         — decorative banner art for Word Mystery, Vocab Feud,
                          Deal or No Deal, Word Blocks, and The Imposter
 ```
 
-**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, Debate &amp; Meeting Arena, Word Mystery, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review. The Word Vault is a persistent rewards layer that runs alongside all of them.
+**Study modes:** flashcard Study (spaced repetition), Test (meaning match / word match / sentence fill / typed recall / context quiz / daily upgrade / word builder / confusing pairs sort / drag &amp; drop), Upgrade Slider, and Listen Mode — hands-free audio playback of word → meaning → example → conversation, either looping continuously or auto-pausing for a quick retention quiz every 5/8/10 words. Any word can be flagged "difficult" during Listen Mode for later focused review.
+
+**Games:** a dedicated Home-screen tile (separate from Test, so it's easy to find) leads to a Games screen listing all 11: Vocabulary Deal or No Deal, Memory Match, Higher or Lower, The Imposter, Thread-Link Board, Vocab Feud, Stack &amp; Match, Word Blocks, Story Quest, Debate &amp; Meeting Arena, and Word Mystery. The Word Vault is a persistent rewards layer that runs alongside all of them (and the study modes above).
 
 **Context quiz:** a sentence-with-blank, 4-option multiple-choice test that shows why the correct answer fits (and why a wrong pick doesn't) after you answer, plus a collapsible hint — generated automatically from each word's own definition and example, so it works across the whole bank.
 

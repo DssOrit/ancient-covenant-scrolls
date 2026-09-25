@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v37';
+const APP_VERSION = 'v38';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -52,7 +52,8 @@ const ICONS = {
   download:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/>',
   compare:'<path d="M8 4v16M16 4v16"/><path d="M4 9l4-4 4 4M12 15l4 4 4-4"/>',
   refresh:'<path d="M3 12a9 9 0 0 1 15.4-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.4 6.4L3 16"/><path d="M3 21v-5h5"/>',
-  person:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>'
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  gamepad:'<rect x="3" y="8" width="18" height="10" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="16" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="18.3" cy="14.5" r="1" fill="currentColor" stroke="none"/>'
 };
 function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
 
@@ -508,6 +509,7 @@ function renderView(){
     case 'debate': return renderDebate();
     case 'grammar': return renderGrammar();
     case 'mystery': return renderMystery();
+    case 'games': return renderGames();
     case 'wwm': return renderWWM();
     case 'add': return renderAdd();
     case 'settings': return renderSettings();
@@ -548,6 +550,11 @@ function renderHome(){
     <button class="action" data-nav="test" style="--c:#7C3AED">
       <div class="a-ic">${ic('test')}</div>
       <div class="a-txt"><b>Take a test</b><span>Meaning match, sentence fill, typed recall &amp; more</span></div>
+      <div class="a-chev">${ic('chevR')}</div>
+    </button>
+    <button class="action" data-nav="games" style="--c:#EA580C">
+      <div class="a-ic">${ic('gamepad')}</div>
+      <div class="a-txt"><b>Games</b><span>11 games — Deal or No Deal, Word Mystery, Vocab Feud &amp; more</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
     <button class="action" data-nav="grammar" style="--c:#0D9488">
@@ -1014,17 +1021,6 @@ function renderTest(){
       <button class="action" data-testtype="pairs" style="--c:#DC2626"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Confusing Pairs sort</b><span>Sort each sentence to the word that fits</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="slider" style="--c:#0891B2"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Upgrade Slider</b><span>Slide to watch a sentence turn advanced</span></div><div class="a-chev">${ic('chevR')}</div></button>
       <button class="action" data-nav="dragdrop" style="--c:#7C3AED"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Drag &amp; Drop</b><span>Drag the right word chip into the blank</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
-      <button class="action" data-nav="mystery" style="--c:#6E2F8A"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Word Mystery</b><span>Use the clues to deduce the mystery word, then accuse</span></div><div class="a-chev">${ic('chevR')}</div></button>
     </div>`;
   }
   if(State.testIndex >= State.testQueue.length){
@@ -1132,6 +1128,25 @@ function renderTest(){
     ${options.map(o=>`<button class="opt" data-answer="${escapeAttr(o)}" data-correct="${escapeAttr(correctText)}">${escapeHtml(o)}</button>`).join('')}
   </div>
   <div class="test-footer"><button class="big-btn" id="nextQ" disabled>Next</button></div>`;
+}
+
+// ---------------- GAMES ----------------
+function renderGames(){
+  return `<div class="pagehead"><button class="back" data-nav="home">${ic('chevL')}</button><h2>Games</h2></div>
+  <p class="sub">Every game here uses the same word bank — play, win points, and it counts toward your progress too.</p>
+  <div class="action-row">
+    <button class="action" data-nav="deal" style="--c:#D97706"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Deal or No Deal</b><span>Eliminate words, weigh the Banker's offer</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="memory" style="--c:#059669"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Memory Match</b><span>Flip cards to pair words with meanings</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="higherlower" style="--c:#0891B2"><div class="a-ic">${ic('star')}</div><div class="a-txt"><b>Higher or Lower</b><span>Guess the meaning, bank your points or risk it</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="imposter" style="--c:#DC2626"><div class="a-ic">${ic('alert')}</div><div class="a-txt"><b>The Imposter</b><span>Spot the card that doesn't belong</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="thread" style="--c:#7C3AED"><div class="a-ic">${ic('compare')}</div><div class="a-txt"><b>Thread-Link Board</b><span>Drag a line to connect matching words</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="feud" style="--c:#EA580C"><div class="a-ic">${ic('target')}</div><div class="a-txt"><b>Vocab Feud</b><span>Tap the words that fit the survey topic before 3 strikes</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="stack" style="--c:#0D9488"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Stack &amp; Match</b><span>Drop word &amp; definition blocks, clear pairs that land side by side</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="blocks" style="--c:#B45309"><div class="a-ic">${ic('layers')}</div><div class="a-txt"><b>Word Blocks</b><span>Drag chunks onto the grid to spell each word</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="mystery" style="--c:#6E2F8A"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Word Mystery</b><span>Use the clues to deduce the mystery word, then accuse</span></div><div class="a-chev">${ic('chevR')}</div></button>
+  </div>`;
 }
 
 // ---------------- WORD BUILDER (etymology / morphemes) ----------------
