@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v36';
+const APP_VERSION = 'v37';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -1124,10 +1124,9 @@ function renderTest(){
 
   return `<div class="progress-bar"><i style="width:${pct}%"></i></div>
   <div class="test-q">Question ${State.testIndex+1} of ${State.testQueue.length}</div>
-  <div class="test-prompt">${State.testType==='sentence'?prompt:escapeHtml(prompt)}</div>
+  <div class="test-prompt">${State.testType==='sentence'?prompt:escapeHtml(prompt)}<span class="mini-spk" data-speak="${escapeAttr(State.testType==='sentence'?w.example:prompt)}" style="display:inline-flex;vertical-align:middle;margin-left:8px;">${ic('speakerSm')}</span></div>
   <div class="test-sub">
     ${State.testType==='meaning'?'Which meaning is correct?':State.testType==='word'?'Which word matches this meaning?':'Pick the word that fits the blank.'}
-    <span class="mini-spk" data-speak="${escapeAttr(State.testType==='sentence'?w.example:prompt)}" style="display:inline-flex;vertical-align:middle;margin-left:6px;">${ic('speakerSm')}</span>
   </div>
   <div class="opt-grid" id="optGrid">
     ${options.map(o=>`<button class="opt" data-answer="${escapeAttr(o)}" data-correct="${escapeAttr(correctText)}">${escapeHtml(o)}</button>`).join('')}
