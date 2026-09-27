@@ -3124,8 +3124,10 @@ function prependPanelImg(id,name){var el=document.getElementById(id);if(el)el.in
 
 function hardRefresh() {
   if ('caches' in window) {
+    // Scoped cleanup: only ever touch this app's own cache prefix, never
+    // another app's cache sharing the same origin.
     caches.keys().then(function(keys) {
-      return Promise.all(keys.map(function(k) { return caches.delete(k); }));
+      return Promise.all(keys.filter(function(k) { return k.indexOf('acr-search-') === 0; }).map(function(k) { return caches.delete(k); }));
     }).then(function() { window.location.reload(); });
   } else {
     window.location.reload(true);
