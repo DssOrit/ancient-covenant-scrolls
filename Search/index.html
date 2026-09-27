@@ -1220,6 +1220,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="figures" onclick="setMode('figures')"><i class="ri-user-search-line"></i> Tribes &amp; Territory</div>
       <div class="mpill" data-mode="explore" onclick="setMode('explore')"><i class="ri-compass-discover-line"></i> Explore</div>
       <div class="mpill" data-mode="practices" onclick="setMode('practices')">Covenant Practices</div>
+      <div class="mpill" data-mode="miracles" onclick="setMode('miracles')"><i class="ri-flashlight-line"></i> Miracles</div>
       <div class="mpill" data-mode="root-search" onclick="setMode('root-search')"><i class="ri-text"></i> Root Search</div>
       <div class="mpill" data-mode="suppressed" onclick="setMode('suppressed')">Suppressed</div>
       <div class="mpill" data-mode="contradictions" onclick="setMode('contradictions')">Contradictions</div>
@@ -1333,6 +1334,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         <div class="nt-tab" id="nt-tab-histdocs" onclick="switchNTTab('histdocs')">Historical Docs</div>
         <div class="nt-tab" id="nt-tab-revelation" onclick="switchNTTab('revelation')">Revelation Sources</div>
         <div class="nt-tab" id="nt-tab-onecreator" onclick="switchNTTab('onecreator')">One Creator</div>
+        <div class="nt-tab" id="nt-tab-miraclesources" onclick="switchNTTab('miraclesources')">Miracle Sources</div>
       </div>
       <div id="nt-pane-lookup" class="nt-tab-pane active">
         <div class="nt-iw">
@@ -1373,11 +1375,19 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div id="nt-pane-onecreator" class="nt-tab-pane">
         <div id="onecreator-panel"></div>
       </div>
+      <div id="nt-pane-miraclesources" class="nt-tab-pane">
+        <div id="miraclesources-panel"></div>
+      </div>
     </div>
 
     <!-- COVENANT PRACTICES -->
     <div id="practices-view" style="display:none">
       <div id="practices-panel"></div>
+    </div>
+
+    <!-- MIRACLES -->
+    <div id="miracles-view" style="display:none">
+      <div id="miracles-panel"></div>
     </div>
 
     <!-- SUPPRESSED -->
@@ -3093,11 +3103,13 @@ function initApp() {
   renderCityWalkerPanel();
   renderOriginsPanel();
   renderOneCreatorPanel();
+  renderMiracleSourcesPanel();
   renderOritPanel();
   renderCovenantPanel();
   renderHistDocsPanel();
   renderRevelationPanel();
   renderPracticesPanel();
+  renderMiraclesPanel();
   renderBeliefsPanel();
   renderSuppressionPanel();
   renderCovenantRecordPanel();
@@ -3136,7 +3148,7 @@ function hardRefresh() {
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez'];
+  var views = ['home','results','nt','paganism','racism','body','figures','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','miracles','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -3171,6 +3183,7 @@ var PANEL_LABELS = {
   covenant:'Covenant Record',
   histdocs:'Historical Documents',
   practices:'Covenant Practices',
+  miracles:'Ancient Miracles Record',
   uncover:'Uncover the Text',
   library:'The Scroll Library',
   solarcal:'The 364-Day Solar Calendar',
@@ -3187,7 +3200,7 @@ var PANEL_LABELS = {
 function buildSiteIndex() {
   if (SITE_INDEX) return;
   SITE_INDEX = [];
-  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','figures','finaldays','watchers'];
+  var tabs = ['paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','practices','paganism','racism','body','figures','finaldays','watchers','miracles','miraclesources'];
   tabs.forEach(function(tab) {
     var panel = document.getElementById(tab + '-panel');
     if (!panel) return;
@@ -3206,6 +3219,10 @@ function buildSiteIndex() {
 function goToSiteEntry(tab, topic) {
   if (tab === 'practices') {
     setMode('practices');
+  } else if (tab === 'miracles') {
+    setMode('miracles');
+  } else if (tab === 'miraclesources') {
+    setMode('nt'); switchNTTab('miraclesources');
   } else if (tab === 'paganism') {
     setMode('paganism');
   } else if (tab === 'racism') {
@@ -3795,9 +3812,34 @@ function togglePASub(hdr) {
   if (icon) icon.style.transform = open ? '' : 'rotate(180deg)';
 }
 
+
+// ── MIRACLE SOURCES ───────────────────────────────────────────────────────────
+var MIRACLE_SOURCES = [
+  {title:'Feeding Multitudes From Almost Nothing', text:'The invented figure is claimed to feed a crowd of thousands from a handful of loaves and fish. The pattern is not original. 1 Melakhim 17:12-16 records a widow\'s jar of flour and jug of oil that do not run out for the length of a drought. 2 Melakhim 4:1-7 records Elisha multiplying a widow\'s oil to clear her debt. 2 Melakhim 4:42-44 records Elisha feeding a hundred men from twenty barley loaves, with food left over, the same leftover-food detail the later account borrows. Provision from near-nothing at a prophet\'s word belongs to Eliyahu and Elisha, centuries before the NT\'s construction.'},
+  {title:'Raising the Dead', text:'The invented figure is claimed to raise the dead more than once. The shape of the claim already exists. 1 Melakhim 17:21-22 records Eliyahu raising the widow of Tzarefat\'s son. 2 Melakhim 4:32-37 records Elisha raising the Shunammite woman\'s son, a mother\'s only son dies, a prophet intervenes privately, the boy is restored, the exact shape the later account borrows. 2 Melakhim 13:20-21 records a dead man reviving on contact with Elisha\'s bones, after Elisha\'s own death. Resurrection at a covenant prophet\'s word is Hebrew record, not an original claim.'},
+  {title:'Healing the Sick, the Leprous, and the Blind', text:'The invented figure is claimed to heal lepers, the blind, and the sick by word or touch. 2 Melakhim 5:1-14 records Na\'aman\'s leprosy healed by washing seven times in the Yarden at Elisha\'s instruction. 2 Melakhim 6:18-20 records an army struck blind, then restored, at Elisha\'s word. Melakhim Bet 20 (the parallel account in Yeshayahu 38) records Chizkiyahu healed of a fatal illness, confirmed by a sign, the shadow on the sundial reversed. Bamidbar 12:10-15 records Miryam struck leprous and healed after Moshe\'s intercession. Healing by a covenant prophet\'s word is fully attested centuries before the NT\'s invented figure.'},
+  {title:'Command Over Water', text:'The invented figure is claimed to walk on the sea and still a storm by command. The precedent is older and covers more ground. Shemot 14:21-22 records the Sea of Reeds divided, walked on dry ground. Yehoshua 3:13 records the Yarden cut off for the nation to cross. 2 Melakhim 2:8 and 2:14 record the Yarden parted twice more, by Eliyahu and then Elisha, using a cloak. Command over open water at a word belongs to Moshe, Yehoshua, Eliyahu, and Elisha, not to a first-century literary construction.'},
+  {title:'Fire Called Down From Heaven', text:'Fire summoned from the sky by a word of command is already a known power in the covenant record, not a new claim. 1 Melakhim 18:38 records fire consuming the offering on Mount Carmel before all Yisra\'EL. 2 Melakhim 1:9-15 records Eliyahu calling fire down twice, consuming two companies of fifty men outright. The power to call fire from heaven is Eliyahu\'s, documented and unambiguous, long before it appears as a borrowed motif in the NT text.'},
+  {title:'Taken Up Without Dying', text:'The invented figure is claimed to ascend bodily into the sky before witnesses. Bereshit 5:24 records Chanokh: the Creator took him, no death, no burial. 2 Melakhim 2:11 records Eliyahu taken up bodily in a whirlwind, in a chariot of fire, witnessed by Elisha. Both predate the NT\'s invented figure by centuries. Bodily ascension without death is covenant-record material.'},
+  {title:'Birth Announced by an Angel', text:'The invented figure\'s birth is framed as announced by an angel to his mother. Shofetim 13:2-5 records the angel of YHWH announcing Shimshon\'s birth to Manoakh\'s wife directly, with instructions for the child\'s life. Bereshit 18:1-14 records three visitors promising Sarah a son in her old age, is anything too hard for YHWH. 2 Melakhim 4:16-17 records Elisha promising the Shunammite woman a son. The angelic birth-announcement to a barren or aged woman is a repeated covenant pattern, not an original claim.'},
+  {title:'Surviving Death Unharmed, on a Fixed Interval', text:'The invented figure is claimed to rise after three days. Yonah 1:17 and 2:10 record Yonah swallowed by a great fish for three days and three nights, then released alive onto dry land, the exact three-day interval the later claim borrows. Daniyel 3:26-27 records three men surviving a furnace unharmed, not a hair singed. Daniyel 6:22-23 records Daniyel surviving a night in a lions\' den: my Creator sent his angel and shut the lions\' mouths. Survival of certain death through divine intervention, on a fixed time interval, is already in the covenant record.'},
+  {title:'Transformation by a Word or an Act', text:'Whatever object-transformation sign a later account borrows, the shape is set earlier and Mosaic. Shemot 4:3 records Moshe\'s staff thrown to the ground becoming a serpent. Bamidbar 17:8 records Aharon\'s dry staff budding, blossoming, and bearing ripe almonds overnight, with no water and no time elapsed. A physical object transformed at a word, as proof of authority, is older than the NT by well over a thousand years.'}
+];
+function renderMiracleSourcesPanel() {
+  var panel = document.getElementById('miraclesources-panel');
+  if (!panel) return;
+  var html = MIRACLE_SOURCES.map(function(m) {
+    return '<div class="pa-contr-item"><div class="pa-contr-title">' + esc(m.title) + '</div><div class="pa-contr-text">' + esc(m.text) + '</div></div>';
+  }).join('');
+  panel.innerHTML =
+    '<div class="hr-sec-head">The Ancient Hebrew Record Is the Source</div>' +
+    '<div class="hr-sec-sub">The DSS and Orit corpus predates the NT. Every miracle category the invented figure is later credited with already exists, fully formed, in the covenant record, centuries earlier. The direction is not in question: the ancient text is the origin, and the NT\'s invented figure is built from patterns it did not originate.</div>' +
+    html;
+}
+
 // ── NT TAB SWITCH ─────────────────────────────────────────────────────────────
 function switchNTTab(tab) {
-  ['lookup','paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','revelation','onecreator'].forEach(function(t) {
+  ['lookup','paulacts','historical','rabbinic','rome','origins','orit','covenant','histdocs','revelation','onecreator','miraclesources'].forEach(function(t) {
     var tabEl = document.getElementById('nt-tab-' + t);
     var paneEl = document.getElementById('nt-pane-' + t);
     if (tabEl) tabEl.classList.toggle('active', t === tab);
@@ -6019,6 +6061,120 @@ function renderHistDocsPanel() {
 }
 
 // ── COVENANT PRACTICES ───────────────────────────────────────────────────────
+function renderMiraclesPanel() {
+  var panel = document.getElementById('miracles-panel');
+  if (!panel) return;
+  panel.innerHTML =
+
+  '<div class="hr-sec-head">The Ancient Miracles Record</div>' +
+  '<div class="hr-sec-sub">Every miracle-act on this page is independently confirmed directly against the covenant record’s own text, verse and chapter named. Organized by type.</div>' +
+
+  '<div class="hr-sec-head">Signs of Calling</div>' +
+  '<div class="td-item"><div class="td-topic">The Burning Bush, Shemot 3:2</div><div class="td-text">The angel of YHWH appears to Moshe in a flame of fire from the midst of a bush. The bush burns with fire and is not consumed.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Staff Becomes a Serpent, Shemot 4:3</div><div class="td-text">Moshe casts his staff on the ground at YHWH\'s word and it becomes a serpent.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Leprous Hand, Shemot 4:6-7</div><div class="td-text">Moshe\'s hand turns leprous, white as snow, when placed in his bosom, then is restored when he repeats the act.</div></div>' +
+
+  '<div class="hr-sec-head">Provision</div>' +
+  '<div class="td-item"><div class="td-topic">Manna, Bread From Heaven, Shemot 16:4</div><div class="td-text">YHWH rains bread from heaven daily for the whole camp in the wilderness.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Quail Driven by the Wind, Bamidbar 11:31</div><div class="td-text">A wind from YHWH brings quail in from the sea and lets them fall around the camp.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Ravens Feed Eliyahu, 1 Melakhim 17:6</div><div class="td-text">Ravens bring Eliyahu bread and meat morning and evening at the brook Kherit.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Widow’s Jar of Flour and Jug of Oil, 1 Melakhim 17:12-16</div><div class="td-text">The jar of flour is not spent and the jug of oil does not run dry for the length of the drought, at Eliyahu’s word.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Elisha Multiplies a Widow’s Oil, 2 Melakhim 4:1-7</div><div class="td-text">A single jar of oil fills every borrowed vessel in the house, enough to pay the widow’s debt and live on the rest.</div></div>' +
+  '<div class="td-item"><div class="td-topic">A Hundred Men Fed From Twenty Loaves, 2 Melakhim 4:42-44</div><div class="td-text">Elisha feeds a hundred men from twenty barley loaves and fresh grain, with food left over.</div></div>' +
+
+  '<div class="hr-sec-head">Raising the Dead</div>' +
+  '<div class="td-item"><div class="td-topic">Eliyahu Raises the Widow’s Son, 1 Melakhim 17:21-22</div><div class="td-text">Eliyahu stretches himself on the dead child three times and cries to YHWH; the child’s soul returns and he revives.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Elisha Raises the Shunammite’s Son, 2 Melakhim 4:32-37</div><div class="td-text">Elisha shuts himself in with the dead child, stretches himself upon him, and the child sneezes seven times and opens his eyes.</div></div>' +
+  '<div class="td-item"><div class="td-topic">A Dead Man Revives Touching Elisha’s Bones, 2 Melakhim 13:20-21</div><div class="td-text">A corpse thrown into Elisha’s grave touches his bones and revives, standing on his feet.</div></div>' +
+
+  '<div class="hr-sec-head">Healing</div>' +
+  '<div class="td-item"><div class="td-topic">Miryam’s Leprosy Healed, Bamidbar 12:10-15</div><div class="td-text">Miryam is struck leprous, white as snow, and healed after Moshe’s intercession.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Bronze Serpent Heals Snakebite, Bamidbar 21:6-9</div><div class="td-text">YHWH sends fiery serpents as judgment; Moshe raises a bronze serpent on a pole, and whoever looks at it after being bitten lives.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Na’aman’s Leprosy Healed, 2 Melakhim 5:1-14</div><div class="td-text">Na’aman, commander of the army of Aram, is healed of leprosy by washing seven times in the Yarden at Elisha’s instruction.</div></div>' +
+  '<div class="td-item"><div class="td-topic">An Army Struck Blind, Then Restored, 2 Melakhim 6:18-20</div><div class="td-text">Elisha prays and an Aramean raiding force is struck blind, led away, then has its sight restored.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Chizkiyahu Healed, the Shadow Reversed, 2 Melakhim 20 / Yeshayahu 38</div><div class="td-text">Chizkiyahu is healed of a fatal illness with a fig poultice; the sign confirming it is the sundial’s shadow going back ten steps.</div></div>' +
+
+  '<div class="hr-sec-head">Control Over Water</div>' +
+  '<div class="td-item"><div class="td-topic">The Sea of Reeds Divided, Shemot 14:21-22</div><div class="td-text">Moshe stretches his hand over the sea; YHWH drives it back with an east wind and the sea becomes dry ground.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Bitter Water at Marah Sweetened, Shemot 15:25</div><div class="td-text">Moshe casts a tree YHWH shows him into the bitter water and it becomes sweet.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Water Struck From the Rock, Shemot 17:6</div><div class="td-text">Moshe strikes the rock at Chorev and water comes out for the people to drink.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Yarden Cut Off, Yehoshua 3:13</div><div class="td-text">The waters of the Yarden are cut off and stand in one heap as the priests bearing the Ark enter the river.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Eliyahu Parts the Yarden, 2 Melakhim 2:8</div><div class="td-text">Eliyahu strikes the water with his rolled cloak and it parts, and he and Elisha cross on dry ground.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Elisha Parts the Yarden, 2 Melakhim 2:14</div><div class="td-text">Elisha takes up Eliyahu’s fallen cloak, strikes the water, and it parts the same way.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Bad Water Healed at Yericho, 2 Melakhim 2:19-22</div><div class="td-text">Elisha throws salt into the spring at Yericho and heals the water; it remains healed to this day, according to the text.</div></div>' +
+
+  '<div class="hr-sec-head">Fire From Heaven</div>' +
+  '<div class="td-item"><div class="td-topic">Fire Consumes the Inaugural Offering, Vayikra 9:24</div><div class="td-text">Fire comes forth from before YHWH and consumes the burnt offering and the fat on the altar before all the people.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Nadav and Avihu, the Strange Fire, Vayikra 10:1-2</div><div class="td-text">Nadav and Avihu offer strange fire not commanded by YHWH; fire comes forth from before YHWH and consumes them.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Fire at Tav’erah, Bamidbar 11:1-3</div><div class="td-text">The fire of YHWH burns among the complainers at the edge of the camp; the place is named for the burning.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Sedom and Amorah Destroyed, Bereshit 19:24-25</div><div class="td-text">YHWH rains brimstone and fire from heaven on Sedom and Amorah and overthrows the cities.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Fire on Mount Carmel, 1 Melakhim 18:38</div><div class="td-text">Fire falls and consumes the offering, the wood, the stones, the dust, and licks up the water in the trench, before all Yisra’EL.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Fire Consumes Two Companies of Fifty, 2 Melakhim 1:9-15</div><div class="td-text">Eliyahu calls fire down from heaven twice, consuming a captain and his fifty men each time; a third company is spared when its captain pleads for mercy.</div></div>' +
+
+  '<div class="hr-sec-head">Taken Up Without Dying</div>' +
+  '<div class="td-item"><div class="td-topic">Chanokh Is Taken, Bereshit 5:24</div><div class="td-text">Chanokh walks with the Creator, and he is not, for the Creator took him.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Eliyahu Taken Up in a Whirlwind, 2 Melakhim 2:11</div><div class="td-text">Chariots and horses of fire separate Eliyahu and Elisha, and Eliyahu goes up by a whirlwind into heaven.</div></div>' +
+
+  '<div class="hr-sec-head">Miraculous Birth Announced</div>' +
+  '<div class="td-item"><div class="td-topic">Sarah Promised a Son, Bereshit 18:1-14</div><div class="td-text">Three visitors promise Avraham that Sarah will bear a son within the year; Sarah laughs, being old, and is answered: is anything too hard for YHWH.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Angel Announces Shimshon’s Birth, Shofetim 13:2-5</div><div class="td-text">The angel of YHWH appears to Manoakh’s barren wife and announces a son, a Nazirite from the womb, who will begin to save Yisra’EL.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Elisha Promises the Shunammite a Son, 2 Melakhim 4:16-17</div><div class="td-text">Elisha tells the childless Shunammite woman she will embrace a son within the year; she conceives as he said.</div></div>' +
+
+  '<div class="hr-sec-head">Protection From Harm</div>' +
+  '<div class="td-item"><div class="td-topic">The Cows Pull the Ark Straight Home, 1 Shemuel 6:12</div><div class="td-text">Cows pulling the cart bearing the Ark go straight to Beit-Shemesh along one road, turning neither right nor left.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Fiery Furnace, Daniyel 3:26-27</div><div class="td-text">Three men are cast into a furnace for refusing to worship an image; they emerge with no hair singed, no cloak harmed, no smell of fire on them.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Lions’ Den, Daniyel 6:22-23</div><div class="td-text">Daniyel survives a night among lions: my Creator sent his angel and shut the lions’ mouths, and no harm is found on him.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Swallowed by a Great Fish, Yonah 1:17, 2:10</div><div class="td-text">YHWH appoints a great fish to swallow Yonah; he is in its belly three days and three nights, then the fish vomits him onto dry land.</div></div>' +
+
+  '<div class="hr-sec-head">Superhuman Strength</div>' +
+  '<div class="td-item"><div class="td-topic">Shimshon Tears a Lion Apart, Shofetim 14:6</div><div class="td-text">The Spirit of YHWH rushes on Shimshon and he tears a roaring lion apart bare-handed.</div></div>' +
+  '<div class="td-item"><div class="td-topic">A Thousand Men With a Jawbone, Shofetim 15:15</div><div class="td-text">Shimshon strikes a thousand men with a fresh donkey’s jawbone.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Gates of Aza Carried Off, Shofetim 16:3</div><div class="td-text">Shimshon tears up the city gates of Aza, posts and bar, and carries them to a hilltop facing Chevron.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Temple Pillars Pulled Down, Shofetim 16:25-30</div><div class="td-text">Shimshon pulls down the two central pillars of the house, killing more at his death than in his life.</div></div>' +
+
+  '<div class="hr-sec-head">Judgment Miracles</div>' +
+  '<div class="td-item"><div class="td-topic">The Ten Plagues, Shemot 7-12</div><div class="td-text">Blood, frogs, lice, swarming insects, livestock death, boils, hail, locusts, darkness, and the death of the firstborn, in sequence against Mitzrayim.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Lot’s Wife Becomes a Pillar of Salt, Bereshit 19:26</div><div class="td-text">She looks back from behind Lot and becomes a pillar of salt.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Earth Swallows Korach’s Household, Bamidbar 16:32</div><div class="td-text">The earth opens its mouth and swallows Korach, his household, and all their goods.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Dagon Falls Before the Ark, 1 Shemuel 5:3-4</div><div class="td-text">The idol Dagon is found fallen face down before the Ark of YHWH at Ashdod, and again broken the following morning.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Pelishtim Struck With Tumors, 1 Shemuel 5:6</div><div class="td-text">The hand of YHWH afflicts Ashdod and its territory with tumors for holding the Ark.</div></div>' +
+  '<div class="td-item"><div class="td-topic">A King’s Hand Withers and Is Restored, 1 Melakhim 13:4-6</div><div class="td-text">Yarov’am’s hand dries up when he stretches it against a prophet, and the altar at Beit-El tears apart as a sign; the hand is restored after the prophet’s prayer.</div></div>' +
+
+  '<div class="hr-sec-head">Requested and Confirming Signs</div>' +
+  '<div class="td-item"><div class="td-topic">Gid’on’s Fleece, Shofetim 6:36-40</div><div class="td-text">Gid’on asks for dew on a fleece alone with dry ground around it, then reverses the test; both signs are given.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Aharon’s Staff Buds, Bamidbar 17:8</div><div class="td-text">Aharon’s dry staff for the house of Levi buds, blossoms, and bears ripe almonds overnight, confirming his priesthood.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Bil’am’s Donkey Speaks, Bamidbar 22:28</div><div class="td-text">YHWH opens the mouth of the donkey and she speaks to Bil’am, asking what she has done to deserve being struck.</div></div>' +
+  '<div class="td-item"><div class="td-topic">YHWH Thunders Against the Pelishtim, 1 Shemuel 7:10</div><div class="td-text">As Shemu’el offers a sacrifice, YHWH thunders with a mighty sound against the attacking Pelishtim and throws them into confusion.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Walls of Yericho Fall, Yehoshua 6:20</div><div class="td-text">At the trumpet blast and the people’s shout, the wall falls down flat and the city is taken.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Sun Stands Still at Giv’on, Yehoshua 10:12-13</div><div class="td-text">The sun stands still and the moon stops until the nation avenges itself on its enemies, for about a whole day.</div></div>' +
+  '<div class="td-item"><div class="td-topic">A Sunk Axe Head Floats, 2 Melakhim 6:1-7</div><div class="td-text">Elisha cuts a stick, throws it into the water where a borrowed iron axe head sank, and makes the iron float.</div></div>' +
+
+  '<div class="hr-sec-head">Dreams and Supernatural Writing</div>' +
+  '<div class="td-item"><div class="td-topic">Nevukhadnetzar’s Madness and Restoration, Daniyel 4:25, 33-34</div><div class="td-text">The king is driven to live like an animal, eating grass, until his reason returns to him after the appointed time.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Writing on the Wall, Daniyel 5:5-6</div><div class="td-text">The fingers of a human hand appear and write on the plaster of the palace wall as the king watches.</div></div>' +
+
+  '<div class="hr-sec-head">Death Sealed by YHWH</div>' +
+  '<div class="td-item"><div class="td-topic">Moshe’s Death and Burial, Devarim 34:5-6</div><div class="td-text">Moshe dies in the land of Mo’av according to the word of YHWH and is buried in the valley; no man knows his burial place to this day.</div></div>' +
+
+  '<div class="hr-sec-head">Prophetic Sign-Acts</div>' +
+  '<div class="hr-sec-sub">Symbolic enacted prophecy rather than a discrete supernatural event, listed separately for that reason.</div>' +
+  '<div class="td-item"><div class="td-topic">Yesha’yahu Walks Naked and Barefoot, Yeshayahu 20:2-4</div><div class="td-text">Yesha’yahu walks naked and barefoot for three years as a sign and a portent against Mitzrayim and Kush.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Linen Loincloth, Yirmeyahu 13:1-11</div><div class="td-text">Yirmeyahu buries a linen loincloth by the Euphrates; it rots, a sign of Yehudah’s ruined pride. DSS attested, 4QJer-a and 4QJer-b.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Potter’s House, Yirmeyahu 18:2-3</div><div class="td-text">Yirmeyahu is sent to watch a potter reworking clay at the wheel, the sign of YHWH reshaping the nation.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Field Bought at Anatot, Yirmeyahu 32:9</div><div class="td-text">Yirmeyahu buys a field for seventeen shekels of silver during the Babylonian siege, a sign of future restoration.</div></div>' +
+  '<div class="td-item"><div class="td-topic">Lying on His Side, Yechezkel 4:4-5</div><div class="td-text">Yechezkel lies on his side, bearing the symbolic weight of the years of Yisra’EL’s punishment.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Razor Sign, Yechezkel 5</div><div class="td-text">Yechezkel shaves his head and beard and divides the hair into thirds, a sign of Yerushalayim’s fate. DSS preserves this chapter in close agreement with the Masoretic.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Valley of Dry Bones, Yechezkel 37</div><div class="td-text">Dry bones are called to life in a vision. The text frames this as a vision, not a historical event.</div></div>' +
+
+  '<div class="hr-sec-head">Cosmological and Visionary Material</div>' +
+  '<div class="hr-sec-sub">Chanokh’s and Yovelim’s cosmic vision and creation material, kept separate from the narrative miracle-acts above.</div>' +
+  '<div class="td-item"><div class="td-topic">The Four Hollow Places, Chanokh 22</div><div class="td-text">Chanokh is shown four hollow places in a mountain in the west, three dark and one bright with a spring, where the spirits of the dead wait.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Fragrant Tree, Chanokh 24</div><div class="td-text">Chanokh’s cosmic tour reaches seven mountains and a fragrant tree by YHWH’s throne-mountain, reserved for the righteous at judgment.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Portals of the Sun, Chanokh, the Astronomical Book</div><div class="td-text">The first law of the luminaries: the sun rises and sets through six portals each, the basis of the covenant calendar.</div></div>' +
+  '<div class="td-item"><div class="td-topic">The Angels Created on Day One, Yovelim 2:1-4</div><div class="td-text">The angel of the presence dictates to Moshe that on the first day, alongside the heavens, earth, and waters, YHWH created the classes of angels, a detail not present in Bereshit 1 itself.</div></div>';
+}
+
+// ── COVENANT PRACTICES ────────────────────────────────────────────────
 function renderPracticesPanel() {
   var panel = document.getElementById('practices-panel');
   if (!panel) return;
