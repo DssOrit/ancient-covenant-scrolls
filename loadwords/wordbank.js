@@ -569,26 +569,26 @@ const CONCEPT_DIAGRAMS = {
   sa166:{t:'flow',v:'boldDirect'}, // cogent
   sa366:{t:'flow',v:'bi'}, // correlation
   sa202:{t:'flow',v:'curveToTarget'}, // teleology
-  sa203:{t:'flow',v:'curveToTarget'}, // teleological
+  sa203:{t:'flow',v:'curveToTargetRing'}, // teleological
   sa367:{t:'chain',v:'plain'}, // determinism
-  sa383:{t:'chain',v:'plain'}, // historicism
+  sa383:{t:'chain',v:'growing'}, // historicism
   sa361:{t:'cycle',v:'plain'}, // praxis
   sa358:{t:'stackedLogic',v:'twoPremise'}, // syllogism
   sa363:{t:'stackedLogic',v:'triad'}, // dialectic
-  sa357:{t:'stackedLogic',v:'triad'}, // dialectical
+  sa357:{t:'stackedLogic',v:'triadOutline'}, // dialectical
   sa353:{t:'foundation',v:'solidBase'}, // axiomatic
   sa359:{t:'foundation',v:'dashedBase'}, // postulate
   sa384:{t:'foundation',v:'hiddenBase'}, // presupposition
   sa167:{t:'compare',v:'equal'}, // commensurate
   sa196:{t:'compare',v:'unequal'}, // disparity
   sa364:{t:'opposition',v:'mirror'}, // antithesis
-  ad2:{t:'opposition',v:'mirror'}, // antithetical
+  ad2:{t:'opposition',v:'mirrorFilled'}, // antithetical
   sa362:{t:'opposition',v:'split'}, // dichotomy
   sa281:{t:'opposition',v:'ambiguous'}, // equivocal
-  li13:{t:'opposition',v:'ambiguous'}, // equivocate
+  li13:{t:'opposition',v:'ambiguousArrow'}, // equivocate
   sa1:{t:'opposition',v:'loop'}, // paradoxical
   sa377:{t:'clash',v:'plain'}, // polemic
-  sa129:{t:'clash',v:'plain'}, // polemical
+  sa129:{t:'clash',v:'written'}, // polemical
   ph37:{t:'clash',v:'internal'}, // psychomachia
   sa207:{t:'interpretation',v:'out'}, // exegesis
   ph30:{t:'interpretation',v:'in'}, // eisegesis
@@ -616,15 +616,15 @@ const CONCEPT_DIAGRAMS = {
   sa228:{t:'trialPath',v:'plain'}, // heuristic
   ph9:{t:'deadEnd',v:'plain'}, // aporia
   sa375:{t:'misleadingPath',v:'plain'}, // sophistry
-  sa376:{t:'misleadingPath',v:'plain'}, // casuistry
+  sa376:{t:'convergingJustification',v:'plain'}, // casuistry
   ph18:{t:'dissolvingEdge',v:'plain'}, // ineffable
   sa356:{t:'imposedRule',v:'plain'}, // prescriptive
   ph7:{t:'scale',v:'plain'}, // axiology
   sa199:{t:'lensStudy',v:'plain'}, // epistemology
-  sa227:{t:'lensStudy',v:'plain'}, // epistemic
-  sa351:{t:'lensStudy',v:'plain'}, // epistemological
+  sa227:{t:'lensStudy',v:'validate'}, // epistemic
+  sa351:{t:'lensStudy',v:'method'}, // epistemological
   ph1:{t:'pureBeing',v:'plain'}, // ontology
-  sa352:{t:'pureBeing',v:'plain'}, // ontological
+  sa352:{t:'pureBeing',v:'relating'}, // ontological
   sa374:{t:'duplicate',v:'plain'}, // tautology
   ph20:{t:'void',v:'plain'}, // nihilism
   sa200:{t:'aloneCertain',v:'plain'}, // solipsism

@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v40';
+const APP_VERSION = 'v41';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -79,6 +79,11 @@ const CONCEPT_TEMPLATES = {
       <path d="M42 55C75 30 100 25 122 40"/>${conceptArrowHead(122,40,35)}
       <circle cx="130" cy="45" r="14"/><circle cx="130" cy="45" r="8" opacity=".5"/><circle cx="130" cy="45" r="2.5" fill="currentColor" stroke="none"/>
     `);
+    if(variant==='curveToTargetRing') return conceptSvg(`
+      <circle cx="30" cy="60" r="13" stroke-dasharray="3 5"/>
+      <path d="M42 55C75 30 100 25 122 40"/>${conceptArrowHead(122,40,35)}
+      <circle cx="130" cy="45" r="16" stroke-width="1.6"/>
+    `);
     if(variant==='boldDirect') return conceptSvg(`
       <path d="M20 45h100" stroke-width="5"/>
       <path d="M112 33l16 12-16 12z" fill="currentColor" stroke="none"/>
@@ -93,11 +98,18 @@ const CONCEPT_TEMPLATES = {
       <path d="M48 45h68"/>${conceptArrowHead(116,45,0)}
     `);
   },
-  chain(){ return conceptSvg(`
-    <circle cx="26" cy="45" r="13"/><path d="M39 45h20"/>
-    <circle cx="80" cy="45" r="13"/><path d="M93 45h20"/>
-    <circle cx="134" cy="45" r="13"/>
-  `); },
+  chain(variant){
+    if(variant==='growing') return conceptSvg(`
+      <circle cx="22" cy="55" r="8"/><path d="M31 53h16"/>
+      <circle cx="66" cy="49" r="12"/><path d="M79 47h18"/>
+      <circle cx="122" cy="41" r="17"/>
+    `);
+    return conceptSvg(`
+      <circle cx="26" cy="45" r="13"/><path d="M39 45h20"/>
+      <circle cx="80" cy="45" r="13"/><path d="M93 45h20"/>
+      <circle cx="134" cy="45" r="13"/>
+    `);
+  },
   cycle(){ return conceptSvg(`
     <circle cx="50" cy="26" r="11"/><circle cx="110" cy="26" r="11"/><circle cx="80" cy="70" r="11"/>
     <path d="M61 26C75 18 95 18 108 24"/>${conceptArrowHead(105,24.5,-20)}
@@ -112,6 +124,14 @@ const CONCEPT_TEMPLATES = {
       <path d="M118 30C118 46 84 46 84 54"/>${conceptArrowHead(84,55,90)}
       <rect x="46" y="58" width="68" height="18" rx="9" fill="currentColor" opacity=".14"/>
       <rect x="46" y="58" width="68" height="18" rx="9"/>
+    `);
+    if(variant==='triadOutline') return conceptSvg(`
+      <rect x="12" y="14" width="56" height="16" rx="8" stroke-dasharray="3 4"/>
+      <rect x="92" y="14" width="56" height="16" rx="8" stroke-dasharray="3 4"/>
+      <path d="M46 30C46 46 80 46 80 54"/>${conceptArrowHead(80,55,90)}
+      <path d="M118 30C118 46 84 46 84 54"/>${conceptArrowHead(84,55,90)}
+      <rect x="46" y="58" width="68" height="18" rx="9" fill="currentColor" opacity=".22"/>
+      <rect x="46" y="58" width="68" height="18" rx="9" stroke-width="2.6"/>
     `);
     return conceptSvg(`
       <rect x="20" y="12" width="120" height="15" rx="7.5"/>
@@ -145,6 +165,10 @@ const CONCEPT_TEMPLATES = {
       <path d="M20 45l38-20v40z"/>
       <path d="M140 45l-38-20v40z"/>
     `);
+    if(variant==='mirrorFilled') return conceptSvg(`
+      <path d="M14 45l42-23v46z" fill="currentColor" opacity=".8"/>
+      <path d="M146 45l-42-23v46z" fill="currentColor" opacity=".8"/>
+    `);
     if(variant==='split') return conceptSvg(`
       <circle cx="80" cy="45" r="30"/>
       <path d="M80 15v60"/>
@@ -152,6 +176,10 @@ const CONCEPT_TEMPLATES = {
     `);
     if(variant==='ambiguous') return conceptSvg(`
       <path d="M80 18c17 0 30 12 30 27 0 12-9 22-22 26-15 4-30-3-35-16-6-15 2-32 18-36 3-1 6-1 9-1z" stroke-dasharray="3 5"/>
+    `);
+    if(variant==='ambiguousArrow') return conceptSvg(`
+      <path d="M18 45h34"/>${conceptArrowHead(52,45,0)}
+      <path d="M78 45c9-9 23-9 30 0 6 9-2 21-15 23-16 3-30-4-33-16-3-11 6-23 20-25" stroke-dasharray="3 5" opacity=".8"/>
     `);
     if(variant==='loop') return conceptSvg(`
       <path d="M40 45c0-16 14-26 28-18 10 6 10 22 0 28-14 8-28-2-28-18 0-16 14-26 28-18"/>
@@ -172,6 +200,13 @@ const CONCEPT_TEMPLATES = {
       <path d="M62 34c6-2 12-2 16 2"/>${conceptArrowHead(80,37,60)}
       <path d="M98 56c-6 2-12 2-16-2"/>${conceptArrowHead(80,53,-120)}
       <path d="M78 33l4 6-4 6-4-6z" fill="currentColor" stroke="none"/>
+    `);
+    if(variant==='written') return conceptSvg(`
+      <rect x="58" y="12" width="44" height="54" rx="4" opacity=".55"/>
+      <path d="M66 24h28M66 34h28M66 44h20" stroke-width="1.4" opacity=".5"/>
+      <path d="M14 66h38"/>${conceptArrowHead(56,66,0)}
+      <path d="M146 66h-38"/>${conceptArrowHead(104,66,180)}
+      <path d="M80 60l4 6-4 6-4-6z" fill="currentColor" stroke="none"/>
     `);
     return conceptSvg(`
       <path d="M20 45h48"/>${conceptArrowHead(68,45,0)}
@@ -321,6 +356,13 @@ const CONCEPT_TEMPLATES = {
     <path d="M22 60C50 20 90 70 118 34c8-10 4-18-4-16"/>
     ${conceptArrowHead(114,18,190)}
   `); },
+  convergingJustification(){ return conceptSvg(`
+    <circle cx="118" cy="45" r="12" fill="currentColor" opacity=".18"/>
+    <circle cx="118" cy="45" r="12"/>
+    <path d="M18 20c30 4 46 14 86 25"/>${conceptArrowHead(104,45,22)}
+    <path d="M18 45h68"/>${conceptArrowHead(106,45,0)}
+    <path d="M18 70c30-4 46-14 86-25"/>${conceptArrowHead(104,45,-22)}
+  `); },
   dissolvingEdge(){ return conceptSvg(`
     <circle cx="70" cy="45" r="18" fill="currentColor" opacity=".85" stroke="none"/>
     <circle cx="96" cy="34" r="3" fill="currentColor" stroke="none" opacity=".7"/>
@@ -342,15 +384,36 @@ const CONCEPT_TEMPLATES = {
     <path d="M62 76h36"/>
     <path d="M80 66v10"/>
   `); },
-  lensStudy(){ return conceptSvg(`
-    <circle cx="62" cy="40" r="24"/>
-    <path d="M80 58l30 30" stroke-width="4"/>
-    <circle cx="62" cy="40" r="4" fill="currentColor" stroke="none"/>
-  `); },
-  pureBeing(){ return conceptSvg(`
-    <circle cx="80" cy="45" r="26" stroke-width="1.4" opacity=".35"/>
-    <circle cx="80" cy="45" r="5" fill="currentColor" stroke="none"/>
-  `); },
+  lensStudy(variant){
+    if(variant==='validate') return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <path d="M52 40l7 7 13-14" stroke-width="3"/>
+    `);
+    if(variant==='method') return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <circle cx="54" cy="40" r="3.5" fill="currentColor" stroke="none"/>
+      <circle cx="70" cy="40" r="3.5" fill="currentColor" stroke="none"/>
+      <path d="M57 40h10" stroke-width="1.6"/>
+    `);
+    return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <circle cx="62" cy="40" r="4" fill="currentColor" stroke="none"/>
+    `);
+  },
+  pureBeing(variant){
+    if(variant==='relating') return conceptSvg(`
+      <circle cx="80" cy="45" r="32" stroke-width="1.2" opacity=".22"/>
+      <circle cx="80" cy="45" r="22" stroke-width="1.4" opacity=".4"/>
+      <circle cx="80" cy="45" r="5" fill="currentColor" stroke="none"/>
+    `);
+    return conceptSvg(`
+      <circle cx="80" cy="45" r="26" stroke-width="1.4" opacity=".35"/>
+      <circle cx="80" cy="45" r="5" fill="currentColor" stroke="none"/>
+    `);
+  },
   duplicate(){ return conceptSvg(`
     <rect x="42" y="26" width="60" height="30" rx="8" opacity=".45"/>
     <rect x="58" y="34" width="60" height="30" rx="8"/>
