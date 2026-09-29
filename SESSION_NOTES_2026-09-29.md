@@ -48,12 +48,7 @@
 
 ## Pending / parked
 
-- `data/file_98.json` (1QS / Community Rule) and `data/file_109.json`
-  (Temple Scroll 11Q19) were found not to be present in `data/nav.json`'s
-  `ids`/`labels` arrays during this session's citation work. Not touched
-  or investigated further — flagging for a future session in case it's a
-  real navigation gap (same class of issue as the 2026-08-25 volume-
-  numbering incident logged in CLAUDE.md).
+- None.
 
 ## Capability gaps in this session
 
