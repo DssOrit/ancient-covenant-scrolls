@@ -558,6 +558,87 @@ const CORE_WORDS = [
   {id:"sa406",word:"tergiversate",syllables:["ter","gi","ver","sate"],stress:2,pos:"verb",definition:"To repeatedly change one's mind, clear stance, or shuffle allegiance to avoid making a firm choice.",example:"The senator tergiversated on the bill until the final vote.",conv:["He keeps tergiversating on this.","Never commits to a position."],register:"formal",category:"sa",theme:"conflict",syn:["waffle","equivocate"]},
 ];
 
+// Symbolic concept diagrams for the ~73 words too abstract for a literal photo
+// to explain (philosophy/logic/rhetoric terms with no physical referent -- e.g.
+// epistemology, syllogism, causality). t = template name, v = variant. Rendered
+// by CONCEPT_TEMPLATES in app.js. Everything else falls through to a bundled
+// photo (assets/words/<id>.jpg) or the plain placeholder as before.
+const CONCEPT_DIAGRAMS = {
+  sa197:{t:'flow',v:'straight'}, // causality
+  sa133:{t:'flow',v:'branch'}, // corollary
+  sa166:{t:'flow',v:'boldDirect'}, // cogent
+  sa366:{t:'flow',v:'bi'}, // correlation
+  sa202:{t:'flow',v:'curveToTarget'}, // teleology
+  sa203:{t:'flow',v:'curveToTarget'}, // teleological
+  sa367:{t:'chain',v:'plain'}, // determinism
+  sa383:{t:'chain',v:'plain'}, // historicism
+  sa361:{t:'cycle',v:'plain'}, // praxis
+  sa358:{t:'stackedLogic',v:'twoPremise'}, // syllogism
+  sa363:{t:'stackedLogic',v:'triad'}, // dialectic
+  sa357:{t:'stackedLogic',v:'triad'}, // dialectical
+  sa353:{t:'foundation',v:'solidBase'}, // axiomatic
+  sa359:{t:'foundation',v:'dashedBase'}, // postulate
+  sa384:{t:'foundation',v:'hiddenBase'}, // presupposition
+  sa167:{t:'compare',v:'equal'}, // commensurate
+  sa196:{t:'compare',v:'unequal'}, // disparity
+  sa364:{t:'opposition',v:'mirror'}, // antithesis
+  ad2:{t:'opposition',v:'mirror'}, // antithetical
+  sa362:{t:'opposition',v:'split'}, // dichotomy
+  sa281:{t:'opposition',v:'ambiguous'}, // equivocal
+  li13:{t:'opposition',v:'ambiguous'}, // equivocate
+  sa1:{t:'opposition',v:'loop'}, // paradoxical
+  sa377:{t:'clash',v:'plain'}, // polemic
+  sa129:{t:'clash',v:'plain'}, // polemical
+  ph37:{t:'clash',v:'internal'}, // psychomachia
+  sa207:{t:'interpretation',v:'out'}, // exegesis
+  ph30:{t:'interpretation',v:'in'}, // eisegesis
+  sa218:{t:'interpretation',v:'lens'}, // hermeneutics
+  ph10:{t:'interpretation',v:'signToMeaning'}, // semiotics
+  ph2:{t:'essenceLayers',v:'outerDashedInnerSolid'}, // hypostasis
+  sa215:{t:'essenceLayers',v:'centerDotOnly'}, // quiddity
+  ph5:{t:'essenceLayers',v:'cloudSolidCore'}, // noetic
+  ph16:{t:'transform',v:'plain'}, // reification
+  ph25:{t:'ripple',v:'calm'}, // ataraxia
+  ph38:{t:'ripple',v:'heavy'}, // weltschmerz
+  sa222:{t:'ripple',v:'broken'}, // anomie
+  sa223:{t:'ripple',v:'full'}, // pleroma
+  sa373:{t:'spectrum',v:'gradient'}, // continuum
+  ph26:{t:'spectrum',v:'curveApproach'}, // asymptote
+  sa368:{t:'spectrum',v:'scatter'}, // stochastic
+  sa395:{t:'spectrum',v:'timelineVerify'}, // historicity
+  ph31:{t:'spectrum',v:'timelineEnd'}, // eschatological
+  ad56:{t:'wholeParts',v:'ringOfPieces'}, // holistic
+  sa219:{t:'wholeParts',v:'highlightPart'}, // synecdoche
+  sa379:{t:'wholeParts',v:'dominance'}, // hegemony
+  ph34:{t:'wholeParts',v:'layeredSphere'}, // noosphere
+  sa214:{t:'wholeParts',v:'allEncompassing'}, // weltanschauung
+  ph21:{t:'wholeParts',v:'staircase'}, // meritocracy
+  sa228:{t:'trialPath',v:'plain'}, // heuristic
+  ph9:{t:'deadEnd',v:'plain'}, // aporia
+  sa375:{t:'misleadingPath',v:'plain'}, // sophistry
+  sa376:{t:'misleadingPath',v:'plain'}, // casuistry
+  ph18:{t:'dissolvingEdge',v:'plain'}, // ineffable
+  sa356:{t:'imposedRule',v:'plain'}, // prescriptive
+  ph7:{t:'scale',v:'plain'}, // axiology
+  sa199:{t:'lensStudy',v:'plain'}, // epistemology
+  sa227:{t:'lensStudy',v:'plain'}, // epistemic
+  sa351:{t:'lensStudy',v:'plain'}, // epistemological
+  ph1:{t:'pureBeing',v:'plain'}, // ontology
+  sa352:{t:'pureBeing',v:'plain'}, // ontological
+  sa374:{t:'duplicate',v:'plain'}, // tautology
+  ph20:{t:'void',v:'plain'}, // nihilism
+  sa200:{t:'aloneCertain',v:'plain'}, // solipsism
+  ph13:{t:'crackReveal',v:'plain'}, // deconstructionism
+  sa360:{t:'incomplete',v:'plain'}, // conjecture
+  sa217:{t:'crossedButPointed',v:'plain'}, // apophasis
+  ph3:{t:'hollowOutline',v:'plain'}, // apophatic
+  sa389:{t:'riseAndCrash',v:'plain'}, // bathos
+  ph6:{t:'preemptiveAnswer',v:'plain'}, // prolepsis
+  ad48:{t:'wrongWordSwap',v:'plain'}, // malapropism
+  ph11:{t:'opposition',v:'outsider'}, // alterity
+  ph29:{t:'swerve',v:'plain'}, // clinamen
+};
+
 const CATEGORY_META = {
   cp: {label:"Confusing Pairs", color:"#DC2626"},
   up: {label:"Upgrade Ladders", color:"#2563EB"},
