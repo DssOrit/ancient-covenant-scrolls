@@ -137,5 +137,8 @@ The icons in `/icons` (48 through 512px, plus a 384px "any"-purpose size) and th
 
 ## Known v1 limits
 
-- Word images are user-supplied links, not bundled photos — paste an image URL per word from the word's detail page or the Add Word form.
 - Pronunciation audio uses the device's built-in text-to-speech (`speechSynthesis`), so voice quality depends on the browser/OS — no external API or key required.
+
+## Bundled word images
+
+Every word's image tile checks `assets/words/<id>.jpg` (the id from `wordbank.js`, e.g. `assets/words/ad1.jpg`) before falling back to the "No image added yet" placeholder — no manifest or code change needed to add one, just drop the file in under the right id. A user-added image URL (via "Add an image" on a word's detail page, or the Add Word form) always takes priority over the bundled one for that word. None are bundled yet; `assets/words/` starts empty. Not precached at install time (most ids won't have a file yet, and `caches.addAll()` fails entirely if even one listed file 404s) — picked up by the normal cache-first-with-refresh handler once a word's card is viewed, so it still works offline after that.
