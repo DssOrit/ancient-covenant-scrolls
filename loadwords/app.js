@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v38';
+const APP_VERSION = 'v41';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -56,6 +56,419 @@ const ICONS = {
   gamepad:'<rect x="3" y="8" width="18" height="10" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="16" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="18.3" cy="14.5" r="1" fill="currentColor" stroke="none"/>'
 };
 function ic(name,extra){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" ${extra||''}>${ICONS[name]||''}</svg>`; }
+
+// ---------------- concept diagrams (symbolic visuals for abstract words a photo can't explain) ----------------
+// No text anywhere -- shape/arrangement alone carries the meaning; the word's real
+// definition already sits below it in the card, in the app's accessible font.
+// Reused by CONCEPT_DIAGRAMS (wordbank.js), which maps a word id to {t: template, v: variant}.
+function conceptSvg(inner){ return `<svg viewBox="0 0 160 90" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`; }
+function conceptArrowHead(x, y, angleDeg){
+  const a = angleDeg * Math.PI / 180, len = 7;
+  const x1 = x - len * Math.cos(a - 0.5), y1 = y - len * Math.sin(a - 0.5);
+  const x2 = x - len * Math.cos(a + 0.5), y2 = y - len * Math.sin(a + 0.5);
+  return `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}L${x} ${y}L${x2.toFixed(1)} ${y2.toFixed(1)}"/>`;
+}
+const CONCEPT_TEMPLATES = {
+  flow(variant){
+    if(variant==='bi') return conceptSvg(`
+      <circle cx="32" cy="45" r="15"/><circle cx="128" cy="45" r="15"/>
+      <path d="M50 45h60"/>${conceptArrowHead(110,45,0)}${conceptArrowHead(50,45,180)}
+    `);
+    if(variant==='curveToTarget') return conceptSvg(`
+      <circle cx="30" cy="60" r="13"/>
+      <path d="M42 55C75 30 100 25 122 40"/>${conceptArrowHead(122,40,35)}
+      <circle cx="130" cy="45" r="14"/><circle cx="130" cy="45" r="8" opacity=".5"/><circle cx="130" cy="45" r="2.5" fill="currentColor" stroke="none"/>
+    `);
+    if(variant==='curveToTargetRing') return conceptSvg(`
+      <circle cx="30" cy="60" r="13" stroke-dasharray="3 5"/>
+      <path d="M42 55C75 30 100 25 122 40"/>${conceptArrowHead(122,40,35)}
+      <circle cx="130" cy="45" r="16" stroke-width="1.6"/>
+    `);
+    if(variant==='boldDirect') return conceptSvg(`
+      <path d="M20 45h100" stroke-width="5"/>
+      <path d="M112 33l16 12-16 12z" fill="currentColor" stroke="none"/>
+    `);
+    if(variant==='branch') return conceptSvg(`
+      <circle cx="34" cy="38" r="15"/>
+      <path d="M48 42C64 52 74 56 90 62"/>${conceptArrowHead(90,62,25)}
+      <circle cx="106" cy="68" r="9"/>
+    `);
+    return conceptSvg(`
+      <circle cx="32" cy="45" r="15"/><circle cx="128" cy="45" r="15"/>
+      <path d="M48 45h68"/>${conceptArrowHead(116,45,0)}
+    `);
+  },
+  chain(variant){
+    if(variant==='growing') return conceptSvg(`
+      <circle cx="22" cy="55" r="8"/><path d="M31 53h16"/>
+      <circle cx="66" cy="49" r="12"/><path d="M79 47h18"/>
+      <circle cx="122" cy="41" r="17"/>
+    `);
+    return conceptSvg(`
+      <circle cx="26" cy="45" r="13"/><path d="M39 45h20"/>
+      <circle cx="80" cy="45" r="13"/><path d="M93 45h20"/>
+      <circle cx="134" cy="45" r="13"/>
+    `);
+  },
+  cycle(){ return conceptSvg(`
+    <circle cx="50" cy="26" r="11"/><circle cx="110" cy="26" r="11"/><circle cx="80" cy="70" r="11"/>
+    <path d="M61 26C75 18 95 18 108 24"/>${conceptArrowHead(105,24.5,-20)}
+    <path d="M105 36C97 50 63 60 55 60"/>${conceptArrowHead(53,60,182)}
+    <path d="M46 51C40 42 42 33 49 27"/>${conceptArrowHead(49.5,26.5,-70)}
+  `); },
+  stackedLogic(variant){
+    if(variant==='triad') return conceptSvg(`
+      <rect x="12" y="14" width="56" height="16" rx="8"/>
+      <rect x="92" y="14" width="56" height="16" rx="8"/>
+      <path d="M46 30C46 46 80 46 80 54"/>${conceptArrowHead(80,55,90)}
+      <path d="M118 30C118 46 84 46 84 54"/>${conceptArrowHead(84,55,90)}
+      <rect x="46" y="58" width="68" height="18" rx="9" fill="currentColor" opacity=".14"/>
+      <rect x="46" y="58" width="68" height="18" rx="9"/>
+    `);
+    if(variant==='triadOutline') return conceptSvg(`
+      <rect x="12" y="14" width="56" height="16" rx="8" stroke-dasharray="3 4"/>
+      <rect x="92" y="14" width="56" height="16" rx="8" stroke-dasharray="3 4"/>
+      <path d="M46 30C46 46 80 46 80 54"/>${conceptArrowHead(80,55,90)}
+      <path d="M118 30C118 46 84 46 84 54"/>${conceptArrowHead(84,55,90)}
+      <rect x="46" y="58" width="68" height="18" rx="9" fill="currentColor" opacity=".22"/>
+      <rect x="46" y="58" width="68" height="18" rx="9" stroke-width="2.6"/>
+    `);
+    return conceptSvg(`
+      <rect x="20" y="12" width="120" height="15" rx="7.5"/>
+      <rect x="20" y="32" width="120" height="15" rx="7.5"/>
+      <path d="M28 54h104" stroke-dasharray="3 5" stroke-width="1.6"/>
+      <rect x="36" y="60" width="88" height="17" rx="8.5" fill="currentColor" opacity=".14"/>
+      <rect x="36" y="60" width="88" height="17" rx="8.5"/>
+    `);
+  },
+  foundation(variant){
+    const baseDash = variant!=='solidBase' ? 'stroke-dasharray="4 5"' : '';
+    const baseOpacity = variant==='hiddenBase' ? '.45' : '1';
+    return conceptSvg(`
+      <rect x="46" y="24" width="68" height="26" rx="8"/>
+      <path d="M80 50v14" stroke-dasharray="${variant==='hiddenBase'?'3 4':'0'}"/>
+      <rect x="24" y="66" width="112" height="10" rx="5" ${baseDash} opacity="${baseOpacity}"/>
+    `);
+  },
+  compare(variant){
+    if(variant==='equal') return conceptSvg(`
+      <rect x="20" y="30" width="52" height="34" rx="8"/>
+      <rect x="88" y="30" width="52" height="34" rx="8"/>
+    `);
+    return conceptSvg(`
+      <rect x="16" y="14" width="46" height="50" rx="8"/>
+      <rect x="96" y="48" width="46" height="16" rx="6"/>
+    `);
+  },
+  opposition(variant){
+    if(variant==='mirror') return conceptSvg(`
+      <path d="M20 45l38-20v40z"/>
+      <path d="M140 45l-38-20v40z"/>
+    `);
+    if(variant==='mirrorFilled') return conceptSvg(`
+      <path d="M14 45l42-23v46z" fill="currentColor" opacity=".8"/>
+      <path d="M146 45l-42-23v46z" fill="currentColor" opacity=".8"/>
+    `);
+    if(variant==='split') return conceptSvg(`
+      <circle cx="80" cy="45" r="30"/>
+      <path d="M80 15v60"/>
+      <path d="M80 15A30 30 0 0 1 80 75Z" fill="currentColor" opacity=".28"/>
+    `);
+    if(variant==='ambiguous') return conceptSvg(`
+      <path d="M80 18c17 0 30 12 30 27 0 12-9 22-22 26-15 4-30-3-35-16-6-15 2-32 18-36 3-1 6-1 9-1z" stroke-dasharray="3 5"/>
+    `);
+    if(variant==='ambiguousArrow') return conceptSvg(`
+      <path d="M18 45h34"/>${conceptArrowHead(52,45,0)}
+      <path d="M78 45c9-9 23-9 30 0 6 9-2 21-15 23-16 3-30-4-33-16-3-11 6-23 20-25" stroke-dasharray="3 5" opacity=".8"/>
+    `);
+    if(variant==='loop') return conceptSvg(`
+      <path d="M40 45c0-16 14-26 28-18 10 6 10 22 0 28-14 8-28-2-28-18 0-16 14-26 28-18"/>
+      ${conceptArrowHead(96,55,120)}
+    `);
+    if(variant==='outsider') return conceptSvg(`
+      <circle cx="60" cy="40" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="78" cy="52" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="52" cy="58" r="7" fill="currentColor" stroke="none"/>
+      <circle cx="63" cy="49" r="34" stroke-dasharray="3 5" opacity=".6"/>
+      <circle cx="128" cy="30" r="7" fill="currentColor" stroke="none" opacity=".55"/>
+    `);
+    return conceptSvg(``);
+  },
+  clash(variant){
+    if(variant==='internal') return conceptSvg(`
+      <circle cx="80" cy="45" r="30" stroke-dasharray="3 5" opacity=".6"/>
+      <path d="M62 34c6-2 12-2 16 2"/>${conceptArrowHead(80,37,60)}
+      <path d="M98 56c-6 2-12 2-16-2"/>${conceptArrowHead(80,53,-120)}
+      <path d="M78 33l4 6-4 6-4-6z" fill="currentColor" stroke="none"/>
+    `);
+    if(variant==='written') return conceptSvg(`
+      <rect x="58" y="12" width="44" height="54" rx="4" opacity=".55"/>
+      <path d="M66 24h28M66 34h28M66 44h20" stroke-width="1.4" opacity=".5"/>
+      <path d="M14 66h38"/>${conceptArrowHead(56,66,0)}
+      <path d="M146 66h-38"/>${conceptArrowHead(104,66,180)}
+      <path d="M80 60l4 6-4 6-4-6z" fill="currentColor" stroke="none"/>
+    `);
+    return conceptSvg(`
+      <path d="M20 45h48"/>${conceptArrowHead(68,45,0)}
+      <path d="M140 45h-48"/>${conceptArrowHead(92,45,180)}
+      <path d="M80 33l4 6-4 6-4-6z" fill="currentColor" stroke="none"/>
+      <path d="M80 26v-6M80 70v-6M67 45h-6M99 45h6" stroke-width="1.6"/>
+    `);
+  },
+  interpretation(variant){
+    if(variant==='lens') return conceptSvg(`
+      <rect x="26" y="16" width="66" height="58" rx="6"/>
+      <path d="M40 32h38M40 44h38M40 56h24" stroke-width="1.6" opacity=".55"/>
+      <circle cx="104" cy="54" r="20"/><path d="M118 68l14 14" />
+    `);
+    if(variant==='signToMeaning') return conceptSvg(`
+      <path d="M32 45l14-14 14 14-14 14z"/>
+      <path d="M60 45h30"/>${conceptArrowHead(94,45,0)}
+      <path d="M108 30c14 0 24 8 24 16s-10 15-24 15-24-7-24-15 10-16 24-16z"/>
+    `);
+    const page = `<rect x="52" y="14" width="56" height="62" rx="6"/><path d="M64 30h32M64 42h32M64 54h20" stroke-width="1.6" opacity=".55"/>`;
+    if(variant==='in') return conceptSvg(`${page}
+      <path d="M138 45h-24"/>${conceptArrowHead(112,45,0)}
+    `);
+    return conceptSvg(`${page}
+      <path d="M110 45h24"/>${conceptArrowHead(136,45,0)}
+    `);
+  },
+  essenceLayers(variant){
+    if(variant==='centerDotOnly') return conceptSvg(`
+      <circle cx="80" cy="45" r="30" stroke-width="1.8"/>
+      <circle cx="80" cy="45" r="3" fill="currentColor" stroke="none"/>
+    `);
+    if(variant==='cloudSolidCore') return conceptSvg(`
+      <path d="M55 34c-10 0-16 8-14 16-8 2-11 12-3 18 4 3 10 4 15 3 6 6 18 6 25 0 12 2 22-6 20-15 6-4 6-14-2-17-2-9-14-13-22-8-6-3-13-1-19 3z" stroke-dasharray="3 5" opacity=".8"/>
+      <circle cx="80" cy="50" r="8" fill="currentColor" stroke="none"/>
+    `);
+    return conceptSvg(`
+      <circle cx="80" cy="45" r="30" stroke-dasharray="3 5" opacity=".7"/>
+      <circle cx="80" cy="45" r="12" fill="currentColor" opacity=".85" stroke="none"/>
+    `);
+  },
+  transform(){ return conceptSvg(`
+    <path d="M28 40c-9 0-14 7-12 13-7 2-9 10-2 14 4 3 9 3 13 2 5 5 15 5 21 0 10 2 18-5 16-12 5-3 5-11-2-14-2-7-12-10-18-6-5-2-11-1-16 3z"/>
+    <path d="M62 47h30"/>${conceptArrowHead(94,47,0)}
+    <rect x="100" y="30" width="36" height="32" rx="4" fill="currentColor" opacity=".2"/>
+    <rect x="100" y="30" width="36" height="32" rx="4"/>
+  `); },
+  ripple(variant){
+    if(variant==='heavy') return conceptSvg(`
+      <circle cx="80" cy="45" r="3" fill="currentColor" stroke="none"/>
+      <path d="M60 42a20 14 0 0 0 40 0" opacity=".85"/>
+      <path d="M46 40a34 22 0 0 0 68 0" opacity=".55"/>
+      <path d="M32 38a48 30 0 0 0 96 0" opacity=".3"/>
+    `);
+    if(variant==='broken') return conceptSvg(`
+      <circle cx="80" cy="45" r="3" fill="currentColor" stroke="none"/>
+      <path d="M69 32a13 13 0 0 1 22 0" opacity=".9"/>
+      <path d="M64 55a20 20 0 0 0 16 8"/>
+      <path d="M50 30a34 34 0 0 1 20-9"/>
+      <path d="M108 60a34 34 0 0 0 14-24"/>
+    `);
+    if(variant==='full') return conceptSvg(`
+      <circle cx="80" cy="45" r="30" fill="currentColor" opacity=".8"/>
+    `);
+    return conceptSvg(`
+      <circle cx="80" cy="45" r="3" fill="currentColor" stroke="none"/>
+      <circle cx="80" cy="45" r="11" opacity=".9"/>
+      <circle cx="80" cy="45" r="20" opacity=".55"/>
+      <circle cx="80" cy="45" r="29" opacity=".3"/>
+    `);
+  },
+  spectrum(variant){
+    if(variant==='curveApproach') return conceptSvg(`
+      <path d="M20 70h120" stroke-dasharray="3 5" opacity=".6"/>
+      <path d="M24 20C50 55 90 68 140 70"/>
+    `);
+    if(variant==='scatter') return conceptSvg(
+      [[30,20],[62,50],[95,18],[40,60],[120,35],[70,72],[135,58],[20,42],[105,68]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="currentColor" stroke="none"/>`).join('')
+    );
+    if(variant==='timelineVerify') return conceptSvg(`
+      <path d="M20 45h120" stroke-dasharray="3 5" opacity=".6"/>
+      <circle cx="45" cy="45" r="5"/><circle cx="80" cy="45" r="7" fill="currentColor" stroke="none"/><circle cx="115" cy="45" r="5"/>
+    `);
+    if(variant==='timelineEnd') return conceptSvg(`
+      <path d="M20 45h96"/>${conceptArrowHead(116,45,0)}
+      <rect x="122" y="35" width="18" height="18" rx="3" fill="currentColor" opacity=".85"/>
+    `);
+    return conceptSvg(`
+      <defs><linearGradient id="gGrad" x1="0" x2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".15"/><stop offset="1" stop-color="currentColor" stop-opacity="1"/></linearGradient></defs>
+      <rect x="20" y="36" width="120" height="18" rx="9" fill="url(#gGrad)" stroke="none"/>
+      <rect x="20" y="36" width="120" height="18" rx="9"/>
+    `);
+  },
+  wholeParts(variant){
+    if(variant==='highlightPart') return conceptSvg(`
+      <circle cx="80" cy="45" r="30"/>
+      <path d="M80 45L80 15A30 30 0 0 1 106 30Z" fill="currentColor" opacity=".55"/>
+    `);
+    if(variant==='dominance') return conceptSvg(`
+      <circle cx="80" cy="38" r="16"/>
+      <circle cx="34" cy="66" r="8" opacity=".8"/><circle cx="80" cy="76" r="8" opacity=".8"/><circle cx="126" cy="66" r="8" opacity=".8"/>
+      <path d="M45 60l25-16M80 68v-14M115 60l-25-16" stroke-width="1.6" opacity=".7"/>
+    `);
+    if(variant==='layeredSphere') return conceptSvg(`
+      <circle cx="80" cy="45" r="32" stroke-dasharray="3 5" opacity=".65"/>
+      <circle cx="80" cy="45" r="17" fill="currentColor" opacity=".25"/>
+      <circle cx="80" cy="45" r="17"/>
+      <circle cx="52" cy="27" r="3" fill="currentColor" stroke="none"/><circle cx="110" cy="24" r="3" fill="currentColor" stroke="none"/><circle cx="105" cy="68" r="3" fill="currentColor" stroke="none"/>
+      <path d="M52 27C60 35 68 40 80 45M110 24C100 32 90 38 80 45M105 68C98 60 90 52 80 45" stroke-width="1.4" opacity=".6"/>
+    `);
+    if(variant==='allEncompassing') return conceptSvg(`
+      <circle cx="80" cy="45" r="32"/>
+      <path d="M64 34l8-8 8 8-8 8z" opacity=".8"/>
+      <circle cx="98" cy="56" r="7" opacity=".8"/>
+      <rect x="58" y="52" width="13" height="13" rx="2" opacity=".8"/>
+    `);
+    if(variant==='staircase') return conceptSvg(`
+      <rect x="24" y="62" width="24" height="14" rx="3"/>
+      <rect x="58" y="48" width="24" height="28" rx="3"/>
+      <rect x="92" y="32" width="24" height="44" rx="3"/>
+      <rect x="126" y="16" width="14" height="60" rx="3" fill="currentColor" opacity=".2"/>
+      <rect x="126" y="16" width="14" height="60" rx="3"/>
+    `);
+    return conceptSvg(`
+      <path d="M80 16a29 29 0 0 1 25 14" stroke-width="8"/>
+      <path d="M108 40a29 29 0 0 1-6 28" stroke-width="8"/>
+      <path d="M92 71a29 29 0 0 1-28-2" stroke-width="8"/>
+      <path d="M56 60a29 29 0 0 1-4-28" stroke-width="8"/>
+      <path d="M56 25a29 29 0 0 1 16-9" stroke-width="8"/>
+    `);
+  },
+  trialPath(){ return conceptSvg(`
+    <path d="M18 60c14-6 10-18 22-20"/>
+    <path d="M40 40c8 2 4-14 16-16"/>
+    <path d="M40 40c-2 8-14 6-18 16" opacity=".4" stroke-dasharray="3 4"/>
+    <path d="M56 24c14 2 12 18 26 20"/>
+    <path d="M82 44c-4 6 2 16-10 18" opacity=".4" stroke-dasharray="3 4"/>
+    <path d="M82 44c12 2 22-4 32 4"/>${conceptArrowHead(114,48,25)}
+    <circle cx="128" cy="55" r="12"/><circle cx="128" cy="55" r="4" fill="currentColor" stroke="none"/>
+  `); },
+  deadEnd(){ return conceptSvg(`
+    <path d="M20 45h72"/>${conceptArrowHead(90,45,0)}
+    <path d="M100 16v58" stroke-width="4"/>
+    <path d="M100 16l8 8M100 30l8 8M100 44l8 8M100 58l8 8" stroke-width="1.6" opacity=".6"/>
+  `); },
+  misleadingPath(){ return conceptSvg(`
+    <path d="M22 60C50 20 90 70 118 34c8-10 4-18-4-16"/>
+    ${conceptArrowHead(114,18,190)}
+  `); },
+  convergingJustification(){ return conceptSvg(`
+    <circle cx="118" cy="45" r="12" fill="currentColor" opacity=".18"/>
+    <circle cx="118" cy="45" r="12"/>
+    <path d="M18 20c30 4 46 14 86 25"/>${conceptArrowHead(104,45,22)}
+    <path d="M18 45h68"/>${conceptArrowHead(106,45,0)}
+    <path d="M18 70c30-4 46-14 86-25"/>${conceptArrowHead(104,45,-22)}
+  `); },
+  dissolvingEdge(){ return conceptSvg(`
+    <circle cx="70" cy="45" r="18" fill="currentColor" opacity=".85" stroke="none"/>
+    <circle cx="96" cy="34" r="3" fill="currentColor" stroke="none" opacity=".7"/>
+    <circle cx="104" cy="50" r="2.4" fill="currentColor" stroke="none" opacity=".55"/>
+    <circle cx="92" cy="62" r="2" fill="currentColor" stroke="none" opacity=".4"/>
+    <circle cx="114" cy="40" r="1.6" fill="currentColor" stroke="none" opacity=".3"/>
+    <circle cx="118" cy="58" r="1.4" fill="currentColor" stroke="none" opacity=".2"/>
+  `); },
+  imposedRule(){ return conceptSvg(`
+    <path d="M40 30c-6 6-4 14 2 18-6 6-2 16 6 18 4 6 14 8 20 2 8 4 18-2 16-10 6-4 4-14-2-16 0-8-10-14-18-10-8-4-18 0-24 8z" opacity=".55"/>
+    <path d="M20 24h120M20 40h120M20 56h120M20 72h120" stroke-width="1.4" opacity=".8"/>
+    <path d="M40 16v60M70 16v60M100 16v60M130 16v60" stroke-width="1.4" opacity=".8"/>
+  `); },
+  scale(){ return conceptSvg(`
+    <path d="M80 16v50"/>
+    <path d="M40 30h80"/>
+    <path d="M40 30l-14 24h28z"/>
+    <path d="M120 30l-14 24h28z"/>
+    <path d="M62 76h36"/>
+    <path d="M80 66v10"/>
+  `); },
+  lensStudy(variant){
+    if(variant==='validate') return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <path d="M52 40l7 7 13-14" stroke-width="3"/>
+    `);
+    if(variant==='method') return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <circle cx="54" cy="40" r="3.5" fill="currentColor" stroke="none"/>
+      <circle cx="70" cy="40" r="3.5" fill="currentColor" stroke="none"/>
+      <path d="M57 40h10" stroke-width="1.6"/>
+    `);
+    return conceptSvg(`
+      <circle cx="62" cy="40" r="24"/>
+      <path d="M80 58l30 30" stroke-width="4"/>
+      <circle cx="62" cy="40" r="4" fill="currentColor" stroke="none"/>
+    `);
+  },
+  pureBeing(variant){
+    if(variant==='relating') return conceptSvg(`
+      <circle cx="80" cy="45" r="32" stroke-width="1.2" opacity=".22"/>
+      <circle cx="80" cy="45" r="22" stroke-width="1.4" opacity=".4"/>
+      <circle cx="80" cy="45" r="5" fill="currentColor" stroke="none"/>
+    `);
+    return conceptSvg(`
+      <circle cx="80" cy="45" r="26" stroke-width="1.4" opacity=".35"/>
+      <circle cx="80" cy="45" r="5" fill="currentColor" stroke="none"/>
+    `);
+  },
+  duplicate(){ return conceptSvg(`
+    <rect x="42" y="26" width="60" height="30" rx="8" opacity=".45"/>
+    <rect x="58" y="34" width="60" height="30" rx="8"/>
+  `); },
+  void(){ return conceptSvg(`
+    <circle cx="80" cy="45" r="28" stroke-dasharray="5 7" opacity=".55"/>
+  `); },
+  aloneCertain(){ return conceptSvg(`
+    <circle cx="80" cy="45" r="32" stroke-dasharray="3 6" opacity=".4"/>
+    <circle cx="80" cy="45" r="6" fill="currentColor" stroke="none"/>
+  `); },
+  crackReveal(){ return conceptSvg(`
+    <rect x="30" y="20" width="100" height="50" rx="6" fill="currentColor" opacity=".18"/>
+    <rect x="30" y="20" width="100" height="50" rx="6"/>
+    <path d="M60 20l6 14-10 8 8 12-6 16" stroke-width="2.4"/>
+  `); },
+  incomplete(){ return conceptSvg(`
+    <path d="M80 17a28 28 0 1 1 -23 41" />
+    <path d="M57 58L44 70" stroke-dasharray="3 5"/>
+    <path d="M44 70l14-4M44 70l4 14" stroke-width="1.6" opacity=".7"/>
+  `); },
+  crossedButPointed(){ return conceptSvg(`
+    <circle cx="90" cy="45" r="22"/>
+    <path d="M74 29l32 32" stroke-width="2"/>
+    <path d="M22 45h38"/>${conceptArrowHead(68,45,0)}
+  `); },
+  hollowOutline(){ return conceptSvg(`
+    <path d="M80 18c18 0 32 12 32 27S98 72 80 72 48 60 48 45 62 18 80 18Z"/>
+  `); },
+  riseAndCrash(){ return conceptSvg(`
+    <path d="M20 68C46 68 58 24 80 22"/>
+    <path d="M80 22v54" stroke-width="3"/>
+  `); },
+  preemptiveAnswer(){ return conceptSvg(`
+    <path d="M18 60c26-6 40-4 54 2" stroke-dasharray="4 5"/>${conceptArrowHead(76,64,35)}
+    <circle cx="112" cy="42" r="16"/><circle cx="112" cy="42" r="23" opacity=".45"/>
+  `); },
+  wrongWordSwap(){ return conceptSvg(`
+    <path d="M28 28h60a10 10 0 0 1 10 10v14a10 10 0 0 1-10 10H60l-10 10V62H28a10 10 0 0 1-10-10V38a10 10 0 0 1 10-10Z" stroke-dasharray="3 5" opacity=".55"/>
+    <path d="M50 40l24 20M74 40l-24 20" stroke-width="1.8" opacity=".7"/>
+    <path d="M70 20h52a9 9 0 0 1 9 9v12a9 9 0 0 1-9 9h-10l1 11-13-11H70a9 9 0 0 1-9-9V29a9 9 0 0 1 9-9Z" fill="currentColor" opacity=".14"/>
+    <path d="M70 20h52a9 9 0 0 1 9 9v12a9 9 0 0 1-9 9h-10l1 11-13-11H70a9 9 0 0 1-9-9V29a9 9 0 0 1 9-9Z"/>
+  `); },
+  swerve(){ return conceptSvg(`
+    <path d="M18 45h48" stroke-dasharray="4 5" opacity=".55"/>
+    <path d="M66 45l20-18"/>${conceptArrowHead(86,27,-42)}
+    <path d="M66 45c30 0 54 6 76 0" stroke-dasharray="4 5" opacity=".3"/>
+  `); },
+};
+function conceptDiagramInner(id){
+  const c = CONCEPT_DIAGRAMS[id];
+  const fn = c && CONCEPT_TEMPLATES[c.t];
+  if(!fn) return null;
+  return `<div class="concept-diagram">${fn(c.v)}</div>`;
+}
 
 // ---------------- storage helpers (browser localStorage — works standalone, no backend needed) ----------------
 const LS_PREFIX = 'loadwords:';
@@ -425,12 +838,15 @@ async function hardRefresh(){
 }
 
 // ---------------- image tile ----------------
+// Resolution order: a user-added image URL always wins (their own choice);
+// otherwise speculatively try the bundled assets/words/<id>.jpg — if one
+// hasn't been added for this word yet, the 404 just falls through to the
+// same "No image added yet" placeholder shown today. Never precached at
+// install time (most don't exist yet, and caches.addAll() is all-or-nothing)
+// — picked up by the normal cache-first-with-refresh handler once viewed.
 function imageTile(word, size){
-  const url = State.images[word.id];
-  if(url){
-    return `<div class="imgtile"><img src="${escapeAttr(url)}" alt="${escapeAttr(word.word)}" onerror="this.parentElement.innerHTML=window.__phFallback()"></div>`;
-  }
-  return phFallback();
+  const url = State.images[word.id] || ('assets/words/'+word.id+'.jpg');
+  return `<div class="imgtile"><img src="${escapeAttr(url)}" alt="${escapeAttr(word.word)}" onerror="this.parentElement.innerHTML=window.__phFallback('${word.id}')"></div>`;
 }
 function phInner(){
   return `<div class="ph">${ic('photo')}<span>No image added yet</span></div>`;
@@ -438,7 +854,7 @@ function phInner(){
 function phFallback(){
   return `<div class="imgtile">${phInner()}</div>`;
 }
-window.__phFallback = ()=> phInner();
+window.__phFallback = (id)=> (id && conceptDiagramInner(id)) || phInner();
 
 function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }

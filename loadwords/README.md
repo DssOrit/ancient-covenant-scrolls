@@ -137,5 +137,12 @@ The icons in `/icons` (48 through 512px, plus a 384px "any"-purpose size) and th
 
 ## Known v1 limits
 
-- Word images are user-supplied links, not bundled photos — paste an image URL per word from the word's detail page or the Add Word form.
 - Pronunciation audio uses the device's built-in text-to-speech (`speechSynthesis`), so voice quality depends on the browser/OS — no external API or key required.
+
+## Bundled word images
+
+Every word's image tile checks `assets/words/<id>.jpg` (the id from `wordbank.js`, e.g. `assets/words/ad1.jpg`) before falling back to a symbolic concept diagram (see below) or, failing that, the "No image added yet" placeholder — no manifest or code change needed to add a photo, just drop the file in under the right id. A user-added image URL (via "Add an image" on a word's detail page, or the Add Word form) always takes priority over the bundled one for that word. None are bundled yet; `assets/words/` starts empty. Not precached at install time (most ids won't have a file yet, and `caches.addAll()` fails entirely if even one listed file 404s) — picked up by the normal cache-first-with-refresh handler once a word's card is viewed, so it still works offline after that.
+
+### Symbolic concept diagrams (for words a photo can't explain)
+
+~73 words are purely abstract (philosophy, logic, rhetoric — e.g. `epistemology`, `syllogism`, `causality`) with no physical referent a photo could usefully show. For exactly those words, `CONCEPT_DIAGRAMS` in `wordbank.js` maps the id to `{t: templateName, v: variant}`; `CONCEPT_TEMPLATES` in `app.js` renders it as a small inline SVG — 73 distinct template/variant combinations across 34 template functions, one per word, each chosen to genuinely match that word's actual definition (e.g. `causality` gets a plain A→B arrow; `syllogism` gets two premise bars feeding a conclusion bar; `ataraxia` gets calm concentric ripples). Every combination is unique — verified programmatically, no two words render an identical diagram, including closely-related word forms like `epistemology`/`epistemic`/`epistemological`, which each get their own distinguishing variant. None contain any text — the shape/arrangement alone carries the meaning, since the word's real definition already sits right below it in the app's accessible font; small text baked into a graphic is exactly the kind of thing that's hard to read for a dyslexic user. Resolution order in `imageTile()`: user-added image > bundled photo > concept diagram (if the id has one) > plain placeholder — so a bundled or user photo, if ever added for one of these words, still takes priority over its diagram.
