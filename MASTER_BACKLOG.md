@@ -37,6 +37,7 @@ marker / code, not from the stale handoff docs.
 | **LoadPlay** `/LoadPlay` | `loadplay-v61` | Autopilot + connectors already in code; docs stale at v43 | Server-side Autopilot (currently browser-only); marketplace samples; acceptance verification | Decisions: public `inbox/` folder; plaintext `acr2026` password in 3 files |
 | **LoadAI** `/LoadAI` | `v7.0.0` (cache `v7-1-1`) | Standalone build exists; static checks pass | Verse→Scene, voice editing, output vision-verify, App-Store readiness | Background removal parked (iPad Safari WASM crash); needs real iPad test pass |
 | **LoadTasks** `/LoadTasks` | app `v5.16` / SW `v2.5.3` | Mature build tracker + OCC | OCC email/reset/multi-employee UI; SW-version cleanup | **OCC backend written but NOT deployed** (`occ-backend/` D1+Worker) — needs Cloudflare setup |
+| **Load Fit** `/LoadFit` | none — placeholder only | Not built. Folder reserved 2026-10-04 at user's request, awaiting a ChatGPT-developed build | Nothing yet — empty | User to hand the finished ChatGPT build to Claude for review before anything is placed in the folder for real |
 
 Notes:
 - `loadplay/` (lowercase) is a redirect stub; the real app is `LoadPlay/` (uppercase).
