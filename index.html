@@ -139,6 +139,16 @@ body.dark #reader-footer{background:#0a0a0a}
 .sm-steps li{counter-increment:sc;position:relative;padding:10px 10px 10px 42px;background:#222;border:1px solid #333;border-radius:8px;margin-bottom:8px;color:#e0e0d8;font-size:13px;line-height:1.5;font-family:Arial}
 .sm-steps li::before{content:counter(sc);position:absolute;left:10px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:#b03030;color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .sm-close{background:#b03030;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;width:100%;cursor:pointer;font-family:Arial;margin-top:4px}
+
+#rv-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+#rv-modal.on{display:flex}
+.rv-box{background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:22px;max-width:380px;width:100%;box-sizing:border-box}
+.rv-label{color:#888;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;font-family:Arial}
+.rv-ref{color:#b03030;font-size:13px;font-weight:700;margin-bottom:10px;font-family:Arial}
+.rv-text{color:#e0e0d8;font-size:15px;line-height:1.6;margin-bottom:18px;font-family:Arial}
+.rv-btns{display:flex;gap:8px}
+.rv-go{background:#b03030;color:#fff;border:none;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;flex:1;cursor:pointer;font-family:Arial}
+.rv-close{background:#2a2a2a;color:#aaa;border:none;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:Arial}
 </style>
 </head>
 <body>
@@ -169,6 +179,7 @@ body.dark #reader-footer{background:#0a0a0a}
   <button class="nb" onclick="toggleRecent()" title="Recently read">🕐</button>
   <button class="nb" onclick="toggleBM()" id="bm-btn" title="Bookmarks">☆</button>
   <button class="nb" onclick="toggleChJump()" title="Jump to chapter">⊕</button>
+  <button class="nb" onclick="openRandomVerse()" title="Random verse or lesson">🎲</button>
   <button class="nb" onclick="toggleNotes()" title="Notes" id="notes-btn">📝</button>
   <button class="nb" onclick="toggleNotesViewer()" title="All notes">📋</button>
   <input id="srch" type="text" placeholder="Search…" oninput="doSearch(this.value)">
@@ -197,6 +208,17 @@ body.dark #reader-footer{background:#0a0a0a}
   <button id="ch-go" onclick="goChJump()">Go</button>
   <button class="nb" onclick="closeChJump()" style="color:#666">✕</button>
 </div>
+
+<!-- RANDOM VERSE -->
+<div id="rv-modal"><div class="rv-box">
+  <div class="rv-label" id="rv-label">Today's Verse</div>
+  <div class="rv-ref" id="rv-ref">—</div>
+  <div class="rv-text" id="rv-text">Loading…</div>
+  <div class="rv-btns">
+    <button class="rv-go" id="rv-go-btn" onclick="rvReadInContext()">Read in Context</button>
+    <button class="rv-close" onclick="closeRVModal()">Close</button>
+  </div>
+</div></div>
 
 <!-- READER FOOTER: single fixed dock, row1=audio row2=nav -->
 <div id="reader-footer">
@@ -361,6 +383,22 @@ var TOC=[{"type": "sec", "label": "TORAH"}, {"type": "vol", "label": "Vol 1 — 
 
 // STATE
 var CUR=parseInt(localStorage.getItem('acr_last')||'0');if(!(CUR>=0&&CUR<NAVIDS.length))CUR=0;
+
+// RANDOM VERSE / LESSON -- two pools. VOD_MOMENTS is a curated set of
+// well-known narrative beats and standalone lines, each verified
+// word-for-word against this site's own data/file_N.json before being
+// written here (never generated from general Bible knowledge); every
+// entry includes exactly which NAVIDS volume, chapter, and verse it
+// came from so "Read in Context" can jump straight to it. Shir HaShirim
+// is deliberately excluded from both pools: unlike Tehillim/Mishlei/
+// Iyov/Kohelet, most of its verses are one half of a back-and-forth
+// dialogue and don't make sense read alone.
+var VOD_MOMENTS=[{l:"The burning bush",r:"Shemot 3:4",nav:4,ch:3,v:[4],bk:null,t:"When YHWH saw that he turned aside to look, the Creator called to him from the midst of the bush and said: Moshe, Moshe! And he said: Here I am."},{l:"The Red Sea parts",r:"Shemot 14:21",nav:4,ch:14,v:[21],bk:null,t:"And Moshe stretched out his hand over the sea, and YHWH drove the sea back by a strong east wind all night, and made the sea dry ground, and the waters were divided."},{l:"Manna from heaven",r:"Shemot 16:15",nav:4,ch:16,v:[15],bk:null,t:"And when the children of Yisra'el saw it, they said to one another: What is it? — for they did not know what it was. And Moshe said to them: This is the bread which YHWH has given you to eat."},{l:"Water from the rock at Chorev",r:"Shemot 17:6",nav:4,ch:17,v:[6],bk:null,t:"Behold, I will stand before you there on the rock at Chorev; and you shall strike the rock, and water will come out of it, that the people may drink. And Moshe did so in the sight of the elders of Yisra'el."},{l:"The opening of the Ten Words",r:"Shemot 20:2",nav:5,ch:20,v:[2],bk:null,t:"I am YHWH your Creator, who brought you out of the land of Mitzrayim, out of the house of bondage. You shall have no other gods before me."},{l:"Aharon's staff buds",r:"Bamidbar 17:8",nav:8,ch:17,v:[8],bk:null,t:"And it came to pass on the next day, that Moshe went into the tent of the testimony; and, behold, the staff of Aharon for the house of Levi had budded, and put forth buds, and bloomed blossoms, and bore ripe almonds."},{l:"Bil'am's donkey speaks",r:"Bamidbar 22:28",nav:9,ch:22,v:[28],bk:null,t:"And YHWH opened the mouth of the donkey, and she said to Bil'am: What have I done to you, that you have struck me these three times?"},{l:"The rainbow covenant",r:"Bereshit 9:13",nav:0,ch:9,v:[13],bk:null,t:"I have set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."},{l:"Sedom and Amorah destroyed",r:"Bereshit 19:24",nav:1,ch:19,v:[24],bk:null,t:"Then YHWH caused to rain upon Sedom and upon Amorah brimstone and fire from YHWH out of heaven;"},{l:"Yosef reveals himself to his brothers",r:"Bereshit 45:4",nav:3,ch:45,v:[4],bk:null,t:"And Yosef said to his brothers: Come near to me, please. And they came near. And he said: I am Yosef your brother, whom you sold into Mitzrayim."},{l:"The walls of Yericho fall",r:"Yehoshua 6:20",nav:17,ch:6,v:[20],bk:null,t:"So the people shouted, and the trumpets were blown. As soon as the people heard the sound of the trumpet, the people shouted a great shout, and the wall fell down flat, so that the people went up into the city, every man straight before him, and they captured the city."},{l:"The sun stands still",r:"Yehoshua 10:13",nav:18,ch:10,v:[13],bk:null,t:"And the sun stood still, and the moon stopped, until the nation took vengeance on their enemies. Is this not written in the Book of the Upright? The sun stopped in the midst of heaven and did not hurry to set for about a whole day."},{l:"Gid'on's fleece sign",r:"Shofetim 6:37",nav:20,ch:6,v:[37],bk:null,t:"Behold, I am laying a fleece of wool on the threshing floor. If there is dew on the fleece alone, and it is dry on all the ground, then I shall know that you will save Yisra'EL by my hand, as you have said."},{l:"Shimshon's last prayer for strength",r:"Shofetim 16:28",nav:22,ch:16,v:[28],bk:null,t:"Then Shimshon called to YHWH and said, O YHWH Creator, please remember me and please strengthen me only this once, O Creator, that I may be avenged on the Pelishtim for my two eyes."},{l:"Dawid and the Pelishtim giant",r:"Shemu'el Aleph 17:49",nav:24,ch:17,v:[49],bk:null,t:"And Dawid put his hand in his bag and took out a stone and slung it and struck the Pelishtim on his forehead. The stone sank into his forehead, and he fell on his face to the ground."},{l:"Fire falls at Mount Carmel",r:"Melakhim Aleph 18:38",nav:33,ch:18,v:[38],bk:null,t:"Then the fire of YHWH fell and consumed the burnt offering and the wood and the stones and the dust, and licked up the water that was in the trench."},{l:"Eliyahu taken up in the whirlwind",r:"Melakhim Bet 2:11",nav:35,ch:2,v:[11],bk:null,t:"And as they still went on and talked, behold, chariots of fire and horses of fire separated the two of them. And Eliyahu went up by a whirlwind into heaven."},{l:"Elisha makes the axe head float",r:"Melakhim Bet 6:6",nav:35,ch:6,v:[6],bk:null,t:"Then the man of Creator said, Where did it fall? When he showed him the place, he cut off a stick and threw it in there and made the iron float."},{l:"Yonah prays from the fish",r:"Yonah 2:1",nav:59,ch:2,v:[1],bk:"YONAH",t:"Then Yonah prayed to YHWH his Creator from the belly of the fish,"},{l:"Yonah vomited onto dry land",r:"Yonah 2:10",nav:59,ch:2,v:[10],bk:"YONAH",t:"And YHWH spoke to the fish, and it vomited Yonah out upon the dry land."},{l:"Daniyel in the lions' den",r:"Daniyel 6:22",nav:82,ch:6,v:[22],bk:null,t:"My Creator sent his angel and shut the lions' mouths, and they have not harmed me, because I was found blameless before him. And also before you, O king, I have done no harm."},{l:"The fire has no power over them",r:"Daniyel 3:27",nav:82,ch:3,v:[27],bk:null,t:"And the satraps, the prefects, the governors, and the king's counselors gathered together and saw that the fire had not had any power over the bodies of those men. The hair of their heads was not singed, their cloaks were not harmed, and no smell of fire had come upon them."},{l:"The handwriting on the wall interpreted",r:"Daniyel 5:28",nav:82,ch:5,v:[28],bk:null,t:"PERES, your kingdom is divided and given to the Medes and Persians."},{l:"Rut's loyalty",r:"Ruth 1:16",nav:78,ch:1,v:[16],bk:null,t:"But Ruth said, Do not urge me to leave you or to return from following you. For where you go I will go, and where you lodge I will lodge. Your people shall be my people, and your Creator my Creator."},{l:"Ester's courage",r:"Esther 4:16",nav:81,ch:4,v:[16],bk:null,t:"Go, gather all the Yehudim to be found in Shushan, and hold a fast on my behalf, and do not eat or drink for three days, night or day. I and my young women will also fast as you do. Then I will go to the king, though it is against the law, and if I perish, I perish."},{l:"The Tower of Bavel scattered",r:"Bereshit 11:9",nav:0,ch:11,v:[9],bk:null,t:"Therefore its name was called Bavel, because YHWH there confounded the language of all the earth; and from there YHWH scattered them abroad upon the face of all the earth."},{l:"The binding of Yitzchak",r:"Bereshit 22:12",nav:1,ch:22,v:[12],bk:null,t:"And he said: Do not lay your hand upon the lad, nor do anything to him; for now I know that you are one who fears the Creator, since you have not withheld your son, your only son, from me."},{l:"Ya'akov's ladder",r:"Bereshit 28:12",nav:2,ch:28,v:[12],bk:null,t:"And he dreamed, and behold, a ladder was set up on the earth, and its top reached to the heavens; and behold, the angels of the Creator were ascending and descending on it."},{l:"Ya'akov becomes Yisra'el",r:"Bereshit 32:28",nav:2,ch:32,v:[28],bk:null,t:"And he said: Your name shall no longer be called Ya'akov, but Yisra'el; for you have striven with the Creator and with men, and have prevailed."},{l:"The first Pesach, death of the firstborn",r:"Shemot 12:29",nav:4,ch:12,v:[29],bk:null,t:"And it came to pass at midnight, that YHWH struck all the firstborn in the land of Mitzrayim, from the firstborn of Pharaoh who sat on his throne to the firstborn of the captive who was in the dungeon, and all the firstborn of livestock."},{l:"The golden calf shattered",r:"Shemot 32:19",nav:5,ch:32,v:[19],bk:null,t:"And it came to pass, as soon as he came near the camp, that he saw the calf, and the dancing; and Moshe's anger burned hot, and he threw the tablets out of his hands, and broke them at the foot of the mountain."},{l:"Korach's rebellion swallowed",r:"Bamidbar 16:32",nav:8,ch:16,v:[32],bk:null,t:"And the earth opened her mouth and swallowed them up, and their households, and all the men that belonged to Korach, and all their goods."},{l:"The bronze serpent",r:"Bamidbar 21:9",nav:9,ch:21,v:[9],bk:null,t:"And Moshe made a serpent of bronze, and set it upon the pole; and it came to pass, that if a serpent had bitten any man, when he looked to the serpent of bronze, he lived."},{l:"Moshe strikes the rock",r:"Bamidbar 20:11",nav:9,ch:20,v:[11],bk:null,t:"And Moshe lifted up his hand, and struck the rock with his staff twice; and water came forth abundantly, and the congregation drank, and their cattle."},{l:"Rachav's confession",r:"Yehoshua 2:11",nav:17,ch:2,v:[11],bk:null,t:"And as soon as we heard it, our hearts melted, and there was no spirit left in any man because of you, for YHWH your Creator, he is Creator in the heavens above and on the earth beneath."},{l:"Devorah and Barak's victory",r:"Shofetim 4:14",nav:20,ch:4,v:[14],bk:null,t:"And Devorah said to Barak, Up, for this is the day in which YHWH has given Sisera into your hand. Does not YHWH go out before you? So Barak went down from Mount Tavor with ten thousand men following him."},{l:"Channah's prayer answered",r:"Shemu'el Aleph 1:27",nav:23,ch:1,v:[27],bk:null,t:"For this child I prayed, and YHWH has granted me my petition that I made to him."},{l:"Dawid spares Shaul",r:"Shemu'el Aleph 24:10",nav:25,ch:24,v:[10],bk:null,t:"Behold, this day your eyes have seen how YHWH gave you today into my hand in the cave. And some told me to kill you, but I spared you. I said, I will not put out my hand against my lord, for he is YHWH's anointed."},{l:"Shelomoh's judgment",r:"Melakhim Aleph 3:28",nav:31,ch:3,v:[28],bk:null,t:"And all Yisra'EL heard of the judgment that the king had rendered, and they stood in awe of the king, because they perceived that the wisdom of Creator was in him to do justice."},{l:"The widow's oil, Eliyahu",r:"Melakhim Aleph 17:16",nav:33,ch:17,v:[16],bk:null,t:"The jar of flour was not spent, neither did the jug of oil become empty, according to the word of YHWH that he spoke by Eliyahu."},{l:"The widow's oil, Elisha",r:"Melakhim Bet 4:6",nav:35,ch:4,v:[6],bk:null,t:"When the vessels were full, she said to her son, Bring me another vessel. And he said to her, There is not another. Then the oil stopped flowing."},{l:"Na'aman healed in the Yarden",r:"Melakhim Bet 5:14",nav:35,ch:5,v:[14],bk:null,t:"So he went down and dipped himself seven times in the Yarden, according to the word of the man of Creator, and his flesh was restored like the flesh of a little child, and he was clean."},{l:"The valley of dry bones",r:"Yehezkel 37:10",nav:55,ch:37,v:[10],bk:null,t:"So I prophesied as he commanded me, and the breath came into them, and they lived and stood on their feet, an exceedingly great army."},{l:"Yesha'yahu's guilt taken away",r:"Yesha'yahu 6:7",nav:39,ch:6,v:[7],bk:null,t:"And he touched my mouth and said: Behold, this has touched your lips. Your guilt is taken away, and your sin atoned for."},{l:"Yirmeyahu at the potter’s house",r:"Yirmeyahu 18:4",nav:46,ch:18,v:[4],bk:null,t:"And the vessel he was making of clay was spoiled in the potter's hand, and he reworked it into another vessel, as it seemed good to the potter to do."},{l:"Nechemyah's enemies lose heart",r:"Nekhemyah 6:16",nav:85,ch:6,v:[16],bk:"NEKHEMYAH",t:"And when all our enemies heard of it, all the nations around us were afraid and fell greatly in their own esteem, for they perceived that this work had been accomplished with the help of our Creator."},{l:"Ezra reads the Torah publicly",r:"Nekhemyah 8:6",nav:85,ch:8,v:[6],bk:"NEKHEMYAH",t:"And Ezra blessed YHWH, the great Creator, and all the people answered, Amen, Amen, lifting up their hands. And they bowed their heads and worshiped YHWH with their faces to the ground."},{l:"Let there be light",r:"Bereshit 1:3",nav:0,ch:1,v:[3],bk:null,t:"And the Creator said: Let there be light. And there was light."},{l:"The Shema",r:"Devarim 6:4",nav:10,ch:6,v:[4],bk:null,t:"Hear, O Yisra'el: YHWH our Creator, YHWH is one."},{l:"The Aaronic Blessing",r:"Bamidbar 6:24-26",nav:8,ch:6,v:[24,25,26],bk:null,t:"YHWH bless you, and keep you; YHWH make his face to shine upon you, and be gracious to you; YHWH lift up his countenance upon you, and give you peace."},{l:"Amos's plumb line vision",r:"Amos 7:7",nav:58,ch:7,v:[7],bk:"AMOS",t:"This is what he showed me: behold, the Creator was standing beside a wall built with a plumb line, with a plumb line in his hand."},{l:"Havakuk's watchpost",r:"Havakuk 2:1",nav:60,ch:2,v:[1],bk:"HAVAKUK",t:"I will take my stand at my watchpost and station myself on the tower, and look out to see what he will say to me, and what I will answer concerning my complaint."},{l:"Malakhi's refiner's fire",r:"Malakhi 3:2",nav:61,ch:3,v:[2],bk:"MALAKHI",t:"But who can endure the day of his coming, and who can stand when he appears? For he is like a refiner's fire and like fullers' soap."}];
+// Wisdom pool: Tehillim, Mishlei, Iyov, Kohelet -- every verse in these
+// qualifies automatically (no curation needed, they're self-contained
+// lines by nature), picked and fetched at random when the button fires.
+var VOD_WISDOM=[{nav:62,name:'Tehillim'},{nav:63,name:'Tehillim'},{nav:64,name:'Tehillim'},{nav:65,name:'Tehillim'},{nav:66,name:'Tehillim'},{nav:67,name:'Tehillim'},{nav:68,name:'Tehillim'},{nav:69,name:'Tehillim'},{nav:70,name:'Tehillim'},{nav:71,name:'Mishlei'},{nav:72,name:'Mishlei'},{nav:73,name:'Mishlei'},{nav:74,name:'Iyov'},{nav:75,name:'Iyov'},{nav:76,name:'Iyov'},{nav:80,name:'Kohelet'}];
+var PENDING_JUMP=null;
 var FS=parseFloat(localStorage.getItem('acr_fs')||'10.5');
 var LH=parseFloat(localStorage.getItem('acr_lh')||'1.65');
 var DARK=localStorage.getItem('acr_dark')==='1';
@@ -436,7 +474,10 @@ function loadSection(idx,restore){
       vStop(); buildVP();
       var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
       VPOS=vp[fid]||0; updateVS();
-      if(restore){
+      if(PENDING_JUMP){
+        var pj=PENDING_JUMP; PENDING_JUMP=null;
+        setTimeout(function(){ scrollToVerseInContent(pj.ch,pj.v,pj.bk); },80);
+      } else if(restore){
         var sp=JSON.parse(localStorage.getItem('acr_sp')||'{}');
         if(sp[fid]) setTimeout(function(){window.scrollTo(0,sp[fid]);},80);
         else window.scrollTo(0,0);
@@ -448,6 +489,131 @@ function loadSection(idx,restore){
 }
 
 function navTo(idx){if(idx>=0&&idx<NAVIDS.length)loadSection(idx,false);}
+
+// RANDOM VERSE / LESSON -- scrolls to the exact verse rather than just
+// opening the volume, by walking the rendered #content paragraphs
+// forward from the matching chapter heading until it finds the matching
+// verse-number span. bk disambiguates chapter numbers shared by more
+// than one book within the same file (The Twelve, Ezra-Nekhemyah).
+function scrollToVerseInContent(ch,v,bk){
+  var heads=document.querySelectorAll('#content p.dp[style*="border-bottom:1.5px solid #666666"]');
+  var target=null;
+  for(var i=0;i<heads.length;i++){
+    var htxt=(heads[i].textContent||'').toUpperCase();
+    if(bk && htxt.indexOf(bk)<0) continue;
+    var mm=htxt.match(/CHAPTER\s*(\d+)/);
+    if(mm && parseInt(mm[1],10)===ch){ target=heads[i]; break; }
+  }
+  if(!target){ window.scrollTo(0,0); return; }
+  var el=target.nextElementSibling, found=null;
+  while(el){
+    if(el.matches && el.matches('[style*="border-bottom:1.5px solid #666666"]')) break;
+    if(el.getAttribute && el.getAttribute('data-ptype')==='verse'){
+      var sp=el.querySelector('span');
+      var num=sp?parseInt((sp.textContent||'').trim(),10):null;
+      if(num===v){ found=el; break; }
+    }
+    el=el.nextElementSibling;
+  }
+  if(found){
+    found.scrollIntoView({behavior:'smooth',block:'center'});
+    var orig=found.style.backgroundColor;
+    found.style.transition='background-color 0.3s';
+    found.style.backgroundColor='rgba(176,48,48,.22)';
+    setTimeout(function(){found.style.backgroundColor=orig;},2500);
+  } else {
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+// Pulls {ch,v,text} for every verse out of a volume's raw html, tracking
+// the current chapter the same way the chapter headings mark it, so a
+// random pick can be cited correctly (book name + chapter + verse).
+function rvExtractVerses(htmlStr){
+  var out=[];
+  var paras=htmlStr.match(/<p class="dp"[^>]*>[\s\S]*?<\/p>/g)||[];
+  var curCh=null;
+  for(var i=0;i<paras.length;i++){
+    var p=paras[i];
+    if(p.indexOf('border-bottom:1.5px solid #666666')>=0){
+      var mm=p.match(/CHAPTER\s*(\d+)/i);
+      curCh=mm?parseInt(mm[1],10):null;
+      continue;
+    }
+    if(curCh!=null && p.indexOf('data-ptype="verse"')>=0){
+      var vm=p.match(/<span[^>]*>(\d+)\s*<\/span><span[^>]*>([^<]*)<\/span>/);
+      if(vm) out.push({ch:curCh,v:parseInt(vm[1],10),text:vm[2]});
+    }
+  }
+  return out;
+}
+
+function rvRecentHas(ref){
+  var hist=[];
+  try{hist=JSON.parse(localStorage.getItem('acr_rv_hist')||'[]');}catch(e){}
+  return hist.indexOf(ref)>=0;
+}
+function rvRemember(ref){
+  var hist=[];
+  try{hist=JSON.parse(localStorage.getItem('acr_rv_hist')||'[]');}catch(e){}
+  hist.push(ref);
+  if(hist.length>8) hist=hist.slice(hist.length-8);
+  try{localStorage.setItem('acr_rv_hist',JSON.stringify(hist));}catch(e){}
+}
+
+var RV_PENDING=null;
+
+function openRandomVerse(){
+  document.getElementById('rv-label').textContent='Today’s Verse';
+  document.getElementById('rv-ref').textContent='—';
+  document.getElementById('rv-text').textContent='Loading…';
+  document.getElementById('rv-modal').classList.add('on');
+  if(Math.random()<0.5) rvPickWisdom(0);
+  else rvPickMoment();
+}
+
+function rvPickMoment(){
+  var pool=VOD_MOMENTS.filter(function(m){return !rvRecentHas(m.r);});
+  if(!pool.length) pool=VOD_MOMENTS;
+  var m=pool[Math.floor(Math.random()*pool.length)];
+  rvRemember(m.r);
+  document.getElementById('rv-label').textContent=m.l;
+  document.getElementById('rv-ref').textContent=m.r;
+  document.getElementById('rv-text').textContent=m.t;
+  RV_PENDING={nav:m.nav,ch:m.ch,v:m.v[0],bk:m.bk};
+}
+
+function rvPickWisdom(attempt){
+  if(attempt>5){ document.getElementById('rv-text').textContent='Could not load. Try again.'; return; }
+  var w=VOD_WISDOM[Math.floor(Math.random()*VOD_WISDOM.length)];
+  fetch('data/'+NAVIDS[w.nav]+'.json')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var verses=rvExtractVerses(d.html||d.content||'');
+      if(!verses.length) return rvPickWisdom(attempt+1);
+      var pick=verses[Math.floor(Math.random()*verses.length)];
+      var ref=w.name+' '+pick.ch+':'+pick.v;
+      if(rvRecentHas(ref)) return rvPickWisdom(attempt+1);
+      rvRemember(ref);
+      document.getElementById('rv-label').textContent='Wisdom';
+      document.getElementById('rv-ref').textContent=ref;
+      document.getElementById('rv-text').textContent=pick.text;
+      RV_PENDING={nav:w.nav,ch:pick.ch,v:pick.v,bk:null};
+    })
+    .catch(function(){ rvPickWisdom(attempt+1); });
+}
+
+function closeRVModal(){
+  document.getElementById('rv-modal').classList.remove('on');
+}
+
+function rvReadInContext(){
+  if(!RV_PENDING) return;
+  var p=RV_PENDING;
+  closeRVModal();
+  PENDING_JUMP={ch:p.ch,v:p.v,bk:p.bk};
+  loadSection(p.nav,false);
+}
 
 // SIDEBAR
 function buildSB(){
