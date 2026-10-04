@@ -1,7 +1,24 @@
 # Load Fit — placeholder
 
 **Status: not built yet.** This folder is a reserved home in the repo for
-Load Fit, a new app in the Load family. No code lives here yet.
+Load Fit, a new app in the Load family. No app code (HTML/JS/manifest)
+lives here yet — only the icon pack below has been placed so far.
+
+## What's here so far
+
+- `icons/` — the PWA icon set from the approved Load Fit artwork
+  (favicon through 512px, named `icon-<size>.png` to match the convention
+  already used in `loadwords/icons/`), plus `manifest-icons-example.json`
+  kept as reference for when a real `manifest.json` is wired in.
+- `assets/load-fit-master-1024.png` — the 1024px source artwork, kept for
+  future re-exports.
+
+**Known issue in the delivered icon pack, not yet fixed:** the pack's
+"maskable" icon (`icons/icon-512-maskable.png`) is byte-identical to the
+plain `icon-512.png` — it has no safe-zone padding, so Android could clip
+the artwork at the edges when it crops the icon into a circle or rounded
+square. Flag this back to whoever is building the rest of the app; a real
+padded maskable variant is needed before shipping to Android users.
 
 ## How this gets filled in
 
