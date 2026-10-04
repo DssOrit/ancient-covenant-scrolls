@@ -43,6 +43,7 @@ body.dark #nav{background:#111}
 .nb{background:none;border:none;color:#bbb;cursor:pointer;padding:3px 6px;border-radius:3px;font-size:12px;font-family:Arial;white-space:nowrap;flex-shrink:0}
 .nb:hover,.nb.on{background:#444;color:#fff}
 #nav-refresh{color:#C8971F}
+#rv-btn{color:#C8971F;border:1px solid rgba(200,151,31,.45);border-radius:5px}
 #nav-title{flex:1;color:#777;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px;min-width:0}
 #solar-back{display:none;background:#1a3a5a;color:#7abfff;border:none;border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;flex-shrink:0;font-family:Arial;white-space:nowrap;margin-right:2px}
 #srch{background:#333;border:1px solid #555;border-radius:3px;color:#ddd;padding:3px 6px;font-size:11px;width:110px;font-family:Arial;flex-shrink:0}
@@ -179,7 +180,7 @@ body.dark #reader-footer{background:#0a0a0a}
   <button class="nb" onclick="toggleRecent()" title="Recently read">🕐</button>
   <button class="nb" onclick="toggleBM()" id="bm-btn" title="Bookmarks">☆</button>
   <button class="nb" onclick="toggleChJump()" title="Jump to chapter">⊕</button>
-  <button class="nb" onclick="openRandomVerse()" title="Random verse or lesson">🎲</button>
+  <button class="nb" id="rv-btn" onclick="openRandomVerse()" title="Random verse or lesson"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;display:inline-block"><path d="M6 4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2"/><path d="M6 4h12c1.1 0 2 .9 2 2v10"/><path d="M6 20h11c1.1 0 2-.9 2-2v-2H8c-1.1 0-2 .9-2 2s.9 2 2 2"/><path d="M9 8h7"/><path d="M9 11h7"/></svg></button>
   <button class="nb" onclick="toggleNotes()" title="Notes" id="notes-btn">📝</button>
   <button class="nb" onclick="toggleNotesViewer()" title="All notes">📋</button>
   <input id="srch" type="text" placeholder="Search…" oninput="doSearch(this.value)">
