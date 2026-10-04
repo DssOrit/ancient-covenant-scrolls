@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v41';
+const APP_VERSION = 'v42';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -514,6 +514,7 @@ const State = {
   debate:{ index:0, score:0, phase:'guess', options:[], chosen:null, correctPick:null },
   grammar:{ index:0, score:0, total:0, phase:'lesson', chosen:null, correctPick:null },
   mystery:{ candidates:[], culpritId:null, clues:[], revealedCount:1, eliminated:{}, phase:'clues', guessId:null, correct:null },
+  cluegrid:{ clueWord:'', clueCount:0, tiles:[], strikes:0, score:0, phase:'playing', lastWrong:null },
   wwm:{ wordId:null, weekStart:null, history:[], stagesDone:{spelling:false,definition:false,usage:false,function:false}, phase:'overview', answered:false, correctPick:null, chosen:null, spellAttempt:'', options:[], correctValue:null },
   listFilter:'all', listSearch:'',
   detailId:null,
@@ -925,6 +926,7 @@ function renderView(){
     case 'debate': return renderDebate();
     case 'grammar': return renderGrammar();
     case 'mystery': return renderMystery();
+    case 'cluegrid': return renderClueGrid();
     case 'games': return renderGames();
     case 'wwm': return renderWWM();
     case 'add': return renderAdd();
@@ -1562,6 +1564,7 @@ function renderGames(){
     <button class="action" data-nav="quest" style="--c:#5B21B6"><div class="a-ic">${ic('book')}</div><div class="a-txt"><b>Story Quest</b><span>A short mystery — choose the right word to shape the story</span></div><div class="a-chev">${ic('chevR')}</div></button>
     <button class="action" data-nav="debate" style="--c:#1D4ED8"><div class="a-ic">${ic('person')}</div><div class="a-txt"><b>Debate &amp; Meeting Arena</b><span>Pick the word that answers the meeting scenario</span></div><div class="a-chev">${ic('chevR')}</div></button>
     <button class="action" data-nav="mystery" style="--c:#6E2F8A"><div class="a-ic">${ic('search')}</div><div class="a-txt"><b>Word Mystery</b><span>Use the clues to deduce the mystery word, then accuse</span></div><div class="a-chev">${ic('chevR')}</div></button>
+    <button class="action" data-nav="cluegrid" style="--c:#9D174D"><div class="a-ic">${ic('gamepad')}</div><div class="a-txt"><b>Clue Grid</b><span>Tap every synonym of the clue word — avoid the trap tile</span></div><div class="a-chev">${ic('chevR')}</div></button>
   </div>`;
 }
 
@@ -2203,6 +2206,110 @@ function renderFeud(){
   <div class="feud-pool">
     ${F.pool.filter(w=>!F.boardWords.some(b=>b.id===w.id && b.revealed)).map(w=>`<button class="feud-chip ${F.lastWrong===w.id?'wrong':''}" data-feud-word="${escapeAttr(w.id)}">${escapeHtml(w.word)}</button>`).join('')}
   </div>`}`;
+}
+
+// ---------------- CLUE GRID ----------------
+// Groups words into synonym clusters using the syn[] field each word already
+// carries (union-find over both directions of the listed-synonym relation, since
+// a word's own syn list often doesn't link back from the other word's entry).
+function synClusters(){
+  const words = State.words.filter(w=>w.word && w.definition);
+  const byLower = new Map();
+  words.forEach(w=>byLower.set(w.word.toLowerCase(), w));
+  const parent = {};
+  words.forEach(w=>{ parent[w.id] = w.id; });
+  function find(x){ while(parent[x]!==x){ parent[x]=parent[parent[x]]; x=parent[x]; } return x; }
+  function union(a,b){ const ra=find(a), rb=find(b); if(ra!==rb) parent[ra]=rb; }
+  words.forEach(w=>{
+    (w.syn||[]).forEach(s=>{
+      const other = byLower.get(s.toLowerCase());
+      if(other && other.id!==w.id) union(w.id, other.id);
+    });
+  });
+  const groups = {};
+  words.forEach(w=>{ const r=find(w.id); (groups[r]=groups[r]||[]).push(w); });
+  return Object.values(groups).filter(g=>g.length>=2);
+}
+function startClueGrid(){
+  const clusters = synClusters();
+  if(!clusters.length){ State.cluegrid = { clueWord:'', clueCount:0, tiles:[], strikes:0, score:0, phase:'idle', lastWrong:null }; return; }
+  const cluster = clusters[Math.floor(Math.random()*clusters.length)];
+  const shuffledCluster = shuffle(cluster);
+  const clue = shuffledCluster[0];
+  const matches = shuffledCluster.slice(1, 5); // up to 4 synonym tiles on the board
+  const matchIds = new Set(matches.map(w=>w.id));
+  const clusterIds = new Set(cluster.map(w=>w.id));
+  const distractorPool = shuffle(State.words.filter(w=>w.definition && !clusterIds.has(w.id)));
+  const trap = distractorPool[0];
+  const fillerCount = Math.max(0, 16 - matches.length - 1);
+  const fillers = distractorPool.slice(1, 1+fillerCount);
+  const tiles = shuffle([
+    ...matches.map(w=>({id:w.id, word:w.word, kind:'match', status:'hidden'})),
+    ...(trap ? [{id:trap.id, word:trap.word, kind:'trap', status:'hidden'}] : []),
+    ...fillers.map(w=>({id:w.id, word:w.word, kind:'filler', status:'hidden'})),
+  ]);
+  State.cluegrid = { clueWord:clue.word, clueCount:matches.length, tiles, strikes:0, score:0, phase:'playing', lastWrong:null };
+}
+function clueGridGuess(tileId){
+  const G = State.cluegrid;
+  if(G.phase!=='playing') return;
+  const tile = G.tiles.find(t=>t.id===tileId && t.status==='hidden');
+  if(!tile) return;
+  if(tile.kind==='match'){
+    tile.status = 'match';
+    G.score += 1;
+    G.lastWrong = null;
+    gradeWord(tileId, 2);
+    if(!G.tiles.some(t=>t.kind==='match' && t.status!=='match')){ G.phase = 'won'; }
+  } else if(tile.kind==='trap'){
+    tile.status = 'trap';
+    G.phase = 'lost-trap';
+  } else {
+    tile.status = 'wrong';
+    G.strikes += 1;
+    G.lastWrong = tileId;
+    if(G.strikes >= 3){ G.phase = 'lost-strikes'; }
+  }
+}
+function renderClueGrid(){
+  const G = State.cluegrid;
+  if(!G.tiles.length){
+    return `<div class="empty"><p>Loading Clue Grid…</p></div>`;
+  }
+  const done = G.phase!=='playing';
+  const matchesFound = G.tiles.filter(t=>t.kind==='match' && t.status==='match').length;
+  return `<div class="pagehead"><h2>Clue Grid</h2></div>
+  <p class="sub">Tap every tile that's a true synonym of the clue word below. One tile is a trap — tap it and the round ends right away.</p>
+  <div class="cluegrid-clue">
+    <span class="cluegrid-clue-label">CLUE</span>
+    <span class="cluegrid-clue-word">${escapeHtml(G.clueWord.toUpperCase())}</span>
+    <span class="cluegrid-clue-count">${G.clueCount} match${G.clueCount===1?'':'es'}</span>
+  </div>
+  <div class="memory-scoreboard">
+    <div>${ic('check')}<b>${matchesFound}/${G.clueCount}</b><span>Found</span></div>
+    <div>${ic('x')}<b>${G.strikes}/3</b><span>Strikes</span></div>
+  </div>
+  <div class="clue-grid">
+    ${G.tiles.map(t=>{
+      let cls = 'clue-tile';
+      let tag = '';
+      if(t.status==='match'){ cls += ' match'; tag = 'FOUND'; }
+      else if(t.status==='wrong'){ cls += ' wrong'; tag = 'NOT A MATCH'; }
+      else if(t.status==='trap'){ cls += ' trap'; tag = 'TRAP'; }
+      else if(done && t.kind==='match'){ cls += ' missed'; tag = 'MISSED'; }
+      const disabled = done || t.status!=='hidden';
+      return `<button class="${cls}" data-cluegrid-tile="${escapeAttr(t.id)}" ${disabled?'disabled':''}>
+        <span class="clue-tile-word">${escapeHtml(t.word)}</span>
+        ${tag ? `<span class="clue-tile-tag">${tag}</span>` : ''}
+      </button>`;
+    }).join('')}
+  </div>
+  ${done ? `<div class="note-box" style="background:${G.phase==='won'?'var(--good-soft)':'var(--warn-soft)'};color:${G.phase==='won'?'var(--good)':'var(--warn)'}">${ic(G.phase==='won'?'check':'x')}<span>${
+    G.phase==='won' ? `All ${G.clueCount} synonym${G.clueCount===1?'':'s'} found! Score: ${G.score}.` :
+    G.phase==='lost-trap' ? `That tile was the trap. Round over — the missed synonyms are marked above.` :
+    `Out of strikes. Round over — the missed synonyms are marked above.`
+  }</span></div>
+  <button class="big-btn" style="margin-top:8px;" id="cluegridAgainBtn">Play again</button>` : ''}`;
 }
 
 // ---------------- STACK & MATCH ----------------
@@ -3049,6 +3156,7 @@ function bindEvents(){
       if(v==='debate'){ startDebate(); }
       if(v==='grammar'){ startGrammar(); }
       if(v==='mystery'){ startMystery(); }
+      if(v==='cluegrid'){ startClueGrid(); }
       if(v==='add'){ State.editingWord=null; }
       if(v==='list' && cat){ State.listFilter = cat; }
       State.view = v;
@@ -3466,6 +3574,12 @@ function bindEvents(){
   });
   const feudAgainBtn = document.getElementById('feudAgainBtn');
   if(feudAgainBtn){ feudAgainBtn.addEventListener('click', ()=>{ startFeud(); render(); }); }
+
+  document.querySelectorAll('[data-cluegrid-tile]').forEach(el=>{
+    el.addEventListener('click', ()=>{ clueGridGuess(el.getAttribute('data-cluegrid-tile')); render(); });
+  });
+  const cluegridAgainBtn = document.getElementById('cluegridAgainBtn');
+  if(cluegridAgainBtn){ cluegridAgainBtn.addEventListener('click', ()=>{ startClueGrid(); render(); }); }
 
   document.querySelectorAll('[data-stack-col]').forEach(el=>{
     el.addEventListener('click', ()=>{ stackDrop(Number(el.getAttribute('data-stack-col'))); render(); });

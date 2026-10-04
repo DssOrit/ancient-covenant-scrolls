@@ -442,6 +442,25 @@ main{ flex:1; padding:6px 20px 30px; }
 .feud-chip{ padding:10px 16px; border-radius:20px; border:1.5px solid var(--border); background:var(--bg-card); font-weight:700; font-size:calc(var(--fs-base) * 0.85); cursor:pointer; }
 .feud-chip.wrong{ background:var(--warn-soft); border-color:var(--warn); color:var(--warn); }
 
+/* Clue Grid */
+.cluegrid-clue{ display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1.5px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:14px; flex-wrap:wrap; }
+.cluegrid-clue-label{ font-size:calc(var(--fs-base) * 0.62); font-weight:800; letter-spacing:.08em; color:var(--text-soft); }
+.cluegrid-clue-word{ font-family:var(--font-head); font-weight:800; font-size:calc(var(--fs-base) * 1.15); color:var(--accent-2); }
+.cluegrid-clue-count{ margin-left:auto; font-size:calc(var(--fs-base) * 0.78); color:var(--text-soft); font-weight:700; }
+.clue-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(78px,1fr)); gap:8px; }
+.clue-tile{ min-height:56px; border-radius:12px; border:1.5px solid var(--border); background:var(--bg-card); padding:8px 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; cursor:pointer; text-align:center; }
+.clue-tile-word{ font-weight:700; font-size:calc(var(--fs-base) * 0.78); word-break:break-word; }
+.clue-tile-tag{ font-size:calc(var(--fs-base) * 0.56); font-weight:800; letter-spacing:.05em; }
+.clue-tile.match{ background:var(--good-soft); border-color:var(--good); }
+.clue-tile.match .clue-tile-word, .clue-tile.match .clue-tile-tag{ color:var(--good); }
+.clue-tile.wrong{ background:var(--warn-soft); border-color:var(--warn); }
+.clue-tile.wrong .clue-tile-word, .clue-tile.wrong .clue-tile-tag{ color:var(--warn); }
+.clue-tile.trap{ background:var(--warn); border-color:var(--warn); }
+.clue-tile.trap .clue-tile-word, .clue-tile.trap .clue-tile-tag{ color:#fff; }
+.clue-tile.missed{ background:transparent; border-color:var(--good); border-style:dashed; }
+.clue-tile.missed .clue-tile-word, .clue-tile.missed .clue-tile-tag{ color:var(--good); }
+.clue-tile:disabled:not(.match):not(.wrong):not(.trap):not(.missed){ opacity:.45; cursor:default; }
+
 /* Stack & Match */
 .stack-next{ display:flex; align-items:center; gap:10px; margin-top:14px; padding:12px 14px; border-radius:12px; border:1.5px dashed var(--accent); background:var(--bg-card); }
 .stack-next-label{ font-family:var(--font-head); font-weight:800; font-size:calc(var(--fs-base) * 0.68); color:var(--accent); letter-spacing:.06em; flex-shrink:0; }
