@@ -11,8 +11,8 @@
   surfaced that ACR Reader's own existing hard-refresh button was itself
   unscoped (violating locked Rule 21), so that got fixed too, explicitly
   scoped ("refresh circle ONLY").
-- `main` HEAD as of last merge: `b300018` (PR #830 merged), cache
-  `acr2-v22`.
+- `main` HEAD at session end: `b7b5306` (PR #836 merged), cache
+  `acr2-v25` / `acr-solar-v35`.
 - PR **#827** (ACR2 Qumran-attestation fix) — **merged and verified
   live**, cache `acr2-v21`.
 - PR **#828** (CLAUDE.md Rule 30 lock) — **merged and verified live**.
@@ -25,10 +25,10 @@
   that the merge touched only `ACR2/index.html` (one line, the
   `nav-refresh` button) and `ACR2/sw.js` (cache bump) — no other site's
   files.
-- PR **#835**: "ACR2: remove Book of War (Vol 12) entirely" — open,
-  branch `claude/acr2-remove-book-of-war`. Went stale against `main`
-  after #830 merged (both touched `ACR2/index.html` and `ACR2/sw.js`),
-  GitHub showed "Unable to merge — Conflicts must be resolved before
+- PR **#835**: "ACR2: remove Book of War (Vol 12) entirely" — **merged
+  and verified live** by user. Went stale against `main` after #830
+  merged (both touched `ACR2/index.html` and `ACR2/sw.js`), GitHub
+  showed "Unable to merge — Conflicts must be resolved before
   merging." User gave the scoped unlock phrase **"edit ACR2 ONLY TO FIX
   THE 835 merge."** Backup `backup/2026-08-11-acr2-v22` cut and verified
   against `origin/main` before any write. Branch merged with current
@@ -36,11 +36,10 @@
   (this PR's `v23` vs. #830's already-live `v22`) — resolved forward to
   `acr2-v24`. `ACR2/index.html`'s `NAVIDS`/`LABELS`/`TOC` auto-merged
   cleanly, combining #830's refresh button with #835's Book of War
-  removal. Verified: no leftover conflict markers, zero remaining
-  references to Book of War/`file_13`, JSON valid, HTML tags balanced,
-  JS syntax valid. Pushed. `mergeable_state` now `unstable` (mergeable,
-  normal CI-pending state) instead of `dirty` — awaiting user merge
-  confirmation per Rule 9.
+  removal. User then asked to also relabel Vol 13/14 down to Vol 12/13
+  (display labels only, ids/idx unchanged) to close the numbering gap
+  left by the removal — done, cache bumped again to `acr2-v25`. User
+  confirmed "Verified" after merge.
 - PR **#826** (session notes, docs-only, from earlier today) — still
   open, awaiting merge; content is a subset of what's now in #827's
   merged version, may be safe to close without merging — flagged to
@@ -56,9 +55,12 @@
   ordinary devotional/prayer material — user unlocked ACR Solar and
   scoped the fix, see PR #836 below.
 - PR **#836**: "ACR Solar: remove Book of War (4Q285/11Q14)
-  references" — open, branch `claude/acr-solar-remove-book-of-war`,
-  awaiting user merge confirmation per Rule 9. Cache bumped
-  `acr-solar-v34` -> `acr-solar-v35`.
+  references" — **merged**. Removed the two prayer citation-map
+  entries (18, 34), the live devotional prayer text quoting it
+  directly, and both "Volume of the Day" label arrays, keeping the
+  paired `readerIdx` array in sync. Cache bumped `acr-solar-v34` ->
+  `acr-solar-v35`. Backup `backup/2026-08-11-acr-solar-v34` cut before
+  the write.
 
 ## Built today
 
@@ -280,9 +282,10 @@
   https://github.com/DssOrit/ancient-covenant-scrolls/pull/829
 - PR #835 (ACR2: remove Book of War) — **merged and verified live**,
   cache `acr2-v25`, labels relabeled Vol 12/13 with no gap.
-- **PR #836 needs user merge confirmation** (ACR Solar: remove Book of
-  War references):
-  https://github.com/DssOrit/ancient-covenant-scrolls/pull/836
+- PR #836 (ACR Solar: remove Book of War references) — **merged**,
+  cache `acr-solar-v35`. Not yet user-verified on a physical device —
+  next session should confirm the "Volume of the Day" widget and the
+  two affected prayer entries (18, 34) render correctly.
 - **ACR Study still has one analytical citation of 4Q285** in
   `study/content/file_31.json` — user reviewed and confirmed this use
   (mortal Davidic human, not deity) is fine as-is, no action needed.
@@ -340,7 +343,48 @@
   `main` HEAD right after PR #835 merged, cut and verified before the
   ACR Solar Book of War removal.
 
-Recovery: `git checkout backup/2026-08-11-acr2-v21` or
-`backup/2026-08-11-acr-v111` for the current pre-hard-refresh-fix state
-(same commit either way); `git checkout backup/2026-08-11-acr2-v20` to
-go back further, to before today's ACR2 Qumran-attestation fix.
+- `backup/2026-08-11-acr-solar-v35` — SHA `b7b53066268da6817afa67e6a990529a8719f6f5`,
+  `main` HEAD at session end (post PR #836 merge, the last
+  verified-working state today). Cut and verified at wrap-up, per the
+  mandatory stable-state backup rule.
+
+Recovery: `git checkout backup/2026-08-11-acr-solar-v35` for tonight's
+final state; `git checkout backup/2026-08-11-acr2-v21` or
+`backup/2026-08-11-acr-v111` for the pre-hard-refresh-fix state (same
+commit either way); `git checkout backup/2026-08-11-acr2-v20` to go
+back further, to before today's ACR2 Qumran-attestation fix.
+
+## Today's commit log (newest first)
+
+```
+b7b5306 Merge pull request #836 from DssOrit/claude/acr-solar-remove-book-of-war
+341bf5c Session notes: log cross-site Book of War check and PR #836
+7342b00 ACR Solar: remove Book of War (4Q285/11Q14) references
+6d0e34a Merge pull request #835 from DssOrit/claude/acr2-remove-book-of-war
+192c0cb ACR2: relabel Vol 13/14 down to Vol 12/13 after Book of War removal
+0643fcb Session notes: log PR #835 merge-conflict resolution
+e7ddd3b Merge remote-tracking branch 'origin/main' into claude/acr2-remove-book-of-war
+b300018 Merge pull request #830 from DssOrit/claude/acr2-scoped-hard-refresh
+60fb82c ACR2: remove Book of War (Vol 12) entirely
+30b54b6 Merge pull request #834 from DssOrit/claude/lock-rule32-dss-forgery-screening
+832af39 CLAUDE.md: lock Rule 32 — DSS forgery screening (provenance verification)
+da02c3a Merge pull request #833 from DssOrit/claude/lock-merge-link-only
+e180df9 CLAUDE.md: correct Rule 9 — default is ask-and-wait, not link-only
+6f6e608 CLAUDE.md: Rule 9 tightened to link-only merges, Rule 6 stale contradiction fixed
+2e749cf CLAUDE.md: lock Rule 31 — paleo Hebrew for Hebrew, native script for Greek/Aramaic, English alongside (#832)
+def17c8 CLAUDE.md: lock Rule 31 — paleo Hebrew for Hebrew, native script for Greek/Aramaic, English alongside
+eb35492 Merge pull request #831 from DssOrit/claude/root-sw-activate-scope-fix
+35cb813 ACR Reader: fix root sw.js activate handler to leave every sub-site's cache alone
+0e042ef Merge pull request #829 from DssOrit/claude/acr-reader-scope-hard-refresh
+23769b1 Session notes: log PR #827/#828 merges and the hard-refresh scoping fixes (#829, #830)
+c82cee9 ACR2: add a scoped hard-refresh button
+b94ec84 ACR Reader: scope the hard-refresh button to its own cache and SW only
+59f819e Merge pull request #828 from DssOrit/claude/lock-rule30-sole-creator-safeguard
+0bd89a4 CLAUDE.md: sharpen Rule 30's trigger test and scope, per user refinement
+b21b34e CLAUDE.md: lock Rule 30 — reject/quarantine polytheism, syncretism, deified intermediaries
+40d0e87 Merge pull request #827 from DssOrit/claude/acr2-qumran-attestation-fixes
+b4faa69 Session notes: log ACR2 Qumran-attestation fix and PR #827
+2f9f858 ACR2: correct Qumran-attestation claims in Animal Apocalypse and Epistle notes
+9f6d5b5 Session notes 2026-08-11: log Chanokh export + Qumran-attestation research review
+24a2d2f Prophetic Watch brief 2026-08-11
+```
