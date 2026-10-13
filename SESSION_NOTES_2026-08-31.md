@@ -470,3 +470,55 @@ point, since it's a later commit on `main`).
   `562996fe1009a47aee042434ada901d81c3c3e94`, `main` HEAD right before
   the ACR2 12-text restoration. Cut and verified before any write, per
   Rule 26. Recovery: `git checkout backup/2026-08-31-acr2-v25`.
+- `backup/2026-08-31-acr-solar-v41` — SHA
+  `1f73642c8248f790135eb4da39deed25f462da2a`, `main` HEAD right after PR
+  #866 (Chanokh content on the four Tekufah entries) merged and
+  verified live. Recovery: `git checkout backup/2026-08-31-acr-solar-v41`.
+- `backup/2026-08-31-session-end` — SHA
+  `c49231968057dc69d051d38446b641d1c6c954e3`, final `main` HEAD at
+  session close (includes PR #868/Rule 34 and other sessions' concurrent
+  work). Recovery: `git checkout backup/2026-08-31-session-end`.
+
+## Session close — 2026-09-01 (late 2026-08-31 wall clock)
+
+- **PR #866 (Chanokh content, 4 Tekufah entries) — merged, verified.**
+  Before merge, re-confirmed the exact diff scope against a *fresh*
+  `origin/main` fetch after an earlier check had accidentally diffed
+  against a stale local `main` ref and shown 31 unrelated files — caught
+  and corrected before reporting it to the user. Also caught that the
+  PR's own description still carried the retracted false-positive claim
+  from before the correction and fixed the PR body to match the
+  corrected session notes, so nothing false was left standing anywhere
+  in the PR. Re-ran the full verification suite (syntax, `HOLIDAYS`
+  parse, headless-browser render + modal + Yom Kippur weekday check) a
+  second time against the real PR branch content, not from memory,
+  before telling the user it was safe to merge. User merged; verified
+  directly against `origin/main` (cache `acr-solar-v41`, Chanokh Ch.
+  40/75/79 citations all present in the live file).
+- **New locked rule — CLAUDE.md Rule 34, merged.** User said "New rule,
+  important... ALWAYS DO THOROUGH CHECKS BEFORE REPORTING ISSUES! Never
+  report false errors" after the Tekufah false-positive. Added Rule 34
+  (full text in the file) requiring the available checks be exhausted
+  — re-derive the math/logic, re-read primary text closely, cross-check
+  already-established results — before any "found an issue" report.
+  Opened as PR #868; a "close this for now" instruction crossed with
+  the user separately merging it via the PR link — reconciled directly
+  with the user (confirmed: "Yes I merged because you sent the link"),
+  no actual conflict, just a timing mix-up. Merged and live on `main`.
+- **Follow-up spot-checks, both held up.** User asked "what do you mean
+  wood offering days" (a plain content question, answered from the live
+  file) and then specifically demanded a fresh, from-scratch re-check of
+  the "no prayer text preserved" claim for the Wood Offering festival,
+  given the earlier false positive. Re-verified via git history (PR
+  #858 did genuinely touch this entry, not skipped) plus two new
+  WebSearches targeting the Temple Scroll's Wood Offering columns
+  specifically for any liturgical/oath content — found festival
+  structure detail (six days, tribal pairs) but nothing contradicting
+  "no prayer text attested," unlike Shavuot's genuinely-quoted 1QS
+  covenant-renewal liturgy used as the contrast case. Claim held up
+  under fresh scrutiny, reported as such rather than just reasserted.
+- User said "Then we are done." Cut the final session-end backup at
+  current `main` HEAD (`c492319`, see Backups above) and closing this
+  log. No uncommitted work; everything shipped this session is either
+  merged and verified, or explicitly logged as pending the user's
+  choice (see Pending/parked).
