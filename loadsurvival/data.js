@@ -22,3 +22,292 @@ lessons:[
 ],
 checklist:[['water','Water and containers'],['food','Shelf-stable food'],['light','Flashlights and batteries'],['phone','Power banks and charging cables'],['radio','Battery or hand-crank radio'],['health','First-aid kit and medications'],['docs','Copies of essential documents'],['plans','Family contacts and evacuation route'],['security','Check locks and safe exits'],['pets','Pet and dependent supplies if needed']]
 };
+
+window.LOAD_WATER=[
+  {
+    "id": "water-source",
+    "icon": 'drop',
+    "title": "Choose an emergency water source",
+    "area": "Water • Source selection",
+    "difficulty": "Essential",
+    "intro": "Choose sealed commercially bottled water first. Evaluate official advisories and contamination before attempting treatment.",
+    "warning": "Do not use floodwater, fuel-contaminated, chemically contaminated, or radioactively contaminated water as drinking water. Ordinary boiling, disinfectants, and DIY filters cannot fix these hazards.",
+    "steps": [
+      [
+        "Read the advisory",
+        "Determine whether officials have declared boil water, do not drink, or do not use. A do-not-use advisory may forbid skin contact as well."
+      ],
+      [
+        "Prioritize safe supplies",
+        "Use sealed bottled water or previously stored potable water where available. Never assume collected rainwater is safe without assessment and treatment."
+      ],
+      [
+        "Identify a backup",
+        "If officials say microbiological treatment is appropriate, consider clean stored tap water, uncontaminated ice, or a source permitted by local authorities."
+      ],
+      [
+        "Reject suspicious water",
+        "Odors of fuel, chemical spills, flooded industrial sites, and unknown well contamination demand an alternative supply and local health advice."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/source.svg"
+  },
+  {
+    "id": "water-sediment",
+    "icon": 'thread',
+    "title": "Remove sediment before treatment",
+    "area": "Water • Pre-filtration",
+    "difficulty": "Essential",
+    "intro": "Make cloudy water clearer before boiling or approved disinfection. This step does not make water drinkable.",
+    "warning": "A cloth, sand, charcoal, or improvised bottle filter does not reliably remove pathogens or dissolved chemicals.",
+    "steps": [
+      [
+        "Let water settle",
+        "Place cloudy water in a clean container and allow visible particles to settle."
+      ],
+      [
+        "Decant carefully",
+        "Slowly pour clearer water into a second clean vessel without stirring the settled sediment."
+      ],
+      [
+        "Use clean cloth",
+        "Pass the water through a clean cloth, paper towel, or coffee filter to catch larger particles."
+      ],
+      [
+        "Treat afterward",
+        "Boil or use a suitable approved disinfection method for microbial hazards. If chemicals or fuels are suspected, reject the source."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/sediment.svg"
+  },
+  {
+    "id": "water-boil",
+    "icon": 'steam',
+    "title": "Disinfect water by boiling",
+    "area": "Water • Microbial treatment",
+    "difficulty": "Essential",
+    "intro": "Boiling is a reliable way to kill common disease-causing microbes when the hazard is biological.",
+    "warning": "Boiling does not remove fuels, toxic chemicals, salts, or radioactive materials. It can concentrate some dissolved contaminants.",
+    "steps": [
+      [
+        "Confirm the contamination type",
+        "Follow local boil-water advisories. If chemical contamination is suspected, use another source."
+      ],
+      [
+        "Clarify cloudy water",
+        "Allow sediment to settle; strain through clean cloth or paper before boiling."
+      ],
+      [
+        "Bring to a rolling boil",
+        "Use the CDC elevation rule: boil for 1 minute, or 3 minutes above 6,500 feet (about 2,000 m)."
+      ],
+      [
+        "Cool and protect",
+        "Allow water to cool, then pour into a clean sanitized container with a tight cover. Prevent recontamination."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/boil.svg"
+  },
+  {
+    "id": "water-filters",
+    "icon": 'flask',
+    "title": "Understand portable filters",
+    "area": "Water • Filtration",
+    "difficulty": "Essential",
+    "intro": "Select equipment by verified contaminant-reduction claims rather than marketing or appearance.",
+    "warning": "Many backpacking filters do not remove viruses; improvised charcoal and sand do not make unsafe water reliably drinkable.",
+    "steps": [
+      [
+        "Identify the problem",
+        "Microbial threats differ from chemicals, dissolved salts, and heavy metals. No single standard camping filter solves every issue."
+      ],
+      [
+        "Check certification",
+        "Read the product label and test standard; verify claimed parasite, bacteria, virus, or chemical removal and flow limitations."
+      ],
+      [
+        "Follow setup guidance",
+        "Prime, assemble, backflush and maintain the filter according to its manufacturer. Keep dirty parts separate from clean outlets."
+      ],
+      [
+        "Apply additional treatment if needed",
+        "Where viruses remain a concern, follow CDC recommendations for appropriate disinfection after filtering."
+      ],
+      [
+        "Retire compromised equipment",
+        "Freezing, cracks, exhausted elements, or contamination may make a filter unsafe. Follow manufacturer replacement guidance."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/filter.svg"
+  },
+  {
+    "id": "water-disinfection",
+    "icon": 'bottle',
+    "title": "Chemical disinfection choices",
+    "area": "Water • Microbial treatment",
+    "difficulty": "Essential",
+    "intro": "Use labeled drinking-water disinfectants and follow instructions matched to the water and product.",
+    "warning": "Never guess bleach drops for an unknown concentration or use scented, splashless, additive-containing, or mixed cleaners. Do not mix household chemicals.",
+    "steps": [
+      [
+        "Prefer boiling when possible",
+        "Boiling is generally the most reliable household method for microbial hazards."
+      ],
+      [
+        "Choose an appropriate product",
+        "Use drinking-water purification tablets/drops per label; for household bleach use only regular unscented product with verified sodium hypochlorite concentration and official matching directions."
+      ],
+      [
+        "Prepare water",
+        "Let sediment settle and filter out cloudiness first. Treatment performance depends on clarity, temperature, and product."
+      ],
+      [
+        "Follow official dose and contact time",
+        "Use the current CDC directions for the exact concentration. Allow the specified contact time. Never improvise a dosage."
+      ],
+      [
+        "Know the limitations",
+        "Chemical disinfection may not kill all parasites. It cannot make water with fuel, industrial chemicals, or radioactive contaminants safe."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/disinfect.svg"
+  },
+  {
+    "id": "water-storage",
+    "icon": 'jar',
+    "title": "Store and rotate drinking water",
+    "area": "Water • Storage",
+    "difficulty": "Essential",
+    "intro": "Prevent recontamination and plan a household emergency reserve.",
+    "warning": "Avoid previous chemical containers, open buckets, and unclean reused bottles for potable-water storage.",
+    "steps": [
+      [
+        "Estimate demand",
+        "Start with at least one US gallon (about 3.8 L) per person daily for emergency planning; increase for heat, pregnancy, health needs and pets."
+      ],
+      [
+        "Use safe containers",
+        "Use food-grade containers intended for drinking water. Clean and sanitize them per CDC guidance."
+      ],
+      [
+        "Label and close",
+        "Date containers; use tight-fitting lids; handle water with clean tools."
+      ],
+      [
+        "Store appropriately",
+        "Keep away from sunlight, heat, pesticides, gasoline and chemicals. Follow guidance for replacement and commercial expiration labels."
+      ],
+      [
+        "Separate uses",
+        "Mark untreated and treated water clearly; reserve the safest water for drinking, infant feeding, and food preparation."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/storage.svg"
+  },
+  {
+    "id": "water-rain",
+    "icon": 'rain',
+    "title": "Collecting rainwater safely",
+    "area": "Water • Collection",
+    "difficulty": "Essential",
+    "intro": "Learn rainwater collection for non-potable uses and when additional drinking-water treatment may be appropriate.",
+    "warning": "Roof runoff can contain bird droppings, metals, smoke debris, chemicals and microorganisms; clear rainwater is not automatically potable.",
+    "steps": [
+      [
+        "Check local laws",
+        "Review rainwater collection rules, particularly during drought or fire seasons."
+      ],
+      [
+        "Use clean collection surfaces",
+        "Avoid roofing and gutters contaminated by ash, chemicals, lead or other hazards."
+      ],
+      [
+        "Divert polluted first runoff",
+        "Commercial first-flush diverters can reduce debris; they do not guarantee potable water."
+      ],
+      [
+        "Use separate containers",
+        "Label stored untreated rainwater and prevent mosquito breeding with covered screens."
+      ],
+      [
+        "Treat only when appropriate",
+        "Follow local health authority advice and testing for drinking use; boiling alone does not address roof-derived chemical contaminants."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/rain.svg"
+  },
+  {
+    "id": "water-wells",
+    "icon": 'home',
+    "title": "Wells and cisterns after disasters",
+    "area": "Water • Rural systems",
+    "difficulty": "Essential",
+    "intro": "Protect private wells, Portuguese boreholes and cisterns before and after flooding or power loss.",
+    "warning": "If a well is flooded, damaged, or may be polluted, do not drink its water until appropriately inspected, disinfected and tested.",
+    "steps": [
+      [
+        "Document the system",
+        "Identify whether the property has a private well, furo, cisterna, municipal water, or shared supply."
+      ],
+      [
+        "Plan pump power",
+        "Know pump voltage, starting surge and approved backup power options. Never improvise house wiring."
+      ],
+      [
+        "After flooding",
+        "Do not operate potentially flood-damaged pumps or electrical systems before professional inspection."
+      ],
+      [
+        "Seek testing and treatment",
+        "Contact local environmental or public health authorities for sampling, disinfection and return-to-service requirements."
+      ],
+      [
+        "Create separate storage",
+        "Maintain treated emergency drinking-water reserves even when a well or cistern is present."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/well.svg"
+  },
+  {
+    "id": "water-sanitation",
+    "icon": 'soap',
+    "title": "Water priorities for hygiene",
+    "area": "Water • Sanitation",
+    "difficulty": "Essential",
+    "intro": "Keep potable water for high-priority uses and prevent waste contamination when utilities fail.",
+    "warning": "Do not use contaminated water to make infant formula, brush teeth, wash food, or clean wounds unless officials specifically permit its use.",
+    "steps": [
+      [
+        "Protect drinking water",
+        "Allocate safest water for drinking, cooking and necessary medical uses."
+      ],
+      [
+        "Separate water uses",
+        "Clearly label potable water versus non-potable cleaning or toilet flushing water."
+      ],
+      [
+        "Prevent cross-contamination",
+        "Keep dirty containers and wastewater away from treated water, food areas and children."
+      ],
+      [
+        "Wash hands safely",
+        "Use safe water and soap when available; follow relevant public-health guidance during outages."
+      ],
+      [
+        "Dispose of wastewater safely",
+        "Follow municipality or local authority instructions; do not contaminate streams, wells, or floodwaters."
+      ]
+    ],
+    "source": "https://www.cdc.gov/water-emergency/about/",
+    "image": "assets/water/sanitize.svg"
+  }
+];
+window.LOAD_DATA.lessons.push(...window.LOAD_WATER);
