@@ -125,5 +125,47 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/water-bleach-dose-2.jpg",
   "assets/steps/water-bleach-dose-3.jpg",
   "assets/steps/water-bleach-dose-4.jpg"
+ ],
+ "hs-bread-no-yeast": [
+  "assets/steps/hs-bread-no-yeast-1.jpg",
+  "assets/steps/hs-bread-no-yeast-2.jpg",
+  "assets/steps/hs-bread-no-yeast-3.jpg",
+  "assets/steps/hs-bread-no-yeast-4.jpg",
+  "assets/steps/hs-bread-no-yeast-5.jpg"
+ ],
+ "hs-hardtack": [
+  "assets/steps/hs-hardtack-1.jpg",
+  "assets/steps/hs-hardtack-2.jpg",
+  "assets/steps/hs-hardtack-3.jpg",
+  "assets/steps/hs-hardtack-4.jpg",
+  "assets/steps/hs-hardtack-5.jpg"
+ ],
+ "hs-beans": [
+  "assets/steps/hs-beans-1.jpg",
+  "assets/steps/hs-beans-2.jpg",
+  "assets/steps/hs-beans-3.jpg",
+  "assets/steps/hs-beans-4.jpg",
+  "assets/steps/hs-beans-5.jpg"
+ ],
+ "hs-eggs": [
+  "assets/steps/hs-eggs-1.jpg",
+  "assets/steps/hs-eggs-2.jpg",
+  "assets/steps/hs-eggs-3.jpg",
+  "assets/steps/hs-eggs-4.jpg",
+  "assets/steps/hs-eggs-5.jpg"
+ ],
+ "hs-food-storage": [
+  "assets/steps/hs-food-storage-1.jpg",
+  "assets/steps/hs-food-storage-2.jpg",
+  "assets/steps/hs-food-storage-3.jpg",
+  "assets/steps/hs-food-storage-4.jpg",
+  "assets/steps/hs-food-storage-5.jpg"
+ ],
+ "hs-canning": [
+  "assets/steps/hs-canning-1.jpg",
+  "assets/steps/hs-canning-2.jpg",
+  "assets/steps/hs-canning-3.jpg",
+  "assets/steps/hs-canning-4.jpg",
+  "assets/steps/hs-canning-5.jpg"
  ]
 };
