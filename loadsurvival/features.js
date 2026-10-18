@@ -72,7 +72,8 @@ window.LSX = function (A) {
   function guideView(l) {
     var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill">' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
       '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>';
-    if (l.note) h += '<div class="notice">' + esc(C.note) + '</div>';
+    if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
+    if (l.image) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
     h += '<section class="gblock"><h2>What to do</h2>' + ol(l.do || []) + '</section>';
     if (l.table) h += table(l.table);
