@@ -403,5 +403,30 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/g-burns-2.jpg",
   "assets/steps/g-burns-3.jpg",
   "assets/steps/g-burns-4.jpg"
+ ],
+ "g-shock": [
+  "assets/steps/g-shock-1.jpg",
+  "assets/steps/g-shock-2.jpg",
+  "assets/steps/g-shock-3.jpg",
+  "assets/steps/g-shock-4.jpg",
+  "assets/steps/g-shock-5.jpg"
+ ],
+ "g-fractures": [
+  "assets/steps/g-fractures-1.jpg",
+  "assets/steps/g-fractures-2.jpg",
+  "assets/steps/g-fractures-3.jpg",
+  "assets/steps/g-fractures-4.jpg",
+  "assets/steps/g-fractures-5.jpg"
+ ],
+ "g-heat-illness": [
+  "assets/steps/g-heat-illness-1.jpg",
+  "assets/steps/g-heat-illness-2.jpg"
+ ],
+ "g-hypothermia": [
+  "assets/steps/g-hypothermia-1.jpg",
+  "assets/steps/g-hypothermia-2.jpg",
+  "assets/steps/g-hypothermia-3.jpg",
+  "assets/steps/g-hypothermia-4.jpg",
+  "assets/steps/g-hypothermia-5.jpg"
  ]
 };
