@@ -300,5 +300,45 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/wx-sea-3.jpg",
   "assets/steps/wx-sea-4.jpg",
   "assets/steps/wx-sea-5.jpg"
+ ],
+ "g-power-outage": [
+  "assets/steps/g-power-outage-1.jpg",
+  "assets/steps/g-power-outage-2.jpg",
+  "assets/steps/g-power-outage-3.jpg",
+  "assets/steps/g-power-outage-4.jpg",
+  "assets/steps/g-power-outage-5.jpg"
+ ],
+ "g-winter-storm": [
+  "assets/steps/g-winter-storm-1.jpg",
+  "assets/steps/g-winter-storm-2.jpg",
+  "assets/steps/g-winter-storm-3.jpg",
+  "assets/steps/g-winter-storm-4.jpg",
+  "assets/steps/g-winter-storm-5.jpg"
+ ],
+ "g-hurricane": [
+  "assets/steps/g-hurricane-1.jpg",
+  "assets/steps/g-hurricane-2.jpg",
+  "assets/steps/g-hurricane-3.jpg",
+  "assets/steps/g-hurricane-4.jpg",
+  "assets/steps/g-hurricane-5.jpg"
+ ],
+ "g-tornado": [
+  "assets/steps/g-tornado-1.jpg",
+  "assets/steps/g-tornado-2.jpg",
+  "assets/steps/g-tornado-3.jpg",
+  "assets/steps/g-tornado-4.jpg"
+ ],
+ "g-earthquake-tsunami": [
+  "assets/steps/g-earthquake-tsunami-1.jpg",
+  "assets/steps/g-earthquake-tsunami-2.jpg",
+  "assets/steps/g-earthquake-tsunami-3.jpg",
+  "assets/steps/g-earthquake-tsunami-4.jpg",
+  "assets/steps/g-earthquake-tsunami-5.jpg"
+ ],
+ "g-wildfire": [
+  "assets/steps/g-wildfire-1.jpg",
+  "assets/steps/g-wildfire-2.jpg",
+  "assets/steps/g-wildfire-3.jpg",
+  "assets/steps/g-wildfire-4.jpg"
  ]
 };
