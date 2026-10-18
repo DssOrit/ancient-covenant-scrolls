@@ -22,3 +22,14 @@
 
 ## Capability gaps
 - No live site access from the sandbox; live URL unverified.
+
+## Update (later 2026-10-18): WHERE WE LEFT OFF
+- PR #1038 merged. PR #1039 open (not merged): 12 water pictures, 2 new water lessons, and 22 new "Home skills" guides (cache p13-v29).
+- Home skills guides built from the owner's idea screenshots, rewritten in our own words with safety limits. Left out on purpose: EMP-proof car, flu/tincture/stop-bleeding/painkiller/mullein/papaya remedies, intruder traps, evading checkpoints and tracking, thermal hiding, elicitation, detecting mics, zip-tie escape, narcissist/disrespect, hidden underground shelter, bacon 5-year, nettle soup.
+- Image prompts for the 22 Home skills guides sent in chat. Owner will generate and send pictures; place them via `image` field in `home-skills-data.js` and add paths to the service worker.
+- NEXT: (1) place Home skills pictures when they arrive; (2) write Part 3 prompts (power, fire, shelter) in the text-free green style; (3) review pass on medical guide wording; (4) native Portuguese review; (5) real iPad offline test.
+- Water pictures needing no more fixes: storage, rain, disinfection were regenerated text-free.
+
+## Update: per-step pictures
+- Owner reported one picture showing for every step. Fixed: each 4-panel picture is split into its own panels (`assets/steps/<lesson>-<n>.jpg`) and `step-images.js` maps steps to panels. 20 lessons now change picture with each step (cache p14-v30). Combined pictures removed.
+- Old purple ChatGPT diagrams (Parts 2 to 6 SVG lessons, 22 lessons) still show one picture per lesson.
