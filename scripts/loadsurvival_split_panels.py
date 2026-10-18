@@ -53,6 +53,8 @@ def split(path, layout=None):
 
 # Special layouts (x0, y0, x1, y1) for pictures that are not two plain rows
 LAYOUTS = {
+    # heat illness: two panels side by side in one row (1672x941)
+    'g-heat-illness': [(0, 0, 827, 941), (844, 0, 1672, 941)],
     'hs-hand-pump': [(0, 0, 449, 941), (467, 0, 848, 941), (865, 0, 1254, 447), (1271, 0, 1672, 447), (865, 464, 1672, 941)],
 }
 

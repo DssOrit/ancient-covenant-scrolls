@@ -300,5 +300,146 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/wx-sea-3.jpg",
   "assets/steps/wx-sea-4.jpg",
   "assets/steps/wx-sea-5.jpg"
+ ],
+ "g-power-outage": [
+  "assets/steps/g-power-outage-1.jpg",
+  "assets/steps/g-power-outage-2.jpg",
+  "assets/steps/g-power-outage-3.jpg",
+  "assets/steps/g-power-outage-4.jpg",
+  "assets/steps/g-power-outage-5.jpg"
+ ],
+ "g-winter-storm": [
+  "assets/steps/g-winter-storm-1.jpg",
+  "assets/steps/g-winter-storm-2.jpg",
+  "assets/steps/g-winter-storm-3.jpg",
+  "assets/steps/g-winter-storm-4.jpg",
+  "assets/steps/g-winter-storm-5.jpg"
+ ],
+ "g-hurricane": [
+  "assets/steps/g-hurricane-1.jpg",
+  "assets/steps/g-hurricane-2.jpg",
+  "assets/steps/g-hurricane-3.jpg",
+  "assets/steps/g-hurricane-4.jpg",
+  "assets/steps/g-hurricane-5.jpg"
+ ],
+ "g-tornado": [
+  "assets/steps/g-tornado-1.jpg",
+  "assets/steps/g-tornado-2.jpg",
+  "assets/steps/g-tornado-3.jpg",
+  "assets/steps/g-tornado-4.jpg"
+ ],
+ "g-earthquake-tsunami": [
+  "assets/steps/g-earthquake-tsunami-1.jpg",
+  "assets/steps/g-earthquake-tsunami-2.jpg",
+  "assets/steps/g-earthquake-tsunami-3.jpg",
+  "assets/steps/g-earthquake-tsunami-4.jpg",
+  "assets/steps/g-earthquake-tsunami-5.jpg"
+ ],
+ "g-wildfire": [
+  "assets/steps/g-wildfire-1.jpg",
+  "assets/steps/g-wildfire-2.jpg",
+  "assets/steps/g-wildfire-3.jpg",
+  "assets/steps/g-wildfire-4.jpg"
+ ],
+ "g-heat-wave": [
+  "assets/steps/g-heat-wave-1.jpg",
+  "assets/steps/g-heat-wave-2.jpg",
+  "assets/steps/g-heat-wave-3.jpg",
+  "assets/steps/g-heat-wave-4.jpg",
+  "assets/steps/g-heat-wave-5.jpg"
+ ],
+ "g-making-electricity": [
+  "assets/steps/g-making-electricity-1.jpg",
+  "assets/steps/g-making-electricity-2.jpg",
+  "assets/steps/g-making-electricity-3.jpg",
+  "assets/steps/g-making-electricity-4.jpg",
+  "assets/steps/g-making-electricity-5.jpg"
+ ],
+ "g-pets": [
+  "assets/steps/g-pets-1.jpg",
+  "assets/steps/g-pets-2.jpg",
+  "assets/steps/g-pets-3.jpg",
+  "assets/steps/g-pets-4.jpg",
+  "assets/steps/g-pets-5.jpg"
+ ],
+ "g-grid-down": [
+  "assets/steps/g-grid-down-1.jpg",
+  "assets/steps/g-grid-down-2.jpg",
+  "assets/steps/g-grid-down-3.jpg",
+  "assets/steps/g-grid-down-4.jpg",
+  "assets/steps/g-grid-down-5.jpg",
+  "assets/steps/g-grid-down-6.jpg"
+ ],
+ "g-group-calm": [
+  "assets/steps/g-group-calm-1.jpg",
+  "assets/steps/g-group-calm-2.jpg",
+  "assets/steps/g-group-calm-3.jpg",
+  "assets/steps/g-group-calm-4.jpg",
+  "assets/steps/g-group-calm-5.jpg",
+  "assets/steps/g-group-calm-6.jpg"
+ ],
+ "g-bleeding": [
+  "assets/steps/g-bleeding-1.jpg",
+  "assets/steps/g-bleeding-2.jpg",
+  "assets/steps/g-bleeding-3.jpg",
+  "assets/steps/g-bleeding-4.jpg",
+  "assets/steps/g-bleeding-5.jpg"
+ ],
+ "g-cpr": [
+  "assets/steps/g-cpr-1.jpg",
+  "assets/steps/g-cpr-2.jpg",
+  "assets/steps/g-cpr-3.jpg",
+  "assets/steps/g-cpr-4.jpg",
+  "assets/steps/g-cpr-5.jpg"
+ ],
+ "g-choking": [
+  "assets/steps/g-choking-1.jpg",
+  "assets/steps/g-choking-2.jpg",
+  "assets/steps/g-choking-3.jpg",
+  "assets/steps/g-choking-4.jpg"
+ ],
+ "g-burns": [
+  "assets/steps/g-burns-1.jpg",
+  "assets/steps/g-burns-2.jpg",
+  "assets/steps/g-burns-3.jpg",
+  "assets/steps/g-burns-4.jpg"
+ ],
+ "g-shock": [
+  "assets/steps/g-shock-1.jpg",
+  "assets/steps/g-shock-2.jpg",
+  "assets/steps/g-shock-3.jpg",
+  "assets/steps/g-shock-4.jpg",
+  "assets/steps/g-shock-5.jpg"
+ ],
+ "g-fractures": [
+  "assets/steps/g-fractures-1.jpg",
+  "assets/steps/g-fractures-2.jpg",
+  "assets/steps/g-fractures-3.jpg",
+  "assets/steps/g-fractures-4.jpg",
+  "assets/steps/g-fractures-5.jpg"
+ ],
+ "g-heat-illness": [
+  "assets/steps/g-heat-illness-1.jpg",
+  "assets/steps/g-heat-illness-2.jpg"
+ ],
+ "g-hypothermia": [
+  "assets/steps/g-hypothermia-1.jpg",
+  "assets/steps/g-hypothermia-2.jpg",
+  "assets/steps/g-hypothermia-3.jpg",
+  "assets/steps/g-hypothermia-4.jpg",
+  "assets/steps/g-hypothermia-5.jpg"
+ ],
+ "g-flood": [
+  "assets/steps/g-flood-1.jpg",
+  "assets/steps/g-flood-2.jpg",
+  "assets/steps/g-flood-3.jpg",
+  "assets/steps/g-flood-4.jpg"
+ ],
+ "g-signaling": [
+  "assets/steps/g-signaling-1.jpg",
+  "assets/steps/g-signaling-2.jpg",
+  "assets/steps/g-signaling-3.jpg",
+  "assets/steps/g-signaling-4.jpg",
+  "assets/steps/g-signaling-5.jpg"
  ]
 };
