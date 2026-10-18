@@ -59,3 +59,11 @@
 - Placed 6 scenario pictures (radiation, chemical, volcano, cyber-grid, EMP, pandemic). Cache p29-v47. concept-preview.png removed in PR 1046 (merged). Remaining scenario/new-guide pictures: see prompts batches.
 
 - Placed 9 more step pictures on branch claude/loadsurvival-scenario-pics (cache loadsurvival-p30-v48): sc-civil-unrest, sc-war, sc-iberian-blackout, sc-fire-safety, es-kit-tiers (was on skip list, user supplied it), es-radios-alerts, es-portugal-notes, wx-sodis, es-medical-kit. Headless test: each shows 5 step cards, images load, no console errors. Still awaiting pictures: sc-solar-storm, sc-supply-chain, sc-drought.
+
+- User direction (approved): all future batch picture prompts (batch 2, batch 3, solar storm, supply chain, drought) must follow this standard. Existing pictures are not being redone for now.
+  - One panel per step, in step order, 5 panels for 5 steps.
+  - Each panel shows only the action in that step text (the exact object, tool, amounts, body position), not a generic scene.
+  - No two panels in a guide share the same setting, angle or composition. Vary close-up, wide, overhead, outdoors, indoors.
+  - Avoid the repeated "hands on a wooden table with a map/notebook/phone/bag" composition.
+  - Text-free, charcoal/forest-green/silver palette, safe for ChatGPT (no ID documents, money, or children in danger).
+  - Before sending each prompt, check it against the guide's step text.
