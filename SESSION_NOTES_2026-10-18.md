@@ -45,3 +45,4 @@
 - Placed first 6 older-guide pictures (power outage, winter storm, hurricane, tornado, earthquake, wildfire). Prompts sent for all 21; choking and burns reworded. Cache p21-v37.
 - Placed 9 more older-guide pictures (heat wave, electricity, pets, grid-down, group, bleeding, CPR, choking, burns; burns cut from a combined choking+burns board). 15 of 21 older guides illustrated. Left: flood, signaling, hypothermia, heat illness, fractures, shock. Cache p22-v38.
 - Placed shock, fractures, heat illness, hypothermia; replaced burns with the standalone picture. 19 of 21 older guides illustrated. Left: flood, signaling. Cache p23-v39.
+- Placed flood and signaling pictures: all 21 older guides illustrated (46 of 46 guides have step pictures). Cache p24-v40. NEXT: Part 3 prompts (power, fire, shelter), purple Foundation set in green, old Parts 2-6 lessons, cover image.

@@ -428,5 +428,18 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/g-hypothermia-3.jpg",
   "assets/steps/g-hypothermia-4.jpg",
   "assets/steps/g-hypothermia-5.jpg"
+ ],
+ "g-flood": [
+  "assets/steps/g-flood-1.jpg",
+  "assets/steps/g-flood-2.jpg",
+  "assets/steps/g-flood-3.jpg",
+  "assets/steps/g-flood-4.jpg"
+ ],
+ "g-signaling": [
+  "assets/steps/g-signaling-1.jpg",
+  "assets/steps/g-signaling-2.jpg",
+  "assets/steps/g-signaling-3.jpg",
+  "assets/steps/g-signaling-4.jpg",
+  "assets/steps/g-signaling-5.jpg"
  ]
 };
