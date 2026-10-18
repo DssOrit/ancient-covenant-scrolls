@@ -9,7 +9,7 @@ scenarios:[
 {id:'heat',icon:'sun',title:'Extreme heat / cold',tag:'Temperature',times:[['Assess','Identify the immediate temperature threat and higher-risk household members.'],['Protect','Seek safe climate-controlled shelter or heating/cooling centers. Hydrate and monitor symptoms.'],['Escalate','Confusion, fainting, severe breathing problems, or heatstroke warning signs require urgent medical assistance.']]}
 ],
 lessons:[
-{id:'water',icon:'drop',title:'Making drinking water safer',area:'Water',difficulty:'Essential',intro:'Cloudy water is not automatically contaminated, and clear water is not automatically safe.',warning:'Do not drink water suspected of chemical, fuel, heavy-metal or radioactive contamination. Boiling and ordinary filters cannot make it safe.',steps:[['Check advisories','Check whether the warning is boil-water, do-not-drink, or do-not-use. Local official instructions override this guide.'],['Select a source','Prefer sealed commercial bottled water. Avoid sources with suspected chemical or fuel contamination.'],['Remove sediment','Let cloudy water settle and pour off the clearer water, or strain through a clean cloth or paper filter. This does not disinfect water.'],['Boil','Bring clear water to a rolling boil for 1 minute, or 3 minutes above 6,500 ft (about 2,000 m).'],['Cool and store','Cool safely, then use a clean, sanitized, tightly covered container. Keep treated and untreated water separate.']],source:'https://www.cdc.gov/water-emergency/about/'},
+{id:'water',icon:'drop',title:'Making drinking water safer',area:'Water',difficulty:'Essential',intro:'Cloudy water is not automatically contaminated, and clear water is not automatically safe.',warning:'Do not drink water suspected of chemical, fuel, heavy-metal or radioactive contamination. Boiling and ordinary filters cannot make it safe.',steps:[['Check advisories','Check whether the warning is boil-water, do-not-drink, or do-not-use. Local official instructions override this guide.'],['Select a source','Prefer sealed commercial bottled water. Avoid sources with suspected chemical or fuel contamination.'],['Remove sediment','Let cloudy water settle and pour off the clearer water, or strain through a clean cloth or paper filter. This does not disinfect water.'],['Boil','Bring clear water to a rolling boil for 1 minute, or 3 minutes above 6,500 ft (about 2,000 m).'],['Cool and store','Cool safely, then use a clean, sanitized, tightly covered container. Keep treated and untreated water separate.']],source:'https://www.cdc.gov/water-emergency/about/',image:'assets/images/water.jpg'},
 {id:'power',icon:'battery',title:'Emergency power without grid electricity',area:'Electricity',difficulty:'Essential',intro:'Prioritize light, communications and medically essential devices. Use approved batteries and power stations.',warning:'Never connect improvised power to household wiring. Never run generators or fuel-burning devices indoors or in garages. Never backfeed a utility socket.',steps:[['List critical loads','Write down wattage and daily run time for essential devices.'],['Conserve first','Enable device low-power settings and turn off unnecessary loads.'],['Select a suitable source','Use manufacturer-rated power banks or portable power stations. Solar charging is weather-dependent and must use compatible controllers.'],['Separate household wiring','Use plug-in devices as intended. Home transfer systems require a qualified electrician and locally compliant equipment.'],['Check ventilation and carbon monoxide','Operate portable fuel generators outdoors and well away from windows, doors and vents; use working CO alarms.']],source:'https://www.ready.gov/power-outages'},
 {id:'shelter',icon:'tent',title:'Shelter and exposure protection',area:'Shelter',difficulty:'Essential',intro:'Choosing a safe location is more important than building a complex shelter.',warning:'Avoid flood plains, dead trees, unstable slopes, dry creek beds and enclosed spaces with combustion heaters.',steps:[['Assess the hazard','Identify wind, rain, flood, lightning, snow, heat and falling debris risk.'],['Choose safest existing shelter','Use a structurally sound building or official shelter if available.'],['Choose an outdoor location only if needed','Find stable, elevated terrain away from trees that may fall and water channels.'],['Create weather protection','Secure a rated tarp or tent with appropriate anchors without damaging trees or using unsafe tie-offs.'],['Insulate and monitor','Reduce heat loss to the ground and check for cold or heat illness.']],source:'https://www.ready.gov/shelter'},
 {id:'fire-safety',icon:'flame',title:'Fire, heat and safe alternatives',area:'Fire',difficulty:'Essential',intro:'Fire can provide heat when legal and safe, but it can also cause burns, wildfires and carbon monoxide poisoning.',warning:'Never light outdoor fires during restrictions or hazardous wildfire conditions. Never burn fuel inside a tent or home for warmth.',steps:[['Check regulations and conditions','Follow local fire bans and landowner rules. High wind or dry vegetation may make a fire unsafe.'],['Prefer lower-risk alternatives','Use approved clothing layers, sleeping bags and battery lighting rather than flames where possible.'],['If fire is permitted','Use an established contained fire location clear of combustibles and maintain supervision.'],['Keep extinguishing resources available','Have water or another appropriate extinguishing method readily accessible.'],['Extinguish completely','Cool and stir ashes until no heat remains; do not leave an unattended fire.']],source:'https://www.ready.gov/wildfires'},
@@ -51,7 +51,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/source.svg"
+    "image": "assets/images/water-source.jpg"
   },
   {
     "id": "water-sediment",
@@ -80,7 +80,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/sediment.svg"
+    "image": "assets/images/water-sediment.jpg"
   },
   {
     "id": "water-boil",
@@ -109,7 +109,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/boil.svg"
+    "image": "assets/images/water-boil.jpg"
   },
   {
     "id": "water-filters",
@@ -142,7 +142,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/filter.svg"
+    "image": "assets/images/water-filters.jpg"
   },
   {
     "id": "water-disinfection",
@@ -175,7 +175,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/disinfect.svg"
+    "image": "assets/images/water-disinfection.jpg"
   },
   {
     "id": "water-storage",
@@ -208,7 +208,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/storage.svg"
+    "image": "assets/images/water-storage.jpg"
   },
   {
     "id": "water-rain",
@@ -241,7 +241,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/rain.svg"
+    "image": "assets/images/water-rain.jpg"
   },
   {
     "id": "water-wells",
@@ -274,7 +274,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/well.svg"
+    "image": "assets/images/water-wells.jpg"
   },
   {
     "id": "water-sanitation",
@@ -307,7 +307,7 @@ window.LOAD_WATER=[
       ]
     ],
     "source": "https://www.cdc.gov/water-emergency/about/",
-    "image": "assets/water/sanitize.svg"
+    "image": "assets/images/water-sanitation.jpg"
   }
 ];
 window.LOAD_DATA.lessons.push(...window.LOAD_WATER);
