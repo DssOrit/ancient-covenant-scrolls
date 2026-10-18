@@ -1,0 +1,323 @@
+/* Load Survival features: guides view, lists, tools, family plan, search, about, home extras.
+   Loaded before app.js. app.js calls window.LSX(api) and uses the returned views and actions. */
+window.LSX = function (A) {
+  'use strict';
+  var state = A.state, D = A.D, esc = A.esc, btn = A.btn, ico = A.ico, region = A.region, switchView = A.switchView;
+  var C = window.LOAD_CORE || { guides: [], lists: [], numbers: [], regionBoxes: {}, sources: [], rule3: [], helpNow: [] };
+
+  /* guides join the lesson list so Learn, search and routing all work */
+  C.guides.forEach(function (g) { D.lessons.push(g); });
+
+  /* local data, one key, always guarded */
+  var SK = 'loadsurvival:v1', S = {};
+  try { S = JSON.parse(localStorage.getItem(SK) || '{}') || {}; } catch (e) { S = {}; }
+  S.lists = S.lists || {}; S.plan = S.plan || {};
+  function put() { try { localStorage.setItem(SK, JSON.stringify(S)); } catch (e) {} }
+
+  var timers = [];
+  function clearTimers() { timers.forEach(function (t) { clearInterval(t); clearTimeout(t); }); timers = []; }
+
+  function li(arr, cls) { return '<ul' + (cls ? ' class="' + cls + '"' : '') + '>' + arr.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
+  function ol(arr) { return '<ol class="stepsol">' + arr.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>'; }
+  function table(t) {
+    if (!t) return '';
+    return '<div class="tblwrap"><table class="tbl"><thead><tr>' + t.head.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      t.rows.map(function (r) { return '<tr>' + r.map(function (c, i) { return (i === 0 ? '<th scope="row">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>'); }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+  function verify() { return '<span class="verify">Verify before you rely on it</span>'; }
+
+  /* ---------- region boxes ---------- */
+  function regionBox(key) {
+    var b = C.regionBoxes[key]; if (!b) return '';
+    return '<div class="panel regionbox"><h2>' + esc(b.title) + '</h2>' +
+      '<ul class="nums">' + b.numbers.map(function (n) { return '<li><span>' + esc(n[0]) + '</span><a href="tel:' + esc(n[2]) + '">' + esc(n[1]) + '</a>' + verify() + '</li>'; }).join('') + '</ul>' +
+      li(b.lines) + '<p class="muted">' + esc(b.hazards) + '</p>' +
+      (b.blackout ? '<div class="tipbox"><strong>' + esc(b.blackout.title) + '</strong>' + li(b.blackout.items) + '</div>' : '') + '</div>';
+  }
+  function regionBoxes() {
+    var r = state.region;
+    return '<section><h2>Your region</h2><div class="grid two-up">' + (r === 'pt' ? '' : regionBox('us')) + (r === 'us' ? '' : regionBox('pt')) + '</div></section>';
+  }
+
+  /* ---------- home extras ---------- */
+  function isIOS() { return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
+  function standalone() { return (window.navigator.standalone === true) || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches); }
+  function netText() {
+    var on = navigator.onLine !== false, ready = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
+    return (on ? 'Online' : 'Offline') + ' · ' + (ready ? 'Offline mode ready' : 'Open once online to enable offline mode');
+  }
+  function homeExtras() {
+    var strip = '<div class="numstrip" role="group" aria-label="Emergency numbers">' + C.numbers.map(function (n) {
+      return '<a class="num" href="tel:' + esc(n.tel) + '"><b>' + esc(n.num) + '</b><span>' + esc(n.who) + '</span></a>';
+    }).join('') + '</div><p class="micro center">' + verify().replace('<span', '<span') + ' Numbers can change.</p>';
+    var help = '<section><h2>I need help now</h2><div class="helpgrid">' + C.helpNow.map(function (h) {
+      return '<button class="helpbtn" data-open-lesson="' + esc(h[1]) + '"><span class="symbol">' + ico(h[2]) + '</span><b>' + esc(h[0]) + '</b></button>';
+    }).join('') + '</div></section>';
+    var r3 = '<section><h2>Rule of 3s</h2>' + table({ head: ['You can survive about', 'Without'], rows: C.rule3.map(function (r) { return [r[1], r[0]]; }) }) + '<p class="muted">Order of priority: air, shelter, water, food.</p></section>';
+    var status = '<div class="statusrow"><span class="badge" id="netbadge">' + esc(netText()) + '</span></div>';
+    var inst = (isIOS() && !standalone() && !S.hideInstall) ?
+      '<div class="tipbox"><strong>Install on your iPad</strong><p>Open this page once online in Safari. Tap Share. Tap Add to Home Screen. Then it opens like an app and works offline.</p>' + btn('Hide this tip', 'hide-install', 'secondary') + '</div>' : '';
+    return strip + status + inst + help + r3 + regionBoxes();
+  }
+  function home() {
+    var h = A.home();
+    h = h.replace('data-action="checklist"', 'data-action="lists"');
+    var i = h.indexOf('<div class="notice">');
+    return i < 0 ? h + homeExtras() : h.slice(0, i) + homeExtras() + h.slice(i);
+  }
+  function updateBadge() { var b = document.getElementById('netbadge'); if (b) b.textContent = netText(); }
+  window.addEventListener('online', updateBadge); window.addEventListener('offline', updateBadge);
+
+  /* ---------- guide view ---------- */
+  function guideView(l) {
+    var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill">' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
+      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>';
+    if (l.note) h += '<div class="notice">' + esc(C.note) + '</div>';
+    h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
+    h += '<section class="gblock"><h2>What to do</h2>' + ol(l.do || []) + '</section>';
+    if (l.table) h += table(l.table);
+    h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
+    h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
+    h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
+    h += '<p class="muted">General information only. In immediate danger call ' + esc(region().emergency) + '. ' + verify() + '</p>';
+    return h;
+  }
+  function lessonView() {
+    var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
+    if (l && l.first) return guideView(l);
+    return A.lessonBase();
+  }
+
+  /* ---------- lists ---------- */
+  function listDone(id) { var s = S.lists[id] || {}, n = 0; Object.keys(s).forEach(function (k) { if (s[k]) n++; }); return n; }
+  function listsView() {
+    return '<h1>Checklists</h1><p class="muted">Tick items as you get them. Saved on this device.</p><div class="grid">' + C.lists.map(function (L) {
+      var n = listDone(L.id), p = Math.round(n * 100 / L.items.length);
+      return '<button class="card" data-action="open-list" data-list="' + esc(L.id) + '"><span class="symbol">' + ico('check') + '</span><b>' + esc(L.title) + '</b><small>' + n + ' of ' + L.items.length + ' done</small><span class="progress"><i style="width:' + p + '%"></i></span></button>';
+    }).join('') + '</div>';
+  }
+  function listView() {
+    var L = C.lists.filter(function (x) { return x.id === state.opened; })[0]; if (!L) return listsView();
+    var s = S.lists[L.id] || {}, n = listDone(L.id), p = Math.round(n * 100 / L.items.length);
+    return '<div class="breadcrumbs">' + btn('← All checklists', 'lists') + '</div><h1>' + esc(L.title) + '</h1>' +
+      '<div class="panel"><div class="stage"><b id="lprog">' + n + ' of ' + L.items.length + ' done</b><span class="muted">Saved on this device</span></div><div class="progress big"><i id="lbar" style="width:' + p + '%"></i></div>' +
+      L.items.map(function (it, i) { return '<label class="checkrow"><input type="checkbox" data-lcheck="' + esc(L.id) + '|' + i + '" ' + (s[i] ? 'checked' : '') + '><span>' + esc(it) + '</span></label>'; }).join('') +
+      '<div class="actions">' + btn('Reset this list', 'list-reset', 'secondary') + '</div></div>';
+  }
+
+  /* ---------- tools ---------- */
+  var TOOLS = [
+    ['water', 'drop', 'Water and food', 'People and days to gallons, liters and calories'],
+    ['bleach', 'flask', 'Bleach dose', 'Drops of household bleach for clear water'],
+    ['fridge', 'fridge', 'Fridge and freezer timer', 'Deadlines after the power goes out'],
+    ['watts', 'battery', 'Watt-hours', 'What a power station can run'],
+    ['units', 'convert', 'Unit converter', 'Gallons, liters, degrees, feet, meters'],
+    ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
+    ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal']
+  ];
+  function toolsView() {
+    return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
+      return '<button class="card" data-action="open-tool" data-tool="' + t[0] + '"><span class="symbol">' + ico(t[1]) + '</span><b>' + esc(t[2]) + '</b><small>' + esc(t[3]) + '</small></button>';
+    }).join('') + '</div>';
+  }
+  function num(id, def, step, min, max) { return '<input id="' + id + '" type="number" inputmode="decimal" value="' + def + '" step="' + (step || 'any') + '" min="' + (min === undefined ? 0 : min) + (max ? '" max="' + max : '') + '">'; }
+  function toolFrame(t, inner) {
+    var T = TOOLS.filter(function (x) { return x[0] === t; })[0];
+    return '<div class="breadcrumbs">' + btn('← All tools', 'tools') + '</div><h1>' + ico(T[1]) + ' ' + esc(T[2]) + '</h1>' + inner;
+  }
+  function toolView() {
+    clearTimers();
+    var t = state.opened;
+    if (t === 'water') return toolFrame(t, '<div class="panel"><label for="w-people">People</label>' + num('w-people', 4, 1, 1, 100) + '<label for="w-days">Days</label>' + num('w-days', 3, 1, 1, 365) + '<div id="w-out" class="kpis"></div><p class="muted">Water: 1 gal (3.8 L) per person per day. 3 days minimum, 2 weeks ideal. Food: about 2,000 kcal per person per day. Raise water for heat, illness, pregnancy and pets.</p></div>');
+    if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
+    if (t === 'fridge') return toolFrame(t, '<div class="panel" id="f-panel"></div><div class="notice">Discard perishables above 40 F (4 C) for more than 2 hours. When in doubt, throw it out. Keep doors closed.</div>');
+    if (t === 'watts') {
+      var devs = [['Phone charging', 10, 2], ['LED lamp', 8, 5], ['Radio', 5, 4], ['Laptop', 50, 3], ['Wi-Fi router', 12, 8], ['Mini fridge', 60, 8], ['Fan', 40, 6], ['CPAP', 40, 8], ['Television', 80, 2]];
+      return toolFrame(t, '<div class="panel"><label for="p-cap">Battery or power station size (Wh)</label>' + num('p-cap', 500, 'any', 1) + '<h2 style="margin-top:18px">What do you want to run?</h2><p class="muted">Watts are typical. Check the label on your device.</p>' +
+        devs.map(function (d, i) { return '<div class="devrow"><label class="checkrow"><input type="checkbox" data-dev="' + i + '" data-w="' + d[1] + '"><span>' + esc(d[0]) + ' (' + d[1] + ' W)</span></label><input aria-label="Hours per day for ' + esc(d[0]) + '" type="number" inputmode="decimal" data-hrs="' + i + '" value="' + d[2] + '" min="0" max="24" step="0.5"></div>'; }).join('') +
+        '<div id="p-out" class="kpis"></div><p class="muted">Energy (Wh) = watts x hours. Runtime is estimated with 85% efficiency because some energy is lost as heat.</p></div>');
+    }
+    if (t === 'units') return toolFrame(t, '<div class="panel"><label for="u-gal">US gallons</label>' + num('u-gal', 1, 'any') + '<label for="u-l">Liters</label>' + num('u-l', 3.785, 'any') +
+      '<label for="u-f">Degrees Fahrenheit</label>' + num('u-f', 40, 'any', -100) + '<label for="u-c">Degrees Celsius</label>' + num('u-c', 4.4, 'any', -100) +
+      '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
+    if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
+    if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    return toolsView();
+  }
+  function setOut(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
+  function kpi(l, v) { return '<div class="kpi">' + esc(l) + '<strong>' + esc(v) + '</strong></div>'; }
+  function nf(x, d) { return Number(x).toLocaleString(undefined, { maximumFractionDigits: d === undefined ? 1 : d }); }
+  function val(id) { var e = document.getElementById(id); return e ? Number(e.value) : NaN; }
+  function calcWater() {
+    var p = val('w-people'), d = val('w-days');
+    if (!(p > 0) || !(d > 0)) return setOut('w-out', '<p>Enter people and days.</p>');
+    var g = p * d;
+    setOut('w-out', kpi('Water', nf(g) + ' gal / ' + nf(g * 3.785) + ' L') + kpi('Food', nf(p * d * 2000, 0) + ' kcal') + kpi('Per day', nf(p) + ' gal / ' + nf(p * 3.785) + ' L'));
+  }
+  function calcBleach() {
+    var v = val('b-vol'), u = (document.getElementById('b-unit') || {}).value;
+    if (!(v > 0)) return setOut('b-out', '<p>Enter an amount of water.</p>');
+    var gal = u === 'l' ? v / 3.785 : v, drops = Math.max(1, Math.round(gal * 8));
+    setOut('b-out', kpi('Bleach drops (6%)', drops + ' drops') + kpi('About', nf(gal * 0.125, 2) + ' tsp') + kpi('Wait', '30 minutes'));
+  }
+  function calcWatts() {
+    var cap = val('p-cap'), total = 0, watts = 0, n = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-dev]'), function (c) {
+      if (c.checked) { var w = Number(c.dataset.w), h = val2('[data-hrs="' + c.dataset.dev + '"]'); if (w > 0 && h > 0) { total += w * h; watts += w; n++; } }
+    });
+    if (!(cap > 0)) return setOut('p-out', '<p>Enter battery size.</p>');
+    if (n === 0) return setOut('p-out', '<p>Pick at least one device.</p>');
+    var days = cap * 0.85 / total;
+    setOut('p-out', kpi('Energy per day', nf(total, 0) + ' Wh') + kpi('Running together', nf(watts, 0) + ' W') + kpi('Battery lasts', days >= 1 ? nf(days) + ' days' : nf(days * 24) + ' hours'));
+  }
+  function val2(sel) { var e = document.querySelector(sel); return e ? Number(e.value) : 0; }
+  function convert(id, v) {
+    var m = { 'u-gal': ['u-l', function (x) { return x * 3.785; }], 'u-l': ['u-gal', function (x) { return x / 3.785; }], 'u-f': ['u-c', function (x) { return (x - 32) * 5 / 9; }], 'u-c': ['u-f', function (x) { return x * 9 / 5 + 32; }], 'u-ft': ['u-m', function (x) { return x * 0.3048; }], 'u-m': ['u-ft', function (x) { return x / 0.3048; }], 'u-in': ['u-cm', function (x) { return x * 2.54; }], 'u-cm': ['u-in', function (x) { return x / 2.54; }] };
+    var t = m[id]; if (!t || !isFinite(v)) return; var e = document.getElementById(t[0]); if (e) e.value = Math.round(t[1](v) * 100) / 100;
+  }
+  /* fridge timer */
+  function fridgePanel() {
+    var p = document.getElementById('f-panel'); if (!p) return;
+    if (!S.outage) { p.innerHTML = '<p>Tap the button when the power goes out. Deadlines are saved on this device.</p><div class="actions">' + btn('Power went out', 'fridge-start', 'button') + '</div>'; return; }
+    var t0 = S.outage;
+    function row(l, h) { var end = t0 + h * 3600000, left = end - Date.now(); return '<div class="kpi">' + esc(l) + '<strong>' + (left <= 0 ? 'Time is up' : fmt(left)) + '</strong><small>Until ' + new Date(end).toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit' }) + '</small></div>'; }
+    function fmt(ms) { var s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60); return h + ' h ' + (m < 10 ? '0' : '') + m + ' min'; }
+    p.innerHTML = '<p>Power went out at <b>' + new Date(t0).toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit' }) + '</b>. Time open: ' + fmt(Date.now() - t0) + '.</p><div class="kpis">' + row('Fridge (closed): about 4 h', 4) + row('Full freezer: about 48 h', 48) + row('Half-full freezer: about 24 h', 24) + '</div><div class="actions">' + btn('Power is back', 'fridge-stop', 'secondary') + '</div>';
+  }
+
+  /* overlays */
+  function overlay(cls) { closeOverlay(); var d = document.createElement('div'); d.id = 'ov'; d.className = 'ov ' + cls; d.setAttribute('role', 'button'); d.setAttribute('tabindex', '0'); d.setAttribute('aria-label', 'Tap to close'); d.addEventListener('click', closeOverlay); d.addEventListener('keydown', closeOverlay); document.body.appendChild(d); try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function (w) { d._wl = w; }).catch(function () {}); } catch (e) {} return d; }
+  function closeOverlay() { var d = document.getElementById('ov'); if (!d) return; if (d._t) clearTimeout(d._t); try { if (d._wl) d._wl.release(); } catch (e) {} d.remove(); }
+  function sos() {
+    var d = overlay('sos'), seq = [], U = 260, i;
+    for (i = 0; i < 3; i++) seq.push([U, 1], [U, 0]); seq[seq.length - 1] = [U * 3, 0];
+    for (i = 0; i < 3; i++) seq.push([U * 3, 1], [U, 0]); seq[seq.length - 1] = [U * 3, 0];
+    for (i = 0; i < 3; i++) seq.push([U, 1], [U, 0]); seq[seq.length - 1] = [U * 7, 0];
+    var k = 0;
+    (function step() { if (!document.getElementById('ov')) return; var s = seq[k % seq.length]; d.classList.toggle('on', !!s[1]); k++; d._t = setTimeout(step, s[0]); })();
+  }
+
+  /* ---------- plan ---------- */
+  var PLAN = [
+    ['members', 'Household members', 'Names, ages, special needs'],
+    ['meet1', 'Meeting place 1 (near home)', 'For example, the corner by the school'],
+    ['meet2', 'Meeting place 2 (outside the area)', 'For example, a relative’s home'],
+    ['contact', 'Out-of-area contact', 'Name and phone number'],
+    ['numbers', 'Local emergency numbers', 'Police, fire, doctor, poison line'],
+    ['meds', 'Medications and medical needs', 'Names, doses, allergies, equipment'],
+    ['shutoff', 'Utility shutoff locations', 'Water, gas and power controls'],
+    ['pets', 'Pets', 'Names, vet, food'],
+    ['route', 'Evacuation route', 'Primary and backup route'],
+    ['notes', 'Notes', 'Anything else']
+  ];
+  function planView() {
+    return '<h1>Family plan</h1><p class="muted">Fill it in once. It saves on this device. Print it or copy it as text.</p><div class="panel planform" id="plan">' +
+      PLAN.map(function (f) { return '<label for="pl-' + f[0] + '">' + esc(f[1]) + '</label><textarea id="pl-' + f[0] + '" data-plan="' + f[0] + '" rows="' + (f[0] === 'members' || f[0] === 'notes' ? 4 : 2) + '" placeholder="' + esc(f[2]) + '">' + esc(S.plan[f[0]] || '') + '</textarea>'; }).join('') +
+      '<div class="actions noprint">' + btn('Print', 'plan-print', 'button') + ' ' + btn('Copy as text', 'plan-copy', 'secondary') + ' ' + btn('Clear plan', 'plan-clear', 'secondary') + '</div><p class="muted noprint" id="plan-msg" aria-live="polite"></p></div>' +
+      '<div class="printonly"><h2>LOAD Survival family plan</h2>' + PLAN.map(function (f) { return '<p><b>' + esc(f[1]) + '</b><br>' + esc(S.plan[f[0]] || '').replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>';
+  }
+  function planText() { return 'LOAD Survival family plan\n\n' + PLAN.map(function (f) { return f[1] + ':\n' + (S.plan[f[0]] || '-') + '\n'; }).join('\n'); }
+  function copy(txt, msg) {
+    function ok() { setOut('plan-msg', 'Copied.'); }
+    function fb() { var t = document.createElement('textarea'); t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (e) { setOut('plan-msg', 'Could not copy. Select the text and copy it yourself.'); } t.remove(); }
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fb); else fb(); } catch (e) { fb(); }
+  }
+
+  /* ---------- search ---------- */
+  var index = null;
+  function flat(v) { return Array.isArray(v) ? v.map(flat).join(' ') : (v && typeof v === 'object' ? Object.keys(v).map(function (k) { return flat(v[k]); }).join(' ') : String(v == null ? '' : v)); }
+  function buildIndex() {
+    index = [];
+    D.lessons.forEach(function (l) { index.push({ t: l.title, k: 'lesson', id: l.id, a: l.area, body: flat([l.title_pt, l.intro, l.intro_pt, l.warning, l.warning_pt, l.steps, l.steps_pt, l.first, l.do, l.warn, l.tip, l.after, l.table]) }); });
+    (D.scenarios || []).forEach(function (s) { index.push({ t: s.title, k: 'scenario', id: s.id, a: 'Emergency', body: flat(s.times) }); });
+    (window.LOAD_PART5 || []).forEach(function (x) { index.push({ t: x.title.en, k: 'regional', id: x.id, a: 'Regional ' + x.region, body: flat([x.title.pt, x.warning, x.steps]) }); });
+    C.lists.forEach(function (L) { index.push({ t: L.title, k: 'list', id: L.id, a: 'Checklist', body: flat(L.items) }); });
+  }
+  function searchResults(q) {
+    if (!index) buildIndex();
+    q = q.trim().toLowerCase(); if (q.length < 2) return '<p class="muted">Type at least 2 letters.</p>';
+    var words = q.split(/\s+/), out = [];
+    index.forEach(function (it) {
+      var tl = it.t.toLowerCase(), bl = it.body.toLowerCase(), sc = 0, ok = true;
+      words.forEach(function (w) { var a = tl.indexOf(w) >= 0, b = bl.indexOf(w) >= 0; if (!a && !b) ok = false; sc += (a ? 3 : 0) + (b ? 1 : 0); });
+      if (ok) { var i = bl.indexOf(words[0]), sn = i >= 0 ? it.body.slice(Math.max(0, i - 40), i + 90) : ''; out.push([sc, it, sn]); }
+    });
+    out.sort(function (a, b) { return b[0] - a[0]; });
+    if (!out.length) return '<p>No results. Try a simpler word.</p>';
+    return '<p class="muted">' + out.length + ' result' + (out.length > 1 ? 's' : '') + '</p><div class="results">' + out.slice(0, 40).map(function (r) {
+      var it = r[1], attr = it.k === 'lesson' ? 'data-open-lesson="' + esc(it.id) + '"' : it.k === 'scenario' ? 'data-open-scenario="' + esc(it.id) + '"' : it.k === 'regional' ? 'data-open-regional="' + esc(it.id) + '"' : 'data-action="open-list" data-list="' + esc(it.id) + '"';
+      return '<button class="result" ' + attr + '><b>' + esc(it.t) + '</b><small>' + esc(it.a) + '</small>' + (r[2] ? '<span>…' + esc(r[2]) + '…</span>' : '') + '</button>';
+    }).join('') + '</div>';
+  }
+  function searchView() {
+    return '<h1>Search</h1><p class="muted">Search every guide, lesson, checklist and regional card.</p><input class="search" id="gsearch" type="search" autocomplete="off" placeholder="Try: bleeding, bleach, generator, tsunami" value="' + esc(state.gq || '') + '"><div id="gresults">' + (state.gq ? searchResults(state.gq) : '') + '</div>';
+  }
+
+  /* ---------- about ---------- */
+  function aboutView() {
+    return '<h1>About and sources</h1><div class="panel"><h2>What this is</h2><p>Load Survival is an offline guide to survival and preparedness for disasters, storms and power-grid outages. It is for the United States and Portugal.</p><p>It is general information only. It is not medical, legal or professional advice. In an emergency call your local emergency number. ' + verify() + '</p><p>First-aid pages are a reference, not a substitute for training. Take a certified first-aid course.</p><p>Nothing here tells anyone to confront an intruder. Laws on self-defense differ by US state and in Portugal. Ask a local professional.</p></div>' +
+      '<section><h2>Sources</h2><p class="muted">Figures follow FEMA, CDC, EPA and Red Cross guidance. Links need internet.</p><ul class="sources">' + C.sources.map(function (s) { return '<li><a href="' + esc(s[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(s[0]) + '</a></li>'; }).join('') + '</ul></section>' +
+      '<section><h2>On this device</h2><p>Your lists, plan and settings stay in this browser. Nothing is sent anywhere. No accounts, no tracking.</p><div class="actions">' + btn('Settings', 'profile', 'secondary') + ' ' + btn('Refresh Load Survival', 'refresh', 'secondary') + '</div></section>';
+  }
+
+  /* ---------- wiring ---------- */
+  var views = {
+    home: home, lesson: lessonView, lists: listsView, list: listView, tools: toolsView, tool: toolView, plan: planView, search: searchView, about: aboutView,
+    emergency: function () { return A.emergency() + regionBoxes(); }
+  };
+  var actions = {
+    lists: function () { switchView('lists'); },
+    plan: function () { switchView('plan'); },
+    search: function () { switchView('search'); },
+    about: function () { switchView('about'); },
+    enter: function () { S.welcomed = true; put(); switchView('home'); },
+    tools: function () { switchView('tools'); },
+    'open-list': function (x) { switchView('list', x.dataset.list); },
+    'open-tool': function (x) { switchView('tool', x.dataset.tool); },
+    'list-reset': function () { S.lists[state.opened] = {}; put(); A.render(); },
+    'hide-install': function () { S.hideInstall = true; put(); A.render(); },
+    'fridge-start': function () { S.outage = Date.now(); put(); fridgePanel(); startFridge(); },
+    'fridge-stop': function () { S.outage = null; put(); clearTimers(); fridgePanel(); },
+    'flash-on': function () { overlay('flash'); },
+    'sos-on': sos,
+    'plan-print': function () { try { window.print(); } catch (e) {} },
+    'plan-copy': function () { copy(planText()); },
+    'plan-clear': function () { S.plan = {}; put(); A.render(); }
+  };
+  function startFridge() { clearTimers(); if (S.outage) timers.push(setInterval(fridgePanel, 30000)); }
+  function after() {
+    var v = state.view;
+    if (v === 'tool') {
+      var t = state.opened;
+      if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+    } else clearTimers();
+    if (v === 'search') { var g = document.getElementById('gsearch'); if (g && !('ontouchstart' in window)) { try { g.focus(); } catch (e) {} } }
+  }
+  function welcome() {
+    return '<div class="wel"><figure><img src="assets/images/welcome.jpg" alt="Load Survival. Know, prepare, survive, thrive." width="1214" height="2160"><button type="button" data-action="enter" aria-label="Get started"></button></figure></div>';
+  }
+  function firstRoute() { return S.welcomed ? null : ['welcome', null]; }
+
+  function onInput(e) {
+    var t = e.target, id = t.id || '';
+    if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
+    if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
+    if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
+    if (id === 'b-vol') { calcBleach(); return true; }
+    if (id === 'p-cap' || (t.dataset && t.dataset.hrs !== undefined)) { calcWatts(); return true; }
+    if (id.indexOf('u-') === 0) { convert(id, Number(t.value)); return true; }
+    return false;
+  }
+  function onChange(e) {
+    var t = e.target, id = t.id || '';
+    if (t.dataset && t.dataset.lcheck) {
+      var p = t.dataset.lcheck.split('|'); S.lists[p[0]] = S.lists[p[0]] || {}; S.lists[p[0]][p[1]] = t.checked; put();
+      var L = C.lists.filter(function (x) { return x.id === p[0]; })[0], n = listDone(p[0]);
+      setOut('lprog', n + ' of ' + L.items.length + ' done'); var b = document.getElementById('lbar'); if (b) b.style.width = Math.round(n * 100 / L.items.length) + '%'; return true;
+    }
+    if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
+    if (id === 'b-unit') { calcBleach(); return true; }
+    return false;
+  }
+  return { views: views, actions: actions, onInput: onInput, onChange: onChange, after: after, welcome: welcome, firstRoute: firstRoute };
+};
