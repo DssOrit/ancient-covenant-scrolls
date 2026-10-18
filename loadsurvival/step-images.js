@@ -441,5 +441,110 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/g-signaling-3.jpg",
   "assets/steps/g-signaling-4.jpg",
   "assets/steps/g-signaling-5.jpg"
+ ],
+ "sc-radiation": [
+  "assets/steps/sc-radiation-1.jpg",
+  "assets/steps/sc-radiation-2.jpg",
+  "assets/steps/sc-radiation-3.jpg",
+  "assets/steps/sc-radiation-4.jpg",
+  "assets/steps/sc-radiation-5.jpg"
+ ],
+ "sc-chemical": [
+  "assets/steps/sc-chemical-1.jpg",
+  "assets/steps/sc-chemical-2.jpg",
+  "assets/steps/sc-chemical-3.jpg",
+  "assets/steps/sc-chemical-4.jpg",
+  "assets/steps/sc-chemical-5.jpg"
+ ],
+ "sc-volcano": [
+  "assets/steps/sc-volcano-1.jpg",
+  "assets/steps/sc-volcano-2.jpg",
+  "assets/steps/sc-volcano-3.jpg",
+  "assets/steps/sc-volcano-4.jpg",
+  "assets/steps/sc-volcano-5.jpg"
+ ],
+ "sc-cyber-grid": [
+  "assets/steps/sc-cyber-grid-1.jpg",
+  "assets/steps/sc-cyber-grid-2.jpg",
+  "assets/steps/sc-cyber-grid-3.jpg",
+  "assets/steps/sc-cyber-grid-4.jpg",
+  "assets/steps/sc-cyber-grid-5.jpg"
+ ],
+ "sc-emp": [
+  "assets/steps/sc-emp-1.jpg",
+  "assets/steps/sc-emp-2.jpg",
+  "assets/steps/sc-emp-3.jpg",
+  "assets/steps/sc-emp-4.jpg",
+  "assets/steps/sc-emp-5.jpg"
+ ],
+ "sc-pandemic": [
+  "assets/steps/sc-pandemic-1.jpg",
+  "assets/steps/sc-pandemic-2.jpg",
+  "assets/steps/sc-pandemic-3.jpg",
+  "assets/steps/sc-pandemic-4.jpg",
+  "assets/steps/sc-pandemic-5.jpg"
+ ],
+ "sc-civil-unrest": [
+  "assets/steps/sc-civil-unrest-1.jpg",
+  "assets/steps/sc-civil-unrest-2.jpg",
+  "assets/steps/sc-civil-unrest-3.jpg",
+  "assets/steps/sc-civil-unrest-4.jpg",
+  "assets/steps/sc-civil-unrest-5.jpg"
+ ],
+ "sc-war": [
+  "assets/steps/sc-war-1.jpg",
+  "assets/steps/sc-war-2.jpg",
+  "assets/steps/sc-war-3.jpg",
+  "assets/steps/sc-war-4.jpg",
+  "assets/steps/sc-war-5.jpg"
+ ],
+ "sc-iberian-blackout": [
+  "assets/steps/sc-iberian-blackout-1.jpg",
+  "assets/steps/sc-iberian-blackout-2.jpg",
+  "assets/steps/sc-iberian-blackout-3.jpg",
+  "assets/steps/sc-iberian-blackout-4.jpg",
+  "assets/steps/sc-iberian-blackout-5.jpg"
+ ],
+ "es-kit-tiers": [
+  "assets/steps/es-kit-tiers-1.jpg",
+  "assets/steps/es-kit-tiers-2.jpg",
+  "assets/steps/es-kit-tiers-3.jpg",
+  "assets/steps/es-kit-tiers-4.jpg",
+  "assets/steps/es-kit-tiers-5.jpg"
+ ],
+ "es-radios-alerts": [
+  "assets/steps/es-radios-alerts-1.jpg",
+  "assets/steps/es-radios-alerts-2.jpg",
+  "assets/steps/es-radios-alerts-3.jpg",
+  "assets/steps/es-radios-alerts-4.jpg",
+  "assets/steps/es-radios-alerts-5.jpg"
+ ],
+ "es-portugal-notes": [
+  "assets/steps/es-portugal-notes-1.jpg",
+  "assets/steps/es-portugal-notes-2.jpg",
+  "assets/steps/es-portugal-notes-3.jpg",
+  "assets/steps/es-portugal-notes-4.jpg",
+  "assets/steps/es-portugal-notes-5.jpg"
+ ],
+ "wx-sodis": [
+  "assets/steps/wx-sodis-1.jpg",
+  "assets/steps/wx-sodis-2.jpg",
+  "assets/steps/wx-sodis-3.jpg",
+  "assets/steps/wx-sodis-4.jpg",
+  "assets/steps/wx-sodis-5.jpg"
+ ],
+ "es-medical-kit": [
+  "assets/steps/es-medical-kit-1.jpg",
+  "assets/steps/es-medical-kit-2.jpg",
+  "assets/steps/es-medical-kit-3.jpg",
+  "assets/steps/es-medical-kit-4.jpg",
+  "assets/steps/es-medical-kit-5.jpg"
+ ],
+ "sc-fire-safety": [
+  "assets/steps/sc-fire-safety-1.jpg",
+  "assets/steps/sc-fire-safety-2.jpg",
+  "assets/steps/sc-fire-safety-3.jpg",
+  "assets/steps/sc-fire-safety-4.jpg",
+  "assets/steps/sc-fire-safety-5.jpg"
  ]
 };
