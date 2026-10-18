@@ -272,5 +272,12 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/hs-hand-pump-3.jpg",
   "assets/steps/hs-hand-pump-4.jpg",
   "assets/steps/hs-hand-pump-5.jpg"
+ ],
+ "hs-seawater": [
+  "assets/steps/hs-seawater-1.jpg",
+  "assets/steps/hs-seawater-2.jpg",
+  "assets/steps/hs-seawater-3.jpg",
+  "assets/steps/hs-seawater-4.jpg",
+  "assets/steps/hs-seawater-5.jpg"
  ]
 };
