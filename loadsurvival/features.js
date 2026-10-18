@@ -68,6 +68,26 @@ window.LSX = function (A) {
   function updateBadge() { var b = document.getElementById('netbadge'); if (b) b.textContent = netText(); }
   window.addEventListener('online', updateBadge); window.addEventListener('offline', updateBadge);
 
+  /* ---------- status label: Checked / Partly checked / Not confirmed ---------- */
+  var SMAP = window.LOAD_STATUS || {};
+  function statusOf(l) {
+    var m = SMAP[l.id] || {};
+    return { status: l.status || m.status || 'general', checkedOn: l.checkedOn || m.checkedOn || '', sources: l.sources || m.sources || (l.source ? [['Source linked in the lesson', l.source]] : []), unconfirmed: l.unconfirmed || m.unconfirmed || [] };
+  }
+  function statusHtml(l) {
+    var s = statusOf(l), name = s.status === 'checked' ? 'Checked' : s.status === 'partly' ? 'Partly checked' : 'Not confirmed';
+    var icon = s.status === 'checked' ? 'check' : s.status === 'partly' ? 'alert' : 'search';
+    var line = s.status === 'checked' ? 'Figures match a named official source' + (s.checkedOn ? ' on ' + s.checkedOn : '') + '.' :
+      s.status === 'partly' ? 'Some figures match a named official source' + (s.checkedOn ? ' on ' + s.checkedOn : '') + '. Items we could not confirm are listed below.' :
+      'General guidance. It was not checked against a named official source. Check it before you rely on it.';
+    var h = '<div class="status st-' + s.status + '" role="note"><span class="stbadge">' + ico(icon) + ' ' + name + '</span><span class="stline">' + esc(line) + '</span></div>';
+    if (s.unconfirmed.length && s.status !== 'general') h += '<div class="unconf"><strong>Not confirmed</strong>' + li(s.unconfirmed) + '</div>';
+    else if (s.unconfirmed.length > 1) h += '<div class="unconf"><strong>Not confirmed</strong>' + li(s.unconfirmed.slice(1)) + '</div>';
+    if (s.sources.length) h += '<div class="srcs"><strong>Sources</strong><ul>' + s.sources.map(function (x) { return '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(x[0]) + '</a></li>'; }).join('') + '</ul><p class="muted">Links need internet.</p></div>';
+    return h;
+  }
+  function catOf(l) { return A.catKey ? A.catKey(l.area) : 'essentials'; }
+
   /* ---------- guide view ---------- */
   /* one picture panel beside each "What to do" step (panels come from window.LOAD_STEP_IMAGES[id]) */
   function panelsFor(l) { var m = window.LOAD_STEP_IMAGES && window.LOAD_STEP_IMAGES[l.id]; return m && m.length ? m : null; }
@@ -81,8 +101,8 @@ window.LSX = function (A) {
   }
 
   function guideView(l) {
-    var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill">' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
-      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>';
+    var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
+      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + statusHtml(l);
     if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
     if (l.image && !panelsFor(l)) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
@@ -97,7 +117,8 @@ window.LSX = function (A) {
   function lessonView() {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
     if (l && l.first) return guideView(l);
-    return A.lessonBase();
+    var b = A.lessonBase(); if (!l) return b;
+    var i = b.indexOf('<div class="dangerbox">'); return i < 0 ? b : b.slice(0, i) + statusHtml(l) + b.slice(i);
   }
 
   /* ---------- lists ---------- */
@@ -141,7 +162,7 @@ window.LSX = function (A) {
     clearTimers();
     var t = state.opened;
     if (t === 'water') return toolFrame(t, '<div class="panel"><label for="w-people">People</label>' + num('w-people', 4, 1, 1, 100) + '<label for="w-days">Days</label>' + num('w-days', 3, 1, 1, 365) + '<div id="w-out" class="kpis"></div><p class="muted">Water: 1 gal (3.8 L) per person per day. 3 days minimum, 2 weeks ideal. Food: about 2,000 kcal per person per day. Raise water for heat, illness, pregnancy and pets.</p></div>');
-    if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
+    if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 5 to 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Cloudy or cold water: settle or filter it first, then use double the dose (16 drops per gallon). Source: CDC. A dose for 1% bleach is not included because we found no official source.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
     if (t === 'fridge') return toolFrame(t, '<div class="panel" id="f-panel"></div><div class="notice">Discard perishables above 40 F (4 C) for more than 2 hours. When in doubt, throw it out. Keep doors closed.</div>');
     if (t === 'watts') {
       var devs = [['Phone charging', 10, 2], ['LED lamp', 8, 5], ['Radio', 5, 4], ['Laptop', 50, 3], ['Wi-Fi router', 12, 8], ['Mini fridge', 60, 8], ['Fan', 40, 6], ['CPAP', 40, 8], ['Television', 80, 2]];
@@ -170,7 +191,7 @@ window.LSX = function (A) {
     var v = val('b-vol'), u = (document.getElementById('b-unit') || {}).value;
     if (!(v > 0)) return setOut('b-out', '<p>Enter an amount of water.</p>');
     var gal = u === 'l' ? v / 3.785 : v, drops = Math.max(1, Math.round(gal * 8));
-    setOut('b-out', kpi('Bleach drops (6%)', drops + ' drops') + kpi('About', nf(gal * 0.125, 2) + ' tsp') + kpi('Wait', '30 minutes'));
+    setOut('b-out', kpi('Bleach drops (5 to 6%)', drops + ' drops') + kpi('About', nf(gal * 0.125, 2) + ' tsp') + kpi('Wait', '30 minutes'));
   }
   function calcWatts() {
     var cap = val('p-cap'), total = 0, watts = 0, n = 0;
@@ -258,7 +279,7 @@ window.LSX = function (A) {
     if (!out.length) return '<p>No results. Try a simpler word.</p>';
     return '<p class="muted">' + out.length + ' result' + (out.length > 1 ? 's' : '') + '</p><div class="results">' + out.slice(0, 40).map(function (r) {
       var it = r[1], attr = it.k === 'lesson' ? 'data-open-lesson="' + esc(it.id) + '"' : it.k === 'scenario' ? 'data-open-scenario="' + esc(it.id) + '"' : it.k === 'regional' ? 'data-open-regional="' + esc(it.id) + '"' : 'data-action="open-list" data-list="' + esc(it.id) + '"';
-      return '<button class="result" ' + attr + '><b>' + esc(it.t) + '</b><small>' + esc(it.a) + '</small>' + (r[2] ? '<span>…' + esc(r[2]) + '…</span>' : '') + '</button>';
+      return '<button class="result" data-cat="' + (A.catKey ? A.catKey(it.a) : 'essentials') + '" ' + attr + '><b>' + esc(it.t) + '</b><small>' + esc(it.a) + '</small>' + (r[2] ? '<span>…' + esc(r[2]) + '…</span>' : '') + '</button>';
     }).join('') + '</div>';
   }
   function searchView() {
