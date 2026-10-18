@@ -28,4 +28,6 @@ p,li,.steptext{text-align:left;max-width:68ch}
 #topnav,#topnav button{letter-spacing:0;word-spacing:0}
 @media(max-width:900px){#topnav .rg span{display:none}}
 
-.lesson-illustration{display:block;width:100%;height:auto;aspect-ratio:20/9;object-fit:contain;background:#1a1738;border-radius:12px;margin:15px 0 19px;border:1px solid var(--border)}
+.lesson-illustration{display:block;width:100%;height:auto;object-fit:contain;background:#1a1738;border-radius:12px;margin:15px 0 19px;border:1px solid var(--border)}
+
+.card .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block}
