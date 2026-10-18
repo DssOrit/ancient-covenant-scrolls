@@ -33,3 +33,9 @@
 ## Update: per-step pictures
 - Owner reported one picture showing for every step. Fixed: each 4-panel picture is split into its own panels (`assets/steps/<lesson>-<n>.jpg`) and `step-images.js` maps steps to panels. 20 lessons now change picture with each step (cache p14-v30). Combined pictures removed.
 - Old purple ChatGPT diagrams (Parts 2 to 6 SVG lessons, 22 lessons) still show one picture per lesson.
+
+## Update: panel beside each "What to do" step
+- PR #1039 and #1040 merged. Guides now show one picture panel beside each "What to do" step when `window.LOAD_STEP_IMAGES[<guide id>]` has panels (cache p15-v31).
+- Home skills pictures: owner generates 5-panel pictures (2 on top, 3 below), one panel per "What to do" step. Split with `python3 -I scripts/loadsurvival_split_panels.py hs-beans=beans.png ...`, then add the new files to the service worker list and bump the cache.
+- NEXT: place Home skills pictures when they arrive; Part 3 prompts (power, fire, shelter); medical wording review; Portuguese review; real iPad offline test.
+- Placed first 6 Home skills pictures (bread, hardtack, beans, eggs, food storage, canning). Remaining 16 prompts not yet sent/generated. Cache p16-v32.

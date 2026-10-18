@@ -69,13 +69,24 @@ window.LSX = function (A) {
   window.addEventListener('online', updateBadge); window.addEventListener('offline', updateBadge);
 
   /* ---------- guide view ---------- */
+  /* one picture panel beside each "What to do" step (panels come from window.LOAD_STEP_IMAGES[id]) */
+  function panelsFor(l) { var m = window.LOAD_STEP_IMAGES && window.LOAD_STEP_IMAGES[l.id]; return m && m.length ? m : null; }
+  function doSteps(l) {
+    var steps = l.do || [], P = panelsFor(l);
+    if (!P) return ol(steps);
+    return '<ol class="stepcards">' + steps.map(function (x, i) {
+      var src = P[Math.min(i, P.length - 1)];
+      return '<li class="stepcard"><img src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span><p>' + esc(x) + '</p></div></li>';
+    }).join('') + '</ol>';
+  }
+
   function guideView(l) {
     var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill">' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
       '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>';
     if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
-    if (l.image) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
+    if (l.image && !panelsFor(l)) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
-    h += '<section class="gblock"><h2>What to do</h2>' + ol(l.do || []) + '</section>';
+    h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
