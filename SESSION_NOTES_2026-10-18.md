@@ -67,3 +67,4 @@
   - Avoid the repeated "hands on a wooden table with a map/notebook/phone/bag" composition.
   - Text-free, charcoal/forest-green/silver palette, safe for ChatGPT (no ID documents, money, or children in danger).
   - Before sending each prompt, check it against the guide's step text.
+- User direction (approved): do NOT redo, replace, audit or delete any image already on the site. Prompts only for guides with no pictures yet.
