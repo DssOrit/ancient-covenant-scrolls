@@ -53,6 +53,8 @@ def split(path, layout=None):
 
 # Special layouts (x0, y0, x1, y1) for pictures that are not two plain rows
 LAYOUTS = {
+    # burns: bottom row of a combined choking+burns board (1536x1024)
+    'g-burns': [(0, 511, 371, 1024), (385, 511, 760, 1024), (773, 511, 1151, 1024), (1166, 511, 1536, 1024)],
     'hs-hand-pump': [(0, 0, 449, 941), (467, 0, 848, 941), (865, 0, 1254, 447), (1271, 0, 1672, 447), (865, 464, 1672, 941)],
 }
 

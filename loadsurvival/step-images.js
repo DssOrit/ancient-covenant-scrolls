@@ -340,5 +340,68 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/g-wildfire-2.jpg",
   "assets/steps/g-wildfire-3.jpg",
   "assets/steps/g-wildfire-4.jpg"
+ ],
+ "g-heat-wave": [
+  "assets/steps/g-heat-wave-1.jpg",
+  "assets/steps/g-heat-wave-2.jpg",
+  "assets/steps/g-heat-wave-3.jpg",
+  "assets/steps/g-heat-wave-4.jpg",
+  "assets/steps/g-heat-wave-5.jpg"
+ ],
+ "g-making-electricity": [
+  "assets/steps/g-making-electricity-1.jpg",
+  "assets/steps/g-making-electricity-2.jpg",
+  "assets/steps/g-making-electricity-3.jpg",
+  "assets/steps/g-making-electricity-4.jpg",
+  "assets/steps/g-making-electricity-5.jpg"
+ ],
+ "g-pets": [
+  "assets/steps/g-pets-1.jpg",
+  "assets/steps/g-pets-2.jpg",
+  "assets/steps/g-pets-3.jpg",
+  "assets/steps/g-pets-4.jpg",
+  "assets/steps/g-pets-5.jpg"
+ ],
+ "g-grid-down": [
+  "assets/steps/g-grid-down-1.jpg",
+  "assets/steps/g-grid-down-2.jpg",
+  "assets/steps/g-grid-down-3.jpg",
+  "assets/steps/g-grid-down-4.jpg",
+  "assets/steps/g-grid-down-5.jpg",
+  "assets/steps/g-grid-down-6.jpg"
+ ],
+ "g-group-calm": [
+  "assets/steps/g-group-calm-1.jpg",
+  "assets/steps/g-group-calm-2.jpg",
+  "assets/steps/g-group-calm-3.jpg",
+  "assets/steps/g-group-calm-4.jpg",
+  "assets/steps/g-group-calm-5.jpg",
+  "assets/steps/g-group-calm-6.jpg"
+ ],
+ "g-bleeding": [
+  "assets/steps/g-bleeding-1.jpg",
+  "assets/steps/g-bleeding-2.jpg",
+  "assets/steps/g-bleeding-3.jpg",
+  "assets/steps/g-bleeding-4.jpg",
+  "assets/steps/g-bleeding-5.jpg"
+ ],
+ "g-cpr": [
+  "assets/steps/g-cpr-1.jpg",
+  "assets/steps/g-cpr-2.jpg",
+  "assets/steps/g-cpr-3.jpg",
+  "assets/steps/g-cpr-4.jpg",
+  "assets/steps/g-cpr-5.jpg"
+ ],
+ "g-choking": [
+  "assets/steps/g-choking-1.jpg",
+  "assets/steps/g-choking-2.jpg",
+  "assets/steps/g-choking-3.jpg",
+  "assets/steps/g-choking-4.jpg"
+ ],
+ "g-burns": [
+  "assets/steps/g-burns-1.jpg",
+  "assets/steps/g-burns-2.jpg",
+  "assets/steps/g-burns-3.jpg",
+  "assets/steps/g-burns-4.jpg"
  ]
 };
