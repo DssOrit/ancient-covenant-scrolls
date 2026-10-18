@@ -441,5 +441,47 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/g-signaling-3.jpg",
   "assets/steps/g-signaling-4.jpg",
   "assets/steps/g-signaling-5.jpg"
+ ],
+ "sc-radiation": [
+  "assets/steps/sc-radiation-1.jpg",
+  "assets/steps/sc-radiation-2.jpg",
+  "assets/steps/sc-radiation-3.jpg",
+  "assets/steps/sc-radiation-4.jpg",
+  "assets/steps/sc-radiation-5.jpg"
+ ],
+ "sc-chemical": [
+  "assets/steps/sc-chemical-1.jpg",
+  "assets/steps/sc-chemical-2.jpg",
+  "assets/steps/sc-chemical-3.jpg",
+  "assets/steps/sc-chemical-4.jpg",
+  "assets/steps/sc-chemical-5.jpg"
+ ],
+ "sc-volcano": [
+  "assets/steps/sc-volcano-1.jpg",
+  "assets/steps/sc-volcano-2.jpg",
+  "assets/steps/sc-volcano-3.jpg",
+  "assets/steps/sc-volcano-4.jpg",
+  "assets/steps/sc-volcano-5.jpg"
+ ],
+ "sc-cyber-grid": [
+  "assets/steps/sc-cyber-grid-1.jpg",
+  "assets/steps/sc-cyber-grid-2.jpg",
+  "assets/steps/sc-cyber-grid-3.jpg",
+  "assets/steps/sc-cyber-grid-4.jpg",
+  "assets/steps/sc-cyber-grid-5.jpg"
+ ],
+ "sc-emp": [
+  "assets/steps/sc-emp-1.jpg",
+  "assets/steps/sc-emp-2.jpg",
+  "assets/steps/sc-emp-3.jpg",
+  "assets/steps/sc-emp-4.jpg",
+  "assets/steps/sc-emp-5.jpg"
+ ],
+ "sc-pandemic": [
+  "assets/steps/sc-pandemic-1.jpg",
+  "assets/steps/sc-pandemic-2.jpg",
+  "assets/steps/sc-pandemic-3.jpg",
+  "assets/steps/sc-pandemic-4.jpg",
+  "assets/steps/sc-pandemic-5.jpg"
  ]
 };
