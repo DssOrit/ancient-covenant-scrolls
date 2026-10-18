@@ -209,3 +209,9 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 @media print{body{background:#fff!important;color:#000!important;font-size:12pt}#topnav,.fab,.footer,.noprint,.planform,.breadcrumbs,h1,.muted{display:none!important}.printonly{display:block!important}.printonly h2{color:#000}.printonly p{color:#000;margin:8px 0}.shell{padding:0;zoom:1}}
 @media(max-width:1000px){#topnav button:not(.on):not(.refresh) span{display:none}#topnav button:not(.on){padding:6px 11px}}
 .panel .kpis{margin-top:16px}
+
+.wel{position:fixed;inset:0;z-index:60;background:#0a0e11;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wel figure{flex:none;margin:0;position:relative;width:calc(100svh * 0.562);aspect-ratio:607/1080}
+.wel img{width:100%;height:100%;display:block;object-fit:fill}
+.wel button{position:absolute;left:13.2%;top:84%;width:71.7%;height:7.4%;border-radius:999px;background:transparent;border:0;color:transparent;cursor:pointer;-webkit-tap-highlight-color:rgba(255,255,255,.15)}
+.wel button:focus-visible{outline:3px solid #fff;outline-offset:3px}

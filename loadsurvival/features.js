@@ -270,6 +270,7 @@ window.LSX = function (A) {
     plan: function () { switchView('plan'); },
     search: function () { switchView('search'); },
     about: function () { switchView('about'); },
+    enter: function () { S.welcomed = true; put(); switchView('home'); },
     tools: function () { switchView('tools'); },
     'open-list': function (x) { switchView('list', x.dataset.list); },
     'open-tool': function (x) { switchView('tool', x.dataset.tool); },
@@ -292,7 +293,11 @@ window.LSX = function (A) {
     } else clearTimers();
     if (v === 'search') { var g = document.getElementById('gsearch'); if (g && !('ontouchstart' in window)) { try { g.focus(); } catch (e) {} } }
   }
-  var origRender = A.render;
+  function welcome() {
+    return '<div class="wel"><figure><img src="assets/images/welcome.jpg" alt="Load Survival. Know, prepare, survive, thrive." width="1214" height="2160"><button type="button" data-action="enter" aria-label="Get started"></button></figure></div>';
+  }
+  function firstRoute() { return S.welcomed ? null : ['welcome', null]; }
+
   function onInput(e) {
     var t = e.target, id = t.id || '';
     if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
@@ -314,5 +319,5 @@ window.LSX = function (A) {
     if (id === 'b-unit') { calcBleach(); return true; }
     return false;
   }
-  return { views: views, actions: actions, onInput: onInput, onChange: onChange, after: after };
+  return { views: views, actions: actions, onInput: onInput, onChange: onChange, after: after, welcome: welcome, firstRoute: firstRoute };
 };
