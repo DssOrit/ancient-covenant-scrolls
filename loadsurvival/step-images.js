@@ -279,5 +279,26 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/hs-seawater-3.jpg",
   "assets/steps/hs-seawater-4.jpg",
   "assets/steps/hs-seawater-5.jpg"
+ ],
+ "wx-river": [
+  "assets/steps/wx-river-1.jpg",
+  "assets/steps/wx-river-2.jpg",
+  "assets/steps/wx-river-3.jpg",
+  "assets/steps/wx-river-4.jpg",
+  "assets/steps/wx-river-5.jpg"
+ ],
+ "wx-rain": [
+  "assets/steps/wx-rain-1.jpg",
+  "assets/steps/wx-rain-2.jpg",
+  "assets/steps/wx-rain-3.jpg",
+  "assets/steps/wx-rain-4.jpg",
+  "assets/steps/wx-rain-5.jpg"
+ ],
+ "wx-sea": [
+  "assets/steps/wx-sea-1.jpg",
+  "assets/steps/wx-sea-2.jpg",
+  "assets/steps/wx-sea-3.jpg",
+  "assets/steps/wx-sea-4.jpg",
+  "assets/steps/wx-sea-5.jpg"
  ]
 };

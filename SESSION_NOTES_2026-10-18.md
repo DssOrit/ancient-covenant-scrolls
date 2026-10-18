@@ -41,3 +41,4 @@
 - Placed first 6 Home skills pictures (bread, hardtack, beans, eggs, food storage, canning). Remaining 16 prompts not yet sent/generated. Cache p16-v32.
 - Placed 15 more Home skills pictures (21 of 22 have panels). Missing: hs-seawater. Notes: car-escape picture shows children in a flooded car and a burning car (owner chose to use it); faraday step 2 caption typo 'toutching', dry-bread-mix has 'Buttemilk' typo, hand-pump filter is a mesh strainer. Splitter now handles 2+3, 3+2 and a custom hand-pump layout. Cache p17-v33.
 - Placed hs-seawater picture: all 22 Home skills guides now have pictures (cache p19-v35). Added water guides wx-river, wx-rain, wx-sea (no pictures yet; prompts sent).
+- Placed wx-river, wx-rain, wx-sea pictures (cache p20-v36).
