@@ -39,3 +39,4 @@
 - Home skills pictures: owner generates 5-panel pictures (2 on top, 3 below), one panel per "What to do" step. Split with `python3 -I scripts/loadsurvival_split_panels.py hs-beans=beans.png ...`, then add the new files to the service worker list and bump the cache.
 - NEXT: place Home skills pictures when they arrive; Part 3 prompts (power, fire, shelter); medical wording review; Portuguese review; real iPad offline test.
 - Placed first 6 Home skills pictures (bread, hardtack, beans, eggs, food storage, canning). Remaining 16 prompts not yet sent/generated. Cache p16-v32.
+- Placed 15 more Home skills pictures (21 of 22 have panels). Missing: hs-seawater. Notes: car-escape picture shows children in a flooded car and a burning car (owner chose to use it); faraday step 2 caption typo 'toutching', dry-bread-mix has 'Buttemilk' typo, hand-pump filter is a mesh strainer. Splitter now handles 2+3, 3+2 and a custom hand-pump layout. Cache p17-v33.

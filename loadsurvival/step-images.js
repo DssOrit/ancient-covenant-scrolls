@@ -167,5 +167,110 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/hs-canning-3.jpg",
   "assets/steps/hs-canning-4.jpg",
   "assets/steps/hs-canning-5.jpg"
+ ],
+ "hs-fire-pit": [
+  "assets/steps/hs-fire-pit-1.jpg",
+  "assets/steps/hs-fire-pit-2.jpg",
+  "assets/steps/hs-fire-pit-3.jpg",
+  "assets/steps/hs-fire-pit-4.jpg",
+  "assets/steps/hs-fire-pit-5.jpg"
+ ],
+ "hs-wood-ash": [
+  "assets/steps/hs-wood-ash-1.jpg",
+  "assets/steps/hs-wood-ash-2.jpg",
+  "assets/steps/hs-wood-ash-3.jpg",
+  "assets/steps/hs-wood-ash-4.jpg",
+  "assets/steps/hs-wood-ash-5.jpg"
+ ],
+ "hs-cast-iron": [
+  "assets/steps/hs-cast-iron-1.jpg",
+  "assets/steps/hs-cast-iron-2.jpg",
+  "assets/steps/hs-cast-iron-3.jpg",
+  "assets/steps/hs-cast-iron-4.jpg",
+  "assets/steps/hs-cast-iron-5.jpg"
+ ],
+ "hs-faraday": [
+  "assets/steps/hs-faraday-1.jpg",
+  "assets/steps/hs-faraday-2.jpg",
+  "assets/steps/hs-faraday-3.jpg",
+  "assets/steps/hs-faraday-4.jpg",
+  "assets/steps/hs-faraday-5.jpg"
+ ],
+ "hs-grow-small": [
+  "assets/steps/hs-grow-small-1.jpg",
+  "assets/steps/hs-grow-small-2.jpg",
+  "assets/steps/hs-grow-small-3.jpg",
+  "assets/steps/hs-grow-small-4.jpg",
+  "assets/steps/hs-grow-small-5.jpg"
+ ],
+ "hs-root-storage": [
+  "assets/steps/hs-root-storage-1.jpg",
+  "assets/steps/hs-root-storage-2.jpg",
+  "assets/steps/hs-root-storage-3.jpg",
+  "assets/steps/hs-root-storage-4.jpg",
+  "assets/steps/hs-root-storage-5.jpg"
+ ],
+ "hs-pemmican": [
+  "assets/steps/hs-pemmican-1.jpg",
+  "assets/steps/hs-pemmican-2.jpg",
+  "assets/steps/hs-pemmican-3.jpg",
+  "assets/steps/hs-pemmican-4.jpg",
+  "assets/steps/hs-pemmican-5.jpg"
+ ],
+ "hs-dry-bread-mix": [
+  "assets/steps/hs-dry-bread-mix-1.jpg",
+  "assets/steps/hs-dry-bread-mix-2.jpg",
+  "assets/steps/hs-dry-bread-mix-3.jpg",
+  "assets/steps/hs-dry-bread-mix-4.jpg",
+  "assets/steps/hs-dry-bread-mix-5.jpg"
+ ],
+ "hs-pallet-garden": [
+  "assets/steps/hs-pallet-garden-1.jpg",
+  "assets/steps/hs-pallet-garden-2.jpg",
+  "assets/steps/hs-pallet-garden-3.jpg",
+  "assets/steps/hs-pallet-garden-4.jpg",
+  "assets/steps/hs-pallet-garden-5.jpg"
+ ],
+ "hs-water-from-air": [
+  "assets/steps/hs-water-from-air-1.jpg",
+  "assets/steps/hs-water-from-air-2.jpg",
+  "assets/steps/hs-water-from-air-3.jpg",
+  "assets/steps/hs-water-from-air-4.jpg",
+  "assets/steps/hs-water-from-air-5.jpg"
+ ],
+ "hs-car-escape": [
+  "assets/steps/hs-car-escape-1.jpg",
+  "assets/steps/hs-car-escape-2.jpg",
+  "assets/steps/hs-car-escape-3.jpg",
+  "assets/steps/hs-car-escape-4.jpg",
+  "assets/steps/hs-car-escape-5.jpg"
+ ],
+ "hs-eggshells": [
+  "assets/steps/hs-eggshells-1.jpg",
+  "assets/steps/hs-eggshells-2.jpg",
+  "assets/steps/hs-eggshells-3.jpg",
+  "assets/steps/hs-eggshells-4.jpg",
+  "assets/steps/hs-eggshells-5.jpg"
+ ],
+ "hs-garlic-honey": [
+  "assets/steps/hs-garlic-honey-1.jpg",
+  "assets/steps/hs-garlic-honey-2.jpg",
+  "assets/steps/hs-garlic-honey-3.jpg",
+  "assets/steps/hs-garlic-honey-4.jpg",
+  "assets/steps/hs-garlic-honey-5.jpg"
+ ],
+ "hs-solar-heater": [
+  "assets/steps/hs-solar-heater-1.jpg",
+  "assets/steps/hs-solar-heater-2.jpg",
+  "assets/steps/hs-solar-heater-3.jpg",
+  "assets/steps/hs-solar-heater-4.jpg",
+  "assets/steps/hs-solar-heater-5.jpg"
+ ],
+ "hs-hand-pump": [
+  "assets/steps/hs-hand-pump-1.jpg",
+  "assets/steps/hs-hand-pump-2.jpg",
+  "assets/steps/hs-hand-pump-3.jpg",
+  "assets/steps/hs-hand-pump-4.jpg",
+  "assets/steps/hs-hand-pump-5.jpg"
  ]
 };
