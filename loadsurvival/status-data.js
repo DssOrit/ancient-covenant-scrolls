@@ -16,6 +16,10 @@ window.LOAD_STATUS = {
   'water-bleach-dose': { status: 'partly', checkedOn: '18 Oct 2026',
     sources: [['CDC emergency water: bleach doses', 'https://www.cdc.gov/water-emergency/communication-resources/']],
     unconfirmed: ['8 drops per gallon for clear water, and a 30-minute wait, match CDC. CDC gives 16 drops for cloudy water.', 'This dose is for plain, unscented bleach of 5 to 6%. Stronger bleach needs a bit less. Read the label.', 'A dose for 1% bleach was seen only on a secondary table. It is not included.'] },
+  'g-bleeding': { status: 'partly', checkedOn: '18 Oct 2026',
+    sources: [['Stop the Bleed (course pages and posters)', 'https://globalmedicalresponse.com/docs/resources/stop-the-bleed/stop-the-bleed-wound-packing-applying-tourniquet']],
+    unconfirmed: ['A tourniquet placed 2 to 3 inches (5 to 8 cm) above the wound and not on a joint, and never loosening it, match Stop the Bleed pages we found.', 'We did not find a source for a second tourniquet above the first, or for a fixed time such as 5 minutes of pressure. Pages give different times. Take a Stop the Bleed course.', 'Official Stop the Bleed Coalition and American College of Surgeons pages were not opened directly.'] },
   'g-wildfire': { status: 'general' }, 'g-earthquake-tsunami': { status: 'general' },
+  'carkit-note': { status: 'general' },
   'g-hurricane': { status: 'general' }, 'g-tornado': { status: 'general' }
 };
