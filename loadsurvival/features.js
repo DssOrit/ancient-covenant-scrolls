@@ -101,7 +101,7 @@ window.LSX = function (A) {
   }
 
   function guideView(l) {
-    var h = '<div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
+    var h = '<div class="guide" data-cat="' + catOf(l) + '"><div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
       '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + statusHtml(l);
     if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
     if (l.image && !panelsFor(l)) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
@@ -113,7 +113,7 @@ window.LSX = function (A) {
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
     h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
     h += '<p class="muted">General information only. In immediate danger call ' + esc(region().emergency) + '. ' + verify() + '</p>';
-    return h;
+    return h + '</div>';
   }
   function lessonView() {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];

@@ -292,3 +292,11 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .stepnum{background:var(--glass-green);border:1px solid var(--glass-green-line)}
 .card.photo .txt{background:linear-gradient(180deg,rgba(13,17,19,0),rgba(13,17,19,.78) 70%)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.button,.secondary,.danger,.chip,.helpbtn,.fab{background:#24302a}}
+/* Guide pages: headers and accents take the guide's category colour */
+.guide[data-cat] .gblock>h2{color:var(--c)}
+.guide[data-cat] section>h2::before{background:var(--c)}
+.guide[data-cat] .gblock.first{border-color:color-mix(in srgb,var(--c) 55%,transparent)}
+.guide[data-cat] .stepnum{background:var(--c);color:#101416}
+.guide[data-cat] table th{color:var(--c)}
+.guide[data-cat] .dangerbox strong{color:#ff8a80}
+.guide[data-cat] .tipbox strong{color:#9be0a4}
