@@ -546,5 +546,19 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/sc-fire-safety-3.jpg",
   "assets/steps/sc-fire-safety-4.jpg",
   "assets/steps/sc-fire-safety-5.jpg"
+ ],
+ "sc-solar-storm": [
+  "assets/steps/sc-solar-storm-1.jpg",
+  "assets/steps/sc-solar-storm-2.jpg",
+  "assets/steps/sc-solar-storm-3.jpg",
+  "assets/steps/sc-solar-storm-4.jpg",
+  "assets/steps/sc-solar-storm-5.jpg"
+ ],
+ "sc-supply-chain": [
+  "assets/steps/sc-supply-chain-1.jpg",
+  "assets/steps/sc-supply-chain-2.jpg",
+  "assets/steps/sc-supply-chain-3.jpg",
+  "assets/steps/sc-supply-chain-4.jpg",
+  "assets/steps/sc-supply-chain-5.jpg"
  ]
 };
