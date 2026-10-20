@@ -108,6 +108,7 @@ window.LSX = function (A) {
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
     h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
+    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + li(s.items) + '</section>'; });
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
     h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
