@@ -17,7 +17,7 @@
       id: "ex-wartime-prep", icon: "shield", area: "Scenarios", difficulty: "Critical", title: "Prepare for wartime: the basics",
       intro: "War can cut power, water, fuel, phones and shops, and can force you to move. Start with the basics that keep a household alive for the first 3 days, then build up.",
       first: [
-        "Store water: at least 1 gallon (4 L) per person per day. 2 gallons (8 L) per person per day gives you drinking, cooking and washing water.",
+        "Store water: 1 gallon (4 L) per person per day, for at least 3 days.",
         "Store food that needs no cooking, and a manual can opener.",
         "Have flashlights, spare batteries, a battery or hand-crank radio and a power bank.",
         "Pack warm clothes, wet-weather gear and sturdy boots for every person.",
@@ -31,7 +31,7 @@
         "Plan, learn and prepare to move. Pick two meeting places and a way to leave. Keep a paper topographic map of your area and know how to use it. Keep the car at least half full. Pack a bug-out bag. Learn first aid, navigation, water treatment, food preservation and basic repairs. Keep a list of what you have and review it every 6 months."
       ],
       table: { head: ["Item", "Minimum", "Better"], rows: [
-        ["Water", "1 gal (4 L) per person per day", "2 gal (8 L) per person per day, plus a filter and bleach"],
+        ["Water", "1 gal (4 L) per person per day for 3 days", "1 gal (4 L) per person per day for 14 days, plus a filter and bleach"],
         ["Food", "3 days, no cooking", "14 days, plus staples"],
         ["Light", "1 flashlight per person", "Headlamps, lantern, spare batteries"],
         ["Power", "1 power bank", "Solar panel, feature phone, large power bank"],
@@ -48,7 +48,7 @@
       sources: [KIT],
       unconfirmed: [
         "The Ready.gov supplies list (radio, flashlight, first aid, batteries, whistle, dust mask, plastic sheeting and duct tape, wipes, garbage bags, wrench, can opener, prescriptions, cash, documents, sleeping bag, change of clothes, fire extinguisher, matches, paper and pencil and more) was pasted by the user from the Ready.gov kit page. We did not open the page ourselves.",
-        "1 gallon of water per person per day is the Ready.gov figure used elsewhere in this app. 2 gallons per person per day is our reasoning for drinking, cooking and washing.",
+        "1 gallon of water per person per day is the Ready.gov figure used across this app.",
         "Honey, ramen, protein powder, boots and feature phones are suggestions from the user's notes, not from a named source.",
         "Portugal: the 3-day advice comes from news reports on ANEPC and EU guidance. We did not find the official page."
       ]
