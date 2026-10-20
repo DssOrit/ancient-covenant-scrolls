@@ -69,3 +69,4 @@
   - Before sending each prompt, check it against the guide's step text.
 - User direction (approved): do NOT redo, replace, audit or delete any image already on the site. Prompts only for guides with no pictures yet.
 - 2026-10-20: PR #1047 (with the 9-guide batch) was merged by the user. New branch claude/loadsurvival-solar-supply from origin/main (backup/2026-10-20-loadsurvival-p30-v48, SHA edbd67e13ed4). Placed sc-solar-storm (first of two versions the user sent; second had a garbled number on the fuel gauge) and sc-supply-chain, cache loadsurvival-p31-v49. Still awaiting: sc-drought.
+- 2026-10-20: Placed sc-drought on branch claude/loadsurvival-solar-supply (PR #1048), cache loadsurvival-p32-v50. Batch 1 pictures now complete. Next: batch 2 prompts (user must say next).

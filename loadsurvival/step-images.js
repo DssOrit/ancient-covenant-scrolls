@@ -560,5 +560,12 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/sc-supply-chain-3.jpg",
   "assets/steps/sc-supply-chain-4.jpg",
   "assets/steps/sc-supply-chain-5.jpg"
+ ],
+ "sc-drought": [
+  "assets/steps/sc-drought-1.jpg",
+  "assets/steps/sc-drought-2.jpg",
+  "assets/steps/sc-drought-3.jpg",
+  "assets/steps/sc-drought-4.jpg",
+  "assets/steps/sc-drought-5.jpg"
  ]
 };
