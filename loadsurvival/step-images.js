@@ -630,5 +630,19 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/ex-seal-home-3.jpg",
   "assets/steps/ex-seal-home-4.jpg",
   "assets/steps/ex-seal-home-5.jpg"
+ ],
+ "med-seizure": [
+  "assets/steps/med-seizure-1.jpg",
+  "assets/steps/med-seizure-2.jpg",
+  "assets/steps/med-seizure-3.jpg",
+  "assets/steps/med-seizure-4.jpg",
+  "assets/steps/med-seizure-5.jpg"
+ ],
+ "ex-boil-filter": [
+  "assets/steps/ex-boil-filter-1.jpg",
+  "assets/steps/ex-boil-filter-2.jpg",
+  "assets/steps/ex-boil-filter-3.jpg",
+  "assets/steps/ex-boil-filter-4.jpg",
+  "assets/steps/ex-boil-filter-5.jpg"
  ]
 };
