@@ -139,10 +139,21 @@ window.LSX = function (A) {
     'lt2-preserve': ['wf-smoke-dry-salt'],
     'wf-fire-wet': ['wf-fire-nomatches', 'hs-fire-pit', 'g-hypothermia'],
     'wf-fire-nomatches': ['wf-fire-wet'],
-    'wf-find-plants': ['lt2-foraging', 'wf-wild-food-rules'],
     'wf-clean-fish': ['wf-fishing-gear', 'wf-smoke-dry-salt'],
     'wf-fishing-gear': ['lt-fishing', 'wf-clean-fish'],
-    'wf-game-handling': ['wf-trapping', 'wf-smoke-dry-salt']
+    'wf-game-handling': ['wf-trapping', 'wf-smoke-dry-salt', 'wf-field-kitchen'],
+    'wf-find-plants': ['wf-plant-method', 'wf-plants-watch', 'lt2-foraging', 'wf-wild-food-rules'],
+    'wf-plant-method': ['wf-plants-watch', 'wf-find-plants', 'lt2-foraging'],
+    'wf-plants-watch': ['wf-plant-method', 'wf-find-plants'],
+    'wf-shelter-build': ['wf-shelter-secure', 'wf-fire-wet', 'g-hypothermia'],
+    'wf-shelter-secure': ['wf-shelter-build', 'shelter-tarp', 'shelter-site'],
+    'wf-raft-river': ['wf-fire-wet', 'g-hypothermia', 'g-flood'],
+    'wf-field-kitchen': ['wf-clean-fish', 'wf-smoke-dry-salt', 'wf-game-handling'],
+    'shelter': ['wf-shelter-build', 'wf-shelter-secure'],
+    'shelter-tarp': ['wf-shelter-secure', 'wf-shelter-build'],
+    'shelter-site': ['wf-shelter-secure'],
+    'shelter-cold': ['wf-shelter-build', 'wf-fire-wet'],
+    'g-flood': ['wf-raft-river']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
