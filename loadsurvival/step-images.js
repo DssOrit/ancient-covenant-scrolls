@@ -700,5 +700,12 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/lim-comms-3.jpg",
   "assets/steps/lim-comms-4.jpg",
   "assets/steps/lim-comms-5.jpg"
+ ],
+ "lim-stay-safe": [
+  "assets/steps/lim-stay-safe-1.jpg",
+  "assets/steps/lim-stay-safe-2.jpg",
+  "assets/steps/lim-stay-safe-3.jpg",
+  "assets/steps/lim-stay-safe-4.jpg",
+  "assets/steps/lim-stay-safe-5.jpg"
  ]
 };
