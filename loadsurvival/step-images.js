@@ -567,5 +567,68 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/sc-drought-3.jpg",
   "assets/steps/sc-drought-4.jpg",
   "assets/steps/sc-drought-5.jpg"
+ ],
+ "med-heart-stroke": [
+  "assets/steps/med-heart-stroke-1.jpg",
+  "assets/steps/med-heart-stroke-2.jpg",
+  "assets/steps/med-heart-stroke-3.jpg",
+  "assets/steps/med-heart-stroke-4.jpg",
+  "assets/steps/med-heart-stroke-5.jpg"
+ ],
+ "med-low-sugar": [
+  "assets/steps/med-low-sugar-1.jpg",
+  "assets/steps/med-low-sugar-2.jpg",
+  "assets/steps/med-low-sugar-3.jpg",
+  "assets/steps/med-low-sugar-4.jpg",
+  "assets/steps/med-low-sugar-5.jpg"
+ ],
+ "med-dehydration": [
+  "assets/steps/med-dehydration-1.jpg",
+  "assets/steps/med-dehydration-2.jpg",
+  "assets/steps/med-dehydration-3.jpg",
+  "assets/steps/med-dehydration-4.jpg",
+  "assets/steps/med-dehydration-5.jpg"
+ ],
+ "med-head-spine": [
+  "assets/steps/med-head-spine-1.jpg",
+  "assets/steps/med-head-spine-2.jpg",
+  "assets/steps/med-head-spine-3.jpg",
+  "assets/steps/med-head-spine-4.jpg",
+  "assets/steps/med-head-spine-5.jpg"
+ ],
+ "med-breathing": [
+  "assets/steps/med-breathing-1.jpg",
+  "assets/steps/med-breathing-2.jpg",
+  "assets/steps/med-breathing-3.jpg",
+  "assets/steps/med-breathing-4.jpg",
+  "assets/steps/med-breathing-5.jpg"
+ ],
+ "med-allergic": [
+  "assets/steps/med-allergic-1.jpg",
+  "assets/steps/med-allergic-2.jpg",
+  "assets/steps/med-allergic-3.jpg",
+  "assets/steps/med-allergic-4.jpg",
+  "assets/steps/med-allergic-5.jpg"
+ ],
+ "med-assess": [
+  "assets/steps/med-assess-1.jpg",
+  "assets/steps/med-assess-2.jpg",
+  "assets/steps/med-assess-3.jpg",
+  "assets/steps/med-assess-4.jpg",
+  "assets/steps/med-assess-5.jpg"
+ ],
+ "med-wounds": [
+  "assets/steps/med-wounds-1.jpg",
+  "assets/steps/med-wounds-2.jpg",
+  "assets/steps/med-wounds-3.jpg",
+  "assets/steps/med-wounds-4.jpg",
+  "assets/steps/med-wounds-5.jpg"
+ ],
+ "ex-seal-home": [
+  "assets/steps/ex-seal-home-1.jpg",
+  "assets/steps/ex-seal-home-2.jpg",
+  "assets/steps/ex-seal-home-3.jpg",
+  "assets/steps/ex-seal-home-4.jpg",
+  "assets/steps/ex-seal-home-5.jpg"
  ]
 };
