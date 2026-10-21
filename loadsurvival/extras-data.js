@@ -183,6 +183,94 @@
       sources: [["US Department of Energy: microhydropower systems", "https://www.energy.gov/energysaver/microhydropower-systems"], ["CDC: finding other sources of water in an emergency", "https://www.cdc.gov/water-emergency/about/how-to-find-clean-water-in-an-emergency.html"]],
       unconfirmed: ["The 10 kilowatt micro-hydro statement comes from the user's notes and matches US Department of Energy text. We did not open that page.", "The list of advantages of river settlements (water, transport, soil, power, defence, fishing) comes from the user's notes. It is general history, not checked against a named source.", "The boat size (10 to 20 people) is from the user's notes. Permits and safety rules were not checked."],
       status: "general"
+    }),
+    g({
+      id: "ex-hospitals-expats", icon: "cross", area: "Essentials", difficulty: "Essential", title: "Private hospitals for expats: Lisbon, Porto, Coimbra, Algarve",
+      intro: "A short list of private hospitals that expats are often pointed to, with what we could find about 24-hour emergency care. In a real emergency call 112 first. Phone before you go if you can.",
+      first: [
+        "Call 112 for a real emergency. The ambulance team takes you to the right hospital. Do not drive a seriously ill person yourself.",
+        "If it is urgent but not life-threatening, phone the hospital first. LUZ 24 (217 104 424) is a 24-hour nurse phone line for the Hospital da Luz network.",
+        "Check the table below for your area. Some hospitals are confirmed 24 hours. Others are not.",
+        "Take your phone, medicine list, ID, health insurance details and a way to pay."
+      ],
+      do: [
+        "Decide if it is an emergency. Chest pain, trouble breathing, stroke signs, heavy bleeding, collapse, a serious injury or a severe allergic reaction: call 112. See the 112 phrases on the home page. Do not wait for a private hospital.",
+        "Phone first for urgent, non-life-threatening problems. Call the hospital, or LUZ 24 for the Luz network. Ask: Is the emergency department open now? Do you treat adults and children? Do you have an English speaker? How long is the wait?",
+        "Pick the 24-hour hospital for your area from the table. Lisbon: Hospital da Luz Lisboa or CUF Descobertas. Porto: CUF Porto. Algarve: Hospital Particular do Algarve at Alvor or Gambelas. Coimbra: 24-hour emergency care at the private hospitals is NOT confirmed. See the Coimbra note.",
+        "Get there safely and bring what you need. Bring photo ID, your insurance card or policy number, your medicine list and allergies, your phone and charger, and a card or cash to pay. Only one companion is allowed at some hospitals.",
+        "Before you leave, ask for the paperwork. Ask for the discharge report, any test results, and an itemised bill for your insurer. Ask about follow-up care. Keep copies."
+      ],
+      table: { head: ["Area", "Hospital", "24-hour emergency?"], rows: [
+        ["Lisbon, first choice", "Hospital da Luz Lisboa, Av. Lusíada 100", "Adults: yes, 24 hours, 365 days (Luz). Children: check, one notice limited daytime hours"],
+        ["Lisbon, alternative", "Hospital CUF Descobertas, R. Mário Botas (Parque das Nações)", "Adults and children: yes, 24 hours, 365 days (CUF)"],
+        ["Porto, first choice", "Hospital CUF Porto, Estrada da Circunvalação 14341", "Adults: yes, 24 hours. Children: daily 8:00 to 22:00 only (CUF)"],
+        ["Porto, alternative", "Hospital da Luz Arrábida, Vila Nova de Gaia", "Not confirmed. Phone first"],
+        ["Coimbra, first choice", "Hospital da Luz Coimbra, +351 239 096 900", "Not confirmed. Phone first"],
+        ["Coimbra, alternative", "Hospital CUF Coimbra, +351 239 700 720", "Not confirmed. Phone first"],
+        ["Algarve, first choice", "Hospital Particular do Algarve, Alvor (Portimão side)", "Yes, 24 hours, 365 days (HPA)"],
+        ["Algarve, alternative", "Hospital Particular do Algarve, Gambelas (Faro side)", "Yes, 24 hours, 365 days (HPA)"]
+      ] },
+      sections: [
+        { h: "Coimbra: what we could not confirm", items: [
+          "We found phone numbers for Hospital da Luz Coimbra and Hospital CUF Coimbra, but nothing that says either has a 24-hour emergency department.",
+          "The public hospital CHUC (Hospitais da Universidade de Coimbra) is the main emergency hospital for the area. Its general number is +351 239 400 400.",
+          "The older Covões (Hospital Geral) emergency service was changed in late 2025. It now takes mainly cases sent by the SNS 24 line or by other hospitals.",
+          "Call the private hospital before you go. In a real emergency call 112."
+        ] },
+        { h: "Useful numbers", items: [
+          "Emergency: 112.",
+          "LUZ 24, nurse phone line for the Hospital da Luz network, 24 hours: 217 104 424.",
+          "Hospital Particular do Algarve: 282 42 04 00. HPA private ambulance, 24 hours: 707 28 28 28.",
+          "Hospital da Luz Coimbra: +351 239 096 900. Hospital CUF Coimbra: +351 239 700 720."
+        ] },
+        { h: "Costs, waiting and language", items: [
+          "Private care is paid out of pocket or through private insurance. Ask about the cost and your insurer's network before you go, unless it is a real emergency.",
+          "Waiting times change by the hour. CUF Descobertas publishes live average waits by triage colour. A January 2024 snapshot of private hospitals reported waits of about 3 to 4 hours at some sites on that day.",
+          "Some reviews of the Luz and HPA hospitals mention long waits and high costs. Others praise the care in critical cases.",
+          "We did not confirm English-speaking staff at any hospital at all hours. One review of HPA says staff speak several languages. Ask when you phone."
+        ] },
+        { h: "Special services we saw", items: [
+          "Hospital da Luz Lisboa lists a stroke fast track and a coronary fast track in its adult urgent care.",
+          "Hospital da Luz Lisboa has a 24-hour obstetric emergency service.",
+          "CUF Porto has an internal medicine specialist physically present 24 hours in adult emergency, according to CUF."
+        ] }
+      ],
+      warn: [
+        "Do not drive a seriously ill person to a private hospital. Call 112.",
+        "A private hospital may not take every emergency. A very serious case may be sent to a public hospital with the right team.",
+        "Opening hours and services change. Check the hospital's own page or phone before you go.",
+        "Do not rely on this guide for prices or insurance cover."
+      ],
+      tip: [
+        "Save the phone numbers in your phone and on paper.",
+        "Keep a card with your name, allergies, medicines and insurance number in your wallet.",
+        "Ask your insurer which hospitals are in your network before you need one."
+      ],
+      after: [
+        "Keep the report, results and bill.",
+        "Send the bill to your insurer. Ask for a written answer.",
+        "Tell your family doctor or main doctor about the visit."
+      ],
+      sources: [
+        ["Hospital da Luz: new adult urgent care, Lisboa (24 hours, 365 days)", "https://www.hospitaldaluz.pt/en/media/news/hospital-da-luz-lisboa-new-adult-urgent-care"],
+        ["Hospital da Luz: paediatric hours notice, Lisboa", "https://www.hospitaldaluz.pt/en/media/news/horario-atendimento-permanente-pediatria-hl-lisboa"],
+        ["Hospital CUF Descobertas: atendimento permanente", "https://www.cuf.pt/hospitais-e-clinicas/hospital-cuf-descobertas-lisboa/atendimento-permanente"],
+        ["Hospital CUF Porto: atendimento permanente", "https://cuf.pt/hospitais-e-clinicas/hospital-cuf-porto/atendimento-permanente"],
+        ["Grupo HPA: facilities and 24-hour medical care", "https://www.grupohpa.com/en/facilities/"],
+        ["Pacific Prime: leading private hospitals for expats", "https://www.pacificprime.com/blog/?p=18752"],
+        ["Student survival guide with Coimbra hospital numbers (2026)", "https://www.euvg.pt/wp-content/uploads/2026/05/Survival_Guide.pdf.pdf"]
+      ],
+      unconfirmed: [
+        "Which hospitals are 'best' is not independently ranked. The picks come from insurance and expat guides (Pacific Prime and others) and from each hospital's own pages.",
+        "Lisbon Luz and CUF Descobertas, CUF Porto and HPA 24-hour claims come from the hospitals' own pages as seen in search results. We did not open the pages ourselves or call the hospitals.",
+        "The Luz paediatric notice about daytime hours has no date. It may be out of date. Phone before taking a child.",
+        "Hospital da Luz Arrábida (Porto area): no official opening hours found. 24-hour emergency care is Not confirmed.",
+        "Hospital da Luz Coimbra and Hospital CUF Coimbra: no source for a 24-hour emergency department. Their phone numbers and the CHUC number come from one student guide.",
+        "We did not find the Hospital São Gonçalo (Lagos), Hospital Lusíadas Algarve or Hospital Internacional Algarve in the search results. They are not listed.",
+        "English-speaking staff, prices, insurance networks and current waiting times were not confirmed.",
+        "HPA waiting times on its own pages conflicted between snapshots."
+      ],
+      status: "partly"
     })
   ];
   window.LOAD_EXTRAS = G;
