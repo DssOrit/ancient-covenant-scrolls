@@ -49,6 +49,9 @@
         ] }
       ],
       warn: [
+        "A tarp or tent you already carry, or a safe building or vehicle, is better than a natural shelter. Natural shelters take hours and energy and can harm protected habitat.",
+        "Build a debris shelter only where taking fallen material is legal. Use fallen material from the ground, not live branches.",
+        "Never burrow into an unstable snowbank or dig under overhanging snow. Snow shelters need trained partners, ventilation and a check of the snowpack.",
         "Never use a fire, stove or charcoal inside a closed shelter. Carbon monoxide and carbon dioxide can kill.",
         "Do not build under dead branches, in a dry stream bed, or where water can run in.",
         "Change out of wet or sweaty clothes. Cold kills faster than hunger.",
@@ -71,6 +74,7 @@
         "Insulation thickness differs between sources: about one foot to about three feet. We chose three feet as the cautious value.",
         "The snow shelter points (vent, no cooking inside, shovel, mark the roof) come from outdoor-club and Wikipedia pages. Avalanche pages (REI, US National Park Service, Utah Avalanche Center) put most slides on slopes of about 30 to 45 degrees, and flat ground below a steeper slope can still be hit. None of them gives a rule for placing a snow shelter, so check the local avalanche service.",
         "Lean-to details are limited. The 'fire in front' idea comes from one summary.",
+        "The user-supplied field manual (AI-written, not independently verified) adds that natural-material shelters are for short-term, fair-to-moderate weather, that a carried tarp is preferred, and that none is guaranteed storm-proof. We follow that caution.",
         "We did not find Portugal-specific guidance on building shelters or on cutting trees."
       ]
     }),
@@ -110,10 +114,12 @@
       warn: [
         "Do not camp under dead trees, in dry stream beds or on avalanche slopes.",
         "Do not tie to power lines or poles.",
+        "Do not surround camp with snares, sharp stakes, tripwires or alarms that could hurt animals or other people.",
+        "Do not use these notes to rig rope rescue, climbing anchors, raised sleeping platforms or anything that holds body weight. That needs rated equipment and instruction.",
         "Do not use a fire or stove inside a closed shelter.",
         "In a storm warning, a building or official shelter is safer than any outdoor shelter."
       ],
-      tip: ["Practise pitching your tarp at home.", "Carry extra cord and spare stakes."],
+      tip: ["Practise pitching your tarp at home.", "Carry extra cord and spare stakes.", "In bear country, cook and store food away from where you sleep, use required bear-resistant containers, and remove fish scraps and grease.", "Check clothing, shoes and bedding for ticks and insects. Keep a whistle, light and shoes within reach at night."],
       after: ["Check everyone for cold or wet injuries.", "Dry your gear."],
       sources: [
         ["Section Hiker: campsite selection tips", "https://sectionhiker.com/campsite-selection-tips/"],
@@ -125,6 +131,7 @@
       ],
       unconfirmed: [
         "The hazards (widowmakers, flash floods, tide, rockfall, drainage, wind, tarp pitch, marking guy lines) come from hiking and outdoor-school pages seen in search results.",
+        "The user-supplied field manual (AI-written, not independently verified) adds: check stitching, eyelets and cord before pitching, test stakes by pulling in the direction of the expected load, flag lines near paths, retension wet synthetic line, and learn the bowline, taut-line hitch, trucker's hitch and clove hitch with their limits.",
         "Stake and anchor methods (stake leaned 45 to 60 degrees away, rocks, buried deadman) come from outdoor-gear pages seen in search results. Strength depends on the ground and the anchor size, and no tested load figure was found.",
         "The Portugal weather and fire rules were not covered here. See the fire and shelter guides."
       ]
@@ -190,6 +197,35 @@
         "Test your body, only after certain identification. Eat a small amount of a well-identified plant first. Wait. Stop if you feel unwell. Some people are allergic to safe plants.",
         "If you cannot identify it, do not eat it. Use stored food, fishing or other safe food. If someone eats an unknown plant, call the poison centre or emergency services and keep a sample and a photo."
       ],
+      sections: [
+        { h: "Eight gates before any plant is eaten (from the supplied field manual)", items: [
+          "1. Record the place: region, habitat, season, likely look-alikes.",
+          "2. Photograph the whole plant where it grows, not a detached leaf.",
+          "3. Check traits: leaf arrangement and edge, stem cross-section, sap, flowers, seeds, fruit, roots (only where legal).",
+          "4. Use an authoritative flora or regional key. A phone app is a lead, not proof.",
+          "5. Compare every plausible dangerous look-alike, not just the edible name. If a diagnostic feature is missing, wait for another season or give up.",
+          "6. Cross-check at least two independent expert references for your region, and ideally a local botanist or forager.",
+          "7. Check that this part, at this stage, is edible and what processing it needs. Do not guess leaching or cooking.",
+          "8. Check landowner consent, legality, protected species and polluted ground. If any gate fails, do not eat it."
+        ] },
+        { h: "Field record template", items: [
+          "Exact place, region, habitat and land permission.",
+          "Date, weather, recent frost or rain.",
+          "Plant traits: leaves, stem, flowers, fruit, roots.",
+          "Candidate scientific name and the reference used.",
+          "Look-alikes ruled out, with scientific names and the difference.",
+          "Edible part and preparation, with an expert source.",
+          "Contamination risk: roadside, farming, industry, dog areas.",
+          "Verification: two sources, and an expert where appropriate."
+        ] },
+        { h: "Groups to avoid until an expert trains you", items: [
+          "White-flowered carrot and parsley relatives (poison hemlock and other deadly look-alikes).",
+          "Onion- or garlic-like bulbs.",
+          "Unknown red, white or black berries. Colour is not a rule.",
+          "All wild mushrooms.",
+          "Unknown coastal algae or shellfish."
+        ] }
+      ],
       table: { head: ["Unsafe shortcut", "Why it fails"], rows: [
         ["Animals eat it, so it is safe", "Many plants that animals eat are poisonous to people."],
         ["Smell or taste test", "Some deadly plants taste mild. Taste does not prove safety."],
@@ -232,6 +268,7 @@
         "The hemlock versus wild carrot differences come from gardening and homestead pages. Check a proper flora.",
         "The Quercus guides and the University of the Algarve book were found in search results. We did not open them.",
         "Phone apps: a 2023 PLOS ONE study (Galway and Leeds) tested six apps on 38 plants, and the best reached about 80 to 88 percent accuracy. A 2021 Journal of Medical Toxicology study tested three apps on 17 toxic species, and the best fully identified 10 of 17. The authors call apps aids, not proof. A further study is cited to us as: Long K, et al. (2023). Plant identification applications do not reliably identify toxic and edible plants in the American Midwest. Clinical Toxicology 61(7): 524-528. PMID 37535032, DOI 10.1080/15563650.2023.2237282. It is reported to have tested 16 plant species, with 58 percent overall species-level accuracy and one app calling five potentially toxic species edible. We could not find this paper ourselves, so we have not checked those figures. It was done in the American Midwest, so its numbers do not describe apps in Portugal or elsewhere. A 2024 Queensland study of 25 real plant exposures found the best app correct for 74 percent of cases and concluded apps are not reliable enough to guide poison-centre advice.",
+        "The eight gates, the field record and the groups to avoid come from the user-supplied field manual (AI-written, not independently verified). They match what the extension and herbarium pages we found say: no rules of thumb, use several regional references, avoid look-alikes.",
         "We found nothing on leaf arrangement, sap tests or umbrella flowers as safe indicators. Our caution about milky sap, white berries and umbrella flower heads is our own rule of caution, not a test."
       ]
     }),
@@ -264,6 +301,14 @@
         "Water hemlock can poison through skin. Wear gloves.",
         "Poisoning needs urgent care. Call 112 or 911."
       ],
+      sections: [
+        { h: "Portugal: plants to study with a local expert (not a list to eat from)", items: [
+          "Fennel (funcho) and strawberry tree (medronheiro) appear in the University of the Algarve wild-plant book index.",
+          "Bramble (Rubus ulmifolius, silva) appears in a 2007 study of traditional wild plant use in the north-west Iberian Peninsula.",
+          "Sea fennel (Crithmum maritimum, funcho-marinho) appears in the Flora Digital de Portugal.",
+          "These are names to study with a Portuguese guide and a local expert. Presence in a book is not a safe-to-eat test. Learn the look-alikes of each one."
+        ] }
+      ],
       tip: ["Take photos of leaf, stem, flower and root before you decide.", "Keep a list of the plants you know for certain."],
       after: ["If a person feels ill, call the poison centre or emergency services.", "Keep a sample and a photo."],
       sources: [
@@ -280,7 +325,8 @@
         "The acorn leaching steps come from several secondary sites and differ on timing.",
         "The Portuguese mushroom figures (93 cases, 11.8 percent of the liver cases) come from a Portuguese study summarised in a search result. We did not open it.",
         "The Portuguese berry list comes from a science-centre article in a search summary. We did not find an official Portuguese safe-picking guide. Fennel and strawberry tree appear in the book index, and the book says it is not exhaustive. Beldroega (purslane) and nettle were not confirmed in the book by our search.",
-        "Hemlock versus wild carrot, and death camas versus wild onion, come from gardening pages and extension pages. Check each with a proper flora."
+        "Hemlock versus wild carrot, and death camas versus wild onion, come from gardening pages and extension pages. Check each with a proper flora.",
+        "The Portugal study list comes from the user-supplied field manual (AI-written). We confirmed only that fennel and strawberry tree are in the Algarve book index, bramble is in the 2007 study, and sea fennel is in the Flora Digital. We did not confirm that any of them is safe to eat or give identification keys."
       ]
     }),
     g({
@@ -296,7 +342,7 @@
         "Set up a clean area. Choose flat ground away from your sleeping place and your water. Put down a clean cloth or a board. Keep a pot of safe water, soap and a cloth for hands. Keep animals and flies off food.",
         "Prepare food safely. Wash hands with soap and safe water. Use a separate board and knife for raw meat and fish. Wash wild plants well and cook them. Cut away damaged parts. Do not eat anything you cannot identify.",
         "Cook to a safe heat. Fish to 145 F (63 C). Wild game to 165 F (74 C) as a cautious target. Poultry to 165 F (74 C). Boil water for 1 minute, or 3 minutes above 6,500 ft (2,000 m). Cook over coals and use a grate or pot stand. See the fire and cooking guides.",
-        "Keep food safe to eat. Eat fresh food first. A fridge or cooler keeps food safe about 4 hours without power, so do not leave warm food out. Do not keep cooked food more than 2 hours in warm weather (general guidance). Keep food cold in a cooler, in a stream in a sealed bag, or buried in shade.",
+        "Keep food safe to eat. Eat fresh food first. A fridge or cooler keeps food safe about 4 hours without power, so do not leave warm food out. Do not leave perishable food out more than 2 hours, or 1 hour when it is above 90 F (32 C) (USDA food safety rule). Keep food cold in a cooler, in a stream in a sealed bag, or buried in shade.",
         "Store and carry food. Dry or smoke extra meat and fish, only with a tested method. See the smoke, dry and salt guide. Keep dried food dry and sealed. Hang food bags away from your shelter, to keep animals away.",
         "Clean up. Wash dishes and tools with soap and safe water, away from streams and lakes. Throw wash water on the ground, not in water. Bury or bag waste and scraps. Do not leave food that attracts animals.",
         "Wash hands and check your health. Wash your hands again. Watch for stomach illness after eating. If someone has vomiting or diarrhoea, give safe fluids and get help.",
@@ -313,7 +359,9 @@
         "Do not eat raw or undercooked wild meat or freshwater fish.",
         "Do not wash dishes in a stream or lake.",
         "Do not keep food in your sleeping area. Animals can follow the smell.",
-        "Do not cook inside a closed shelter."
+        "Do not cook inside a closed shelter.",
+        "Do not drink or cook with water that has a green scum, paint-like film or bad smell. Algal blooms can make toxins that boiling does not remove. Use another source.",
+        "Keep two clear containers or marks: DIRTY water and TREATED water. Never mix them up."
       ],
       tip: ["Carry soap, a cloth and a small pot just for water.", "Keep a thermometer if you can."],
       after: ["Check that the fire is out.", "Dry your tools and cloth."],
@@ -325,7 +373,7 @@
       ],
       unconfirmed: [
         "The boiling times, 145 F for fish and the 4-hour and 48-hour fridge and freezer times come from CDC and food-safety pages seen in search results.",
-        "The 165 F for wild game, the 2-hour limit for cooked food in warm weather, hanging food, washing dishes away from water and animal-proofing are common practice and general guidance. We did not find a named source for them in this research.",
+        "The 2-hour and 1-hour (above 90 F) rule matches USDA food-safety guidance found in search. The algal bloom warning comes from EPA material seen in search. The 165 F for wild game, hanging food, washing dishes away from water and animal-proofing are common practice and general guidance. We did not find a named source for them in this research.",
         "We found no Portugal-specific field cooking guidance."
       ]
     })
