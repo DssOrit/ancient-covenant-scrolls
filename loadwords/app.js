@@ -972,7 +972,7 @@ function renderHome(){
     </button>
     <button class="action" data-nav="games" style="--c:#EA580C">
       <div class="a-ic">${ic('gamepad')}</div>
-      <div class="a-txt"><b>Games</b><span>11 games — Deal or No Deal, Word Mystery, Vocab Feud &amp; more</span></div>
+      <div class="a-txt"><b>Games</b><span>12 games — Deal or No Deal, Word Mystery, Vocab Feud &amp; more</span></div>
       <div class="a-chev">${ic('chevR')}</div>
     </button>
     <button class="action" data-nav="grammar" style="--c:#0D9488">
@@ -2890,6 +2890,13 @@ function wwmBeginNext(){
   if(!next){ W.phase = 'complete'; sSet('wwm', W); return; }
   wwmStartStage(next);
 }
+function wwmPracticeAgain(){
+  const W = State.wwm;
+  W.stagesDone = {spelling:false, definition:false, usage:false, function:false};
+  W.phase = 'overview'; W.answered = false; W.correctPick = null; W.chosen = null;
+  W.spellAttempt = ''; W.options = []; W.correctValue = null;
+  sSet('wwm', W);
+}
 function wwmAnswer(value){
   const W = State.wwm;
   if(W.answered) return;
@@ -2958,8 +2965,9 @@ function renderWWM(){
     <div class="empty">
       <div>${ic('star')}</div>
       <h3>"${escapeHtml(w.word)}" mastered</h3>
-      <p>You've cleared spelling, definition, usage, and function for this word. A new word starts next week.</p>
-      <button class="big-btn" style="margin-top:20px;" data-nav="home">Back home</button>
+      <p>You've cleared spelling, definition, usage, and function for this word. A new word starts next week — or practice this one again right now.</p>
+      <button class="big-btn" style="margin-top:20px;" id="wwmPracticeAgainBtn">Practice again</button>
+      <button class="big-btn" style="margin-top:10px;background:var(--bg-card);color:var(--text);border:1.5px solid var(--border);box-shadow:none;" data-nav="home">Back home</button>
     </div>`;
   }
 
@@ -3689,6 +3697,8 @@ function bindEvents(){
   if(wwmContinueBtn){ wwmContinueBtn.addEventListener('click', ()=>{ wwmBeginNext(); render(); }); }
   const wwmRetryBtn = document.getElementById('wwmRetryBtn');
   if(wwmRetryBtn){ wwmRetryBtn.addEventListener('click', ()=>{ wwmStartStage(State.wwm.phase); render(); }); }
+  const wwmPracticeAgainBtn = document.getElementById('wwmPracticeAgainBtn');
+  if(wwmPracticeAgainBtn){ wwmPracticeAgainBtn.addEventListener('click', ()=>{ wwmPracticeAgain(); render(); }); }
   const wwmSpellSubmitBtn = document.getElementById('wwmSpellSubmitBtn');
   if(wwmSpellSubmitBtn){ wwmSpellSubmitBtn.addEventListener('click', ()=>{ wwmSpellSubmit(); render(); }); }
   const wwmSpellInput = document.getElementById('wwmSpellInput');
