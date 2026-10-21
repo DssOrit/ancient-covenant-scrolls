@@ -308,7 +308,7 @@ window.LSX = function (A) {
 
   /* ---------- save all pictures for offline ---------- */
   /* Step pictures are cached when first viewed (service-worker.js, cache PICS). This fills that same cache on request. */
-  var PICS = 'loadsurvival-pics-1', picRun = false, picStop = false;
+  var PICS = 'loadsurvival-pics-2', picRun = false, picStop = false;
   function picUrls() {
     var m = window.LOAD_STEP_IMAGES || {}, seen = {}, out = [];
     Object.keys(m).forEach(function (k) { m[k].forEach(function (p) { if (/^assets\/steps\//.test(p) && !seen[p]) { seen[p] = 1; out.push(new URL(p, location.href).href); } }); });
