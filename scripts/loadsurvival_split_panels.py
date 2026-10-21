@@ -88,7 +88,7 @@ def main(args):
         for i, p in enumerate(split(pic, boxes), 1):
             if p.width > 640: p = p.resize((640, round(640 * p.height / p.width)), Image.LANCZOS)
             rel = 'assets/steps/%s-%d.jpg' % (gid, i)
-            p.save(os.path.join(ROOT, rel), quality=68, optimize=True, progressive=True); paths.append(rel)
+            p.save(os.path.join(ROOT, rel), quality=int(os.environ.get('LS_Q', 68)), optimize=True, progressive=True); paths.append(rel)
         m[gid] = paths; print(gid, len(paths), 'panels')
     open(mapping_path, 'w', encoding='utf8').write('window.LOAD_STEP_IMAGES=' + json.dumps(m, indent=1) + ';\n')
 
