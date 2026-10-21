@@ -672,5 +672,33 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/lim-heat-cold-3.jpg",
   "assets/steps/lim-heat-cold-4.jpg",
   "assets/steps/lim-heat-cold-5.jpg"
+ ],
+ "lim-city-event": [
+  "assets/steps/lim-city-event-1.jpg",
+  "assets/steps/lim-city-event-2.jpg",
+  "assets/steps/lim-city-event-3.jpg",
+  "assets/steps/lim-city-event-4.jpg",
+  "assets/steps/lim-city-event-5.jpg"
+ ],
+ "lim-banks-down": [
+  "assets/steps/lim-banks-down-1.jpg",
+  "assets/steps/lim-banks-down-2.jpg",
+  "assets/steps/lim-banks-down-3.jpg",
+  "assets/steps/lim-banks-down-4.jpg",
+  "assets/steps/lim-banks-down-5.jpg"
+ ],
+ "lim-food-none": [
+  "assets/steps/lim-food-none-1.jpg",
+  "assets/steps/lim-food-none-2.jpg",
+  "assets/steps/lim-food-none-3.jpg",
+  "assets/steps/lim-food-none-4.jpg",
+  "assets/steps/lim-food-none-5.jpg"
+ ],
+ "lim-comms": [
+  "assets/steps/lim-comms-1.jpg",
+  "assets/steps/lim-comms-2.jpg",
+  "assets/steps/lim-comms-3.jpg",
+  "assets/steps/lim-comms-4.jpg",
+  "assets/steps/lim-comms-5.jpg"
  ]
 };
