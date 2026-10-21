@@ -63,7 +63,7 @@
       ]
     }),
     g({
-      id: "wf-raft-build", area: "Water", icon: "waves", title: "Rafts: why they fail, and a safe tabletop buoyancy demonstration",
+      id: "wf-raft-build", image: "assets/steps/wf-plant-raft-notes.jpg", area: "Water", icon: "waves", title: "Rafts: why they fail, and a safe tabletop buoyancy demonstration",
       intro: "A homemade raft is not a rescue boat. Buoyancy alone says little about stability, current, swamping, cold shock or steering. This guide teaches why rafts fail and lets you study the physics safely. It does not tell you how to launch one.",
       first: [
         "Do not launch a homemade raft into a river, reservoir, surf or cold open water.",
