@@ -155,7 +155,10 @@ window.LSX = function (A) {
     'shelter-tarp': ['wf-shelter-secure', 'wf-shelter-build'],
     'shelter-site': ['wf-shelter-secure'],
     'shelter-cold': ['wf-shelter-build', 'wf-fire-wet'],
-    'g-flood': ['wf-raft-river']
+    'g-flood': ['wf-raft-river', 'wf-storm-fire-out'],
+    'wf-practice-plan': ['wf-shelter-build', 'wf-plant-method', 'wf-field-kitchen', 'wf-fishing-gear'],
+    'wf-pt-words': ['wf-wild-food-rules', 'wf-storm-fire-out'],
+    'wf-storm-fire-out': ['wf-shelter-secure', 'wf-fire-wet', 'g-flood']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
