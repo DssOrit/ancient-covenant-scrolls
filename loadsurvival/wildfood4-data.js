@@ -46,12 +46,14 @@
         ["ABANA (blacksmiths' association): safety policy", "https://abana.org/wp-content/uploads/2025/08/ABANA-Safety-Policy-1.pdf"],
         ["iForgeIron: gas forge safety (forum)", "https://www.iforgeiron.com/topic/45146-gas-forge-safety/"],
         ["Newslj: common blacksmithing safety risks", "https://newslj.com/content/common-blacksmithing-safety-risks-and-how-stay-safe"],
-        ["iFixit: basics for blacksmithing", "https://www.ifixit.com/Topic/Blacksmithing"]
+        ["iFixit: basics for blacksmithing", "https://www.ifixit.com/Topic/Blacksmithing"],
+        ["OSHA 29 CFR 1910.218: forging machines (industrial standard)", "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.218"],
+        ["NIOSH HHE report 91-090-2175: blacksmith forge, Fort Myer (mirror copy)", "https://corpora.tika.apache.org/base/docs/govdocs1/942/942268.pdf"]
       ],
       unconfirmed: [
         "The eye protection point (prescription glasses are not safety glasses) is from the ABANA safety policy as seen in search results. The page was not opened.",
         "Carbon monoxide, galvanized zinc fumes, keeping a fire extinguisher or water beside you, and 'do not heat shiny outdoor metal' come from hobbyist forums and a blog. We found no OSHA or NIOSH page for forges, so these are general guidance.",
-        "The user-supplied manual report says OSHA and NIOSH support these safety rules. We could not confirm that in our search.",
+        "Precise sources, as cited to us and partly checked: OSHA 29 CFR 1910.218, Forging Machines, is an industrial standard on guarding, maintenance, tongs and flying scale. We saw its structure in search results but not the text. NIOSH Health Hazard Evaluation 91-090-2175 (Fort Myer, Virginia, 1992) concerns a blacksmith forge, smoke reaching a tack room and forge flue repairs; it also noted welding hazards. We confirmed that report. A second NIOSH report cited to us, HHE 80-101-9001, was not found. These show particular hazards. They do not approve a homemade forge design or prove any improvised setup is safe.",
         "We found no checked method for forging a tent stake or a pot hook. The steps here are safety rules and the idea of cold work first. Learn forging from a qualified person.",
         "We found no Portugal-specific rules on forges or metal work. Fire rules apply: check IPMA danger and local bans.",
         "Rules, seasons and conditions change by US state and in Portugal by region and year. Ask the local authority."
