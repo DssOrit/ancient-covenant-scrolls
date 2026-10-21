@@ -112,9 +112,34 @@ window.LSX = function (A) {
     }).join('') + '</ol>';
   }
 
+  /* ---------- "see the picture guide" links for guides that overlap a guide with pictures ---------- */
+  var SEE_ALSO = {
+    'ht-warm-cool': ['lim-heat-cold'],
+    'ht-store-water': ['lim-water-none', 'lt-permanent-water'],
+    'ht-family-plan': ['lim-comms', 'foundation-communication'],
+    'ht-kit-quantities': ['es-kit-tiers'],
+    'ht-buy-order': ['es-kit-tiers'],
+    'lt-community': ['lim-stay-safe'],
+    'p6-emergency-handwashing': ['lim-sanitation'],
+    'p6-sanitation-when-toilets-fail': ['lim-sanitation'],
+    'sanitation': ['lim-sanitation'],
+    'p6-food-after-a-blackout': ['lim-food-none'],
+    'p6-no-flame-emergency-meals': ['lim-food-none'],
+    'food': ['lim-food-none'],
+    'p6-documents-and-emergency-cash': ['lim-banks-down']
+  };
+  function seeAlso(id) {
+    var ids = SEE_ALSO[id]; if (!ids) return '';
+    var links = ids.map(function (x) {
+      var g = D.lessons.filter(function (l) { return l.id === x; })[0];
+      return g ? '<li><a href="#/lesson/' + encodeURIComponent(x) + '">' + esc(g.title) + '</a></li>' : '';
+    }).join('');
+    return links ? '<div class="tipbox seealso"><strong>See the guide with pictures</strong><ul>' + links + '</ul></div>' : '';
+  }
+
   function guideView(l) {
     var h = '<div class="guide" data-cat="' + catOf(l) + '"><div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
-      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + statusHtml(l);
+      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + statusHtml(l) + seeAlso(l.id);
     if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
     if (l.image && !panelsFor(l)) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
@@ -131,7 +156,7 @@ window.LSX = function (A) {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
     if (l && l.first) return guideView(l);
     var b = A.lessonBase(); if (!l) return b;
-    var i = b.indexOf('<div class="dangerbox">'); return i < 0 ? b : b.slice(0, i) + statusHtml(l) + b.slice(i);
+    var i = b.indexOf('<div class="dangerbox">'); return i < 0 ? b : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + b.slice(i);
   }
 
   /* ---------- lists ---------- */
