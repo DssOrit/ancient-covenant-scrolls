@@ -791,5 +791,70 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/lt2-woodheat-3.jpg",
   "assets/steps/lt2-woodheat-4.jpg",
   "assets/steps/lt2-woodheat-5.jpg"
+ ],
+ "wf-fire-wet": [
+  "assets/steps/wf-fire-wet-1.jpg",
+  "assets/steps/wf-fire-wet-2.jpg",
+  "assets/steps/wf-fire-wet-3.jpg",
+  "assets/steps/wf-fire-wet-4.jpg",
+  "assets/steps/wf-fire-wet-5.jpg"
+ ],
+ "wf-fire-nomatches": [
+  "assets/steps/wf-fire-nomatches-1.jpg",
+  "assets/steps/wf-fire-nomatches-2.jpg",
+  "assets/steps/wf-fire-nomatches-3.jpg",
+  "assets/steps/wf-fire-nomatches-4.jpg",
+  "assets/steps/wf-fire-nomatches-5.jpg"
+ ],
+ "wf-shelter-build": [
+  "assets/steps/wf-shelter-build-1.jpg",
+  "assets/steps/wf-shelter-build-2.jpg",
+  "assets/steps/wf-shelter-build-3.jpg",
+  "assets/steps/wf-shelter-build-4.jpg",
+  "assets/steps/wf-shelter-build-5.jpg",
+  "assets/steps/wf-shelter-build-6.jpg",
+  "assets/steps/wf-shelter-build-7.jpg",
+  "assets/steps/wf-shelter-build-8.jpg"
+ ],
+ "wf-shelter-secure": [
+  "assets/steps/wf-shelter-secure-1.jpg",
+  "assets/steps/wf-shelter-secure-2.jpg",
+  "assets/steps/wf-shelter-secure-3.jpg",
+  "assets/steps/wf-shelter-secure-4.jpg",
+  "assets/steps/wf-shelter-secure-5.jpg",
+  "assets/steps/wf-shelter-secure-6.jpg",
+  "assets/steps/wf-shelter-secure-7.jpg",
+  "assets/steps/wf-shelter-secure-8.jpg"
+ ],
+ "wf-clean-fish": [
+  "assets/steps/wf-clean-fish-1.jpg",
+  "assets/steps/wf-clean-fish-2.jpg",
+  "assets/steps/wf-clean-fish-3.jpg",
+  "assets/steps/wf-clean-fish-4.jpg",
+  "assets/steps/wf-clean-fish-5.jpg"
+ ],
+ "wf-fishing-gear": [
+  "assets/steps/wf-fishing-gear-1.jpg",
+  "assets/steps/wf-fishing-gear-2.jpg",
+  "assets/steps/wf-fishing-gear-3.jpg",
+  "assets/steps/wf-fishing-gear-4.jpg",
+  "assets/steps/wf-fishing-gear-5.jpg"
+ ],
+ "wf-field-kitchen": [
+  "assets/steps/wf-field-kitchen-1.jpg",
+  "assets/steps/wf-field-kitchen-2.jpg",
+  "assets/steps/wf-field-kitchen-3.jpg",
+  "assets/steps/wf-field-kitchen-4.jpg",
+  "assets/steps/wf-field-kitchen-5.jpg",
+  "assets/steps/wf-field-kitchen-6.jpg",
+  "assets/steps/wf-field-kitchen-7.jpg",
+  "assets/steps/wf-field-kitchen-8.jpg"
+ ],
+ "wf-smoke-dry-salt": [
+  "assets/steps/wf-smoke-dry-salt-1.jpg",
+  "assets/steps/wf-smoke-dry-salt-2.jpg",
+  "assets/steps/wf-smoke-dry-salt-3.jpg",
+  "assets/steps/wf-smoke-dry-salt-4.jpg",
+  "assets/steps/wf-smoke-dry-salt-5.jpg"
  ]
 };
