@@ -54,6 +54,8 @@ a{color:var(--lav)}
 .regions button[aria-pressed=true]{border-color:var(--lav);background:linear-gradient(135deg,#5f8238,#3f5f2a);box-shadow:0 0 0 3px rgba(155,191,99,.25)}
 .features{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:22px}
 .features .pill{background:rgba(21,27,30,.7)}
+.features button.pill{font:inherit;font-size:14px;color:var(--text);cursor:pointer;min-height:44px;padding:8px 18px}
+.regionopen{margin:-6px 0 14px}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .card,.panel{background:linear-gradient(160deg,var(--s1),var(--s2));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
