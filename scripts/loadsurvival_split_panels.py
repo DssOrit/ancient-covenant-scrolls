@@ -55,6 +55,8 @@ def split(path, layout=None):
 LAYOUTS = {
     # heat illness: two panels side by side in one row (1672x941)
     'g-heat-illness': [(0, 0, 827, 941), (844, 0, 1672, 941)],
+    # seizure: two, two, then one wide panel (phone) cropped to 16:9
+    'med-seizure': [(0, 0, 580, 383), (590, 0, 1672, 383), (0, 391, 820, 679), (830, 391, 1672, 679), (440, 688, 888, 941)],
     'hs-hand-pump': [(0, 0, 449, 941), (467, 0, 848, 941), (865, 0, 1254, 447), (1271, 0, 1672, 447), (865, 464, 1672, 941)],
 }
 
