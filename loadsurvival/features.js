@@ -34,9 +34,21 @@ window.LSX = function (A) {
       li(b.lines) + '<p class="muted">' + esc(b.hazards) + '</p>' +
       (b.blackout ? '<div class="tipbox"><strong>' + esc(b.blackout.title) + '</strong>' + li(b.blackout.items) + '</div>' : '') + '</div>';
   }
+  function callScript() {
+    var d = window.LOAD_CALL112; if (!d) return '';
+    var h = '<section class="call112"><h2>What to say when you call 112</h2><p>' + esc(d.intro) + '</p><div class="notice">' + esc(d.status) + '</div>';
+    d.groups.forEach(function (g, i) {
+      h += '<details class="callgroup"' + (i === 0 ? ' open' : '') + '><summary>' + esc(g.title) + '</summary><ul class="callrows">' + g.rows.map(function (r) {
+        return '<li><span class="en">' + esc(r[0]) + '</span><span class="pt" lang="pt">' + esc(r[1]) + '</span></li>';
+      }).join('') + '</ul></details>';
+    });
+    h += '<div class="tipbox"><strong>Tips</strong>' + li(d.tips) + '</div>';
+    h += '<div class="statusbox"><strong>Not confirmed</strong>' + li(d.unconfirmed) + '<p class="muted">Sources: ' + d.sources.map(function (s) { return '<a href="' + esc(s[1]) + '" target="_blank" rel="noopener">' + esc(s[0]) + '</a>'; }).join(', ') + '. Links need internet.</p></div></section>';
+    return h;
+  }
   function regionBoxes() {
     var r = state.region;
-    return '<section><h2>Your region</h2><div class="grid two-up">' + (r === 'pt' ? '' : regionBox('us')) + (r === 'us' ? '' : regionBox('pt')) + '</div></section>';
+    return '<section><h2>Your region</h2><div class="grid two-up">' + (r === 'pt' ? '' : regionBox('us')) + (r === 'us' ? '' : regionBox('pt')) + '</div></section>' + (r === 'us' ? '' : callScript());
   }
 
   /* ---------- home extras ---------- */
