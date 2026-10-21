@@ -387,12 +387,15 @@
         ["USDA FSIS: jerky and food safety", "https://www.fsis.usda.gov/es/node/3309"],
         ["UC Cooperative Extension: jerky and drying", "https://ucanr.edu/sites/NSJMFP/files/386887.pdf"],
         ["USDA National Agricultural Library: Listeria in ready-to-eat smoked fish", "https://nal.usda.gov/research-tools/food-safety-research-projects/risk-listeria-monocytogenes-ready-eat-smoked-fish-executive-summary"],
-        ["USDA ARS: keeping smoked salmon safe", "https://agresearchmag.ars.usda.gov/2010/oct/safe"]
+        ["USDA ARS: keeping smoked salmon safe", "https://agresearchmag.ars.usda.gov/2010/oct/safe"],
+        ["Penn State Extension: drying jerky", "https://extension.psu.edu/drying-jerky"],
+        ["Kansas State: dry meat safely at home (MF3173)", "https://bookstore.ksre.ksu.edu/download/dry-meat-safely-at-home_MF3173"]
       ],
       unconfirmed: [
         "The USDA jerky advice (160 F for meat, 165 F for poultry before drying, then 130 to 140 F) is from the USDA hotline as quoted in search results. A Wisconsin extension method differs. The FSIS page was not opened.",
         "Cold smoking below about 80 to 90 F and the Listeria warnings come from USDA research and UK Food Standards Agency pages seen in search results.",
-        "We found no checked recipe for salting or sun-drying fish. This guide does not give one.",
+        "Extension pages (citing the National Center for Home Food Preservation) add: marinate meat 1 to 2 hours or overnight in the fridge; freezing wild game at 0 F (-18 C) or below for at least 30 days kills trichinella but not bacteria; homemade jerky keeps about 1 to 2 months, longer in the fridge or freezer.",
+        "We found no checked recipe for dry-salt curing, nitrite amounts, salting fish or sun-drying. This guide does not give one.",
         "The 'door open a crack' oven tip is common practice and our reasoning."
       ]
     }),
@@ -434,6 +437,9 @@
       sources: [
         ["Portugal: obtain a sport fishing licence in inland waters", "https://www.gov.pt/servicos/obter-licenca-de-pesca-desportiva-em-aguas-interiores"],
         ["CCDR Centro: recreational fishing (pesca lúdica)", "https://www.ccdrc.pt/en/pesca-ludica"],
+        ["DGRM: minimum catch sizes table (Oct 2019)", "https://www.dgrm.pt/documents/20143/43770/Tabela+de+Tamanhos+M%C3%ADnimos+de+Captura+02-10-19.pdf/329f99c3-6207-f1b8-3deb-2f0566bf121d"],
+        ["DGRM: recreational fishing FAQ (2018)", "https://www.dgrm.pt/documents/20143/0/FAQ-PescaLudica2018.pdf/730e6d56-1f8c-66a2-a020-aecc016685bb"],
+        ["Portaria 14/2014 (recreational fishing)", "https://diariodarepublica.pt/dr/detalhe/portaria/14-2014-571046"],
         ["DGRM: licensing for recreational fishing", "https://dgrm.pt/en/pesca-pp-licenciamento"],
         ["ICNF hunter exam manual", "https://www.cinergetica.pt/en/icnf/carta-de-cacador/manual"],
         ["Santander: queimas and queimadas rules", "https://www.santander.pt/salto/queimas-queimadas-regras-autorizacao-portugal"],
@@ -442,6 +448,8 @@
       unconfirmed: [
         "US licence ages come from a tackle shop's summary and state examples (Utah, Ohio, New York, Virginia). Check your own state.",
         "The Portugal licence facts come from the government and CCDR pages seen in search results. We did not find size limits, bag limits, closed seasons or sea and shellfish rules.",
+        "Portugal: DGRM publishes a table of minimum catch sizes by species (our copy is from October 2019, with examples such as sea urchin 5 cm and pollack 27 cm). We did not find daily bag limits in kilos for recreational fishing, or the current table.",
+        "Portugal: without a licence, recreational gathering of shellfish may be done by hand only, with no tools. With a recreational licence some tools are allowed. This comes from a municipal leaflet and a news summary of Portaria 14/2014. We did not read the Portaria. Closed seasons exist, for example 15 July to 15 August each year on natural bivalve banks in the Ria de Aveiro (a DGRM despacho of 2026).",
         "We found nothing on emergency or survival exceptions for fishing, hunting or plants.",
         "Portugal's hunting law (Decreto-Lei 202/2004) and the current text of the fire rules were not read. Fire dates and fines come from civil-protection, law-firm and news pages."
       ]

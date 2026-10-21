@@ -37,6 +37,12 @@
         ["Building, car or official shelter", "Always first choice", "Do not run the engine in a closed space."]
       ] },
       sections: [
+        { h: "Snow shelters and avalanche terrain", items: [
+          "Most avalanches start on slopes of about 30 to 45 degrees. One avalanche centre treats any slope over 30 degrees as avalanche terrain.",
+          "Flat ground can be unsafe if a steeper slope sits above it. Avoid the run-out zone below a slope.",
+          "Watch for terrain traps such as gullies, cliffs, trees and rocks, which make burial deeper.",
+          "Choose low-angle ground clear of steeper slopes above. Check the local avalanche centre bulletin before you build."
+        ] },
         { h: "United States and Portugal", items: [
           "Portugal: many woods and protected areas are fire-risk zones. Do not cut live trees or light fires in the danger season. Ask ICNF or your câmara before camping.",
           "US: public land has rules about cutting trees and camping. In an emergency, use dead material on the ground, not live trees."
@@ -55,12 +61,15 @@
         ["Outdoor Hub: how to make a debris hut shelter", "https://outdoorhub.com/?p=5767"],
         ["New Jersey State Parks: building a forest debris hut", "https://nj.gov/dep/parksandforests/education/docs/eo-Building%20a%20Forest%20Debris%20Hut.pdf"],
         ["UBC Varsity Outdoor Club: snow shelters", "https://wiki.ubc-voc.com/Snow_shelter"],
-        ["Wikipedia: snow cave", "https://en.wikipedia.org/wiki/Snow_cave"]
+        ["Wikipedia: snow cave", "https://en.wikipedia.org/wiki/Snow_cave"],
+        ["REI: reducing risk, how to recognize avalanche terrain", "https://www.rei.com/learn/expert-advice/avalanche-reducing-risk.html"],
+        ["US National Park Service: avalanche awareness bulletin", "https://www.nps.gov/lavo/planyourvisit/upload/Avalanche-Awareness-site-bulletin-508.pdf"],
+        ["Utah Avalanche Center: terrain over 30 degrees", "https://fuac.utahavalanchecenter.org/sites/default/files/attached_files/Staples.Terrain30.TAR41.2.pdf"]
       ],
       unconfirmed: [
         "The debris hut steps (ridgepole, ribs about 10 to 12 inches apart, lattice, debris) are consistent across the outdoor and park pages seen in search results.",
         "Insulation thickness differs between sources: about one foot to about three feet. We chose three feet as the cautious value.",
-        "The snow shelter points (vent, no cooking inside, shovel, mark the roof) come from outdoor-club and Wikipedia pages. We found nothing on avalanche risk for snow shelters. Check the local avalanche service before you build in the mountains.",
+        "The snow shelter points (vent, no cooking inside, shovel, mark the roof) come from outdoor-club and Wikipedia pages. Avalanche pages (REI, US National Park Service, Utah Avalanche Center) put most slides on slopes of about 30 to 45 degrees, and flat ground below a steeper slope can still be hit. None of them gives a rule for placing a snow shelter, so check the local avalanche service.",
         "Lean-to details are limited. The 'fire in front' idea comes from one summary.",
         "We did not find Portugal-specific guidance on building shelters or on cutting trees."
       ]
@@ -84,6 +93,13 @@
         "Keep air and exits. Leave gaps for air to prevent condensation. Do not seal yourself in. Keep the way out clear. Do not place fires or fuel stoves inside. In wind, keep the door away from the wind.",
         "Check after the weather changes. Re-tighten lines, clear snow from the roof so it does not collapse, and move if water rises or a branch cracks. Pack your essentials so you can leave in minutes."
       ],
+      sections: [{ h: "Anchors that hold", items: [
+        "Stake: set it deep, leaned about 45 to 60 degrees away from the shelter, so the guy line meets it at close to a right angle. Stakes pushed in upright come out in wind.",
+        "Rock: lay the line over a large flat rock, push the stake behind it, then stack rocks on the stake. A line wrapped round a big rock is very strong.",
+        "Buried anchor (deadman): dig about 12 inches (30 cm), lay the line under a stick, stake or rock, leave a long running end above ground, bury it, and tie off the running end with a hitch. Do not tie the line to the anchor before you bury it.",
+        "Snow: bury a log or large stick sideways. Tie a stake in the middle and bury it flat. A buried log is stronger than a bag.",
+        "Sand: bury a sack filled with sand with only the cord showing."
+      ] }],
       table: { head: ["Hazard", "Check", "Do"], rows: [
         ["Falling branches", "Look up. Dead or heavy branches.", "Move to a clear site."],
         ["Flash flood or high tide", "Dry stream bed, low ground, tide line.", "Go higher. Do not camp in channels."],
@@ -103,11 +119,13 @@
         ["Section Hiker: campsite selection tips", "https://sectionhiker.com/campsite-selection-tips/"],
         ["Section Hiker: sleep tarp in rain", "https://sectionhiker.com/sleep-tarp-rain/"],
         ["The Hiking Life: five tips for a successful tarp pitch", "https://www.thehikinglife.com/2016/10/five-tips-for-a-successful-tarp-pitch/"],
-        ["Outward Bound: tarp shelter guidance", "https://outwardbound.org/blog/?p=11898"]
+        ["Outward Bound: tarp shelter guidance", "https://outwardbound.org/blog/?p=11898"],
+        ["The Ultimate Hang: using stakes and snow anchors", "https://theultimatehang.com/2014/09/using-stakes-snow-anchors/"],
+        ["Andrew Skurka: guyline tension system", "https://andrewskurka.com/guyline-tension-system-backpacking-tents-tarps-hammocks"]
       ],
       unconfirmed: [
         "The hazards (widowmakers, flash floods, tide, rockfall, drainage, wind, tarp pitch, marking guy lines) come from hiking and outdoor-school pages seen in search results.",
-        "We did not find named guidance on stake types, anchor strength or line tension. The anchor and tension steps are general guidance.",
+        "Stake and anchor methods (stake leaned 45 to 60 degrees away, rocks, buried deadman) come from outdoor-gear pages seen in search results. Strength depends on the ground and the anchor size, and no tested load figure was found.",
         "The Portugal weather and fire rules were not covered here. See the fire and shelter guides."
       ]
     }),
@@ -126,7 +144,7 @@
         "Check depth, speed and the bottom. Sources suggest knee-deep water or less for one person, and a little above mid-thigh for a group. Debris can trap or trip you. If the water is above knee deep and fast, do not wade. Wear boots in the river, not bare feet.",
         "If you must wade: prepare and cross carefully. Unfasten your pack hip belt, so you can drop it if you fall. Face upstream, lean on a pole and move one foot at a time. Cross at an angle downstream. Stay together if you are a group.",
         "If you fall, do not fight the current. Float on your back, feet downstream and up, and aim for the shallow side. Do not stand in fast water, because your foot can catch. Swim at an angle to the bank.",
-        "A raft only if you have no other choice. A raft can capsize, and capsizing is the main danger. A homemade raft on a big river can meet barges and a coast guard stop. Use it only on slow, calm water, for a short distance, with lifejackets or flotation for everyone, and never in a flood. We give no build plan, because we found no checked source for one.",
+        "A raft only if you have no other choice. A raft can capsize, and capsizing is the main danger. A homemade raft on a big river can meet barges and a coast guard stop. Use it only on slow, calm water, for a short distance, with lifejackets or flotation for everyone, and never in a flood. See the separate raft guide for principles. We found no checked design or load figure.",
         "Think of safer floats. Where the river is deep but slow, improvised flotation, such as a ball or sealed containers, may help a person cross. Check that it holds you. This works only where the current is not swift.",
         "After the crossing, warm up. Change out of wet clothes. Build a fire and dry out. See the fire guides and the hypothermia guide."
       ],
@@ -141,12 +159,14 @@
       sources: [
         ["Art of Manliness: how to ford a river or stream", "https://www.artofmanliness.com/skills/survival/ford-river-stream/"],
         ["Mental Floss: how to cross a river without a bridge", "https://www.mentalfloss.com/article/53005/how-cross-river-without-bridge"],
-        ["Transportation Safety Board of Canada: raft capsize investigation", "https://bst.gc.ca/eng/rapports-reports/marine/2005/m05w0080/m05w0080.html"]
+        ["Transportation Safety Board of Canada: raft capsize investigation", "https://bst.gc.ca/eng/rapports-reports/marine/2005/m05w0080/m05w0080.html"],
+        ["Canadian Safe Boating Council: the 1-10-1 principle", "https://csbc.ca/1-10-1-principle/"],
+        ["Washington State Parks: cold water shock and how to protect yourself", "https://parks.wa.gov/about/news-center/field-guide-blog/cold-water-shock-what-it-and-how-protect-yourself"]
       ],
       unconfirmed: [
         "The site-scouting and depth points come from outdoor-skills pages seen in search results. We did not find them in an official or lifesaving source.",
         "Cold-water shock, lifejacket use, floating on your back and unclipping a pack belt are widely taught. We did not find a named lifesaving page in this search. They are general guidance.",
-        "We found no checked source for building a raft, so this guide gives no raft plan. A homemade raft can be dangerous.",
+        "The cold-water points (first minute: control the gasp; about 10 minutes of useful movement; about an hour before hypothermia) are the 1-10-1 memory aid from Canadian and Washington State pages. Researchers say the timings are approximate. We found only survival-blog sources for building a raft. See the separate raft guide. A homemade raft can be dangerous.",
         "The coast guard and river-barge points come from a news item about a homemade raft on the Mississippi."
       ],
       status: "general"
@@ -224,7 +244,7 @@
         "Learn the deadly pairs first. Wild carrot and poison hemlock, and cowbane or water hemlock. Wild onion and death camas. Learn each pair side by side, from a field guide and an expert. These have killed people.",
         "Know the bitter or raw-unsafe foods. Acorns have tannins and are bitter. They are not recommended raw. Cold or hot leaching removes them. Hot leaching: boil in double the volume of water and change the water until it stays clear. White oak acorns need less leaching than red oak. Do not use acorns with holes or grubs.",
         "Learn a small set of beginner plants well. Beginner guides suggest a handful, such as blackberries, dandelion, nettles, wild garlic and elderflowers. These come from a commercial guide, not an extension service. Check each in your own regional guide first. Cook nettles. Never eat wild garlic you cannot confirm by smell and leaf.",
-        "Portugal: treat berries with great care. A Portuguese science-centre article warns that not all wild fruits are edible, and names belladonna, bryony, holly and privet as dangerous. Blackberries are a well-known wild fruit, and one source says to pick them before September. Medronho, acorn and chestnut are traditional foods in Portugal, but we did not find a safe-picking source. Learn them from a local guide.",
+        "Portugal: treat berries with great care. A Portuguese science-centre article warns that not all wild fruits are edible, and names belladonna, bryony, holly and privet as dangerous. Blackberries are a well-known wild fruit, and one source says to pick them before September. The University of the Algarve book lists fennel (funcho) and strawberry tree (medronheiro) among its 70 traditionally eaten species. A related study looked at evidence for eating wild asparagus, curly dock (Rumex crispus), holm oak acorns (Quercus rotundifolia) and Corema album (camarinha). We found no safe-picking steps for them. Learn them from a local guide.",
         "Never eat wild mushrooms without expert identification. In Portugal a study counted 93 serious mushroom poisonings in 1990 to 2008, and about 11.8 percent of the liver cases died. The deadly death cap, Amanita phalloides, causes most deaths. Its toxins survive cooking, and symptoms can be delayed for hours. Mushroom apps and guides are not enough.",
         "Take a local course. Cooperative extension in the US and groups such as Quercus in Portugal run courses. This is the safest way to learn."
       ],
@@ -253,7 +273,7 @@
         "This is a watch list only. The list of beginner plants comes from a commercial beginner's guide. Dandelion, plantain, chickweed, purslane and cattail were not confirmed by a source in our search. We do not list how to identify them.",
         "The acorn leaching steps come from several secondary sites and differ on timing.",
         "The Portuguese mushroom figures (93 cases, 11.8 percent of the liver cases) come from a Portuguese study summarised in a search result. We did not open it.",
-        "The Portuguese berry list comes from a science-centre article in a search summary. We did not find an official Portuguese safe-picking guide.",
+        "The Portuguese berry list comes from a science-centre article in a search summary. We did not find an official Portuguese safe-picking guide. Fennel and strawberry tree appear in the book index, and the book says it is not exhaustive. Beldroega (purslane) and nettle were not confirmed in the book by our search.",
         "Hemlock versus wild carrot, and death camas versus wild onion, come from gardening pages and extension pages. Check each with a proper flora."
       ]
     }),
