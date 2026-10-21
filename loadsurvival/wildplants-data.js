@@ -762,6 +762,7 @@
     "The document itself says its region and season cues are broad, that exact district distribution and flowering dates are unverified, and that it is not a wild-food identification system.",
     "We included no photographs. The document left every photo slot empty on purpose, because wrong plant pictures can cause deadly mistakes. We agree.",
     "We did not check whether any listed plant is protected, or whether picking it is allowed. Ask the landowner, the municipality and ICNF.",
+    "The profiles are written for mainland Portugal only. The document says island plants need their own lists checked against island floras. We have not built those.",
     "Do not use these pages to decide that a plant is safe to eat."
   ];
   var SRC = [
@@ -775,6 +776,7 @@
       id: d.id, area: "Food", icon: "alert", difficulty: "Critical", title: d.title, intro: d.intro,
       status: "general", checkedOn: CD,
       first: [
+        "These profiles are for mainland Portugal. They do not apply to the Azores or Madeira.",
         "This is a study page, not permission to eat. A picture, a smell or one feature cannot show a plant is safe.",
         "Poison centre in Portugal: 800 250 250. Emergency: 112.",
         d.poison ? "If someone has eaten any of these, call 112 or the poison centre now. Keep a sample or photo." : "If you are not 100 percent sure, do not eat it."
