@@ -707,5 +707,89 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/lim-stay-safe-3.jpg",
   "assets/steps/lim-stay-safe-4.jpg",
   "assets/steps/lim-stay-safe-5.jpg"
+ ],
+ "ht-cook-no-power": [
+  "assets/steps/ht-cook-no-power-1.jpg",
+  "assets/steps/ht-cook-no-power-2.jpg",
+  "assets/steps/ht-cook-no-power-3.jpg",
+  "assets/steps/ht-cook-no-power-4.jpg",
+  "assets/steps/ht-cook-no-power-5.jpg"
+ ],
+ "ht-shelter-in-place": [
+  "assets/steps/ht-shelter-in-place-1.jpg",
+  "assets/steps/ht-shelter-in-place-2.jpg",
+  "assets/steps/ht-shelter-in-place-3.jpg",
+  "assets/steps/ht-shelter-in-place-4.jpg",
+  "assets/steps/ht-shelter-in-place-5.jpg"
+ ],
+ "ht-evacuate": [
+  "assets/steps/ht-evacuate-1.jpg",
+  "assets/steps/ht-evacuate-2.jpg",
+  "assets/steps/ht-evacuate-3.jpg",
+  "assets/steps/ht-evacuate-4.jpg",
+  "assets/steps/ht-evacuate-5.jpg"
+ ],
+ "lt-fishing": [
+  "assets/steps/lt-fishing-1.jpg",
+  "assets/steps/lt-fishing-2.jpg",
+  "assets/steps/lt-fishing-3.jpg",
+  "assets/steps/lt-fishing-4.jpg",
+  "assets/steps/lt-fishing-5.jpg"
+ ],
+ "lt-permanent-water": [
+  "assets/steps/lt-permanent-water-1.jpg",
+  "assets/steps/lt-permanent-water-2.jpg",
+  "assets/steps/lt-permanent-water-3.jpg",
+  "assets/steps/lt-permanent-water-4.jpg",
+  "assets/steps/lt-permanent-water-5.jpg"
+ ],
+ "lt-sanitation": [
+  "assets/steps/lt-sanitation-1.jpg",
+  "assets/steps/lt-sanitation-2.jpg",
+  "assets/steps/lt-sanitation-3.jpg",
+  "assets/steps/lt-sanitation-4.jpg",
+  "assets/steps/lt-sanitation-5.jpg"
+ ],
+ "lt2-compost": [
+  "assets/steps/lt2-compost-1.jpg",
+  "assets/steps/lt2-compost-2.jpg",
+  "assets/steps/lt2-compost-3.jpg",
+  "assets/steps/lt2-compost-4.jpg",
+  "assets/steps/lt2-compost-5.jpg"
+ ],
+ "lt2-seeds": [
+  "assets/steps/lt2-seeds-1.jpg",
+  "assets/steps/lt2-seeds-2.jpg",
+  "assets/steps/lt2-seeds-3.jpg",
+  "assets/steps/lt2-seeds-4.jpg",
+  "assets/steps/lt2-seeds-5.jpg"
+ ],
+ "lt2-preserve": [
+  "assets/steps/lt2-preserve-1.jpg",
+  "assets/steps/lt2-preserve-2.jpg",
+  "assets/steps/lt2-preserve-3.jpg",
+  "assets/steps/lt2-preserve-4.jpg",
+  "assets/steps/lt2-preserve-5.jpg"
+ ],
+ "lt2-rootcellar": [
+  "assets/steps/lt2-rootcellar-1.jpg",
+  "assets/steps/lt2-rootcellar-2.jpg",
+  "assets/steps/lt2-rootcellar-3.jpg",
+  "assets/steps/lt2-rootcellar-4.jpg",
+  "assets/steps/lt2-rootcellar-5.jpg"
+ ],
+ "lt2-cook": [
+  "assets/steps/lt2-cook-1.jpg",
+  "assets/steps/lt2-cook-2.jpg",
+  "assets/steps/lt2-cook-3.jpg",
+  "assets/steps/lt2-cook-4.jpg",
+  "assets/steps/lt2-cook-5.jpg"
+ ],
+ "lt2-woodheat": [
+  "assets/steps/lt2-woodheat-1.jpg",
+  "assets/steps/lt2-woodheat-2.jpg",
+  "assets/steps/lt2-woodheat-3.jpg",
+  "assets/steps/lt2-woodheat-4.jpg",
+  "assets/steps/lt2-woodheat-5.jpg"
  ]
 };
