@@ -303,7 +303,56 @@ window.LSX = function (A) {
   function aboutView() {
     return '<h1>About and sources</h1><div class="panel"><h2>What this is</h2><p>Load Survival is an offline guide to survival and preparedness for disasters, storms and power-grid outages. It is for the United States and Portugal.</p><p>It is general information only. It is not medical, legal or professional advice. In an emergency call your local emergency number. ' + verify() + '</p><p>First-aid pages are a reference, not a substitute for training. Take a certified first-aid course.</p><p>Nothing here tells anyone to confront an intruder. Laws on self-defense differ by US state and in Portugal. Ask a local professional.</p></div>' +
       '<section><h2>Sources</h2><p class="muted">Figures follow FEMA, CDC, EPA and Red Cross guidance. Links need internet.</p><ul class="sources">' + C.sources.map(function (s) { return '<li><a href="' + esc(s[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(s[0]) + '</a></li>'; }).join('') + '</ul></section>' +
-      '<section><h2>On this device</h2><p>Your lists, plan and settings stay in this browser. Nothing is sent anywhere. No accounts, no tracking.</p><div class="actions">' + btn('Settings', 'profile', 'secondary') + ' ' + btn('Refresh Load Survival', 'refresh', 'secondary') + '</div></section>';
+      picSection() + '<section><h2>On this device</h2><p>Your lists, plan and settings stay in this browser. Nothing is sent anywhere. No accounts, no tracking.</p><div class="actions">' + btn('Settings', 'profile', 'secondary') + ' ' + btn('Refresh Load Survival', 'refresh', 'secondary') + '</div></section>';
+  }
+
+  /* ---------- save all pictures for offline ---------- */
+  /* Step pictures are cached when first viewed (service-worker.js, cache PICS). This fills that same cache on request. */
+  var PICS = 'loadsurvival-pics-1', picRun = false, picStop = false;
+  function picUrls() {
+    var m = window.LOAD_STEP_IMAGES || {}, seen = {}, out = [];
+    Object.keys(m).forEach(function (k) { m[k].forEach(function (p) { if (/^assets\/steps\//.test(p) && !seen[p]) { seen[p] = 1; out.push(new URL(p, location.href).href); } }); });
+    return out;
+  }
+  function picBar(done, total) { var b = document.getElementById('picbar'); if (b) b.style.width = (total ? Math.round(done * 100 / total) : 0) + '%'; }
+  function picStatus() {
+    if (!window.caches) { setOut('picmsg', 'This browser cannot save pictures for offline use.'); return; }
+    var urls = picUrls();
+    caches.open(PICS).then(function (c) { return Promise.all(urls.map(function (u) { return c.match(u); })); }).then(function (r) {
+      var have = r.filter(Boolean).length;
+      setOut('picmsg', have + ' of ' + urls.length + ' pictures are saved on this device.' + (have < urls.length ? ' About ' + Math.max(1, Math.round((urls.length - have) * 36 / 1024)) + ' MB left to save.' : ' All saved.'));
+      picBar(have, urls.length);
+    }).catch(function () {});
+  }
+  function savePics() {
+    if (picRun) return;
+    if (!window.caches) { setOut('picmsg', 'This browser cannot save pictures for offline use.'); return; }
+    if (navigator.onLine === false) { setOut('picmsg', 'You are offline. Connect to Wi-Fi and try again.'); return; }
+    picRun = true; picStop = false;
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+    caches.open(PICS).then(function (c) {
+      var urls = picUrls();
+      return Promise.all(urls.map(function (u) { return c.match(u).then(function (f) { return f ? null : u; }); })).then(function (r) {
+        var todo = r.filter(Boolean), total = todo.length, done = 0, fail = 0;
+        if (!total) { setOut('picmsg', 'All ' + urls.length + ' pictures are already saved.'); picBar(1, 1); return; }
+        function worker() {
+          if (picStop || !todo.length) return Promise.resolve();
+          var u = todo.shift();
+          return fetch(u).then(function (resp) { if (resp.ok) return c.put(u, resp); fail++; }).catch(function () { fail++; }).then(function () {
+            done++; setOut('picmsg', 'Saving pictures: ' + done + ' of ' + total + (fail ? ' (' + fail + ' failed)' : '')); picBar(done, total); return worker();
+          });
+        }
+        return Promise.all([worker(), worker(), worker(), worker()]).then(function () {
+          setOut('picmsg', (picStop ? 'Stopped. ' : (fail ? 'Finished with ' + fail + ' failed. Tap Save again to retry. ' : 'Done. ')) + (done - fail) + ' pictures saved this time.');
+        });
+      });
+    }).catch(function () { setOut('picmsg', 'Could not save pictures. Check space on this device and try again.'); }).then(function () { picRun = false; });
+  }
+  function picSection() {
+    var n = picUrls().length;
+    return '<section><h2>Pictures offline</h2><p>Step pictures are saved on this device the first time you open a guide. To save all ' + n + ' now, use Wi-Fi and keep this page open. It is about ' + Math.max(1, Math.round(n * 36 / 1024)) + ' MB.</p>' +
+      '<div class="actions">' + btn('Save all pictures', 'save-pics', 'button') + ' ' + btn('Stop', 'save-pics-stop', 'secondary') + '</div>' +
+      '<div class="progress" aria-hidden="true"><i id="picbar" style="width:0%"></i></div><p id="picmsg" class="muted" role="status" aria-live="polite">Checking...</p></section>';
   }
 
   /* ---------- wiring ---------- */
@@ -328,7 +377,9 @@ window.LSX = function (A) {
     'sos-on': sos,
     'plan-print': function () { try { window.print(); } catch (e) {} },
     'plan-copy': function () { copy(planText()); },
-    'plan-clear': function () { S.plan = {}; put(); A.render(); }
+    'plan-clear': function () { S.plan = {}; put(); A.render(); },
+    'save-pics': savePics,
+    'save-pics-stop': function () { picStop = true; }
   };
   function startFridge() { clearTimers(); if (S.outage) timers.push(setInterval(fridgePanel, 30000)); }
   function after() {
@@ -337,6 +388,7 @@ window.LSX = function (A) {
       var t = state.opened;
       if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
+    if (v === 'about') picStatus();
     if (v === 'search') { var g = document.getElementById('gsearch'); if (g && !('ontouchstart' in window)) { try { g.focus(); } catch (e) {} } }
   }
   function welcome() {
