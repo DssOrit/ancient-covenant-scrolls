@@ -1,6 +1,6 @@
 /* What to say when you call 112 in Portugal: English and Portuguese, by reason.
    Written 21 Oct 2026. The Portuguese was NOT reviewed by a native speaker. The phrases are simple and standard.
-   Ask a Portuguese speaker to check them. Where the Portuguese has a male and female form, both are shown with a slash. */
+   Ask a Portuguese speaker to check them. Lines are written without male or female endings where possible, so the voice reads them cleanly. */
 window.LOAD_CALL112 = {
   intro: "Call 112. The call is free. Speak slowly. Say where you are first. Stay on the line.",
   status: "Not confirmed: this Portuguese was not reviewed by a native speaker. Ask a Portuguese speaker to check it.",
@@ -17,15 +17,15 @@ window.LOAD_CALL112 = {
       ["My phone number is:", "O meu número de telefone é:"]
     ] },
     { id: "medical", title: "Someone is hurt or ill", rows: [
-      ["Someone is hurt.", "Alguém está ferido/a."],
+      ["Someone is hurt.", "Há uma pessoa ferida."],
       ["Someone is not breathing.", "Alguém não está a respirar."],
       ["Someone is unconscious.", "Alguém está inconsciente."],
       ["Someone is bleeding badly.", "Alguém está a sangrar muito."],
       ["Chest pain.", "Dor no peito."],
       ["I think it is a stroke.", "Acho que é um AVC."],
-      ["Someone is having a seizure.", "Alguém está com uma convulsão."],
-      ["Severe allergic reaction.", "Reação alérgica grave."],
-      ["Someone is choking.", "Alguém está engasgado/a."],
+      ["Someone is having a seizure.", "Alguém está a ter uma convulsão."],
+      ["Severe allergic reaction.", "Alguém está a ter uma reação alérgica grave."],
+      ["Someone is choking.", "Alguém está a engasgar-se."],
       ["Someone swallowed poison.", "Alguém ingeriu veneno."],
       ["A baby is being born.", "Vai nascer um bebé."],
       ["It is a child.", "É uma criança."],
@@ -33,14 +33,15 @@ window.LOAD_CALL112 = {
     ] },
     { id: "fire", title: "Fire, smoke or gas", rows: [
       ["There is a fire.", "Há um incêndio."],
-      ["There is a wildfire near:", "Há um incêndio florestal perto de:"],
+      ["There is a wildfire near: (term used by civil protection)", "Há um incêndio rural perto de:"],
+      ["There is a wildfire near: (common term)", "Há um incêndio florestal perto de:"],
       ["People are trapped.", "Há pessoas presas."],
       ["I smell gas.", "Sinto cheiro a gás."],
       ["There is a lot of smoke.", "Há muito fumo."]
     ] },
     { id: "police", title: "Danger from a person", rows: [
       ["I need the police.", "Preciso da polícia."],
-      ["I am being threatened.", "Estou a ser ameaçado/a."],
+      ["I am being threatened.", "Estão a ameaçar-me."],
       ["There is a robbery.", "Há um assalto."],
       ["Someone has a weapon.", "Alguém tem uma arma."],
       ["I am in danger at home.", "Estou em perigo em casa."],
@@ -51,7 +52,7 @@ window.LOAD_CALL112 = {
       ["There are injured people.", "Há feridos."],
       ["There is a flood.", "Há uma inundação."],
       ["We are stuck in a lift.", "Estamos presos no elevador."],
-      ["I am lost in the mountains.", "Estou perdido/a na montanha."],
+      ["I am lost in the mountains.", "Perdi-me na montanha."],
       ["I am in danger at sea.", "Estou em perigo no mar."]
     ] },
     { id: "answers", title: "What they may ask, and your answer", rows: [
@@ -60,12 +61,14 @@ window.LOAD_CALL112 = {
       ["How many people are hurt?", "Quantas pessoas estão feridas?"],
       ["Is he or she breathing?", "Está a respirar?"],
       ["Is he or she awake?", "Está consciente?"],
-      ["Yes / No", "Sim / Não"],
+      ["Yes.", "Sim."],
+      ["No.", "Não."],
       ["I do not know.", "Não sei."],
       ["Stay on the line.", "Fique na linha."],
       ["Do not hang up.", "Não desligue."],
       ["Help is on the way.", "A ajuda está a caminho."],
-      ["Thank you.", "Obrigado/a."]
+      ["Thank you (a man is speaking).", "Obrigado."],
+      ["Thank you (a woman is speaking).", "Obrigada."]
     ] }
   ],
   tips: [
