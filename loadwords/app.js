@@ -15,7 +15,7 @@
   if(splash) splash.addEventListener('click', function(){ if(intro) intro.classList.add('gone'); splash.classList.add('gone'); });
 })();
 
-const APP_VERSION = 'v42';
+const APP_VERSION = 'v43';
 const BOX_INTERVAL_DAYS = [0,1,3,7,14,30];
 const TRICKY_PATTERNS = ['augh','eigh','ough','tious','cious','sion','tion','dge','que','gue','igh','kn','wr','mb','ck','ph','gh','ei','ie'].sort((a,b)=>b.length-a.length);
 
@@ -840,22 +840,17 @@ async function hardRefresh(){
 
 // ---------------- image tile ----------------
 // Resolution order: a user-added image URL always wins (their own choice);
-// otherwise speculatively try the bundled assets/words/<id>.jpg — if one
-// hasn't been added for this word yet, the 404 just falls through to the
-// same "No image added yet" placeholder shown today. Never precached at
-// install time (most don't exist yet, and caches.addAll() is all-or-nothing)
-// — picked up by the normal cache-first-with-refresh handler once viewed.
+// otherwise speculatively try the bundled assets/words/<id>.jpg; if that 404s,
+// fall back to a concept diagram when this word has one. If none of those
+// apply, the tile removes itself entirely rather than showing an empty
+// placeholder box. Never precached at install time (most bundled photos
+// don't exist yet, and caches.addAll() is all-or-nothing) — picked up by the
+// normal cache-first-with-refresh handler once viewed.
 function imageTile(word, size){
   const url = State.images[word.id] || ('assets/words/'+word.id+'.jpg');
-  return `<div class="imgtile"><img src="${escapeAttr(url)}" alt="${escapeAttr(word.word)}" onerror="this.parentElement.innerHTML=window.__phFallback('${word.id}')"></div>`;
+  return `<div class="imgtile"><img src="${escapeAttr(url)}" alt="${escapeAttr(word.word)}" onerror="var d=window.__imgFallback('${word.id}'); if(d){ this.parentElement.innerHTML=d; } else { this.parentElement.remove(); }"></div>`;
 }
-function phInner(){
-  return `<div class="ph">${ic('photo')}<span>No image added yet</span></div>`;
-}
-function phFallback(){
-  return `<div class="imgtile">${phInner()}</div>`;
-}
-window.__phFallback = (id)=> (id && conceptDiagramInner(id)) || phInner();
+window.__imgFallback = (id)=> (id && conceptDiagramInner(id)) || null;
 
 function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
 function escapeHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
