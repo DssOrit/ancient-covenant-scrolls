@@ -221,6 +221,8 @@
         ["Ask Extension: onion smell and plant identification", "https://ask.extension.org/kb/faq.php?id=867128"],
         ["College of Saint Benedict herbarium: edible wild plants (no rules of thumb)", "https://faculty.csbsju.edu/SSAUPE/essays/edible_wild_plants.pdf"],
         ["Mississippi State Extension: forgotten foods, wild edible plants", "https://extension.msstate.edu/publications/forgotten-foods-introduction-wild-edible-plants"],
+        ["University of Galway: smartphone apps cannot identify plant species accurately (2023)", "https://universityofgalway.ie/about-us/news-and-events/news-archive/2023/april/new-study-reveals-smartphone-apps-are-unable-to-identify-plant-species-accurately.html"],
+        ["Swipe Right: accuracy of plant identification apps for toxic plants", "https://experts.colorado.edu/display/pubid_306084"],
         ["University of the Algarve: Plantas silvestres comestíveis do Algarve (PDF)", "https://sapientia.ualg.pt/bitstreams/d8ba3262-9b14-4cc8-8490-28afd0d654d4/download"]
       ],
       unconfirmed: [
@@ -228,6 +230,7 @@
         "The death camas versus wild onion points (no onion smell, six stamens versus three) come from extension pages. One extension answer says smell alone should not settle an ID.",
         "The hemlock versus wild carrot differences come from gardening and homestead pages. Check a proper flora.",
         "The Quercus guides and the University of the Algarve book were found in search results. We did not open them.",
+        "Phone apps: a 2023 PLOS ONE study (Galway and Leeds) tested six apps on 38 plants, and the best reached about 80 to 88 percent accuracy. A 2021 Journal of Medical Toxicology study tested three apps on 17 toxic species, and the best fully identified 10 of 17. The authors call apps aids, not proof. The report the user supplied cites a 2023 study at PubMed 37535032, but we could not confirm that exact entry.",
         "We found nothing on leaf arrangement, sap tests or umbrella flowers as safe indicators. Our caution about milky sap, white berries and umbrella flower heads is our own rule of caution, not a test."
       ]
     }),
@@ -244,8 +247,8 @@
         "Learn the deadly pairs first. Wild carrot and poison hemlock, and cowbane or water hemlock. Wild onion and death camas. Learn each pair side by side, from a field guide and an expert. These have killed people.",
         "Know the bitter or raw-unsafe foods. Acorns have tannins and are bitter. They are not recommended raw. Cold or hot leaching removes them. Hot leaching: boil in double the volume of water and change the water until it stays clear. White oak acorns need less leaching than red oak. Do not use acorns with holes or grubs.",
         "Learn a small set of beginner plants well. Beginner guides suggest a handful, such as blackberries, dandelion, nettles, wild garlic and elderflowers. These come from a commercial guide, not an extension service. Check each in your own regional guide first. Cook nettles. Never eat wild garlic you cannot confirm by smell and leaf.",
-        "Portugal: treat berries with great care. A Portuguese science-centre article warns that not all wild fruits are edible, and names belladonna, bryony, holly and privet as dangerous. Blackberries are a well-known wild fruit, and one source says to pick them before September. The University of the Algarve book lists fennel (funcho) and strawberry tree (medronheiro) among its 70 traditionally eaten species. A related study looked at evidence for eating wild asparagus, curly dock (Rumex crispus), holm oak acorns (Quercus rotundifolia) and Corema album (camarinha). We found no safe-picking steps for them. Learn them from a local guide.",
-        "Never eat wild mushrooms without expert identification. In Portugal a study counted 93 serious mushroom poisonings in 1990 to 2008, and about 11.8 percent of the liver cases died. The deadly death cap, Amanita phalloides, causes most deaths. Its toxins survive cooking, and symptoms can be delayed for hours. Mushroom apps and guides are not enough.",
+        "Portugal: treat berries with great care. A Portuguese science-centre article warns that not all wild fruits are edible, and names belladonna, bryony, holly and privet as dangerous. Blackberries are a well-known wild fruit, and one source says to pick them before September. The University of the Algarve book lists fennel (funcho) and strawberry tree (medronheiro) among its 70 traditionally eaten species. A 2007 ethnobotany study of six rural areas in the north-west Iberian Peninsula (five in Spain and one, Montesinho, in Portugal) names sweet chestnut (Castanea sativa), elmleaf blackberry (Rubus ulmifolius) and wild strawberry (Fragaria vesca) among its most significant wild foods, and notes that much of this knowledge is being lost. A related study looked at evidence for eating wild asparagus, curly dock (Rumex crispus), holm oak acorns (Quercus rotundifolia) and Corema album (camarinha). We found no safe-picking steps for them. Learn them from a local guide.",
+        "Never eat wild mushrooms without expert identification. Picking mushrooms may need permission: a report on Montesinho Natural Park says picking is banned on Wednesdays and between sunset and sunrise, and requires open baskets, not plastic bags. The report is old, so check the park and ICNF. In Portugal a study counted 93 serious mushroom poisonings in 1990 to 2008, and about 11.8 percent of the liver cases died. The deadly death cap, Amanita phalloides, causes most deaths. Its toxins survive cooking, and symptoms can be delayed for hours. Mushroom apps and guides are not enough.",
         "Take a local course. Cooperative extension in the US and groups such as Quercus in Portugal run courses. This is the safest way to learn."
       ],
       table: { head: ["Edible", "Deadly look-alike", "How people tell them apart (check with a guide)"], rows: [
@@ -267,6 +270,8 @@
         ["Farmers' Almanac: Queen Anne's lace and its toxic look-alikes", "https://farmersalmanac.com/what-queen-annes-lace"],
         ["Postal.pt: wild fruits, dangers and pleasures", "https://postal.pt/nacional/os-frutos-silvestres-perigos-e-prazeres/"],
         ["Porto repository: mushroom poisoning in Portugal (study)", "https://repositorio-aberto.up.pt/bitstream/10216/71946/2/30720.pdf"],
+        ["Traditional knowledge of wild edible plants in the north-west Iberian Peninsula (2007)", "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1904191/"],
+        ["Agroportal: wild mushroom picking in Montesinho gets rules and fines", "https://www.agroportal.pt/cogumelos-silvestres-apanha-em-montesinho-passa-a-ter-regras-e-coimas/"],
         ["WebMD: are acorns safe to eat", "https://www.webmd.com/diet/are-acorns-safe-to-eat"]
       ],
       unconfirmed: [

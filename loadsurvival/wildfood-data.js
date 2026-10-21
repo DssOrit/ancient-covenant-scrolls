@@ -437,7 +437,9 @@
       sources: [
         ["Portugal: obtain a sport fishing licence in inland waters", "https://www.gov.pt/servicos/obter-licenca-de-pesca-desportiva-em-aguas-interiores"],
         ["CCDR Centro: recreational fishing (pesca lúdica)", "https://www.ccdrc.pt/en/pesca-ludica"],
-        ["DGRM: minimum catch sizes table (Oct 2019)", "https://www.dgrm.pt/documents/20143/43770/Tabela+de+Tamanhos+M%C3%ADnimos+de+Captura+02-10-19.pdf/329f99c3-6207-f1b8-3deb-2f0566bf121d"],
+        ["DGRM: minimum catch sizes table (30 Oct 2025)", "https://dgrm.pt/documents/20143/121101/Tabela+de+Tamanhos+M%C3%ADnimos+de+Captura+30-10-25.pdf/0395af29-7e6b-8fd8-4b8a-3e29c09226e4"],
+        ["DGRM: 2026 closed seasons, Despacho 45", "https://www.dgrm.pt/documents/20143/46478/despacho45defesos2026-Final.pdf/99a06265-c423-6b19-fad5-59af9241e0dd"],
+        ["DGRM: species, minimum sizes and closed seasons", "https://www.dgrm.pt/pesca_cpt_especies"],
         ["DGRM: recreational fishing FAQ (2018)", "https://www.dgrm.pt/documents/20143/0/FAQ-PescaLudica2018.pdf/730e6d56-1f8c-66a2-a020-aecc016685bb"],
         ["Portaria 14/2014 (recreational fishing)", "https://diariodarepublica.pt/dr/detalhe/portaria/14-2014-571046"],
         ["DGRM: licensing for recreational fishing", "https://dgrm.pt/en/pesca-pp-licenciamento"],
@@ -448,7 +450,7 @@
       unconfirmed: [
         "US licence ages come from a tackle shop's summary and state examples (Utah, Ohio, New York, Virginia). Check your own state.",
         "The Portugal licence facts come from the government and CCDR pages seen in search results. We did not find size limits, bag limits, closed seasons or sea and shellfish rules.",
-        "Portugal: DGRM publishes a table of minimum catch sizes by species (our copy is from October 2019, with examples such as sea urchin 5 cm and pollack 27 cm). We did not find daily bag limits in kilos for recreational fishing, or the current table.",
+        "Portugal: DGRM publishes a table of minimum catch sizes by species, based on Portaria 255/2022 and EU Regulation 2019/1241. Versions dated 7 Feb 2025 and 30 Oct 2025 exist, with examples such as eel 22 cm, gilt-head bream 19 cm, meagre 42 cm and conger 58 cm. A DGRM fish list dated 27 Feb 2026 gives for example pouting (faneca) 17 cm and blackspot seabream (goraz) 33 cm. DGRM Despacho 45/DG/2025 sets 2026 closed seasons for shad (sável and savelha) in the Mondego, Lima and Cávado rivers, the Ria de Aveiro and other inland waters licensed by DGRM. Eel fishing is banned for at least six months under EU rules, and October to December in Portuguese law. We did not find daily bag limits in kilos for recreational fishing, and we did not read the tables themselves.",
         "Portugal: without a licence, recreational gathering of shellfish may be done by hand only, with no tools. With a recreational licence some tools are allowed. This comes from a municipal leaflet and a news summary of Portaria 14/2014. We did not read the Portaria. Closed seasons exist, for example 15 July to 15 August each year on natural bivalve banks in the Ria de Aveiro (a DGRM despacho of 2026).",
         "We found nothing on emergency or survival exceptions for fishing, hunting or plants.",
         "Portugal's hunting law (Decreto-Lei 202/2004) and the current text of the fire rules were not read. Fire dates and fines come from civil-protection, law-firm and news pages."
