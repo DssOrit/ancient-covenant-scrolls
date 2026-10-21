@@ -128,8 +128,45 @@ window.LSX = function (A) {
     'food': ['lim-food-none'],
     'p6-documents-and-emergency-cash': ['lim-banks-down']
   };
+  /* related guides (not picture links) */
+  var RELATED = {
+    'lt-fishing': ['wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules'],
+    'lt2-foraging': ['wf-find-plants', 'wf-shore-shellfish'],
+    'hs-fire-pit': ['wf-fire-wet', 'wf-fire-nomatches'],
+    'fire-ignition': ['wf-fire-wet', 'wf-fire-nomatches'],
+    'fire-ferro': ['wf-fire-nomatches', 'wf-fire-wet'],
+    'hs-pemmican': ['wf-smoke-dry-salt'],
+    'lt2-preserve': ['wf-smoke-dry-salt'],
+    'wf-fire-wet': ['wf-fire-nomatches', 'hs-fire-pit', 'g-hypothermia'],
+    'wf-fire-nomatches': ['wf-fire-wet'],
+    'wf-clean-fish': ['wf-fishing-gear', 'wf-smoke-dry-salt'],
+    'wf-fishing-gear': ['lt-fishing', 'wf-clean-fish'],
+    'wf-game-handling': ['wf-trapping', 'wf-smoke-dry-salt', 'wf-field-kitchen'],
+    'wf-find-plants': ['wf-plant-method', 'wf-plants-watch', 'lt2-foraging', 'wf-wild-food-rules'],
+    'wf-plants-us': ['wf-plant-method', 'wf-plants-watch', 'wf-find-plants'],
+    'wf-raft-build': ['wf-raft-river', 'g-hypothermia', 'wf-fire-wet'],
+    'wf-plant-method': ['wf-plants-us', 'wf-plants-watch', 'wf-find-plants', 'lt2-foraging'],
+    'wf-plants-watch': ['wf-plants-us', 'wf-plant-method', 'wf-find-plants'],
+    'wf-shelter-build': ['wf-shelter-secure', 'wf-fire-wet', 'g-hypothermia'],
+    'wf-shelter-secure': ['wf-shelter-build', 'shelter-tarp', 'shelter-site'],
+    'wf-raft-river': ['wf-raft-build', 'wf-fire-wet', 'g-hypothermia', 'g-flood'],
+    'wf-field-kitchen': ['wf-clean-fish', 'wf-smoke-dry-salt', 'wf-game-handling'],
+    'shelter': ['wf-shelter-build', 'wf-shelter-secure'],
+    'shelter-tarp': ['wf-shelter-secure', 'wf-shelter-build'],
+    'shelter-site': ['wf-shelter-secure'],
+    'shelter-cold': ['wf-shelter-build', 'wf-fire-wet'],
+    'g-flood': ['wf-raft-river']
+  };
+  function relatedBox(id) {
+    var ids = RELATED[id]; if (!ids) return '';
+    var links = ids.map(function (x) {
+      var g = D.lessons.filter(function (l) { return l.id === x; })[0];
+      return g ? '<li><a href="#/lesson/' + encodeURIComponent(x) + '">' + esc(g.title) + '</a></li>' : '';
+    }).join('');
+    return links ? '<div class="tipbox seealso"><strong>Related guides</strong><ul>' + links + '</ul></div>' : '';
+  }
   function seeAlso(id) {
-    var ids = SEE_ALSO[id]; if (!ids) return '';
+    var ids = SEE_ALSO[id]; if (!ids) return relatedBox(id);
     var links = ids.map(function (x) {
       var g = D.lessons.filter(function (l) { return l.id === x; })[0];
       return g ? '<li><a href="#/lesson/' + encodeURIComponent(x) + '">' + esc(g.title) + '</a></li>' : '';
