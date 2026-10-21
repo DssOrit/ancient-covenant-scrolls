@@ -39,7 +39,7 @@ window.LSX = function (A) {
     var h = '<section class="call112"><h2>What to say when you call 112</h2><p>' + esc(d.intro) + '</p><div class="notice">' + esc(d.status) + '</div>' + (window.LOAD_SPEAK ? '<p class="speakrow">' + window.LOAD_SPEAK.slowToggle() + ' <span class="muted">Tap Listen to hear the Portuguese. It uses a voice on your device.</span></p>' : '');
     d.groups.forEach(function (g, i) {
       h += '<details class="callgroup"' + (i === 0 ? ' open' : '') + '><summary>' + esc(g.title) + '</summary><ul class="callrows">' + g.rows.map(function (r) {
-        return '<li><span class="en">' + esc(r[0]) + '</span><span class="pt" lang="pt">' + esc(r[1]) + '</span>' + (window.LOAD_SPEAK ? window.LOAD_SPEAK.btn(r[1].replace(/\//g, ' '), 'Listen') : '') + '</li>';
+        return '<li><span class="en">' + esc(r[0]) + '</span><span class="pt" lang="pt">' + esc(r[1]) + '</span>' + (window.LOAD_SPEAK ? window.LOAD_SPEAK.btn((r[2] || r[1]).replace(/\//g, ' '), 'Listen') : '') + '</li>';
       }).join('') + '</ul></details>';
     });
     h += '<div class="tipbox"><strong>Tips</strong>' + li(d.tips) + '</div>';
