@@ -128,8 +128,32 @@ window.LSX = function (A) {
     'food': ['lim-food-none'],
     'p6-documents-and-emergency-cash': ['lim-banks-down']
   };
+  /* related guides (not picture links) */
+  var RELATED = {
+    'lt-fishing': ['wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules'],
+    'lt2-foraging': ['wf-find-plants', 'wf-shore-shellfish'],
+    'hs-fire-pit': ['wf-fire-wet', 'wf-fire-nomatches'],
+    'fire-ignition': ['wf-fire-wet', 'wf-fire-nomatches'],
+    'fire-ferro': ['wf-fire-nomatches', 'wf-fire-wet'],
+    'hs-pemmican': ['wf-smoke-dry-salt'],
+    'lt2-preserve': ['wf-smoke-dry-salt'],
+    'wf-fire-wet': ['wf-fire-nomatches', 'hs-fire-pit', 'g-hypothermia'],
+    'wf-fire-nomatches': ['wf-fire-wet'],
+    'wf-find-plants': ['lt2-foraging', 'wf-wild-food-rules'],
+    'wf-clean-fish': ['wf-fishing-gear', 'wf-smoke-dry-salt'],
+    'wf-fishing-gear': ['lt-fishing', 'wf-clean-fish'],
+    'wf-game-handling': ['wf-trapping', 'wf-smoke-dry-salt']
+  };
+  function relatedBox(id) {
+    var ids = RELATED[id]; if (!ids) return '';
+    var links = ids.map(function (x) {
+      var g = D.lessons.filter(function (l) { return l.id === x; })[0];
+      return g ? '<li><a href="#/lesson/' + encodeURIComponent(x) + '">' + esc(g.title) + '</a></li>' : '';
+    }).join('');
+    return links ? '<div class="tipbox seealso"><strong>Related guides</strong><ul>' + links + '</ul></div>' : '';
+  }
   function seeAlso(id) {
-    var ids = SEE_ALSO[id]; if (!ids) return '';
+    var ids = SEE_ALSO[id]; if (!ids) return relatedBox(id);
     var links = ids.map(function (x) {
       var g = D.lessons.filter(function (l) { return l.id === x; })[0];
       return g ? '<li><a href="#/lesson/' + encodeURIComponent(x) + '">' + esc(g.title) + '</a></li>' : '';
