@@ -311,3 +311,14 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .callrows li{display:grid;gap:2px;padding:10px 0;border-top:1px solid var(--line)}
 .callrows .en{opacity:.8;font-size:.95em}
 .callrows .pt{font-weight:700;font-size:1.15em;color:#fff}
+
+/* Listen buttons for Portuguese */
+.speakbtn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.07);color:#fff;font:inherit;font-weight:700;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.speakbtn .svg{width:20px;height:20px;fill:none;stroke:var(--c,#9be0ff);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.speakbtn:active{transform:scale(.97)}
+.callrows li .speakbtn{justify-self:start;margin-top:6px}
+.speakrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.slowtoggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;min-height:44px}
+.slowtoggle input{width:22px;height:22px}
+.speakmsg{position:fixed;left:16px;right:16px;bottom:84px;z-index:50;padding:14px 16px;border-radius:14px;background:#1b2a1f;border:1px solid var(--line2);color:#fff;opacity:0;pointer-events:none;transition:opacity .2s}
+.speakmsg.on{opacity:1}
