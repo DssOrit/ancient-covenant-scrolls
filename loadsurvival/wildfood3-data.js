@@ -63,43 +63,50 @@
       ]
     }),
     g({
-      id: "wf-raft-build", area: "Water", icon: "waves", title: "A simple log raft: principles and limits (last resort)",
-      intro: "Use this only if you have no safe way to cross or get out, the water is slow and calm, and the distance is short. A raft can capsize. We found no checked plan or load figure, so treat these steps as principles, not a design.",
+      id: "wf-raft-build", area: "Water", icon: "waves", title: "Rafts: why they fail, and a safe tabletop buoyancy demonstration",
+      intro: "A homemade raft is not a rescue boat. Buoyancy alone says little about stability, current, swamping, cold shock or steering. This guide teaches why rafts fail and lets you study the physics safely. It does not tell you how to launch one.",
       first: [
-        "Try to cross another way, wait or be rescued first. See the river guide.",
-        "Wear a lifejacket if you have one. Do not raft in a flood or fast water.",
-        "Test the raft in shallow water before you trust it.",
-        "Do not raft on a busy river with boats or barges."
+        "Do not launch a homemade raft into a river, reservoir, surf or cold open water.",
+        "Ask first: must you cross at all? Find a bridge, a ferry, or wait and call for rescue.",
+        "If you do use any boat, wear an approved life jacket.",
+        "Never tie people to a raft or a rope while crossing moving water."
       ],
       do: [
-        "Choose logs. Pine, spruce and cedar float better than oak, maple or hickory. Pick dry, dead, sound logs. Check for rot, cracks and insects. Bark can soak up water, so peeling it can help.",
-        "Lay out the frame. Lay several logs side by side, and put cross-pieces on top and below. Keep the logs about the same size and length. Lay them so that the thick ends are even.",
-        "Lash it tight. The strength of a raft depends on the lashing. Sources recommend a square lashing, started with a clove hitch, and finished with frapping turns that pull the joint tight. Re-tighten the lashings after the first test.",
-        "Add buoyancy only if you must. Sources suggest sealed plastic barrels, tied-off plastic bags packed with brush, or foam. They disagree on where to put barrels. If you add them, tie them so they cannot slip out.",
-        "Test it in shallow water. Stand on it with the load you will carry. If the raft sits very low or tips, add more floatation or logs. Spread weight evenly. A finished log raft can weigh hundreds of pounds, so you must be able to launch it.",
-        "Make a paddle or pole. A long branch with a flat piece of wood lashed across one end works as a paddle. A pole helps in shallow, slow water.",
-        "Cross only in calm conditions. Cross in daylight, in slow water, where you can see the far bank and a landing spot. Keep gear tied to the raft. Do not tie yourself to the raft.",
-        "After crossing, warm up. Change out of wet clothes. Light a fire and dry out. See the fire guides and the hypothermia guide."
+        "Ask if crossing is necessary. Look for a bridge, a road, an authorised ferry or a known safe crossing. Delaying and calling for help is often safer than crossing.",
+        "Check the water. Look at the current, depth, cold, strainers (trees and debris the water pushes through), submerged obstacles, tides, release structures and where you would come ashore if you fell in. If the water is fast, opaque, high or rising, or above knee level, or the weather is getting worse, do not cross.",
+        "Check what you have. Without approved life jackets, a support crew, a rescue plan and a safe place to launch and land, do not launch a raft. If you must cross, ask for rescue instead of trusting homemade flotation.",
+        "Learn the physics with a model. An object floats when the water it pushes aside weighs as much as the whole load. One litre of fully submerged, sealed volume gives about one kilogram of ideal lift. That is not a safe load. A real safe load must subtract the weight of the raft, leave a large reserve, allow for uneven loads and movement, and include the effect of waves and current.",
+        "Do the tabletop demonstration, indoors only. Use a shallow basin, capped small bottles, string, a board and small weights. Fix the bottles symmetrically under the board so they cannot roll. Put weights in the centre, then toward one edge, and watch the tilt, how low it sits and where it fails. Change the width, the spare flotation and the load spread and see which stays level in still water.",
+        "Understand the limits of the model. It cannot predict rivers, waves, leaks, cold-water exposure or how people move on a real raft.",
+        "Learn why television raft builds fail. Too little freeboard (the raft sits too low and swamps when anyone moves). Loose logs or barrels that shift and roll the raft. No way to steer, so the current pushes it into debris. Cold shock, which can stop even a good swimmer from swimming. No legal right to cut trees, launch or travel on that water.",
+        "If anyone ends up in cold water, act. Float on your back with your face clear, control your breathing for the first minute, and get out as soon as you can. Call 112 or 911 for help. See the river guide."
       ],
+      table: { head: ["Why rafts fail", "What happens"], rows: [
+        ["Too little freeboard", "Swamps when people move"],
+        ["Loose flotation", "Rolls and tips at once"],
+        ["No steering", "Current pushes it onto debris"],
+        ["Cold shock", "Even strong swimmers cannot swim"],
+        ["No legal access", "Cutting trees, launching or travel may be banned"]
+      ] },
       warn: [
-        "Rafts capsize. People have drowned on homemade and inflatable rafts.",
-        "Cold water can shock the body within the first minute. A lifejacket keeps your head up.",
-        "Do not tie yourself or your gear to the raft in a way that can trap you.",
-        "Do not use a raft near weirs, waterfalls, rapids or boat traffic."
+        "Do not treat a homemade raft as a rescue boat.",
+        "Do not tie anyone to a raft or rope in moving water.",
+        "Do not use a raft to enter floodwater, surf or open sea.",
+        "Wear an approved life jacket on any boat and get training."
       ],
-      tip: ["A lifejacket and a whistle weigh far less than a raft.", "A shorter crossing is always safer."],
-      after: ["Take the raft apart or leave it safely.", "Tell someone where you are."],
+      tip: ["A life jacket and a whistle weigh far less than a raft.", "Take a water-rescue course."],
+      after: ["Keep the model for teaching others.", "Tell someone where you are."],
       sources: [
-        ["Battlbox: how to build a raft in the wilderness", "https://www.battlbox.com/blogs/preparedness/how-to-build-a-raft-in-the-wilderness-a-comprehensive-guide"],
-        ["American Outdoor Guide: three ways of making a survival raft", "https://www.americanoutdoor.guide/survival-skills/equipment/3-ways-of-making-a-survival-raft/"],
         ["Transportation Safety Board of Canada: raft capsize investigation", "https://bst.gc.ca/eng/rapports-reports/marine/2005/m05w0080/m05w0080.html"],
-        ["Washington State Parks: cold water shock", "https://parks.wa.gov/about/news-center/field-guide-blog/cold-water-shock-what-it-and-how-protect-yourself"]
+        ["Washington State Parks: cold water shock", "https://parks.wa.gov/about/news-center/field-guide-blog/cold-water-shock-what-it-and-how-protect-yourself"],
+        ["Canadian Safe Boating Council: the 1-10-1 principle", "https://csbc.ca/1-10-1-principle/"],
+        ["US Coast Guard: life jacket wear", "https://uscgboating.org/recreational-boaters/life-jacket-wear-wearing-your-life-jacket.php"]
       ],
       unconfirmed: [
-        "The log choice, square lashing with clove hitch and frapping, buoyancy add-ons and testing come from survival blogs and a forum seen in search results. No official or tested source was found.",
-        "We found no safe load figure and no source that says calm water only. The calm-water and daylight limits are our reasoning.",
-        "The cold water shock point comes from a Washington State Parks page seen in search results.",
-        "We could not confirm the paddle design beyond a one-line description."
+        "This guide replaced an earlier version that listed raft building steps from survival blogs. The user-supplied field manual argues that rafts are disproportionately dangerous and should not be taught as a launch method, so we switched to why they fail and a model.",
+        "The buoyancy figure (1 litre of sealed volume is about 1 kilogram of ideal lift, not a safe load) and the list of failure causes come from that supplied manual. We did not find them in an independent engineering source. The physics is standard.",
+        "The Canadian report (a raft capsize with a death) and the cold-water pages were found in search results.",
+        "We did not verify the US Coast Guard life jacket page beyond its title in search results."
       ],
       status: "general"
     })

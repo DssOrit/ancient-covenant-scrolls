@@ -265,7 +265,9 @@
       warn: [
         "A gorge hook can be dangerous to the fish and to you. Handle with care.",
         "Do not use a cut or damaged line for large fish.",
-        "Do not use illegal gear, such as nets or traps, without checking the law."
+        "Do not use illegal gear, such as nets or traps, without checking the law.",
+        "Hooks and lines can cut and snag. Keep hooks covered when not in use, and keep the line clear of your hands and neck.",
+        "Never fish from a slippery bank, a flooded river or while alone in cold water."
       ],
       tip: ["Keep a small fishing kit in your bag: line, hooks, weights.", "Fish at dawn and dusk when fish feed (general guidance)."],
       after: ["Clean the fish and your hands.", "Dry and store your line."],
@@ -379,7 +381,9 @@
         "Do not dry or smoke meat that has been warm for hours.",
         "Do not give cold-smoked fish to pregnant people, older adults or people with weak immunity.",
         "Throw out anything that smells bad or has mould.",
-        "Do not eat wild game raw."
+        "Do not eat wild game raw.",
+        "Smoke and dry only in the open air. Smouldering fires make carbon monoxide. Never smoke food inside a tent, shelter or closed room.",
+        "Do not use salt or smoke to make doubtful meat safe. It does not."
       ],
       tip: ["Dry small batches.", "Use the preserving guide for canning and fermenting."],
       after: ["Label and date what you store.", "Check stored food each week."],
