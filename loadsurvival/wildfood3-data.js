@@ -92,7 +92,9 @@
         "Do not treat a homemade raft as a rescue boat.",
         "Do not tie anyone to a raft or rope in moving water.",
         "Do not use a raft to enter floodwater, surf or open sea.",
-        "Wear an approved life jacket on any boat and get training."
+        "Wear an approved life jacket on any boat and get training.",
+        "Moving water, debris, a sudden rise or rain upstream: no crossing. Cold water, poor visibility or unknown hazards: no entry. A flooded ford is not a safe alternative.",
+        "If you must cross a waterway, go back to a bridge or maintained crossing that is officially open. If you are stranded, stay on high ground and call 911 or 112. Do not improvise a rescue crossing."
       ],
       tip: ["A life jacket and a whistle weigh far less than a raft.", "Take a water-rescue course."],
       after: ["Keep the model for teaching others.", "Tell someone where you are."],
@@ -106,7 +108,8 @@
         "This guide replaced an earlier version that listed raft building steps from survival blogs. The user-supplied field manual argues that rafts are disproportionately dangerous and should not be taught as a launch method, so we switched to why they fail and a model.",
         "The buoyancy figure (1 litre of sealed volume is about 1 kilogram of ideal lift, not a safe load) and the list of failure causes come from that supplied manual. We did not find them in an independent engineering source. The physics is standard.",
         "The Canadian report (a raft capsize with a death) and the cold-water pages were found in search results.",
-        "We did not verify the US Coast Guard life jacket page beyond its title in search results."
+        "We did not verify the US Coast Guard life jacket page beyond its title in search results.",
+        "The no-crossing, no-entry and flooded-ford lines come from the second user-supplied document (Portugal plant study and raft safety, AI-written, not independently verified). They match the first manual."
       ],
       status: "general"
     })
