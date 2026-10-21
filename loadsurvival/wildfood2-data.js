@@ -179,7 +179,7 @@
       status: "general"
     }),
     g({
-      id: "wf-plant-method", image: "assets/steps/wf-plant-raft-notes.jpg", area: "Food", icon: "leaf", difficulty: "Critical", title: "How to know which plants can be eaten: the safe method, step by step",
+      id: "wf-plant-method", image: "assets/steps/wf-plant-raft-notes-2.jpg", area: "Food", icon: "leaf", difficulty: "Critical", title: "How to know which plants can be eaten: the safe method, step by step",
       intro: "There is no quick trick. Smell, colour, animals eating it and folk rules are not safe tests. The safe method is to learn a few plants well, with an expert, before you need them.",
       first: [
         "No simple rule tells edible from poisonous. Do not trust single-feature tests.",
@@ -273,7 +273,7 @@
       ]
     }),
     g({
-      id: "wf-plants-watch", image: "assets/steps/wf-plant-raft-notes.jpg", area: "Food", icon: "alert", difficulty: "Critical", title: "Plants to know: deadly look-alikes and beginner foods, US and Portugal",
+      id: "wf-plants-watch", image: "assets/steps/wf-plant-raft-notes-2.jpg", area: "Food", icon: "alert", difficulty: "Critical", title: "Plants to know: deadly look-alikes and beginner foods, US and Portugal",
       intro: "This is a short watch list, not an identification guide. Learn each plant from a trusted guide and an expert. Never eat from this list alone.",
       first: [
         "This page is a reminder of dangers. It is not enough to identify any plant.",
