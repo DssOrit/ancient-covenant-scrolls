@@ -644,5 +644,33 @@ window.LOAD_STEP_IMAGES={
   "assets/steps/ex-boil-filter-3.jpg",
   "assets/steps/ex-boil-filter-4.jpg",
   "assets/steps/ex-boil-filter-5.jpg"
+ ],
+ "lim-power-outage": [
+  "assets/steps/lim-power-outage-1.jpg",
+  "assets/steps/lim-power-outage-2.jpg",
+  "assets/steps/lim-power-outage-3.jpg",
+  "assets/steps/lim-power-outage-4.jpg",
+  "assets/steps/lim-power-outage-5.jpg"
+ ],
+ "lim-water-none": [
+  "assets/steps/lim-water-none-1.jpg",
+  "assets/steps/lim-water-none-2.jpg",
+  "assets/steps/lim-water-none-3.jpg",
+  "assets/steps/lim-water-none-4.jpg",
+  "assets/steps/lim-water-none-5.jpg"
+ ],
+ "lim-sanitation": [
+  "assets/steps/lim-sanitation-1.jpg",
+  "assets/steps/lim-sanitation-2.jpg",
+  "assets/steps/lim-sanitation-3.jpg",
+  "assets/steps/lim-sanitation-4.jpg",
+  "assets/steps/lim-sanitation-5.jpg"
+ ],
+ "lim-heat-cold": [
+  "assets/steps/lim-heat-cold-1.jpg",
+  "assets/steps/lim-heat-cold-2.jpg",
+  "assets/steps/lim-heat-cold-3.jpg",
+  "assets/steps/lim-heat-cold-4.jpg",
+  "assets/steps/lim-heat-cold-5.jpg"
  ]
 };
