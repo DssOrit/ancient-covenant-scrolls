@@ -20,7 +20,7 @@
   function stop() { try { if (supported()) window.speechSynthesis.cancel(); } catch (e) {} }
   function speak(text) {
     if (!supported()) { msg('This device cannot read aloud.'); return false; }
-    text = String(text || '').replace(/[:\s]+$/, '').trim(); if (!text) return false;
+    text = String(text || '').replace(/[:.\u2026\s]+$/, '').trim(); if (!text) return false;
     stop();
     var u = new window.SpeechSynthesisUtterance(text), v = pick();
     u.lang = 'pt-PT'; if (v) { u.voice = v; u.lang = v.lang; }
