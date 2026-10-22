@@ -482,9 +482,19 @@ window.LSX = function (A) {
   function readGuide() {
     var Sp = window.LOAD_SPEAK; if (!Sp) return;
     if (Sp.isReading()) { Sp.stop(); readReset(); return; }
-    var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0]; if (!l) return;
+    var txt = null, lang = 'en';
+    if (state.view === 'regional-detail') {
+      var x = (window.LOAD_PART5 || []).filter(function (y) { return y.id === state.opened; })[0]; if (!x) return;
+      lang = state.language === 'pt' ? 'pt' : 'en';
+      txt = [x.title[lang], x.warning[lang]]; (x.steps[lang] || []).forEach(function (s, i) { txt.push((lang === 'pt' ? 'Passo ' : 'Step ') + (i + 1) + '. ' + s[0] + '. ' + s[1]); });
+    } else if (state.view === 'scenario') {
+      var sc = (D.scenarios || []).filter(function (y) { return y.id === state.opened; })[0]; if (!sc) return;
+      txt = [sc.title, 'Risk changes quickly. Follow current local emergency warnings, shelter orders and evacuation directions.']; (sc.times || []).forEach(function (t, i) { txt.push('Phase ' + (i + 1) + '. ' + t[0] + '. ' + t[1]); });
+    } else {
+      var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0]; if (!l) return; txt = guideText(l);
+    }
     var b = document.getElementById('readbtn');
-    if (Sp.readList(guideText(l), readReset) && b) { var s = b.querySelector('span'); if (s) s.textContent = 'Stop reading'; b.setAttribute('aria-label', 'Stop reading'); }
+    if (Sp.readList(txt, readReset, lang) && b) { var s = b.querySelector('span'); if (s) s.textContent = 'Stop reading'; b.setAttribute('aria-label', 'Stop reading'); }
   }
   /* ---------- CPR rhythm ---------- */
   var cpr = null;
