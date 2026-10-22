@@ -131,3 +131,30 @@
 - 2026-10-22 User reported "I don't see the audio button" with two iPad screenshots of the Regional guides list and the Tornado regional guide page. Cause: my read-aloud button was only on the main guide template (guideView). The regional guide page (regionalDetail) and the emergency scenario pages (scenario) have their own templates and had no button. My PR text said "every guide", which was wrong. Fix on branch claude/loadsurvival-readaloud-regional (cache p73-v91): button added to regional guide pages (reads in Portuguese when the guide language is Portuguese) and scenario pages; readList takes a language; button label stays correct after a re-render. Tested with a mocked speech engine: regional page speaks 5 pieces in English, 5 in pt-PT when language is Portuguese; scenario page speaks 6; all 160 guides still render. Pages still without the button: home, Guides list, Lists, Tools, Plan, Search, Emergency list.
 
 - 2026-10-22 Disaster guides (branch claude/loadsurvival-disaster-sources, cache p74-v92): user sent ChatGPT's source audit of 7 disaster guides. Added sources and Not confirmed lists (Partly checked) for winter storm, hurricane, tornado, flood, earthquake and tsunami, wildfire, heat wave via status-data.js. Text NOT changed: corrections are proposed and waiting for user approval (hurricane: 12 in is moving water and shelter only if not ordered to evacuate; tornado: outdoors is last resort; flood table: moving water; earthquake: uphill after the shaking stops; wildfire: remove leave lights on, more than one way out; heat wave: 104 F not 103 F, action at yellow, free relief wording). ChatGPT said the ANEPC flood page returned 502 and the FEMA wildfire PDF and Ready.gov heat page returned 403, so those are cited to us. Backup backup/2026-10-22-loadsurvival-p73-v91-b at 128efbfa (main had moved with unrelated Solar changes).
+
+## WRAP-UP 2026-10-22 (Load Survival)
+
+Current state: origin/main at 1e0d1966, Load Survival cache loadsurvival-p74-v92. No open PRs from this session.
+
+Backups (recover with git checkout backup/<name>):
+- backup/2026-10-22-loadsurvival-p69-v87 at 108eaae4
+- backup/2026-10-22-loadsurvival-p72-v90 at 1f15e1c9
+- backup/2026-10-22-loadsurvival-p73-v91 at 0356ecee
+- backup/2026-10-22-loadsurvival-p73-v91-b at 128efbfa
+- backup/2026-10-22-loadsurvival-p74-v92 at 1e0d1966 (latest, after PR #1093)
+
+Built and merged (user confirmed each merge): #1084 rule 38; #1085 carbon monoxide, Portugal beach and sun, child CPR guides; #1086 English read-aloud and CPR rhythm tool; #1087 first-aid corrections and sources for 8 guides; #1088 read-aloud on regional and scenario pages (user confirmed the button now shows on iPad); #1093 sources and Not confirmed lists for 7 disaster guides. Earlier today: #1083 home buttons.
+
+Outstanding / for the user:
+- Check on iPad: does read-aloud actually speak and does Stop work; CPR rhythm tool sound; new guides.
+- Disaster guide text corrections waiting for approval (hurricane moving-water note, tornado last resort, flood table, earthquake uphill after shaking, wildfire lights and routes, heat wave 104 F and yellow warnings). Not applied.
+- Heat wave guide still says 103 F while the heat stroke guide says 104 F. Approval pending.
+- About 31 older guides still lack a Not confirmed list (22 home skills, wx-sea, signaling, pets, grid-down, group calm and others). Next ChatGPT batches: batch_3, batch_4, batch_5 files in the scratchpad (re-export if the scratchpad is gone).
+- Portuguese speaker review of the 112 phrases, outdoor words and 60 plant profiles.
+- A rule numbering note: an older unmerged Alkebulan rule may also be called Rule 38 (PRs #923 to #925). Offer to renumber ours to 39.
+
+Pending / parked: Azores and Madeira plant volumes (user said no). Optional idea: read-aloud on the Emergency list and Plan pages.
+
+Capability gaps: official sites cannot be opened from this sandbox (searches only); ChatGPT cannot open attached files here, so guide text has to be pasted; a headless browser stands in for the iPad (no real voice, audio or wake lock tests).
+
+Lesson: scans must check the rendered page, not raw data (earlier false claim about 46 guides corrected); check a PR is still open before adding commits.
