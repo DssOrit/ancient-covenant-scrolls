@@ -994,6 +994,36 @@ These have been re-locked on 2026-05-04 after repeated violations.
       value with nothing checkable behind it — is still flatly rejected
       under this rule, exactly as before.
 
+38. **BACKUP FIRST, CONFIRM NO BREAK RISK, THEN FIX, THEN SEND THE MERGE
+    LINK — LOCKED 2026-10-22 by user, in the user's own words: "always
+    backup site first then confirm no site break risk, then apply fix then
+    send me merge links."** This is the fixed order for every change to any
+    site in this repo, and it restates and tightens Rules 9, 11 and 26.
+    The order is:
+    a. **Backup first.** Before any file is changed, create and push a
+       backup branch from the current `origin/main` HEAD
+       (`backup/<YYYY-MM-DD>-<currentCacheVersion>`), and verify its SHA
+       matches `origin/main`. Never overwrite an existing backup.
+    b. **Confirm no site-break risk.** Before applying the change, state
+       what the change touches and what could break (shared files such as
+       `index.html`, `service-worker.js`, `features.js`, `app.js`, the
+       cache list). After the change is written and before it is pushed,
+       run the checks: JS files parse (`node --check`), JSON parses, every
+       file listed in the service-worker CORE list exists, and the real app
+       is exercised in a headless browser (pages render, no page errors, no
+       overflow). Report the result. If any check fails, do not push.
+    c. **Then apply the fix** on a fresh feature branch from the latest
+       `origin/main`, and push the branch.
+    d. **Then send the merge link.** Open the PR and give the user the PR
+       number and URL, the files changed and the risk level. If a PR is
+       already merged, open a new PR rather than adding commits to the
+       merged branch, and say so.
+    e. **Claude never merges.** The user merges on GitHub, every time.
+       Rule 9 stands unchanged: no merge tool call unless the user names
+       that specific PR and tells Claude to merge it in that same message.
+    A change that skips any step, or runs the steps out of order, is a
+    rule violation however small the change is.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
