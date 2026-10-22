@@ -38,16 +38,16 @@
     return out;
   }
   /* Read a list of English sentences one after another. Short pieces keep iPad Safari from cutting off. */
-  function readList(list, done) {
+  function readList(list, done, lang) {
     if (!supported()) { msg('This device cannot read aloud.'); return false; }
     var c = chunks(list); if (!c.length) return false;
     stop(); readDone = done || null; reading = true;
-    var v = pickEn(), i = 0;
-    if (!v && voices().length) msg('No English voice found. The device will use its default voice.');
+    var pt = lang === 'pt', v = pt ? pick() : pickEn(), i = 0;
+    if (!v && voices().length) msg(pt ? 'No Portuguese voice found. On iPad: Settings, Accessibility, Spoken Content, Voices, Portuguese.' : 'No English voice found. The device will use its default voice.');
     function next() {
       if (!reading || i >= c.length) { reading = false; finish(); return; }
       var u = new window.SpeechSynthesisUtterance(c[i++]);
-      u.lang = 'en-US'; if (v) { u.voice = v; u.lang = v.lang; }
+      u.lang = pt ? 'pt-PT' : 'en-US'; if (v) { u.voice = v; u.lang = v.lang; }
       u.rate = slow ? 0.7 : 0.95;
       u.onend = next;
       u.onerror = function (e) { if (e && (e.error === 'interrupted' || e.error === 'canceled')) return; reading = false; msg('Could not play the sound. Check the volume.'); finish(); };
@@ -75,7 +75,7 @@
     return '<button type="button" class="speakbtn" data-speak="' + esc(text) + '" aria-label="' + esc('Listen in Portuguese: ' + text) + '">' + ICON + '<span>' + esc(label || 'Listen') + '</span></button>';
   }
   function readBtn() {
-    return '<div class="readrow"><button type="button" id="readbtn" class="speakbtn" data-action="read-guide" aria-label="Listen to this guide read aloud">' + ICON + '<span>Listen to this guide</span></button>' + slowToggle() + '</div>';
+    return '<div class="readrow"><button type="button" id="readbtn" class="speakbtn" data-action="read-guide" aria-label="Listen to this guide read aloud">' + ICON + '<span>' + (reading ? 'Stop reading' : 'Listen to this guide') + '</span></button>' + slowToggle() + '</div>';
   }
   function slowToggle() {
     return '<label class="slowtoggle"><input type="checkbox" data-speak-slow' + (slow ? ' checked' : '') + '> Slow speech</label>';
