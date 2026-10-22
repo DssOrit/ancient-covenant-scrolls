@@ -191,7 +191,7 @@ window.LSX = function (A) {
 
   function guideView(l) {
     var h = '<div class="guide" data-cat="' + catOf(l) + '"><div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
-      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + statusHtml(l) + seeAlso(l.id);
+      '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + (window.LOAD_SPEAK && window.LOAD_SPEAK.supported() ? window.LOAD_SPEAK.readBtn() : '') + statusHtml(l) + seeAlso(l.id);
     if (l.note || l.noteText) h += '<div class="notice">' + esc(l.noteText || C.note) + '</div>';
     if (l.image && !panelsFor(l)) h += '<img class="lesson-illustration" src="' + esc(l.image) + '" alt="Illustration for ' + esc(l.title) + '" loading="lazy">';
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
@@ -236,7 +236,8 @@ window.LSX = function (A) {
     ['watts', 'battery', 'Watt-hours', 'What a power station can run'],
     ['units', 'convert', 'Unit converter', 'Gallons, liters, degrees, feet, meters'],
     ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
-    ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal']
+    ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
+    ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
@@ -265,6 +266,13 @@ window.LSX = function (A) {
       '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
     if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
     if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    if (t === 'cpr') return toolFrame(t, '<div class="panel cprpanel"><div class="dangerbox"><strong>Call 112 (Portugal) or 911 (US) first.</strong><p>This tool only keeps the beat. It does not replace a course or the operator. Push hard in the centre of the chest, and let it come fully back up.</p></div>' +
+      '<div id="cprpulse" class="cprpulse" aria-hidden="true"><span id="cprcount">0</span></div><p id="cprmsg" class="cprmsg" role="status" aria-live="polite">Ready</p>' +
+      '<label for="cprbpm">Beats a minute</label><select id="cprbpm"><option value="100">100</option><option value="110" selected>110</option><option value="120">120</option></select>' +
+      '<label for="cprcycle">Pause for breaths</label><select id="cprcycle"><option value="30">After 30 pushes</option><option value="15">After 15 pushes</option><option value="0">Never (keep pushing)</option></select>' +
+      '<label class="checkrow"><input type="checkbox" id="cprsound" checked><span>Sound (turn volume up)</span></label>' +
+      '<div class="actions">' + btn('Start', 'cpr-start', 'danger') + btn('Stop', 'cpr-stop', 'secondary') + '</div>' +
+      '<p class="muted">The 100 to 120 a minute rate comes from Red Cross and ERC pages seen in search results. See the child and infant CPR guide for hands, depth and the breaths. Adult hands-only CPR is in the CPR guide.</p></div>');
     return toolsView();
   }
   function setOut(id, html) { var e = document.getElementById(id); if (e) e.innerHTML = html; }
@@ -452,12 +460,71 @@ window.LSX = function (A) {
     'fridge-stop': function () { S.outage = null; put(); clearTimers(); fridgePanel(); },
     'flash-on': function () { overlay('flash'); },
     'sos-on': sos,
+    'cpr-start': cprStart,
+    'cpr-stop': cprStop,
+    'cpr-go': cprGo,
+    'read-guide': readGuide,
     'plan-print': function () { try { window.print(); } catch (e) {} },
     'plan-copy': function () { copy(planText()); },
     'plan-clear': function () { S.plan = {}; put(); A.render(); },
     'save-pics': savePics,
     'save-pics-stop': function () { picStop = true; }
   };
+  /* ---------- read a guide aloud (English) ---------- */
+  function guideText(l) {
+    var t = [l.title, l.intro];
+    if (l.first && l.first.length) t.push('Do this first.'), (l.first || []).forEach(function (x) { t.push(x); });
+    if (l.do && l.do.length) { t.push('What to do.'); l.do.forEach(function (x, i) { t.push('Step ' + (i + 1) + '. ' + x); }); }
+    if (l.warn && l.warn.length) { t.push('Warnings.'); l.warn.forEach(function (x) { t.push(x); }); }
+    return t;
+  }
+  function readReset() { var b = document.getElementById('readbtn'); if (b) { var s = b.querySelector('span'); if (s) s.textContent = 'Listen to this guide'; b.setAttribute('aria-label', 'Listen to this guide read aloud'); } }
+  function readGuide() {
+    var Sp = window.LOAD_SPEAK; if (!Sp) return;
+    if (Sp.isReading()) { Sp.stop(); readReset(); return; }
+    var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0]; if (!l) return;
+    var b = document.getElementById('readbtn');
+    if (Sp.readList(guideText(l), readReset) && b) { var s = b.querySelector('span'); if (s) s.textContent = 'Stop reading'; b.setAttribute('aria-label', 'Stop reading'); }
+  }
+  /* ---------- CPR rhythm ---------- */
+  var cpr = null;
+  function cprEls() { return { pulse: document.getElementById('cprpulse'), count: document.getElementById('cprcount'), msg: document.getElementById('cprmsg') }; }
+  function cprClick(ctx, high) {
+    try { var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = high ? 1000 : 800; o.type = 'square'; g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.35, ctx.currentTime + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08); o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.09); } catch (e) {}
+  }
+  function cprStop() {
+    if (cpr) { clearTimeout(cpr.t); try { if (cpr.wl) cpr.wl.release(); } catch (e) {} try { if (cpr.ctx && cpr.ctx.close) cpr.ctx.close(); } catch (e) {} cpr = null; }
+    var e = cprEls(); if (e.msg) e.msg.textContent = 'Stopped'; if (e.pulse) e.pulse.classList.remove('beat');
+  }
+  function cprBeat() {
+    if (!cpr || cpr.paused) return;
+    var e = cprEls(), bpm = cpr.bpm, per = 60000 / bpm;
+    cpr.n += 1; cpr.cycleN += 1;
+    if (e.count) e.count.textContent = cpr.cycle ? cpr.cycleN : cpr.n;
+    if (e.pulse) { e.pulse.classList.remove('beat'); void e.pulse.offsetWidth; e.pulse.classList.add('beat'); }
+    if (e.msg) e.msg.textContent = 'Push';
+    if (cpr.sound && cpr.ctx) cprClick(cpr.ctx, cpr.cycle && cpr.cycleN === 1);
+    if (cpr.cycle && cpr.cycleN >= cpr.cycle) {
+      cpr.paused = true; cpr.cycleN = 0;
+      if (e.msg) e.msg.innerHTML = 'Give 2 breaths now. Then tap <b>Keep pushing</b>.';
+      var a = document.querySelector('.cprpanel .actions'); if (a && !document.getElementById('cprgo')) { var bt = document.createElement('button'); bt.type = 'button'; bt.id = 'cprgo'; bt.className = 'button'; bt.setAttribute('data-action', 'cpr-go'); bt.textContent = 'Keep pushing'; a.appendChild(bt); }
+      return;
+    }
+    cpr.next += per; cpr.t = setTimeout(cprBeat, Math.max(10, cpr.next - Date.now()));
+  }
+  function cprGo() {
+    if (!cpr) return; var b = document.getElementById('cprgo'); if (b) b.remove();
+    cpr.paused = false; cpr.next = Date.now(); cprBeat();
+  }
+  function cprStart() {
+    cprStop();
+    var bpm = Number((document.getElementById('cprbpm') || {}).value) || 110, cyc = Number((document.getElementById('cprcycle') || {}).value);
+    var snd = !!(document.getElementById('cprsound') || {}).checked, ctx = null;
+    if (snd) { try { var AC = window.AudioContext || window.webkitAudioContext; if (AC) { ctx = new AC(); if (ctx.state === 'suspended' && ctx.resume) ctx.resume(); } } catch (e) {} }
+    cpr = { bpm: bpm, cycle: cyc || 0, n: 0, cycleN: 0, sound: snd && !!ctx, ctx: ctx, paused: false, next: Date.now(), t: null, wl: null };
+    try { if (navigator.wakeLock && navigator.wakeLock.request) navigator.wakeLock.request('screen').then(function (w) { if (cpr) cpr.wl = w; else w.release(); }).catch(function () {}); } catch (e) {}
+    cprBeat();
+  }
   function startFridge() { clearTimers(); if (S.outage) timers.push(setInterval(fridgePanel, 30000)); }
   function after() {
     var v = state.view;
@@ -465,6 +532,7 @@ window.LSX = function (A) {
       var t = state.opened;
       if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
+    if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
     if (v === 'search') { var g = document.getElementById('gsearch'); if (g && !('ontouchstart' in window)) { try { g.focus(); } catch (e) {} } }
   }

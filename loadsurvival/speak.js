@@ -17,7 +17,46 @@
     el.textContent = t; el.classList.add('on');
     clearTimeout(msgTimer); msgTimer = setTimeout(function () { el.classList.remove('on'); }, 6000);
   }
-  function stop() { try { if (supported()) window.speechSynthesis.cancel(); } catch (e) {} }
+  var reading = false, readDone = null;
+  function stop() { reading = false; try { if (supported()) window.speechSynthesis.cancel(); } catch (e) {} finish(); }
+  function finish() { var d = readDone; readDone = null; if (d) { try { d(); } catch (e) {} } }
+  function pickEn() {
+    var v = voices(), i;
+    for (i = 0; i < v.length; i++) if (/^en[-_]US/i.test(v[i].lang)) return v[i];
+    for (i = 0; i < v.length; i++) if (/^en[-_]GB/i.test(v[i].lang)) return v[i];
+    for (i = 0; i < v.length; i++) if (/^en/i.test(v[i].lang)) return v[i];
+    return null;
+  }
+  function chunks(list) {
+    var out = [];
+    list.forEach(function (t) {
+      t = String(t || '').replace(/\s+/g, ' ').trim(); if (!t) return;
+      var parts = t.match(/[^.!?]+[.!?]*/g) || [t], cur = '';
+      parts.forEach(function (p) { if ((cur + p).length > 200 && cur) { out.push(cur.trim()); cur = p; } else cur += p; });
+      if (cur.trim()) out.push(cur.trim());
+    });
+    return out;
+  }
+  /* Read a list of English sentences one after another. Short pieces keep iPad Safari from cutting off. */
+  function readList(list, done) {
+    if (!supported()) { msg('This device cannot read aloud.'); return false; }
+    var c = chunks(list); if (!c.length) return false;
+    stop(); readDone = done || null; reading = true;
+    var v = pickEn(), i = 0;
+    if (!v && voices().length) msg('No English voice found. The device will use its default voice.');
+    function next() {
+      if (!reading || i >= c.length) { reading = false; finish(); return; }
+      var u = new window.SpeechSynthesisUtterance(c[i++]);
+      u.lang = 'en-US'; if (v) { u.voice = v; u.lang = v.lang; }
+      u.rate = slow ? 0.7 : 0.95;
+      u.onend = next;
+      u.onerror = function (e) { if (e && (e.error === 'interrupted' || e.error === 'canceled')) return; reading = false; msg('Could not play the sound. Check the volume.'); finish(); };
+      try { window.speechSynthesis.speak(u); } catch (x) { reading = false; msg('Could not play the sound.'); finish(); }
+    }
+    setTimeout(next, 80);
+    return true;
+  }
+  function isReading() { return reading; }
   function speak(text) {
     if (!supported()) { msg('This device cannot read aloud.'); return false; }
     text = String(text || '').replace(/[:.\u2026\s]+$/, '').trim(); if (!text) return false;
@@ -35,6 +74,9 @@
   function btn(text, label) {
     return '<button type="button" class="speakbtn" data-speak="' + esc(text) + '" aria-label="' + esc('Listen in Portuguese: ' + text) + '">' + ICON + '<span>' + esc(label || 'Listen') + '</span></button>';
   }
+  function readBtn() {
+    return '<div class="readrow"><button type="button" id="readbtn" class="speakbtn" data-action="read-guide" aria-label="Listen to this guide read aloud">' + ICON + '<span>Listen to this guide</span></button>' + slowToggle() + '</div>';
+  }
   function slowToggle() {
     return '<label class="slowtoggle"><input type="checkbox" data-speak-slow' + (slow ? ' checked' : '') + '> Slow speech</label>';
   }
@@ -50,5 +92,5 @@
   });
   window.addEventListener('hashchange', stop);
   if (supported() && window.speechSynthesis.addEventListener) { try { window.speechSynthesis.addEventListener('voiceschanged', function () {}); } catch (e) {} }
-  window.LOAD_SPEAK = { btn: btn, speak: speak, stop: stop, slowToggle: slowToggle, supported: supported };
+  window.LOAD_SPEAK = { btn: btn, speak: speak, stop: stop, slowToggle: slowToggle, supported: supported, readList: readList, isReading: isReading, readBtn: readBtn };
 })();
