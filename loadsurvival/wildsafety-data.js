@@ -185,6 +185,184 @@
       ]
     }),
     g({
+      id: "fire-upper-floors", area: "Fire", icon: "flame", title: "Fire in a building: what to do on the second floor or higher",
+      intro: "Smoke is what kills first. Get out if the way is clear. If it is not, stay in a closed room, seal the door, and signal at the window.",
+      first: [
+        "Get out now if the stairs are clear. Close the doors behind you.",
+        "Never use the lift (elevator). Use the stairs.",
+        "Hot door or smoke in the stairs: do not go that way.",
+        "Call 112 (Portugal) or 911 (US) and say your floor and flat number."
+      ],
+      do: [
+        "Leave at once if the alarm sounds or you smell smoke. Take your phone and keys. Do not stop for belongings.",
+        "Feel the door with the back of your hand before you open it. If it is hot, do not open it.",
+        "If the door is cool, open it slowly and stand behind it. If you feel heat or pressure, shut it.",
+        "Close every door behind you. This slows the smoke and the fire. A door left open lets smoke into the stairs for everyone.",
+        "Use the stairs, not the lift. A lift can stop or fill with smoke.",
+        "In smoke, stay low, where the air is better, and cover your mouth with a damp cloth.",
+        "If the stairs are blocked by fire or smoke, go back to your flat or room and close the door.",
+        "Seal the door: put wet towels or sheets along the bottom and tape the cracks and vents. Do not open a window if smoke comes in through it.",
+        "Call 112 or 911 and tell them your address, your floor and which room you are in. Stay on the line.",
+        "Go to the window or balcony, away from the smoke. Open it for air if no smoke comes in. Stay where firefighters can see you. Wave or hang a sheet or towel so they can find you.",
+        "Do not jump. Falls from a height are very dangerous. Stay and signal. One UK fire service says to try to leave by a window only if there is no other way and the room cannot be survived."
+      ],
+      table: { head: ["Situation", "Do this"], rows: [
+        ["Stairs are clear and the door is cool", "Go out, close doors, use the stairs"],
+        ["Door is hot, or smoke in the stairs", "Stay in. Seal the door. Signal at the window"],
+        ["Fire is in your flat", "Get out and close the door. Warn others"],
+        ["Fire is elsewhere in the building", "Follow the alarm and the firefighters. Some buildings say stay in your flat"]
+      ] },
+      warn: [
+        "Do not use the lift in a fire.",
+        "Do not open a hot door.",
+        "Do not jump from a window on the second floor or higher.",
+        "Do not go back inside for people or pets. Tell the firefighters where they are."
+      ],
+      sections: [
+        { h: "Plan ahead", items: [
+          "Know two ways out of your flat, and where the stairs are. Count the doors from your door to the stairs.",
+          "Keep your phone, keys and shoes by the bed.",
+          "Learn how the building's alarm sounds, and what the building plan says: leave, or stay in your flat.",
+          "Fit a smoke alarm in each room where you sleep, and test it."
+        ] }
+      ],
+      tip: ["Practise the route in the dark.", "Tell visitors and children the plan."],
+      after: ["Do not go back inside until the fire service says it is safe.", "Get a medical check if you breathed smoke."],
+      sources: [
+        ["Albany (NY) Fire Department: high-rise residential fire safety flyer", "https://albanyny.gov/DocumentCenter/View/884/High-Rise-Residential-Fire-Safety-Flyer-PDF"],
+        ["Canada Safety Council: high-rise fire, smoke and flames", "https://canadasafetycouncil.org/high-rise-fire-smoke-and-flames/"],
+        ["Surrey Fire and Rescue: fire safety in high rises", "https://www.surreycc.gov.uk/community/fire-and-rescue/businesses/buildings/high-rises"],
+        ["Fire and Rescue Service Scotland: Escaping a fire", "https://www.firescotland.gov.uk/at-home/in-an-emergency"],
+        ["Toronto Fire Services: high-rise fire safety (Portuguese)", "https://www.toronto.ca/wp-content/uploads/2021/01/9678-20-00237-FireHighRise-NOV5-noon-Portuguese.pdf"],
+        ["DGE (Portugal): Incêndios, sabes o que fazer? (school booklet)", "https://www.dge.mec.pt/sites/default/files/ECidadania/educacao_Risco/documentos/incendios-escola-sabes-o-que-fazer.pdf"]
+      ],
+      unconfirmed: [
+        "We found no NFPA, ANEPC or Portuguese fire service page. The steps come from a US city fire flyer, safety council and UK and Canadian fire service pages, and a Portuguese school booklet, seen in search results. We did not open them.",
+        "Leave the building or stay in the flat depends on the building. Most sources say leave if it is safe. The Toronto guide and the Canada Safety Council say staying can be safer in a building with fire-resistant doors and walls or working sprinklers. We cannot tell which kind of building you are in. Follow the building alarm and the firefighters.",
+        "Feeling a door, closing doors behind you, no lift, sealing the door with wet towels and tape, and going to the window are in the Albany flyer and the other pages seen in search results.",
+        "Hanging a sheet or towel at the window to show where you are came from a Brazilian fire service page in search results. UK pages say to wave a sheet and stay at the open window.",
+        "We found no source for how to get out of a window above the first floor. The UK service says to try a window escape only when there is no other way and the advice we found is for a first-floor window. We found no advice for the third floor and higher. Our line not to jump is our choice and matches the 'stay and signal' advice.",
+        "We did not check fire-escape ladders or building rules about them.",
+        "The line that a hot door must not be opened and that you should stay low and cover your mouth with a damp cloth is from the Portuguese school booklet and the Albany flyer in search results. We did not check a medical source on how much a damp cloth helps."
+      ]
+    }),
+    g({
+      id: "flood-at-home", area: "Disasters", icon: "waves", title: "Flooding at home: before, during and after",
+      intro: "Floodwater is strong, dirty and may be live with electricity. Get yourself and your family up and out of the water first. Things can be replaced.",
+      first: [
+        "Move to higher ground or upstairs now. Take your phone and go-bag.",
+        "Do not walk or drive through floodwater.",
+        "Do not touch electrical things if you are wet or standing in water.",
+        "Trapped: call 112 (Portugal) or 911 (US)."
+      ],
+      do: [
+        "Before heavy rain: clear drains, gutters and gullies near your home, so the water can run away.",
+        "Move valuables, papers, medicines and electrical items up, off the floor. Move your car and animals out of places that often flood.",
+        "Pack a go-bag with your documents, medicines, phone charger and torch. Know your route to high ground.",
+        "If water is coming in: take people and pets upstairs or to a high place that has a way out.",
+        "If it is safe and before the water enters, turn off gas, electricity and water at the mains. Only do this if you do not have to stand in water.",
+        "Do not touch switches, sockets or electrical equipment while you are standing in water.",
+        "Do not walk through floodwater. As little as 15 cm (6 in) of fast water can knock you over, and you cannot see holes, open manholes or sharp objects.",
+        "Do not use a petrol generator indoors or in a closed space. It makes carbon monoxide.",
+        "Follow the warnings from Proteção Civil and IPMA (Portugal) or the National Weather Service (US).",
+        "After the flood: go home only when the authorities say it is safe. Check for damage before you go in.",
+        "Floodwater is dirty. Do not use it to drink, wash dishes, clean teeth or prepare food. Wear rubber gloves and boots when you clean up.",
+        "Throw out food, drink and medicine that touched floodwater, and soft things you cannot clean such as mattresses and carpets.",
+        "Do not turn the gas back on until a qualified person has checked it. Get the electrics checked before you switch them on."
+      ],
+      table: { head: ["Do", "Do not"], rows: [
+        ["Go up and out early", "Wait for water to reach you"],
+        ["Turn off the mains if it is safe", "Touch electrics when you are wet"],
+        ["Stay out of floodwater", "Walk or drive through flood"],
+        ["Wear boots and gloves after", "Use floodwater to wash or drink"]
+      ] },
+      warn: [
+        "Do not drive through a flooded road. See the Car in water guide.",
+        "Do not touch downed power lines or anything they touch.",
+        "Do not go back in until it is declared safe.",
+        "Do not run a generator inside. Keep it outdoors, away from doors, windows and vents."
+      ],
+      tip: ["Take photos of the damage for your insurer before you clean.", "Keep important papers in a waterproof bag."],
+      after: ["Dry the home well and watch for mould. Keep children, older people and pregnant people out of mouldy rooms until cleaned.", "Check on neighbours."],
+      sources: [
+        ["FEMA: Returning home after the flood", "https://fema.gov/ht/node/639163"],
+        ["American Red Cross: 20 safety steps for returning home after a flood", "https://www.redcross.org/about-us/news-and-events/news/20-Red-Cross-Safety-Steps-for-Returning-Home-After-the-Flood.html"],
+        ["Sutton Council (UK): what to do if there is a flood in your home", "https://www.sutton.gov.uk/w/flooding-advice-what-should-i-do-if-i-am-experiencing-flooding-in-my-home"],
+        ["Spelthorne Council (UK): flooding do's and don'ts", "https://www.spelthorne.gov.uk/page/841/flooding-dos-and-donts"],
+        ["Kingston Council (UK): flooding advice before, during and after", "https://kingston.gov.uk/emergency-planning/flooding-advice-1/2"],
+        ["Proteção Civil dos Açores: leaflet on flash floods", "https://prociv.azores.gov.pt/fotos/paginas/141677253027.pdf"],
+        ["Postal.pt: heavy rain, how to protect home, car and garage (Portugal)", "https://postal.pt/nacional/chuva-em-forca-como-proteger-casa-carro-garagem-chuva/"],
+        ["Iowa DNR: after a flood", "https://www.iowadnr.gov/media/1599/download"]
+      ],
+      unconfirmed: [
+        "The steps come from UK council pages, FEMA and Red Cross pages and a regional civil protection leaflet seen in search results. We did not open them. We found no Ready.gov, CDC or national ANEPC page.",
+        "Go up to a higher floor or a high place with a way out, turn off gas, electricity and water if it is safe, never touch electrics when standing in water, and not walking through floodwater are in the council pages and FEMA text seen in search results.",
+        "The 15 cm (6 in) figure for fast water is from a UK council page in search results. The US National Weather Service uses the same 6 inches for moving water.",
+        "Never cross flooded areas on foot or by car, and move cars and animals out of flood-prone places before the rain, are ANEPC advice quoted in a search summary. We did not open the page.",
+        "Clearing drains, gutters and gullies before heavy rain is quoted ANEPC advice in a search summary.",
+        "Not using floodwater to drink or wash, gloves and boots, throwing out food and soft items, and waiting until it is safe to return are FEMA and Red Cross text seen in search results. Not turning the gas back on until it is checked is from a UK council page.",
+        "We found no source specific to basements or to going upstairs in Portugal. The upstairs advice is from UK councils.",
+        "The mould and who should stay out comes from an Iowa state page in search results.",
+        "We did not check generator rules for Portugal. The 20 foot distance from doors, windows and vents is FEMA advice quoted in a search summary."
+      ]
+    }),
+    g({
+      id: "robbery", area: "Security", icon: "shield", title: "If you are being robbed: stay safe, then report",
+      intro: "Your safety matters more than any thing. Money and phones can be replaced. You cannot be replaced.",
+      first: [
+        "Stay calm. Do not resist or argue.",
+        "Do exactly what they say, no more and no less. Move slowly.",
+        "Hand over what they ask for.",
+        "When it is safe, get to a safe place and call 112 (Portugal) or 911 (US)."
+      ],
+      do: [
+        "Stay as calm as you can. Breathe. Keep your voice low and your hands where they can see them.",
+        "Do not fight, chase or argue. Do not resist, especially if the person has a weapon.",
+        "Do what the person tells you to do, no more and no less. Avoid sudden movements that could surprise them.",
+        "Give them what they ask for. Money and goods can be replaced.",
+        "If there are children in your car or with you, tell the robbers so they know.",
+        "Try to remember them: height, build, clothes, hair, voice, shoes. Do not stare. Look when it is safe.",
+        "If they leave in a car, note the plate, make, model and the direction. Write it down as soon as you can.",
+        "Do not follow them. Pay attention to which way they go.",
+        "When it is safe, get to a safe place, such as a shop or a crowded street, and ask for help. Call 112 (Portugal) or 911 (US) and give as many details as you can.",
+        "If it is your home: if the robber may still be inside, do not go in. Call 112 from outside.",
+        "Do not touch or move anything, so you do not destroy evidence.",
+        "Make a list of what was taken, with serial numbers and photos if you have them.",
+        "Report it to the police, and tell your bank at once if cards or phones were taken."
+      ],
+      table: { head: ["Do", "Do not"], rows: [
+        ["Stay calm and comply", "Fight, chase or argue"],
+        ["Remember details", "Stare at the robber"],
+        ["Move to a safe place, then call", "Follow them"],
+        ["Report and block cards", "Touch evidence at home"]
+      ] },
+      warn: [
+        "Do not resist an armed person.",
+        "Do not chase the robber.",
+        "Do not enter your home if the robber may still be there.",
+        "Do not delay reporting. Details are fresh at the start."
+      ],
+      tip: ["Keep your phone and wallet in different pockets.", "Photograph your valuables and note serial numbers at home before anything happens."],
+      after: ["Talk to someone you trust. It is normal to feel scared or shaky afterwards.", "Ask for victim support if you need it.", "Change door locks if keys were taken."],
+      sources: [
+        ["PSP: what to do in a robbery (reported by Notícias ao Minuto)", "https://www.noticiasaominuto.com/pais/1801180/como-re-agir-em-caso-de-assalto-eis-as-recomendacoes-da-psp"],
+        ["PSP: security advice leaflet (EU migrant integration site)", "https://ec.europa.eu/migrant-integration/system/files/2023-02/Leaflet Security Advice_PSP_EN.pdf"],
+        ["Generali Tranquilidade: your home was robbed, first 10 steps", "https://www.generalitranquilidade.pt/blog/familia/a-sua-casa-foi-assaltada-eis-os-primeiros-10-passos-a-dar"],
+        ["Crimestoppers UK: robbery explained", "https://crimestoppers-uk.org/fearless/more-info/crime-types-explained/robbery"],
+        ["Police Grand-Ducal Luxembourg: violent thefts", "https://police.public.lu/en/prevention/vols/vols-avec-violences.html"],
+        ["WSPS: do not be the hero, hand over cash and valuables", "https://www.wsps.ca/resource-hub/young-worker-my-first-job/don-t-be-the-hero-hand-over-any-and-all-cash-products-and-valuables-during-a-robbery"]
+      ],
+      unconfirmed: [
+        "The advice (stay calm, do not resist, hand over valuables, note details, call the police when safe) is consistent across the pages seen in search results: PSP advice reported in the press, UK, Luxembourg and Canadian pages. We did not open them. We did not find the psp.pt or gnr.pt page itself. The main Portuguese source is a press article about five years old.",
+        "Do exactly what the robber says, no more and no less, and do not surprise them, comes from a retail robbery guide in search results.",
+        "Telling the robbers that children are in the car is from the PSP advice quoted in the press.",
+        "At home: not entering if the robber is inside, not touching anything, and listing the stolen items with serial numbers and photos, are from the PSP advice quoted in the press and an insurer's blog.",
+        "We found no US police source. The US numbers and the bank step are common practice.",
+        "We did not check advice for carjackings, knives or guns. Follow the dispatcher.",
+        "The wellbeing and victim support lines come from UK victim support wording in search results."
+      ]
+    }),
+    g({
       id: "med-child-cpr", area: "Medical", icon: "heart", title: "Child and infant CPR and choking: the differences from adults",
       intro: "A child is about 1 year to puberty. An infant is under 1 year. Children and babies often stop breathing first, so breaths matter more than for adults. This guide does not replace a course.",
       first: [
