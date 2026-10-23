@@ -1,4 +1,5 @@
-var CACHE = 'acr-search-v329';
+var CACHE = 'acr-search-v330';
+var SEARCH_CACHE_PREFIX = 'acr-search-';  // Search owns only caches with this prefix
 var FILES = [
   './',
   './index.html',
@@ -18,7 +19,8 @@ self.addEventListener('install', function(e) {
 self.addEventListener('activate', function(e) {
   e.waitUntil(
     caches.keys().then(function(keys) {
-      return Promise.all(keys.filter(function(k) { return k !== CACHE; }).map(function(k) { return caches.delete(k); }));
+      // Search may clean ONLY its own caches. Never touch other apps' caches.
+      return Promise.all(keys.filter(function(k) { return k.indexOf(SEARCH_CACHE_PREFIX) === 0 && k !== CACHE; }).map(function(k) { return caches.delete(k); }));
     }).then(function(){ return self.clients.claim(); })
   );
 });
