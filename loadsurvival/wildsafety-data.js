@@ -307,6 +307,74 @@
       ]
     }),
     g({
+      id: "break-in", area: "Security", icon: "shield", title: "If someone breaks into your home",
+      intro: "Do not confront anyone. Get away if you can, or lock yourself in a room, stay quiet and call for help. Stuff can be replaced. You cannot.",
+      first: [
+        "Do not go and look. Do not confront.",
+        "Get out safely, or lock yourself in a room.",
+        "Call 112 (Portugal) or 911 (US) from your mobile phone. Speak quietly.",
+        "Came home to a forced door or broken window: do not go in."
+      ],
+      do: [
+        "If you are inside and hear a break-in: stay calm and quiet. Do not go to check.",
+        "If you can leave safely by a route away from the intruder, go. Get to a neighbour or a safe place and call for help.",
+        "If you cannot leave, go to a room with a lock. Lock the door and block it if you can. A closet with a deadbolt is another option.",
+        "Call 112 or 911 on your mobile phone. A landline may be cut. Give your address and say you think someone is in the house. Speak softly and keep the call short.",
+        "If you cannot speak, text the emergency service if it is available where you are.",
+        "Stay on the line and follow the operator's instructions. Do not come out until the police say it is safe.",
+        "If the intruder finds you: do not fight or argue. Do what they say and do not make sudden moves. See the robbery guide.",
+        "If you come home and the door is open or forced, or a window is broken: do not go in. The person may still be inside.",
+        "Go to a neighbour's house or lock yourself in your car. Call 112 or 911 from there and wait for the police.",
+        "If you already went in and are not sure they have gone, leave at once.",
+        "Do not touch, move or clean anything. You could destroy fingerprints and other evidence.",
+        "While you wait, write down the plates of any strange vehicles and what any strange people looked like.",
+        "Make sure everyone in the home, children, family and pets, is safe and accounted for."
+      ],
+      table: { head: ["You are", "Do this"], rows: [
+        ["Inside, at night", "Stay quiet. Leave safely, or lock a room. Call 112 or 911"],
+        ["Intruder finds you", "Do not resist. Do what they say. See the robbery guide"],
+        ["Coming home, door forced", "Do not go in. Go to a safe place. Call 112 or 911"],
+        ["Already inside, unsure", "Leave at once"]
+      ] },
+      warn: [
+        "Do not search the house for the intruder.",
+        "Do not confront or chase anyone.",
+        "Do not go in if the door is forced or a window is broken.",
+        "Do not clean up before the police come."
+      ],
+      sections: [
+        { h: "Prevent it", items: [
+          "Lock the door of your home every time you go out. Check the building door and garage gate are closed.",
+          "Make the home look lived in: keep some washing out or use lights.",
+          "Do not post your holidays or your routines on social media.",
+          "Older people: do not open the door to strangers, and use the door chain. If they insist, call 112.",
+          "If you see something strange near your home or a neighbour's, call the police or 112."
+        ] }
+      ],
+      tip: ["Keep your phone charged and by the bed.", "Agree a safe room with your family and how you will call for help."],
+      after: ["List what was taken, with serial numbers and photos. Report it to the police.", "Tell your bank at once if cards were taken. Change the locks if keys were taken.", "Talk to someone you trust. It is normal to feel scared afterwards."],
+      sources: [
+        ["CBS Detroit: what to do when you see an intruder in the house", "https://www.cbsnews.com/detroit/news/what-to-do-when-you-see-an-intruder-in-the-house"],
+        ["SafeHome: what to do if a person breaks into your house", "https://www.safehome.org/home-safety/survive-home-invasion/"],
+        ["St. Albert Today: the aftermath of a break-in (police advice)", "https://www.stalberttoday.ca/local-news/the-aftermath-of-a-break-in-1283216"],
+        ["Economical Insurance: what to do when your home has been broken into", "https://economical.com/en/blog/economical-blog/december-2016/what-to-do-when-your-home-has-been-broken-into"],
+        ["Town of Lloyd Police Department: preventing burglary (PDF)", "https://www.townoflloyd.gov/Documents/Departments/Police Department/Important Links & Forms/preventingburglary.pdf"],
+        ["PSP: security advice leaflet (EU migrant integration site)", "https://ec.europa.eu/migrant-integration/system/files/2023-02/Leaflet Security Advice_PSP_EN.pdf"],
+        ["Notícias ao Minuto: PSP advice to keep your home safe", "https://www.noticiasaominuto.com/pais/2768352/vai-estar-fora-os-conselhos-da-psp-para-manter-a-sua-residencia-segura"],
+        ["El Corte Inglés: what to do with a thief at home (Spanish)", "https://www.elcorteingles.es/sicor/?p=69040"]
+      ],
+      unconfirmed: [
+        "We found no official police page on an intruder inside the home. The steps come from news that quotes police, security company and insurer blogs and a Spanish retailer's article seen in search results. We did not open them.",
+        "The Portuguese advice we found is about prevention: lock the door, make the home look lived in, do not post absences, older people should not open to strangers, and call 112 about suspicious activity. We found no PSP page on what to do when an intruder is inside. The advice to hide and stay quiet is from a Spanish article, not the PSP.",
+        "Leave if you can and lock a room if you cannot, speak softly to the emergency service, and use a mobile phone because the landline may be cut, come from security and news pages in search results.",
+        "Sources disagree on a few points: some say shout that police are coming, others say stay silent. We follow stay quiet. One source says not to tell the operator which room you are in. Others do not say. We left that out.",
+        "The advice not to go in when the door is forced, to wait at a neighbour's house or in a locked car, not to touch anything, to note plates and descriptions, and to check that everyone is safe, comes from Canadian police quoted in news and from insurer pages in search results.",
+        "We found no source for texting the emergency service in Portugal. Text to 112 may not be available. Ask your operator.",
+        "We found no source for blocking the door, or for the closet with a deadbolt, beyond security websites.",
+        "We found no medical or counselling source for the wellbeing line. It is common sense."
+      ]
+    }),
+    g({
       id: "robbery", area: "Security", icon: "shield", title: "If you are being robbed: stay safe, then report",
       intro: "Your safety matters more than any thing. Money and phones can be replaced. You cannot be replaced.",
       first: [
