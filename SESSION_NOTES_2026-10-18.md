@@ -158,3 +158,5 @@ Pending / parked: Azores and Madeira plant volumes (user said no). Optional idea
 Capability gaps: official sites cannot be opened from this sandbox (searches only); ChatGPT cannot open attached files here, so guide text has to be pasted; a headless browser stands in for the iPad (no real voice, audio or wake lock tests).
 
 Lesson: scans must check the rendered page, not raw data (earlier false claim about 46 guides corrected); check a PR is still open before adding commits.
+
+- 2026-10-23 User asked to add what to do if a car submerges in water. Backup backup/2026-10-23-loadsurvival-p74-v92 at b37a5873 (matches origin/main). Branch claude/loadsurvival-car-submerged (cache p75-v93): new guide car-in-water (area Disasters, Partly checked) in wildsafety-data.js; links to and from hs-car-escape and g-flood. Sources from search results only (AAA, NPR/WHYY, Kids and Cars, Brownsville city, Postal.pt, RTP); no NHTSA, Red Cross, RoSPA, ANSR or ANEPC page found. Roof advice and the headrest trick left out because sources conflict or had only one source. Checks: all 161 guides render at 820 and 390 px, CORE files exist, no page errors, search finds it.

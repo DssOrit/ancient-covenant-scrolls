@@ -119,6 +119,72 @@
       ]
     }),
     g({
+      id: "car-in-water", area: "Disasters", icon: "waves", title: "Car in water: how to get out of a sinking or flooded car",
+      intro: "A car can float for only about 30 seconds to 2 minutes. Act in the first seconds. Do not wait for the car to fill. Do not open the door.",
+      first: [
+        "Seat belt off.",
+        "Window open or broken. Do it now.",
+        "Out at once. Children first.",
+        "Then call 112 (Portugal) or 911 (US)."
+      ],
+      do: [
+        "Stay as calm as you can and move at once. Sources give 30 to 120 seconds before the car fills. Every second you spend thinking is lost.",
+        "Undo your seat belt first. Undo the children's belts next.",
+        "Open a window. Most electric windows keep working for some time under water. Use the switch now, before the water rises.",
+        "Do not open the door. Rushing water can slam it shut or hold it closed, and an open door lets the car fill faster.",
+        "If the window will not open, break a side window with an escape tool. Spring-loaded tools work best. Hammer-style tools are hard to swing under water.",
+        "Get children out first. One expert says take the oldest first, because older children can wait while a younger one is helped.",
+        "Go out through the window and push away from the car. Swim or wade to the nearest bank, and keep away from fast water.",
+        "Call 112 (Portugal) or 911 (US) when you are safe. Do not go back for belongings.",
+        "Car stalled in rising floodwater, not yet sinking: leave when the water reaches the bottom of the doors. Leave the car and go to higher ground. Do not try to move it.",
+        "Do not restart a car that has been in water. Wait for it to be checked."
+      ],
+      table: { head: ["Step", "Do this"], rows: [
+        ["S", "Seat belts off"],
+        ["W", "Window open or broken"],
+        ["O", "Out at once"],
+        ["C", "Children first"]
+      ] },
+      warn: [
+        "Do not wait for the car to fill so you can open the door. Experts say to leave at once.",
+        "Do not open the door. Use a window.",
+        "A new car's side window may be hard to break. Check your window for a Tempered label and keep a tool within reach.",
+        "Do not stand on top of the car in fast water. You can be swept away.",
+        "Do not drive into water on the road. See the Flood guide."
+      ],
+      sections: [
+        { h: "Get ready before you need it", items: [
+          "Keep an escape tool within reach of the driver, for example on a keychain or on the dashboard. Do not keep it in the glove box.",
+          "Check the tool works on your car's side window. A US study (AAA) found six common tools could not break stronger glass.",
+          "Tell every passenger the steps. Practise finding your belt release with your eyes closed.",
+          "See the 'Trapped in a car' guide for belt cutters and window breakers, and the Flood guide for road flooding."
+        ] }
+      ],
+      tip: ["Choose a tool that is spring-loaded.", "Practise the four steps with the family while the car is parked, with the engine off."],
+      after: ["Get a medical check even if you feel fine, especially if you swallowed water.", "Report the car to the police, your insurer or your breakdown service when you are safe."],
+      sources: [
+        ["AAA: How to Escape a Sinking Vehicle", "https://cluballiance.aaa.com/the-extra-mile/advice/car/how-to-escape-a-sinking-vehicle"],
+        ["NPR and WHYY: What to do if your vehicle is submerged in water", "https://whyy.org/npr-story/car-submerged-underwater-escape/"],
+        ["Kids and Cars: if your vehicle is going underwater, seconds count", "https://www.kidsandcars.org/news/if-your-vehicle-is-going-underwater-seconds-count-here-are-4-tips-to-help-you-survive"],
+        ["Kids and Cars: what to do if your car is sinking with you inside", "https://www.kidsandcars.org/news/florida-has-water-everywhere-heres-what-to-do-if-your-car-is-sinking-with-you-inside"],
+        ["City of Brownsville: what to do if you are driving during a flood", "https://www.brownsvilletx.gov/243/What-to-Do-if-Your-Are-Driving-During-a-"],
+        ["Postal.pt: how to act when your car is submerged (Portugal)", "https://postal.pt/nacional/saiba-como-agir-em-caso-de-submersao-do-seu-carro/"],
+        ["RTP: what to do and avoid on flooded roads (Portugal)", "https://www.rtp.pt/noticias/pais/mau-tempo-o-que-devemos-fazer-e-evitar-quando-as-estradas-estao-alagadas_n1698474"]
+      ],
+      unconfirmed: [
+        "We found no page from NHTSA, the Red Cross, RoSPA, ANSR or ANEPC on a sinking car. The steps come from AAA, NPR and WHYY, Kids and Cars, and news and city pages found in search results. We did not open them.",
+        "The timing of 30 to 120 seconds, and the sequence seat belt, window, out, children, are from these sources. The timing varies between sources, and we found no measured figure for a particular car.",
+        "The sources disagree about waiting. One article says to wait for the water to rise so the pressure equalises and then open the door. An expert quoted in a search result says that is wrong and the escape must be at once. We follow the second.",
+        "On child order, one expert says oldest first. Other sources say only children first.",
+        "Whether electric windows work, and for how long, differs between cars. We found no figure.",
+        "Spring-loaded tools being better than hammers, and the AAA finding that six tools could not break stronger glass, are from search results about the AAA study. We did not open the study.",
+        "One Portuguese article suggests using the metal prongs of a headrest on the rear window. We found no second source, so we left it out.",
+        "Leaving the car when the water reaches the bottom of the doors, and not trying to move a stalled car, come from a city flood guide and a motoring page. We found conflicting advice about the roof. One guide says do not stand on the roof. A summary of FEMA advice, which we could not confirm, says to get on the roof if water is rising inside. We did not include the roof advice.",
+        "Not restarting a car that has been in water is from Portuguese motoring pages. We did not check the reason given (engine damage).",
+        "We found no source for the medical check or the report-to-insurer lines. They are common sense."
+      ]
+    }),
+    g({
       id: "med-child-cpr", area: "Medical", icon: "heart", title: "Child and infant CPR and choking: the differences from adults",
       intro: "A child is about 1 year to puberty. An infant is under 1 year. Children and babies often stop breathing first, so breaths matter more than for adults. This guide does not replace a course.",
       first: [
