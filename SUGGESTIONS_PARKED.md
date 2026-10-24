@@ -237,3 +237,27 @@ anywhere except on the user's own device after they choose to save it.
 research + one working proof-of-concept, not a build. Sample files
 (`sample_bereshit_piper.wav`, `sample_bereshit_espeak.wav`) were sent
 directly to the user, not committed to the repo.
+
+---
+
+## ACR Solar — auto-refresh on app open — parked by user 2026-10-24
+
+Raised while fixing the Shabbat-screen DST bug (PR #1101/#1102, both
+merged). The app's `today` variable is set once at page load and never
+reassigned, so a session left open across a day change or a DST
+transition shows stale data until something reloads the page. The
+owner's standing habit is to always manually refresh, so this was
+confirmed as unnecessary *for now* and explicitly parked rather than
+built.
+
+**The idea, if ever requested:** add a `visibilitychange` listener that
+fires when the app becomes visible again (e.g. tapping back in from the
+home screen after it was backgrounded, without a full manual reload).
+On that event: recompute `today = new Date(); today.setHours(0,0,0,0);`
+fresh, then re-render whichever view is currently showing (sun view,
+calendar, Shabbat screen if open). No existing `visibilitychange` or
+`pageshow` listener exists anywhere in `Solar/index.html` today (checked
+2026-10-24) — this would be a net-new addition, not a fix to something
+broken.
+
+**Do not implement until the user explicitly requests it.**
