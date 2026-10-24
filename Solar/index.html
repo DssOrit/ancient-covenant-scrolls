@@ -2090,8 +2090,13 @@ function resetLocation() {
 // Sun position calculations (simplified but accurate to ~minutes)
 function getDSTHours(forDate) {
   var d = forDate || new Date();
-  var jan = new Date(d.getFullYear(), 0, 15);
-  return (jan.getTimezoneOffset() - d.getTimezoneOffset()) / 60;
+  // DST transitions happen around 1-2am local, so checking at the exact
+  // date/time passed in is ambiguous right at midnight on a transition day
+  // (and 'today' elsewhere in this file is always pinned to midnight).
+  // Always evaluate at noon of that calendar day instead.
+  var noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
+  var jan = new Date(noon.getFullYear(), 0, 15);
+  return (jan.getTimezoneOffset() - noon.getTimezoneOffset()) / 60;
 }
 
 function getSunTimes(date, lat, lon, utcOffset) {
@@ -2667,15 +2672,10 @@ function updateShabbatDisplay(){
   var now=new Date(),dow=now.getDay();
   var sat=new Date(now);if(dow!==6){var d=(6-dow+7)%7;if(d===0)d=7;sat.setDate(now.getDate()+d);}sat.setHours(0,0,0,0);
   var sun=new Date(sat);sun.setDate(sat.getDate()+1);
-  // DST status is checked at noon, not midnight -- the actual change happens
-  // around 1-2am local, so midnight on a transition day still reads as the
-  // old offset and would mislabel that day's own sunrise.
-  var satNoon=new Date(sat);satNoon.setHours(12,0,0,0);
-  var sunNoon=new Date(sun);sunNoon.setHours(12,0,0,0);
   var st='06:00',en='06:00';
   if(typeof userLocation!=='undefined'&&userLocation){
-    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(satNoon));
-    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(sunNoon));
+    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(sat));
+    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(sun));
     if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;
   }
   var el1=document.getElementById('shab-start-time');if(el1)el1.textContent=st;
