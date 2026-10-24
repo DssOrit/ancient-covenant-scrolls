@@ -1024,6 +1024,20 @@ These have been re-locked on 2026-05-04 after repeated violations.
     A change that skips any step, or runs the steps out of order, is a
     rule violation however small the change is.
 
+39. **STAY ON THE SITE YOU'RE WORKING ON — NO CROSS-SITE PRs WITHOUT
+    EXPLICIT PERMISSION — LOCKED 2026-10-24 by user, in the user's own
+    words: "If we are working on one site, never push things from
+    another site for me to merge unless I explicitly tell you."** When
+    the current task is scoped to one site (per Rule 8's site list),
+    Claude does not also push a branch or open a PR touching a
+    different site in the same session unless the user explicitly asks
+    for that second site's work too in that session. Finishing work on
+    Site A is not permission to also ship something on Site B, however
+    small or however related it seems. If a genuinely separate,
+    unrelated finding turns up on another site while working on the
+    first, the correct move is to flag it to the user and wait (per
+    Rule 11), not to open a PR for it on the spot.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
