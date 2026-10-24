@@ -2088,10 +2088,10 @@ function resetLocation() {
 }
 
 // Sun position calculations (simplified but accurate to ~minutes)
-function getDSTHours() {
-  var jan = new Date(new Date().getFullYear(), 0, 15);
-  var now = new Date();
-  return (jan.getTimezoneOffset() - now.getTimezoneOffset()) / 60;
+function getDSTHours(forDate) {
+  var d = forDate || new Date();
+  var jan = new Date(d.getFullYear(), 0, 15);
+  return (jan.getTimezoneOffset() - d.getTimezoneOffset()) / 60;
 }
 
 function getSunTimes(date, lat, lon, utcOffset) {
@@ -2160,7 +2160,7 @@ function renderSunView() {
     months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
   // Always show the device clock time of the solar event — one number, always correct
-  var dstH = getDSTHours();
+  var dstH = getDSTHours(today);
   var dstBanner = document.getElementById('dst-banner');
   var srClock = document.getElementById('sunrise-clock');
   var ssClock = document.getElementById('sunset-clock');
@@ -2447,7 +2447,7 @@ function scheduleAlerts() {
     var st = getSunTimes(now, userLocation.lat, userLocation.lon, userLocation.utcOffset);
     if (!st) return;
 
-    var dstH = getDSTHours();
+    var dstH = getDSTHours(now);
     var nowMins = now.getHours() * 60 + now.getMinutes() - dstH * 60;
     var sunriseMins = Math.round(st.sunrise.total * 60);
     var alertMins = settings.alert_mins || 30;
@@ -2667,10 +2667,15 @@ function updateShabbatDisplay(){
   var now=new Date(),dow=now.getDay();
   var sat=new Date(now);if(dow!==6){var d=(6-dow+7)%7;if(d===0)d=7;sat.setDate(now.getDate()+d);}sat.setHours(0,0,0,0);
   var sun=new Date(sat);sun.setDate(sat.getDate()+1);
+  // DST status is checked at noon, not midnight -- the actual change happens
+  // around 1-2am local, so midnight on a transition day still reads as the
+  // old offset and would mislabel that day's own sunrise.
+  var satNoon=new Date(sat);satNoon.setHours(12,0,0,0);
+  var sunNoon=new Date(sun);sunNoon.setHours(12,0,0,0);
   var st='06:00',en='06:00';
   if(typeof userLocation!=='undefined'&&userLocation){
-    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours());
-    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours());
+    var ss=getSunTimes(sat,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(satNoon));
+    var es=getSunTimes(sun,userLocation.lat,userLocation.lon,userLocation.utcOffset+getDSTHours(sunNoon));
     if(ss)st=ss.sunriseStr;if(es)en=es.sunriseStr;
   }
   var el1=document.getElementById('shab-start-time');if(el1)el1.textContent=st;
