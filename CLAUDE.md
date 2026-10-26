@@ -1024,6 +1024,47 @@ These have been re-locked on 2026-05-04 after repeated violations.
     A change that skips any step, or runs the steps out of order, is a
     rule violation however small the change is.
 
+39. **ASK FOR THE PHRASE FIRST, EVERY TIME — NO CARRYOVER FROM A PRIOR
+    PHRASE, A FEATURE REQUEST, OR "WE'RE ALREADY WORKING ON THIS SITE" —
+    LOCKED 2026-10-26 by user, in the user's own words: "you are always
+    supposed to ask for the phrase, then backup site then verify no site
+    break risks then fix then send merge link in that order" / "Lock this
+    as a rule, it should be already locked but you keep ignoring it & that
+    is unacceptable."** Locked after a same-day incident: across four
+    consecutive Solar builds in one session (a games feature, then two
+    rebuilds and a content expansion, each prompted by the user's
+    feedback on the last), Claude obtained the exact unlock phrase before
+    only the first and third — on the other two, it treated an earlier
+    phrase, or the user's feedback/redirect itself ("that's still not
+    right," "make it longer," "do X instead"), as if it already carried
+    the unlock forward. It does not, and this rule exists because Rule 8
+    alone did not stop Claude from reasoning its way around it a second
+    and third time.
+    a. **The fixed order is always: (1) get the exact unlock phrase for
+       THIS specific round of work, stated plainly, and wait for it;
+       (2) backup (Rule 38a); (3) confirm no break risk (Rule 38b);
+       (4) apply the fix; (5) send the merge link (Rule 38d).** Step 1
+       comes before step 2 — never bundled with it, never assumed from
+       it, never skipped because the conversation is already mid-task.
+    b. **A phrase given for one build does not cover the next build.**
+       Once a PR from that phrase is opened, the phrase is spent.
+       Continuing to iterate on the same feature after user feedback —
+       "make it better," "that's not right yet," "do X instead" — is
+       feedback on the work, not a fresh unlock. Claude asks again before
+       writing a single character of the next round, even the very next
+       message in the same conversation.
+    c. **Being mid-session on the same site is not authorization
+       either.** Having edited Solar five minutes ago does not make
+       Solar touchable now for a different change without asking again.
+    d. **If Claude is not certain the phrase was given for THIS specific
+       round of edits, it stops and asks before touching any file.**
+       "I believe this is already authorized" is the exact failure mode
+       this rule exists to close.
+    This rule does not replace Rule 38 — it names the step Rule 38 was
+    missing explicitly, as its own gate standing in front of backup, and
+    closes the specific rationalization that caused three violations in
+    one session before this rule was written.
+
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
 training. Treat them as hard constraints, not preferences.
