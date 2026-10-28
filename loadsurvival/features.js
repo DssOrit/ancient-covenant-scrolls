@@ -161,6 +161,10 @@ window.LSX = function (A) {
     'flood-at-home': ['g-flood', 'car-in-water', 'g-power-outage', 'med-carbon-monoxide'],
     'robbery': ['break-in', 'security-intrusion', 'lim-city-event'],
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
+    'storage-area-setup': ['stockpile-basics', 'stockpile-buying-tips', 'hs-food-storage', 'lt-year-pantry'],
+    'stockpile-buying-tips': ['stockpile-basics', 'storage-area-setup', 'budget-offgrid', 'ht-buy-order'],
+    'dog-stockpile': ['stockpile-basics', 'budget-offgrid', 'storage-area-setup'],
+    'budget-offgrid': ['stockpile-basics', 'dog-stockpile', 'med-carbon-monoxide', 'meds-natural-alternatives'],
     'meds-natural-alternatives': ['med-dehydration', 'med-allergic', 'stockpile-basics', 'es-medical-kit'],
     'sea-desalinate': ['hs-seawater', 'wx-sea', 'stockpile-basics'],
     'stockpile-basics': ['ht-kit-quantities', 'ht-buy-order', 'es-kit-tiers', 'lt-year-pantry', 'lt2-staples', 'hs-food-storage', 'meds-natural-alternatives', 'sea-desalinate'],
@@ -249,7 +253,8 @@ window.LSX = function (A) {
     ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
     ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
     ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions'],
-    ['stock', 'can', 'Stockpile planner', 'Food, water and supplies for 3 days to 10 years']
+    ['stock', 'can', 'Stockpile planner', 'Food, water and supplies for 3 days to 10 years'],
+    ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
@@ -278,6 +283,17 @@ window.LSX = function (A) {
       '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
     if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
     if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    if (t === 'dogs') {
+      var DK = window.LOAD_STOCK2; if (!DK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
+      var dsz = function (id) { var o = ''; for (var i = 0; i <= 6; i++) o += '<option value="' + i + '"' + (i === (id === 'dg-s' ? 1 : 0) ? ' selected' : '') + '>' + i + '</option>'; return o; };
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick how many small and large dogs and how long. You get food, water, medicine and gear for each. It works offline.</p>' +
+        '<label for="dg-c">Country</label><select id="dg-c"><option value="us">United States</option><option value="pt">Portugal</option></select>' +
+        '<label for="dg-s">Small dogs (about 18 lb, 8 kg)</label><select id="dg-s">' + dsz('dg-s') + '</select>' +
+        '<label for="dg-l">Large dogs (about 66 lb, 30 kg)</label><select id="dg-l">' + dsz('dg-l') + '</select>' +
+        '<label for="dg-p">How long</label><select id="dg-p">' + window.LOAD_STOCK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
+        '<label class="checkrow"><input type="checkbox" id="dg-all"><span>Show 1 to 6 small dogs and 1 to 6 large dogs side by side</span></label>' +
+        '<div class="actions">' + btn('Copy the list', 'dg-copy', 'button') + btn('Print', 'stk-print', 'secondary') + '</div><p id="dg-msg" class="muted" role="status"></p></div><div id="dg-out"></div>');
+    }
     if (t === 'stock') {
       var SK = window.LOAD_STOCK; if (!SK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var c0 = state.region === 'pt' ? 'pt' : 'us';
@@ -489,6 +505,7 @@ window.LSX = function (A) {
     'flash-on': function () { overlay('flash'); },
     'sos-on': sos,
     'cpr-start': cprStart,
+    'dg-copy': function () { copy(dgText()); setOut('dg-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-copy': function () { copy(stkText()); setOut('stk-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-print': function () { try { window.print(); } catch (e) {} },
     'cpr-stop': cprStop,
@@ -547,6 +564,58 @@ window.LSX = function (A) {
     if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
     return line;
   }
+  function dgInputs() {
+    var s = Number((document.getElementById('dg-s') || {}).value) || 0, l = Number((document.getElementById('dg-l') || {}).value) || 0;
+    if (s + l > 6) l = Math.max(0, 6 - s);
+    return { us: ((document.getElementById('dg-c') || {}).value || 'us') === 'us', s: s, l: l, days: Number((document.getElementById('dg-p') || {}).value) || 30, all: !!(document.getElementById('dg-all') || {}).checked };
+  }
+  function dgMass(g, us) { return us ? nf(g / 453.592, 1) + ' lb' : nf(g / 1000, 1) + ' kg'; }
+  function dgRender() {
+    var I = dgInputs(), DK = window.LOAD_STOCK2, h = '';
+    if (I.s + I.l < 1) { setOut('dg-out', '<div class="notice">Choose at least 1 dog.</div>'); return; }
+    var P = DK.dogPlan(I.us, I.s, I.l, I.days);
+    h += '<div class="kpis">' + kpi('Dogs', I.s + ' small, ' + I.l + ' large') + kpi('Food a day', dgMass(P.perDayG, I.us)) + kpi('Water a day', I.us ? nf(P.waterPerDay / 3.785, 2) + ' gal' : nf(P.waterPerDay, 1) + ' L') + kpi('Food over the plan', dgMass(P.totalG, I.us)) + '</div>';
+    var cats = [], seen = {}; P.items.forEach(function (x) { if (!seen[x.cat]) { seen[x.cat] = 1; cats.push(x.cat); } });
+    cats.forEach(function (c) {
+      h += '<section class="gblock"><h2>' + esc(c) + '</h2><ul class="stklist">';
+      P.items.filter(function (x) { return x.cat === c; }).forEach(function (x) { h += '<li class="stkrow"><b>' + esc(x.name) + '</b><div class="stkqty">' + nf(x.q, 1) + ' ' + esc(x.unit) + '</div>' + (x.note ? '<small class="muted">' + esc(x.note) + '</small>' : '') + '</li>'; });
+      h += '</ul></section>';
+    });
+    if (I.all) {
+      DK.dogTable(I.us, I.days).forEach(function (t) {
+        h += '<section class="gblock"><h2>' + esc(t.label) + ': 1 to 6 dogs</h2><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + t.plans.map(function (p) { return '<th>' + p.dogs + ' dog' + (p.dogs === 1 ? '' : 's') + '</th>'; }).join('') + '</tr></thead><tbody>';
+        h += '<tr><td>Food a day</td>' + t.plans.map(function (p) { return '<td>' + dgMass(p.perDayG, I.us) + '</td>'; }).join('') + '</tr>';
+        h += '<tr><td>Food over the plan</td>' + t.plans.map(function (p) { return '<td>' + dgMass(p.totalG, I.us) + '</td>'; }).join('') + '</tr>';
+        h += '<tr><td>Water stored (up to 14 days)</td>' + t.plans.map(function (p) { return '<td>' + (I.us ? nf(p.waterStore / 3.785, 1) + ' gal' : nf(p.waterStore, 0) + ' L') + '</td>'; }).join('') + '</tr>';
+        t.plans[0].items.forEach(function (x, i) { h += '<tr><td>' + esc(x.name) + '</td>' + t.plans.map(function (p) { var y = p.items[i]; return '<td>' + nf(y.q, 1) + ' ' + esc(y.unit) + '</td>'; }).join('') + '</tr>'; });
+        h += '</tbody></table></div></section>';
+      });
+    }
+    h += '<div class="notice">Planner estimates. The CDC checklist says 2 weeks of food, water and medicine for each animal. Dry food keeps about 12 to 18 months unopened, so for plans over 1 year, buy again each year. Ask your vet about your dogs. See the dog guide for sources and what we could not confirm.</div>';
+    setOut('dg-out', h);
+  }
+  function dgText() {
+    var I = dgInputs(), P = window.LOAD_STOCK2.dogPlan(I.us, I.s, I.l, I.days), t = 'LOAD Survival dog supply list\n' + I.s + ' small, ' + I.l + ' large dogs, ' + I.days + ' days\n';
+    P.items.forEach(function (x) { t += '[ ] ' + x.name + ': ' + nf(x.q, 1) + ' ' + x.unit + '\n'; });
+    return t;
+  }
+  function stkLong(I, SK) {
+    var K = window.LOAD_STOCK2; if (!K || I.days < 365) return '';
+    var L = K.longPlan(I.us ? 'us' : 'pt', I.people, I.days, I.kids), cur = L.cur, us = I.us;
+    var fmt = function (a) { return cur + nf(Math.round(a[0] / 10) * 10, 0) + ' to ' + cur + nf(Math.round(a[1] / 10) * 10, 0); };
+    var h = '<section class="gblock"><h2>Long-term plan: two layers</h2><p class="muted">Layer 1 is rotating food you eat and replace every year. Layer 2 is sealed long-storage staples you store once.</p>';
+    h += '<h3>Layer 1: rotating, buy each year</h3><ul class="stklist">';
+    L.rolling.forEach(function (r) { h += '<li class="stkrow"><b>' + esc(r.name) + '</b><div class="stkqty">' + nf(r.perYear, 0) + ' ' + esc(r.unit) + ' a year</div><small class="muted">Keeps about ' + stkShelf(r.shelf) + '. Eat the oldest first and replace it.</small></li>'; });
+    L.hygiene.forEach(function (n) { h += '<li class="stkrow"><b>' + esc(n.name) + '</b><div class="stkqty">' + nf(n.q, 1) + ' ' + esc(n.unit) + ' a year</div></li>'; });
+    h += '</ul><h3>Layer 2: sealed long-storage staples, store once</h3><ul class="stklist">';
+    L.long.forEach(function (r) { h += '<li class="stkrow"><b>' + esc(r.name) + '</b><div class="stkqty">' + nf(r.packs, 0) + ' ' + esc(r.unit) + '</div><small class="muted">About ' + SK.fmtMass(r.mass, us) + '. Packed sealed and kept cool, it keeps about ' + stkShelf(r.shelf) + ' (planner estimate).</small></li>'; });
+    h += '</ul><h3>Space and cost (planner estimates)</h3><ul>' +
+      '<li>Layer 1 shelf space: about ' + nf(Math.round(L.rollM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.rollM3 * 35.3 * 10) / 10, 1) + ' cubic feet).</li>' +
+      '<li>Layer 2 space: about ' + nf(Math.round(L.longM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.longM3 * 35.3 * 10) / 10, 1) + ' cubic feet), about ' + nf(L.buckets, 0) + ' six-gallon buckets.</li>' +
+      '<li>Cost to rebuild the whole plan from shops: about ' + fmt(L.fullCost) + '. Food only. Not an official price.</li>' +
+      '<li>Yearly replacement of Layer 1: about ' + fmt(L.perYearRolling) + '. This is food you eat, so it replaces normal grocery spending. The one-time extra cost is Layer 2, buckets, lids, oxygen absorbers and shelves.</li></ul></section>';
+    return h;
+  }
   function stkAll(I, SK) {
     var us = I.us, c = us ? 'us' : 'pt', cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
     var h = '<section class="gblock"><h2>All household sizes</h2><p class="muted">' + (I.full ? 'Full total for the whole plan.' : 'Amount to keep on the shelf.') + ' Adults only (no children entered).</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + SK.sizes.map(function (n) { return '<th>' + n + ' people</th>'; }).join('') + '</tr></thead><tbody>';
@@ -587,6 +656,7 @@ window.LSX = function (A) {
     md.items.forEach(function (m) { h += '<li class="stkrow"><b>' + esc(m.name) + '</b><div class="stkqty">' + nf(m.q, 0) + ' ' + esc(m.unit) + ' <span class="muted">(about ' + m.packs + ' pack' + (m.packs === 1 ? '' : 's') + ')</span></div>' + (m.note ? '<small class="muted">' + esc(m.note) + '</small>' : '') + '</li>'; });
     if (I.rx > 0) h += '<li class="stkrow"><b>Your prescription medicine</b><div class="stkqty">' + nf(md.rxTotal, 0) + ' doses <span class="muted">(' + I.rx + ' a day, plus 15 percent)</span></div><small class="muted">That is ' + nf(md.rxPerYear, 0) + ' doses for one year. This is a theoretical total. Official advice we found is 2 weeks (CDC) to 30 days (Red Cross, older adults). Ask your prescriber and pharmacist for the largest refill you can get, and how long it keeps. Insulin and cold-chain medicines do not keep for years.</small></li>';
     h += '</ul><p class="muted">When medicine runs out, see the guide Medicines in a long emergency: what to store, and natural options. Natural options help with mild problems. They do not replace prescription medicine.</p><p><a class="button secondary" href="#/lesson/meds-natural-alternatives">Open the natural alternatives guide</a></p></section>';
+    h += stkLong(I, SK);
     if (I.all) h += stkAll(I, SK);
     if (I.full) h += '<div class="notice">Full totals show everything you would use over the whole plan. Items that spoil cannot be bought once and kept. Buy in rounds and rotate. The shelf life of each item is shown above.</div>';
     if (I.days > 365) h += '<div class="notice">Soap, paper, batteries and gas are listed for up to 1 year. Buy more each year. For batteries, use rechargeable ones with a solar charger.</div>';
@@ -649,7 +719,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -680,6 +750,7 @@ window.LSX = function (A) {
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
+    if (id.indexOf('dg-') === 0) { dgRender(); return true; }
     if (id.indexOf('stk-') === 0) { var bx = document.getElementById('stk-nnbox'); if (bx) bx.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); return true; }
     return false;
   }
