@@ -161,6 +161,8 @@ window.LSX = function (A) {
     'flood-at-home': ['g-flood', 'car-in-water', 'g-power-outage', 'med-carbon-monoxide'],
     'robbery': ['break-in', 'security-intrusion', 'lim-city-event'],
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
+    'vitamins-natural-items': ['meds-natural-alternatives', 'stockpile-basics', 'med-dehydration', 'es-medical-kit'],
+    'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup'],
     'storage-area-setup': ['stockpile-basics', 'stockpile-buying-tips', 'hs-food-storage', 'lt-year-pantry'],
     'stockpile-buying-tips': ['stockpile-basics', 'storage-area-setup', 'budget-offgrid', 'ht-buy-order'],
@@ -256,7 +258,9 @@ window.LSX = function (A) {
     ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions'],
     ['stock', 'can', 'Stockpile planner', 'Food, water and supplies for 3 days to 10 years'],
     ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs'],
-    ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances']
+    ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances'],
+    ['tracker', 'list', 'My stockpile tracker', 'Your rates, prices, what you own, shopping list, CSV and backup'],
+    ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
@@ -285,6 +289,34 @@ window.LSX = function (A) {
       '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
     if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
     if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    if (t === 'tracker') {
+      var TK = window.LOAD_TRACK; if (!TK) return toolFrame(t, '<div class="panel"><p>The tracker could not load.</p></div>');
+      trInit();
+      var cats = ['All']; TK.items.forEach(function (i) { if (cats.indexOf(i.cat) < 0) cats.push(i.cat); });
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Edit the monthly amount for each person, the pack size and your own prices. No prices are built in. Items with no price are left out of the totals. Everything is saved only on this device. It works offline.</p>' +
+        '<label for="tr-c">Country</label><select id="tr-c"><option value="US"' + (TR.country === 'US' ? ' selected' : '') + '>United States</option><option value="PT"' + (TR.country === 'PT' ? ' selected' : '') + '>Portugal</option></select>' +
+        '<label for="tr-n">People</label>' + num('tr-n', TR.people, 1, 1, 50) +
+        '<label for="tr-p">How long</label><select id="tr-p">' + TK.periods.map(function (p) { return '<option value="' + p[0] + '"' + (String(p[0]) === String(TR.days) && !TR.custom ? ' selected' : '') + '>' + p[1] + '</option>'; }).join('') + '<option value="x"' + (TR.custom ? ' selected' : '') + '>Other number of days</option></select>' +
+        '<div id="tr-cdbox"' + (TR.custom ? '' : ' hidden') + '><label for="tr-cd">Number of days</label>' + num('tr-cd', TR.custom || TR.days, 1, 1, 7300) + '</div>' +
+        '<label for="tr-w">Water in litres per person per day</label>' + num('tr-w', TR.water, 'any', 0.5, 20) +
+        '<label for="tr-m">People who use menstrual products</label>' + num('tr-m', TR.mens, 1, 0, 50) +
+        '<label for="tr-f">Show</label><select id="tr-f">' + cats.map(function (c) { return '<option>' + esc(c) + '</option>'; }).join('') + '</select>' +
+        '<div class="actions">' + btn('Export shopping list (CSV)', 'tr-csv', 'button') + btn('Back up (JSON)', 'tr-json', 'secondary') + btn('Restore a backup', 'tr-import', 'secondary') + btn('Copy the list', 'tr-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Reset', 'tr-reset', 'secondary') + '</div>' +
+        '<input type="file" id="tr-file" accept="application/json,.json" hidden><p id="tr-msg" class="muted" role="status"></p></div>' +
+        '<div id="tr-sum"></div>' +
+        '<section class="gblock"><h2>Items</h2><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th><th>Per person, 30 days</th><th>Pack size</th><th>Packs to buy</th><th>Price per pack</th><th>Cost</th><th>Packs you have</th><th>Still to buy</th></tr></thead><tbody id="tr-rows"></tbody></table></div></section>' +
+        '<section class="gblock"><h2>Equipment checklist</h2><div id="tr-gear"></div></section>' +
+        '<section class="gblock"><h2>Where to look</h2><div id="tr-shops"></div></section>');
+    }
+    if (t === 'dogp') {
+      var DT = window.LOAD_TRACK; if (!DT) return toolFrame(t, '<div class="panel"><p>The dog profiles could not load.</p></div>');
+      trInit();
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Add each dog on its own, up to 6. Change the weight, daily food, bag size, water and medicine notes. These are planning numbers, not a vet prescription. Saved only on this device.</p>' +
+        '<label for="dp-p">How long</label><select id="dp-p">' + DT.periods.map(function (p) { return '<option value="' + p[0] + '"' + (String(p[0]) === String(TR.dogDays) ? ' selected' : '') + '>' + p[1] + '</option>'; }).join('') + '</select>' +
+        '<label for="dp-u">Weight unit</label><select id="dp-u"><option value="kg"' + (TR.dogUnit !== 'lb' ? ' selected' : '') + '>Kilograms</option><option value="lb"' + (TR.dogUnit === 'lb' ? ' selected' : '') + '>Pounds</option></select>' +
+        '<div class="actions">' + btn('Add a dog', 'dp-add', 'button') + btn('Copy the list', 'dp-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + '</div><p id="dp-msg" class="muted" role="status"></p></div>' +
+        '<div id="dp-cards"></div><div id="dp-out"></div>');
+    }
     if (t === 'power') {
       var PK = window.LOAD_POWER; if (!PK) return toolFrame(t, '<div class="panel"><p>The calculator could not load.</p></div>');
       pwInit();
@@ -523,6 +555,14 @@ window.LSX = function (A) {
     'flash-on': function () { overlay('flash'); },
     'sos-on': sos,
     'cpr-start': cprStart,
+    'tr-csv': function () { trInit(); var s = {}; for (var k in TR) s[k] = TR[k]; s.days = trDays(); var ok = trDownload('load-survival-shopping-list.csv', window.LOAD_TRACK.csv(s), 'text/csv'); setOut('tr-msg', ok ? 'CSV file created. On iPad, choose where to save it.' : 'The file could not be created. Use Copy the list instead.'); },
+    'tr-json': function () { trInit(); var ok = trDownload('load-survival-backup.json', JSON.stringify(TR, null, 1), 'application/json'); setOut('tr-msg', ok ? 'Backup file created. Keep it somewhere safe.' : 'The file could not be created.'); },
+    'tr-import': function () { var e = document.getElementById('tr-file'); if (e) e.click(); },
+    'tr-copy': function () { copy(trText()); setOut('tr-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'tr-reset': function () { var ok = true; try { ok = window.confirm('Clear all your rates, prices, items you have and checklist ticks on this device?'); } catch (e) {} if (!ok) return; var keep = TR.dogs; TR = window.LOAD_TRACK.blank(); TR.dogs = keep; trSave(); trShowAll(); var g = document.getElementById('tr-gear'); setOut('tr-msg', 'Cleared. Your dog profiles were kept.'); },
+    'dp-add': function () { trInit(); if (TR.dogs.length >= 6) return; TR.dogs.push({ name: '', kg: 10, bag: 13.6, w: 30, meds: '' }); trSave(); dpCards(); dpOut(); },
+    'dp-rm': function (x) { trInit(); TR.dogs.splice(Number(x.dataset.i), 1); trSave(); dpCards(); dpOut(); },
+    'dp-copy': function () { copy(dpText()); setOut('dp-msg', 'Copied. Paste it into Notes or Messages.'); },
     'pw-fill': function () { pwInit(); PW.roomsEdited = false; PW.edited = {}; PW.w = {}; PW.h = {}; pwDefaults(); pwTables(); pwOut(); setOut('pw-msg', 'Filled from the home size and the number of people.'); },
     'pw-add': function () { pwInit(); PW.rooms.push({ t: 'Bedroom', ft: 150 }); PW.roomsEdited = true; pwDefaults(); pwTables(); pwOut(); },
     'pw-rm': function (x) { pwInit(); var i = Number(x.dataset.i); if (PW.rooms.length > 1) PW.rooms.splice(i, 1); PW.roomsEdited = true; pwDefaults(); pwTables(); pwOut(); },
@@ -585,6 +625,144 @@ window.LSX = function (A) {
     var line = 'Store ' + w.storeDays + ' days of drinking and cooking water: ' + text + '.';
     if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
     return line;
+  }
+  /* ---------- tracker and dog profiles ---------- */
+  var TR = null, TRK = 'loadsurvival-tracker-v1';
+  function trInit() {
+    if (TR) return;
+    TR = window.LOAD_TRACK.blank();
+    try { var raw = localStorage.getItem(TRK); if (raw) { var o = JSON.parse(raw); if (o && typeof o === 'object') for (var k in o) TR[k] = o[k]; } } catch (e) {}
+    TR.price = TR.price || { US: {}, PT: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {};
+    TR.rate = TR.rate || {}; TR.pack = TR.pack || {}; TR.have = TR.have || {}; TR.gear = TR.gear || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : [];
+    if (TR.country !== 'US' && TR.country !== 'PT') TR.country = 'US';
+  }
+  function trSave() { try { localStorage.setItem(TRK, JSON.stringify(TR)); return true; } catch (e) { return false; } }
+  function trDays() { return Math.max(1, Math.round(Number(TR.custom || TR.days) || 30)); }
+  function trCompute() { var s = {}; for (var k in TR) s[k] = TR[k]; s.days = trDays(); return window.LOAD_TRACK.compute(s); }
+  function trRows() {
+    var TK = window.LOAD_TRACK, C = trCompute(), f = (document.getElementById('tr-f') || {}).value || 'All', h = '';
+    C.rows.forEach(function (r) {
+      var it = r.it; if (f !== 'All' && it.cat !== f) return;
+      h += '<tr><td>' + esc(it.name) + '<br><small class="muted">' + esc(it.cat) + ', ' + esc(it.unit) + '. ' + esc(it.note) + '</small></td>' +
+        '<td><input id="tr-r-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" value="' + (TR.rate[it.id] === undefined ? it.rate : TR.rate[it.id]) + '" aria-label="' + esc(it.name) + ' per person per 30 days"></td>' +
+        '<td><input id="tr-k-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" value="' + (TR.pack[it.id] === undefined ? it.pack : TR.pack[it.id]) + '" aria-label="' + esc(it.name) + ' pack size"></td>' +
+        '<td id="tr-b-' + it.id + '"></td>' +
+        '<td><input id="tr-pr-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" placeholder="none" value="' + (((TR.price[TR.country] || {})[it.id]) === undefined ? '' : TR.price[TR.country][it.id]) + '" aria-label="' + esc(it.name) + ' price per pack"></td>' +
+        '<td id="tr-co-' + it.id + '"></td>' +
+        '<td><input id="tr-h-' + it.id + '" type="number" inputmode="decimal" min="0" step="1" value="' + (TR.have[it.id] === undefined ? 0 : TR.have[it.id]) + '" aria-label="' + esc(it.name) + ' packs you have"></td>' +
+        '<td id="tr-l-' + it.id + '"></td></tr>';
+    });
+    setOut('tr-rows', h);
+    var g = ''; TK.gear.forEach(function (x) { g += '<label class="checkrow"><input type="checkbox" id="tr-g-' + x[0] + '"' + (TR.gear[x[0]] ? ' checked' : '') + '><span>' + esc(x[1]) + '</span></label>'; });
+    setOut('tr-gear', g);
+    var s = '<ul>'; TK.retail[TR.country].forEach(function (x) { s += '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(x[0]) + '</a> <small class="muted">' + esc(x[2]) + '</small></li>'; });
+    setOut('tr-shops', s + '</ul><p class="muted">These are shop websites, not live prices. Type the prices you find.</p>');
+  }
+  function trOut() {
+    var TK = window.LOAD_TRACK, C = trCompute(), cur = TK.cur[TR.country];
+    C.rows.forEach(function (r) {
+      var id = r.it.id, set = function (k, v) { var e = document.getElementById(k + id); if (e) e.textContent = v; };
+      set('tr-b-', nf(r.packs, 0) + ' (' + nf(Math.round(r.units * 100) / 100, 2) + ' ' + r.it.unit + ')');
+      set('tr-co-', r.cost === null ? '-' : cur + nf(Math.round(r.cost * 100) / 100, 2));
+      set('tr-l-', nf(r.remain, 0) + (r.costLeft === null ? '' : ' (' + cur + nf(Math.round(r.costLeft * 100) / 100, 2) + ')'));
+    });
+    var d = trDays();
+    var h = '<div class="kpis">' + kpi('People', String(C.people)) + kpi('Days', nf(d, 0)) + kpi('Water', nf(Math.round(C.water), 0) + ' L') + kpi('Priced total', cur + nf(Math.round(C.known), 0)) + '</div>';
+    h += '<section class="gblock"><h2>Totals</h2><ul>' +
+      '<li>Water: ' + nf(Math.round(C.water), 0) + ' litres, about ' + C.containers + ' containers of 20 L. It weighs about ' + nf(Math.round(C.waterKg), 0) + ' kg. Plans longer than 14 days cannot all be stored. Plan to treat water.</li>' +
+      '<li>Priced items total ' + cur + nf(Math.round(C.known * 100) / 100, 2) + '. Still to buy, after what you have: ' + cur + nf(Math.round(C.left * 100) / 100, 2) + '.</li>' +
+      '<li>' + C.unknown + ' items have no price and are left out of these totals.</li>' +
+      (C.mens > 0 ? '<li>Menstrual products: about ' + nf(Math.round(C.mens), 0) + ' (30 per user per 30 days).</li>' : '') + '</ul>' +
+      (d > 365 ? '<div class="notice">Totals for years are the amounts you will use over the whole time. They are not goods you can all store unchanged. Buy and rotate each year.</div>' : '') + '</section>';
+    setOut('tr-sum', h);
+  }
+  function trHandle(t) {
+    var id = t.id || '', m;
+    if (!TR) trInit();
+    if (id === 'tr-c') { TR.country = t.value; trRows(); trOut(); trSave(); return true; }
+    if (id === 'tr-n') { TR.people = Math.max(1, Math.min(50, Math.round(Number(t.value) || 1))); }
+    else if (id === 'tr-p') { var box = document.getElementById('tr-cdbox'); if (t.value === 'x') { TR.custom = String(Math.round(Number((document.getElementById('tr-cd') || {}).value) || 30)); if (box) box.hidden = false; } else { TR.custom = ''; TR.days = Number(t.value); if (box) box.hidden = true; } }
+    else if (id === 'tr-cd') { TR.custom = String(Math.max(1, Math.round(Number(t.value) || 1))); }
+    else if (id === 'tr-w') { TR.water = Math.max(0.5, Number(t.value) || 3.785); }
+    else if (id === 'tr-m') { TR.mens = Math.max(0, Math.round(Number(t.value) || 0)); }
+    else if (id === 'tr-f') { trRows(); trOut(); return true; }
+    else if ((m = /^tr-r-(.+)$/.exec(id))) { TR.rate[m[1]] = t.value === '' ? undefined : Math.max(0, Number(t.value) || 0); }
+    else if ((m = /^tr-k-(.+)$/.exec(id))) { TR.pack[m[1]] = t.value === '' ? undefined : Math.max(0.0001, Number(t.value) || 1); }
+    else if ((m = /^tr-pr-(.+)$/.exec(id))) { TR.price[TR.country][m[1]] = t.value === '' ? undefined : Math.max(0, Number(t.value) || 0); }
+    else if ((m = /^tr-h-(.+)$/.exec(id))) { TR.have[m[1]] = Math.max(0, Number(t.value) || 0); }
+    else if ((m = /^tr-g-(.+)$/.exec(id))) { TR.gear[m[1]] = !!t.checked; }
+    else return false;
+    trOut(); if (!trSave()) setOut('tr-msg', 'This device would not save. Use Back up (JSON) to keep your numbers.');
+    return true;
+  }
+  function trDownload(name, text, type) {
+    try { var b = new Blob([text], { type: type }), u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(u); }, 500); return true; } catch (e) { return false; }
+  }
+  function trImport(file) {
+    if (!file) return;
+    var r = new FileReader();
+    r.onload = function () { try { var o = JSON.parse(String(r.result)); if (!o || typeof o !== 'object' || !o.rate || !o.price) throw new Error('bad'); var b = window.LOAD_TRACK.blank(); for (var k in o) b[k] = o[k]; TR = b; trInit2(); trSave(); setOut('tr-msg', 'Backup restored.'); trShowAll(); } catch (e) { setOut('tr-msg', 'That file is not a Load Survival backup. Nothing was changed.'); } };
+    r.readAsText(file);
+  }
+  function trInit2() { TR.price = TR.price || { US: {}, PT: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : []; if (TR.country !== 'US' && TR.country !== 'PT') TR.country = 'US'; }
+  function trShowAll() {
+    var set = function (i, v) { var e = document.getElementById(i); if (e) e.value = v; };
+    set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens);
+    var p = document.getElementById('tr-p'); if (p) p.value = TR.custom ? 'x' : String(TR.days); var cb = document.getElementById('tr-cdbox'); if (cb) cb.hidden = !TR.custom; set('tr-cd', TR.custom || TR.days);
+    trRows(); trOut();
+  }
+  function trText() {
+    if (!TR) trInit(); var C = trCompute(), cur = window.LOAD_TRACK.cur[TR.country];
+    var t = 'LOAD Survival shopping list\n' + (TR.country === 'US' ? 'United States' : 'Portugal') + ', ' + C.people + ' people, ' + trDays() + ' days\nWater: ' + Math.round(C.water) + ' L (' + C.containers + ' containers of 20 L)\n\n';
+    C.rows.forEach(function (r) { if (r.remain > 0) t += '[ ] ' + r.it.name + ': ' + r.remain + ' packs of ' + r.pack + ' ' + r.it.unit + (r.costLeft === null ? '' : ' (' + cur + (Math.round(r.costLeft * 100) / 100) + ')') + '\n'; });
+    return t;
+  }
+  function dpCards() {
+    var h = '';
+    TR.dogs.forEach(function (d, i) {
+      var lb = TR.dogUnit === 'lb', w = lb ? Math.round((Number(d.kg) || 0) * 2.20462 * 10) / 10 : d.kg;
+      h += '<section class="gblock"><h2>Dog ' + (i + 1) + '</h2>' +
+        '<label for="dp-n-' + i + '">Name</label><input id="dp-n-' + i + '" type="text" value="' + esc(d.name || '') + '" maxlength="40">' +
+        '<label for="dp-k-' + i + '">Weight in ' + (lb ? 'pounds' : 'kilograms') + '</label><input id="dp-k-' + i + '" type="number" inputmode="decimal" min="0" step="any" value="' + (w === undefined ? '' : w) + '">' +
+        '<label for="dp-g-' + i + '">Food a day in grams (blank uses the estimate)</label><input id="dp-g-' + i + '" type="number" inputmode="decimal" min="0" step="any" placeholder="' + Math.round(window.LOAD_TRACK.dogGrams(Number(d.kg) || 0)) + '" value="' + (d.g === undefined ? '' : d.g) + '">' +
+        '<label for="dp-b-' + i + '">Bag size in kg</label><input id="dp-b-' + i + '" type="number" inputmode="decimal" min="0.1" step="any" value="' + (d.bag === undefined ? 13.6 : d.bag) + '">' +
+        '<label for="dp-w-' + i + '">Water in ml per kg a day</label><input id="dp-w-' + i + '" type="number" inputmode="decimal" min="0" step="any" value="' + (d.w === undefined ? 30 : d.w) + '">' +
+        '<label for="dp-m-' + i + '">Medicine notes (name, dose, times)</label><textarea id="dp-m-' + i + '" rows="2" maxlength="300">' + esc(d.meds || '') + '</textarea>' +
+        '<div class="actions"><button type="button" class="secondary" data-action="dp-rm" data-i="' + i + '">Remove this dog</button></div></section>';
+    });
+    setOut('dp-cards', h);
+    var a = document.querySelector('[data-action="dp-add"]'); if (a) a.disabled = TR.dogs.length >= 6;
+  }
+  function dpOut() {
+    var DT = window.LOAD_TRACK, days = Number(TR.dogDays) || 14, h = '', fk = 0, wl = 0, bags = 0;
+    if (!TR.dogs.length) { setOut('dp-out', '<div class="notice">Add a dog to begin.</div>'); return; }
+    h += '<section class="gblock"><h2>Per dog</h2><ul class="stklist">';
+    TR.dogs.forEach(function (d, i) {
+      var c = DT.dogCalc(d, days); fk += c.foodKg; wl += c.waterL; bags += c.bags;
+      h += '<li class="stkrow"><b>' + esc(d.name || 'Dog ' + (i + 1)) + '</b><div class="stkqty">' + nf(Math.round(c.foodKg * 10) / 10, 1) + ' kg food, ' + c.bags + ' bag' + (c.bags === 1 ? '' : 's') + ' of ' + nf(c.bag, 1) + ' kg</div>' +
+        '<small class="muted">' + nf(Math.round(c.grams), 0) + ' g a day. A bag lasts about ' + nf(Math.round(c.bagWeeks * 10) / 10, 1) + ' weeks. Water ' + nf(Math.round(c.waterPerDay * 100) / 100, 2) + ' L a day, ' + nf(Math.round(c.waterL * 10) / 10, 1) + ' L over the plan.' + (c.bagWeeks > 6 ? ' An opened bag keeps about 4 to 6 weeks, so choose a smaller bag or split it into sealed portions.' : '') + (d.meds ? ' Medicine: ' + esc(d.meds) : '') + '</small></li>';
+    });
+    h += '</ul></section><div class="kpis">' + kpi('Dogs', String(TR.dogs.length)) + kpi('Food', nf(Math.round(fk * 10) / 10, 1) + ' kg') + kpi('Bags', String(bags)) + kpi('Water', nf(Math.round(wl), 0) + ' L') + '</div>';
+    h += '<div class="notice">Planning numbers, not a vet prescription. The CDC checklist says 2 weeks of food, water and medicine for each animal. Dry food keeps about 12 to 18 months unopened. Ask your vet.</div>';
+    setOut('dp-out', h);
+  }
+  function dpHandle(t) {
+    var id = t.id || '', m; if (!TR) trInit();
+    if (id === 'dp-p') { TR.dogDays = Number(t.value) || 14; }
+    else if (id === 'dp-u') { TR.dogUnit = t.value; dpCards(); }
+    else if ((m = /^dp-([nkgbwm])-(\d+)$/.exec(id))) {
+      var d = TR.dogs[Number(m[2])]; if (!d) return true; var v = t.value;
+      if (m[1] === 'n') d.name = v; else if (m[1] === 'm') d.meds = v;
+      else if (m[1] === 'k') { var n = Math.max(0, Number(v) || 0); d.kg = TR.dogUnit === 'lb' ? n / 2.20462 : n; }
+      else if (m[1] === 'g') d.g = v === '' ? undefined : Math.max(0, Number(v) || 0);
+      else if (m[1] === 'b') d.bag = Math.max(0.1, Number(v) || 13.6); else if (m[1] === 'w') d.w = Math.max(0, Number(v) || 0);
+    } else return false;
+    dpOut(); trSave(); return true;
+  }
+  function dpText() {
+    if (!TR) trInit(); var DT = window.LOAD_TRACK, days = Number(TR.dogDays) || 14, t = 'LOAD Survival dog list, ' + days + ' days\n';
+    TR.dogs.forEach(function (d, i) { var c = DT.dogCalc(d, days); t += '[ ] ' + (d.name || 'Dog ' + (i + 1)) + ': ' + (Math.round(c.foodKg * 10) / 10) + ' kg food (' + c.bags + ' bags of ' + c.bag + ' kg), ' + (Math.round(c.waterL * 10) / 10) + ' L water' + (d.meds ? ', medicine: ' + d.meds : '') + '\n'; });
+    return t;
   }
   /* ---------- home power calculator ---------- */
   var PW = null;
@@ -827,7 +1005,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -845,6 +1023,8 @@ window.LSX = function (A) {
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
     if (id.indexOf('pw-') === 0 && t.tagName === 'INPUT') return pwHandle(t);
+    if (id.indexOf('tr-') === 0 && (t.tagName === 'INPUT' || t.tagName === 'SELECT') && id !== 'tr-file') return trHandle(t);
+    if (id.indexOf('dp-') === 0 && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return dpHandle(t);
     if (id === 'stk-nn' || id === 'stk-k' || id === 'stk-rx') { stkRender(); return true; }
     if (id === 'p-cap' || (t.dataset && t.dataset.hrs !== undefined)) { calcWatts(); return true; }
     if (id.indexOf('u-') === 0) { convert(id, Number(t.value)); return true; }
@@ -859,6 +1039,9 @@ window.LSX = function (A) {
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
+    if (id === 'tr-file') { trImport(t.files && t.files[0]); t.value = ''; return true; }
+    if (id.indexOf('tr-') === 0) return t.tagName === 'INPUT' && t.type !== 'checkbox' ? true : trHandle(t);
+    if (id.indexOf('dp-') === 0) return (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') ? true : dpHandle(t);
     if (id.indexOf('pw-') === 0) return t.tagName === 'INPUT' ? true : pwHandle(t);
     if (id.indexOf('dg-') === 0) { dgRender(); return true; }
     if (id.indexOf('stk-') === 0) { var bx = document.getElementById('stk-nnbox'); if (bx) bx.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); return true; }
