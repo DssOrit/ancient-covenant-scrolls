@@ -3,9 +3,10 @@
    with few or no appliances. Written 28 Oct 2026. Rates are editable monthly per-person planning numbers, not nutrition prescriptions.
    No prices are built in. Blank prices are left out of totals. */
 (function () {
-  var CUR = { US: '$', PT: 'EUR ' };
+  var CUR = { US: '$', PT: 'EUR ', UK: 'GBP ' };
   var RETAIL = {
     US: [['Amazon.com', 'https://www.amazon.com/s?k=bulk+emergency+food+supplies', 'Search listings. Compare unit price.'], ['Walmart', 'https://www.walmart.com/', 'Regular and bulk groceries'], ['Costco', 'https://www.costco.com/', 'Warehouse club. Membership may apply.'], ["Sam's Club", 'https://www.samsclub.com/', 'Warehouse club. Membership may apply.'], ['Target', 'https://www.target.com/', 'Household and hygiene']],
+    UK: [['Amazon.co.uk', 'https://www.amazon.co.uk/s?k=bulk+emergency+food+supplies', 'Search listings. Compare unit price.'], ['Tesco', 'https://www.tesco.com/', 'Groceries and household'], ['ASDA', 'https://www.asda.com/', 'Groceries and household'], ['Costco UK', 'https://www.costco.co.uk/', 'Warehouse club. Membership may apply.'], ["Sainsbury's", 'https://www.sainsburys.co.uk/', 'Groceries and household']],
     PT: [['Amazon.es', 'https://www.amazon.es/s?k=alimentos+conservas+por+grosso', 'Check that it delivers to Portugal.'], ['Continente', 'https://www.continente.pt/', 'Groceries and hygiene'], ['Pingo Doce', 'https://www.pingodoce.pt/', 'Groceries and hygiene'], ['Auchan Portugal', 'https://www.auchan.pt/', 'Groceries and hygiene'], ['Makro Portugal', 'https://www.makro.pt/', 'Wholesale. Eligibility may apply.']]
   };
   /* id, name, category, unit, monthly rate per person, pack size, note */
@@ -26,7 +27,7 @@
   var GEAR = [['radio', 'Battery or hand-crank radio'], ['lights', 'LED lanterns and headlamps'], ['power', 'Power banks and charging cables'], ['charger', 'Portable solar charger (optional)'], ['opener', 'Manual can opener'], ['watercontainers', 'Food-safe water containers'], ['treatment', 'Water treatment that matches your source'], ['fire', 'Fire extinguisher and smoke alarms'], ['co', 'Carbon monoxide alarms'], ['cook', 'Safe backup cooking arrangement'], ['medkit', 'Household first-aid kit'], ['bleed', 'Bleeding-control kit and training'], ['burn', 'Burn care supplies'], ['thermometer', 'Thermometer and essential medical devices'], ['meds', 'Personal medicines and medicine records'], ['sanitation', 'Emergency toilet supplies'], ['shelter', 'Blankets, insulation and weather clothing'], ['docs', 'Copies of documents and emergency contacts'], ['cash', 'Small cash reserve'], ['tools', 'Basic hand tools and repair supplies'], ['hygiene', 'Menstrual, infant and incontinence supplies as needed'], ['petkit', 'Pet carriers, leashes and records']];
   var PERIODS = [[3, '3 days'], [7, '1 week'], [30, '1 month'], [90, '3 months'], [180, '6 months'], [365, '1 year'], [1825, '5 years'], [3650, '10 years']];
   function ceil(x) { return Math.ceil(x - 1e-9); }
-  function blank() { return { country: 'US', people: 4, days: 90, custom: '', water: 3.785, mens: 0, rate: {}, pack: {}, price: { US: {}, PT: {} }, have: {}, gear: {}, dogs: [], dogDays: 14, owned: {} }; }
+  function blank() { return { country: 'US', people: 4, days: 90, custom: '', water: 3.785, mens: 0, rate: {}, pack: {}, price: { US: {}, PT: {}, UK: {} }, have: {}, gear: {}, dogs: [], dogDays: 14, owned: {} }; }
   /* st: the tracker state. Returns rows and totals. */
   function compute(st) {
     var days = Math.max(1, Number(st.days) || 1), people = Math.max(1, Number(st.people) || 1), rows = [], known = 0, unknown = 0, left = 0;
@@ -142,27 +143,19 @@
       'Check the fishing rules and the water first.',
       'Keep the fish cold and in the shade from the moment you catch it.',
       'Inspect it before you clean it. If you are unsure, do not eat it.',
-      'Cook it fully. Cooking does not remove some toxins, so inspection matters.'
+      'Use a food thermometer. Cook to 145 F (63 C). Cooking does not remove some toxins.'
     ],
     do: [
-      'Check the rules. In Portugal, recreational fishing with gear generally needs a licence from DGRM. Hand-collecting without tools is an exception, and children under 16 with a licence holder are exempt. In the US, each state sets its own licence rules. Check the state wildlife agency.',
-      'Check the water. Do not fish where there is a closure, a pollution warning, a red tide, or sewage. Use the shore and shellfish guide.',
-      'Pick a spot. Fish near logs, rocks, shade and drop-offs, early or late in the day.',
-      'Get a line and hook. Use your kit, or make a hand line and a gorge hook with the making gear guide. Bait with worms, insects or small pieces of fish.',
-      'Catch the fish. Hold the line. When you feel a bite, pull gently and steady. Do not drag the fish across rocks. Wet your hands before you handle it.',
-      'Kill it fast. Strike the head once, firmly, just behind the eyes, then cut the gills. Put it in the shade or a wet cloth, in cold water if you can.',
-      'Inspect it. Use the table. Look at the eyes, gills, skin, flesh, belly and smell. Reject it if it fails.',
-      'Know the species. Do not eat large predatory reef fish (examples: barracuda, grouper, amberjack, snapper, shark), because ciguatera toxin is not removed by cooking. Do not eat pufferfish. For tuna, mackerel and mahi-mahi, keep them cold at once, because histamine poisoning from spoiled fish is not destroyed by cooking.',
-      'Clean it within an hour or two. Wash your hands. Scale it if you will eat the skin. Cut from the vent toward the head. Take out the organs and the gills. Do not burst the gall bladder. Rinse the cavity in safe water. See the clean and cook guide for detail.',
-      'Look inside as you clean. Reject a fish with a strong bad smell, grey or green flesh, slime that smears, many worms or cysts, or a very soft belly.',
-      'Cook it with no appliances. Choose a method below. Cook until the flesh is opaque and flakes easily with a fork, and the inside reaches 145 F (63 C) if you have a thermometer.',
-      'Over a fire: put the whole fish on a green stick or a clean metal grate over embers, not flames. Turn it every few minutes.',
-      'In foil: wrap the fish loosely in foil with a little water or oil. Place it on hot coals. Turn once. Open the foil and check it is done.',
-      'On a flat rock: heat a clean flat stone in the fire, brush off ash, lay the fish on it. Turn once. Use stones that are dry and not from water, which can crack.',
-      'In a pot or can: cut the fish into pieces, cover with water, and boil for about 10 minutes until it flakes. This is the safest method for soup.',
-      'With a camp stove: use a pan with a little oil, or boil. Use the stove outdoors only.',
-      'Eat it the same day if you can. Keep leftovers cold and eat within a day or two. For long storage, see the smoke, dry and salt guide.',
-      'Clean up. Wash the knife, board and hands with soap and safe water. Bury or bin the waste far from camp and water.'
+      'Rules and water. Check the licence rules and the water before you fish. Portugal: fishing with gear generally needs a DGRM licence. Hand-collecting without tools is an exception. England and Wales: a rod licence from the Environment Agency is needed from age 13 for freshwater fish, and you also need the owner\'s permission. US: each state sets its own rules. Do not fish where there is a closure, a pollution or toxin warning, or sewage. Never use a fish you find dead on the shore.',
+      'Spot and gear. Fish near logs, rocks, shade and drop-offs, early or late in the day. Use your kit, or make a hand line and a gorge hook with the making gear guide. Bait with worms, insects or small pieces of fish.',
+      'Catch the fish. Hold the line. When you feel a bite, pull gently and steady. Use a net if you have one. Keep your hands away from hooks and spines. Wet your hands before you handle the fish. Measure it. Release any fish that is too small, protected or that you cannot name.',
+      'Dispatch and chill. Strike the head once, firmly, just behind the eyes, then cut the gills. Put the fish in the shade, in cold water or under a damp cloth. Clean it within an hour or two. Do not plan to keep raw fish for later without cooling.',
+      'Inspect the fish. Use the table. Look at the eyes, gills, skin, flesh, belly and smell. Do not eat large predatory reef fish (examples: barracuda, grouper, amberjack, snapper, shark) because ciguatera toxin is not removed by cooking. Do not eat pufferfish. Keep tuna, mackerel and mahi-mahi cold at once, because histamine from spoiled fish is not destroyed by cooking. Inspection is needed but it does not prove safety.',
+      'Scale and open the belly. Wear a cut-resistant glove if you have one. Hold the fish by the tail. Scrape from tail to head with a scaler or the back of a spoon. Place the fish on a stable board. Make a shallow cut from the vent toward the head. Do not cut into the intestines.',
+      'Gut, remove the gills and rinse. Lift out the organs and the gills. Do not burst the gall bladder. Rinse the cavity with clean water. Look inside. Reject a fish with a strong bad smell, grey or green flesh, slime that smears, many worms or cysts, or a very soft belly. Wash your hands, board and knife.',
+      'Cook in a pot or pan. A food thermometer is the safe way to check. You cannot judge a safe temperature from how long food has been over a fire. Cook until the thickest part reaches 145 F (63 C). Boiling pieces in a covered pot is the safest method. Use a pan with a little oil on a camp stove. Use the stove outdoors only. Without a thermometer, the flesh should be opaque and flake easily with a fork. This is a weaker check.',
+      'Cook over a fire. Use a metal grate over embers, not flames, and turn the fish every few minutes. Or wrap it loosely in foil and place it on hot coals. Or lay it on a hot, dry, flat stone. Check the thickest part with a thermometer. Never cook on a stove or grill indoors, in a tent or in a vehicle.',
+      'Eat, store and clean up. Eat the same day if you can. Keep leftovers cold and eat within a day or two. For long storage see the smoke, dry and salt guide. Wash the knife, board and hands with soap and safe water. Bury or bin the waste far from camp and water.'
     ],
     table: { head: ['Check', 'Good sign', 'Reject if'], rows: [
       ['Eyes', 'Clear, bright, slightly bulging', 'Cloudy, sunken, dull'],
@@ -201,6 +194,10 @@
       ['University of Alaska Fairbanks Extension: smoking fish at home', 'https://www.uaf.edu/ces/publications/database/food/smoking-fish.php'],
       ['Oregon State Extension (archived): smoking fish, 160 F for 30 minutes', 'https://webarchive.library.unt.edu/web/20090116024610/http://extension.oregonstate.edu/catalog/pdf/pnw/pnw238.pdf'],
       ['DGRM Portugal: licensing of recreational fishing', 'https://dgrm.pt/en/pesca-pl-licenciamento'],
+      ['Canal and River Trust: fishing FAQs, licences in England and Wales', 'https://canalrivertrust.org.uk/enjoy-the-waterways/fishing/fishing-faqs'],
+      ['GOV.UK fishing licences (archived copy)', 'https://tnaqa.mirrorweb.com/ukgwa/20260715155243mp_/https://www.gov.uk/fishing-licences/print'],
+      ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (cited to us, not checked)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
+      ['FDA: selecting and serving fresh and frozen seafood safely (cited to us, not checked)', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely'],
       ['CDC: preventing parasites from freshwater fish', 'https://www.cdc.gov/parasites/clonorchis/prevent.html']
     ],
     unconfirmed: [
@@ -211,6 +208,8 @@
       'We found nothing in our search on pufferfish toxin or on parasites in the cooked fish. The advice not to eat pufferfish is general.',
       'The no-appliance cooking methods (green stick, foil on coals, hot flat stone, boiling in a pot or can, boil about 10 minutes) are common outdoor practice. We did not find an official source for them.',
       'We did not find the Portugal licence rules for handlines, gill nets or traps. Check the current rules with DGRM. We found no US state rules in this search.',
+      'England and Wales: the rod licence from age 13 is from search results. Sources differ on the junior age limit. We found nothing on sea fishing in England and nothing on Scotland, Northern Ireland or the Border Esk beyond a small note. Check GOV.UK.',
+      'The thermometer-first rule and the USDA and FDA pages are from the illustrated survival food PDF you gave us. We did not open those pages.',
       'The method of striking the head and cutting the gills, and keeping fish in wet cloth and shade, is common practice. We did not find a source.',
       'The smoking notes (160 F for 30 minutes, light salt does not preserve, freeze or can for long storage) are from the extension pages seen in search results. We did not open them.',
       'Leftover cooked fish keeping 1 to 2 days is general guidance.',

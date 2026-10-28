@@ -164,6 +164,12 @@ window.LSX = function (A) {
     'vitamins-natural-items': ['meds-natural-alternatives', 'stockpile-basics', 'med-dehydration', 'es-medical-kit'],
     'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup'],
+    'wild-birds-prep': ['fish-catch-inspect-clean-cook', 'wild-food-field-checklist', 'wf-wild-food-rules', 'med-carbon-monoxide'],
+    'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life'],
+    'shellfish-safe-collect': ['wf-shore-shellfish', 'crabs-shrimp-lobster', 'wild-food-field-checklist', 'other-sea-life'],
+    'other-sea-life': ['crabs-shrimp-lobster', 'shellfish-safe-collect', 'wild-food-field-checklist'],
+    'wild-food-field-checklist': ['fish-catch-inspect-clean-cook', 'wild-birds-prep', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'solar-oven-cooking'],
+    'solar-oven-cooking': ['wild-food-field-checklist', 'fish-catch-inspect-clean-cook', 'med-carbon-monoxide'],
     'storage-area-setup': ['stockpile-basics', 'stockpile-buying-tips', 'hs-food-storage', 'lt-year-pantry'],
     'stockpile-buying-tips': ['stockpile-basics', 'storage-area-setup', 'budget-offgrid', 'ht-buy-order'],
     'dog-stockpile': ['stockpile-basics', 'budget-offgrid', 'storage-area-setup'],
@@ -294,7 +300,7 @@ window.LSX = function (A) {
       trInit();
       var cats = ['All']; TK.items.forEach(function (i) { if (cats.indexOf(i.cat) < 0) cats.push(i.cat); });
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Edit the monthly amount for each person, the pack size and your own prices. No prices are built in. Items with no price are left out of the totals. Everything is saved only on this device. It works offline.</p>' +
-        '<label for="tr-c">Country</label><select id="tr-c"><option value="US"' + (TR.country === 'US' ? ' selected' : '') + '>United States</option><option value="PT"' + (TR.country === 'PT' ? ' selected' : '') + '>Portugal</option></select>' +
+        '<label for="tr-c">Country</label><select id="tr-c"><option value="US"' + (TR.country === 'US' ? ' selected' : '') + '>United States</option><option value="PT"' + (TR.country === 'PT' ? ' selected' : '') + '>Portugal</option><option value="UK"' + (TR.country === 'UK' ? ' selected' : '') + '>United Kingdom</option></select>' +
         '<label for="tr-n">People</label>' + num('tr-n', TR.people, 1, 1, 50) +
         '<label for="tr-p">How long</label><select id="tr-p">' + TK.periods.map(function (p) { return '<option value="' + p[0] + '"' + (String(p[0]) === String(TR.days) && !TR.custom ? ' selected' : '') + '>' + p[1] + '</option>'; }).join('') + '<option value="x"' + (TR.custom ? ' selected' : '') + '>Other number of days</option></select>' +
         '<div id="tr-cdbox"' + (TR.custom ? '' : ' hidden') + '><label for="tr-cd">Number of days</label>' + num('tr-cd', TR.custom || TR.days, 1, 1, 7300) + '</div>' +
@@ -632,9 +638,9 @@ window.LSX = function (A) {
     if (TR) return;
     TR = window.LOAD_TRACK.blank();
     try { var raw = localStorage.getItem(TRK); if (raw) { var o = JSON.parse(raw); if (o && typeof o === 'object') for (var k in o) TR[k] = o[k]; } } catch (e) {}
-    TR.price = TR.price || { US: {}, PT: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {};
+    TR.price = TR.price || { US: {}, PT: {}, UK: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.price.UK = TR.price.UK || {};
     TR.rate = TR.rate || {}; TR.pack = TR.pack || {}; TR.have = TR.have || {}; TR.gear = TR.gear || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : [];
-    if (TR.country !== 'US' && TR.country !== 'PT') TR.country = 'US';
+    if (TR.country !== 'US' && TR.country !== 'PT' && TR.country !== 'UK') TR.country = 'US';
   }
   function trSave() { try { localStorage.setItem(TRK, JSON.stringify(TR)); return true; } catch (e) { return false; } }
   function trDays() { return Math.max(1, Math.round(Number(TR.custom || TR.days) || 30)); }
@@ -704,7 +710,7 @@ window.LSX = function (A) {
     r.onload = function () { try { var o = JSON.parse(String(r.result)); if (!o || typeof o !== 'object' || !o.rate || !o.price) throw new Error('bad'); var b = window.LOAD_TRACK.blank(); for (var k in o) b[k] = o[k]; TR = b; trInit2(); trSave(); setOut('tr-msg', 'Backup restored.'); trShowAll(); } catch (e) { setOut('tr-msg', 'That file is not a Load Survival backup. Nothing was changed.'); } };
     r.readAsText(file);
   }
-  function trInit2() { TR.price = TR.price || { US: {}, PT: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : []; if (TR.country !== 'US' && TR.country !== 'PT') TR.country = 'US'; }
+  function trInit2() { TR.price = TR.price || { US: {}, PT: {}, UK: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.price.UK = TR.price.UK || {}; TR.rate = TR.rate || {}; TR.pack = TR.pack || {}; TR.have = TR.have || {}; TR.gear = TR.gear || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : []; if (TR.country !== 'US' && TR.country !== 'PT' && TR.country !== 'UK') TR.country = 'US'; }
   function trShowAll() {
     var set = function (i, v) { var e = document.getElementById(i); if (e) e.value = v; };
     set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens);
@@ -713,7 +719,7 @@ window.LSX = function (A) {
   }
   function trText() {
     if (!TR) trInit(); var C = trCompute(), cur = window.LOAD_TRACK.cur[TR.country];
-    var t = 'LOAD Survival shopping list\n' + (TR.country === 'US' ? 'United States' : 'Portugal') + ', ' + C.people + ' people, ' + trDays() + ' days\nWater: ' + Math.round(C.water) + ' L (' + C.containers + ' containers of 20 L)\n\n';
+    var t = 'LOAD Survival shopping list\n' + (TR.country === 'US' ? 'United States' : TR.country === 'UK' ? 'United Kingdom' : 'Portugal') + ', ' + C.people + ' people, ' + trDays() + ' days\nWater: ' + Math.round(C.water) + ' L (' + C.containers + ' containers of 20 L)\n\n';
     C.rows.forEach(function (r) { if (r.remain > 0) t += '[ ] ' + r.it.name + ': ' + r.remain + ' packs of ' + r.pack + ' ' + r.it.unit + (r.costLeft === null ? '' : ' (' + cur + (Math.round(r.costLeft * 100) / 100) + ')') + '\n'; });
     return t;
   }
