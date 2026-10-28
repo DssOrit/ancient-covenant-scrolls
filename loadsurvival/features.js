@@ -161,6 +161,7 @@ window.LSX = function (A) {
     'flood-at-home': ['g-flood', 'car-in-water', 'g-power-outage', 'med-carbon-monoxide'],
     'robbery': ['break-in', 'security-intrusion', 'lim-city-event'],
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
+    'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup'],
     'storage-area-setup': ['stockpile-basics', 'stockpile-buying-tips', 'hs-food-storage', 'lt-year-pantry'],
     'stockpile-buying-tips': ['stockpile-basics', 'storage-area-setup', 'budget-offgrid', 'ht-buy-order'],
     'dog-stockpile': ['stockpile-basics', 'budget-offgrid', 'storage-area-setup'],
@@ -254,7 +255,8 @@ window.LSX = function (A) {
     ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
     ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions'],
     ['stock', 'can', 'Stockpile planner', 'Food, water and supplies for 3 days to 10 years'],
-    ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs']
+    ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs'],
+    ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
@@ -283,6 +285,22 @@ window.LSX = function (A) {
       '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
     if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
     if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    if (t === 'power') {
+      var PK = window.LOAD_POWER; if (!PK) return toolFrame(t, '<div class="panel"><p>The calculator could not load.</p></div>');
+      pwInit();
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Type your floor area, rooms, people and appliances. You get daily energy, generator size, battery size and solar size. Typical numbers are filled in. Overwrite them with the numbers on your own labels. It works offline.</p>' +
+        '<label for="pw-u">Units for area</label><select id="pw-u"><option value="ft"' + (PW.u === 'ft' ? ' selected' : '') + '>Square feet</option><option value="m"' + (PW.u === 'm' ? ' selected' : '') + '>Square metres</option></select>' +
+        '<label for="pw-a">Floor area of the home</label>' + num('pw-a', pwArea(PW.ft), 'any', 100, 100000) +
+        '<label for="pw-n">Number of people</label>' + num('pw-n', PW.people, 1, 1, 50) +
+        '<label for="pw-m">What to power</label><select id="pw-m">' + PK.modes.map(function (m) { return '<option value="' + m[0] + '"' + (m[0] === PW.mode ? ' selected' : '') + '>' + m[1] + '</option>'; }).join('') + '</select>' +
+        '<label for="pw-d">Days of battery backup</label>' + num('pw-d', PW.days, 'any', 0.5, 30) +
+        '<label for="pw-b">Battery type</label><select id="pw-b"><option value="0.8"' + (PW.dod === 0.8 ? ' selected' : '') + '>Lithium iron phosphate (80 percent usable)</option><option value="0.5"' + (PW.dod === 0.5 ? ' selected' : '') + '>Lead-acid (50 percent usable)</option></select>' +
+        '<label for="pw-sun">Sun hours a day in your worst month</label>' + num('pw-sun', PW.sun, 'any', 0.5, 12) +
+        '<div class="actions">' + btn('Fill rooms and appliances from the home size', 'pw-fill', 'button') + btn('Copy the result', 'pw-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + '</div><p id="pw-msg" class="muted" role="status"></p></div>' +
+        '<section class="gblock"><h2>Rooms</h2><div id="pw-rooms"></div><div class="actions">' + btn('Add a room', 'pw-add', 'secondary') + '</div></section>' +
+        '<section class="gblock"><h2>Appliances</h2><p class="muted">Number, running watts and hours a day for each. Blank watts or hours use the typical value.</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Appliance</th><th>Number</th><th>Watts each</th><th>Hours a day</th><th>Wh a day</th></tr></thead><tbody id="pw-apps"></tbody></table></div></section>' +
+        '<div id="pw-out"></div>');
+    }
     if (t === 'dogs') {
       var DK = window.LOAD_STOCK2; if (!DK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var dsz = function (id) { var o = ''; for (var i = 0; i <= 6; i++) o += '<option value="' + i + '"' + (i === (id === 'dg-s' ? 1 : 0) ? ' selected' : '') + '>' + i + '</option>'; return o; };
@@ -505,6 +523,10 @@ window.LSX = function (A) {
     'flash-on': function () { overlay('flash'); },
     'sos-on': sos,
     'cpr-start': cprStart,
+    'pw-fill': function () { pwInit(); PW.roomsEdited = false; PW.edited = {}; PW.w = {}; PW.h = {}; pwDefaults(); pwTables(); pwOut(); setOut('pw-msg', 'Filled from the home size and the number of people.'); },
+    'pw-add': function () { pwInit(); PW.rooms.push({ t: 'Bedroom', ft: 150 }); PW.roomsEdited = true; pwDefaults(); pwTables(); pwOut(); },
+    'pw-rm': function (x) { pwInit(); var i = Number(x.dataset.i); if (PW.rooms.length > 1) PW.rooms.splice(i, 1); PW.roomsEdited = true; pwDefaults(); pwTables(); pwOut(); },
+    'pw-copy': function () { copy(pwText()); setOut('pw-msg', 'Copied. Paste it into Notes or Messages.'); },
     'dg-copy': function () { copy(dgText()); setOut('dg-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-copy': function () { copy(stkText()); setOut('stk-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-print': function () { try { window.print(); } catch (e) {} },
@@ -563,6 +585,92 @@ window.LSX = function (A) {
     var line = 'Store ' + w.storeDays + ' days of drinking and cooking water: ' + text + '.';
     if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
     return line;
+  }
+  /* ---------- home power calculator ---------- */
+  var PW = null;
+  function pwInit() {
+    var PK = window.LOAD_POWER;
+    if (PW) return;
+    PW = { u: 'ft', ft: 2000, people: 4, mode: 'e', days: 3, sun: 4, dod: 0.8, rooms: null, roomsEdited: false, q: {}, w: {}, h: {}, edited: {} };
+    PW.rooms = PK.defaultRooms(PW.ft, PW.people); PW.q = PK.defaultQty(PW.ft, PW.people, PW.rooms);
+  }
+  function pwArea(ft) { return PW.u === 'm' ? Math.round(ft / window.LOAD_POWER.m2 * 10) / 10 : Math.round(ft); }
+  function pwToFt(v) { return PW.u === 'm' ? v * window.LOAD_POWER.m2 : v; }
+  function pwDefaults() {
+    var PK = window.LOAD_POWER;
+    if (!PW.roomsEdited) PW.rooms = PK.defaultRooms(PW.ft, PW.people);
+    var q = PK.defaultQty(PW.ft, PW.people, PW.rooms);
+    PK.catalog.forEach(function (it) { if (!PW.edited[it.id]) PW.q[it.id] = q[it.id]; });
+  }
+  function pwTables() {
+    var PK = window.LOAD_POWER, h = '';
+    PW.rooms.forEach(function (r, i) {
+      h += '<div class="pwroom"><select id="pw-rt-' + i + '" aria-label="Room type">' + PK.roomTypes.map(function (t) { return '<option' + (t === r.t ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>' +
+        '<input id="pw-rs-' + i + '" type="number" inputmode="decimal" min="0" step="any" value="' + pwArea(r.ft) + '" aria-label="Room size in ' + (PW.u === 'm' ? 'square metres' : 'square feet') + '">' +
+        '<button type="button" class="secondary" data-action="pw-rm" data-i="' + i + '" aria-label="Remove this room">Remove</button></div>';
+    });
+    setOut('pw-rooms', h + '<p class="muted">Room sizes in ' + (PW.u === 'm' ? 'square metres' : 'square feet') + '. Rooms add up to ' + nf(pwArea(PW.rooms.reduce(function (a, r) { return a + (Number(r.ft) || 0); }, 0)), 0) + '. Each room adds LED lights.</p>');
+    var a = '';
+    PK.catalog.forEach(function (it) {
+      if (!PK.inMode(it, PW.mode)) return;
+      a += '<tr><td>' + esc(it.name) + (it.note ? '<br><small class="muted">' + esc(it.note) + '</small>' : '') + '</td>' +
+        '<td><input id="pw-q-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" value="' + (PW.q[it.id] === undefined ? 0 : PW.q[it.id]) + '" aria-label="Number of ' + esc(it.name) + '"></td>' +
+        '<td><input id="pw-w-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" placeholder="' + it.w + '" value="' + (PW.w[it.id] === undefined ? '' : PW.w[it.id]) + '" aria-label="Watts each, ' + esc(it.name) + '"></td>' +
+        '<td><input id="pw-h-' + it.id + '" type="number" inputmode="decimal" min="0" step="any" placeholder="' + it.h + '" value="' + (PW.h[it.id] === undefined ? '' : PW.h[it.id]) + '" aria-label="Hours a day, ' + esc(it.name) + '"></td>' +
+        '<td id="pw-wh-' + it.id + '"></td></tr>';
+    });
+    setOut('pw-apps', a);
+  }
+  function pwSyncQty() {
+    window.LOAD_POWER.catalog.forEach(function (it) { var e = document.getElementById('pw-q-' + it.id); if (e && !PW.edited[it.id] && document.activeElement !== e) e.value = PW.q[it.id]; });
+  }
+  function pwResult() {
+    return window.LOAD_POWER.calc({ mode: PW.mode, q: PW.q, w: PW.w, h: PW.h, days: PW.days, sun: PW.sun, dod: PW.dod });
+  }
+  function pwOut() {
+    var PK = window.LOAD_POWER, R = pwResult(), h = '';
+    R.rows.forEach(function (r) { var c = document.getElementById('pw-wh-' + r.id); if (c) c.textContent = nf(Math.round(r.wh), 0); });
+    var sq = PW.ft;
+    h += '<div class="kpis">' + kpi('Energy a day', nf(Math.round(R.kwh * 10) / 10, 1) + ' kWh') + kpi('Running watts', nf(Math.round(R.run), 0) + ' W') + kpi('Generator size', nf(R.genRound, 0) + ' W') + kpi('Battery', nf(Math.round(R.batt * 10) / 10, 1) + ' kWh') + '</div>';
+    h += '<section class="gblock"><h2>Your result</h2><ul>' +
+      '<li>Home: ' + nf(Math.round(sq), 0) + ' sq ft (' + nf(Math.round(sq / PK.m2), 0) + ' m2), ' + PW.people + ' people, ' + PW.rooms.length + ' rooms.</li>' +
+      '<li>Energy: about ' + nf(Math.round(R.Wh), 0) + ' Wh a day (' + nf(Math.round(R.kwh * 10) / 10, 1) + ' kWh).</li>' +
+      '<li>Generator: running watts ' + nf(Math.round(R.run), 0) + ' plus the largest start-up surge ' + nf(Math.round(R.extra), 0) + ' = ' + nf(Math.round(R.gen), 0) + ' W. Choose a generator rated at least ' + nf(R.genRound, 0) + ' W. Use it outdoors only.</li>' +
+      '<li>Battery for ' + nf(PW.days, 1) + ' days: about ' + nf(Math.round(R.batt * 10) / 10, 1) + ' kWh, about ' + R.battUnits + ' lithium batteries of 100 Ah at 12.8 V (1.28 kWh each).</li>' +
+      '<li>Solar to refill one day of use with ' + nf(PW.sun, 1) + ' sun hours: about ' + nf(Math.round(R.solar), 0) + ' W of panels, about ' + R.panels + ' panels of 400 W.</li></ul>' +
+      '<div class="notice">Typical estimates, not measurements. Read the watts on your own labels or use a plug-in power meter. Check the carbon monoxide guide before you run a generator. Do not connect a generator to the house without a transfer switch fitted by an electrician.</div></section>';
+    setOut('pw-out', h + pwRef());
+  }
+  function pwRef() {
+    var PK = window.LOAD_POWER, h = '<section class="gblock"><h2>Reference tables</h2><p class="muted">Typical energy a day in kWh, with running watts, for 5 home sizes and 1 to 20 people. Our model, not measured data. Whole home is an all-electric worst case with air conditioning running about 6 hours.</p>';
+    PK.modes.forEach(function (m) {
+      h += '<h3>' + esc(m[1]) + '</h3><div class="tablewrap"><table class="stktable"><thead><tr><th>Home</th>' + PK.people.map(function (n) { return '<th>' + n + (n === 1 ? ' person' : ' people') + '</th>'; }).join('') + '</tr></thead><tbody>';
+      PK.reference(m[0]).forEach(function (r) { h += '<tr><td>' + esc(r.size.label) + '</td>' + r.cols.map(function (c) { return '<td>' + nf(Math.round(c.kwh * 10) / 10, 1) + ' kWh<br><small class="muted">' + nf(Math.round(c.run / 10) * 10, 0) + ' W</small></td>'; }).join('') + '</tr>'; });
+      h += '</tbody></table></div>';
+    });
+    return h + '</section>';
+  }
+  function pwHandle(t) {
+    var id = t.id || '', PK = window.LOAD_POWER; if (!PW) pwInit();
+    if (id === 'pw-u') { PW.u = t.value; var a = document.getElementById('pw-a'); if (a) a.value = pwArea(PW.ft); pwTables(); pwOut(); return true; }
+    if (id === 'pw-a') { PW.ft = Math.max(100, pwToFt(Number(t.value) || 0)); pwDefaults(); pwTables(); pwOut(); return true; }
+    if (id === 'pw-n') { PW.people = Math.max(1, Math.min(50, Math.round(Number(t.value) || 1))); pwDefaults(); pwTables(); pwOut(); return true; }
+    if (id === 'pw-m') { PW.mode = t.value; pwTables(); pwOut(); return true; }
+    if (id === 'pw-d') { PW.days = Math.max(0.5, Number(t.value) || 3); pwOut(); return true; }
+    if (id === 'pw-sun') { PW.sun = Math.max(0.5, Number(t.value) || 4); pwOut(); return true; }
+    if (id === 'pw-b') { PW.dod = Number(t.value) || 0.8; pwOut(); return true; }
+    var m = /^pw-([qwh])-(.+)$/.exec(id);
+    if (m) { var k = m[2]; if (m[1] === 'q') { PW.q[k] = Math.max(0, Number(t.value) || 0); PW.edited[k] = true; } else PW[m[1]][k] = t.value === '' ? undefined : Math.max(0, Number(t.value) || 0); pwOut(); return true; }
+    m = /^pw-r([ts])-(\d+)$/.exec(id);
+    if (m) { var r = PW.rooms[Number(m[2])]; if (r) { if (m[1] === 't') r.t = t.value; else r.ft = Math.max(0, pwToFt(Number(t.value) || 0)); PW.roomsEdited = true; pwDefaults(); pwSyncQty(); pwOut(); } return true; }
+    return false;
+  }
+  function pwText() {
+    if (!PW) pwInit(); var R = pwResult(), PK = window.LOAD_POWER;
+    var t = 'LOAD Survival home power result\n' + Math.round(PW.ft) + ' sq ft (' + Math.round(PW.ft / PK.m2) + ' m2), ' + PW.people + ' people\n';
+    t += 'Energy a day: ' + (Math.round(R.kwh * 10) / 10) + ' kWh\nRunning watts: ' + Math.round(R.run) + ' W\nGenerator: at least ' + R.genRound + ' W (outdoors only)\nBattery for ' + PW.days + ' days: ' + (Math.round(R.batt * 10) / 10) + ' kWh\nSolar: ' + Math.round(R.solar) + ' W of panels at ' + PW.sun + ' sun hours\n\nAPPLIANCES\n';
+    R.rows.forEach(function (r) { if (r.q > 0) { var it = PK.catalog.filter(function (c) { return c.id === r.id; })[0]; t += it.name + ': ' + r.q + ' x ' + r.w + ' W x ' + r.h + ' h = ' + Math.round(r.wh) + ' Wh\n'; } });
+    return t;
   }
   function dgInputs() {
     var s = Number((document.getElementById('dg-s') || {}).value) || 0, l = Number((document.getElementById('dg-l') || {}).value) || 0;
@@ -719,7 +827,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -736,6 +844,7 @@ window.LSX = function (A) {
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
+    if (id.indexOf('pw-') === 0 && t.tagName === 'INPUT') return pwHandle(t);
     if (id === 'stk-nn' || id === 'stk-k' || id === 'stk-rx') { stkRender(); return true; }
     if (id === 'p-cap' || (t.dataset && t.dataset.hrs !== undefined)) { calcWatts(); return true; }
     if (id.indexOf('u-') === 0) { convert(id, Number(t.value)); return true; }
@@ -750,6 +859,7 @@ window.LSX = function (A) {
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
+    if (id.indexOf('pw-') === 0) return t.tagName === 'INPUT' ? true : pwHandle(t);
     if (id.indexOf('dg-') === 0) { dgRender(); return true; }
     if (id.indexOf('stk-') === 0) { var bx = document.getElementById('stk-nnbox'); if (bx) bx.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); return true; }
     return false;
