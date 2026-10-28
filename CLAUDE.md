@@ -108,6 +108,8 @@ These have been re-locked on 2026-05-04 after repeated violations.
      Unlock: "edit LoadStudio" or "fix LoadStudio"
    - Study (`/study/`): all files inside it.
      Unlock: "edit Study" or "fix Study"
+   - Load Survival (`/loadsurvival/`): all files inside it.
+     Unlock: "edit Load Survival" or "fix Load Survival"
    A general bug report, content question, or feature idea does NOT count
    as approval — stop and ask before touching anything in any site folder.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
