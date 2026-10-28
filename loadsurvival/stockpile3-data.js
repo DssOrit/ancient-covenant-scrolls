@@ -146,7 +146,7 @@
       'Use a food thermometer. Cook to 145 F (63 C). Cooking does not remove some toxins.'
     ],
     do: [
-      'Rules and water. Check the licence rules and the water before you fish. Portugal: fishing with gear generally needs a DGRM licence. Hand-collecting without tools is an exception. England and Wales: a rod licence from the Environment Agency is needed from age 13 for freshwater fish, and you also need the owner\'s permission. US: each state sets its own rules. Do not fish where there is a closure, a pollution or toxin warning, or sewage. Never use a fish you find dead on the shore.',
+      'Rules and water. Check the licence rules and the water before you fish. Portugal: fishing with gear generally needs a DGRM licence. Hand-collecting without tools is an exception. England and Wales: a rod licence from the Environment Agency is needed from age 13 for freshwater fish, and you also need the owner\'s permission. Scotland: there is no general recreational fishing licence, but you need permission to fish and some waters have special rules. Sea angling can have species and local bylaw limits in England and Scotland. US: each state sets its own rules. Do not fish where there is a closure, a pollution or toxin warning, or sewage. Never use a fish you find dead on the shore.',
       'Spot and gear. Fish near logs, rocks, shade and drop-offs, early or late in the day. Use your kit, or make a hand line and a gorge hook with the making gear guide. Bait with worms, insects or small pieces of fish.',
       'Catch the fish. Hold the line. When you feel a bite, pull gently and steady. Use a net if you have one. Keep your hands away from hooks and spines. Wet your hands before you handle the fish. Measure it. Release any fish that is too small, protected or that you cannot name.',
       'Dispatch and chill. Strike the head once, firmly, just behind the eyes, then cut the gills. Put the fish in the shade, in cold water or under a damp cloth. Clean it within an hour or two. Do not plan to keep raw fish for later without cooling.',
@@ -194,6 +194,7 @@
       ['University of Alaska Fairbanks Extension: smoking fish at home', 'https://www.uaf.edu/ces/publications/database/food/smoking-fish.php'],
       ['Oregon State Extension (archived): smoking fish, 160 F for 30 minutes', 'https://webarchive.library.unt.edu/web/20090116024610/http://extension.oregonstate.edu/catalog/pdf/pnw/pnw238.pdf'],
       ['DGRM Portugal: licensing of recreational fishing', 'https://dgrm.pt/en/pesca-pl-licenciamento'],
+      ['Scottish Government: recreational fishing', 'https://www.gov.scot/policies/salmon-and-recreational-fisheries/recreational-fishing/'],
       ['Canal and River Trust: fishing FAQs, licences in England and Wales', 'https://canalrivertrust.org.uk/enjoy-the-waterways/fishing/fishing-faqs'],
       ['GOV.UK fishing licences (archived copy)', 'https://tnaqa.mirrorweb.com/ukgwa/20260715155243mp_/https://www.gov.uk/fishing-licences/print'],
       ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (cited to us, not checked)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
@@ -208,6 +209,7 @@
       'We found nothing in our search on pufferfish toxin or on parasites in the cooked fish. The advice not to eat pufferfish is general.',
       'The no-appliance cooking methods (green stick, foil on coals, hot flat stone, boiling in a pot or can, boil about 10 minutes) are common outdoor practice. We did not find an official source for them.',
       'We did not find the Portugal licence rules for handlines, gill nets or traps. Check the current rules with DGRM. We found no US state rules in this search.',
+      'Scotland: gov.scot says there are no recreational fishing licences and permission is needed. That was seen in search results. Sea angling limits and English marine and local bylaws are from a verification report you gave us. We did not open those pages.',
       'England and Wales: the rod licence from age 13 is from search results. Sources differ on the junior age limit. We found nothing on sea fishing in England and nothing on Scotland, Northern Ireland or the Border Esk beyond a small note. Check GOV.UK.',
       'The thermometer-first rule and the USDA and FDA pages are from the illustrated survival food PDF you gave us. We did not open those pages.',
       'The method of striking the head and cutting the gills, and keeping fish in wet cloth and shade, is common practice. We did not find a source.',

@@ -1066,6 +1066,16 @@ These have been re-locked on 2026-05-04 after repeated violations.
     missing explicitly, as its own gate standing in front of backup, and
     closes the specific rationalization that caused three violations in
     one session before this rule was written.
+    **RE-LOCKED 2026-10-28 by user, in the user's own words: "edit Load
+    Survival, but first backup site, confirm no site break risks, then fix,
+    then send merge link in that order, always that order so remember rule
+    and lock it."** The order is: (1) exact unlock phrase for THIS round,
+    (2) backup branch verified against `origin/main`, (3) confirm no
+    site-break risk, (4) fix, (5) send the merge link. It applies to every
+    site and every round, including follow-up fixes after a merge. A new
+    round needs a new phrase. Claude never merges. Branch from the latest
+    `origin/main` after the previous PR is confirmed merged on GitHub, and
+    never stack a PR on a branch that may be merged first.
 
 These are LOCKED. They take precedence over politeness, helpfulness,
 acknowledgements, "thinking out loud", or any pattern from earlier in
