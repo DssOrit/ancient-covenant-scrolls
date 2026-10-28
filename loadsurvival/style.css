@@ -337,4 +337,6 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .stkrow:last-child{border-bottom:0}
 .stkqty{font-size:20px;font-weight:800;margin:2px 0}
 .stkrow small{display:block}
+  .tablewrap{overflow-x:auto}
+.stktable{border-collapse:collapse;font-size:14px;min-width:640px}.stktable th,.stktable td{border:1px solid var(--line2);padding:6px 8px;text-align:left;vertical-align:top}.stktable th{position:sticky;top:0;background:var(--card,#fff)}
 @media print{#topnav,.fab,.stkpanel,.breadcrumbs{display:none}body{background:#fff;color:#000}}

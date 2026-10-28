@@ -161,7 +161,9 @@ window.LSX = function (A) {
     'flood-at-home': ['g-flood', 'car-in-water', 'g-power-outage', 'med-carbon-monoxide'],
     'robbery': ['break-in', 'security-intrusion', 'lim-city-event'],
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
-    'stockpile-basics': ['ht-kit-quantities', 'ht-buy-order', 'es-kit-tiers', 'lt-year-pantry', 'lt2-staples', 'hs-food-storage'],
+    'meds-natural-alternatives': ['med-dehydration', 'med-allergic', 'stockpile-basics', 'es-medical-kit'],
+    'sea-desalinate': ['hs-seawater', 'wx-sea', 'stockpile-basics'],
+    'stockpile-basics': ['ht-kit-quantities', 'ht-buy-order', 'es-kit-tiers', 'lt-year-pantry', 'lt2-staples', 'hs-food-storage', 'meds-natural-alternatives', 'sea-desalinate'],
     'lt-year-pantry': ['stockpile-basics'],
     'car-in-water': ['hs-car-escape', 'flood-at-home', 'g-flood', 'g-hurricane', 'med-child-cpr'],
     'hs-car-escape': ['car-in-water', 'g-flood'],
@@ -285,6 +287,9 @@ window.LSX = function (A) {
         '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
         '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
         '<label for="stk-k">Children under 10 (they eat about 60 percent)</label>' + num('stk-k', 0, 1, 0, 50) +
+        '<label for="stk-rx">Doses of your own prescription medicine per day (0 if none)</label>' + num('stk-rx', 0, 1, 0, 40) +
+        '<label class="checkrow"><input type="checkbox" id="stk-full"><span>Show the full total for the whole plan (not only what to keep on the shelf at one time)</span></label>' +
+        '<label class="checkrow"><input type="checkbox" id="stk-all"><span>Show all household sizes side by side (2, 4, 6, 10, 15, 20 people)</span></label>' +
         '<label class="checkrow"><input type="checkbox" id="stk-lt" checked><span>For 1 year or more, I will use long-term packing (sealed cans, buckets with oxygen absorbers)</span></label>' +
         '<div class="actions">' + btn('Copy the list', 'stk-copy', 'button') + btn('Print', 'stk-print', 'secondary') + '</div><p id="stk-msg" class="muted" role="status"></p></div>' +
         '<div id="stk-out"></div>');
@@ -528,11 +533,11 @@ window.LSX = function (A) {
     var days = Number((document.getElementById('stk-p') || {}).value) || 30;
     var kids = Math.max(0, Math.round(Number((document.getElementById('stk-k') || {}).value) || 0));
     var us = ((document.getElementById('stk-c') || {}).value || 'us') === 'us';
-    return { people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked };
+    return { people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
   }
   function stkShelf(y) { return y < 1 ? Math.round(y * 12) + ' months' : (y === 1 ? '1 year' : y + ' years'); }
   function stkPlan() {
-    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.us ? 'us' : 'pt', I.people, I.days, { lt: I.lt, kids: I.kids });
+    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.us ? 'us' : 'pt', I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full });
     return { I: I, R: R, SK: SK };
   }
   function stkWater(R, us, SK) {
@@ -541,6 +546,15 @@ window.LSX = function (A) {
     var line = 'Store ' + w.storeDays + ' days of drinking and cooking water: ' + text + '.';
     if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
     return line;
+  }
+  function stkAll(I, SK) {
+    var us = I.us, c = us ? 'us' : 'pt', cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
+    var h = '<section class="gblock"><h2>All household sizes</h2><p class="muted">' + (I.full ? 'Full total for the whole plan.' : 'Amount to keep on the shelf.') + ' Adults only (no children entered).</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + SK.sizes.map(function (n) { return '<th>' + n + ' people</th>'; }).join('') + '</tr></thead><tbody>';
+    h += '<tr><td><b>Water</b></td>' + cols.map(function (R) { return '<td>' + (us ? nf(Math.round(R.water.gallons), 0) + ' gal' : nf(Math.round(R.water.litres), 0) + ' L') + '</td>'; }).join('') + '</tr>';
+    cols[0].food.forEach(function (f, i) { h += '<tr><td>' + esc(f.name) + '</td>' + cols.map(function (R) { var x = R.food[i]; return '<td>' + nf(x.packs, 0) + ' ' + esc(x.unit) + '</td>'; }).join('') + '</tr>'; });
+    cols[0].nonfood.forEach(function (f, i) { h += '<tr><td>' + esc(f.name) + '</td>' + cols.map(function (R) { var x = R.nonfood[i]; return '<td>' + nf(x.q, 1) + ' ' + esc(x.unit) + '</td>'; }).join('') + '</tr>'; });
+    SK.medsPlan(1, 30, 0).items.forEach(function (m, i) { h += '<tr><td>' + esc(m.name) + '</td>' + SK.sizes.map(function (n) { var x = SK.medsPlan(n, I.days, 0).items[i]; return '<td>' + (x ? nf(x.q, 0) + ' ' + esc(x.unit) : '') + '</td>'; }).join('') + '</tr>'; });
+    return h + '</tbody></table></div></section>';
   }
   function stkRender() {
     var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = '';
@@ -568,6 +582,13 @@ window.LSX = function (A) {
       });
       h += '</ul></section>';
     });
+    var md = SK.medsPlan(Math.max(1, I.people - I.kids), I.days, I.rx);
+    h += '<section class="gblock"><h2>Medicines (theoretical)</h2><p class="muted">Common over-the-counter items for ' + Math.max(1, I.people - I.kids) + ' adult' + (I.people - I.kids === 1 ? '' : 's') + '. These are planner estimates, not doctor advice. Children need doses by weight, so ask a pharmacist. Read every label.</p><ul class="stklist">';
+    md.items.forEach(function (m) { h += '<li class="stkrow"><b>' + esc(m.name) + '</b><div class="stkqty">' + nf(m.q, 0) + ' ' + esc(m.unit) + ' <span class="muted">(about ' + m.packs + ' pack' + (m.packs === 1 ? '' : 's') + ')</span></div>' + (m.note ? '<small class="muted">' + esc(m.note) + '</small>' : '') + '</li>'; });
+    if (I.rx > 0) h += '<li class="stkrow"><b>Your prescription medicine</b><div class="stkqty">' + nf(md.rxTotal, 0) + ' doses <span class="muted">(' + I.rx + ' a day, plus 15 percent)</span></div><small class="muted">That is ' + nf(md.rxPerYear, 0) + ' doses for one year. This is a theoretical total. Official advice we found is 2 weeks (CDC) to 30 days (Red Cross, older adults). Ask your prescriber and pharmacist for the largest refill you can get, and how long it keeps. Insulin and cold-chain medicines do not keep for years.</small></li>';
+    h += '</ul><p class="muted">When medicine runs out, see the guide Medicines in a long emergency: what to store, and natural options. Natural options help with mild problems. They do not replace prescription medicine.</p><p><a class="button secondary" href="#/lesson/meds-natural-alternatives">Open the natural alternatives guide</a></p></section>';
+    if (I.all) h += stkAll(I, SK);
+    if (I.full) h += '<div class="notice">Full totals show everything you would use over the whole plan. Items that spoil cannot be bought once and kept. Buy in rounds and rotate. The shelf life of each item is shown above.</div>';
     if (I.days > 365) h += '<div class="notice">Soap, paper, batteries and gas are listed for up to 1 year. Buy more each year. For batteries, use rechargeable ones with a solar charger.</div>';
     h += '<div class="notice">Planner estimates. The 3-day and 1 to 2 week amounts follow official advice. Longer amounts are our estimate from a standard long-term storage pattern, and each guide below the list says what we could not confirm. See the Stockpile basics guide. Also stock any medicines, baby food, formula, pet food and special diet needs. Check dates and rotate.</div>';
     setOut('stk-out', h);
@@ -579,6 +600,9 @@ window.LSX = function (A) {
     R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });
     var s2 = {};
     R.nonfood.forEach(function (f) { if (!s2[f.cat]) { s2[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + nf(f.q, 1) + ' ' + f.unit + '\n'; });
+    var md = SK.medsPlan(Math.max(1, I.people - I.kids), I.days, I.rx);
+    t += '\nMEDICINES (theoretical, adults)\n'; md.items.forEach(function (m) { t += '[ ] ' + m.name + ': ' + nf(m.q, 0) + ' ' + m.unit + '\n'; });
+    if (I.rx > 0) t += '[ ] My prescription medicine: ' + nf(md.rxTotal, 0) + ' doses (theoretical)\n';
     return t;
   }
   /* ---------- CPR rhythm ---------- */
@@ -642,7 +666,7 @@ window.LSX = function (A) {
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
-    if (id === 'stk-nn' || id === 'stk-k') { stkRender(); return true; }
+    if (id === 'stk-nn' || id === 'stk-k' || id === 'stk-rx') { stkRender(); return true; }
     if (id === 'p-cap' || (t.dataset && t.dataset.hrs !== undefined)) { calcWatts(); return true; }
     if (id.indexOf('u-') === 0) { convert(id, Number(t.value)); return true; }
     return false;
