@@ -537,7 +537,7 @@ window.LSX = function (A) {
   }
   function stkWater(R, us, SK) {
     var w = R.water, L = Math.round(w.litres), gal = Math.round(w.gallons);
-    var text = us ? gal + ' gallons (' + L + ' litres), about ' + gal + ' one-gallon jugs' : L + ' litros (' + gal + ' galões de 3,8 L), cerca de ' + Math.ceil(w.litres / 1.5) + ' garrafas de 1,5 L ou ' + Math.ceil(w.litres / 5) + ' garrafões de 5 L';
+    var text = us ? gal + ' gallons (' + L + ' litres), about ' + gal + ' one-gallon jugs' : L + ' litres, about ' + Math.ceil(w.litres / 1.5) + ' bottles of 1.5 L or ' + Math.ceil(w.litres / 5) + ' jugs of 5 L';
     var line = 'Store ' + w.storeDays + ' days of drinking and cooking water: ' + text + '.';
     if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
     return line;
