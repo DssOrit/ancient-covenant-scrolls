@@ -117,8 +117,8 @@ window.LSX = function (A) {
     'ht-warm-cool': ['lim-heat-cold'],
     'ht-store-water': ['lim-water-none', 'lt-permanent-water'],
     'ht-family-plan': ['lim-comms', 'foundation-communication'],
-    'ht-kit-quantities': ['es-kit-tiers'],
-    'ht-buy-order': ['es-kit-tiers'],
+    'ht-kit-quantities': ['es-kit-tiers', 'stockpile-basics'],
+    'ht-buy-order': ['es-kit-tiers', 'stockpile-basics'],
     'lt-community': ['lim-stay-safe'],
     'p6-emergency-handwashing': ['lim-sanitation'],
     'p6-sanitation-when-toilets-fail': ['lim-sanitation'],
@@ -161,6 +161,8 @@ window.LSX = function (A) {
     'flood-at-home': ['g-flood', 'car-in-water', 'g-power-outage', 'med-carbon-monoxide'],
     'robbery': ['break-in', 'security-intrusion', 'lim-city-event'],
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
+    'stockpile-basics': ['ht-kit-quantities', 'ht-buy-order', 'es-kit-tiers', 'lt-year-pantry', 'lt2-staples', 'hs-food-storage'],
+    'lt-year-pantry': ['stockpile-basics'],
     'car-in-water': ['hs-car-escape', 'flood-at-home', 'g-flood', 'g-hurricane', 'med-child-cpr'],
     'hs-car-escape': ['car-in-water', 'g-flood'],
     'wf-pt-study-trees': ['wf-pt-study-greens', 'wf-pt-study-herbs', 'wf-pt-study-poison', 'wf-plant-method'],
@@ -244,7 +246,8 @@ window.LSX = function (A) {
     ['units', 'convert', 'Unit converter', 'Gallons, liters, degrees, feet, meters'],
     ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
     ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
-    ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions']
+    ['cpr', 'heart', 'CPR rhythm', 'Steady beat for chest compressions'],
+    ['stock', 'can', 'Stockpile planner', 'Food, water and supplies for 3 days to 10 years']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
@@ -273,6 +276,19 @@ window.LSX = function (A) {
       '<label for="u-ft">Feet</label>' + num('u-ft', 6500, 'any') + '<label for="u-m">Meters</label>' + num('u-m', 1981, 'any') + '<label for="u-in">Inches</label>' + num('u-in', 6, 'any') + '<label for="u-cm">Centimeters</label>' + num('u-cm', 15.2, 'any') + '</div>');
     if (t === 'flashlight') return toolFrame(t, '<div class="panel"><p>Turns the whole screen bright white. Tap anywhere to close. Turn brightness up first.</p><div class="actions">' + btn('Turn on screen flashlight', 'flash-on', 'button') + '</div></div>');
     if (t === 'sos') return toolFrame(t, '<div class="panel"><p>The screen blinks three short, three long, three short flashes. Tap anywhere to stop.</p><div class="dangerbox"><strong>Warning</strong><p>Flashing light can trigger seizures in some people. Do not use if you are sensitive to flashing light.</p></div><div class="actions">' + btn('Start SOS flash', 'sos-on', 'danger') + '</div></div>');
+    if (t === 'stock') {
+      var SK = window.LOAD_STOCK; if (!SK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
+      var c0 = state.region === 'pt' ? 'pt' : 'us';
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick your country, how many people and how long. You get a full shopping list with quantities. It works offline.</p>' +
+        '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option></select>' +
+        '<label for="stk-n">People in your household</label><select id="stk-n">' + SK.sizes.map(function (n) { return '<option value="' + n + '"' + (n === 4 ? ' selected' : '') + '>' + n + ' people</option>'; }).join('') + '<option value="x">Other number</option></select>' +
+        '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
+        '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
+        '<label for="stk-k">Children under 10 (they eat about 60 percent)</label>' + num('stk-k', 0, 1, 0, 50) +
+        '<label class="checkrow"><input type="checkbox" id="stk-lt" checked><span>For 1 year or more, I will use long-term packing (sealed cans, buckets with oxygen absorbers)</span></label>' +
+        '<div class="actions">' + btn('Copy the list', 'stk-copy', 'button') + btn('Print', 'stk-print', 'secondary') + '</div><p id="stk-msg" class="muted" role="status"></p></div>' +
+        '<div id="stk-out"></div>');
+    }
     if (t === 'cpr') return toolFrame(t, '<div class="panel cprpanel"><div class="dangerbox"><strong>Call 112 (Portugal) or 911 (US) first.</strong><p>This tool only keeps the beat. It does not replace a course or the operator. Push hard in the centre of the chest, and let it come fully back up.</p></div>' +
       '<div id="cprpulse" class="cprpulse" aria-hidden="true"><span id="cprcount">0</span></div><p id="cprmsg" class="cprmsg" role="status" aria-live="polite">Ready</p>' +
       '<label for="cprbpm">Beats a minute</label><select id="cprbpm"><option value="100">100</option><option value="110" selected>110</option><option value="120">120</option></select>' +
@@ -468,6 +484,8 @@ window.LSX = function (A) {
     'flash-on': function () { overlay('flash'); },
     'sos-on': sos,
     'cpr-start': cprStart,
+    'stk-copy': function () { copy(stkText()); setOut('stk-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'stk-print': function () { try { window.print(); } catch (e) {} },
     'cpr-stop': cprStop,
     'cpr-go': cprGo,
     'read-guide': readGuide,
@@ -502,6 +520,66 @@ window.LSX = function (A) {
     }
     var b = document.getElementById('readbtn');
     if (Sp.readList(txt, readReset, lang) && b) { var s = b.querySelector('span'); if (s) s.textContent = 'Stop reading'; b.setAttribute('aria-label', 'Stop reading'); }
+  }
+  /* ---------- stockpile planner ---------- */
+  function stkInputs() {
+    var n = (document.getElementById('stk-n') || {}).value, nn = Number((document.getElementById('stk-nn') || {}).value);
+    var people = n === 'x' ? Math.max(1, Math.min(50, Math.round(nn) || 1)) : Number(n) || 4;
+    var days = Number((document.getElementById('stk-p') || {}).value) || 30;
+    var kids = Math.max(0, Math.round(Number((document.getElementById('stk-k') || {}).value) || 0));
+    var us = ((document.getElementById('stk-c') || {}).value || 'us') === 'us';
+    return { people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked };
+  }
+  function stkShelf(y) { return y < 1 ? Math.round(y * 12) + ' months' : (y === 1 ? '1 year' : y + ' years'); }
+  function stkPlan() {
+    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.us ? 'us' : 'pt', I.people, I.days, { lt: I.lt, kids: I.kids });
+    return { I: I, R: R, SK: SK };
+  }
+  function stkWater(R, us, SK) {
+    var w = R.water, L = Math.round(w.litres), gal = Math.round(w.gallons);
+    var text = us ? gal + ' gallons (' + L + ' litres), about ' + gal + ' one-gallon jugs' : L + ' litros (' + gal + ' galões de 3,8 L), cerca de ' + Math.ceil(w.litres / 1.5) + ' garrafas de 1,5 L ou ' + Math.ceil(w.litres / 5) + ' garrafões de 5 L';
+    var line = 'Store ' + w.storeDays + ' days of drinking and cooking water: ' + text + '.';
+    if (w.treatDays > 0) line += ' For the other ' + w.treatDays + ' days, plan a filter and plain unscented bleach, or boiling. About ' + nf(Math.round(w.totalGal), 0) + ' gallons (' + nf(Math.round(w.totalGal * 3.785), 0) + ' litres) to treat in total.';
+    return line;
+  }
+  function stkRender() {
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = '';
+    var cats = [], seen = {}; R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; cats.push(f.cat); } });
+    var totalKeep = R.grams;
+    h += '<div class="kpis">' + kpi('People', I.people + (I.kids ? ' (' + I.kids + ' children)' : '')) + kpi('Length', I.days >= 365 ? nf(I.days / 365, 0) + (I.days === 365 ? ' year' : ' years') : (I.days === 7 ? '1 week' : I.days === 30 ? '1 month' : I.days === 90 ? '3 months' : I.days === 180 ? '6 months' : I.days + ' days')) +
+      kpi('Food to store', SK.fmtMass(totalKeep, us)) + kpi('Calories a day each', '~' + nf(Math.round(R.perDayKcal / 50) * 50, 0)) + '</div>';
+    h += '<section class="gblock"><h2>Water</h2><ul><li>' + esc(stkWater(R, us, SK)) + '</li><li>1 gallon (3.8 L) per person per day: drinking, cooking and a little washing. Add more for heat, pregnancy, illness and pets.</li></ul></section>';
+    cats.forEach(function (c) {
+      h += '<section class="gblock"><h2>' + esc(c) + '</h2><ul class="stklist">';
+      R.food.filter(function (f) { return f.cat === c; }).forEach(function (f) {
+        h += '<li class="stkrow"><b>' + esc(f.name) + '</b>' + (f.fav ? ' <span class="pill">Favourite</span>' : '') + (f.alt ? ' <small class="muted">(' + esc(f.alt) + ')</small>' : '') +
+          '<div class="stkqty">' + f.packs + ' ' + esc(f.unit) + ' <span class="muted">(' + SK.fmtMass(f.keep, us) + ')</span></div>';
+        var note = []; if (f.rotate) note.push('Keeps about ' + stkShelf(f.shelf) + '. Eat the oldest first and replace it. Over the whole plan you will use about ' + SK.fmtMass(f.total, us) + '.'); if (f.cook) note.push('Needs fire or a stove and water.'); if (f.note) note.push(f.note);
+        if (note.length) h += '<small class="muted">' + esc(note.join(' ')) + '</small>';
+        h += '</li>';
+      });
+      h += '</ul></section>';
+    });
+    var ncats = [], ns = {}; R.nonfood.forEach(function (f) { if (!ns[f.cat]) { ns[f.cat] = 1; ncats.push(f.cat); } });
+    ncats.forEach(function (c) {
+      h += '<section class="gblock"><h2>' + esc(c) + '</h2><ul class="stklist">';
+      R.nonfood.filter(function (f) { return f.cat === c; }).forEach(function (f) {
+        h += '<li class="stkrow"><b>' + esc(f.name) + '</b>' + (f.alt ? ' <small class="muted">(' + esc(f.alt) + ')</small>' : '') + '<div class="stkqty">' + nf(f.q, 1) + ' ' + esc(f.unit) + '</div>' + (f.note ? '<small class="muted">' + esc(f.note) + '</small>' : '') + '</li>';
+      });
+      h += '</ul></section>';
+    });
+    if (I.days > 365) h += '<div class="notice">Soap, paper, batteries and gas are listed for up to 1 year. Buy more each year. For batteries, use rechargeable ones with a solar charger.</div>';
+    h += '<div class="notice">Planner estimates. The 3-day and 1 to 2 week amounts follow official advice. Longer amounts are our estimate from a standard long-term storage pattern, and each guide below the list says what we could not confirm. See the Stockpile basics guide. Also stock any medicines, baby food, formula, pet food and special diet needs. Check dates and rotate.</div>';
+    setOut('stk-out', h);
+  }
+  function stkText() {
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
+    t += 'WATER\n' + stkWater(R, us, SK) + '\n\n';
+    var seen = {};
+    R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });
+    var s2 = {};
+    R.nonfood.forEach(function (f) { if (!s2[f.cat]) { s2[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + nf(f.q, 1) + ' ' + f.unit + '\n'; });
+    return t;
   }
   /* ---------- CPR rhythm ---------- */
   var cpr = null;
@@ -547,7 +625,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -564,6 +642,7 @@ window.LSX = function (A) {
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
+    if (id === 'stk-nn' || id === 'stk-k') { stkRender(); return true; }
     if (id === 'p-cap' || (t.dataset && t.dataset.hrs !== undefined)) { calcWatts(); return true; }
     if (id.indexOf('u-') === 0) { convert(id, Number(t.value)); return true; }
     return false;
@@ -577,6 +656,7 @@ window.LSX = function (A) {
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
+    if (id.indexOf('stk-') === 0) { var bx = document.getElementById('stk-nnbox'); if (bx) bx.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); return true; }
     return false;
   }
   return { views: views, actions: actions, onInput: onInput, onChange: onChange, after: after, welcome: welcome, firstRoute: firstRoute };
