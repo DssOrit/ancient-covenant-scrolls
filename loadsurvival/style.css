@@ -339,4 +339,5 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .stkrow small{display:block}
   .tablewrap{overflow-x:auto}
 .stktable{border-collapse:collapse;font-size:14px;min-width:640px}.stktable th,.stktable td{border:1px solid var(--line2);padding:6px 8px;text-align:left;vertical-align:top}.stktable th{position:sticky;top:0;background:var(--card,#fff)}
+.pwroom{display:flex;gap:8px;align-items:center;margin:6px 0}.pwroom select{flex:2}.pwroom input{flex:1;min-width:70px}.stktable input{width:80px;min-width:60px}
 @media print{#topnav,.fab,.stkpanel,.breadcrumbs{display:none}body{background:#fff;color:#000}}
