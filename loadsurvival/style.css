@@ -433,3 +433,8 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .hm .hmplb{padding:8px 16px;min-height:42px;border:1px solid #4d7a4a;border-radius:999px;background:rgba(107,143,62,.14);color:#e6efe0;font-size:15px;font-weight:700}
 .hm .hmplb:hover{background:rgba(107,143,62,.3)}
 .guide li,.guide p,.tipbox li{overflow-wrap:anywhere}
+
+.exrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;margin:8px 0;border:1px solid var(--line,#2a3338);border-radius:14px}
+.exrow .exname{flex:1 1 200px;min-width:0}.exrow .exname small{display:block;opacity:.75}
+.exrow .actions{margin:0;gap:8px}.exbar{margin-top:18px}
+@media print{.guide h1{display:block!important;color:#000;font-size:22pt}.guide .pgban,.pgban,.exbar,.status .stbadge svg{display:none!important}.guide{color:#000}.guide *{color:#000!important;background:transparent!important}.guide a{text-decoration:none}}
