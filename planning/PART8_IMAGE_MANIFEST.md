@@ -10,8 +10,11 @@ Part 8D needs 60 individual 16:9 frames (10 stories x 6). The supplied pack has 
 | p8-09-child-care.jpg | Story_06.jpg | Story 9 | Check the child and keep medicines and a first-aid kit together. | No medicine labels readable. |
 | p8-10-dry-storage.jpg | Story_09.jpg | Story 10 | Store dry food in sealed, labelled containers in a dry place. | No words readable. |
 
-## Held for the pets and home-safe stories (not yet in the app until that PR is merged)
-Story_07.jpg (pets, usable) and Story_05.jpg (door lock and lights, usable).
+## Used in the home-safe and pets stories
+| File in assets/pics | Source | Story |
+|---|---|---|
+| p8-home-door.jpg | Story_05.jpg | Story: Keep your home safe |
+| p8-pets.jpg | Story_07.jpg | Story: Pets and animals |
 
 ## Not used
 | Cover | Reason |
