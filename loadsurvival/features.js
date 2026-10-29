@@ -240,9 +240,9 @@ window.LSX = function (A) {
   /* ---------- lists ---------- */
   function listDone(id) { var s = S.lists[id] || {}, n = 0; Object.keys(s).forEach(function (k) { if (s[k]) n++; }); return n; }
   function listsView() {
-    return '<h1>Checklists</h1><p class="muted">Tick items as you get them. Saved on this device.</p><div class="grid hmtools">' + C.lists.map(function (L) {
+    return '<h1>Checklists</h1><p class="muted">Tick items as you get them. Saved on this device.</p><div class="hmlist">' + C.lists.map(function (L) {
       var n = listDone(L.id), p = Math.round(n * 100 / L.items.length);
-      return '<button class="card" data-action="open-list" data-list="' + esc(L.id) + '"><span class="symbol">' + ico('check') + '</span><b>' + esc(L.title) + '</b><small>' + n + ' of ' + L.items.length + ' done</small><span class="progress"><i style="width:' + p + '%"></i></span></button>';
+      return '<button class="li" data-action="open-list" data-list="' + esc(L.id) + '"><span class="ic">' + ico('check') + '</span><span class="lt"><b>' + esc(L.title) + '</b><small>' + n + ' of ' + L.items.length + ' done</small><span class="progress"><i style="width:' + p + '%"></i></span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>';
     }).join('') + '</div>';
   }
   function listView() {
