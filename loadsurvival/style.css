@@ -424,3 +424,12 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .hmlist .li .chev{margin-left:auto;color:var(--muted);font-size:20px}
 @media(max-width:640px){.hmsc{grid-template-columns:repeat(2,minmax(0,1fr))}.pgban{height:104px}.pgban + h1{margin-top:-50px}}
 .hmwhog{margin-top:6px}
+/* Place choices (p93-v111) */
+.hm .hmplaces{flex-basis:100%;margin-top:4px}
+.hm .hmstate{margin:10px 0 4px;padding-top:10px;border-top:1px solid #26302d}
+.hm .hmstate h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;font-weight:700}
+.hm .hmstate1{margin:0 0 8px}.hm .hmstate1 b{display:block;font-size:15px;margin-bottom:6px}
+.hm .hmpl{display:flex;flex-wrap:wrap;gap:8px}
+.hm .hmplb{padding:8px 16px;min-height:42px;border:1px solid #4d7a4a;border-radius:999px;background:rgba(107,143,62,.14);color:#e6efe0;font-size:15px;font-weight:700}
+.hm .hmplb:hover{background:rgba(107,143,62,.3)}
+.guide li,.guide p,.tipbox li{overflow-wrap:anywhere}

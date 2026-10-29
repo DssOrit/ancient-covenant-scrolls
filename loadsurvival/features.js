@@ -219,7 +219,19 @@ window.LSX = function (A) {
     'ps-safety': ['med-carbon-monoxide', 'power-generator', 'ps-lithium', 'g-power-outage'],
     'ps-lithium': ['ps-safety', 'ps-types', 'power-battery'],
     'ps-cooking-battery': ['ps-sizing', 'ht-cook-no-power', 'ps-safety', 'solar-oven-cooking'],
-    'ps-budget': ['ps-types', 'ex-cheap-power', 'budget-offgrid', 'home-power-sizing']
+    'ps-budget': ['ps-types', 'ex-cheap-power', 'budget-offgrid', 'home-power-sizing'],
+    'place-pt-lisboa': ['g-earthquake-tsunami', 'g-flood', 'g-heat-wave', 'g-wildfire', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-porto': ['g-flood', 'g-power-outage', 'g-heat-wave', 'g-wildfire', 'g-earthquake-tsunami', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-coimbra': ['g-flood', 'g-wildfire', 'g-heat-wave', 'g-earthquake-tsunami', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-setubal': ['g-earthquake-tsunami', 'g-heat-wave', 'g-wildfire', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-losangeles': ['g-earthquake-tsunami', 'g-wildfire', 'g-power-outage', 'g-heat-wave', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-sanpedro': ['g-earthquake-tsunami', 'g-heat-wave', 'g-power-outage', 'g-wildfire', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-palmdale': ['g-heat-wave', 'g-power-outage', 'g-earthquake-tsunami', 'g-wildfire', 'g-flood', 'g-winter-storm', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-valencia': ['g-wildfire', 'g-earthquake-tsunami', 'g-power-outage', 'g-heat-wave', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-fl-jacksonville': ['g-hurricane', 'g-flood', 'g-heat-wave', 'g-tornado', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-fl-orlando': ['g-hurricane', 'g-flood', 'g-tornado', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-sc-conway': ['g-hurricane', 'g-flood', 'g-tornado', 'g-winter-storm', 'g-heat-wave', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-oh-ohio': ['g-tornado', 'g-winter-storm', 'g-flood', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
