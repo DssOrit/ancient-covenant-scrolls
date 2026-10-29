@@ -47,3 +47,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - Owner 2026-10-29: site must work when government and outside sites cannot be reached; saved Survival Maps handoff and research docx under planning/ for later.
 
 - #1134 and #1135 merged. Download and print built (export.js, Tools > Download and print), cache p96-v114. Backup backup/2026-10-29-loadsurvival-p95-v113 at 750ec990. Next: place the 40 pictures when uploaded; audit guides for steps that depend on outside links.
+
+- #1136 (download and print) merged. Owner approved audit A, B and C. Built: labels on all 299 guides, 56 'If you cannot reach it' boxes (fallback-data.js), cache p97-v115. Backup backup/2026-10-29-loadsurvival-p96-v114 at 178ba583. Owner answered: tampons and pads mixture for the three women (asked whether all three still have periods). Waiting on: 40 pictures from ChatGPT (1 received, tile-medical), well pump label, older woman details.

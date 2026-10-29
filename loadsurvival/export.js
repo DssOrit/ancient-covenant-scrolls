@@ -7,9 +7,11 @@
   function bytes(s) { if (enc) return enc.encode(s); var out = [], i, c; s = unescape(encodeURIComponent(s)); for (i = 0; i < s.length; i++) { c = s.charCodeAt(i); out.push(c); } return new Uint8Array(out); }
 
   /* ---------- one guide as a simple model ---------- */
+  var statusFn = null;
+  function stat(l) { return statusFn ? statusFn(l) : { status: l.status, checkedOn: l.checkedOn, sources: l.sources || [], unconfirmed: l.unconfirmed || [] }; }
   function statusLine(l) {
-    var st = l.status === 'checked' ? 'Checked' : l.status === 'partly' ? 'Partly checked' : 'General guidance, not checked against a named official source';
-    return st + (l.checkedOn ? ' (' + l.checkedOn + ')' : '');
+    var s = stat(l), st = s.status === 'checked' ? 'Checked' : s.status === 'partly' ? 'Partly checked' : 'General guidance, not checked against a named official source';
+    return st + (s.checkedOn ? ' (' + s.checkedOn + ')' : '');
   }
   function model(l) {
     var b = [];
@@ -22,8 +24,11 @@
       add('Steps', 'ol', (l.steps || []).map(function (x) { return Array.isArray(x) ? x[0] + ': ' + x[1] : x; }));
       if (l.warning) add('Warning', 'ul', [l.warning]);
     }
-    var unc = (l.unconfirmed || []).slice();
-    var src = (l.sources || []).map(function (x) { return x[0] + ' - ' + x[1]; });
+    var S = stat(l), unc = (S.unconfirmed || []).slice();
+    if (S.status === 'general' && unc.length > 1) unc = unc.slice(1);
+    var src = (S.sources || []).map(function (x) { return x[0] + ' - ' + x[1]; });
+    var fb = window.LOAD_FALLBACK && window.LOAD_FALLBACK[l.id];
+    if (fb) { var at = 0; for (var q = 0; q < b.length; q++) if (/^(Warnings|Warning)$/.test(b[q].h)) { at = q; break; } if (!at) at = b.length; b.splice(at, 0, { h: fb.h + ': ' + fb.lead, kind: 'ol', items: fb.items }); }
     return { title: l.title, area: l.area || '', intro: l.intro || '', status: statusLine(l), table: l.table || null, blocks: b, unconfirmed: unc, sources: src };
   }
   function tableHtml(t) {
@@ -121,5 +126,5 @@
   function zipPack(pack, by) { return zip(build(pack, by)); }
   function onePage(pack, by) { return new Blob([page(pack.label + ' (print)', pack.ids.map(function (id) { return bodyHtml(by[id]); }).join(''))], { type: 'text/html' }); }
 
-  window.LOAD_EXPORT = { guideFile: guideFile, packs: packs, build: build, zip: zip, zipPack: zipPack, onePage: onePage, save: save, slug: slug, crc: crc };
+  window.LOAD_EXPORT = { setStatus: function (f) { statusFn = f; }, guideFile: guideFile, packs: packs, build: build, zip: zip, zipPack: zipPack, onePage: onePage, save: save, slug: slug, crc: crc };
 })();

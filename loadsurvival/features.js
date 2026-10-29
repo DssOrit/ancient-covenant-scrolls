@@ -86,7 +86,10 @@ window.LSX = function (A) {
   var SMAP = window.LOAD_STATUS || {};
   function statusOf(l) {
     var m = SMAP[l.id] || {};
-    return { status: l.status || m.status || 'general', checkedOn: l.checkedOn || m.checkedOn || '', sources: l.sources || m.sources || (l.source ? [['Source linked in the lesson', l.source]] : []), unconfirmed: l.unconfirmed || m.unconfirmed || [] };
+    var unc = l.unconfirmed || m.unconfirmed;
+    if (!unc) { unc = ['General guidance written for this app.', 'This is general guidance. The figures, amounts and times in it were not checked against a named source.']; if (l.source) unc.push('A source link is listed with this guide. We have not opened it.'); }
+    if ((l.status || m.status || 'general') === 'general' && unc.length === 1) { unc = unc.concat(['The figures, amounts and times in this guide were not checked against a named source.']); if (l.source && !(l.sources || m.sources)) unc.push('A source link is listed with this guide. We have not opened it.'); }
+    return { status: l.status || m.status || 'general', checkedOn: l.checkedOn || m.checkedOn || '', sources: l.sources || m.sources || (l.source ? [['Source linked in the lesson', l.source]] : []), unconfirmed: unc };
   }
   function statusHtml(l) {
     var s = statusOf(l), name = s.status === 'checked' ? 'Checked' : s.status === 'partly' ? 'Partly checked' : 'Not confirmed';
@@ -269,6 +272,10 @@ window.LSX = function (A) {
     return links ? '<div class="tipbox seealso"><strong>See the guide with pictures</strong><ul>' + links + '</ul></div>' : '';
   }
 
+  function fbHtml(l) {
+    var f = window.LOAD_FALLBACK && window.LOAD_FALLBACK[l.id]; if (!f) return '';
+    return '<div class="fbbox"><strong>' + esc(f.h) + '</strong><p>' + esc(f.lead) + '</p>' + ol(f.items) + '<p class="muted">General guidance written for this app. No named source.</p></div>';
+  }
   function guideView(l) {
     var h = '<div class="guide" data-cat="' + catOf(l) + '"><div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
       '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + (window.LOAD_SPEAK && window.LOAD_SPEAK.supported() ? window.LOAD_SPEAK.readBtn() : '') + statusHtml(l) + seeAlso(l.id);
@@ -278,6 +285,7 @@ window.LSX = function (A) {
     h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
     (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + li(s.items) + '</section>'; });
+    h += fbHtml(l);
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
     h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
@@ -288,7 +296,7 @@ window.LSX = function (A) {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
     if (l && l.first) return guideView(l);
     var b = A.lessonBase(); if (!l) return b;
-    var i = b.indexOf('<div class="dangerbox">'); return (i < 0 ? b : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + b.slice(i)) + exBar(l);
+    var i = b.indexOf('<div class="dangerbox">'); return (i < 0 ? b + statusHtml(l) + fbHtml(l) : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + fbHtml(l) + b.slice(i)) + exBar(l);
   }
 
   /* ---------- lists ---------- */
@@ -338,6 +346,7 @@ window.LSX = function (A) {
 
   /* ---------- download and print ---------- */
   var EXP = null;
+  if (window.LOAD_EXPORT && window.LOAD_EXPORT.setStatus) window.LOAD_EXPORT.setStatus(statusOf);
   function exPacks() { if (!EXP && window.LOAD_EXPORT) { var by = {}; D.lessons.forEach(function (l) { by[l.id] = l; }); EXP = { by: by, packs: window.LOAD_EXPORT.packs({ lessons: D.lessons, cat: catOf, related: RELATED }) }; } return EXP; }
   function exFind(id) { var E = exPacks(); if (!E) return null; var g = ['people', 'places', 'topics', 'all']; for (var i = 0; i < g.length; i++) { var f = E.packs[g[i]].filter(function (p) { return p.id === id; })[0]; if (f) return f; } return null; }
   function exBar(l) {

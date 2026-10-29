@@ -753,7 +753,7 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 
 ### Pending: checks and open questions
 - Real iPad Safari tests (read-aloud, Stop, CPR sound, tracker downloads, offline, the new Home page, the refresh circle).
-- About 46 older guides have no status label; some lack a Not confirmed list.
+- DONE in #18 (cache p97-v115, awaiting merge): all 299 guides have a label and a Not confirmed list.
 - Portuguese and Spanish wording needs review by a speaker. Shop names and search words are cited to us, not checked.
 - The CDC and NHS pages could not be opened from the session network (www.cdc.gov and www.nhs.uk need to be allowed). Only search summaries were read.
 - Owner to answer: how many of the 3 women use tampons, pads or liners (3 assumed); the older woman's age, hearing aids, incontinence needs, allergies and medicines; the well pump label (horsepower, volts, amps).
@@ -764,3 +764,5 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 16. SAVED FOR LATER (owner 2026-10-29): Load Maps Survival Maps module (12 places). Full spec in planning/LOAD_MAPS_SURVIVAL_MAPS_HANDOFF.md and Part 2 (off-grid expansion, owner correction: first-class, not optional) in planning/LOAD_MAPS_SURVIVAL_MAPS_HANDOFF_PART2_OFFGRID.md, research in planning/Location-Specific_Survival_and_Emergency-Preparedness_Research.docx. Build only after everything else and after the images are placed. Needs the Load Maps unlock phrase, backup, checks, merge link.
 
 17. BUILT 2026-10-29 in a PR (cache p96-v114), awaiting owner merge and iPad check: DOWNLOAD AND PRINT. Tools > Download and print: zip packs (made in the app, no outside library) for the older woman, seniors, pregnancy, dogs and pets, our household, each of the 12 places, each topic, and every guide; each zip has one page per guide, an index, print-all.html and README. One-file print option per pack. Every guide has Print this guide and Save this guide as a file. Not yet checked: real iPad Safari download and Files unzip.
+
+18. BUILT 2026-10-29 in a PR (cache p97-v115), awaiting owner merge. OUTSIDE-LINK AUDIT, approved by owner as A, B and C. A: every one of the 299 guides now shows a status label and a Not confirmed list (90 had none; 15 more showed no list). B: 56 guides that send the reader to a website, app, council or rule book now have an 'If you cannot reach it' box with steps that need no outside page (fallback-data.js); the boxes are also in the zip and print files. C: no local numbers were added that cannot be verified; place guides keep 911 and 112 and the numbers already in them, and their box says to write local numbers on paper. Open: older guides still partly depend on links for extra reading; the 112 other 'check local rules' lines were reviewed and the genuine ones covered.
