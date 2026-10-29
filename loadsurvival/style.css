@@ -423,3 +423,4 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .hmlist .li .progress i{margin-left:0;font-size:inherit;color:inherit}
 .hmlist .li .chev{margin-left:auto;color:var(--muted);font-size:20px}
 @media(max-width:640px){.hmsc{grid-template-columns:repeat(2,minmax(0,1fr))}.pgban{height:104px}.pgban + h1{margin-top:-50px}}
+.hmwhog{margin-top:6px}
