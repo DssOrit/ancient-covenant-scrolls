@@ -1,5 +1,7 @@
 # Session notes 2026-10-29 (Load Survival)
 
+Full request list: see the section LOAD SURVIVAL: owner request tracker at the end of MASTER_BACKLOG.md. PRs #1122, #1123 and #1124 are merged by DssOrit. Owner asked 2026-10-29: do not lose track of any request.
+
 ## Current state
 - Branch claude/loadsurvival-home-redesign from origin/main d45f618f (PR #1122 merged by DssOrit, cache p85-v103).
 - Home redesign built and checked, cache loadsurvival-p86-v104. PR opened, not merged.
