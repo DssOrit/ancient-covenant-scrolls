@@ -103,6 +103,7 @@
       pk('topics', 't-' + c[0], c[1], ids(function (l) { return ctx.cat(l) === c[0]; }));
     });
     pk('topics', 't-comms', 'Communicate when phones fail', ids(function (l) { return /^comm-/.test(l.id) || ['lim-comms', 'es-radios-alerts', 'lt-ham-radio'].indexOf(l.id) >= 0; })),
+    pk('topics', 't-solar', 'Solar and battery projects', ids(function (l) { return /^sol-/.test(l.id) || ['lt2-solar', 'ps-sizing', 'ps-safety', 'ps-lithium'].indexOf(l.id) >= 0; })),
     pk('topics', 't-grow', 'Grow food, eat and trap', ids(function (l) { return /^(gr-|eat-|trap-|gather-|diet-)/.test(l.id) || ['lt2-seeds', 'hs-grow-small', 'lt-garden-plan', 'wf-trapping', 'wf-fishing-gear', 'crabs-shrimp-lobster'].indexOf(l.id) >= 0; }));
     pk('all', 'all', 'Every guide', ids(function () { return true; }));
     return out;
