@@ -30,6 +30,8 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 
 - #1132 (place choices and 12 place guides) merged by DssOrit. Staying warm (2), hygiene (5), glasses (2) and scenarios (3) guides built in life-data.js, cache p94-v112. Backup backup/2026-10-29-loadsurvival-p93-v111 at 426a26e2. PR awaiting merge.
 
+- #1133 (staying warm, hygiene, glasses, scenarios) merged by DssOrit. Household guides (7) built in household-data.js, cache p95-v113. Backup backup/2026-10-29-loadsurvival-p94-v112 at b8781bad. PR awaiting merge. Next: download and print.
+
 ## Approved scope, not built yet (each needs its own phrase, backup, checks, PR)
 - Seniors guides and pregnancy guides (named sources, status label, Not confirmed list).
 - Place pages: Portugal (Lisboa, Porto, Coimbra, Setubal), United States by state (CA: Los Angeles, San Pedro, Palmdale, Valencia; FL: Jacksonville, Orlando; SC: Conway; Ohio statewide). Each with hazards and alerts, stores, DIY survival, maps with a Load Maps link, ponds, rivers, water sources, off-grid resources.
