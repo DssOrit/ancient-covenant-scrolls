@@ -87,7 +87,7 @@
   var FB = {};
   function put(ids, key) { ids.forEach(function (id) { FB[id] = { h: 'If you cannot reach it', lead: T[key][0], items: T[key][1] }; }); }
   put(['water-rain', 'wx-rain', 'lt-fishing', 'lt-permanent-water', 'ex-river-hydro', 'lt2-livestock', 'lt2-pt-food', 'lt2-pt-energy', 'budget-offgrid', 'wf-fire-wet', 'wf-fishing-gear', 'wf-wild-food-rules', 'wild-birds-prep', 'crabs-shrimp-lobster', 'other-sea-life', 'wf-pt-words'], 'rules');
-  put(['trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'trap-no-snare'], 'rules');
+  put(['trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'trap-no-snare', 'gather-legal-checklist'], 'rules');
   put(['wf-shore-shellfish', 'shellfish-safe-collect'], 'shell');
   put(['place-pt-lisboa', 'place-pt-porto', 'place-pt-coimbra', 'place-pt-setubal'], 'alertsPt');
   put(['place-ca-losangeles', 'place-ca-sanpedro', 'place-ca-palmdale', 'place-ca-valencia', 'place-fl-jacksonville', 'place-fl-orlando', 'place-sc-conway', 'place-oh-ohio'], 'alertsUs');

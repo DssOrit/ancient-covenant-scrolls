@@ -347,43 +347,43 @@
       'Eat meals hot. Keep leftovers cold and covered.'
     ],
     sections: [
-      { h: 'Rice and bean pot', items: [
+      { h: 'Rice and bean pot (vegan)', items: [
         'You need: 1 cup (200 g) dry beans or lentils, 1 cup (200 g) rice, 6 cups (1.4 litres) water, salt, oil if you have it, one onion or any seasoning.',
         'Step 1. Soak the beans in plenty of water for at least 5 hours. Pour off the soak water. Do not cook in it.',
         'Step 2. Put the beans in a pot with fresh water. Boil hard for at least 10 minutes. Then simmer until soft, 45 to 90 minutes for most beans, 20 to 30 minutes for lentils.',
         'Step 3. Add the rice and more water. Simmer 15 to 20 minutes until the rice is soft.',
         'Step 4. Add salt and seasoning at the end. Eat hot.'
       ] },
-      { h: 'Oat porridge', items: [
+      { h: 'Oat porridge (vegan if made with water)', items: [
         'You need: 1 cup (90 g) rolled oats, 2 to 3 cups (500 to 700 ml) water, a pinch of salt.',
         'Step 1. Boil the water. Add the oats and salt.',
         'Step 2. Stir and simmer 5 to 10 minutes. Add more water if too thick.',
         'Step 3. Add sugar, honey, dried fruit or nuts if you have them.'
       ] },
-      { h: 'Flatbread', items: [
+      { h: 'Flatbread (vegan)', items: [
         'You need: 2 cups (250 g) flour, 3/4 cup (180 ml) water, 1/2 teaspoon salt.',
         'Step 1. Mix flour and salt. Add water slowly. Mix to a dough.',
         'Step 2. Knead 3 to 5 minutes. Rest 15 to 30 minutes.',
         'Step 3. Divide into 4 balls. Flatten each very thin.',
         'Step 4. Heat a dry pan or a flat metal sheet. Cook 2 to 3 minutes each side until brown spots show.'
       ] },
-      { h: 'Lentil soup', items: [
+      { h: 'Lentil soup (vegan)', items: [
         'You need: 1 cup (200 g) lentils, 4 cups (1 litre) water, salt, one onion or garlic if you have it, a spoon of oil.',
         'Step 1. Rinse the lentils. Put them in a pot with water.',
         'Step 2. Boil, then simmer 20 to 30 minutes until soft. Add onion, salt and oil.',
         'Step 3. Mash a little for a thicker soup. Add greens or sprouts at the end and cook through.'
       ] },
-      { h: 'Rice porridge from leftover rice', items: [
+      { h: 'Rice porridge from leftover rice (vegan; egg or tinned fish are optional extras)', items: [
         'Step 1. Put 1 cup of cooked rice in a pot with 4 to 5 cups of water.',
         'Step 2. Simmer 20 to 30 minutes until thick. Add salt, greens, egg or tinned fish if you have them.',
         'This turns a little rice into a filling meal.'
       ] },
-      { h: 'Broth from scraps', items: [
+      { h: 'Broth from scraps (vegan if you use only vegetable ends; bones are not vegetarian)', items: [
         'Step 1. Keep clean vegetable ends, onion skins and clean bones. Do not use spoiled food.',
         'Step 2. Put them in a pot with water. Simmer 1 hour or more. Strain.',
         'Step 3. Use the broth to cook rice, beans or soup. It adds flavour and some nutrition.'
       ] },
-      { h: 'Flour pancakes', items: [
+      { h: 'Flour pancakes (vegan without the egg)', items: [
         'Step 1. Mix 1 cup flour, 1 cup water, a pinch of salt and, if you have it, an egg.',
         'Step 2. Cook spoonfuls in a lightly oiled hot pan, 2 minutes each side.',
         'Eat with honey, jam or soup.'

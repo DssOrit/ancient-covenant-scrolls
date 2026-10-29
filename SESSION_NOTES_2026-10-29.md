@@ -61,3 +61,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - #1141 merged. Owner sent 20 more pictures and said About banner = community picture. Placed all remaining pictures, cache p102-v120. Backup backup/2026-10-29-loadsurvival-p101-v119 at 8d68bd2a.
 
 - #1142 merged. Owner asked whether seeds, indoor planting and household traps were covered (only partly). Built 14 guides, cache p103-v121. Owner chose to keep the new flood scene. Backup backup/2026-10-29-loadsurvival-p102-v120 at 3fbf2705.
+
+- #1143 merged. Owner supplied Part 3 (four PDFs), asked a diet question (none existed), and asked for plant identification and where to find each plant. Built the trap legality fix, diet options, Part 3 lessons, plant cards and place sections, cache p104-v122. Backup backup/2026-10-29-loadsurvival-p103-v121 at 40373af3.

@@ -54,8 +54,8 @@
 
   /* 5 to 10 year plan: two layers, replenishment, storage space, cost */
   var COST = { us: { lo: 180, hi: 300, cur: '$' }, pt: { lo: 150, hi: 240, cur: 'EUR ' }, uk: null };
-  function longPlan(country, people, days, kids) {
-    var us = country === 'us', R = SK.compute(country, people, days, { lt: true, kids: kids, full: true });
+  function longPlan(country, people, days, kids, diet) {
+    var us = country === 'us', R = SK.compute(country, people, days, { lt: true, kids: kids, full: true, diet: diet });
     var years = days / 365, rolling = [], longL = [], rMass = 0, lMass = 0;
     R.food.forEach(function (f) {
       if (f.rotate > 0) { rolling.push({ name: f.name, perYear: Math.max(1, ceil(f.packs * 365 / days)), unit: f.unit, shelf: f.shelf, massYear: f.total * 365 / days }); rMass += f.total; }
