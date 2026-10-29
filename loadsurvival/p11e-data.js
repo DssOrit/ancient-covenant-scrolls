@@ -39,7 +39,7 @@
       "LEGAL STATUS UNVERIFIED for every place in this app. Do the 7 checks below before you use any method.",
       "Safer first: rod and line with a modern hook where the rules allow it. It is easier to check and more selective.",
       "A rule that allows a trap or spear in one water can ban it in the next. In Portugal, recreational sea fishing bans traps such as baskets, pots and cages. Florida allows certain freshwater traps, setlines and hand-held spears for named fish in named places under detailed limits.",
-      "Do not wade into fast or deep water for any method. Pictures: none of the six frames below is made yet, so they are text only."
+      "Do not wade into fast or deep water for any method. Every frame has a picture. None shows a trap, hook or spear in use."
     ],
     do: [
       "Check 1. Country, state and the exact waterbody. A mapped river does not mean public access.",
@@ -65,6 +65,12 @@
     tip: ["Write the rules, the date and the web page on paper and keep it with the gear.", "Ask a local fishing office or a licensed guide before you try any traditional method."],
     after: ["Wash hands. Clean and cook fish properly. Never eat a fish you cannot identify or that came from polluted or flooded water."],
     sections: [
+      { h: "Pictures", img: "assets/pics/p11e-01.jpg", alt: "A man in safety glasses and gloves turns a green bamboo pole in his hands to look for cracks, with a magnifying glass and ruler on the bench.", items: ["Frame 1: look over the bamboo for cracks, splits, decay, insects and sharp splinters."], at: 9 },
+      { h: "Pictures, continued", img: "assets/pics/p11e-02.jpg", alt: "A man in safety glasses and gloves saws a bamboo pole that is clamped in a vise on a workbench.", items: ["Frame 2: eye protection and gloves. Clamp the pole and keep your hand behind the cut."], at: 10 },
+      { h: "Pictures, continued", img: "assets/pics/p11e-03.jpg", alt: "A man with a backpack and safety glasses reads a folded leaflet at a river access point beside a notice board.", items: ["Frame 3: read the local fishing rules at the access point or from an official page."], at: 11 },
+      { h: "Pictures, continued", img: "assets/pics/p11e-04.jpg", alt: "A man in a life vest casts a spinning rod from a stable gravel bank into calm water.", items: ["Frame 4: a lawful alternative: rod and line with a modern hook, from dry ground, where it is permitted."], at: 12 },
+      { h: "Pictures, continued", img: "assets/pics/p11e-05.jpg", alt: "A man kneels on a rocky bank and holds a trout over a wooden measuring board, with a cooler of ice and a phone showing a map beside him.", items: ["Frame 5: check size and species rules, release protected fish quickly, keep the keepers cold and clean."], at: 13 },
+      { h: "Pictures, continued", img: "assets/pics/p11e-06.jpg", alt: "A man dries a bamboo pole with a grey cloth at a workbench, with a rod and reel laid out beside him.", items: ["Frame 6: dry and inspect all gear, remove splinters and store it out of reach of children and pets."], at: 14 },
       { h: "Method 1: Hollow bamboo funnel trap (traditional concept)", items: [
         "Traditional purpose: a hollow bamboo tube or cage with a funnel-shaped entrance lets small fish swim in and makes it hard for them to turn around. Many fishing cultures made versions of this.",
         "Material limits: bamboo splits and rots when wet, and joints and ties can fail. It can float away in a flood and become litter.",
@@ -94,7 +100,7 @@
     ],
     table: { head: ["Place", "Who sets the rules (to check; nothing verified)"], rows: PLACES },
     sources: [SRC.fwc, SRC.fwcBait, SRC.dgrmGear, SRC.dgrmLic, SRC.dgrmZones, SRC.cdcFluke],
-    unconfirmed: [UNV + ": no rule, licence, season, species or access status is confirmed for any place. The Florida and Portugal examples come from the owner message and the linked pages, which we have not opened.", "The three traditional methods are described in general terms. We have no source page for how any bamboo trap, gorge hook or spear performs. The statement that bamboo points are weaker than steel and can split is general knowledge about the material, not from a named test.", PENDING + ": not tested on a real iPad. The six story pictures are not made, so the story is NOT complete.", "Load Maps river and fishing display for each place is not built; it needs the owner own edit Load Maps message."] });
+    unconfirmed: [UNV + ": no rule, licence, season, species or access status is confirmed for any place. The Florida and Portugal examples come from the owner message and the linked pages, which we have not opened.", "The three traditional methods are described in general terms. We have no source page for how any bamboo trap, gorge hook or spear performs. The statement that bamboo points are weaker than steel and can split is general knowledge about the material, not from a named test.", PENDING + ": not tested on a real iPad. All six story pictures exist. They are illustrations. Frames 2 and 5 show hand tools and a fish, and none shows a trap, hook or spear in use.", "Load Maps river and fishing display for each place is not built; it needs the owner own edit Load Maps message."] });
 
   if (window.LOAD_CORE && window.LOAD_CORE.guides) {
     G.forEach(function (g) { window.LOAD_CORE.guides.push(g); });
