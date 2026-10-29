@@ -729,7 +729,7 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 - Picture prompts for ChatGPT: 26 seafood and 9 cover prompts (owner to generate and upload; then place them).
 
 ### Pending: build in the app (each needs its own phrase and PR)
-1. Six approved disaster guide corrections: hurricane 12 in (30 cm) is for rushing water; tornado lying low outdoors is a last resort; flood table 6 in and 12 in are for moving water; earthquake drop, cover and hold on then go uphill; wildfire remove "Leave lights on for firefighters" and change "two ways out" to "more than one way out"; heat wave 103 F to 104 F (40 C), yellow warnings, "free relief" to "can give relief".
+1. BUILT 2026-10-29 in a PR, awaiting owner merge and iPad check (cache p88-v106). Six approved disaster guide corrections: hurricane 12 in (30 cm) is for rushing water; tornado lying low outdoors is a last resort; flood table 6 in and 12 in are for moving water; earthquake drop, cover and hold on then go uphill; wildfire remove "Leave lights on for firefighters" and change "two ways out" to "more than one way out"; heat wave 103 F to 104 F (40 C), yellow warnings, "free relief" to "can give relief".
 2. Seniors guides and pregnancy guides (the Who is at home row already exists). Named sources, status label, Not confirmed list, not medical advice.
 3. Place pages ("Where you live"), by place:
    - Portugal: Lisboa, Porto, Coimbra, Setubal.

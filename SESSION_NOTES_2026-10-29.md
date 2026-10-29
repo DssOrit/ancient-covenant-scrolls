@@ -16,6 +16,8 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - PR #1123 (Home redesign) merged by DssOrit.
 - Refresh circle now returns to the welcome screen once, then Get started goes to Home (cache p87-v105). Backup backup/2026-10-29-loadsurvival-p86-v104 at 48792a4e. Normal opening of the app still goes straight to the page you were on.
 
+- Six disaster guide corrections built (hurricane, tornado, flood table, earthquake, wildfire, heat wave) plus their Not confirmed notes updated, cache p88-v106. Backup backup/2026-10-29-loadsurvival-p87-v105 at c9ddb68f. PR awaiting merge.
+
 ## Approved scope, not built yet (each needs its own phrase, backup, checks, PR)
 - Seniors guides and pregnancy guides (named sources, status label, Not confirmed list).
 - Place pages: Portugal (Lisboa, Porto, Coimbra, Setubal), United States by state (CA: Los Angeles, San Pedro, Palmdale, Valencia; FL: Jacksonville, Orlando; SC: Conway; Ohio statewide). Each with hazards and alerts, stores, DIY survival, maps with a Load Maps link, ponds, rivers, water sources, off-grid resources.

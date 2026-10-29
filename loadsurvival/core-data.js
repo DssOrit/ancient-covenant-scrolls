@@ -97,7 +97,7 @@ window.LOAD_CORE = {
       intro: 'Leave early when told to. Storm surge and flood kill more people than wind.',
       first: ['Follow official evacuation orders at once.', 'Know your evacuation zone and route.', 'Take your go-bag, medicines, documents, pets and phone chargers.'],
       do: ['48 hours before: fill the car with fuel, get cash in small bills, charge power banks.', 'Bring in or tie down outdoor items. Shutter or board windows.', 'Fill water containers. Store 1 gal (3.8 L) per person per day.', 'If you stay: shelter in a small interior room on the lowest safe floor, away from windows.', 'Listen to a battery radio for updates.'],
-      warn: ['Do not go outside in the calm of the eye. The wind returns suddenly.', 'Never drive through flooded roads. 12 in (30 cm) of water can float a car.', 'Portugal and coastal Europe: strong Atlantic storms can bring flooding and falling trees. Follow IPMA warnings.'],
+      warn: ['Do not go outside in the calm of the eye. The wind returns suddenly.', 'Never drive through flooded roads. 12 in (30 cm) of rushing water can carry a car away.', 'Portugal and coastal Europe: strong Atlantic storms can bring flooding and falling trees. Follow IPMA warnings.'],
       tip: ['Photograph your home and valuables before the storm for insurance.', 'Charge everything while power is on.'],
       after: ['Stay away from downed power lines.', 'Do not drink floodwater. Boil or treat water until officials say it is safe.', 'Photograph damage before cleanup.']
     },
@@ -106,7 +106,7 @@ window.LOAD_CORE = {
       title: 'Tornado',
       intro: 'You may have only minutes. Move to shelter at the first warning.',
       first: ['Go to the lowest floor, in a small interior room.', 'Cover your head and neck with your arms, a mattress or a helmet.', 'Stay away from windows.'],
-      do: ['Know the difference: a Watch means tornadoes are possible. A Warning means one is happening or about to. Act on a Warning.', 'If you are in a mobile home or vehicle, get to a sturdy building if you safely can.', 'If outside with no shelter, lie flat in a low area and cover your head.', 'Keep shoes, a flashlight and a whistle where you shelter.'],
+      do: ['Know the difference: a Watch means tornadoes are possible. A Warning means one is happening or about to. Act on a Warning.', 'If you are in a mobile home or vehicle, get to a sturdy building if you safely can.', 'Outdoors is a last resort. If you cannot get inside, lie flat in the lowest place you can find and cover your head and neck. Watch for rising water, because low ground can flood.', 'Keep shoes, a flashlight and a whistle where you shelter.'],
       warn: ['Do not shelter under a highway overpass. Wind speeds can be higher there.', 'Do not try to outrun a tornado in a car in heavy traffic.'],
       tip: ['Practice with your family twice a year.', 'A bicycle or sports helmet protects your head.'],
       after: ['Stay in shelter until the warning ends.', 'Watch for broken glass, nails, downed power lines and gas leaks.', 'Help others only when safe. Call emergency services for injuries.']
@@ -117,7 +117,7 @@ window.LOAD_CORE = {
       intro: 'Water is stronger than it looks. Move to higher ground early.',
       first: ['Move to higher ground now. Do not wait for water to reach you.', 'Turn around, do not drown. Never walk or drive through floodwater.', 'Never drink floodwater.'],
       do: ['Take your go-bag, medicines, documents and phone.', 'If time allows, switch off gas, water and electricity at the main controls. Do not touch electrical equipment if you are wet or standing in water.', 'Go upstairs if trapped. Do not go into a closed attic.', 'Call emergency services if you are trapped.'],
-      table: { head: ['Floodwater danger', 'Depth'], rows: [['Can knock an adult down (moving water)', '6 in (15 cm)'], ['Can float a car', '12 in (30 cm)']] },
+      table: { head: ['Floodwater danger', 'Depth'], rows: [['Can knock an adult down (fast-moving water)', '6 in (15 cm) of fast-moving water'], ['Can carry a car away (rushing water)', '12 in (30 cm) of rushing water']] },
       warn: ['Floodwater can carry sewage, chemicals and sharp debris.', 'Do not touch downed power lines or anything they touch.', 'Portugal: heavy rain can flood towns quickly. Follow IPMA and Proteção Civil warnings.'],
       tip: ['Park your car on high ground when a flood warning is issued.', 'Keep important papers in a waterproof bag.'],
       after: ['Wear boots and gloves during cleanup.', 'Throw away food, bottled water and cooking items that touched floodwater.', 'Dry the house quickly to prevent mold.']
@@ -125,8 +125,8 @@ window.LOAD_CORE = {
     {
       id: 'g-earthquake-tsunami', icon: 'quake', area: 'Disasters', difficulty: 'Essential',
       title: 'Earthquake and tsunami',
-      intro: 'Protect yourself during the shaking. Near the coast, move uphill at once.',
-      first: ['Drop, Cover, Hold On.', 'Do not run outside.', 'Near the coast: if shaking is strong or long, go uphill at once. Do not wait for an alert.'],
+      intro: 'Protect yourself during the shaking. Near the coast, when the shaking stops, move uphill at once.',
+      first: ['Drop, Cover, Hold On.', 'Do not run outside.', 'Near the coast: when the shaking stops, go uphill at once. Do not wait for an alert.'],
       do: ['Drop to your hands and knees. Cover your head and neck under a sturdy table. Hold on.', 'If in bed, stay there and cover your head with a pillow.', 'If outdoors, move away from buildings, trees and power lines.', 'If driving, pull over in a clear area and stay in the car.', 'After shaking stops, check for injuries and fires. Expect aftershocks.'],
       warn: ['If you smell gas or hear hissing, leave the building and report it from a safe place.', 'Do not use elevators.', 'A tsunami can be many waves over hours. Stay on high ground until officials say it is safe.', 'Portugal: the coast is at tsunami risk. Know your uphill route.'],
       tip: ['Secure tall furniture to walls.', 'Keep shoes and a flashlight by your bed.'],
@@ -137,7 +137,7 @@ window.LOAD_CORE = {
       title: 'Wildfire',
       intro: 'Leave early. A fire can move faster than you can run.',
       first: ['Leave early when told to, or when you see smoke or flame near you.', 'Take your go-bag, medicines, documents and pets.', 'Wear an N95 mask. A cloth mask does not stop smoke particles.'],
-      do: ['Close all windows and doors. Turn off gas. Leave lights on for firefighters.', 'Drive with headlights on, windows up and vents closed.', 'Know two ways out of your area.', 'Clear dry leaves and brush from around your home before fire season.'],
+      do: ['Close all windows and doors. Turn off gas.', 'Drive with headlights on, windows up and vents closed.', 'Know more than one way out of your area.', 'Clear dry leaves and brush from around your home before fire season.'],
       warn: ['If trapped in a car: keep windows up, park in a clear area away from trees, lie below the dash, and cover yourself with blankets.', 'Do not use fire outdoors in dry weather. Follow local fire restrictions.', 'Portugal: wildfire is the biggest summer risk. Follow Proteção Civil and ICNF notices.'],
       tip: ['Keep a pair of sturdy shoes, a flashlight and a battery radio near the door.', 'Fill a bathtub or buckets with water if you must stay.'],
       after: ['Return only when officials say it is safe.', 'Watch for hot spots, falling trees and ash. Wear an N95 mask during cleanup.']
@@ -148,8 +148,8 @@ window.LOAD_CORE = {
       intro: 'Heat is a silent killer. Stay cool, drink water and check on others.',
       first: ['Move to the coolest place you can, out of the sun.', 'Drink water regularly. Do not wait until you are thirsty.', 'Never leave a child, older person or pet in a parked car.'],
       do: ['Stay indoors in air conditioning or a shaded, ventilated room. Fans alone do not cool you enough in extreme heat.', 'Wear light, loose clothing and a hat outside.', 'Take cool showers. Put a damp cloth on your neck.', 'Avoid hard work in the hottest hours.', 'Check on older neighbors and anyone living alone.'],
-      warn: ['Know the signs of heat stroke: confusion, hot dry or very sweaty skin, body temperature about 103 F (39.4 C) or higher. Call emergency services. See Heat exhaustion vs heat stroke.', 'Portugal: IPMA uses yellow, orange and red warning levels. Take action at orange and red.'],
-      tip: ['Close curtains on sunny windows during the day.', 'Libraries, malls and cooling centers give free relief.'],
+      warn: ['Know the signs of heat stroke: confusion, hot dry or very sweaty skin, body temperature about 104 F (40 C) or higher. Call emergency services. See Heat exhaustion vs heat stroke.', 'Portugal: IPMA uses yellow, orange and red warning levels. Take care at every level, including yellow.'],
+      tip: ['Close curtains on sunny windows during the day.', 'Libraries, malls and cooling centers can give relief.'],
       after: ['Keep drinking water and rest for a day.', 'Check on others again.']
     },
     /* ---------------- ESSENTIALS ---------------- */
