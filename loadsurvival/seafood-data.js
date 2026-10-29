@@ -35,18 +35,20 @@
     sections: [
       { h: 'Country notes to check', items: [
         'United States: each state sets hunting seasons, licences and protected species.',
-        'United Kingdom: sources we found give duck and goose seasons of 1 September to 31 January inland and to 20 February on the foreshore. They disagree on some dates and differ for Northern Ireland. They also say no shooting after dark, and that lead shot is not allowed for wildfowl. Check GOV.UK for the current rules.',
+        'England and Wales: the Home Office guide on firearms licensing law is reported to give duck and goose seasons of 1 September to 31 January inland and 1 September to 20 February on the foreshore. Shooting sites we found give the same dates, and also say no shooting after dark and no lead shot for wildfowl. These dates do not make every bird legal to take. Check the species list and any extra rules.',
+        'Scotland and Northern Ireland: not confirmed. Check the species and the place before any shooting.',
         'Portugal: we found no hunting rules. DGRM lists all seabirds as protected from capture in recreational fishing. Check the national rules.'
       ] }
     ],
     tip: ['Keep gloves, a thermometer and a dedicated board in your wild food kit.', 'Bury or bin the waste away from camp.'],
     after: ['Wash the board, knife and your hands with soap and safe water.', 'Chill or cook the meat the same day.'],
-    sources: [['CDC: hunters and bird flu (cited to us, not checked)', 'https://www.cdc.gov/bird-flu/risk-factors/hunters-and-bird-flu.html'], SAFE[2], ['Shooting UK: dates for UK game shooting seasons (search result)', 'https://www.shootinguk.co.uk/shooting/game-shooting/game-shooting-seasons-32229/'], ['BASC: why the extra 20 days (foreshore season)', 'https://basc.org.uk/why-the-extra-20-days']],
+    sources: [['Home Office (home page only): the report names its Guide on Firearms Licensing Law for wild duck and goose seasons. We did not find or open the guide.', 'https://www.gov.uk/government/organisations/home-office'], ['CDC: hunters and bird flu (cited to us, not checked)', 'https://www.cdc.gov/bird-flu/risk-factors/hunters-and-bird-flu.html'], SAFE[2], ['Shooting UK: dates for UK game shooting seasons (search result)', 'https://www.shootinguk.co.uk/shooting/game-shooting/game-shooting-seasons-32229/'], ['BASC: why the extra 20 days (foreshore season)', 'https://basc.org.uk/why-the-extra-20-days']],
     unconfirmed: [
       PDFNOTE,
       'The 165 F (74 C) poultry temperature and the bird flu warning are from the PDF. We did not open FoodSafety.gov or the CDC page.',
       'The plucking and gutting steps are general preparation steps, not a species-specific game-handling manual.',
-      'The UK season dates are from shooting sites. They disagree. One gives 1 February as the end date. We found no GOV.UK page and no licence rules.',
+      'The England and Wales dates are from a verification report that cites the Home Office guide on firearms licensing law. We could not open that guide. Two shooting sites gave the same dates. One other source gave 1 February as the end date, and the report explains the difference as inland versus foreshore.',
+      'We found no season dates for Scotland or Northern Ireland and no licence rules.',
       'We found no Portugal hunting authority page and no US state rules in this search.',
       'We did not look up the lead shot rules. One UK source says lead is illegal for wildfowl.'
     ]
@@ -63,7 +65,7 @@
       'Cook fully in a covered pot.'
     ],
     do: [
-      'Catch. Check the rules. Use only permitted gear: a hand net, a trap or a baited line. Measure each animal. Check any size, egg-bearing or sex limits. Release small, protected or egg-bearing animals gently. Avoid polluted harbours, drains and restricted areas. Handle claws and sharp shells with care.',
+      'Catch. Check the rules. Use only permitted gear. A hand net or a baited line is the simplest. Portugal: traps (cages, pots and baskets) are not permitted recreational sea-fishing gear, per DGRM. England: trap and pot rules are set by each Inshore Fisheries and Conservation Authority (IFCA), so check your district. Scotland, Wales and Northern Ireland: not confirmed. Check the exact place, species and method. Measure each animal. Check any size, egg-bearing or sex limits. Release small, protected or egg-bearing animals gently. Avoid polluted harbours, drains and restricted areas. Handle claws and sharp shells with care.',
       'Keep them alive. Put crabs and lobsters in a bucket with cool seawater and a damp cloth, in the shade. Do not use an animal found dead if you do not know when it died. For shrimp, use a properly identified species and keep it cold.',
       'Cook in a covered pot. Use a large covered pot on a camp stove or fire pit outdoors. For crab, cook promptly, then separate the body, discard the gills and the digestive organs, and take out the meat. For lobster, use a large pot or steamer, then remove the tail and claw meat and discard the internal organs. There is no one time that is right for every size, so look at the flesh.',
       'Shrimp. Cook in a pot or skillet until the flesh is firm and opaque. Remove the head and shell. If you wish, make a shallow cut along the back and remove the dark digestive thread. Keep cleaned shrimp cold until cooking.'
@@ -76,15 +78,21 @@
     ],
     sections: [
       { h: 'Rules to check', items: [
-        'Portugal: DGRM sets species restrictions, minimum sizes and closed seasons.',
-        'United States and United Kingdom: rules differ by state, region and species. Check the local authority.'
+        'Portugal: DGRM sets species restrictions, minimum sizes and closed seasons. DGRM lists traps (cages, pots, baskets and others) outside the permitted recreational sea-fishing gear. Do not build or set a bottle, basket or cage trap for sea fishing in Portugal.',
+        'England: each IFCA sets its own gear rules, permits, tags, escape gaps and limits. A homemade pot is not legal everywhere just because one district allows some recreational potting.',
+        'Scotland: there is no general recreational fishing licence, but you need permission to fish, and some waters and species have special rules. Wales and Northern Ireland: not confirmed.',
+        'United States: rules differ by state, region and species. Check the local authority.'
       ] }
     ],
     tip: ['Carry a ruler, a bucket, gloves and a thermometer.', 'Cook the same day.'],
     after: ['Wash tools and hands with soap and safe water.', 'Bin the shells away from camp.'],
-    sources: [SAFE[0], SAFE[1], ['DGRM Portugal: licensing of recreational fishing', 'https://dgrm.pt/en/pesca-pl-licenciamento']],
+    sources: [SAFE[0], SAFE[1], ['DGRM Portugal: licensing of recreational fishing', 'https://dgrm.pt/en/pesca-pl-licenciamento'], ['DGRM Portugal (home page only): the report names its page Artes e Utensilios de Pesca. We did not find or open that page.', 'https://www.dgrm.pt'], ['Marine Management Organisation (home page only): the report cites its marine conservation byelaws and IFCA pages. We did not open them.', 'https://www.gov.uk/government/organisations/marine-management-organisation'], ['Scottish Government: recreational fishing', 'https://www.gov.scot/policies/salmon-and-recreational-fisheries/recreational-fishing/']],
     unconfirmed: [
       PDFNOTE,
+      'The Portugal trap ban is from a verification report you gave us. It names the DGRM page "Artes e Utensilios de Pesca" and quotes "armadilhas (gaiolas, potes, cestos ou outras)". Our own search found only commercial trap rules and did not reach that page. We did not confirm it ourselves.',
+      'England IFCA rules are from the same report. We did not open the MMO or an IFCA page.',
+      'The Scotland statement (no general recreational licence, permission needed) was seen on the gov.scot page in search results.',
+      'We found no Scotland, Wales or Northern Ireland rule for traps. We give no instructions for building traps.',
       'The "keep crabs and lobsters alive until cooking" advice is attributed to USDA in the PDF. The "pearly or opaque" test is attributed to FDA. We did not open either page.',
       'The steps for catching, separating the crab body and removing the shrimp vein are general kitchen practice. We did not find a source.',
       'We found no UK or US size limits and no Portugal limits. Check with the local authority.'
@@ -111,22 +119,23 @@
       'Harmful algal toxins cannot be seen, smelled or tasted, and cooking does not remove them.',
       'The shells opening is not proof that toxins are absent.',
       'Do not collect near sewage outlets, marinas, runoff or an algal bloom.',
-      'Closure status written in this app is not current. Check the official page on the same day.'
+      'Closure status written in this app is not current. Check the official page on the same day.',
+      'A classified shellfish area is not permission to collect. Check the local rules for the shore.'
     ],
     sections: [
       { h: 'Where to check, as of 28 Oct 2026', items: [
         'Portugal: IPMA bivalve harvesting status page. It separates areas approved for direct eating from areas that need professional purification or processing.',
         'United States: check your state shellfish closures and the CDC page on harmful algal blooms.',
-        'United Kingdom: we found no UK source. Check with your local council and the Food Standards Agency.'
+        'United Kingdom: the Food Standards Agency says classifying a shellfish area does not give anyone the right to harvest it. Other approvals may apply, such as the local fisheries authority, conservation bodies and the landowner. Check the exact shore and date. We found no UK list of open recreational shores.'
       ] }
     ],
     tip: ['Save the IPMA page in your phone before you go.', 'Write the date you checked in your notebook.'],
     after: ['Wash your hands and tools with soap and safe water.', 'Throw the shells away from camp.'],
-    sources: [['IPMA Portugal: bivalve harvesting permissions and prohibitions (cited to us, not checked)', 'https://www.ipma.pt/en/bivalves/'], ['CDC: preventing illnesses caused by harmful algal blooms (cited to us, not checked)', 'https://www.cdc.gov/harmful-algal-blooms/prevention/index.html'], SAFE[1]],
+    sources: [['Food Standards Agency: shellfish classification', 'https://www.food.gov.uk/business-guidance/shellfish-classification'], ['IPMA Portugal: bivalve harvesting permissions and prohibitions (cited to us, not checked)', 'https://www.ipma.pt/en/bivalves/'], ['CDC: preventing illnesses caused by harmful algal blooms (cited to us, not checked)', 'https://www.cdc.gov/harmful-algal-blooms/prevention/index.html'], SAFE[1]],
     unconfirmed: [
       PDFNOTE,
       'The IPMA closures change over time. This guide is dated 28 Oct 2026 and must never be read as current.',
-      'We found no UK shellfish source in our search.',
+      'The FSA statement that classification does not confer the right to harvest was seen on FSA pages in search results. We did not find a UK list of shores open for recreational collecting.',
       'The "tap the shell and it should close" check and the "discard shells that stay closed" rule are the PDF steps. The FDA opening criterion is from the PDF. We did not open the FDA page.',
       'The CDC statement that harmful algal toxins cannot be detected by smell, appearance or taste and are not removed by cooking is from the PDF.'
     ]
@@ -209,33 +218,35 @@
   var solar = {
     id: 'solar-oven-cooking', area: 'Food', icon: 'sun', difficulty: 'Practical', status: 'partly', checkedOn: '28 Oct 2026',
     title: 'Solar oven cooking: what it can and cannot do',
-    intro: 'A solar oven uses sunlight, not fuel. It is slow and depends on the weather. Raw meat, fish and poultry should only be cooked in one that can reach and hold a safe temperature.',
+    intro: 'A solar oven uses sunlight, not fuel. It is slow and depends on the weather. A homemade solar oven is NOT validated for cooking raw fish, meat or poultry. Use it for rice, beans, vegetables and heating water. Finish raw animal food on a stove or fire.',
     first: [
-      'Use a thermometer. Do not guess.',
-      'Fish needs 145 F (63 C). Poultry needs 165 F (74 C).',
-      'If it cannot reach the temperature, finish on a stove or fire.',
-      'Use it for rice, beans and vegetables on sunny days.'
+      'Use a solar oven for rice, beans, vegetables and hot water.',
+      'Do not cook raw fish, meat or poultry in a homemade solar oven.',
+      'Use a thermometer for any food. Fish needs 145 F (63 C). Poultry needs 165 F (74 C).',
+      'If the sun fades, finish on a camp stove or fire.'
     ],
     do: [
       'Set the oven in full sun on level ground, away from shade, and aim it at the sun.',
-      'Use a dark pot with a lid. Put the thermometer in the food.',
+      'Use a dark pot with a lid. Put a thermometer in the food.',
       'Preheat the oven for a short time before you put the food in.',
       'Turn the oven toward the sun every 30 to 60 minutes.',
-      'Cook raw fish, meat and poultry only if the thickest part reaches the safe temperature and stays there.',
-      'If the sun fades, finish on a camp stove or a fire.',
+      'Cook rice, beans and vegetables, or heat water. Check that the food is hot all the way through.',
+      'For raw fish, meat or poultry, use a camp stove or a fire. Food held for hours at warm, unsafe temperatures before it cooks can make you sick, even if a later reading looks safe.',
       'Use oven mitts. Reflectors and the pot can be hot.'
     ],
     warn: [
-      'Do not rely on a solar oven for raw animal food on a cloudy day.',
+      'A homemade solar oven is not validated for raw fish, meat or poultry.',
+      'A safe temperature reading does not show the food was not held too long at unsafe temperatures before.',
       'Reflectors can hurt your eyes. Do not look at them.',
       'Do not leave raw food in a lukewarm oven.'
     ],
     tip: ['Use it for beans and rice to save fuel.', 'Keep a thermometer with it.'],
     after: ['Let the pot cool before you wash it.', 'Keep reflectors clean.'],
-    sources: [SAFE[2]],
+    sources: [SAFE[2], ['USDA FSIS Ask USDA (home page only): the report cites its oven temperature guidance. We did not open it.', 'https://ask.fsis.usda.gov']],
     unconfirmed: [
       PDFNOTE,
-      'The only claim from the PDF is that a solar oven uses sunlight, heats slowly and depends on the weather, and that raw animal foods need a cooker that reaches and holds a safe temperature.',
+      'A verification report you gave us says we found no official source validating a homemade solar oven for raw fish or poultry. The report says a solar cooker can use sunlight to heat food, but that does not prove a homemade cooker is safe for raw animal food. We changed this guide to match.',
+      'The report says USDA gives a minimum conventional oven setting of 325 F (163 C) and warns about long exposure to unsafe temperatures. That does not prove how any solar oven performs. We did not open the USDA page.',
       'The set-up steps (dark pot with a lid, preheating, turning toward the sun) are common practice. We did not find a source.',
       'We did not find how hot a given solar oven gets.'
     ]
