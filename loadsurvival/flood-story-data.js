@@ -1,23 +1,23 @@
 /* Flood and long-outage modules and picture stories. 4 module guides and 10 picture stories.
    Written 29 Oct 2026 from the owner four-part report and story pack. Pictures are illustrations, not photographs of real places.
    Order of action: leave early if told to or if the way out is getting worse. An upper accessible room is a last resort only.
-   No sealing of rooms, no attics, no towels in drains, no roof signalling. Sources are cited to us, not checked. Not safety or legal advice. */
+   No sealing of rooms, no attics, no towels in drains, no roof signalling. Sources are given to us, not opened. Not safety or legal advice. */
 (function () {
-  var NOTE = "We read a relayed four-part report and search results. We could not open the pages, so they are cited to us, not checked by us.";
+  var NOTE = "We read a relayed four-part report and search results. We could not open the pages, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.";
   var GEN = "Steps marked as general practice are common advice. We did not find a named source for each step.";
   var CALL = "In danger to life, call 911 (US) or 112 (Portugal) first, if the phone works. Follow orders from local officials.";
   var ILL = "The pictures are illustrations made for this app. They are not photographs of real places, and they do not show that any place is safe, open or legal to use.";
   var FRAMES = "Only some steps have a picture. The other steps are text only until pictures are made.";
   var SRC = {
-    ready: ["Ready.gov: floods (from the owner report), cited to us, not checked", "https://www.ready.gov/floods"],
-    cdcFlood: ["CDC: floodwater safety (from the owner report), cited to us, not checked", "https://www.cdc.gov/floods/about/index.html"],
-    nws: ["US National Weather Service: flood safety (from the owner report), cited to us, not checked", "https://www.weather.gov/safety/flood"],
-    cdcWater: ["CDC: emergency water treatment (from the owner report), cited to us, not checked", "https://www.cdc.gov/water-emergency/about/index.html"],
-    fsDisaster: ["FoodSafety.gov: food and water in a disaster (from the owner report), cited to us, not checked", "https://www.foodsafety.gov/keep-food-safe/food-safety-in-disaster-or-emergency"],
-    fsOutage: ["FoodSafety.gov: food safety during a power outage (from the owner report), cited to us, not checked", "https://www.foodsafety.gov/food-safety-charts/food-safety-during-power-outage"],
-    cdcDis: ["CDC: disasters (from the owner report), cited to us, not checked", "https://www.cdc.gov/disasters/index.html"],
-    nchfp: ["USDA Complete Guide to Home Canning (from the owner report), cited to us, not checked", "https://nchfp.uga.edu/resources/category/usda-guide"],
-    usu: ["Utah State University Extension: preserve the harvest (from the owner report), cited to us, not checked", "https://extension.usu.edu/preserve-the-harvest/"]
+    ready: ["Ready.gov: floods (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.ready.gov/floods"],
+    cdcFlood: ["CDC: floodwater safety (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.cdc.gov/floods/about/index.html"],
+    nws: ["US National Weather Service: flood safety (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.weather.gov/safety/flood"],
+    cdcWater: ["CDC: emergency water treatment (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.cdc.gov/water-emergency/about/index.html"],
+    fsDisaster: ["FoodSafety.gov: food and water in a disaster (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.foodsafety.gov/keep-food-safe/food-safety-in-disaster-or-emergency"],
+    fsOutage: ["FoodSafety.gov: food safety during a power outage (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.foodsafety.gov/food-safety-charts/food-safety-during-power-outage"],
+    cdcDis: ["CDC: disasters (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.cdc.gov/disasters/index.html"],
+    nchfp: ["USDA Complete Guide to Home Canning (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://nchfp.uga.edu/resources/category/usda-guide"],
+    usu: ["Utah State University Extension: preserve the harvest (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://extension.usu.edu/preserve-the-harvest/"]
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "shield"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
@@ -142,7 +142,7 @@
       ["90", "Stay or go: water, food safety, waste, contact."]
     ] },
     sources: [SRC.fsOutage, SRC.cdcDis],
-    unconfirmed: [NOTE, "The day-by-day plan is from the owner report. The fridge and freezer times are in the FoodSafety.gov chart cited to us. We did not open it. " + GEN] });
+    unconfirmed: [NOTE, "The day-by-day plan is from the owner report. The fridge and freezer times are in the FoodSafety.gov chart given to us. We did not open it. " + GEN] });
 
   add({ id: "pantry-90-year-plan", area: "Food • Stockpile", icon: "can", title: "90-day, one-year and bulk pantry: what the numbers mean (and do not mean)",
     intro: "This is a planning example for 6 to 15 people. The three staples used (rice, dry beans, rolled oats) are not a balanced diet. Use the Pantry and bucket planner tool and change every number. Plan BEFORE a crisis.",

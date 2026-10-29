@@ -2,21 +2,21 @@
    Written 29 Oct 2026 from a relayed report plus search results (pages not opened). No wire gauge or fuse table is given because no named chart was supplied.
    Buying and installing is planning for BEFORE a crisis. Every guide has a version that needs no shop. Not electrical advice: a qualified electrician decides. */
 (function () {
-  var NOTE = "We read search results and a relayed report about these topics. We could not open the pages, so they are cited to us, not checked by us.";
+  var NOTE = "We read search results and a relayed report about these topics. We could not open the pages, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.";
   var GEN = "Steps marked as general practice are common advice. We did not find a named source for each one.";
   var ELEC = "Power can burn, start a fire and kill. Do not treat a home-made power system as safe by default. Where this guide says call a qualified electrician, do that.";
   var BEFORE = "Plan, buy and test this BEFORE a crisis. In a crisis shops may be closed. The no-store steps are for when you could not prepare.";
   var SRC = {
-    vicForum: ["Victron Community: cable resistance and voltage drop thread (a 3 percent rule of thumb from a forum answer), cited to us, not checked", "https://communityarchive.victronenergy.com/questions/202260/why-doesnt-victron-specify-the-resistance-of-the-p.html"],
-    vicBook: ["Wiring Unlimited by Victron (book listing: current, cable resistance, voltage drop, fuses), cited to us, not checked", "https://www.bimblesolar.com/wiring-unlimited-book"],
-    pwm: ["Victron Community: PWM reality against expected MPPT output, cited to us, not checked", "https://communityarchive.victronenergy.com/questions/59779/pwm-reality-vs-expected-mppt-production-for-rv.html"],
-    pwm2: ["Footprint Hero: PWM vs MPPT charge controllers (a blog), cited to us, not checked", "https://footprinthero.com/pwm-vs-mppt-charge-controllers"],
-    fda: ["FoodSafety.gov blog archive: food safety in a power outage, cited to us, not checked", "https://webarchive.library.unt.edu/web/20130218132749/http://www.foodsafety.gov/blog/power_outages.html"],
-    fdaNews: ["News summary of FDA advice: fridge keeps food cold about 4 hours, cited to us, not checked", "https://okcfox.com/news/local/fda-fridge-will-keep-food-cold-for-4-hours-in-a-power-outage"],
-    starter: ["Pedal Commander: deep cycle and starter batteries (a blog), cited to us, not checked", "https://pedalcommander.com/blogs/backyard/difference-between-deep-cycle-and-starter-batteries"],
-    safety: ["Occupational Safety Academy: electrical hazards of solar PV and battery storage, cited to us, not checked", "https://occupationalsafetyacademy.com/blogs/news/electrical-hazards-and-safety-controls-for-solar-pv-and-battery-storage-systems"],
-    ufsw: ["UFSW: solar PV system safety and fire ground procedures, cited to us, not checked", "https://ufsw.org"],
-    seBat: ["SolarEdge: home battery emergency response guide, cited to us, not checked", "https://knowledge-center.solaredge.com"]
+    vicForum: ["Victron Community: cable resistance and voltage drop thread (a 3 percent rule of thumb from a forum answer) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://communityarchive.victronenergy.com/questions/202260/why-doesnt-victron-specify-the-resistance-of-the-p.html"],
+    vicBook: ["Wiring Unlimited by Victron (book listing: current, cable resistance, voltage drop, fuses) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://www.bimblesolar.com/wiring-unlimited-book"],
+    pwm: ["Victron Community: PWM reality against expected MPPT output (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://communityarchive.victronenergy.com/questions/59779/pwm-reality-vs-expected-mppt-production-for-rv.html"],
+    pwm2: ["Footprint Hero: PWM vs MPPT charge controllers (a blog) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://footprinthero.com/pwm-vs-mppt-charge-controllers"],
+    fda: ["FoodSafety.gov blog archive: food safety in a power outage (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://webarchive.library.unt.edu/web/20130218132749/http://www.foodsafety.gov/blog/power_outages.html"],
+    fdaNews: ["News summary of FDA advice: fridge keeps food cold about 4 hours (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://okcfox.com/news/local/fda-fridge-will-keep-food-cold-for-4-hours-in-a-power-outage"],
+    starter: ["Pedal Commander: deep cycle and starter batteries (a blog) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://pedalcommander.com/blogs/backyard/difference-between-deep-cycle-and-starter-batteries"],
+    safety: ["Occupational Safety Academy: electrical hazards of solar PV and battery storage (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://occupationalsafetyacademy.com/blogs/news/electrical-hazards-and-safety-controls-for-solar-pv-and-battery-storage-systems"],
+    ufsw: ["UFSW: solar PV system safety and fire ground procedures (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://ufsw.org"],
+    seBat: ["SolarEdge: home battery emergency response guide (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://knowledge-center.solaredge.com"]
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.area = "Power • Solar projects"; g.icon = g.icon || "sun"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }

@@ -2,20 +2,20 @@
    Written 29 Oct 2026 at the owner request: food catching must be fully on the site, and gardening is shown as how stored food is replaced over time.
    Legal status is never claimed. Every catching guide says legal status is not verified and tells the reader how to check. No product names. Not legal or medical advice. */
 (function () {
-  var NOTE = "We read search results and relayed reports about these topics. We could not open the pages, so they are cited to us, not checked by us.";
+  var NOTE = "We read search results and relayed reports about these topics. We could not open the pages, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.";
   var GEN = "Steps marked as general practice are common advice. We did not find a named source for each one.";
   var LEGAL = "LEGAL STATUS NOT VERIFIED for your place. No emergency gives an automatic right to trap, fish, hunt or enter private land. Do the 10 checks in the trapping rules guide first, and write the answers on paper before a crisis.";
   var CALL = "In danger to life, call 911 (US) or 112 (Portugal) first, if the phone works.";
   var SRC = {
-    army: ["US Army Survival manual FM 21-76 (publisher site, the manual itself was not opened), cited to us, not checked", "https://armypubs.army.mil/"],
-    psu: ["Penn State Extension: proper field dressing and handling of wild game and fish, cited to us, not checked", "https://extension.psu.edu/proper-field-dressing-and-handling-of-wild-game-and-fish"],
-    tul: ["Utah Department of Health: tularemia fact sheet, cited to us, not checked", "https://epi.utah.gov/wp-content/uploads/tularemia_factsheet.pdf"],
-    dgrm: ["Portugal DGRM: permitted and prohibited recreational marine fishing gear (from the owner Part 3D file), cited to us, not checked", "https://dgrm.pt/pt/web/guest/artes-e-utensilios-de-pesca"],
-    fwc: ["Florida FWC: freshwater fishing regulations (from the owner Part 3D file), cited to us, not checked", "https://myfwc.com/fishing/freshwater/regulations/"],
-    celiac: ["Celiac Disease Foundation (site home page, specific page not opened), cited to us, not checked", "https://celiac.org/"],
-    fda: ["US FDA (site home page, specific allergen page not opened), cited to us, not checked", "https://www.fda.gov/"],
-    eu: ["European Commission food safety (site home page, specific allergen page not opened), cited to us, not checked", "https://food.ec.europa.eu/"],
-    aap: ["American Academy of Pediatrics HealthyChildren (site home page, specific page not opened), cited to us, not checked", "https://www.healthychildren.org/"]
+    army: ["US Army Survival manual FM 21-76 (publisher site, the manual itself was not opened) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://armypubs.army.mil/"],
+    psu: ["Penn State Extension: proper field dressing and handling of wild game and fish (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://extension.psu.edu/proper-field-dressing-and-handling-of-wild-game-and-fish"],
+    tul: ["Utah Department of Health: tularemia fact sheet (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://epi.utah.gov/wp-content/uploads/tularemia_factsheet.pdf"],
+    dgrm: ["Portugal DGRM: permitted and prohibited recreational marine fishing gear (from the owner Part 3D file) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://dgrm.pt/pt/web/guest/artes-e-utensilios-de-pesca"],
+    fwc: ["Florida FWC: freshwater fishing regulations (from the owner Part 3D file) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://myfwc.com/fishing/freshwater/regulations/"],
+    celiac: ["Celiac Disease Foundation (site home page, specific page not opened) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://celiac.org/"],
+    fda: ["US FDA (site home page, specific allergen page not opened) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.fda.gov/"],
+    eu: ["European Commission food safety (site home page, specific allergen page not opened) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://food.ec.europa.eu/"],
+    aap: ["American Academy of Pediatrics HealthyChildren (site home page, specific page not opened) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.healthychildren.org/"]
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "leaf"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
@@ -48,13 +48,13 @@
     g.warn = [
       "Traps can catch pets, protected animals and children. Keep them away from paths and homes.",
       "Abandoned gear pollutes and keeps catching. Always take every piece back.",
-      "In Portugal, recreational marine traps (cages, pots, baskets) are prohibited, as the DGRM page cited to us says. Freshwater rules differ. We did not check your water."
+      "In Portugal, recreational marine traps (cages, pots, baskets) are prohibited, as the DGRM page given to us says. Freshwater rules differ. We did not check your water."
     ];
     g.tip = ["Learn from a local hunter or fisher before a crisis. They know the land and the rules.", "Take a hunter education or trapper course if one is offered."];
     g.after = ["Check traps at dawn and dusk. Clean the catch fast. Cook it fully."];
     g.sources = [SRC.army, SRC.dgrm, SRC.fwc];
     g.source = g.sources[0][1];
-    g.unconfirmed = [NOTE, "The 10 checks come from the owner Part 3D file, cited to us. We did not verify any local rule. The ranking of methods by how selective they are is general practice. " + GEN];
+    g.unconfirmed = [NOTE, "The 10 checks come from the owner Part 3D file, given to us. We did not verify any local rule. The ranking of methods by how selective they are is general practice. " + GEN];
     g.status = "partly";
   });
 
@@ -102,7 +102,7 @@
 
   add({ id: "trap-fish-weir", area: "Food • Traps and catch", title: "Stone fish trap or basket trap in a stream: how it works",
     intro: "A V-shaped line of stones guides small fish into a basket or a pool. It is a very old method. " + LEGAL,
-    first: [LEGAL, "In Portugal recreational marine traps (cages, pots, baskets) are prohibited, per the DGRM page cited to us. Rivers and streams follow other rules. We did not check yours.", "Never go into fast or deep water for gear.", "Fish need cooking fully. Check pollution and fish advice."],
+    first: [LEGAL, "In Portugal recreational marine traps (cages, pots, baskets) are prohibited, per the DGRM page given to us. Rivers and streams follow other rules. We did not check yours.", "Never go into fast or deep water for gear.", "Fish need cooking fully. Check pollution and fish advice."],
     do: [
       "Step 1. Find slow shallow flowing water with a firm bed and a safe bank.",
       "Step 2. Check pollution, floods, algae and fish advice. If you cannot check, do not eat the catch.",
@@ -137,7 +137,7 @@
     tip: ["Do this outside on a board you can wash. Keep flies off the meat."],
     after: ["Cooked meat keeps only a short time without cold. Eat it the same day."],
     sources: [SRC.psu, SRC.tul],
-    unconfirmed: [NOTE, "The 165 F cooking target and the glove advice come from the extension and health pages cited to us. The skinning steps are general practice. Laws on taking game differ by place and we did not check any. " + GEN] });
+    unconfirmed: [NOTE, "The 165 F cooking target and the glove advice come from the extension and health pages given to us. The skinning steps are general practice. Laws on taking game differ by place and we did not check any. " + GEN] });
 
   /* ---- Gardening as the long-term replacement for stored food ---- */
   add({ id: "gr-replace-stored-food", area: "Home skills • Grow food", icon: "leaf", title: "Growing food to replace stored food: the plan, the months and the crops that feed you",
