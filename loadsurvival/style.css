@@ -408,3 +408,18 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .hmtools .card{min-height:0;padding:12px 14px;border-radius:14px}.hmtools .card b{font-size:16px}.hmtools .card small{font-size:13px}
 .hm .hmgrid4 .hmtile{aspect-ratio:16/10}
 @media(max-width:640px){.hmgrid4{grid-template-columns:repeat(2,minmax(0,1fr))}.hmstrip{grid-template-columns:repeat(2,minmax(0,1fr))}.hmrow .hmtile{width:200px}}
+
+/* All pages, same style (p90-v108): picture banner, slim panels, picture tiles for situations and regional guides */
+.pgban{position:relative;height:130px;margin:0 0 12px;border-radius:16px;overflow:hidden;border:1px solid #26302d;background:#151b1d}
+.pgban img{display:block;width:100%;height:100%;object-fit:cover}
+.pgban:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,16,.05) 20%,rgba(11,15,16,.88))}
+.pgban + h1{position:relative;z-index:2;margin:-60px 0 12px;padding:0 16px;text-shadow:0 2px 10px rgba(0,0,0,.85)}
+.card,.panel{background:#151b1d;border:1px solid #26302d;border-radius:14px;padding:14px 16px;box-shadow:none}
+.emergency{padding:14px 16px;border-radius:14px;box-shadow:none}.emergency h2{font-size:20px}
+.notice{padding:10px 14px;border-radius:12px;background:#241c14}
+.hmsc{grid-template-columns:repeat(3,minmax(0,1fr))}
+.hmsc .hmtile{aspect-ratio:16/9}
+.hmlist .li .progress{margin-top:6px;height:6px}
+.hmlist .li .progress i{margin-left:0;font-size:inherit;color:inherit}
+.hmlist .li .chev{margin-left:auto;color:var(--muted);font-size:20px}
+@media(max-width:640px){.hmsc{grid-template-columns:repeat(2,minmax(0,1fr))}.pgban{height:104px}.pgban + h1{margin-top:-50px}}

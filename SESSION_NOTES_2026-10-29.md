@@ -20,6 +20,8 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 
 - Sleek pass built (Home down to the footer, Guides tiles and rows, Tools and Lists cards, button caps, calmer dyslexia spacing), cache p89-v107. Backup backup/2026-10-29-loadsurvival-p88-v106-after1127 at 62642718. PR awaiting merge. Topic picture prompts delivered (14).
 
+- #1128 (sleek pass) merged by DssOrit. All-pages style with a picture banner on every page built, cache p90-v108. Backup backup/2026-10-29-loadsurvival-p89-v107 at 4eb5d6c1. PR awaiting merge.
+
 ## Approved scope, not built yet (each needs its own phrase, backup, checks, PR)
 - Seniors guides and pregnancy guides (named sources, status label, Not confirmed list).
 - Place pages: Portugal (Lisboa, Porto, Coimbra, Setubal), United States by state (CA: Los Angeles, San Pedro, Palmdale, Valencia; FL: Jacksonville, Orlando; SC: Conway; Ohio statewide). Each with hazards and alerts, stores, DIY survival, maps with a Load Maps link, ponds, rivers, water sources, off-grid resources.
