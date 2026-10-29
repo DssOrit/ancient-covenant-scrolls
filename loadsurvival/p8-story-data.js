@@ -21,7 +21,7 @@
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "image"; g.area = "Scenarios • Part 8 stories"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
   function story(n, id, title, intro, frames, warn, opt) {
     opt = opt || {};
-    var secs = (opt.pics || []).map(function (p, k) { return { h: k === 0 ? "Picture" : "Picture, continued", img: "assets/pics/" + p[0] + ".jpg", alt: p[1], items: [p[2]] }; });
+    var secs = (opt.pics || []).map(function (p, k) { return { h: k === 0 ? "Picture" : "Picture, continued", img: "assets/pics/" + p[0] + ".jpg", alt: p[1], items: [p[2]], at: ({ "p8-01-water-stops": 2, "p8-05-bucket-toilet": 4, "p8-09-child-care": 4, "p8-10-dry-storage": 4 })[p[0]] }; });
     add({ id: id, title: "Part 8, Story " + n + ": " + title, intro: intro + " " + ILL,
       first: ["Story " + n + " of 10. Six frames, one action each.", CALL, "Every day ask: is there enough safe water for the next 72 hours, a safe way to dispose of waste, a safe building, a livable temperature, medicine, and a way to talk or leave? A NO on any of these means get help or move, not more improvising.", NOFRAMES],
       do: frames.map(function (f, i) { return "Frame " + (i + 1) + ". " + f; }),

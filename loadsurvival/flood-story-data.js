@@ -21,6 +21,7 @@
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "shield"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
+  var AT = { 's01-watch-flood': 2, 's01-go-bag': 3, 's01-call-help': 4, 's03-upper-room': 1, 's04-inventory': 1, 's04-neighbour': 2, 's04-pantry': 3, 's04-medicines': 5, 's04-documents': 6, 's05-boil-water': 5, 's06-radio-map': 1, 's06-alerts': 2, 's06-warning': 3, 's06-handhelds': 4, 's06-plan-card': 5, 's07-family-plan': 1, 's08-crank-radio': 6, 's09-armchair': 1, 's10-water-jugs': 1 };
   function P(file) { return "assets/pics/story-" + file + ".jpg"; }
 
   /* ---------------- Modules ---------------- */
@@ -176,7 +177,7 @@
 
   /* ---------------- Picture stories ---------------- */
   function story(n, id, title, intro, pics, frames, warn, extra) {
-    var secs = pics.map(function (p, k) { return { h: k === 0 ? "Pictures" : "Pictures, continued", img: P(p[0]), alt: p[1], items: [p[2]] }; });
+    var secs = pics.map(function (p, k) { return { h: k === 0 ? "Pictures" : "Pictures, continued", img: P(p[0]), alt: p[1], items: [p[2]], at: AT[p[0]] }; });
     var g = { id: id, area: "Scenarios • Picture stories", icon: "image", title: title, intro: intro + " " + ILL,
       first: ["Story " + n + " of 10. Six steps, one action each.", CALL, "Beginner mode: read one step at a time. Expert mode: read the whole list.", FRAMES],
       do: frames.map(function (f, i) { return "Frame " + (i + 1) + ". " + f; }),

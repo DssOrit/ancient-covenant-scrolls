@@ -121,14 +121,75 @@ window.LSX = function (A) {
     var items = steps.map(function (x, i) {
       var cls = (mode === 'beginner' && i !== cur) ? ' bhide' : '';
       var chk = '<label class="checkrow"><input type="checkbox" data-step="' + esc(id) + '|' + i + '"' + (s[i] ? ' checked' : '') + '><span>' + esc(x) + '</span></label>';
-      if (P) { var src = P[Math.min(i, P.length - 1)]; return '<li class="stepcard' + cls + '"><img src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span>' + chk + '</div></li>'; }
+      if (P) { var src = P[Math.min(i, P.length - 1)]; return '<li class="stepcard' + cls + '"><img data-viewer="1" tabindex="0" role="button" aria-label="Open step ' + (i + 1) + ' in the step viewer" src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span>' + chk + '</div></li>'; }
       return '<li value="' + (i + 1) + '" class="' + cls.trim() + '">' + chk + '</li>';
     }).join('');
     h += '<ol class="' + (P ? 'stepcards' : 'stepsol') + (mode === 'beginner' ? ' beginner' : '') + '">' + items + '</ol>';
     if (mode === 'beginner' && n > 1) h += '<div class="actions noprint bnav"><button type="button" class="secondary" data-action="step-prev"' + (cur === 0 ? ' disabled' : '') + '>Back</button><span class="muted bcount">' + (cur + 1) + ' of ' + n + '</span><button type="button" class="button" data-action="step-next"' + (cur === n - 1 ? ' disabled' : '') + '>Next step</button></div>';
-    h += '<div class="actions noprint"><button type="button" class="secondary" data-action="steps-reset">Clear ticks for this guide</button></div>';
+    h += '<div class="actions noprint"><button type="button" class="secondary" data-action="vw-open">Open step viewer</button><button type="button" class="secondary" data-action="steps-reset">Clear ticks for this guide</button></div>';
     return h;
   }
+
+  /* ---------- full-screen step viewer: tap a picture to read one step at a time ---------- */
+  var VW = null;
+  function viewerSlides(l) {
+    var steps = l.do || [], P = panelsFor(l), slides = [], pics = (l.sections || []).filter(function (s) { return s.img; });
+    steps.forEach(function (x, i) { slides.push({ step: x, n: i + 1, img: P ? P[Math.min(i, P.length - 1)] : '', alt: P ? 'Step ' + (i + 1) + ' picture' : '', cap: '' }); });
+    pics.forEach(function (s, j) {
+      var cap = (s.items || []).join(' '), m = /^Frame (\d+)/i.exec(cap), idx = s.at ? Number(s.at) - 1 : (m ? Number(m[1]) - 1 : (pics.length === steps.length ? j : -1));
+      if (idx >= 0 && idx < slides.length && !slides[idx].img) { slides[idx].img = s.img; slides[idx].alt = s.alt || ''; slides[idx].cap = cap; }
+      else slides.push({ step: '', n: 0, img: s.img, alt: s.alt || '', cap: cap });
+    });
+    if (l.image && !P && !pics.length) slides.push({ step: '', n: 0, img: l.image, alt: 'Illustration for ' + l.title, cap: '' });
+    return slides;
+  }
+  function vwRender() {
+    var d = document.getElementById('gviewer'); if (!d || !VW) return;
+    var s = VW.slides[VW.i], n = VW.slides.length;
+    d.innerHTML = '<div class="vwbar"><b id="vwcount" role="status" aria-live="polite">' + (VW.i + 1) + ' of ' + n + '</b><button type="button" class="button" data-vw="close" aria-label="Close the step viewer">Close</button></div>' +
+      '<div class="vwbody">' + (s.img ? '<img class="vwimg" src="' + esc(s.img) + '" alt="' + esc(s.alt) + '">' : '') +
+      (s.step ? '<p class="vwstep">' + esc(s.step) + '</p>' : '') + (s.cap ? '<p class="vwcap">' + esc(s.cap) + '</p>' : '') + '</div>' +
+      '<div class="vwnav"><button type="button" class="secondary" data-vw="prev"' + (VW.i === 0 ? ' disabled' : '') + '>Back</button><button type="button" class="button" data-vw="next"' + (VW.i === n - 1 ? ' disabled' : '') + '>Next</button></div>';
+    var b = d.querySelector('.vwbody'); if (b) b.scrollTop = 0;
+  }
+  function vwOpen(at) {
+    var l = openLesson(); if (!l) return;
+    var slides = viewerSlides(l); if (!slides.length) return;
+    VW = { slides: slides, i: Math.max(0, Math.min(at || 0, slides.length - 1)), from: document.activeElement };
+    var d = document.getElementById('gviewer');
+    if (!d) {
+      d = document.createElement('div'); d.id = 'gviewer'; d.className = 'gviewer'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', 'Step viewer');
+      d.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-vw]'); if (!b || b.disabled) return; vwGo(b.dataset.vw); });
+      document.body.appendChild(d);
+    }
+    document.body.classList.add('vwopen'); vwRender();
+    var c = d.querySelector('[data-vw=close]'); if (c) c.focus();
+  }
+  function vwGo(what) {
+    if (!VW) return;
+    if (what === 'close') { var d = document.getElementById('gviewer'); if (d) d.remove(); document.body.classList.remove('vwopen'); try { if (VW.from && VW.from.focus) VW.from.focus(); } catch (e) {} VW = null; return; }
+    if (what === 'prev') VW.i = Math.max(0, VW.i - 1); else if (what === 'next') VW.i = Math.min(VW.slides.length - 1, VW.i + 1);
+    vwRender(); var c = document.querySelector('#gviewer [data-vw=' + (what === 'prev' && VW.i === 0 ? 'next' : what === 'next' && VW.i === VW.slides.length - 1 ? 'prev' : what) + ']'); if (c) c.focus();
+  }
+  function vwSlideFor(im) {
+    var l = openLesson(); if (!l) return 0;
+    var cards = document.querySelectorAll('.guide .stepcard'), k, slides = viewerSlides(l);
+    for (k = 0; k < cards.length; k++) if (cards[k].contains(im)) return k;
+    var src = im.getAttribute('src');
+    for (k = 0; k < slides.length; k++) if (slides[k].img === src) return k;
+    return 0;
+  }
+  document.addEventListener('click', function (e) {
+    var im = e.target.closest && e.target.closest('img[data-viewer]');
+    if (im && im.closest('.guide')) { e.preventDefault(); vwOpen(vwSlideFor(im)); }
+  });
+  document.addEventListener('keydown', function (e) {
+    var im = e.target && e.target.matches && e.target.matches('img[data-viewer]') ? e.target : null;
+    if (im && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); vwOpen(vwSlideFor(im)); return; }
+    if (!VW) return;
+    if (e.key === 'Escape') vwGo('close'); else if (e.key === 'ArrowRight') vwGo('next'); else if (e.key === 'ArrowLeft') vwGo('prev');
+  });
+  window.addEventListener('hashchange', function () { if (VW) vwGo('close'); });
   function doSteps(l) { return '<div id="dosteps">' + stepsInner(l) + '</div>'; }
   function openLesson() { return D.lessons.filter(function (x) { return x.id === state.opened; })[0]; }
   function stepsRedraw() { var l = openLesson(), e = document.getElementById('dosteps'); if (l && e) e.innerHTML = stepsInner(l); }
@@ -406,7 +467,7 @@ window.LSX = function (A) {
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
     h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
-    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + (s.img ? '<img class="lesson-illustration strip" src="' + esc(s.img) + '" alt="' + esc(s.alt || '') + '" loading="lazy">' : '') + li(s.items) + '</section>'; });
+    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + (s.img ? '<img class="lesson-illustration strip" data-viewer="1" tabindex="0" role="button" aria-label="Open this picture in the step viewer. ' + esc(s.alt || '') + '" src="' + esc(s.img) + '" alt="' + esc(s.alt || '') + '" loading="lazy">' : '') + li(s.items) + '</section>'; });
     h += fbHtml(l);
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
@@ -797,6 +858,7 @@ window.LSX = function (A) {
     'open-list': function (x) { switchView('list', x.dataset.list); },
     'open-tool': function (x) { switchView('tool', x.dataset.tool); },
     'list-reset': function () { S.lists[state.opened] = {}; put(); A.render(); },
+    'vw-open': function () { var l = openLesson(), cur = l ? Math.min(Math.max(S.cur[l.id] || 0, 0), Math.max((l.do || []).length - 1, 0)) : 0; vwOpen(modeOf() === 'beginner' ? cur : 0); },
     'mode-set': function (x) { S.mode = x.dataset.mode === 'beginner' ? 'beginner' : 'expert'; put(); stepsRedraw(); },
     'step-prev': function () { var id = state.opened; S.cur[id] = Math.max(0, (S.cur[id] || 0) - 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
     'step-next': function () { var l = openLesson(), id = state.opened, n = l && l.do ? l.do.length : 0; S.cur[id] = Math.min(Math.max(n - 1, 0), (S.cur[id] || 0) + 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
