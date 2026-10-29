@@ -58,7 +58,7 @@
       CALL,
       "Check who owns the bamboo and any local limits on cutting it.",
       "Wear eye protection, thick gloves, long sleeves and sturdy shoes.",
-      "Keep people and pets out of the cutting path. Frames 1 and 2 have a picture. The other frames are text only."
+      "Keep people and pets out of the cutting path. Every frame has a picture."
     ],
     do: [
       "Frame 1. Select a sound culm sized for a stake or trellis. Check for splits, decay, insects and sharp splinters.",
@@ -79,11 +79,15 @@
     after: ["Re-check stakes and trellises after storms. Replace split poles."],
     sections: [
       { h: "Pictures", img: "assets/pics/p11b-01.jpg", alt: "A man in safety glasses looks up a tall green bamboo culm in a bamboo grove, with one hand resting on the stem.", items: ["Frame 1: look the culm over for splits and decay. No tool in hand."] },
-      { h: "Pictures, continued", img: "assets/pics/p11b-02.jpg", alt: "A man puts on safety glasses and thick gloves beside a workbench with a hand saw, sandpaper and a bamboo pole.", items: ["Frame 2: eye protection and gloves on before you cut."] }
+      { h: "Pictures, continued", img: "assets/pics/p11b-02.jpg", alt: "A man puts on safety glasses and thick gloves beside a workbench with a hand saw, sandpaper and a bamboo pole.", items: ["Frame 2: eye protection and gloves on before you cut."] },
+      { h: "Pictures, continued", img: "assets/pics/p11b-03.jpg", alt: "A man in safety glasses and gloves measures a bamboo pole on a workbench with a tape measure and marks it with a pencil.", items: ["Frame 3: measure and mark on a steady bench. Cut only with a maintained hand tool."] },
+      { h: "Pictures, continued", img: "assets/pics/p11b-04.jpg", alt: "Gloved hands smooth the cut end of a bamboo pole with sandpaper on a workbench.", items: ["Frame 4: smooth the cut end. Hold the pole steady and sand away from your body."] },
+      { h: "Pictures, continued", img: "assets/pics/p11b-05.jpg", alt: "A man crouches in a vegetable bed, pushing a bamboo stake into firm soil beside a tomato plant and tying the plant loosely with a soft strip.", items: ["Frame 5: set the stake in firm soil and tie loosely with a soft tie."] },
+      { h: "Pictures, continued", img: "assets/pics/p11b-06.jpg", alt: "A man stands beside a finished bamboo trellis covered in climbing beans, with one hand resting on the frame. Nobody is on it.", items: ["Frame 6: inspect the finished trellis. It is for plants only, never for people or heavy loads."] }
     ],
     table: PT([["bamboo", "bambu"], ["garden stakes", "estacas para horta"], ["irrigation trough", "calha de rega"], ["basket", "cesto"], ["rack", "suporte"], ["rope", "corda"]]),
     sources: [],
-    unconfirmed: unc("no source page was supplied for bamboo strength or species. " + PTNOTE, "Only 2 of the 6 story pictures exist (frames 1 and 2), so the story is NOT complete.") });
+    unconfirmed: unc("no source page was supplied for bamboo strength or species. " + PTNOTE, "All six story pictures exist. In frames 1 and 2 the man wears a grey top and yellow gloves, and in frames 3 to 6 an olive shirt and grey gloves, so the clothes do not match. They are illustrations, not photographs of a real place. " + PENDING + ".") });
 
   add({ id: "p11c-water", area: "Water • Garden", title: "Part 11C: Rainwater and gravity irrigation (água e rega por gravidade)",
     intro: "Keep three kinds of water apart. DRINKING (potável): verified treated water. RAW (bruta): rain, river or other unverified water that needs evaluation and treatment. UTILITY (utilitária): water for the garden or cleaning only.",
