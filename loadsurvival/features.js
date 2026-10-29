@@ -108,14 +108,30 @@ window.LSX = function (A) {
   /* ---------- guide view ---------- */
   /* one picture panel beside each "What to do" step (panels come from window.LOAD_STEP_IMAGES[id]) */
   function panelsFor(l) { var m = window.LOAD_STEP_IMAGES && window.LOAD_STEP_IMAGES[l.id]; return m && m.length ? m : null; }
-  function doSteps(l) {
-    var steps = l.do || [], P = panelsFor(l);
-    if (!P) return ol(steps);
-    return '<ol class="stepcards">' + steps.map(function (x, i) {
-      var src = P[Math.min(i, P.length - 1)];
-      return '<li class="stepcard"><img src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span><p>' + esc(x) + '</p></div></li>';
-    }).join('') + '</ol>';
+  /* ---------- Beginner / Expert modes and step tick boxes (saved on this device only) ---------- */
+  S.steps = S.steps || {}; S.cur = S.cur || {};
+  function modeOf() { return S.mode === 'beginner' ? 'beginner' : 'expert'; }
+  function stepsDoneN(id, n) { var s = S.steps[id] || {}, c = 0, i; for (i = 0; i < n; i++) if (s[i]) c++; return c; }
+  function stepsInner(l) {
+    var steps = l.do || [], id = l.id, P = panelsFor(l), mode = modeOf(), n = steps.length;
+    if (!n) return '';
+    var cur = Math.min(Math.max(S.cur[id] || 0, 0), n - 1), done = stepsDoneN(id, n), s = S.steps[id] || {};
+    var h = '<div class="modebar noprint" role="group" aria-label="Reading mode"><button type="button" class="secondary" data-action="mode-set" data-mode="beginner" aria-pressed="' + (mode === 'beginner') + '">Beginner: one step at a time</button><button type="button" class="secondary" data-action="mode-set" data-mode="expert" aria-pressed="' + (mode === 'expert') + '">Expert: all steps</button></div>';
+    h += '<div class="stage"><b id="sprog" role="status" aria-live="polite">' + done + ' of ' + n + ' steps done</b><span class="muted">Saved on this device only</span></div><div class="progress big" aria-hidden="true"><i id="sbar" style="width:' + Math.round(done * 100 / n) + '%"></i></div>';
+    var items = steps.map(function (x, i) {
+      var cls = (mode === 'beginner' && i !== cur) ? ' bhide' : '';
+      var chk = '<label class="checkrow"><input type="checkbox" data-step="' + esc(id) + '|' + i + '"' + (s[i] ? ' checked' : '') + '><span>' + esc(x) + '</span></label>';
+      if (P) { var src = P[Math.min(i, P.length - 1)]; return '<li class="stepcard' + cls + '"><img src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span>' + chk + '</div></li>'; }
+      return '<li value="' + (i + 1) + '" class="' + cls.trim() + '">' + chk + '</li>';
+    }).join('');
+    h += '<ol class="' + (P ? 'stepcards' : 'stepsol') + (mode === 'beginner' ? ' beginner' : '') + '">' + items + '</ol>';
+    if (mode === 'beginner' && n > 1) h += '<div class="actions noprint bnav"><button type="button" class="secondary" data-action="step-prev"' + (cur === 0 ? ' disabled' : '') + '>Back</button><span class="muted bcount">' + (cur + 1) + ' of ' + n + '</span><button type="button" class="button" data-action="step-next"' + (cur === n - 1 ? ' disabled' : '') + '>Next step</button></div>';
+    h += '<div class="actions noprint"><button type="button" class="secondary" data-action="steps-reset">Clear ticks for this guide</button></div>';
+    return h;
   }
+  function doSteps(l) { return '<div id="dosteps">' + stepsInner(l) + '</div>'; }
+  function openLesson() { return D.lessons.filter(function (x) { return x.id === state.opened; })[0]; }
+  function stepsRedraw() { var l = openLesson(), e = document.getElementById('dosteps'); if (l && e) e.innerHTML = stepsInner(l); }
 
   /* ---------- "see the picture guide" links for guides that overlap a guide with pictures ---------- */
   var SEE_ALSO = {
@@ -776,6 +792,10 @@ window.LSX = function (A) {
     'open-list': function (x) { switchView('list', x.dataset.list); },
     'open-tool': function (x) { switchView('tool', x.dataset.tool); },
     'list-reset': function () { S.lists[state.opened] = {}; put(); A.render(); },
+    'mode-set': function (x) { S.mode = x.dataset.mode === 'beginner' ? 'beginner' : 'expert'; put(); stepsRedraw(); },
+    'step-prev': function () { var id = state.opened; S.cur[id] = Math.max(0, (S.cur[id] || 0) - 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
+    'step-next': function () { var l = openLesson(), id = state.opened, n = l && l.do ? l.do.length : 0; S.cur[id] = Math.min(Math.max(n - 1, 0), (S.cur[id] || 0) + 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
+    'steps-reset': function () { S.steps[state.opened] = {}; S.cur[state.opened] = 0; put(); stepsRedraw(); },
     'hide-install': function () { S.hideInstall = true; put(); A.render(); },
     'fridge-start': function () { S.outage = Date.now(); put(); fridgePanel(); startFridge(); },
     'fridge-stop': function () { S.outage = null; put(); clearTimers(); fridgePanel(); },
@@ -1277,6 +1297,12 @@ window.LSX = function (A) {
       var p = t.dataset.lcheck.split('|'); S.lists[p[0]] = S.lists[p[0]] || {}; S.lists[p[0]][p[1]] = t.checked; put();
       var L = C.lists.filter(function (x) { return x.id === p[0]; })[0], n = listDone(p[0]);
       setOut('lprog', n + ' of ' + L.items.length + ' done'); var b = document.getElementById('lbar'); if (b) b.style.width = Math.round(n * 100 / L.items.length) + '%'; return true;
+    }
+    if (t.dataset && t.dataset.step !== undefined) {
+      var sp = t.dataset.step.split('|'), sl = openLesson(), sn = sl && sl.do ? sl.do.length : 0;
+      S.steps[sp[0]] = S.steps[sp[0]] || {}; S.steps[sp[0]][sp[1]] = t.checked; put();
+      var sd = stepsDoneN(sp[0], sn); setOut('sprog', sd + ' of ' + sn + ' steps done'); var sb = document.getElementById('sbar'); if (sb && sn) sb.style.width = Math.round(sd * 100 / sn) + '%';
+      return true;
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
     if (id === 'pn-pre') { if (Number(t.value) > 0) { var pd = document.getElementById('pn-days'); if (pd) pd.value = t.value; } calcPantry(); return true; }
