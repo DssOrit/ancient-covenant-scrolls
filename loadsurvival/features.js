@@ -196,7 +196,24 @@ window.LSX = function (A) {
     'med-poison': ['med-carbon-monoxide'],
     'wf-practice-plan': ['wf-shelter-build', 'wf-plant-method', 'wf-field-kitchen', 'wf-fishing-gear'],
     'wf-pt-words': ['wf-wild-food-rules', 'wf-storm-fire-out'],
-    'wf-storm-fire-out': ['wf-shelter-secure', 'wf-fire-wet', 'g-flood']
+    'wf-storm-fire-out': ['wf-shelter-secure', 'wf-fire-wet', 'g-flood'],
+    'preg-early': ['preg-warning-signs', 'preg-bleeding-pain', 'preg-disaster-water-food'],
+    'preg-warning-signs': ['preg-bleeding-pain', 'preg-later', 'preg-after-birth'],
+    'preg-bleeding-pain': ['preg-warning-signs', 'preg-early'],
+    'preg-later': ['preg-warning-signs', 'preg-waters-preterm', 'preg-labour'],
+    'preg-waters-preterm': ['preg-labour', 'preg-warning-signs'],
+    'preg-labour': ['preg-waters-preterm', 'preg-after-birth', 'preg-warning-signs'],
+    'preg-after-birth': ['preg-warning-signs', 'preg-disaster-water-food'],
+    'preg-disaster-water-food': ['preg-heat-cold-power', 'g-power-outage', 'preg-early'],
+    'preg-heat-cold-power': ['g-heat-wave', 'lim-heat-cold', 'med-carbon-monoxide', 'g-winter-storm'],
+    'sen-kit-lists': ['sen-medicines-power', 'sen-checkin-evac', 'p6-medication-and-medical-power'],
+    'sen-medicines-power': ['p6-medication-and-medical-power', 'g-power-outage', 'sen-kit-lists'],
+    'sen-heat': ['g-heat-wave', 'sen-confusion', 'sen-checkin-evac'],
+    'sen-cold': ['g-winter-storm', 'lim-heat-cold', 'med-carbon-monoxide'],
+    'sen-falls-mobility': ['sen-kit-lists', 'sen-checkin-evac'],
+    'sen-confusion': ['sen-heat', 'sen-medicines-power', 'sen-dementia'],
+    'sen-dementia': ['sen-confusion', 'sen-checkin-evac', 'sen-kit-lists'],
+    'sen-checkin-evac': ['sen-kit-lists', 'sen-dementia', 'g-heat-wave']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
