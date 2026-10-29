@@ -3,16 +3,16 @@
    Written 29 Oct 2026 from relayed reports plus search results (pages not opened). Buying and installing is BEFORE a crisis. Every guide has a no-store version.
    No product names. No wire or fuse size tables. Not electrical advice: a qualified electrician decides. */
 (function () {
-  var NOTE = "We read search results and relayed reports about these topics. We could not open the pages, so they are cited to us, not checked by us.";
+  var NOTE = "We read search results and relayed reports about these topics. We could not open the pages, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.";
   var GEN = "Steps marked as general practice are common advice. We did not find a named source for each one.";
   var ELEC = "Power can burn, start a fire and kill. Where this guide says call a qualified electrician, do that.";
   var BEFORE = "Plan, buy and test this BEFORE a crisis. In a crisis shops may be closed. The no-store steps are for when you could not prepare.";
   var SRC = {
-    classT: ["Seller page: Class T fuse (interrupt rating 20,000 A, up to 125 V DC), cited to us, not checked", "https://www.currentconnected.com/product/blue-sea-class-t-fuse/"],
-    aic: ["Victron Community: interrupt ratings for LiFePO4 (Class T and other fuses), cited to us, not checked", "https://community.victronenergy.com/t/aic-ratings-for-lifepo4-class-t-mrbf/16468"],
-    mppt: ["Victron: MPPT 150/60 to 250/70 technical specifications (maximum PV voltage), cited to us, not checked", "https://victronenergy.com/media/pg/Manual_SmartSolar_MPPT_150-60_up_to_250-70/en/technical-specifications.html"],
-    jump: ["Good Sam Community: jumper cables, copper-clad aluminium (a forum), cited to us, not checked", "https://forums.goodsamclub.com/t5/technical-issues/jumper-cables-a-jumble-of-compromises/m-p/3411176/highlight/true"],
-    fda: ["FoodSafety.gov blog archive: food safety in a power outage, cited to us, not checked", "https://webarchive.library.unt.edu/web/20130218132749/http://www.foodsafety.gov/blog/power_outages.html"]
+    classT: ["Seller page: Class T fuse (interrupt rating 20,000 A, up to 125 V DC) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://www.currentconnected.com/product/blue-sea-class-t-fuse/"],
+    aic: ["Victron Community: interrupt ratings for LiFePO4 (Class T and other fuses) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://community.victronenergy.com/t/aic-ratings-for-lifepo4-class-t-mrbf/16468"],
+    mppt: ["Victron: MPPT 150/60 to 250/70 technical specifications (maximum PV voltage) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://victronenergy.com/media/pg/Manual_SmartSolar_MPPT_150-60_up_to_250-70/en/technical-specifications.html"],
+    jump: ["Good Sam Community: jumper cables, copper-clad aluminium (a forum) (DATA UNVERIFIED: unofficial source, linked but not opened)", "https://forums.goodsamclub.com/t5/technical-issues/jumper-cables-a-jumble-of-compromises/m-p/3411176/highlight/true"],
+    fda: ["FoodSafety.gov blog archive: food safety in a power outage (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://webarchive.library.unt.edu/web/20130218132749/http://www.foodsafety.gov/blog/power_outages.html"]
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "sun"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
@@ -75,7 +75,7 @@
     tip: ["Ask for a diagram you can keep.", "Take photos before the walls are closed."],
     after: ["Test the system under load once a year with your installer."],
     sources: [SRC.classT, SRC.aic, SRC.mppt],
-    unconfirmed: [NOTE, "The Class T point comes from a seller page and a forum thread, cited to us. We did not find a standard we could open. The relayed text tied the transfer switch to one US code article, and we could not confirm which. We did not check Portuguese rules or permits. Panel voltage rises in the cold, as the controller manual lists. " + GEN] });
+    unconfirmed: [NOTE, "The Class T point comes from a seller page and a forum thread, given to us. We did not find a standard we could open. The relayed text tied the transfer switch to one US code article, and we could not confirm which. We did not check Portuguese rules or permits. Panel voltage rises in the cold, as the controller manual lists. " + GEN] });
 
   add({ id: "sal-salvage-inspect", area: "Power • Supplies", title: "Salvaged wire, panels and fuses: inspect first, and what not to reuse",
     intro: "Second-hand parts can save money before a crisis. Some are not safe to reuse. This is a checklist of what to test and what to refuse. " + ELEC + " " + BEFORE,

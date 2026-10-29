@@ -197,8 +197,8 @@
       ['Scottish Government: recreational fishing', 'https://www.gov.scot/policies/salmon-and-recreational-fisheries/recreational-fishing/'],
       ['Canal and River Trust: fishing FAQs, licences in England and Wales', 'https://canalrivertrust.org.uk/enjoy-the-waterways/fishing/fishing-faqs'],
       ['GOV.UK fishing licences (archived copy)', 'https://tnaqa.mirrorweb.com/ukgwa/20260715155243mp_/https://www.gov.uk/fishing-licences/print'],
-      ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (cited to us, not checked)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
-      ['FDA: selecting and serving fresh and frozen seafood safely (cited to us, not checked)', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely'],
+      ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
+      ['FDA: selecting and serving fresh and frozen seafood safely (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely'],
       ['CDC: preventing parasites from freshwater fish', 'https://www.cdc.gov/parasites/clonorchis/prevent.html']
     ],
     unconfirmed: [

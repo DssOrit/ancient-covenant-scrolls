@@ -2,39 +2,39 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked
    and the Not confirmed list says what was and was not found. This is not medical advice. Call the local emergency number for an emergency. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var NOTMED = 'This guide is general information. It is not medical advice and does not replace your doctor, midwife or emergency services.';
   var SRC = {
     whoLcg: ['WHO: Introduction to the WHO Labour Care Guide, slidedoc (file dated 14 Dec 2020, version 1.1). The owner supplied the file and we read all 23 pages. The web address is the WHO page for the Labour Care Guide materials, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
     whoLcgMan: ['WHO: Labour Care Guide user manual (ISBN 978-92-4-001756-6, 2020), supplied by the owner and opened. The web address is the WHO page for the manual, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
-    nhsLabour: ['NHS 111 Wales: signs and stages of labour, cited to us, not checked', 'https://111.wales.nhs.uk/livewell/pregnancy/signsandstageslabour'],
-    nhsSurrey: ['Surrey and Sussex NHS maternity service: signs of labour and when to contact your midwife, cited to us, not checked', 'https://www.surreyandsussex.nhs.uk/our-services/womens-services/maternity-services/giving-birth-sash/signs-labour-and-when-contact-your-midwife'],
-    hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her), cited to us, not checked', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
-    mod: ['March of Dimes: know when to seek medical care during pregnancy and after giving birth, cited to us, not checked', 'https://www.marchofdimes.org/find-support/blog/know-when-to-seek-medical-care-during-pregnancy-and-after-giving-birth'],
-    mayoBleed: ['Mayo Clinic: bleeding during pregnancy, when to see a doctor, cited to us, not checked', 'https://www.mayoclinic.org/symptoms/bleeding-during-pregnancy/basics/when-to-see-doctor/sym-20050636'],
-    acogEctopic: ['ACOG: ectopic pregnancy, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/ectopic-pregnancy'],
-    nhsPre: ['NHS: pre-eclampsia symptoms, cited to us, not checked', 'https://www.nhs.uk/conditions/pre-eclampsia/symptoms/'],
-    acogPre: ['ACOG: preeclampsia and high blood pressure during pregnancy, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/preeclampsia-and-high-blood-pressure-during-pregnancy'],
-    rfm: ['NHS England North West: reduced fetal movement guideline (2019), cited to us, not checked', 'https://www.england.nhs.uk/north-west/wp-content/uploads/sites/48/2019/09/Reduced-Fetal-Movement-Guidelines.pdf'],
-    acogPreterm: ['ACOG: preterm labor and birth, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/preterm-labor-and-birth'],
-    mayoLabor: ['Mayo Clinic: signs of labor, cited to us, not checked', 'https://www.mayoclinic.org/healthy-lifestyle/labor-and-delivery/in-depth/signs-of-labor/art-20046184'],
-    nhsVit: ['NHS: pregnancy vitamins and supplements, cited to us, not checked', 'https://www.nhs.uk/pregnancy/keeping-well/pregnancy-vitamins-and-supplements/'],
-    cdcWater: ['CDC: drinking water advisories, cited to us, not checked', 'https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html'],
-    cdcInfant: ['CDC: infant feeding in emergencies, special considerations, cited to us, not checked', 'https://www.cdc.gov/infant-feeding-emergencies-toolkit/php/special-considerations.html'],
-    cdcPregDisaster: ['CDC (archived): safety messages for pregnant, postpartum and breastfeeding women in disasters, cited to us, not checked', 'https://archive.cdc.gov/www_cdc_gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
-    cdcHeatPreg: ['CDC: five steps for heat and pregnancy (PDF), cited to us, not checked', 'https://cdc.gov/heat-health/media/pdfs/2025/09/Five-steps-for-heat-and-pregnancy-H.pdf'],
-    cdph: ['California Department of Public Health: safe pregnancies in extreme heat, cited to us, not checked', 'https://www.cdph.ca.gov/Programs/CFH/DMCAH/Pages/Health-Topics/Safe-Pregnancies-in-Extreme-Heat.aspx'],
-    txChildrens: ['Texas Childrens: disaster preparedness during pregnancy and postpartum, cited to us, not checked', 'https://www.texaschildrens.org/content/disaster-preparedness-during-pregnancy-and-postpartum'],
-    snsGravida: ['DN: pregnant women are asked to call SNS 24 before obstetric emergency rooms (news report, 2026), cited to us, not checked', 'https://www.dn.pt/sociedade/gravidas-de-lisboa-e-vale-do-tejo-passam-a-ter-de-ligar-para-o-sns24-antes-de-ir-as-urgencias'],
-    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF), cited to us, not checked', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf'],
-    hud: ['HUD: older adult emergency preparedness checklist (PDF), cited to us, not checked', 'https://www.hud.gov/sites/dfiles/HH/documents/HUD_OLHCHH_Older_Adult-Emergency_Preparedness_Checklist.pdf'],
-    cdcOlder: ['CDC: emergency preparedness concerns for older adults (PDF), cited to us, not checked', 'https://tools.cdc.gov/podcasts/media/pdf/HealthyAgingDisasterPrep.pdf'],
-    redCrossOlder: ['American Red Cross: closing the gaps for older adults in disasters (white paper, 2020), cited to us, not checked', 'https://www.redcross.org/content/dam/redcross/training-services/scientific-advisory-council/253901-03%20BRCR-Older%20Adults%20Whitepaper%20FINAL%201.23.2020.pdf'],
-    cdcCog: ['CDC: emergency preparedness for people with cognitive impairment (brief), cited to us, not checked', 'https://www.cdc.gov/aging-programs/media/pdfs/2024/06/emer-prep-cognitive-impairment-brief-july-2015.pdf'],
-    pmcWeather: ['PubMed Central: actions to reduce risk of older adults during extreme weather events, cited to us, not checked', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6846451/'],
-    nhsHypo: ['NHS: hypothermia, cited to us, not checked', 'https://www.nhs.uk/conditions/hypothermia/'],
-    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021), cited to us, not checked', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
-    dgsHeat: ['RTP: DGS warns of extra care in the coming hot days (news report), cited to us, not checked', 'https://www.rtp.pt/noticias/pais/dgs-alerta-para-necessidade-de-cuidados-extra-nos-proximos-dias-de-calor_n1665186']
+    nhsLabour: ['NHS 111 Wales: signs and stages of labour (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://111.wales.nhs.uk/livewell/pregnancy/signsandstageslabour'],
+    nhsSurrey: ['Surrey and Sussex NHS maternity service: signs of labour and when to contact your midwife (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.surreyandsussex.nhs.uk/our-services/womens-services/maternity-services/giving-birth-sash/signs-labour-and-when-contact-your-midwife'],
+    hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
+    mod: ['March of Dimes: know when to seek medical care during pregnancy and after giving birth (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.marchofdimes.org/find-support/blog/know-when-to-seek-medical-care-during-pregnancy-and-after-giving-birth'],
+    mayoBleed: ['Mayo Clinic: bleeding during pregnancy, when to see a doctor (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.mayoclinic.org/symptoms/bleeding-during-pregnancy/basics/when-to-see-doctor/sym-20050636'],
+    acogEctopic: ['ACOG: ectopic pregnancy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/ectopic-pregnancy'],
+    nhsPre: ['NHS: pre-eclampsia symptoms (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/pre-eclampsia/symptoms/'],
+    acogPre: ['ACOG: preeclampsia and high blood pressure during pregnancy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/preeclampsia-and-high-blood-pressure-during-pregnancy'],
+    rfm: ['NHS England North West: reduced fetal movement guideline (2019) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.england.nhs.uk/north-west/wp-content/uploads/sites/48/2019/09/Reduced-Fetal-Movement-Guidelines.pdf'],
+    acogPreterm: ['ACOG: preterm labor and birth (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/preterm-labor-and-birth'],
+    mayoLabor: ['Mayo Clinic: signs of labor (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.mayoclinic.org/healthy-lifestyle/labor-and-delivery/in-depth/signs-of-labor/art-20046184'],
+    nhsVit: ['NHS: pregnancy vitamins and supplements (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/pregnancy/keeping-well/pregnancy-vitamins-and-supplements/'],
+    cdcWater: ['CDC: drinking water advisories (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html'],
+    cdcInfant: ['CDC: infant feeding in emergencies, special considerations (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/infant-feeding-emergencies-toolkit/php/special-considerations.html'],
+    cdcPregDisaster: ['CDC (archived): safety messages for pregnant, postpartum and breastfeeding women in disasters (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://archive.cdc.gov/www_cdc_gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
+    cdcHeatPreg: ['CDC: five steps for heat and pregnancy (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://cdc.gov/heat-health/media/pdfs/2025/09/Five-steps-for-heat-and-pregnancy-H.pdf'],
+    cdph: ['California Department of Public Health: safe pregnancies in extreme heat (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdph.ca.gov/Programs/CFH/DMCAH/Pages/Health-Topics/Safe-Pregnancies-in-Extreme-Heat.aspx'],
+    txChildrens: ['Texas Childrens: disaster preparedness during pregnancy and postpartum (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.texaschildrens.org/content/disaster-preparedness-during-pregnancy-and-postpartum'],
+    snsGravida: ['DN: pregnant women are asked to call SNS 24 before obstetric emergency rooms (news report, 2026) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.dn.pt/sociedade/gravidas-de-lisboa-e-vale-do-tejo-passam-a-ter-de-ligar-para-o-sns24-antes-de-ir-as-urgencias'],
+    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf'],
+    hud: ['HUD: older adult emergency preparedness checklist (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.hud.gov/sites/dfiles/HH/documents/HUD_OLHCHH_Older_Adult-Emergency_Preparedness_Checklist.pdf'],
+    cdcOlder: ['CDC: emergency preparedness concerns for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://tools.cdc.gov/podcasts/media/pdf/HealthyAgingDisasterPrep.pdf'],
+    redCrossOlder: ['American Red Cross: closing the gaps for older adults in disasters (white paper, 2020) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.redcross.org/content/dam/redcross/training-services/scientific-advisory-council/253901-03%20BRCR-Older%20Adults%20Whitepaper%20FINAL%201.23.2020.pdf'],
+    cdcCog: ['CDC: emergency preparedness for people with cognitive impairment (brief) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/aging-programs/media/pdfs/2024/06/emer-prep-cognitive-impairment-brief-july-2015.pdf'],
+    pmcWeather: ['PubMed Central: actions to reduce risk of older adults during extreme weather events (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6846451/'],
+    nhsHypo: ['NHS: hypothermia (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/hypothermia/'],
+    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
+    dgsHeat: ['RTP: DGS warns of extra care in the coming hot days (news report) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.rtp.pt/noticias/pais/dgs-alerta-para-necessidade-de-cuidados-extra-nos-proximos-dias-de-calor_n1665186']
   };
   var NUM = 'Emergency: 911 (US), 112 (Portugal), 999 (UK).';
 
@@ -245,7 +245,7 @@
         'In labour, for women at low risk, WHO recommends drinks and food, an upright position and moving around. Massage, warm packs and relaxation are options for pain.',
         'These are WHO recommendations for trained care. They are not step-by-step instructions for delivering a baby without help.'
       ] },
-      { h: 'When to call your midwife (NHS pages, cited to us)', items: [
+      { h: 'When to call your midwife (NHS pages, given to us)', items: [
         'Signs labour may be starting: tightenings or contractions, a show (a pink, slightly bloody mucus), backache, an urge to use the toilet, and the waters breaking.',
         'Call your midwife or maternity unit if the waters break, even with no contractions. Also call for vaginal bleeding, if the baby moves less than usual, or if you think you are in labour before 37 weeks.',
         'Many units ask you to call when contractions are regular and last about 60 seconds, about every 5 minutes. Units differ, so follow your own unit rule.',

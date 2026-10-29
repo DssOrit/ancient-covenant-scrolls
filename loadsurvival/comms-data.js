@@ -2,26 +2,26 @@
    Written 29 Oct 2026 from search results (not opened) and common practice. Radio rules change by country and date.
    Everything you buy, set up or license is for BEFORE a crisis. No guide here sends anyone to a shop or office in an emergency. Not legal advice. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var GEN = 'The steps marked as general guidance, and the tips, are common practice. We did not find a named source for each step.';
   var SRC = {
-    fccFrs: ['FCC: Family Radio Service (FRS), cited to us, not checked', 'https://www.fcc.gov/general/family-radio-service-frs'],
-    fccGmrs: ['FCC: General Mobile Radio Service (GMRS), cited to us, not checked', 'https://www.fcc.gov/general/general-mobile-radio-service-gmrs'],
-    wikiFrs: ['Wikipedia: Family Radio Service, cited to us, not checked', 'https://en.wikipedia.org/wiki/Family_Radio_Service'],
-    pmr: ['Kenwood: PMR446 white paper, cited to us, not checked', 'https://kenwoodcommunications.co.uk/files/file/comms/uk/pmr446/PMR446-White-Paper-V6_18AUG2016_JT_KB.pdf'],
-    portaria: ['Diário da República: Portaria 802/1999 (older law on licence-free radio, now out of date), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/portaria/802-1999-560777'],
-    mesh: ['Linux Pro Magazine: messaging off the grid with Meshtastic, cited to us, not checked', 'https://www.linuxpromagazine.com/Issues/2025/299/Meshtastic'],
-    meshHam: ['Meshtastic ham radio guide, cited to us, not checked', 'https://vu3dxr.in/meshtastic-ham-radio-guide-lora-mesh-networking-for-hams/'],
-    iosSat: ['Western Hunter: Apple satellite messaging first impressions, cited to us, not checked', 'https://westernhunter.net/gear-reviews/camp-gear/new-apple-satellite-messaging-initial-thoughts/'],
-    wikiGmrs: ['Wikipedia: General Mobile Radio Service (fee, term, family cover), cited to us, not checked', 'https://en.wikipedia.org/wiki/GMRS'],
-    arrl: ['ARRL: International Operating (US amateurs in CEPT countries), May 2021, cited to us, not checked', 'https://www.arrl.org/files/file/Reciprocal%20operating%20forms/May%202021%20International%20Operating.pdf'],
-    anacomHam: ['ANACOM: visiting amateur operators (page cited to us, we could not open it)', 'https://www.anacom.pt/render.jsp?contentId=978436'],
-    pf5x: ['An operator blog: how to get a Portuguese callsign, 2025 (personal account, cited to us, we could not open it)', 'https://pf5x.wordpress.com/2025/06/23/how-to-get-a-portuguese-callsign/'],
-    iaru60: ['IARU Region 1: CEPT licences do not allow 60 metres in Portugal, cited to us, not checked', 'https://www.iaru-r1.org/about-us/committees-and-working-groups/hf-committee-c4/news/cept-licenses-do-not-allow-operation-at-60-meters-in-portugal'],
-    dl1: ['Diario da Republica: Decreto-Lei 1/2017 of 5 January (CB: no registration), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/1-2017-105703294'],
-    lei22: ['Diario da Republica: Lei 22/2026 of 27 May (amateur radio law, in force 25 Aug 2026), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/lei/22-2026-1126675654'],
-    dl47: ['Diario da Republica: Decreto-Lei 47/2000 (ended CB licensing, left registration), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/47-2000-508468'],
-    bgrSat: ['BGR: Messages via satellite in iOS 18, cited to us, not checked', 'https://www.bgr.com/tech/move-over-garmin-messages-via-satellite-is-coming-in-ios-18/']
+    fccFrs: ['FCC: Family Radio Service (FRS) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.fcc.gov/general/family-radio-service-frs'],
+    fccGmrs: ['FCC: General Mobile Radio Service (GMRS) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.fcc.gov/general/general-mobile-radio-service-gmrs'],
+    wikiFrs: ['Wikipedia: Family Radio Service (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://en.wikipedia.org/wiki/Family_Radio_Service'],
+    pmr: ['Kenwood: PMR446 white paper (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://kenwoodcommunications.co.uk/files/file/comms/uk/pmr446/PMR446-White-Paper-V6_18AUG2016_JT_KB.pdf'],
+    portaria: ['Diário da República: Portaria 802/1999 (older law on licence-free radio, now out of date) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://diariodarepublica.pt/dr/detalhe/portaria/802-1999-560777'],
+    mesh: ['Linux Pro Magazine: messaging off the grid with Meshtastic (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.linuxpromagazine.com/Issues/2025/299/Meshtastic'],
+    meshHam: ['Meshtastic ham radio guide (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://vu3dxr.in/meshtastic-ham-radio-guide-lora-mesh-networking-for-hams/'],
+    iosSat: ['Western Hunter: Apple satellite messaging first impressions (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://westernhunter.net/gear-reviews/camp-gear/new-apple-satellite-messaging-initial-thoughts/'],
+    wikiGmrs: ['Wikipedia: General Mobile Radio Service (fee, term, family cover) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://en.wikipedia.org/wiki/GMRS'],
+    arrl: ['ARRL: International Operating (US amateurs in CEPT countries), May 2021 (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.arrl.org/files/file/Reciprocal%20operating%20forms/May%202021%20International%20Operating.pdf'],
+    anacomHam: ['ANACOM: visiting amateur operators (page given to us, we could not open it)', 'https://www.anacom.pt/render.jsp?contentId=978436'],
+    pf5x: ['An operator blog: how to get a Portuguese callsign, 2025 (personal account, given to us, we could not open it)', 'https://pf5x.wordpress.com/2025/06/23/how-to-get-a-portuguese-callsign/'],
+    iaru60: ['IARU Region 1: CEPT licences do not allow 60 metres in Portugal (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.iaru-r1.org/about-us/committees-and-working-groups/hf-committee-c4/news/cept-licenses-do-not-allow-operation-at-60-meters-in-portugal'],
+    dl1: ['Diario da Republica: Decreto-Lei 1/2017 of 5 January (CB: no registration) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/1-2017-105703294'],
+    lei22: ['Diario da Republica: Lei 22/2026 of 27 May (amateur radio law, in force 25 Aug 2026) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://diariodarepublica.pt/dr/detalhe/lei/22-2026-1126675654'],
+    dl47: ['Diario da Republica: Decreto-Lei 47/2000 (ended CB licensing, left registration) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/47-2000-508468'],
+    bgrSat: ['BGR: Messages via satellite in iOS 18 (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.bgr.com/tech/move-over-garmin-messages-via-satellite-is-coming-in-ios-18/']
   };
   var G = [];
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources.length ? g.sources[0][1] : ''; G.push(g); }
@@ -207,7 +207,7 @@
     tip: ['Many people find a club the fastest way to learn.', 'A hand radio can also listen to many channels.'],
     after: ['Renew your licence on time. Keep a copy and a call sign card.'],
     sources: [SRC.lei22, SRC.arrl, SRC.anacomHam, SRC.pf5x, SRC.iaru60, SRC.meshHam],
-    unconfirmed: [NOTE, 'The US-in-Portugal CEPT points match the ARRL guide as quoted to us (2021). Sources differ on the visit limit: 90 days or three months. The ANACOM page and the operator blog were cited to us and we could not open them. The NIF, HAREC, 15 euro and 20 euro figures, the CT7 prefix and the 10-year term are from that blog only. The removal of waits and ages and the Category 3 band and power figures come from messages relayed to us (the law, annex and an ARAL page were named but we could not open them). A search confirmed only that Lei 22/2026 exists and took effect on 25 August 2026. The final ANACOM technical rules may change the figures. The 7.200 MHz limit is from a video, cited to us. The US exam statement is general knowledge. ' + LAW, GEN] });
+    unconfirmed: [NOTE, 'The US-in-Portugal CEPT points match the ARRL guide as quoted to us (2021). Sources differ on the visit limit: 90 days or three months. The ANACOM page and the operator blog were given to us and we could not open them. The NIF, HAREC, 15 euro and 20 euro figures, the CT7 prefix and the 10-year term are from that blog only. The removal of waits and ages and the Category 3 band and power figures come from messages relayed to us (the law, annex and an ARAL page were named but we could not open them). A search confirmed only that Lei 22/2026 exists and took effect on 25 August 2026. The final ANACOM technical rules may change the figures. The 7.200 MHz limit is from a video, given to us. The US exam statement is general knowledge. ' + LAW, GEN] });
 
   add({ id: 'comm-satellite', area: 'Home skills • Communicate', icon: 'phone',
     title: 'Satellite texting: iPhone and satellite messengers',
