@@ -151,6 +151,7 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'p11e-bamboo-fishing': ['river-10b-fishing', 'river-10a-water', 'gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
     'p11a-orchard': ['lt2-preserve', 'hs-canning', 'wf-smoke-dry-salt', 'gr-replace-stored-food', 'diet-nutrient-watch'],
     'p11b-bamboo': ['p11c-water', 'gr-find-seeds', 'p11d-solar-skills'],
     'p11c-water': ['water-14day-plan', 'river-10a-water', 'wx-river', 'p11b-bamboo', 'lt2-crop-water'],
