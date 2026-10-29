@@ -2,24 +2,24 @@
    Written 29 Oct 2026 from the owner's Part 3 files (3A to 3D, read in full), a few search results, and general practice.
    Nothing here states that a place, a supplier, a planting date, a fishing rule or water is verified. Not medical advice. */
 (function () {
-  var NOTE = 'We read search results and the owner Part 3 files about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results and the owner Part 3 files about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var GEN = 'The steps marked as general guidance, and the tips, are common practice. We did not find a named source for each step.';
   var SRC = {
-    unh: ['UNH Cooperative Extension: growing vegetables in containers, cited to us, not checked', 'https://extension.unh.edu/resource/growing-vegetables-containers-fact-sheet'],
-    uvm: ['University of Vermont Extension: saving vegetable seeds, cited to us, not checked', 'https://www.uvm.edu/extension/news/saving-seeds-vegetable-crops'],
-    ufifas: ['UF/IFAS: container growing media, cited to us, not checked', 'https://gardeningsolutions.ifas.ufl.edu/plants/edibles/vegetables/container-media/'],
-    dgrmGear: ['Portugal DGRM: permitted and prohibited recreational marine fishing gear, cited to us, not checked', 'https://dgrm.pt/pt/web/guest/artes-e-utensilios-de-pesca'],
-    dgrmZones: ['Portugal DGRM: fishing zones and the freshwater distinction, cited to us, not checked', 'https://www.dgrm.pt/web/guest/zonas-de-pesca'],
-    dgrmLic: ['Portugal DGRM: recreational licences, cited to us, not checked', 'https://dgrm.pt/licencas'],
-    fwcFresh: ['Florida FWC: freshwater fishing regulations, cited to us, not checked', 'https://myfwc.com/fishing/freshwater/regulations/'],
-    fwcBait: ['Florida FWC: taking bait, cited to us, not checked', 'https://myfwc.com/fishing/freshwater/regulations/taking-bait/'],
-    cdcPreg: ['CDC: high-risk food guidance for pregnancy, cited to us, not checked', 'https://www.cdc.gov/food-safety/foods/pregnant-women.html'],
-    usdaAllium: ['USDA plant guide: wild onions (Allium), cited to us, not checked', 'https://plants.usda.gov/DocumentLibrary/plantguide/pdf/pg_alun.pdf'],
-    infopedia: ['Infopedia (Portugal): aipo, wild celery, cited to us, not checked', 'https://www.infopedia.pt/$aipo'],
-    umassLettuce: ['UMass Extension: prickly lettuce, cited to us, not checked', 'https://extension.umass.edu/weed-herbarium/weeds/lactuca-serriola/'],
-    ucanrLettuce: ['UC IPM: prickly lettuce, cited to us, not checked', 'https://ipm.ucanr.edu/weeds-identification-gallery/prickly-lettuce/'],
-    naturespot: ['NatureSpot (UK): prickly lettuce and great lettuce, cited to us, not checked', 'https://www.naturespot.org/node/2058'],
-    b12: ['PubMed: vitamin B12 and vegetarian diets, cited to us, not checked', 'https://pubmed.ncbi.nlm.nih.gov/25369926/']
+    unh: ['UNH Cooperative Extension: growing vegetables in containers (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://extension.unh.edu/resource/growing-vegetables-containers-fact-sheet'],
+    uvm: ['University of Vermont Extension: saving vegetable seeds (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.uvm.edu/extension/news/saving-seeds-vegetable-crops'],
+    ufifas: ['UF/IFAS: container growing media (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://gardeningsolutions.ifas.ufl.edu/plants/edibles/vegetables/container-media/'],
+    dgrmGear: ['Portugal DGRM: permitted and prohibited recreational marine fishing gear (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://dgrm.pt/pt/web/guest/artes-e-utensilios-de-pesca'],
+    dgrmZones: ['Portugal DGRM: fishing zones and the freshwater distinction (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.dgrm.pt/web/guest/zonas-de-pesca'],
+    dgrmLic: ['Portugal DGRM: recreational licences (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://dgrm.pt/licencas'],
+    fwcFresh: ['Florida FWC: freshwater fishing regulations (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://myfwc.com/fishing/freshwater/regulations/'],
+    fwcBait: ['Florida FWC: taking bait (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://myfwc.com/fishing/freshwater/regulations/taking-bait/'],
+    cdcPreg: ['CDC: high-risk food guidance for pregnancy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/food-safety/foods/pregnant-women.html'],
+    usdaAllium: ['USDA plant guide: wild onions (Allium) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://plants.usda.gov/DocumentLibrary/plantguide/pdf/pg_alun.pdf'],
+    infopedia: ['Infopedia (Portugal): aipo, wild celery (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.infopedia.pt/$aipo'],
+    umassLettuce: ['UMass Extension: prickly lettuce (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://extension.umass.edu/weed-herbarium/weeds/lactuca-serriola/'],
+    ucanrLettuce: ['UC IPM: prickly lettuce (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://ipm.ucanr.edu/weeds-identification-gallery/prickly-lettuce/'],
+    naturespot: ['NatureSpot (UK): prickly lettuce and great lettuce (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.naturespot.org/node/2058'],
+    b12: ['PubMed: vitamin B12 and vegetarian diets (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://pubmed.ncbi.nlm.nih.gov/25369926/']
   };
   var G = [];
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources.length ? g.sources[0][1] : ''; G.push(g); }
@@ -36,7 +36,7 @@
     g.intro = 'A 2 litre bottle can be cut into a funnel trap. This guide shows how it works. Legal status is not verified, so check the rules first. Rod and line is easier to check and more selective.';
     g.first = [GATE, PT, FL, 'Do the Lawful food-catching checklist first. If an answer is unknown, write LEGALITY UNCONFIRMED on your paper. Rod and line is the easier choice. If you go ahead, you carry the risk: check the trap often and take all gear home.'];
     g.do = [HOWTO].concat(g.do);
-    g.unconfirmed = g.unconfirmed.concat(['The Portugal and Florida lines come from the owner Part 3 file and DGRM and FWC pages cited to us. We did not open them. A trap can be legal in one place and banned in the next. Check the exact water, gear and date.']);
+    g.unconfirmed = g.unconfirmed.concat(['The Portugal and Florida lines come from the owner Part 3 file and DGRM and FWC pages given to us. We did not open them. A trap can be legal in one place and banned in the next. Check the exact water, gear and date.']);
     g.sources = (g.sources || []).concat([SRC.dgrmGear, SRC.fwcBait]);
   });
   patch('trap-crate-crab', function (g) {
@@ -44,7 +44,7 @@
     g.intro = 'A crate or basket with bait can hold crabs or crayfish. This guide shows how it works. Legal status is not verified. In many places this kind of trap is banned or needs a licence and marking, so check first.';
     g.first = [GATE, PT, 'Crab and crayfish traps are restricted in many US states too. They often need a licence, a mark, escape openings and set check times. Check first.', 'If a rule is unknown, write LEGALITY UNCONFIRMED on your paper. A hand net or a baited line is easier to check. If you go ahead, you carry the risk.'];
     g.do = [HOWTO].concat(g.do);
-    g.unconfirmed = g.unconfirmed.concat(['The statement that crab and crayfish traps need a licence, mark and escape openings in many US places is general knowledge. We did not check a named source.', 'The Portugal line comes from the owner Part 3 file and a DGRM page cited to us. We did not open it.']);
+    g.unconfirmed = g.unconfirmed.concat(['The statement that crab and crayfish traps need a licence, mark and escape openings in many US places is general knowledge. We did not check a named source.', 'The Portugal line comes from the owner Part 3 file and a DGRM page given to us. We did not open it.']);
     g.sources = (g.sources || []).concat([SRC.dgrmGear]);
   });
   patch('trap-live-small', function (g) {

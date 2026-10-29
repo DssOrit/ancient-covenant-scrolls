@@ -2,20 +2,20 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked.
    Steps without a named source are marked general guidance in the Not confirmed list. This is not medical advice. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us. The web addresses may have moved.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED. The web addresses may have moved.';
   var GEN = 'The steps marked as general guidance, and the tips, are common practice. We did not find a named source for them.';
   var SRC = {
-    epaWells: ['EPA: private drinking water wells, cited to us, not checked', 'https://www.epa.gov/privatewells'],
-    nhsMeno: ['NHS: menopause, cited to us, not checked', 'https://www.nhs.uk/conditions/menopause/'],
-    niaMeno: ['National Institute on Aging: menopause, cited to us, not checked', 'https://www.nia.nih.gov/health/menopause'],
-    mayoMeno: ['Mayo Clinic: menopause symptoms and causes, cited to us, not checked', 'https://www.mayoclinic.org/diseases-conditions/menopause/symptoms-causes/syc-20353397'],
-    acaaiMite: ['ACAAI: dust mite allergy, cited to us, not checked', 'https://acaai.org/allergies/allergic-conditions/dust-mite-allergy/'],
-    nhsHay: ['NHS: hay fever, cited to us, not checked', 'https://www.nhs.uk/conditions/hay-fever/'],
-    readyFood: ['Ready.gov: food, cited to us, not checked', 'https://www.ready.gov/food'],
-    readyWater: ['Ready.gov: water, cited to us, not checked', 'https://www.ready.gov/water'],
-    usdaShelf: ['USDA FSIS: shelf-stable food safety, cited to us, not checked', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/shelf-stable-food-safety'],
-    redCross: ['American Red Cross: survival kit supplies, cited to us, not checked', 'https://www.redcross.org/get-help/how-to-prepare-for-emergencies/survival-kit-supplies.html'],
-    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF), cited to us, not checked', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf']
+    epaWells: ['EPA: private drinking water wells (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.epa.gov/privatewells'],
+    nhsMeno: ['NHS: menopause (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/menopause/'],
+    niaMeno: ['National Institute on Aging: menopause (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nia.nih.gov/health/menopause'],
+    mayoMeno: ['Mayo Clinic: menopause symptoms and causes (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.mayoclinic.org/diseases-conditions/menopause/symptoms-causes/syc-20353397'],
+    acaaiMite: ['ACAAI: dust mite allergy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://acaai.org/allergies/allergic-conditions/dust-mite-allergy/'],
+    nhsHay: ['NHS: hay fever (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/hay-fever/'],
+    readyFood: ['Ready.gov: food (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/food'],
+    readyWater: ['Ready.gov: water (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/water'],
+    usdaShelf: ['USDA FSIS: shelf-stable food safety (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/shelf-stable-food-safety'],
+    redCross: ['American Red Cross: survival kit supplies (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.redcross.org/get-help/how-to-prepare-for-emergencies/survival-kit-supplies.html'],
+    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf']
   };
   var G = [];
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources[0][1]; G.push(g); }
