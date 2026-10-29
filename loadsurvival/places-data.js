@@ -3,7 +3,7 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked.
    Store names are common chains in each region, from general knowledge. We did not check that a branch exists near you or what is in stock. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var STORENOTE = 'Store names are common chains in this region, from general knowledge. We did not check that a branch is near you, its hours, or its stock. Find the nearest branch on the chain website.';
   var WATERNOTE = 'Water body names are general geography. We did not check access, fishing or camping rules. Treat all natural water before you drink it, and check the local rules first.';
   var MAPNOTE = 'The map link needs internet. For offline maps of Portugal, open Load Maps from this site.';
@@ -32,22 +32,22 @@
     PT: [['Groceries', 'Continente, Pingo Doce, Auchan, Lidl'], ['Hardware and tools', 'Leroy Merlin, IKEA Portugal'], ['Outdoor and camping', 'Decathlon'], ['Electronics and power', 'Worten, FNAC'], ['Pharmacy', 'Farmácia (medicines are sold only here)'], ['Pets', 'Tiendanimal, Kiwoko, Zooplus.pt']]
   };
   var SRC = {
-    laAlert: ['Los Angeles County: Alert LA County sign-up (alert.lacounty.gov), cited to us, not checked', 'https://alert.lacounty.gov'],
+    laAlert: ['Los Angeles County: Alert LA County sign-up (alert.lacounty.gov) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://alert.lacounty.gov'],
     laReady: ['Los Angeles County: Ready LA County', 'https://ready.lacounty.gov'],
-    sc: ['City of Santa Clarita: emergency preparedness information, cited to us, not checked', 'https://santaclarita.gov/emergency-management/preparedness-information/'],
-    rsg: ['LA County Fire: Ready! Set! Go! wildfire action plan (LACounty.gov/RSG), cited to us, not checked', 'https://lacounty.gov/RSG'],
-    jax: ['City of Jacksonville: know your evacuation zone, cited to us, not checked', 'https://www.jacksonville.gov/welcome/news/know-your-evacuation-zone'],
-    orange: ['Orange County Florida: storm information and OCAlert (ocfl.net/storm), cited to us, not checked', 'https://www.ocfl.net/storm'],
-    conway: ['City of Conway: hurricane preparedness, cited to us, not checked', 'https://cityofconway.com/hurricane_preparedness'],
-    horry: ['Horry County: Emergency Management, cited to us, not checked', 'https://www.horrycountysc.gov/departments/emergency-management'],
-    scemd: ['South Carolina Emergency Management Division (scemd.org), cited to us, not checked', 'https://www.scemd.org'],
-    ohio: ['Ohio Emergency Management Agency, cited to us, not checked', 'https://ema.ohio.gov'],
+    sc: ['City of Santa Clarita: emergency preparedness information (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://santaclarita.gov/emergency-management/preparedness-information/'],
+    rsg: ['LA County Fire: Ready! Set! Go! wildfire action plan (LACounty.gov/RSG) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://lacounty.gov/RSG'],
+    jax: ['City of Jacksonville: know your evacuation zone (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.jacksonville.gov/welcome/news/know-your-evacuation-zone'],
+    orange: ['Orange County Florida: storm information and OCAlert (ocfl.net/storm) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ocfl.net/storm'],
+    conway: ['City of Conway: hurricane preparedness (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://cityofconway.com/hurricane_preparedness'],
+    horry: ['Horry County: Emergency Management (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.horrycountysc.gov/departments/emergency-management'],
+    scemd: ['South Carolina Emergency Management Division (scemd.org) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.scemd.org'],
+    ohio: ['Ohio Emergency Management Agency (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://ema.ohio.gov'],
     nws: ['National Weather Service', 'https://www.weather.gov'],
     ready: ['Ready.gov', 'https://www.ready.gov'],
-    prociv: ['Proteção Civil (ANEPC), Portugal, cited to us, not checked', 'https://prociv.gov.pt'],
-    ipma: ['IPMA: weather warnings, Portugal, cited to us, not checked', 'https://www.ipma.pt/pt/otempo/prev-sam/'],
-    dgs: ['DGS: Direção-Geral da Saúde, Portugal, cited to us, not checked', 'https://www.dgs.pt'],
-    ccdr: ['CCDR-LVT: sector diagnosis of civil protection risks, Lisbon region (2010 PDF), cited to us, not checked', 'https://www.ccdr-lvt.pt/wp-content/uploads/2022/02/diagnostico-sectorial-riscos-proteccao-civil.pdf']
+    prociv: ['Proteção Civil (ANEPC), Portugal (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://prociv.gov.pt'],
+    ipma: ['IPMA: weather warnings, Portugal (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ipma.pt/pt/otempo/prev-sam/'],
+    dgs: ['DGS: Direção-Geral da Saúde, Portugal (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.dgs.pt'],
+    ccdr: ['CCDR-LVT: sector diagnosis of civil protection risks, Lisbon region (2010 PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ccdr-lvt.pt/wp-content/uploads/2022/02/diagnostico-sectorial-riscos-proteccao-civil.pdf']
   };
 
   var P = [

@@ -1,18 +1,18 @@
 /* Part 5 pictures (exact supplied filenames), diet planning guides, and two Part 8 stories (home safety, pets). 4 new guides and 12 pictures.
    Written 29 Oct 2026 from the owner Part 5A and Part 8 sheet. Pictures are illustrations, not photographs of real places.
-   Indoor growing is a supplement, not calorie insurance. Not medical, nutrition or legal advice. Sources are cited to us, not checked. */
+   Indoor growing is a supplement, not calorie insurance. Not medical, nutrition or legal advice. Sources are given to us, not opened. */
 (function () {
-  var NOTE = "We read the owner Part 5 manual and search results. We could not open the pages, so they are cited to us, not checked by us.";
+  var NOTE = "We read the owner Part 5 manual and search results. We could not open the pages, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.";
   var GEN = "Steps marked as general practice are common advice. We did not find a named source for each step.";
   var CALL = "In danger to life, call 911 (US) or 112 (Portugal) first, if the phone works.";
   var ILL = "The pictures are illustrations made for this app. They are not photographs of real places.";
   var SRC = {
-    ods: ["NIH Office of Dietary Supplements (from the owner Part 5A), cited to us, not checked", "https://ods.od.nih.gov/"],
-    myplate: ["USDA MyPlate (from the owner Part 5A), cited to us, not checked", "https://www.myplate.gov/"],
-    fish: ["FDA: advice about eating fish (from the owner Part 5A), cited to us, not checked", "https://www.fda.gov/food/consumers/advice-about-eating-fish"],
-    outage: ["FoodSafety.gov: food safety during a power outage (from the owner Part 5A), cited to us, not checked", "https://www.foodsafety.gov/food-safety-charts/food-safety-during-power-outage"],
-    umn: ["University of Minnesota Extension: lighting houseplants (from the owner Part 5B), cited to us, not checked", "https://extension.umn.edu/planting-and-growing-guides/lighting-houseplants"],
-    ready: ["Ready.gov (from the owner report), cited to us, not checked", "https://www.ready.gov/"]
+    ods: ["NIH Office of Dietary Supplements (from the owner Part 5A) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://ods.od.nih.gov/"],
+    myplate: ["USDA MyPlate (from the owner Part 5A) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.myplate.gov/"],
+    fish: ["FDA: advice about eating fish (from the owner Part 5A) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.fda.gov/food/consumers/advice-about-eating-fish"],
+    outage: ["FoodSafety.gov: food safety during a power outage (from the owner Part 5A) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.foodsafety.gov/food-safety-charts/food-safety-during-power-outage"],
+    umn: ["University of Minnesota Extension: lighting houseplants (from the owner Part 5B) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://extension.umn.edu/planting-and-growing-guides/lighting-houseplants"],
+    ready: ["Ready.gov (from the owner report) (OFFICIAL SOURCE LINKED BUT NOT OPENED)", "https://www.ready.gov/"]
   };
   var G = [];
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "leaf"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }

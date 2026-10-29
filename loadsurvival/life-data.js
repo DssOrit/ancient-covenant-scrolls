@@ -2,30 +2,30 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked.
    Steps without a named source are marked general guidance in the Not confirmed list. This is not medical advice. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var SRC = {
-    cdcHyg: ['CDC: guidelines for personal hygiene during an emergency, cited to us, not checked', 'https://www.cdc.gov/water-emergency/safety/guidelines-for-personal-hygiene-during-an-emergency.html'],
-    cdcHands: ['CDC: wash your hands factsheet for disasters, cited to us, not checked', 'https://www.cdc.gov/natural-disasters/communication-resources/wash-your-hands-factsheet.html'],
-    cdcBoil: ['CDC: boil water advisory, cited to us, not checked', 'https://www.cdc.gov/natural-disasters/psa-toolkit/boil-water-advisory.html'],
-    cdcCrypto: ['CDC: preventing Crypto at home during a boil water advisory, cited to us, not checked', 'https://www.cdc.gov/cryptosporidium/prevention/crypto-home-boil-water.html'],
-    cdcSafeWater: ['CDC: use safe water during an emergency (one-pager), cited to us, not checked', 'https://www.cdc.gov/water-emergency/media/pdfs/334749-B_UseSafeWater-OnePager-508.pdf'],
-    ifrcMhm: ['IFRC: menstrual hygiene management guidelines (PDF), cited to us, not checked', 'https://wash.ifrc.org/wp-content/uploads/2025/01/mhm-guidelines-v7.pdf'],
-    unicefMh: ['UNICEF: menstrual hygiene, cited to us, not checked', 'https://www.unicef.org/supply/topics/menstrual-hygiene'],
-    cdcPregSafety: ['CDC: safety messages for pregnant, postpartum and breastfeeding women in disasters, cited to us, not checked', 'https://www.cdc.gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
-    aaoEvac: ['American Academy of Ophthalmology: make eyeglasses and medication part of your evacuation checklist, cited to us, not checked', 'https://www.aao.org/eye-health/tips-prevention/eyeglasses-medication-evacuation-checklist'],
-    aaoRx: ['American Academy of Ophthalmology: can my glasses be read for my prescription, cited to us, not checked', 'https://www.aao.org/eye-health/ask-ophthalmologist-q/is-it-possible-that-my-glasses-can-be-read-my-pres'],
-    aaoPlan: ['American Academy of Ophthalmology EyeNet: why ophthalmologists should plan for disaster, cited to us, not checked', 'https://www.aao.org/eyenet/article/trauma-disaster-planning'],
-    readyKit: ['Ready.gov: build a kit, cited to us, not checked', 'https://www.ready.gov/kit'],
-    neiLow: ['National Eye Institute: free or low-cost eye care (US), cited to us, not checked', 'https://www.nei.nih.gov/eye-health-information/healthy-vision/finding-eye-doctor/get-free-or-low-cost-eye-care'],
-    airnow: ['AirNow: be smoke ready, cited to us, not checked', 'https://www.airnow.gov/wildfires/be-smoke-ready/'],
-    airnowFilter: ['AirNow: indoor air filtration factsheet (PDF), cited to us, not checked', 'https://www.airnow.gov/sites/default/files/2021-07/indoor-air-filtration-factsheet.pdf'],
-    epaDiy: ['EPA: research on DIY air cleaners to reduce wildfire smoke indoors, cited to us, not checked', 'https://www.epa.gov/air-research/research-diy-air-cleaners-reduce-wildfire-smoke-indoors'],
-    cdcWinter: ['CDC: safety guidelines during and after a winter storm, cited to us, not checked', 'https://www.cdc.gov/winter-weather/safety/stay-safe-during-after-a-winter-storm-safety.html'],
-    cdcCO: ['CDC: prevent carbon monoxide poisoning, cited to us, not checked', 'https://www.cdc.gov/natural-disasters/psa-toolkit/prevent-carbon-monoxide-poisoning.html'],
-    cpscGen: ['CPSC: what to know about generators and carbon monoxide (PDF), cited to us, not checked', 'https://www.cpsc.gov/s3fs-public/468-WhattoKnowGenerators_2022.pdf'],
-    nhsHypo: ['NHS: hypothermia, cited to us, not checked', 'https://www.nhs.uk/conditions/hypothermia/'],
-    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021), cited to us, not checked', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
-    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF), cited to us, not checked', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf']
+    cdcHyg: ['CDC: guidelines for personal hygiene during an emergency (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/water-emergency/safety/guidelines-for-personal-hygiene-during-an-emergency.html'],
+    cdcHands: ['CDC: wash your hands factsheet for disasters (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/natural-disasters/communication-resources/wash-your-hands-factsheet.html'],
+    cdcBoil: ['CDC: boil water advisory (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/natural-disasters/psa-toolkit/boil-water-advisory.html'],
+    cdcCrypto: ['CDC: preventing Crypto at home during a boil water advisory (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/cryptosporidium/prevention/crypto-home-boil-water.html'],
+    cdcSafeWater: ['CDC: use safe water during an emergency (one-pager) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/water-emergency/media/pdfs/334749-B_UseSafeWater-OnePager-508.pdf'],
+    ifrcMhm: ['IFRC: menstrual hygiene management guidelines (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://wash.ifrc.org/wp-content/uploads/2025/01/mhm-guidelines-v7.pdf'],
+    unicefMh: ['UNICEF: menstrual hygiene (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.unicef.org/supply/topics/menstrual-hygiene'],
+    cdcPregSafety: ['CDC: safety messages for pregnant, postpartum and breastfeeding women in disasters (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
+    aaoEvac: ['American Academy of Ophthalmology: make eyeglasses and medication part of your evacuation checklist (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.aao.org/eye-health/tips-prevention/eyeglasses-medication-evacuation-checklist'],
+    aaoRx: ['American Academy of Ophthalmology: can my glasses be read for my prescription (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.aao.org/eye-health/ask-ophthalmologist-q/is-it-possible-that-my-glasses-can-be-read-my-pres'],
+    aaoPlan: ['American Academy of Ophthalmology EyeNet: why ophthalmologists should plan for disaster (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.aao.org/eyenet/article/trauma-disaster-planning'],
+    readyKit: ['Ready.gov: build a kit (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/kit'],
+    neiLow: ['National Eye Institute: free or low-cost eye care (US) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nei.nih.gov/eye-health-information/healthy-vision/finding-eye-doctor/get-free-or-low-cost-eye-care'],
+    airnow: ['AirNow: be smoke ready (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.airnow.gov/wildfires/be-smoke-ready/'],
+    airnowFilter: ['AirNow: indoor air filtration factsheet (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.airnow.gov/sites/default/files/2021-07/indoor-air-filtration-factsheet.pdf'],
+    epaDiy: ['EPA: research on DIY air cleaners to reduce wildfire smoke indoors (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.epa.gov/air-research/research-diy-air-cleaners-reduce-wildfire-smoke-indoors'],
+    cdcWinter: ['CDC: safety guidelines during and after a winter storm (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/winter-weather/safety/stay-safe-during-after-a-winter-storm-safety.html'],
+    cdcCO: ['CDC: prevent carbon monoxide poisoning (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/natural-disasters/psa-toolkit/prevent-carbon-monoxide-poisoning.html'],
+    cpscGen: ['CPSC: what to know about generators and carbon monoxide (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cpsc.gov/s3fs-public/468-WhattoKnowGenerators_2022.pdf'],
+    nhsHypo: ['NHS: hypothermia (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/hypothermia/'],
+    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
+    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf']
   };
   var G = [];
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources[0][1]; G.push(g); }

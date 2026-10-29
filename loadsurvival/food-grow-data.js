@@ -2,17 +2,17 @@
    Written 29 Oct 2026. Safety points come from named pages seen in search results (we could not open the pages themselves).
    The step by step method is general practice and is marked general guidance. This is not medical advice. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var GEN = 'The steps marked as general guidance, and the tips, are common practice. We did not find a named source for each step.';
   var SRC = {
-    cornell: ['Cornell Cooperative Extension: seed germination test, cited to us, not checked', 'https://dlc.cce.cornell.edu/pluginfile.php/376588/mod_resource/content/1/Seed%20Germination%20Test%20-%20Cornell%20Cooperative%20Extension.pdf'],
-    fdaSprouts: ['US FDA: sprouts safety advice (archived page), cited to us, not checked', 'https://webarchive.library.unt.edu/eot2008/20090511175647/http://www.cfsan.fda.gov/~lrd/tpsprout.html'],
-    purdue: ['Purdue Extension: potatoes turning green, cited to us, not checked', 'https://www.purdue.edu/hla/sites/yardandgarden/potatoes-turning-green'],
-    kstate: ['Kansas State University: cooking dry beans safely, cited to us, not checked', 'https://www.k-state.edu/news/you-asked-it/articles/2017/10/cooking-dry-beans-safely.html'],
-    osu: ['Ohio State University: dry kidney beans need to be boiled, cited to us, not checked', 'https://cfaes.osu.edu/news/articles/chow-line-dry-kidney-beans-need-be-boiled'],
-    utahTul: ['Utah Department of Health: tularemia fact sheet, cited to us, not checked', 'https://epi.utah.gov/wp-content/uploads/tularemia_factsheet.pdf'],
-    moTul: ['Missouri Department of Conservation: tularemia (rabbit fever), cited to us, not checked', 'https://mdc.mo.gov/node/201'],
-    rice: ['Delicious magazine (UK): how to store cooked rice safely, cited to us, not checked', 'https://www.deliciousmagazine.co.uk/how-to-store-cooked-rice-safely/']
+    cornell: ['Cornell Cooperative Extension: seed germination test (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://dlc.cce.cornell.edu/pluginfile.php/376588/mod_resource/content/1/Seed%20Germination%20Test%20-%20Cornell%20Cooperative%20Extension.pdf'],
+    fdaSprouts: ['US FDA: sprouts safety advice (archived page) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://webarchive.library.unt.edu/eot2008/20090511175647/http://www.cfsan.fda.gov/~lrd/tpsprout.html'],
+    purdue: ['Purdue Extension: potatoes turning green (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.purdue.edu/hla/sites/yardandgarden/potatoes-turning-green'],
+    kstate: ['Kansas State University: cooking dry beans safely (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.k-state.edu/news/you-asked-it/articles/2017/10/cooking-dry-beans-safely.html'],
+    osu: ['Ohio State University: dry kidney beans need to be boiled (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://cfaes.osu.edu/news/articles/chow-line-dry-kidney-beans-need-be-boiled'],
+    utahTul: ['Utah Department of Health: tularemia fact sheet (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://epi.utah.gov/wp-content/uploads/tularemia_factsheet.pdf'],
+    moTul: ['Missouri Department of Conservation: tularemia (rabbit fever) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://mdc.mo.gov/node/201'],
+    rice: ['Delicious magazine (UK): how to store cooked rice safely (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.deliciousmagazine.co.uk/how-to-store-cooked-rice-safely/']
   };
   var G = [];
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources.length ? g.sources[0][1] : ''; G.push(g); }
