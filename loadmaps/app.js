@@ -176,6 +176,7 @@ function navTo(key){
   else if(key==='fuel'){ renderFuel(); showView('fuel','home'); }
   else if(key==='restrooms'){ renderRestrooms(); showView('restrooms','home'); }
   else if(key==='alerts'){ renderAlerts(); showView('alerts','home'); }
+  else if(key==='survival'){ if(window.LMS && LMS.render) LMS.render(el('v-survival')); showView('survival','home'); }
   else if(key==='help'){ renderHelp(); showView('help','home'); }
 }
 /* ---------------- map-first menu drawer ---------------- */
@@ -189,6 +190,7 @@ var NAV_ITEMS=[
   { key:'offline',   label:'Offline maps',  sub:'Use the map with no signal', ico:'download' },
   { key:'alerts',    label:'Alerts',        sub:'Route notes and reports', ico:'warn' },
   { key:'assistant', label:'Ask Load Maps', sub:'Plan a trip or ask about a place', ico:'q' },
+  { key:'survival',  label:'Survival Maps', sub:'12 places: rivers, water, fishing checks', ico:'warn' },
   { key:'help',      label:'How to use',    sub:'Simple guide, with search', ico:'q' }
 ];
 function buildDrawer(){
