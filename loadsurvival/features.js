@@ -1020,7 +1020,11 @@ window.LSX = function (A) {
   function welcome() {
     return '<div class="wel"><figure><img src="assets/images/welcome.jpg" alt="Load Survival. Know, prepare, survive, thrive." width="1214" height="2160"><button type="button" data-action="enter" aria-label="Get started"></button></figure></div>';
   }
-  function firstRoute() { return S.welcomed ? null : ['welcome', null]; }
+  function firstRoute() {
+    var again = false;
+    try { again = localStorage.getItem('load-survival-welcome-next') === '1'; localStorage.removeItem('load-survival-welcome-next'); } catch (e) {}
+    return (S.welcomed && !again) ? null : ['welcome', null];
+  }
 
   function onInput(e) {
     var t = e.target, id = t.id || '';
