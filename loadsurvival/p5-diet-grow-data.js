@@ -81,7 +81,7 @@
 
   function story(id, title, intro, frames, warn) {
     add({ id: id, area: "Scenarios • Picture stories", icon: "shield", title: title, intro: intro + " " + ILL,
-      first: ["Six steps, one action each.", CALL, "Beginner mode: read one step at a time. Expert mode: read the whole list.", "No pictures are made for this story yet. It is text only until they are supplied."],
+      first: ["Six steps, one action each.", CALL, "Beginner mode: read one step at a time. Expert mode: read the whole list.", "Only one picture is made for this story. The other frames are text only."],
       do: frames.map(function (f, i) { return "Frame " + (i + 1) + ". " + f; }),
       warn: warn, tip: ["Print this page and keep it with your go-bag.", "Tick each step when you do it."], after: ["Practise the steps once with your household."],
       sources: [SRC.ready], unconfirmed: [NOTE, "The story follows the owner Part 8 sheet. " + GEN] });
@@ -100,4 +100,6 @@
   if (window.LOAD_CORE && window.LOAD_CORE.guides) {
     G.forEach(function (g) { window.LOAD_CORE.guides.push(g); });
   }
+  pic("story-p8-home-safe", "p8-home-door", "A man kneeling at a front door checking the lock, with a woman and a child using a flashlight beside him.", "Check locks and keep a flashlight ready. Keep every exit usable.");
+  pic("story-p8-pets", "p8-pets", "A girl feeding a golden dog and a ginger cat from bowls on a rug.", "Feed pets from measured bowls. Keep their food and water stored.");
 })();

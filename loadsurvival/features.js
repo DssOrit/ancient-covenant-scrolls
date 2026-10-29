@@ -135,6 +135,16 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'p8-s01-water-stops': ['water-14day-plan', 'lim-water-none', 'p8-s05-toilet-stops'],
+    'p8-s02-no-cooking': ['lim-power-outage', 'pantry-90-year-plan', 'diet-gluten-free'],
+    'p8-s03-freezing-night': ['warm-one-room', 'warm-safe-heat', 'lim-heat-cold'],
+    'p8-s04-week1-to-day90': ['week1-day90-plan', 'story-04-week1-to-day90', 'vis-lost-glasses'],
+    'p8-s05-toilet-stops': ['san-two-bucket', 'lim-sanitation', 'story-05-sanitation'],
+    'p8-s06-flood-warning-pets': ['flood-decisions', 'story-01-flood-warning', 'scn-evacuate-pets-seniors'],
+    'p8-s07-upper-floor': ['flood-upper-room', 'story-03-upper-floor'],
+    'p8-s08-older-person-alone': ['vis-lost-glasses', 'story-09-lost-glasses', 'sen-checkin-evac'],
+    'p8-s09-pregnancy-child-medical': ['preg-disaster-water-food', 'nutrition-children', 'sen-medicines-power'],
+    'p8-s10-storage-problem': ['pantry-90-year-plan', 'hs-food-storage', 'lt2-preserve'],
     'diet-profile-checklist': ['diet-nutrient-watch', 'diet-plant-based', 'diet-gluten-free', 'diet-allergy-aware', 'stockpile-basics'],
     'diet-nutrient-watch': ['diet-profile-checklist', 'nutrition-children', 'preg-disaster-water-food', 'diet-plant-based'],
     'story-p8-home-safe': ['lim-stay-safe', 'break-in', 'story-08-hazards', 'sec-dark-night', 'g-signaling'],
