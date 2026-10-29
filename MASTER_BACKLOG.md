@@ -729,7 +729,7 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 - Picture prompts for ChatGPT: 26 seafood and 9 cover prompts (owner to generate and upload; then place them).
 
 ### Pending: build in the app (each needs its own phrase and PR)
-1. Six approved disaster guide corrections: hurricane 12 in (30 cm) is for rushing water; tornado lying low outdoors is a last resort; flood table 6 in and 12 in are for moving water; earthquake drop, cover and hold on then go uphill; wildfire remove "Leave lights on for firefighters" and change "two ways out" to "more than one way out"; heat wave 103 F to 104 F (40 C), yellow warnings, "free relief" to "can give relief".
+1. BUILT 2026-10-29 in a PR, awaiting owner merge and iPad check (cache p88-v106). Six approved disaster guide corrections: hurricane 12 in (30 cm) is for rushing water; tornado lying low outdoors is a last resort; flood table 6 in and 12 in are for moving water; earthquake drop, cover and hold on then go uphill; wildfire remove "Leave lights on for firefighters" and change "two ways out" to "more than one way out"; heat wave 103 F to 104 F (40 C), yellow warnings, "free relief" to "can give relief".
 2. Seniors guides and pregnancy guides (the Who is at home row already exists). Named sources, status label, Not confirmed list, not medical advice.
 3. Place pages ("Where you live"), by place:
    - Portugal: Lisboa, Porto, Coimbra, Setubal.
@@ -744,6 +744,7 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 8. More scenarios to make the app comprehensive (proposed, owner to add or remove): winter power cut, heat wave, evacuating with pets, boil-water notice, wildfire smoke, flooded road, stuck in a car in snow, sheltering in place for days, losing phone signal.
 9. Household content as app guides: older woman, weather, dust and allergies, menopause, outage and well, buy order, storage. Owner to say yes or no.
 10. Place pictures: owner uploads the 35 images, then Claude places them.
+11. Download and print: make the information downloadable as a zip and printable (guides, lists, checklists, place pages). Existing: print buttons on the family plan and tracker, CSV and JSON downloads in the tracker. Proposed: a Download and print page with print-friendly guides, a one-tap zip of chosen guides and lists built offline in the app (no outside library), and a printable pack per place and per group (seniors, pregnancy). Not built. Needs the owner's phrase and a choice of what goes in the zip.
 
 ### Pending: checks and open questions
 - Real iPad Safari tests (read-aloud, Stop, CPR sound, tracker downloads, offline, the new Home page, the refresh circle).
