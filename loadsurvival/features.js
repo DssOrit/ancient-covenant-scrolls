@@ -135,6 +135,18 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'comm-start': ['comm-radio-listen', 'comm-frs-pmr', 'comm-licence-chart', 'ht-family-plan'],
+    'comm-radio-listen': ['comm-start', 'comm-frs-pmr', 'comm-ham'],
+    'comm-frs-pmr': ['comm-gmrs', 'comm-meshtastic', 'comm-licence-chart'],
+    'comm-gmrs': ['comm-frs-pmr', 'comm-licence-chart', 'comm-ham'],
+    'comm-ham': ['comm-gmrs', 'comm-licence-chart', 'comm-radio-listen'],
+    'comm-satellite': ['comm-start', 'comm-meshtastic', 'comm-licence-chart'],
+    'comm-meshtastic': ['comm-frs-pmr', 'comm-satellite', 'comm-licence-chart'],
+    'comm-licence-chart': ['comm-frs-pmr', 'comm-gmrs', 'comm-ham', 'comm-meshtastic'],
+    'lim-comms': ['comm-start', 'comm-frs-pmr'],
+    'es-radios-alerts': ['comm-radio-listen', 'comm-start'],
+    'lt-ham-radio': ['comm-ham', 'comm-licence-chart'],
+    'foundation-communication': ['comm-start'],
     'lt-fishing': ['wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules'],
     'lt2-foraging': ['wf-find-plants', 'wf-shore-shellfish'],
     'hs-fire-pit': ['wf-fire-wet', 'wf-fire-nomatches'],
