@@ -16,7 +16,7 @@
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "leaf"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
   function PT(rows) { return { head: ["English", "Português"], rows: rows }; }
   var PTNOTE = "Portuguese words are for orientation. " + UNV + ": not reviewed by a native speaker.";
-  function unc(extra) { return [UNV + ": " + extra, "The steps follow the owner Part 11 manual. We have not opened any linked page. " + PENDING + ": not tested on a real iPad.", "The six story photographs for this module do not exist yet, so the story is NOT complete."]; }
+  function unc(extra, pic) { return [UNV + ": " + extra, "The steps follow the owner Part 11 manual. We have not opened any linked page. " + PENDING + ": not tested on a real iPad.", pic || "The six story photographs for this module do not exist yet, so the story is NOT complete."]; }
 
   add({ id: "p11a-orchard", area: "Food • Orchard", title: "Part 11A: Orchard fruit, drying and preserving (pomar e conservação)",
     intro: "Grapes, pears, guava, lemons, oranges and quince add variety and nutrients. They are a seasonal supplement, not a year-round calorie or drinking-water supply. Fruit acidity, sugar, salt or pectin is not sterilisation.",
@@ -24,7 +24,7 @@
       CALL,
       "Identify the fruit for certain before you eat it. The fruit called Martello is UNIDENTIFIED. Do not give it a botanical name until it is confirmed.",
       "Use a tested method for drying and preserving. Never promise 6 to 12 months from how dry the fruit feels.",
-      "Do not climb unsafe ladders or enter storm-damaged trees. " + NOPIC
+      "Do not climb unsafe ladders or enter storm-damaged trees. " + "Every frame has a picture. Some are small, so they look soft on a large screen."
     ],
     do: [
       "Frame 1. Identify the fruit confidently and check it is right to eat.",
@@ -40,9 +40,17 @@
     warn: ["Do not use treated bamboo, dirty cloth, wax paper near high heat or raw river water in food preparation.", "Never eat fruit you cannot identify."],
     tip: ["Keep fruit and drinking water supplies separate.", "Write the date on every container."],
     after: ["Check stored fruit often. When in doubt, throw it out."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/p11a-01.jpg", alt: "A woman in a straw hat holds a ripe pear beside a pear tree and compares it with a field guide page.", items: ["Frame 1: identify the fruit before you eat it."] },
+      { h: "Pictures, continued", img: "assets/pics/p11a-02.jpg", alt: "An older man picks a pear from a low branch while standing on the ground and places it in a wooden crate.", items: ["Frame 2: pick from the ground or a low reach. No ladder."] },
+      { h: "Pictures, continued", img: "assets/pics/p11a-03.jpg", alt: "Hands rinse pears and grapes in a bowl under a running tap, with bruised pears set aside in a separate bowl.", items: ["Frame 3: wash with drinking water and set bruised fruit aside."] },
+      { h: "Pictures, continued", img: "assets/pics/p11a-04.jpg", alt: "Hands cut a pear into even slices on a wooden board with a kitchen knife.", items: ["Frame 4: cut on a clean board. Keep fingers curled, away from the blade."] },
+      { h: "Pictures, continued", img: "assets/pics/p11a-05.jpg", alt: "Sliced pears and grapes laid in single layers on mesh trays under fine insect netting on a shaded porch.", items: ["Frame 5: dry in single layers on clean trays, covered from insects."] },
+      { h: "Pictures, continued", img: "assets/pics/p11a-06.jpg", alt: "A woman holds a glass jar of dried fruit with a blank tag, with more jars on a shelf behind her.", items: ["Frame 6: inspect, label with the date and rotate. Do not promise months from how dry it feels."] }
+    ],
     table: PT([["grapes", "uvas"], ["pears", "peras"], ["guava", "goiaba"], ["lemons", "limões"], ["oranges", "laranjas"], ["quince", "marmelo"], ["to dry", "secar"], ["harvest", "colher"]]),
     sources: [SRC.nchfp, SRC.fsDisaster],
-    unconfirmed: unc("no drying temperature, time or storage life is given because no tested figure was supplied. The Martello fruit is unidentified. " + PTNOTE) });
+    unconfirmed: unc("no drying temperature, time or storage life is given because no tested figure was supplied. The Martello fruit is unidentified. " + PTNOTE, "All six story pictures exist. Some are small and soft. They are illustrations, not photographs of a real place. " + PENDING + ".") });
 
   add({ id: "p11b-bamboo", area: "Home skills • Bamboo", title: "Part 11B: Bamboo for the garden and household (projetos com bambu)",
     intro: "Use identified, sound bamboo for low-risk garden supports and storage aids. Strength varies with species, age, moisture, damage and joints. Bamboo is not stronger than steel, and a woven platform must not carry people.",
@@ -50,7 +58,7 @@
       CALL,
       "Check who owns the bamboo and any local limits on cutting it.",
       "Wear eye protection, thick gloves, long sleeves and sturdy shoes.",
-      "Keep people and pets out of the cutting path. " + NOPIC
+      "Keep people and pets out of the cutting path. Frames 1 and 2 have a picture. The other frames are text only."
     ],
     do: [
       "Frame 1. Select a sound culm sized for a stake or trellis. Check for splits, decay, insects and sharp splinters.",
@@ -69,9 +77,13 @@
     ],
     tip: ["Practise on a small project before a bigger one."],
     after: ["Re-check stakes and trellises after storms. Replace split poles."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/p11b-01.jpg", alt: "A man in safety glasses looks up a tall green bamboo culm in a bamboo grove, with one hand resting on the stem.", items: ["Frame 1: look the culm over for splits and decay. No tool in hand."] },
+      { h: "Pictures, continued", img: "assets/pics/p11b-02.jpg", alt: "A man puts on safety glasses and thick gloves beside a workbench with a hand saw, sandpaper and a bamboo pole.", items: ["Frame 2: eye protection and gloves on before you cut."] }
+    ],
     table: PT([["bamboo", "bambu"], ["garden stakes", "estacas para horta"], ["irrigation trough", "calha de rega"], ["basket", "cesto"], ["rack", "suporte"], ["rope", "corda"]]),
     sources: [],
-    unconfirmed: unc("no source page was supplied for bamboo strength or species. " + PTNOTE) });
+    unconfirmed: unc("no source page was supplied for bamboo strength or species. " + PTNOTE, "Only 2 of the 6 story pictures exist (frames 1 and 2), so the story is NOT complete.") });
 
   add({ id: "p11c-water", area: "Water • Garden", title: "Part 11C: Rainwater and gravity irrigation (água e rega por gravidade)",
     intro: "Keep three kinds of water apart. DRINKING (potável): verified treated water. RAW (bruta): rain, river or other unverified water that needs evaluation and treatment. UTILITY (utilitária): water for the garden or cleaning only.",
