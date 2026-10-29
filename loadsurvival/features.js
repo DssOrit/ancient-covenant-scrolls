@@ -165,7 +165,7 @@ window.LSX = function (A) {
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
     'vitamins-natural-items': ['meds-natural-alternatives', 'stockpile-basics', 'med-dehydration', 'es-medical-kit'],
     'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
-    'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup'],
+    'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup', 'ps-types', 'ps-sizing'],
     'wild-birds-prep': ['fish-catch-inspect-clean-cook', 'wild-food-field-checklist', 'wf-wild-food-rules', 'med-carbon-monoxide'],
     'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life'],
     'shellfish-safe-collect': ['wf-shore-shellfish', 'crabs-shrimp-lobster', 'wild-food-field-checklist', 'other-sea-life'],
@@ -175,7 +175,7 @@ window.LSX = function (A) {
     'storage-area-setup': ['stockpile-basics', 'stockpile-buying-tips', 'hs-food-storage', 'lt-year-pantry'],
     'stockpile-buying-tips': ['stockpile-basics', 'storage-area-setup', 'budget-offgrid', 'ht-buy-order'],
     'dog-stockpile': ['stockpile-basics', 'budget-offgrid', 'storage-area-setup'],
-    'budget-offgrid': ['stockpile-basics', 'dog-stockpile', 'med-carbon-monoxide', 'meds-natural-alternatives'],
+    'budget-offgrid': ['stockpile-basics', 'dog-stockpile', 'med-carbon-monoxide', 'meds-natural-alternatives', 'ps-budget'],
     'meds-natural-alternatives': ['med-dehydration', 'med-allergic', 'stockpile-basics', 'es-medical-kit'],
     'sea-desalinate': ['hs-seawater', 'wx-sea', 'stockpile-basics'],
     'stockpile-basics': ['ht-kit-quantities', 'ht-buy-order', 'es-kit-tiers', 'lt-year-pantry', 'lt2-staples', 'hs-food-storage', 'meds-natural-alternatives', 'sea-desalinate'],
@@ -213,7 +213,13 @@ window.LSX = function (A) {
     'sen-falls-mobility': ['sen-kit-lists', 'sen-checkin-evac'],
     'sen-confusion': ['sen-heat', 'sen-medicines-power', 'sen-dementia'],
     'sen-dementia': ['sen-confusion', 'sen-checkin-evac', 'sen-kit-lists'],
-    'sen-checkin-evac': ['sen-kit-lists', 'sen-dementia', 'g-heat-wave']
+    'sen-checkin-evac': ['sen-kit-lists', 'sen-dementia', 'g-heat-wave'],
+    'ps-types': ['ps-sizing', 'ps-safety', 'ps-budget', 'home-power-sizing'],
+    'ps-sizing': ['ps-types', 'home-power-sizing', 'ps-cooking-battery'],
+    'ps-safety': ['med-carbon-monoxide', 'power-generator', 'ps-lithium', 'g-power-outage'],
+    'ps-lithium': ['ps-safety', 'ps-types', 'power-battery'],
+    'ps-cooking-battery': ['ps-sizing', 'ht-cook-no-power', 'ps-safety', 'solar-oven-cooking'],
+    'ps-budget': ['ps-types', 'ex-cheap-power', 'budget-offgrid', 'home-power-sizing']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
