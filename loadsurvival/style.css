@@ -189,6 +189,7 @@ a{color:#b9d68a}
 .progress i{display:block;height:100%;background:linear-gradient(90deg,#6b8f3e,#b9d68a);border-radius:8px;transition:width .2s ease}
 .devrow{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center}
 .devrow input{margin:0}
+.devrow3{grid-template-columns:1fr 104px 104px}
 textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:1px solid var(--line2);color:var(--text);font:inherit;line-height:1.6;resize:vertical}
 .kpi small{display:block;color:var(--muted);font-size:13px}
 .results{display:grid;gap:10px}
@@ -207,7 +208,7 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 #topnav button.sos.on{background:linear-gradient(135deg,#b91c1c,#7f1d1d);border-color:#f08a8a;color:#fff}
 .card .progress{margin-top:auto}
 @media(max-width:900px){.helpgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){.num b{font-size:24px}.helpbtn{min-height:96px}#topnav [data-action=sizedown],#topnav [data-action=sizeup]{display:none}.devrow{grid-template-columns:1fr 78px}}
+@media(max-width:640px){.num b{font-size:24px}.helpbtn{min-height:96px}#topnav [data-action=sizedown],#topnav [data-action=sizeup]{display:none}.devrow{grid-template-columns:1fr 78px}.devrow3{grid-template-columns:1fr 84px 84px}}
 @media print{body{background:#fff!important;color:#000!important;font-size:12pt}#topnav,.fab,.footer,.noprint,.planform,.breadcrumbs,h1,.muted{display:none!important}.printonly{display:block!important}.printonly h2{color:#000}.printonly p{color:#000;margin:8px 0}.shell{padding:0;zoom:1}}
 
 .panel .kpis{margin-top:16px}

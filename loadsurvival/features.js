@@ -135,6 +135,21 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'flood-decisions': ['flood-upper-room', 'story-01-flood-warning', 'story-02-protect-if-safe', 'g-flood', 'ht-evacuate', 'scn-evacuate-pets-seniors'],
+    'flood-upper-room': ['flood-decisions', 'story-03-upper-floor', 'story-06-rescue-signals'],
+    'water-14day-plan': ['lim-water-none', 'story-10-14-day-drill', 'pantry-90-year-plan', 'hs-water-storage'],
+    'week1-day90-plan': ['story-04-week1-to-day90', 'water-14day-plan', 'pantry-90-year-plan', 'lim-power-outage'],
+    'pantry-90-year-plan': ['week1-day90-plan', 'water-14day-plan', 'stockpile-basics', 'story-10-14-day-drill'],
+    'story-01-flood-warning': ['flood-decisions', 'story-02-protect-if-safe', 'story-03-upper-floor'],
+    'story-02-protect-if-safe': ['flood-decisions', 'story-01-flood-warning'],
+    'story-03-upper-floor': ['flood-upper-room', 'story-06-rescue-signals', 'story-08-hazards'],
+    'story-04-week1-to-day90': ['week1-day90-plan', 'story-05-sanitation', 'story-07-vulnerable-family'],
+    'story-05-sanitation': ['san-two-bucket', 'lim-sanitation', 'story-10-14-day-drill'],
+    'story-06-rescue-signals': ['comm-start', 'comm-listen-log', 'flood-upper-room'],
+    'story-07-vulnerable-family': ['nutrition-children', 'preg-disaster-water-food', 'story-09-lost-glasses'],
+    'story-08-hazards': ['flood-decisions', 'warm-safe-heat', 'story-03-upper-floor'],
+    'story-09-lost-glasses': ['vis-lost-glasses', 'vis-glasses-kit', 'story-07-vulnerable-family'],
+    'story-10-14-day-drill': ['water-14day-plan', 'story-05-sanitation', 'pantry-90-year-plan'],
     'trap-no-snare': ['trap-snare-small', 'trap-deadfall', 'trap-fish-weir', 'game-skin-small', 'gather-legal-checklist', 'wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'gr-start'],
     'trap-snare-small': ['trap-no-snare', 'game-skin-small', 'trap-deadfall', 'wf-game-handling'],
     'trap-deadfall': ['trap-no-snare', 'trap-snare-small', 'game-skin-small'],
@@ -389,6 +404,7 @@ window.LSX = function (A) {
     ['bleach', 'flask', 'Bleach dose', 'Drops of household bleach for clear water'],
     ['fridge', 'fridge', 'Fridge and freezer timer', 'Deadlines after the power goes out'],
     ['watts', 'battery', 'Watt-hours', 'What a power station can run'],
+    ['pantry', 'can', 'Pantry and bucket planner', 'Staples, buckets, water and pet food for 6 to 15 people. Every number can be changed'],
     ['units', 'convert', 'Unit converter', 'Gallons, liters, degrees, feet, meters'],
     ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
     ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
@@ -439,6 +455,19 @@ window.LSX = function (A) {
     if (t === 'water') return toolFrame(t, '<div class="panel"><label for="w-people">People</label>' + num('w-people', 4, 1, 1, 100) + '<label for="w-days">Days</label>' + num('w-days', 3, 1, 1, 365) + '<div id="w-out" class="kpis"></div><p class="muted">Water: 1 gal (3.8 L) per person per day. 3 days minimum, 2 weeks ideal. Food: about 2,000 kcal per person per day. Raise water for heat, illness, pregnancy and pets.</p></div>');
     if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 5 to 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Cloudy or cold water: settle or filter it first, then use double the dose (16 drops per gallon). Source: CDC. A dose for 1% bleach is not included because we found no official source.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
     if (t === 'fridge') return toolFrame(t, '<div class="panel" id="f-panel"></div><div class="notice">Discard perishables above 40 F (4 C) for more than 2 hours. When in doubt, throw it out. Keep doors closed.</div>');
+    if (t === 'pantry') {
+      var PNS = [['White rice', 0.5, 30], ['Dry beans', 0.25, 30], ['Rolled oats', 0.15, 12]];
+      return toolFrame(t, '<div class="panel"><label for="pn-people">People (adult-equivalents)</label>' + num('pn-people', 6, 1, 1, 100) +
+        '<label for="pn-pre">How long</label><select id="pn-pre"><option value="90">90 days</option><option value="365">1 year</option><option value="1095">3 years</option><option value="0">Other (type days below)</option></select>' + num('pn-days', 90, 1, 1, 3650) +
+        '<label for="pn-spare">Spare buckets</label>' + num('pn-spare', 2, 1, 0, 50) +
+        '<h2 style="margin-top:18px">Staples. Change every number.</h2><p class="muted">Example amounts only. Rice, beans and oats are NOT a balanced diet.</p>' +
+        PNS.map(function (s, i) { return '<div class="devrow devrow3"><span>' + esc(s[0]) + '</span><input aria-label="Pounds per person per day for ' + esc(s[0]) + '" id="pn-r' + i + '" type="number" inputmode="decimal" value="' + s[1] + '" min="0" step="0.01"><input aria-label="Pounds one 5 gallon bucket holds for ' + esc(s[0]) + '" id="pn-c' + i + '" type="number" inputmode="decimal" value="' + s[2] + '" min="1" step="0.5"></div>'; }).join('') +
+        '<p class="muted">Left box: pounds per person per day. Right box: pounds one 5 gallon bucket holds. Weigh a test bucket.</p>' +
+        '<label for="pn-wg">Drinking water per person per day (US gallons)</label>' + num('pn-wg', 1, 0.1, 0.1, 10) +
+        '<h2 style="margin-top:18px">Pets (not in the people totals)</h2><p class="muted">For each pet type food grams per day and water litres per day, from the label and your vet. Leave empty if none.</p>' +
+        [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return '<div class="devrow devrow3"><span>Pet ' + (i + 1) + '</span><input aria-label="Food grams per day for pet ' + (i + 1) + '" id="pn-pf' + i + '" type="number" inputmode="decimal" placeholder="food g/day" min="0" step="1"><input aria-label="Water litres per day for pet ' + (i + 1) + '" id="pn-pw' + i + '" type="number" inputmode="decimal" placeholder="water L/day" min="0" step="0.1"></div>'; }).join('') +
+        '<div id="pn-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['This is a planning tool. Rice, beans and oats alone are not a nutritionally complete diet. Add oil, vegetables, fruit, protein and vitamins.', 'Infants, pregnancy, older age and activity change what people need.', 'Bucket capacities are examples. Real weights vary. Weigh a test bucket before you buy many.', 'Each bucket needs a food-grade liner, a lid and the oxygen absorbers the maker states. Use Mylar and absorbers only for very dry foods.', 'No claim is made that food keeps for decades.', 'Pets: use the label and your vet for food and medicines.']) + '</div>');
+    }
     if (t === 'watts') {
       var devs = [['Phone charging', 10, 2], ['LED lamp', 8, 5], ['Radio', 5, 4], ['Laptop', 50, 3], ['Wi-Fi router', 12, 8], ['Mini fridge', 60, 8], ['Fan', 40, 6], ['CPAP', 40, 8], ['Television', 80, 2]];
       return toolFrame(t, '<div class="panel"><label for="p-cap">Battery or power station size (Wh)</label>' + num('p-cap', 500, 'any', 1) + '<h2 style="margin-top:18px">What do you want to run?</h2><p class="muted">Watts are typical. Check the label on your device.</p>' +
@@ -557,6 +586,22 @@ window.LSX = function (A) {
     if (n === 0) return setOut('p-out', '<p>Pick at least one device.</p>');
     var days = cap * 0.85 / total;
     setOut('p-out', kpi('Energy per day', nf(total, 0) + ' Wh') + kpi('Running together', nf(watts, 0) + ' W') + kpi('Battery lasts', days >= 1 ? nf(days) + ' days' : nf(days * 24) + ' hours'));
+  }
+  function calcPantry() {
+    var people = val('pn-people'), days = val('pn-days'), spare = Math.max(0, Math.round(val('pn-spare') || 0)), wg = val('pn-wg');
+    if (!(people > 0) || !(days > 0)) return setOut('pn-out', '<p>Enter people and days.</p>');
+    var names = ['White rice', 'Dry beans', 'Rolled oats'], tb = 0, h = '';
+    for (var i = 0; i < 3; i++) {
+      var r = val('pn-r' + i) || 0, cap = val('pn-c' + i) || 0, lb = people * r * days, bk = cap > 0 ? Math.ceil(lb / cap) : 0;
+      tb += bk; h += kpi(names[i], nf(lb, 0) + ' lb (' + nf(lb * 0.4536, 0) + ' kg), ' + (cap > 0 ? bk + ' buckets' : 'set bucket size'));
+    }
+    h += kpi('Buckets for staples', tb + ' plus ' + spare + ' spare = ' + (tb + spare));
+    var gal = people * (wg || 0) * days; h += kpi('Drinking water', nf(gal, 0) + ' gal (' + nf(gal * 3.785, 0) + ' L)');
+    var pf = 0, pw = 0, np = 0;
+    for (var j = 0; j < 8; j++) { var a = val('pn-pf' + j), b = val('pn-pw' + j); if (a > 0 || b > 0) { np++; pf += (a > 0 ? a : 0); pw += (b > 0 ? b : 0); } }
+    if (np) { h += kpi('Pet food (' + np + ' pets)', nf(pf * days / 1000, 1) + ' kg'); h += kpi('Pet water', nf(pw * days, 0) + ' L'); }
+    else h += kpi('Pets', 'Enter food and water for each pet above');
+    setOut('pn-out', h + '<p class="muted">Planning estimate from your numbers. Not a nutrition plan.</p>');
   }
   function val2(sel) { var e = document.querySelector(sel); return e ? Number(e.value) : 0; }
   function convert(id, v) {
@@ -1177,7 +1222,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -1197,6 +1242,7 @@ window.LSX = function (A) {
     if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
+    if (id.indexOf('pn-') === 0 && id !== 'pn-pre') { calcPantry(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
     if (id.indexOf('pw-') === 0 && t.tagName === 'INPUT') return pwHandle(t);
     if (id.indexOf('tr-') === 0 && (t.tagName === 'INPUT' || t.tagName === 'SELECT') && id !== 'tr-file') return trHandle(t);
@@ -1214,6 +1260,8 @@ window.LSX = function (A) {
       setOut('lprog', n + ' of ' + L.items.length + ' done'); var b = document.getElementById('lbar'); if (b) b.style.width = Math.round(n * 100 / L.items.length) + '%'; return true;
     }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
+    if (id === 'pn-pre') { if (Number(t.value) > 0) { var pd = document.getElementById('pn-days'); if (pd) pd.value = t.value; } calcPantry(); return true; }
+    if (id.indexOf('pn-') === 0) { calcPantry(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
     if (id === 'tr-file') { trImport(t.files && t.files[0]); t.value = ''; return true; }
     if (id.indexOf('tr-') === 0) return t.tagName === 'INPUT' && t.type !== 'checkbox' ? true : trHandle(t);
