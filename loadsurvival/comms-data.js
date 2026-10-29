@@ -13,6 +13,12 @@
     mesh: ['Linux Pro Magazine: messaging off the grid with Meshtastic, cited to us, not checked', 'https://www.linuxpromagazine.com/Issues/2025/299/Meshtastic'],
     meshHam: ['Meshtastic ham radio guide, cited to us, not checked', 'https://vu3dxr.in/meshtastic-ham-radio-guide-lora-mesh-networking-for-hams/'],
     iosSat: ['Western Hunter: Apple satellite messaging first impressions, cited to us, not checked', 'https://westernhunter.net/gear-reviews/camp-gear/new-apple-satellite-messaging-initial-thoughts/'],
+    wikiGmrs: ['Wikipedia: General Mobile Radio Service (fee, term, family cover), cited to us, not checked', 'https://en.wikipedia.org/wiki/GMRS'],
+    arrl: ['ARRL: International Operating (US amateurs in CEPT countries), May 2021, cited to us, not checked', 'https://www.arrl.org/files/file/Reciprocal%20operating%20forms/May%202021%20International%20Operating.pdf'],
+    anacomHam: ['ANACOM: visiting amateur operators (page cited to us, we could not open it)', 'https://www.anacom.pt/render.jsp?contentId=978436'],
+    pf5x: ['An operator blog: how to get a Portuguese callsign, 2025 (personal account, cited to us, we could not open it)', 'https://pf5x.wordpress.com/2025/06/23/how-to-get-a-portuguese-callsign/'],
+    iaru60: ['IARU Region 1: CEPT licences do not allow 60 metres in Portugal, cited to us, not checked', 'https://www.iaru-r1.org/about-us/committees-and-working-groups/hf-committee-c4/news/cept-licenses-do-not-allow-operation-at-60-meters-in-portugal'],
+    dl47: ['Diario da Republica: Decreto-Lei 47/2000 (ended CB licensing, left registration), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/47-2000-508468'],
     bgrSat: ['BGR: Messages via satellite in iOS 18, cited to us, not checked', 'https://www.bgr.com/tech/move-over-garmin-messages-via-satellite-is-coming-in-ios-18/']
   };
   var G = [];
@@ -145,7 +151,7 @@
     ],
     do: [
       'Step 1. Decide if you need more range than FRS. Hills, woods and a farm may need GMRS.',
-      'Step 2. Apply for the licence before you transmit. Use the FCC licensing page. We did not find the fee or term, so check the page. Fees and terms change.',
+      'Step 2. Apply for the licence before you transmit. Use the FCC licensing page. Reported: the fee is $35 and the licence lasts 10 years, with no exam (fee cut in April 2022). Fees change, so check the page.',
       'Step 3. Keep your call sign on paper and in the radio case.',
       'Step 4. Buy GMRS radios or a base or car radio. Buy at least two.',
       'Step 5. Choose your family channel. Test range with a family member.',
@@ -162,8 +168,8 @@
     ],
     tip: ['Learn the channels and the repeaters in your area before a crisis.', 'A licence covers the family. Put family names on the paperwork.'],
     after: ['Renew the licence before it ends. Keep a copy.'],
-    sources: [SRC.fccGmrs, SRC.fccFrs],
-    unconfirmed: [NOTE, 'That GMRS needs an FCC licence, covers the family, and needs an adult holder matches FCC pages as quoted to us. We did not find the fee or term. The call sign every 15 minutes is a common rule that we did not confirm in this search. ' + LAW, GEN] });
+    sources: [SRC.fccGmrs, SRC.fccFrs, SRC.wikiGmrs],
+    unconfirmed: [NOTE, 'That GMRS needs an FCC licence, covers the family, and needs an adult holder matches FCC pages as quoted to us. The $35 fee, 10-year term and no exam come from Wikipedia and shop pages. We did not reach the FCC page, and some shops still show an old $70 fee. The call sign every 15 minutes is a common rule that we did not confirm in this search. ' + LAW, GEN] });
 
   add({ id: 'comm-ham', area: 'Home skills • Communicate', icon: 'radio',
     title: 'Hand radios and ham (amateur) radio: licence and uses',
@@ -178,7 +184,10 @@
       'Step 1. Decide what you want: nearby voice contact, or long distance.',
       'Step 2. Find a local radio club or a study guide. Learn the rules, the bands and safe operating.',
       'Step 3. United States: the FCC grants amateur licences after an exam. Beginners start with the entry level.',
-      'Step 4. Portugal: amateur radio is licensed by the national regulator. We could not confirm the steps. Contact a Portuguese amateur radio club before you buy a radio.',
+      'Step 4. Visiting Portugal under 90 days with a US licence: a CEPT arrangement lets US Extra and Advanced licence holders operate for a short stay (US General class falls under a separate novice arrangement). Carry your original FCC licence, your passport and the FCC CEPT notice (DA 16-1048). Say CT1/ before your call sign, then /P if portable (CT7 also mainland; CT3 or CT9 Madeira; CU Azores). One operator report says no notice to ANACOM is needed for a short visit.',
+      'Step 4b. Follow the European band plan in Portugal. On 40 metres, voice ends at 7.200 MHz, not 7.300 MHz as in the US. The 60 metre band needs a special ANACOM permission that a CEPT licence does not give.',
+      'Step 4c. Living in Portugal over 90 days: one operator reports you need a Portuguese tax number (NIF), then send your passport, proof of residence and your licence or HAREC exam certificate to ANACOM, and pay a first fee of about 15 euros and about 20 euros a year. They report the licence lasts 10 years. This is one person account and fees change.',
+      'Step 4d. New Portuguese licences by exam: one report says a beginner category cannot transmit alone and must wait about two years for the next category. We found that a new law (Lei 22/2026) changes the amateur categories from 25 August 2026, so this may be out of date. Ask a Portuguese amateur club.',
       'Step 5. Buy a hand radio (handheld) for local contact. Buy a spare battery and a better antenna.',
       'Step 6. Learn the simple rules: say your call sign, keep it short, and do not interfere.',
       'Step 7. Join a local group or net. Practice every week.',
@@ -194,8 +203,8 @@
     ],
     tip: ['Many people find a club the fastest way to learn.', 'A hand radio can also listen to many channels.'],
     after: ['Renew your licence on time. Keep a copy and a call sign card.'],
-    sources: [SRC.meshHam],
-    unconfirmed: [NOTE, 'We found no official US or Portuguese licensing page in this search. The statement that the US grants amateur licences after an exam is general knowledge. We found nothing on the Portuguese process, so we say so. ' + LAW, GEN] });
+    sources: [SRC.arrl, SRC.anacomHam, SRC.pf5x, SRC.iaru60, SRC.meshHam],
+    unconfirmed: [NOTE, 'The US-in-Portugal CEPT points match the ARRL guide as quoted to us (2021). Sources differ on the visit limit: 90 days or three months. The ANACOM page and the operator blog were cited to us and we could not open them. The NIF, HAREC, 15 euro and 20 euro figures, the CT7 prefix and the 10-year term are from that blog only. The two-year category wait and beginner no-transmit rule were not found and may be changed by Lei 22/2026. The 7.200 MHz limit is from a video, cited to us. The US exam statement is general knowledge. ' + LAW, GEN] });
 
   add({ id: 'comm-satellite', area: 'Home skills • Communicate', icon: 'phone',
     title: 'Satellite texting: iPhone and satellite messengers',
@@ -211,6 +220,7 @@
       'Step 2. Practice now. Many phones have a demo in settings. Run it outdoors.',
       'Step 3. Learn the steps. Open Messages, or Emergency SOS. The screen shows where to point the phone. Follow it.',
       'Step 4. Go outdoors. Stand where you can see the sky in all directions. Move away from trees, walls and hills.',
+      'Step 4b. Android: reported to us, not checked: some newer phones (for example Pixel 9 and Galaxy S25 series) have a Satellite SOS setting, found under Settings, Safety and emergency (Pixel) or Settings, Connections (Samsung), and it depends on your carrier. Check your own phone model and plan now.',
       'Step 5. Hold the phone as the screen shows. Keep still. Satellites move, so you may need to adjust.',
       'Step 6. Write a short message: who, where, what, how many. Send it.',
       'Step 7. Wait. Do not send many copies. Check again later.',
@@ -281,17 +291,17 @@
       ['Crank or battery radio (listen only)', 'No licence to listen', 'No licence to listen (not confirmed)'],
       ['FRS walkie-talkie', 'No licence if it stays within the FRS rules', 'Not for use. Use PMR446 instead'],
       ['PMR446 walkie-talkie', 'Not for use in the US', 'Licence-free, as a trade paper and an older law say. Not confirmed on an official page'],
-      ['GMRS radio', 'FCC licence required. Covers the family', 'Not for use'],
-      ['Ham (amateur) radio', 'FCC licence required, after an exam', 'Licence required. Process not confirmed'],
-      ['CB (citizens band)', 'Not covered here', 'Not confirmed'],
+      ['GMRS radio', 'FCC licence required. Covers the family. Reported $35, 10 years, no exam', 'Not for use'],
+      ['Ham (amateur) radio', 'FCC licence required, after an exam', 'Licence required. US visitors: short stay under CEPT rules. Residents: apply to ANACOM'],
+      ['CB (citizens band)', 'Not covered here', 'No licence since Decreto-Lei 47/2000, leaving only a registration. Whether registration still applies, and rules for channels 6, 7, 24 and 25, not confirmed'],
       ['Meshtastic (LoRa)', 'Licence-free band, set the right region', 'Licence-free band, set the right region. Duty cycle limits. Not confirmed'],
       ['Satellite texting on a phone', 'A phone feature. Check your model and plan', 'A phone feature. Country coverage not confirmed']
     ] },
     warn: ['Do not transmit if the table says licence and you have none.', 'Rules and fees change. Check before you buy.'],
     tip: ['Print this page and keep it with your radios.'],
     after: ['Review this chart once a year.'],
-    sources: [SRC.fccFrs, SRC.fccGmrs, SRC.pmr, SRC.portaria, SRC.mesh],
-    unconfirmed: [NOTE, 'This chart combines points from the other radio guides. We found no official Portuguese page for PMR446, amateur radio or CB. The US ham licence row is general knowledge. ' + LAW, GEN] });
+    sources: [SRC.fccFrs, SRC.fccGmrs, SRC.wikiGmrs, SRC.pmr, SRC.portaria, SRC.dl47, SRC.arrl, SRC.mesh],
+    unconfirmed: [NOTE, 'This chart combines points from the other radio guides. We found no official Portuguese page for PMR446. CB comes from a 2000 law cited in a search summary; a claim that a 2017 decree removed registration was not found. Ham rows are from the ARRL guide and one operator blog. ' + LAW, GEN] });
 
   /* ---------- PICTURES FOR LESSONS (split from the owner sheets) ---------- */
   function pics(id, list) {
