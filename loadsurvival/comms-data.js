@@ -18,6 +18,8 @@
     anacomHam: ['ANACOM: visiting amateur operators (page cited to us, we could not open it)', 'https://www.anacom.pt/render.jsp?contentId=978436'],
     pf5x: ['An operator blog: how to get a Portuguese callsign, 2025 (personal account, cited to us, we could not open it)', 'https://pf5x.wordpress.com/2025/06/23/how-to-get-a-portuguese-callsign/'],
     iaru60: ['IARU Region 1: CEPT licences do not allow 60 metres in Portugal, cited to us, not checked', 'https://www.iaru-r1.org/about-us/committees-and-working-groups/hf-committee-c4/news/cept-licenses-do-not-allow-operation-at-60-meters-in-portugal'],
+    dl1: ['Diario da Republica: Decreto-Lei 1/2017 of 5 January (CB: no registration), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/1-2017-105703294'],
+    lei22: ['Diario da Republica: Lei 22/2026 of 27 May (amateur radio law, in force 25 Aug 2026), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/lei/22-2026-1126675654'],
     dl47: ['Diario da Republica: Decreto-Lei 47/2000 (ended CB licensing, left registration), cited to us, not checked', 'https://diariodarepublica.pt/dr/detalhe/decreto-lei/47-2000-508468'],
     bgrSat: ['BGR: Messages via satellite in iOS 18, cited to us, not checked', 'https://www.bgr.com/tech/move-over-garmin-messages-via-satellite-is-coming-in-ios-18/']
   };
@@ -187,7 +189,8 @@
       'Step 4. Visiting Portugal under 90 days with a US licence: a CEPT arrangement lets US Extra and Advanced licence holders operate for a short stay (US General class falls under a separate novice arrangement). Carry your original FCC licence, your passport and the FCC CEPT notice (DA 16-1048). Say CT1/ before your call sign, then /P if portable (CT7 also mainland; CT3 or CT9 Madeira; CU Azores). One operator report says no notice to ANACOM is needed for a short visit.',
       'Step 4b. Follow the European band plan in Portugal. On 40 metres, voice ends at 7.200 MHz, not 7.300 MHz as in the US. The 60 metre band needs a special ANACOM permission that a CEPT licence does not give.',
       'Step 4c. Living in Portugal over 90 days: one operator reports you need a Portuguese tax number (NIF), then send your passport, proof of residence and your licence or HAREC exam certificate to ANACOM, and pay a first fee of about 15 euros and about 20 euros a year. They report the licence lasts 10 years. This is one person account and fees change.',
-      'Step 4d. New Portuguese licences by exam: one report says a beginner category cannot transmit alone and must wait about two years for the next category. We found that a new law (Lei 22/2026) changes the amateur categories from 25 August 2026, so this may be out of date. Ask a Portuguese amateur club.',
+      'Step 4d. New Portuguese licences by exam: Lei 22/2026 changed the amateur law (in force 25 August 2026). It was reported to us that minimum ages and minimum waiting times between categories were removed, so the old two-year wait is out of date. You need a National Amateur Certificate from ANACOM, by exam. We could not open the law.',
+      'Step 4e. Reported to us by a Portuguese club (ARAL), not checked, and it may change when ANACOM publishes its final rules (due within 120 days of 25 August 2026): Category 3 may now transmit on its own, up to about 10 W on 80 m (3.7 to 3.8 MHz), 40 m (7.1 to 7.2 MHz) and 20 m (14.25 to 14.35 MHz); about 100 W on 10 m (28 to 29.7 MHz); about 50 W on 6 m (51 to 52 MHz), 2 m (144 to 145.806 MHz) and 70 cm (430 to 435 and 438 to 440 MHz). Categories 1 and 2 have wider privileges. Confirm every figure with ANACOM or a Portuguese amateur club before you transmit.',
       'Step 5. Buy a hand radio (handheld) for local contact. Buy a spare battery and a better antenna.',
       'Step 6. Learn the simple rules: say your call sign, keep it short, and do not interfere.',
       'Step 7. Join a local group or net. Practice every week.',
@@ -203,8 +206,8 @@
     ],
     tip: ['Many people find a club the fastest way to learn.', 'A hand radio can also listen to many channels.'],
     after: ['Renew your licence on time. Keep a copy and a call sign card.'],
-    sources: [SRC.arrl, SRC.anacomHam, SRC.pf5x, SRC.iaru60, SRC.meshHam],
-    unconfirmed: [NOTE, 'The US-in-Portugal CEPT points match the ARRL guide as quoted to us (2021). Sources differ on the visit limit: 90 days or three months. The ANACOM page and the operator blog were cited to us and we could not open them. The NIF, HAREC, 15 euro and 20 euro figures, the CT7 prefix and the 10-year term are from that blog only. The two-year category wait and beginner no-transmit rule were not found and may be changed by Lei 22/2026. The 7.200 MHz limit is from a video, cited to us. The US exam statement is general knowledge. ' + LAW, GEN] });
+    sources: [SRC.lei22, SRC.arrl, SRC.anacomHam, SRC.pf5x, SRC.iaru60, SRC.meshHam],
+    unconfirmed: [NOTE, 'The US-in-Portugal CEPT points match the ARRL guide as quoted to us (2021). Sources differ on the visit limit: 90 days or three months. The ANACOM page and the operator blog were cited to us and we could not open them. The NIF, HAREC, 15 euro and 20 euro figures, the CT7 prefix and the 10-year term are from that blog only. The removal of waits and ages and the Category 3 band and power figures come from messages relayed to us (the law, annex and an ARAL page were named but we could not open them). A search confirmed only that Lei 22/2026 exists and took effect on 25 August 2026. The final ANACOM technical rules may change the figures. The 7.200 MHz limit is from a video, cited to us. The US exam statement is general knowledge. ' + LAW, GEN] });
 
   add({ id: 'comm-satellite', area: 'Home skills • Communicate', icon: 'phone',
     title: 'Satellite texting: iPhone and satellite messengers',
@@ -292,16 +295,16 @@
       ['FRS walkie-talkie', 'No licence if it stays within the FRS rules', 'Not for use. Use PMR446 instead'],
       ['PMR446 walkie-talkie', 'Not for use in the US', 'Licence-free, as a trade paper and an older law say. Not confirmed on an official page'],
       ['GMRS radio', 'FCC licence required. Covers the family. Reported $35, 10 years, no exam', 'Not for use'],
-      ['Ham (amateur) radio', 'FCC licence required, after an exam', 'Licence required. US visitors: short stay under CEPT rules. Residents: apply to ANACOM'],
-      ['CB (citizens band)', 'Not covered here', 'No licence since Decreto-Lei 47/2000, leaving only a registration. Whether registration still applies, and rules for channels 6, 7, 24 and 25, not confirmed'],
+      ['Ham (amateur) radio', 'FCC licence required, after an exam', 'Licence required (certificate from ANACOM). US visitors: short stay under CEPT rules. Residents: apply to ANACOM'],
+      ['CB (citizens band)', 'Not covered here', 'No licence and no registration since Decreto-Lei 1/2017 (reported to us, not checked). Use channels and power that the general radio rules allow. Rules for channels 6, 7, 24 and 25 not confirmed'],
       ['Meshtastic (LoRa)', 'Licence-free band, set the right region', 'Licence-free band, set the right region. Duty cycle limits. Not confirmed'],
       ['Satellite texting on a phone', 'A phone feature. Check your model and plan', 'A phone feature. Country coverage not confirmed']
     ] },
     warn: ['Do not transmit if the table says licence and you have none.', 'Rules and fees change. Check before you buy.'],
     tip: ['Print this page and keep it with your radios.'],
     after: ['Review this chart once a year.'],
-    sources: [SRC.fccFrs, SRC.fccGmrs, SRC.wikiGmrs, SRC.pmr, SRC.portaria, SRC.dl47, SRC.arrl, SRC.mesh],
-    unconfirmed: [NOTE, 'This chart combines points from the other radio guides. We found no official Portuguese page for PMR446. CB comes from a 2000 law cited in a search summary; a claim that a 2017 decree removed registration was not found. Ham rows are from the ARRL guide and one operator blog. ' + LAW, GEN] });
+    sources: [SRC.fccFrs, SRC.fccGmrs, SRC.wikiGmrs, SRC.pmr, SRC.portaria, SRC.dl47, SRC.dl1, SRC.lei22, SRC.arrl, SRC.mesh],
+    unconfirmed: [NOTE, 'This chart combines points from the other radio guides. We found no official Portuguese page for PMR446. CB: a search summary shows Decreto-Lei 1/2017 exists and dropped registration; we could not open the page. Ham rows are from the ARRL guide and one operator blog. ' + LAW, GEN] });
 
   /* ---------- PICTURES FOR LESSONS (split from the owner sheets) ---------- */
   function pics(id, list) {
