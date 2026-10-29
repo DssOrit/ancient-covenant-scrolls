@@ -135,6 +135,10 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'diet-profile-checklist': ['diet-nutrient-watch', 'diet-plant-based', 'diet-gluten-free', 'diet-allergy-aware', 'stockpile-basics'],
+    'diet-nutrient-watch': ['diet-profile-checklist', 'nutrition-children', 'preg-disaster-water-food', 'diet-plant-based'],
+    'story-p8-home-safe': ['lim-stay-safe', 'break-in', 'story-08-hazards', 'sec-dark-night', 'g-signaling'],
+    'story-p8-pets': ['dog-stockpile', 'scn-evacuate-pets-seniors', 'pantry-90-year-plan', 'story-07-vulnerable-family'],
     'flood-decisions': ['flood-upper-room', 'story-01-flood-warning', 'story-02-protect-if-safe', 'g-flood', 'ht-evacuate', 'scn-evacuate-pets-seniors'],
     'flood-upper-room': ['flood-decisions', 'story-03-upper-floor', 'story-06-rescue-signals'],
     'water-14day-plan': ['lim-water-none', 'story-10-14-day-drill', 'pantry-90-year-plan', 'hs-water-storage'],
