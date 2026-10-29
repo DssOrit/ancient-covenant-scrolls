@@ -438,3 +438,5 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .exrow .exname{flex:1 1 200px;min-width:0}.exrow .exname small{display:block;opacity:.75}
 .exrow .actions{margin:0;gap:8px}.exbar{margin-top:18px}
 @media print{.guide h1{display:block!important;color:#000;font-size:22pt}.guide .pgban,.pgban,.exbar,.status .stbadge svg{display:none!important}.guide{color:#000}.guide *{color:#000!important;background:transparent!important}.guide a{text-decoration:none}}
+.fbbox{margin:16px 0;padding:14px 16px;border:2px solid var(--accent,#6b8f3e);border-radius:14px;background:var(--s2,#151b1e)}.fbbox strong{display:block;font-size:1.1em;margin-bottom:4px}.fbbox p{margin:6px 0}.fbbox ol{margin:8px 0 8px 1.2em;padding:0}.fbbox li{margin:6px 0}
+@media print{.fbbox{border:2px solid #000;background:#fff!important;break-inside:avoid}}
