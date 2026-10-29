@@ -151,6 +151,10 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'p11a-orchard': ['lt2-preserve', 'hs-canning', 'wf-smoke-dry-salt', 'gr-replace-stored-food', 'diet-nutrient-watch'],
+    'p11b-bamboo': ['p11c-water', 'gr-find-seeds', 'p11d-solar-skills'],
+    'p11c-water': ['water-14day-plan', 'river-10a-water', 'wx-river', 'p11b-bamboo', 'lt2-crop-water'],
+    'p11d-solar-skills': ['pw-station-plug-play', 'sol-wh-budget', 'sol-first-power-up', 'p11b-bamboo'],
     'p8-s01-water-stops': ['water-14day-plan', 'lim-water-none', 'p8-s05-toilet-stops'],
     'p8-s02-no-cooking': ['lim-power-outage', 'pantry-90-year-plan', 'diet-gluten-free'],
     'p8-s03-freezing-night': ['warm-one-room', 'warm-safe-heat', 'lim-heat-cold'],
