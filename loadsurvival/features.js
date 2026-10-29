@@ -62,20 +62,22 @@ window.LSX = function (A) {
     var strip = '<div class="numstrip" role="group" aria-label="Emergency numbers">' + C.numbers.map(function (n) {
       return '<a class="num" href="tel:' + esc(n.tel) + '"><b>' + esc(n.num) + '</b><span>' + esc(n.who) + '</span></a>';
     }).join('') + '</div><p class="micro center">' + verify().replace('<span', '<span') + ' Numbers can change.</p>';
-    var help = '<section><h2>I need help now</h2><div class="helpgrid">' + C.helpNow.map(function (h) {
-      return '<button class="helpbtn" data-open-lesson="' + esc(h[1]) + '"><span class="symbol">' + ico(h[2]) + '</span><b>' + esc(h[0]) + '</b></button>';
+    var help = '<section><h2>I need help now</h2><div class="hmchips">' + C.helpNow.map(function (h) {
+      return '<button class="hmchip" data-open-lesson="' + esc(h[1]) + '">' + esc(h[0]) + '</button>';
     }).join('') + '</div></section>';
-    var r3 = '<section><h2>Rule of 3s</h2>' + table({ head: ['You can survive about', 'Without'], rows: C.rule3.map(function (r) { return [r[1], r[0]]; }) }) + '<p class="muted">Order of priority: air, shelter, water, food.</p></section>';
+    var r3 = '<section><h2>Rule of 3s</h2><div class="hmstrip">' + C.rule3.map(function (r) { return '<div><b>' + esc(r[1]) + '</b>without ' + esc(r[0].toLowerCase()) + '</div>'; }).join('') + '</div><p class="micro">Order of priority: air, shelter, water, food.</p></section>';
     var status = '<div class="statusrow"><span class="badge" id="netbadge">' + esc(netText()) + '</span></div>';
     var inst = (isIOS() && !standalone() && !S.hideInstall) ?
       '<div class="tipbox"><strong>Install on your iPad</strong><p>Open this page once online in Safari. Tap Share. Tap Add to Home Screen. Then it opens like an app and works offline.</p>' + btn('Hide this tip', 'hide-install', 'secondary') + '</div>' : '';
-    return strip + status + inst + help + r3 + regionBoxes();
+    var region = '<details class="hmdet"><summary>Regional contacts and agencies</summary>' + regionBoxes() + '</details>';
+    return { help: help, r3: r3, tail: strip + status + inst + region };
   }
   function home() {
     var h = A.home();
     h = h.replace('data-action="checklist"', 'data-action="lists"');
-    var i = h.indexOf('<div class="notice">');
-    return '<div class="hm">' + (i < 0 ? h + homeExtras() : h.slice(0, i) + homeExtras() + h.slice(i)) + '</div>';
+    var x = homeExtras(), i = h.indexOf('<div class="notice">'), j = i < 0 ? -1 : h.indexOf('<section>', i);
+    if (i < 0 || j < 0) return '<div class="hm">' + h + x.help + x.r3 + x.tail + '</div>';
+    return '<div class="hm">' + h.slice(0, i) + x.help + h.slice(j) + x.r3 + x.tail + h.slice(i, j) + '</div>';
   }
   function updateBadge() { var b = document.getElementById('netbadge'); if (b) b.textContent = netText(); }
   window.addEventListener('online', updateBadge); window.addEventListener('offline', updateBadge);
@@ -238,7 +240,7 @@ window.LSX = function (A) {
   /* ---------- lists ---------- */
   function listDone(id) { var s = S.lists[id] || {}, n = 0; Object.keys(s).forEach(function (k) { if (s[k]) n++; }); return n; }
   function listsView() {
-    return '<h1>Checklists</h1><p class="muted">Tick items as you get them. Saved on this device.</p><div class="grid">' + C.lists.map(function (L) {
+    return '<h1>Checklists</h1><p class="muted">Tick items as you get them. Saved on this device.</p><div class="grid hmtools">' + C.lists.map(function (L) {
       var n = listDone(L.id), p = Math.round(n * 100 / L.items.length);
       return '<button class="card" data-action="open-list" data-list="' + esc(L.id) + '"><span class="symbol">' + ico('check') + '</span><b>' + esc(L.title) + '</b><small>' + n + ' of ' + L.items.length + ' done</small><span class="progress"><i style="width:' + p + '%"></i></span></button>';
     }).join('') + '</div>';
@@ -269,7 +271,7 @@ window.LSX = function (A) {
     ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes']
   ];
   function toolsView() {
-    return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid">' + TOOLS.map(function (t) {
+    return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid hmtools">' + TOOLS.map(function (t) {
       return '<button class="card" data-action="open-tool" data-tool="' + t[0] + '"><span class="symbol">' + ico(t[1]) + '</span><b>' + esc(t[2]) + '</b><small>' + esc(t[3]) + '</small></button>';
     }).join('') + '</div>';
   }

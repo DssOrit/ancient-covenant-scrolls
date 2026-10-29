@@ -378,3 +378,33 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .hm .num b{font-size:24px;color:#ff8a8e}.hm .num span{color:var(--muted);font-size:14px}
 @media(max-width:640px){.hm .hmwhorow{gap:8px}.hm .hmwhorow button{padding:12px 6px}.hm .hmwhorow button b{font-size:15px}.hm .num{flex-direction:column;gap:0;min-width:96px}.hm .card.photo{aspect-ratio:16/10;min-height:0}#topnav button[data-tab]{padding:6px 8px}}
 @media(max-width:1000px){#topnav{flex-wrap:nowrap;overflow-x:auto;row-gap:0}#topnav .grow{display:block}#topnav button.refresh{margin-left:6px}}
+
+/* Sleek pass (p89-v107): picture tiles, slim rows, slim chips, button caps, calmer dyslexia spacing */
+.button,.secondary,.danger{min-height:44px;padding:10px 20px;font-size:15px}
+body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
+.hmgrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 6px}
+.hmtile{position:relative;overflow:hidden;display:flex;align-items:flex-end;aspect-ratio:16/10;min-height:0;width:100%;padding:0;text-align:left;color:#fff;background:#151b1d;border:1px solid #26302d;border-radius:14px}
+.hmtile .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hmtile .txt{position:relative;display:block;width:100%;padding:26px 10px 8px;background:linear-gradient(180deg,rgba(11,15,16,0),rgba(11,15,16,.92) 70%)}
+.hmtile b{display:block;font-size:15px;line-height:1.25}.hmtile small{display:block;font-size:12px;color:#cdd6d0}
+.hmtile.plain{background:linear-gradient(135deg,#1d2a21,#121a15)}
+.hmtile[aria-pressed=true]{border-color:var(--green-hi);box-shadow:0 0 0 2px rgba(155,191,99,.3)}
+.hmrow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.hmrow .hmtile{flex:none;width:232px;aspect-ratio:16/9;scroll-snap-align:start}
+.hmchips{display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}
+.hmchip{flex:none;padding:8px 14px;min-height:40px;border:1px solid #4a2326;border-radius:999px;background:#1a1112;color:#ffb4b6;font-weight:700;font-size:14px}
+.hmstrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.hmstrip div{padding:8px 12px;border:1px solid #26302d;border-radius:12px;background:#151b1d;font-size:13px;color:var(--muted)}.hmstrip b{display:block;color:#fff;font-size:15px}
+.hmdet{margin:18px 0;border:1px solid #26302d;border-radius:14px;padding:2px 14px;background:#151b1d}
+.hmdet summary{min-height:44px;display:flex;align-items:center;font-weight:700;cursor:pointer}
+.hmcats{margin:10px 0 14px}
+.hmlist{display:block;border:1px solid #26302d;border-radius:14px;overflow:hidden;background:#151b1d}
+.hmlist .li{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:9px 14px;text-align:left;color:#fff;background:transparent;border:0;border-bottom:1px solid #26302d;border-radius:0;box-shadow:none}
+.hmlist .li:last-child{border-bottom:0}.hmlist .li:hover{background:rgba(107,143,62,.12)}
+.hmlist .ic{display:flex;align-items:center;justify-content:center;flex:none;width:36px;height:36px;border-radius:9px;background:#223027;border:1px solid #34503c}.hmlist .ic .svg{font-size:20px}
+.hmlist .lt b{display:block;font-size:15px;line-height:1.3}.hmlist .lt small{display:block;color:var(--muted);font-size:12px}
+.hmlist .li i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
+.hmtools{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.hmtools .card{min-height:0;padding:12px 14px;border-radius:14px}.hmtools .card b{font-size:16px}.hmtools .card small{font-size:13px}
+.hm .hmgrid4 .hmtile{aspect-ratio:16/10}
+@media(max-width:640px){.hmgrid4{grid-template-columns:repeat(2,minmax(0,1fr))}.hmstrip{grid-template-columns:repeat(2,minmax(0,1fr))}.hmrow .hmtile{width:200px}}
