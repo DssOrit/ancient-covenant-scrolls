@@ -232,6 +232,18 @@ window.LSX = function (A) {
     'place-fl-orlando': ['g-hurricane', 'g-flood', 'g-tornado', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
     'place-sc-conway': ['g-hurricane', 'g-flood', 'g-tornado', 'g-winter-storm', 'g-heat-wave', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
     'place-oh-ohio': ['g-tornado', 'g-winter-storm', 'g-flood', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics']
+    ,'warm-one-room': ['warm-safe-heat', 'lim-heat-cold', 'g-winter-storm', 'sen-cold', 'med-carbon-monoxide']
+    ,'warm-safe-heat': ['warm-one-room', 'med-carbon-monoxide', 'ps-safety', 'lt2-woodheat']
+    ,'hyg-body-hair': ['hyg-hands-teeth-feet', 'hyg-laundry-clean', 'water-sanitation', 'lim-sanitation']
+    ,'hyg-hands-teeth-feet': ['p6-emergency-handwashing', 'hyg-body-hair', 'scn-boil-notice']
+    ,'hyg-period-incontinence': ['p6-sanitation-when-toilets-fail', 'hyg-body-hair', 'preg-after-birth', 'sen-kit-lists']
+    ,'hyg-laundry-clean': ['hyg-body-hair', 'p6-safe-cleanup-after-a-disaster', 'scn-boil-notice']
+    ,'scn-boil-notice': ['ex-boil-filter', 'hyg-hands-teeth-feet', 'water-boil', 'hyg-laundry-clean']
+    ,'vis-glasses-kit': ['vis-lost-glasses', 'sen-kit-lists', 'evac']
+    ,'vis-lost-glasses': ['vis-glasses-kit', 'sen-falls-mobility']
+    ,'scn-smoke-clean-room': ['g-wildfire', 'sen-kit-lists', 'preg-heat-cold-power']
+    ,'scn-days-at-home': ['lim-power-outage', 'hyg-body-hair', 'warm-one-room', 'shelter-home']
+    ,'scn-evacuate-pets-seniors': ['ht-evacuate', 'g-pets', 'sen-checkin-evac', 'evac']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
