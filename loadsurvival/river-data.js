@@ -7,7 +7,7 @@
   var PENDING = "DEVICE TEST PENDING";
   var CALL = "In danger to life, call 911 (US) or 112 (Portugal) first, if the phone works.";
   var ILL = "The picture is an illustration made for this app. It is not a photograph of a real place and does not show that any water is safe, open or legal to use.";
-  var FRAMES = "Only some frames have a picture. The other frames are text only until pictures are made.";
+  var FRAMES = "Every frame has a picture. Some are small, so they look soft on a large screen.";
   var NOGUARANTEE = "No river here is confirmed safe to drink, legal to fish or suitable for power. Check the exact place before you act.";
   var SRC = {
     cdcWater: ["CDC: emergency water (" + LINKED + ")", "https://www.cdc.gov/water-emergency/about/"],
@@ -23,7 +23,7 @@
   function find(id) { var gs = (window.LOAD_CORE && window.LOAD_CORE.guides) || []; for (var i = 0; i < gs.length; i++) if (gs[i].id === id) return gs[i]; return null; }
   function PT(rows) { return { head: ["English", "Português"], rows: rows }; }
   var PTNOTE = "Portuguese words are for orientation. " + UNV + ": not reviewed by a native speaker.";
-  function unc(extra) { return [UNV + ": " + extra, "The steps follow the owner Part 10 report. We have not opened the linked pages. " + PENDING + ": not tested on a real iPad."]; }
+  function unc(extra) { return [UNV + ": " + extra, "The steps follow the owner Part 10 report. We have not opened the linked pages. " + PENDING + ": not tested on a real iPad.", "All story pictures exist. They are illustrations, not photographs of real places, and they do not show that any water, fish or site is safe, open or legal to use."]; }
 
   /* ---- 10A ---- */
   add({ id: "river-10a-water", area: "Water • River", title: "Part 10A: River water, safe collection and treatment",
@@ -51,7 +51,12 @@
     ],
     tip: ["Treat only water you may legally collect.", "Write the pickup spot and date on the container."],
     after: ["Wash hands and containers. Never mix raw and treated water."],
-    sections: [{ h: "Picture", img: "assets/pics/river-10a-map-check.jpg", alt: "A bearded man in a beanie and backpack stands on a mossy bank holding a paper map and a white water jug beside a rocky river.", items: ["Frame 1: check a map and notices from dry ground before you collect water."] }],
+    sections: [{ h: "Picture", img: "assets/pics/river-10a-map-check.jpg", alt: "A bearded man in a beanie and backpack stands on a mossy bank holding a paper map and a white water jug beside a rocky river.", items: ["Frame 1: check a map and notices from dry ground before you collect water."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10a-f2-flooded.jpg", alt: "A bearded man in an olive jacket stands on a high gravel path with his arms folded, looking at a fast, muddy brown flooded river from a safe distance.", items: ["Frame 2: do not use flooded, muddy river water. Look for another source."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10a-f3-containers.jpg", alt: "Two clear water jugs with blue and green tape bands stand on separate trays on a folding table at a dry riverbank.", items: ["Frame 3: keep raw water (blue) and treated water (green) in separate, marked containers."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10a-f4-prefilter.jpg", alt: "Hands pour cloudy water from a pot through a paper coffee filter in a funnel into a glass jug.", items: ["Frame 4: pour cloudy water through a clean cloth or coffee filter. This removes dirt only. It does not make water safe."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10a-f5-boil.jpg", alt: "A pot of water boils on a camping stove on level ground beside a river while the bearded man in a hat stands back.", items: ["Frame 5: boil clear water at a rolling boil for 1 minute (3 minutes above 6,500 ft) on a stable stove, outdoors."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10a-f6-store.jpg", alt: "The man in a hat checks large covered water jugs with colour tape and blank paper tags on a wooden shelf under an outdoor canopy.", items: ["Frame 6: cool, cover and label treated water with the date."] }],
     table: PT([["river", "rio"], ["stream", "ribeiro"], ["drinking water", "água potável"], ["boil", "ferver"], ["flood", "cheia"], ["safe", "seguro"], ["polluted", "poluído"]]),
     sources: [SRC.cdcWater, SRC.cdcFind, SRC.epa],
     unconfirmed: unc("whether a given river is clean, open or legal to use is not known. " + PTNOTE) });
@@ -83,6 +88,14 @@
     ],
     tip: ["Keep a paper copy of the rules, with the date you checked them.", "A tape or board for measuring helps you follow size limits."],
     after: ["Take all gear home. Clean fish away from the water supply."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/river-10b-f1-rules.jpg", alt: "A woman in a green jacket and cap reads a folded leaflet at a river access point beside a wooden fence.", items: ["Frame 1: read the rules for this water: licence, season, species, size, gear."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10b-f2-advisory.jpg", alt: "A woman holds a phone showing a plain map with a blue river and red fish icons, at a picnic table by the river.", items: ["Frame 2: check the fish-consumption advice for this water before you eat any catch."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10b-f3-gear.jpg", alt: "A woman crouches on dry grass choosing a spinning rod, with more rods and a tackle box beside her.", items: ["Frame 3: choose lawful gear. Rod and line is the easiest to check."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10b-f4-measure.jpg", alt: "A woman gently holds a trout over a wooden measuring board on a rock beside a river.", items: ["Frame 4: measure the catch. Release protected or undersized fish quickly and gently."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10b-f5-cool.jpg", alt: "A woman places a bagged fish on ice in an open cooler on a flat rock.", items: ["Frame 5: keep the catch cold and clean."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10b-f6-cook.jpg", alt: "A woman checks a pan-fried fish fillet on a camp stove with a probe thermometer.", items: ["Frame 6: cook to 145 F (63 C) with a thermometer, or decline to harvest when you are unsure."] }
+    ],
     table: PT([["fish", "peixe"], ["fishing licence", "licença de pesca"], ["line fishing", "pesca à linha"], ["river", "rio"], ["permit", "licença"], ["season", "época"]]),
     sources: [SRC.dgrmZones, SRC.dgrmLic, SRC.fluke],
     unconfirmed: unc("licences, seasons, species and gear rules for your water are not known. The Portugal links are for sea zones and licences; inland waters need another authority. " + PTNOTE) });
@@ -136,6 +149,14 @@
     ],
     tip: ["Measure through a full year before you spend money.", "Ask a qualified electrician and your water authority first."],
     after: ["Inspect screens and the intake after every storm."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/river-10c-f1-survey.jpg", alt: "A woman in a grey fleece and a technician in a hard hat stand on a dry path and look at a small stream, one holding a clipboard.", items: ["Frame 1: survey from a dry, stable bank. Do not go into the flow."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10c-f2-measure.jpg", alt: "The woman writes in a notebook while the technician crouches on a rock beside a small waterfall with a tape measure and a level.", items: ["Frame 2: measure head and flow with a technician and write them down. Do it from a safe, dry spot, never from rocks in the flow."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10c-f3-permits.jpg", alt: "Two people look at a printed river map and a stack of permit papers on a picnic table.", items: ["Frame 3: check land and water rights, environmental permits and fish passage first."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10c-f4-controller.jpg", alt: "A wall panel holds a charge controller, a clear-cover fuse box and a red disconnect switch with tidy cable ducting above a battery.", items: ["Frame 4: a professionally wired controller, fuses and a disconnect."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10c-f5-test.jpg", alt: "A technician in a hard hat and gloves uses a multimeter inside a ventilated battery cabinet with a breaker panel.", items: ["Frame 5: protective devices are tested by a professional before any load is connected. This is not a home task."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10c-f6-compare.jpg", alt: "A woman and a technician stand near a small stream turbine house with a roof of solar panels, comparing them in a notebook.", items: ["Frame 6: compare solar and micro-hydro for permits, upkeep, seasons, cost and risk."] }
+    ],
     table: PT([["flow", "caudal"], ["head (drop)", "altura de queda"], ["generator", "gerador"], ["charge controller", "controlador de carga"], ["permit", "licença"], ["battery", "bateria"]]),
     sources: [SRC.cdcWater],
     unconfirmed: unc("the power formula is standard physics; the example numbers are ours, not measured at any real site. Permits, water rights and rules for your stream are not known. No Part 10C source page was supplied, so the only link here is general. " + PTNOTE) });
@@ -168,6 +189,14 @@
     ],
     tip: ["Stock commercial soap, detergent and hand sanitiser (at least 60 percent alcohol)."],
     after: ["Throw out fish that was warm too long. When in doubt, throw it out."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/river-10d-f1-clean-fish.jpg", alt: "A woman in an apron and black gloves cleans a fish on a white board with a bowl of clean water beside it in a kitchen.", items: ["Frame 1: clean fish safely: gloves, clean board, clean water, away from drinking water."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10d-f2-cook-probe.jpg", alt: "A teenager in a hoodie checks a seared fish fillet in a pan on a kitchen stove with a probe thermometer.", items: ["Frame 2: cook to 145 F (63 C) and check with a thermometer."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10d-f3-chill.jpg", alt: "A woman in black gloves slides a covered tray of fish fillets into a refrigerator.", items: ["Frame 3: chill or freeze fish quickly if power allows."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10d-f4-handwash.jpg", alt: "A white basin of water, a jug, a bar of soap in plain wrapping and a folded towel on a wooden table.", items: ["Frame 4: a handwashing station with packaged soap, water and a towel."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10d-f5-lantern.jpg", alt: "A teenager reads a book at a table beside a glowing lantern in a living room.", items: ["Frame 5: use a battery lantern. Never an oil lamp or a candle."] },
+      { h: "Pictures, continued", img: "assets/pics/river-10d-f6-rotate.jpg", alt: "Hands move a jar of preserved food on a tidy pantry shelf lined with jars and cans.", items: ["Frame 6: rotate stored food. Use the oldest first and check for spoilage."] }
+    ],
     table: PT([["soap", "sabão"], ["fish", "peixe"], ["lantern", "lanterna"], ["freeze", "congelar"], ["canning", "conservas"], ["smoked", "fumado"]]),
     sources: [SRC.fdaSmoke, SRC.cdcWater],
     unconfirmed: unc("the Listeria and pathogen risk of cold smoking comes from the FDA page linked here, which we have not opened. The soap and lamp warnings come from the owner Part 10D. " + PTNOTE) });

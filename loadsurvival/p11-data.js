@@ -95,7 +95,7 @@
       CALL,
       "Never assume rainwater is drinkable because it fell from the sky.",
       "Water on a map is not permission to divert it. Check access and collection rules before you take river or spring water.",
-      "Protect the privacy of private wells. Frames 1 to 4 have a picture. Frames 5 and 6 are text only."
+      "Protect the privacy of private wells. Every frame has a picture."
     ],
     do: [
       "Frame 1. Identify a clean, stable collection surface made for rain.",
@@ -113,11 +113,13 @@
       { h: "Pictures", img: "assets/pics/p11c-01.jpg", alt: "A woman in a green rain jacket points at the clean roof gutter of a garden shed in the rain while a boy in a yellow raincoat watches.", items: ["Frame 1: pick a clean, stable roof surface made for rain."] },
       { h: "Pictures, continued", img: "assets/pics/p11c-02.jpg", alt: "A boy in a yellow raincoat rinses a lidded plastic barrel with a garden hose while a woman crouches beside him.", items: ["Frame 2: rinse the container clean before you use it."] },
       { h: "Pictures, continued", img: "assets/pics/p11c-03.jpg", alt: "A woman fits a lid with fine mesh over a rain barrel under a downpipe while a boy watches.", items: ["Frame 3: cover the tank with a lid and fine mesh so mosquitoes cannot breed."] },
-      { h: "Pictures, continued", img: "assets/pics/p11c-04.jpg", alt: "A boy sticks a red band of tape around a rain barrel while a woman helps. A blue jug sits apart on a shelf beside it.", items: ["Frame 4: mark utility-only water with colour tape and keep drinking water in a different jug, apart."] }
+      { h: "Pictures, continued", img: "assets/pics/p11c-04.jpg", alt: "A boy sticks a red band of tape around a rain barrel while a woman helps. A blue jug sits apart on a shelf beside it.", items: ["Frame 4: mark utility-only water with colour tape and keep drinking water in a different jug, apart."] },
+      { h: "Pictures, continued", img: "assets/pics/p11c-05.jpg", alt: "A boy and a woman stand clear and watch a plain split pipe on wooden stands carry a stream of water from a raised barrel to a raised vegetable bed.", items: ["Frame 5: lay a short, supported garden channel from the raised tank to the bed. Test it with a little water."] },
+      { h: "Pictures, continued", img: "assets/pics/p11c-06.jpg", alt: "A woman crouches at the end of the channel to check water reaching a vegetable bed while the boy holds a bucket.", items: ["Frame 6: check the water reaching the garden. Make sure nothing overflows onto paths."] }
     ],
     table: PT([["drinking water", "água potável"], ["raw water", "água bruta"], ["utility water", "água utilitária"], ["rainwater", "água da chuva"], ["irrigation", "rega"], ["gravity", "gravidade"]]),
     sources: [SRC.cdcWater],
-    unconfirmed: unc("the support strength, slope and first-flush amount for your site are not known. No water quality for any collection point is confirmed. " + PTNOTE, "Only 4 of the 6 story pictures exist (frames 1 to 4), so the story is NOT complete. The barrel looks black, green and dark grey in different frames. They are illustrations, not photographs of a real place. " + PENDING + ".") });
+    unconfirmed: unc("the support strength, slope and first-flush amount for your site are not known. No water quality for any collection point is confirmed. " + PTNOTE, "All six story pictures exist. The barrel looks black, green and dark grey in different frames. They are illustrations, not photographs of a real place. " + PENDING + ".") });
 
   add({ id: "p11d-solar-skills", area: "Power • Skills", title: "Part 11D: Solar charging, a power budget and household skills (solar e competências)",
     intro: "Keep phones, radios and power banks usable with equipment rated for their input voltage, plugs and weather. Do not use exposed wires, twisted copper, bare batteries or improvised car sockets.",
@@ -125,7 +127,7 @@
       CALL,
       "Use a panel with a matching controller, or a made-for-purpose USB solar charger.",
       "Use only the approved cable.",
-      "A 12 V label does not mean a USB device will charge safely. " + NOPIC
+      "A 12 V label does not mean a USB device will charge safely. Every frame has a picture."
     ],
     do: [
       "Frame 1. Inventory your solar gear: panel, cable, power bank, phone, radio.",
@@ -141,9 +143,17 @@
     warn: ["Do not twist wires together to charge a phone.", "A battery that swells, smells or gets hot must be moved outside and not used.", "Never leave charging gear in rain or floodwater."],
     tip: ["Keep a paper list of which cable goes with which device."],
     after: ["Check stored gear monthly and write the date."],
+    sections: [
+      { h: "Pictures", img: "assets/pics/p11d-01.jpg", alt: "A teenager in a grey hoodie unfolds a small solar panel on a garden table beside a power bank, a phone and two cables, while a woman watches.", items: ["Frame 1: inventory your solar gear: panel, cable, power bank, phone."] },
+      { h: "Pictures, continued", img: "assets/pics/p11d-02.jpg", alt: "The teenager and the woman compare the plug on a cable with the port on a power bank, with the panel and phone on the table.", items: ["Frame 2: read the connector and voltage details. Match the plugs before you connect."] },
+      { h: "Pictures, continued", img: "assets/pics/p11d-03.jpg", alt: "A teenager props a folding solar panel on a dry garden table in full sun, with its cable lying straight.", items: ["Frame 3: place the panel on a stable, dry surface in sunlight."] },
+      { h: "Pictures, continued", img: "assets/pics/p11d-04.jpg", alt: "Hands plug a USB cable into a power bank, with the cable running from the solar panel.", items: ["Frame 4: connect only the approved cable."] },
+      { h: "Pictures, continued", img: "assets/pics/p11d-05.jpg", alt: "A power bank and a phone charge on a table in the shade of an umbrella, with the solar panel in the sun nearby.", items: ["Frame 5: charge the power bank in shade. Check it for heat."] },
+      { h: "Pictures, continued", img: "assets/pics/p11d-06.jpg", alt: "A woman wipes a power bank with a dry cloth and puts it in a dry plastic box with its cable.", items: ["Frame 6: inspect and store the gear dry."] }
+    ],
     table: PT([["solar panel", "painel solar"], ["power bank", "bateria externa"], ["cable", "cabo"], ["charger", "carregador"], ["shade", "sombra"], ["maintenance", "manutenção"]]),
     sources: [],
-    unconfirmed: unc("no source page was supplied. Whether a given panel, cable or power bank fits is not known; read the labels. " + PTNOTE) });
+    unconfirmed: unc("no source page was supplied. Whether a given panel, cable or power bank fits is not known; read the labels. " + PTNOTE, "All six story pictures exist. They are illustrations, not photographs of a real place. " + PENDING + ".") });
 
   if (window.LOAD_CORE && window.LOAD_CORE.guides) {
     G.forEach(function (g) { window.LOAD_CORE.guides.push(g); });

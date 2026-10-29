@@ -21,7 +21,7 @@
   function add(g) { g.checkedOn = "29 Oct 2026"; g.status = "partly"; g.difficulty = g.difficulty || "Practical"; g.icon = g.icon || "image"; g.area = "Scenarios • Part 8 stories"; g.source = g.sources.length ? g.sources[0][1] : ""; G.push(g); }
   function story(n, id, title, intro, frames, warn, opt) {
     opt = opt || {};
-    var secs = (opt.pics || []).map(function (p, k) { return { h: k === 0 ? "Picture" : "Picture, continued", img: "assets/pics/" + p[0] + ".jpg", alt: p[1], items: [p[2]], at: ({ "p8-01-water-stops": 2, "p8-05-bucket-toilet": 4, "p8-09-child-care": 4, "p8-10-dry-storage": 4 })[p[0]] }; });
+    var secs = (opt.pics || []).map(function (p, k) { return { h: k === 0 ? "Picture" : "Picture, continued", img: "assets/pics/" + p[0] + ".jpg", alt: p[1], items: [p[2]], at: ({ "p8-01-water-stops": 2, "p8-05-bucket-toilet": 4, "p8-09-child-care": 4, "p8-10-dry-storage": 4, "p8-02-no-cooking": 3, "p8-08-flood-safe-distance": 5, "p8-10-planner": 6 })[p[0]] }; });
     add({ id: id, title: "Part 8, Story " + n + ": " + title, intro: intro + " " + ILL,
       first: ["Story " + n + " of 10. Six frames, one action each.", CALL, "Every day ask: is there enough safe water for the next 72 hours, a safe way to dispose of waste, a safe building, a livable temperature, medicine, and a way to talk or leave? A NO on any of these means get help or move, not more improvising.", NOFRAMES],
       do: frames.map(function (f, i) { return "Frame " + (i + 1) + ". " + f; }),
@@ -40,7 +40,7 @@
     "No power and no way to cook. Eat safely from what you have.",
     ["Check how far the outage reaches. Is it your home only or the whole street?", "Keep the fridge and freezer closed. A closed fridge keeps food safe about 4 hours, a full freezer about 48 hours, half full about 24 hours. Use a thermometer.", "Find the ready-to-eat packages: sealed commercial cans and packs marked ready to eat, nut or seed butters, dry crackers, cereal, shelf-stable milk. Check each label.", "Choose foods that fit each person: allergies, gluten-free, vegetarian or vegan, age and medical needs.", "Open cans with a manual can opener. Never pry them open with sharp tools or concrete.", "Write down what you have and what you ate. Throw out bulging, leaking or badly damaged cans and food that was above 40 F (4 C) too long."],
     ["Never use a camp stove, grill or heater indoors.", "Do not taste food to test it.", "Do not drink the salty liquid from cans."],
-    { sources: [SRC.fsOutage, SRC.fsDisaster] });
+    { pics: [["p8-02-no-cooking", "A family at a kitchen table sorts sealed plain packs of grains and beans and metal tins, with a manual can opener on the table.", "Choose ready-to-eat packs that fit each person, and open cans with a manual can opener."]], sources: [SRC.fsOutage, SRC.fsDisaster] });
 
   story(3, "p8-s03-freezing-night", "A freezing night",
     "The heating is off. Stay warm without fuel or flames indoors.",
@@ -52,7 +52,7 @@
     "This follows a household from day 7 to day 90. It is not a two-day outage.",
     ["Day 7. An older adult cannot find their glasses. Help them sit safely, check pockets and bags, use spare glasses or a magnifier, and keep the floor clear.", "Day 14. Audit water and waste: how much safe water is left, and is the toilet working safely?", "Day 21. Check the pantry for balance and for pets. Rice, beans and oats alone are not a complete diet.", "Day 30. Review medicines and anything that needs power or cold. Plan how to get more.", "Day 60. Assess safe resupply, or relocation if you cannot keep water, food, sanitation, medicine and a livable temperature.", "Day 90. Make the safety decision: do not remain indefinitely without the essentials."],
     ["Do not stay in an unsafe, flood-damaged or contaminated home."],
-    { sources: [SRC.fsOutage, SRC.cdcDis] });
+    { pics: [["p8-10-planner", "Two adults at a wooden table draw on a paper planner with plain blank columns, beside a paper map, mugs and shelves of jars and tins.", "Day 90: write down the safety decision. Stay only if water, food, waste, medicine and a way to get help are secure."]], sources: [SRC.fsOutage, SRC.cdcDis] });
 
   story(5, "p8-s05-toilet-stops", "The toilet does not work",
     "No water or a blocked sewer. Set up a contained bucket toilet and keep clean.",
@@ -64,7 +64,7 @@
     "A flood warning arrives for a family with pets. They leave early.",
     ["Check the official hazard: warnings, water level, routes.", "Gather family and pets. Put pets in carriers or on leads.", "Take medicines, glasses and mobility aids, a charged phone, water and papers.", "Choose a safe way to leave and where to go. Tell someone.", "Avoid flooded roads. Never walk or drive through floodwater.", "Reach safe high ground. Stay there until officials say it is safe."],
     ["Never wade or drive through floodwater.", "Do not leave pets behind."],
-    { sources: [SRC.floods, SRC.cdcFlood], unc: "The supplied cover picture for this story shows a family wading in floodwater, so it is not used." });
+    { sources: [SRC.floods, SRC.cdcFlood], pics: [["p8-08-flood-safe-distance", "Two adults with backpacks stand on a hillside road and look down at a flooded street, one pointing toward higher ground.", "Avoid flooded roads. Look from a safe distance and go to higher ground."]], unc: "The picture shows two adults, not the whole family. Nobody is in the water." });
 
   story(7, "p8-s07-upper-floor", "Trapped on the upper floor",
     "Leaving was not possible. This is the last resort, not the first choice.",
