@@ -64,7 +64,7 @@
       'Dry foods that can grow: dry beans, lentils, peas, chickpeas, whole corn kernels for popcorn, raw sunflower seeds in the shell, pumpkin and squash seeds, mustard, coriander and fenugreek seed, whole wheat berries, raw peanuts in the shell.',
       'Fresh foods that give seed: tomatoes, peppers, pumpkin, squash, melon, cucumber (let one grow yellow and big), bean and pea pods left to dry, apples, oranges and lemons (the pips).',
       'Roots, bulbs and cuttings: potatoes with eyes, sweet potatoes, garlic cloves, onion and shallot bottoms, green onion roots, ginger pieces with buds, herb cuttings such as basil and mint.',
-      'Ask people: neighbours who garden, a local garden club, a seed swap, a library seed box, a farmer, a market stall.',
+      'If you can reach them: a neighbour who gardens, a friend with saved seed, a swap. Do not plan on a shop in a crisis. Buying seed is for planning before a crisis.',
       'Paper towel test, step 1. Dampen a paper towel. Squeeze it so it is wet, not dripping. Lay 10 seeds on it.',
       'Paper towel test, step 2. Fold the towel. Put it in a plastic bag or between two plates. Keep it warm, about 65 to 75 F (18 to 24 C).',
       'Paper towel test, step 3. Check each day. Keep the towel damp. Seeds that sprout in 3 to 10 days are alive. Wait up to 14 days for slow ones.',
@@ -537,8 +537,8 @@
       'Step 4. Fish with a line and hook where the law allows. See Make simple fishing gear.',
       'Step 5. Use the bottle fish trap or the crate trap for small fish, crab and crayfish where legal.',
       'Step 6. Use the bucket live trap only as a last resort. See Bucket live trap.',
-      'Step 7. Ask a local hunter or trapper for lessons. A person who knows the area and the law is the best guide.',
-      'Step 8. Take a hunter education or trapper course if one is offered where you live.'
+      'Step 7. Before a crisis, learn from a local hunter or trapper if you can. A person who knows the area and the law is the best guide.',
+      'Step 8. Before a crisis, take a hunter education or trapper course if one is offered where you live.'
     ],
     warn: [
       'Poison is illegal and dangerous. Never use it.',
