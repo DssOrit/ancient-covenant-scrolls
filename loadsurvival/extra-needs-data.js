@@ -5,6 +5,10 @@
   var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
   var NOTMED = 'This guide is general information. It is not medical advice and does not replace your doctor, midwife or emergency services.';
   var SRC = {
+    whoLcg: ['WHO: Introduction to the WHO Labour Care Guide, slidedoc (file dated 14 Dec 2020, version 1.1). The owner supplied the file and we read all 23 pages. The web address is the WHO page for the Labour Care Guide materials, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
+    whoLcgMan: ['WHO: Labour Care Guide user manual (ISBN 978-92-4-001756-6), cited to us, not opened', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
+    nhsLabour: ['NHS 111 Wales: signs and stages of labour, cited to us, not checked', 'https://111.wales.nhs.uk/livewell/pregnancy/signsandstageslabour'],
+    nhsSurrey: ['Surrey and Sussex NHS maternity service: signs of labour and when to contact your midwife, cited to us, not checked', 'https://www.surreyandsussex.nhs.uk/our-services/womens-services/maternity-services/giving-birth-sash/signs-labour-and-when-contact-your-midwife'],
     hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her), cited to us, not checked', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
     mod: ['March of Dimes: know when to seek medical care during pregnancy and after giving birth, cited to us, not checked', 'https://www.marchofdimes.org/find-support/blog/know-when-to-seek-medical-care-during-pregnancy-and-after-giving-birth'],
     mayoBleed: ['Mayo Clinic: bleeding during pregnancy, when to see a doctor, cited to us, not checked', 'https://www.mayoclinic.org/symptoms/bleeding-during-pregnancy/basics/when-to-see-doctor/sym-20050636'],
@@ -223,6 +227,22 @@
       'The afterbirth usually comes within about 30 minutes. Do not pull on the cord to help it.',
       'Check the mother for heavy bleeding. Soaking one or more pads in an hour is an emergency.'
     ],
+    sections: [
+      { h: 'What good labour care looks like (WHO)', items: [
+        'WHO says labour and birth care should be built around the woman, and no treatment should be given without a clear medical reason.',
+        'Care should be respectful. It includes a companion with her in labour, medicine or other ways to ease pain, being offered drinks, and being encouraged to move around.',
+        'Carers explain what they are doing and what they find, in simple words, and plan the next step with her and her companion.',
+        'Carers check the mother (pulse, blood pressure, temperature, urine), the baby (heart rate and the waters), and the labour (how often and how long the contractions last). Active labour is counted from the neck of the womb being open 5 cm.',
+        'This WHO tool is for trained health workers caring for women with low-risk pregnancies. It is not a guide to delivering a baby at home. Women with higher risk may need more checks and care.'
+      ] },
+      { h: 'When to call your midwife (NHS pages, cited to us)', items: [
+        'Signs labour may be starting: tightenings or contractions, a show (a pink, slightly bloody mucus), backache, an urge to use the toilet, and the waters breaking.',
+        'Call your midwife or maternity unit if the waters break, even with no contractions. Also call for vaginal bleeding, if the baby moves less than usual, or if you think you are in labour before 37 weeks.',
+        'Many units ask you to call when contractions are regular and last about 60 seconds, about every 5 minutes. Units differ, so follow your own unit rule.',
+        'It is fine to phone for advice. Maternity teams would rather you call than wait. A pink, slightly bloody show is normal. Heavier bleeding needs an immediate call.',
+        'United Kingdom: if you cannot reach your midwife or maternity triage, call 111 for advice. For heavy bleeding, fits, a cord you can see or feel, or a baby coming now, call 999.'
+      ] }
+    ],
     warn: [
       'If the baby is not breathing, follow the emergency operator instructions. They can guide you step by step.',
       'Never leave the mother alone with a new baby if she is bleeding heavily or feels faint.',
@@ -230,9 +250,13 @@
     ],
     tip: ['Keep clean towels, a blanket, a hat for the baby and a clean plastic sheet in the bag from 36 weeks.', 'Write the address and cross streets on a card for the operator.'],
     after: ['Keep the baby on the mother chest and keep them warm until help arrives.', 'Tell the medical staff the exact time of birth.'],
-    sources: [SRC.mayoLabor, SRC.hearher, SRC.acogPreterm],
+    sources: [SRC.whoLcg, SRC.whoLcgMan, SRC.nhsLabour, SRC.nhsSurrey, SRC.mayoLabor, SRC.hearher, SRC.acogPreterm],
     unconfirmed: [NOTE,
       'The signs of labour match Mayo Clinic text quoted to us.',
+      'The WHO care points above match the WHO Labour Care Guide slidedoc, which we read in full (23 pages, supplied by the owner). It describes care by trained health workers. It does not say how to deliver a baby, so it changes nothing in the emergency birth steps.',
+      'The WHO user manual is a real publication (ISBN 978-92-4-001756-6, 2020) found in search results. We did not open it.',
+      'The NHS signs of labour and when to call match NHS trust and NHS 111 Wales pages as quoted to us. We did not open them. We did not find the NHS Best Start in Life guide, and we could not check the claims about green or brown waters from any page.',
+      'The UK numbers 999 and 111 are general knowledge for the UK.',
       'The emergency birth steps are general guidance. We searched for an NHS, Red Cross, Mayo Clinic or ACOG page and did not find one that gave step-by-step steps for an unplanned birth. A search summary said the usual advice is to keep the baby warm skin to skin, not to pull the cord, and to keep the mother lying down. We have not checked that against a named page. Follow the emergency operator.',
       'Soaking one or more pads in an hour as an emergency sign is from the CDC Hear Her page as quoted to us.',
       'The roughly 30 minutes for the afterbirth came from a community handout quoted to us, not an official page.',
