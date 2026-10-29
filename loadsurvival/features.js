@@ -282,13 +282,13 @@ window.LSX = function (A) {
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
     h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
     h += '<p class="muted">General information only. In immediate danger call ' + esc(region().emergency) + '. ' + verify() + '</p>';
-    return h + '</div>';
+    return h + exBar(l) + '</div>';
   }
   function lessonView() {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
     if (l && l.first) return guideView(l);
     var b = A.lessonBase(); if (!l) return b;
-    var i = b.indexOf('<div class="dangerbox">'); return i < 0 ? b : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + b.slice(i);
+    var i = b.indexOf('<div class="dangerbox">'); return (i < 0 ? b : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + b.slice(i)) + exBar(l);
   }
 
   /* ---------- lists ---------- */
@@ -322,7 +322,8 @@ window.LSX = function (A) {
     ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs'],
     ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances'],
     ['tracker', 'list', 'My stockpile tracker', 'Your rates, prices, what you own, shopping list, CSV and backup'],
-    ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes']
+    ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes'],
+    ['export', 'print', 'Download and print', 'Guides as files, packs for each person, place and topic']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid hmtools">' + TOOLS.map(function (t) {
@@ -334,9 +335,31 @@ window.LSX = function (A) {
     var T = TOOLS.filter(function (x) { return x[0] === t; })[0];
     return '<div class="breadcrumbs">' + btn('← All tools', 'tools') + '</div><h1>' + ico(T[1]) + ' ' + esc(T[2]) + '</h1>' + inner;
   }
+
+  /* ---------- download and print ---------- */
+  var EXP = null;
+  function exPacks() { if (!EXP && window.LOAD_EXPORT) { var by = {}; D.lessons.forEach(function (l) { by[l.id] = l; }); EXP = { by: by, packs: window.LOAD_EXPORT.packs({ lessons: D.lessons, cat: catOf, related: RELATED }) }; } return EXP; }
+  function exFind(id) { var E = exPacks(); if (!E) return null; var g = ['people', 'places', 'topics', 'all']; for (var i = 0; i < g.length; i++) { var f = E.packs[g[i]].filter(function (p) { return p.id === id; })[0]; if (f) return f; } return null; }
+  function exBar(l) {
+    if (!window.LOAD_EXPORT) return '';
+    return '<div class="actions noprint exbar"><button type="button" class="secondary" data-action="stk-print">Print this guide</button><button type="button" class="secondary" data-action="gd-dl" data-id="' + esc(l.id) + '">Save this guide as a file</button></div>';
+  }
+  function exRows(list) {
+    return list.map(function (p) {
+      return '<div class="exrow"><div class="exname"><b>' + esc(p.label) + '</b><small>' + p.ids.length + ' guides</small></div><div class="actions"><button type="button" class="button" data-action="ex-zip" data-pack="' + esc(p.id) + '">Download zip</button><button type="button" class="secondary" data-action="ex-one" data-pack="' + esc(p.id) + '">One file to print</button></div></div>';
+    }).join('');
+  }
+  function exportTool() {
+    var E = exPacks(); if (!E) return toolFrame('export', '<div class="notice">Download is not available in this browser.</div>');
+    var P = E.packs;
+    return toolFrame('export', '<div class="panel"><p>Save guides as plain files. They open with no internet and no app. A zip holds one page per guide, an index, and one file for printing. Keep a copy on paper and on a second device.</p>' +
+      '<p class="muted">On iPad: tap Download. Choose Download or Save to Files. Then open the zip in Files and tap it to unpack.</p><p id="ex-msg" class="muted" role="status" aria-live="polite"></p></div>' +
+      '<h2>For a person</h2>' + exRows(P.people) + '<h2>For a place</h2>' + exRows(P.places) + '<h2>By topic</h2>' + exRows(P.topics) + '<h2>Everything</h2>' + exRows(P.all));
+  }
   function toolView() {
     clearTimers();
     var t = state.opened;
+    if (t === 'export') return exportTool();
     if (t === 'water') return toolFrame(t, '<div class="panel"><label for="w-people">People</label>' + num('w-people', 4, 1, 1, 100) + '<label for="w-days">Days</label>' + num('w-days', 3, 1, 1, 365) + '<div id="w-out" class="kpis"></div><p class="muted">Water: 1 gal (3.8 L) per person per day. 3 days minimum, 2 weeks ideal. Food: about 2,000 kcal per person per day. Raise water for heat, illness, pregnancy and pets.</p></div>');
     if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 5 to 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Cloudy or cold water: settle or filter it first, then use double the dose (16 drops per gallon). Source: CDC. A dose for 1% bleach is not included because we found no official source.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
     if (t === 'fridge') return toolFrame(t, '<div class="panel" id="f-panel"></div><div class="notice">Discard perishables above 40 F (4 C) for more than 2 hours. When in doubt, throw it out. Keep doors closed.</div>');
@@ -631,6 +654,9 @@ window.LSX = function (A) {
     'pw-copy': function () { copy(pwText()); setOut('pw-msg', 'Copied. Paste it into Notes or Messages.'); },
     'dg-copy': function () { copy(dgText()); setOut('dg-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-copy': function () { copy(stkText()); setOut('stk-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'gd-dl': function (x) { var l = D.lessons.filter(function (g) { return g.id === x.dataset.id; })[0]; if (l && window.LOAD_EXPORT) window.LOAD_EXPORT.save(window.LOAD_EXPORT.slug(l.title) + '.html', new Blob([window.LOAD_EXPORT.guideFile(l)], { type: 'text/html' })); },
+    'ex-zip': function (x) { var E = exPacks(), p = exFind(x.dataset.pack), ok = false; if (E && p) { try { ok = window.LOAD_EXPORT.save('load-survival-' + window.LOAD_EXPORT.slug(p.label) + '.zip', window.LOAD_EXPORT.zipPack(p, E.by)); } catch (e) {} } setOut('ex-msg', ok ? 'The zip was created (' + p.ids.length + ' guides). Find it in Downloads or Files.' : 'The file could not be created on this device.'); },
+    'ex-one': function (x) { var E = exPacks(), p = exFind(x.dataset.pack), ok = false; if (E && p) { try { ok = window.LOAD_EXPORT.save('load-survival-' + window.LOAD_EXPORT.slug(p.label) + '-print.html', window.LOAD_EXPORT.onePage(p, E.by)); } catch (e) {} } setOut('ex-msg', ok ? 'The print file was created. Open it, then use Print or Share.' : 'The file could not be created on this device.'); },
     'stk-print': function () { try { window.print(); } catch (e) {} },
     'cpr-stop': cprStop,
     'cpr-go': cprGo,

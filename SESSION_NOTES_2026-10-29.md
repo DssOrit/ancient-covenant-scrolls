@@ -45,3 +45,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - www.cdc.gov and www.nhs.uk could not be opened from the session network. Only search summaries were read.
 
 - Owner 2026-10-29: site must work when government and outside sites cannot be reached; saved Survival Maps handoff and research docx under planning/ for later.
+
+- #1134 and #1135 merged. Download and print built (export.js, Tools > Download and print), cache p96-v114. Backup backup/2026-10-29-loadsurvival-p95-v113 at 750ec990. Next: place the 40 pictures when uploaded; audit guides for steps that depend on outside links.
