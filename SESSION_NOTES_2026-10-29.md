@@ -65,3 +65,6 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - #1143 merged. Owner supplied Part 3 (four PDFs), asked a diet question (none existed), and asked for plant identification and where to find each plant. Built the trap legality fix, diet options, Part 3 lessons, plant cards and place sections, cache p104-v122. Backup backup/2026-10-29-loadsurvival-p103-v121 at 40373af3.
 
 - Owner corrected PR #1144: no store or office referrals in emergencies; add where each plant can be found with no store, and wild where sourced. Second commit on the same PR branch (no new PR), same backup. Wild list is thin: USDA wild onions (California), Infopedia wild celery (Portugal coast), prickly lettuce.
+
+## Communications and split pictures round (cache loadsurvival-p106-v124)
+Backup: backup/2026-10-29-loadsurvival-p105-v123 at 9c2ccd58. Added comms-data.js (8 guides), 36 les-* pictures, RELATED links, export pack. Tests passed (node --check, CORE files exist, 820 and 390 renders, no page errors). Waiting on owner: merge, hold-tile decision, rule 26 lock question.
