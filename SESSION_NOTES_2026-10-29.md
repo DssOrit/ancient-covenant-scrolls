@@ -43,3 +43,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 
 ## Capability gaps
 - www.cdc.gov and www.nhs.uk could not be opened from the session network. Only search summaries were read.
+
+- Owner 2026-10-29: site must work when government and outside sites cannot be reached; saved Survival Maps handoff and research docx under planning/ for later.
