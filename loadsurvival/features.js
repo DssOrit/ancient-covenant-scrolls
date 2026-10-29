@@ -151,6 +151,11 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'river-10a-water': ['wx-river', 'water-14day-plan', 'lim-water-none', 'hs-water-from-air', 'river-10b-fishing'],
+    'river-10b-fishing': ['trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wf-clean-fish', 'river-10b-plants', 'river-10a-water'],
+    'river-10b-plants': ['wf-find-plants', 'wf-plants-us', 'wild-food-field-checklist', 'river-10b-fishing'],
+    'river-10c-microhydro': ['lt2-solar', 'ex-river-hydro', 'sol-safety-lines', 'pw-electrician-ask'],
+    'river-10d-preserve': ['wf-smoke-dry-salt', 'lt2-preserve', 'game-skin-small', 'sec-dark-night', 'river-10b-fishing'],
     'p8-s01-water-stops': ['water-14day-plan', 'lim-water-none', 'p8-s05-toilet-stops'],
     'p8-s02-no-cooking': ['lim-power-outage', 'pantry-90-year-plan', 'diet-gluten-free'],
     'p8-s03-freezing-night': ['warm-one-room', 'warm-safe-heat', 'lim-heat-cold'],
