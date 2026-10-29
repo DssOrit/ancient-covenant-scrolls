@@ -442,3 +442,15 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .fbbox{margin:16px 0;padding:14px 16px;border:2px solid var(--accent,#6b8f3e);border-radius:14px;background:var(--s2,#151b1e)}.fbbox strong{display:block;font-size:1.1em;margin-bottom:4px}.fbbox p{margin:6px 0}.fbbox ol{margin:8px 0 8px 1.2em;padding:0}.fbbox li{margin:6px 0}
 @media print{.fbbox{border:2px solid #000;background:#fff!important;break-inside:avoid}}
 .lesson-illustration.strip{display:block;width:100%;height:auto;border-radius:12px;margin:8px 0 12px}
+
+.modebar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.modebar button{min-height:44px}
+.modebar button[aria-pressed=true]{border-color:var(--v1);font-weight:700;box-shadow:inset 0 0 0 2px var(--v1)}
+.bhide{display:none}
+.stepsol.beginner li,.stepcards.beginner .stepbody{font-size:22px;line-height:1.7}
+.stepsol .checkrow,.stepbody .checkrow{margin:0}
+.bnav{margin-top:12px}
+.bnav button{min-height:52px;min-width:120px}
+.bnav button[disabled]{opacity:.45}
+@media print{.bhide{display:block!important}.modebar,.bnav{display:none!important}}
+.bcount{align-self:center;font-size:18px}
