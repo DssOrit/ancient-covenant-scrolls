@@ -310,7 +310,7 @@
     if (!g) return;
     g.sections = (g.sections || []).concat(list.map(function (p, k) { return { h: k === 0 ? 'Pictures' : 'Pictures, continued', img: 'assets/pics/les-' + p[0] + '.jpg', alt: p[1], items: [p[2]] }; }));
   }
-  var TR = 'Training model only. Do not put gear in the water unless every rule allows it.';
+  var TR = 'Check the rules before you put gear in the water.';
   pics('gr-find-seeds', [
     ['b-seeds-four-fruits-board', 'Seeds from a tomato, a pepper, a cucumber and a pumpkin on a board.', 'Seeds from fruit you already have.'],
     ['b-seeds-wash-strainer', 'Hands rinsing seeds in a strainer under a tap.', 'Rinse the flesh off wet seed.'],

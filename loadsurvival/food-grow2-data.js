@@ -25,30 +25,30 @@
   function add(g) { g.checkedOn = '29 Oct 2026'; g.status = 'partly'; g.difficulty = g.difficulty || 'Practical'; g.source = g.sources.length ? g.sources[0][1] : ''; G.push(g); }
   function find(id) { var gs = (window.LOAD_CORE && window.LOAD_CORE.guides) || []; for (var i = 0; i < gs.length; i++) if (gs[i].id === id) return gs[i]; return null; }
   function patch(id, fn) { var g = find(id); if (g) fn(g); }
-  var GATE = 'LEGALITY UNCONFIRMED. DO NOT DEPLOY. No emergency or power cut gives a right to fish, trap, hunt, gather or enter private land.';
+  var GATE = 'CHECK THE RULES FIRST. Legal status is not verified for your place. No emergency or power cut gives an automatic right to fish, trap, hunt, gather or enter private land. Do the 10 checks, then decide.';
   var PT = 'Portugal: for recreational marine fishing, DGRM prohibits traps, including cages, pots, baskets and other traps. Do not use this in Portuguese sea water.';
   var FL = 'Florida: some minnow traps are allowed under specific FWC rules. A home made bottle may not meet the size, species, place or marking rules.';
-  var HOWTO = 'The steps below show how a device is built, as a training model. Do not put it in the water unless you have finished the Lawful food-catching checklist and every answer says it is allowed.';
+  var HOWTO = 'The steps below show how a device is built and used. Check the rules first with the Lawful food-catching checklist, and write the answers on paper.';
 
   /* ---------- LEGAL GATE ON TRAP GUIDES ---------- */
   patch('trap-fish-bottle', function (g) {
-    g.title = 'Bottle trap: training model (do not deploy unless verified legal)';
-    g.intro = 'A 2 litre bottle can be cut into a funnel trap. This guide shows how it works. It is a training model. It is not permission to fish. Rod and line is easier to check and more selective.';
-    g.first = [GATE, PT, FL, 'Do the Lawful food-catching checklist first. If any answer is unknown, do not deploy. Use rod and line or another food instead.'];
+    g.title = 'Bottle trap: how to build and use it (check the rules first)';
+    g.intro = 'A 2 litre bottle can be cut into a funnel trap. This guide shows how it works. Legal status is not verified, so check the rules first. Rod and line is easier to check and more selective.';
+    g.first = [GATE, PT, FL, 'Do the Lawful food-catching checklist first. If an answer is unknown, write LEGALITY UNCONFIRMED on your paper. Rod and line is the easier choice. If you go ahead, you carry the risk: check the trap often and take all gear home.'];
     g.do = [HOWTO].concat(g.do);
     g.unconfirmed = g.unconfirmed.concat(['The Portugal and Florida lines come from the owner Part 3 file and DGRM and FWC pages cited to us. We did not open them. A trap can be legal in one place and banned in the next. Check the exact water, gear and date.']);
     g.sources = (g.sources || []).concat([SRC.dgrmGear, SRC.fwcBait]);
   });
   patch('trap-crate-crab', function (g) {
-    g.title = 'Crate or basket trap for crabs and crayfish: training model (do not deploy unless verified legal)';
-    g.intro = 'A crate or basket with bait can hold crabs or crayfish. This guide shows how it works. It is a training model, not permission to fish. In many places this kind of trap is banned or needs a licence and marking.';
-    g.first = [GATE, PT, 'Crab and crayfish traps are restricted in many US states too. They often need a licence, a mark, escape openings and set check times. Check first.', 'If any rule is unknown, do not deploy. Use a hand net, a baited line or stored food instead.'];
+    g.title = 'Crate or basket trap for crabs and crayfish: how to build and use it (check the rules first)';
+    g.intro = 'A crate or basket with bait can hold crabs or crayfish. This guide shows how it works. Legal status is not verified. In many places this kind of trap is banned or needs a licence and marking, so check first.';
+    g.first = [GATE, PT, 'Crab and crayfish traps are restricted in many US states too. They often need a licence, a mark, escape openings and set check times. Check first.', 'If a rule is unknown, write LEGALITY UNCONFIRMED on your paper. A hand net or a baited line is easier to check. If you go ahead, you carry the risk.'];
     g.do = [HOWTO].concat(g.do);
     g.unconfirmed = g.unconfirmed.concat(['The statement that crab and crayfish traps need a licence, mark and escape openings in many US places is general knowledge. We did not check a named source.', 'The Portugal line comes from the owner Part 3 file and a DGRM page cited to us. We did not open it.']);
     g.sources = (g.sources || []).concat([SRC.dgrmGear]);
   });
   patch('trap-live-small', function (g) {
-    g.title = 'Bucket live trap for small animals: last resort, verify the law first';
+    g.title = 'Bucket live trap for small animals: how to build and use it (check the rules first)';
     g.first = [GATE, 'Use fishing, stored food and safe plants first. Trapping uses energy and often fails.'].concat(g.first.slice(2));
     g.do = [HOWTO.replace('device is built', 'trap is built').replace('water', 'ground')].concat(g.do);
     g.unconfirmed = g.unconfirmed.concat(['No named source says a bucket trap is allowed anywhere. Treat it as not allowed until you have checked the rules for your land, the species and the season.']);
@@ -60,7 +60,7 @@
   /* ---------- LAWFUL CHECKLIST ---------- */
   add({ id: 'gather-legal-checklist', area: 'Food • Traps and catch', icon: 'check',
     title: 'Lawful food-catching: the 10 checks before you try',
-    intro: 'Not every home made trap is legal. A device can harm protected animals, pets and people, and left gear can pollute water. Do these 10 checks first. If any answer is unknown, do not deploy.',
+    intro: 'Not every home made trap is legal. A device can harm protected animals, pets and people, and left gear can pollute water. Do these 10 checks first and write the answers on paper. If an answer is unknown, write LEGALITY UNCONFIRMED.',
     first: [
       GATE,
       'A mapped river does not mean public access. Private land needs the owner permission.',
@@ -77,7 +77,7 @@
       'Check 7. Check fish advisories, shellfish closures, pollution and algae warnings.',
       'Check 8. Choose gear that lets you release a catch quickly and safely. Do not leave gear that can tangle animals unattended.',
       'Check 9. Prepare clean tools, safe water, a cooler with ice and a food thermometer.',
-      'Check 10. If any rule or safety fact is unknown, do not deploy. Use rod and line or another food source.',
+      'Check 10. If a rule or safety fact is unknown, write LEGALITY UNCONFIRMED. Prefer rod and line or another food source. If you go ahead, you carry the risk: keep gear selective, check it often and take it all home.',
       'Who sets the rules for your place: see the table below. It is a research list, not a verified rule. Always check the current rule.'
     ],
     sections: [
@@ -513,7 +513,7 @@
         'Planting dates for ' + p[0] + ': NOT VERIFIED. Do not wait for a date. Sow cool crops (lettuce, peas, radish) when nights are cool and the soil is not frozen. Plant tender crops (tomato, pepper, beans) only after the last frost, when nights stay warm. Watch the trees and wild plants around you leaf out. Write what works in your notebook.',
         'Seed and plants: use what you have first. Saved seed, kitchen seed, cuttings, sprouting potatoes, a neighbour. See Find seeds and things to plant.',
         'Wild food plants near ' + p[0] + ': ' + WILDMAP[id] + ' Never eat a wild plant you cannot name for certain. See the Plant cards and How to know which plants can be eaten.',
-        'Fishing and food-catching rules: LEGALITY UNCONFIRMED. Do not deploy any trap. Rod and line is the safest start. Read the authority below before a crisis, because you may not reach it in one: ' + p[2],
+        'Fishing and food-catching rules: LEGALITY UNCONFIRMED. Check the rules before you set any trap. Rod and line is the easiest start. Read the authority below before a crisis, because you may not reach it in one: ' + p[2],
         'See the Plant cards, the Crop cards and the Lawful food-catching checklist in Guides.'
       ];
       if (p[3] === 'PT') items.splice(6, 0, PT);
