@@ -171,20 +171,32 @@ window.LSX = function (A) {
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup', 'ps-types', 'ps-sizing'],
     'wild-birds-prep': ['fish-catch-inspect-clean-cook', 'wild-food-field-checklist', 'wf-wild-food-rules', 'med-carbon-monoxide'],
     'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life', 'trap-crate-crab'],
-    'gr-start': ['gr-find-seeds', 'gr-sprouts', 'gr-microgreens', 'gr-regrow-scraps', 'gr-indoor-garden', 'gr-start-bed', 'gr-save-seed-steps', 'eat-survive-plan', 'eat-stretch-food', 'trap-no-snare'],
+    'gather-legal-checklist': ['trap-no-snare', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'gather-diy-safe-projects', 'wf-wild-food-rules', 'wf-fishing-gear'],
+    'gather-diy-safe-projects': ['gather-legal-checklist', 'wf-fishing-gear', 'wf-clean-fish', 'wf-game-handling'],
+    'gr-crop-cards': ['gr-start', 'gr-indoor-garden', 'gr-lettuce-indoors', 'gr-radish-tub', 'gr-tomato-bucket', 'gr-potato-container', 'gr-reality-check'],
+    'gr-lettuce-indoors': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot', 'gr-no-electricity'],
+    'gr-radish-tub': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot'],
+    'gr-tomato-bucket': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot', 'gr-save-seed-steps'],
+    'gr-potato-container': ['gr-crop-cards', 'gr-regrow-scraps', 'gr-start-bed', 'gr-troubleshoot'],
+    'gr-no-electricity': ['gr-indoor-garden', 'gr-reality-check', 'ps-types', 'g-power-outage'],
+    'gr-troubleshoot': ['gr-indoor-garden', 'gr-start-bed', 'gr-sprouts'],
+    'gr-reality-check': ['gr-start', 'gr-crop-cards', 'eat-survive-plan', 'hh-storage'],
+    'gr-plant-cards': ['gr-regrow-scraps', 'gr-start', 'gr-indoor-garden', 'gr-potato-container'],
+    'diet-plant-based': ['eat-stretch-food', 'eat-survive-plan', 'stockpile-basics', 'gr-sprouts'],
+    'gr-start': ['gr-plant-cards', 'gr-crop-cards', 'gr-reality-check', 'gather-legal-checklist', 'diet-plant-based', 'gr-find-seeds', 'gr-sprouts', 'gr-microgreens', 'gr-regrow-scraps', 'gr-indoor-garden', 'gr-start-bed', 'gr-save-seed-steps', 'eat-survive-plan', 'eat-stretch-food', 'trap-no-snare'],
     'gr-find-seeds': ['gr-start', 'lt2-seeds', 'gr-save-seed-steps', 'gr-sprouts', 'gr-start-bed'],
     'gr-sprouts': ['gr-start', 'gr-microgreens', 'gr-find-seeds', 'eat-stretch-food'],
     'gr-microgreens': ['gr-start', 'gr-sprouts', 'gr-indoor-garden', 'gr-find-seeds'],
-    'gr-regrow-scraps': ['gr-start', 'gr-indoor-garden', 'gr-start-bed', 'lt-garden-plan'],
-    'gr-indoor-garden': ['gr-start', 'gr-microgreens', 'gr-regrow-scraps', 'hs-grow-small', 'lt2-compost'],
+    'gr-regrow-scraps': ['gr-plant-cards', 'gr-start', 'gr-indoor-garden', 'gr-start-bed', 'lt-garden-plan'],
+    'gr-indoor-garden': ['gr-crop-cards', 'gr-no-electricity', 'gr-troubleshoot', 'gr-start', 'gr-microgreens', 'gr-regrow-scraps', 'hs-grow-small', 'lt2-compost'],
     'gr-start-bed': ['gr-start', 'lt-garden-plan', 'lt2-compost', 'lt2-season', 'lt2-us', 'lt2-pt-food', 'hs-pallet-garden'],
     'gr-save-seed-steps': ['gr-start', 'lt2-seeds', 'gr-find-seeds', 'gr-start-bed'],
     'eat-survive-plan': ['gr-start', 'eat-stretch-food', 'hh-storage', 'hh-buy-order', 'ht-cook-no-power', 'g-power-outage', 'stockpile-basics'],
-    'eat-stretch-food': ['eat-survive-plan', 'gr-sprouts', 'ht-cook-no-power', 'hh-storage'],
-    'trap-fish-bottle': ['trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules', 'trap-crate-crab'],
-    'trap-crate-crab': ['trap-no-snare', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'wf-wild-food-rules', 'trap-fish-bottle'],
-    'trap-live-small': ['trap-no-snare', 'wf-trapping', 'wf-game-handling', 'wf-wild-food-rules'],
-    'trap-no-snare': ['wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'gr-start'],
+    'eat-stretch-food': ['diet-plant-based', 'eat-survive-plan', 'gr-sprouts', 'ht-cook-no-power', 'hh-storage'],
+    'trap-fish-bottle': ['gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules', 'trap-crate-crab'],
+    'trap-crate-crab': ['gather-legal-checklist', 'trap-no-snare', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'wf-wild-food-rules', 'trap-fish-bottle'],
+    'trap-live-small': ['gather-legal-checklist', 'trap-no-snare', 'wf-trapping', 'wf-game-handling', 'wf-wild-food-rules'],
+    'trap-no-snare': ['gather-legal-checklist', 'wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'gr-start'],
     'wf-trapping': ['trap-no-snare', 'trap-live-small', 'wf-game-handling'],
     'lt2-seeds': ['gr-find-seeds', 'gr-save-seed-steps'],
     'hs-grow-small': ['gr-indoor-garden', 'gr-microgreens'],
@@ -302,7 +314,7 @@ window.LSX = function (A) {
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
     h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
-    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + li(s.items) + '</section>'; });
+    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + (s.img ? '<img class="lesson-illustration strip" src="' + esc(s.img) + '" alt="' + esc(s.alt || '') + '" loading="lazy">' : '') + li(s.items) + '</section>'; });
     h += fbHtml(l);
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
@@ -462,6 +474,7 @@ window.LSX = function (A) {
       var c0 = state.region === 'pt' ? 'pt' : 'us';
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick your country, how many people and how long. You get a full shopping list with quantities. It works offline.</p>' +
         '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option><option value="uk"' + (c0 === 'uk' ? ' selected' : '') + '>United Kingdom</option></select>' +
+        '<label for="stk-d">Diet</label><select id="stk-d"><option value="">Everyone eats mixed food</option><option value="pesc">Pescatarian (fish, no meat)</option><option value="veg">Vegetarian (no meat or fish)</option><option value="vegan">Vegan (no animal foods)</option></select>' +
         '<label for="stk-n">People in your household</label><select id="stk-n">' + SK.sizes.map(function (n) { return '<option value="' + n + '"' + (n === 4 ? ' selected' : '') + '>' + n + ' people</option>'; }).join('') + '<option value="x">Other number</option></select>' +
         '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
         '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -728,11 +741,11 @@ window.LSX = function (A) {
     var days = Number((document.getElementById('stk-p') || {}).value) || 30;
     var kids = Math.max(0, Math.round(Number((document.getElementById('stk-k') || {}).value) || 0));
     var cv = (document.getElementById('stk-c') || {}).value || 'us', us = cv === 'us';
-    return { c: cv === 'pt' || cv === 'uk' ? cv : 'us', people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
+    return { diet: (document.getElementById('stk-d') || {}).value || '', c: cv === 'pt' || cv === 'uk' ? cv : 'us', people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
   }
   function stkShelf(y) { return y < 1 ? Math.round(y * 12) + ' months' : (y === 1 ? '1 year' : y + ' years'); }
   function stkPlan() {
-    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.c, I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full });
+    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.c, I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full, diet: I.diet });
     return { I: I, R: R, SK: SK };
   }
   function stkWater(R, us, SK) {
@@ -1006,7 +1019,7 @@ window.LSX = function (A) {
   }
   function stkLong(I, SK) {
     var K = window.LOAD_STOCK2; if (!K || I.days < 365) return '';
-    var L = K.longPlan(I.c, I.people, I.days, I.kids), cur = L.cur, us = I.us;
+    var L = K.longPlan(I.c, I.people, I.days, I.kids, I.diet), cur = L.cur, us = I.us;
     var fmt = function (a) { return cur + nf(Math.round(a[0] / 10) * 10, 0) + ' to ' + cur + nf(Math.round(a[1] / 10) * 10, 0); };
     var h = '<section class="gblock"><h2>Long-term plan: two layers</h2><p class="muted">Layer 1 is rotating food you eat and replace every year. Layer 2 is sealed long-storage staples you store once.</p>';
     h += '<h3>Layer 1: rotating, buy each year</h3><ul class="stklist">';
@@ -1022,7 +1035,7 @@ window.LSX = function (A) {
     return h;
   }
   function stkAll(I, SK) {
-    var us = I.us, c = I.c, cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
+    var us = I.us, c = I.c, cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full, diet: I.diet }); });
     var h = '<section class="gblock"><h2>All household sizes</h2><p class="muted">' + (I.full ? 'Full total for the whole plan.' : 'Amount to keep on the shelf.') + ' Adults only (no children entered).</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + SK.sizes.map(function (n) { return '<th>' + n + ' people</th>'; }).join('') + '</tr></thead><tbody>';
     h += '<tr><td><b>Water</b></td>' + cols.map(function (R) { return '<td>' + (us ? nf(Math.round(R.water.gallons), 0) + ' gal' : nf(Math.round(R.water.litres), 0) + ' L') + '</td>'; }).join('') + '</tr>';
     cols[0].food.forEach(function (f, i) { h += '<tr><td>' + esc(f.name) + '</td>' + cols.map(function (R) { var x = R.food[i]; return '<td>' + nf(x.packs, 0) + ' ' + esc(x.unit) + '</td>'; }).join('') + '</tr>'; });
@@ -1032,6 +1045,7 @@ window.LSX = function (A) {
   }
   function stkRender() {
     var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = I.c === 'uk' ? '<div class="notice">United Kingdom: amounts are metric. The food list and pack sizes are the planner\'s own and were not checked for UK shops. Check the pack you buy. For costs, use My stockpile tracker with your own prices.</div>' : '';
+    if (I.diet) h += '<div class="notice"><b>' + ({ pesc: 'Pescatarian', veg: 'Vegetarian', vegan: 'Vegan' }[I.diet]) + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more beans, lentils, rice, oats, nuts and oil to reach your target. Check every label for animal products. ' + (I.diet === 'vegan' ? 'Plan vitamin B12 from fortified foods or a supplement. ' : '') + 'See the guide on vegetarian, vegan and pescatarian meals.</div>';
     var cats = [], seen = {}; R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; cats.push(f.cat); } });
     var totalKeep = R.grams;
     h += '<div class="kpis">' + kpi('People', I.people + (I.kids ? ' (' + I.kids + ' children)' : '')) + kpi('Length', I.days >= 365 ? nf(I.days / 365, 0) + (I.days === 365 ? ' year' : ' years') : (I.days === 7 ? '1 week' : I.days === 30 ? '1 month' : I.days === 90 ? '3 months' : I.days === 180 ? '6 months' : I.days + ' days')) +
@@ -1070,6 +1084,7 @@ window.LSX = function (A) {
   }
   function stkText() {
     var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : I.c === 'uk' ? 'United Kingdom' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
+    if (I.diet) t += 'Diet: ' + ({ pesc: 'pescatarian', veg: 'vegetarian', vegan: 'vegan' }[I.diet]) + '. Removed: ' + R.skipped.join('; ') + '. Calories not rebalanced. Check labels.\n\n';
     t += 'WATER\n' + stkWater(R, us, SK) + '\n\n';
     var seen = {};
     R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });

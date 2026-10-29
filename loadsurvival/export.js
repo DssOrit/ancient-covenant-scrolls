@@ -102,7 +102,7 @@
     [['water', 'Water'], ['power', 'Power'], ['fire', 'Fire'], ['shelter', 'Shelter'], ['food', 'Food'], ['home', 'Home skills'], ['security', 'Security'], ['medical', 'Medical'], ['disasters', 'Disasters'], ['scenarios', 'Scenarios'], ['essentials', 'Essentials'], ['longterm', 'Long-term']].forEach(function (c) {
       pk('topics', 't-' + c[0], c[1], ids(function (l) { return ctx.cat(l) === c[0]; }));
     });
-    pk('topics', 't-grow', 'Grow food, eat and trap', ids(function (l) { return /^(gr-|eat-|trap-)/.test(l.id) || ['lt2-seeds', 'hs-grow-small', 'lt-garden-plan', 'wf-trapping', 'wf-fishing-gear', 'crabs-shrimp-lobster'].indexOf(l.id) >= 0; }));
+    pk('topics', 't-grow', 'Grow food, eat and trap', ids(function (l) { return /^(gr-|eat-|trap-|gather-|diet-)/.test(l.id) || ['lt2-seeds', 'hs-grow-small', 'lt-garden-plan', 'wf-trapping', 'wf-fishing-gear', 'crabs-shrimp-lobster'].indexOf(l.id) >= 0; }));
     pk('all', 'all', 'Every guide', ids(function () { return true; }));
     return out;
   }
