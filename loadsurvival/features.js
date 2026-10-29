@@ -151,6 +151,7 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'p11e-bamboo-fishing': ['gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
     'p8-s01-water-stops': ['water-14day-plan', 'lim-water-none', 'p8-s05-toilet-stops'],
     'p8-s02-no-cooking': ['lim-power-outage', 'pantry-90-year-plan', 'diet-gluten-free'],
     'p8-s03-freezing-night': ['warm-one-room', 'warm-safe-heat', 'lim-heat-cold'],
