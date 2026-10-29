@@ -1,9 +1,11 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v33';
+var CACHE = 'loadmaps-v34';
 var CORE = [
   'index.html',
   'app.js',
   'data.js',
+  'survival-data.js',
+  'survival.js',
   'manifest.webmanifest',
   'icon.png',
   'icon-192.png',
