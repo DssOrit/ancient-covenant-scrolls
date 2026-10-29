@@ -135,6 +135,16 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'sol-safety-lines': ['sol-wiring-fuse', 'sol-first-power-up', 'ps-safety', 'lt2-solar'],
+    'sol-wh-budget': ['sol-inverter-surge', 'sol-kit-check', 'ps-sizing', 'home-power-sizing', 'lt2-solar'],
+    'sol-wiring-fuse': ['sol-safety-lines', 'sol-first-power-up', 'sol-inverter-surge'],
+    'sol-inverter-surge': ['sol-wh-budget', 'sol-wiring-fuse', 'sol-ac', 'hh-outage-well'],
+    'sol-kit-check': ['sol-wh-budget', 'sol-wiring-fuse', 'ps-lithium', 'lt2-solar'],
+    'sol-first-power-up': ['sol-safety-lines', 'sol-wiring-fuse', 'sol-troubleshoot'],
+    'sol-troubleshoot': ['sol-first-power-up', 'sol-safety-lines'],
+    'sol-ac': ['sol-inverter-surge', 'sol-wh-budget', 'lim-heat-cold', 'g-heat-wave'],
+    'sol-mobile-fixed': ['sol-wiring-fuse', 'sol-safety-lines', 'lt2-solar'],
+    'sol-no-store-power': ['sol-wh-budget', 'ps-safety', 'g-power-outage', 'lim-power-outage'],
     'pw-station-plug-play': ['ps-lithium', 'ps-safety', 'ps-sizing', 'home-power-sizing', 'pw-electrician-ask'],
     'pw-electrician-ask': ['ps-safety', 'lt2-solar', 'pw-station-plug-play', 'sal-salvage-inspect'],
     'sal-salvage-inspect': ['ps-safety', 'ps-lithium', 'pw-electrician-ask', 'lt2-solar'],
