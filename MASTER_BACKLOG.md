@@ -744,6 +744,7 @@ Owner instruction 2026-10-29: "Don't lose track of my request. I want everything
 8. More scenarios to make the app comprehensive (proposed, owner to add or remove): winter power cut, heat wave, evacuating with pets, boil-water notice, wildfire smoke, flooded road, stuck in a car in snow, sheltering in place for days, losing phone signal.
 9. Household content as app guides: older woman, weather, dust and allergies, menopause, outage and well, buy order, storage. Owner to say yes or no.
 10. Place pictures: owner uploads the 35 images, then Claude places them.
+11. Download and print: make the information downloadable as a zip and printable (guides, lists, checklists, place pages). Existing: print buttons on the family plan and tracker, CSV and JSON downloads in the tracker. Proposed: a Download and print page with print-friendly guides, a one-tap zip of chosen guides and lists built offline in the app (no outside library), and a printable pack per place and per group (seniors, pregnancy). Not built. Needs the owner's phrase and a choice of what goes in the zip.
 
 ### Pending: checks and open questions
 - Real iPad Safari tests (read-aloud, Stop, CPR sound, tracker downloads, offline, the new Home page, the refresh circle).
