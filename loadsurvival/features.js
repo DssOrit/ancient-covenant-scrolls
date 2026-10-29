@@ -135,6 +135,13 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'pw-station-plug-play': ['ps-lithium', 'ps-safety', 'ps-sizing', 'home-power-sizing', 'pw-electrician-ask'],
+    'pw-electrician-ask': ['ps-safety', 'lt2-solar', 'pw-station-plug-play', 'sal-salvage-inspect'],
+    'sal-salvage-inspect': ['ps-safety', 'ps-lithium', 'pw-electrician-ask', 'lt2-solar'],
+    'san-two-bucket': ['lim-sanitation', 'lt-sanitation', 'lim-water-none', 'scn-total-blackout'],
+    'comm-listen-log': ['comm-start', 'comm-radio-listen', 'es-radios-alerts', 'scn-total-blackout'],
+    'sec-dark-night': ['warm-one-room', 'lim-heat-cold', 'warm-safe-heat', 'scn-total-blackout'],
+    'scn-total-blackout': ['lim-water-none', 'lim-sanitation', 'san-two-bucket', 'warm-one-room', 'warm-safe-heat', 'comm-listen-log', 'pw-station-plug-play', 'sec-dark-night', 'lim-power-outage'],
     'comm-start': ['comm-radio-listen', 'comm-frs-pmr', 'comm-licence-chart', 'ht-family-plan'],
     'comm-radio-listen': ['comm-start', 'comm-frs-pmr', 'comm-ham'],
     'comm-frs-pmr': ['comm-gmrs', 'comm-meshtastic', 'comm-licence-chart'],
