@@ -244,6 +244,13 @@ window.LSX = function (A) {
     ,'scn-smoke-clean-room': ['g-wildfire', 'sen-kit-lists', 'preg-heat-cold-power']
     ,'scn-days-at-home': ['lim-power-outage', 'hyg-body-hair', 'warm-one-room', 'shelter-home']
     ,'scn-evacuate-pets-seniors': ['ht-evacuate', 'g-pets', 'sen-checkin-evac', 'evac']
+    ,'hh-older-woman': ['sen-kit-lists', 'sen-medicines-power', 'sen-heat', 'sen-cold', 'sen-falls-mobility', 'hh-menopause', 'hh-dust-allergy']
+    ,'hh-weather-home': ['g-heat-wave', 'g-winter-storm', 'g-flood', 'g-pets', 'warm-one-room']
+    ,'hh-dust-allergy': ['hh-older-woman', 'scn-smoke-clean-room', 'hyg-laundry-clean']
+    ,'hh-menopause': ['hh-older-woman', 'sen-heat', 'hh-dust-allergy']
+    ,'hh-outage-well': ['g-power-outage', 'ps-types', 'ps-sizing', 'ps-safety', 'scn-boil-notice', 'hh-storage']
+    ,'hh-buy-order': ['stockpile-basics', 'stockpile-buying-tips', 'dog-stockpile', 'budget-offgrid', 'hh-storage']
+    ,'hh-storage': ['stockpile-basics', 'hh-buy-order', 'hh-outage-well']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
