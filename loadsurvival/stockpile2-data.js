@@ -53,7 +53,7 @@
   }
 
   /* 5 to 10 year plan: two layers, replenishment, storage space, cost */
-  var COST = { us: { lo: 180, hi: 300, cur: '$' }, pt: { lo: 150, hi: 240, cur: 'EUR ' } };
+  var COST = { us: { lo: 180, hi: 300, cur: '$' }, pt: { lo: 150, hi: 240, cur: 'EUR ' }, uk: null };
   function longPlan(country, people, days, kids) {
     var us = country === 'us', R = SK.compute(country, people, days, { lt: true, kids: kids, full: true });
     var years = days / 365, rolling = [], longL = [], rMass = 0, lMass = 0;
@@ -61,14 +61,14 @@
       if (f.rotate > 0) { rolling.push({ name: f.name, perYear: Math.max(1, ceil(f.packs * 365 / days)), unit: f.unit, shelf: f.shelf, massYear: f.total * 365 / days }); rMass += f.total; }
       else { longL.push({ name: f.name, packs: f.packs, unit: f.unit, shelf: f.shelf, mass: f.total }); lMass += f.total; }
     });
-    var months = days / 30, c = COST[country], full = [c.lo * people * months, c.hi * people * months];
+    var months = days / 30, c = COST[country], full = c ? [c.lo * people * months, c.hi * people * months] : null;
     var share = rMass + lMass > 0 ? rMass / (rMass + lMass) : 0;
     var rollingKg = rolling.reduce(function (a, r) { return a + r.massYear; }, 0) / 1000, longKg = lMass / 1000;
     var rollM3 = rollingKg * 1.7 / 1000, longM3 = longKg * 1.5 / 1000;
-    var perYear = [c.lo * people * 12 * share, c.hi * people * 12 * share];
+    var perYear = c ? [c.lo * people * 12 * share, c.hi * people * 12 * share] : null;
     var hygiene = R.nonfood.filter(function (n) { return n.cat === 'Hygiene' || n.cat === 'Cleaning'; });
     return { us: us, years: years, rolling: rolling, long: longL, rollingKg: rollingKg, longKg: longKg, rollM3: rollM3, longM3: longM3,
-      buckets: ceil(longKg / 18), rollShare: share, fullCost: full, perYearRolling: perYear, cur: c.cur, hygiene: hygiene };
+      buckets: ceil(longKg / 18), rollShare: share, fullCost: full, perYearRolling: perYear, cur: c ? c.cur : '', hygiene: hygiene };
   }
 
   var sizes = SK.sizes;

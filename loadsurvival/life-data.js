@@ -185,6 +185,7 @@
       'Wash your hands after every change.'
     ],
     do: [
+      'Example for 3 people who all have periods: the tracker planner uses 30 items per person per 30 days, so about 90 items a month. With half pads and half tampons that is about 45 pads and 45 tampons. Open Tools, then My stockpile tracker, set People who use menstrual products to 3, and change the pad share if your mix is different. Buy a little extra of both.',
       'Period kit: pads or tampons for the days you expect, spare underwear, wipes, a small waterproof bag for used items, a clean cloth, soap and pain relief you can use.',
       'Plan the number. A cycle may last several days. The master stockpile list gives a starting number.',
       'Change often. Wash your hands before and after. Wash and dry the skin gently.',
@@ -207,6 +208,7 @@
     unconfirmed: [NOTE,
       'Packing your own supply because products may not be available matches CDC text quoted to us. The IFRC says menstrual products become harder to get in disasters and includes washing, drying, disposal and storage items in its kits.',
       'The menstrual cup figures (empty and rinse every 6 to 12 hours, boil 5 to 10 minutes at the end of each cycle) came from a UNICEF product page quoted to us. They are not a field study.',
+      'The 30 items per person per 30 days is the planner\'s own estimate. We found no named source. The half pads and half tampons split is an example mix for one household, not a recommendation. Use the amounts you really use.',
       'The incontinence supply of 15 percent extra is from the older adult guide in this app. We did not find a named source.',
       GEN] });
 

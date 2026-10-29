@@ -49,3 +49,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - #1134 and #1135 merged. Download and print built (export.js, Tools > Download and print), cache p96-v114. Backup backup/2026-10-29-loadsurvival-p95-v113 at 750ec990. Next: place the 40 pictures when uploaded; audit guides for steps that depend on outside links.
 
 - #1136 (download and print) merged. Owner approved audit A, B and C. Built: labels on all 299 guides, 56 'If you cannot reach it' boxes (fallback-data.js), cache p97-v115. Backup backup/2026-10-29-loadsurvival-p96-v114 at 178ba583. Owner answered: tampons and pads mixture for the three women (asked whether all three still have periods). Waiting on: 40 pictures from ChatGPT (1 received, tile-medical), well pump label, older woman details.
+
+- #1137 (audit) merged. Owner said all three women have periods (tampons and pads mixture), pump info and older woman details wait, finish the build requests. Built UK in the Stockpile and Dog tools, pad and tampon split in the tracker, cache p98-v116. Backup backup/2026-10-29-loadsurvival-p97-v115 at 71d97cf4. Still waiting: 39 pictures, pump label.
