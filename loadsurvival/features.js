@@ -152,6 +152,10 @@ window.LSX = function (A) {
   /* related guides (not picture links) */
   var RELATED = {
     'p11e-bamboo-fishing': ['river-10b-fishing', 'river-10a-water', 'gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
+    'p11a-orchard': ['lt2-preserve', 'hs-canning', 'wf-smoke-dry-salt', 'gr-replace-stored-food', 'diet-nutrient-watch'],
+    'p11b-bamboo': ['p11c-water', 'gr-find-seeds', 'p11d-solar-skills'],
+    'p11c-water': ['water-14day-plan', 'river-10a-water', 'wx-river', 'p11b-bamboo', 'lt2-crop-water'],
+    'p11d-solar-skills': ['pw-station-plug-play', 'sol-wh-budget', 'sol-first-power-up', 'p11b-bamboo'],
     'river-10a-water': ['wx-river', 'water-14day-plan', 'lim-water-none', 'hs-water-from-air', 'river-10b-fishing'],
     'river-10b-fishing': ['trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wf-clean-fish', 'river-10b-plants', 'river-10a-water'],
     'river-10b-plants': ['wf-find-plants', 'wf-plants-us', 'wild-food-field-checklist', 'river-10b-fishing'],
