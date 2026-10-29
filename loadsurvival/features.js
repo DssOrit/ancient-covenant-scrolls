@@ -75,7 +75,7 @@ window.LSX = function (A) {
     var h = A.home();
     h = h.replace('data-action="checklist"', 'data-action="lists"');
     var i = h.indexOf('<div class="notice">');
-    return i < 0 ? h + homeExtras() : h.slice(0, i) + homeExtras() + h.slice(i);
+    return '<div class="hm">' + (i < 0 ? h + homeExtras() : h.slice(0, i) + homeExtras() + h.slice(i)) + '</div>';
   }
   function updateBadge() { var b = document.getElementById('netbadge'); if (b) b.textContent = netText(); }
   window.addEventListener('online', updateBadge); window.addEventListener('offline', updateBadge);

@@ -341,3 +341,40 @@ textarea{width:100%;border-radius:12px;padding:12px;background:var(--bg);border:
 .stktable{border-collapse:collapse;font-size:14px;min-width:640px}.stktable th,.stktable td{border:1px solid var(--line2);padding:6px 8px;text-align:left;vertical-align:top}.stktable th{position:sticky;top:0;background:var(--card,#fff)}
 .pwroom{display:flex;gap:8px;align-items:center;margin:6px 0}.pwroom select{flex:2}.pwroom input{flex:1;min-width:70px}.stktable input{width:80px;min-width:60px}
 @media print{#topnav,.fab,.stkpanel,.breadcrumbs{display:none}body{background:#fff;color:#000}}
+
+/* Home redesign (p86-v104): slim navigation, photo header, thin buttons, photo cards */
+#topnav{background:rgba(11,15,16,.88);padding:6px 14px;gap:2px;border-bottom:1px solid #26302d}
+#topnav button{border-radius:0;border:0;border-bottom:2px solid transparent;min-height:46px;padding:6px 12px;font-weight:600;background:transparent;color:var(--muted)}
+#topnav button[data-tab]{border-bottom:2px solid transparent;border-top:0;border-left:0;border-right:0}
+#topnav button[data-tab] .svg{color:currentColor;font-size:18px;opacity:.8}
+#topnav button[data-tab]:hover{background:transparent;color:#fff}
+#topnav button[data-tab].on{background:transparent;border-color:transparent;border-bottom-color:var(--green-hi);color:#fff}
+#topnav button.sos{color:#ff9a9d}
+#topnav button.sos.on{background:transparent;border-bottom-color:#e5484d;color:#fff}
+#topnav button.rg{border:1px solid #26302d;border-radius:999px;min-height:38px;padding:4px 12px}
+#topnav button.refresh{border:1px solid #26302d;background:transparent}
+.hm .hmhero{position:relative;margin:0 -2px;height:min(92.5vw,720px);overflow:hidden;border-radius:20px}
+.hm .hmphoto{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.hm .hmfade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,16,0) 72%,var(--bg) 100%)}
+.hm .hmintro{padding:6px 4px 4px}.hm .hmintro p{margin:0 0 16px;color:#dfe6e1;max-width:36em}
+.hm .hmbtns{display:flex;flex-wrap:wrap;gap:12px}
+.hm .hmbtns .button{border-radius:999px;padding:13px 26px;min-height:48px;font-weight:700;letter-spacing:.03em;background:linear-gradient(180deg,#7ea04a,#4c6c2e);border:1px solid #a9c97a;box-shadow:0 8px 22px rgba(60,90,30,.3)}
+.hm .hmbtns .danger{border-radius:999px;padding:13px 26px;min-height:48px;font-weight:700;background:rgba(255,255,255,.04);border:1px solid #5a6a62;color:var(--text);box-shadow:none}
+.hm .hmbtns .danger:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#e5484d;margin-right:9px}
+.hm .hmplace{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:22px 0 6px;padding:12px 16px;border:1px solid #26302d;border-radius:14px;background:var(--s1)}
+.hm .hmplace small{color:var(--muted);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.hm .hmplace .regions{margin:0;justify-content:flex-start;gap:8px}
+.hm .hmplace .regions button{border-radius:999px;padding:8px 16px;min-height:42px;font-size:14px}
+.hm .hmwho h2,.hm section>h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px;font-weight:700}
+.hm .hmwhorow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hm .hmwhorow button{display:block;text-align:center;padding:14px 10px;border:1px solid #26302d;border-radius:14px;background:var(--s1);color:var(--text);min-height:60px}
+.hm .hmwhorow button b{display:block;font-size:16px}.hm .hmwhorow button small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.hm .hmwhorow button[aria-pressed=true]{border-color:var(--green-hi);background:linear-gradient(135deg,rgba(107,143,62,.3),rgba(63,95,42,.2))}
+.hm .card.photo{min-height:0;aspect-ratio:16/10;border-radius:16px;border:1px solid #26302d}
+.hm .card.photo .txt{padding:40px 16px 14px}
+.hm .card.photo b{font-size:19px}.hm .card.photo small{color:#cdd6d0;font-size:14px}
+.hm .numstrip{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 6px}
+.hm .num{flex:1;min-width:110px;display:flex;align-items:baseline;gap:8px;padding:10px 14px;border-radius:14px;border:1px solid #4a2326;background:linear-gradient(180deg,#1c1213,#151011);text-decoration:none}
+.hm .num b{font-size:24px;color:#ff8a8e}.hm .num span{color:var(--muted);font-size:14px}
+@media(max-width:640px){.hm .hmwhorow{gap:8px}.hm .hmwhorow button{padding:12px 6px}.hm .hmwhorow button b{font-size:15px}.hm .num{flex-direction:column;gap:0;min-width:96px}.hm .card.photo{aspect-ratio:16/10;min-height:0}#topnav button[data-tab]{padding:6px 8px}}
+@media(max-width:1000px){#topnav{flex-wrap:nowrap;overflow-x:auto;row-gap:0}#topnav .grow{display:block}#topnav button.refresh{margin-left:6px}}
