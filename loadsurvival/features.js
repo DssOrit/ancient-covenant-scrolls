@@ -135,6 +135,15 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'trap-no-snare': ['trap-snare-small', 'trap-deadfall', 'trap-fish-weir', 'game-skin-small', 'gather-legal-checklist', 'wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'gr-start'],
+    'trap-snare-small': ['trap-no-snare', 'game-skin-small', 'trap-deadfall', 'wf-game-handling'],
+    'trap-deadfall': ['trap-no-snare', 'trap-snare-small', 'game-skin-small'],
+    'trap-fish-weir': ['trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'fish-catch-inspect-clean-cook'],
+    'game-skin-small': ['wf-game-handling', 'trap-snare-small', 'trap-deadfall', 'trap-live-small'],
+    'gr-replace-stored-food': ['gr-start', 'gr-reality-check', 'lt-garden-plan', 'lt2-seeds', 'lt2-preserve', 'gr-save-seed-steps', 'eat-stretch-food'],
+    'diet-gluten-free': ['diet-plant-based', 'diet-allergy-aware', 'stockpile-basics', 'eat-stretch-food'],
+    'diet-allergy-aware': ['diet-gluten-free', 'diet-plant-based', 'nutrition-children', 'stockpile-basics'],
+    'nutrition-children': ['preg-disaster-water-food', 'diet-allergy-aware', 'diet-plant-based', 'stockpile-basics'],
     'pw-station-plug-play': ['ps-lithium', 'ps-safety', 'ps-sizing', 'home-power-sizing', 'pw-electrician-ask'],
     'pw-electrician-ask': ['ps-safety', 'lt2-solar', 'pw-station-plug-play', 'sal-salvage-inspect'],
     'sal-salvage-inspect': ['ps-safety', 'ps-lithium', 'pw-electrician-ask', 'lt2-solar'],
@@ -215,7 +224,6 @@ window.LSX = function (A) {
     'trap-fish-bottle': ['gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules', 'trap-crate-crab'],
     'trap-crate-crab': ['gather-legal-checklist', 'trap-no-snare', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'wf-wild-food-rules', 'trap-fish-bottle'],
     'trap-live-small': ['gather-legal-checklist', 'trap-no-snare', 'wf-trapping', 'wf-game-handling', 'wf-wild-food-rules'],
-    'trap-no-snare': ['gather-legal-checklist', 'wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'gr-start'],
     'wf-trapping': ['trap-no-snare', 'trap-live-small', 'wf-game-handling'],
     'lt2-seeds': ['gr-find-seeds', 'gr-save-seed-steps'],
     'hs-grow-small': ['gr-indoor-garden', 'gr-microgreens'],
@@ -493,7 +501,7 @@ window.LSX = function (A) {
       var c0 = state.region === 'pt' ? 'pt' : 'us';
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick your country, how many people and how long. You get a full shopping list with quantities. It works offline.</p>' +
         '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option><option value="uk"' + (c0 === 'uk' ? ' selected' : '') + '>United Kingdom</option></select>' +
-        '<label for="stk-d">Diet</label><select id="stk-d"><option value="">Everyone eats mixed food</option><option value="pesc">Pescatarian (fish, no meat)</option><option value="veg">Vegetarian (no meat or fish)</option><option value="vegan">Vegan (no animal foods)</option></select>' +
+        '<label for="stk-d">Diet</label><select id="stk-d"><option value="">Everyone eats mixed food</option><option value="pesc">Pescatarian (fish, no meat)</option><option value="veg">Vegetarian (no meat or fish)</option><option value="vegan">Vegan (no animal foods)</option><option value="gf">Gluten-free (no wheat, barley, rye)</option><option value="nf">Nut-free (no peanuts or tree nuts)</option></select>' +
         '<label for="stk-n">People in your household</label><select id="stk-n">' + SK.sizes.map(function (n) { return '<option value="' + n + '"' + (n === 4 ? ' selected' : '') + '>' + n + ' people</option>'; }).join('') + '<option value="x">Other number</option></select>' +
         '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
         '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -1064,7 +1072,8 @@ window.LSX = function (A) {
   }
   function stkRender() {
     var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = I.c === 'uk' ? '<div class="notice">United Kingdom: amounts are metric. The food list and pack sizes are the planner\'s own and were not checked for UK shops. Check the pack you buy. For costs, use My stockpile tracker with your own prices.</div>' : '';
-    if (I.diet) h += '<div class="notice"><b>' + ({ pesc: 'Pescatarian', veg: 'Vegetarian', vegan: 'Vegan' }[I.diet]) + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more beans, lentils, rice, oats, nuts and oil to reach your target. Check every label for animal products. ' + (I.diet === 'vegan' ? 'Plan vitamin B12 from fortified foods or a supplement. ' : '') + 'See the guide on vegetarian, vegan and pescatarian meals.</div>';
+    if (I.diet === 'gf' || I.diet === 'nf') h += '<div class="notice"><b>' + (I.diet === 'gf' ? 'Gluten-free' : 'Nut-free') + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more of the safe foods to reach your target. Read every label' + (I.diet === 'gf' ? ' and look for oats and sauces marked gluten-free' : ' and look for may contain nuts') + '. See the guide on ' + (I.diet === 'gf' ? 'gluten-free eating' : 'allergy-aware eating') + '.</div>';
+    else if (I.diet) h += '<div class="notice"><b>' + ({ pesc: 'Pescatarian', veg: 'Vegetarian', vegan: 'Vegan' }[I.diet]) + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more beans, lentils, rice, oats, nuts and oil to reach your target. Check every label for animal products. ' + (I.diet === 'vegan' ? 'Plan vitamin B12 from fortified foods or a supplement. ' : '') + 'See the guide on vegetarian, vegan and pescatarian meals.</div>';
     var cats = [], seen = {}; R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; cats.push(f.cat); } });
     var totalKeep = R.grams;
     h += '<div class="kpis">' + kpi('People', I.people + (I.kids ? ' (' + I.kids + ' children)' : '')) + kpi('Length', I.days >= 365 ? nf(I.days / 365, 0) + (I.days === 365 ? ' year' : ' years') : (I.days === 7 ? '1 week' : I.days === 30 ? '1 month' : I.days === 90 ? '3 months' : I.days === 180 ? '6 months' : I.days + ' days')) +
@@ -1103,7 +1112,7 @@ window.LSX = function (A) {
   }
   function stkText() {
     var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : I.c === 'uk' ? 'United Kingdom' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
-    if (I.diet) t += 'Diet: ' + ({ pesc: 'pescatarian', veg: 'vegetarian', vegan: 'vegan' }[I.diet]) + '. Removed: ' + R.skipped.join('; ') + '. Calories not rebalanced. Check labels.\n\n';
+    if (I.diet) t += 'Diet: ' + ({ pesc: 'pescatarian', veg: 'vegetarian', vegan: 'vegan', gf: 'gluten-free', nf: 'nut-free' }[I.diet]) + '. Removed: ' + R.skipped.join('; ') + '. Calories not rebalanced. Check labels.\n\n';
     t += 'WATER\n' + stkWater(R, us, SK) + '\n\n';
     var seen = {};
     R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });

@@ -104,7 +104,7 @@
     });
     pk('topics', 't-comms', 'Communicate when phones fail', ids(function (l) { return /^comm-/.test(l.id) || ['lim-comms', 'es-radios-alerts', 'lt-ham-radio'].indexOf(l.id) >= 0; })),
     pk('topics', 't-blackout', 'Total blackout', ids(function (l) { return ['scn-total-blackout', 'pw-station-plug-play', 'pw-electrician-ask', 'sal-salvage-inspect', 'san-two-bucket', 'comm-listen-log', 'sec-dark-night', 'lim-power-outage', 'lim-water-none', 'lim-sanitation', 'warm-one-room'].indexOf(l.id) >= 0; })),
-    pk('topics', 't-grow', 'Grow food, eat and trap', ids(function (l) { return /^(gr-|eat-|trap-|gather-|diet-)/.test(l.id) || ['lt2-seeds', 'hs-grow-small', 'lt-garden-plan', 'wf-trapping', 'wf-fishing-gear', 'crabs-shrimp-lobster'].indexOf(l.id) >= 0; }));
+    pk('topics', 't-grow', 'Grow food, eat and trap', ids(function (l) { return /^(gr-|eat-|trap-|gather-|diet-|game-|nutrition-)/.test(l.id) || ['lt2-seeds', 'hs-grow-small', 'lt-garden-plan', 'wf-trapping', 'wf-fishing-gear', 'crabs-shrimp-lobster'].indexOf(l.id) >= 0; }));
     pk('all', 'all', 'Every guide', ids(function () { return true; }));
     return out;
   }

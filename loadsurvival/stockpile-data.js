@@ -116,7 +116,7 @@
   function band(days) { return days <= D.shortMax ? 0 : days >= D.longMin ? 2 : 1; }
   function ceil(x) { return Math.ceil(x - 1e-9); }
   /* opt: {lt: use long-term packaging, kids: number of children under 10 (eat about 60 percent)} */
-  var DIETS = { veg: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze'], pesc: ['meat', 'jerky', 'freeze'], vegan: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze', 'pmilk', 'eggs'] };
+  var DIETS = { veg: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze'], pesc: ['meat', 'jerky', 'freeze'], vegan: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze', 'pmilk', 'eggs'], gf: ['pasta', 'wheat', 'oats', 'crackers', 'cereal', 'bars', 'spice'], nf: ['pb', 'nuts', 'bars'] };
   function compute(country, people, days, opt) {
     opt = opt || {}; var skipIds = DIETS[opt.diet] || []; var b = band(days), us = country === 'us', uk = country === 'uk', lt = opt.lt !== false && days >= 365;
     var kids = Math.min(opt.kids || 0, people), eaters = people - kids + kids * 0.6;
