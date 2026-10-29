@@ -708,3 +708,48 @@ parity passes are deferred indefinitely.
 When the user asks for something, add it to the appropriate
 **Pending** block in this file. Reference the inbox source file (or
 the date the user asked) so context is preserved.
+
+
+---
+
+## LOAD SURVIVAL: owner request tracker (added 2026-10-29)
+
+Owner instruction 2026-10-29: "Don't lose track of my request. I want everything I asked." Every request below stays here until the owner confirms it is done. Each Load Survival round needs the exact phrase `edit Load Survival`, a verified backup, break-risk checks, then a PR link (Rules 8, 38, 39). Claude never merges.
+
+### Done and merged
+- Stockpile planner, dog supply planner, home power calculator, My stockpile tracker, vitamins and natural items, fish catch-inspect-clean-cook (10 steps), seafood and wild food guides, UK in the tracker (up to #1121).
+- #1122: verification fixes (traps, shellfish, birds, solar oven), order rule re-locked.
+- #1123: Home redesign (slim tabs, photo header, thin buttons, Your place, Who is at home saved on device, photo cards, slim numbers).
+- #1124: refresh circle returns to the welcome screen once, then Get started goes to Home (cache p87-v105). Owner to confirm on iPad.
+
+### Delivered as files, not in the app
+- Master list for 6 people (3 women, 2 men, 1 older woman) and 5 small dogs in Portugal, 3 months and 1 year, one list with where to buy (PDF and Excel), including battery cooking items and the warm items.
+- Easy-read list, calculations report, Excel outage power calculator (generator at least 7,522 W, battery 35.3 kWh for 3 days with the induction hob and rice cooker added).
+- Staying-warm guide PDF (17 pages), status Partly checked.
+- Picture prompts for ChatGPT: 26 seafood and 9 cover prompts (owner to generate and upload; then place them).
+
+### Pending: build in the app (each needs its own phrase and PR)
+1. Six approved disaster guide corrections: hurricane 12 in (30 cm) is for rushing water; tornado lying low outdoors is a last resort; flood table 6 in and 12 in are for moving water; earthquake drop, cover and hold on then go uphill; wildfire remove "Leave lights on for firefighters" and change "two ways out" to "more than one way out"; heat wave 103 F to 104 F (40 C), yellow warnings, "free relief" to "can give relief".
+2. Seniors guides and pregnancy guides (the Who is at home row already exists). Named sources, status label, Not confirmed list, not medical advice.
+3. Place pages ("Where you live"), by place:
+   - Portugal: Lisboa, Porto, Coimbra, Setubal.
+   - United States by state: California (Los Angeles proper, San Pedro, Palmdale, Valencia), Florida (Jacksonville, Orlando), South Carolina (Conway), Ohio (statewide).
+   - Each page: hazards and alerts with named sources, stores for supplies, DIY survival for the area, maps with a link to Load Maps (/loadmaps/), ponds, rivers and water sources, off-grid resources, status label and Not confirmed list.
+   - Order idea: pick place, then who is at home, then one ranked list (do first, this week, this month, this season).
+   - Research so far (search summaries only): Alert LA County and NotifyLA; Nixle and Genasys for Santa Clarita; JaxReady zones A to F; OCAlert for Orlando; Horry County EM 843-915-5150 and SCEMD for Conway; Ohio EMA. No official Portugal city contacts found yet. Store names not yet researched.
+4. Power supplies guides: types compared (power bank, power station, generator, solar, car inverter, batteries, hand-crank, battery cooking gear), safety precautions for each, budget-friendly ladder. Link to existing power guides, do not duplicate.
+5. Staying warm as an app guide (from the PDF), with sources and Not confirmed list.
+6. Hair care and hygiene during a catastrophe.
+7. People who wear glasses and may lose them (spares, repair kit, prescription copy, coping with blurred sight).
+8. More scenarios to make the app comprehensive (proposed, owner to add or remove): winter power cut, heat wave, evacuating with pets, boil-water notice, wildfire smoke, flooded road, stuck in a car in snow, sheltering in place for days, losing phone signal.
+9. Household content as app guides: older woman, weather, dust and allergies, menopause, outage and well, buy order, storage. Owner to say yes or no.
+10. Place pictures: owner uploads the 35 images, then Claude places them.
+
+### Pending: checks and open questions
+- Real iPad Safari tests (read-aloud, Stop, CPR sound, tracker downloads, offline, the new Home page, the refresh circle).
+- About 46 older guides have no status label; some lack a Not confirmed list.
+- Portuguese and Spanish wording needs review by a speaker. Shop names and search words are cited to us, not checked.
+- The CDC and NHS pages could not be opened from the session network (www.cdc.gov and www.nhs.uk need to be allowed). Only search summaries were read.
+- Owner to answer: how many of the 3 women use tampons, pads or liners (3 assumed); the older woman's age, hearing aids, incontinence needs, allergies and medicines; the well pump label (horsepower, volts, amps).
+- UK is not in the Stockpile, Dog and Home power tools (no data).
+- Welcome screen: shown once after the refresh circle (option A). Owner may choose every open (option B).
