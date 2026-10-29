@@ -24,6 +24,8 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 
 - #1129 (all pages style) merged by DssOrit. Seniors (8) and pregnancy (9) guides built in extra-needs-data.js, cache p91-v109, Home Who is at home row shows them. Backup backup/2026-10-29-loadsurvival-p90-v108 at a284d9e4. PR awaiting merge. Emergency birth steps are labelled general guidance (no named source found).
 
+- #1130 (pregnancy and seniors guides) merged by DssOrit. Power supplies guides (6) built in power-supplies-data.js, cache p92-v110. Backup backup/2026-10-29-loadsurvival-p91-v109 at 93e29925. PR awaiting merge.
+
 ## Approved scope, not built yet (each needs its own phrase, backup, checks, PR)
 - Seniors guides and pregnancy guides (named sources, status label, Not confirmed list).
 - Place pages: Portugal (Lisboa, Porto, Coimbra, Setubal), United States by state (CA: Los Angeles, San Pedro, Palmdale, Valencia; FL: Jacksonville, Orlando; SC: Conway; Ohio statewide). Each with hazards and alerts, stores, DIY survival, maps with a Load Maps link, ponds, rivers, water sources, off-grid resources.
