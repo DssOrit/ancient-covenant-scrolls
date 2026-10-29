@@ -53,3 +53,5 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 - #1137 (audit) merged. Owner said all three women have periods (tampons and pads mixture), pump info and older woman details wait, finish the build requests. Built UK in the Stockpile and Dog tools, pad and tampon split in the tracker, cache p98-v116. Backup backup/2026-10-29-loadsurvival-p97-v115 at 71d97cf4. Still waiting: 39 pictures, pump label.
 
 - #1138 merged. Owner pasted another tool's verification of the labour guidance (checked: WHO manual and ISBN real, NHS signs match search results, rest unconfirmed) and supplied the WHO slidedoc PDF with edit Load Survival. Built the labour guide update, cache p99-v117. Backup backup/2026-10-29-loadsurvival-p98-v116 at 676048bb.
+
+- #1139 merged. Owner's pasted download list checked: ACNM Giving Birth In Place is real (could not open, site blocked); other titles not found. Labour guide updated from the opened WHO manual, cache p100-v118. Backup backup/2026-10-29-loadsurvival-p99-v117 at 5dc7f891.

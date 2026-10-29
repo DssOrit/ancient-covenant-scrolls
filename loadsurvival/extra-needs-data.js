@@ -6,7 +6,7 @@
   var NOTMED = 'This guide is general information. It is not medical advice and does not replace your doctor, midwife or emergency services.';
   var SRC = {
     whoLcg: ['WHO: Introduction to the WHO Labour Care Guide, slidedoc (file dated 14 Dec 2020, version 1.1). The owner supplied the file and we read all 23 pages. The web address is the WHO page for the Labour Care Guide materials, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
-    whoLcgMan: ['WHO: Labour Care Guide user manual (ISBN 978-92-4-001756-6), cited to us, not opened', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
+    whoLcgMan: ['WHO: Labour Care Guide user manual (ISBN 978-92-4-001756-6, 2020), supplied by the owner and opened. The web address is the WHO page for the manual, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
     nhsLabour: ['NHS 111 Wales: signs and stages of labour, cited to us, not checked', 'https://111.wales.nhs.uk/livewell/pregnancy/signsandstageslabour'],
     nhsSurrey: ['Surrey and Sussex NHS maternity service: signs of labour and when to contact your midwife, cited to us, not checked', 'https://www.surreyandsussex.nhs.uk/our-services/womens-services/maternity-services/giving-birth-sash/signs-labour-and-when-contact-your-midwife'],
     hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her), cited to us, not checked', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
@@ -222,8 +222,8 @@
       'IF BIRTH CANNOT BE AVOIDED (general guidance, not checked against a named source): stay calm and stay with the mother.',
       'Wash your hands if you can. Put clean towels or sheets under her. She can lie on her back with her knees bent, or on her side.',
       'Let the baby come by itself. If the head comes out first, support it gently. Do not pull.',
-      'After the birth, dry the baby with a clean towel. Put the baby skin to skin on the mother chest. Cover both with a blanket and cover the baby head.',
-      'Do not pull the cord. Do not cut the cord unless the operator tells you how.',
+      'After the birth, dry the baby with a clean towel. Put the baby skin to skin on the mother chest. Cover both with a blanket and cover the baby head. (WHO recommends skin to skin for the first hour for newborns without complications, and a hat.)',
+      'Do not pull the cord. Do not cut the cord unless the operator tells you how. (WHO recommends that the cord is not clamped earlier than 1 minute after birth, when trained care is present.)',
       'The afterbirth usually comes within about 30 minutes. Do not pull on the cord to help it.',
       'Check the mother for heavy bleeding. Soaking one or more pads in an hour is an emergency.'
     ],
@@ -234,6 +234,16 @@
         'Carers explain what they are doing and what they find, in simple words, and plan the next step with her and her companion.',
         'Carers check the mother (pulse, blood pressure, temperature, urine), the baby (heart rate and the waters), and the labour (how often and how long the contractions last). Active labour is counted from the neck of the womb being open 5 cm.',
         'This WHO tool is for trained health workers caring for women with low-risk pregnancies. It is not a guide to delivering a baby at home. Women with higher risk may need more checks and care.'
+      ] },
+      { h: 'Newborn and mother after the birth (WHO manual, opened)', items: [
+        'Skin to skin: healthy newborns should stay skin to skin with the mother for the first hour, to prevent chilling and help feeding.',
+        'Warmth: dress the baby in one to two layers more than an adult would wear, and a hat. Keep mother and baby together in a warm, clean room.',
+        'Feeding: put the baby to the breast as soon as the baby and mother are ready.',
+        'Mouth and nose: WHO says do not routinely suction the mouth and nose if the waters were clear and the baby starts to breathe alone.',
+        'Cord: WHO recommends waiting at least 1 minute before the cord is clamped.',
+        'Bathing: delay the first bath for 24 hours, or at least 6 hours if that is not possible.',
+        'In labour, for women at low risk, WHO recommends drinks and food, an upright position and moving around. Massage, warm packs and relaxation are options for pain.',
+        'These are WHO recommendations for trained care. They are not step-by-step instructions for delivering a baby without help.'
       ] },
       { h: 'When to call your midwife (NHS pages, cited to us)', items: [
         'Signs labour may be starting: tightenings or contractions, a show (a pink, slightly bloody mucus), backache, an urge to use the toilet, and the waters breaking.',
@@ -254,7 +264,8 @@
     unconfirmed: [NOTE,
       'The signs of labour match Mayo Clinic text quoted to us.',
       'The WHO care points above match the WHO Labour Care Guide slidedoc, which we read in full (23 pages, supplied by the owner). It describes care by trained health workers. It does not say how to deliver a baby, so it changes nothing in the emergency birth steps.',
-      'The WHO user manual is a real publication (ISBN 978-92-4-001756-6, 2020) found in search results. We did not open it.',
+      'The WHO Labour Care Guide user manual (ISBN 978-92-4-001756-6, 2020, 42 pages) was supplied by the owner and opened. The newborn, mother and labour-comfort points above come from its Annex 4 list of WHO recommendations. The manual is for trained health workers. It does not give steps for an unplanned birth with no helper.',
+      'The skin to skin, hat, warm layers and cord waiting lines in the emergency steps match those WHO recommendations. The rule not to cut the cord unless the operator tells you how still has no named source.',
       'The NHS signs of labour and when to call match NHS trust and NHS 111 Wales pages as quoted to us. We did not open them. We did not find the NHS Best Start in Life guide, and we could not check the claims about green or brown waters from any page.',
       'The UK numbers 999 and 111 are general knowledge for the UK.',
       'The emergency birth steps are general guidance. We searched for an NHS, Red Cross, Mayo Clinic or ACOG page and did not find one that gave step-by-step steps for an unplanned birth. A search summary said the usual advice is to keep the baby warm skin to skin, not to pull the cord, and to keep the mother lying down. We have not checked that against a named page. Follow the emergency operator.',
