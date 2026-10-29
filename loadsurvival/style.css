@@ -468,3 +468,4 @@ body.font-dyslexic{letter-spacing:.02em;word-spacing:.08em;line-height:1.7}
 .bnav button[disabled]{opacity:.45}
 @media print{.bhide{display:block!important}.modebar,.bnav{display:none!important}}
 .bcount{align-self:center;font-size:18px}
+.cathead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 8px;scroll-margin-top:70px}.cathead h2{margin:0;font-size:22px}.cathead button{min-height:44px}
