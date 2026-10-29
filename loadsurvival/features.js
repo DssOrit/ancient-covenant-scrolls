@@ -394,6 +394,7 @@ window.LSX = function (A) {
         '<div id="tr-cdbox"' + (TR.custom ? '' : ' hidden') + '><label for="tr-cd">Number of days</label>' + num('tr-cd', TR.custom || TR.days, 1, 1, 7300) + '</div>' +
         '<label for="tr-w">Water in litres per person per day</label>' + num('tr-w', TR.water, 'any', 0.5, 20) +
         '<label for="tr-m">People who use menstrual products</label>' + num('tr-m', TR.mens, 1, 0, 50) +
+        '<label for="tr-pp">Share that are pads, in percent (the rest are tampons)</label>' + num('tr-pp', TR.padPct === undefined ? 50 : TR.padPct, 1, 0, 100) +
         '<label for="tr-f">Show</label><select id="tr-f">' + cats.map(function (c) { return '<option>' + esc(c) + '</option>'; }).join('') + '</select>' +
         '<div class="actions">' + btn('Export shopping list (CSV)', 'tr-csv', 'button') + btn('Back up (JSON)', 'tr-json', 'secondary') + btn('Restore a backup', 'tr-import', 'secondary') + btn('Copy the list', 'tr-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Reset', 'tr-reset', 'secondary') + '</div>' +
         '<input type="file" id="tr-file" accept="application/json,.json" hidden><p id="tr-msg" class="muted" role="status"></p></div>' +
@@ -431,7 +432,7 @@ window.LSX = function (A) {
       var DK = window.LOAD_STOCK2; if (!DK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var dsz = function (id) { var o = ''; for (var i = 0; i <= 6; i++) o += '<option value="' + i + '"' + (i === (id === 'dg-s' ? 1 : 0) ? ' selected' : '') + '>' + i + '</option>'; return o; };
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick how many small and large dogs and how long. You get food, water, medicine and gear for each. It works offline.</p>' +
-        '<label for="dg-c">Country</label><select id="dg-c"><option value="us">United States</option><option value="pt">Portugal</option></select>' +
+        '<label for="dg-c">Country</label><select id="dg-c"><option value="us">United States</option><option value="pt">Portugal</option><option value="uk">United Kingdom</option></select>' +
         '<label for="dg-s">Small dogs (about 18 lb, 8 kg)</label><select id="dg-s">' + dsz('dg-s') + '</select>' +
         '<label for="dg-l">Large dogs (about 66 lb, 30 kg)</label><select id="dg-l">' + dsz('dg-l') + '</select>' +
         '<label for="dg-p">How long</label><select id="dg-p">' + window.LOAD_STOCK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -442,7 +443,7 @@ window.LSX = function (A) {
       var SK = window.LOAD_STOCK; if (!SK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var c0 = state.region === 'pt' ? 'pt' : 'us';
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick your country, how many people and how long. You get a full shopping list with quantities. It works offline.</p>' +
-        '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option></select>' +
+        '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option><option value="uk"' + (c0 === 'uk' ? ' selected' : '') + '>United Kingdom</option></select>' +
         '<label for="stk-n">People in your household</label><select id="stk-n">' + SK.sizes.map(function (n) { return '<option value="' + n + '"' + (n === 4 ? ' selected' : '') + '>' + n + ' people</option>'; }).join('') + '<option value="x">Other number</option></select>' +
         '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
         '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -708,12 +709,12 @@ window.LSX = function (A) {
     var people = n === 'x' ? Math.max(1, Math.min(50, Math.round(nn) || 1)) : Number(n) || 4;
     var days = Number((document.getElementById('stk-p') || {}).value) || 30;
     var kids = Math.max(0, Math.round(Number((document.getElementById('stk-k') || {}).value) || 0));
-    var us = ((document.getElementById('stk-c') || {}).value || 'us') === 'us';
-    return { people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
+    var cv = (document.getElementById('stk-c') || {}).value || 'us', us = cv === 'us';
+    return { c: cv === 'pt' || cv === 'uk' ? cv : 'us', people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
   }
   function stkShelf(y) { return y < 1 ? Math.round(y * 12) + ' months' : (y === 1 ? '1 year' : y + ' years'); }
   function stkPlan() {
-    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.us ? 'us' : 'pt', I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full });
+    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.c, I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full });
     return { I: I, R: R, SK: SK };
   }
   function stkWater(R, us, SK) {
@@ -769,7 +770,7 @@ window.LSX = function (A) {
       '<li>Water: ' + nf(Math.round(C.water), 0) + ' litres, about ' + C.containers + ' containers of 20 L. It weighs about ' + nf(Math.round(C.waterKg), 0) + ' kg. Plans longer than 14 days cannot all be stored. Plan to treat water.</li>' +
       '<li>Priced items total ' + cur + nf(Math.round(C.known * 100) / 100, 2) + '. Still to buy, after what you have: ' + cur + nf(Math.round(C.left * 100) / 100, 2) + '.</li>' +
       '<li>' + C.unknown + ' items have no price and are left out of these totals.</li>' +
-      (C.mens > 0 ? '<li>Menstrual products: about ' + nf(Math.round(C.mens), 0) + ' (30 per user per 30 days).</li>' : '') + '</ul>' +
+      (C.mens > 0 ? '<li>Menstrual products: about ' + nf(Math.round(C.mens), 0) + ' (30 per user per 30 days), about ' + nf(Math.round(C.mens * (TR.padPct === undefined ? 50 : TR.padPct) / 100), 0) + ' pads and ' + nf(Math.round(C.mens * (100 - (TR.padPct === undefined ? 50 : TR.padPct)) / 100), 0) + ' tampons. Change the share above.</li>' : '') + '</ul>' +
       (d > 365 ? '<div class="notice">Totals for years are the amounts you will use over the whole time. They are not goods you can all store unchanged. Buy and rotate each year.</div>' : '') + '</section>';
     setOut('tr-sum', h);
   }
@@ -782,6 +783,7 @@ window.LSX = function (A) {
     else if (id === 'tr-cd') { TR.custom = String(Math.max(1, Math.round(Number(t.value) || 1))); }
     else if (id === 'tr-w') { TR.water = Math.max(0.5, Number(t.value) || 3.785); }
     else if (id === 'tr-m') { TR.mens = Math.max(0, Math.round(Number(t.value) || 0)); }
+    else if (id === 'tr-pp') { TR.padPct = Math.max(0, Math.min(100, Math.round(Number(t.value)))); if (isNaN(TR.padPct)) TR.padPct = 50; }
     else if (id === 'tr-f') { trRows(); trOut(); return true; }
     else if ((m = /^tr-r-(.+)$/.exec(id))) { TR.rate[m[1]] = t.value === '' ? undefined : Math.max(0, Number(t.value) || 0); }
     else if ((m = /^tr-k-(.+)$/.exec(id))) { TR.pack[m[1]] = t.value === '' ? undefined : Math.max(0.0001, Number(t.value) || 1); }
@@ -804,7 +806,7 @@ window.LSX = function (A) {
   function trInit2() { TR.price = TR.price || { US: {}, PT: {}, UK: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.price.UK = TR.price.UK || {}; TR.rate = TR.rate || {}; TR.pack = TR.pack || {}; TR.have = TR.have || {}; TR.gear = TR.gear || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : []; if (TR.country !== 'US' && TR.country !== 'PT' && TR.country !== 'UK') TR.country = 'US'; }
   function trShowAll() {
     var set = function (i, v) { var e = document.getElementById(i); if (e) e.value = v; };
-    set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens);
+    set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens); set('tr-pp', TR.padPct === undefined ? 50 : TR.padPct);
     var p = document.getElementById('tr-p'); if (p) p.value = TR.custom ? 'x' : String(TR.days); var cb = document.getElementById('tr-cdbox'); if (cb) cb.hidden = !TR.custom; set('tr-cd', TR.custom || TR.days);
     trRows(); trOut();
   }
@@ -950,13 +952,15 @@ window.LSX = function (A) {
   function dgInputs() {
     var s = Number((document.getElementById('dg-s') || {}).value) || 0, l = Number((document.getElementById('dg-l') || {}).value) || 0;
     if (s + l > 6) l = Math.max(0, 6 - s);
-    return { us: ((document.getElementById('dg-c') || {}).value || 'us') === 'us', s: s, l: l, days: Number((document.getElementById('dg-p') || {}).value) || 30, all: !!(document.getElementById('dg-all') || {}).checked };
+    var dc = (document.getElementById('dg-c') || {}).value || 'us';
+    return { c: dc, us: dc === 'us', s: s, l: l, days: Number((document.getElementById('dg-p') || {}).value) || 30, all: !!(document.getElementById('dg-all') || {}).checked };
   }
   function dgMass(g, us) { return us ? nf(g / 453.592, 1) + ' lb' : nf(g / 1000, 1) + ' kg'; }
   function dgRender() {
     var I = dgInputs(), DK = window.LOAD_STOCK2, h = '';
     if (I.s + I.l < 1) { setOut('dg-out', '<div class="notice">Choose at least 1 dog.</div>'); return; }
     var P = DK.dogPlan(I.us, I.s, I.l, I.days);
+    if (I.c === 'uk') h += '<div class="notice">United Kingdom: amounts are metric. Bag sizes are planner sizes and were not checked for UK shops. Check the bag you buy.</div>';
     h += '<div class="kpis">' + kpi('Dogs', I.s + ' small, ' + I.l + ' large') + kpi('Food a day', dgMass(P.perDayG, I.us)) + kpi('Water a day', I.us ? nf(P.waterPerDay / 3.785, 2) + ' gal' : nf(P.waterPerDay, 1) + ' L') + kpi('Food over the plan', dgMass(P.totalG, I.us)) + '</div>';
     var cats = [], seen = {}; P.items.forEach(function (x) { if (!seen[x.cat]) { seen[x.cat] = 1; cats.push(x.cat); } });
     cats.forEach(function (c) {
@@ -984,7 +988,7 @@ window.LSX = function (A) {
   }
   function stkLong(I, SK) {
     var K = window.LOAD_STOCK2; if (!K || I.days < 365) return '';
-    var L = K.longPlan(I.us ? 'us' : 'pt', I.people, I.days, I.kids), cur = L.cur, us = I.us;
+    var L = K.longPlan(I.c, I.people, I.days, I.kids), cur = L.cur, us = I.us;
     var fmt = function (a) { return cur + nf(Math.round(a[0] / 10) * 10, 0) + ' to ' + cur + nf(Math.round(a[1] / 10) * 10, 0); };
     var h = '<section class="gblock"><h2>Long-term plan: two layers</h2><p class="muted">Layer 1 is rotating food you eat and replace every year. Layer 2 is sealed long-storage staples you store once.</p>';
     h += '<h3>Layer 1: rotating, buy each year</h3><ul class="stklist">';
@@ -995,12 +999,12 @@ window.LSX = function (A) {
     h += '</ul><h3>Space and cost (planner estimates)</h3><ul>' +
       '<li>Layer 1 shelf space: about ' + nf(Math.round(L.rollM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.rollM3 * 35.3 * 10) / 10, 1) + ' cubic feet).</li>' +
       '<li>Layer 2 space: about ' + nf(Math.round(L.longM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.longM3 * 35.3 * 10) / 10, 1) + ' cubic feet), about ' + nf(L.buckets, 0) + ' six-gallon buckets.</li>' +
-      '<li>Cost to rebuild the whole plan from shops: about ' + fmt(L.fullCost) + '. Food only. Not an official price.</li>' +
-      '<li>Yearly replacement of Layer 1: about ' + fmt(L.perYearRolling) + '. This is food you eat, so it replaces normal grocery spending. The one-time extra cost is Layer 2, buckets, lids, oxygen absorbers and shelves.</li></ul></section>';
+      (L.fullCost ? '<li>Cost to rebuild the whole plan from shops: about ' + fmt(L.fullCost) + '. Food only. Not an official price.</li>' +
+      '<li>Yearly replacement of Layer 1: about ' + fmt(L.perYearRolling) + '. This is food you eat, so it replaces normal grocery spending. The one-time extra cost is Layer 2, buckets, lids, oxygen absorbers and shelves.</li>' : '<li>No built-in prices for this country. Type your own prices in My stockpile tracker to get costs.</li>') + '</ul></section>';
     return h;
   }
   function stkAll(I, SK) {
-    var us = I.us, c = us ? 'us' : 'pt', cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
+    var us = I.us, c = I.c, cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
     var h = '<section class="gblock"><h2>All household sizes</h2><p class="muted">' + (I.full ? 'Full total for the whole plan.' : 'Amount to keep on the shelf.') + ' Adults only (no children entered).</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + SK.sizes.map(function (n) { return '<th>' + n + ' people</th>'; }).join('') + '</tr></thead><tbody>';
     h += '<tr><td><b>Water</b></td>' + cols.map(function (R) { return '<td>' + (us ? nf(Math.round(R.water.gallons), 0) + ' gal' : nf(Math.round(R.water.litres), 0) + ' L') + '</td>'; }).join('') + '</tr>';
     cols[0].food.forEach(function (f, i) { h += '<tr><td>' + esc(f.name) + '</td>' + cols.map(function (R) { var x = R.food[i]; return '<td>' + nf(x.packs, 0) + ' ' + esc(x.unit) + '</td>'; }).join('') + '</tr>'; });
@@ -1009,7 +1013,7 @@ window.LSX = function (A) {
     return h + '</tbody></table></div></section>';
   }
   function stkRender() {
-    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = '';
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = I.c === 'uk' ? '<div class="notice">United Kingdom: amounts are metric. The food list and pack sizes are the planner\'s own and were not checked for UK shops. Check the pack you buy. For costs, use My stockpile tracker with your own prices.</div>' : '';
     var cats = [], seen = {}; R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; cats.push(f.cat); } });
     var totalKeep = R.grams;
     h += '<div class="kpis">' + kpi('People', I.people + (I.kids ? ' (' + I.kids + ' children)' : '')) + kpi('Length', I.days >= 365 ? nf(I.days / 365, 0) + (I.days === 365 ? ' year' : ' years') : (I.days === 7 ? '1 week' : I.days === 30 ? '1 month' : I.days === 90 ? '3 months' : I.days === 180 ? '6 months' : I.days + ' days')) +
@@ -1047,7 +1051,7 @@ window.LSX = function (A) {
     setOut('stk-out', h);
   }
   function stkText() {
-    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : I.c === 'uk' ? 'United Kingdom' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
     t += 'WATER\n' + stkWater(R, us, SK) + '\n\n';
     var seen = {};
     R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });
