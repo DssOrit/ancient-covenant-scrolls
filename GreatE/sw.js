@@ -1,4 +1,4 @@
-const CACHE = 'great-eraser-v23';
+const CACHE = 'great-eraser-v24';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -16,7 +16,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      Promise.all(keys.filter(k => k.indexOf('great-eraser-') === 0 && k !== CACHE).map(k => caches.delete(k)))
     )
   );
   self.clients.claim();
