@@ -102,8 +102,43 @@
     ["story-p8-pets", 0, "p8-pets-x1", "A girl, a woman and a boy sit on the kitchen floor with a small dog and a cat, beside a basket and two bowls.", "Keep bowls, toys and supplies together where everyone can find them."],
     ["story-p8-pets", 3, "p8-pets-f3", "A woman reaches up to move a bowl of grapes and a bar of chocolate onto a high shelf.", "Frame 3: grapes and chocolate go out of reach of pets."],
     ["story-p8-pets", 4, "p8-pets-f4", "A girl in blue gloves scoops dog waste into a black bag in the yard, with a dog, a cat and an outdoor tap nearby.", "Frame 4: scoop and bag waste, then wash hands."],
-    ["story-p8-pets", 5, "p8-pets-f5", "A woman and two children load a dog carrier and a cat carrier onto the back seat floor of a car.", "Frame 5: pets are part of the evacuation plan."]
-  ];
+    ["story-p8-pets", 5, "p8-pets-f5", "A woman and two children load a dog carrier and a cat carrier onto the back seat floor of a car.", "Frame 5: pets are part of the evacuation plan."],
+
+    /* Older pictures (assets/steps and earlier assets/pics) tied to frames that had no picture. Added 30 Oct 2026. */
+    ["story-02-protect-if-safe", 6, "assets/steps/ht-evacuate-4.jpg", "Cars stop at a barrier across a flooded road with water over the road ahead.", "Frame 6: if water rises or an order comes, stop and leave. Never drive into a flooded road."],
+    ["story-03-upper-floor", 2, "assets/steps/g-flood-1.jpg", "A packed backpack with a water bottle and a medicine bottle beside the front door.", "Frame 2: take water, a light, medicines, glasses, a phone and charger, a whistle and warm clothes."],
+    ["story-03-upper-floor", 3, "assets/steps/g-flood-4.jpg", "A woman on the phone looks out of a window at floodwater and trees.", "Frame 3: call 911 or 112 if you can. Give the address, the floor and who is with you."],
+    ["story-03-upper-floor", 4, "p8-s07-f2", "A man in a black beanie looks up at a closed ceiling hatch and holds up one hand as a stop sign.", "Frame 4: keep the way out clear. Do not go into a closed attic."],
+    ["story-03-upper-floor", 5, "p8-s07-f5", "A man and a young woman hold a bright orange cloth at an open upstairs window from inside the room.", "Frame 5: signal from a safe window with bright cloth. Stay off the roof."],
+    ["story-03-upper-floor", 6, "assets/steps/g-flood-3.jpg", "Two adults on a staircase look down at floodwater in the hall below, keeping well back from it.", "Frame 6: stay away from floodwater and wait for rescue."],
+    ["story-04-week1-to-day90", 4, "assets/steps/hs-food-storage-1.jpg", "A room thermometer standing on a dark storage shelf beside a basket.", "Day 60: check storage temperature, pests, damp and food variety."],
+    ["story-05-sanitation", 2, "assets/steps/lim-sanitation-1.jpg", "A bucket toilet with a strong liner and a wooden seat, with spare paper beside it.", "Frame 2: fit a strong liner and keep dry cover material ready."],
+    ["story-05-sanitation", 6, "assets/steps/lim-sanitation-3.jpg", "Two tied waste bags inside a lidded outdoor bin beside a fence.", "Frame 6: keep tied bags in a covered container until you can dispose of them in an approved way."],
+    ["story-06-rescue-signals", 6, "assets/steps/g-signaling-3.jpg", "An orange whistle clipped to the strap of a backpack.", "Frame 6: a whistle, bright cloth or flashlight from a safe upper window. Never the roof."],
+    ["story-07-vulnerable-family", 5, "assets/steps/ht-evacuate-1.jpg", "A packed backpack, a pet carrier, a lead and a box of supplies laid out on a rug by the door.", "Frame 5: pets need a carrier, lead, food, water, medicines and records."],
+    ["story-08-hazards", 2, "assets/steps/lim-stay-safe-4.jpg", "A road blocked by a fallen utility pole, wires and branches, with a barrier in front.", "Frame 2: keep far away from fallen lines and wet electrical equipment."],
+    ["story-09-lost-glasses", 5, "p8-s04-f4", "A man holds two pill bottles and a phone beside a medical kit while an older woman watches.", "Frame 5: check each medicine with another person. Do not guess."],
+    ["story-10-14-day-drill", 3, "assets/steps/lim-sanitation-1.jpg", "A bucket toilet with a strong liner and a wooden seat, with spare paper beside it.", "Frame 3 (Day 3): set up the bucket toilet for one day and write what you learned."],
+    ["story-10-14-day-drill", 4, "assets/steps/water-storage-1.jpg", "Three large water jugs on a shelf beside a notepad with ticks.", "Frame 4 (Day 7): check how much water you really used and change the plan."],
+
+    ["p8-s01-water-stops", 3, "assets/steps/water-storage-3.jpg", "A hand writes on a blank label on a large water jug.", "Frame 3: label each container for drinking or for washing."],
+    ["p8-s01-water-stops", 4, "assets/steps/es-radios-alerts-1.jpg", "A battery radio on a shelf beside a framed map.", "Frame 4: check the official water advisory by radio or an official page."],
+    ["p8-s01-water-stops", 5, "assets/steps/water-boil-3.jpg", "A pot of water at a rolling boil on a camp stove with a timer beside it.", "Frame 5: boil at a rolling boil for 1 minute (3 minutes at high altitude) and let it cool."],
+    ["p8-s02-no-cooking", 2, "assets/steps/lim-food-none-2.jpg", "A small thermometer hanging on a shelf inside a refrigerator.", "Frame 2: keep the fridge and freezer closed and check the temperature."],
+    ["p8-s02-no-cooking", 4, "assets/steps/lim-food-none-1.jpg", "Food sorted into trays: eggs, vegetables, packs, tins and jars.", "Frame 4: choose foods that fit each person's needs."],
+    ["p8-s02-no-cooking", 6, "story-s04-inventory", "A notebook and pencil on a counter beside a jar of oats, a bowl of flour and cans.", "Frame 6: write down what you have and what you ate."],
+    ["p8-s04-week1-to-day90", 3, "assets/steps/hs-food-storage-2.jpg", "Pantry shelves with glass jars of grains, beans and pasta.", "Day 21: check the pantry for balance. Rice, beans and oats alone are not a complete diet."],
+    ["p8-s05-toilet-stops", 3, "assets/steps/lim-sanitation-1.jpg", "A bucket toilet with a strong liner and a wooden seat, with spare paper beside it.", "Frame 3: line stable buckets with strong liners."],
+    ["p8-s05-toilet-stops", 5, "assets/steps/lim-sanitation-4.jpg", "Hands washed with water poured from a jug over a basin.", "Frame 5: wash hands with soap and safe water every time."],
+    ["p8-s05-toilet-stops", 6, "assets/steps/lim-sanitation-3.jpg", "Two tied waste bags inside a lidded outdoor bin beside a fence.", "Frame 6: keep waste bags secure until there is an approved disposal route."],
+    ["p8-s06-flood-warning-pets", 1, "assets/steps/g-signaling-1.jpg", "A hand cranks a green emergency radio on a rock.", "Frame 1: check the official hazard: warnings, water level and routes."],
+    ["p8-s06-flood-warning-pets", 2, "assets/steps/g-pets-4.jpg", "A cat in a carrier beside a dog on a lead.", "Frame 2: gather the family and pets. Pets go in carriers or on leads."],
+    ["p8-s06-flood-warning-pets", 3, "assets/steps/g-flood-1.jpg", "A packed backpack with a water bottle and a medicine bottle beside the front door.", "Frame 3: take medicines, glasses, a charged phone, water and papers."],
+    ["p8-s06-flood-warning-pets", 4, "assets/steps/g-signaling-2.jpg", "A family leans over a paper map and points at a route.", "Frame 4: choose a safe way to leave and where to go. Tell someone."],
+    ["p8-s08-older-person-alone", 4, "assets/steps/g-power-outage-4.jpg", "A hand holds a phone with a low battery sign and a short message.", "Frame 4: save water and phone power. Use short calls."],
+    ["p8-s08-older-person-alone", 5, "assets/steps/g-power-outage-1.jpg", "An older woman at her open door talks with a neighbour on the step.", "Frame 5: arrange a neighbour check-in at set times."],
+    ["story-p8-pets", 2, "assets/steps/g-pets-1.jpg", "An open pet bag holding food, a collapsible bowl, a blanket and a lead.", "Frame 2: keep a pet bag with food, a bowl, a lead, medicines, records and a photo."],
+    ["story-p8-pets", 6, "p8-s03-f4", "A small dog sleeps on a warm blanket in a dog bed beside a bed.", "Frame 6: keep pets warm, cool and safe. Never leave a pet in a closed car or in floodwater."]  ];
   /* A story is complete when its frames 1 to 6 all have a picture (the older pictures supply the rest). */
   var OLD = {
     "story-01-flood-warning": [2, 3, 4],
@@ -116,7 +151,7 @@
   F.forEach(function (r) {
     var g = find(r[0]); if (!g) return;
     var first = !(g.sections || []).some(function (x) { return x.img; });
-    g.sections = (g.sections || []).concat([{ h: first ? "Pictures" : "Pictures, continued", img: "assets/pics/" + r[2] + ".jpg", alt: r[3], items: [r[4]], at: r[1] || undefined }]);
+    g.sections = (g.sections || []).concat([{ h: first ? "Pictures" : "Pictures, continued", img: /\//.test(r[2]) ? r[2] : "assets/pics/" + r[2] + ".jpg", alt: r[3], items: [r[4]], at: r[1] || undefined }]);
     (have[r[0]] = have[r[0]] || []).push(r[1]);
   });
   /* Tie older cover pictures that had no step number to their frame. */
