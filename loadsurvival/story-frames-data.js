@@ -20,11 +20,14 @@
     ["story-06-rescue-signals", 0, "story-06-f6", "A man, a woman and a girl with backpacks stand on high ground beside a road and look down at a flooded valley. A small dog waits on a lead beside them.", "After you reach high ground, wait there. Nobody goes near the water."],
 
     ["story-07-vulnerable-family", 2, "story-07-f2", "A woman measures formula powder into a baby bottle with bottled water at a kitchen counter while a man holds the baby.", "Frame 2: make formula exactly as the pack says, with safe water."],
-    ["story-07-vulnerable-family", 3, "story-07-f3", "An older woman at a table checks a small glasses case with a small dog at her side.", "Frame 3: older adults need spare glasses, spare batteries and a medicine list."],
+    ["story-07-vulnerable-family", 3, "story-07-f3-full", "An older woman at a table holds a small battery beside a glasses case, a pill organiser and a blank sheet of paper, with a small dog at her side.", "Frame 3: older adults need spare glasses, spare batteries and a medicine list."],
     ["story-07-vulnerable-family", 4, "story-07-f4", "An older woman with a walking frame stands at an open door with a ramp outside, and a phone charges on a small table beside her.", "Frame 4: a way out they can use, and charging for equipment."],
+    ["story-07-vulnerable-family", 0, "story-07-x1", "A pregnant woman, a man holding a baby and an older woman with a walking frame stand beside a car with a small dog, ready to leave early.", "Leave early when anyone needs more time. Everyone, including the dog, goes together."],
     ["story-07-vulnerable-family", 6, "story-07-f6", "A family with go-bags stands in a line at the front door, practising leaving. A man holds a baby and an older woman uses a walking frame.", "Frame 6: practise the plan once, with everyone."],
 
     ["story-08-hazards", 1, "story-08-f1", "A man and a woman stand on a dry pavement beside a traffic cone and look at a flooded road from a distance.", "Frame 1: stay out of floodwater. Look from a safe distance."],
+    ["story-08-hazards", 0, "story-08-x1", "A man and a woman stand on a dry pavement beside a traffic cone and look down a flooded street from a distance.", "Look from a safe distance. Nobody goes into the water."],
+    ["story-08-hazards", 0, "story-08-x2", "A man and a woman stand on grass beside a small portable generator in an open yard, well away from the house with its doors and windows closed.", "Keep the generator and its cable outdoors, far from every door and window."],
     ["story-08-hazards", 3, "story-08-f3", "A man stands beside a small portable generator running on the grass in an open yard, well away from the house. The house doors and windows are closed.", "Frame 3: a generator runs outdoors only, far from every door and window."],
     ["story-08-hazards", 4, "story-08-f4", "A woman and a man step away from a damaged house with a cracked wall and a sagging roof, with warning tape across the gate.", "Frame 4: do not enter a building with cracks or a sagging roof."],
     ["story-08-hazards", 5, "story-08-f5", "A woman and a man read a book beside a plain white battery lantern on a dark kitchen table.", "Frame 5: use battery lights, not candles."],
@@ -59,6 +62,8 @@
     ["p8-s05-toilet-stops", 1, "p8-s05-f1", "A woman in an apron and gloves stands at a bathroom doorway with a phone in her hand, looking at the toilet from a distance.", "Frame 1: check for a sewer hazard before you use the toilet."],
     ["p8-s05-toilet-stops", 2, "p8-s05-f2", "A woman in an apron and gloves points to a private corner of a laundry room away from the kitchen.", "Frame 2: pick a private place away from food, children and pets."],
 
+    ["p8-s05-toilet-stops", 0, "p8-s05-x1", "A woman with a phone in her hand stands at a bathroom doorway and looks at the toilet from a distance.", "Do not use the toilet until it is checked. Use the bucket toilet instead."],
+    ["p8-s05-toilet-stops", 0, "p8-s05-x2", "A woman with a phone in her hand points to a lidded bucket toilet in a storage corner beside water jugs and a roll of paper.", "Put the bucket toilet in a private corner away from food, children and pets."],
     ["p8-s06-flood-warning-pets", 6, "p8-s06-f6", "A family with backpacks and a small dog in a carrier stands on high ground beside a road and looks down at a flooded valley.", "Frame 6: stay on safe high ground until officials say it is safe."],
 
     ["p8-s07-upper-floor", 1, "p8-s07-f1", "A family carries bags and a small dog in a carrier up a clear staircase toward an open upstairs door.", "Frame 1: move everyone and the pets to an upper room with a way out."],
@@ -66,9 +71,12 @@
     ["p8-s07-upper-floor", 3, "p8-s07-f3", "A girl puts down a bowl of water for a small dog in an upstairs room while a boy packs a bag.", "Frame 3: keep pets in the room with water."],
     ["p8-s07-upper-floor", 4, "p8-s07-f4", "A woman speaks on a phone beside an upstairs window.", "Frame 4: call 911 or 112. Give the address, the floor and who is with you."],
     ["p8-s07-upper-floor", 5, "p8-s07-f5", "A man and a young woman hold a bright orange cloth at an open upstairs window from inside the room.", "Frame 5: signal with bright cloth from inside a safe window. Stay off the roof."],
+    ["p8-s07-upper-floor", 0, "p8-s07-x1", "A woman and a man hold a bright orange cloth at an upstairs window from inside the room.", "Signal with a bright cloth from inside a safe window. Stay off the roof."],
+    ["p8-s07-upper-floor", 0, "p8-s07-x2", "A family and a small dog sit together on the floor of an upstairs room, listening, with go-bags behind them.", "Stay together in the upper room and wait for rescue guidance."],
     ["p8-s07-upper-floor", 6, "p8-s07-f6", "A family sits together on the floor of an upstairs room with the door open behind them, listening.", "Frame 6: wait together for rescue guidance."],
 
     ["p8-s08-older-person-alone", 1, "p8-s08-f1", "An older man with white hair and a walking stick looks at a wall clock and a blank paper list on the refrigerator.", "Frame 1: check the clock, the date and the contact list."],
+    ["p8-s08-older-person-alone", 0, "p8-s08-x1", "An older man with white hair and a walking stick looks at a wall clock and a blank paper list on the refrigerator in his kitchen.", "Check the clock, the date and the list on the fridge."],
     ["p8-s08-older-person-alone", 2, "p8-s08-f2", "An older man sits on a bed and lifts a glasses case out of an open bedside drawer.", "Frame 2: look in the bedside, the kit and a bag for the spare glasses."],
     ["p8-s08-older-person-alone", 3, "p8-s08-f3", "An older man in glasses sorts pills into a weekly organiser at a table, with a blank paper list and his walking frame beside him.", "Frame 3: gather prescriptions, a medicine list and the walking aid."],
     ["p8-s08-older-person-alone", 6, "p8-s08-f6", "A woman helps an older man with a walking stick into the passenger seat of a car, with a small bag on his lap.", "Frame 6: if care is not possible, leave with help."],
@@ -91,6 +99,7 @@
     ["story-p8-home-safe", 5, "p8-home-f5", "A woven basket by the front door holds flashlights, a small radio and a whistle.", "Frame 5: keep flashlights, a radio and a whistle where everyone can reach them."],
     ["story-p8-home-safe", 6, "p8-home-f6", "A woman, a girl and a man sit around a blank sheet of paper with a phone beside it, making a plan.", "Frame 6: agree a check-in plan and write it down."],
 
+    ["story-p8-pets", 0, "p8-pets-x1", "A girl, a woman and a boy sit on the kitchen floor with a small dog and a cat, beside a basket and two bowls.", "Keep bowls, toys and supplies together where everyone can find them."],
     ["story-p8-pets", 3, "p8-pets-f3", "A woman reaches up to move a bowl of grapes and a bar of chocolate onto a high shelf.", "Frame 3: grapes and chocolate go out of reach of pets."],
     ["story-p8-pets", 4, "p8-pets-f4", "A girl in blue gloves scoops dog waste into a black bag in the yard, with a dog, a cat and an outdoor tap nearby.", "Frame 4: scoop and bag waste, then wash hands."],
     ["story-p8-pets", 5, "p8-pets-f5", "A woman and two children load a dog carrier and a cat carrier onto the back seat floor of a car.", "Frame 5: pets are part of the evacuation plan."]
