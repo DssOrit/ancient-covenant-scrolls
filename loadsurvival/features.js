@@ -212,6 +212,8 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'coimbra-90-plan': ['coimbra-90-numbers', 'water-14day-plan', 'week1-day90-plan', 'pantry-90-year-plan', 'lim-sanitation', 'g-pets', 'flood-decisions', 'es-kit-tiers'],
+    'coimbra-90-numbers': ['coimbra-90-plan', 'water-14day-plan', 'pantry-90-year-plan', 'ht-store-water', 'lim-power-outage', 'lim-sanitation'],
     'p11e-bamboo-fishing': ['river-10b-fishing', 'river-10a-water', 'gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
     'p11a-orchard': ['lt2-preserve', 'hs-canning', 'wf-smoke-dry-salt', 'gr-replace-stored-food', 'diet-nutrient-watch'],
     'p11b-bamboo': ['p11c-water', 'gr-find-seeds', 'p11d-solar-skills'],
