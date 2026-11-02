@@ -10,7 +10,7 @@
  {
   "id": "coimbra-90-plan",
   "title": "90 days at home: 4 people and 5 small dogs, Coimbra (worked example, steps)",
-  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. Four people (three women and one man) and five small dogs (8, 10, 10, 11 and 16 lb) stay at home in Coimbra with no shops, and mains water and power failing for long spells. This guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps and the weekly buying. The next guide gives every amount and how it was worked out.",
+  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. Four people (three women and one man) and five small dogs (8, 10, 10, 11 and 16 lb) stay at home in Coimbra with no shops, and mains water and power failing for long spells. This guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps, the weekly buying, the first-aid list, a seven-day menu, the dog plan, what to do if something goes wrong and the checkpoints. The next guide gives every amount and how it was worked out.",
   "first": [
    "In danger to life, call 112 (Portugal) first, if the phone works.",
    "Start here. Six steps:",
@@ -368,14 +368,108 @@
     ]
    },
    {
-    "h": "If something goes wrong",
+    "h": "First-aid kit: what to put in it (ask a pharmacist and a doctor about each item and dose)",
     "items": [
-     "Flood warning: leave early with the dogs. Never walk or drive through floodwater.",
-     "Water source fails: use stored water first, try a second source, treat everything. If you cannot get safe water within 3 days, get help or move.",
-     "Someone is ill: call 112 for danger to life. A person who cannot keep fluids down needs help.",
-     "A dog is ill or stops drinking or eating: call the vet.",
-     "Gas smell: leave at once and call for help from outside. Do not use switches.",
-     "Headache, dizziness or nausea near a stove: go outside and call 112."
+     "This is a suggestion, not medical advice. Ask a pharmacist or doctor about every item and every dose.",
+     "Each person: 90 days of every prescription medicine. Ask the doctor about an early refill.",
+     "Plasters, assorted: 100",
+     "Gauze pads: 40",
+     "Bandage rolls: 10",
+     "Medical tape: 3 rolls",
+     "Antiseptic: 250 mL",
+     "Nitrile gloves: 100",
+     "Oral rehydration sachets: 20",
+     "Thermometers: 2",
+     "Tweezers and scissors: 2 of each",
+     "Eye wash: 2 bottles",
+     "Pain and fever relief: as the pack and the pharmacist say",
+     "Dog first aid: gauze, bandage and tweezers for ticks: 1 kit",
+     "A written medicine list for each person and dog: 1 copy each, plus a copy in the go-bag"
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: the daily pattern for 4 people",
+    "items": [
+     "Fish is the only meat. The amounts are for 4 people for one day and add up to about 8,200 kcal. They stay the same every day. Only the type of bean and the type of tin change.",
+     "Breakfast: porridge, oats 150 g with sugar 40 g. Flatbread, flour 150 g with nut butter 75 g.",
+     "Main meal (midday): rice 350 g, beans, lentils or chickpeas 200 g (dry weight), tinned tomato or vegetables 250 g, olive oil 50 mL.",
+     "Evening meal: pasta 250 g, beans, lentils or chickpeas 150 g (dry weight), 2 cans of fish, tinned fruit or vegetables 150 g, olive oil 70 mL. Flatbread, flour 250 g with nut butter 75 g. Sugar 60 g in tea or on fruit.",
+     "Check of the sum: oats 150, sugar 40 + 60 = 100, flour 150 + 250 = 400, nut butter 75 + 75 = 150, rice 350, pasta 250, beans and lentils 200 + 150 = 350, tins 250 + 150 = 400, oil 50 + 70 = 120 mL, fish 2 cans. These match the daily amounts in the numbers guide.",
+     "Soak beans, lentils and chickpeas overnight. Cook with treated water and a lid. Weigh the first week against this plan and adjust. Fish values differ a little by kind, so the calorie total moves a little. Check the packs."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: how the week changes",
+    "items": [
+     "Day 1: midday lentils and tinned tomato. Evening lentils and tinned fruit. Fish: sardines.",
+     "Day 2: midday chickpeas and tinned vegetables. Evening beans and tinned tomato. Fish: mackerel.",
+     "Day 3: midday beans and tinned tomato. Evening lentils and tinned vegetables. Fish: tuna.",
+     "Day 4: midday lentils and tinned vegetables. Evening chickpeas and tinned fruit. Fish: sardines.",
+     "Day 5: midday chickpeas and tinned tomato. Evening chickpeas and tinned vegetables. Fish: mackerel.",
+     "Day 6: midday beans and tinned vegetables. Evening beans and tinned fruit. Fish: tuna.",
+     "Day 7: midday lentils and tinned tomato. Evening beans and tinned vegetables. Fish: sardines."
+    ]
+   },
+   {
+    "h": "The dog plan: food and water",
+    "items": [
+     "Fish only, for all five dogs. Dry fish-based food per day: dog 1 (8 lb) 72 g, dogs 2 and 3 (10 lb) 85 g each, dog 4 (11 lb) 92 g, dog 5 (16 lb) 121 g. Plus plain tinned fish: 20, 23, 23, 25 and 33 g. Split each into two meals. Adjust to the pack table. Check with your vet.",
+     "Water per day: about 0.22, 0.27, 0.27, 0.30 and 0.44 L, 1.5 L in all, more in heat. Clean the bowls daily.",
+     "Do not change the food suddenly. A bag torn open attracts pests, so keep it sealed in a lidded bin.",
+     "If dog food runs short, ask your vet in advance which plain foods are safe. Never give chocolate, grapes, raisins, onions or xylitol."
+    ]
+   },
+   {
+    "h": "The dog plan: bathroom, health, exercise",
+    "items": [
+     "Bathroom: dog pee pads on a plastic sheet, changed when wet. Used pads go in a tied bin bag every day. Wipe paws and bottoms with a pet wipe. Wash hands after.",
+     "Waste: scoop and bag dog waste at once, about 12 bags a day. Keep the bags in a covered bin away from food and water. Wear gloves and wash hands after every scoop.",
+     "Weigh each dog on day 1 and once a week. Write the weights.",
+     "Check for ticks and fleas after every outdoor trip.",
+     "Check that every dog drinks. A dog that stops drinking or eating needs a vet.",
+     "Keep a copy of vaccination records and microchip numbers in the go-bag.",
+     "Five dogs in one home need space and routine. Walk or play with them in short sessions, in a safe, dry place, away from floodwater and traffic.",
+     "Keep a quiet bed for each dog. Keep dogs apart at meals if they guard food."
+    ]
+   },
+   {
+    "h": "The dog plan: leaving with five dogs",
+    "items": [
+     "One carrier for each dog, and one lead and one collar with an ID tag each: five carriers in all.",
+     "Practise loading all five carriers in the car. Time it.",
+     "Find out in advance where dogs are allowed. To check: many shelters do not take pets.",
+     "Pack for the dogs: 3 days of food, a bowl each, water, bags, medicines, records and a blanket each.",
+     "Never leave pets behind in a flood. Never leave a dog in a closed car."
+    ]
+   },
+   {
+    "h": "If something goes wrong: 12 situations",
+    "items": [
+     "Flood warning: leave early with the dogs. Do not wait to protect furniture. Never walk or drive through floodwater. Go to high ground you can reach without crossing water.",
+     "Water source fails: use stored water first. Try a second source. Treat everything. If you cannot get safe water within 3 days, get help or move.",
+     "Power cut lasting weeks: this plan assumes it. Keep the fridge closed for the first hours. Eat perishable food first, then staples.",
+     "Someone is ill: call 112 for danger to life. For smaller problems, use the first-aid kit and the thermometers. If someone cannot keep fluids down, get help.",
+     "A dog is ill: call the vet. Keep the dog drinking. Keep it separate if it may be catching.",
+     "Food or water running short: do not ration water so hard that anyone is dehydrated. Cut meal sizes a little, not drinking water. Reduce dog food only on a vet's advice. If dog food runs short, plain tinned fish with some plain cooked rice is a short-term back-up. Ask your vet first. Plan to move if it cannot last.",
+     "Damp or mould in the store: move sealed stock to a dry place. Separate suspect packs. Throw out anything uncertain. Do not use cat litter, charcoal or sprays on food.",
+     "Cold night: dry layers and a hat. Cardboard, rugs and blankets under the bed. A battery lantern only. Heavy drowsiness, confusion or clumsiness need urgent help.",
+     "Heat wave: extra water, curtains closed, the coolest room, rest in the day. Watch the dogs.",
+     "Gas leak or smell of gas: leave at once and call for help from outside. Do not use switches.",
+     "Carbon monoxide risk: never burn fuel indoors. If anyone has a headache, dizziness or nausea near a stove, go outside and call 112.",
+     "Trapped upstairs by flood: a last resort only. An upper room with a clear way out and a window you can open. Never an enclosed attic. Call 112. Signal from the window with bright cloth, a flashlight or a whistle. Stay off the roof."
+    ]
+   },
+   {
+    "h": "Checkpoints: day by day",
+    "items": [
+     "Day 7: count safe water, dog food, medicines and meals. Write the numbers down. Compare with the plan.",
+     "Day 14: review the toilet, storage, each person's needs, contact with neighbours and the strain on the household. The stored water is now used up, so the source must work.",
+     "Day 21: check the pantry for balance. Rice, beans and oats alone are not complete. Check the dogs' food too.",
+     "Day 30: rotate staples by date. Check packs for damp, pests and damage. Review medicines and anything that needs power.",
+     "Day 45: halfway. Count everything. Adjust the daily amounts so nothing runs out before day 90.",
+     "Day 60: check food variety, health, pests, heating or cooling. Plan how to get more medicine. Decide on safe resupply, or relocation if you cannot keep water, food, sanitation, medicine and a livable temperature.",
+     "Day 75: prepare for the end. Charge everything, repack the go-bags, plan the return to normal supply.",
+     "Day 90: make the safety decision. Do not remain indefinitely without the essentials. Write down what you learned."
     ]
    }
   ],
