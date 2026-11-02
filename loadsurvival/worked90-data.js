@@ -11,7 +11,7 @@
  {
   "id": "w90-ca-single",
   "title": "90 days at home: a single woman in California (worked example)",
-  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A woman who lives alone in a one-bedroom apartment in California. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps and every sum.",
+  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A woman who lives alone in a one-bedroom apartment in California. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the weekly buying, the first-aid list, a seven-day menu, what to do if something goes wrong, the checkpoints and every sum.",
   "first": [
    "In danger to life, call 911 first, if the phone works.",
    "Start here. Six steps:",
@@ -423,6 +423,79 @@
     ]
    },
    {
+    "h": "First-aid kit: what to put in it (ask a pharmacist and a doctor about each item and dose)",
+    "items": [
+     "This is a suggestion, not medical advice. Ask a pharmacist or doctor about every item and every dose.",
+     "Your own prescription medicines: 90 days of each. Ask the doctor about an early refill. Keep a written list.",
+     "Plasters, assorted: 40",
+     "Gauze pads: 20",
+     "Bandage rolls: 4",
+     "Medical tape: 1 roll",
+     "Antiseptic: 100 mL",
+     "Nitrile gloves: 50",
+     "Oral rehydration sachets: 10",
+     "Thermometer: 1",
+     "Tweezers and scissors: 1 of each",
+     "Eye wash: 1 bottle",
+     "Pain and fever relief: as the pack and the pharmacist say",
+     "N95 or similar masks for smoke: in the shopping list. Check the fit.",
+     "A card with your medicines, allergies and your contact, in the go-bag"
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: the daily pattern for 1 person",
+    "items": [
+     "Fish is the only meat. These are the daily pantry amounts for your household, split across the meals and rounded to 5 g. They stay the same every day. Only the type of bean and the type of tin change.",
+     "Breakfast: porridge, oats 35 g with sugar 10 g. Flatbread, flour 35 g with nut butter 20 g.",
+     "Main meal (midday): rice 85 g, beans, lentils or chickpeas 50 g (dry weight), tinned tomato or vegetables 60 g, olive oil 15 mL.",
+     "Evening meal: pasta 60 g, beans, lentils or chickpeas 35 g (dry weight), tinned fish on the days shown below, tinned fruit or vegetables 35 g, olive oil 15 mL. Flatbread, flour 60 g with nut butter 20 g. Sugar 15 g in tea or on fruit.",
+     "Tinned fish for the week: 4 cans of 125 g (about 0.57 a day). Eat a whole can at one meal, because an opened can does not keep without a fridge.",
+     "Soak beans, lentils and chickpeas overnight. Cook with treated water and a lid. Weigh the first week against this plan and adjust. Check the packs."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: how the week changes",
+    "items": [
+     "Day 1: midday lentils and tinned tomato. Evening lentils and tinned fruit. Fish: 1 can of sardines.",
+     "Day 2: midday chickpeas and tinned vegetables. Evening chickpeas and tinned tomato. Fish: 1 can of mackerel.",
+     "Day 3: midday beans and tinned tomato. Evening beans and tinned vegetables. Fish: 1 can of tuna.",
+     "Day 4: midday lentils and tinned vegetables. Evening lentils and tinned fruit. Fish: 1 can of sardines.",
+     "Day 5: midday chickpeas and tinned tomato. Evening lentils and tinned tomato. Fish: none today.",
+     "Day 6: midday beans and tinned vegetables. Evening chickpeas and tinned vegetables. Fish: none today.",
+     "Day 7: midday lentils and tinned tomato. Evening beans and tinned fruit. Fish: none today."
+    ]
+   },
+   {
+    "h": "If something goes wrong: 12 situations",
+    "items": [
+     "Earthquake: drop, cover and hold on. After the shaking, check yourself, put on shoes, and check the building. Leave if it is damaged or if you smell gas. Call 911 for danger to life.",
+     "Wildfire smoke: stay indoors, close windows, wear a mask if you must go out. Leave early if an evacuation order is given. Keep the car about half full of fuel if you have one.",
+     "Power shut-off: this plan assumes it. Charge the power station and power banks before a planned shut-off. Use battery lanterns only.",
+     "Water source fails: use stored water first. Try a second source. Treat everything. If you cannot get safe water within 3 days, get help or move.",
+     "I am hurt or cannot get up: use the satellite SOS or messenger, or call 911. Say your address and that you live alone. Your check-in friend will notice if you miss two check-ins.",
+     "Heat wave: extra water, curtains closed, the coolest room, rest in the day. Check on a neighbour.",
+     "Food or water running short: do not ration water so hard that you are dehydrated. Cut meal sizes a little, not drinking water. Plan to move if it cannot last.",
+     "Damp or pests in the store: move sealed stock to a dry place. Separate suspect packs. Throw out anything uncertain.",
+     "Smell of gas: leave at once and call for help from outside. Do not use switches.",
+     "Carbon monoxide risk: never burn fuel indoors. Headache, dizziness or nausea near a stove: go outside and call 911.",
+     "Flood or heavy storm: move to an upper floor only as a last resort. Never walk or drive through floodwater.",
+     "Feeling alone or low: call your check-in friend. Keep a routine. A call is part of the plan."
+    ]
+   },
+   {
+    "h": "Checkpoints: day by day",
+    "items": [
+     "Day 7: count safe water, food, medicines and meals. Write the numbers down. Compare with the plan. Tell your check-in friend how you are.",
+     "Day 14: review the toilet, storage and contact with other people. The stored water is now used up, so the source must work.",
+     "Day 21: check the pantry for balance. Rice, beans and oats alone are not complete.",
+     "Day 30: rotate staples by date. Check packs for damp, pests and damage. Review medicines and anything that needs power.",
+     "Day 45: halfway. Count everything. Adjust the daily amounts so nothing runs out before day 90.",
+     "Day 60: check food variety, health, pests, heating or cooling. Plan how to get more medicine. Decide on safe resupply, or moving if you cannot keep water, food, sanitation, medicine and a livable temperature.",
+     "Day 75: prepare for the end. Charge everything, repack the go-bag, plan the return to normal supply.",
+     "Day 90: make the safety decision. Do not remain indefinitely without the essentials. Write down what you learned."
+    ]
+   },
+   {
     "h": "The sums: water",
     "items": [
      "People: 1 x 4 L x 90 days = 360 L.",
@@ -508,7 +581,7 @@
  {
   "id": "w90-ca-couple",
   "title": "90 days at home: a young couple with a dog in California (worked example)",
-  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A young couple in a two-bedroom apartment in California: a woman and a man, with one small dog of 15 lb. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps and every sum.",
+  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A young couple in a two-bedroom apartment in California: a woman and a man, with one small dog of 15 lb. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the weekly buying, the first-aid list, a seven-day menu, the pet plan, what to do if something goes wrong, the checkpoints and every sum.",
   "first": [
    "In danger to life, call 911 first, if the phone works.",
    "Start here. Six steps:",
@@ -982,6 +1055,110 @@
     ]
    },
    {
+    "h": "First-aid kit: what to put in it (ask a pharmacist and a doctor about each item and dose)",
+    "items": [
+     "This is a suggestion, not medical advice. Ask a pharmacist or doctor about every item and every dose.",
+     "Prescription medicines for both of you: 90 days of each. Ask the doctor about an early refill. Keep a written list for each person.",
+     "Plasters, assorted: 60",
+     "Gauze pads: 30",
+     "Bandage rolls: 6",
+     "Medical tape: 2 rolls",
+     "Antiseptic: 200 mL",
+     "Nitrile gloves: 100",
+     "Oral rehydration sachets: 14",
+     "Thermometers: 2",
+     "Tweezers and scissors: 2 of each",
+     "Eye wash: 2 bottles",
+     "Pain and fever relief: as the pack and the pharmacist say",
+     "Dog first aid: gauze, bandage, tweezers for ticks, 1 kit. Ask your vet what else to add.",
+     "A card with your medicines and allergies and the dog's vaccination and microchip numbers, in the go-bag"
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: the daily pattern for 2 people",
+    "items": [
+     "Fish is the only meat. These are the daily pantry amounts for your household, split across the meals and rounded to 5 g. They stay the same every day. Only the type of bean and the type of tin change.",
+     "Breakfast: porridge, oats 80 g with sugar 20 g. Flatbread, flour 80 g with nut butter 40 g.",
+     "Main meal (midday): rice 185 g, beans, lentils or chickpeas 105 g (dry weight), tinned tomato or vegetables 135 g, olive oil 25 mL.",
+     "Evening meal: pasta 135 g, beans, lentils or chickpeas 80 g (dry weight), tinned fish on the days shown below, tinned fruit or vegetables 80 g, olive oil 40 mL. Flatbread, flour 135 g with nut butter 40 g. Sugar 35 g in tea or on fruit.",
+     "Tinned fish for the week: 7 cans of 125 g (about 1 a day). Eat a whole can at one meal, because an opened can does not keep without a fridge.",
+     "Soak beans, lentils and chickpeas overnight. Cook with treated water and a lid. Weigh the first week against this plan and adjust. Check the packs."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: how the week changes",
+    "items": [
+     "Day 1: midday lentils and tinned tomato. Evening lentils and tinned fruit. Fish: 1 can of sardines.",
+     "Day 2: midday chickpeas and tinned vegetables. Evening chickpeas and tinned tomato. Fish: 1 can of mackerel.",
+     "Day 3: midday beans and tinned tomato. Evening beans and tinned vegetables. Fish: 1 can of tuna.",
+     "Day 4: midday lentils and tinned vegetables. Evening lentils and tinned fruit. Fish: 1 can of sardines.",
+     "Day 5: midday chickpeas and tinned tomato. Evening lentils and tinned tomato. Fish: 1 can of mackerel.",
+     "Day 6: midday beans and tinned vegetables. Evening chickpeas and tinned vegetables. Fish: 1 can of tuna.",
+     "Day 7: midday lentils and tinned tomato. Evening beans and tinned fruit. Fish: 1 can of sardines."
+    ]
+   },
+   {
+    "h": "The dog plan: food and water",
+    "items": [
+     "Fish only. Dry fish-based food 115 g a day plus plain tinned fish 31 g a day, split into two meals. Adjust to the pack table. Check with your vet.",
+     "Water: about 0.41 L a day, more in heat. Clean the bowl daily.",
+     "Do not change the food suddenly. A bag torn open attracts pests, so keep it sealed in a lidded bin.",
+     "If dog food runs short, ask your vet in advance which plain foods are safe. Never give chocolate, grapes, raisins, onions or xylitol."
+    ]
+   },
+   {
+    "h": "The dog plan: bathroom, health, exercise",
+    "items": [
+     "Bathroom: dog pee pads on a plastic sheet, changed when wet. Used pads go in a tied bin bag every day. Wipe paws and bottoms with a pet wipe. Wash hands after.",
+     "Waste outdoors: scoop and bag it at once. Keep the bags in a covered bin away from food and water. Wear gloves and wash hands after.",
+     "Weigh the dog on day 1 and every week. Check for ticks and fleas after every outdoor trip.",
+     "Check that the dog drinks. A dog that stops drinking or eating needs a vet.",
+     "Keep a copy of the vaccination records and microchip number in the go-bag.",
+     "A small dog needs short walks or play in a safe, dry place, away from floodwater and traffic. Keep a quiet bed for the dog."
+    ]
+   },
+   {
+    "h": "The dog plan: leaving with the dog",
+    "items": [
+     "A carrier, a lead and a collar with an ID tag.",
+     "Practise loading the carrier in the car. Time it.",
+     "Pack for the dog: 3 days of food, a bowl, water, bags, medicines, records and a blanket.",
+     "Wildfire or earthquake: keep the carrier, lead and go-bag by the door. Find where dogs are allowed in advance. Many shelters do not take pets.",
+     "Smoke: keep the dog indoors with the windows closed when the air is bad.",
+     "Never leave a pet behind in a disaster. Never leave a pet in a closed car."
+    ]
+   },
+   {
+    "h": "If something goes wrong: 12 situations",
+    "items": [
+     "Earthquake: drop, cover and hold on. After the shaking, check each other and the dog, put on shoes, and check the building. Leave if it is damaged or if you smell gas. Call 911 for danger to life.",
+     "Wildfire smoke or an evacuation order: leave early with the dog in its carrier. Keep the car about half full of fuel. Find where dogs are allowed in advance.",
+     "Power shut-off: charge the power station and power banks before a planned shut-off. Use battery lanterns only.",
+     "Water source fails: use stored water first. Try a second source. Treat everything. If you cannot get safe water within 3 days, get help or move.",
+     "One of you is ill or hurt: call 911 for danger to life. For smaller problems, use the first-aid kit and the thermometers. The other adult looks after the dog.",
+     "The dog is ill: call the vet. Keep the dog drinking. Keep it separate if it may be catching.",
+     "Heat wave: extra water, curtains closed, the coolest room, rest in the day. Watch the dog.",
+     "Food or water running short: do not ration water so hard that anyone is dehydrated. Cut meal sizes a little, not drinking water. Reduce dog food only on a vet's advice. Plan to move if it cannot last.",
+     "Damp or pests in the store: move sealed stock to a dry place. Separate suspect packs. Throw out anything uncertain.",
+     "Smell of gas: leave at once and call for help from outside. Do not use switches.",
+     "Carbon monoxide risk: never burn fuel indoors. Headache, dizziness or nausea near a stove: go outside and call 911.",
+     "Flood or heavy storm: leave early with the dog if told to. Never walk or drive through floodwater."
+    ]
+   },
+   {
+    "h": "Checkpoints: day by day",
+    "items": [
+     "Day 7: count safe water, food, medicines and meals. Write the numbers down. Compare with the plan. Count pet food and litter too.",
+     "Day 14: review the toilet, storage and contact with other people. The stored water is now used up, so the source must work.",
+     "Day 21: check the pantry for balance. Rice, beans and oats alone are not complete. Check the pet food too.",
+     "Day 30: rotate staples by date. Check packs for damp, pests and damage. Review medicines and anything that needs power.",
+     "Day 45: halfway. Count everything. Adjust the daily amounts so nothing runs out before day 90.",
+     "Day 60: check food variety, health, pests, heating or cooling. Plan how to get more medicine. Decide on safe resupply, or moving if you cannot keep water, food, sanitation, medicine and a livable temperature.",
+     "Day 75: prepare for the end. Charge everything, repack the go-bag, plan the return to normal supply.",
+     "Day 90: make the safety decision. Do not remain indefinitely without the essentials. Write down what you learned."
+    ]
+   },
+   {
     "h": "The sums: water",
     "items": [
      "People: 2 x 4 L x 90 days = 720 L.",
@@ -1078,7 +1255,7 @@
  {
   "id": "w90-fl-pregnant",
   "title": "90 days at home: a pregnant couple with a dog and a cat in Florida (worked example)",
-  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A couple in a rented house in Florida. The woman is 30 weeks pregnant at the start, so the baby is due about day 70. They have one small dog of 20 lb and one cat of 10 lb. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps and every sum.",
+  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A couple in a rented house in Florida. The woman is 30 weeks pregnant at the start, so the baby is due about day 70. They have one small dog of 20 lb and one cat of 10 lb. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the weekly buying, the first-aid list, a seven-day menu, the pet plan, what to do if something goes wrong, the checkpoints and every sum.",
   "first": [
    "In danger to life, call 911 first, if the phone works.",
    "Start here. Six steps:",
@@ -1603,6 +1780,125 @@
     ]
    },
    {
+    "h": "First-aid kit: what to put in it (ask a pharmacist and a doctor about each item and dose)",
+    "items": [
+     "This is a suggestion, not medical advice. Ask a pharmacist or doctor about every item and every dose.",
+     "Ask the midwife or doctor first about everything in this list. Pregnancy changes what is safe to take.",
+     "Prescription medicines and prenatal vitamins: 90 days. Ask about an early refill. Keep a written list for each person.",
+     "The pregnancy records and the hospital bag: keep the maternity notes, ID, insurance papers and the midwife's numbers together in the go-bag.",
+     "Plasters, assorted: 60",
+     "Gauze pads: 30",
+     "Bandage rolls: 6",
+     "Medical tape: 2 rolls",
+     "Antiseptic: 200 mL",
+     "Nitrile gloves: 200",
+     "Oral rehydration sachets: 14",
+     "Thermometers: 2",
+     "Tweezers and scissors: 2 of each",
+     "Eye wash: 2 bottles",
+     "Pain and fever relief: only what the midwife or doctor says is safe in pregnancy",
+     "Insect repellent: only the kind the midwife or doctor says is safe",
+     "Blood pressure monitor, if the midwife has asked you to check at home",
+     "Pet first aid: gauze, bandage and tweezers for ticks, 1 kit. Ask your vet what else to add."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: the daily pattern for 2 people",
+    "items": [
+     "Fish is the only meat. These are the daily pantry amounts for your household, split across the meals and rounded to 5 g. They stay the same every day. Only the type of bean and the type of tin change.",
+     "Breakfast: porridge, oats 90 g with sugar 25 g. Flatbread, flour 90 g with nut butter 45 g.",
+     "Main meal (midday): rice 205 g, beans, lentils or chickpeas 115 g (dry weight), tinned tomato or vegetables 145 g, olive oil 30 mL.",
+     "Evening meal: pasta 145 g, beans, lentils or chickpeas 90 g (dry weight), tinned fish on the days shown below, tinned fruit or vegetables 90 g, olive oil 40 mL. Flatbread, flour 145 g with nut butter 45 g. Sugar 35 g in tea or on fruit.",
+     "Tinned fish for the week: 9 cans of 125 g (about 1.29 a day). Eat a whole can at one meal, because an opened can does not keep without a fridge.",
+     "Soak beans, lentils and chickpeas overnight. Cook with treated water and a lid. Weigh the first week against this plan and adjust. Check the packs."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: how the week changes",
+    "items": [
+     "Day 1: midday lentils and tinned tomato. Evening lentils and tinned fruit. Fish: 2 cans of sardines.",
+     "Day 2: midday chickpeas and tinned vegetables. Evening chickpeas and tinned tomato. Fish: 2 cans of mackerel.",
+     "Day 3: midday beans and tinned tomato. Evening beans and tinned vegetables. Fish: 1 can of tuna.",
+     "Day 4: midday lentils and tinned vegetables. Evening lentils and tinned fruit. Fish: 1 can of sardines.",
+     "Day 5: midday chickpeas and tinned tomato. Evening lentils and tinned tomato. Fish: 1 can of mackerel.",
+     "Day 6: midday beans and tinned vegetables. Evening chickpeas and tinned vegetables. Fish: 1 can of tuna.",
+     "Day 7: midday lentils and tinned tomato. Evening beans and tinned fruit. Fish: 1 can of sardines."
+    ]
+   },
+   {
+    "h": "The dog plan: food and water",
+    "items": [
+     "Fish only. Dry fish-based food 143 g a day plus plain tinned fish 39 g a day, split into two meals. Adjust to the pack table. Check with your vet.",
+     "Water: about 0.54 L a day, more in heat. Clean the bowl daily.",
+     "Do not change the food suddenly. A bag torn open attracts pests, so keep it sealed in a lidded bin.",
+     "If dog food runs short, ask your vet in advance which plain foods are safe. Never give chocolate, grapes, raisins, onions or xylitol."
+    ]
+   },
+   {
+    "h": "The dog plan: bathroom, health, exercise",
+    "items": [
+     "Bathroom: dog pee pads on a plastic sheet, changed when wet. Used pads go in a tied bin bag every day. Wipe paws and bottoms with a pet wipe. Wash hands after.",
+     "Waste outdoors: scoop and bag it at once. Keep the bags in a covered bin away from food and water. Wear gloves and wash hands after.",
+     "Weigh the dog on day 1 and every week. Check for ticks and fleas after every outdoor trip.",
+     "Check that the dog drinks. A dog that stops drinking or eating needs a vet.",
+     "Keep a copy of the vaccination records and microchip number in the go-bag.",
+     "A small dog needs short walks or play in a safe, dry place, away from floodwater and traffic. Keep a quiet bed for the dog."
+    ]
+   },
+   {
+    "h": "The dog plan: leaving with the dog",
+    "items": [
+     "A carrier, a lead and a collar with an ID tag.",
+     "Practise loading the carrier in the car. Time it.",
+     "Pack for the dog: 3 days of food, a bowl, water, bags, medicines, records and a blanket.",
+     "Hurricane: leave early when an evacuation order covers your zone. Find a pet-friendly shelter or hotel in advance. Many shelters do not take pets.",
+     "Heat: keep the dog in the coolest room, with water. Never leave a dog in a closed car.",
+     "Never leave a pet behind in a disaster. Never leave a pet in a closed car."
+    ]
+   },
+   {
+    "h": "The cat plan: food, litter, health, leaving",
+    "items": [
+     "Fish only. Dry fish-based food 64 g a day plus plain tinned fish 17 g a day, split into small meals. Ask your vet about a fish-only diet for a cat, and about anything a cat needs that fish alone may not give.",
+     "Water: about 0.27 L a day. Keep the bowl clean and away from the litter.",
+     "Litter: 2 trays, scooped every day, with the clumping litter in the list. Tie used litter in a bin bag every day. Wear gloves. Wash hands after.",
+     "Pregnancy: ask the midwife or doctor about cat litter and toxoplasmosis. Let the other adult handle the litter if the midwife advises it.",
+     "Weigh the cat every week. A cat that stops eating for a day needs a vet.",
+     "Carrier, ID tag and microchip papers by the door. Practise putting the cat in the carrier. Pack food, a bowl, litter and a blanket for 3 days.",
+     "Find a pet-friendly shelter or hotel in advance. Never leave a pet behind in a hurricane."
+    ]
+   },
+   {
+    "h": "If something goes wrong: 12 situations",
+    "items": [
+     "Hurricane: leave early when an evacuation order covers your zone. Do not wait for the storm. Take the maternity notes, the hospital bag, the dog and the cat in carriers, and the go-bags.",
+     "Warning signs in pregnancy: bleeding, severe pain, a baby that moves much less, regular contractions or the waters breaking. Call 911 or go to the hospital as your midwife has told you. Do not wait.",
+     "Labour starts early or at home: call 911 or the midwife straight away. Stay calm, keep warm, and have the hospital bag by the door. Get to the hospital early if a storm is coming.",
+     "Power cut lasting days: this plan assumes it. Use the power station for phones and the fans. Eat from the pantry. Keep the fridge closed if you have medicine that needs cold.",
+     "Heat: extra water, battery fans, the coolest room, rest. Heat is a risk in pregnancy, so tell the midwife if you feel faint, dizzy or very hot.",
+     "Water source fails: use stored water first. Try a second source. Treat everything. If you cannot get safe water within 3 days, get help or move.",
+     "Flooding: never walk or drive through floodwater. Move to higher ground. An upper room is a last resort.",
+     "The dog or the cat is ill: call the vet. Keep the pet drinking. Keep it separate if it may be catching.",
+     "Food or water running short: do not ration water so hard that anyone is dehydrated. Pregnancy needs enough food and water. Plan to move if it cannot last.",
+     "Mosquitoes and water standing: tip out standing water, use the repellent the midwife says is safe, and keep windows closed or screened.",
+     "Smell of gas: leave at once and call for help from outside. Do not use switches.",
+     "Carbon monoxide risk: never run a stove or generator indoors or in a garage. Headache, dizziness or nausea: go outside and call 911."
+    ]
+   },
+   {
+    "h": "Checkpoints: day by day",
+    "items": [
+     "Day 7: count safe water, food, medicines and meals. Write the numbers down. Compare with the plan. Count pet food and litter too.",
+     "Day 14: review the toilet, storage and contact with other people. The stored water is now used up, so the source must work. Go to your appointments. Check the hospital route and the hospital bag.",
+     "Day 21: check the pantry for balance. Rice, beans and oats alone are not complete. Check the pet food too.",
+     "Day 30: rotate staples by date. Check packs for damp, pests and damage. Review medicines and anything that needs power. The baby is due about day 70: check the baby items, the car seat and the hospital bag now.",
+     "Day 45: halfway. Count everything. Adjust the daily amounts so nothing runs out before day 90.",
+     "Day 60: check food variety, health, pests, heating or cooling. Plan how to get more medicine. Decide on safe resupply, or moving if you cannot keep water, food, sanitation, medicine and a livable temperature. The baby is due about day 70. After the birth, follow the midwife's advice for food, rest and when to call.",
+     "Day 75: prepare for the end. Charge everything, repack the go-bag, plan the return to normal supply. Include the baby's supplies.",
+     "Day 90: make the safety decision. Do not remain indefinitely without the essentials. Write down what you learned."
+    ]
+   },
+   {
     "h": "The sums: water",
     "items": [
      "People: 2 x 4 L x 90 days = 720 L.",
@@ -1700,7 +1996,7 @@
  {
   "id": "w90-london-elder",
   "title": "90 days at home: an elderly woman in a boarding house in London (worked example)",
-  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A woman of 78 who rents a single room in a boarding house in London. She shares a kitchen and bathroom. She walks with a stick, takes regular medicines and wears reading glasses. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the steps and every sum.",
+  "intro": "This is a worked example for planning practice. It is not a promise that anyone can last 90 days. A woman of 78 who rents a single room in a boarding house in London. She shares a kitchen and bathroom. She walks with a stick, takes regular medicines and wears reading glasses. The guide starts with a simple \"Start here\" list and an easy shopping list, then gives the weekly buying, the first-aid list, a seven-day menu, what to do if something goes wrong, the checkpoints and every sum.",
   "first": [
    "In danger to life, call 999 first (112 also works in the UK), if the phone works. For a health problem that is not an emergency, the NHS 111 service is the usual number. To check.",
    "Start here. Six steps:",
@@ -2103,6 +2399,82 @@
      "[  ] Prescription medicine: 90 days for each person (ask the doctor or pharmacist). To check: some places only give a month at a time.",
      "[  ] First-aid kit: 1 (ask a pharmacist what to put in it)",
      "[  ] Top up whatever ran out in the 7-day test"
+    ]
+   },
+   {
+    "h": "First-aid kit: what to put in it (ask a pharmacist and a doctor about each item and dose)",
+    "items": [
+     "This is a suggestion, not medical advice. Ask a pharmacist or doctor about every item and every dose.",
+     "Your regular medicines: ask your GP and pharmacist for the longest supply they can give. To check: some places only give 28 days at a time.",
+     "A written medicine list, with doses and times, and one copy in the go-bag. Large print.",
+     "Spare reading glasses: 2. Spare hearing-aid batteries, if you use a hearing aid.",
+     "Plasters, assorted: 30",
+     "Gauze pads: 15",
+     "Bandage rolls: 3",
+     "Medical tape: 1 roll",
+     "Antiseptic: 100 mL",
+     "Disposable gloves: 100",
+     "Oral rehydration sachets: 10",
+     "Thermometer: 1",
+     "Tweezers and scissors: 1 of each",
+     "Pain and fever relief: as the pack and the pharmacist say",
+     "A pill organiser for the week, filled before the plan starts",
+     "Anything your doctor has told you to keep, such as a blood pressure monitor or a glucose meter. Check that its batteries are charged.",
+     "A card with your name, address, medicines, allergies and your contact, by the door and in your pocket"
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: no-cook, no-flame, ring-pull tins",
+    "items": [
+     "Fish is the only meat. Nothing here needs cooking, a stove or a fridge. Use ring-pull tins and small tins so nothing is left open.",
+     "Breakfast: oats 70 g soaked cold overnight in treated water or in the tinned fruit juice, with dried fruit 30 g and sugar or honey 20 g.",
+     "Midday: crackers, oatcakes or crispbread 60 g with nut butter 30 g, tinned fruit in juice 100 g, and a tin of fish on the days shown below.",
+     "Evening: ready-to-eat tinned beans, lentils or chickpeas 150 g, tinned vegetables or tomato 200 g, olive oil 15 mL, tinned fruit 100 g, and a tin of fish on the days shown below.",
+     "Tinned fish for the week: 11 cans of 125 g (4 days with 2 cans, 3 days with 1 can, about 1.6 a day). Eat a whole can at one meal.",
+     "A hot drink or soup is a comfort. Fill a vacuum flask with hot water when the power is on. Do not use a flame or a stove in your room.",
+     "These amounts are about 1,670 kcal a day, which is 98 percent of 1,700. Check the packs. Ask your doctor or a dietitian if you have a health condition."
+    ]
+   },
+   {
+    "h": "Seven-day sample menu: how the week changes",
+    "items": [
+     "Day 1: fish 2 cans (midday and evening), sardines. Evening: tinned lentils and tinned tomato.",
+     "Day 2: fish 1 can (evening), mackerel. Evening: tinned chickpeas and tinned vegetables.",
+     "Day 3: fish 2 cans (midday and evening), tuna. Evening: tinned beans and tinned tomato.",
+     "Day 4: fish 1 can (evening), sardines. Evening: tinned lentils and tinned vegetables.",
+     "Day 5: fish 2 cans (midday and evening), mackerel. Evening: tinned chickpeas and tinned tomato.",
+     "Day 6: fish 1 can (evening), tuna. Evening: tinned beans and tinned vegetables.",
+     "Day 7: fish 2 cans (midday and evening), sardines. Evening: tinned lentils and tinned tomato."
+    ]
+   },
+   {
+    "h": "If something goes wrong: 12 situations",
+    "items": [
+     "Cold night: wear thermal layers, a hat and warm socks. Use the hot water bottles and the blankets. Keep the room warm enough. Never use a fuel heater or a candle. Heavy drowsiness, confusion or clumsiness need urgent help: call 999.",
+     "Heat wave: extra water, curtains closed by day, the coolest room, rest. Check on the other residents.",
+     "Power cut: this plan assumes it. Use the battery lantern. Charge the phone from the power banks. Eat from the no-cook pantry. If the lift does not work, stay put and tell the landlord and your check-in friend.",
+     "A fall: stay still if it hurts. Use the phone or the whistle. Call 999. Your check-in friend will notice if you miss two check-ins.",
+     "Flood: leave early with help if told to. Never walk through floodwater. Take the go-bag, the medicines and the glasses.",
+     "Medicine runs short: call your GP or pharmacist before it runs out. Some places only give 28 days at a time. Never take medicine you cannot read.",
+     "Water cut: use the stored bottles first. The shared bathroom may not work. Use the bucket and commode only if the landlord agrees.",
+     "No appetite or not eating: eat small amounts often from the pantry. Drink water. Tell your GP or call NHS 111 if it lasts.",
+     "Feeling ill: call 999 for danger to life. For anything else, NHS 111. Use the first-aid kit and the thermometer.",
+     "Smell of gas or smoke: leave at once and call 999 from outside. Do not use switches. Do not use a flame in your room.",
+     "Carbon monoxide risk: no fuel burning indoors. Headache, dizziness or nausea: go outside and call 999.",
+     "Feeling alone or low: call your check-in friend. Keep a routine. Ask the landlord about the others in the house."
+    ]
+   },
+   {
+    "h": "Checkpoints: day by day",
+    "items": [
+     "Day 7: count safe water, food, medicines and meals. Write the numbers down. Compare with the plan. Tell your check-in friend and the landlord how you are.",
+     "Day 14: review the toilet, storage and contact with other people. The stored water is now used up, so the source must work.",
+     "Day 21: check the pantry for balance. Rice, beans and oats alone are not complete.",
+     "Day 30: rotate staples by date. Check packs for damp, pests and damage. Review medicines and anything that needs power. Ask your GP or pharmacist about the next supply of medicine.",
+     "Day 45: halfway. Count everything. Adjust the daily amounts so nothing runs out before day 90.",
+     "Day 60: check food variety, health, pests, heating or cooling. Plan how to get more medicine. Decide on safe resupply, or moving if you cannot keep water, food, sanitation, medicine and a livable temperature. Check that you are warm, eating and drinking, and not falling. Ask for help early.",
+     "Day 75: prepare for the end. Charge everything, repack the go-bag, plan the return to normal supply.",
+     "Day 90: make the safety decision. Do not remain indefinitely without the essentials. Write down what you learned."
     ]
    },
    {
