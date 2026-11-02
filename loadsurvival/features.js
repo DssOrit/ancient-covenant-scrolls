@@ -525,6 +525,8 @@ window.LSX = function (A) {
     ['tracker', 'list', 'My stockpile tracker', 'Your rates, prices, what you own, shopping list, CSV and backup'],
     ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes'],
     ['comms', 'radio', 'Communication devices and check-ins', 'Your phones, radios and satellite gear, test dates, airtime end dates, check-in times and emergency numbers by place'],
+    ['listen', 'radio', 'Radio listening schedule', 'Set short listening times, see how many batteries they use, and print a paper log'],
+    ['cpower', 'battery', 'Power budget for communications', 'Phones, radios and satellite gear: days of power left and the solar panels you need'],
     ['export', 'print', 'Download and print', 'Guides as files, packs for each person, place and topic']
   ];
   function toolsView() {
@@ -619,6 +621,25 @@ window.LSX = function (A) {
         '<label for="cm-missed">If someone misses two check-ins, we will</label><textarea id="cm-missed" data-cm="missed" rows="2" placeholder="Call the out-of-area contact. Go to the meeting place.">' + esc(S.cm.missed) + '</textarea>' +
         '<div class="actions">' + btn('Add a device', 'cm-add', 'button') + btn('Add a contact', 'cm-addc', 'secondary') + btn('Copy as text', 'cm-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Clear', 'cm-clear', 'secondary') + '</div><p id="cm-msg" class="muted" role="status"></p></div>' +
         '<section class="gblock"><h2>Devices</h2><div id="cm-devs"></div></section><section class="gblock"><h2>Contacts</h2><div id="cm-cons"></div></section><div id="cm-print" class="printonly"></div>');
+    }
+    if (t === 'listen') {
+      lsInit();
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick short listening times so a radio does not drain its batteries. Use the same times every day so neighbours know when to listen. The numbers are typical, so change them to match your radio. It saves only on this device.</p>' +
+        '<label for="ls-w">Radio power in watts (a small radio is often about 1 W; check the label)</label><input id="ls-w" data-ls="w" type="number" inputmode="decimal" step="any" min="0" value="' + esc(S.ls.w) + '">' +
+        '<label for="ls-aa">Energy in one AA cell, in watt-hours (typical alkaline is about 3.5)</label><input id="ls-aa" data-ls="aa" type="number" inputmode="decimal" step="any" min="0.1" value="' + esc(S.ls.aa) + '">' +
+        '<label for="ls-cells">AA cells in the radio</label><input id="ls-cells" data-ls="cells" type="number" inputmode="numeric" step="1" min="1" value="' + esc(S.ls.cells) + '">' +
+        '<div class="actions">' + btn('Add a listening time', 'ls-add', 'button') + btn('Copy as text', 'ls-copy', 'secondary') + btn('Print schedule and log', 'stk-print', 'secondary') + btn('Reset', 'ls-clear', 'secondary') + '</div><p id="ls-msg" class="muted" role="status"></p></div>' +
+        '<section class="gblock"><h2>Listening times</h2><div id="ls-rows"></div></section><div id="ls-out"></div><div id="ls-print" class="printonly"></div>');
+    }
+    if (t === 'cpower') {
+      cwInit();
+      var cwn = function (id, key, label, val, step, min) { return '<label for="' + id + '">' + label + '</label><input id="' + id + '" data-cw="' + key + '" type="number" inputmode="decimal" step="' + (step || 'any') + '" min="' + (min === undefined ? 0 : min) + '" value="' + esc(val) + '">'; };
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">List what you need to keep powered to reach people: phones, lanterns, radios, a satellite messenger or phone. The tool adds up the daily energy, then shows how many days your batteries last and how many solar panels you need. The numbers are typical. Change every one to match your gear. It saves only on this device.</p>' +
+        cwn('cw-days', 'days', 'Days to plan for', S.cw.days, 1, 1) + cwn('cw-batt', 'battWh', 'Power station or battery, in watt-hours (0 if none)', S.cw.battWh, 'any', 0) +
+        cwn('cw-use', 'usable', 'Usable share of the battery, in percent (about 80 for lithium iron phosphate)', S.cw.usable, 1, 1) + cwn('cw-banks', 'banks', 'Power banks (number)', S.cw.banks, 1, 0) + cwn('cw-bwh', 'bankWh', 'Energy in one power bank, in watt-hours (20,000 mAh is about 74)', S.cw.bankWh, 'any', 0) +
+        cwn('cw-pn', 'panels', 'Solar panels (number)', S.cw.panels, 1, 0) + cwn('cw-pw', 'panelW', 'Watts of one panel', S.cw.panelW, 'any', 0) + cwn('cw-sun', 'sun', 'Sun hours a day in your worst month (2 to 3 in a dull winter)', S.cw.sun, 'any', 0) +
+        '<div class="actions">' + btn('Add a device', 'cw-add', 'button') + btn('Copy the result', 'cw-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Reset', 'cw-clear', 'secondary') + '</div><p id="cw-msg" class="muted" role="status"></p></div>' +
+        '<section class="gblock"><h2>What to power</h2><p class="muted">Number of units, and watt-hours each uses in a day. A phone charge is about 15 Wh. A 3 W lantern for 4 hours is 12 Wh.</p><div id="cw-rows"></div></section><div id="cw-out"></div><div id="cw-print" class="printonly"></div>');
     }
     if (t === 'dogp') {
       var DT = window.LOAD_TRACK; if (!DT) return toolFrame(t, '<div class="panel"><p>The dog profiles could not load.</p></div>');
@@ -817,6 +838,101 @@ window.LSX = function (A) {
     return true;
   }
 
+  /* ---------- radio listening schedule and power budget for communications ---------- */
+  function numv(v, d) { var n = Number(v); return isFinite(n) && v !== '' && v !== null ? n : d; }
+  function lsInit() {
+    S.ls = S.ls || {};
+    if (S.ls.w === undefined) S.ls.w = 1; if (S.ls.aa === undefined) S.ls.aa = 3.5; if (S.ls.cells === undefined) S.ls.cells = 3;
+    if (!Array.isArray(S.ls.times)) S.ls.times = [{ t: '07:00', m: 10, what: 'News and warnings' }, { t: '12:00', m: 10, what: 'Weather and road news' }, { t: '18:00', m: 10, what: 'Evening news and check-in' }];
+    S.ls.times = S.ls.times.slice(0, 8);
+  }
+  function lsCalc() {
+    var L = S.ls, mins = 0, w = Math.max(0, numv(L.w, 1)), aa = Math.max(0.1, numv(L.aa, 3.5)), cells = Math.max(1, Math.round(numv(L.cells, 3)));
+    L.times.forEach(function (x) { mins += Math.max(0, numv(x.m, 0)); });
+    var whDay = w * mins / 60, wh30 = whDay * 30, set = cells * aa;
+    return { mins: mins, whDay: whDay, wh30: wh30, cells30: Math.ceil(wh30 / aa - 1e-9), setDays: whDay > 0 ? Math.floor(set / whDay) : 0, set: set, cells: cells };
+  }
+  function lsOut() {
+    var c = lsCalc();
+    setOut('ls-out', '<div class="kpis">' + kpi('Listening a day', nf(c.mins, 0) + ' min') + kpi('Energy a day', nf(Math.round(c.whDay * 100) / 100, 2) + ' Wh') + kpi('AA cells in 30 days', String(c.cells30)) + kpi('One set lasts', c.whDay > 0 ? 'about ' + nf(c.setDays, 0) + ' days' : 'not used') + '</div>' +
+      '<div class="notice">A set of ' + c.cells + ' AA cells holds about ' + nf(Math.round(c.set * 10) / 10, 1) + ' Wh. Radios also draw power when only switched on, and cold weather cuts battery life, so keep spare cells. These are planning numbers. Check your radio and your batteries.</div>');
+    var p = '<h2>LOAD Survival: radio listening schedule</h2>';
+    S.ls.times.forEach(function (x) { p += '<p>' + esc(x.t || '--:--') + ' for ' + esc(String(numv(x.m, 0))) + ' minutes: ' + esc(x.what || '') + '</p>'; });
+    p += '<p>Use the same times every day. Switch the radio off between times.</p><h2>Log</h2><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%"><tr><th>Date</th><th>Time</th><th>What I heard</th><th>Who I told</th></tr>';
+    for (var i = 0; i < 12; i++) p += '<tr><td>&nbsp;</td><td></td><td></td><td></td></tr>';
+    setOut('ls-print', p + '</table>');
+  }
+  function lsRows() {
+    var h = '';
+    S.ls.times.forEach(function (x, i) {
+      h += '<div class="panel stkpanel"><label for="ls-t' + i + '">Time ' + (i + 1) + '</label><input id="ls-t' + i + '" data-ls="t|' + i + '|t" type="time" value="' + esc(x.t || '') + '">' +
+        '<label for="ls-m' + i + '">Minutes to listen</label><input id="ls-m' + i + '" data-ls="t|' + i + '|m" type="number" inputmode="numeric" step="1" min="0" value="' + esc(String(numv(x.m, 10))) + '">' +
+        '<label for="ls-x' + i + '">What to listen for</label><input id="ls-x' + i + '" data-ls="t|' + i + '|what" type="text" value="' + esc(x.what || '') + '"><div class="actions">' + btn('Remove this time', 'ls-rm', 'secondary').replace('<button', '<button data-i="' + i + '"') + '</div></div>';
+    });
+    setOut('ls-rows', h || '<div class="notice">No listening times. Tap "Add a listening time".</div>');
+    var a = document.querySelector('[data-action="ls-add"]'); if (a) a.disabled = S.ls.times.length >= 8;
+  }
+  function lsRender() { lsInit(); lsRows(); lsOut(); }
+  function lsText() {
+    var c = lsCalc(), t = 'LOAD Survival: radio listening schedule\n\n';
+    S.ls.times.forEach(function (x) { t += (x.t || '--:--') + ' for ' + numv(x.m, 0) + ' minutes: ' + (x.what || '') + '\n'; });
+    return t + '\nListening a day: ' + nf(c.mins, 0) + ' min. Energy a day: ' + nf(Math.round(c.whDay * 100) / 100, 2) + ' Wh. AA cells in 30 days: ' + c.cells30 + '. One set of ' + c.cells + ' cells lasts about ' + (c.whDay > 0 ? nf(c.setDays, 0) + ' days' : 'n/a') + '.\n';
+  }
+  function lsHandle(t) {
+    lsInit(); var k = t.dataset.ls, p = k.split('|');
+    if (k === 'w' || k === 'aa' || k === 'cells') { S.ls[k] = t.value; }
+    else if (p[0] === 't' && S.ls.times[Number(p[1])]) { S.ls.times[Number(p[1])][p[2]] = t.value; }
+    put(); lsOut(); return true;
+  }
+  function cwInit() {
+    S.cw = S.cw || {};
+    var D = { days: 14, battWh: 500, usable: 80, banks: 2, bankWh: 74, panels: 1, panelW: 100, sun: 3 };
+    Object.keys(D).forEach(function (k) { if (S.cw[k] === undefined) S.cw[k] = D[k]; });
+    if (!Array.isArray(S.cw.rows)) S.cw.rows = [{ n: 'Phones', q: 2, wh: 15 }, { n: 'Battery lanterns', q: 2, wh: 12 }, { n: 'Radio', q: 1, wh: 5 }, { n: 'Walkie-talkie charging', q: 2, wh: 5 }, { n: 'Meshtastic node', q: 1, wh: 3 }, { n: 'Satellite messenger', q: 1, wh: 3 }];
+    S.cw.rows = S.cw.rows.slice(0, 14);
+  }
+  function cwCalc() {
+    var C = S.cw, day = 0, d = Math.max(1, Math.round(numv(C.days, 14)));
+    C.rows.forEach(function (r) { day += Math.max(0, numv(r.q, 0)) * Math.max(0, numv(r.wh, 0)); });
+    var stored = Math.max(0, numv(C.battWh, 0)) * Math.min(100, Math.max(1, numv(C.usable, 80))) / 100 + Math.max(0, numv(C.banks, 0)) * Math.max(0, numv(C.bankWh, 0)) * 0.8;
+    var onePanel = Math.max(0, numv(C.panelW, 100)) * Math.max(0, numv(C.sun, 3)) * 0.7, solar = Math.max(0, numv(C.panels, 0)) * onePanel;
+    var need = day * d, have = stored + solar * d, gap = day - solar;
+    return { day: day, d: d, stored: stored, onePanel: onePanel, solar: solar, need: need, have: have, ok: have >= need, storedDays: day > 0 ? stored / day : 0, extraPanels: gap > 0 && onePanel > 0 ? Math.ceil(gap / onePanel - 1e-9) : 0, withSolarDays: gap > 0 ? stored / gap : Infinity };
+  }
+  function cwOut() {
+    var c = cwCalc(), h = '<div class="kpis">' + kpi('Energy a day', nf(Math.round(c.day), 0) + ' Wh') + kpi('Stored energy', nf(Math.round(c.stored), 0) + ' Wh') + kpi('Days on stored energy', c.day > 0 ? nf(Math.round(c.storedDays * 10) / 10, 1) : 'n/a') + kpi('Solar a day', nf(Math.round(c.solar), 0) + ' Wh') + '</div>';
+    h += '<div class="notice">' + (c.day <= 0 ? 'Add a device to see the result.' :
+      (c.solar >= c.day ? 'On a typical day your panels make about ' + nf(Math.round(c.solar), 0) + ' Wh, which covers the ' + nf(Math.round(c.day), 0) + ' Wh you use. The stored energy is your reserve for cloudy days.' :
+        'Your panels make about ' + nf(Math.round(c.solar), 0) + ' Wh a day, less than the ' + nf(Math.round(c.day), 0) + ' Wh you use. With the stored energy you last about ' + (isFinite(c.withSolarDays) ? nf(Math.round(c.withSolarDays * 10) / 10, 1) : 'a long time') + ' days. ' + (c.extraPanels ? 'About ' + c.extraPanels + ' more panel' + (c.extraPanels === 1 ? '' : 's') + ' of ' + nf(numv(S.cw.panelW, 100), 0) + ' W would cover your daily use.' : '')) +
+      ' For the ' + c.d + ' days you chose, you need ' + nf(Math.round(c.need), 0) + ' Wh and have ' + nf(Math.round(c.have), 0) + ' Wh counting the solar: ' + (c.ok ? 'enough.' : 'not enough.')) + '</div>' +
+      '<div class="notice">Planning numbers only. Panels make less in cloud, shade and cold, and batteries lose some energy when charging. The 70 percent figure is a typical real output for a panel. Test your gear in your drill.</div>';
+    setOut('cw-out', h);
+    var p = '<h2>LOAD Survival: power budget for communications</h2>';
+    S.cw.rows.forEach(function (r) { p += '<p>' + esc(r.n || '') + ': ' + esc(String(numv(r.q, 0))) + ' x ' + esc(String(numv(r.wh, 0))) + ' Wh = ' + nf(numv(r.q, 0) * numv(r.wh, 0), 1) + ' Wh a day</p>'; });
+    setOut('cw-print', p + '<p><b>Total ' + nf(Math.round(c.day), 0) + ' Wh a day. Stored ' + nf(Math.round(c.stored), 0) + ' Wh. Solar ' + nf(Math.round(c.solar), 0) + ' Wh a day. ' + (c.ok ? 'Enough' : 'Not enough') + ' for ' + c.d + ' days.</b></p>');
+  }
+  function cwRows() {
+    var h = '';
+    S.cw.rows.forEach(function (r, i) {
+      h += '<div class="panel stkpanel"><label for="cw-n' + i + '">Device ' + (i + 1) + '</label><input id="cw-n' + i + '" data-cw="r|' + i + '|n" type="text" value="' + esc(r.n || '') + '">' +
+        '<label for="cw-q' + i + '">Number of units</label><input id="cw-q' + i + '" data-cw="r|' + i + '|q" type="number" inputmode="decimal" step="any" min="0" value="' + esc(String(numv(r.q, 1))) + '">' +
+        '<label for="cw-w' + i + '">Watt-hours each uses in a day</label><input id="cw-w' + i + '" data-cw="r|' + i + '|wh" type="number" inputmode="decimal" step="any" min="0" value="' + esc(String(numv(r.wh, 0))) + '"><div class="actions">' + btn('Remove this device', 'cw-rm', 'secondary').replace('<button', '<button data-i="' + i + '"') + '</div></div>';
+    });
+    setOut('cw-rows', h || '<div class="notice">No devices. Tap "Add a device".</div>');
+    var a = document.querySelector('[data-action="cw-add"]'); if (a) a.disabled = S.cw.rows.length >= 14;
+  }
+  function cwRender() { cwInit(); cwRows(); cwOut(); }
+  function cwText() {
+    var c = cwCalc(), t = 'LOAD Survival: power budget for communications\n\n';
+    S.cw.rows.forEach(function (r) { t += r.n + ': ' + numv(r.q, 0) + ' x ' + numv(r.wh, 0) + ' Wh = ' + nf(numv(r.q, 0) * numv(r.wh, 0), 1) + ' Wh a day\n'; });
+    return t + '\nTotal: ' + nf(Math.round(c.day), 0) + ' Wh a day. Stored energy: ' + nf(Math.round(c.stored), 0) + ' Wh (' + (c.day > 0 ? nf(Math.round(c.storedDays * 10) / 10, 1) : 'n/a') + ' days on stored energy). Solar: ' + nf(Math.round(c.solar), 0) + ' Wh a day. For ' + c.d + ' days you need ' + nf(Math.round(c.need), 0) + ' Wh and have ' + nf(Math.round(c.have), 0) + ' Wh: ' + (c.ok ? 'enough' : 'not enough') + '.\n';
+  }
+  function cwHandle(t) {
+    cwInit(); var k = t.dataset.cw, p = k.split('|');
+    if (p[0] === 'r' && S.cw.rows[Number(p[1])]) { S.cw.rows[Number(p[1])][p[2]] = t.value; } else { S.cw[k] = t.value; }
+    put(); cwOut(); return true;
+  }
+
   /* ---------- plan ---------- */
   var PLAN = [
     ['members', 'Household members', 'Names, ages, special needs'],
@@ -979,6 +1095,14 @@ window.LSX = function (A) {
     'plan-print': function () { try { window.print(); } catch (e) {} },
     'plan-copy': function () { copy(planText()); },
     'plan-clear': function () { S.plan = {}; put(); A.render(); },
+    'ls-add': function () { lsInit(); if (S.ls.times.length >= 8) return; S.ls.times.push({ t: '', m: 10, what: '' }); put(); lsRender(); },
+    'ls-rm': function (x) { lsInit(); S.ls.times.splice(Number(x.dataset.i), 1); put(); lsRender(); },
+    'ls-copy': function () { lsInit(); copy(lsText()); setOut('ls-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'ls-clear': function () { var ok = true; try { ok = window.confirm('Reset the listening schedule on this device?'); } catch (e) {} if (!ok) return; S.ls = null; lsInit(); put(); A.render(); },
+    'cw-add': function () { cwInit(); if (S.cw.rows.length >= 14) return; S.cw.rows.push({ n: '', q: 1, wh: 5 }); put(); cwRender(); },
+    'cw-rm': function (x) { cwInit(); S.cw.rows.splice(Number(x.dataset.i), 1); put(); cwRender(); },
+    'cw-copy': function () { cwInit(); copy(cwText()); setOut('cw-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'cw-clear': function () { var ok = true; try { ok = window.confirm('Reset the power budget on this device?'); } catch (e) {} if (!ok) return; S.cw = null; cwInit(); put(); A.render(); },
     'cm-add': function () { cmInit(); if (S.cm.devices.length >= 12) return; S.cm.devices.push({ type: CM_TYPES[0], model: '', where: '', end: '', tested: '', chan: '' }); put(); cmRender(); },
     'cm-rm': function (x) { cmInit(); S.cm.devices.splice(Number(x.dataset.i), 1); put(); cmRender(); },
     'cm-addc': function () { cmInit(); if (S.cm.contacts.length >= 8) return; S.cm.contacts.push({ n: '', p: '' }); put(); cmRender(); },
@@ -1420,7 +1544,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'comms') cmRender(); else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'comms') cmRender(); else if (t === 'listen') lsRender(); else if (t === 'cpower') cwRender(); else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -1440,6 +1564,8 @@ window.LSX = function (A) {
     if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (t.dataset && t.dataset.cm && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return cmHandle(t);
+    if (t.dataset && t.dataset.ls && t.tagName === 'INPUT') return lsHandle(t);
+    if (t.dataset && t.dataset.cw && t.tagName === 'INPUT') return cwHandle(t);
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id.indexOf('pn-') === 0 && id !== 'pn-pre') { calcPantry(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
