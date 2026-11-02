@@ -2,35 +2,39 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked
    and the Not confirmed list says what was and was not found. This is not medical advice. Call the local emergency number for an emergency. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var NOTMED = 'This guide is general information. It is not medical advice and does not replace your doctor, midwife or emergency services.';
   var SRC = {
-    hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her), cited to us, not checked', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
-    mod: ['March of Dimes: know when to seek medical care during pregnancy and after giving birth, cited to us, not checked', 'https://www.marchofdimes.org/find-support/blog/know-when-to-seek-medical-care-during-pregnancy-and-after-giving-birth'],
-    mayoBleed: ['Mayo Clinic: bleeding during pregnancy, when to see a doctor, cited to us, not checked', 'https://www.mayoclinic.org/symptoms/bleeding-during-pregnancy/basics/when-to-see-doctor/sym-20050636'],
-    acogEctopic: ['ACOG: ectopic pregnancy, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/ectopic-pregnancy'],
-    nhsPre: ['NHS: pre-eclampsia symptoms, cited to us, not checked', 'https://www.nhs.uk/conditions/pre-eclampsia/symptoms/'],
-    acogPre: ['ACOG: preeclampsia and high blood pressure during pregnancy, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/preeclampsia-and-high-blood-pressure-during-pregnancy'],
-    rfm: ['NHS England North West: reduced fetal movement guideline (2019), cited to us, not checked', 'https://www.england.nhs.uk/north-west/wp-content/uploads/sites/48/2019/09/Reduced-Fetal-Movement-Guidelines.pdf'],
-    acogPreterm: ['ACOG: preterm labor and birth, cited to us, not checked', 'https://www.acog.org/womens-health/faqs/preterm-labor-and-birth'],
-    mayoLabor: ['Mayo Clinic: signs of labor, cited to us, not checked', 'https://www.mayoclinic.org/healthy-lifestyle/labor-and-delivery/in-depth/signs-of-labor/art-20046184'],
-    nhsVit: ['NHS: pregnancy vitamins and supplements, cited to us, not checked', 'https://www.nhs.uk/pregnancy/keeping-well/pregnancy-vitamins-and-supplements/'],
-    cdcWater: ['CDC: drinking water advisories, cited to us, not checked', 'https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html'],
-    cdcInfant: ['CDC: infant feeding in emergencies, special considerations, cited to us, not checked', 'https://www.cdc.gov/infant-feeding-emergencies-toolkit/php/special-considerations.html'],
-    cdcPregDisaster: ['CDC (archived): safety messages for pregnant, postpartum and breastfeeding women in disasters, cited to us, not checked', 'https://archive.cdc.gov/www_cdc_gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
-    cdcHeatPreg: ['CDC: five steps for heat and pregnancy (PDF), cited to us, not checked', 'https://cdc.gov/heat-health/media/pdfs/2025/09/Five-steps-for-heat-and-pregnancy-H.pdf'],
-    cdph: ['California Department of Public Health: safe pregnancies in extreme heat, cited to us, not checked', 'https://www.cdph.ca.gov/Programs/CFH/DMCAH/Pages/Health-Topics/Safe-Pregnancies-in-Extreme-Heat.aspx'],
-    txChildrens: ['Texas Childrens: disaster preparedness during pregnancy and postpartum, cited to us, not checked', 'https://www.texaschildrens.org/content/disaster-preparedness-during-pregnancy-and-postpartum'],
-    snsGravida: ['DN: pregnant women are asked to call SNS 24 before obstetric emergency rooms (news report, 2026), cited to us, not checked', 'https://www.dn.pt/sociedade/gravidas-de-lisboa-e-vale-do-tejo-passam-a-ter-de-ligar-para-o-sns24-antes-de-ir-as-urgencias'],
-    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF), cited to us, not checked', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf'],
-    hud: ['HUD: older adult emergency preparedness checklist (PDF), cited to us, not checked', 'https://www.hud.gov/sites/dfiles/HH/documents/HUD_OLHCHH_Older_Adult-Emergency_Preparedness_Checklist.pdf'],
-    cdcOlder: ['CDC: emergency preparedness concerns for older adults (PDF), cited to us, not checked', 'https://tools.cdc.gov/podcasts/media/pdf/HealthyAgingDisasterPrep.pdf'],
-    redCrossOlder: ['American Red Cross: closing the gaps for older adults in disasters (white paper, 2020), cited to us, not checked', 'https://www.redcross.org/content/dam/redcross/training-services/scientific-advisory-council/253901-03%20BRCR-Older%20Adults%20Whitepaper%20FINAL%201.23.2020.pdf'],
-    cdcCog: ['CDC: emergency preparedness for people with cognitive impairment (brief), cited to us, not checked', 'https://www.cdc.gov/aging-programs/media/pdfs/2024/06/emer-prep-cognitive-impairment-brief-july-2015.pdf'],
-    pmcWeather: ['PubMed Central: actions to reduce risk of older adults during extreme weather events, cited to us, not checked', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6846451/'],
-    nhsHypo: ['NHS: hypothermia, cited to us, not checked', 'https://www.nhs.uk/conditions/hypothermia/'],
-    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021), cited to us, not checked', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
-    dgsHeat: ['RTP: DGS warns of extra care in the coming hot days (news report), cited to us, not checked', 'https://www.rtp.pt/noticias/pais/dgs-alerta-para-necessidade-de-cuidados-extra-nos-proximos-dias-de-calor_n1665186']
+    whoLcg: ['WHO: Introduction to the WHO Labour Care Guide, slidedoc (file dated 14 Dec 2020, version 1.1). The owner supplied the file and we read all 23 pages. The web address is the WHO page for the Labour Care Guide materials, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
+    whoLcgMan: ['WHO: Labour Care Guide user manual (ISBN 978-92-4-001756-6, 2020), supplied by the owner and opened. The web address is the WHO page for the manual, not checked', 'https://www.who.int/publications-detail-redirect/who-labour-care-guide-user-s-manual'],
+    nhsLabour: ['NHS 111 Wales: signs and stages of labour (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://111.wales.nhs.uk/livewell/pregnancy/signsandstageslabour'],
+    nhsSurrey: ['Surrey and Sussex NHS maternity service: signs of labour and when to contact your midwife (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.surreyandsussex.nhs.uk/our-services/womens-services/maternity-services/giving-birth-sash/signs-labour-and-when-contact-your-midwife'],
+    hearher: ['CDC: Urgent Maternal Warning Signs and Symptoms (Hear Her) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/hearher/maternal-warning-signs/index.html'],
+    mod: ['March of Dimes: know when to seek medical care during pregnancy and after giving birth (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.marchofdimes.org/find-support/blog/know-when-to-seek-medical-care-during-pregnancy-and-after-giving-birth'],
+    mayoBleed: ['Mayo Clinic: bleeding during pregnancy, when to see a doctor (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.mayoclinic.org/symptoms/bleeding-during-pregnancy/basics/when-to-see-doctor/sym-20050636'],
+    acogEctopic: ['ACOG: ectopic pregnancy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/ectopic-pregnancy'],
+    nhsPre: ['NHS: pre-eclampsia symptoms (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/pre-eclampsia/symptoms/'],
+    acogPre: ['ACOG: preeclampsia and high blood pressure during pregnancy (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/preeclampsia-and-high-blood-pressure-during-pregnancy'],
+    rfm: ['NHS England North West: reduced fetal movement guideline (2019) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.england.nhs.uk/north-west/wp-content/uploads/sites/48/2019/09/Reduced-Fetal-Movement-Guidelines.pdf'],
+    acogPreterm: ['ACOG: preterm labor and birth (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.acog.org/womens-health/faqs/preterm-labor-and-birth'],
+    mayoLabor: ['Mayo Clinic: signs of labor (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.mayoclinic.org/healthy-lifestyle/labor-and-delivery/in-depth/signs-of-labor/art-20046184'],
+    nhsVit: ['NHS: pregnancy vitamins and supplements (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/pregnancy/keeping-well/pregnancy-vitamins-and-supplements/'],
+    cdcWater: ['CDC: drinking water advisories (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html'],
+    cdcInfant: ['CDC: infant feeding in emergencies, special considerations (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/infant-feeding-emergencies-toolkit/php/special-considerations.html'],
+    cdcPregDisaster: ['CDC (archived): safety messages for pregnant, postpartum and breastfeeding women in disasters (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://archive.cdc.gov/www_cdc_gov/reproductive-health/emergency-preparation-response/safety-messages.html'],
+    cdcHeatPreg: ['CDC: five steps for heat and pregnancy (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://cdc.gov/heat-health/media/pdfs/2025/09/Five-steps-for-heat-and-pregnancy-H.pdf'],
+    cdph: ['California Department of Public Health: safe pregnancies in extreme heat (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdph.ca.gov/Programs/CFH/DMCAH/Pages/Health-Topics/Safe-Pregnancies-in-Extreme-Heat.aspx'],
+    txChildrens: ['Texas Childrens: disaster preparedness during pregnancy and postpartum (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.texaschildrens.org/content/disaster-preparedness-during-pregnancy-and-postpartum'],
+    snsGravida: ['DN: pregnant women are asked to call SNS 24 before obstetric emergency rooms (news report, 2026) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.dn.pt/sociedade/gravidas-de-lisboa-e-vale-do-tejo-passam-a-ter-de-ligar-para-o-sns24-antes-de-ir-as-urgencias'],
+    readyOlder: ['Ready.gov: disaster preparedness guide for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ready.gov/sites/default/files/2023-09/ready-gov_disaster-preparedness-guide-for-older-adults.pdf'],
+    hud: ['HUD: older adult emergency preparedness checklist (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.hud.gov/sites/dfiles/HH/documents/HUD_OLHCHH_Older_Adult-Emergency_Preparedness_Checklist.pdf'],
+    cdcOlder: ['CDC: emergency preparedness concerns for older adults (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://tools.cdc.gov/podcasts/media/pdf/HealthyAgingDisasterPrep.pdf'],
+    redCrossOlder: ['American Red Cross: closing the gaps for older adults in disasters (white paper, 2020) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.redcross.org/content/dam/redcross/training-services/scientific-advisory-council/253901-03%20BRCR-Older%20Adults%20Whitepaper%20FINAL%201.23.2020.pdf'],
+    cdcCog: ['CDC: emergency preparedness for people with cognitive impairment (brief) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/aging-programs/media/pdfs/2024/06/emer-prep-cognitive-impairment-brief-july-2015.pdf'],
+    pmcWeather: ['PubMed Central: actions to reduce risk of older adults during extreme weather events (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6846451/'],
+    nhsHypo: ['NHS: hypothermia (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nhs.uk/conditions/hypothermia/'],
+    dgsCold: ['Observador: DGS recommends measures to prevent the effects of cold (news report, 2021) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://observador.pt/2021/01/06/dgs-recomenda-medidas-para-prevenir-efeitos-do-frio-e-admite-repercussoes-na-mortalidade/'],
+    dgsHeat: ['RTP: DGS warns of extra care in the coming hot days (news report) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.rtp.pt/noticias/pais/dgs-alerta-para-necessidade-de-cuidados-extra-nos-proximos-dias-de-calor_n1665186']
   };
   var NUM = 'Emergency: 911 (US), 112 (Portugal), 999 (UK).';
 
@@ -218,10 +222,36 @@
       'IF BIRTH CANNOT BE AVOIDED (general guidance, not checked against a named source): stay calm and stay with the mother.',
       'Wash your hands if you can. Put clean towels or sheets under her. She can lie on her back with her knees bent, or on her side.',
       'Let the baby come by itself. If the head comes out first, support it gently. Do not pull.',
-      'After the birth, dry the baby with a clean towel. Put the baby skin to skin on the mother chest. Cover both with a blanket and cover the baby head.',
-      'Do not pull the cord. Do not cut the cord unless the operator tells you how.',
+      'After the birth, dry the baby with a clean towel. Put the baby skin to skin on the mother chest. Cover both with a blanket and cover the baby head. (WHO recommends skin to skin for the first hour for newborns without complications, and a hat.)',
+      'Do not pull the cord. Do not cut the cord unless the operator tells you how. (WHO recommends that the cord is not clamped earlier than 1 minute after birth, when trained care is present.)',
       'The afterbirth usually comes within about 30 minutes. Do not pull on the cord to help it.',
       'Check the mother for heavy bleeding. Soaking one or more pads in an hour is an emergency.'
+    ],
+    sections: [
+      { h: 'What good labour care looks like (WHO)', items: [
+        'WHO says labour and birth care should be built around the woman, and no treatment should be given without a clear medical reason.',
+        'Care should be respectful. It includes a companion with her in labour, medicine or other ways to ease pain, being offered drinks, and being encouraged to move around.',
+        'Carers explain what they are doing and what they find, in simple words, and plan the next step with her and her companion.',
+        'Carers check the mother (pulse, blood pressure, temperature, urine), the baby (heart rate and the waters), and the labour (how often and how long the contractions last). Active labour is counted from the neck of the womb being open 5 cm.',
+        'This WHO tool is for trained health workers caring for women with low-risk pregnancies. It is not a guide to delivering a baby at home. Women with higher risk may need more checks and care.'
+      ] },
+      { h: 'Newborn and mother after the birth (WHO manual, opened)', items: [
+        'Skin to skin: healthy newborns should stay skin to skin with the mother for the first hour, to prevent chilling and help feeding.',
+        'Warmth: dress the baby in one to two layers more than an adult would wear, and a hat. Keep mother and baby together in a warm, clean room.',
+        'Feeding: put the baby to the breast as soon as the baby and mother are ready.',
+        'Mouth and nose: WHO says do not routinely suction the mouth and nose if the waters were clear and the baby starts to breathe alone.',
+        'Cord: WHO recommends waiting at least 1 minute before the cord is clamped.',
+        'Bathing: delay the first bath for 24 hours, or at least 6 hours if that is not possible.',
+        'In labour, for women at low risk, WHO recommends drinks and food, an upright position and moving around. Massage, warm packs and relaxation are options for pain.',
+        'These are WHO recommendations for trained care. They are not step-by-step instructions for delivering a baby without help.'
+      ] },
+      { h: 'When to call your midwife (NHS pages, given to us)', items: [
+        'Signs labour may be starting: tightenings or contractions, a show (a pink, slightly bloody mucus), backache, an urge to use the toilet, and the waters breaking.',
+        'Call your midwife or maternity unit if the waters break, even with no contractions. Also call for vaginal bleeding, if the baby moves less than usual, or if you think you are in labour before 37 weeks.',
+        'Many units ask you to call when contractions are regular and last about 60 seconds, about every 5 minutes. Units differ, so follow your own unit rule.',
+        'It is fine to phone for advice. Maternity teams would rather you call than wait. A pink, slightly bloody show is normal. Heavier bleeding needs an immediate call.',
+        'United Kingdom: if you cannot reach your midwife or maternity triage, call 111 for advice. For heavy bleeding, fits, a cord you can see or feel, or a baby coming now, call 999.'
+      ] }
     ],
     warn: [
       'If the baby is not breathing, follow the emergency operator instructions. They can guide you step by step.',
@@ -230,9 +260,14 @@
     ],
     tip: ['Keep clean towels, a blanket, a hat for the baby and a clean plastic sheet in the bag from 36 weeks.', 'Write the address and cross streets on a card for the operator.'],
     after: ['Keep the baby on the mother chest and keep them warm until help arrives.', 'Tell the medical staff the exact time of birth.'],
-    sources: [SRC.mayoLabor, SRC.hearher, SRC.acogPreterm],
+    sources: [SRC.whoLcg, SRC.whoLcgMan, SRC.nhsLabour, SRC.nhsSurrey, SRC.mayoLabor, SRC.hearher, SRC.acogPreterm],
     unconfirmed: [NOTE,
       'The signs of labour match Mayo Clinic text quoted to us.',
+      'The WHO care points above match the WHO Labour Care Guide slidedoc, which we read in full (23 pages, supplied by the owner). It describes care by trained health workers. It does not say how to deliver a baby, so it changes nothing in the emergency birth steps.',
+      'The WHO Labour Care Guide user manual (ISBN 978-92-4-001756-6, 2020, 42 pages) was supplied by the owner and opened. The newborn, mother and labour-comfort points above come from its Annex 4 list of WHO recommendations. The manual is for trained health workers. It does not give steps for an unplanned birth with no helper.',
+      'The skin to skin, hat, warm layers and cord waiting lines in the emergency steps match those WHO recommendations. The rule not to cut the cord unless the operator tells you how still has no named source.',
+      'The NHS signs of labour and when to call match NHS trust and NHS 111 Wales pages as quoted to us. We did not open them. We did not find the NHS Best Start in Life guide, and we could not check the claims about green or brown waters from any page.',
+      'The UK numbers 999 and 111 are general knowledge for the UK.',
       'The emergency birth steps are general guidance. We searched for an NHS, Red Cross, Mayo Clinic or ACOG page and did not find one that gave step-by-step steps for an unplanned birth. A search summary said the usual advice is to keep the baby warm skin to skin, not to pull the cord, and to keep the mother lying down. We have not checked that against a named page. Follow the emergency operator.',
       'Soaking one or more pads in an hour as an emergency sign is from the CDC Hear Her page as quoted to us.',
       'The roughly 30 minutes for the afterbirth came from a community handout quoted to us, not an official page.',

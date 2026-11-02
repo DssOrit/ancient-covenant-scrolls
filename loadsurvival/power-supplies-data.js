@@ -2,16 +2,16 @@
    Written 29 Oct 2026 from search results. The official pages could not be opened from where this was written, so every guide is Partly checked.
    No prices are given. Prices change by place and shop. Type your own in the tools. */
 (function () {
-  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so they are cited to us, not checked by us.';
+  var NOTE = 'We read search results about these pages. We could not open the pages themselves, so each source is labelled OFFICIAL SOURCE LINKED BUT NOT OPENED or DATA UNVERIFIED.';
   var SRC = {
-    cpscGen: ['CPSC: what to know about generators and carbon monoxide (PDF), cited to us, not checked', 'https://www.cpsc.gov/s3fs-public/468-WhattoKnowGenerators_2022.pdf'],
-    cpscAlert: ['CPSC: portable generator safety alert (2017, PDF), cited to us, not checked', 'https://www.cpsc.gov/s3fs-public/Portable-Generator-Safety-Alert-2017_5123.pdf'],
-    cdcCO: ['CDC: prevent carbon monoxide poisoning, cited to us, not checked', 'https://www.cdc.gov/natural-disasters/psa-toolkit/prevent-carbon-monoxide-poisoning.html'],
-    osha: ['OSHA: lithium-ion battery safety (SHIB 011819), cited to us, not checked', 'https://www.osha.gov/sites/default/files/publications/SHIB011819.pdf'],
-    nfpa: ['NFPA: lithium-ion batteries in your home, cited to us, not checked', 'https://www.nfpa.org/-/media/Project/Storefront/Catalog/Files/Fire-Prevention-Week/2025/FPW25_10minutelessonplan.pdf'],
-    recalls: ['CPSC: recalls and warnings for power banks (for example 2025 Anker recall), cited to us, not checked', 'https://www.cpsc.gov/Recalls/2025/More-than-One-Million-Anker-Power-Banks-Recalled-Due-to-Fire-and-Burn-Hazards-Manufactured-by-Anker-Innovations'],
-    cpscStorm: ['CPSC: winter storms, carbon monoxide risks and fires during power outages (2026), cited to us, not checked', 'https://www.cpsc.gov/Newsroom/News-Releases/2026/Winter-Storms-Arent-Over-CPSC-Warns-of-Deadly-Carbon-Monoxide-Risks-and-Fires-During-Power-Outages'],
-    ptGen: ['RTP: man dies of carbon monoxide poisoning from a generator in Leiria (news report, 2026), cited to us, not checked', 'https://www.rtp.pt/noticias/especiais/homem-morre-de-intoxicacao-associada-a-gerador_e1714915']
+    cpscGen: ['CPSC: what to know about generators and carbon monoxide (PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cpsc.gov/s3fs-public/468-WhattoKnowGenerators_2022.pdf'],
+    cpscAlert: ['CPSC: portable generator safety alert (2017, PDF) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cpsc.gov/s3fs-public/Portable-Generator-Safety-Alert-2017_5123.pdf'],
+    cdcCO: ['CDC: prevent carbon monoxide poisoning (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/natural-disasters/psa-toolkit/prevent-carbon-monoxide-poisoning.html'],
+    osha: ['OSHA: lithium-ion battery safety (SHIB 011819) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.osha.gov/sites/default/files/publications/SHIB011819.pdf'],
+    nfpa: ['NFPA: lithium-ion batteries in your home (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.nfpa.org/-/media/Project/Storefront/Catalog/Files/Fire-Prevention-Week/2025/FPW25_10minutelessonplan.pdf'],
+    recalls: ['CPSC: recalls and warnings for power banks (for example 2025 Anker recall) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cpsc.gov/Recalls/2025/More-than-One-Million-Anker-Power-Banks-Recalled-Due-to-Fire-and-Burn-Hazards-Manufactured-by-Anker-Innovations'],
+    cpscStorm: ['CPSC: winter storms, carbon monoxide risks and fires during power outages (2026) (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cpsc.gov/Newsroom/News-Releases/2026/Winter-Storms-Arent-Over-CPSC-Warns-of-Deadly-Carbon-Monoxide-Risks-and-Fires-During-Power-Outages'],
+    ptGen: ['RTP: man dies of carbon monoxide poisoning from a generator in Leiria (news report, 2026) (DATA UNVERIFIED: unofficial source, linked but not opened)', 'https://www.rtp.pt/noticias/especiais/homem-morre-de-intoxicacao-associada-a-gerador_e1714915']
   };
   var PHY = 'This figure is our own arithmetic from a physics fact (about 4.2 kilojoules to warm 1 litre of water by 1 degree C). It is not from a named source.';
   var G = [];

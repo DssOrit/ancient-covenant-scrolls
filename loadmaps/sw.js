@@ -1,9 +1,11 @@
 /* Load Maps service worker — offline-first app shell */
-var CACHE = 'loadmaps-v33';
+var CACHE = 'loadmaps-v35';
 var CORE = [
   'index.html',
   'app.js',
   'data.js',
+  'survival-data.js',
+  'survival.js',
   'manifest.webmanifest',
   'icon.png',
   'icon-192.png',
@@ -31,7 +33,7 @@ self.addEventListener('install', function(e){
 self.addEventListener('activate', function(e){
   e.waitUntil(
     caches.keys().then(function(keys){
-      return Promise.all(keys.map(function(k){ if(k!==CACHE) return caches.delete(k); }));
+      return Promise.all(keys.filter(function(k){ return k.indexOf('loadmaps-') === 0 && k!==CACHE; }).map(function(k){ return caches.delete(k); }));
     }).then(function(){ return self.clients.claim(); })
   );
 });

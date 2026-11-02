@@ -4,9 +4,9 @@
 (function () {
   var PDFNOTE = 'This guide follows the illustrated survival food PDF you gave us. We did not open the official pages it names.';
   var SAFE = [
-    ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (cited to us, not checked)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
-    ['FDA: selecting and serving fresh and frozen seafood safely (cited to us, not checked)', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely'],
-    ['FoodSafety.gov: safe minimum internal temperatures (cited to us, not checked)', 'https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures']
+    ['USDA FSIS: when fishing, how do I keep my catch safe to eat? (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://ask.fsis.usda.gov/article/When-fishing-how-do-I-keep-my-catch-safe-to-eat'],
+    ['FDA: selecting and serving fresh and frozen seafood safely (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-fresh-and-frozen-seafood-safely'],
+    ['FoodSafety.gov: safe minimum internal temperatures (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures']
   ];
 
   var birds = {
@@ -42,7 +42,7 @@
     ],
     tip: ['Keep gloves, a thermometer and a dedicated board in your wild food kit.', 'Bury or bin the waste away from camp.'],
     after: ['Wash the board, knife and your hands with soap and safe water.', 'Chill or cook the meat the same day.'],
-    sources: [['Home Office (home page only): the report names its Guide on Firearms Licensing Law for wild duck and goose seasons. We did not find or open the guide.', 'https://www.gov.uk/government/organisations/home-office'], ['CDC: hunters and bird flu (cited to us, not checked)', 'https://www.cdc.gov/bird-flu/risk-factors/hunters-and-bird-flu.html'], SAFE[2], ['Shooting UK: dates for UK game shooting seasons (search result)', 'https://www.shootinguk.co.uk/shooting/game-shooting/game-shooting-seasons-32229/'], ['BASC: why the extra 20 days (foreshore season)', 'https://basc.org.uk/why-the-extra-20-days']],
+    sources: [['Home Office (home page only): the report names its Guide on Firearms Licensing Law for wild duck and goose seasons. We did not find or open the guide.', 'https://www.gov.uk/government/organisations/home-office'], ['CDC: hunters and bird flu (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/bird-flu/risk-factors/hunters-and-bird-flu.html'], SAFE[2], ['Shooting UK: dates for UK game shooting seasons (search result)', 'https://www.shootinguk.co.uk/shooting/game-shooting/game-shooting-seasons-32229/'], ['BASC: why the extra 20 days (foreshore season)', 'https://basc.org.uk/why-the-extra-20-days']],
     unconfirmed: [
       PDFNOTE,
       'The 165 F (74 C) poultry temperature and the bird flu warning are from the PDF. We did not open FoodSafety.gov or the CDC page.',
@@ -131,7 +131,7 @@
     ],
     tip: ['Save the IPMA page in your phone before you go.', 'Write the date you checked in your notebook.'],
     after: ['Wash your hands and tools with soap and safe water.', 'Throw the shells away from camp.'],
-    sources: [['Food Standards Agency: shellfish classification', 'https://www.food.gov.uk/business-guidance/shellfish-classification'], ['IPMA Portugal: bivalve harvesting permissions and prohibitions (cited to us, not checked)', 'https://www.ipma.pt/en/bivalves/'], ['CDC: preventing illnesses caused by harmful algal blooms (cited to us, not checked)', 'https://www.cdc.gov/harmful-algal-blooms/prevention/index.html'], SAFE[1]],
+    sources: [['Food Standards Agency: shellfish classification', 'https://www.food.gov.uk/business-guidance/shellfish-classification'], ['IPMA Portugal: bivalve harvesting permissions and prohibitions (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.ipma.pt/en/bivalves/'], ['CDC: preventing illnesses caused by harmful algal blooms (OFFICIAL SOURCE LINKED BUT NOT OPENED)', 'https://www.cdc.gov/harmful-algal-blooms/prevention/index.html'], SAFE[1]],
     unconfirmed: [
       PDFNOTE,
       'The IPMA closures change over time. This guide is dated 28 Oct 2026 and must never be read as current.',

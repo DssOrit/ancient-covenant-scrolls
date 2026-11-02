@@ -116,12 +116,14 @@
   function band(days) { return days <= D.shortMax ? 0 : days >= D.longMin ? 2 : 1; }
   function ceil(x) { return Math.ceil(x - 1e-9); }
   /* opt: {lt: use long-term packaging, kids: number of children under 10 (eat about 60 percent)} */
+  var DIETS = { veg: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze'], pesc: ['meat', 'jerky', 'freeze'], vegan: ['tuna', 'sardine', 'salmon', 'meat', 'jerky', 'cod', 'freeze', 'pmilk', 'eggs'], gf: ['pasta', 'wheat', 'oats', 'crackers', 'cereal', 'bars', 'spice'], nf: ['pb', 'nuts', 'bars'] };
   function compute(country, people, days, opt) {
-    opt = opt || {}; var b = band(days), us = country === 'us', lt = opt.lt !== false && days >= 365;
+    opt = opt || {}; var skipIds = DIETS[opt.diet] || []; var b = band(days), us = country === 'us', uk = country === 'uk', lt = opt.lt !== false && days >= 365;
     var kids = Math.min(opt.kids || 0, people), eaters = people - kids + kids * 0.6;
     var food = [], kcal = 0, grams = 0;
     ITEMS.forEach(function (it) {
-      if ((us && it.nous) || (!us && it.nopt)) return;
+      if (((us || uk) && it.nous) || (!us && it.nopt)) return;
+      if (skipIds.indexOf(it.id) >= 0) return;
       var r = it.r[b]; if (!r) return;
       var pk = (us ? it.us : it.ptk) || it.us || it.ptk || { g: 500, u: 'pack', p: 'packs' };
       var shelf = lt && it.lt ? it.lt : it.shelf, total = r * eaters * days, perYear = r * eaters * 365;
@@ -130,9 +132,9 @@
       var packs = ceil(keep / pk.g);
       kcal += r * (it.kcal / 100); grams += keep;
       food.push({ id: it.id, cat: it.cat, name: it.en, alt: '', fav: !!it.fav, cook: !!it.cook,
-        total: total, keep: keep, packs: packs, unit: packs === 1 ? pk.u : pk.p, rotate: years, perDay: r, note: (us ? it.note : (it.ptnote || it.note)) || '', shelf: shelf });
+        total: total, keep: keep, packs: packs, unit: packs === 1 ? pk.u : pk.p, rotate: years, perDay: r, note: ((us || uk) ? it.note : (it.ptnote || it.note)) || '', shelf: shelf });
     });
-    var perDayKcal = 0; ITEMS.forEach(function (it) { if ((us && it.nous) || (!us && it.nopt)) return; if (it.r[b]) perDayKcal += it.r[b] * it.kcal / 100; });
+    var perDayKcal = 0; ITEMS.forEach(function (it) { if (((us || uk) && it.nous) || (!us && it.nopt)) return; if (skipIds.indexOf(it.id) >= 0) return; if (it.r[b]) perDayKcal += it.r[b] * it.kcal / 100; });
     /* water */
     var storeDays = Math.min(days, WATER_CAP_DAYS), litres = people * storeDays * WATER_L, gallons = people * storeDays;
     var totalGal = people * days;
@@ -154,7 +156,7 @@
       if (days < 7 && (it.id === 'fuel' || it.id === 'detergent')) q = Math.max(1, q);
       nf.push({ id: it.id, cat: it.cat, name: it.en, alt: '', q: q, unit: q === 1 ? it.u : it.p, note: it.note || '' });
     });
-    return { country: country, people: people, days: days, band: b, full: !!opt.full, food: food, water: water, nonfood: nf, perDayKcal: perDayKcal, grams: grams, eaters: eaters, longPack: lt };
+    return { diet: opt.diet || '', skipped: ITEMS.filter(function (it) { return skipIds.indexOf(it.id) >= 0; }).map(function (it) { return it.en; }), country: country, people: people, days: days, band: b, full: !!opt.full, food: food, water: water, nonfood: nf, perDayKcal: perDayKcal, grams: grams, eaters: eaters, longPack: lt };
   }
   function fmtMass(g, us) {
     if (us) { var lb = g / 453.592; if (lb >= 2000) return (Math.round(lb / 200) / 10) + ' tons'; return lb >= 2 ? (Math.round(lb * 10) / 10) + ' lb' : (Math.round(g / 28.3495)) + ' oz'; }
@@ -233,7 +235,8 @@
       'We found no Portuguese source for the shelf life of bacalhau seco, and the soaking time is common advice.',
       'We found no source for the non-food amounts (toilet paper, soap, toothpaste, bleach, gas, batteries, diapers, pads). They are planner estimates. The 8 drops of bleach per gallon is CDC advice used elsewhere in this app.',
       'The cap of 14 days of stored water follows the 2 week figure. For long plans we assume you can filter, boil or treat water. See the water guides.',
-      'Portugal: the 72 hour kit is quoted from a Portuguese news site that cites ANEPC and the EU. We did not find the ANEPC page.'
+      'Portugal: the 72 hour kit is quoted from a Portuguese news site that cites ANEPC and the EU. We did not find the ANEPC page.',
+      'United Kingdom: the planner uses the same food list and metric pack sizes as Portugal, minus Portuguese-only items such as dried salted cod. We did not check UK pack sizes, UK shops or UK government advice. Pack sizes and amounts are planner estimates. Type your own pack sizes in My stockpile tracker.'
     ]
   };
   if (window.LOAD_CORE && window.LOAD_CORE.guides) {

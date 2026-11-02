@@ -86,7 +86,10 @@ window.LSX = function (A) {
   var SMAP = window.LOAD_STATUS || {};
   function statusOf(l) {
     var m = SMAP[l.id] || {};
-    return { status: l.status || m.status || 'general', checkedOn: l.checkedOn || m.checkedOn || '', sources: l.sources || m.sources || (l.source ? [['Source linked in the lesson', l.source]] : []), unconfirmed: l.unconfirmed || m.unconfirmed || [] };
+    var unc = l.unconfirmed || m.unconfirmed;
+    if (!unc) { unc = ['General guidance written for this app.', 'This is general guidance. The figures, amounts and times in it were not checked against a named source.']; if (l.source) unc.push('A source link is listed with this guide. We have not opened it.'); }
+    if ((l.status || m.status || 'general') === 'general' && unc.length === 1) { unc = unc.concat(['The figures, amounts and times in this guide were not checked against a named source.']); if (l.source && !(l.sources || m.sources)) unc.push('A source link is listed with this guide. We have not opened it.'); }
+    return { status: l.status || m.status || 'general', checkedOn: l.checkedOn || m.checkedOn || '', sources: l.sources || m.sources || (l.source ? [['Source linked in the lesson', l.source]] : []), unconfirmed: unc };
   }
   function statusHtml(l) {
     var s = statusOf(l), name = s.status === 'checked' ? 'Checked' : s.status === 'partly' ? 'Partly checked' : 'Not confirmed';
@@ -105,14 +108,91 @@ window.LSX = function (A) {
   /* ---------- guide view ---------- */
   /* one picture panel beside each "What to do" step (panels come from window.LOAD_STEP_IMAGES[id]) */
   function panelsFor(l) { var m = window.LOAD_STEP_IMAGES && window.LOAD_STEP_IMAGES[l.id]; return m && m.length ? m : null; }
-  function doSteps(l) {
-    var steps = l.do || [], P = panelsFor(l);
-    if (!P) return ol(steps);
-    return '<ol class="stepcards">' + steps.map(function (x, i) {
-      var src = P[Math.min(i, P.length - 1)];
-      return '<li class="stepcard"><img src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span><p>' + esc(x) + '</p></div></li>';
-    }).join('') + '</ol>';
+  /* ---------- Beginner / Expert modes and step tick boxes (saved on this device only) ---------- */
+  S.steps = S.steps || {}; S.cur = S.cur || {};
+  function modeOf() { return S.mode === 'beginner' ? 'beginner' : 'expert'; }
+  function stepsDoneN(id, n) { var s = S.steps[id] || {}, c = 0, i; for (i = 0; i < n; i++) if (s[i]) c++; return c; }
+  function stepsInner(l) {
+    var steps = l.do || [], id = l.id, P = panelsFor(l), mode = modeOf(), n = steps.length;
+    if (!n) return '';
+    var cur = Math.min(Math.max(S.cur[id] || 0, 0), n - 1), done = stepsDoneN(id, n), s = S.steps[id] || {};
+    var h = '<div class="modebar noprint" role="group" aria-label="Reading mode"><button type="button" class="secondary" data-action="mode-set" data-mode="beginner" aria-pressed="' + (mode === 'beginner') + '">Beginner: one step at a time</button><button type="button" class="secondary" data-action="mode-set" data-mode="expert" aria-pressed="' + (mode === 'expert') + '">Expert: all steps</button></div>';
+    h += '<div class="stage"><b id="sprog" role="status" aria-live="polite">' + done + ' of ' + n + ' steps done</b><span class="muted">Saved on this device only</span></div><div class="progress big" aria-hidden="true"><i id="sbar" style="width:' + Math.round(done * 100 / n) + '%"></i></div>';
+    var items = steps.map(function (x, i) {
+      var cls = (mode === 'beginner' && i !== cur) ? ' bhide' : '';
+      var chk = '<label class="checkrow"><input type="checkbox" data-step="' + esc(id) + '|' + i + '"' + (s[i] ? ' checked' : '') + '><span>' + esc(x) + '</span></label>';
+      if (P) { var src = P[Math.min(i, P.length - 1)]; return '<li class="stepcard' + cls + '"><img data-viewer="1" tabindex="0" role="button" aria-label="Open step ' + (i + 1) + ' in the step viewer" src="' + esc(src) + '" alt="Step ' + (i + 1) + ' picture" loading="lazy" width="800" height="450"><div class="stepbody"><span class="stepnum">' + (i + 1) + '</span>' + chk + '</div></li>'; }
+      return '<li value="' + (i + 1) + '" class="' + cls.trim() + '">' + chk + '</li>';
+    }).join('');
+    h += '<ol class="' + (P ? 'stepcards' : 'stepsol') + (mode === 'beginner' ? ' beginner' : '') + '">' + items + '</ol>';
+    if (mode === 'beginner' && n > 1) h += '<div class="actions noprint bnav"><button type="button" class="secondary" data-action="step-prev"' + (cur === 0 ? ' disabled' : '') + '>Back</button><span class="muted bcount">' + (cur + 1) + ' of ' + n + '</span><button type="button" class="button" data-action="step-next"' + (cur === n - 1 ? ' disabled' : '') + '>Next step</button></div>';
+    h += '<div class="actions noprint"><button type="button" class="secondary" data-action="vw-open">Open step viewer</button><button type="button" class="secondary" data-action="steps-reset">Clear ticks for this guide</button></div>';
+    return h;
   }
+
+  /* ---------- full-screen step viewer: tap a picture to read one step at a time ---------- */
+  var VW = null;
+  function viewerSlides(l) {
+    var steps = l.do || [], P = panelsFor(l), slides = [], pics = (l.sections || []).filter(function (s) { return s.img; });
+    steps.forEach(function (x, i) { slides.push({ step: x, n: i + 1, img: P ? P[Math.min(i, P.length - 1)] : '', alt: P ? 'Step ' + (i + 1) + ' picture' : '', cap: '' }); });
+    pics.forEach(function (s, j) {
+      var cap = (s.items || []).join(' '), m = /^Frame (\d+)/i.exec(cap), idx = s.at ? Number(s.at) - 1 : (m ? Number(m[1]) - 1 : (pics.length === steps.length ? j : -1));
+      if (idx >= 0 && idx < slides.length && !slides[idx].img) { slides[idx].img = s.img; slides[idx].alt = s.alt || ''; slides[idx].cap = cap; }
+      else slides.push({ step: '', n: 0, img: s.img, alt: s.alt || '', cap: cap });
+    });
+    if (l.image && !P && !pics.length) slides.push({ step: '', n: 0, img: l.image, alt: 'Illustration for ' + l.title, cap: '' });
+    return slides;
+  }
+  function vwRender() {
+    var d = document.getElementById('gviewer'); if (!d || !VW) return;
+    var s = VW.slides[VW.i], n = VW.slides.length;
+    d.innerHTML = '<div class="vwbar"><b id="vwcount" role="status" aria-live="polite">' + (VW.i + 1) + ' of ' + n + '</b><button type="button" class="button" data-vw="close" aria-label="Close the step viewer">Close</button></div>' +
+      '<div class="vwbody">' + (s.img ? '<img class="vwimg" src="' + esc(s.img) + '" alt="' + esc(s.alt) + '">' : '') +
+      (s.step ? '<p class="vwstep">' + esc(s.step) + '</p>' : '') + (s.cap ? '<p class="vwcap">' + esc(s.cap) + '</p>' : '') + '</div>' +
+      '<div class="vwnav"><button type="button" class="secondary" data-vw="prev"' + (VW.i === 0 ? ' disabled' : '') + '>Back</button><button type="button" class="button" data-vw="next"' + (VW.i === n - 1 ? ' disabled' : '') + '>Next</button></div>';
+    var b = d.querySelector('.vwbody'); if (b) b.scrollTop = 0;
+  }
+  function vwOpen(at) {
+    var l = openLesson(); if (!l) return;
+    var slides = viewerSlides(l); if (!slides.length) return;
+    VW = { slides: slides, i: Math.max(0, Math.min(at || 0, slides.length - 1)), from: document.activeElement };
+    var d = document.getElementById('gviewer');
+    if (!d) {
+      d = document.createElement('div'); d.id = 'gviewer'; d.className = 'gviewer'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', 'Step viewer');
+      d.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-vw]'); if (!b || b.disabled) return; vwGo(b.dataset.vw); });
+      document.body.appendChild(d);
+    }
+    document.body.classList.add('vwopen'); vwRender();
+    var c = d.querySelector('[data-vw=close]'); if (c) c.focus();
+  }
+  function vwGo(what) {
+    if (!VW) return;
+    if (what === 'close') { var d = document.getElementById('gviewer'); if (d) d.remove(); document.body.classList.remove('vwopen'); try { if (VW.from && VW.from.focus) VW.from.focus(); } catch (e) {} VW = null; return; }
+    if (what === 'prev') VW.i = Math.max(0, VW.i - 1); else if (what === 'next') VW.i = Math.min(VW.slides.length - 1, VW.i + 1);
+    vwRender(); var c = document.querySelector('#gviewer [data-vw=' + (what === 'prev' && VW.i === 0 ? 'next' : what === 'next' && VW.i === VW.slides.length - 1 ? 'prev' : what) + ']'); if (c) c.focus();
+  }
+  function vwSlideFor(im) {
+    var l = openLesson(); if (!l) return 0;
+    var cards = document.querySelectorAll('.guide .stepcard'), k, slides = viewerSlides(l);
+    for (k = 0; k < cards.length; k++) if (cards[k].contains(im)) return k;
+    var src = im.getAttribute('src');
+    for (k = 0; k < slides.length; k++) if (slides[k].img === src) return k;
+    return 0;
+  }
+  document.addEventListener('click', function (e) {
+    var im = e.target.closest && e.target.closest('img[data-viewer]');
+    if (im && im.closest('.guide')) { e.preventDefault(); vwOpen(vwSlideFor(im)); }
+  });
+  document.addEventListener('keydown', function (e) {
+    var im = e.target && e.target.matches && e.target.matches('img[data-viewer]') ? e.target : null;
+    if (im && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); vwOpen(vwSlideFor(im)); return; }
+    if (!VW) return;
+    if (e.key === 'Escape') vwGo('close'); else if (e.key === 'ArrowRight') vwGo('next'); else if (e.key === 'ArrowLeft') vwGo('prev');
+  });
+  window.addEventListener('hashchange', function () { if (VW) vwGo('close'); });
+  function doSteps(l) { return '<div id="dosteps">' + stepsInner(l) + '</div>'; }
+  function openLesson() { return D.lessons.filter(function (x) { return x.id === state.opened; })[0]; }
+  function stepsRedraw() { var l = openLesson(), e = document.getElementById('dosteps'); if (l && e) e.innerHTML = stepsInner(l); }
 
   /* ---------- "see the picture guide" links for guides that overlap a guide with pictures ---------- */
   var SEE_ALSO = {
@@ -132,6 +212,85 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'coimbra-90-plan': ['coimbra-90-numbers', 'water-14day-plan', 'week1-day90-plan', 'pantry-90-year-plan', 'lim-sanitation', 'g-pets', 'flood-decisions', 'es-kit-tiers'],
+    'coimbra-90-numbers': ['coimbra-90-plan', 'water-14day-plan', 'pantry-90-year-plan', 'ht-store-water', 'lim-power-outage', 'lim-sanitation'],
+    'p11e-bamboo-fishing': ['river-10b-fishing', 'river-10a-water', 'gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
+    'p11a-orchard': ['lt2-preserve', 'hs-canning', 'wf-smoke-dry-salt', 'gr-replace-stored-food', 'diet-nutrient-watch'],
+    'p11b-bamboo': ['p11c-water', 'gr-find-seeds', 'p11d-solar-skills'],
+    'p11c-water': ['water-14day-plan', 'river-10a-water', 'wx-river', 'p11b-bamboo', 'lt2-crop-water'],
+    'p11d-solar-skills': ['pw-station-plug-play', 'sol-wh-budget', 'sol-first-power-up', 'p11b-bamboo'],
+    'river-10a-water': ['wx-river', 'water-14day-plan', 'lim-water-none', 'hs-water-from-air', 'river-10b-fishing'],
+    'river-10b-fishing': ['trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wf-clean-fish', 'river-10b-plants', 'river-10a-water'],
+    'river-10b-plants': ['wf-find-plants', 'wf-plants-us', 'wild-food-field-checklist', 'river-10b-fishing'],
+    'river-10c-microhydro': ['lt2-solar', 'ex-river-hydro', 'sol-safety-lines', 'pw-electrician-ask'],
+    'river-10d-preserve': ['wf-smoke-dry-salt', 'lt2-preserve', 'game-skin-small', 'sec-dark-night', 'river-10b-fishing'],
+    'p8-s01-water-stops': ['water-14day-plan', 'lim-water-none', 'p8-s05-toilet-stops'],
+    'p8-s02-no-cooking': ['lim-power-outage', 'pantry-90-year-plan', 'diet-gluten-free'],
+    'p8-s03-freezing-night': ['warm-one-room', 'warm-safe-heat', 'lim-heat-cold'],
+    'p8-s04-week1-to-day90': ['week1-day90-plan', 'story-04-week1-to-day90', 'vis-lost-glasses'],
+    'p8-s05-toilet-stops': ['san-two-bucket', 'lim-sanitation', 'story-05-sanitation'],
+    'p8-s06-flood-warning-pets': ['flood-decisions', 'story-01-flood-warning', 'scn-evacuate-pets-seniors'],
+    'p8-s07-upper-floor': ['flood-upper-room', 'story-03-upper-floor'],
+    'p8-s08-older-person-alone': ['vis-lost-glasses', 'story-09-lost-glasses', 'sen-checkin-evac'],
+    'p8-s09-pregnancy-child-medical': ['preg-disaster-water-food', 'nutrition-children', 'sen-medicines-power'],
+    'p8-s10-storage-problem': ['pantry-90-year-plan', 'hs-food-storage', 'lt2-preserve'],
+    'diet-profile-checklist': ['diet-nutrient-watch', 'diet-plant-based', 'diet-gluten-free', 'diet-allergy-aware', 'stockpile-basics'],
+    'diet-nutrient-watch': ['diet-profile-checklist', 'nutrition-children', 'preg-disaster-water-food', 'diet-plant-based'],
+    'story-p8-home-safe': ['lim-stay-safe', 'break-in', 'story-08-hazards', 'sec-dark-night', 'g-signaling'],
+    'story-p8-pets': ['dog-stockpile', 'scn-evacuate-pets-seniors', 'pantry-90-year-plan', 'story-07-vulnerable-family'],
+    'flood-decisions': ['flood-upper-room', 'story-01-flood-warning', 'story-02-protect-if-safe', 'g-flood', 'ht-evacuate', 'scn-evacuate-pets-seniors'],
+    'flood-upper-room': ['flood-decisions', 'story-03-upper-floor', 'story-06-rescue-signals'],
+    'water-14day-plan': ['lim-water-none', 'story-10-14-day-drill', 'pantry-90-year-plan', 'hs-water-storage'],
+    'week1-day90-plan': ['story-04-week1-to-day90', 'water-14day-plan', 'pantry-90-year-plan', 'lim-power-outage'],
+    'pantry-90-year-plan': ['week1-day90-plan', 'water-14day-plan', 'stockpile-basics', 'story-10-14-day-drill'],
+    'story-01-flood-warning': ['flood-decisions', 'story-02-protect-if-safe', 'story-03-upper-floor'],
+    'story-02-protect-if-safe': ['flood-decisions', 'story-01-flood-warning'],
+    'story-03-upper-floor': ['flood-upper-room', 'story-06-rescue-signals', 'story-08-hazards'],
+    'story-04-week1-to-day90': ['week1-day90-plan', 'story-05-sanitation', 'story-07-vulnerable-family'],
+    'story-05-sanitation': ['san-two-bucket', 'lim-sanitation', 'story-10-14-day-drill'],
+    'story-06-rescue-signals': ['comm-start', 'comm-listen-log', 'flood-upper-room'],
+    'story-07-vulnerable-family': ['nutrition-children', 'preg-disaster-water-food', 'story-09-lost-glasses'],
+    'story-08-hazards': ['flood-decisions', 'warm-safe-heat', 'story-03-upper-floor'],
+    'story-09-lost-glasses': ['vis-lost-glasses', 'vis-glasses-kit', 'story-07-vulnerable-family'],
+    'story-10-14-day-drill': ['water-14day-plan', 'story-05-sanitation', 'pantry-90-year-plan'],
+    'trap-no-snare': ['trap-snare-small', 'trap-deadfall', 'trap-fish-weir', 'game-skin-small', 'gather-legal-checklist', 'wf-trapping', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'gr-start'],
+    'trap-snare-small': ['trap-no-snare', 'game-skin-small', 'trap-deadfall', 'wf-game-handling'],
+    'trap-deadfall': ['trap-no-snare', 'trap-snare-small', 'game-skin-small'],
+    'trap-fish-weir': ['trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'fish-catch-inspect-clean-cook'],
+    'game-skin-small': ['wf-game-handling', 'trap-snare-small', 'trap-deadfall', 'trap-live-small'],
+    'gr-replace-stored-food': ['gr-start', 'gr-reality-check', 'lt-garden-plan', 'lt2-seeds', 'lt2-preserve', 'gr-save-seed-steps', 'eat-stretch-food'],
+    'diet-gluten-free': ['diet-plant-based', 'diet-allergy-aware', 'stockpile-basics', 'eat-stretch-food'],
+    'diet-allergy-aware': ['diet-gluten-free', 'diet-plant-based', 'nutrition-children', 'stockpile-basics'],
+    'nutrition-children': ['preg-disaster-water-food', 'diet-allergy-aware', 'diet-plant-based', 'stockpile-basics'],
+    'sol-safety-lines': ['sol-wiring-fuse', 'sol-first-power-up', 'ps-safety', 'lt2-solar'],
+    'sol-wh-budget': ['sol-inverter-surge', 'sol-kit-check', 'ps-sizing', 'home-power-sizing', 'lt2-solar'],
+    'sol-wiring-fuse': ['sol-safety-lines', 'sol-first-power-up', 'sol-inverter-surge'],
+    'sol-inverter-surge': ['sol-wh-budget', 'sol-wiring-fuse', 'sol-ac', 'hh-outage-well'],
+    'sol-kit-check': ['sol-wh-budget', 'sol-wiring-fuse', 'ps-lithium', 'lt2-solar'],
+    'sol-first-power-up': ['sol-safety-lines', 'sol-wiring-fuse', 'sol-troubleshoot'],
+    'sol-troubleshoot': ['sol-first-power-up', 'sol-safety-lines'],
+    'sol-ac': ['sol-inverter-surge', 'sol-wh-budget', 'lim-heat-cold', 'g-heat-wave'],
+    'sol-mobile-fixed': ['sol-wiring-fuse', 'sol-safety-lines', 'lt2-solar'],
+    'sol-no-store-power': ['sol-wh-budget', 'ps-safety', 'g-power-outage', 'lim-power-outage'],
+    'pw-station-plug-play': ['ps-lithium', 'ps-safety', 'ps-sizing', 'home-power-sizing', 'pw-electrician-ask'],
+    'pw-electrician-ask': ['ps-safety', 'lt2-solar', 'pw-station-plug-play', 'sal-salvage-inspect'],
+    'sal-salvage-inspect': ['ps-safety', 'ps-lithium', 'pw-electrician-ask', 'lt2-solar'],
+    'san-two-bucket': ['lim-sanitation', 'lt-sanitation', 'lim-water-none', 'scn-total-blackout'],
+    'comm-listen-log': ['comm-start', 'comm-radio-listen', 'es-radios-alerts', 'scn-total-blackout'],
+    'sec-dark-night': ['warm-one-room', 'lim-heat-cold', 'warm-safe-heat', 'scn-total-blackout'],
+    'scn-total-blackout': ['lim-water-none', 'lim-sanitation', 'san-two-bucket', 'warm-one-room', 'warm-safe-heat', 'comm-listen-log', 'pw-station-plug-play', 'sec-dark-night', 'lim-power-outage'],
+    'comm-start': ['comm-radio-listen', 'comm-frs-pmr', 'comm-licence-chart', 'ht-family-plan'],
+    'comm-radio-listen': ['comm-start', 'comm-frs-pmr', 'comm-ham'],
+    'comm-frs-pmr': ['comm-gmrs', 'comm-meshtastic', 'comm-licence-chart'],
+    'comm-gmrs': ['comm-frs-pmr', 'comm-licence-chart', 'comm-ham'],
+    'comm-ham': ['comm-gmrs', 'comm-licence-chart', 'comm-radio-listen'],
+    'comm-satellite': ['comm-start', 'comm-meshtastic', 'comm-licence-chart'],
+    'comm-meshtastic': ['comm-frs-pmr', 'comm-satellite', 'comm-licence-chart'],
+    'comm-licence-chart': ['comm-frs-pmr', 'comm-gmrs', 'comm-ham', 'comm-meshtastic'],
+    'lim-comms': ['comm-start', 'comm-frs-pmr'],
+    'es-radios-alerts': ['comm-radio-listen', 'comm-start'],
+    'lt-ham-radio': ['comm-ham', 'comm-licence-chart'],
+    'foundation-communication': ['comm-start'],
     'lt-fishing': ['wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules'],
     'lt2-foraging': ['wf-find-plants', 'wf-shore-shellfish'],
     'hs-fire-pit': ['wf-fire-wet', 'wf-fire-nomatches'],
@@ -142,7 +301,7 @@ window.LSX = function (A) {
     'wf-fire-wet': ['wf-fire-nomatches', 'hs-fire-pit', 'g-hypothermia'],
     'wf-fire-nomatches': ['wf-fire-wet'],
     'wf-clean-fish': ['wf-fishing-gear', 'wf-smoke-dry-salt'],
-    'wf-fishing-gear': ['lt-fishing', 'wf-clean-fish'],
+    'wf-fishing-gear': ['lt-fishing', 'wf-clean-fish', 'trap-fish-bottle', 'trap-crate-crab'],
     'wf-game-handling': ['wf-trapping', 'wf-smoke-dry-salt', 'wf-field-kitchen'],
     'wf-find-plants': ['wf-plant-method', 'wf-plants-watch', 'lt2-foraging', 'wf-wild-food-rules'],
     'wf-plants-us': ['wf-plant-method', 'wf-plants-watch', 'wf-find-plants'],
@@ -167,7 +326,36 @@ window.LSX = function (A) {
     'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup', 'ps-types', 'ps-sizing'],
     'wild-birds-prep': ['fish-catch-inspect-clean-cook', 'wild-food-field-checklist', 'wf-wild-food-rules', 'med-carbon-monoxide'],
-    'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life'],
+    'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life', 'trap-crate-crab'],
+    'gather-legal-checklist': ['trap-no-snare', 'trap-fish-bottle', 'trap-crate-crab', 'trap-live-small', 'gather-diy-safe-projects', 'wf-wild-food-rules', 'wf-fishing-gear'],
+    'gather-diy-safe-projects': ['gather-legal-checklist', 'wf-fishing-gear', 'wf-clean-fish', 'wf-game-handling'],
+    'gr-crop-cards': ['gr-start', 'gr-indoor-garden', 'gr-lettuce-indoors', 'gr-radish-tub', 'gr-tomato-bucket', 'gr-potato-container', 'gr-reality-check'],
+    'gr-lettuce-indoors': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot', 'gr-no-electricity'],
+    'gr-radish-tub': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot'],
+    'gr-tomato-bucket': ['gr-crop-cards', 'gr-indoor-garden', 'gr-troubleshoot', 'gr-save-seed-steps'],
+    'gr-potato-container': ['gr-crop-cards', 'gr-regrow-scraps', 'gr-start-bed', 'gr-troubleshoot'],
+    'gr-no-electricity': ['gr-indoor-garden', 'gr-reality-check', 'ps-types', 'g-power-outage'],
+    'gr-troubleshoot': ['gr-indoor-garden', 'gr-start-bed', 'gr-sprouts'],
+    'gr-reality-check': ['gr-start', 'gr-crop-cards', 'eat-survive-plan', 'hh-storage'],
+    'gr-plant-cards': ['gr-regrow-scraps', 'gr-start', 'gr-indoor-garden', 'gr-potato-container'],
+    'diet-plant-based': ['eat-stretch-food', 'eat-survive-plan', 'stockpile-basics', 'gr-sprouts'],
+    'gr-start': ['gr-plant-cards', 'gr-crop-cards', 'gr-reality-check', 'gather-legal-checklist', 'diet-plant-based', 'gr-find-seeds', 'gr-sprouts', 'gr-microgreens', 'gr-regrow-scraps', 'gr-indoor-garden', 'gr-start-bed', 'gr-save-seed-steps', 'eat-survive-plan', 'eat-stretch-food', 'trap-no-snare'],
+    'gr-find-seeds': ['gr-start', 'lt2-seeds', 'gr-save-seed-steps', 'gr-sprouts', 'gr-start-bed'],
+    'gr-sprouts': ['gr-start', 'gr-microgreens', 'gr-find-seeds', 'eat-stretch-food'],
+    'gr-microgreens': ['gr-start', 'gr-sprouts', 'gr-indoor-garden', 'gr-find-seeds'],
+    'gr-regrow-scraps': ['gr-plant-cards', 'gr-start', 'gr-indoor-garden', 'gr-start-bed', 'lt-garden-plan'],
+    'gr-indoor-garden': ['gr-crop-cards', 'gr-no-electricity', 'gr-troubleshoot', 'gr-start', 'gr-microgreens', 'gr-regrow-scraps', 'hs-grow-small', 'lt2-compost'],
+    'gr-start-bed': ['gr-start', 'lt-garden-plan', 'lt2-compost', 'lt2-season', 'lt2-us', 'lt2-pt-food', 'hs-pallet-garden'],
+    'gr-save-seed-steps': ['gr-start', 'lt2-seeds', 'gr-find-seeds', 'gr-start-bed'],
+    'eat-survive-plan': ['gr-start', 'eat-stretch-food', 'hh-storage', 'hh-buy-order', 'ht-cook-no-power', 'g-power-outage', 'stockpile-basics'],
+    'eat-stretch-food': ['diet-plant-based', 'eat-survive-plan', 'gr-sprouts', 'ht-cook-no-power', 'hh-storage'],
+    'trap-fish-bottle': ['gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'wf-clean-fish', 'wf-wild-food-rules', 'trap-crate-crab'],
+    'trap-crate-crab': ['gather-legal-checklist', 'trap-no-snare', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'wf-wild-food-rules', 'trap-fish-bottle'],
+    'trap-live-small': ['gather-legal-checklist', 'trap-no-snare', 'wf-trapping', 'wf-game-handling', 'wf-wild-food-rules'],
+    'wf-trapping': ['trap-no-snare', 'trap-live-small', 'wf-game-handling'],
+    'lt2-seeds': ['gr-find-seeds', 'gr-save-seed-steps'],
+    'hs-grow-small': ['gr-indoor-garden', 'gr-microgreens'],
+    'lt-garden-plan': ['gr-start-bed', 'gr-start'],
     'shellfish-safe-collect': ['wf-shore-shellfish', 'crabs-shrimp-lobster', 'wild-food-field-checklist', 'other-sea-life'],
     'other-sea-life': ['crabs-shrimp-lobster', 'shellfish-safe-collect', 'wild-food-field-checklist'],
     'wild-food-field-checklist': ['fish-catch-inspect-clean-cook', 'wild-birds-prep', 'crabs-shrimp-lobster', 'shellfish-safe-collect', 'solar-oven-cooking'],
@@ -219,7 +407,38 @@ window.LSX = function (A) {
     'ps-safety': ['med-carbon-monoxide', 'power-generator', 'ps-lithium', 'g-power-outage'],
     'ps-lithium': ['ps-safety', 'ps-types', 'power-battery'],
     'ps-cooking-battery': ['ps-sizing', 'ht-cook-no-power', 'ps-safety', 'solar-oven-cooking'],
-    'ps-budget': ['ps-types', 'ex-cheap-power', 'budget-offgrid', 'home-power-sizing']
+    'ps-budget': ['ps-types', 'ex-cheap-power', 'budget-offgrid', 'home-power-sizing'],
+    'place-pt-lisboa': ['g-earthquake-tsunami', 'g-flood', 'g-heat-wave', 'g-wildfire', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-porto': ['g-flood', 'g-power-outage', 'g-heat-wave', 'g-wildfire', 'g-earthquake-tsunami', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-coimbra': ['g-flood', 'g-wildfire', 'g-heat-wave', 'g-earthquake-tsunami', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-pt-setubal': ['g-earthquake-tsunami', 'g-heat-wave', 'g-wildfire', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-losangeles': ['g-earthquake-tsunami', 'g-wildfire', 'g-power-outage', 'g-heat-wave', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-sanpedro': ['g-earthquake-tsunami', 'g-heat-wave', 'g-power-outage', 'g-wildfire', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-palmdale': ['g-heat-wave', 'g-power-outage', 'g-earthquake-tsunami', 'g-wildfire', 'g-flood', 'g-winter-storm', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-ca-valencia': ['g-wildfire', 'g-earthquake-tsunami', 'g-power-outage', 'g-heat-wave', 'g-flood', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-fl-jacksonville': ['g-hurricane', 'g-flood', 'g-heat-wave', 'g-tornado', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-fl-orlando': ['g-hurricane', 'g-flood', 'g-tornado', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-sc-conway': ['g-hurricane', 'g-flood', 'g-tornado', 'g-winter-storm', 'g-heat-wave', 'budget-offgrid', 'ps-types', 'stockpile-basics'],
+    'place-oh-ohio': ['g-tornado', 'g-winter-storm', 'g-flood', 'g-heat-wave', 'g-power-outage', 'budget-offgrid', 'ps-types', 'stockpile-basics']
+    ,'warm-one-room': ['warm-safe-heat', 'lim-heat-cold', 'g-winter-storm', 'sen-cold', 'med-carbon-monoxide']
+    ,'warm-safe-heat': ['warm-one-room', 'med-carbon-monoxide', 'ps-safety', 'lt2-woodheat']
+    ,'hyg-body-hair': ['hyg-hands-teeth-feet', 'hyg-laundry-clean', 'water-sanitation', 'lim-sanitation']
+    ,'hyg-hands-teeth-feet': ['p6-emergency-handwashing', 'hyg-body-hair', 'scn-boil-notice']
+    ,'hyg-period-incontinence': ['p6-sanitation-when-toilets-fail', 'hyg-body-hair', 'preg-after-birth', 'sen-kit-lists']
+    ,'hyg-laundry-clean': ['hyg-body-hair', 'p6-safe-cleanup-after-a-disaster', 'scn-boil-notice']
+    ,'scn-boil-notice': ['ex-boil-filter', 'hyg-hands-teeth-feet', 'water-boil', 'hyg-laundry-clean']
+    ,'vis-glasses-kit': ['vis-lost-glasses', 'sen-kit-lists', 'evac']
+    ,'vis-lost-glasses': ['vis-glasses-kit', 'sen-falls-mobility']
+    ,'scn-smoke-clean-room': ['g-wildfire', 'sen-kit-lists', 'preg-heat-cold-power']
+    ,'scn-days-at-home': ['lim-power-outage', 'hyg-body-hair', 'warm-one-room', 'shelter-home']
+    ,'scn-evacuate-pets-seniors': ['ht-evacuate', 'g-pets', 'sen-checkin-evac', 'evac']
+    ,'hh-older-woman': ['sen-kit-lists', 'sen-medicines-power', 'sen-heat', 'sen-cold', 'sen-falls-mobility', 'hh-menopause', 'hh-dust-allergy']
+    ,'hh-weather-home': ['g-heat-wave', 'g-winter-storm', 'g-flood', 'g-pets', 'warm-one-room']
+    ,'hh-dust-allergy': ['hh-older-woman', 'scn-smoke-clean-room', 'hyg-laundry-clean']
+    ,'hh-menopause': ['hh-older-woman', 'sen-heat', 'hh-dust-allergy']
+    ,'hh-outage-well': ['g-power-outage', 'ps-types', 'ps-sizing', 'ps-safety', 'scn-boil-notice', 'hh-storage']
+    ,'hh-buy-order': ['stockpile-basics', 'stockpile-buying-tips', 'dog-stockpile', 'budget-offgrid', 'hh-storage']
+    ,'hh-storage': ['stockpile-basics', 'hh-buy-order', 'hh-outage-well']
   };
   function relatedBox(id) {
     var ids = RELATED[id]; if (!ids) return '';
@@ -238,6 +457,10 @@ window.LSX = function (A) {
     return links ? '<div class="tipbox seealso"><strong>See the guide with pictures</strong><ul>' + links + '</ul></div>' : '';
   }
 
+  function fbHtml(l) {
+    var f = window.LOAD_FALLBACK && window.LOAD_FALLBACK[l.id]; if (!f) return '';
+    return '<div class="fbbox"><strong>' + esc(f.h) + '</strong><p>' + esc(f.lead) + '</p>' + ol(f.items) + '<p class="muted">General guidance written for this app. No named source.</p></div>';
+  }
   function guideView(l) {
     var h = '<div class="guide" data-cat="' + catOf(l) + '"><div class="breadcrumbs">' + btn('← All guides', 'learn') + '</div><span class="pill cat" data-cat="' + catOf(l) + '"><i class="dot"></i>' + esc(l.area) + ' · ' + esc(l.difficulty) + '</span>' +
       '<h1>' + ico(l.icon) + ' ' + esc(l.title) + '</h1><p>' + esc(l.intro) + '</p>' + (window.LOAD_SPEAK && window.LOAD_SPEAK.supported() ? window.LOAD_SPEAK.readBtn() : '') + statusHtml(l) + seeAlso(l.id);
@@ -246,18 +469,19 @@ window.LSX = function (A) {
     h += '<section class="gblock first"><h2>Do this first</h2>' + ol(l.first) + '</section>';
     h += '<section class="gblock"><h2>What to do</h2>' + doSteps(l) + '</section>';
     if (l.table) h += table(l.table);
-    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + li(s.items) + '</section>'; });
+    (l.sections || []).forEach(function (s) { h += '<section class="gblock"><h2>' + esc(s.h) + '</h2>' + (s.img ? '<img class="lesson-illustration strip" data-viewer="1" tabindex="0" role="button" aria-label="Open this picture in the step viewer. ' + esc(s.alt || '') + '" src="' + esc(s.img) + '" alt="' + esc(s.alt || '') + '" loading="lazy">' : '') + li(s.items) + '</section>'; });
+    h += fbHtml(l);
     h += '<div class="dangerbox"><strong>Warnings</strong>' + li(l.warn) + '</div>';
     h += '<div class="tipbox"><strong>Tips</strong>' + li(l.tip) + '</div>';
     h += '<section class="gblock"><h2>After</h2>' + li(l.after) + '</section>';
     h += '<p class="muted">General information only. In immediate danger call ' + esc(region().emergency) + '. ' + verify() + '</p>';
-    return h + '</div>';
+    return h + exBar(l) + '</div>';
   }
   function lessonView() {
     var l = D.lessons.filter(function (x) { return x.id === state.opened; })[0];
     if (l && l.first) return guideView(l);
     var b = A.lessonBase(); if (!l) return b;
-    var i = b.indexOf('<div class="dangerbox">'); return i < 0 ? b : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + b.slice(i);
+    var i = b.indexOf('<div class="dangerbox">'); return (i < 0 ? b + statusHtml(l) + fbHtml(l) : b.slice(0, i) + statusHtml(l) + seeAlso(l.id) + fbHtml(l) + b.slice(i)) + exBar(l);
   }
 
   /* ---------- lists ---------- */
@@ -283,6 +507,7 @@ window.LSX = function (A) {
     ['bleach', 'flask', 'Bleach dose', 'Drops of household bleach for clear water'],
     ['fridge', 'fridge', 'Fridge and freezer timer', 'Deadlines after the power goes out'],
     ['watts', 'battery', 'Watt-hours', 'What a power station can run'],
+    ['pantry', 'can', 'Pantry and bucket planner', 'Staples, buckets, water and pet food for 6 to 15 people. Every number can be changed'],
     ['units', 'convert', 'Unit converter', 'Gallons, liters, degrees, feet, meters'],
     ['flashlight', 'flash', 'Screen flashlight', 'Full white screen. Tap to close'],
     ['sos', 'alert', 'SOS flash', 'Screen blinks the SOS signal'],
@@ -291,7 +516,8 @@ window.LSX = function (A) {
     ['dogs', 'paw', 'Dog supply planner', 'Food, water, medicine and gear for 1 to 6 dogs'],
     ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances'],
     ['tracker', 'list', 'My stockpile tracker', 'Your rates, prices, what you own, shopping list, CSV and backup'],
-    ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes']
+    ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes'],
+    ['export', 'print', 'Download and print', 'Guides as files, packs for each person, place and topic']
   ];
   function toolsView() {
     return '<h1>Tools</h1><p class="muted">Simple calculators and signals. Everything works offline.</p><div class="grid hmtools">' + TOOLS.map(function (t) {
@@ -303,12 +529,48 @@ window.LSX = function (A) {
     var T = TOOLS.filter(function (x) { return x[0] === t; })[0];
     return '<div class="breadcrumbs">' + btn('← All tools', 'tools') + '</div><h1>' + ico(T[1]) + ' ' + esc(T[2]) + '</h1>' + inner;
   }
+
+  /* ---------- download and print ---------- */
+  var EXP = null;
+  if (window.LOAD_EXPORT && window.LOAD_EXPORT.setStatus) window.LOAD_EXPORT.setStatus(statusOf);
+  function exPacks() { if (!EXP && window.LOAD_EXPORT) { var by = {}; D.lessons.forEach(function (l) { by[l.id] = l; }); EXP = { by: by, packs: window.LOAD_EXPORT.packs({ lessons: D.lessons, cat: catOf, related: RELATED }) }; } return EXP; }
+  function exFind(id) { var E = exPacks(); if (!E) return null; var g = ['people', 'places', 'topics', 'all']; for (var i = 0; i < g.length; i++) { var f = E.packs[g[i]].filter(function (p) { return p.id === id; })[0]; if (f) return f; } return null; }
+  function exBar(l) {
+    if (!window.LOAD_EXPORT) return '';
+    return '<div class="actions noprint exbar"><button type="button" class="secondary" data-action="stk-print">Print this guide</button><button type="button" class="secondary" data-action="gd-dl" data-id="' + esc(l.id) + '">Save this guide as a file</button></div>';
+  }
+  function exRows(list) {
+    return list.map(function (p) {
+      return '<div class="exrow"><div class="exname"><b>' + esc(p.label) + '</b><small>' + p.ids.length + ' guides</small></div><div class="actions"><button type="button" class="button" data-action="ex-zip" data-pack="' + esc(p.id) + '">Download zip</button><button type="button" class="secondary" data-action="ex-one" data-pack="' + esc(p.id) + '">One file to print</button></div></div>';
+    }).join('');
+  }
+  function exportTool() {
+    var E = exPacks(); if (!E) return toolFrame('export', '<div class="notice">Download is not available in this browser.</div>');
+    var P = E.packs;
+    return toolFrame('export', '<div class="panel"><p>Save guides as plain files. They open with no internet and no app. A zip holds one page per guide, an index, and one file for printing. Keep a copy on paper and on a second device.</p>' +
+      '<p class="muted">On iPad: tap Download. Choose Download or Save to Files. Then open the zip in Files and tap it to unpack.</p><p id="ex-msg" class="muted" role="status" aria-live="polite"></p></div>' +
+      '<h2>For a person</h2>' + exRows(P.people) + '<h2>For a place</h2>' + exRows(P.places) + '<h2>By topic</h2>' + exRows(P.topics) + '<h2>Everything</h2>' + exRows(P.all));
+  }
   function toolView() {
     clearTimers();
     var t = state.opened;
+    if (t === 'export') return exportTool();
     if (t === 'water') return toolFrame(t, '<div class="panel"><label for="w-people">People</label>' + num('w-people', 4, 1, 1, 100) + '<label for="w-days">Days</label>' + num('w-days', 3, 1, 1, 365) + '<div id="w-out" class="kpis"></div><p class="muted">Water: 1 gal (3.8 L) per person per day. 3 days minimum, 2 weeks ideal. Food: about 2,000 kcal per person per day. Raise water for heat, illness, pregnancy and pets.</p></div>');
     if (t === 'bleach') return toolFrame(t, '<div class="panel"><label for="b-vol">Amount of clear water</label>' + num('b-vol', 1, 'any', 0.1) + '<label for="b-unit">Unit</label><select id="b-unit"><option value="gal">US gallons</option><option value="l">Liters</option></select><div id="b-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['Three steps: strain through cloth, filter, then disinfect.', 'Use only plain, unscented household bleach that is 5 to 6%. If yours is a different strength, follow its label or use water purification tablets.', 'Stir. Wait 30 minutes. The water should have a slight chlorine smell. If not, repeat once and wait 15 more minutes.', 'Cloudy or cold water: settle or filter it first, then use double the dose (16 drops per gallon). Source: CDC. A dose for 1% bleach is not included because we found no official source.', 'Bleach does not make fuel, chemical or flood-contaminated water safe.', 'Or boil water for 1 minute (3 minutes above 6,500 ft / 2,000 m).']) + '</div>');
     if (t === 'fridge') return toolFrame(t, '<div class="panel" id="f-panel"></div><div class="notice">Discard perishables above 40 F (4 C) for more than 2 hours. When in doubt, throw it out. Keep doors closed.</div>');
+    if (t === 'pantry') {
+      var PNS = [['White rice', 0.5, 30], ['Dry beans', 0.25, 30], ['Rolled oats', 0.15, 12]];
+      return toolFrame(t, '<div class="panel"><label for="pn-people">People (adult-equivalents)</label>' + num('pn-people', 6, 1, 1, 100) +
+        '<label for="pn-pre">How long</label><select id="pn-pre"><option value="90">90 days</option><option value="365">1 year</option><option value="1095">3 years</option><option value="0">Other (type days below)</option></select>' + num('pn-days', 90, 1, 1, 3650) +
+        '<label for="pn-spare">Spare buckets</label>' + num('pn-spare', 2, 1, 0, 50) +
+        '<h2 style="margin-top:18px">Staples. Change every number.</h2><p class="muted">Example amounts only. Rice, beans and oats are NOT a balanced diet.</p>' +
+        PNS.map(function (s, i) { return '<div class="devrow devrow3"><span>' + esc(s[0]) + '</span><input aria-label="Pounds per person per day for ' + esc(s[0]) + '" id="pn-r' + i + '" type="number" inputmode="decimal" value="' + s[1] + '" min="0" step="0.01"><input aria-label="Pounds one 5 gallon bucket holds for ' + esc(s[0]) + '" id="pn-c' + i + '" type="number" inputmode="decimal" value="' + s[2] + '" min="1" step="0.5"></div>'; }).join('') +
+        '<p class="muted">Left box: pounds per person per day. Right box: pounds one 5 gallon bucket holds. Weigh a test bucket.</p>' +
+        '<label for="pn-wg">Drinking water per person per day (US gallons)</label>' + num('pn-wg', 1, 0.1, 0.1, 10) +
+        '<h2 style="margin-top:18px">Pets (not in the people totals)</h2><p class="muted">For each pet type food grams per day and water litres per day, from the label and your vet. Leave empty if none.</p>' +
+        [0, 1, 2, 3, 4, 5, 6, 7].map(function (i) { return '<div class="devrow devrow3"><span>Pet ' + (i + 1) + '</span><input aria-label="Food grams per day for pet ' + (i + 1) + '" id="pn-pf' + i + '" type="number" inputmode="decimal" placeholder="food g/day" min="0" step="1"><input aria-label="Water litres per day for pet ' + (i + 1) + '" id="pn-pw' + i + '" type="number" inputmode="decimal" placeholder="water L/day" min="0" step="0.1"></div>'; }).join('') +
+        '<div id="pn-out" class="kpis"></div></div><div class="dangerbox"><strong>Read first</strong>' + li(['This is a planning tool. Rice, beans and oats alone are not a nutritionally complete diet. Add oil, vegetables, fruit, protein and vitamins.', 'Infants, pregnancy, older age and activity change what people need.', 'Bucket capacities are examples. Real weights vary. Weigh a test bucket before you buy many.', 'Each bucket needs a food-grade liner, a lid and the oxygen absorbers the maker states. Use Mylar and absorbers only for very dry foods.', 'No claim is made that food keeps for decades.', 'Pets: use the label and your vet for food and medicines.']) + '</div>');
+    }
     if (t === 'watts') {
       var devs = [['Phone charging', 10, 2], ['LED lamp', 8, 5], ['Radio', 5, 4], ['Laptop', 50, 3], ['Wi-Fi router', 12, 8], ['Mini fridge', 60, 8], ['Fan', 40, 6], ['CPAP', 40, 8], ['Television', 80, 2]];
       return toolFrame(t, '<div class="panel"><label for="p-cap">Battery or power station size (Wh)</label>' + num('p-cap', 500, 'any', 1) + '<h2 style="margin-top:18px">What do you want to run?</h2><p class="muted">Watts are typical. Check the label on your device.</p>' +
@@ -331,6 +593,7 @@ window.LSX = function (A) {
         '<div id="tr-cdbox"' + (TR.custom ? '' : ' hidden') + '><label for="tr-cd">Number of days</label>' + num('tr-cd', TR.custom || TR.days, 1, 1, 7300) + '</div>' +
         '<label for="tr-w">Water in litres per person per day</label>' + num('tr-w', TR.water, 'any', 0.5, 20) +
         '<label for="tr-m">People who use menstrual products</label>' + num('tr-m', TR.mens, 1, 0, 50) +
+        '<label for="tr-pp">Share that are pads, in percent (the rest are tampons)</label>' + num('tr-pp', TR.padPct === undefined ? 50 : TR.padPct, 1, 0, 100) +
         '<label for="tr-f">Show</label><select id="tr-f">' + cats.map(function (c) { return '<option>' + esc(c) + '</option>'; }).join('') + '</select>' +
         '<div class="actions">' + btn('Export shopping list (CSV)', 'tr-csv', 'button') + btn('Back up (JSON)', 'tr-json', 'secondary') + btn('Restore a backup', 'tr-import', 'secondary') + btn('Copy the list', 'tr-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Reset', 'tr-reset', 'secondary') + '</div>' +
         '<input type="file" id="tr-file" accept="application/json,.json" hidden><p id="tr-msg" class="muted" role="status"></p></div>' +
@@ -368,7 +631,7 @@ window.LSX = function (A) {
       var DK = window.LOAD_STOCK2; if (!DK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var dsz = function (id) { var o = ''; for (var i = 0; i <= 6; i++) o += '<option value="' + i + '"' + (i === (id === 'dg-s' ? 1 : 0) ? ' selected' : '') + '>' + i + '</option>'; return o; };
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick how many small and large dogs and how long. You get food, water, medicine and gear for each. It works offline.</p>' +
-        '<label for="dg-c">Country</label><select id="dg-c"><option value="us">United States</option><option value="pt">Portugal</option></select>' +
+        '<label for="dg-c">Country</label><select id="dg-c"><option value="us">United States</option><option value="pt">Portugal</option><option value="uk">United Kingdom</option></select>' +
         '<label for="dg-s">Small dogs (about 18 lb, 8 kg)</label><select id="dg-s">' + dsz('dg-s') + '</select>' +
         '<label for="dg-l">Large dogs (about 66 lb, 30 kg)</label><select id="dg-l">' + dsz('dg-l') + '</select>' +
         '<label for="dg-p">How long</label><select id="dg-p">' + window.LOAD_STOCK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -379,7 +642,8 @@ window.LSX = function (A) {
       var SK = window.LOAD_STOCK; if (!SK) return toolFrame(t, '<div class="panel"><p>The planner could not load.</p></div>');
       var c0 = state.region === 'pt' ? 'pt' : 'us';
       return toolFrame(t, '<div class="panel stkpanel"><p class="muted">Pick your country, how many people and how long. You get a full shopping list with quantities. It works offline.</p>' +
-        '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option></select>' +
+        '<label for="stk-c">Country</label><select id="stk-c"><option value="us"' + (c0 === 'us' ? ' selected' : '') + '>United States</option><option value="pt"' + (c0 === 'pt' ? ' selected' : '') + '>Portugal</option><option value="uk"' + (c0 === 'uk' ? ' selected' : '') + '>United Kingdom</option></select>' +
+        '<label for="stk-d">Diet</label><select id="stk-d"><option value="">Everyone eats mixed food</option><option value="pesc">Pescatarian (fish, no meat)</option><option value="veg">Vegetarian (no meat or fish)</option><option value="vegan">Vegan (no animal foods)</option><option value="gf">Gluten-free (no wheat, barley, rye)</option><option value="nf">Nut-free (no peanuts or tree nuts)</option></select>' +
         '<label for="stk-n">People in your household</label><select id="stk-n">' + SK.sizes.map(function (n) { return '<option value="' + n + '"' + (n === 4 ? ' selected' : '') + '>' + n + ' people</option>'; }).join('') + '<option value="x">Other number</option></select>' +
         '<div id="stk-nnbox" hidden><label for="stk-nn">Number of people (1 to 50)</label>' + num('stk-nn', 12, 1, 1, 50) + '</div>' +
         '<label for="stk-p">How long</label><select id="stk-p">' + SK.periods.map(function (p) { return '<option value="' + p.days + '"' + (p.id === '1m' ? ' selected' : '') + '>' + p.label + '</option>'; }).join('') + '</select>' +
@@ -425,6 +689,22 @@ window.LSX = function (A) {
     if (n === 0) return setOut('p-out', '<p>Pick at least one device.</p>');
     var days = cap * 0.85 / total;
     setOut('p-out', kpi('Energy per day', nf(total, 0) + ' Wh') + kpi('Running together', nf(watts, 0) + ' W') + kpi('Battery lasts', days >= 1 ? nf(days) + ' days' : nf(days * 24) + ' hours'));
+  }
+  function calcPantry() {
+    var people = val('pn-people'), days = val('pn-days'), spare = Math.max(0, Math.round(val('pn-spare') || 0)), wg = val('pn-wg');
+    if (!(people > 0) || !(days > 0)) return setOut('pn-out', '<p>Enter people and days.</p>');
+    var names = ['White rice', 'Dry beans', 'Rolled oats'], tb = 0, h = '';
+    for (var i = 0; i < 3; i++) {
+      var r = val('pn-r' + i) || 0, cap = val('pn-c' + i) || 0, lb = people * r * days, bk = cap > 0 ? Math.ceil(lb / cap) : 0;
+      tb += bk; h += kpi(names[i], nf(lb, 0) + ' lb (' + nf(lb * 0.4536, 0) + ' kg), ' + (cap > 0 ? bk + ' buckets' : 'set bucket size'));
+    }
+    h += kpi('Buckets for staples', tb + ' plus ' + spare + ' spare = ' + (tb + spare));
+    var gal = people * (wg || 0) * days; h += kpi('Drinking water', nf(gal, 0) + ' gal (' + nf(gal * 3.785, 0) + ' L)');
+    var pf = 0, pw = 0, np = 0;
+    for (var j = 0; j < 8; j++) { var a = val('pn-pf' + j), b = val('pn-pw' + j); if (a > 0 || b > 0) { np++; pf += (a > 0 ? a : 0); pw += (b > 0 ? b : 0); } }
+    if (np) { h += kpi('Pet food (' + np + ' pets)', nf(pf * days / 1000, 1) + ' kg'); h += kpi('Pet water', nf(pw * days, 0) + ' L'); }
+    else h += kpi('Pets', 'Enter food and water for each pet above');
+    setOut('pn-out', h + '<p class="muted">Planning estimate from your numbers. Not a nutrition plan.</p>');
   }
   function val2(sel) { var e = document.querySelector(sel); return e ? Number(e.value) : 0; }
   function convert(id, v) {
@@ -580,6 +860,11 @@ window.LSX = function (A) {
     'open-list': function (x) { switchView('list', x.dataset.list); },
     'open-tool': function (x) { switchView('tool', x.dataset.tool); },
     'list-reset': function () { S.lists[state.opened] = {}; put(); A.render(); },
+    'vw-open': function () { var l = openLesson(), cur = l ? Math.min(Math.max(S.cur[l.id] || 0, 0), Math.max((l.do || []).length - 1, 0)) : 0; vwOpen(modeOf() === 'beginner' ? cur : 0); },
+    'mode-set': function (x) { S.mode = x.dataset.mode === 'beginner' ? 'beginner' : 'expert'; put(); stepsRedraw(); },
+    'step-prev': function () { var id = state.opened; S.cur[id] = Math.max(0, (S.cur[id] || 0) - 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
+    'step-next': function () { var l = openLesson(), id = state.opened, n = l && l.do ? l.do.length : 0; S.cur[id] = Math.min(Math.max(n - 1, 0), (S.cur[id] || 0) + 1); put(); stepsRedraw(); var e = document.getElementById('dosteps'); if (e && e.scrollIntoView) e.scrollIntoView({ block: 'start' }); },
+    'steps-reset': function () { S.steps[state.opened] = {}; S.cur[state.opened] = 0; put(); stepsRedraw(); },
     'hide-install': function () { S.hideInstall = true; put(); A.render(); },
     'fridge-start': function () { S.outage = Date.now(); put(); fridgePanel(); startFridge(); },
     'fridge-stop': function () { S.outage = null; put(); clearTimers(); fridgePanel(); },
@@ -600,6 +885,9 @@ window.LSX = function (A) {
     'pw-copy': function () { copy(pwText()); setOut('pw-msg', 'Copied. Paste it into Notes or Messages.'); },
     'dg-copy': function () { copy(dgText()); setOut('dg-msg', 'Copied. Paste it into Notes or Messages.'); },
     'stk-copy': function () { copy(stkText()); setOut('stk-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'gd-dl': function (x) { var l = D.lessons.filter(function (g) { return g.id === x.dataset.id; })[0]; if (l && window.LOAD_EXPORT) window.LOAD_EXPORT.save(window.LOAD_EXPORT.slug(l.title) + '.html', new Blob([window.LOAD_EXPORT.guideFile(l)], { type: 'text/html' })); },
+    'ex-zip': function (x) { var E = exPacks(), p = exFind(x.dataset.pack), ok = false; if (E && p) { try { ok = window.LOAD_EXPORT.save('load-survival-' + window.LOAD_EXPORT.slug(p.label) + '.zip', window.LOAD_EXPORT.zipPack(p, E.by)); } catch (e) {} } setOut('ex-msg', ok ? 'The zip was created (' + p.ids.length + ' guides). Find it in Downloads or Files.' : 'The file could not be created on this device.'); },
+    'ex-one': function (x) { var E = exPacks(), p = exFind(x.dataset.pack), ok = false; if (E && p) { try { ok = window.LOAD_EXPORT.save('load-survival-' + window.LOAD_EXPORT.slug(p.label) + '-print.html', window.LOAD_EXPORT.onePage(p, E.by)); } catch (e) {} } setOut('ex-msg', ok ? 'The print file was created. Open it, then use Print or Share.' : 'The file could not be created on this device.'); },
     'stk-print': function () { try { window.print(); } catch (e) {} },
     'cpr-stop': cprStop,
     'cpr-go': cprGo,
@@ -642,12 +930,12 @@ window.LSX = function (A) {
     var people = n === 'x' ? Math.max(1, Math.min(50, Math.round(nn) || 1)) : Number(n) || 4;
     var days = Number((document.getElementById('stk-p') || {}).value) || 30;
     var kids = Math.max(0, Math.round(Number((document.getElementById('stk-k') || {}).value) || 0));
-    var us = ((document.getElementById('stk-c') || {}).value || 'us') === 'us';
-    return { people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
+    var cv = (document.getElementById('stk-c') || {}).value || 'us', us = cv === 'us';
+    return { diet: (document.getElementById('stk-d') || {}).value || '', c: cv === 'pt' || cv === 'uk' ? cv : 'us', people: people, days: days, kids: Math.min(kids, people), us: us, lt: !!(document.getElementById('stk-lt') || {}).checked, full: !!(document.getElementById('stk-full') || {}).checked, all: !!(document.getElementById('stk-all') || {}).checked, rx: Math.max(0, Number((document.getElementById('stk-rx') || {}).value) || 0) };
   }
   function stkShelf(y) { return y < 1 ? Math.round(y * 12) + ' months' : (y === 1 ? '1 year' : y + ' years'); }
   function stkPlan() {
-    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.us ? 'us' : 'pt', I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full });
+    var I = stkInputs(), SK = window.LOAD_STOCK, R = SK.compute(I.c, I.people, I.days, { lt: I.lt, kids: I.kids, full: I.full, diet: I.diet });
     return { I: I, R: R, SK: SK };
   }
   function stkWater(R, us, SK) {
@@ -703,7 +991,7 @@ window.LSX = function (A) {
       '<li>Water: ' + nf(Math.round(C.water), 0) + ' litres, about ' + C.containers + ' containers of 20 L. It weighs about ' + nf(Math.round(C.waterKg), 0) + ' kg. Plans longer than 14 days cannot all be stored. Plan to treat water.</li>' +
       '<li>Priced items total ' + cur + nf(Math.round(C.known * 100) / 100, 2) + '. Still to buy, after what you have: ' + cur + nf(Math.round(C.left * 100) / 100, 2) + '.</li>' +
       '<li>' + C.unknown + ' items have no price and are left out of these totals.</li>' +
-      (C.mens > 0 ? '<li>Menstrual products: about ' + nf(Math.round(C.mens), 0) + ' (30 per user per 30 days).</li>' : '') + '</ul>' +
+      (C.mens > 0 ? '<li>Menstrual products: about ' + nf(Math.round(C.mens), 0) + ' (30 per user per 30 days), about ' + nf(Math.round(C.mens * (TR.padPct === undefined ? 50 : TR.padPct) / 100), 0) + ' pads and ' + nf(Math.round(C.mens * (100 - (TR.padPct === undefined ? 50 : TR.padPct)) / 100), 0) + ' tampons. Change the share above.</li>' : '') + '</ul>' +
       (d > 365 ? '<div class="notice">Totals for years are the amounts you will use over the whole time. They are not goods you can all store unchanged. Buy and rotate each year.</div>' : '') + '</section>';
     setOut('tr-sum', h);
   }
@@ -716,6 +1004,7 @@ window.LSX = function (A) {
     else if (id === 'tr-cd') { TR.custom = String(Math.max(1, Math.round(Number(t.value) || 1))); }
     else if (id === 'tr-w') { TR.water = Math.max(0.5, Number(t.value) || 3.785); }
     else if (id === 'tr-m') { TR.mens = Math.max(0, Math.round(Number(t.value) || 0)); }
+    else if (id === 'tr-pp') { TR.padPct = Math.max(0, Math.min(100, Math.round(Number(t.value)))); if (isNaN(TR.padPct)) TR.padPct = 50; }
     else if (id === 'tr-f') { trRows(); trOut(); return true; }
     else if ((m = /^tr-r-(.+)$/.exec(id))) { TR.rate[m[1]] = t.value === '' ? undefined : Math.max(0, Number(t.value) || 0); }
     else if ((m = /^tr-k-(.+)$/.exec(id))) { TR.pack[m[1]] = t.value === '' ? undefined : Math.max(0.0001, Number(t.value) || 1); }
@@ -738,7 +1027,7 @@ window.LSX = function (A) {
   function trInit2() { TR.price = TR.price || { US: {}, PT: {}, UK: {} }; TR.price.US = TR.price.US || {}; TR.price.PT = TR.price.PT || {}; TR.price.UK = TR.price.UK || {}; TR.rate = TR.rate || {}; TR.pack = TR.pack || {}; TR.have = TR.have || {}; TR.gear = TR.gear || {}; TR.dogs = Array.isArray(TR.dogs) ? TR.dogs.slice(0, 6) : []; if (TR.country !== 'US' && TR.country !== 'PT' && TR.country !== 'UK') TR.country = 'US'; }
   function trShowAll() {
     var set = function (i, v) { var e = document.getElementById(i); if (e) e.value = v; };
-    set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens);
+    set('tr-c', TR.country); set('tr-n', TR.people); set('tr-w', TR.water); set('tr-m', TR.mens); set('tr-pp', TR.padPct === undefined ? 50 : TR.padPct);
     var p = document.getElementById('tr-p'); if (p) p.value = TR.custom ? 'x' : String(TR.days); var cb = document.getElementById('tr-cdbox'); if (cb) cb.hidden = !TR.custom; set('tr-cd', TR.custom || TR.days);
     trRows(); trOut();
   }
@@ -884,13 +1173,15 @@ window.LSX = function (A) {
   function dgInputs() {
     var s = Number((document.getElementById('dg-s') || {}).value) || 0, l = Number((document.getElementById('dg-l') || {}).value) || 0;
     if (s + l > 6) l = Math.max(0, 6 - s);
-    return { us: ((document.getElementById('dg-c') || {}).value || 'us') === 'us', s: s, l: l, days: Number((document.getElementById('dg-p') || {}).value) || 30, all: !!(document.getElementById('dg-all') || {}).checked };
+    var dc = (document.getElementById('dg-c') || {}).value || 'us';
+    return { c: dc, us: dc === 'us', s: s, l: l, days: Number((document.getElementById('dg-p') || {}).value) || 30, all: !!(document.getElementById('dg-all') || {}).checked };
   }
   function dgMass(g, us) { return us ? nf(g / 453.592, 1) + ' lb' : nf(g / 1000, 1) + ' kg'; }
   function dgRender() {
     var I = dgInputs(), DK = window.LOAD_STOCK2, h = '';
     if (I.s + I.l < 1) { setOut('dg-out', '<div class="notice">Choose at least 1 dog.</div>'); return; }
     var P = DK.dogPlan(I.us, I.s, I.l, I.days);
+    if (I.c === 'uk') h += '<div class="notice">United Kingdom: amounts are metric. Bag sizes are planner sizes and were not checked for UK shops. Check the bag you buy.</div>';
     h += '<div class="kpis">' + kpi('Dogs', I.s + ' small, ' + I.l + ' large') + kpi('Food a day', dgMass(P.perDayG, I.us)) + kpi('Water a day', I.us ? nf(P.waterPerDay / 3.785, 2) + ' gal' : nf(P.waterPerDay, 1) + ' L') + kpi('Food over the plan', dgMass(P.totalG, I.us)) + '</div>';
     var cats = [], seen = {}; P.items.forEach(function (x) { if (!seen[x.cat]) { seen[x.cat] = 1; cats.push(x.cat); } });
     cats.forEach(function (c) {
@@ -918,7 +1209,7 @@ window.LSX = function (A) {
   }
   function stkLong(I, SK) {
     var K = window.LOAD_STOCK2; if (!K || I.days < 365) return '';
-    var L = K.longPlan(I.us ? 'us' : 'pt', I.people, I.days, I.kids), cur = L.cur, us = I.us;
+    var L = K.longPlan(I.c, I.people, I.days, I.kids, I.diet), cur = L.cur, us = I.us;
     var fmt = function (a) { return cur + nf(Math.round(a[0] / 10) * 10, 0) + ' to ' + cur + nf(Math.round(a[1] / 10) * 10, 0); };
     var h = '<section class="gblock"><h2>Long-term plan: two layers</h2><p class="muted">Layer 1 is rotating food you eat and replace every year. Layer 2 is sealed long-storage staples you store once.</p>';
     h += '<h3>Layer 1: rotating, buy each year</h3><ul class="stklist">';
@@ -929,12 +1220,12 @@ window.LSX = function (A) {
     h += '</ul><h3>Space and cost (planner estimates)</h3><ul>' +
       '<li>Layer 1 shelf space: about ' + nf(Math.round(L.rollM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.rollM3 * 35.3 * 10) / 10, 1) + ' cubic feet).</li>' +
       '<li>Layer 2 space: about ' + nf(Math.round(L.longM3 * 10) / 10, 1) + ' cubic metres (' + nf(Math.round(L.longM3 * 35.3 * 10) / 10, 1) + ' cubic feet), about ' + nf(L.buckets, 0) + ' six-gallon buckets.</li>' +
-      '<li>Cost to rebuild the whole plan from shops: about ' + fmt(L.fullCost) + '. Food only. Not an official price.</li>' +
-      '<li>Yearly replacement of Layer 1: about ' + fmt(L.perYearRolling) + '. This is food you eat, so it replaces normal grocery spending. The one-time extra cost is Layer 2, buckets, lids, oxygen absorbers and shelves.</li></ul></section>';
+      (L.fullCost ? '<li>Cost to rebuild the whole plan from shops: about ' + fmt(L.fullCost) + '. Food only. Not an official price.</li>' +
+      '<li>Yearly replacement of Layer 1: about ' + fmt(L.perYearRolling) + '. This is food you eat, so it replaces normal grocery spending. The one-time extra cost is Layer 2, buckets, lids, oxygen absorbers and shelves.</li>' : '<li>No built-in prices for this country. Type your own prices in My stockpile tracker to get costs.</li>') + '</ul></section>';
     return h;
   }
   function stkAll(I, SK) {
-    var us = I.us, c = us ? 'us' : 'pt', cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full }); });
+    var us = I.us, c = I.c, cols = SK.sizes.map(function (n) { return SK.compute(c, n, I.days, { lt: I.lt, kids: 0, full: I.full, diet: I.diet }); });
     var h = '<section class="gblock"><h2>All household sizes</h2><p class="muted">' + (I.full ? 'Full total for the whole plan.' : 'Amount to keep on the shelf.') + ' Adults only (no children entered).</p><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th>' + SK.sizes.map(function (n) { return '<th>' + n + ' people</th>'; }).join('') + '</tr></thead><tbody>';
     h += '<tr><td><b>Water</b></td>' + cols.map(function (R) { return '<td>' + (us ? nf(Math.round(R.water.gallons), 0) + ' gal' : nf(Math.round(R.water.litres), 0) + ' L') + '</td>'; }).join('') + '</tr>';
     cols[0].food.forEach(function (f, i) { h += '<tr><td>' + esc(f.name) + '</td>' + cols.map(function (R) { var x = R.food[i]; return '<td>' + nf(x.packs, 0) + ' ' + esc(x.unit) + '</td>'; }).join('') + '</tr>'; });
@@ -943,7 +1234,9 @@ window.LSX = function (A) {
     return h + '</tbody></table></div></section>';
   }
   function stkRender() {
-    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = '';
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, h = I.c === 'uk' ? '<div class="notice">United Kingdom: amounts are metric. The food list and pack sizes are the planner\'s own and were not checked for UK shops. Check the pack you buy. For costs, use My stockpile tracker with your own prices.</div>' : '';
+    if (I.diet === 'gf' || I.diet === 'nf') h += '<div class="notice"><b>' + (I.diet === 'gf' ? 'Gluten-free' : 'Nut-free') + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more of the safe foods to reach your target. Read every label' + (I.diet === 'gf' ? ' and look for oats and sauces marked gluten-free' : ' and look for may contain nuts') + '. See the guide on ' + (I.diet === 'gf' ? 'gluten-free eating' : 'allergy-aware eating') + '.</div>';
+    else if (I.diet) h += '<div class="notice"><b>' + ({ pesc: 'Pescatarian', veg: 'Vegetarian', vegan: 'Vegan' }[I.diet]) + ' list.</b> Removed: ' + esc(R.skipped.join('; ')) + '. The planner did not add more of the other foods. Calories a day are now about ' + nf(Math.round(R.perDayKcal / 50) * 50, 0) + '. Add more beans, lentils, rice, oats, nuts and oil to reach your target. Check every label for animal products. ' + (I.diet === 'vegan' ? 'Plan vitamin B12 from fortified foods or a supplement. ' : '') + 'See the guide on vegetarian, vegan and pescatarian meals.</div>';
     var cats = [], seen = {}; R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; cats.push(f.cat); } });
     var totalKeep = R.grams;
     h += '<div class="kpis">' + kpi('People', I.people + (I.kids ? ' (' + I.kids + ' children)' : '')) + kpi('Length', I.days >= 365 ? nf(I.days / 365, 0) + (I.days === 365 ? ' year' : ' years') : (I.days === 7 ? '1 week' : I.days === 30 ? '1 month' : I.days === 90 ? '3 months' : I.days === 180 ? '6 months' : I.days + ' days')) +
@@ -981,7 +1274,8 @@ window.LSX = function (A) {
     setOut('stk-out', h);
   }
   function stkText() {
-    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
+    var P = stkPlan(), I = P.I, R = P.R, SK = P.SK, us = I.us, t = 'LOAD Survival stockpile list\n' + (us ? 'United States' : I.c === 'uk' ? 'United Kingdom' : 'Portugal') + ', ' + I.people + ' people, ' + I.days + ' days\n\n';
+    if (I.diet) t += 'Diet: ' + ({ pesc: 'pescatarian', veg: 'vegetarian', vegan: 'vegan', gf: 'gluten-free', nf: 'nut-free' }[I.diet]) + '. Removed: ' + R.skipped.join('; ') + '. Calories not rebalanced. Check labels.\n\n';
     t += 'WATER\n' + stkWater(R, us, SK) + '\n\n';
     var seen = {};
     R.food.forEach(function (f) { if (!seen[f.cat]) { seen[f.cat] = 1; t += '\n' + f.cat.toUpperCase() + '\n'; } t += '[ ] ' + f.name + ': ' + f.packs + ' ' + f.unit + ' (' + SK.fmtMass(f.keep, us) + ')\n'; });
@@ -1036,7 +1330,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -1056,6 +1350,7 @@ window.LSX = function (A) {
     if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
+    if (id.indexOf('pn-') === 0 && id !== 'pn-pre') { calcPantry(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
     if (id.indexOf('pw-') === 0 && t.tagName === 'INPUT') return pwHandle(t);
     if (id.indexOf('tr-') === 0 && (t.tagName === 'INPUT' || t.tagName === 'SELECT') && id !== 'tr-file') return trHandle(t);
@@ -1072,7 +1367,15 @@ window.LSX = function (A) {
       var L = C.lists.filter(function (x) { return x.id === p[0]; })[0], n = listDone(p[0]);
       setOut('lprog', n + ' of ' + L.items.length + ' done'); var b = document.getElementById('lbar'); if (b) b.style.width = Math.round(n * 100 / L.items.length) + '%'; return true;
     }
+    if (t.dataset && t.dataset.step !== undefined) {
+      var sp = t.dataset.step.split('|'), sl = openLesson(), sn = sl && sl.do ? sl.do.length : 0;
+      S.steps[sp[0]] = S.steps[sp[0]] || {}; S.steps[sp[0]][sp[1]] = t.checked; put();
+      var sd = stepsDoneN(sp[0], sn); setOut('sprog', sd + ' of ' + sn + ' steps done'); var sb = document.getElementById('sbar'); if (sb && sn) sb.style.width = Math.round(sd * 100 / sn) + '%';
+      return true;
+    }
     if (t.dataset && t.dataset.dev !== undefined) { calcWatts(); return true; }
+    if (id === 'pn-pre') { if (Number(t.value) > 0) { var pd = document.getElementById('pn-days'); if (pd) pd.value = t.value; } calcPantry(); return true; }
+    if (id.indexOf('pn-') === 0) { calcPantry(); return true; }
     if (id === 'b-unit') { calcBleach(); return true; }
     if (id === 'tr-file') { trImport(t.files && t.files[0]); t.value = ''; return true; }
     if (id.indexOf('tr-') === 0) return t.tagName === 'INPUT' && t.type !== 'checkbox' ? true : trHandle(t);

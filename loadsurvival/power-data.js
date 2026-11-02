@@ -137,7 +137,8 @@
       { h: 'Portugal and the US', items: [
         'Portugal: the average household used about 2,531 kWh in 2024, about 6.9 kWh a day, from PORDATA (DGEG data). Use the Whole home mode only as a rough comparison.',
         'US homes use more. We did not extract the US figure from the EIA tables.',
-        'Portugal mains power is 230 V. US mains power is 120 V and 240 V. Check the voltage of any appliance you bring from another country.'
+        'Portugal mains power is 230 V. US mains power is 120 V and 240 V. Check the voltage of any appliance you bring from another country.',
+        'United Kingdom: mains power is 230 V, the same as Portugal. UK plugs and sockets differ from Portuguese ones, so check the plug as well as the voltage. The calculator works in watts and square feet or metres, so it works the same in the UK.'
       ] }
     ],
     tip: ['A plug-in power meter costs little and shows real watts.', 'Buy rechargeable batteries and a small solar charger first.'],
@@ -153,6 +154,7 @@
     ],
     unconfirmed: [
       'We did not open these pages. The facts come from search results and summaries.',
+      'United Kingdom: the 230 V mains figure and the note about plugs are general knowledge. We found no UK household use figure and did not check a UK source.',
       'We could not read the numbers in the EIA tables. We found no kWh per day by home size or by number of people. The table in this guide is our own model, not EIA data.',
       'The appliance watts are typical values from generator guides. They disagree a lot. A fridge was 180 to 800 running watts and 600 to 2,400 start-up watts. A 2 ton air conditioner was 2,800 or 3,800 running watts.',
       'The hours a day, the number of bulbs per room (1 per 60 sq ft), the 1 ton per 600 sq ft rule and the default appliance counts are the planner\'s own.',

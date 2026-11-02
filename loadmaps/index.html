@@ -457,6 +457,27 @@
   @media (min-aspect-ratio:7/10){ #splash .sp-img{background-image:url(splash/splash-1668x2388.png)} }
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   @media (prefers-reduced-motion:reduce){ #boot-intro .bi-fill{animation-duration:.3s} }
+
+  /* ---------- Survival Maps (add-only) ---------- */
+  .svx h1{margin:6px 0 8px}
+  .svx h2{margin:14px 0 8px;font-size:1.15rem}
+  .svx-card{margin-bottom:11px}
+  .svx-tag{display:inline-block;border-radius:999px;padding:4px 10px;font-size:.74rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+  .svx-tag.amber{background:rgba(255,176,35,.14);border-color:rgba(255,176,35,.5);color:var(--amber)}
+  .svx-tag.blue{background:rgba(61,139,255,.14);border-color:rgba(61,139,255,.5);color:var(--blue)}
+  .svx-tag.grey{background:rgba(255,255,255,.06);color:var(--muted)}
+  .svx-alert{border:1px solid rgba(255,77,61,.55);background:rgba(255,77,61,.1);border-radius:14px;padding:12px 14px;font-weight:700;margin:6px 0 12px}
+  .svx-warn{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:10px 0}
+  .svx-warn summary{font-weight:800;cursor:pointer;min-height:44px;display:flex;align-items:center}
+  .svx-w p{margin:4px 0 10px;font-size:.92rem;line-height:1.55}
+  .svx-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.92rem}
+  .svx-table th,.svx-table td{text-align:left;padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}
+  .svx-table th{font-weight:600;width:55%}
+  .svx-link{color:var(--blue);font-weight:700;text-decoration:underline;display:inline-block;padding:6px 0}
+  .svx-ul{margin:6px 0 0;padding-left:20px}
+  .svx-ul li{margin:6px 0}
+  .svx-tabs{flex-wrap:wrap;overflow:visible}
+  .svx-tabs .chip{min-height:44px}
 </style>
 </head>
 <body>
@@ -529,6 +550,8 @@
     <section class="view" id="v-restrooms"></section>
 
     <!-- ============ HOW TO USE ============ -->
+    <section class="view" id="v-survival"></section>
+
     <section class="view" id="v-help">
       <h2 class="sec">How to Use</h2>
       <div class="searchbar">
@@ -631,6 +654,8 @@
 <script src="vendor/pmtiles/pmtiles.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="survival-data.js"></script>
+<script src="survival.js"></script>
 <script>
 if('serviceWorker' in navigator){
   var _swReloading=false;
