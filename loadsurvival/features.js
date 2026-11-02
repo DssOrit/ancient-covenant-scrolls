@@ -212,6 +212,10 @@ window.LSX = function (A) {
   };
   /* related guides (not picture links) */
   var RELATED = {
+    'w90-ca-single': ['w90-ca-couple', 'coimbra-90-numbers', 'water-14day-plan', 'pantry-90-year-plan', 'lim-sanitation', 'lim-power-outage', 'es-kit-tiers'],
+    'w90-ca-couple': ['w90-ca-single', 'coimbra-90-numbers', 'g-pets', 'water-14day-plan', 'pantry-90-year-plan', 'lim-sanitation', 'lim-power-outage'],
+    'w90-fl-pregnant': ['w90-ca-couple', 'coimbra-90-numbers', 'g-pets', 'flood-decisions', 'water-14day-plan', 'pantry-90-year-plan', 'lim-power-outage'],
+    'w90-london-elder': ['w90-ca-single', 'coimbra-90-numbers', 'water-14day-plan', 'pantry-90-year-plan', 'lim-sanitation', 'lim-power-outage', 'lim-heat-cold'],
     'coimbra-90-plan': ['coimbra-90-numbers', 'water-14day-plan', 'week1-day90-plan', 'pantry-90-year-plan', 'lim-sanitation', 'g-pets', 'flood-decisions', 'es-kit-tiers'],
     'coimbra-90-numbers': ['coimbra-90-plan', 'water-14day-plan', 'pantry-90-year-plan', 'ht-store-water', 'lim-power-outage', 'lim-sanitation'],
     'p11e-bamboo-fishing': ['river-10b-fishing', 'river-10a-water', 'gather-legal-checklist', 'trap-no-snare', 'wf-fishing-gear', 'fish-catch-inspect-clean-cook', 'wx-river', 'wf-wild-food-rules'],
