@@ -524,6 +524,7 @@ window.LSX = function (A) {
     ['power', 'bolt', 'Home power calculator', 'Backup power for your home size, rooms, people and appliances'],
     ['tracker', 'list', 'My stockpile tracker', 'Your rates, prices, what you own, shopping list, CSV and backup'],
     ['dogp', 'paw', 'Dog profiles', 'Each dog on its own: weight, food, bags, water and medicine notes'],
+    ['comms', 'radio', 'Communication devices and check-ins', 'Your phones, radios and satellite gear, test dates, airtime end dates, check-in times and emergency numbers by place'],
     ['export', 'print', 'Download and print', 'Guides as files, packs for each person, place and topic']
   ];
   function toolsView() {
@@ -608,6 +609,16 @@ window.LSX = function (A) {
         '<section class="gblock"><h2>Items</h2><div class="tablewrap"><table class="stktable"><thead><tr><th>Item</th><th>Per person, 30 days</th><th>Pack size</th><th>Packs to buy</th><th>Price per pack</th><th>Cost</th><th>Packs you have</th><th>Still to buy</th></tr></thead><tbody id="tr-rows"></tbody></table></div></section>' +
         '<section class="gblock"><h2>Equipment checklist</h2><div id="tr-gear"></div></section>' +
         '<section class="gblock"><h2>Where to look</h2><div id="tr-shops"></div></section>');
+    }
+    if (t === 'comms') {
+      cmInit();
+      return toolFrame(t, '<div class="panel stkpanel"><p class="muted">List every way your household can reach people when cell phones are out. Write the test date and the date the airtime ends. The tool warns you when a test is due or a plan is about to end. It saves only on this device. Nothing is sent anywhere. The family plan (meeting places, contacts) is on the Plan tab.</p>' +
+        '<label for="cm-place">Where you are</label><select id="cm-place" data-cm="place">' + CM_PLACES.map(function (p) { return '<option value="' + p[0] + '"' + (p[0] === S.cm.place ? ' selected' : '') + '>' + esc(p[1]) + '</option>'; }).join('') + '</select>' +
+        '<div id="cm-nums"></div>' +
+        '<label for="cm-times">Check-in times (for example 8 am and 6 pm)</label><input id="cm-times" data-cm="times" type="text" value="' + esc(S.cm.times) + '" placeholder="8 am and 6 pm">' +
+        '<label for="cm-missed">If someone misses two check-ins, we will</label><textarea id="cm-missed" data-cm="missed" rows="2" placeholder="Call the out-of-area contact. Go to the meeting place.">' + esc(S.cm.missed) + '</textarea>' +
+        '<div class="actions">' + btn('Add a device', 'cm-add', 'button') + btn('Add a contact', 'cm-addc', 'secondary') + btn('Copy as text', 'cm-copy', 'secondary') + btn('Print', 'stk-print', 'secondary') + btn('Clear', 'cm-clear', 'secondary') + '</div><p id="cm-msg" class="muted" role="status"></p></div>' +
+        '<section class="gblock"><h2>Devices</h2><div id="cm-devs"></div></section><section class="gblock"><h2>Contacts</h2><div id="cm-cons"></div></section><div id="cm-print" class="printonly"></div>');
     }
     if (t === 'dogp') {
       var DT = window.LOAD_TRACK; if (!DT) return toolFrame(t, '<div class="panel"><p>The dog profiles could not load.</p></div>');
@@ -738,6 +749,72 @@ window.LSX = function (A) {
     for (i = 0; i < 3; i++) seq.push([U, 1], [U, 0]); seq[seq.length - 1] = [U * 7, 0];
     var k = 0;
     (function step() { if (!document.getElementById('ov')) return; var s = seq[k % seq.length]; d.classList.toggle('on', !!s[1]); k++; d._t = setTimeout(step, s[0]); })();
+  }
+
+  /* ---------- communication devices and check-ins ---------- */
+  var CM_PLACES = [['ca', 'California'], ['fl', 'Florida'], ['ldn', 'London'], ['pt', 'Coimbra, Portugal'], ['other', 'Somewhere else']];
+  var CM_NUMS = {
+    ca: 'California: call 911 for danger to life. To check: your county alert system and your non-emergency number.',
+    fl: 'Florida: call 911 for danger to life. To check: your county emergency management and your evacuation zone.',
+    ldn: 'London: call 999 for danger to life (112 also works). NHS 111 is the usual number for a health problem that is not an emergency. To check.',
+    pt: 'Coimbra, Portugal: call 112 for danger to life. To check: the local civil protection service and your nearest hospital.',
+    other: 'Write the emergency number for your place in the notes. To check.'
+  };
+  var CM_TYPES = ['iPhone satellite SOS', 'Satellite messenger (Garmin, ZOLEO)', 'Satellite phone', 'Walkie-talkies', 'Meshtastic node', 'Crank or battery radio', 'Power bank or power station', 'Other'];
+  function cmInit() {
+    S.cm = S.cm || {}; S.cm.place = S.cm.place || 'ca'; S.cm.times = S.cm.times || ''; S.cm.missed = S.cm.missed || '';
+    S.cm.devices = Array.isArray(S.cm.devices) ? S.cm.devices.slice(0, 12) : []; S.cm.contacts = Array.isArray(S.cm.contacts) ? S.cm.contacts.slice(0, 8) : [];
+  }
+  function cmDays(s) { if (!s) return null; var d = new Date(s + 'T12:00:00'); if (isNaN(d.getTime())) return null; return Math.round((Date.now() - d.getTime()) / 86400000); }
+  function cmStatus(d) {
+    var out = [], e = cmDays(d.end), tt = cmDays(d.tested);
+    if (e !== null) { if (e > 0) out.push('Plan or airtime ended ' + e + ' day' + (e === 1 ? '' : 's') + ' ago'); else if (e > -30) out.push('Plan or airtime ends in ' + (-e) + ' day' + (e === -1 ? '' : 's')); }
+    if (tt === null) out.push('Not tested yet'); else if (tt > 90) out.push('Test again (last tested ' + tt + ' days ago)');
+    return out.length ? out.join('. ') + '.' : 'No warnings.';
+  }
+  function cmPrintHtml() {
+    var c = S.cm, h = '<h2>LOAD Survival: communication devices and check-ins</h2><p><b>Where</b><br>' + esc(CM_NUMS[c.place] || '') + '</p><p><b>Check-in times</b><br>' + esc(c.times || '-') + '</p><p><b>If someone misses two check-ins</b><br>' + esc(c.missed || '-').replace(/\n/g, '<br>') + '</p><p><b>Devices</b></p>';
+    c.devices.forEach(function (d) { h += '<p>' + esc(d.type || '') + ': ' + esc(d.model || '-') + '. Kept: ' + esc(d.where || '-') + '. Plan ends: ' + esc(d.end || '-') + '. Last tested: ' + esc(d.tested || '-') + '. Channel or number: ' + esc(d.chan || '-') + '.</p>'; });
+    if (!c.devices.length) h += '<p>-</p>';
+    h += '<p><b>Contacts</b></p>'; c.contacts.forEach(function (k) { h += '<p>' + esc(k.n || '-') + ': ' + esc(k.p || '-') + '</p>'; }); if (!c.contacts.length) h += '<p>-</p>';
+    return h;
+  }
+  function cmText() {
+    var c = S.cm, t = 'LOAD Survival: communication devices and check-ins\n\n' + (CM_NUMS[c.place] || '') + '\nCheck-in times: ' + (c.times || '-') + '\nIf someone misses two check-ins: ' + (c.missed || '-') + '\n\nDevices:\n';
+    c.devices.forEach(function (d) { t += '- ' + (d.type || '') + ': ' + (d.model || '-') + '. Kept: ' + (d.where || '-') + '. Plan ends: ' + (d.end || '-') + '. Last tested: ' + (d.tested || '-') + '. Channel or number: ' + (d.chan || '-') + '. ' + cmStatus(d) + '\n'; });
+    t += '\nContacts:\n'; c.contacts.forEach(function (k) { t += '- ' + (k.n || '-') + ': ' + (k.p || '-') + '\n'; });
+    return t;
+  }
+  function cmRender() {
+    cmInit(); var c = S.cm, h = '';
+    setOut('cm-nums', '<div class="notice">' + esc(CM_NUMS[c.place] || '') + '</div>');
+    c.devices.forEach(function (d, i) {
+      h += '<div class="panel stkpanel"><label for="cm-t' + i + '">Device ' + (i + 1) + ': type</label><select id="cm-t' + i + '" data-cm="d|' + i + '|type">' + CM_TYPES.map(function (x) { return '<option' + (x === d.type ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('') + '</select>' +
+        '<label for="cm-m' + i + '">Model or name</label><input id="cm-m' + i + '" data-cm="d|' + i + '|model" type="text" value="' + esc(d.model || '') + '">' +
+        '<label for="cm-w' + i + '">Where it is kept</label><input id="cm-w' + i + '" data-cm="d|' + i + '|where" type="text" value="' + esc(d.where || '') + '">' +
+        '<label for="cm-e' + i + '">Plan or airtime ends on</label><input id="cm-e' + i + '" data-cm="d|' + i + '|end" type="date" value="' + esc(d.end || '') + '">' +
+        '<label for="cm-s' + i + '">Last tested on</label><input id="cm-s' + i + '" data-cm="d|' + i + '|tested" type="date" value="' + esc(d.tested || '') + '">' +
+        '<label for="cm-c' + i + '">Channel, number or SIM note</label><input id="cm-c' + i + '" data-cm="d|' + i + '|chan" type="text" value="' + esc(d.chan || '') + '">' +
+        '<p class="notice" id="cm-st' + i + '" role="status">' + esc(cmStatus(d)) + '</p><div class="actions">' + btn('Remove this device', 'cm-rm', 'secondary').replace('<button', '<button data-i="' + i + '"') + '</div></div>';
+    });
+    setOut('cm-devs', h || '<div class="notice">No devices yet. Tap "Add a device".</div>');
+    var k = '';
+    c.contacts.forEach(function (x, i) {
+      k += '<div class="panel stkpanel"><label for="cm-n' + i + '">Contact ' + (i + 1) + ': name</label><input id="cm-n' + i + '" data-cm="c|' + i + '|n" type="text" value="' + esc(x.n || '') + '">' +
+        '<label for="cm-p' + i + '">Phone, radio channel or other way to reach them</label><input id="cm-p' + i + '" data-cm="c|' + i + '|p" type="text" value="' + esc(x.p || '') + '"><div class="actions">' + btn('Remove this contact', 'cm-rmc', 'secondary').replace('<button', '<button data-i="' + i + '"') + '</div></div>';
+    });
+    setOut('cm-cons', k || '<div class="notice">No contacts yet. Tap "Add a contact". Include one person outside your area.</div>');
+    setOut('cm-print', cmPrintHtml());
+    var a = document.querySelector('[data-action="cm-add"]'); if (a) a.disabled = c.devices.length >= 12;
+    var b = document.querySelector('[data-action="cm-addc"]'); if (b) b.disabled = c.contacts.length >= 8;
+  }
+  function cmHandle(t) {
+    cmInit(); var c = S.cm, k = t.dataset.cm, p = k.split('|');
+    if (k === 'place' || k === 'times' || k === 'missed') { c[k] = t.value; put(); if (k === 'place') setOut('cm-nums', '<div class="notice">' + esc(CM_NUMS[c.place] || '') + '</div>'); }
+    else if (p[0] === 'd' && c.devices[Number(p[1])]) { c.devices[Number(p[1])][p[2]] = t.value; put(); setOut('cm-st' + p[1], esc(cmStatus(c.devices[Number(p[1])]))); }
+    else if (p[0] === 'c' && c.contacts[Number(p[1])]) { c.contacts[Number(p[1])][p[2]] = t.value; put(); }
+    setOut('cm-print', cmPrintHtml());
+    return true;
   }
 
   /* ---------- plan ---------- */
@@ -902,6 +979,12 @@ window.LSX = function (A) {
     'plan-print': function () { try { window.print(); } catch (e) {} },
     'plan-copy': function () { copy(planText()); },
     'plan-clear': function () { S.plan = {}; put(); A.render(); },
+    'cm-add': function () { cmInit(); if (S.cm.devices.length >= 12) return; S.cm.devices.push({ type: CM_TYPES[0], model: '', where: '', end: '', tested: '', chan: '' }); put(); cmRender(); },
+    'cm-rm': function (x) { cmInit(); S.cm.devices.splice(Number(x.dataset.i), 1); put(); cmRender(); },
+    'cm-addc': function () { cmInit(); if (S.cm.contacts.length >= 8) return; S.cm.contacts.push({ n: '', p: '' }); put(); cmRender(); },
+    'cm-rmc': function (x) { cmInit(); S.cm.contacts.splice(Number(x.dataset.i), 1); put(); cmRender(); },
+    'cm-copy': function () { cmInit(); copy(cmText()); setOut('cm-msg', 'Copied. Paste it into Notes or Messages.'); },
+    'cm-clear': function () { var ok = true; try { ok = window.confirm('Clear all devices, contacts and check-in times on this device?'); } catch (e) {} if (!ok) return; S.cm = null; cmInit(); put(); cmRender(); var tm = document.getElementById('cm-times'); if (tm) tm.value = ''; var ms = document.getElementById('cm-missed'); if (ms) ms.value = ''; },
     'save-pics': savePics,
     'save-pics-stop': function () { picStop = true; }
   };
@@ -1337,7 +1420,7 @@ window.LSX = function (A) {
     var v = state.view;
     if (v === 'tool') {
       var t = state.opened;
-      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
+      if (t === 'tracker') { trInit(); trRows(); trOut(); } else if (t === 'dogp') { trInit(); dpCards(); dpOut(); } else if (t === 'power') { pwTables(); pwOut(); } else if (t === 'comms') cmRender(); else if (t === 'dogs') dgRender(); else if (t === 'stock') { var sb = document.getElementById('stk-nnbox'); if (sb) sb.hidden = ((document.getElementById('stk-n') || {}).value !== 'x'); stkRender(); } else if (t === 'pantry') calcPantry(); else if (t === 'water') calcWater(); else if (t === 'bleach') calcBleach(); else if (t === 'watts') calcWatts(); else if (t === 'fridge') { fridgePanel(); startFridge(); }
     } else clearTimers();
     if (v !== 'tool' || state.opened !== 'cpr') cprStop();
     if (v === 'about') picStatus();
@@ -1356,6 +1439,7 @@ window.LSX = function (A) {
     var t = e.target, id = t.id || '';
     if (id === 'gsearch') { state.gq = t.value; setOut('gresults', searchResults(t.value)); return true; }
     if (t.dataset && t.dataset.plan) { S.plan[t.dataset.plan] = t.value; put(); return true; }
+    if (t.dataset && t.dataset.cm && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return cmHandle(t);
     if (id === 'w-people' || id === 'w-days') { calcWater(); return true; }
     if (id.indexOf('pn-') === 0 && id !== 'pn-pre') { calcPantry(); return true; }
     if (id === 'b-vol') { calcBleach(); return true; }
@@ -1369,6 +1453,7 @@ window.LSX = function (A) {
   }
   function onChange(e) {
     var t = e.target, id = t.id || '';
+    if (t.dataset && t.dataset.cm && (t.tagName === 'SELECT' || t.type === 'date')) return cmHandle(t);
     if (t.dataset && t.dataset.lcheck) {
       var p = t.dataset.lcheck.split('|'); S.lists[p[0]] = S.lists[p[0]] || {}; S.lists[p[0]][p[1]] = t.checked; put();
       var L = C.lists.filter(function (x) { return x.id === p[0]; })[0], n = listDone(p[0]);
