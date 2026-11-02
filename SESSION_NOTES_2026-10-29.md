@@ -68,3 +68,20 @@ Full request list: see the section LOAD SURVIVAL: owner request tracker at the e
 
 ## Communications and split pictures round (cache loadsurvival-p106-v124)
 Backup: backup/2026-10-29-loadsurvival-p105-v123 at 9c2ccd58. Added comms-data.js (8 guides), 36 les-* pictures, RELATED links, export pack. Tests passed (node --check, CORE files exist, 820 and 390 renders, no page errors). Waiting on owner: merge, hold-tile decision, rule 26 lock question.
+
+---
+
+## Separate thread this same date: ACR Search diagnostic (read-only, no site changes)
+
+A different session (branch `claude/acr-reader-text-additions-mo2b4k`) investigated a
+user report that ACR Search wouldn't open on phone/iPad. No unlock phrase was given, no
+site file was touched. Findings: `git status` was clean and zero commits had been made
+anywhere in the repo in the prior 48h; all of `Search/`'s JSON files
+(`acr_search_data.json`, `daily_brief.json`, `acr_concordance.json`, `figure_studies.json`)
+validated, and a JS syntax check on `index.html`'s inline scripts against `origin/main`
+passed clean. User confirmed the live `Search/sw.js` showed `CACHE = 'acr-search-v330'`,
+matching `origin/main` exactly, so the deployment was current. The commit that bumped to
+v330 (`c4a79d8b`, 2026-10-23) was a prior fix (Rule 21 cache-prefix scoping), not a
+regression. No code-level cause was found; the user reported it working again shortly
+after, most likely a stuck service worker or transient network issue on-device. Logged
+here only for continuity — no action item left open.
