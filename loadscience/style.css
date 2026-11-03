@@ -128,7 +128,6 @@ p{margin:.4em 0 .9em}
 }
 .t-VERIFIED{border-left-color:var(--c-verified)}.t-VERIFIED .tag{background:var(--c-verified)}
 .t-SECONDARY{border-left-color:var(--c-secondary)}.t-SECONDARY .tag{background:var(--c-secondary)}
-.t-UNVERIFIED{border-left-color:var(--c-unverified)}.t-UNVERIFIED .tag{background:var(--c-unverified)}
 .t-READING{border-left-color:var(--c-reading)}.t-READING .tag{background:var(--c-reading)}
 .t-NOTSUPPORTED{border-left-color:#888}.t-NOTSUPPORTED .tag{background:var(--c-notsupported);border:1.5px solid #bbb}
 .t-CALCULATED{border-left-color:var(--c-calculated)}.t-CALCULATED .tag{background:var(--c-calculated)}

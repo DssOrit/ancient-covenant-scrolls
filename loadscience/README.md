@@ -3,9 +3,9 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v13` (goes forward only)
+- Cache: `loadscience-v14` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
-- Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
+- Tags: VERIFIED, SECONDARY, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
 - Hard refresh is scoped to this app only (prefix `loadscience-`, scope `/loadscience/`).
 - Design follows ACR Search: dark ground and gold accent, top bar with search box and tag pills, feature cards with a gold left edge, result cards.
@@ -42,7 +42,7 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 
 ## Wording standard (2026-11-03, owner direction: no downplaying of melanin or dark-skin findings)
 - Lead with the result. Put the limit second, stated once, and keep it only where the source states it (mice, observational, one study).
-- Do not use only, just, merely or ordinary to shrink a finding. Tags say where a source was seen (Secondary, Unverified). They never say how important a finding is.
+- Do not use only, just, merely or ordinary to shrink a finding. Tags say where a source was seen (Secondary). They never say how important a finding is.
 - Dark skin is named first in comparisons (Black skin lets through about one fifth of the UV that reaches the upper dermis in Caucasian skin).
 
 ## Dark skin, overlooked scientists, genetic diversity, programs (data5.js)
@@ -58,3 +58,5 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 - Diagrams in the pastes scroll sideways inside their card, so the page itself does not overflow.
 
 - Claims check tables: the claim column quotes the owner's pasted sentence exactly (a test confirms each quote is found word for word in its paste). The other columns are the check.
+
+- Round 15: the Unverified tag is removed from the whole site (no pill, quiz button, legend entry, card or row), by owner direction. Claims that carried it are removed from the claims tables; the pastes themselves are unchanged on the pasted reports page.

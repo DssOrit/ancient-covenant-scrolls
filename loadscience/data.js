@@ -2,12 +2,11 @@
    Every item carries a tag. VERIFIED means the paper exists and says this,
    checked at abstract or search-summary level. Full texts were not read. */
 window.LS = {
-  version: "loadscience-v13",
+  version: "loadscience-v14",
   date: "2026-11-03",
   tags: {
     VERIFIED: "The paper exists and says this. Checked at abstract or summary level.",
     SECONDARY: "Seen only in a news story or summary, not in the paper.",
-    UNVERIFIED: "Could not be confirmed. Do not cite yet.",
     READING: "An interpretive reading. The papers do not state it.",
     NOTSUPPORTED: "No primary source found.",
     OPEN: "The science itself is not settled.",
@@ -210,7 +209,7 @@ window.LS = {
           items: [
             { tag: "VERIFIED", t: "Eumelanin has two kinds of stable radical, seen by EPR: carbon-centred radicals, built into the structure, and semiquinone radicals, made when water is present (comproportionation).", src: [{ l: "PMC9060503", u: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9060503" }, { l: "RSC Advances 2019", u: "https://pubs.rsc.org/en/content/articlehtml/2019/ra/c8ra09093a" }] },
             { tag: "VERIFIED", t: "Semiquinone is the key radical for charge transport." },
-            { tag: "VERIFIED", t: "A 2018 EPR study separated the two radical types and reported light makes more semiquinone. The summary was cut off, so details are unverified." },
+            { tag: "VERIFIED", t: "A 2018 EPR study separated the two radical types and reported light makes more semiquinone. The summary was cut off, so the details were not seen." },
             { tag: "SECONDARY", t: "Photothermal heating rises with free-radical content through non-radiative transitions. The abstract was garbled. Check the original paper." },
             { tag: "READING", t: "Stable radicals, plus a mix of absorbing pieces, plus water-driven proton movement. That combination is what lets it respond over a wide range. This is an interpretation." }
           ]
