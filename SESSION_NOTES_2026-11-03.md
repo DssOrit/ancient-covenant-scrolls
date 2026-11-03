@@ -6,7 +6,7 @@
 
 ## Built today
 - Melanin research note (scratchpad, not in repo): UV, DNA, barrier, neuromelanin, African pigmentation genetics, full electromagnetic spectrum, gamma, electronics. Every item tagged VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING or HYPOTHESIS.
-- New app Load Science at /loadscience/ (cache loadscience-v3): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
+- New app Load Science at /loadscience/ (cache loadscience-v4): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
 
 ## Verification run (headless browser, real index.html)
 - node --check on app.js, data.js, sw.js: pass. Manifest parses. Every file in the sw.js CORE list exists.
@@ -27,3 +27,6 @@
 
 ## Round 3 (same day)
 - Owner did not like the design: must resemble ACR Search and be dyslexia friendly. Redesigned /loadscience/ (index.html, style.css, app.js) on the same branch and PR #1188. ACR Search was only read, never edited. New: ACR Search dark and gold look, top bar with search and tag pills, feature cards, result cards with highlight, settings panel (text size, Dark or Cream, spacing, read aloud, refresh), tables turned into cards. Cache loadscience-v3.
+
+## Round 4 (same day)
+- Owner supplied a new icon pack and splash sheet (green and silver art, 1536x1024) and asked to trim it for the logo and splash page. Trimmed: big icon (square 396 px) to logo-hero.jpg and all app icons; splash panel (682x989) to icons/splash.jpg. Splash overlay added in app.js: once per session, skipped on deep links, tap anywhere or Get started. The Get started area is a transparent real button over the baked-in button. Cache loadscience-v4. Same branch and PR #1188.
