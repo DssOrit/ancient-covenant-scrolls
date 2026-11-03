@@ -6,7 +6,7 @@
 
 ## Built today
 - Melanin research note (scratchpad, not in repo): UV, DNA, barrier, neuromelanin, African pigmentation genetics, full electromagnetic spectrum, gamma, electronics. Every item tagged VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING or HYPOTHESIS.
-- New app Load Science at /loadscience/ (cache loadscience-v4): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
+- New app Load Science at /loadscience/ (cache loadscience-v5): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
 
 ## Verification run (headless browser, real index.html)
 - node --check on app.js, data.js, sw.js: pass. Manifest parses. Every file in the sw.js CORE list exists.
@@ -30,3 +30,11 @@
 
 ## Round 4 (same day)
 - Owner supplied a new icon pack and splash sheet (green and silver art, 1536x1024) and asked to trim it for the logo and splash page. Trimmed: big icon (square 396 px) to logo-hero.jpg and all app icons; splash panel (682x989) to icons/splash.jpg. Splash overlay added in app.js: once per session, skipped on deep links, tap anywhere or Get started. The Get started area is a transparent real button over the baked-in button. Cache loadscience-v4. Same branch and PR #1188.
+
+## Round 5 (same day)
+- Owner asked: make the site interactive, create a favicon, add innovative little-known melanin research, and give the splash page a Get started button.
+- PR #1188 (v3) and PR #1189 (v4: logo, icons, splash) are both merged. Round 5 is a fresh branch claude/loadscience-v5 from origin/main 923db623. Backup: backup/2026-11-03-loadscience-v4 at 923db623.
+- Added: lesser-known research page (12 groups: inner-ear melanocytes and hearing, vitamin D binding protein, fossil melanosomes, feather structural colour, heart melanocytes, neuromelanin MRI, fungal melanin and MelLec, light-driven radical, hair graying, melanin battery anode, polydopamine, melanin water splitting). Every item tagged; items seen only through summaries are tagged SECONDARY.
+- Added interactive tools: photon shielding explorer, spectrum explorer, claim check quiz, saved claims, glossary, Did you know card. New tag: CALCULATED.
+- Favicon from the flask icon. Splash Get started button is now a real visible button.
+- Nothing outside /loadscience/ was touched.

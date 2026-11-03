@@ -1,10 +1,12 @@
 /* Load Science service worker. Cache name goes forward only. */
-var CACHE = 'loadscience-v4';
+var CACHE = 'loadscience-v5';
 var CORE = [
   './',
   './index.html',
   './style.css',
   './data.js',
+  './data2.js',
+  './explore.js',
   './app.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
@@ -12,6 +14,9 @@ var CORE = [
   './icons/icon-maskable-192.png',
   './icons/apple-touch-icon.png',
   './icons/favicon-32.png',
+  './icons/favicon-16.png',
+  './icons/favicon-48.png',
+  './favicon.ico',
   './icons/logo-hero.jpg',
   './icons/splash.jpg'
 ];
