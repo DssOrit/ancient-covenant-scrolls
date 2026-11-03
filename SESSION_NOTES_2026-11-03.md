@@ -39,6 +39,12 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 15 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner direction, with a circled screenshot: remove only the Unverified button and the note beneath it on the claims-check rows, and keep the quoted claim above. My first attempt (PR #1196, v14) removed the tag, pill, quiz button and 69 cards and rows everywhere; that was too much, so it was reverted on the same branch and replaced by the narrow change. Backups: backup/2026-11-03-loadscience-v13 at 817183e1 and backup/2026-11-03-loadscience-v13b at 0dd9b0d5 (current main, verified). Cache v14.
+- The 39 pasted-claim check rows tagged Unverified (Pastes 1 to 9, the government claims table, the later pasted sets table) are shown as bare cards: the quoted claim and Save only. No badge, no note. Search matches only the claim for these cards. They are left out of the quiz.
+- Unchanged: the Unverified pill, quiz button and legend, all Unverified cards on other pages and the supernatural-claims table, and the pasted reports page.
+- Open: 4Q186 reject or hold; Damascus Document notes with repeated covenant; Yirmeyahu 38; blocked hosts.
+
 ## Round 14 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 PR #1194 was merged by the owner (main f01319c8, cache v12). Owner gave the phrase and the rule: the claim column of every check row quotes the pasted sentence exactly. Backup of main: backup/2026-11-03-loadscience-v12 at f01319c8 (verified). Fresh branch claude/loadscience-v13, cache v13.
 - All 126 check rows (Pastes 1 to 9, the government claims table, the later pasted sets table) now quote the pasted text exactly. Extra rows were added where one old row had covered two separate pasted sentences. A test confirms each claim column is found word for word in a paste. The supernatural-claims table is not from a paste and is unchanged.

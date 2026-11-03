@@ -1,5 +1,5 @@
 /* Load Science service worker. Cache name goes forward only. */
-var CACHE = 'loadscience-v13';
+var CACHE = 'loadscience-v14';
 var CORE = [
   './',
   './index.html',

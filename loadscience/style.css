@@ -138,6 +138,7 @@ p{margin:.4em 0 .9em}
 .t-PASTED{border-left-color:#b0a58a}.t-PASTED .tag{background:#5a5242;border:1.5px solid #b0a58a}
 .card p.pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
 .card p.pre.diagram{white-space:pre;overflow-x:auto;overflow-wrap:normal;font-family:Arial,sans-serif;font-size:.85rem;line-height:1.5}
+.t-bare{border-left-color:#b0a58a}
 .t-OPEN{border-left-color:var(--c-open)}.t-OPEN .tag{background:var(--c-open)}
 .t-CONFLICTING{border-left-color:var(--c-conflicting)}.t-CONFLICTING .tag{background:var(--c-conflicting)}
 .t-HYPOTHESIS{border-left-color:#999}.t-HYPOTHESIS .tag{background:var(--c-hypothesis);border:1.5px solid #bbb}

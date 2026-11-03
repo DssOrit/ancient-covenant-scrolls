@@ -90,15 +90,18 @@
   /* One claim card. Used on section pages and in search results. */
   function claimCard(it, opts) {
     opts = opts || {};
-    var c = el("div", "card t-" + it.tag);
+    var c = el("div", "card " + (it.bare ? "t-bare" : "t-" + it.tag));
     if (opts.ref) { c.appendChild(el("div", "ref", opts.ref)); }
     if (it.title) { c.appendChild(el("h3", "", it.title)); }
-    c.appendChild(badge(it.tag));
-    var p = el("p", it.pre ? (it.diagram ? "pre diagram" : "pre") : "");
-    p.appendChild(withMarks(it.t, opts.words || []));
-    c.appendChild(p);
-    if (it.cite) { c.appendChild(el("p", "src", "Where: " + it.cite)); }
-    if (it.src && it.src.length) { c.appendChild(srcLine(it.src)); }
+    /* A bare card shows only the claim: no tag button and no note beneath it. */
+    if (!it.bare) {
+      c.appendChild(badge(it.tag));
+      var p = el("p", it.pre ? (it.diagram ? "pre diagram" : "pre") : "");
+      p.appendChild(withMarks(it.t, opts.words || []));
+      c.appendChild(p);
+      if (it.cite) { c.appendChild(el("p", "src", "Where: " + it.cite)); }
+      if (it.src && it.src.length) { c.appendChild(srcLine(it.src)); }
+    }
     var foot = el("div", "row-actions");
     if (!opts.noSave) {
       var cid = idOf(it.title, it.t);
@@ -126,6 +129,10 @@
     return c;
   }
 
+  /* A table row marked bare (a pasted claim whose tag was Unverified) shows only the quoted
+     claim: the owner asked for the tag button and the note beneath it to be removed, not the
+     claim above. The mark is set in data7.js. */
+
   /* Index of every claim, for search */
   var INDEX = [];
   LS.sections.forEach(function (s) {
@@ -135,7 +142,7 @@
       });
       if (b.table) {
         b.table.rows.forEach(function (r) {
-          INDEX.push({ id: idOf(r[0], r[1]), sec: s, block: b.h, tag: r[r.length - 1], title: r[0], t: r[1] });
+          INDEX.push({ id: idOf(r[0], r[1]), sec: s, block: b.h, tag: r[r.length - 1], title: r[0], t: r[1], bare: !!r.bare });
         });
       }
     });
@@ -308,7 +315,7 @@
       if (b.chart === "photon") { f.appendChild(photonChartSvg()); }
       if (b.table) {
         b.table.rows.forEach(function (r) {
-          f.appendChild(claimCard({ tag: r[r.length - 1], title: r[0], t: r[1] }));
+          f.appendChild(claimCard({ tag: r[r.length - 1], title: r[0], t: r[1], bare: !!r.bare }));
         });
       }
       (b.items || []).forEach(function (it) { f.appendChild(claimCard(it)); });
@@ -356,7 +363,7 @@
     }
     var hits = INDEX.filter(function (e) {
       if (curTag !== "all" && e.tag !== curTag) { return false; }
-      var hay = (e.t + " " + (e.title || "") + " " + e.block + " " + e.sec.title + " " + (LABEL[e.tag] || "")).toLowerCase();
+      var hay = ((e.bare ? "" : e.t) + " " + (e.title || "") + " " + e.block + " " + e.sec.title + " " + (e.bare ? "" : (LABEL[e.tag] || ""))).toLowerCase();
       return words.every(function (w) { return hay.indexOf(w) >= 0; });
     });
     var hdr = el("div", "results-hdr",
@@ -366,7 +373,7 @@
     if (curTag !== "all") { f.appendChild(el("p", "sub", LS.tags[curTag])); }
     hits.forEach(function (e) {
       f.appendChild(claimCard(
-        { tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
+        { tag: e.tag, title: e.title, t: e.t, bare: e.bare, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
         { ref: e.sec.title + "  >  " + e.block, words: words, open: e.sec.id }
       ));
     });
