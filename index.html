@@ -234,7 +234,7 @@ body.dark #reader-footer{background:#0a0a0a}
     </select>
     <select id="vvoice" class="vb" onchange="vSetVoice(this.value)" style="max-width:120px;padding:2px"></select>
     <button class="vb" onclick="vPreview()">Preview</button>
-    <select id="vmode" class="vb" onchange="VMODE=this.value;localStorage.setItem('acr_vm',this.value)" style="padding:2px">
+    <select id="vmode" class="vb" onchange="VMODE=this.value;LS.set('acr_vm',this.value)" style="padding:2px">
       <option value="verses">Verses</option>
       <option value="notes">Notes</option>
       <option value="all">All</option>
@@ -291,6 +291,20 @@ body.dark #reader-footer{background:#0a0a0a}
 <button id="top" onclick="window.scrollTo(0,0)" title="Scroll to top">↑</button>
 
 <script>
+// Safe localStorage wrapper. Some embedding contexts (e.g. a sandboxed
+// iframe without allow-same-origin, or Safari private browsing in some
+// configurations) throw on any localStorage access. Routing every call
+// through this wrapper means those contexts fall back to an in-memory
+// store for the session instead of throwing and halting the script.
+var LS=(function(){
+  var mem={},ok=true;
+  try{localStorage.setItem('__acr_ls_test__','1');localStorage.removeItem('__acr_ls_test__');}catch(e){ok=false;}
+  return{
+    get:function(k,d){if(ok){try{var v=localStorage.getItem(k);return v===null?d:v;}catch(e){}}return(k in mem)?mem[k]:d;},
+    set:function(k,v){if(ok){try{localStorage.setItem(k,v);return;}catch(e){}}mem[k]=String(v);},
+    remove:function(k){if(ok){try{localStorage.removeItem(k);return;}catch(e){}}delete mem[k];}
+  };
+})();
 var _glyphIv=null;
 var _YHWH=[
   {text:String.fromCodePoint(0x10909,0x10904,0x10905,0x10904),label:'Paleo Hebrew',font:'"Segoe UI Historic","Noto Sans Phoenician",serif',size:'40px'},
@@ -369,9 +383,9 @@ function goBackToSolar(){
 }
 window.addEventListener('load',function(){
   // Splash stays visible until the user taps Enter (doEnter opens the reader).
-  if(localStorage.getItem('acr_from_solar')==='1'){
+  if(LS.get('acr_from_solar',null)==='1'){
     document.getElementById('solar-back').style.display='block';
-    localStorage.removeItem('acr_from_solar');
+    LS.remove('acr_from_solar');
   }
 });
 </script>
@@ -383,7 +397,7 @@ var LABELS=['Vol 1 — Bereshit (Genesis) — Part 1 — Chapters 1–11', 'Vol 
 var TOC=[{"type": "sec", "label": "TORAH"}, {"type": "vol", "label": "Vol 1 — Bereshit (Genesis)"}, {"type": "file", "idx": 0, "label": "Part 1 — Chapters 1–11"}, {"type": "file", "idx": 1, "label": "Part 2 — Chapters 12–25"}, {"type": "file", "idx": 2, "label": "Part 3 — Chapters 26–37"}, {"type": "file", "idx": 3, "label": "Part 4 — Chapters 38–50"}, {"type": "vol", "label": "Vol 2 — Shemot (Exodus)"}, {"type": "file", "idx": 4, "label": "Part 1 — Chapters 1–18"}, {"type": "file", "idx": 5, "label": "Part 2 — Chapters 19–40"}, {"type": "vol", "label": "Vol 3 — Vayikra (Leviticus)"}, {"type": "file", "idx": 6, "label": "Part 1 — Chapters 1–16"}, {"type": "file", "idx": 7, "label": "Part 2 — Chapters 17–27"}, {"type": "vol", "label": "Vol 4 — Bamidbar (Numbers)"}, {"type": "file", "idx": 8, "label": "Part 1 — Chapters 1–18"}, {"type": "file", "idx": 9, "label": "Part 2 — Chapters 19–36"}, {"type": "vol", "label": "Vol 5 — Devarim (Deuteronomy)"}, {"type": "file", "idx": 10, "label": "Part 1 — Chapters 1–17"}, {"type": "file", "idx": 11, "label": "Part 2 — Chapters 18–34"}, {"type": "sec", "label": "SECOND CANON — ORIT GE'EZ"}, {"type": "vol", "label": "Vol 6 — Chanokh (1 Enoch) — DSS Attested Ch 1–49"}, {"type": "file", "idx": 12, "label": "Part 1 — Chapters 1–36 — Book of Watchers"}, {"type": "file", "idx": 13, "label": "The Book of Parables — Why It Is Excluded"}, {"type": "file", "idx": 14, "label": "Part 2 — Chapters 37–49 — Astronomical Book and First Dream Vision"}, {"type": "vol", "label": "Vol 7 — Yovelim (Jubilees)"}, {"type": "file", "idx": 15, "label": "All 50 Chapters — Part 1 — Chapters 1–25"}, {"type": "file", "idx": 16, "label": "All 50 Chapters — Part 2 — Chapters 26–50"}, {"type": "sec", "label": "NEVI'IM — FORMER PROPHETS"}, {"type": "vol", "label": "Vol 8 — Yehoshua (Joshua)"}, {"type": "file", "idx": 17, "label": "Part 1 — Chapters 1–8"}, {"type": "file", "idx": 18, "label": "Part 2 — Chapters 9–15"}, {"type": "file", "idx": 19, "label": "Part 3 — Chapters 16–24"}, {"type": "vol", "label": "Vol 9 — Shofetim (Judges)"}, {"type": "file", "idx": 20, "label": "Part 1 — Chapters 1–7"}, {"type": "file", "idx": 21, "label": "Part 2 — Chapters 8–14"}, {"type": "file", "idx": 22, "label": "Part 3 — Chapters 15–21"}, {"type": "vol", "label": "Vol 10 — Shemu'el Aleph (1 Samuel)"}, {"type": "file", "idx": 23, "label": "Part 1 — Chapters 1–10"}, {"type": "file", "idx": 24, "label": "Part 2 — Chapters 11–17"}, {"type": "file", "idx": 25, "label": "Part 3 — Chapters 18–24"}, {"type": "file", "idx": 26, "label": "Part 4 — Chapters 25–31"}, {"type": "vol", "label": "Vol 11 — Shemu'el Bet (2 Samuel)"}, {"type": "file", "idx": 27, "label": "Part 1 — Chapters 1–6"}, {"type": "file", "idx": 28, "label": "Part 2 — Chapters 7–12"}, {"type": "file", "idx": 29, "label": "Part 3 — Chapters 13–18"}, {"type": "file", "idx": 30, "label": "Part 4 — Chapters 19–24"}, {"type": "vol", "label": "Vol 12 — Melakhim Aleph (1 Kings)"}, {"type": "file", "idx": 31, "label": "Part 1 — Chapters 1–6"}, {"type": "file", "idx": 32, "label": "Part 2 — Chapters 7–12"}, {"type": "file", "idx": 33, "label": "Part 3 — Chapters 13–18"}, {"type": "file", "idx": 34, "label": "Part 4 — Chapters 19–22"}, {"type": "vol", "label": "Vol 13 — Melakhim Bet (2 Kings)"}, {"type": "file", "idx": 35, "label": "Part 1 — Chapters 1–7"}, {"type": "file", "idx": 36, "label": "Part 2 — Chapters 8–13"}, {"type": "file", "idx": 37, "label": "Part 3 — Chapters 14–19"}, {"type": "file", "idx": 38, "label": "Part 4 — Chapters 20–25"}, {"type": "sec", "label": "NEVI'IM — LATTER PROPHETS & THE TWELVE"}, {"type": "vol", "label": "Vol 14 — Yesha'yahu (Isaiah)"}, {"type": "file", "idx": 39, "label": "1QIsa-a — Part 1 — Chapters 1–12"}, {"type": "file", "idx": 40, "label": "1QIsa-a — Part 2 — Chapters 13–27"}, {"type": "file", "idx": 41, "label": "1QIsa-a — Part 3 — Chapters 28–41"}, {"type": "file", "idx": 42, "label": "1QIsa-a — Part 4 — Chapters 42–54"}, {"type": "file", "idx": 43, "label": "1QIsa-a — Part 5 — Chapters 55–66"}, {"type": "vol", "label": "Vol 15 — Yirmeyahu (Jeremiah)"}, {"type": "file", "idx": 44, "label": "DSS Primary — Part 1 — Chapters 1–7"}, {"type": "file", "idx": 45, "label": "DSS Primary — Part 2 — Chapters 8–15"}, {"type": "file", "idx": 46, "label": "DSS Primary — Part 3 — Chapters 16–23"}, {"type": "file", "idx": 47, "label": "DSS Primary — Part 4 — Chapters 24–31"}, {"type": "file", "idx": 48, "label": "DSS Primary — Part 5 — Chapters 32–39"}, {"type": "file", "idx": 49, "label": "DSS Primary — Part 6 — Chapters 40–48"}, {"type": "file", "idx": 50, "label": "DSS Primary — Part 7 — Chapters 49–52"}, {"type": "vol", "label": "Vol 16 — Yehezkel (Ezekiel)"}, {"type": "file", "idx": 51, "label": "4QEzek — Part 1 — Chapters 1–11"}, {"type": "file", "idx": 52, "label": "4QEzek — Part 2 — Chapters 12–19"}, {"type": "file", "idx": 53, "label": "4QEzek — Part 3 — Chapters 20–24"}, {"type": "file", "idx": 54, "label": "4QEzek — Part 4 — Chapters 25–32"}, {"type": "file", "idx": 55, "label": "4QEzek — Part 5 — Chapters 33–39"}, {"type": "file", "idx": 56, "label": "4QEzek — Part 6 — Chapters 40–48"}, {"type": "vol", "label": "Vol 17 — The Twelve"}, {"type": "file", "idx": 57, "label": "Part 1 — Hoshea"}, {"type": "file", "idx": 58, "label": "Part 2 — Yoel and Amos"}, {"type": "file", "idx": 59, "label": "Part 3 — Ovadyah, Yonah, Mikhah, Nakhum"}, {"type": "file", "idx": 60, "label": "Part 4 — Havakuk, Tzefanyah, Khagai, Zekhariyahu 1–8"}, {"type": "file", "idx": 61, "label": "Part 5 — Zekhariyahu 9–14 and Malakhi"}, {"type": "sec", "label": "KETUVIM — THE WRITINGS"}, {"type": "vol", "label": "Vol 18 — Tehillim (Psalms)"}, {"type": "file", "idx": 62, "label": "Including Ps 151, 154, 155 — Part 1 — Psalms 1–20"}, {"type": "file", "idx": 63, "label": "Including Ps 151, 154, 155 — Part 2 — Psalms 21–41"}, {"type": "file", "idx": 64, "label": "Including Ps 151, 154, 155 — Part 3 — Psalms 42–72"}, {"type": "file", "idx": 65, "label": "Including Ps 151, 154, 155 — Part 4 — Psalms 73–89"}, {"type": "file", "idx": 66, "label": "Including Ps 151, 154, 155 — Part 5 — Psalms 90–106"}, {"type": "file", "idx": 67, "label": "Including Ps 151, 154, 155 — Part 6 — Psalms 107–118"}, {"type": "file", "idx": 68, "label": "Including Ps 151, 154, 155 — Part 7 — Psalm 119"}, {"type": "file", "idx": 69, "label": "Including Ps 151, 154, 155 — Part 8 — Psalms 120–150"}, {"type": "file", "idx": 70, "label": "Including Ps 151, 154, 155 — Part 9 — Psalms 151, 154, 155 — DSS Only"}, {"type": "vol", "label": "Vol 19 — Mishlei (Proverbs)"}, {"type": "file", "idx": 71, "label": "Part 1 — Chapters 1–10"}, {"type": "file", "idx": 72, "label": "Part 2 — Chapters 11–20"}, {"type": "file", "idx": 73, "label": "Part 3 — Chapters 21–31"}, {"type": "vol", "label": "Vol 20 — Iyov (Job)"}, {"type": "file", "idx": 74, "label": "Part 1 — Chapters 1–14"}, {"type": "file", "idx": 75, "label": "Part 2 — Chapters 15–28"}, {"type": "file", "idx": 76, "label": "Part 3 — Chapters 29–42"}, {"type": "vol", "label": "Vol 21 — Shir HaShirim (Song of Songs)"}, {"type": "file", "idx": 77, "label": "Complete"}, {"type": "vol", "label": "Vol 22 — Ruth"}, {"type": "file", "idx": 78, "label": "Complete"}, {"type": "vol", "label": "Vol 23 — Eikha (Lamentations)"}, {"type": "file", "idx": 79, "label": "Complete"}, {"type": "vol", "label": "Vol 24 — Kohelet (Ecclesiastes)"}, {"type": "file", "idx": 80, "label": "Complete"}, {"type": "vol", "label": "Vol 25 — Esther"}, {"type": "file", "idx": 81, "label": "Orit Ge'ez Primary — Complete"}, {"type": "vol", "label": "Vol 26 — Daniyel (Daniel)"}, {"type": "file", "idx": 82, "label": "8 DSS Manuscripts — Part 1 — Chapters 1–6"}, {"type": "file", "idx": 83, "label": "8 DSS Manuscripts — Part 2 — Chapters 7–12"}, {"type": "vol", "label": "Vol 27 — Ezra-Nekhemyah"}, {"type": "file", "idx": 84, "label": "Part 1 — Ezra"}, {"type": "file", "idx": 85, "label": "Part 2 — Nekhemyah"}, {"type": "vol", "label": "Vol 28 — Divrei HaYamim Aleph (1 Chronicles)"}, {"type": "file", "idx": 86, "label": "Part 1 — Chapters 1–9"}, {"type": "file", "idx": 87, "label": "Part 2 — Chapters 10–29"}, {"type": "vol", "label": "Vol 29 — Divrei HaYamim Bet (2 Chronicles)"}, {"type": "file", "idx": 88, "label": "Part 1 — Chapters 1–18"}, {"type": "file", "idx": 89, "label": "Part 2 — Chapters 19–36"}, {"type": "sec", "label": "QUMRAN SECTARIAN TEXTS"}, {"type": "vol", "label": "Vol 30 — War Scroll (1QM)"}, {"type": "file", "idx": 90, "label": "All 19 Columns — Complete"}, {"type": "vol", "label": "Vol 31 — Book of Giants (Sefer HaNephilim)"}, {"type": "file", "idx": 91, "label": "Complete — Fragments 1–6"}];
 
 // STATE
-var CUR=parseInt(localStorage.getItem('acr_last')||'0');if(!(CUR>=0&&CUR<NAVIDS.length))CUR=0;
+var CUR=parseInt(LS.get('acr_last','0'));if(!(CUR>=0&&CUR<NAVIDS.length))CUR=0;
 
 // RANDOM VERSE / LESSON -- two pools. VOD_MOMENTS is a curated set of
 // well-known narrative beats and standalone lines, each verified
@@ -400,17 +414,17 @@ var VOD_MOMENTS=[{l:"The burning bush",r:"Shemot 3:4",nav:4,ch:3,v:[4],bk:null,t
 // lines by nature), picked and fetched at random when the button fires.
 var VOD_WISDOM=[{nav:62,name:'Tehillim'},{nav:63,name:'Tehillim'},{nav:64,name:'Tehillim'},{nav:65,name:'Tehillim'},{nav:66,name:'Tehillim'},{nav:67,name:'Tehillim'},{nav:68,name:'Tehillim'},{nav:69,name:'Tehillim'},{nav:70,name:'Tehillim'},{nav:71,name:'Mishlei'},{nav:72,name:'Mishlei'},{nav:73,name:'Mishlei'},{nav:74,name:'Iyov'},{nav:75,name:'Iyov'},{nav:76,name:'Iyov'},{nav:80,name:'Kohelet'}];
 var PENDING_JUMP=null;
-var FS=parseFloat(localStorage.getItem('acr_fs')||'10.5');
-var LH=parseFloat(localStorage.getItem('acr_lh')||'1.65');
-var DARK=localStorage.getItem('acr_dark')==='1';
-var SEPIA=localStorage.getItem('acr_sepia')==='1';
+var FS=parseFloat(LS.get('acr_fs','10.5'));
+var LH=parseFloat(LS.get('acr_lh','1.65'));
+var DARK=LS.get('acr_dark',null)==='1';
+var SEPIA=LS.get('acr_sepia',null)==='1';
 var SB_OPEN=window.innerWidth>=1024;
 var READING=false;
 var VOICES=[];
-var VIDX=parseInt(localStorage.getItem('acr_vi')||'0');
-var VRATE=parseFloat(localStorage.getItem('acr_vr')||'1');
+var VIDX=parseInt(LS.get('acr_vi','0'));
+var VRATE=parseFloat(LS.get('acr_vr','1'));
 var VOL=1;
-var VMODE=localStorage.getItem('acr_vm')||'verses';
+var VMODE=LS.get('acr_vm','verses');
 var VPARAS=[];
 var VPOS=0;
 var VPLAYING=false;
@@ -427,7 +441,7 @@ function start(){
   applyFS(); applyLH();
   if(DARK) document.body.classList.add('dark');
   if(SEPIA&&!DARK) document.body.classList.add('sepia');
-  try{HL_DATA=JSON.parse(localStorage.getItem('acr_hl')||'{}');}catch(e){}
+  try{HL_DATA=JSON.parse(LS.get('acr_hl','{}'));}catch(e){}
   buildSB();
   document.getElementById('vmode').value=VMODE;
   loadVoices();
@@ -448,7 +462,7 @@ function loadSection(idx,restore){
   if(idx<0||idx>=NAVIDS.length) return;
   if(window.innerWidth<1024 && document.getElementById('sb').classList.contains('mob')) toggleSB();
   CUR=idx;
-  localStorage.setItem('acr_last',CUR);
+  LS.set('acr_last',CUR);
   addRecent(CUR);
   saveNotes();
   var fid=NAVIDS[CUR];
@@ -460,9 +474,9 @@ function loadSection(idx,restore){
   document.querySelectorAll('.tf').forEach(function(el){
     el.classList.toggle('cur',el.dataset.idx===String(CUR));
   });
-  var bms=JSON.parse(localStorage.getItem('acr_bms')||'[]');
+  var bms=JSON.parse(LS.get('acr_bms','[]'));
   document.getElementById('bm-btn').textContent=bms.indexOf(fid)>=0?'★':'☆';
-  var notes=JSON.parse(localStorage.getItem('acr_notes')||'{}');
+  var notes=JSON.parse(LS.get('acr_notes','{}'));
   document.getElementById('notes-ta').value=notes[fid]||'';
   document.getElementById('notes-lbl').textContent=lbl.split(' — ').slice(0,2).join(' — ');
   document.getElementById('content').innerHTML='<p style="padding:40px;color:#888;text-align:center">Loading…</p>';
@@ -473,13 +487,13 @@ function loadSection(idx,restore){
       applyFS(); applyLH();
       restoreHL(fid);
       vStop(); buildVP();
-      var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
+      var vp=JSON.parse(LS.get('acr_vp','{}'));
       VPOS=vp[fid]||0; updateVS();
       if(PENDING_JUMP){
         var pj=PENDING_JUMP; PENDING_JUMP=null;
         setTimeout(function(){ scrollToVerseInContent(pj.ch,pj.v,pj.bk); },80);
       } else if(restore){
-        var sp=JSON.parse(localStorage.getItem('acr_sp')||'{}');
+        var sp=JSON.parse(LS.get('acr_sp','{}'));
         if(sp[fid]) setTimeout(function(){window.scrollTo(0,sp[fid]);},80);
         else window.scrollTo(0,0);
       } else { window.scrollTo(0,0); }
@@ -551,15 +565,15 @@ function rvExtractVerses(htmlStr){
 
 function rvRecentHas(ref){
   var hist=[];
-  try{hist=JSON.parse(localStorage.getItem('acr_rv_hist')||'[]');}catch(e){}
+  try{hist=JSON.parse(LS.get('acr_rv_hist','[]'));}catch(e){}
   return hist.indexOf(ref)>=0;
 }
 function rvRemember(ref){
   var hist=[];
-  try{hist=JSON.parse(localStorage.getItem('acr_rv_hist')||'[]');}catch(e){}
+  try{hist=JSON.parse(LS.get('acr_rv_hist','[]'));}catch(e){}
   hist.push(ref);
   if(hist.length>8) hist=hist.slice(hist.length-8);
-  try{localStorage.setItem('acr_rv_hist',JSON.stringify(hist));}catch(e){}
+  try{LS.set('acr_rv_hist',JSON.stringify(hist));}catch(e){}
 }
 
 var RV_PENDING=null;
@@ -649,19 +663,19 @@ function toggleSB(){
 // DISPLAY
 function applyFS(){document.getElementById('content').style.setProperty('--fs',FS+'pt');}
 function applyLH(){document.getElementById('content').style.setProperty('--lh',LH);}
-function adjFS(d){FS=Math.max(8,Math.min(22,FS+d));applyFS();localStorage.setItem('acr_fs',FS);}
-function adjLH(d){LH=Math.max(1.2,Math.min(2.5,Math.round((LH+d*.1)*10)/10));applyLH();localStorage.setItem('acr_lh',LH);}
+function adjFS(d){FS=Math.max(8,Math.min(22,FS+d));applyFS();LS.set('acr_fs',FS);}
+function adjLH(d){LH=Math.max(1.2,Math.min(2.5,Math.round((LH+d*.1)*10)/10));applyLH();LS.set('acr_lh',LH);}
 function doDark(){
   document.body.classList.remove('sepia');SEPIA=false;
   DARK=document.body.classList.toggle('dark');
-  localStorage.setItem('acr_dark',DARK?'1':'0');
-  localStorage.setItem('acr_sepia','0');
+  LS.set('acr_dark',DARK?'1':'0');
+  LS.set('acr_sepia','0');
   document.getElementById('dark-btn').classList.toggle('on',DARK);
 }
 function doSepia(){
-  if(DARK){document.body.classList.remove('dark');DARK=false;localStorage.setItem('acr_dark','0');}
+  if(DARK){document.body.classList.remove('dark');DARK=false;LS.set('acr_dark','0');}
   SEPIA=document.body.classList.toggle('sepia');
-  localStorage.setItem('acr_sepia',SEPIA?'1':'0');
+  LS.set('acr_sepia',SEPIA?'1':'0');
   document.getElementById('sepia-btn').classList.toggle('on',SEPIA);
 }
 function doRead(){
@@ -684,9 +698,9 @@ function onScroll(){
   document.getElementById('top').style.display=s>300?'block':'none';
   clearTimeout(SCROLL_T);
   SCROLL_T=setTimeout(function(){
-    var sp=JSON.parse(localStorage.getItem('acr_sp')||'{}');
+    var sp=JSON.parse(LS.get('acr_sp','{}'));
     sp[NAVIDS[CUR]]=s;
-    localStorage.setItem('acr_sp',JSON.stringify(sp));
+    LS.set('acr_sp',JSON.stringify(sp));
   },3000);
 }
 
@@ -731,16 +745,16 @@ function doSearch(q){
 // BOOKMARKS
 function toggleBM(){
   var fid=NAVIDS[CUR];
-  var bms=JSON.parse(localStorage.getItem('acr_bms')||'[]');
+  var bms=JSON.parse(LS.get('acr_bms','[]'));
   var i=bms.indexOf(fid);
   if(i>=0){bms.splice(i,1);document.getElementById('bm-btn').textContent='☆';}
   else{bms.push(fid);document.getElementById('bm-btn').textContent='★';}
-  localStorage.setItem('acr_bms',JSON.stringify(bms));
+  LS.set('acr_bms',JSON.stringify(bms));
   renderBM();
   document.getElementById('bm-panel').classList.toggle('show');
 }
 function renderBM(){
-  var bms=JSON.parse(localStorage.getItem('acr_bms')||'[]');
+  var bms=JSON.parse(LS.get('acr_bms','[]'));
   var p=document.getElementById('bm-panel');
   if(!bms.length){p.innerHTML='<span style="color:#666;font-size:11px">No bookmarks yet</span>';return;}
   p.innerHTML=bms.map(function(fid){
@@ -752,15 +766,15 @@ function renderBM(){
 
 // RECENTLY READ
 function addRecent(idx){
-  var r=JSON.parse(localStorage.getItem('acr_rec')||'[]');
+  var r=JSON.parse(LS.get('acr_rec','[]'));
   r=r.filter(function(i){return i!==idx;});
   r.unshift(idx);if(r.length>10)r=r.slice(0,10);
-  localStorage.setItem('acr_rec',JSON.stringify(r));
+  LS.set('acr_rec',JSON.stringify(r));
 }
 function toggleRecent(){
   var p=document.getElementById('recent-panel');
   if(p.classList.toggle('show')){
-    var r=JSON.parse(localStorage.getItem('acr_rec')||'[]');
+    var r=JSON.parse(LS.get('acr_rec','[]'));
     p.innerHTML=r.length?r.map(function(idx){
       var lbl=LABELS[idx]?LABELS[idx].split(' — ').slice(0,2).join(' — '):'?';
       return '<span class="rp" onclick="loadSection('+idx+',true);document.getElementById(\'recent-panel\').classList.remove(\'show\')">'+lbl+'</span>';
@@ -772,9 +786,9 @@ function toggleRecent(){
 function saveNotes(){
   var fid=NAVIDS[CUR];
   var v=document.getElementById('notes-ta').value;
-  var n=JSON.parse(localStorage.getItem('acr_notes')||'{}');
+  var n=JSON.parse(LS.get('acr_notes','{}'));
   if(v)n[fid]=v;else delete n[fid];
-  localStorage.setItem('acr_notes',JSON.stringify(n));
+  LS.set('acr_notes',JSON.stringify(n));
 }
 function toggleNotes(){
   var p=document.getElementById('notes-panel');
@@ -786,7 +800,7 @@ function toggleNotesViewer(){
   var p=document.getElementById('notes-viewer');
   p.classList.toggle('show');
   if(p.classList.contains('show')){
-    var n=JSON.parse(localStorage.getItem('acr_notes')||'{}');
+    var n=JSON.parse(LS.get('acr_notes','{}'));
     var keys=Object.keys(n);
     document.getElementById('nv-list').innerHTML=keys.length?keys.map(function(fid){
       var idx=NAVIDS.indexOf(fid);
@@ -836,7 +850,7 @@ function saveHL(){
   var saved=[];
   spans.forEach(function(s){saved.push({t:s.textContent,c:s.className});});
   HL_DATA[fid]=saved;
-  localStorage.setItem('acr_hl',JSON.stringify(HL_DATA));
+  LS.set('acr_hl',JSON.stringify(HL_DATA));
 }
 function restoreHL(fid){
   var saved=HL_DATA[fid];if(!saved||!saved.length) return;
@@ -874,7 +888,7 @@ function loadVoices(){
   function doit(){
     VOICES=window.speechSynthesis.getVoices();
     // Default to the Samantha voice when the user hasn't chosen one yet.
-    if(localStorage.getItem('acr_vi')===null){
+    if(LS.get('acr_vi',null)===null){
       for(var k=0;k<VOICES.length;k++){ if(/samantha/i.test(VOICES[k].name)){ VIDX=k; break; } }
     }
     var sel=document.getElementById('vvoice');
@@ -937,8 +951,8 @@ function speakExactElement(el){
   document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
   el.style.background='rgba(255,235,59,.15)';
   window.scrollTo(0,el.getBoundingClientRect().top+(window.pageYOffset||0)-80);
-  var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
-  vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
+  var vp=JSON.parse(LS.get('acr_vp','{}'));
+  vp[NAVIDS[CUR]]=VPOS;LS.set('acr_vp',JSON.stringify(vp));
   updateVS();
   var txt=pronounce(el.textContent||'');
   console.log('TAP_AUDIO_DEBUG',{VPOS:VPOS,highlightedText:(el.innerText||'').slice(0,80),spokenText:txt.slice(0,80),counter:(VPOS+1)+'/'+VPARAS.length,VGEN:VGEN});
@@ -990,8 +1004,8 @@ function vNext(){
   if(!txt.trim()){VPOS++;vNext();return;}
   window.scrollTo(0,para.getBoundingClientRect().top+(window.pageYOffset||0)-80);
   para.style.background='rgba(255,235,59,.15)';
-  var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
-  vp[NAVIDS[CUR]]=VPOS;localStorage.setItem('acr_vp',JSON.stringify(vp));
+  var vp=JSON.parse(LS.get('acr_vp','{}'));
+  vp[NAVIDS[CUR]]=VPOS;LS.set('acr_vp',JSON.stringify(vp));
   updateVS();
   var myGen=VGEN;
   var fired=false;
@@ -1010,8 +1024,8 @@ function vStop(){
   document.getElementById('vbtn-play').textContent='▶ Play';
   document.querySelectorAll('#content [data-ptype]').forEach(function(p){p.style.background='';});
 }
-function vSetSpeed(v){VRATE=parseFloat(v);localStorage.setItem('acr_vr',VRATE);}
-function vSetVoice(i){VIDX=parseInt(i);localStorage.setItem('acr_vi',VIDX);}
+function vSetSpeed(v){VRATE=parseFloat(v);LS.set('acr_vr',VRATE);}
+function vSetVoice(i){VIDX=parseInt(i);LS.set('acr_vi',VIDX);}
 function vSetVol(v){VOL=parseFloat(v);}
 function vPreview(){
   window.speechSynthesis.cancel();
@@ -1021,20 +1035,25 @@ function vPreview(){
 }
 function updateVS(){
   var fid=NAVIDS[CUR];
-  var vp=JSON.parse(localStorage.getItem('acr_vp')||'{}');
+  var vp=JSON.parse(LS.get('acr_vp','{}'));
   var saved=vp[fid];
   var s=VPLAYING?(VPOS+1)+'/'+VPARAS.length:saved?'Resume v'+saved:'—';
   document.getElementById('vstatus').textContent=s;
 }
 
 // SERVICE WORKER
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
-}
+// Accessing navigator.serviceWorker itself throws (not just the register()
+// promise rejecting) inside a sandboxed iframe lacking allow-same-origin --
+// same restricted-embedding case the LS wrapper above exists for.
+try{
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){});
+  }
+}catch(e){}
 </script>
 <div id="save-banner"><div class="sb-info"><strong>Save this as your own app.</strong><span class="sb-sub">Tap Share in Safari, then Add to Home Screen. Works offline, no browser needed.</span></div><button class="sb-how" id="sb-how">Show me how</button><button class="sb-x" id="sb-x" aria-label="Dismiss">&times;</button></div>
 <div id="save-modal"><div class="sm-box"><h3>Save to your home screen</h3><p>No App Store. Works offline. Tap once from your home screen to open.</p><ol class="sm-steps"><li>Open this page in <strong>Safari</strong> (not Chrome or another browser).</li><li>Tap the <strong>Share</strong> button — the square with an arrow pointing up, at the top of Safari.</li><li>Scroll down and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong> in the top right. Done.</li></ol><p style="font-size:12px;background:rgba(176,48,48,.12);padding:10px;border-radius:8px;border-left:3px solid #b03030;line-height:1.6">Open it from your home screen and it works offline — just like any app.</p><button class="sm-close" id="sm-close">Got it</button></div></div>
-<script>(function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='acr_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{localStorage.setItem(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();</script>
+<script>(function(){if(navigator.standalone||window.matchMedia('(display-mode:standalone)').matches)return;var K='acr_save_count',n=0;try{n=parseInt(localStorage.getItem(K)||'0',10);}catch(e){}if(n>=3)return;var b=document.getElementById('save-banner');if(b)b.style.display='flex';var m=document.getElementById('save-modal');document.getElementById('sb-how').addEventListener('click',function(){if(m)m.classList.add('on');});document.getElementById('sb-x').addEventListener('click',function(){if(b)b.style.display='none';try{LS.set(K,String(n+1));}catch(e){}});document.getElementById('sm-close').addEventListener('click',function(){if(m)m.classList.remove('on');});})();</script>
 <div id="acr-build-marker" style="position:fixed;bottom:calc(var(--reader-footer-height,170px) + 4px);right:8px;font-size:7px;color:#555;z-index:1001;pointer-events:none;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:2px">ACR v58</div>
 </body>
 </html>
