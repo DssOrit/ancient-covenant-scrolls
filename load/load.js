@@ -9123,7 +9123,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g84</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g85</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -16217,7 +16217,14 @@ window.LoadAudioFix = {
  var asset = await loadAsset(hrefMatch[1]);
  if (!asset || asset.type !== 'text') continue;
  var inlinedCss = await inlineCssUrls(asset.content, asset.path.replace(/[^/]+$/, ''), loadAsset);
- html = html.replace(links[i].tag, '<style>\n' + inlinedCss + '\n</style>');
+ // split/join instead of replace(): (a) replaces every occurrence of this
+ // tag, not just the first -- a stylesheet/script/media src can legitimately
+ // appear more than once in a page; (b) a String.replace() replacement
+ // argument treats a literal "$&", "$'", "$`", "$$" or "$<n>" in the
+ // asset's own content as a special substitution pattern instead of literal
+ // text, silently corrupting or truncating the inlined copy. split/join is
+ // immune to both.
+ html = html.split(links[i].tag).join('<style>\n' + inlinedCss + '\n</style>');
  }
 
  // 2. Inline <script src="...">
@@ -16227,7 +16234,7 @@ window.LoadAudioFix = {
  for (var s = 0; s < scripts.length; s++) {
  var aa = await loadAsset(scripts[s].src);
  if (!aa || aa.type !== 'text') continue;
- html = html.replace(scripts[s].tag, '<script>\n' + aa.content.replace(/<\/script/gi, '<\\/script') + '\n</script>');
+ html = html.split(scripts[s].tag).join('<script>\n' + aa.content.replace(/<\/script/gi, '<\\/script') + '\n</script>');
  }
 
  // 3. Inline <img src="...">, <source src="...">, <video src>, <audio src>
@@ -16237,8 +16244,8 @@ window.LoadAudioFix = {
  for (var r = 0; r < toReplace.length; r++) {
  var ad = await loadAsset(toReplace[r].src);
  if (!ad) continue;
- var newTag = toReplace[r].tag.replace(toReplace[r].src, ad.type === 'dataurl' ? ad.content : toReplace[r].src);
- html = html.replace(toReplace[r].tag, newTag);
+ var newTag = toReplace[r].tag.split(toReplace[r].src).join(ad.type === 'dataurl' ? ad.content : toReplace[r].src);
+ html = html.split(toReplace[r].tag).join(newTag);
  }
 
  return html;
