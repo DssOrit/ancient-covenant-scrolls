@@ -2,7 +2,7 @@
    Every item carries a tag. VERIFIED means the paper exists and says this,
    checked at abstract or search-summary level. Full texts were not read. */
 window.LS = {
-  version: "loadscience-v2",
+  version: "loadscience-v3",
   date: "2026-11-03",
   tags: {
     VERIFIED: "The paper exists and says this. Checked at abstract or summary level.",
@@ -23,7 +23,7 @@ window.LS = {
         {
           h: "Important limit",
           items: [
-            { tag: "OPEN", t: "VERIFIED in this app does not mean the full text was read. The full-text site (pmc.ncbi.nlm.nih.gov) was blocked when this research was done. So there are no effect sizes and no allele-frequency tables here." }
+            { tag: "OPEN", t: "Verified in this app does not mean the full text was read. The full-text site (pmc.ncbi.nlm.nih.gov) was blocked when this research was done. So there are no effect sizes and no allele-frequency tables here." }
           ]
         },
         {
