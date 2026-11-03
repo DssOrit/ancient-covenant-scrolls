@@ -1,5 +1,5 @@
 /* Load Science service worker. Cache name goes forward only. */
-var CACHE = 'loadscience-v9';
+var CACHE = 'loadscience-v10';
 var CORE = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ var CORE = [
   './data3.js',
   './data4.js',
   './data5.js',
+  './data6.js',
   './explore.js',
   './app.js',
   './manifest.webmanifest',
