@@ -289,7 +289,7 @@
 
     var ROUND = 10, pool, n, score;
     function start() {
-      pool = shuffle(H.INDEX.filter(function (e) { return e.t.length > 30; })).slice(0, ROUND);
+      pool = shuffle(H.INDEX.filter(function (e) { return e.t.length > 30 && e.tag !== "PASTED"; })).slice(0, ROUND);
       n = 0; score = 0; ask();
     }
     function ask() {
@@ -305,6 +305,7 @@
       var grid = H.el("div", "ans-grid");
       var btns = [];
       H.tagKeys.forEach(function (k) {
+        if (k === "PASTED") { return; }
         var b = H.el("button", "btn ans", H.LABEL[k]); b.type = "button"; b.dataset.tag = k;
         b.addEventListener("click", function () { answer(k, e, btns); });
         btns.push(b); grid.appendChild(b);

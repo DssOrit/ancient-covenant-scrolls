@@ -39,6 +39,13 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 12 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner gave the phrase and asked that every pasted report be kept so nothing is lost. Same open PR #1194 (not merged), cache v11. Backup for main already exists: backup/2026-11-03-loadscience-v9 at a86d5ec7.
+- data7.js: new page "Your pasted reports, word for word" with all seven pastes in full (PASTED tag; request lines omitted, two invisible marker characters removed, the part pasted twice shown once). A test checks that every line over 40 characters from each paste is present.
+- Claims page: row-by-row check for each paste (about 70 rows), grouped by paste. New searches this round: Meredith and Riesz 2004 (99.9 percent), insect cuticle sclerotization, 4Q186 script (Geller), 1 Enoch 106 light imagery, Selig buying power, BLS workforce shares, phytoplankton sunscreens.
+- app.js: PASTED label and sideways-scrolling diagram cards. explore.js: PASTED left out of the quiz.
+- Owner decision still open: 4Q186 reject or hold; nothing added to the Reader.
+
 ## Round 11 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 Owner gave the phrase for Load Science. Backup: backup/2026-11-03-loadscience-v9 at a86d5ec7 (verified against origin/main). Cache v10.
 - Added data6.js: plain-words cards after the headline findings (dark skin, skin, gamma, photon, start), limits moved to one end-of-page block on dark skin and start, gamma "weak photon stopping" card replaced with the calculated numbers, 2007 wording refined (4-fold NADH capacity, 3-fold 14C-acetate).
