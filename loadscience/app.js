@@ -398,10 +398,47 @@
     location.reload(true);
   });
 
+
+  /* SPLASH: shown once per browser session, never on a deep link. Tap anywhere,
+     use the Get started area, or press Enter or Escape to continue. */
+  function showSplash() {
+    var seen = null;
+    try { seen = sessionStorage.getItem(KEY + "splash"); } catch (e) {}
+    var h = location.hash;
+    if (seen || (h && h !== "#/")) { return; }
+    var ov = el("div", "splash");
+    ov.setAttribute("role", "dialog");
+    ov.setAttribute("aria-modal", "true");
+    ov.setAttribute("aria-label", "Welcome to Load Science");
+    var wrap = el("div", "splash-wrap");
+    var img = el("img", "splash-img");
+    img.src = "icons/splash.jpg";
+    img.alt = "Load Science. Explore, experiment, discover, innovate.";
+    img.width = 682; img.height = 989;
+    wrap.appendChild(img);
+    var go = el("button", "splash-go", "Get started");
+    go.type = "button";
+    wrap.appendChild(go);
+    ov.appendChild(wrap);
+    function close() {
+      try { sessionStorage.setItem(KEY + "splash", "1"); } catch (e) {}
+      document.removeEventListener("keydown", onKey);
+      ov.classList.add("out");
+      setTimeout(function () { if (ov.parentNode) { ov.parentNode.removeChild(ov); } }, 250);
+      document.getElementById("main").focus({ preventScroll: true });
+    }
+    function onKey(e) { if (e.key === "Escape" || e.key === "Enter") { close(); } }
+    ov.addEventListener("click", close);
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(ov);
+    go.focus({ preventScroll: true });
+  }
+
   document.getElementById("ver").textContent = LS.version;
   buildPills();
   window.addEventListener("hashchange", onHash);
   onHash();
+  showSplash();
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
