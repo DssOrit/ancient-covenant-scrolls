@@ -125,3 +125,13 @@ Owner gave the phrase for Load Science. Backup: backup/2026-11-03-loadscience-v9
 - Current offline status: LoadTasks offline still does NOT work. Icons are on main (PR #1206 merged), but the init() crash from A1 is still unfixed on main (PR #1205 still open). Without A1 fixed, init() halts before navigator.serviceWorker.register() fires, so the SW never registers and cache.addAll() never runs regardless of whether the icon files exist. Offline becomes functional only when PR #1205 also merges and devices pick up the v2.5.5 cache bump.
 - Not fixed, still open: C2 (6 remaining manifest icon sizes — 144, 152, 167, 384, maskable-512) — this PR fixed 2 of the 8 as a side effect.
 - iPad verification: owner has not been asked to test (owner's running "no testing today" posture respected).
+
+## Round 15 (same day — LoadTasks Add-to-Home-Screen USER-VERIFIED)
+- Owner performed real iPad Safari test: Add-to-Home-Screen PWA install prompt → confirmed WORKING. This moves one of the previously-UNVERIFIED items from the Round 14 honest residual list into WORKING REAL OUTPUT per the seven-label rule.
+- Working ingredients confirmed on main (cache load-tasks-cache-v2.5.7):
+  - manifest.json valid, start_url "./index.html", display "standalone", scope "./", theme/background colors set.
+  - All 13 manifest icon URLs return 200, including the two sizes that iOS Safari specifically honors for the home-screen icon (192 and 180 apple-touch-icon.png byte-identical to 180x180 in manifest).
+  - Service worker registers at /LoadTasks/ scope, activates successfully (post-PR-#1205 + #1206).
+  - No page errors on initial load (post-PR-#1205 fix).
+- Remaining UNVERIFIED items from the honest residual list, carried forward: GitHub push with real token (destructive, will not be tested from sandbox); real touch-gesture behaviours beyond Playwright simulation; cross-browser beyond Chromium (owner verifies specific behaviours on iPad on request).
+- No code touched this round.

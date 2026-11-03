@@ -273,3 +273,15 @@ but should not be treated as known-good baselines.
   - SW: `loadstudio-complete-v170`
 - **Recovery:** `git checkout fabf85d -- loadstudio/lseb.js loadstudio/sw.js`
 - **NOTE:** If user says any of the 4 new synthesized tracks sound wrong, check this log before changing — do NOT rename the original 3 (Mellow/Upbeat/Energetic Demo).
+
+### LoadTasks `load-tasks-cache-v2.5.7` — commit `8de705e` — 2026-11-03 USER-VERIFIED
+
+- **Status:** WORKING REAL OUTPUT. iPad Safari Add-to-Home-Screen install prompt confirmed by owner.
+- **What it has:**
+  - All 6 audit items fixed on main: A1 (init null-ref), A2 (3 inline-script parse errors), C1 (2 missing APP_SHELL icons), C2 (5 missing manifest icon sizes), D (21 Copy buttons hardened against clipboard permission denial), E (refresh circle = real Rule 21-scoped hard refresh).
+  - Service worker registers + installs + activates + controls page.
+  - All 191 nav tabs switch views.
+  - Deep workflow test passed: project form + localStorage persistence, sample build + validator run, task extraction from notes, 3 export flows produce valid ZIP files, state survives reload, **offline reload serves app shell from cache**, 0 page errors.
+- **Add-to-Home-Screen iPad verification (owner, 2026-11-03):** PWA install prompt appears; installs with correct icon; opens standalone from home screen.
+- **Still UNVERIFIED (not claimed either way):** GitHub push with real token (destructive); real touch-gesture behaviours beyond Playwright simulation; non-Chromium browsers beyond iPad Safari.
+- **Recovery:** `git checkout backup/2026-11-03-load-tasks-v2.5.7-FUNCTIONAL-FINAL`
