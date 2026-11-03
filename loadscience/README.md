@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v6` (goes forward only)
+- Cache: `loadscience-v7` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -35,3 +35,7 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 
 ## Refresh circle
 - Round button at the top right. It deletes only caches named `loadscience-*`, unregisters only service workers whose scope contains `/loadscience/`, re-fetches this app's own files past the browser cache, and reloads. Saved claims and reading settings (localStorage) are kept. No other site's cache or worker is touched (locked rule 21).
+
+## Photon calculation and supernatural claims pages (data4.js)
+- Photon calculation page: tables of stopping per gram (melanin as three unit formulas, cellulose, water, lead) at seven energies, half-value layers at three assumed densities, a log-log chart, the patent check, and what the calculation means for the mouse results. Elam tables through xraydb 4.5.8, not NIST XCOM.
+- Supernatural claims page: the unexplained science with sources, the measurement gaps (microwave, ultrafast), a claims table with claimants and findings, the pineal gland (melatonin is not melanin), a pointer to the ancient texts page, and a space for the owner's reading.

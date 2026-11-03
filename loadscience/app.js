@@ -188,6 +188,58 @@
     return svg;
   }
 
+  /* Photon chart: stopping per gram against photon energy, both axes log. */
+  function photonChartSvg() {
+    var P = LS.photon, NS = "http://www.w3.org/2000/svg";
+    var W = 360, H = 330, L = 46, R = 84, T = 30, B = 52, pw = W - L - R, ph = H - T - B;
+    var xMin = 10, xMax = 700, yMin = 0.05, yMax = 200;
+    function X(e) { return L + Math.log(e / xMin) / Math.log(xMax / xMin) * pw; }
+    function Y(m) { return T + (1 - Math.log(m / yMin) / Math.log(yMax / yMin)) * ph; }
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("class", "spec");
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Chart of how much melanin, cellulose, water and lead stop per gram, from 10 to 700 keV, both axes on a log scale. Melanin sits just under cellulose and water. Lead is far higher, with jumps at its absorption edges.");
+    function node(n, a, txt) {
+      var e = document.createElementNS(NS, n);
+      Object.keys(a).forEach(function (k) { e.setAttribute(k, a[k]); });
+      if (txt !== undefined) { e.textContent = txt; }
+      return e;
+    }
+    svg.appendChild(node("text", { x: 8, y: 18, "font-size": 13, "font-weight": "bold", fill: "currentColor" }, "Stopping per gram (cm2 per gram)"));
+    [0.1, 1, 10, 100].forEach(function (v) {
+      svg.appendChild(node("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "currentColor", "stroke-opacity": 0.18 }));
+      svg.appendChild(node("text", { x: L - 6, y: Y(v) + 4, "font-size": 12, "text-anchor": "end", fill: "currentColor" }, String(v)));
+    });
+    [10, 30, 100, 300].forEach(function (v) {
+      svg.appendChild(node("line", { x1: X(v), x2: X(v), y1: T, y2: T + ph, stroke: "currentColor", "stroke-opacity": 0.18 }));
+      svg.appendChild(node("text", { x: X(v), y: T + ph + 16, "font-size": 12, "text-anchor": "middle", fill: "currentColor" }, String(v)));
+    });
+    svg.appendChild(node("text", { x: L + pw / 2, y: H - 10, "font-size": 13, "text-anchor": "middle", fill: "currentColor", "font-weight": "bold" }, "Photon energy (keV)"));
+    var styles = {
+      lead: { c: "#9a9a9a", w: 2, d: "" },
+      water: { c: "#4d8fd1", w: 2.4, d: "2 4" },
+      cellulose: { c: "#5aa66b", w: 2.4, d: "7 4" },
+      melanin: { c: "#C8971F", w: 3.6, d: "" }
+    };
+    var ends = [];
+    ["lead", "water", "cellulose", "melanin"].forEach(function (m) {
+      var d = "";
+      P.E.forEach(function (e, i) { d += (i ? "L" : "M") + X(e).toFixed(1) + " " + Y(P.mu[m][i]).toFixed(1) + " "; });
+      var st = styles[m];
+      var attrs = { d: d, fill: "none", stroke: st.c, "stroke-width": st.w, "stroke-linejoin": "round", "stroke-linecap": "round" };
+      if (st.d) { attrs["stroke-dasharray"] = st.d; }
+      svg.appendChild(node("path", attrs));
+      ends.push({ m: m, y: Y(P.mu[m][P.E.length - 1]), c: st.c });
+    });
+    ends.sort(function (a, b) { return a.y - b.y; });
+    for (var i = 1; i < ends.length; i++) { if (ends[i].y - ends[i - 1].y < 15) { ends[i].y = ends[i - 1].y + 15; } }
+    ends.forEach(function (e) {
+      svg.appendChild(node("text", { x: W - R + 6, y: e.y + 4, "font-size": 13, "font-weight": "bold", fill: "currentColor" }, P.names[e.m]));
+    });
+    return svg;
+  }
+
   function sectionIndex(id) {
     for (var i = 0; i < LS.sections.length; i++) { if (LS.sections[i].id === id) { return i; } }
     return -1;
@@ -252,6 +304,7 @@
       f.appendChild(el("h2", "", b.h));
       if (b.intro) { f.appendChild(el("p", "", b.intro)); }
       if (b.spectrum) { f.appendChild(ladderSvg()); }
+      if (b.chart === "photon") { f.appendChild(photonChartSvg()); }
       if (b.table) {
         b.table.rows.forEach(function (r) {
           f.appendChild(claimCard({ tag: r[r.length - 1], title: r[0], t: r[1] }));

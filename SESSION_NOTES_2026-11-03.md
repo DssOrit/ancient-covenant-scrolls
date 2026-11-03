@@ -39,6 +39,13 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 8 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+- Owner gave the phrase "edit Load Science" and asked: add the photon calculation and supernatural claims pages. Order followed: phrase, backup (backup/2026-11-03-loadscience-v6 at c80b0b45, matches origin/main), no-break check, change, merge link.
+- Built on branch claude/loadscience-v7 from origin/main c80b0b45 (PR #1190 merged; PR #1191, the rule 8 change, still open). Cache loadscience-v7.
+- New: data4.js. Photon calculation page (tables for melanin as three unit formulas, cellulose, water and lead at seven energies, half-value layers at three assumed densities, a log-log chart, the patent check, the meaning for the mouse results, still-to-do). Supernatural claims page (unexplained science with sources, microwave and ultrafast gaps, a claims table with claimants, the pineal gland, a pointer to the ancient texts page, a space for the owner's reading). Pointers added on the gamma and claims-with-no-source pages. 14 sources added.
+- Calculated numbers come from the Elam tables (xraydb 4.5.8), not NIST XCOM (host returned 403). The table values were regenerated from the calculation, and a test checks the page table against the explorer data at all seven energies.
+- Owner's reading on the supernatural claims page is still empty by design. It needs the owner's words and the source they rest on.
+
 ## Round 6 (same day)
 - Owner asked: tie the melanin research to the DSS and Orit, pre-Rabbinic, pre-Christian ACR Reader and ACR2 texts; add a refresh circle that refreshes only Load Science.
 - Still on branch claude/loadscience-v5 and PR #1190 (open and unmerged when checked). Cache loadscience-v6.
