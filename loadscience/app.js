@@ -120,6 +120,10 @@
 
   function homeView() {
     var f = document.createDocumentFragment();
+    var logo = el("img", "logo");
+    logo.src = "icons/logo-hero.jpg"; logo.alt = "Load Science logo";
+    logo.width = 640; logo.height = 640;
+    f.appendChild(logo);
     f.appendChild(el("h1", "", "Load Science"));
     f.appendChild(el("p", "lead", "Melanin research. Every claim carries a tag that says how well it is verified. Research date: " + LS.date + "."));
     var ul = el("ul", "menu");

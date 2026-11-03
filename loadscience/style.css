@@ -33,6 +33,7 @@ h3{font-size:1.05em;margin:1.2em 0 .3em}
 p{margin:.5em 0 .9em}
 a{color:var(--link);text-decoration:underline;word-break:break-word}
 .lead{color:var(--muted)}
+.logo{display:block;width:100%;max-width:340px;height:auto;margin:6px auto 10px;border-radius:16px}
 .menu{list-style:none;padding:0;margin:1em 0}
 .menu li{margin:0 0 10px}
 .menu a{
