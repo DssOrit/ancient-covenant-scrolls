@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f2a30">
+<meta name="description" content="Load Science: melanin research with every claim tagged by how well it is verified.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+<title>Load Science</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="brand" href="#/" aria-label="Load Science home">Load Science</a>
+  <div class="tools" role="group" aria-label="Reading tools">
+    <button type="button" id="smaller" aria-label="Smaller text">A-</button>
+    <button type="button" id="bigger" aria-label="Bigger text">A+</button>
+    <button type="button" id="speak" aria-label="Read this page aloud">Read aloud</button>
+    <button type="button" id="refresh" aria-label="Hard refresh this app only">Refresh</button>
+  </div>
+</header>
+<main id="main" tabindex="-1"><div id="app" aria-live="polite"></div></main>
+<footer class="foot">
+  <span id="ver">loadscience-v1</span>
+  <span>Works offline after the first visit.</span>
+</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

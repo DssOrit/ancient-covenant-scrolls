@@ -1,0 +1,15 @@
+{
+  "name": "Load Science",
+  "short_name": "Load Science",
+  "description": "Melanin research with every claim tagged: verified, secondary only, unverified, reading, or not supported.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e4",
+  "theme_color": "#1f2a30",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" }
+  ]
+}
