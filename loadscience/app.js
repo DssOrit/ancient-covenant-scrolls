@@ -522,7 +522,7 @@
      app's own files past the browser cache. Other sites are never touched, and the
      saved claims and reading settings (localStorage) are kept. */
   var refreshBtn = document.getElementById("refresh");
-  var OWN_FILES = ["./", "index.html", "style.css", "data.js", "data2.js", "data3.js", "explore.js", "app.js", "sw.js", "manifest.webmanifest"];
+  var OWN_FILES = ["./", "index.html", "style.css", "data.js", "data2.js", "data3.js", "data4.js", "data5.js", "data6.js", "data7.js", "data8.js", "explore.js", "app.js", "sw.js", "manifest.webmanifest"];
   refreshBtn.addEventListener("click", async function () {
     if (refreshBtn.classList.contains("spin")) { return; }
     refreshBtn.classList.add("spin");
@@ -542,11 +542,15 @@
     try {
       await Promise.all(OWN_FILES.map(function (u) { return fetch(u, { cache: "reload" }).catch(function () {}); }));
     } catch (e) {}
+    /* After a refresh the app opens back on the front splash page: clear this app's
+       "splash seen" mark (sessionStorage key of Load Science only) and the page address. */
+    try { sessionStorage.removeItem(KEY + "splash"); } catch (e) {}
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
     location.reload();
   });
 
 
-  /* SPLASH: shown once per browser session, never on a deep link. Tap anywhere,
+  /* SPLASH: shown once per browser session and after every refresh-circle tap, never on a deep link. Tap anywhere,
      use the Get started area, or press Enter or Escape to continue. */
   function showSplash() {
     var seen = null;
