@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v12` (goes forward only)
+- Cache: `loadscience-v13` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -56,3 +56,5 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 - The claims page now holds a row-by-row check for each paste, with a tag and what was found.
 - PASTED does not rate the text. It is left out of the Claim check quiz.
 - Diagrams in the pastes scroll sideways inside their card, so the page itself does not overflow.
+
+- Claims check tables: the claim column quotes the owner's pasted sentence exactly (a test confirms each quote is found word for word in its paste). The other columns are the check.
