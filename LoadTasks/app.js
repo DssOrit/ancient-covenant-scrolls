@@ -176,8 +176,40 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     $('#hardRefresh').addEventListener('click', () => {
-      renderAll();
-      toast('Interface refreshed. Local project data preserved.');
+      // Real hard refresh, scoped to LoadTasks per CLAUDE.md Rule 21.
+      // Clear only load-tasks-cache-* caches (never touch ACR Reader /
+      // Study / Attain / Load / LoadStudio / LoadPlay / etc). Unregister
+      // only service workers whose scope includes /LoadTasks/. Preserve
+      // localStorage so the user's workspace / projects / notes stay.
+      // Reload the page from network so the new build is picked up.
+      // Prior behaviour was only a UI re-render, which did not match the
+      // refresh icon's promise and left users confused.
+      toast('Clearing LoadTasks cache and reloading...');
+      const scopedCleanup = Promise.all([
+        (window.caches && caches.keys)
+          ? caches.keys().then(keys => Promise.all(
+              keys.filter(k => k.indexOf('load-tasks-cache-') === 0)
+                  .map(k => caches.delete(k))
+            )).catch(() => {})
+          : Promise.resolve(),
+        (navigator.serviceWorker && navigator.serviceWorker.getRegistrations)
+          ? navigator.serviceWorker.getRegistrations().then(regs => Promise.all(
+              regs.filter(r => r.scope && r.scope.indexOf('/LoadTasks/') >= 0)
+                  .map(r => r.unregister())
+            )).catch(() => {})
+          : Promise.resolve()
+      ]);
+      // Give the cleanup a short, bounded window — do not block forever
+      // if a browser is slow to resolve getRegistrations in some edge case.
+      Promise.race([
+        scopedCleanup,
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]).then(() => {
+        // Reload bypassing any lingering in-memory copy. location.reload()
+        // on modern browsers re-fetches; with our fetch handler gone (SW
+        // unregistered above), the HTML is served fresh from the network.
+        location.reload();
+      });
     });
 
     $('#projectForm').addEventListener('submit', event => {
