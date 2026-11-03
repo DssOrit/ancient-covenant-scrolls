@@ -49,6 +49,11 @@
           "CONFLICTING"
         ],
         [
+          "researchers used electrochemical techniques (chronoamperometry and cyclic voltammetry) to prove that melanin continuously generates a measurable electrical current when bombarded with gamma radiation.",
+          "The paper and its current are verified at summary level. The two method names were not seen.",
+          "UNVERIFIED"
+        ],
+        [
           "accelerating cell growth up to three times faster under intense radiation fields.",
           "The 3-fold figure in the 2007 paper is for 14C-acetate taken in. The growth result is stated as about 500 times background radiation. A three-times growth figure was not found.",
           "CONFLICTING"
@@ -64,6 +69,16 @@
           "VERIFIED"
         ],
         [
+          "Because human neural communication relies heavily on proton gradients and ion flows, melanin acts as the ultimate biomimetic bridge for microelectronics.",
+          "No source seen. Nerve signals are carried mainly by sodium and potassium ions, from standard neuroscience that was not searched in this session. The implant-interface idea itself is listed as a candidate use, not shown.",
+          "UNVERIFIED"
+        ],
+        [
+          "Pure melanin naturally possesses a 1.7 electron-volt (eV) semiconductor bandgap.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
           "When melanin is hydrated, its electrical conductivity surges by ten orders of magnitude (a billion-fold increase), transforming it from an insulator into a highly efficient conductor at room temperature without requiring synthetic doping.",
           "Reported range with hydration is 10^-13 to 10^-5 S/cm: 8 orders. Ten orders is ten billion-fold, so the pasted wording disagrees with itself. No source seen for the doping statement.",
           "CONFLICTING"
@@ -77,6 +92,11 @@
           "The U.S. Army's Chemical Biological Center (DEVCOM CBC) scales up natural melanin production specifically because natural melanin's shielding architecture dramatically outperforms synthetic models.",
           "DEVCOM CBC developed a melanin recovery process (2022 Army release). The Army STTR topic A19B-T010 estimates synthetic melanin at 40 to 60 percent less efficient than natural melanin.",
           "VERIFIED"
+        ],
+        [
+          "Natural melanin features a complex, chaotic, multi-layered macromolecular matrix that synthetic chemistry cannot precisely replicate.",
+          "No source seen.",
+          "UNVERIFIED"
         ],
         [
           "Melanin absorbs raw electromagnetic waves across the entire spectrum. It traps incoming high-energy Compton electrons within its dense free-radical scavenging rings, completely neutralizing the charge and converting the localized threat into uniform, harmless thermal energy dissipation.",
@@ -107,6 +127,11 @@
           "Crucially, these texts contain fragments of physiognomic and astrological texts (such as 4Q186 and 4Q561) where spiritual election, righteousness, and the \"Spirit of Light\" are explicitly tied to specific, unblemished physical traits.",
           "4Q186 is a Qumran text on body features and shares of light and darkness. Geller describes 4Q561 as a fragmentary Aramaic physiognomic text. A DSS-by-number list calls 4Q561 a horoscope, so the genre label differs by source.",
           "VERIFIED"
+        ],
+        [
+          "In the ancient Near Eastern context of these texts, the \"Children of Light\" are described with terms denoting robust physical health, deep, radiant skin tones, and eyes that flash with vitality.",
+          "The sources found describe body features and shares of light and dark in ninths. A skin-tone statement was not seen in them. The full translation was not seen.",
+          "UNVERIFIED"
         ],
         [
           "In the Genesis Apocryphon (1Q20), a prominent scroll in the DSS collection, the birth of ancient holy figures is described with a hyper-focus on their skin. When a holy child is born, their skin is described as illuminating the room like the sun.",
@@ -154,9 +179,19 @@
           "NOTSUPPORTED"
         ],
         [
+          "Standard semiconductors require highly controlled, artificial \"doping\" (the introduction of foreign impurities like boron or phosphorus) and extreme temperatures to conduct electricity efficiently.",
+          "No source seen. Silicon chips run at room temperature, and doping is how they are tuned. Stated from general knowledge that was not searched here.",
+          "UNVERIFIED"
+        ],
+        [
           "The water molecules undergo localized auto-ionization, releasing a dense cloud of free protons (\\(H^{+}\\)).",
           "The exact conduction mechanism is still being refined (electronics page). The picture is a proposal.",
           "OPEN"
+        ],
+        [
+          "This turns melanin into a self-doping, self-healing organic semiconductor that operates at room temperature—a feat synthetic silicon can never achieve because silicon degrades permanently when exposed to the very moisture that activates melanin.",
+          "Self-restoring after gamma is reported (Turick 2011). Self-doping was not seen. For silicon degrading in the moisture that activates melanin: no source seen, and silicon chips run at room temperature (general knowledge, not searched here).",
+          "UNVERIFIED"
         ],
         [
           "Melanin uses this electrical current to drive the reduction of \\(NAD^{+}\\) to \\(NADH\\). This is a clean, direct conversion of lethal nuclear and cosmic radiation into metabolic energy (ATP) capable of powering cellular life in environments completely devoid of sunlight or oxygen.",
@@ -174,6 +209,16 @@
           "READING"
         ],
         [
+          "The individuals who possess the highest spiritual authority and physical resilience are explicitly described as having eight to nine parts of their physical composition derived from the \"Column of Light.\"",
+          "Shares in ninths are verified. Which share is highest was not seen. The full translation was not seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "The text explicitly links this high-light ratio to specific physical markers: deep, richly pigmented skin, robust physical density, and eyes capable of processing extreme environmental stress. Conversely, those belonging to the \"Column of Darkness\" (depleted light) are described as physically frail, structurally irregular, and lacking the protective bodily shielding required to endure the raw elements of creation.",
+          "Shares in ninths are verified. The skin and frailty descriptions were not seen in the sources found. The full translation was not seen.",
+          "UNVERIFIED"
+        ],
+        [
           "The text explicitly records that when the patriarchs descended from places of high spiritual frequency (like Moses descending the mountain), their skin was so densely saturated with this converted energy that it physically glowed, requiring them to veil their faces because ordinary, low-frequency biological systems could not handle the emission.",
           "ACR Reader Shemot 34:29-35: the skin of his face shone, they were afraid to come near, he put a veil on his face. ACR's note keeps the cause undefined. The energy and frequency explanation is not in the text.",
           "TEXT"
@@ -183,6 +228,11 @@
     {
       "h": "Checked: Paste 6 (chelation, 4Q186 text, synthesis)",
       "rows": [
+        [
+          "From a quantum mechanical perspective, melanin is a macro-molecular amorphous network with high-density surface functionalization, acting as an immutable Thermodynamic Sink for heavy metals, radionuclides, and toxic cations. Government defense and environmental protection frameworks leverage this molecular grid because its chelating architecture outperforms synthetic ion-exchange materials.",
+          "Metal binding is documented with numbers on the electronics page. Immutable, radionuclides and the comparison with ion-exchange materials: no source seen.",
+          "UNVERIFIED"
+        ],
         [
           "Carboxyl Groups (\\(-\\text{COOH}\\) / \\(-\\text{COO}^{-}\\)): Present primarily on DHICA units. These act as hard Lewis bases, optimized for electrostatic ion-exchange.",
           "A DHICA-containing melanin bound at least eight times more Cd than polydopamine, attributed to carboxyl groups (search summary of the study).",
@@ -199,9 +249,34 @@
           "CONFLICTING"
         ],
         [
+          "Melanin sequesters these toxic metals, locks down their chemical reactivity, and forms an inert bio-composite grid that isolates environmental toxins from biological tissue.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
           "Discovered in Cave 4 at Qumran, this document was written in a highly complex, childishly cryptographic script—reading left-to-right (reversing traditional Hebrew) and mixing standard square characters, Paleo-Hebrew letters, and Greek alphabetic keys to strictly restrict its access.",
           "The 4Q prefix marks Cave 4, an official Qumran excavation designation (project rule 32). Geller describes the text as written left to right, starting with the column on the left, avoiding final letters, with some words in Paleo-Hebrew script and Greek letters. The phrase cryptic script A was not found.",
           "VERIFIED"
+        ],
+        [
+          "This 9-part metric directly reflected the foundational months of human gestation in the womb.",
+          "Not found in the sources seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his place is divided into eight parts in the pit of darkness, and one part from the house of light...\"",
+          "Profile A: the ratio of 1:8 is reported in the sources seen. The quoted line and its fragment and column label were not matched to a translation.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his thighs are long and slender, and the toes of his feet are slender and long... His place is divided into six parts in the house of light and three parts in the pit of darkness. And this is the sign in which he was born: the foot of Taurus...\"",
+          "Profile B: a 6:3 share and the foot of the bull are reported in the sources seen. The quoted line and its fragment and column label were not matched to a translation.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his body is filled... and his composition is eight parts from the house of light, and one part from the pit of darkness...\"",
+          "Profile C: a share in ninths is reported. The quoted line and its fragment label were not matched to a translation.",
+          "UNVERIFIED"
         ],
         [
           "The cryptographic protection of 4Q186 proves that the Qumran scribes considered this physical light-to-dark ratio calculation to be a closely guarded operational secret.",
@@ -297,6 +372,21 @@
           "Black workers make up approximately 20% of nurses, medical assistants, and care aides in major metropolitan medical systems.",
           "BLS 2018 data: about 36 percent of nursing, psychiatric and home health aides. Registered nurses are about 11 to 14.5 percent depending on the source.",
           "CONFLICTING"
+        ],
+        [
+          "Over 20% of the active government, public transit, and municipal services workforce in major nations is comprised of Black employees.",
+          "No source seen for the 20 percent government, transit and municipal figure.",
+          "UNVERIFIED"
+        ],
+        [
+          "Over 29% of workers in educational services and social assistance systems belong to the Black demographic.",
+          "No source seen for the 29 percent figure.",
+          "UNVERIFIED"
+        ],
+        [
+          "The elimination of melanated peoples would completely depopulate sub-Saharan Africa—a region home to over a billion individuals—and decimate massive population centers globally. Africa acts as the primary global source for essential materials, including cobalt, copper, lithium, gold, platinum, and agricultural commodities.",
+          "Not checked in this session: cobalt, copper, lithium, gold, platinum and agricultural commodities as an African share, and a population of over a billion.",
+          "UNVERIFIED"
         ]
       ]
     },
@@ -309,9 +399,39 @@
           "VERIFIED"
         ],
         [
+          "Acknowledging a fundamental, systemic dependency on these regions for the baseline survival of global technologies and supply chains forces a restructuring of international relationships, explaining why these realities have traditionally been relegated to specialized military and intelligence reports rather than consumer-facing education.",
+          "No source seen that the data were relegated to military or intelligence reports. The documented part is the bias in genomic reference data.",
+          "UNVERIFIED"
+        ],
+        [
+          "Individuals carrying the G1 or G2 variants possess the unique ability to lyse (destroy) Trypanosoma brucei rhodesiense, the lethal parasite transmitted by the tsetse fly that causes African Sleeping Sickness.",
+          "The search returned no abstract text for APOL1, so the protection was not seen in a source here.",
+          "UNVERIFIED"
+        ],
+        [
+          "While protective against parasites, inheriting these variants introduces severe health risks. Landmark studies published by the Human Heredity and Health in Africa (H3Africa) Consortiumreveal that carrying just one copy of an APOL1 risk variant increases the risk of chronic kidney disease (CKD) by 18%, while carrying two copies raises the risk by 25% and expands the likelihood of developing focal segmental glomerulosclerosis (FSGS—severe kidney tissue scarring) by a staggering 84%.",
+          "The 18, 25 and 84 percent figures were not seen in any source. The attribution to the H3Africa Consortium was not confirmed.",
+          "UNVERIFIED"
+        ],
+        [
+          "Coding variants of this gene—specifically designated as the G1 and G2 risk alleles—are found in high frequencies exclusively in individuals of recent African descent and are virtually non-existent in ancestral European and Asian populations.",
+          "Not seen in a source in this session.",
+          "UNVERIFIED"
+        ],
+        [
+          "Genomic sequencing of diverse African cohorts uncovered a vital genetic variant known as M1 (APOL1 p.N264K). When present alongside the high-risk G1/G2 variants, the M1 modifier acts as a molecular safeguard, actively neutralizing the toxic gain-of-function mechanisms that induce kidney cell lysis and organ failure.",
+          "The variant name was not confirmed in a source seen here, and neither was its safeguard effect.",
+          "UNVERIFIED"
+        ],
+        [
           "The Democratic Republic of Congo (DRC) controls over 70% to 76% of the world's mined cobalt and retains more than half of the planet’s proven reserves.",
           "USGS-based reports: about 74 percent of mined cobalt in 2023 and about 54.5 percent of reserves; 73 percent in another 2024 account and 75.9 percent in an IISD profile. Several pages seen were secondary.",
           "VERIFIED"
+        ],
+        [
+          "There are currently no viable synthetic alternatives capable of matching cobalt's energy density and thermal stability profiles at scale.",
+          "No source seen.",
+          "UNVERIFIED"
         ],
         [
           "South Africa, Gabon, and Ghana collectively account for over 60% of global manganese production, a fundamental element required for high-strength steel alloy fabrication and next-generation grid energy storage systems.",
@@ -319,9 +439,19 @@
           "VERIFIED"
         ],
         [
+          "Zimbabwe, Mali, and the DRC possess massive, highly concentrated lithium reserves. By enforcing strict resource nationalism—such as Zimbabwe's raw mineral export bans—these nations are systematically forcing international manufacturers to shift processing value and industrial capital directly onto the African continent.",
+          "No source retrieved for the reserves or for the ban.",
+          "UNVERIFIED"
+        ],
+        [
           "The United States and G7 allies are funding the Lobito Corridor, a massive transcontinental rail network backed by a $553 million loan from the U.S. International Development Finance Corporation (DFC).",
           "The DFC signed a $553 million loan in December 2025 for about 1,300 km of rail from Lobito port to Luau on the DRC border. The project total is reported as $753 million with a $200 million Development Bank of Southern Africa facility.",
           "VERIFIED"
+        ],
+        [
+          "Concurrently, China maintains multi-billion dollar infrastructure-for-resource partnerships, managing active stakes in approximately 90% of the DRC's commercial cobalt output.",
+          "No source retrieved.",
+          "UNVERIFIED"
         ],
         [
           "The global supply chains for advanced computing, electric vehicles (EVs), renewable energy infrastructure, and aerospace defense are entirely dependent on highly melanated sovereign regions.",
@@ -364,6 +494,11 @@
           "NOTEXT"
         ],
         [
+          "The root K-B-D literally means \"heavy,\" \"dense,\" or \"massive.\"",
+          "Standard in Hebrew lexicons. No lexicon was reached by the search, so it was not seen here. The Reader uses the word kavod.",
+          "UNVERIFIED"
+        ],
+        [
           "In the ancient Near Eastern context, the Kavod of YHWH was a highly concentrated kinetic and electromagnetic energy field that filled the tabernacle. It possessed a physical mass and a radiation frequency so intense that unshielded biological systems would suffer instant cellular ionization and death upon contact with it.",
           "No source in the ACR files or elsewhere seen.",
           "NOTSUPPORTED"
@@ -399,6 +534,21 @@
           "CONFLICTING"
         ],
         [
+          "By anchoring themselves within the deepest mineral vaults and most rugged mountain massifs on the planet, these populations and their original records were preserved in a state of absolute isolation, surviving untouched until the modern era.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "The ancestral lineages moved along the natural geographic trenches of the Nile River and the Great Rift Valley.",
+          "No source seen for the route.",
+          "UNVERIFIED"
+        ],
+        [
+          "This region features a distinct geological formation known as Ambas—sheer, volcanic tablelands that rise abruptly out of the earth with near-vertical cliffs thousands of feet high, accessible only via narrow, easily defended footpaths.",
+          "Not confirmed in a source seen.",
+          "UNVERIFIED"
+        ],
+        [
           "This is an integrated, self-defending system. The biological source code, the mineral wealth of the planet, and the un-edited historical records are locked together in a single geographical and physical reality. The global powers are forced to study, protect, and depend on these systems because they cannot bypass them. The design is complete, unyielding, and absolute.",
           "This is the owner's reading and is kept as such.",
           "READING"
@@ -422,7 +572,7 @@
   blocks.push({
     h: "Where the checks are",
     items: [
-      { tag: "READING", t: "Each pasted claim has a row on the claims page, grouped by paste. Rows tagged Verified, Calculated and ACR text are backed by a named source or a file. Rows tagged Not supported or Not in the text say what was searched and not found.", go: "s/claims", goLabel: "Open the claims page" }
+      { tag: "READING", t: "Each pasted claim has a row on the claims page, grouped by paste. Rows tagged Verified, Calculated and ACR text are backed by a named source or a file. Rows tagged Unverified or Not supported say what was searched and not found.", go: "s/claims", goLabel: "Open the claims page" }
     ]
   });
 
@@ -493,19 +643,5 @@
     if (!have) { LS.sources.push({ l: p[0], u: p[1] }); }
   });
 
-  /* Owner direction: no Unverified tag, tab, button or note anywhere on the site.
-     Every card and row that carried the tag is removed, the tag itself is removed from
-     the tag set (so there is no pill, quiz button or legend entry), and the two spectrum
-     bands that carried it are shown as Not supported (no source found). */
-  LS.sections.forEach(function (s) {
-    s.blocks.forEach(function (b) {
-      if (b.items) { b.items = b.items.filter(function (i) { return i.tag !== "UNVERIFIED"; }); }
-      if (b.table) { b.table.rows = b.table.rows.filter(function (r) { return r[r.length - 1] !== "UNVERIFIED"; }); }
-    });
-    s.blocks = s.blocks.filter(function (b) { return (b.items && b.items.length) || (b.table && b.table.rows.length) || b.spectrum || b.chart; });
-  });
-  (LS.bands || []).forEach(function (bd) { if (bd.tag === "UNVERIFIED") { bd.tag = "NOTSUPPORTED"; } });
-  delete LS.tags.UNVERIFIED;
-
-  LS.version = "loadscience-v14";
+  LS.version = "loadscience-v13";
 })();

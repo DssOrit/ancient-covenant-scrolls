@@ -13,7 +13,7 @@
   var KEY = "loadscience-";
 
   var LABEL = {
-    VERIFIED: "Verified", SECONDARY: "Secondary only",
+    VERIFIED: "Verified", SECONDARY: "Secondary only", UNVERIFIED: "Unverified",
     READING: "Reading", NOTSUPPORTED: "Not supported", OPEN: "Open",
     CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis", CALCULATED: "Calculated",
     TEXT: "ACR text", HELD: "Held under warning", NOTEXT: "Not in the text",
@@ -148,12 +148,12 @@
   /* Spectrum ladder, low energy at top */
   var LADDER = [
     ["Radio and extremely low frequency", "Verified in cells. Radio exposure: conflicting."],
-    ["Microwave", "No melanin data found."],
+    ["Microwave", "Unverified. No melanin data found."],
     ["Terahertz", "Verified."],
     ["Infrared", "Verified in nanoparticles."],
     ["Visible light", "Verified."],
     ["Ultraviolet", "Verified."],
-    ["X-ray", "No published coefficients."],
+    ["X-ray", "Unverified. No published coefficients."],
     ["Gamma ray", "Verified: radical quenching."]
   ];
   function ladderSvg() {

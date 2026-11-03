@@ -39,13 +39,6 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
-## Round 15 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
-PR #1195 merged by the owner (main 817183e1, cache v13). Owner gave the phrase and the direction: no Unverified tab, button or note anywhere. Backup of main: backup/2026-11-03-loadscience-v13 at 817183e1 (verified). Fresh branch claude/loadscience-v14, cache v14.
-- The Unverified tag is gone from the tag set: no filter pill, no quiz button, no legend entry, no spectrum label. 28 cards and 41 table rows that carried it were removed (30 rows from the pasted-claims check in data7.js, the rest by a runtime filter at the end of data7.js). The two spectrum bands that carried it now read Not supported (microwave, X-ray), with the text "No melanin data found" and "No published coefficients".
-- Pastes are unchanged on the pasted reports page. Not supported and Not in the text rows are still there.
-- Tests updated for the removed rows; a new test checks no route, pill, quiz button or tooltip contains the word.
-- Open: 4Q186 reject or hold; Damascus Document notes with repeated covenant; Yirmeyahu 38; blocked hosts.
-
 ## Round 14 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 PR #1194 was merged by the owner (main f01319c8, cache v12). Owner gave the phrase and the rule: the claim column of every check row quotes the pasted sentence exactly. Backup of main: backup/2026-11-03-loadscience-v12 at f01319c8 (verified). Fresh branch claude/loadscience-v13, cache v13.
 - All 126 check rows (Pastes 1 to 9, the government claims table, the later pasted sets table) now quote the pasted text exactly. Extra rows were added where one old row had covered two separate pasted sentences. A test confirms each claim column is found word for word in a paste. The supernatural-claims table is not from a paste and is unchanged.
