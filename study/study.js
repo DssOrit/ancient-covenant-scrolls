@@ -9,6 +9,21 @@
 // Voice reader and notes panels are wired up to empty handlers here;
 // actual logic lands in follow-up commits one function at a time.
 
+// Safe localStorage wrapper. Some embedding contexts (e.g. a sandboxed
+// iframe without allow-same-origin, or Safari private browsing in some
+// configurations) throw on any localStorage access. Routing every call
+// through this wrapper means those contexts fall back to an in-memory
+// store for the session instead of throwing and halting the script.
+var LS=(function(){
+  var mem={},ok=true;
+  try{localStorage.setItem('__acr_study_ls_test__','1');localStorage.removeItem('__acr_study_ls_test__');}catch(e){ok=false;}
+  return{
+    get:function(k,d){if(ok){try{var v=localStorage.getItem(k);return v===null?d:v;}catch(e){}}return(k in mem)?mem[k]:d;},
+    set:function(k,v){if(ok){try{localStorage.setItem(k,v);return;}catch(e){}}mem[k]=String(v);},
+    remove:function(k){if(ok){try{localStorage.removeItem(k);return;}catch(e){}}delete mem[k];}
+  };
+})();
+
 // ---- Premium SVG icon set (matches Load family) ----
 function lbIcon(name, sizePx) {
   var size = sizePx || 18;
@@ -229,8 +244,8 @@ var VOL_GROUPS = [
 {title:'Useful Tools Reference',eng:'Promises, Names, Mo’edim, Timeline',count:1,vol:'UTR'},
 {title:'Mo’edim Reference',eng:'Appointed Times, Preparation & Observance',count:1,vol:'MOE'}
 ];
-var fs = parseFloat(localStorage.getItem('acr_study_fs') || '10.5');
-var lh = parseFloat(localStorage.getItem('acr_study_lh') || '1.65');
+var fs = parseFloat(LS.get('acr_study_fs','10.5'));
+var lh = parseFloat(LS.get('acr_study_lh','1.65'));
 var sbo = true;
 var cur = -1;
 var vop = false;
@@ -240,22 +255,22 @@ var nvop = false;
 document.documentElement.style.setProperty('--lh', lh);
 
 // ---- Reading Aids: BeeLine gradient + Line Focus ----
-var beelineOn = localStorage.getItem('acr_study_beeline') === '1';
-var lineFocusOn = localStorage.getItem('acr_study_linefocus') === '1';
+var beelineOn = LS.get('acr_study_beeline',null)==='1';
+var lineFocusOn = LS.get('acr_study_linefocus',null)==='1';
 
 function toggleBeeline() {
   beelineOn = !beelineOn;
   document.body.classList.toggle('beeline-on', beelineOn);
-  try { localStorage.setItem('acr_study_beeline', beelineOn ? '1' : '0'); } catch (e) {}
+  try { LS.set('acr_study_beeline', beelineOn ? '1' : '0'); } catch (e) {}
 }
 
 function toggleLineFocus() {
   lineFocusOn = !lineFocusOn;
   document.body.classList.toggle('linefocus-on', lineFocusOn);
-  try { localStorage.setItem('acr_study_linefocus', lineFocusOn ? '1' : '0'); } catch (e) {}
+  try { LS.set('acr_study_linefocus', lineFocusOn ? '1' : '0'); } catch (e) {}
 }
 
-var childMode = localStorage.getItem('acr_study_child') === '1';
+var childMode = LS.get('acr_study_child',null)==='1';
 
 function toggleChildMode() {
   childMode = !childMode;
@@ -263,7 +278,7 @@ function toggleChildMode() {
   if (childMode) {
     document.body.classList.add('font-dyslexic');
   }
-  try { localStorage.setItem('acr_study_child', childMode ? '1' : '0'); } catch (e) {}
+  try { LS.set('acr_study_child', childMode ? '1' : '0'); } catch (e) {}
 }
 
 if (childMode) {
@@ -343,10 +358,10 @@ document.addEventListener('click', function (e) {
 // Confidence 1-5 maps: 1=again(0), 2=hard(1), 3=okay(3), 4=good(4), 5=easy(5)
 
 function getCards() {
-  try { return JSON.parse(localStorage.getItem('acr_study_cards') || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(LS.get('acr_study_cards','{}')); } catch (e) { return {}; }
 }
 function saveCards(cards) {
-  try { localStorage.setItem('acr_study_cards', JSON.stringify(cards)); } catch (e) {}
+  try { LS.set('acr_study_cards', JSON.stringify(cards)); } catch (e) {}
 }
 
 function sm2(card, quality) {
@@ -445,10 +460,10 @@ function getVolumeSessionCount(volId) {
 
 // ---- Question Mastery Tracking ----
 function getQuizMastery() {
-  try { return JSON.parse(localStorage.getItem('acr_study_qmastery') || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(LS.get('acr_study_qmastery','{}')); } catch (e) { return {}; }
 }
 function saveQuizMastery(m) {
-  try { localStorage.setItem('acr_study_qmastery', JSON.stringify(m)); } catch (e) {}
+  try { LS.set('acr_study_qmastery', JSON.stringify(m)); } catch (e) {}
 }
 function recordQuestionResult(fid, mode, qIndex, correct) {
   var m = getQuizMastery();
@@ -474,11 +489,11 @@ function recordQuestionResult(fid, mode, qIndex, correct) {
 // only when the remixed version is answered correctly.
 
 function getRemixQueue() {
-  try { return JSON.parse(localStorage.getItem('acr_study_remix_queue') || '[]'); }
+  try { return JSON.parse(LS.get('acr_study_remix_queue','[]')); }
   catch (e) { return []; }
 }
 function saveRemixQueue(q) {
-  try { localStorage.setItem('acr_study_remix_queue', JSON.stringify(q || [])); }
+  try { LS.set('acr_study_remix_queue', JSON.stringify(q || [])); }
   catch (e) {}
 }
 function remixKey(item) {
@@ -562,7 +577,7 @@ var LEVELS = [
 ];
 
 function getStats() {
-  try { return JSON.parse(localStorage.getItem('acr_study_stats') || '{}'); }
+  try { return JSON.parse(LS.get('acr_study_stats','{}')); }
   catch (e) { return {}; }
 }
 
@@ -727,7 +742,7 @@ function extractSpeakerQuotesFromCurated(data) {
 }
 
 function saveStats(s) {
-  try { localStorage.setItem('acr_study_stats', JSON.stringify(s)); } catch (e) {}
+  try { LS.set('acr_study_stats', JSON.stringify(s)); } catch (e) {}
 }
 
 function addXP(amount) {
@@ -945,7 +960,7 @@ function go(fid) {
   for (var j = 0; j < secs.length; j++) {
     secs[j].classList.toggle('on', secs[j].getAttribute('data-id') === fid);
   }
-  try { localStorage.setItem('acr_study_last', fid); } catch (e) {}
+  try { LS.set('acr_study_last', fid); } catch (e) {}
   document.getElementById('np-lbl').textContent = 'Notes \u2014 ' + LBL[i];
   document.getElementById('np-ta').value = getNote(fid) || '';
   if (window.innerWidth <= 768) {
@@ -994,10 +1009,10 @@ var SEALS = [
 ];
 
 function getSeals() {
-  try { return JSON.parse(localStorage.getItem('acr_study_seals') || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(LS.get('acr_study_seals','{}')); } catch (e) { return {}; }
 }
 function saveSeals(s) {
-  try { localStorage.setItem('acr_study_seals', JSON.stringify(s)); } catch (e) {}
+  try { LS.set('acr_study_seals', JSON.stringify(s)); } catch (e) {}
 }
 
 function checkAndAwardSeals() {
@@ -1052,10 +1067,10 @@ function checkAndAwardSeals() {
 
 // ---- Daily Scroll ----
 function getDailyStats() {
-  try { return JSON.parse(localStorage.getItem('acr_study_daily') || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(LS.get('acr_study_daily','{}')); } catch (e) { return {}; }
 }
 function saveDailyStats(d) {
-  try { localStorage.setItem('acr_study_daily', JSON.stringify(d)); } catch (e) {}
+  try { LS.set('acr_study_daily', JSON.stringify(d)); } catch (e) {}
 }
 function getDailyStatus() {
   var d = getDailyStats();
@@ -1168,10 +1183,10 @@ var TRIAL_QUESTIONS = {
 };
 
 function getTrialStats() {
-  try { return JSON.parse(localStorage.getItem('acr_study_trials') || '{}'); } catch (e) { return {}; }
+  try { return JSON.parse(LS.get('acr_study_trials','{}')); } catch (e) { return {}; }
 }
 function saveTrialStats(t) {
-  try { localStorage.setItem('acr_study_trials', JSON.stringify(t)); } catch (e) {}
+  try { LS.set('acr_study_trials', JSON.stringify(t)); } catch (e) {}
 }
 
 function showCovenantTrial(volId) {
@@ -1472,7 +1487,7 @@ function initTTS() {
 function loadVoiceSelector() {
   var vc = document.getElementById('vc');
   if (!vc || !ttsVoices.length) return;
-  var saved = localStorage.getItem('acr_study_voice');
+  var saved = LS.get('acr_study_voice',null);
   vc.innerHTML = '';
   var enh = [], siri = [], other = [];
   ttsVoices.forEach(function (v, i) {
@@ -1505,7 +1520,7 @@ setTimeout(initTTS, 500);
 setTimeout(initTTS, 2000);
 
 function getBestVoice() {
-  var saved = localStorage.getItem('acr_study_voice');
+  var saved = LS.get('acr_study_voice',null);
   if (saved) {
     for (var i = 0; i < ttsVoices.length; i++) {
       if (ttsVoices[i].name === saved) return ttsVoices[i];
@@ -3159,7 +3174,7 @@ function showProgress(fid) {
       stats: getStats(),
       cards: getCards(),
       quizMastery: getQuizMastery(),
-      notes: (function () { try { return JSON.parse(localStorage.getItem('acr_study_notes') || '{}'); } catch (e) { return {}; } })()
+      notes: (function () { try { return JSON.parse(LS.get('acr_study_notes','{}')); } catch (e) { return {}; } })()
     };
     var blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
     var url = URL.createObjectURL(blob);
@@ -3216,11 +3231,11 @@ function showProgress(fid) {
           saveQuizMastery(currentM);
         }
         if (imported.notes) {
-          var currentNotes = (function () { try { return JSON.parse(localStorage.getItem('acr_study_notes') || '{}'); } catch (e) { return {}; } })();
+          var currentNotes = (function () { try { return JSON.parse(LS.get('acr_study_notes','{}')); } catch (e) { return {}; } })();
           for (var nk in imported.notes) {
             if (!currentNotes[nk]) currentNotes[nk] = imported.notes[nk];
           }
-          try { localStorage.setItem('acr_study_notes', JSON.stringify(currentNotes)); } catch (e) {}
+          try { LS.set('acr_study_notes', JSON.stringify(currentNotes)); } catch (e) {}
         }
         document.getElementById('prog-io-msg').textContent = 'Done: Progress imported — merging with existing data';
         setTimeout(function () { showProgress(fid); }, 1500);
@@ -6260,7 +6275,7 @@ function goHome() {
     return;
   }
 
-  var lastFid = localStorage.getItem('acr_study_last');
+  var lastFid = LS.get('acr_study_last',null);
   var hasResume = lastFid && IDS.indexOf(lastFid) >= 0;
   var totalDue = getAllDueCount();
   var lvl = getLevel(stats.xp || 0);
@@ -6377,7 +6392,7 @@ function goHome() {
   var bResume = document.getElementById('b-resume');
   if (bResume) {
     bResume.addEventListener('click', function () {
-      var f = localStorage.getItem('acr_study_last');
+      var f = LS.get('acr_study_last',null);
       if (f && IDS.indexOf(f) >= 0) go(f);
     });
   }
@@ -6479,7 +6494,7 @@ function loadContent(fid) {
 // ---- Notes (per section) ----
 
 function getNotes() {
-  try { return JSON.parse(localStorage.getItem('acr_study_notes') || '{}'); }
+  try { return JSON.parse(LS.get('acr_study_notes','{}')); }
   catch (e) { return {}; }
 }
 function getNote(fid) { return getNotes()[fid] || ''; }
@@ -6487,7 +6502,7 @@ function saveNote(fid, t) {
   var n = getNotes();
   if (t && t.trim()) n[fid] = t;
   else delete n[fid];
-  try { localStorage.setItem('acr_study_notes', JSON.stringify(n)); } catch (e) {}
+  try { LS.set('acr_study_notes', JSON.stringify(n)); } catch (e) {}
 }
 
 function closeNP() {
@@ -6533,25 +6548,25 @@ function bindUI() {
   document.getElementById('b-fs-').addEventListener('click', function () {
     fs = Math.max(8, fs - 1);
     applyFontSize();
-    try { localStorage.setItem('acr_study_fs', fs); } catch (e) {}
+    try { LS.set('acr_study_fs', fs); } catch (e) {}
   });
 
   document.getElementById('b-fs+').addEventListener('click', function () {
     fs = Math.min(22, fs + 1);
     applyFontSize();
-    try { localStorage.setItem('acr_study_fs', fs); } catch (e) {}
+    try { LS.set('acr_study_fs', fs); } catch (e) {}
   });
 
   // Theme cycle: light -> parchment -> navy -> amber -> light
   var themes = ['', 'theme-parchment', 'theme-navy', 'theme-amber'];
-  var curTheme = localStorage.getItem('acr_study_theme_mode') || '';
+  var curTheme = LS.get('acr_study_theme_mode','');
   if (curTheme) document.body.classList.add(curTheme);
   document.getElementById('b-theme').addEventListener('click', function () {
     var idx = themes.indexOf(curTheme);
     document.body.classList.remove(curTheme);
     curTheme = themes[(idx + 1) % themes.length];
     if (curTheme) document.body.classList.add(curTheme);
-    try { localStorage.setItem('acr_study_theme_mode', curTheme); } catch (e) {}
+    try { LS.set('acr_study_theme_mode', curTheme); } catch (e) {}
     this.classList.toggle('on', curTheme !== '');
   });
   if (curTheme) document.getElementById('b-theme').classList.add('on');
@@ -6615,7 +6630,7 @@ function bindUI() {
   document.getElementById('vs').addEventListener('change', function () {});
   document.getElementById('vc').addEventListener('change', function () {
     var v = ttsVoices[parseInt(this.value)];
-    if (v) { try { localStorage.setItem('acr_study_voice', v.name); } catch (e) {} }
+    if (v) { try { LS.set('acr_study_voice', v.name); } catch (e) {} }
   });
   document.getElementById('vm').addEventListener('change', function () {});
 }
@@ -6632,14 +6647,14 @@ document.addEventListener('DOMContentLoaded', function () {
   fontBtn.title = 'Switch font: Atkinson Hyperlegible / OpenDyslexic';
   fontBtn.setAttribute('aria-label', 'Toggle dyslexic font');
   document.body.appendChild(fontBtn);
-  if (localStorage.getItem('acr_study_font') === 'dyslexic') {
+  if (LS.get('acr_study_font',null)==='dyslexic') {
     document.body.classList.add('font-dyslexic');
     fontBtn.textContent = 'Dy';
   }
   fontBtn.addEventListener('click', function () {
     var on = document.body.classList.toggle('font-dyslexic');
     this.textContent = on ? 'Dy' : 'Aa';
-    try { localStorage.setItem('acr_study_font', on ? 'dyslexic' : 'default'); } catch (e) {}
+    try { LS.set('acr_study_font', on ? 'dyslexic' : 'default'); } catch (e) {}
   });
 });
 
@@ -6871,8 +6886,8 @@ TU.scoreboard = function () {
 };
 TU.playAgain = function () { this.state.view = 'setup'; this.render(); };
 
-if ('serviceWorker' in navigator) {
+try{if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('sw.js').catch(function () {});
+    try{navigator.serviceWorker.register('sw.js').catch(function () {});}catch(e){}
   });
-}
+}}catch(e){}
