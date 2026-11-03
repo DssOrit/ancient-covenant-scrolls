@@ -39,6 +39,14 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 16 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+PR #1196 merged by the owner (v14). Owner gave the phrase: the refresh circle opens back to the front splash page, and complete the build tasks. Backup of main: backup/2026-11-03-loadscience-v14 at 56efbed1 (verified). Fresh branch claude/loadscience-v15, cache v15.
+- Refresh circle now clears the splash-seen mark and the address before reloading, so the splash shows again. A test confirms it and that other caches and saved settings survive.
+- The refresh re-fetch list stopped at data3.js; it now covers data4.js to data8.js.
+- data8.js: plain-words cards for brain, genes, scientists, spectrum, electronics and discoveries; limits gathered at the end of the scientists and discoveries pages.
+- Correction: PR #1196 said 39 bare rows. The test counts 36 rows (Pastes 1 to 9, the government table and the later pasted table, tagged Unverified). 39 was my miscount.
+- Open: 4Q186 reject or hold; Damascus Document notes with repeated covenant; Yirmeyahu 38; blocked hosts. Plain-words cards are not yet on the texts, not-supported and checks pages.
+
 ## Round 15 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 Owner direction, with a circled screenshot: remove only the Unverified button and the note beneath it on the claims-check rows, and keep the quoted claim above. My first attempt (PR #1196, v14) removed the tag, pill, quiz button and 69 cards and rows everywhere; that was too much, so it was reverted on the same branch and replaced by the narrow change. Backups: backup/2026-11-03-loadscience-v13 at 817183e1 and backup/2026-11-03-loadscience-v13b at 0dd9b0d5 (current main, verified). Cache v14.
 - The 39 pasted-claim check rows tagged Unverified (Pastes 1 to 9, the government claims table, the later pasted sets table) are shown as bare cards: the quoted claim and Save only. No badge, no note. Search matches only the claim for these cards. They are left out of the quiz.
