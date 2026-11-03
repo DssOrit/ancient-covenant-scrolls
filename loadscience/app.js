@@ -15,7 +15,8 @@
   var LABEL = {
     VERIFIED: "Verified", SECONDARY: "Secondary only", UNVERIFIED: "Unverified",
     READING: "Reading", NOTSUPPORTED: "Not supported", OPEN: "Open",
-    CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis"
+    CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis", CALCULATED: "Calculated",
+    TEXT: "ACR text", HELD: "Held under warning", NOTEXT: "Not in the text"
   };
   var tagKeys = Object.keys(LS.tags);
   var curTag = "all";
@@ -65,6 +66,26 @@
     return f;
   }
 
+  /* Stable id for a claim, so it can be saved. */
+  function idOf(title, text) {
+    var str = (title || "") + "|" + text, h = 5381;
+    for (var i = 0; i < str.length; i++) { h = ((h << 5) + h + str.charCodeAt(i)) | 0; }
+    return "c" + (h >>> 0).toString(36);
+  }
+  function savedIds() {
+    var raw = store(true, "saved"), a = [];
+    try { a = JSON.parse(raw || "[]"); } catch (e) { a = []; }
+    return Array.isArray(a) ? a : [];
+  }
+  function isSaved(id) { return savedIds().indexOf(id) >= 0; }
+  function toggleSave(id) {
+    var a = savedIds(), i = a.indexOf(id);
+    if (i >= 0) { a.splice(i, 1); } else { a.push(id); }
+    store(false, "saved", JSON.stringify(a));
+    return i < 0;
+  }
+  function clearSaved() { store(false, "saved", "[]"); }
+
   /* One claim card. Used on section pages and in search results. */
   function claimCard(it, opts) {
     opts = opts || {};
@@ -75,11 +96,32 @@
     var p = el("p");
     p.appendChild(withMarks(it.t, opts.words || []));
     c.appendChild(p);
+    if (it.cite) { c.appendChild(el("p", "src", "Where: " + it.cite)); }
     if (it.src && it.src.length) { c.appendChild(srcLine(it.src)); }
+    var foot = el("div", "row-actions");
+    if (!opts.noSave) {
+      var cid = idOf(it.title, it.t);
+      var sv = el("button", "btn save", isSaved(cid) ? "Saved" : "Save");
+      sv.type = "button";
+      sv.setAttribute("aria-pressed", String(isSaved(cid)));
+      sv.setAttribute("aria-label", (isSaved(cid) ? "Remove from saved: " : "Save this claim: ") + it.t.slice(0, 60));
+      sv.addEventListener("click", function () {
+        var on = toggleSave(cid);
+        sv.textContent = on ? "Saved" : "Save";
+        sv.setAttribute("aria-pressed", String(on));
+        if (opts.onSave) { opts.onSave(on); }
+      });
+      foot.appendChild(sv);
+    }
+    if (it.go) {
+      var g = el("a", "open", it.goLabel || "Open");
+      g.href = "#/" + it.go; foot.appendChild(g);
+    }
     if (opts.open) {
       var a = el("a", "open", "Open this page");
-      a.href = "#/s/" + opts.open; c.appendChild(a);
+      a.href = "#/s/" + opts.open; foot.appendChild(a);
     }
+    if (foot.childNodes.length) { c.appendChild(foot); }
     return c;
   }
 
@@ -88,15 +130,19 @@
   LS.sections.forEach(function (s) {
     s.blocks.forEach(function (b) {
       (b.items || []).forEach(function (it) {
-        INDEX.push({ sec: s, block: b.h, tag: it.tag, t: it.t, src: it.src });
+        INDEX.push({ id: idOf(it.title, it.t), sec: s, block: b.h, tag: it.tag, t: it.t, src: it.src, cite: it.cite, go: it.go, goLabel: it.goLabel });
       });
       if (b.table) {
         b.table.rows.forEach(function (r) {
-          INDEX.push({ sec: s, block: b.h, tag: r[r.length - 1], title: r[0], t: r[1] });
+          INDEX.push({ id: idOf(r[0], r[1]), sec: s, block: b.h, tag: r[r.length - 1], title: r[0], t: r[1] });
         });
       }
     });
   });
+
+  var BYID = {};
+  INDEX.forEach(function (e) { if (!BYID[e.id]) { BYID[e.id] = e; } });
+  function entryById(id) { return BYID[id] || null; }
 
   /* Spectrum ladder, low energy at top */
   var LADDER = [
@@ -162,6 +208,21 @@
     f.appendChild(el("div", "home-sub", "Melanin research"));
     f.appendChild(el("div", "home-tagline", "Every claim carries a tag. Research date " + LS.date + "."));
     f.appendChild(el("p", "home-welcome", "Tap a page below. Or type a word in the search box above."));
+    if (window.LSX) { f.appendChild(window.LSX.didYouKnow(helpers())); }
+    f.appendChild(el("h2", "", "Try it"));
+    var tools = el("div", "feat-grid");
+    [["x/photon", "Photon shielding explorer", "Slide energy and thickness."],
+     ["x/spectrum", "Spectrum explorer", "Radio waves up to gamma rays."],
+     ["x/quiz", "Claim check", "Guess the tag. Learn why."],
+     ["saved", "Saved claims", "Your own list, kept on this device."],
+     ["glossary", "Glossary", "Plain-word science terms."]].forEach(function (t) {
+      var a = el("a", "feat-card"); a.href = "#/" + t[0];
+      a.appendChild(el("span", "fc-title", t[1]));
+      a.appendChild(el("span", "fc-desc", t[2]));
+      tools.appendChild(a);
+    });
+    f.appendChild(tools);
+    f.appendChild(el("h2", "", "Read the research"));
     var grid = el("div", "feat-grid");
     LS.sections.forEach(function (s) {
       var a = el("a", "feat-card"); a.href = "#/s/" + s.id;
@@ -175,7 +236,7 @@
     grid.appendChild(src);
     f.appendChild(grid);
     f.appendChild(el("h2", "", "What the tags mean"));
-    tagKeys.forEach(function (k) { f.appendChild(claimCard({ tag: k, t: LS.tags[k] })); });
+    tagKeys.forEach(function (k) { f.appendChild(claimCard({ tag: k, t: LS.tags[k] }, { noSave: true })); });
     return f;
   }
 
@@ -251,7 +312,7 @@
     if (curTag !== "all") { f.appendChild(el("p", "sub", LS.tags[curTag])); }
     hits.forEach(function (e) {
       f.appendChild(claimCard(
-        { tag: e.tag, title: e.title, t: e.t, src: e.src },
+        { tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
         { ref: e.sec.title + "  >  " + e.block, words: words, open: e.sec.id }
       ));
     });
@@ -266,6 +327,16 @@
     return f;
   }
 
+  /* Helpers handed to the interactive tools in explore.js */
+  function helpers() {
+    return {
+      el: el, ext: ext, badge: badge, claimCard: claimCard, INDEX: INDEX, LABEL: LABEL, tagKeys: tagKeys,
+      savedIds: savedIds, clearSaved: clearSaved, entryById: entryById,
+      rerender: function () { render(); },
+      goSearch: function (term) { qInput.value = term; curTag = "all"; qClear.hidden = false; if (inFind()) { render(); } else { location.hash = "#/find"; } }
+    };
+  }
+
   /* ROUTER */
   function inFind() { return location.hash === "#/find"; }
 
@@ -277,6 +348,9 @@
     else if (!h) { node = homeView(); }
     else if (p[0] === "s") { node = sectionView(p[1]); }
     else if (p[0] === "sources") { node = sourcesView(); }
+    else if (p[0] === "explore" && window.LSX) { node = window.LSX.views.explore(helpers()); }
+    else if (p[0] === "x" && window.LSX && window.LSX.views[p[1]]) { node = window.LSX.views[p[1]](helpers()); }
+    else if ((p[0] === "saved" || p[0] === "glossary") && window.LSX) { node = window.LSX.views[p[0]](helpers()); }
     else { node = notFound(); }
     if (window.speechSynthesis) { window.speechSynthesis.cancel(); }
     view.textContent = "";
@@ -381,8 +455,17 @@
     s.speak(u);
   });
 
-  /* Hard refresh, scoped to this app only (locked rule 21). */
-  document.getElementById("refresh").addEventListener("click", async function () {
+  /* Refresh circle. Hard refresh scoped to Load Science only (locked rule 21):
+     it deletes only caches whose name starts with "loadscience-", unregisters only
+     service workers whose scope contains "/loadscience/", then re-fetches this
+     app's own files past the browser cache. Other sites are never touched, and the
+     saved claims and reading settings (localStorage) are kept. */
+  var refreshBtn = document.getElementById("refresh");
+  var OWN_FILES = ["./", "index.html", "style.css", "data.js", "data2.js", "data3.js", "explore.js", "app.js", "sw.js", "manifest.webmanifest"];
+  refreshBtn.addEventListener("click", async function () {
+    if (refreshBtn.classList.contains("spin")) { return; }
+    refreshBtn.classList.add("spin");
+    refreshBtn.setAttribute("aria-busy", "true");
     try {
       var keys = await caches.keys();
       await Promise.all(
@@ -395,7 +478,10 @@
           .map(function (r) { return r.unregister(); })
       );
     } catch (e) {}
-    location.reload(true);
+    try {
+      await Promise.all(OWN_FILES.map(function (u) { return fetch(u, { cache: "reload" }).catch(function () {}); }));
+    } catch (e) {}
+    location.reload();
   });
 
 

@@ -9,7 +9,9 @@
 <meta name="theme-color" content="#0D0B07">
 <meta name="description" content="Load Science: melanin research with every claim tagged by how well it is verified.">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="icons/favicon-16.png" type="image/png" sizes="16x16">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 <title>Load Science</title>
@@ -24,6 +26,9 @@
       <div class="tb-name">Load Science</div>
       <div class="tb-sub">Melanin research, tagged by evidence</div>
     </div>
+    <button type="button" id="refresh" class="tb-btn tb-round" aria-label="Refresh Load Science only" title="Refresh Load Science only. No other site is touched.">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <button type="button" id="aa" class="tb-btn" aria-expanded="false" aria-controls="settings" aria-label="Reading settings">Aa</button>
   </div>
   <div class="search-wrap">
@@ -60,7 +65,6 @@
     <span class="set-label">Tools</span>
     <div class="set-ctl">
       <button type="button" id="speak" class="btn">Read aloud</button>
-      <button type="button" id="refresh" class="btn" aria-label="Hard refresh this app only">Refresh app</button>
     </div>
   </div>
 </section>
@@ -68,11 +72,14 @@
 <main id="main" tabindex="-1"><div id="view" aria-live="polite"></div></main>
 
 <footer class="foot">
-  <span id="ver">loadscience-v4</span>
+  <span id="ver">loadscience-v6</span>
   <span>Works offline after the first visit.</span>
 </footer>
 
 <script src="data.js"></script>
+<script src="data2.js"></script>
+<script src="data3.js"></script>
+<script src="explore.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
