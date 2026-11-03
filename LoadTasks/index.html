@@ -5783,7 +5783,7 @@
               var checked=faCriteria.filter(function(c){return c.done;}).length;
               var txt='FEATURE ACCEPTANCE CHECKLIST\n'+feature+(site?' — '+site:'')+'\n'+'='.repeat(40)+'\n\n'
                 +faCriteria.map(function(c){return(c.done?'[x] ':'[ ] ')+c.text;}).join('\n')
-                +'\n\nRESULT: '+checked+'/'+faCriteria.length+' criteria met'+(checked===faCriteria.length?'\nSTATUS: ACCEPTED':''\nSTATUS: NOT YET ACCEPTED');
+                +'\n\nRESULT: '+checked+'/'+faCriteria.length+' criteria met'+(checked===faCriteria.length?'\nSTATUS: ACCEPTED':'\nSTATUS: NOT YET ACCEPTED');
               var b=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='feature-acceptance.txt';a.click();
             });
             document.getElementById('fa-reset').addEventListener('click',function(){faCriteria.forEach(function(c){c.done=false;});faRender();});
@@ -6753,7 +6753,7 @@
               el.innerHTML='<div style="font-size:13px;color:#9aa0b0;margin-bottom:8px;">'+done+' / '+items.length+' complete</div>'
                 +items.map(function(g,idx){return'<label style="display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:6px;background:rgba(255,255,255,0.05);border-radius:8px;cursor:pointer;">'
                   +'<input type="checkbox" data-idx="'+idx+'"'+(g.done?' checked':'')+' style="width:18px;height:18px;accent-color:#ffd400;flex-shrink:0;">'
-                  +'<span style="flex:1;'+(g.done?'text-decoration:line-through;color:#9aa0b0;')+'">'+g.goal+'</span>'
+                  +'<span style="flex:1;'+(g.done?'text-decoration:line-through;color:#9aa0b0;':'')+'">'+g.goal+'</span>'
                   +'<span style="background:'+SGL_PRI[g.pri]+';color:#fff;border-radius:4px;padding:2px 6px;font-size:10px;white-space:nowrap;">'+g.pri+'</span>'
                   +'<button class="small-btn sgl-del" data-idx="'+idx+'">X</button></label>';}).join('');
               el.querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.addEventListener('change',function(){var items=sglLoad();items[parseInt(cb.dataset.idx)].done=cb.checked;sglSave(items);sglRender();});});
@@ -8246,7 +8246,7 @@
               var openIncidents=snsGet('lt_ir_',['lt_ir_draft']).filter(function(it){return!it.resolved||it.resolved==='Still open';});
               if(openIncidents.length){steps.push({risk:'High',label:'Resolve open incidents first',detail:'There are '+openIncidents.length+' unresolved incident'+(openIncidents.length>1?'s':'')+'. Do not ship anything new until incidents are closed.',action:'Go to Incident Report',view:'incidentreport'});return;}
               var critBugs=snsGet('lt_bgt_',['lt_bgt_draft']).filter(function(b){return b.sev==='Critical'&&b.status==='Open';});
-              if(critBugs.length){steps.push({risk:'High',label:'Fix critical bugs before continuing',detail:critBugs.length+' critical bug'+(critBugs.length>1?'s')+' are open. Any build on top of a critical bug adds risk.',action:'Go to Bug Triage',view:'bugtriage'});}
+              if(critBugs.length){steps.push({risk:'High',label:'Fix critical bugs before continuing',detail:critBugs.length+' critical bug'+(critBugs.length>1?'s':'')+' are open. Any build on top of a critical bug adds risk.',action:'Go to Bug Triage',view:'bugtriage'});}
               var staleBackup=!localStorage.getItem('lt_last_backup_ts')||(Date.now()-parseInt(localStorage.getItem('lt_last_backup_ts')||'0',10))>86400000;
               if(staleBackup){steps.push({risk:'Medium',label:'Back up your data before the next build',detail:'No backup recorded in the last 24 hours. Export settings before making more changes.',action:'Go to Settings Backup',view:'settingsio'});}
               var blockers=snsGet('lt_bk_',['lt_bk_draft']).filter(function(b){return b.status==='Open';});

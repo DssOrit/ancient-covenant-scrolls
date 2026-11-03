@@ -1,4 +1,4 @@
-const CACHE_NAME = 'load-tasks-cache-v2.5.4';
+const CACHE_NAME = 'load-tasks-cache-v2.5.5';
 const CACHE_PREFIX = 'load-tasks-cache-';
 const APP_SHELL = [
   './',

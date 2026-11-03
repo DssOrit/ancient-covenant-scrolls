@@ -186,14 +186,19 @@
     $('#previewGithubBtn').addEventListener('click', previewGithubPush);
     $('#pushGithubBtn').addEventListener('click', pushGithubFiles);
 
-    $('#dyslexiaMode').addEventListener('change', updateSettings);
-    $('#largeTextMode').addEventListener('change', updateSettings);
-    $('#reducedMotionMode').addEventListener('change', updateSettings);
-    $('#simpleMode').addEventListener('change', updateSettings);
-    $('#exportWorkspaceBtn').addEventListener('click', exportWorkspace);
-    $('#importWorkspaceBtn').addEventListener('click', () => $('#workspaceImportFile').click());
-    $('#workspaceImportFile').addEventListener('change', importWorkspace);
-    $('#resetWorkspaceBtn').addEventListener('click', resetWorkspace);
+    // Each of these settings controls is optional in the HTML — the dyslexiaMode
+    // checkbox was removed from index.html but references remained in app.js,
+    // which previously crashed bindEvents() at the first $('#dyslexiaMode')
+    // call and halted init() before SW registration. Use bindIf for every
+    // optional control so a missing element is a no-op, not a crash.
+    bindIf('#dyslexiaMode', 'change', updateSettings);
+    bindIf('#largeTextMode', 'change', updateSettings);
+    bindIf('#reducedMotionMode', 'change', updateSettings);
+    bindIf('#simpleMode', 'change', updateSettings);
+    bindIf('#exportWorkspaceBtn', 'click', exportWorkspace);
+    bindIf('#importWorkspaceBtn', 'click', () => { const f = $('#workspaceImportFile'); if (f) f.click(); });
+    bindIf('#workspaceImportFile', 'change', importWorkspace);
+    bindIf('#resetWorkspaceBtn', 'click', resetWorkspace);
 
     bindIf('#saveProjectMemoryBtn', 'click', saveProjectMemory);
     bindIf('#exportProjectMemoryBtn', 'click', exportProjectMemory);
@@ -2618,11 +2623,14 @@ function setText(selector, value) {
   }
 
   function updateSettings() {
+    // Read optional controls defensively — any of them may not exist in the HTML.
+    const prev = state.settings || {};
+    const get = (sel, prevKey) => { const el = $(sel); return el ? el.checked : !!prev[prevKey]; };
     state.settings = {
-      dyslexiaMode: $('#dyslexiaMode').checked,
-      largeTextMode: $('#largeTextMode').checked,
-      reducedMotionMode: $('#reducedMotionMode').checked,
-      simpleMode: $('#simpleMode').checked
+      dyslexiaMode: get('#dyslexiaMode', 'dyslexiaMode'),
+      largeTextMode: get('#largeTextMode', 'largeTextMode'),
+      reducedMotionMode: get('#reducedMotionMode', 'reducedMotionMode'),
+      simpleMode: get('#simpleMode', 'simpleMode')
     };
     saveState();
     applySettings();
@@ -2630,10 +2638,12 @@ function setText(selector, value) {
 
   function applySettings() {
     const s = state.settings || {};
-    $('#dyslexiaMode').checked = !!s.dyslexiaMode;
-    $('#largeTextMode').checked = !!s.largeTextMode;
-    $('#reducedMotionMode').checked = !!s.reducedMotionMode;
-    $('#simpleMode').checked = !!s.simpleMode;
+    // Write back to controls only if they exist in the HTML.
+    const setChk = (sel, val) => { const el = $(sel); if (el) el.checked = !!val; };
+    setChk('#dyslexiaMode', s.dyslexiaMode);
+    setChk('#largeTextMode', s.largeTextMode);
+    setChk('#reducedMotionMode', s.reducedMotionMode);
+    setChk('#simpleMode', s.simpleMode);
     document.body.classList.toggle('dyslexia', !!s.dyslexiaMode);
     document.body.classList.toggle('large-text', !!s.largeTextMode);
     document.body.classList.toggle('reduced-motion', !!s.reducedMotionMode);
