@@ -48,3 +48,9 @@
 - For the owner's decision (nothing changed in the Reader): the Yirmeyahu 38 [DSS] note calls Eved-Melekh "a foreigner" and an outsider, while the [ORIT GE'EZ] note on the same chapter ties him to the same cultural geography as the Hebrew people; rule 16 treats the foreigner framing as the overlay.
 - Not confirmed (shown as UNVERIFIED in the app): whether Shir HaShirim 1:5-6 is physically attested in 4QCant-a or 4QCant-b (ACR's note does not say); whether Yirmeyahu 13:23 is in the portions of 4QJer-a ACR's note describes (it discusses verses 1-11); the Hebrew wording for dark and skin (the ACR files for those books show English only).
 - Refresh circle: top bar, 48 px, scoped. Tested: other sites' caches and a fake other-site service worker survive; only loadscience- caches deleted; only the /loadscience/ worker unregistered; saved claims kept.
+
+## Round 7 (same day)
+- PR #1188, #1189 and #1190 are all merged (main c80b0b45, cache loadscience-v6 live in the repo). Backup: backup/2026-11-03-loadscience-v6 at c80b0b45.
+- Owner asked: "Include unlock phrase for this site." Read as: add Load Science to the locked-site list in CLAUDE.md rule 8. Added: Load Science (/loadscience/), unlock "edit Load Science" or "fix Load Science". Only CLAUDE.md and these notes changed. Branch claude/rule8-loadscience.
+- No CI guard was added for /loadscience/ (the only CI lock today is the ACR Reader root-app lock). Optional; not requested.
+- From now on every round of work in /loadscience/ needs the exact phrase first, then backup, then the no-break check, then the fix, then the merge link (rules 38 and 39).
