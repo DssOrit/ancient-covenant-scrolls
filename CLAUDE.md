@@ -71,6 +71,7 @@ These have been re-locked on 2026-05-04 after repeated violations.
 8. **DO NOT TOUCH ANY SITE — EVER, WITHOUT DIRECT APPROVAL.**
    Locked 2026-06-02 by user. Extended 2026-07-16 to cover ACR Search and
    ACR Solar. Extended 2026-07-25 to cover ALL sites in the repo.
+   Extended 2026-11-03 by user to cover Load Science (`/loadscience/`).
    Every deployable site requires an exact unlock phrase before any file
    inside it may be touched. Covers all sites:
    - ACR Reader (root `/` app): `index.html`, `acr.css`, `sw.js`, etc.,
@@ -110,6 +111,10 @@ These have been re-locked on 2026-05-04 after repeated violations.
      Unlock: "edit Study" or "fix Study"
    - Load Survival (`/loadsurvival/`): all files inside it.
      Unlock: "edit Load Survival" or "fix Load Survival"
+   - Load Science (`/loadscience/`): all files inside it.
+     Unlock: "edit Load Science" or "fix Load Science"
+     (Added 2026-11-03 by user. Phrases are exact: "edit Load" alone
+     unlocks only Load (`/load/`), never Load Science.)
    A general bug report, content question, or feature idea does NOT count
    as approval — stop and ask before touching anything in any site folder.
    If ACR audio breaks, read `HANDOFF.md` section "ACR Reader Audio —
