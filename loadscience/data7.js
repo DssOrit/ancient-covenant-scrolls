@@ -630,6 +630,14 @@
     b.table.rows.forEach(function (r) { if (QUOTES.hasOwnProperty(r[0])) { r[0] = QUOTES[r[0]]; } });
   });
 
+  /* Owner direction (round 15): on the pasted-claim check rows, remove the Unverified tag
+     button and the note beneath it, and keep the quoted claim above it. The row stays in
+     the data and is shown as a bare card (see claimCard in app.js). */
+  cl.blocks.forEach(function (b) {
+    if (!b.table || b.h === "Claims of supernatural ability") { return; }
+    b.table.rows.forEach(function (r) { if (r[r.length - 1] === "UNVERIFIED") { r.bare = true; } });
+  });
+
   [
     ["Meredith and Riesz 2004, radiative relaxation quantum yields (arXiv)", "https://arxiv.org/abs/cond-mat/0312277"],
     ["Geller, Babylonian physiognomic omens in cryptic Hebrew orthography (UCL)", "https://discovery.ucl.ac.uk/10193507/1/Geller%202023%20Aest%204%20Qumran%20Phys.pdf"],
@@ -643,5 +651,5 @@
     if (!have) { LS.sources.push({ l: p[0], u: p[1] }); }
   });
 
-  LS.version = "loadscience-v13";
+  LS.version = "loadscience-v14";
 })();

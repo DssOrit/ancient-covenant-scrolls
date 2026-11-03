@@ -251,12 +251,12 @@
       out.appendChild(c);
       var terms = b.terms.map(function (t) { return t.toLowerCase(); });
       var hits = H.INDEX.filter(function (e) {
-        var hay = (e.t + " " + (e.title || "")).toLowerCase();
+        var hay = ((e.bare ? "" : e.t) + " " + (e.title || "")).toLowerCase();
         return terms.some(function (t) { return hay.indexOf(t) >= 0; });
       });
       out.appendChild(H.el("h2", "", "Related claims (" + hits.length + ")"));
       hits.slice(0, 8).forEach(function (e) {
-        out.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel }, { ref: e.sec.title + "  >  " + e.block, open: e.sec.id }));
+        out.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, bare: e.bare, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel }, { ref: e.sec.title + "  >  " + e.block, open: e.sec.id }));
       });
       if (hits.length > 8) {
         var more = H.el("button", "btn", "Search all " + hits.length + " for " + b.terms[0]); more.type = "button";
@@ -289,7 +289,7 @@
 
     var ROUND = 10, pool, n, score;
     function start() {
-      pool = shuffle(H.INDEX.filter(function (e) { return e.t.length > 30 && e.tag !== "PASTED"; })).slice(0, ROUND);
+      pool = shuffle(H.INDEX.filter(function (e) { return e.t.length > 30 && e.tag !== "PASTED" && !e.bare; })).slice(0, ROUND);
       n = 0; score = 0; ask();
     }
     function ask() {
@@ -391,7 +391,7 @@
       f.appendChild(row);
     }
     entries.forEach(function (e) {
-      f.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
+      f.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, bare: e.bare, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
         { ref: e.sec.title + "  >  " + e.block, open: e.sec.id, onSave: function () { H.rerender(); } }));
     });
     return f;
