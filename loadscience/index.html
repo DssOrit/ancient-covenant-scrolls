@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Load Science">
+<meta name="theme-color" content="#0D0B07">
+<meta name="description" content="Load Science: melanin research with every claim tagged by how well it is verified.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+<title>Load Science</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header id="topbar">
+  <div class="tb-row">
+    <a class="tb-home" href="#/" aria-label="Load Science home"><img class="tb-logo" src="icons/icon-192.png" alt="" width="44" height="44"></a>
+    <div class="tb-titles">
+      <div class="tb-name">Load Science</div>
+      <div class="tb-sub">Melanin research, tagged by evidence</div>
+    </div>
+    <button type="button" id="aa" class="tb-btn" aria-expanded="false" aria-controls="settings" aria-label="Reading settings">Aa</button>
+  </div>
+  <div class="search-wrap">
+    <input id="q" class="search-input" type="search" placeholder="Search the research" aria-label="Search the research" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+    <button type="button" id="qclear" class="si-clear" aria-label="Clear search" hidden>Clear</button>
+  </div>
+  <div id="pills" class="mode-pills" role="group" aria-label="Filter by tag" hidden></div>
+</header>
+
+<section id="settings" class="settings" aria-label="Reading settings" hidden>
+  <div class="set-row">
+    <span class="set-label">Text size</span>
+    <div class="set-ctl">
+      <button type="button" id="smaller" class="btn" aria-label="Smaller text">A-</button>
+      <span id="fsval" class="set-val" aria-live="polite">20</span>
+      <button type="button" id="bigger" class="btn" aria-label="Bigger text">A+</button>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">Colors</span>
+    <div class="set-ctl">
+      <button type="button" id="th-dark" class="btn" aria-pressed="true">Dark</button>
+      <button type="button" id="th-cream" class="btn" aria-pressed="false">Cream</button>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">Spacing</span>
+    <div class="set-ctl">
+      <button type="button" id="sp-normal" class="btn" aria-pressed="true">Normal</button>
+      <button type="button" id="sp-wide" class="btn" aria-pressed="false">Wide</button>
+    </div>
+  </div>
+  <div class="set-row">
+    <span class="set-label">Tools</span>
+    <div class="set-ctl">
+      <button type="button" id="speak" class="btn">Read aloud</button>
+      <button type="button" id="refresh" class="btn" aria-label="Hard refresh this app only">Refresh app</button>
+    </div>
+  </div>
+</section>
+
+<main id="main" tabindex="-1"><div id="view" aria-live="polite"></div></main>
+
+<footer class="foot">
+  <span id="ver">loadscience-v3</span>
+  <span>Works offline after the first visit.</span>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
