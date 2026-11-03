@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v11` (goes forward only)
+- Cache: `loadscience-v12` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -52,7 +52,7 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 - Both source reports were re-checked before this was written. Corrections made: Diop's birth year was dropped (not in any tool result), the Fajuyigbe comparison group is stated as the paper's title states it (extreme skin types), and the Springer review is cited by DOI only.
 
 ## Pasted reports page and claims check (data7.js, round 12)
-- Page "Your pasted reports, word for word": the owner's seven pastes kept in full with the PASTED tag, so nothing is lost. Only the owner's request lines were left out, two invisible marker characters were removed, and a part pasted twice is shown once.
+- Page "Your pasted reports, word for word": the owner's nine pastes kept exactly as pasted with the PASTED tag, not reworded, softened or summarised. Only the owner's own request lines are left out. A part pasted twice is shown twice.
 - The claims page now holds a row-by-row check for each paste, with a tag and what was found.
 - PASTED does not rate the text. It is left out of the Claim check quiz.
 - Diagrams in the pastes scroll sideways inside their card, so the page itself does not overflow.

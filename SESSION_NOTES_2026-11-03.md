@@ -39,6 +39,13 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 13 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner gave the phrase and set the rule: pasted text is not rephrased, softened or summarised. Same open PR #1194, cache v12. Backup of main unchanged: backup/2026-11-03-loadscience-v9 at a86d5ec7.
+- Pasted reports page now holds nine pastes exactly as pasted (Paste 8: institutions, APOL1, minerals, fail-safe; Paste 9: Kavod, mountain fortresses). Earlier version dropped a part pasted twice and two invisible characters; both are now kept. Only the owner's own instruction lines are left out. A test checks every line over 40 characters of all nine pastes, with the invisible characters kept.
+- Claims page: check groups for Paste 8 and Paste 9. New rows quote the pasted claim in the owner's words. Older rows (Pastes 1 to 7) shorten the claim in the first column; the full text is on the pasted reports page.
+- Found, not changed: the Damascus Document critical notes (data/file_96, 97, 98, plus a few in 38, 77, 85, 86, 111) have the word covenant repeated inside sentences. Needs "edit ACR reader" and the owner's approval of the exact list first.
+- Open: 4Q186 reject or hold; Yirmeyahu 38 note difference; blocked hosts for full texts.
+
 ## Round 12 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 Owner gave the phrase and asked that every pasted report be kept so nothing is lost. Same open PR #1194 (not merged), cache v11. Backup for main already exists: backup/2026-11-03-loadscience-v9 at a86d5ec7.
 - data7.js: new page "Your pasted reports, word for word" with all seven pastes in full (PASTED tag; request lines omitted, two invisible marker characters removed, the part pasted twice shown once). A test checks that every line over 40 characters from each paste is present.
