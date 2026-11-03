@@ -4,7 +4,7 @@
    the owner's own instruction lines (such as "edit Load Science" and "Check this
    research"), because those are requests and not report text. Repeated parts are shown as
    many times as they were pasted. The check of each claim (tag and what was found) is in
-   the tables further down. The PASTED tag says only that it is the owner's pasted text and
+   the tables further down. In those tables the claim column quotes the pasted text exactly, and the other columns are the check. The PASTED tag says only that it is the owner's pasted text and
    does not rate it. */
 (function () {
   var LS = window.LS;
@@ -16,134 +16,543 @@
 
   var CHECK = [
     {
-      h: "Checked: Pastes 1 and 2 (the standard, the threefold figure, the diversity addition)",
-      rows: [
-        ["Roughly threefold lower UV DNA damage in heavily pigmented skin under certain conditions", "The pasted text names a review, and its page was not opened. The site holds larger measured figures from named studies: 8.0-fold overall and 59.0-fold in the basal layer (Fajuyigbe 2018), and about one fifth of the UV reaching the upper dermis (Kaidbey 1979).", "SECONDARY"],
-        ["African genetic diversity is the highest of any continent (Tishkoff et al., Science 2009)", "On the genes page. Penn's release states Africa holds more genetic diversity than anywhere else. The exact abstract sentence was not retrieved.", "SECONDARY"],
-        ["Reference panels under-sample African diversity (Popejoy and Fullerton, Nature 2016)", "On the genes page. 81 percent of GWAS Catalog participants were of European descent in 2016, down from 96 percent in 2009.", "VERIFIED"]
+      "h": "Checked: Pastes 1 and 2 (the standard, the threefold figure, the diversity addition)",
+      "rows": [
+        [
+          "research has documented approximately threefold lower UV-induced DNA photodamage in more heavily pigmented skin under certain experimental conditions",
+          "The pasted text names a review, and its page was not opened. The site holds larger measured figures from named studies: 8.0-fold overall and 59.0-fold in the basal layer (Fajuyigbe 2018), and about one fifth of the UV reaching the upper dermis (Kaidbey 1979).",
+          "SECONDARY"
+        ],
+        [
+          "African genetic diversity is the highest of any continent (Tishkoff et al., Science 2009)",
+          "On the genes page. Penn's release states Africa holds more genetic diversity than anywhere else. The exact abstract sentence was not retrieved.",
+          "SECONDARY"
+        ],
+        [
+          "reference panels under-sample it (Popejoy and Fullerton, Nature 2016)",
+          "On the genes page. 81 percent of GWAS Catalog participants were of European descent in 2016, down from 96 percent in 2009.",
+          "VERIFIED"
+        ]
       ]
     },
     {
-      h: "Checked: Paste 4, science half (radiosynthesis, electronics, EMP, space)",
-      rows: [
-        ["Dadachova's work proved that melanin executes radiosynthesis", "The 2007 paper reports faster growth of melanized fungi under radiation about 500 times background, a 4-fold higher NADH-reducing capacity and 3-fold more 14C-acetate taken in. The authors present energy capture as a question. The mechanism is not shown.", "HYPOTHESIS"],
-        ["Radiation causes a permanent change in melanin's redox potential", "Turick 2011 (Savannah River National Laboratory) reports that gamma changed the redox potential and produced a current, and that the melanin restored itself. Restored itself does not match permanent.", "CONFLICTING"],
-        ["Savannah River used chronoamperometry and cyclic voltammetry to prove continuous current", "The paper and its current are verified at summary level. The two method names were not seen.", "UNVERIFIED"],
-        ["Cell growth up to three times faster under intense radiation", "The 3-fold figure in the 2007 paper is for 14C-acetate taken in. The growth result is stated as about 500 times background radiation. A three-times growth figure was not found.", "CONFLICTING"],
-        ["Melanin captures high-energy photons and channels the energy into NADH, which drives metabolism", "A 4-fold higher capacity to reduce NADH after irradiation is reported. Capture of photon energy that drives metabolism is the open question.", "HYPOTHESIS"],
-        ["Melanin conducts both electrons and protons", "Mostert et al. PNAS 2012: eumelanin is an electronic-ionic hybrid conductor.", "VERIFIED"],
-        ["Nerve signalling relies on proton gradients, so melanin is the ultimate bridge to the nervous system", "No source seen. Nerve signals are carried mainly by sodium and potassium ions, from standard neuroscience that was not searched in this session. The implant-interface idea itself is listed as a candidate use, not shown.", "UNVERIFIED"],
-        ["Pure melanin has a 1.7 eV semiconductor bandgap", "No source seen.", "UNVERIFIED"],
-        ["Hydration raises conductivity by ten orders of magnitude, a billion-fold, with no doping", "Reported range with hydration is 10^-13 to 10^-5 S/cm: 8 orders. Ten orders is ten billion-fold, so the pasted wording disagrees with itself. No source seen for the doping statement.", "CONFLICTING"],
-        ["HAVE reached copper-like conductivity (318 S/cm) and can replace heavy metals in circuitry, brain stimulators and computing", "318 S/cm is reported for annealed synthetic eumelanin (Migliaccio 2019). Copper is about 6 x 10^7 S/cm, so about 190,000 times higher. The device uses were not found.", "CALCULATED"],
-        ["The Army Chemical Biological Center scales up natural melanin because it outperforms synthetic", "DEVCOM CBC developed a melanin recovery process (2022 Army release). The Army STTR topic A19B-T010 estimates synthetic melanin at 40 to 60 percent less efficient than natural melanin.", "VERIFIED"],
-        ["Natural melanin has a chaotic multi-layered matrix that synthetic chemistry cannot replicate", "No source seen.", "UNVERIFIED"],
-        ["Melanin absorbs electromagnetic waves across the whole spectrum, traps Compton electrons in its radical rings and completely neutralises the charge", "The mouse paper's authors propose Compton scattering inside the pigment, then radical quenching, as a mechanism. Whole spectrum and completely are not shown. Measured X-ray and gamma attenuation for pure melanin was not found.", "HYPOTHESIS"],
-        ["NASA and ESA are moving away from lead because it creates secondary radiation (bremsstrahlung)", "An ESA and DLR abstract discusses secondary radiation from aluminium, titanium and polymers when radiation hits them. Moving away from lead was not seen.", "VERIFIED"],
-        ["Melanin's X-ray attenuation is half of lead's by mass, so it saves thousands of pounds in rockets", "Calculated on the photon page: per gram melanin reaches half of lead at about 454 keV and 2.8 percent at 100 keV. For the same shielding melanin is not lighter than lead: about 1.2 times lead's mass at 800 keV, about 35 times at 100 keV. No source for the weight saving.", "CALCULATED"],
-        ["NASA tested melanin aerogels and PLA on MISSE, and a physical scattering filter blocked particles while atomic oxygen did no harm", "PNAS 2025: PLA with fungal, synthetic or animal melanin flew on MISSE-FF for about 6 months, and fungal melanin reduced mass loss and wrinkling. Aerogels were not in that report. The scattering-filter mechanism was not seen.", "CONFLICTING"]
+      "h": "Checked: Paste 4, science half (radiosynthesis, electronics, EMP, space)",
+      "rows": [
+        [
+          "Landmark research led by Dr. Ekaterina Dadachova at the Albert Einstein College of Medicine completely shattered this paradigm, proving that melanin executes radiosynthesis.",
+          "The 2007 paper reports faster growth of melanized fungi under radiation about 500 times background, a 4-fold higher NADH-reducing capacity and 3-fold more 14C-acetate taken in. The authors present energy capture as a question. The mechanism is not shown.",
+          "HYPOTHESIS"
+        ],
+        [
+          "When radiation strikes melanin, the polymer absorbs the impact and undergoes a permanent change in its oxidation-reduction (redox) potential.",
+          "Turick 2011 (Savannah River National Laboratory) reports that gamma changed the redox potential and produced a current, and that the melanin restored itself. Restored itself does not match permanent.",
+          "CONFLICTING"
+        ],
+        [
+          "researchers used electrochemical techniques (chronoamperometry and cyclic voltammetry) to prove that melanin continuously generates a measurable electrical current when bombarded with gamma radiation.",
+          "The paper and its current are verified at summary level. The two method names were not seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "accelerating cell growth up to three times faster under intense radiation fields.",
+          "The 3-fold figure in the 2007 paper is for 14C-acetate taken in. The growth result is stated as about 500 times background radiation. A three-times growth figure was not found.",
+          "CONFLICTING"
+        ],
+        [
+          "Instead of degrading under radiation, melanin captures high-energy photons and channels that captured energy into reducing Nicotinamide Adenine Dinucleotide (\\(NAD^{+}\\)) into its energy-carrying form, NADH.",
+          "A 4-fold higher capacity to reduce NADH after irradiation is reported. Capture of photon energy that drives metabolism is the open question.",
+          "HYPOTHESIS"
+        ],
+        [
+          "It conducts both electrons and hydrogen ions (protons) simultaneously.",
+          "Mostert et al. PNAS 2012: eumelanin is an electronic-ionic hybrid conductor.",
+          "VERIFIED"
+        ],
+        [
+          "Because human neural communication relies heavily on proton gradients and ion flows, melanin acts as the ultimate biomimetic bridge for microelectronics.",
+          "No source seen. Nerve signals are carried mainly by sodium and potassium ions, from standard neuroscience that was not searched in this session. The implant-interface idea itself is listed as a candidate use, not shown.",
+          "UNVERIFIED"
+        ],
+        [
+          "Pure melanin naturally possesses a 1.7 electron-volt (eV) semiconductor bandgap.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "When melanin is hydrated, its electrical conductivity surges by ten orders of magnitude (a billion-fold increase), transforming it from an insulator into a highly efficient conductor at room temperature without requiring synthetic doping.",
+          "Reported range with hydration is 10^-13 to 10^-5 S/cm: 8 orders. Ten orders is ten billion-fold, so the pasted wording disagrees with itself. No source seen for the doping statement.",
+          "CONFLICTING"
+        ],
+        [
+          "By uniformly compressing the natural stacking arrays of the polymer, they achieved copper-like electrical conductivity levels (318 S/cm), proving that natural melanin can replace heavy metals in high-performance, biodegradable circuitry, brain stimulators, and advanced computing active layers.",
+          "318 S/cm is reported for annealed synthetic eumelanin (Migliaccio 2019). Copper is about 6 x 10^7 S/cm, so about 190,000 times higher. The device uses were not found.",
+          "CALCULATED"
+        ],
+        [
+          "The U.S. Army's Chemical Biological Center (DEVCOM CBC) scales up natural melanin production specifically because natural melanin's shielding architecture dramatically outperforms synthetic models.",
+          "DEVCOM CBC developed a melanin recovery process (2022 Army release). The Army STTR topic A19B-T010 estimates synthetic melanin at 40 to 60 percent less efficient than natural melanin.",
+          "VERIFIED"
+        ],
+        [
+          "Natural melanin features a complex, chaotic, multi-layered macromolecular matrix that synthetic chemistry cannot precisely replicate.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "Melanin absorbs raw electromagnetic waves across the entire spectrum. It traps incoming high-energy Compton electrons within its dense free-radical scavenging rings, completely neutralizing the charge and converting the localized threat into uniform, harmless thermal energy dissipation.",
+          "The mouse paper's authors propose Compton scattering inside the pigment, then radical quenching, as a mechanism. Whole spectrum and completely are not shown. Measured X-ray and gamma attenuation for pure melanin was not found.",
+          "HYPOTHESIS"
+        ],
+        [
+          "NASA and the European Space Agency (ESA) are moving away from traditional dense barriers like lead because they create catastrophic secondary radiation (bremsstrahlung) when struck by heavy cosmic ions.",
+          "An ESA and DLR abstract discusses secondary radiation from aluminium, titanium and polymers when radiation hits them. Moving away from lead was not seen.",
+          "VERIFIED"
+        ],
+        [
+          "Fungal melanin's raw X-ray attenuation capacity is half that of lead by mass. Because space travel requires extreme mass optimization, replacing heavy metal shielding with ultra-lightweight melanin composites saves thousands of pounds in rocket payloads.",
+          "Calculated on the photon page: per gram melanin reaches half of lead at about 454 keV and 2.8 percent at 100 keV. For the same shielding melanin is not lighter than lead: about 1.2 times lead's mass at 800 keV, about 35 times at 100 keV. No source for the weight saving.",
+          "CALCULATED"
+        ],
+        [
+          "Through the MISSE platform on the International Space Station, NASA tested melanin-infused aerogels and polylactic acid (PLA) biocomposites. The polymer's physical backbone scattering mechanism acted as a physical filter that simultaneously impeded high-energy particulate radiation while maintaining complete structural integrity against raw atomic oxygen.",
+          "PNAS 2025: PLA with fungal, synthetic or animal melanin flew on MISSE-FF for about 6 months, and fungal melanin reduced mass loss and wrinkling. Aerogels were not in that report. The scattering-filter mechanism was not seen.",
+          "CONFLICTING"
+        ]
       ]
     },
     {
-      h: "Checked: Paste 4, ancient texts half (DSS and Orit)",
-      rows: [
-        ["4Q186 and 4Q561 are Qumran texts on bodies and light and darkness", "4Q186 is a Qumran text on body features and shares of light and darkness. Geller describes 4Q561 as a fragmentary Aramaic physiognomic text. A DSS-by-number list calls 4Q561 a horoscope, so the genre label differs by source.", "VERIFIED"],
-        ["The Children of Light are described with deep radiant skin tones, robust health and flashing eyes", "The sources found describe body features and shares of light and dark in ninths. A skin-tone statement was not seen in them. The full translation was not seen.", "UNVERIFIED"],
-        ["Genesis Apocryphon (1Q20): a holy child's skin lights the room like the sun", "The light imagery is found in the Enochic birth of Noah (1 Enoch 106: eyes like the rays of the sun, face glorious, the house lit), which scholars link to the Genesis Apocryphon's Lamech and Noah narrative. The exact wording of column 5 was not seen, and skin is not in the wording found. ACR Reader Genesis Apocryphon column 2 verse 1 has no colour words. ACR2 (held) 4Q534 has a face shining like the sun.", "CONFLICTING"],
-        ["The Kavod is a physical radiant energy, and skin is a garment that stores and emits light", "This is the owner's reading. The ACR critical note on Shemot 34 keeps the cause of the shining undefined.", "READING"],
-        ["The Orit places the garden's river Gihon around Kush", "ACR Reader Bereshit 2:13: Gichon encompasses the whole land of Kush.", "TEXT"],
-        ["Gihon is the Nile", "The verse does not name the Nile.", "NOTEXT"],
-        ["The name Adam comes from adamah, rich red-brown volcanic soil, so the first human was dark and full of eumelanin", "ACR Reader Bereshit 2:7 says dust of the ground. It has no colour words and no volcanic soil. The link to eumelanin is a reading.", "NOTEXT"],
-        ["In Enoch, original humanity wore garments of light", "Not in the ACR Reader or in ACR2.", "NOTEXT"],
-        ["Greek and Rabbinic layers deliberately severed the connection, and 4Q186 was hidden", "This is a historical reading and is kept as the owner's reading. One scholar, Geller, argues the zodiacal reading and Hellenistic influence on 4Q186 are overstated and reads it against Babylonian physiognomic omens.", "READING"]
+      "h": "Checked: Paste 4, ancient texts half (DSS and Orit)",
+      "rows": [
+        [
+          "Crucially, these texts contain fragments of physiognomic and astrological texts (such as 4Q186 and 4Q561) where spiritual election, righteousness, and the \"Spirit of Light\" are explicitly tied to specific, unblemished physical traits.",
+          "4Q186 is a Qumran text on body features and shares of light and darkness. Geller describes 4Q561 as a fragmentary Aramaic physiognomic text. A DSS-by-number list calls 4Q561 a horoscope, so the genre label differs by source.",
+          "VERIFIED"
+        ],
+        [
+          "In the ancient Near Eastern context of these texts, the \"Children of Light\" are described with terms denoting robust physical health, deep, radiant skin tones, and eyes that flash with vitality.",
+          "The sources found describe body features and shares of light and dark in ninths. A skin-tone statement was not seen in them. The full translation was not seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "In the Genesis Apocryphon (1Q20), a prominent scroll in the DSS collection, the birth of ancient holy figures is described with a hyper-focus on their skin. When a holy child is born, their skin is described as illuminating the room like the sun.",
+          "The light imagery is found in the Enochic birth of Noah (1 Enoch 106: eyes like the rays of the sun, face glorious, the house lit), which scholars link to the Genesis Apocryphon's Lamech and Noah narrative. The exact wording of column 5 was not seen, and skin is not in the wording found. ACR Reader Genesis Apocryphon column 2 verse 1 has no colour words. ACR2 (held) 4Q534 has a face shining like the sun.",
+          "CONFLICTING"
+        ],
+        [
+          "In ancient Hebrew cosmology, the \"Glory of God\" (Kavod) was not a metaphor—it was a physical, radiant energy. The texts view the skin as a localized, protective biological garment that stores and emits light, a conceptual precursor to the way biophysics now understands melanin's ability to harvest and emit electromagnetic radiation.",
+          "This is the owner's reading. The ACR critical note on Shemot 34 keeps the cause of the shining undefined.",
+          "READING"
+        ],
+        [
+          "In the Orit and related pre-Christian pseudepigrapha (like the Book of Jubilees and the Book of Enoch, which are canonical in Ethiopia but were banned or lost in European Christianity), the biblical narrative is rooted in Northeast Africa and the Levant. The river Gihon (associated with the Nile) encompasses the lands of Cush.",
+          "ACR Reader Bereshit 2:13: Gichon encompasses the whole land of Kush.",
+          "TEXT"
+        ],
+        [
+          "The river Gihon (associated with the Nile) encompasses the lands of Cush.",
+          "The verse does not name the Nile.",
+          "NOTEXT"
+        ],
+        [
+          "In the linguistic roots preserved in these ancient Semitic contexts, the name Adam is tied to the root Adamah (the rich, red-brown, nutrient-dense volcanic soil of the Earth). The ancient text describes the creation of the original human archetype not as pale, but as a rich, dark, elemental reflection of the Earth itself—a biological vessel densely packed with what modern science would identify as eumelanin.",
+          "ACR Reader Bereshit 2:7 says dust of the ground. It has no colour words and no volcanic soil. The link to eumelanin is a reading.",
+          "NOTEXT"
+        ],
+        [
+          "The Uncorrupted Garment: In the Book of Enoch (Orit tradition), original humanity wore \"garments of light\" that protected them from the volatile physical elements of the fallen world.",
+          "Not in the ACR Reader or in ACR2.",
+          "NOTEXT"
+        ],
+        [
+          "The connection between the ancient texts and high-melanin biology was deliberately severed during two major historical shifts:\n1. The Hellenistic & Roman Re-interpretation: As Judaism and early Christianity moved into the Greco-Roman sphere, the Afro-Asiatic idioms of the original texts were Hellenized. Physical concepts of bodily radiance and earthly, dark-skinned lineage were converted into abstract, platonic \"spiritual\" concepts.\n2. The European Rabbinic Shift: Following the destruction of Jerusalem, Rabbinic Judaism standardized the Masoretic text and moving away from the physical, apocalyptic physiognomy found in the Dead Sea Scrolls. Texts like 4Q186 were hidden away, and the Ethiopian Orit was entirely ignored by Western scholarship until the 19th and 20th centuries.",
+          "This is a historical reading and is kept as the owner's reading. One scholar, Geller, argues the zodiacal reading and Hellenistic influence on 4Q186 are overstated and reads it against Babylonian physiognomic omens.",
+          "READING"
+        ]
       ]
     },
     {
-      h: "Checked: Paste 5 (superconductivity threshold, radiosynthetic efficiency, 4Q186, solar garment)",
-      rows: [
-        ["Melanin reaches a room-temperature superconductivity threshold", "The pasted body describes hydration-controlled conduction, which is documented, not superconductivity. No measurement of superconductivity was found. See the supernatural claims page.", "NOTSUPPORTED"],
-        ["Standard semiconductors need doping and extreme temperatures, and silicon degrades in the moisture that activates melanin", "No source seen. Silicon chips run at room temperature, and doping is how they are tuned. Stated from general knowledge that was not searched here.", "UNVERIFIED"],
-        ["Water auto-ionises inside melanin and the protons couple to the electron network to give the surge", "The exact conduction mechanism is still being refined (electronics page). The picture is a proposal.", "OPEN"],
-        ["Melanin is a self-doping, self-healing semiconductor", "Self-restoring after gamma is reported (Turick 2011). Self-doping was not seen.", "UNVERIFIED"],
-        ["Radiation is converted to NADH and then directly to ATP, powering cells without sunlight or oxygen", "No source shows ATP made from radiation. NADH-reducing capacity is reported to rise 4-fold.", "NOTSUPPORTED"],
-        ["4Q186 is written in a cryptic, left-to-right script mixing square letters, Paleo-Hebrew and Greek letters", "Geller describes it as written left to right, starting with the column on the left, avoiding final letters, with some words in Paleo-Hebrew script and Greek letters. The phrase cryptic script A was not found.", "VERIFIED"],
-        ["The script was meant to protect explosive contents", "The purpose is a reading. No source seen.", "READING"],
-        ["The highest authority belongs to those with eight to nine parts of light, with deep pigmented skin; the column of darkness is physically frail", "Shares in ninths are verified. Which share is highest, and the skin and frailty descriptions, were not seen. The full translation was not seen.", "UNVERIFIED"],
-        ["Moses descended Sinai with skin so saturated with converted energy that it glowed, so he veiled his face because normal biological systems could not handle the emission", "ACR Reader Shemot 34:29-35: the skin of his face shone, they were afraid to come near, he put a veil on his face. ACR's note keeps the cause undefined. The energy and frequency explanation is not in the text.", "TEXT"]
+      "h": "Checked: Paste 5 (superconductivity threshold, radiosynthetic efficiency, 4Q186, solar garment)",
+      "rows": [
+        [
+          "The Room-Temperature Superconductivity Threshold",
+          "The pasted body describes hydration-controlled conduction, which is documented, not superconductivity. No measurement of superconductivity was found. See the supernatural claims page.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "Standard semiconductors require highly controlled, artificial \"doping\" (the introduction of foreign impurities like boron or phosphorus) and extreme temperatures to conduct electricity efficiently.",
+          "No source seen. Silicon chips run at room temperature, and doping is how they are tuned. Stated from general knowledge that was not searched here.",
+          "UNVERIFIED"
+        ],
+        [
+          "The water molecules undergo localized auto-ionization, releasing a dense cloud of free protons (\\(H^{+}\\)).",
+          "The exact conduction mechanism is still being refined (electronics page). The picture is a proposal.",
+          "OPEN"
+        ],
+        [
+          "This turns melanin into a self-doping, self-healing organic semiconductor that operates at room temperature—a feat synthetic silicon can never achieve because silicon degrades permanently when exposed to the very moisture that activates melanin.",
+          "Self-restoring after gamma is reported (Turick 2011). Self-doping was not seen. For silicon degrading in the moisture that activates melanin: no source seen, and silicon chips run at room temperature (general knowledge, not searched here).",
+          "UNVERIFIED"
+        ],
+        [
+          "Melanin uses this electrical current to drive the reduction of \\(NAD^{+}\\) to \\(NADH\\). This is a clean, direct conversion of lethal nuclear and cosmic radiation into metabolic energy (ATP) capable of powering cellular life in environments completely devoid of sunlight or oxygen.",
+          "No source shows ATP made from radiation. NADH-reducing capacity is reported to rise 4-fold.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "Found among the Dead Sea Scrolls and written in a cryptic, reversed Hebrew script to protect its explosive contents,",
+          "Geller describes it as written left to right, starting with the column on the left, avoiding final letters, with some words in Paleo-Hebrew script and Greek letters. The phrase cryptic script A was not found.",
+          "VERIFIED"
+        ],
+        [
+          "a cryptic, reversed Hebrew script to protect its explosive contents",
+          "The purpose is a reading. No source seen.",
+          "READING"
+        ],
+        [
+          "The individuals who possess the highest spiritual authority and physical resilience are explicitly described as having eight to nine parts of their physical composition derived from the \"Column of Light.\"",
+          "Shares in ninths are verified. Which share is highest was not seen. The full translation was not seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "The text explicitly links this high-light ratio to specific physical markers: deep, richly pigmented skin, robust physical density, and eyes capable of processing extreme environmental stress. Conversely, those belonging to the \"Column of Darkness\" (depleted light) are described as physically frail, structurally irregular, and lacking the protective bodily shielding required to endure the raw elements of creation.",
+          "Shares in ninths are verified. The skin and frailty descriptions were not seen in the sources found. The full translation was not seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "The text explicitly records that when the patriarchs descended from places of high spiritual frequency (like Moses descending the mountain), their skin was so densely saturated with this converted energy that it physically glowed, requiring them to veil their faces because ordinary, low-frequency biological systems could not handle the emission.",
+          "ACR Reader Shemot 34:29-35: the skin of his face shone, they were afraid to come near, he put a veil on his face. ACR's note keeps the cause undefined. The energy and frequency explanation is not in the text.",
+          "TEXT"
+        ]
       ]
     },
     {
-      h: "Checked: Paste 6 (chelation, 4Q186 text, synthesis)",
-      rows: [
-        ["Melanin is an immutable thermodynamic sink for heavy metals, radionuclides and toxic cations, and outperforms synthetic ion-exchange materials", "Metal binding is documented with numbers on the electronics page. Immutable, radionuclides and the comparison with ion-exchange materials: no source seen.", "UNVERIFIED"],
-        ["Carboxyl groups on DHICA bind hard cations by electrostatic exchange", "A DHICA-containing melanin bound at least eight times more Cd than polydopamine, attributed to carboxyl groups (search summary of the study).", "SECONDARY"],
-        ["Quinone imine nitrogens give high-stability d-orbital coordination", "Infrared work on squid melanin points to phenolic OH, carboxyl and amine groups as binding sites. Stability of the nitrogen coordination was not seen.", "SECONDARY"],
-        ["Pb and Cd are driven into the catechol matrix, while calcium sits on carboxyl groups", "Cd binding relies more on carboxyl groups in the studies seen, and in squid melanin Pb and Cd are held by different groups. Calcium was not seen.", "CONFLICTING"],
-        ["Melanin forms an inert composite that isolates toxins from tissue", "No source seen.", "UNVERIFIED"],
-        ["4Q186 was found in Cave 4 at Qumran", "The 4Q prefix marks Cave 4, an official Qumran excavation designation (project rule 32).", "VERIFIED"],
-        ["The nine-part metric reflects the months of gestation", "Not found in the sources seen.", "UNVERIFIED"],
-        ["Profile A (eight parts dark, one light), Profile B (six light, three dark, the foot of Taurus) and Profile C (eight light, one dark), with quoted lines", "Ratios in ninths such as 1:8 and 6:3 are reported, and the foot of the bull is reported. The quoted lines and the Profile A and C wording and the fragment and column labels were not matched to a translation.", "UNVERIFIED"],
-        ["The Qumran scribes treated the light-to-dark ratio as a guarded operational secret", "No source seen. This is a reading.", "READING"],
-        ["The conclusion that the historical downplaying of dark skin dissolves against the data and the texts", "This is the owner's reading and is kept as such.", "READING"]
+      "h": "Checked: Paste 6 (chelation, 4Q186 text, synthesis)",
+      "rows": [
+        [
+          "From a quantum mechanical perspective, melanin is a macro-molecular amorphous network with high-density surface functionalization, acting as an immutable Thermodynamic Sink for heavy metals, radionuclides, and toxic cations. Government defense and environmental protection frameworks leverage this molecular grid because its chelating architecture outperforms synthetic ion-exchange materials.",
+          "Metal binding is documented with numbers on the electronics page. Immutable, radionuclides and the comparison with ion-exchange materials: no source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "Carboxyl Groups (\\(-\\text{COOH}\\) / \\(-\\text{COO}^{-}\\)): Present primarily on DHICA units. These act as hard Lewis bases, optimized for electrostatic ion-exchange.",
+          "A DHICA-containing melanin bound at least eight times more Cd than polydopamine, attributed to carboxyl groups (search summary of the study).",
+          "SECONDARY"
+        ],
+        [
+          "Quinone Imine Nitrogen (\\(=\\text{N}-\\) / \\(-\\text{NH}-\\)): Interspersed throughout the polymer backbone, offering nitrogen lone pairs for high-stability d-orbital coordination.",
+          "Infrared work on squid melanin points to phenolic OH, carboxyl and amine groups as binding sites. Stability of the nitrogen coordination was not seen.",
+          "SECONDARY"
+        ],
+        [
+          "While light biological metals like Calcium (\\(\\text{Ca}^{2+}\\)) bind loosely to the outer carboxyl groups to serve as a dynamic physiological reservoir, toxic heavy metals like Lead (\\(\\text{Pb}^{2+}\\)) and Cadmium (\\(\\text{Cd}^{2+}\\)) are driven directly into the inner catechol matrix via coordinate covalent bonds.",
+          "Cd binding relies more on carboxyl groups in the studies seen, and in squid melanin Pb and Cd are held by different groups. Calcium was not seen.",
+          "CONFLICTING"
+        ],
+        [
+          "Melanin sequesters these toxic metals, locks down their chemical reactivity, and forms an inert bio-composite grid that isolates environmental toxins from biological tissue.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "Discovered in Cave 4 at Qumran, this document was written in a highly complex, childishly cryptographic script—reading left-to-right (reversing traditional Hebrew) and mixing standard square characters, Paleo-Hebrew letters, and Greek alphabetic keys to strictly restrict its access.",
+          "The 4Q prefix marks Cave 4, an official Qumran excavation designation (project rule 32). Geller describes the text as written left to right, starting with the column on the left, avoiding final letters, with some words in Paleo-Hebrew script and Greek letters. The phrase cryptic script A was not found.",
+          "VERIFIED"
+        ],
+        [
+          "This 9-part metric directly reflected the foundational months of human gestation in the womb.",
+          "Not found in the sources seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his place is divided into eight parts in the pit of darkness, and one part from the house of light...\"",
+          "Profile A: the ratio of 1:8 is reported in the sources seen. The quoted line and its fragment and column label were not matched to a translation.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his thighs are long and slender, and the toes of his feet are slender and long... His place is divided into six parts in the house of light and three parts in the pit of darkness. And this is the sign in which he was born: the foot of Taurus...\"",
+          "Profile B: a 6:3 share and the foot of the bull are reported in the sources seen. The quoted line and its fragment and column label were not matched to a translation.",
+          "UNVERIFIED"
+        ],
+        [
+          "\"...And his body is filled... and his composition is eight parts from the house of light, and one part from the pit of darkness...\"",
+          "Profile C: a share in ninths is reported. The quoted line and its fragment label were not matched to a translation.",
+          "UNVERIFIED"
+        ],
+        [
+          "The cryptographic protection of 4Q186 proves that the Qumran scribes considered this physical light-to-dark ratio calculation to be a closely guarded operational secret.",
+          "No source seen. This is a reading.",
+          "READING"
+        ],
+        [
+          "The historical attempts to downplay dark skin findings or minimize melanin's functional capabilities dissolve when confronted with hard scientific data and unedited historical texts.",
+          "This is the owner's reading and is kept as such.",
+          "READING"
+        ]
       ]
     },
     {
-      h: "Checked: Paste 7 (if all melanin were destroyed)",
-      rows: [
-        ["Eumelanin dissipates over 99.9 percent of absorbed UV as heat", "Meredith and Riesz, Photochemistry and Photobiology 2004, Radiative Relaxation Quantum Yields for Synthetic Eumelanin: more than 99.9 percent of absorbed UV and visible light goes through non-radiative routes. The yield depends on the excitation energy. Measured on synthetic eumelanin.", "VERIFIED"],
-        ["Fungal melanin protects fungal cell walls, spores and hyphae from UV, cold, heat and dehydration", "Melanized fungi resisting radiation is documented on the gamma page. The cold, heat and dehydration items were not searched.", "SECONDARY"],
-        ["Without melanin, topsoil fungi die from UV within days and agriculture collapses", "No source seen for the timeline or the die-off. The depth that UV reaches in soil was not found.", "NOTSUPPORTED"],
-        ["Melanin is the primary component that hardens the insect cuticle", "Hardening runs mainly through NADA and NBAD quinone cross-links with chitin and proteins. Melanin is a separate branch from shared precursors, and in Tribolium sclerotization needs quinone tanning and dehydration (Frontiers in Physiology 2022, search summary). Removing the whole precursor pathway would harm the cuticle. Removing melanin alone is not shown to do so.", "CONFLICTING"],
-        ["All insects die of desiccation in 24 to 48 hours", "No source seen. The day-by-day collapse timeline has no source either.", "NOTSUPPORTED"],
-        ["Cephalopod ink is concentrated eumelanin", "Squid ink sac melanin is studied as melanin (PMC5824532, PMC2817865).", "VERIFIED"],
-        ["Marine plankton make melanin as their UV shield, and without it the oceans flip to carbon emitters and oxygen falls to near zero", "The UV sunscreens found in phytoplankton are mycosporine-like amino acids. A plankton melanin role was not found. The oxygen and carbon timeline has no source.", "NOTSUPPORTED"],
-        ["Without melanin, blistering within minutes, folate depletion, lethal cancers and uninhabitable tropics", "Photoprotection by melanin is documented (skin pages). The minutes, the dead zones and the weeks-to-collapse timeline have no source.", "HYPOTHESIS"],
-        ["African populations hold the highest genetic diversity, and non-Africans carry a pruned subset (serial founder effect, 50,000 to 70,000 years ago)", "Highest diversity in Africa is on the genes page. The founder-effect dates and the comparison of neighboring African groups against Europe and East Asia were not searched in this session.", "SECONDARY"],
-        ["Destroying melanated populations would remove the vast majority of human alleles and endanger the species", "Africa's diversity is the verified part. Non-African populations also carry variants of their own (general genetics, not searched here), so vast majority is not shown. The species-survival step is a projection. Melanated is also wider than African: South Asian, Melanesian and Aboriginal Australian peoples are dark-skinned too.", "READING"],
-        ["African Americans have $1.7 to $1.8 trillion in annual buying power (Nielsen)", "Nielsen put it at about $1.4 trillion for 2019. The Selig Center put it at about $1.6 trillion for 2020 and projects over $2 trillion for 2026. The pasted figure matches neither seen.", "CONFLICTING"],
-        ["Black workers are about 20 percent of nurses, medical assistants and care aides", "BLS 2018 data: about 36 percent of nursing, psychiatric and home health aides. Registered nurses are about 11 to 14.5 percent depending on the source.", "CONFLICTING"],
-        ["Over 20 percent of government, transit and municipal workers are Black; over 29 percent of educational services and social assistance", "No source seen for either figure.", "UNVERIFIED"],
-        ["Africa is the primary source of cobalt, copper, lithium, gold and platinum, and sub-Saharan Africa has over a billion people", "Not checked in this session.", "UNVERIFIED"]
+      "h": "Checked: Paste 7 (if all melanin were destroyed)",
+      "rows": [
+        [
+          "Eumelanin naturally dissipates over 99.9% of all absorbed UV radiation, safely converting it into harmless heat before it can fracture human DNA.",
+          "Meredith and Riesz, Photochemistry and Photobiology 2004, Radiative Relaxation Quantum Yields for Synthetic Eumelanin: more than 99.9 percent of absorbed UV and visible light goes through non-radiative routes. The yield depends on the excitation energy. Measured on synthetic eumelanin.",
+          "VERIFIED"
+        ],
+        [
+          "Melanin is embedded directly in fungal cell walls, spores, and hyphae to act as structural protection. It buffers fungi against extreme solar ultraviolet (UV) radiation, severe cold, heat waves, and dehydration.",
+          "Melanized fungi resisting radiation is documented on the gamma page. The cold, heat and dehydration items were not searched.",
+          "SECONDARY"
+        ],
+        [
+          "Without melanin, topsoil fungi and decomposers would instantly lose their radiation shielding. The sun's raw UV rays would cross-link and mutate their DNA, causing mass die-offs of decomposer networks. This would immediately stall organic decomposition, halt leaf-litter processing, and starve the global plant kingdom of bioavailable nitrogen and phosphorus, collapsing global agriculture from the soil up.",
+          "No source seen for the timeline or the die-off. The depth that UV reaches in soil was not found.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "Melanin is the primary component responsible for the sclerotization (hardening) and pigmentation of insect cuticles and exoskeletons.",
+          "Hardening runs mainly through NADA and NBAD quinone cross-links with chitin and proteins. Melanin is a separate branch from shared precursors, and in Tribolium sclerotization needs quinone tanning and dehydration (Frontiers in Physiology 2022, search summary). Removing the whole precursor pathway would harm the cuticle. Removing melanin alone is not shown to do so.",
+          "CONFLICTING"
+        ],
+        [
+          "Under normal atmospheric pressure and humidity, the world’s entire insect population would undergo fatal, systemic desiccation (drying out) within 24 to 48 hours, instantly paralyzing global plant pollination and nutrient recycling.",
+          "No source seen. The day-by-day collapse timeline has no source either.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "Cephalopods (squid, octopuses, and cuttlefish) rely entirely on concentrated eumelanin suspensions for their defensive ink clouds to confuse predators.",
+          "Squid ink sac melanin is studied as melanin (PMC5824532, PMC2817865).",
+          "VERIFIED"
+        ],
+        [
+          "Simultaneously, floating marine micro-plankton in the upper photic zone produce melanin to withstand raw solar radiation.",
+          "The UV sunscreens found in phytoplankton are mycosporine-like amino acids. A plankton melanin role was not found. The oxygen and carbon timeline has no source.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "Removing this biological filter would trigger an immediate mass kill-off of surface plankton. Because these organisms form the foundational layer of the marine food web and generate a massive percentage of the planet's oxygen while acting as the primary carbon sink, their loss would flip the oceans from carbon absorbers into massive carbon emitters.",
+          "No source seen for the carbon-sink reversal. The UV sunscreens found in phytoplankton are mycosporine-like amino acids.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "while oxygen production would plummet to near-zero levels.",
+          "No source seen.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "At Equatorial latitudes, unprotected exposure to daylight would trigger severe blistering within minutes, followed by rapid systemic folate depletion and near-instantaneous DNA mutations leading to lethal skin cancers. Human civilization would be forced to retreat completely indoors or adopt heavily engineered space-suit-like containment systems just to navigate the surface, transforming the tropics and equatorial regions into uninhabitable dead zones.",
+          "Photoprotection by melanin is documented (skin pages). The minutes, the dead zones and the weeks-to-collapse timeline have no source.",
+          "HYPOTHESIS"
+        ],
+        [
+          "When a small subset of humans migrated out of Africa roughly 50,000 to 70,000 years ago, they experienced a \"serial founder effect\". This means all non-African populations across Eurasia, the Americas, and Oceania share a high degree of genetic similarity, relying on a drastically pruned subset of the original human gene pool. Genomic mapping demonstrates that the genetic distance between two neighboring African ethnic groups can be significantly greater than the distance between a Western European and an East Asian individual.",
+          "Highest diversity in Africa is on the genes page. The founder-effect dates and the comparison of neighboring African groups against Europe and East Asia were not searched in this session.",
+          "SECONDARY"
+        ],
+        [
+          "African populations harbor the highest levels of genetic diversity on Earth.",
+          "On the genes page. Penn's release states Africa holds more genetic diversity than anywhere else. The exact abstract sentence was not retrieved.",
+          "SECONDARY"
+        ],
+        [
+          "Erasing the world’s melanated populations means permanently wiping out the vast majority of unique single nucleotide polymorphisms (SNPs), private alleles, and adaptive variants present in the human genome.",
+          "Africa's diversity is the verified part. Non-African populations also carry variants of their own (general genetics, not searched here), so vast majority is not shown.",
+          "READING"
+        ],
+        [
+          "The destruction of Black and highly melanated human populations would cause an immediate, catastrophic collapse of global human civilization, permanently crippling the genetic, economic, and structural survival of the human species.",
+          "The species-survival step is a projection and is kept as your reading. Melanated is also wider than African: South Asian, Melanesian and Aboriginal Australian peoples are dark-skinned too.",
+          "READING"
+        ],
+        [
+          "Data compiled by Nielsen shows that in the United States alone, African Americans command over $1.7 to $1.8 trillion in annual buying power.",
+          "Nielsen put it at about $1.4 trillion for 2019. The Selig Center put it at about $1.6 trillion for 2020 and projects over $2 trillion for 2026. The pasted figure matches neither seen.",
+          "CONFLICTING"
+        ],
+        [
+          "Black workers make up approximately 20% of nurses, medical assistants, and care aides in major metropolitan medical systems.",
+          "BLS 2018 data: about 36 percent of nursing, psychiatric and home health aides. Registered nurses are about 11 to 14.5 percent depending on the source.",
+          "CONFLICTING"
+        ],
+        [
+          "Over 20% of the active government, public transit, and municipal services workforce in major nations is comprised of Black employees.",
+          "No source seen for the 20 percent government, transit and municipal figure.",
+          "UNVERIFIED"
+        ],
+        [
+          "Over 29% of workers in educational services and social assistance systems belong to the Black demographic.",
+          "No source seen for the 29 percent figure.",
+          "UNVERIFIED"
+        ],
+        [
+          "The elimination of melanated peoples would completely depopulate sub-Saharan Africa—a region home to over a billion individuals—and decimate massive population centers globally. Africa acts as the primary global source for essential materials, including cobalt, copper, lithium, gold, platinum, and agricultural commodities.",
+          "Not checked in this session: cobalt, copper, lithium, gold, platinum and agricultural commodities as an African share, and a population of over a billion.",
+          "UNVERIFIED"
+        ]
       ]
-    }
-    ,{
-      h: "Checked: Paste 8 (marginalization, APOL1, minerals, fail-safe)",
-      rows: [
-        ["\"Early genetic and medical research was heavily skewed toward European-derived populations\"", "Popejoy and Fullerton, Nature 2016: 81 percent of GWAS Catalog participants were of European descent in 2016, down from 96 percent in 2009.", "VERIFIED"],
-        ["\"explaining why these realities have traditionally been relegated to specialized military and intelligence reports rather than consumer-facing education\"", "No source seen that the data were relegated to military or intelligence reports. The documented part is the bias in genomic reference data.", "UNVERIFIED"],
-        ["\"Individuals carrying the G1 or G2 variants possess the unique ability to lyse Trypanosoma brucei rhodesiense\"", "The search returned no abstract text for APOL1, so the protection was not seen in a source here.", "UNVERIFIED"],
-        ["\"carrying just one copy of an APOL1 risk variant increases the risk of chronic kidney disease (CKD) by 18%, while carrying two copies raises the risk by 25% and ... FSGS ... by a staggering 84%\"", "The 18, 25 and 84 percent figures were not seen in any source. The attribution to the H3Africa Consortium was not confirmed.", "UNVERIFIED"],
-        ["\"found in high frequencies exclusively in individuals of recent African descent and are virtually non-existent in ancestral European and Asian populations\"", "Not seen in a source in this session.", "UNVERIFIED"],
-        ["\"M1 (APOL1 p.N264K) ... actively neutralizing the toxic gain-of-function mechanisms\"", "The variant name was not confirmed in a source seen here, and neither was its safeguard effect.", "UNVERIFIED"],
-        ["\"The Democratic Republic of Congo (DRC) controls over 70% to 76% of the world's mined cobalt and retains more than half of the planet's proven reserves\"", "USGS-based reports: about 74 percent of mined cobalt in 2023 and about 54.5 percent of reserves; 73 percent in another 2024 account and 75.9 percent in an IISD profile. Several pages seen were secondary.", "VERIFIED"],
-        ["\"There are currently no viable synthetic alternatives capable of matching cobalt's energy density and thermal stability profiles at scale\"", "No source seen.", "UNVERIFIED"],
-        ["\"South Africa, Gabon, and Ghana collectively account for over 60% of global manganese production\"", "USGS tonnages for 2024 give South Africa about 7.49 million tonnes, Gabon about 4.64 and Ghana about 1.28 of roughly 18.7 million, which is over 60 percent. Shares change with the base: in gross weight in 2023 South Africa was 34 percent and Gabon 18 percent. Ghana's figure is disputed between sources.", "VERIFIED"],
-        ["\"Zimbabwe, Mali, and the DRC possess massive, highly concentrated lithium reserves ... Zimbabwe's raw mineral export bans\"", "No source retrieved for the reserves or for the ban.", "UNVERIFIED"],
-        ["\"a $553 million loan from the U.S. International Development Finance Corporation (DFC)\" for the Lobito Corridor", "The DFC signed a $553 million loan in December 2025 for about 1,300 km of rail from Lobito port to Luau on the DRC border. The project total is reported as $753 million with a $200 million Development Bank of Southern Africa facility.", "VERIFIED"],
-        ["\"China maintains ... active stakes in approximately 90% of the DRC's commercial cobalt output\"", "No source retrieved.", "UNVERIFIED"],
-        ["\"highly melanated sovereign nations\" and \"highly melanated sovereign regions\"", "Cobalt, manganese and lithium are located in specific countries. The sources seen do not map them to skin tone.", "READING"],
-        ["\"[4Q186]\" cited for a covenant being \"a cosmic, immutable law woven directly into the physical fabric of creation, biology, and the earth itself\"", "The 4Q186 sources found describe body features and shares of light and darkness in ninths. They do not say this.", "NOTEXT"],
-        ["\"the 'serial founder effect' proves that all migration outside of the primary African cradle resulted in a pruning of genetic data\"", "Africa's diversity is on the genes page. The founder-effect statement was not searched in this session.", "SECONDARY"],
-        ["\"You cannot destroy the source code without ensuring the eventual extinction of the entire program\"", "This is a reading and is kept as such. Non-African populations also carry variants of their own (general genetics, not searched here).", "READING"],
-        ["\"The fail-safe is built into the very cells of the body and the core elements of the earth\"", "This is the owner's reading and is kept as such.", "READING"]
+    },
+    {
+      "h": "Checked: Paste 8 (marginalization, APOL1, minerals, fail-safe)",
+      "rows": [
+        [
+          "Historically, early genetic and medical research was heavily skewed toward European-derived populations.",
+          "Popejoy and Fullerton, Nature 2016: 81 percent of GWAS Catalog participants were of European descent in 2016, down from 96 percent in 2009.",
+          "VERIFIED"
+        ],
+        [
+          "Acknowledging a fundamental, systemic dependency on these regions for the baseline survival of global technologies and supply chains forces a restructuring of international relationships, explaining why these realities have traditionally been relegated to specialized military and intelligence reports rather than consumer-facing education.",
+          "No source seen that the data were relegated to military or intelligence reports. The documented part is the bias in genomic reference data.",
+          "UNVERIFIED"
+        ],
+        [
+          "Individuals carrying the G1 or G2 variants possess the unique ability to lyse (destroy) Trypanosoma brucei rhodesiense, the lethal parasite transmitted by the tsetse fly that causes African Sleeping Sickness.",
+          "The search returned no abstract text for APOL1, so the protection was not seen in a source here.",
+          "UNVERIFIED"
+        ],
+        [
+          "While protective against parasites, inheriting these variants introduces severe health risks. Landmark studies published by the Human Heredity and Health in Africa (H3Africa) Consortiumreveal that carrying just one copy of an APOL1 risk variant increases the risk of chronic kidney disease (CKD) by 18%, while carrying two copies raises the risk by 25% and expands the likelihood of developing focal segmental glomerulosclerosis (FSGS—severe kidney tissue scarring) by a staggering 84%.",
+          "The 18, 25 and 84 percent figures were not seen in any source. The attribution to the H3Africa Consortium was not confirmed.",
+          "UNVERIFIED"
+        ],
+        [
+          "Coding variants of this gene—specifically designated as the G1 and G2 risk alleles—are found in high frequencies exclusively in individuals of recent African descent and are virtually non-existent in ancestral European and Asian populations.",
+          "Not seen in a source in this session.",
+          "UNVERIFIED"
+        ],
+        [
+          "Genomic sequencing of diverse African cohorts uncovered a vital genetic variant known as M1 (APOL1 p.N264K). When present alongside the high-risk G1/G2 variants, the M1 modifier acts as a molecular safeguard, actively neutralizing the toxic gain-of-function mechanisms that induce kidney cell lysis and organ failure.",
+          "The variant name was not confirmed in a source seen here, and neither was its safeguard effect.",
+          "UNVERIFIED"
+        ],
+        [
+          "The Democratic Republic of Congo (DRC) controls over 70% to 76% of the world's mined cobalt and retains more than half of the planet’s proven reserves.",
+          "USGS-based reports: about 74 percent of mined cobalt in 2023 and about 54.5 percent of reserves; 73 percent in another 2024 account and 75.9 percent in an IISD profile. Several pages seen were secondary.",
+          "VERIFIED"
+        ],
+        [
+          "There are currently no viable synthetic alternatives capable of matching cobalt's energy density and thermal stability profiles at scale.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "South Africa, Gabon, and Ghana collectively account for over 60% of global manganese production, a fundamental element required for high-strength steel alloy fabrication and next-generation grid energy storage systems.",
+          "USGS tonnages for 2024 give South Africa about 7.49 million tonnes, Gabon about 4.64 and Ghana about 1.28 of roughly 18.7 million, which is over 60 percent. Shares change with the base: in gross weight in 2023 South Africa was 34 percent and Gabon 18 percent. Ghana's figure is disputed between sources.",
+          "VERIFIED"
+        ],
+        [
+          "Zimbabwe, Mali, and the DRC possess massive, highly concentrated lithium reserves. By enforcing strict resource nationalism—such as Zimbabwe's raw mineral export bans—these nations are systematically forcing international manufacturers to shift processing value and industrial capital directly onto the African continent.",
+          "No source retrieved for the reserves or for the ban.",
+          "UNVERIFIED"
+        ],
+        [
+          "The United States and G7 allies are funding the Lobito Corridor, a massive transcontinental rail network backed by a $553 million loan from the U.S. International Development Finance Corporation (DFC).",
+          "The DFC signed a $553 million loan in December 2025 for about 1,300 km of rail from Lobito port to Luau on the DRC border. The project total is reported as $753 million with a $200 million Development Bank of Southern Africa facility.",
+          "VERIFIED"
+        ],
+        [
+          "Concurrently, China maintains multi-billion dollar infrastructure-for-resource partnerships, managing active stakes in approximately 90% of the DRC's commercial cobalt output.",
+          "No source retrieved.",
+          "UNVERIFIED"
+        ],
+        [
+          "The global supply chains for advanced computing, electric vehicles (EVs), renewable energy infrastructure, and aerospace defense are entirely dependent on highly melanated sovereign regions.",
+          "Cobalt, manganese and lithium are located in specific countries. The sources seen do not map them to skin tone.",
+          "READING"
+        ],
+        [
+          "Geopolitically, dominant global powers historically treated resource-rich, highly melanated sovereign nations as extraction sites rather than industrial partners.",
+          "Cobalt, manganese and lithium are located in specific countries. The sources seen do not map them to skin tone.",
+          "READING"
+        ],
+        [
+          "In those ancient frameworks, a covenant was not a piece of paper or a set of abstract theological suggestions—it was a cosmic, immutable law woven directly into the physical fabric of creation, biology, and the earth itself. [4Q186]",
+          "The 4Q186 sources found describe body features and shares of light and darkness in ninths. They do not say this.",
+          "NOTEXT"
+        ],
+        [
+          "In population genetics, the \"serial founder effect\" proves that all migration outside of the primary African cradle resulted in a pruning of genetic data.",
+          "Africa's diversity is on the genes page. The founder-effect statement was not searched in this session.",
+          "SECONDARY"
+        ],
+        [
+          "You cannot destroy the source code without ensuring the eventual extinction of the entire program.",
+          "This is a reading and is kept as such. Non-African populations also carry variants of their own (general genetics, not searched here).",
+          "READING"
+        ],
+        [
+          "The fail-safe is built into the very cells of the body and the core elements of the earth.",
+          "This is the owner's reading and is kept as such.",
+          "READING"
+        ]
       ]
-    }
-    ,{
-      h: "Checked: Paste 9 (the Kavod, the mountain fortresses)",
-      rows: [
-        ["\"the Kavod is explicitly defined as a heavy, dense, radiant, and atomic substance\"", "ACR Reader: Shemu'el Aleph 4 note reads \"the glory has departed\" as \"YHWH's covenant presence\". The Yehezkel volumes are titled \"The Kavod Departs\" and \"The Kavod Returns\". Habakkuk: \"the earth shall be filled with the knowledge of the kavod of YHWH\". No ACR note defines the Kavod as an atomic substance.", "NOTEXT"],
-        ["\"The root K-B-D literally means 'heavy,' 'dense,' or 'massive.'\"", "Standard in Hebrew lexicons. No lexicon was reached by the search, so it was not seen here. The Reader uses the word kavod.", "UNVERIFIED"],
-        ["\"a physical mass and a radiation frequency so intense that unshielded biological systems would suffer instant cellular ionization and death upon contact\"", "No source in the ACR files or elsewhere seen.", "NOTSUPPORTED"],
-        ["\"humanity was originally formed out of Adamah—the deep, rich, mineral-dense, high-melanin volcanic soil of Northeast Africa\"", "ACR Reader Bereshit 2:7 says dust of the ground, with no colour words, no volcanic soil and no place.", "NOTEXT"],
-        ["\"The skin of the primordial human was structurally engineered as an ultra-stable, high-density organic semiconductor\"", "No text and no measurement seen.", "NOTSUPPORTED"],
-        ["\"trapping the energy within its stable free-radical rings and converting it into a physical, protective 'Garment of Light'\"", "Garment of light is not in the ACR Reader or ACR2. The radical-trapping mechanism is a proposal from the mouse-work authors, not shown for skin.", "NOTEXT"],
-        ["\"the Beta Israel, withdrew from the Mediterranean theater and migrated deep into the Semien Mountains\"", "Beta Israel tradition dates a Semien kingdom to the fourth century. The earliest documentary mention is the royal chronicle of Amda Seyon, and another source says there is no evidence for a unified dominion then. From the 15th to the 17th century they lost territory to the Solomonic dynasty and were confined to Semien. The words Semien and Amba are not in the ACR files.", "CONFLICTING"],
-        ["\"completely immune to the military expansions of the Roman Empire, the expansion of the caliphates, and the later European crusades\"", "No source seen. The sources seen describe troops sent against them under Amda Seyon and later loss of territory.", "CONFLICTING"],
-        ["\"the Kesim (high priests) hand-copied the Orit in the ancient Semitic language of Ge'ez\"", "Ge'ez is the main liturgical language. The priest classes are meloksewoch (ascetic high priests) and qesoch (lay priests). Where and when the copying was done was not seen.", "CONFLICTING"],
-        ["\"their scriptoria were completely untainted\" and \"absolute isolation\"", "No source seen.", "UNVERIFIED"],
-        ["\"The ancestral lineages moved along the natural geographic trenches of the Nile River and the Great Rift Valley\"", "No source seen for the route.", "UNVERIFIED"],
-        ["\"Ambas ... sheer, volcanic tablelands ... near-vertical cliffs thousands of feet high\"", "Not confirmed in a source seen.", "UNVERIFIED"],
-        ["\"The design is complete, unyielding, and absolute\"", "This is the owner's reading and is kept as such.", "READING"]
+    },
+    {
+      "h": "Checked: Paste 9 (the Kavod, the mountain fortresses)",
+      "rows": [
+        [
+          "However, in the pre-Rabbinic Hebrew of the Dead Sea Scrolls and the pristine Semitic syntax of the Ge’ez Orit, the Kavod is explicitly defined as a heavy, dense, radiant, and atomic substance.",
+          "ACR Reader: Shemu'el Aleph 4 note reads \"the glory has departed\" as \"YHWH's covenant presence\". The Yehezkel volumes are titled \"The Kavod Departs\" and \"The Kavod Returns\". Habakkuk: \"the earth shall be filled with the knowledge of the kavod of YHWH\". No ACR note defines the Kavod as an atomic substance.",
+          "NOTEXT"
+        ],
+        [
+          "The root K-B-D literally means \"heavy,\" \"dense,\" or \"massive.\"",
+          "Standard in Hebrew lexicons. No lexicon was reached by the search, so it was not seen here. The Reader uses the word kavod.",
+          "UNVERIFIED"
+        ],
+        [
+          "In the ancient Near Eastern context, the Kavod of YHWH was a highly concentrated kinetic and electromagnetic energy field that filled the tabernacle. It possessed a physical mass and a radiation frequency so intense that unshielded biological systems would suffer instant cellular ionization and death upon contact with it.",
+          "No source in the ACR files or elsewhere seen.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "The ancient texts state that humanity was originally formed out of Adamah—the deep, rich, mineral-dense, high-melanin volcanic soil of Northeast Africa.",
+          "ACR Reader Bereshit 2:7 says dust of the ground, with no colour words, no volcanic soil and no place.",
+          "NOTEXT"
+        ],
+        [
+          "The skin of the primordial human was structurally engineered as an ultra-stable, high-density organic semiconductor.",
+          "No text and no measurement seen.",
+          "NOTSUPPORTED"
+        ],
+        [
+          "The skin captured the unshielded electromagnetic emission of the Kavod, trapping the energy within its stable free-radical rings and converting it into a physical, protective \"Garment of Light.",
+          "Garment of light is not in the ACR Reader or ACR2. The radical-trapping mechanism is a proposal from the mouse-work authors, not shown for skin.",
+          "NOTEXT"
+        ],
+        [
+          "The primary remnant of pre-Exilic Israel, the Beta Israel, withdrew from the Mediterranean theater and migrated deep into the Semien Mountains of Northern Ethiopia.",
+          "Beta Israel tradition dates a Semien kingdom to the fourth century. The earliest documentary mention is the royal chronicle of Amda Seyon, and another source says there is no evidence for a unified dominion then. From the 15th to the 17th century they lost territory to the Solomonic dynasty and were confined to Semien. The words Semien and Amba are not in the ACR files.",
+          "CONFLICTING"
+        ],
+        [
+          "These mountain fortresses rendered the community completely immune to the military expansions of the Roman Empire, the expansion of the caliphates, and the later European crusades.",
+          "No source seen. The sources seen describe troops sent against them under Amda Seyon and later loss of territory.",
+          "CONFLICTING"
+        ],
+        [
+          "Because the Kesim (high priests) hand-copied the Orit in the ancient Semitic language of Ge'ez atop these isolated tablelands, their scriptoria were completely untainted by the linguistic censoring, theological adjustments, and phenotypic whitening that occurred during the European Renaissance and the Rabbinic standardization of the Masoretic text.",
+          "Ge'ez is the main liturgical language. The priest classes are meloksewoch (ascetic high priests) and qesoch (lay priests). Where and when the copying was done was not seen.",
+          "CONFLICTING"
+        ],
+        [
+          "By anchoring themselves within the deepest mineral vaults and most rugged mountain massifs on the planet, these populations and their original records were preserved in a state of absolute isolation, surviving untouched until the modern era.",
+          "No source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "The ancestral lineages moved along the natural geographic trenches of the Nile River and the Great Rift Valley.",
+          "No source seen for the route.",
+          "UNVERIFIED"
+        ],
+        [
+          "This region features a distinct geological formation known as Ambas—sheer, volcanic tablelands that rise abruptly out of the earth with near-vertical cliffs thousands of feet high, accessible only via narrow, easily defended footpaths.",
+          "Not confirmed in a source seen.",
+          "UNVERIFIED"
+        ],
+        [
+          "This is an integrated, self-defending system. The biological source code, the mineral wealth of the planet, and the un-edited historical records are locked together in a single geographical and physical reality. The global powers are forced to study, protect, and depend on these systems because they cannot bypass them. The design is complete, unyielding, and absolute.",
+          "This is the owner's reading and is kept as such.",
+          "READING"
+        ]
       ]
     }
   ];
@@ -187,6 +596,40 @@
     ]
   });
 
+  /* Claim column of the two earlier check tables: quote the pasted sentence exactly. */
+  var QUOTES = {
+    "NASA, the Naval Research Laboratory and the Army are heavily researching melanin": "Government agencies, including NASA, the U.S. Naval Research Laboratory (NRL), and the U.S. Army, are heavily researching melanin due to its extraordinary, multi-functional properties that surpass many synthetic materials.",
+    "Melanin has a high LET absorption coefficient and turns radiation into heat and harmless low-energy photons": "Melanin features a high linear energy transfer (LET) absorption coefficient. It captures high-energy protons, X-rays, and cosmic ions, and safely transforms that lethal energy into thermal energy and harmless low-energy photons.",
+    "X-ray attenuation of certain melanins is half that of lead by mass": "Peer-reviewed data indicates that the X-ray attenuation capacity of certain melanins is half that of lead by mass, making it a lighter, superior alternative for protecting spacesuits, electronics, and spacecraft hulls.",
+    "Artemis I sent melanized organisms to show how melanin repairs DNA": "Through the Artemis I BioExpt-01, NASA sent highly melanized organisms into lunar orbit to map how melanin actively repairs DNA and shields biological cells from deep-space radiation.",
+    "Melanized cells use ionizing radiation to grow faster (radiosynthesis)": "Landmark research from the Albert Einstein College of Medicinedemonstrated that melanized cells can utilize ionizing radiation to accelerate cellular growth, a process termed radiosynthesis.",
+    "MDPI studies show melanin splits water, reversibly, at room temperature": "Studies published on MDPI reveal that melanin can split water molecules (\\(2H_2O \\leftrightarrow O_2 + 4H^+ + 4e^-\\)) at room temperature to produce an orderly, reversible flow of electrons, generating clean energy similarly to chlorophyll but across a wider electromagnetic spectrum.",
+    "Natural melanin is 40 to 60 percent more efficient at absorbing energy than synthetic": "The U.S. Army STTR Project funds the mass production of natural melanin because it is 40% to 60% more efficient at absorbing energy than synthetic versions.",
+    "Melanin conducts electronic and ionic current and is the candidate for linking machines to tissue": "Melanin conducts both electronic and ionic currents. This unique dual-conductivity makes it the primary candidate for interfacing synthetic machines with living tissue, laying the groundwork for highly biocompatible cybernetic circuits and implants.",
+    "The military is prototyping solid melanin materials for EMP shielding": "The military is prototyping solid melanin materials to protect critical defenses and electronics against Electromagnetic Pulses (EMPs) and electromagnetic radiation (EMR) weapons.",
+    "Melanin binds toxic heavy metals and neutralises free radicals": "binds toxic heavy metals, and neutralizes free radicals",
+    "Melanin resists massive acid exposure": "Melanin is highly resistant to massive acid exposure, binds toxic heavy metals, and neutralizes free radicals, making it an unyielding material in volatile environments.",
+    "Squid-ink melanin removes more than 95 to 97 percent of Cd, Cr6+ and Pb": "Studies tracking synthetic and natural squid-ink melanin show heavy metal removal efficiencies exceeding 95% to 97% for \\(\\text{Cd}^{2+}\\), \\(\\text{Cr}^{6+}\\), and \\(\\text{Pb}^{2+}\\).",
+    "Melanin binds metals in one fixed order": "Melanin discriminates between physiological ions and toxic environmental heavy metals through distinct thermodynamic affinity thresholds:",
+    "Hard and soft acid-base chemistry explains the binding": "According to the Hard-Soft Acid-Base (HSAB) principle, the oxygen donors in the catechol structure transition from high-affinity binding to near-permanent entrapment for soft transition metals.",
+    "The binding is irreversible": "the mechanism shifts from basic electrostatic attraction to irreversible quantum coordination complexation.",
+    "4Q186 is a Qumran text with nine-part light and dark shares": "the Qumran community calculated human essence through physical proportions of Light and Darkness, measured uniformly in fractions of nine parts.",
+    "The quoted lines and the three profiles in the pasted 4Q186 text": "The uncompromised transcription outlines three explicit biological profiles based on this light-to-dark elemental balance:",
+    "The pasted 4Q186 text belongs in the ACR record": "MODULE 2: The Uncensored Text of Scroll 4Q186 (Qumran Zodiacal Physiognomy)",
+    "The solar garment tradition is in the Orit and Kebra Nagast": "The texts state that the primordial ancestors did not possess fragile, naked skin. They were clothed in a \"Garment of Light\"synthesized directly from the earth (Adamah).",
+    "Adamah (volcanic soil) explains the origin of dark skin": "This directly explains the ancient linguistic architecture of the Orit, where the original human archetype is formed out of Adamah—the deep, rich, mineral-saturated volcanic earth.",
+    "Melanin is the only known biological substance that resists radiation": "It remains the only known biological substance that serves as a room-temperature semiconductor, a permanent heavy-metal trap, and an absolute radiation armor",
+    "Artemis I showed 50 percent to 10-fold better survival of melanized organisms": "Data showed that under extreme cosmic stress, melanized assets had a 50% to 10-fold higher survival and cellular lifespan profile compared to non-melanized clones",
+    "Synthetic melanin reaches 318 S/cm": "they achieved copper-like electrical conductivity levels (318 S/cm)",
+    "Melanin-based material gives huge EMI shielding": "Research published in Nature Communications demonstrates that highly ordered melanin-like structures achieve ultrahigh specific electromagnetic shielding efficiencies.",
+    "Melanin conducts across a huge range": "its electrical conductivity surges by ten orders of magnitude (a billion-fold increase)",
+    "Radiation produces current in melanin and it restores itself": "melanin continuously generates a measurable electrical current when bombarded with gamma radiation."
+  };
+  cl.blocks.forEach(function (b) {
+    if (!b.table) { return; }
+    b.table.rows.forEach(function (r) { if (QUOTES.hasOwnProperty(r[0])) { r[0] = QUOTES[r[0]]; } });
+  });
+
   [
     ["Meredith and Riesz 2004, radiative relaxation quantum yields (arXiv)", "https://arxiv.org/abs/cond-mat/0312277"],
     ["Geller, Babylonian physiognomic omens in cryptic Hebrew orthography (UCL)", "https://discovery.ucl.ac.uk/10193507/1/Geller%202023%20Aest%204%20Qumran%20Phys.pdf"],
@@ -200,5 +643,5 @@
     if (!have) { LS.sources.push({ l: p[0], u: p[1] }); }
   });
 
-  LS.version = "loadscience-v12";
+  LS.version = "loadscience-v13";
 })();

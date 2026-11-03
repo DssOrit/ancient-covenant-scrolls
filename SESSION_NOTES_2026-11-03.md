@@ -39,6 +39,12 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 14 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+PR #1194 was merged by the owner (main f01319c8, cache v12). Owner gave the phrase and the rule: the claim column of every check row quotes the pasted sentence exactly. Backup of main: backup/2026-11-03-loadscience-v12 at f01319c8 (verified). Fresh branch claude/loadscience-v13, cache v13.
+- All 126 check rows (Pastes 1 to 9, the government claims table, the later pasted sets table) now quote the pasted text exactly. Extra rows were added where one old row had covered two separate pasted sentences. A test confirms each claim column is found word for word in a paste. The supernatural-claims table is not from a paste and is unchanged.
+- Check results (tags and what was found) are unchanged except where a row was split or merged.
+- Open: 4Q186 reject or hold; Damascus Document notes with repeated "covenant" (needs edit ACR reader and approval of the list); Yirmeyahu 38 note difference; blocked hosts.
+
 ## Round 13 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 Owner gave the phrase and set the rule: pasted text is not rephrased, softened or summarised. Same open PR #1194, cache v12. Backup of main unchanged: backup/2026-11-03-loadscience-v9 at a86d5ec7.
 - Pasted reports page now holds nine pastes exactly as pasted (Paste 8: institutions, APOL1, minerals, fail-safe; Paste 9: Kavod, mountain fortresses). Earlier version dropped a part pasted twice and two invisible characters; both are now kept. Only the owner's own instruction lines are left out. A test checks every line over 40 characters of all nine pastes, with the invisible characters kept.
