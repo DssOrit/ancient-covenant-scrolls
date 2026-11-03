@@ -2,7 +2,7 @@
    Every item carries a tag. VERIFIED means the paper exists and says this,
    checked at abstract or search-summary level. Full texts were not read. */
 window.LS = {
-  version: "loadscience-v8",
+  version: "loadscience-v9",
   date: "2026-11-03",
   tags: {
     VERIFIED: "The paper exists and says this. Checked at abstract or summary level.",
@@ -53,7 +53,7 @@ window.LS = {
           items: [
             { tag: "VERIFIED", t: "Kaidbey, Agin, Sayre, Kligman. J Am Acad Dermatol 1979;1(3):249-60. Black skin lets through about one fifth of the UV (UVB and UVA) that reaches the upper dermis in Caucasian skin.", src: [{ l: "PubMed 512075", u: "https://pubmed.ncbi.nlm.nih.gov/512075/" }] },
             { tag: "VERIFIED", t: "In Caucasian skin the top dead layer (stratum corneum) does most of the filtering. In Black skin the living epidermal layers do it. The authors credit melanin amount plus how melanosomes are packed and spread." },
-            { tag: "UNVERIFIED", t: "The numbers SPF 13.4 versus 3.4 were not found in any source. Do not cite them." }
+            { tag: "SECONDARY", t: "Natural protection factors of about 13.4 for dark skin and 3.3 for light skin appear in a 2022 Springer photochemistry review (DOI 10.1007/s43630-022-00314-z), citing an earlier reference. They are estimates, not sunscreen-test SPF values, and the original measurement was not traced. Popular pages quote 3.4 for light skin.", go: "s/darkskin", goLabel: "Open the dark skin page" }
           ]
         },
         {
@@ -264,9 +264,9 @@ window.LS = {
         {
           h: "Space tests",
           items: [
-            { tag: "SECONDARY", t: "Cordero lab: melanin plus plastic (PLA) flown about 6 months outside the ISS. Reported less mass loss and less surface wrinkling. Conference abstract only." },
+            { tag: "VERIFIED", t: "NASA Glenn flew polylactic acid (PLA) with fungal, synthetic or animal melanin on the space station for about 6 months. PNAS 2025, DOI 10.1073/pnas.2427118122. Fungal melanin reduced mass loss and surface wrinkling. Peer reviewed. Details are in the government and space programs block below.", src: [{ l: "Summary", u: "https://astrobiology.com/2025/05/01/radiation-protection-and-structural-stability-of-fungal-melanin-polylactic-acid-biocomposites-in-low-earth-orbit/" }] },
             { tag: "SECONDARY", t: "Bland et al.: Cladosporium sphaerospermum on the ISS for 30 days. Reported radiation reduction. A bioRxiv preprint, not peer reviewed in the version found.", src: [{ l: "bioRxiv preprint", u: "https://www.biorxiv.org/content/10.1101/2020.07.16.205534v4" }] },
-            { tag: "UNVERIFIED", t: "No published X-ray or gamma attenuation coefficients for melanin found." }
+            { tag: "UNVERIFIED", t: "No measured X-ray or gamma attenuation coefficients for pure melanin were found in the sources opened. A search listing shows a study of metal-doped eumelanin (PMC11902467). It was not opened." }
           ]
         },
         {

@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v8` (goes forward only)
+- Cache: `loadscience-v9` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -44,3 +44,9 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 - Lead with the result. Put the limit second, stated once, and keep it only where the source states it (mice, observational, one study).
 - Do not use only, just, merely or ordinary to shrink a finding. Tags say where a source was seen (Secondary, Unverified). They never say how important a finding is.
 - Dark skin is named first in comparisons (Black skin lets through about one fifth of the UV that reaches the upper dermis in Caucasian skin).
+
+## Dark skin, overlooked scientists, genetic diversity, programs (data5.js)
+- Dark skin and melanin at full strength: Fajuyigbe 2018 (8.0-fold overall, 59.0-fold basal layer), cancer incidence, the dose that reddens skin (MED) with the studies that disagree on size, eumelanin against pheomelanin, the acral melanoma findings stated plainly, oxidative stress as an open question, photoaging.
+- Overlooked scientists: Jewel Plummer Cobb (1956 X-ray work on pigmented melanoma), Cheikh Anta Diop (melanin test, contested), Susan C. Taylor, McGinness, Corry and Proctor.
+- Genes page: Tishkoff 2009 and Popejoy and Fullerton 2016. Photon page: per-gram melanin against lead (half of lead near 454 keV, 2.8 percent at 100 keV). Gamma page: the NASA Glenn space station flight (PNAS 2025), the NRL Artemis I experiment, the Army STTR topic. Claims page: a pasted claim set checked row by row.
+- Both source reports were re-checked before this was written. Corrections made: Diop's birth year was dropped (not in any tool result), the Fajuyigbe comparison group is stated as the paper's title states it (extreme skin types), and the Springer review is cited by DOI only.

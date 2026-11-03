@@ -140,7 +140,7 @@
         items: [
           { tag: "OPEN", t: "Run the real NIST XCOM web tool and compare with these tables." },
           { tag: "OPEN", t: "Find a primary paper with measured melanin density and elemental analysis." },
-          { tag: "OPEN", t: "Find any published gamma attenuation coefficient for melanin." }
+          { tag: "OPEN", t: "Open the 2025 study of metal-doped eumelanin attenuation (PMC11902467) and compare its coefficients with this calculation." }
         ]
       }
     ]
