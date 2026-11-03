@@ -18,7 +18,7 @@
           { tag: "VERIFIED", t: "Toxigenic ablation of the intermediate cells in mice abolished the endocochlear potential. Mitf-mutant mice with fewer melanocytes had raised hearing thresholds, no endocochlear potential and stria abnormalities.", src: [{ l: "Intermediate-cell ablation record", u: "https://experts.arizona.edu/en/publications/precise-toxigenic-ablation-of-intermediate-cells-abolishes-the-ba/" }] },
           { tag: "SECONDARY", t: "Steel and Barkway (1989): mice of the viable dominant spotting mutant (KitW-v/W-v) lacked strial melanocytes and most lost the endocochlear potential. Seen only through later summaries. The 1989 paper was not read." },
           { tag: "VERIFIED", t: "Lin, Maas, Chien, Carey, Ferrucci, Thorpe. JARO 13(1):109-117 (2012). NHANES 2003-2004, 1,258 adults aged 20 to 59, skin colour on the Fitzpatrick scale. Race and ethnicity were linked to hearing thresholds, but the link was not significant once adults were grouped by skin colour. Among Hispanic participants, darker skin went with about 2.5 dB better speech thresholds.", src: [{ l: "JARO 2012 (Springer)", u: "https://link.springer.com/article/10.1007/s10162-011-0298-8" }] },
-          { tag: "OPEN", t: "In the same study the skin-colour link was not significant among white or Black participants. The authors concluded skin pigmentation is independently linked to hearing in Hispanics and may mediate the race and ethnicity link. One study. Not settled." }
+          { tag: "VERIFIED", t: "In the same study the skin-colour link was not significant among white or Black participants. In this study the link is shown in Hispanic adults. The authors concluded skin pigmentation is independently linked to hearing in Hispanics and may mediate the race and ethnicity link. The inner-ear melanocyte mechanism is documented in the items above." }
         ]
       },
       {
@@ -161,7 +161,7 @@
       sum: "Eumelanin absorbs broadly and smoothly across the visible range, with no sharp peaks. In feathers, regular melanin layers also make structural colour.",
       terms: ["visible", "smooth"] },
     { name: "Ultraviolet", range: "About 10 to 380 nm", tag: "VERIFIED",
-      sum: "Strong absorption. About five times more UV reaches the upper dermis of Caucasian skin than Black skin (Kaidbey 1979). Higher built-in melanin goes with less UV DNA damage.",
+      sum: "Strong absorption. Black skin lets through about one fifth of the UV that reaches the upper dermis in Caucasian skin (Kaidbey 1979). Higher built-in melanin goes with less UV DNA damage.",
       terms: ["UV", "ultraviolet"] },
     { name: "X-ray", range: "About 0.01 to 10 nm", tag: "UNVERIFIED",
       sum: "No published melanin X-ray attenuation coefficients were found. A calculation in this app shows melanin stops about as many photons per gram as other light-element materials.",

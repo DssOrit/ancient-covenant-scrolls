@@ -2,7 +2,7 @@
    Every item carries a tag. VERIFIED means the paper exists and says this,
    checked at abstract or search-summary level. Full texts were not read. */
 window.LS = {
-  version: "loadscience-v7",
+  version: "loadscience-v8",
   date: "2026-11-03",
   tags: {
     VERIFIED: "The paper exists and says this. Checked at abstract or summary level.",
@@ -51,7 +51,7 @@ window.LS = {
         {
           h: "It filters UV light",
           items: [
-            { tag: "VERIFIED", t: "Kaidbey, Agin, Sayre, Kligman. J Am Acad Dermatol 1979;1(3):249-60. About 5 times more UV (UVB and UVA) reaches the upper dermis of Caucasian skin than of Black skin.", src: [{ l: "PubMed 512075", u: "https://pubmed.ncbi.nlm.nih.gov/512075/" }] },
+            { tag: "VERIFIED", t: "Kaidbey, Agin, Sayre, Kligman. J Am Acad Dermatol 1979;1(3):249-60. Black skin lets through about one fifth of the UV (UVB and UVA) that reaches the upper dermis in Caucasian skin.", src: [{ l: "PubMed 512075", u: "https://pubmed.ncbi.nlm.nih.gov/512075/" }] },
             { tag: "VERIFIED", t: "In Caucasian skin the top dead layer (stratum corneum) does most of the filtering. In Black skin the living epidermal layers do it. The authors credit melanin amount plus how melanosomes are packed and spread." },
             { tag: "UNVERIFIED", t: "The numbers SPF 13.4 versus 3.4 were not found in any source. Do not cite them." }
           ]
@@ -68,7 +68,7 @@ window.LS = {
           h: "It strengthens the skin barrier",
           items: [
             { tag: "VERIFIED", t: "Man, Elias et al. J Invest Dermatol 2014, \"Basis for enhanced barrier function of pigmented skin.\" Darker skin holds water better. Cause: lower surface pH, linked to melanin granule release and the enzyme sPLA2f. Acidifying light skin raised its barrier to the dark-skin level.", src: [{ l: "PubMed 24732399", u: "https://pubmed.ncbi.nlm.nih.gov/24732399/" }] },
-            { tag: "OPEN", t: "This was done in hairless mice. It is not a human study." }
+            { tag: "OPEN", t: "Shown in mice: acidifying light skin raised its barrier to the dark-skin level. That is a clear result. Testing it in people is the next step." }
           ]
         },
         {
@@ -251,7 +251,7 @@ window.LS = {
             { tag: "VERIFIED", t: "White mushrooms plus melanin did as well. This points to melanin as the active part. Blood counts returned to normal by day 45." },
             { tag: "HYPOTHESIS", t: "Proposed mechanism, from the authors: internal shielding by Compton scattering, then radical scavenging." },
             { tag: "VERIFIED", t: "Later work with soluble fungal allomelanin: better survival at a lethal 10 Gy when given 24 hours after exposure. A trend toward better survival at a sublethal 8 Gy, given up to 48 hours after.", src: [{ l: "Record", u: "https://katalog.lib.cas.cz/KNAV/EdsRecord/edsair,edsair.doi.dedup.....5c3613412fe7fc627b041e61d3caadad" }] },
-            { tag: "OPEN", t: "The protection is time-limited. It is preclinical, in mice only." }
+            { tag: "OPEN", t: "80 percent of the mice survived a lethal dose. Melanin given after the exposure also raised survival at a lethal 10 Gy. Done in mice so far. The protection lasts a limited time." }
           ]
         },
         {

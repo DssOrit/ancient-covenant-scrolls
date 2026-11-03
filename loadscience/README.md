@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v7` (goes forward only)
+- Cache: `loadscience-v8` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -39,3 +39,8 @@ Splash: a real, visible Get started button covers the artwork's printed button.
 ## Photon calculation and supernatural claims pages (data4.js)
 - Photon calculation page: tables of stopping per gram (melanin as three unit formulas, cellulose, water, lead) at seven energies, half-value layers at three assumed densities, a log-log chart, the patent check, and what the calculation means for the mouse results. Elam tables through xraydb 4.5.8, not NIST XCOM.
 - Supernatural claims page: the unexplained science with sources, the measurement gaps (microwave, ultrafast), a claims table with claimants and findings, the pineal gland (melatonin is not melanin), a pointer to the ancient texts page, and a space for the owner's reading.
+
+## Wording standard (2026-11-03, owner direction: no downplaying of melanin or dark-skin findings)
+- Lead with the result. Put the limit second, stated once, and keep it only where the source states it (mice, observational, one study).
+- Do not use only, just, merely or ordinary to shrink a finding. Tags say where a source was seen (Secondary, Unverified). They never say how important a finding is.
+- Dark skin is named first in comparisons (Black skin lets through about one fifth of the UV that reaches the upper dermis in Caucasian skin).

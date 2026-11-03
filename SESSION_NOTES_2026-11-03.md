@@ -39,6 +39,13 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 9 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+- Owner direction: "No downplaying the significance of the melanin findings or dark skin findings." A read-only scan of Load Science wording found 7 places that shrink a finding (list given to the owner, nothing changed). Owner then gave the phrase "edit Load Science" in answer to that list. Scope applied: items 1 to 7 as listed. The optional genetic-diversity addition (Tishkoff 2009, Popejoy and Fullerton 2016) was NOT applied; it needs its two citations verified first.
+- Built on branch claude/loadscience-v8 from origin/main 18172045 (PR #1192 merged, cache v7 live). Backup: backup/2026-11-03-loadscience-v7 at 18172045. Cache loadscience-v8.
+- Changed wording: barrier finding, mouse gamma survival, photon explorer sentence, superconductor claims row (conduction called a real and significant finding, with the transistor), ordered-sheets row, hearing study card (now tagged Verified, "One study. Not settled" removed), UV fact in three places (Black skin named first: lets through about one fifth of the UV).
+- Standard written into loadscience/README.md: lead with the result, limit second and once, no only, just, merely or ordinary, tags never rank importance.
+- Not done: the easy-words and Melanin for kids round (owner chose main pages first). It needs a fresh phrase. The other service's research report has not arrived.
+
 ## Round 8 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 - Owner gave the phrase "edit Load Science" and asked: add the photon calculation and supernatural claims pages. Order followed: phrase, backup (backup/2026-11-03-loadscience-v6 at c80b0b45, matches origin/main), no-break check, change, merge link.
 - Built on branch claude/loadscience-v7 from origin/main c80b0b45 (PR #1190 merged; PR #1191, the rule 8 change, still open). Cache loadscience-v7.

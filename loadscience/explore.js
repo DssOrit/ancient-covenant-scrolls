@@ -184,7 +184,7 @@
       var vsW = 100 * (1 - mel / wat), vsC = 100 * (1 - mel / cel);
       summary.textContent = "";
       summary.appendChild(H.badge("CALCULATED"));
-      summary.appendChild(H.el("p", "", "At " + fmtE(e) + ", per gram, melanin stops about " + vsW.toFixed(1) + " percent less than water and about " + vsC.toFixed(1) + " percent less than cellulose. Mass for mass it is an ordinary light-element material."));
+      summary.appendChild(H.el("p", "", "At " + fmtE(e) + ", per gram, melanin stops about " + vsW.toFixed(1) + " percent less than water and about " + vsC.toFixed(1) + " percent less than cellulose. Its photon stopping is close to water and cellulose. The calculation says the protection seen in mice is not from blocking the beam. It points to melanin's chemistry."));
       summary.appendChild(H.el("p", "", "Per centimetre, lead at " + fmtE(e) + " stops about " + (muAt("lead", e) * P.rho.lead / (mel * st.mel)).toFixed(0) + " times as much as melanin, because lead is far denser and has heavy atoms."));
     }
     eIn.addEventListener("input", update);
