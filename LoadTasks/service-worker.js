@@ -1,4 +1,5 @@
-const CACHE_NAME = 'load-tasks-cache-v2.5.3';
+const CACHE_NAME = 'load-tasks-cache-v2.5.4';
+const CACHE_PREFIX = 'load-tasks-cache-';
 const APP_SHELL = [
   './',
   './index.html',
@@ -25,7 +26,19 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))).then(() => self.clients.claim()));
+  // SCOPED: only delete OLD Load Tasks caches. Never touch other apps'
+  // caches on this origin (ACR Reader acr-*, Study acr-study-*,
+  // Attain attain-*, Load load-*, LoadStudio loadstudio-*, LoadPlay
+  // loadplay-*, etc.). CLAUDE.md Rule 21.
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys
+          .filter(key => key.indexOf(CACHE_PREFIX) === 0 && key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', event => {
