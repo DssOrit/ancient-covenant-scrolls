@@ -9123,7 +9123,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g83</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g85</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -16165,7 +16165,17 @@ window.LoadAudioFix = {
  '})();';
  var shimTag = '<script>/* Load runtime bundle shim — intercepts fetch/XHR for assets bundled from the imported zip */\n' + shim + '</script>';
  if (/<head[^>]*>/i.test(html)) {
- return html.replace(/<head([^>]*)>/i, '<head$1>' + shimTag);
+ // shimTag embeds every bundled file's raw content (the whole JSON
+ // bundle, B). A String.replace() replacement ARGUMENT interprets a
+ // literal "$&", "$'", "$`", "$$" or "$<n>" anywhere inside it as a
+ // special substitution pattern instead of literal text -- and across
+ // a zip with hundreds of files, one of those sequences turning up by
+ // coincidence is near-guaranteed (e.g. a data file whose own content
+ // is literally "$", a lone dollar sign, immediately followed by a
+ // quote character). A function replacer's return value is always used
+ // literally, so it is immune to this regardless of what shimTag
+ // contains.
+ return html.replace(/<head([^>]*)>/i, function (m, attrs) { return '<head' + attrs + '>' + shimTag; });
  }
  return shimTag + html;
  }
