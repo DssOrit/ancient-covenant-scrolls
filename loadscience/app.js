@@ -15,7 +15,8 @@
   var LABEL = {
     VERIFIED: "Verified", SECONDARY: "Secondary only", UNVERIFIED: "Unverified",
     READING: "Reading", NOTSUPPORTED: "Not supported", OPEN: "Open",
-    CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis", CALCULATED: "Calculated"
+    CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis", CALCULATED: "Calculated",
+    TEXT: "ACR text", HELD: "Held under warning", NOTEXT: "Not in the text"
   };
   var tagKeys = Object.keys(LS.tags);
   var curTag = "all";
@@ -95,6 +96,7 @@
     var p = el("p");
     p.appendChild(withMarks(it.t, opts.words || []));
     c.appendChild(p);
+    if (it.cite) { c.appendChild(el("p", "src", "Where: " + it.cite)); }
     if (it.src && it.src.length) { c.appendChild(srcLine(it.src)); }
     var foot = el("div", "row-actions");
     if (!opts.noSave) {
@@ -128,7 +130,7 @@
   LS.sections.forEach(function (s) {
     s.blocks.forEach(function (b) {
       (b.items || []).forEach(function (it) {
-        INDEX.push({ id: idOf(it.title, it.t), sec: s, block: b.h, tag: it.tag, t: it.t, src: it.src, go: it.go, goLabel: it.goLabel });
+        INDEX.push({ id: idOf(it.title, it.t), sec: s, block: b.h, tag: it.tag, t: it.t, src: it.src, cite: it.cite, go: it.go, goLabel: it.goLabel });
       });
       if (b.table) {
         b.table.rows.forEach(function (r) {
@@ -310,7 +312,7 @@
     if (curTag !== "all") { f.appendChild(el("p", "sub", LS.tags[curTag])); }
     hits.forEach(function (e) {
       f.appendChild(claimCard(
-        { tag: e.tag, title: e.title, t: e.t, src: e.src, go: e.go, goLabel: e.goLabel },
+        { tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
         { ref: e.sec.title + "  >  " + e.block, words: words, open: e.sec.id }
       ));
     });
@@ -453,8 +455,17 @@
     s.speak(u);
   });
 
-  /* Hard refresh, scoped to this app only (locked rule 21). */
-  document.getElementById("refresh").addEventListener("click", async function () {
+  /* Refresh circle. Hard refresh scoped to Load Science only (locked rule 21):
+     it deletes only caches whose name starts with "loadscience-", unregisters only
+     service workers whose scope contains "/loadscience/", then re-fetches this
+     app's own files past the browser cache. Other sites are never touched, and the
+     saved claims and reading settings (localStorage) are kept. */
+  var refreshBtn = document.getElementById("refresh");
+  var OWN_FILES = ["./", "index.html", "style.css", "data.js", "data2.js", "data3.js", "explore.js", "app.js", "sw.js", "manifest.webmanifest"];
+  refreshBtn.addEventListener("click", async function () {
+    if (refreshBtn.classList.contains("spin")) { return; }
+    refreshBtn.classList.add("spin");
+    refreshBtn.setAttribute("aria-busy", "true");
     try {
       var keys = await caches.keys();
       await Promise.all(
@@ -467,7 +478,10 @@
           .map(function (r) { return r.unregister(); })
       );
     } catch (e) {}
-    location.reload(true);
+    try {
+      await Promise.all(OWN_FILES.map(function (u) { return fetch(u, { cache: "reload" }).catch(function () {}); }));
+    } catch (e) {}
+    location.reload();
   });
 
 

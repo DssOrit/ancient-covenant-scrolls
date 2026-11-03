@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v5` (goes forward only)
+- Cache: `loadscience-v6` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -26,3 +26,12 @@ Logo and splash: trimmed from the owner-supplied icon and splash sheet. `icons/l
 
 Favicon: `favicon.ico` (16, 32, 48) and PNGs in `icons/`, from the flask icon on the owner's sheet.
 Splash: a real, visible Get started button covers the artwork's printed button.
+
+## Ancient texts page (data3.js)
+- Ties the melanin research to the ACR Reader (main record: DSS and Ge'ez Orit, before the Rabbinic and Christian layers) and to ACR2 (held under warning, documented as the later layer, never the baseline).
+- Quotations use ACR's own wording and verse numbers, read from the ACR data files on 2026-11-03. Each is checked by script against those files. A "Where" line gives the volume and the data file.
+- New tags: ACR text (quoted from the Reader), Held under warning (ACR2), Not in the text (searched, absent). A tie to the science is tagged Reading.
+- The Reader and ACR2 were only read. No file in either site was changed.
+
+## Refresh circle
+- Round button at the top right. It deletes only caches named `loadscience-*`, unregisters only service workers whose scope contains `/loadscience/`, re-fetches this app's own files past the browser cache, and reloads. Saved claims and reading settings (localStorage) are kept. No other site's cache or worker is touched (locked rule 21).

@@ -256,7 +256,7 @@
       });
       out.appendChild(H.el("h2", "", "Related claims (" + hits.length + ")"));
       hits.slice(0, 8).forEach(function (e) {
-        out.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, go: e.go, goLabel: e.goLabel }, { ref: e.sec.title + "  >  " + e.block, open: e.sec.id }));
+        out.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel }, { ref: e.sec.title + "  >  " + e.block, open: e.sec.id }));
       });
       if (hits.length > 8) {
         var more = H.el("button", "btn", "Search all " + hits.length + " for " + b.terms[0]); more.type = "button";
@@ -371,6 +371,7 @@
       copy.addEventListener("click", function () {
         var text = entries.map(function (e, i) {
           var s = (i + 1) + ". [" + H.LABEL[e.tag] + "] " + (e.title ? e.title + ": " : "") + e.t + " (" + e.sec.title + ")";
+          if (e.cite) { s += "\n   Where: " + e.cite; }
           if (e.src && e.src.length) { s += "\n   Source: " + e.src.map(function (x) { return x.l + " " + x.u; }).join("; "); }
           return s;
         }).join("\n\n");
@@ -389,7 +390,7 @@
       f.appendChild(row);
     }
     entries.forEach(function (e) {
-      f.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, go: e.go, goLabel: e.goLabel },
+      f.appendChild(H.claimCard({ tag: e.tag, title: e.title, t: e.t, src: e.src, cite: e.cite, go: e.go, goLabel: e.goLabel },
         { ref: e.sec.title + "  >  " + e.block, open: e.sec.id, onSave: function () { H.rerender(); } }));
     });
     return f;

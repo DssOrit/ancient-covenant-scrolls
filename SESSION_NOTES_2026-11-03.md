@@ -6,7 +6,7 @@
 
 ## Built today
 - Melanin research note (scratchpad, not in repo): UV, DNA, barrier, neuromelanin, African pigmentation genetics, full electromagnetic spectrum, gamma, electronics. Every item tagged VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING or HYPOTHESIS.
-- New app Load Science at /loadscience/ (cache loadscience-v5): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
+- New app Load Science at /loadscience/ (cache loadscience-v6): the research note as an offline-first iPad PWA. Files: index.html, style.css, data.js, app.js, sw.js, manifest.webmanifest, icons, README.md. New folder only; no existing site was touched.
 
 ## Verification run (headless browser, real index.html)
 - node --check on app.js, data.js, sw.js: pass. Manifest parses. Every file in the sw.js CORE list exists.
@@ -38,3 +38,13 @@
 - Added interactive tools: photon shielding explorer, spectrum explorer, claim check quiz, saved claims, glossary, Did you know card. New tag: CALCULATED.
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
+
+## Round 6 (same day)
+- Owner asked: tie the melanin research to the DSS and Orit, pre-Rabbinic, pre-Christian ACR Reader and ACR2 texts; add a refresh circle that refreshes only Load Science.
+- Still on branch claude/loadscience-v5 and PR #1190 (open and unmerged when checked). Cache loadscience-v6.
+- ACR Reader and ACR2 were READ ONLY (data/file_N.json converted to plain text in scratch). No Reader or ACR2 file was edited. Rule 8 phrases were not needed for reading.
+- New page "Ancient texts and the research" (data3.js, 49 cards). 33 quotations, each checked by script against the ACR files; none missing. Findings: ACR's own [ORIT GE'EZ] note on Yirmeyahu 13:23 uses the word melanin (the only occurrence in all ACR Reader and ACR2 data files); Shir HaShirim 1:5-6 pairs dark skin with the sun; Iyov 30:30, Eikha 4:8 and 5:10 pair black skin with heat and famine; Bereshit 10:6 names Kush, Mitzrayim, Put and Kena'an; Orit notes on Tehillim 68:31, Yesha'yahu 18:7, Tzefanyah 3:10, Amos 9:7 and Yirmeyahu 38 place Kush in the northeast African corridor.
+- ACR2 items are tagged Held under warning and are not used as evidence: the Animal Apocalypse colour allegory (black bull with Yefet), the Birth of Noah (4Q534) and Chanokh site chapter 71 newborn descriptions.
+- For the owner's decision (nothing changed in the Reader): the Yirmeyahu 38 [DSS] note calls Eved-Melekh "a foreigner" and an outsider, while the [ORIT GE'EZ] note on the same chapter ties him to the same cultural geography as the Hebrew people; rule 16 treats the foreigner framing as the overlay.
+- Not confirmed (shown as UNVERIFIED in the app): whether Shir HaShirim 1:5-6 is physically attested in 4QCant-a or 4QCant-b (ACR's note does not say); whether Yirmeyahu 13:23 is in the portions of 4QJer-a ACR's note describes (it discusses verses 1-11); the Hebrew wording for dark and skin (the ACR files for those books show English only).
+- Refresh circle: top bar, 48 px, scoped. Tested: other sites' caches and a fake other-site service worker survive; only loadscience- caches deleted; only the /loadscience/ worker unregistered; saved claims kept.
