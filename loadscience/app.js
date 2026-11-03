@@ -16,7 +16,8 @@
     VERIFIED: "Verified", SECONDARY: "Secondary only", UNVERIFIED: "Unverified",
     READING: "Reading", NOTSUPPORTED: "Not supported", OPEN: "Open",
     CONFLICTING: "Conflicting", HYPOTHESIS: "Hypothesis", CALCULATED: "Calculated",
-    TEXT: "ACR text", HELD: "Held under warning", NOTEXT: "Not in the text"
+    TEXT: "ACR text", HELD: "Held under warning", NOTEXT: "Not in the text",
+    PASTED: "Your paste"
   };
   var tagKeys = Object.keys(LS.tags);
   var curTag = "all";
@@ -93,7 +94,7 @@
     if (opts.ref) { c.appendChild(el("div", "ref", opts.ref)); }
     if (it.title) { c.appendChild(el("h3", "", it.title)); }
     c.appendChild(badge(it.tag));
-    var p = el("p");
+    var p = el("p", it.pre ? (it.diagram ? "pre diagram" : "pre") : "");
     p.appendChild(withMarks(it.t, opts.words || []));
     c.appendChild(p);
     if (it.cite) { c.appendChild(el("p", "src", "Where: " + it.cite)); }

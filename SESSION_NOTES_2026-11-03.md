@@ -39,6 +39,28 @@
 - Favicon from the flask icon. Splash Get started button is now a real visible button.
 - Nothing outside /loadscience/ was touched.
 
+## Round 13 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner gave the phrase and set the rule: pasted text is not rephrased, softened or summarised. Same open PR #1194, cache v12. Backup of main unchanged: backup/2026-11-03-loadscience-v9 at a86d5ec7.
+- Pasted reports page now holds nine pastes exactly as pasted (Paste 8: institutions, APOL1, minerals, fail-safe; Paste 9: Kavod, mountain fortresses). Earlier version dropped a part pasted twice and two invisible characters; both are now kept. Only the owner's own instruction lines are left out. A test checks every line over 40 characters of all nine pastes, with the invisible characters kept.
+- Claims page: check groups for Paste 8 and Paste 9. New rows quote the pasted claim in the owner's words. Older rows (Pastes 1 to 7) shorten the claim in the first column; the full text is on the pasted reports page.
+- Found, not changed: the Damascus Document critical notes (data/file_96, 97, 98, plus a few in 38, 77, 85, 86, 111) have the word covenant repeated inside sentences. Needs "edit ACR reader" and the owner's approval of the exact list first.
+- Open: 4Q186 reject or hold; Yirmeyahu 38 note difference; blocked hosts for full texts.
+
+## Round 12 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner gave the phrase and asked that every pasted report be kept so nothing is lost. Same open PR #1194 (not merged), cache v11. Backup for main already exists: backup/2026-11-03-loadscience-v9 at a86d5ec7.
+- data7.js: new page "Your pasted reports, word for word" with all seven pastes in full (PASTED tag; request lines omitted, two invisible marker characters removed, the part pasted twice shown once). A test checks that every line over 40 characters from each paste is present.
+- Claims page: row-by-row check for each paste (about 70 rows), grouped by paste. New searches this round: Meredith and Riesz 2004 (99.9 percent), insect cuticle sclerotization, 4Q186 script (Geller), 1 Enoch 106 light imagery, Selig buying power, BLS workforce shares, phytoplankton sunscreens.
+- app.js: PASTED label and sideways-scrolling diagram cards. explore.js: PASTED left out of the quiz.
+- Owner decision still open: 4Q186 reject or hold; nothing added to the Reader.
+
+## Round 11 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
+Owner gave the phrase for Load Science. Backup: backup/2026-11-03-loadscience-v9 at a86d5ec7 (verified against origin/main). Cache v10.
+- Added data6.js: plain-words cards after the headline findings (dark skin, skin, gamma, photon, start), limits moved to one end-of-page block on dark skin and start, gamma "weak photon stopping" card replaced with the calculated numbers, 2007 wording refined (4-fold NADH capacity, 3-fold 14C-acetate).
+- Added the missing findings: Turick 2011, 318 S/cm (copper about 190,000 times higher), Nature Communications 2025 EMI, DEVCOM CBC release, ESA/DLR abstract, hydration range (8 orders), Mostert doubt, Gichon (Bereshit 2:13), Shemot 34:29-35 with ACR's note, 4Q186 check.
+- Metal binding numbers added (squid melanin 95 percent Cd and Pb at 2 mM; P. stutzeri capacities; orders differ by melanin type). Cr(VI) squid-ink figure, 97 percent, hard-soft acid-base and irreversible binding: UNVERIFIED.
+- Claims check rows added for the Uncompromised Architecture paste and later sets.
+- Open for the owner: 4Q186 reject or quarantine (not in ACR, nothing added); Yirmeyahu 38 [DSS] vs [ORIT GE'EZ] note difference; style check before the remaining pages get plain-words cards; hosts to allow (pmc, pubmed, projectbiodiversify, en.wikipedia.org) so primary papers can be read.
+
 ## Round 10 (same day, placed here so it merges cleanly beside the Round 7 rules PR)
 - Owner pasted a claims summary (with a PMC5132026 link) and then said "edit Load Science, but first check the reports". The reports were re-checked first (the deep research report and the claims check). Corrections found and applied: Diop's birth year was dropped (it was not in any tool result); the Fajuyigbe comparison is worded as the paper's title words it (extreme skin types) because the comparison group was not confirmed; the Springer review is cited by DOI only (journal and year were inferred from the DOI); the earlier "eight of thirteen" tally in the claims reply is not used; the 454 keV crossing was computed to the keV. The earlier search summary that called the Army topic "the reverse" of the pasted claim was wrong: same direction, bigger gap.
 - Scope applied: all items in both reports. Added on the same branch and PR #1193 (still open): data5.js with the Dark skin and melanin at full strength page, the Overlooked scientists page, genetic diversity (Tishkoff 2009, Popejoy and Fullerton 2016), per-gram melanin against lead on the photon page, government and space programs on the gamma page (NASA Glenn PNAS 2025, NRL Artemis I, Army STTR A19B-T010), electronics additions, water-splitting claim record, and a row-by-row check of the pasted claim set on the claims page. Three old lines were corrected (SPF line, space station item, attenuation coefficient line). Cache loadscience-v9. Backup: backup/2026-11-03-loadscience-v7 at 18172045 (main unchanged).

@@ -2,7 +2,7 @@
    Every item carries a tag. VERIFIED means the paper exists and says this,
    checked at abstract or search-summary level. Full texts were not read. */
 window.LS = {
-  version: "loadscience-v9",
+  version: "loadscience-v12",
   date: "2026-11-03",
   tags: {
     VERIFIED: "The paper exists and says this. Checked at abstract or summary level.",
