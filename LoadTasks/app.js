@@ -1,6 +1,46 @@
 (function () {
   'use strict';
 
+  // Clipboard hardening — wrap navigator.clipboard.writeText so a permission
+  // denial, insecure context, or iframe sandbox block does not surface as an
+  // unhandled promise rejection to the page. On failure, try a textarea +
+  // document.execCommand('copy') fallback (works on iPad Safari without any
+  // permission prompt); if that also fails, show a toast so the user knows
+  // the copy did not succeed instead of silently believing it did. All 21
+  // copy buttons across the tool views benefit without touching each handler.
+  (function hardenClipboard() {
+    if (typeof navigator === 'undefined' || !navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') return;
+    const _origWrite = navigator.clipboard.writeText.bind(navigator.clipboard);
+    function execCommandFallback(text) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = String(text == null ? '' : text);
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        ta.style.top = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return !!ok;
+      } catch (e) { return false; }
+    }
+    function safeToast(msg) {
+      try { if (typeof toast === 'function') toast(msg); } catch (e) {}
+    }
+    navigator.clipboard.writeText = function (text) {
+      return _origWrite(text).catch(function (err) {
+        if (execCommandFallback(text)) return;
+        safeToast('Copy failed — your browser blocked clipboard access.');
+        // Swallow the rejection. Callers that chain .then will still run
+        // after the resolved fallback path above; callers without .catch
+        // will no longer see an unhandled rejection in the console.
+      });
+    };
+  })();
+
   const STORE_KEY = 'loadTasksWorkspaceV4';
   const SESSION_FILES = new Map();
 
