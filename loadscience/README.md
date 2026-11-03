@@ -3,7 +3,7 @@
 Offline-first iPad PWA. Melanin research with every claim tagged by how well it is verified.
 
 - Path: `/loadscience/`
-- Cache: `loadscience-v3` (goes forward only)
+- Cache: `loadscience-v4` (goes forward only)
 - Content: `data.js` (one file, ported from the research note dated 2026-11-03)
 - Tags: VERIFIED, SECONDARY, UNVERIFIED, READING, NOT SUPPORTED, OPEN, CONFLICTING, HYPOTHESIS
 - VERIFIED means abstract or summary level. Full texts were not read.
@@ -13,4 +13,4 @@ Offline-first iPad PWA. Melanin research with every claim tagged by how well it 
 
 To add or change a claim, edit `data.js`, then bump the cache name in `sw.js` and the `version` field in `data.js` together.
 
-Logo: `icons/logo-hero.jpg` (home page) and the app icons are made from the owner-supplied Load Science logo.
+Logo and splash: trimmed from the owner-supplied icon and splash sheet. `icons/logo-hero.jpg` (home page), the app icons, and `icons/splash.jpg` (launch screen, shown once per browser session, tap anywhere or Get started to continue, skipped on deep links). The sheet was 1536 x 1024, so the 512 px icon is the 396 px source scaled up.

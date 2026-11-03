@@ -1,5 +1,5 @@
 /* Load Science service worker. Cache name goes forward only. */
-var CACHE = 'loadscience-v3';
+var CACHE = 'loadscience-v4';
 var CORE = [
   './',
   './index.html',
@@ -12,7 +12,8 @@ var CORE = [
   './icons/icon-maskable-192.png',
   './icons/apple-touch-icon.png',
   './icons/favicon-32.png',
-  './icons/logo-hero.jpg'
+  './icons/logo-hero.jpg',
+  './icons/splash.jpg'
 ];
 
 self.addEventListener('install', function (e) {

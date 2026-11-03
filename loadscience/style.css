@@ -145,6 +145,18 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 2px}
 .spec{display:block;width:100%;height:auto;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);color:var(--tx);margin-bottom:12px}
 .spec .bar{fill:var(--gold)}
 
+/* SPLASH */
+.splash{position:fixed;inset:0;z-index:200;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .25s}
+.splash.out{opacity:0}
+.splash-wrap{position:relative;width:min(100vw,calc(100vh * 0.6896));aspect-ratio:682/989}
+@supports (height:100dvh){.splash-wrap{width:min(100vw,calc(100dvh * 0.6896))}}
+.splash-img{display:block;width:100%;height:auto}
+.splash-go{
+  position:absolute;left:18%;top:86.7%;width:62.3%;height:7.7%;min-height:48px;
+  background:transparent;border:none;border-radius:999px;color:transparent;font-size:0;cursor:pointer;
+}
+.splash-go:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+
 /* PAGE NAV */
 .nav{display:flex;gap:10px;margin:22px 0 0}
 .nav a{
