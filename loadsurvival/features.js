@@ -337,6 +337,7 @@ window.LSX = function (A) {
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
     'vitamins-natural-items': ['meds-natural-alternatives', 'stockpile-basics', 'med-dehydration', 'es-medical-kit'],
     'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
+    'offgrid-whole-home': ['sol-wh-budget', 'sol-inverter-surge', 'ps-sizing', 'home-power-sizing', 'ps-lithium', 'med-carbon-monoxide'],
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup', 'ps-types', 'ps-sizing'],
     'wild-birds-prep': ['fish-catch-inspect-clean-cook', 'wild-food-field-checklist', 'wf-wild-food-rules', 'med-carbon-monoxide'],
     'crabs-shrimp-lobster': ['fish-catch-inspect-clean-cook', 'shellfish-safe-collect', 'wild-food-field-checklist', 'other-sea-life', 'trap-crate-crab'],
