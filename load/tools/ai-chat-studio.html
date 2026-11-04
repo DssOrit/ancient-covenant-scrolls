@@ -1101,7 +1101,7 @@ function send() {
 }
 
 function runChat(p) {
-  var card = appendCard({ cls: 'assistant', who: 'Pollinations.ai', badge: { cls: 'run', text: 'thinking' }, text: '' });
+  var card = appendCard({ cls: 'assistant', who: 'Pollinations.ai', badge: { cls: 'run', text: 'thinking' }, html: '<pre></pre>' });
   card.querySelector('pre').innerHTML = '<span class="spinner"></span> calling text.pollinations.ai...';
   var pollMs = (window.LoadTimeouts ? window.LoadTimeouts.byIntent('pollinations-text') : 30000);
   var stopChip = startDeadlineCountdown(card, pollMs, 'timeout');
