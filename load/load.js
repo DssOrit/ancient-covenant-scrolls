@@ -9129,7 +9129,7 @@ window.LoadAudioFix = {
  '<button id="ve-close" class="ve-iconbtn" aria-label="Close">&larr;</button>' +
  '<button id="ve-help" class="ve-iconbtn" aria-label="Help">?</button>' +
  '<button id="ve-refresh" class="ve-iconbtn" aria-label="Force refresh editor build" title="Force refresh">&#8635;</button>' +
- '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g87</span>' +
+ '<span id="ve-version" style="font-size:10px;color:#7a7a8a;font-weight:600;letter-spacing:0.04em;padding:0 4px;font-variant-numeric:tabular-nums;">v17g88</span>' +
  '<div style="margin:0 auto;display:flex;align-items:center;gap:6px;background:#1a1a26;padding:6px 12px;border-radius:8px;">' +
  '<span style="font-size:13px;color:#cfcfdc;">&#9633;</span>' +
  '<select id="ve-ratio" style="background:transparent;color:#fff;border:none;font-size:14px;font-weight:600;outline:none;">' +
@@ -16080,7 +16080,14 @@ window.LoadAudioFix = {
  * original fetch for anything not in the bundle, so external URLs
  * still behave normally (they'll just fail offline, same as before). */
  function injectBundleShim(html, bundle, baseDir) {
- var bundleJson = JSON.stringify(bundle);
+ // A literal "</script" anywhere inside any bundled file's text (e.g. a
+ // bundled HTML page with its own inline <script> tag) would otherwise
+ // prematurely close THIS shim's own <script> tag in the browser's HTML
+ // parser -- which scans raw text for that literal sequence regardless of
+ // JS string context -- leaking the rest of that file's JSON-escaped
+ // content out as real markup into the page. Same escape already used
+ // for inlined <script src> content in inlineHtmlAssets() above.
+ var bundleJson = JSON.stringify(bundle).replace(/<\/script/gi, '<\\/script');
  var shim =
  '(function(){' +
  'try{var B=' + bundleJson + ';' +
