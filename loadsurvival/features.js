@@ -337,6 +337,7 @@ window.LSX = function (A) {
     'break-in': ['robbery', 'security-intrusion', 'fire-upper-floors', 'lim-city-event'],
     'vitamins-natural-items': ['meds-natural-alternatives', 'stockpile-basics', 'med-dehydration', 'es-medical-kit'],
     'fish-catch-inspect-clean-cook': ['wf-clean-fish', 'wf-fishing-gear', 'wf-smoke-dry-salt', 'wf-shore-shellfish', 'lt2-foraging', 'med-carbon-monoxide'],
+    'alerts-when-closed': ['g-power-outage', 'g-flood', 'comm-start', 'comm-satellite', 'g-earthquake-tsunami'],
     'offgrid-your-list': ['offgrid-whole-home', 'sol-wh-budget', 'sol-inverter-surge', 'river-10c-microhydro', 'ps-lithium', 'med-carbon-monoxide'],
     'offgrid-whole-home': ['sol-wh-budget', 'sol-inverter-surge', 'ps-sizing', 'home-power-sizing', 'ps-lithium', 'med-carbon-monoxide'],
     'home-power-sizing': ['budget-offgrid', 'med-carbon-monoxide', 'stockpile-basics', 'storage-area-setup', 'ps-types', 'ps-sizing'],
