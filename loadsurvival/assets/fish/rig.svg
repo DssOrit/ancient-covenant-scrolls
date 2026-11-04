@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="A float rig: rod tip, line, float, sinker, hook and bait">
+<rect width="640" height="400" fill="#10202b"/>
+<rect x="0" y="120" width="640" height="280" fill="#173a4a"/>
+<line x1="0" y1="120" x2="640" y2="120" stroke="#6fb3c8" stroke-width="3"/>
+<text x="470" y="108" font-family="Arial,sans-serif" font-size="20" fill="#cfe9f2">water level</text>
+<line x1="60" y1="30" x2="200" y2="40" stroke="#c9b28a" stroke-width="6" stroke-linecap="round"/>
+<text x="20" y="22" font-family="Arial,sans-serif" font-size="22" fill="#f2f2f2">rod tip</text>
+<path d="M200 40 L240 100" stroke="#ffffff" stroke-width="2" fill="none"/>
+<line x1="240" y1="100" x2="240" y2="330" stroke="#ffffff" stroke-width="2"/>
+<ellipse cx="240" cy="112" rx="13" ry="22" fill="#e2452f"/>
+<rect x="228" y="100" width="24" height="12" fill="#ffffff"/>
+<circle cx="240" cy="236" r="12" fill="#9aa3a8"/>
+<path d="M240 330 q0 24 22 24 q20 0 20 -22" stroke="#ffffff" stroke-width="4" fill="none"/>
+<path d="M282 332 l-8 -10 l16 0 z" fill="#ffffff"/>
+<path d="M240 330 q-10 18 -42 8 q-22 -8 -50 6 q-20 10 -34 -4" stroke="#d18a8a" stroke-width="9" fill="none" stroke-linecap="round"/>
+<g font-family="Arial,sans-serif" font-size="24" fill="#f2f2f2">
+<text x="290" y="170">line</text>
+<line x1="286" y1="164" x2="244" y2="164" stroke="#f2f2f2" stroke-width="2"/>
+<text x="290" y="120">float</text>
+<line x1="286" y1="114" x2="258" y2="114" stroke="#f2f2f2" stroke-width="2"/>
+<text x="290" y="242">sinker (weight)</text>
+<line x1="286" y1="236" x2="256" y2="236" stroke="#f2f2f2" stroke-width="2"/>
+<text x="300" y="352">hook</text>
+<line x1="296" y1="346" x2="284" y2="340" stroke="#f2f2f2" stroke-width="2"/>
+<text x="40" y="390">bait (a worm)</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="20" fill="#cfe9f2">
+<text x="16" y="210">Sinker about</text>
+<text x="16" y="234">6 to 12 in (15 to 30 cm)</text>
+<text x="16" y="258">above the hook</text>
+</g>
+</svg>

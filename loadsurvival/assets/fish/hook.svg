@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Parts of a fishing hook: eye, shank, bend, point and barb">
+<rect width="640" height="420" fill="#10202b"/>
+<circle cx="200" cy="60" r="16" fill="none" stroke="#d9dde0" stroke-width="7"/>
+<path d="M200 76 L200 250 Q200 340 270 340 Q340 340 340 250 L340 190" fill="none" stroke="#d9dde0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M340 214 L320 240 L340 236 Z" fill="#d9dde0"/>
+<g font-family="Arial,sans-serif" font-size="26" fill="#f2f2f2">
+<text x="240" y="66">eye (tie the line here)</text>
+<line x1="236" y1="60" x2="220" y2="60" stroke="#f2f2f2" stroke-width="2"/>
+<text x="224" y="170">shank</text>
+<line x1="220" y1="164" x2="206" y2="164" stroke="#f2f2f2" stroke-width="2"/>
+<text x="380" y="330">bend</text>
+<line x1="376" y1="324" x2="330" y2="318" stroke="#f2f2f2" stroke-width="2"/>
+<text x="380" y="196">point (sharp)</text>
+<line x1="376" y1="190" x2="350" y2="190" stroke="#f2f2f2" stroke-width="2"/>
+<text x="380" y="250">barb (small hook that</text>
+<text x="380" y="280">stops it slipping out)</text>
+<line x1="376" y1="244" x2="342" y2="232" stroke="#f2f2f2" stroke-width="2"/>
+</g>
+<text x="40" y="400" font-family="Arial,sans-serif" font-size="22" fill="#e8c06a">Keep the point away from your skin.</text>
+</svg>
