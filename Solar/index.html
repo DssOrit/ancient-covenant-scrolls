@@ -1420,6 +1420,36 @@ select.form-input option { background: var(--surface2); }
 </div>
 
 <script>
+// Safe localStorage wrapper -- in Load's sandboxed iframe viewer
+// (allow-scripts only, no allow-same-origin) any direct localStorage
+// access throws synchronously. Route every call through this so a
+// missing/blocked store degrades to an in-memory fallback instead of
+// crashing the page.
+var LS = (function () {
+  var ok = false;
+  try {
+    var k = '__acr_solar_ls_test__';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    ok = true;
+  } catch (e) {}
+  var mem = {};
+  return {
+    get: function (key) {
+      if (ok) { try { return localStorage.getItem(key); } catch (e) {} }
+      return mem.hasOwnProperty(key) ? mem[key] : null;
+    },
+    set: function (key, value) {
+      if (ok) { try { localStorage.setItem(key, value); return; } catch (e) {} }
+      mem[key] = value;
+    },
+    remove: function (key) {
+      if (ok) { try { localStorage.removeItem(key); return; } catch (e) {} }
+      delete mem[key];
+    }
+  };
+})();
+
 // ─── SOLAR CALENDAR ENGINE ────────────────────────────────────────────────────
 
 // The 364-day Qumran solar calendar
@@ -1664,11 +1694,11 @@ var selectedColor = '#F5C842';
 var alertTimer = null;
 
 try {
-  var saved = localStorage.getItem('acr_solar_settings');
+  var saved = LS.get('acr_solar_settings');
   if (saved) settings = Object.assign(settings, JSON.parse(saved));
-  var savedRem = localStorage.getItem('acr_solar_reminders');
+  var savedRem = LS.get('acr_solar_reminders');
   if (savedRem) reminders = JSON.parse(savedRem);
-  var savedLoc = localStorage.getItem('acr_solar_location');
+  var savedLoc = LS.get('acr_solar_location');
   if (savedLoc) {
     userLocation = JSON.parse(savedLoc);
     document.getElementById('location-prompt').style.display = 'none';
@@ -1676,10 +1706,10 @@ try {
 } catch(e) {}
 
 function saveSettings() {
-  localStorage.setItem('acr_solar_settings', JSON.stringify(settings));
+  LS.set('acr_solar_settings', JSON.stringify(settings));
 }
 function saveReminders() {
-  localStorage.setItem('acr_solar_reminders', JSON.stringify(reminders));
+  LS.set('acr_solar_reminders', JSON.stringify(reminders));
 }
 
 // ─── VIEWS ────────────────────────────────────────────────────────────────────
@@ -2719,7 +2749,7 @@ function requestLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(function(pos) {
       userLocation = { lat: pos.coords.latitude, lon: pos.coords.longitude, utcOffset: (function() { var jan1 = new Date(new Date().getFullYear(), 0, 15); return -jan1.getTimezoneOffset() / 60; })() };
-      localStorage.setItem('acr_solar_location', JSON.stringify(userLocation));
+      LS.set('acr_solar_location', JSON.stringify(userLocation));
       document.getElementById('location-prompt').style.display = 'none';
       renderSunView();
       scheduleAlerts();
@@ -2732,7 +2762,7 @@ function requestLocation() {
 }
 
 function resetLocation() {
-  localStorage.removeItem('acr_solar_location');
+  LS.remove('acr_solar_location');
   userLocation = { lat: 40.2033, lon: -8.4103, utcOffset: 0 };
   document.getElementById('location-prompt').style.display = '';
   renderSunView();
@@ -3220,11 +3250,11 @@ function hexToRgba(hex, alpha) {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 
 // Service worker
-if ('serviceWorker' in navigator) {
+try{if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js').catch(function(){});
+    try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}
   });
-}
+}}catch(e){}
 
 // Select first color option
 document.querySelector('.color-opt').style.borderColor = 'white';
@@ -3244,17 +3274,17 @@ setInterval(function() {
 }, 60000);
 </script>
 <script>
-var TP_VOICES=[],TP_VIDX=parseInt(localStorage.getItem('tp_vi')||'0'),TP_RATE=parseFloat(localStorage.getItem('tp_vr')||'1'),TP_PARAS=[],TP_POS=0,TP_PLAYING=false;
+var TP_VOICES=[],TP_VIDX=parseInt(LS.get('tp_vi')||'0'),TP_RATE=parseFloat(LS.get('tp_vr')||'1'),TP_PARAS=[],TP_POS=0,TP_PLAYING=false;
 function pronounceTP(t){return(t||'').replace(/[\uD800-\uDFFF][\uD800-\uDFFF]/g,'').replace(/\bYHWH\b/g,'Yahweh').replace(/\bYH\b/g,'Yah').replace(/\bMosheh\b/gi,'Mo-sheh').replace(/\bChanokh\b/gi,'Hha-nokh').replace(/\bTehillim\b/gi,'Teh-hee-leem').replace(/\bDevarim\b/gi,'Dev-ah-reem').replace(/\bShemot\b/gi,'Sheh-moht').replace(/\bBereshit\b/gi,'Beh-reh-sheet').replace(/\bDaniyyel\b/gi,'Dah-nee-yel').replace(/\bAvraham\b/gi,'Av-rah-hahm').replace(/\bYitzhak\b/gi,'Yitz-khahk').replace(/\bYa'akov\b/gi,'Yah-ah-kove').replace(/\bYehoshua\b/gi,'Yeh-ho-shoo-ah').replace(/\bYesha'yahu\b/gi,'Yeh-shah-yah-hoo').replace(/\bMitzrayim\b/gi,'Mitz-rah-yeem').replace(/\bYoel\b/gi,'Yo-ale').replace(/\bBenyamin\b/gi,'Ben-yah-meen').replace(/\bZebulun\b/gi,'Zeh-voo-loon').replace(/\bOrit\b/gi,'Oh-reet').replace(/\bGe'ez\b/gi,'Geh-ehz').replace(/\bQumran\b/gi,'Koom-rahn').replace(/\bYisra'el\b/gi,'Yis-rah-ale').replace(/\bDSS\b/g,'Dead Sea Scrolls').replace(/[^\x00-\xFF\u0100-\u024F]/g,'');}
-function loadTPVoices(){function d(){TP_VOICES=window.speechSynthesis.getVoices();if(!localStorage.getItem('tp_vi')){var si=TP_VOICES.findIndex(function(v){return v.name==='Samantha';});if(si>=0){TP_VIDX=si;}}var s=document.getElementById('tp-voice');if(!s)return;s.innerHTML=TP_VOICES.map(function(v,i){var x=(v.name.includes('Enhanced')||v.name.includes('Neural'))?'\u2605 ':'';return'<option value="'+i+'"'+(i===TP_VIDX?' selected':'')+'>'+x+v.name.substring(0,22)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)d();else window.speechSynthesis.onvoiceschanged=d;}
+function loadTPVoices(){function d(){TP_VOICES=window.speechSynthesis.getVoices();if(!LS.get('tp_vi')){var si=TP_VOICES.findIndex(function(v){return v.name==='Samantha';});if(si>=0){TP_VIDX=si;}}var s=document.getElementById('tp-voice');if(!s)return;s.innerHTML=TP_VOICES.map(function(v,i){var x=(v.name.includes('Enhanced')||v.name.includes('Neural'))?'\u2605 ':'';return'<option value="'+i+'"'+(i===TP_VIDX?' selected':'')+'>'+x+v.name.substring(0,22)+'</option>';}).join('');}if(window.speechSynthesis.getVoices().length)d();else window.speechSynthesis.onvoiceschanged=d;}
 function openTextPage(title,content){document.getElementById('text-page-label').textContent=title;document.getElementById('text-page-inner').innerHTML=content;document.getElementById('text-page-overlay').classList.add('open');tpStop();TP_POS=0;setTimeout(function(){TP_PARAS=Array.from(document.querySelectorAll('#text-page-inner [data-ptype="verse"]'));loadTPVoices();},150);document.getElementById('text-page-content').scrollTop=0;}
 function closeTextPage(){tpStop();document.getElementById('text-page-overlay').classList.remove('open');}
 function tpPlay(){if(TP_PLAYING)return;TP_PARAS=Array.from(document.querySelectorAll('#text-page-inner [data-ptype="verse"]'));if(!TP_PARAS.length)return;TP_PLAYING=true;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Playing';tpNext();}
 function tpNext(){if(!TP_PLAYING||TP_POS>=TP_PARAS.length){tpStop();return;}var p=TP_PARAS[TP_POS];var t=pronounceTP(p.textContent||'');if(!t.trim()){TP_POS++;tpNext();return;}p.style.background='rgba(200,151,31,0.15)';var s=document.getElementById('tp-vstatus');if(s)s.textContent=(TP_POS+1)+'/'+TP_PARAS.length;var u=new SpeechSynthesisUtterance(t);if(TP_VOICES[TP_VIDX])u.voice=TP_VOICES[TP_VIDX];u.rate=TP_RATE;u.onend=function(){if(p)p.style.background='';TP_POS++;tpNext();};u.onerror=function(){if(p)p.style.background='';TP_POS++;tpNext();};window.speechSynthesis.speak(u);}
 function tpPause(){window.speechSynthesis.pause();TP_PLAYING=false;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Play';}
 function tpStop(){window.speechSynthesis.cancel();TP_PLAYING=false;var b=document.getElementById('tp-play-btn');if(b)b.innerHTML='<i class="ri-play-circle-line"></i> Play';document.querySelectorAll('#text-page-inner [data-ptype="verse"]').forEach(function(p){p.style.background='';});}
-function tpSetSpeed(v){TP_RATE=parseFloat(v);localStorage.setItem('tp_vr',TP_RATE);}
-function tpSetVoice(i){TP_VIDX=parseInt(i);localStorage.setItem('tp_vi',TP_VIDX);}
+function tpSetSpeed(v){TP_RATE=parseFloat(v);LS.set('tp_vr',TP_RATE);}
+function tpSetVoice(i){TP_VIDX=parseInt(i);LS.set('tp_vi',TP_VIDX);}
 function _p(tag,cls,style,content){return'<'+tag+(cls?' class="'+cls+'"':'')+(style?' style="'+style+'"':'')+'>'+content+'</'+tag+'>';}
 function tpPaleo(){return _p('div','tp-paleo','','\u{10909}\u{10904}\u{10905}\u{10904}');}
 function tpTitle(t){return _p('div','tp-title','',t);}
@@ -3363,12 +3393,12 @@ function openVolOfDay(){
   var idx=(sd.dayOfYear*17)%VOD.length;
   var v=VOD[idx];
   if(v[1]==='a'){
-    localStorage.setItem('acr2_last',String(v[2]));
+    LS.set('acr2_last',String(v[2]));
     window.location.href='https://acrscrolls.com/ACR2/';
   }else{
-    localStorage.setItem('acr_ok','1');
-    localStorage.setItem('acr_last',String(v[2]));
-    localStorage.setItem('acr_from_solar','1');
+    LS.set('acr_ok','1');
+    LS.set('acr_last',String(v[2]));
+    LS.set('acr_from_solar','1');
     window.location.href='https://acrscrolls.com/';
   }
 }
