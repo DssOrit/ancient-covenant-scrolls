@@ -14,11 +14,50 @@ build a PDF is reading, not editing).
 ## Status as of 2026-11-10
 
 - Two print-ready packages exist and have been verified (opened, page-counted,
-  rendered to images) as complete and correct: `ACR_Reader_PrintReady.zip` (6
-  volumes) and `ACR2_PrintReady.zip` (1 volume, companion/auxiliary archive).
+  rendered to images): `ACR_Reader_PrintReady.zip` (6 volumes) and
+  `ACR2_PrintReady.zip` (1 volume, companion/auxiliary archive).
+- **A real cover defect was found and fixed the same day — see "Known issues
+  found and fixed" below. Use `ACR_Reader_PrintReady_YODFIX.zip`, not the
+  original `ACR_Reader_PrintReady.zip`, going forward** (delivered to the user
+  directly; not stored in this repo, same as the original).
 - A quote-request letter to printgroup.pt has been drafted and verified against
-  the real page counts. **Not yet sent.**
+  the real page counts, **but needs two corrections before sending** — see
+  "Printer research" below (vendor domain may be wrong; quantity needs updating
+  from 1-2 copies to 6 copies per volume, for family).
 - No printer has confirmed final specs yet. Nothing has been ordered.
+
+## Known issues found and fixed
+
+**2026-11-10 — wrong Yod glyph on all 6 front covers, found and fixed.**
+The user flagged the paleo-Hebrew YHWH glyph as looking wrong on the print
+proof compared to the live site. Investigation (not assumption) found:
+- The live site, and the print **interior** pages, both correctly show YHWH
+  as Yod-He-Waw-He (`0x10909 0x10904 0x10905 0x10904`), confirmed by
+  installing the real `Noto Sans Phoenician` font and comparing rendered
+  output directly, letter by letter.
+- The print **cover** files (all 6 main volumes — `book1_torah` through
+  `book6_ketuvim_pt2`) had the 4th character wrong: `0x10911` (SADE) instead
+  of `0x10909` (YOD) — confirmed via `pdftotext -bbox-layout` text extraction
+  on the actual delivered PDFs, not guessed from the rendered shape alone.
+  This is the same bug class already documented and fixed on the live site
+  itself back in PR #797/#799 (see `SESSION_NOTES_2026-08-05.md`) —
+  recurring independently in the separate cover-generation pipeline used for
+  this print project.
+- ACR2's cover does not carry this glyph at all, so it was unaffected.
+- **Fix applied:** a surgical PDF patch (navy-colored rectangle covering the
+  old glyph, corrected 4-character glyph drawn on top in the real font, in
+  the correct visual left-to-right order — He, Waw, He, Yod, matching how
+  the live site actually displays it) was applied to all 6 cover PDFs only.
+  Interiors, foil masks, and everything else were left untouched and
+  reverified unchanged (same page counts as before: 569/188/476/598/405/428).
+  Delivered as `ACR_Reader_PrintReady_YODFIX.zip`.
+- **One known limitation of this patch, disclosed plainly:** the fix covers
+  and redraws the *visual* glyph only. The PDF's underlying text layer (what
+  you'd get from copy-paste or text search inside the PDF) still has the old
+  wrong codepoint sitting underneath, hidden by the patch. This does not
+  affect what prints on paper, only digital text-extraction from the file.
+  If a true from-source rebuild of the cover template ever happens, fix the
+  source text run directly instead of patching.
 
 ## The finished design
 
@@ -97,51 +136,68 @@ earlier chat) — every INTERIOR.pdf opens and has the page count listed above a
 1-page wraparound at a width that scales correctly with that book's thickness
 (thinnest book = narrowest cover width, thickest book = widest).
 
-## Printer research (as of late Oct 2026)
+## Printer research (as of late Oct 2026, corrected 2026-11-10)
 
-**Best lead: printgroup.pt (Books Factory, Poland / EU)**
-- States it accepts orders of as few as 1 copy.
+**IMPORTANT CORRECTION — check this before sending anything.** The vendor
+name "printgroup.pt" (a Portugal domain) may simply be wrong. A 2026-11-10
+search found a real Polish company, "Books Factory Sp. z o.o." (Szczecin,
+Poland, digital book printing from a single copy), sitting on the same
+street (Cukrowa 22) as a company called "Print Group Sp. z o.o.", whose
+real website domain is **printgroup.pl** (Poland), not **printgroup.pt**.
+Both printgroup.pl and printgroup.pt are unreachable from this sandbox, so
+this has NOT been directly confirmed — **before sending the quote email,
+open printgroup.pl yourself and check it's the right company.**
+
+**Also: the quantity in the drafted quote letter needs updating.** The
+letter below was written for "1-2 copies of each title." The user has since
+clarified this is for family — **6 copies of each volume (6 complete sets)**
+is the real target. Update the letter before sending.
+
+**Best lead (name pending the domain correction above): Books Factory, Poland / EU**
+- States it accepts orders of as few as 1 copy (so 6 should be no problem,
+  but hasn't been confirmed at 6 specifically).
 - EU-based (Poland) — no UK-style post-Brexit customs/VAT exposure shipping to
   Portugal.
 - Has a dedicated hardcover category, sewn or glued binding.
 - Trim range 105x145mm to 297x297mm — the 178x254mm target fits, though anything
   with a spine-side dimension over 160x160mm reportedly costs more (a surcharge,
   not a rejection).
-- **Still unconfirmed, and this is the risk to watch:** a web search on
-  2026-11-10 turned up an unverified figure — a "Bookfactory FAQ" page stating
-  thread-sewn hardcover page limits of 24 to 400 pages. It is NOT confirmed
-  whether this FAQ belongs to the same company as printgroup.pt (both that FAQ
-  domain and printgroup.pt itself are unreachable from this sandbox, so this has
-  never been checked directly). If it does apply, Book 1 (569pp) and Book 4
-  (598pp) would exceed it, and either a different binding method (glued/PUR
-  instead of thread-sewn) or a different vendor would be needed for those two
-  volumes. **This is exactly question #2 in the drafted quote letter below — get
-  this answered before ordering anything.**
+- **Still unconfirmed, and this is the risk to watch:** a "Bookfactory FAQ"
+  page states hardcover page limits of 16-400 pages (glue binding) and
+  24-400 pages (thread binding) — i.e. BOTH binding methods cap at 400
+  pages. If this applies to the same vendor, Book 1 (569pp) and Book 4
+  (598pp) would exceed it in EITHER binding method, and a different vendor
+  would be needed for those two volumes. **This is exactly question #2 in
+  the drafted quote letter below — get this answered before ordering
+  anything.**
 - Also still unconfirmed: exact file specs (bleed/margin/color profile), and real
-  Portugal shipping cost/VAT at checkout.
+  Portugal shipping cost/VAT at checkout for a 6-copies-per-title order.
 
-**Other vendors checked, ranked by fit:**
+**Other vendors checked, ranked by fit (quantity column updated 2026-11-10 to
+reflect the real target of 6 copies per volume, not 1-2):**
 
-| Vendor | 1-2 copies? | Custom 7x10in? |
-|---|---|---|
-| printgroup.pt / Books Factory | Yes (confirmed) | Likely (in range, see page-limit risk above) |
-| IngramSpark | Medium confidence (as a "proof" copy) | Low confidence — custom trim is paperback-only; hardcover is a fixed size list |
-| Lulu | Yes | Unconfirmed in their live configurator, but their own docs claim "thousands of trim sizes" supported, so true custom 7x10 is likely orderable — the named "Executive" preset (7.25x10.5in) is close but not exact |
-| Doxzoo | Likely yes | Contradictory claims found (both "custom" and "fixed list" language) |
-| Mixam | Likely yes | No — fixed presets only |
-| Pixartprinting | **No** (confirmed directly) | N/A — ruled out |
-| Portuguese artisan binderies | Unconfirmed, needs direct outreach | Yes (bespoke, by definition) |
+| Vendor | No big minimum (need 6/title)? | Custom 7x10in? | Portugal? |
+|---|---|---|---|
+| Books Factory (domain: confirm printgroup.pl, not .pt) | Yes, from 1 copy per their own site language — 6 should be fine but unconfirmed at that exact number | Likely (in range, see page-limit risk above) | EU/Poland, ships to PT |
+| Doxzoo | Confirmed "no minimum order" for case-bound books, custom trim sizes | Yes (custom trim) | UK-based — Portugal shipping cost/VAT not yet confirmed |
+| CPI (Germany) | No MOQ stated, 72h hardcover production (per their dropshipping factsheet) | Not confirmed | EU — Portugal shipping not yet confirmed; gold foil capability not yet confirmed |
+| IngramSpark | Medium confidence (as a "proof" copy) | Low confidence — custom trim is paperback-only; hardcover is a fixed size list | N/A |
+| Lulu | Yes | Unconfirmed in their live configurator, but their own docs claim "thousands of trim sizes" supported, so true custom 7x10 is likely orderable — the named "Executive" preset (7.25x10.5in) is close but not exact | Unconfirmed |
+| Mixam | Likely yes | No — fixed presets only | N/A |
+| Pixartprinting | **No** (confirmed directly) | N/A — ruled out | Has a Portuguese site, but already ruled out on quantity |
+| Portuguese artisan binderies / gilders | Unconfirmed, needs direct outreach | Yes (bespoke, by definition) | Based in Portugal (Lisbon area) |
 
-**New leads found 2026-11-10** (for hand-gilded/artisan binding, not industrial
-printing — worth considering if you want real hand-tooled gold leaf rather than
-machine foil stamping):
-- **Carlos Guerreiro** — Lisbon bookbinder and gilder. Offers simple and luxury
-  binding, gilding with fine gold leaf and foil, and restoration. Described as
-  one of the city's last surviving artisans in this craft. Not yet confirmed
-  whether he takes cloth-cover or one-off commissions — needs direct contact.
+**New leads found 2026-11-10 for hand-gilded/artisan binding** (not
+industrial printing — worth considering for real hand-tooled gold leaf
+rather than machine foil stamping, and they're actually IN Portugal):
+- **Carlos Guerreiro** — Lisbon bookbinder and gilder. Offers simple and
+  luxury binding, gilding with fine gold leaf and foil, restoration.
+  Described as one of the city's last surviving artisans in this craft.
+  Not yet confirmed for cloth-cover or multi-copy commissions.
 - **Arte no Livro** (Andreia Tibério dos Santos and her father Fernando) —
-  studio in Cascais, near Lisbon, since 2014. Work includes gold-leaf blocked
-  titles and tooled spines. Also not yet confirmed for custom single-copy work.
+  studio in Cascais, near Lisbon, since 2014. Gold-leaf blocked titles,
+  tooled spines. Also not yet confirmed for this kind of order.
+- No Porto-based binders were found in this search.
 - No Porto-based binders were found in this search.
 
 ## The drafted quote-request letter (ready to send, not yet sent)
@@ -169,6 +225,11 @@ printgroup.pt, in order:
 It covers only the 6-volume main set — ACR2 (310pp) is not mentioned in it yet.
 Decide whether to fold ACR2 into the same email or send it as a separate request
 before sending.
+
+**Before sending, apply both 2026-11-10 corrections from "Printer research"
+above:** (1) confirm/fix the vendor domain (printgroup.pl vs printgroup.pt),
+(2) change the quantity throughout from "1-2 copies" to "6 copies" of each
+volume (family order, 6 complete sets).
 
 ## Hardcover file-spec notes (general guidance, not yet vendor-confirmed)
 
