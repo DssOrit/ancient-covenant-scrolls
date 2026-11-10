@@ -78,6 +78,84 @@ as a reference image only (`acr2_aged_leather.png`,
 rebuild from scratch if ever pursued — nothing from the current cover-generation
 script is reusable for it.
 
+**2026-11-10 — user clarified the brown option doesn't need real leather, just the
+coloring.** This simplifies it: it no longer requires a different manufacturing
+process (leather binding + debossing) from the navy option.
+
+## Print asset kit received and reconciled, 2026-11-10
+
+The user sent a formal "ACR Print Repo Kit" (README, FONT_AUDIT.md,
+ASSET_MANIFEST.json, PRINTER_RELEASE_CHECKLIST.md, plus the same design-reference
+JPGs and `ACR2_PrintReady_ORIGINAL.zip`) with explicit instructions not to
+regenerate/redesign the supplied images. Verified: all 11 SHA-256 hashes in the
+manifest match: the kit's own files are intact. Reconciled against this session's
+actual working state:
+- The kit's checklist marks the six Reader interior/cover PDFs as **not present**
+  and the Reader cover fonts as **not confirmed**. Both are wrong for this
+  session specifically — this session already has the real 6 interior PDFs
+  (569/188/476/598/405/428 pages) and has been building from the real cover PDFs
+  throughout. Running `pdffonts` directly on a real Reader cover PDF confirmed
+  **Cinzel-Bold, Cinzel-Regular, Cardo-Italic, Noto Sans Phoenician** — the same
+  family as ACR2's confirmed fonts, not a guess.
+- Per the kit's own font-licensing caution (don't extract/commit font binaries
+  from source PDFs): the embedded subset was only ever used in this sandbox to
+  *identify* the family, never committed; the actual Cinzel/Cardo used in
+  production text are the full, properly-licensed (OFL) files pulled from Google
+  Fonts.
+- Kit lists quantity as "2 per title (provisional)" — conflicts with the 6-per-
+  volume figure this session already confirmed with the user earlier. **Still
+  needs the user's explicit confirmation of which is current.**
+- Kit's Part 2 layout doc states the Paleo-Hebrew name is **required on the main
+  Reader spines**, not just the fronts. The current spine rebuild dropped it
+  (matched a reference image that didn't show it there). **Known gap, not yet
+  fixed — the user said to leave the spine alone for now.**
+
+## Vector-traced versions of the cover art, 2026-11-10
+
+ChatGPT was asked to produce editable/vector versions of the reference art and
+had trouble (image generators produce pixels, not vectors — there's no
+generation path to a true SVG/AI/EPS). As a mechanical alternative: `potrace`
+was installed in-session and used to trace the already-isolated clean-navy/gold
+raster crops (menorah, full wreath+rays+menorah emblem, corner scrollwork,
+spine-top ornament, spine flower) into real vector paths (SVG + EPS + PDF, plus
+a gold-filled SVG variant of each) — delivered to the user as
+`ACR_Vector_Traced_Assets.zip`. This is a direct trace of the exact pixels
+supplied, not a redesign. Quality varies by source crop: the menorah and the
+full emblem traced cleanly (crisp, faithful); the corner scrollwork and spine
+ornament came from busier/lower-res/textured source crops and traced rougher,
+losing some interior linework — flagged to the user as the two assets most
+worth getting as cleaner source crops or a human vector redraw if the foil die
+needs the fine detail.
+
+## Printer-readiness recommendation, 2026-11-10 (beyond the files)
+
+Given a direct "what else would printers need" question, the open items besides
+the art files, and the recommendation given:
+- **Real cloth + flat foil stamping cannot reproduce the reference images'
+  gradient/glow (e.g. the lit-menorah rays) — foil lays down one flat metallic
+  color, no gradient.** The alternative, a printed laminate cover wrap, could
+  match the reference images almost exactly but is a different (non-cloth)
+  product. **Recommended: real cloth + flat foil for both colorways** — more
+  lasting value for 6 keepsake copies than a printed stand-in, and foil has its
+  own real-light sheen that a flat printed image can't replicate (often reads as
+  better in hand than on screen, just not identical to the mockup).
+- **Recommended construction for both design options is the same process**, just
+  different color inputs, so only one binder/process needs sourcing: navy cloth
+  + bright gold foil for the navy option; warm tan/brown cloth (not a simulated-
+  leather print, per the "doesn't need to be leather" clarification) + an
+  antique/bronze-toned foil for the brown option.
+- Physical cloth and foil swatch numbers cannot be reliably picked from a screen
+  photo (lighting/screen calibration/JPEG compression all shift color) — this
+  has to happen with physical swatch books in hand, from the user or whichever
+  binder quotes the job. Not something to guess a Pantone/hex code for.
+- Still open per the kit's own checklist and unaffected by any of the above:
+  printer's case-bound template (board turn-ins, hinge/wrap), binder-confirmed
+  spine width per volume, foil-die minimum-stroke-width review (the fine
+  scrollwork and the 3-column spine text may be too thin to stamp cleanly on
+  textured cloth), binding construction specifics (board weight, turn-in,
+  rounded vs flat spine, endpaper color), and a signed physical proof before the
+  full run.
+
 ## Known issues found and fixed
 
 **2026-11-10 — wrong Yod glyph on all 6 front covers, found and fixed.**
