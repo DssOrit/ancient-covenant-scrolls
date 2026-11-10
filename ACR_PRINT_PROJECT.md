@@ -26,6 +26,58 @@ build a PDF is reading, not editing).
   from 1-2 copies to 6 copies per volume, for family).
 - No printer has confirmed final specs yet. Nothing has been ordered.
 
+## Cover redesign, 2026-11-10 (same day, later) — real reference art, not redrawn
+
+The user supplied actual AI-rendered cover mockups (saved at
+`print_references/design_options/`) and asked for the print files to match them
+using the real image pixels, not hand-drawn approximations. What changed, in order:
+
+- **Emblem (wreath + sunburst rays + lit menorah)**: cropped directly from the
+  user's reference image and composited onto both front and back covers of all 6
+  volumes, replacing the earlier plain bare-menorah emblem and a since-rejected
+  hand-drawn version. Measured on a pixel grid against the reference and resized —
+  the emblem was originally far too small (under a third of the correct height),
+  leaving a dead gap of empty navy above and below it on the back cover; it now
+  fills roughly half the panel height, matching the reference proportions.
+- **Corner ornament**: the old circular "compass star" corner was replaced with a
+  scroll/acanthus flourish cropped from the same reference image, placed at all 8
+  panel corners (4 on back, 4 on front).
+- **Spine**: rebuilt to match the bordered, vertical-text style shown in the
+  user's ACR2 reference cover specifically (not the horizontal, unbordered style
+  from an earlier boxed-set mockup — the two references disagree with each other,
+  and ACR2's was confirmed as the one to match). The spine now has its own
+  double-rule border with a top/bottom ornament cropped from the reference, a
+  bare-menorah icon, and "THE ANCIENT COVENANT RECORD" wrapped into 3 side-by-side
+  vertical columns (reading top-to-bottom, first column rightmost) instead of one
+  long unbroken line — this matches the reference exactly rather than approximately.
+  **As of this writing the user says the spine still doesn't fully match and has
+  asked to leave it for now — it is NOT signed off. Re-open this specifically with
+  the user before treating the spine as finished.**
+- **Fonts corrected**: the first few redesign rounds used NotoSerif as a stand-in
+  for the spine/corner text because the real fonts weren't available locally. The
+  original cover/interior PDFs actually embed **Cinzel** (Bold for titles/numerals,
+  Regular for the small caps series-title line) and **Cardo** (Italic for
+  subtitles) — extracted directly from the existing PDFs' embedded font streams to
+  confirm, then the full un-subsetted families were pulled from Google Fonts and
+  used for every newly-added text element so it matches the rest of the cover
+  instead of looking like a different typeface.
+- **Current deliverable:** `ACR_Reader_PrintReady_V7.zip`, delivered directly to
+  the user (not stored in this repo — same as every prior print-ready zip). It
+  supersedes `_YODFIX`, `_MENORAH_YODFIX`, and the in-chat `_V1` through `_V6`
+  rounds. All 25 files (6 volumes x interior + fullcolor cover + foilmask) were
+  independently re-verified: correct page counts, every file opens.
+
+**Two design directions exist — only one is built.** The user also sent an
+"aged/distressed leather, debossed brass tooling" alternative (arched panel, metal
+corner bosses, pomegranate spine motif, horizontal 2-line spine text — a completely
+different manufacturing process from flat foil on cloth) and said to **keep both
+ideas for now** without discarding either. Only the clean navy/gold flat-foil
+design has actually been built into print files; the aged-leather option is saved
+as a reference image only (`acr2_aged_leather.png`,
+`acr_reader_6volume_boxset_aged_leather.png`) and would need a full separate
+rebuild from scratch if ever pursued — nothing from the current cover-generation
+script is reusable for it.
+
 ## Known issues found and fixed
 
 **2026-11-10 — wrong Yod glyph on all 6 front covers, found and fixed.**
