@@ -1,4 +1,4 @@
-var CACHE = 'acr-search-v335';
+var CACHE = 'acr-search-v336';
 var SEARCH_CACHE_PREFIX = 'acr-search-';  // Search owns only caches with this prefix
 var FILES = [
   './',
