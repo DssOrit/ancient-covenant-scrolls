@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_34",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_34",
   "label": "Melakhim Aleph (1 Kings) — Part 1 — Chapters 1–6",
   "volume": 14,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Dawid is old. Adoniyahu attempts to take the throne. Bat-Sheva and Natan the prophet secure the succession for Shelomoh. Dawid charges Shelomoh: Be strong and keep the charge of YHWH — walk in his ways, keep his statutes, his commandments, his rules, his testimonies. Shelomoh asks YHWH for wisdom — not riches, not long life, not the death of his enemies. YHWH gives him wisdom and also what he did not ask. Shelomoh builds the Temple — the House of YHWH — in Yerushalayim.",
   "summary_scholarly": "The ACR reads from DSS Kings fragments (4QKgs, 5QKgs) and the Orit Ge'ez. Shelomoh's Temple construction (ch 5-6) is the covenant people's central architectural achievement — but the building itself is not the covenant. Yirmeyahu will later warn: 'do not trust in the words — the temple of YHWH, the temple of YHWH' (Jer 7:4). The Temple Scroll (11QT) at Qumran provides an alternative temple architecture that the Qumran community believed was the correct design — differing from Shelomoh's temple.",
   "key_terms": [
-    { "term": "Shelomoh", "phonetic": "Sheh-lo-MOH", "definition": "Son of Dawid and Bat-Sheva. Third king of Yisra'EL. Built the Temple in Yerushalayim. His name comes from shalom — peace. Anglicized as Solomon." },
-    { "term": "Bat-Sheva", "phonetic": "Bat-SHEH-vah", "definition": "Mother of Shelomoh. Wife of Dawid. She secures Shelomoh's succession to the throne. Anglicized as Bathsheba." },
-    { "term": "Temple (Beit YHWH)", "phonetic": "Bayt YHWH", "definition": "The House of YHWH built by Shelomoh in Yerushalayim (ch 5-6). Cedar from Lebanon. Inner sanctuary (Devir) overlaid with gold. The Ark of the Covenant placed inside." }
+    {
+      "term": "Shlomoh's Coronation",
+      "phonetic": "shlo-MOH",
+      "definition": "In 1 Melakhim 1, the aged David has not designated a successor. His son Adoniyahu (eldest living son) declares himself king and throws a coronation feast. Natan the prophet and Bat-Sheva alert David. David immediately orders Tzadok the priest and Natan to anoint Shlomoh at the Gihon Spring. When the trumpet sounds and the people cry 'Long live King Shlomoh!', Adoniyahu's feast collapses and his guests flee."
+    },
+    {
+      "term": "David's Final Charge to Shlomoh",
+      "phonetic": "",
+      "definition": "In 1 Melakhim 2, David gives Shlomoh his final instructions: be strong and walk in YHWH's ways, keeping the Torah of Mosheh, so that YHWH may keep His covenant promise to the house of David. David also tells Shlomoh to deal with Yoav (who shed innocent blood in peacetime) and with Shimei (who cursed David). David dies after reigning forty years — seven in Hevron, thirty-three in Yerushalayim."
+    },
+    {
+      "term": "Shlomoh's Wisdom",
+      "phonetic": "",
+      "definition": "In 1 Melakhim 3, YHWH appears to Shlomoh at Givon in a dream and offers him whatever he asks. Shlomoh asks for a discerning heart to govern the people and distinguish right from wrong. YHWH is pleased that Shlomoh did not ask for long life or riches or the death of his enemies — He gives him a wise and discerning heart, plus riches and honor. YHWH adds that if Shlomoh walks in His ways, he will also receive long life."
+    },
+    {
+      "term": "The Two Mothers",
+      "phonetic": "",
+      "definition": "The famous judgment in 1 Melakhim 3:16-28: two women bring a case before Shlomoh. Both gave birth; one woman's baby died; each claims the living baby is hers. Shlomoh calls for a sword to divide the living child. The true mother says give the child to the other woman — do not kill him. The other says divide it. Shlomoh gives the child to the true mother. 'All Yisra'el heard and they feared the king, because they saw that YHWH's wisdom was in him.'"
+    },
+    {
+      "term": "Shlomoh's Administration",
+      "phonetic": "",
+      "definition": "In 1 Melakhim 4, Shlomoh's vast administrative structure is detailed: twelve district governors who each provide food for the palace one month per year. His wisdom exceeds that of all eastern peoples and Egypt — he composed 3,000 proverbs and 1,005 songs. He spoke of trees, animals, birds, reptiles, and fish. People from all nations came to hear his wisdom."
+    },
+    {
+      "term": "Hiram of Tyre",
+      "phonetic": "khi-RAM",
+      "definition": "The king of Tsor (Tyre), David's ally, who makes a treaty with Shlomoh to supply cedar and cypress timber from the Levanon mountains in exchange for large quantities of wheat and oil (1 Melakhim 5). Hiram's craftsmen are skilled in timber work; Shlomoh's are skilled in stone. Together they supply the materials for the Temple. Hiram declares: 'Blessed be YHWH today who gave David a wise son over this great people.'"
+    },
+    {
+      "term": "The Temple Building Begins",
+      "phonetic": "",
+      "definition": "In 1 Melakhim 5-6, Shlomoh begins building the Temple 480 years after the exodus, in the fourth year of his reign. He conscripts 30,000 laborers for the Levanon timber work (10,000 at a time, one month in Levanon then two months home), 70,000 carriers, and 80,000 stonecutters. The Temple is built to precise dimensions. No iron tool is used at the building site — all stones are cut and prepared at the quarry."
+    },
+    {
+      "term": "The Temple Dimensions and Structure",
+      "phonetic": "",
+      "definition": "The Temple (Heikhal) in 1 Melakhim 6 is 60 cubits long, 20 cubits wide, 30 cubits high. It has a porch (Ulam), main hall (Heikhal), and innermost room (Devir/Holy of Holies). The side chambers surround the building. The walls are cedar, the floors are cypress. The innermost room houses the Ark and is overlaid with pure gold."
+    },
+    {
+      "term": "YHWH's Conditional Promise to Shlomoh",
+      "phonetic": "",
+      "definition": "In 1 Melakhim 6:11-13, while the Temple is being built, YHWH speaks to Shlomoh: 'As for this Temple you are building — if you follow my decrees and do what I command and keep my laws, I will fulfill the promise I gave David your father. I will live among Yisra'el and not abandon my people.' The covenant promise is conditional — the Temple's existence does not guarantee YHWH's presence; that depends on obedience."
+    },
+    {
+      "term": "The Holy of Holies",
+      "phonetic": "de-VIR",
+      "definition": "The innermost room of the Temple (called the Devir in Hebrew, or Qodesh HaQodashim — Holy of Holies). It is 20 cubits cube, overlaid entirely with gold. Two cherubim of olive wood, each 10 cubits high with 10-cubit wingspans, stand in the room with wings touching at the center and reaching the outer walls. The Ark of the Covenant is placed here. The High Priest enters only once a year on Yom Kippur."
+    }
   ],
   "fill_blank": [
-    { "ref": "2:2-3", "prompt": "Be strong, and show yourself a man, and keep the charge of YHWH your Creator, walking in his ways and keeping his statutes, his ______, his rules, and his testimonies.", "answer": "commandments", "source_quote": "Keep the charge of YHWH your Creator, walking in his ways and keeping his statutes, his commandments, his rules, and his testimonies, as it is written in the Torah of Moshe." },
-    { "ref": "3:9", "prompt": "Give your servant therefore an understanding heart to judge your people, that I may discern between ______ and evil.", "answer": "good", "source_quote": "Give your servant therefore an understanding heart to judge your people, that I may discern between good and evil." },
-    { "ref": "6:1", "prompt": "In the four hundred and eightieth year after the people of Yisra'EL came out of the land of ______, Shelomoh began to build the house of YHWH.", "answer": "Egypt", "source_quote": "In the four hundred and eightieth year after the people of Yisra'EL came out of the land of Egypt, in the fourth year of Shelomoh's reign over Yisra'EL, he began to build the house of YHWH." }
+    {
+      "ref": "1 Melakhim 1:39",
+      "prompt": "Tzadok the priest anointed Shlomoh at the ___ spring, and the people cried 'Long live King Shlomoh!'",
+      "answer": "Gihon",
+      "source_quote": "Zadok the priest took the horn of oil from the sacred tent and anointed Solomon. — 1 Melakhim 1:39"
+    },
+    {
+      "ref": "1 Melakhim 3:9",
+      "prompt": "Shlomoh asked YHWH for a ___ heart to distinguish right from wrong and govern the people.",
+      "answer": "discerning",
+      "source_quote": "So give your servant a discerning heart to govern your people and to distinguish between right and wrong. — 1 Melakhim 3:9"
+    },
+    {
+      "ref": "1 Melakhim 3:28",
+      "prompt": "All Yisra'el feared the king because they saw that ___ wisdom was in him.",
+      "answer": "YHWH's",
+      "source_quote": "They saw that he had wisdom from God to administer justice. — 1 Melakhim 3:28"
+    },
+    {
+      "ref": "1 Melakhim 4:32",
+      "prompt": "Shlomoh spoke ___ proverbs and his songs numbered 1,005.",
+      "answer": "three thousand (3,000)",
+      "source_quote": "He spoke three thousand proverbs and his songs numbered a thousand and five. — 1 Melakhim 4:32"
+    },
+    {
+      "ref": "1 Melakhim 5:3",
+      "prompt": "David could not build a Temple because of the ___ on every side surrounding him.",
+      "answer": "wars",
+      "source_quote": "You know that because of the wars waged against my father David from all sides, he could not build a temple. — 1 Melakhim 5:3"
+    },
+    {
+      "ref": "1 Melakhim 6:1",
+      "prompt": "Shlomoh began building the Temple ___ years after the Israelites came out of Egypt.",
+      "answer": "four hundred and eighty (480)",
+      "source_quote": "In the four hundred and eightieth year after the Israelites came out of Egypt... Solomon began to build the temple. — 1 Melakhim 6:1"
+    },
+    {
+      "ref": "1 Melakhim 6:7",
+      "prompt": "No ___ tool was used at the Temple building site — all stones were dressed at the quarry.",
+      "answer": "iron",
+      "source_quote": "In building the temple, only blocks dressed at the quarry were used, and no hammer, chisel or any other iron tool was heard at the temple site. — 1 Melakhim 6:7"
+    },
+    {
+      "ref": "1 Melakhim 6:12",
+      "prompt": "YHWH said to Shlomoh: 'If you follow my decrees, I will fulfill the promise I gave David and will ___ among Yisra'el.'",
+      "answer": "live (dwell)",
+      "source_quote": "I will live among the Israelites and will not abandon my people Israel. — 1 Melakhim 6:13"
+    },
+    {
+      "ref": "1 Melakhim 2:3",
+      "prompt": "David told Shlomoh to walk in YHWH's ways, keeping the Torah as written in the ___.",
+      "answer": "Law of Mosheh",
+      "source_quote": "Walk in obedience to him, and keep his decrees and commands, his laws and regulations, as written in the Law of Moses. — 1 Melakhim 2:3"
+    },
+    {
+      "ref": "1 Melakhim 3:12",
+      "prompt": "YHWH told Shlomoh: 'I will give you a wise and discerning heart, so that there will never have been anyone like you, ___ will there be.'",
+      "answer": "nor ever",
+      "source_quote": "I will give you a wise and discerning heart, so that there will never have been anyone like you, nor will there ever be. — 1 Melakhim 3:12"
+    }
   ],
   "multiple_choice": [
-    { "ref": "3:5-9", "question": "What did Shelomoh ask YHWH for?", "options": ["Long life", "Riches", "Wisdom to judge the people", "Victory over enemies"], "correct": 2, "source_quote": "Give your servant an understanding heart to judge your people, that I may discern between good and evil." },
-    { "ref": "6:1", "question": "How many years after the exodus did Shelomoh begin building the Temple?", "options": ["40 years", "120 years", "480 years", "1,000 years"], "correct": 2, "source_quote": "In the four hundred and eightieth year after the people of Yisra'EL came out of the land of Egypt." },
-    { "ref": "5:1-6", "question": "Where did the cedar for the Temple come from?", "options": ["Egypt", "Lebanon", "Babylon", "The Negev"], "correct": 1, "source_quote": "Shelomoh sent to Hiram king of Tyre — command that cedars of Lebanon be cut for me." }
+    {
+      "ref": "1 Melakhim 1",
+      "question": "Who tried to seize the throne before Shlomoh's coronation?",
+      "options": [
+        "Avshalom",
+        "Adoniyahu",
+        "Mefivoshet",
+        "Sheva ben Bikhri"
+      ],
+      "correct": 1,
+      "source_quote": "Adonijah, whose mother was Haggith, put himself forward and said, 'I will be king.' — 1 Melakhim 1:5"
+    },
+    {
+      "ref": "1 Melakhim 2:5-6",
+      "question": "David told Shlomoh to deal with Yoav because he had shed innocent blood in what circumstance?",
+      "options": [
+        "He killed the Plishtim prisoners",
+        "He killed Avner and Amasa, men of war, in peacetime — putting blood of war on the belt of peace",
+        "He had David's spies executed",
+        "He killed the men who brought Ish-Boshet's head"
+      ],
+      "correct": 1,
+      "source_quote": "He killed them, shedding their blood in peacetime as if in battle, and with that blood stained the belt around his waist and the sandals on his feet. — 1 Melakhim 2:5"
+    },
+    {
+      "ref": "1 Melakhim 3:5",
+      "question": "How did YHWH appear to Shlomoh to offer him whatever he asked?",
+      "options": [
+        "Through a burning bush",
+        "Through the prophet Natan",
+        "In a dream at night at Givon",
+        "Through the Ark of the Covenant"
+      ],
+      "correct": 2,
+      "source_quote": "At Gibeon YHWH appeared to Solomon during the night in a dream. — 1 Melakhim 3:5"
+    },
+    {
+      "ref": "1 Melakhim 3:16-27",
+      "question": "In the judgment of the two mothers, how did Shlomoh determine which was the true mother?",
+      "options": [
+        "He asked their neighbors to testify",
+        "He used a priest to inquire of YHWH",
+        "He called for a sword to divide the child — the true mother said give it to the other woman alive",
+        "He consulted the Book of the Covenant"
+      ],
+      "correct": 2,
+      "source_quote": "Cut the living child in two... The woman whose son was alive was deeply moved out of love for her son and said, 'Please, my lord, give her the living baby!' — 1 Melakhim 3:25-26"
+    },
+    {
+      "ref": "1 Melakhim 5:3-5",
+      "question": "Why did David not build the Temple himself, according to Shlomoh's message to Hiram?",
+      "options": [
+        "YHWH told David he was not worthy",
+        "David was unable to because of the wars surrounding him on all sides",
+        "David did not have the skills for such a building",
+        "The people of Yisra'el refused to support it"
+      ],
+      "correct": 1,
+      "source_quote": "You know that because of the wars waged against my father David from all sides, he could not build a temple. — 1 Melakhim 5:3"
+    },
+    {
+      "ref": "1 Melakhim 6:1",
+      "question": "In what year of Shlomoh's reign did Temple construction begin, and how many years after the exodus?",
+      "options": [
+        "First year; 400 years after the exodus",
+        "Seventh year; 500 years after the exodus",
+        "Fourth year; 480 years after the exodus",
+        "Tenth year; 400 years after the exodus"
+      ],
+      "correct": 2,
+      "source_quote": "In the four hundred and eightieth year after the Israelites came out of Egypt — in the fourth year of Solomon's reign. — 1 Melakhim 6:1"
+    },
+    {
+      "ref": "1 Melakhim 6:7",
+      "question": "What was unique about how the Temple was constructed at the building site?",
+      "options": [
+        "No wood was used in the construction",
+        "No iron tool was heard — all stones were dressed at the quarry",
+        "Construction took place only on certain feast days",
+        "Only priests were allowed to work on the structure"
+      ],
+      "correct": 1,
+      "source_quote": "No hammer, chisel or any other iron tool was heard at the temple site while it was being built. — 1 Melakhim 6:7"
+    },
+    {
+      "ref": "1 Melakhim 6:11-13",
+      "question": "What was YHWH's condition for fulfilling the covenant promise to David in connection with the Temple?",
+      "options": [
+        "That Shlomoh complete the Temple in seven years",
+        "That the entire nation contribute to its building",
+        "That Shlomoh follow YHWH's decrees and keep His laws",
+        "That the Temple be dedicated to YHWH alone with no foreign worship"
+      ],
+      "correct": 2,
+      "source_quote": "If you follow my decrees, observe my laws and keep all my commands... I will fulfill through you the promise I gave to David your father. — 1 Melakhim 6:12"
+    },
+    {
+      "ref": "1 Melakhim 2:10-11",
+      "question": "How long did David reign in total and where?",
+      "options": [
+        "Thirty years total — all in Yerushalayim",
+        "Forty years total — seven in Hevron, thirty-three in Yerushalayim",
+        "Twenty years total — in Hevron only",
+        "Fifty years — fifteen in Hevron, thirty-five in Yerushalayim"
+      ],
+      "correct": 1,
+      "source_quote": "He had reigned forty years over Israel — seven years in Hebron and thirty-three in Jerusalem. — 1 Melakhim 2:11"
+    },
+    {
+      "ref": "1 Melakhim 4:29-34",
+      "question": "What demonstrates the breadth of Shlomoh's wisdom?",
+      "options": [
+        "He wrote the entire Torah from memory",
+        "He composed 3,000 proverbs and 1,005 songs; he spoke of trees, animals, birds, reptiles, and fish; people from all nations came to hear him",
+        "He solved every legal dispute in Yisra'el within his first year",
+        "He built the Temple and the palace simultaneously"
+      ],
+      "correct": 1,
+      "source_quote": "He spoke three thousand proverbs and his songs numbered a thousand and five. He spoke about plant life... He also spoke about animals and birds, reptiles and fish. — 1 Melakhim 4:32-33"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Temple Scroll (11QT) say about Shelomoh's Temple?",
-      "answer": "The Temple Scroll (11QT) — the longest Dead Sea Scroll, found in Cave 11 — provides an alternative temple architecture that the Qumran community believed was the correct divine blueprint. It differs from Shelomoh's temple in dimensions, layout, and ritual procedures. The Qumran community believed the Jerusalem Temple had been corrupted — not just in its calendar and priesthood, but in its very design. The Temple Scroll presents itself as direct instruction from YHWH — Torah-level authority. The community withdrew from the Temple because they believed it failed to match YHWH's specifications."
+      "question": "Why does Adoniyahu's attempt to seize the throne fail?",
+      "answer": "Adoniyahu has the support of Yoav (the military commander) and Evyatar (the priest), giving him real power. But he does not have the support of Tzadok the priest, Benayahu (David's bodyguard commander), Natan the prophet, or his father David's formal designation. When Natan and Bat-Sheva alert David, the aged king acts decisively. Shlomoh is anointed at the Gihon Spring — in public, with the royal mule, with Tzadok pouring the oil — before Adoniyahu's feast ends. The trumpet blast and the acclamation end the coup before it starts. Adoniyahu is later executed when he asks for David's concubine Avishag — which is interpreted as another bid for the throne."
     },
     {
-      "question": "What do the spice trade routes in Shelomoh's era reveal?",
-      "answer": "Shelomoh's Temple was built with cedar from Lebanon and gold from Ophir (9:28). The luxury goods of Shelomoh's kingdom — gold, silver, ivory, apes, peacocks (10:22) — came through the Red Sea trade routes connecting the Horn of Africa, the Arabian Peninsula, and India. The Queen of Sheva (10:1-13) came from the African-Arabian corridor with spices, gold, and precious stones. The Aksumite kingdom — which Mani (3rd century CE) placed alongside Rome, Persia, and China as one of four world powers — controlled these same Red Sea trade routes. Shelomoh's wealth flowed through African commercial networks."
+      "question": "What is significant about Shlomoh asking for wisdom rather than wealth?",
+      "answer": "YHWH explicitly notes what Shlomoh did NOT ask for: long life, wealth, or the death of his enemies. Asking for wisdom to govern justly reflects the covenant understanding of kingship — the king's first responsibility is justice for the people, not personal aggrandizement. YHWH rewards the request by giving wisdom beyond all previous wisdom, plus the wealth and honor Shlomoh did not request. The logic is covenant: putting YHWH's purposes first results in everything else being added. The judgment of the two mothers immediately follows as a demonstration that YHWH's wisdom is working in Shlomoh."
     },
     {
-      "question": "Why does Dawid's charge to Shelomoh matter?",
-      "answer": "Dawid's deathbed charge (2:2-3): 'Keep the charge of YHWH your Creator, walking in his ways, keeping his statutes, his commandments, his rules, and his testimonies — as it is written in the Torah of Moshe.' The charge is entirely Torah-centered. No mention of any institution beyond the Torah. No Rabbinical oral law. No priestly intermediary system. No ecclesiastical hierarchy. Walk in YHWH's ways as written in the Torah of Moshe. The Qumran community's entire program was exactly this: return to what is written, reject what was added by human institutional authority."
+      "question": "What does the two-mothers judgment tell us about Shlomoh's method?",
+      "answer": "Shlomoh's tactic is psychological rather than evidentiary. He has no witnesses, no physical evidence, only two contradictory claims. He uses the sword threat not to actually divide the child but to reveal maternal love — the true mother's protective instinct overrides her legal claim. It is a brilliant application of wisdom to a situation that conventional legal process cannot resolve. The narrator records that all Yisra'el heard and feared the king because they saw YHWH's wisdom in him. The case establishes Shlomoh's reputation for justice at the very beginning of his reign."
+    },
+    {
+      "question": "Why is the prohibition on iron tools at the Temple site significant?",
+      "answer": "The prohibition on iron tools at the building site — all stones cut and dressed at the quarry in silence — connects to Shemot 20:25 where YHWH commands that altar stones not be cut with iron tools, since iron defiles them. The Temple's construction is extended to the same standard. There may also be symbolic significance: iron was the metal of war and conquest; the House of YHWH is built in peace. The practical effect is that the entire Temple is built in near-silence on site — an unusual and deliberate choice that marks the building as sacred space from the first stone."
+    },
+    {
+      "question": "What is the relationship between the Temple and the covenant?",
+      "answer": "YHWH's message during the Temple construction (1 Melakhim 6:11-13) makes the relationship explicit: the Temple's existence does not guarantee YHWH's presence or the covenant promises. Those depend entirely on Shlomoh's — and his successors' — obedience to the Torah. The building is a container for the covenant; it has no inherent power of its own. This distinction is critical: later prophets (especially Yirmeyahu) will confront the people for treating the Temple as a talisman — believing its physical presence guarantees protection regardless of how the covenant is kept. The text establishes at the outset that the Temple is conditional."
+    },
+    {
+      "question": "Who is Hiram of Tyre and what is his role?",
+      "answer": "Hiram of Tsor (Tyre) is the Phoenician king who had been David's ally. He sends envoys to Shlomoh and they negotiate a treaty: cedar and cypress timber from the Levanon mountains, plus skilled Phoenician craftsmen, in exchange for 20,000 cors of wheat and 20 cors of pressed olive oil annually. Hiram declares 'Blessed be YHWH today who gave David a wise son over this great people.' His blessing is theologically notable: a foreign king acknowledging YHWH's provision. He later supplies Shlomoh's skilled metalworker Hiram-Abi (a different Hiram) for the bronze work."
+    },
+    {
+      "question": "What is the significance of building the Temple 480 years after the exodus?",
+      "answer": "The number 480 (12 × 40) is a structured chronological marker — 12 generational units of 40 years each. It places the Temple at the midpoint of a larger chronological framework. Whether literally accurate or schematically structured, the number emphasizes that the Temple is the culmination of everything that began at Yetziat Mitzrayim (the exodus): YHWH who freed His people and gave them the Torah at Sinai now has a permanent dwelling place in the land He gave them. The construction begins in Shlomoh's fourth year (the third year after a full year of consolidation), signaling stability before the great project begins."
+    },
+    {
+      "question": "What does David's deathbed charge tell us about covenant succession?",
+      "answer": "David's final words to Shlomoh (1 Melakhim 2:2-9) have two registers: theological and political. Theologically: walk in YHWH's ways, keep the Torah of Mosheh, so that YHWH will keep His promise to the house of David — if your sons keep the covenant, there will always be a man on the throne. Politically: deal wisely with Yoav (kill him — he shed innocent blood in peacetime) and with Shimei (don't let him go unpunished — his grey head doesn't go to Sheol in peace). David is both a covenant theologian and a practical king to the end, handling the loose political threads he could not resolve during his own reign."
+    },
+    {
+      "question": "What is the Holy of Holies and what does it contain?",
+      "answer": "The Devir (innermost room) of the Temple is a perfect cube: 20 cubits on each side. It is overlaid entirely with gold. Two cherubim of olive wood, each 10 cubits high with 10-cubit wingspans, stand in it. Their inner wings touch each other at the center; their outer wings touch the walls — together they form a continuous canopy spanning the room. The Ark of the Covenant is placed beneath the wings of the cherubim. The Ark contains the stone tablets of the Torah. No windows. Total darkness. The High Priest enters once a year on Yom Kippur — the most sacred space in the most sacred building in Yisra'el."
+    },
+    {
+      "question": "How does Shlomoh consolidate his power in the opening chapters?",
+      "answer": "Shlomoh consolidates quickly and firmly. Adoniyahu is pardoned initially but executed after asking for Avishag — a move that could only mean another bid for the throne. Evyatar the priest (who backed Adoniyahu) is removed from the priesthood and exiled to Anatot, fulfilling the prophecy against Eli's house. Yoav, hearing of Adoniyahu's death, flees to the Ark and grabs its horns — but Shlomoh sends Benayahu to execute him even there, because his blood guilt was not erased by sanctuary. Shimei is confined to Yerushalayim on pain of death; when he breaks the confinement three years later to retrieve runaway servants, Shlomoh has him executed. The regime change is complete and unambiguous."
     }
   ]
 }
