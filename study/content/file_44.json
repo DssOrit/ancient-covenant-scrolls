@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_44",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_44",
   "label": "Yesha'yahu (Isaiah) — 1QIsa-a — Part 3 — Chapters 28–41",
   "volume": 16,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yesha'yahu pronounces woe upon Ephrayim and the drunkards of Shomron. YHWH lays in Tsiyon a stone, a tested stone, a precious cornerstone, a sure foundation — whoever believes will not be in haste. Woe to those who go down to Mitsrayim for help and rely on horses. A king will reign in righteousness. The wilderness will become a fruitful field. Comfort, comfort my people, says your Creator. Every valley shall be lifted up and every mountain brought low. The nations are like a drop from a bucket. YHWH gives power to the faint and strengthens the powerless. Those who wait upon YHWH shall renew their strength — they shall mount up with wings as eagles.",
   "summary_scholarly": "The ACR reads from the Great Isaiah Scroll (1QIsa-a) and the Orit Ge'ez. The cornerstone passage (28:16) is read by the Qumran community in the Community Rule (1QS 8:7) as referring to the community itself — the tested foundation laid by YHWH. The comfort oracle beginning in chapter 40 marks the transition in tone from judgment to restoration. 1QIsa-a preserves this transition as a continuous scroll — the same scribe, the same manuscript. The artificial division of 'First Isaiah' and 'Second Isaiah' by Western scholarship has no basis in the Qumran manuscript evidence. The scroll is one document.",
   "key_terms": [
-    { "term": "Cornerstone (Even Bohan)", "phonetic": "EH-ven BO-hahn", "definition": "YHWH lays in Tsiyon a tested stone, a precious cornerstone, a sure foundation (28:16). The Qumran community read this as the foundation of the covenant community — not an individual figure." },
-    { "term": "Comfort (Nahamu)", "phonetic": "Nah-hah-MOO", "definition": "The opening word of chapter 40: 'Comfort, comfort my people, says your Creator.' This begins the restoration oracles. In Hebrew, nahamu is the intensive plural imperative — a doubled command to comfort." },
-    { "term": "Wings as Eagles", "phonetic": "", "definition": "Those who wait upon YHWH shall renew their strength — they shall mount up with wings as eagles, they shall run and not be weary, they shall walk and not faint (40:31). The covenant promise of restored power to the exhausted." }
+    {
+      "term": "Comfort Prologue",
+      "phonetic": "ch.40",
+      "definition": "Yesha'yahu 40 opens the section known as Deutero-Yesha'yahu with the double call 'Comfort, comfort my people'; it marks a shift from judgment to consolation, addressing those in Babylonian exile."
+    },
+    {
+      "term": "'Comfort My People'",
+      "phonetic": "nakha-MU 'am-mi",
+      "definition": "The opening cry of Yesha'yahu 40: YHWH commands double comfort for his people; their warfare is ended and their iniquity is pardoned."
+    },
+    {
+      "term": "'A Voice in the Wilderness'",
+      "phonetic": "ch.40:3",
+      "definition": "Yesha'yahu 40:3 — 'A voice cries: In the wilderness prepare the way of YHWH; make straight in the desert a highway for our Creator.' This ancient Hebrew text is the source; the NT borrowed from it."
+    },
+    {
+      "term": "Khizkiyahu's Crisis",
+      "phonetic": "chs 36-39",
+      "definition": "Sennakherib's siege of Yerushalayim and Khizkiyahu's illness and recovery dominate Yesha'yahu 36-39; YHWH delivers the city but Khizkiyahu's foolish display to Babylonian envoys seals Yehudah's future exile."
+    },
+    {
+      "term": "Wings Like Eagles",
+      "phonetic": "40:31",
+      "definition": "Yesha'yahu 40:31 — 'Those who wait for YHWH shall renew their strength; they shall mount up with wings like eagles; they shall run and not be weary; they shall walk and not faint.'"
+    },
+    {
+      "term": "The Arm of YHWH",
+      "phonetic": "ch.40",
+      "definition": "Yesha'yahu 40 describes YHWH as one whose arm rules for him — feeding the flock like a shepherd and gathering the lambs; his arm carries the creation."
+    },
+    {
+      "term": "Woes Oracle",
+      "phonetic": "ch.28",
+      "definition": "Yesha'yahu 28 opens with 'Woe to the proud crown of the drunkards of Efrayim'; six woes follow in chapters 28-33 addressing faithless leaders, false alliances, and trust in Mitzrayim instead of YHWH."
+    },
+    {
+      "term": "He Who Created You O Ya'akov",
+      "phonetic": "43:1",
+      "definition": "Yesha'yahu 43:1 — 'Fear not, for I have redeemed you; I have called you by name, you are mine.' YHWH addresses Yisra'el as the one who formed and redeemed them."
+    },
+    {
+      "term": "The Molten Image Polemic",
+      "phonetic": "chs 40-41",
+      "definition": "Yesha'yahu 40-41 mocks idol-making: a craftsman cuts down a tree, uses half for fire and half to make an idol, then bows to it. The polemic exposes the emptiness of manufactured deities."
+    },
+    {
+      "term": "The Watching Sentinel",
+      "phonetic": "ch.21",
+      "definition": "Yesha'yahu 21 depicts a sentinel posted to watch for Babylon's fall; when the news comes — 'Fallen, fallen is Babylon' — the sentinel reports it to Yehudah."
+    }
   ],
   "fill_blank": [
-    { "ref": "28:16", "prompt": "Behold, I am the one who has laid as a foundation in Tsiyon a stone, a tested stone, a precious ______, a sure foundation.", "answer": "cornerstone", "source_quote": "Behold, I am the one who has laid as a foundation in Tsiyon a stone, a tested stone, a precious cornerstone, a sure foundation." },
-    { "ref": "40:31", "prompt": "Those who wait upon YHWH shall renew their strength — they shall mount up with wings as ______.", "answer": "eagles", "source_quote": "Those who wait upon YHWH shall renew their strength — they shall mount up with wings as eagles, they shall run and not be weary, they shall walk and not faint." },
-    { "ref": "40:1", "prompt": "______, ______ my people, says your Creator.", "answer": "Comfort, comfort", "source_quote": "Comfort, comfort my people, says your Creator." }
+    {
+      "ref": "Yesha'yahu 40:1",
+      "prompt": "'Comfort, _____ my people, says your Creator YHWH. Speak tenderly to Yerushalayim and cry to her that her warfare is ended.'",
+      "answer": "comfort",
+      "source_quote": "Comfort, comfort my people, says your Creator YHWH. Speak tenderly to Yerushalayim, and cry to her that her warfare is ended, that her iniquity is pardoned."
+    },
+    {
+      "ref": "Yesha'yahu 40:3",
+      "prompt": "'A voice cries: In the wilderness prepare the way of YHWH; make _____ in the desert a highway for our Creator.'",
+      "answer": "straight",
+      "source_quote": "A voice cries: In the wilderness prepare the way of YHWH; make straight in the desert a highway for our Creator."
+    },
+    {
+      "ref": "Yesha'yahu 40:31",
+      "prompt": "'Those who wait for YHWH shall renew their strength; they shall mount up with _____ like eagles.'",
+      "answer": "wings",
+      "source_quote": "Those who wait for YHWH shall renew their strength; they shall mount up with wings like eagles; they shall run and not be weary; they shall walk and not faint."
+    },
+    {
+      "ref": "Yesha'yahu 40:28-29",
+      "prompt": "'YHWH is the everlasting Creator. He does not faint or grow weary; he gives _____ to the faint and strengthens the powerless.'",
+      "answer": "power",
+      "source_quote": "He does not faint or grow weary; his understanding is unsearchable. He gives power to the faint, and to him who has no might he increases strength."
+    },
+    {
+      "ref": "Yesha'yahu 40:4",
+      "prompt": "'Every valley shall be lifted up, and every mountain and hill be made low; the _____ ground shall become level and the rough places a plain.'",
+      "answer": "uneven",
+      "source_quote": "Every valley shall be lifted up, and every mountain and hill be made low; the uneven ground shall become level, and the rough places a plain."
+    },
+    {
+      "ref": "Yesha'yahu 40:11",
+      "prompt": "YHWH 'will tend his flock like a shepherd; he will gather the lambs in his arms; he will carry them in his _____ and gently lead those that are with young.'",
+      "answer": "bosom",
+      "source_quote": "He will tend his flock like a shepherd; he will gather the lambs in his arms; he will carry them in his bosom, and gently lead those that are with young."
+    },
+    {
+      "ref": "Yesha'yahu 28:16",
+      "prompt": "'Behold, I am the one who has laid in Tziyon a foundation stone, a tested stone, a precious cornerstone, of a sure foundation. Whoever _____ will not be in haste.'",
+      "answer": "believes",
+      "source_quote": "Behold, I am the one who has laid in Tziyon a foundation stone, a tested stone, a precious cornerstone, of a sure foundation. Whoever believes will not be in haste."
+    },
+    {
+      "ref": "Yesha'yahu 37:36",
+      "prompt": "The messenger of YHWH went out and struck down _____ thousand in the Assyrian camp; Sennakherib departed and returned to Nineveh.",
+      "answer": "185",
+      "source_quote": "And the messenger of YHWH went out and struck down 185,000 in the camp of the Assyrians. And when people arose early in the morning, behold, these were all dead bodies."
+    },
+    {
+      "ref": "Yesha'yahu 40:6",
+      "prompt": "'All flesh is _____, and all its beauty is like the flower of the field. The grass withers, the flower fades when the breath of YHWH blows on it.'",
+      "answer": "grass",
+      "source_quote": "All flesh is grass, and all its beauty is like the flower of the field. The grass withers, the flower fades when the breath of YHWH blows on it; surely the people are grass."
+    },
+    {
+      "ref": "Yesha'yahu 41:10",
+      "prompt": "'Fear not, for I am with you; be not dismayed, for I am your Creator; I will strengthen you, I will help you, I will _____ you with my righteous right hand.'",
+      "answer": "uphold",
+      "source_quote": "Fear not, for I am with you; be not dismayed, for I am your Creator; I will strengthen you, I will help you, I will uphold you with my righteous right hand."
+    }
   ],
   "multiple_choice": [
-    { "ref": "28:16", "question": "How did the Qumran community interpret the cornerstone passage?", "options": ["As referring to a future divine incarnation", "As the foundation of the covenant community itself", "As referring to the Temple of Shelomoh", "As referring to a political alliance"], "correct": 1, "source_quote": "The Community Rule (1QS 8:7) interprets the cornerstone as the foundation of the covenant community." },
-    { "ref": "40:31", "question": "What happens to those who wait upon YHWH?", "options": ["They receive riches", "They are given kingdoms", "They renew their strength and mount up with wings as eagles", "They see visions of the throne"], "correct": 2, "source_quote": "Those who wait upon YHWH shall renew their strength — they shall mount up with wings as eagles." },
-    { "ref": "40:15", "question": "How does Yesha'yahu describe the nations before YHWH?", "options": ["As mighty empires", "As a drop from a bucket", "As raging fires", "As tall cedars"], "correct": 1, "source_quote": "Behold, the nations are like a drop from a bucket, and are accounted as the dust on the scales." }
+    {
+      "ref": "Yesha'yahu 40:3",
+      "question": "The cry 'A voice in the wilderness: prepare the way of YHWH' in Yesha'yahu 40:3 is an ancient source text; which tradition borrowed its language?",
+      "options": [
+        "The NT borrowed from this ancient text",
+        "This text borrowed from the NT",
+        "Both were written simultaneously",
+        "The text originated in Babylon"
+      ],
+      "correct": 0,
+      "source_quote": "A voice cries: In the wilderness prepare the way of YHWH; make straight in the desert a highway for our Creator."
+    },
+    {
+      "ref": "Yesha'yahu 36-39",
+      "question": "What foolish act by King Khizkiyahu sealed the prophecy of Yehudah's future exile to Babylon?",
+      "options": [
+        "Showing all his treasury to Babylonian envoys",
+        "Building an alliance with Mitzrayim",
+        "Refusing to pay tribute to Assyria",
+        "Destroying the Temple vessels"
+      ],
+      "correct": 0,
+      "source_quote": "And Yesha'yahu said to Khizkiyahu, Hear the word of YHWH of Hosts: Behold, the days are coming, when all that is in your house shall be carried to Babylon."
+    },
+    {
+      "ref": "Yesha'yahu 40:12",
+      "question": "Yesha'yahu 40 uses a series of rhetorical questions to establish YHWH's incomparability; what is the first example?",
+      "options": [
+        "Who has measured the waters in the hollow of his hand",
+        "Who has weighed the mountains in scales",
+        "Who has stretched out the heavens like a curtain",
+        "Who feeds all flesh with his hand"
+      ],
+      "correct": 0,
+      "source_quote": "Who has measured the waters in the hollow of his hand and marked off the heavens with a span?"
+    },
+    {
+      "ref": "Yesha'yahu 40:22",
+      "question": "Yesha'yahu 40:22 says YHWH 'stretches out the heavens like' what?",
+      "options": [
+        "A curtain",
+        "A tent",
+        "A veil",
+        "A garment"
+      ],
+      "correct": 0,
+      "source_quote": "It is he who sits above the circle of the earth, and its inhabitants are like grasshoppers; who stretches out the heavens like a curtain, and spreads them like a tent to dwell in."
+    },
+    {
+      "ref": "Yesha'yahu 28:7-8",
+      "question": "Yesha'yahu 28 criticizes which group of leaders for being drunk while giving oracles and visions?",
+      "options": [
+        "The priests and prophets of Yisra'el",
+        "The elders of Yerushalayim",
+        "The kings of Yehudah",
+        "The Levitical gatekeepers"
+      ],
+      "correct": 0,
+      "source_quote": "These also reel with wine and stagger with strong drink; the priest and the prophet reel with strong drink, they are swallowed by wine."
+    },
+    {
+      "ref": "Yesha'yahu 37:14-20",
+      "question": "What did Khizkiyahu do when he received the threatening letter from Sennakherib?",
+      "options": [
+        "Spread it before YHWH in the Temple",
+        "Burned it and prepared for war",
+        "Sent tribute to Assyria",
+        "Called a fast throughout Yehudah"
+      ],
+      "correct": 0,
+      "source_quote": "Khizkiyahu received the letter from the hand of the messengers, and read it; and Khizkiyahu went up to the house of YHWH, and spread it before YHWH."
+    },
+    {
+      "ref": "Yesha'yahu 40:17",
+      "question": "According to Yesha'yahu 40:17, all the nations are what before YHWH?",
+      "options": [
+        "As nothing and less than nothing",
+        "Like grass that withers",
+        "Like sand at the sea",
+        "Like dust under his feet"
+      ],
+      "correct": 0,
+      "source_quote": "All the nations are as nothing before him, they are accounted by him as less than nothing and emptiness."
+    },
+    {
+      "ref": "Yesha'yahu 38:1-5",
+      "question": "How many additional years of life did YHWH grant Khizkiyahu after his illness?",
+      "options": [
+        "Fifteen years",
+        "Ten years",
+        "Twenty years",
+        "Forty years"
+      ],
+      "correct": 0,
+      "source_quote": "Thus says YHWH, the Creator of David your father: I have heard your prayer; I have seen your tears. Behold, I will add fifteen years to your life."
+    },
+    {
+      "ref": "Yesha'yahu 40:8",
+      "question": "'The grass withers, the flower fades, but' what endures forever?",
+      "options": [
+        "The word of our Creator YHWH stands forever",
+        "The covenant of YHWH endures",
+        "The mountains of YHWH remain",
+        "The throne of YHWH is eternal"
+      ],
+      "correct": 0,
+      "source_quote": "The grass withers, the flower fades, but the word of our Creator YHWH will stand forever."
+    },
+    {
+      "ref": "Yesha'yahu 41:21-24",
+      "question": "YHWH's challenge to the idols in Yesha'yahu 41 demands that they do what, to prove they are real?",
+      "options": [
+        "Declare the former things and what is to come",
+        "Speak a single word",
+        "Move from their place",
+        "Show their power against nations"
+      ],
+      "correct": 0,
+      "source_quote": "Set forth your case, says YHWH; bring your proofs, says the King of Ya'akov. Let them bring them, and tell us what is to happen. Tell us the former things, what they are, that we may consider them."
+    }
   ],
   "faq": [
     {
-      "question": "Why does the 1QIsa-a scroll disprove the 'two Isaiahs' theory?",
-      "answer": "Western scholarship since the 18th century has divided Yesha'yahu into 'First Isaiah' (ch 1-39) and 'Second Isaiah' (ch 40-66), attributing them to different authors from different centuries. The Great Isaiah Scroll (1QIsa-a) — written in a continuous hand on a single scroll — preserves all 66 chapters as one document. There is no physical break, no scribal mark, no change of hand at chapter 40. The Qumran community treated the entire scroll as the work of Yesha'yahu. The 'two Isaiahs' theory was developed by European scholars who did not have access to the DSS — it is a product of post-Enlightenment source criticism, not manuscript evidence. The oldest complete manuscript treats the text as unified."
+      "question": "What is the 'Comfort Prologue' and why does it mark a shift in Yesha'yahu?",
+      "answer": "Yesha'yahu 40 opens with 'Comfort, comfort my people' — a double call that signals a shift from judgment (chapters 1-39) to consolation. Scholars call chapters 40-55 Deutero-Yesha'yahu because the audience is no longer Ahaz or Khizkiyahu's era but exiles in Babylon. YHWH's comfort is based on his identity as Creator and Redeemer."
     },
     {
-      "question": "What does the cornerstone passage reveal about Qumran messianic interpretation?",
-      "answer": "Yesha'yahu 28:16 describes YHWH laying a tested stone, a precious cornerstone in Tsiyon. Roman Christianity later interpreted this as referring to a divine messiah. The Qumran community's own interpretation, preserved in the Community Rule (1QS 8:7), reads the cornerstone as the covenant community itself — the 'council of the community shall be established in truth as an eternal planting, a holy house for Israel and a foundation of the holy of holies for Aaron.' The DSS interpretation is communal, not individual. It refers to the covenant people as the foundation — not a divine individual. The oldest interpreters of this text read it differently than the Roman Church would centuries later."
+      "question": "What is the significance of Yesha'yahu 40:3 as an ancient source text?",
+      "answer": "The cry 'A voice in the wilderness: prepare the way of YHWH' in Yesha'yahu 40:3 is an ancient Hebrew prophetic text. The NT borrowed its language. The ancient text is the source; it does not derive from the NT. Its context in Yesha'yahu is specifically the return of exiles from Babylon, not a distant messianic figure."
     },
     {
-      "question": "How does Yesha'yahu 40 speak to the condition of the scattered covenant people?",
-      "answer": "Chapter 40 opens: 'Comfort, comfort my people, says your Creator. Speak tenderly to Yerushalayim and cry to her that her warfare is ended, that her iniquity is pardoned.' This is addressed to a people in exile — scattered, exhausted, despairing. 'He gives power to the faint and to him who has no might he increases strength' (40:29). 'Those who wait upon YHWH shall renew their strength — they shall mount up with wings as eagles' (40:31). The text is written to people whose identity has been denied, whose history has been erased, whose power has been stripped. The promise is not institutional restoration — it is direct empowerment from YHWH to the scattered, weakened, trodden-down covenant community. This language was preserved in the oldest complete prophetic manuscript because it was written for a people who would need it."
+      "question": "Why is Khizkiyahu's show to the Babylonian envoys significant?",
+      "answer": "In Yesha'yahu 39, Khizkiyahu shows all his treasury, armory, and storehouses to Babylonian envoys who come to congratulate him after his recovery. Yesha'yahu immediately pronounces that everything Khizkiyahu showed will be carried to Babylon. This is the pivot point linking Khizkiyahu's era to the coming exile."
+    },
+    {
+      "question": "What is the Molten Image Polemic in Yesha'yahu 40-44?",
+      "answer": "Yesha'yahu 40-44 contains a sustained polemic against idol-making. The craftsman plants a tree; rain nourishes it; he cuts it down, uses half for fire and warmth, and from the other half carves a god to bow down to. The polemic's point: the idol is wood; YHWH created the earth with his outstretched hand and weighs the mountains in a balance."
+    },
+    {
+      "question": "What does the eagle-wings imagery in Yesha'yahu 40:31 convey?",
+      "answer": "Yesha'yahu 40:31 promises that those who wait (or hope) for YHWH will have their strength renewed; they will rise up on wings like eagles, run without exhaustion, and walk without fainting. The eagle's ability to soar effortlessly on thermals captures the contrast between human exhaustion and the energy YHWH gives to those who trust him."
+    },
+    {
+      "question": "What are the six woes of Yesha'yahu 28-33?",
+      "answer": "Yesha'yahu 28-33 contains six woe-oracles: (1) Woe to Efrayim's proud drunkards (28); (2) Woe to Ariel/Yerushalayim (29); (3) Woe to those who hide plans from YHWH (29:15); (4) Woe to those who go down to Mitzrayim for help (31); (5) Woe to the destroyer who has not been destroyed (33); and (6) Woe to those who make a covenant with Mitzrayim but not with YHWH's spirit (30)."
+    },
+    {
+      "question": "How did YHWH deliver Yerushalayim from Sennakherib in Yesha'yahu 37?",
+      "answer": "After Khizkiyahu spread Sennakherib's letter before YHWH in the Temple and prayed, YHWH answered through Yesha'yahu: Sennakherib will not enter the city or shoot an arrow there. That night, the messenger of YHWH struck down 185,000 in the Assyrian camp. Sennakherib departed and was later killed by his own sons in Nineveh."
+    },
+    {
+      "question": "What argument does Yesha'yahu 40 make for YHWH's incomparability?",
+      "answer": "Yesha'yahu 40:12-26 stacks rhetorical questions: Who measured the waters in the hollow of his hand? Who weighed the mountains? Who counseled YHWH? Who taught him? Then: Who stretches the heavens like a curtain? Who brings out the starry host by number? The answer is always YHWH alone — no nation, no idol, no heavenly advisor is his equal."
+    },
+    {
+      "question": "What is the foundation stone laid in Tziyon in Yesha'yahu 28:16?",
+      "answer": "Yesha'yahu 28:16 — contrasting the false 'covenant with death' the leaders made — says YHWH is laying in Tziyon a tested cornerstone, a sure foundation. 'Whoever believes will not be in haste.' This stone is the covenant community's true security, opposed to the false security of an alliance with Mitzrayim."
+    },
+    {
+      "question": "Why does Yesha'yahu 40 emphasize YHWH as Creator?",
+      "answer": "The exiles in Babylon saw the great temples of Marduk and Babylon's military power. Yesha'yahu 40 counters this: YHWH alone created the heavens by stretching them out, sustains the stars by name, and weighs the nations as dust on a scale. The Creator argument grounds YHWH's ability to redeem the exiles — if he made everything, Babylon's power is nothing before him."
     }
   ]
 }

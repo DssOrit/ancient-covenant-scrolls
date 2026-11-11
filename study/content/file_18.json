@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_18",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_18",
   "label": "Book of Giants (Sefer HaNephilim) — Complete — Fragments 1–6",
   "volume": 8,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The Book of Giants tells the story of the Nephilim — the offspring of the Watchers and human women. The giants Ohya and Hahya receive terrifying dreams warning of the coming flood. They send Mahaway to Chanokh to interpret the dreams. Chanokh confirms: the destruction is coming because of what the Watchers did. Gilgamesh is named as one of the Nephilim. The text survives in Aramaic fragments from Qumran — 4Q203, 4Q530, 4Q531, 4Q532.",
   "summary_scholarly": "The Book of Giants is preserved in Aramaic fragments from Qumran Cave 4 (4Q203, 4Q530-532). It is absent from the Ge'ez Orit — the text was not transmitted to Africa through the Greek translation chain. The fragments name Gilgamesh — the central figure of Mesopotamian mythology — as a Nephilim, directly connecting the Sumerian dynastic tradition to the Watcher/Nephilim framework. The giants Ohya and Hahya receive dream visions of the coming flood. They send the messenger Mahaway flying to Chanokh at the ends of the earth to interpret the dreams. Chanokh delivers the judgment: the tablet of destruction has been issued. The text fills the gap between the Watcher descent in Chanokh 6-16 and the flood narrative in Bereshit 6-9.",
   "key_terms": [
-    { "term": "Nephilim", "phonetic": "Neh-fee-LEEM", "definition": "The offspring of the Watchers and human women. Bereshit 6:4 calls them 'the mighty men who were of old, the men of renown.' The Book of Giants names specific Nephilim and documents their dreams before the flood." },
-    { "term": "Gilgamesh", "phonetic": "GIL-gah-mesh", "definition": "Named in the Qumran fragments (4Q530) as one of the Nephilim. The central figure of Mesopotamian mythology — the king of Uruk in the Epic of Gilgamesh — is identified within the covenant textual tradition as a giant of Watcher descent." },
-    { "term": "Ohya and Hahya", "phonetic": "OH-yah, HAH-yah", "definition": "Two named Nephilim who receive terrifying dream visions warning of the coming flood. They are sons of the Watcher Shemikhazah." },
-    { "term": "Mahaway", "phonetic": "Mah-HAH-way", "definition": "The Nephilim messenger sent to Chanokh to interpret the dreams. The text describes him flying to find Chanokh at the ends of the earth." }
+    {
+      "term": "Nephilim",
+      "phonetic": "ne-fee-LEEM",
+      "definition": "The offspring of the Watchers and the daughters of men — giants of enormous size and strength who filled the earth with violence before the flood. 1 Chanokh and the Book of Giants describe their deeds and judgment. Their spirits remain as evil spirits after death."
+    },
+    {
+      "term": "Watchers",
+      "phonetic": "",
+      "definition": "The heavenly beings (irin) who descended to earth and took human wives, transgressing their station. The Book of Giants is focused on their offspring — the Nephilim — and the chaos the giants created."
+    },
+    {
+      "term": "Ohya",
+      "phonetic": "oh-YAH",
+      "definition": "One of the giant sons of the Watcher Shemihaza in the Book of Giants. He and his brother Hahya are central figures. Ohya has ominous dreams and debates their meaning with the other giants."
+    },
+    {
+      "term": "Hahya",
+      "phonetic": "hah-YAH",
+      "definition": "The brother of Ohya — a giant son of Shemihaza. Together Ohya and Hahya are terrified by their dreams of cosmic destruction and seek out Mahway to carry a message to Chanokh."
+    },
+    {
+      "term": "Mahway",
+      "phonetic": "mah-WAY",
+      "definition": "A giant, son of the Watcher Barakel, who travels through the air to find Chanokh and ask him to interpret the giants' terrifying dreams. Mahway functions as the giants' messenger and petitioner."
+    },
+    {
+      "term": "Chanokh's Tablets",
+      "phonetic": "",
+      "definition": "The heavenly tablets that Chanokh possesses and that the giants in the Book of Giants are desperate to have read. The tablets contain the judgment decreed against the Nephilim and the Watchers — YHWH's verdict that the giants will be destroyed."
+    },
+    {
+      "term": "Giborim",
+      "phonetic": "gi-bo-REEM",
+      "definition": "Warriors / mighty ones — a term used for the Nephilim alongside 'Nephilim.' Bereshit 6:4 calls them 'the mighty men who were of old, men of renown.' The Book of Giants portrays them as violent destroyers of both humans and animals."
+    },
+    {
+      "term": "The Dream of Destruction",
+      "phonetic": "",
+      "definition": "The central narrative event of the Book of Giants: Ohya and Hahya have terrifying dreams of a great garden being destroyed and a figure with water tablets washing away everything. These dreams presage the coming flood judgment. The giants cannot interpret the dreams themselves and send Mahway to find Chanokh."
+    },
+    {
+      "term": "Shemihaza",
+      "phonetic": "she-mi-HA-zah",
+      "definition": "The leader of the Watchers who descended — the chief of the two hundred who swore the oath together on Mount Hermon to take human wives. His sons Ohya and Hahya are prominent in the Book of Giants. 1 Chanokh 6-7 names him first among the Watcher leaders."
+    },
+    {
+      "term": "Fragments 4Q531-4Q533",
+      "phonetic": "",
+      "definition": "The primary Aramaic fragments of the Book of Giants found in Cave 4 at Qumran. Combined with 4Q203, 1Q23, 2Q26, and 6Q8, they give a partial but coherent text. The Manichaean Book of Giants, adapted from the Enochic tradition, provides additional comparative evidence for the original narrative."
+    }
   ],
   "fill_blank": [
-    { "ref": "4Q530", "prompt": "The Book of Giants names ______ as one of the Nephilim — the central figure of Mesopotamian mythology.", "answer": "Gilgamesh", "source_quote": "The Book of Giants names Gilgamesh as a Nephilim in the Qumran Aramaic fragments." },
-    { "ref": "4Q203", "prompt": "The giants sent ______ to Chanokh to interpret their dreams of the coming destruction.", "answer": "Mahaway", "source_quote": "They sent the messenger Mahaway to Chanokh at the ends of the earth." },
-    { "ref": "4Q531", "prompt": "Ohya and Hahya received terrifying ______ warning of the coming flood.", "answer": "dreams", "source_quote": "The giants Ohya and Hahya receive dream visions warning of the coming flood." }
+    {
+      "ref": "Book of Giants",
+      "prompt": "Ohya and Hahya are the giant sons of the Watcher ___.",
+      "answer": "Shemihaza",
+      "source_quote": "The sons of Shemihaza — Ohya and Hahya. — Book of Giants (4Q531)"
+    },
+    {
+      "ref": "Book of Giants",
+      "prompt": "The giant ___ travels through the air to find Chanokh and ask him to interpret the dreams.",
+      "answer": "Mahway",
+      "source_quote": "Mahway flew and passed over the earth... to find Chanokh. — Book of Giants (4Q530 col.2)"
+    },
+    {
+      "ref": "Book of Giants",
+      "prompt": "Chanokh possesses heavenly ___ that contain YHWH's verdict against the Nephilim.",
+      "answer": "tablets",
+      "source_quote": "The tablets of Chanokh. — Book of Giants (4Q530)"
+    },
+    {
+      "ref": "Book of Giants",
+      "prompt": "The giants' dreams presage the coming ___, which will destroy them.",
+      "answer": "flood",
+      "source_quote": "The great judgment in which all the Nephilim will be destroyed. — Book of Giants (4Q530)"
+    },
+    {
+      "ref": "1 Chanokh 6",
+      "prompt": "Two hundred Watchers swore an oath together on Mount ___ to descend and take wives.",
+      "answer": "Hermon",
+      "source_quote": "They all swore together on Mount Hermon. — 1 Chanokh 6:6"
+    },
+    {
+      "ref": "Bereshit 6:4",
+      "prompt": "The Nephilim were on the earth in those days — they were the mighty men of old, men of ___.",
+      "answer": "renown",
+      "source_quote": "They were the mighty men of old, men of renown. — Bereshit 6:4"
+    },
+    {
+      "ref": "1 Chanokh 10",
+      "prompt": "The spirits of the Nephilim remain on the earth as ___ after the giants' physical deaths.",
+      "answer": "evil spirits",
+      "source_quote": "The spirits of the giants shall be like clouds, which oppress, corrupt, fall, contend, and bruise upon earth. — 1 Chanokh 15:9"
+    },
+    {
+      "ref": "Book of Giants",
+      "prompt": "The leader of the Watchers who swore the oath to take human wives was ___.",
+      "answer": "Shemihaza",
+      "source_quote": "Their leader Shemihaza. — 1 Chanokh 6:3"
+    },
+    {
+      "ref": "Book of Giants",
+      "prompt": "The Aramaic Book of Giants fragments were found primarily in Cave ___ at Qumran.",
+      "answer": "4",
+      "source_quote": "Primary fragments: 4Q203, 4Q531-4Q533 — Cave 4, Qumran."
+    },
+    {
+      "ref": "1 Chanokh 7",
+      "prompt": "The giants consumed everything the people produced, then attacked the ___ and finally turned on each other.",
+      "answer": "animals / people",
+      "source_quote": "They devoured everything the people produced... and attacked the animals... and each other. — 1 Chanokh 7:3-5"
+    }
   ],
   "multiple_choice": [
-    { "ref": "4Q530", "question": "Who is named as a Nephilim in the Book of Giants?", "options": ["Nimrod", "Gilgamesh", "Esav", "Pharaoh"], "correct": 1, "source_quote": "The Book of Giants names Gilgamesh as a Nephilim in the Qumran Aramaic fragments." },
-    { "ref": "4Q203", "question": "What were the Nephilim warned about in their dreams?", "options": ["A war between nations", "The coming flood that would destroy them", "A famine in the land", "A plague from the heavens"], "correct": 1, "source_quote": "The giants receive terrifying dream visions warning of the coming flood." },
-    { "ref": "4Q531", "question": "Where is the Book of Giants preserved?", "options": ["In the Ge'ez Orit only", "In the Masoretic canon", "In Aramaic fragments from Qumran Cave 4", "In the Greek Septuagint"], "correct": 2, "source_quote": "The Book of Giants is preserved in Aramaic fragments from Qumran — 4Q203, 4Q530, 4Q531, 4Q532." }
+    {
+      "ref": "Book of Giants",
+      "question": "Who are Ohya and Hahya?",
+      "options": [
+        "Two of the Twelve Tribes",
+        "Sons of the Watcher Shemihaza",
+        "Angels sent to judge the Watchers",
+        "Prophets of the flood warning"
+      ],
+      "correct": 1,
+      "source_quote": "The sons of Shemihaza — Ohya and Hahya. — Book of Giants (4Q531)"
+    },
+    {
+      "ref": "Book of Giants",
+      "question": "Why does Mahway travel to find Chanokh?",
+      "options": [
+        "To warn him of the flood",
+        "To ask him to interpret the giants' terrifying dreams",
+        "To bring him back to the Watchers",
+        "To receive the covenant on their behalf"
+      ],
+      "correct": 1,
+      "source_quote": "Mahway flew and passed over the earth to find Chanokh. — Book of Giants (4Q530)"
+    },
+    {
+      "ref": "Book of Giants",
+      "question": "What do Chanokh's tablets contain?",
+      "options": [
+        "The 364-day calendar",
+        "YHWH's verdict and judgment against the Nephilim",
+        "A list of all the Watchers' names",
+        "The covenant given to Avraham"
+      ],
+      "correct": 1,
+      "source_quote": "The tablets of Chanokh contain the great judgment. — Book of Giants (4Q530)"
+    },
+    {
+      "ref": "1 Chanokh 6",
+      "question": "Where did the Watchers swear their oath before descending?",
+      "options": [
+        "In the third heaven",
+        "On Mount Sinai",
+        "On Mount Hermon",
+        "At the gates of Yerushalayim"
+      ],
+      "correct": 2,
+      "source_quote": "They all swore together on Mount Hermon. — 1 Chanokh 6:6"
+    },
+    {
+      "ref": "1 Chanokh 15",
+      "question": "After the Nephilim die, what do their spirits become?",
+      "options": [
+        "Holy angels serving YHWH",
+        "Evil spirits that oppress and corrupt on earth",
+        "Souls waiting in Sheol",
+        "Part of the flood waters"
+      ],
+      "correct": 1,
+      "source_quote": "The spirits of the giants shall oppress, corrupt, fall, contend, and bruise upon earth. — 1 Chanokh 15:9"
+    },
+    {
+      "ref": "Bereshit 6:4",
+      "question": "How does Bereshit 6:4 describe the Nephilim?",
+      "options": [
+        "Fallen angels cast from heaven",
+        "The mighty men of old, men of renown",
+        "Servants of the serpent",
+        "Firstborn sons of Kham"
+      ],
+      "correct": 1,
+      "source_quote": "They were the mighty men of old, men of renown. — Bereshit 6:4"
+    },
+    {
+      "ref": "Book of Giants",
+      "question": "What is the central event in the giants' dreams?",
+      "options": [
+        "A great victory for the Nephilim",
+        "A cosmic garden being destroyed and tablets washing away everything",
+        "YHWH appearing on a throne",
+        "The Watchers ascending back to heaven"
+      ],
+      "correct": 1,
+      "source_quote": "The dream: the great garden destroyed... water tablets washing away. — Book of Giants (4Q530)"
+    },
+    {
+      "ref": "Book of Giants",
+      "question": "The primary Aramaic fragments of the Book of Giants come from which Qumran cave?",
+      "options": [
+        "Cave 1",
+        "Cave 11",
+        "Cave 4",
+        "Cave 7"
+      ],
+      "correct": 2,
+      "source_quote": "4Q203, 4Q531-4Q533 — Cave 4 fragments."
+    },
+    {
+      "ref": "1 Chanokh 7",
+      "question": "After consuming all human food, what did the giants attack next?",
+      "options": [
+        "The angels",
+        "The animals and each other",
+        "The heavenly beings",
+        "The sea creatures"
+      ],
+      "correct": 1,
+      "source_quote": "They devoured everything the people produced... then attacked the animals... and each other. — 1 Chanokh 7:3-5"
+    },
+    {
+      "ref": "Book of Giants",
+      "question": "The Book of Giants is closely related to which larger Enochic work?",
+      "options": [
+        "Yovelim",
+        "4QMMT",
+        "1 Chanokh",
+        "The Damascus Document"
+      ],
+      "correct": 2,
+      "source_quote": "The Book of Giants is part of the Enochic corpus, closely related to 1 Chanokh's account of the Watchers."
+    }
   ],
   "faq": [
     {
-      "question": "Why is the naming of Gilgamesh as a Nephilim significant?",
-      "answer": "The Qumran fragments (4Q530) name Gilgamesh — the central figure of Mesopotamian mythology, the king of Uruk in the Sumerian Epic of Gilgamesh — as a Nephilim. This directly connects Mesopotamian dynastic mythology to the Watcher/Nephilim framework of the covenant tradition. The first civilizations of Mesopotamia, according to the covenant texts, were founded through the Watcher corruption — not through independent human achievement. Bereshit 10:8-10 names Nimrod son of Cush as the builder of Babylon, Erech (Uruk), and Akkad. The Sumerians called themselves saggiga — black-headed people — a self-designation by the color black, consistent with the Afro-Asiatic populations of the Nile-Cushite corridor."
+      "question": "What is the Book of Giants?",
+      "answer": "The Book of Giants is an Aramaic text from the Enochic tradition, found in fragments at Qumran (4Q203, 4Q530-4Q533, 1Q23, 2Q26, 6Q8). It expands on the Watcher narrative of 1 Chanokh, focusing on the Nephilim giants — specifically the sons of Shemihaza, Ohya and Hahya — and their ominous dreams presaging the coming flood judgment. The giants send Mahway to find Chanokh and ask for dream interpretation. Chanokh's response, carried back by Mahway, confirms the judgment: the Nephilim will be destroyed. No Aramaic complete copy survived — the text is reconstructed from multiple fragmentary manuscripts."
     },
     {
-      "question": "Why is the Book of Giants absent from the Ge'ez Orit?",
-      "answer": "The Book of Giants was not transmitted to Africa through the Greek translation chain. The Ge'ez Orit preserves texts that passed through Greek before reaching Ge'ez. The Book of Giants appears only in the Aramaic Qumran fragments — it circulated in Aramaic-speaking communities in the land but did not enter the Greek transmission that carried Chanokh and Yovelim to Ethiopia. This is why the three-witness method (DSS + Orit + Samaritan) is essential: each transmission chain preserved some texts and lost others. What Qumran preserved in Aramaic, Africa preserved in Ge'ez. Together they recover what no single chain could."
+      "question": "How does the Book of Giants relate to 1 Chanokh?",
+      "answer": "The Book of Giants is part of the same Enochic tradition as 1 Chanokh and elaborates the Watcher narrative from a different angle. While 1 Chanokh focuses on Chanokh himself — his journeys, visions, and the heavenly verdict — the Book of Giants focuses on the Nephilim's perspective: their fear, their dreams, their failed attempt to appeal through Chanokh. The two texts are complementary. The Qumran community treated both as authoritative, preserving multiple copies of each. The Book of Giants is older than the Manichaean version that adapted it, which helps confirm the Qumran text's priority."
     },
     {
-      "question": "What does the Watcher tradition reveal about the origin of imperial power?",
-      "answer": "The Book of Chanokh and the Book of Giants together document that every domain of knowledge enabling autonomous human power outside YHWH's governance was transmitted through cosmic rebellion. Azazel transmitted weapons manufacturing. Semyaza transmitted occult manipulation. The Nephilim — including Gilgamesh — built the first imperial systems from this forbidden knowledge. The covenant framework's specific statement is that human imperial power — military, intelligence, social manipulation — originates in rebellion against YHWH's created order. This is not metaphor. It is the covenant tradition's explanation for why empires exist and why they are destined to fall."
+      "question": "Who is Mahway and why is his role important?",
+      "answer": "Mahway is a giant son of the Watcher Barakel who travels through the air to reach Chanokh and present the giants' petition. His role is theologically significant: even the Nephilim, who are the product of the Watchers' transgression, seek YHWH's verdict through Chanokh — the righteous human who walked with YHWH. The giants cannot reverse their judgment, but the narrative shows them acknowledging the authority of the heavenly court. Mahway functions as the threshold figure between the condemned giants and the heavenly authority that condemned them."
+    },
+    {
+      "question": "What do the giants' dreams signify?",
+      "answer": "In the Book of Giants, Ohya and Hahya have terrible dreams of a great garden being uprooted — trees falling, water tablets washing away names, and cosmic destruction. The dreams are YHWH's advance warning to the giants that their time is ending. The giants cannot interpret the dreams themselves — they lack the wisdom of Chanokh, who was taken up to receive heavenly knowledge. The dreams establish that even the most powerful physical beings are subject to YHWH's judgment and have no access to the heavenly wisdom that would let them understand it without a mediator."
+    },
+    {
+      "question": "What is the theological significance of evil spirits coming from the Nephilim's bodies?",
+      "answer": "1 Chanokh 15 explains that after the Nephilim die in the flood, their spirits do not go to Sheol like normal human spirits but remain on earth as evil spirits — orphaned, disembodied, corrupting and afflicting humanity. This provides the Enochic explanation for the ongoing presence of evil in the post-flood world: the original transgression of the Watchers left a residue. The flood destroyed the Nephilim's bodies but their spirits remain until the final judgment. This framework is foundational to the DSS community's understanding of the present era's spiritual warfare."
+    },
+    {
+      "question": "What is the connection between the Book of Giants and Manichaean literature?",
+      "answer": "The Manichaean Book of Giants, written centuries after the Qumran text, adapted the Enochic narrative — but replaced some figures with Zoroastrian names and added Manichaean theological content. The existence of the Manichaean version confirms that the Enochic Book of Giants was widely known and influential in the ancient world. When comparing the two versions, the Qumran text's priority is clear: the Manichaean version borrowed from the Enochic tradition, not the reverse. This is another example of the ancient covenant texts being the source tradition — the later adaptation is derived from them."
+    },
+    {
+      "question": "How does the Book of Giants treat the question of accountability?",
+      "answer": "The Book of Giants does not present the Nephilim as simply monsters — they are terrified, they seek information, they try to appeal their judgment. This creates a nuanced picture: the giants are accountable for the violence they caused, and that accountability is real and final. But they are also products of their fathers' transgression — they did not choose to be born Nephilim. The text does not resolve this tension; it presents the judgment as YHWH's just verdict and Chanokh's confirmation of it. The Qumran community found in this narrative a template for understanding their own era: the corrupt powers that dominated them were accountable, and YHWH's judgment would come."
+    },
+    {
+      "question": "Why is the Book of Giants important for understanding the DSS community's worldview?",
+      "answer": "The Book of Giants, alongside 1 Chanokh, provided the Qumran community with their explanation of the present world's corruption. The Watchers' transgression introduced forbidden knowledge, violence, and spiritual contamination into the created order. The flood did not fully eliminate the problem — evil spirits remain. The community's strict purity rules, their separation from the corrupted mainstream, and their calendar observance were all responses to this framework. They were the remnant preserving covenant purity in a world still contaminated by the Watchers' legacy, waiting for YHWH's final judgment to complete what the flood began."
+    },
+    {
+      "question": "What is the significance of Shemihaza as the Watcher leader?",
+      "answer": "Shemihaza (also spelled Semyaza or Shemyaza in various manuscripts) is named in 1 Chanokh 6:3 as the leader of the Watchers who swore the oath on Mount Hermon. His sons Ohya and Hahya are the most prominent Nephilim in the Book of Giants. By naming a specific leader responsible for organizing the transgression, 1 Chanokh and the Book of Giants assign moral responsibility to a named agent rather than treating the fall as anonymous or inevitable. The oath sworn by the two hundred Watchers — a collective choice — makes all of them accountable. The Book of Giants traces the consequences of that choice through the generations to the giants themselves."
+    },
+    {
+      "question": "What does the Book of Giants reveal about ancient understanding of cosmic hierarchy?",
+      "answer": "The Book of Giants assumes a clear cosmic hierarchy: YHWH at the top, angels (Watchers) in the intermediate realm, humans on earth, animals below humans. The Watchers' transgression was crossing the boundary between their station (heavenly) and the human realm — taking wives and producing hybrid offspring. This boundary-crossing corrupted both realms: the heavenly beings became earthly, and earthly beings became gigantic violators of normal creaturely limits. The Nephilim are the living embodiment of a violated cosmic order. The judgment — the flood — is the restoration of proper boundaries. This framework underlies all the Enochic tradition's treatment of purity, separation, and covenant discipline."
     }
   ]
 }

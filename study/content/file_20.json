@@ -1,37 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_20",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_20",
   "label": "Yehoshua (Joshua) — Part 1 — Chapters 1–8",
   "volume": 10,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "After Moshe's death, YHWH speaks to Yehoshua: Be strong and courageous. Do not be frightened. YHWH your Creator is with you wherever you go. Yehoshua sends spies to Yericho. Rachav the innkeeper hides them and declares: YHWH your Creator — he is Creator in the heavens above and on the earth beneath. Yisra'EL crosses the Yarden on dry ground. They take twelve stones from the river. They circumcise the new generation at Gilgal. The commander of YHWH's army appears to Yehoshua. Yericho falls when the people shout. Ai is taken after Akhan's sin is purged.",
   "summary_scholarly": "The ACR reads from DSS Joshua fragments (4QJosh-a, 4QJosh-b) and the Orit Ge'ez. The Yehoshua narrative is the fulfillment of the land promise in Bereshit 15. The crossing of the Yarden parallels the crossing of the sea in Shemot 14. The twelve stones mark the covenant community's entry into the promised territory — physically African soil on the Nubian tectonic plate west of the Jordan Rift Valley.",
   "key_terms": [
-    { "term": "Yehoshua", "phonetic": "Yeh-ho-SHOO-ah", "definition": "Son of Nun, from the tribe of Efrayim. Moshe's successor. His name means 'YHWH saves.' Originally named Hoshea — Moshe renamed him (Bamidbar 13:16). Anglicized as Joshua." },
-    { "term": "Rachav", "phonetic": "Rah-KHAV", "definition": "A woman of Yericho who hides the Israelite spies and declares faith in YHWH. Her household is spared when Yericho falls. She joins the covenant community. Anglicized as Rahab." },
-    { "term": "Gilgal", "phonetic": "Gil-GAHL", "definition": "The place where Yisra'EL first camps after crossing the Yarden. The new generation is circumcised here. YHWH says: Today I have rolled away the reproach of Egypt from you (5:9)." }
+    {
+      "term": "Yehoshua bin Nun",
+      "phonetic": "ye-ho-SHOO-ah bin NOON",
+      "definition": "Successor to Mosheh, leader of Yisra'el's entry into Kena'an. YHWH's command at the opening of the book: 'Be strong and courageous — do not be afraid.' Yehoshua led the Jordan crossing, the Jericho campaign, and the initial conquest. His name means 'YHWH saves.'"
+    },
+    {
+      "term": "The Jordan Crossing",
+      "phonetic": "",
+      "definition": "In Yehoshua 3-4, YHWH stops the Jordan's flow as the priests carrying the Ark step into the water. The entire nation crosses on dry ground — a deliberate parallel to the Red Sea crossing. Twelve stones are set up at Gilgal as a memorial. The generation that did not witness the Red Sea now witnesses its own miracle."
+    },
+    {
+      "term": "Rahav",
+      "phonetic": "ra-HAV",
+      "definition": "The woman in Yeriho who hides the two Israelite spies and secures a promise of protection for her family. She signals with a scarlet cord in her window. When Yeriho falls, Rahav and her household are spared. She is a Kenaanite woman whose faith-action saves her — a critical figure in the Yeriho narrative."
+    },
+    {
+      "term": "Yeriho (Jericho)",
+      "phonetic": "ye-REE-ho",
+      "definition": "The first city conquered in Kena'an. YHWH's command: march around the city once daily for six days, seven times on the seventh day, then blow the trumpets and shout. The walls collapse. Yeriho is placed under total Kherem (devoted destruction) — no plunder taken. Akhan's violation of the Kherem is the central crisis of chapter 7."
+    },
+    {
+      "term": "Kherem",
+      "phonetic": "KHE-rem",
+      "definition": "Devoted destruction — the total consecration of conquered peoples and goods to YHWH, with nothing kept for personal use. In Yeriho, the entire city and its contents are Kherem. The only exception is Rahav's household (protected by covenant promise) and the silver, gold, and bronze vessels (brought to YHWH's treasury). Kherem is not ordinary war-plunder — it is a covenant act."
+    },
+    {
+      "term": "Akhan",
+      "phonetic": "a-KHAN",
+      "definition": "The Israelite man from the tribe of Yehudah who secretly took a Babylonian garment, silver, and gold from the Kherem of Yeriho. His violation caused the defeat at Ai. When exposed by lot and confession, Akhan and his household are executed in the Valley of Akhor. The name 'Akhor' (trouble) becomes a place-name memorial."
+    },
+    {
+      "term": "Ai",
+      "phonetic": "ah-EE",
+      "definition": "The second city targeted after Yeriho. The first attempt is routed because of Akhan's hidden sin — the Kherem has been violated. After Akhan is executed, Yehoshua uses a military ambush strategy (feigned retreat) and destroys Ai. The contrast between Yeriho (miraculous wall-collapse) and Ai (tactical ambush) shows YHWH working through both supernatural and tactical means."
+    },
+    {
+      "term": "Gilgal",
+      "phonetic": "gil-GAL",
+      "definition": "The first campsite in Kena'an, near Yeriho, where the Jordan memorial stones are set up and where the generation born in the wilderness is circumcised. Gilgal becomes the base of operations for the initial campaign. Circumcision at Gilgal 'rolled away the reproach of Mitzrayim' — restoring the covenant sign to the generation that grew up without it."
+    },
+    {
+      "term": "Covenant Renewal at Shechem/Mount Ebal",
+      "phonetic": "",
+      "definition": "In Yehoshua 8:30-35, after the Ai campaign, Yehoshua builds an altar on Mount Eival and reads all the Torah — blessings and curses — to the entire assembly. This follows Mosheh's command in Devarim 27. The covenant is renewed publicly, with the entire nation present, women and children and strangers included."
+    },
+    {
+      "term": "The Two Spies",
+      "phonetic": "",
+      "definition": "In Yehoshua 2, Yehoshua sends two spies into Yeriho before the crossing. They are hidden by Rahav and escape via a rope through her window. Their report to Yehoshua is the opposite of the Qadesh-Barnea spies: 'YHWH has given all the land into our hands, and all the inhabitants are melting in fear of us.' Faith against fear."
+    }
   ],
   "fill_blank": [
-    { "ref": "1:9", "prompt": "Be strong and courageous. Do not be frightened and do not be dismayed, for YHWH your Creator is with you wherever you ______.", "answer": "go", "source_quote": "Be strong and courageous. Do not be frightened and do not be dismayed, for YHWH your Creator is with you wherever you go." },
-    { "ref": "2:11", "prompt": "YHWH your Creator — he is Creator in the ______ above and on the earth beneath.", "answer": "heavens", "source_quote": "For YHWH your Creator — he is Creator in the heavens above and on the earth beneath." },
-    { "ref": "6:20", "prompt": "So the people shouted, and the trumpets were blown. The wall fell down ______.", "answer": "flat", "source_quote": "So the people shouted, and the trumpets were blown. As soon as the people heard the sound of the trumpet, the people shouted a great shout, and the wall fell down flat." }
+    {
+      "ref": "Yehoshua 1:9",
+      "prompt": "YHWH commands Yehoshua: 'Be strong and courageous — do not be terrified, for YHWH your Creator is with you ___.'",
+      "answer": "wherever you go",
+      "source_quote": "Be strong and courageous. Do not be terrified or discouraged, for YHWH your Creator will be with you wherever you go. — Yehoshua 1:9"
+    },
+    {
+      "ref": "Yehoshua 2",
+      "prompt": "Rahav hid the two Israelite spies and secured their promise of safety by displaying a ___ cord in her window.",
+      "answer": "scarlet",
+      "source_quote": "She tied the scarlet cord in the window. — Yehoshua 2:21"
+    },
+    {
+      "ref": "Yehoshua 3",
+      "prompt": "The Jordan River stopped flowing when the ___ carrying the Ark stepped into the water.",
+      "answer": "priests / Levitical priests",
+      "source_quote": "As soon as the priests who carried the Ark set foot in the Jordan, the water flowing downstream stood up in a heap. — Yehoshua 3:15-16"
+    },
+    {
+      "ref": "Yehoshua 6",
+      "prompt": "The walls of Yeriho collapsed after the people marched around the city ___ times on the seventh day and shouted.",
+      "answer": "seven",
+      "source_quote": "On the seventh day they marched around the city seven times and the priests blew the trumpets. — Yehoshua 6:15"
+    },
+    {
+      "ref": "Yehoshua 7",
+      "prompt": "___ took a Babylonian garment, silver, and gold from the Kherem of Yeriho, causing Yisra'el's defeat at Ai.",
+      "answer": "Akhan",
+      "source_quote": "Akhan son of Karmi confessed: I have sinned against YHWH. — Yehoshua 7:20"
+    },
+    {
+      "ref": "Yehoshua 7:1",
+      "prompt": "The defeat at Ai was caused because Yisra'el had violated the ___ — the devoted destruction command.",
+      "answer": "Kherem",
+      "source_quote": "The Israelites acted unfaithfully in regard to the Kherem — Akhan took some of it. — Yehoshua 7:1"
+    },
+    {
+      "ref": "Yehoshua 4",
+      "prompt": "After the Jordan crossing, ___ stones were taken from the riverbed and set up at Gilgal as a memorial.",
+      "answer": "twelve",
+      "source_quote": "Joshua set up the twelve stones they had taken out of the Jordan at Gilgal. — Yehoshua 4:20"
+    },
+    {
+      "ref": "Yehoshua 5",
+      "prompt": "At Gilgal, Yehoshua circumcised the generation born in the wilderness, saying YHWH had rolled away the ___ of Mitzrayim.",
+      "answer": "reproach",
+      "source_quote": "YHWH said to Joshua: Today I have rolled away the reproach of Egypt from you. — Yehoshua 5:9"
+    },
+    {
+      "ref": "Yehoshua 8:30-35",
+      "prompt": "After the Ai campaign, Yehoshua built an altar on Mount ___ and read the entire Torah to all Yisra'el.",
+      "answer": "Eival (Ebal)",
+      "source_quote": "Then Joshua built on Mount Ebal an altar to YHWH. — Yehoshua 8:30"
+    },
+    {
+      "ref": "Yehoshua 2",
+      "prompt": "The two spies reported that all the land's inhabitants were ___ with fear when they heard about Yisra'el.",
+      "answer": "melting / filled",
+      "source_quote": "All who live in this country are melting in fear because of you. — Yehoshua 2:24"
+    }
   ],
   "multiple_choice": [
-    { "ref": "1:1-2", "question": "Who does YHWH speak to after Moshe's death?", "options": ["Aharon", "Kalev", "Yehoshua son of Nun", "El'azar"], "correct": 2, "source_quote": "After the death of Moshe the servant of YHWH, YHWH said to Yehoshua the son of Nun, Moshe's assistant." },
-    { "ref": "2:1-11", "question": "Who hid the Israelite spies in Yericho?", "options": ["The king of Yericho", "Rachav", "A priest", "An elder"], "correct": 1, "source_quote": "Rachav took the two men and hid them." },
-    { "ref": "5:9", "question": "What did YHWH say he rolled away at Gilgal?", "options": ["The curse of Bavel", "The reproach of Egypt", "The sin of Adam", "The shame of the wilderness"], "correct": 1, "source_quote": "YHWH said to Yehoshua: Today I have rolled away the reproach of Egypt from you." }
+    {
+      "ref": "Yehoshua 1:9",
+      "question": "What is YHWH's core command to Yehoshua at the opening of the book?",
+      "options": [
+        "Build a new altar at Gilgal",
+        "Be strong and courageous — do not be terrified",
+        "Wait forty years before entering",
+        "Consult Mosheh's written laws only"
+      ],
+      "correct": 1,
+      "source_quote": "Be strong and courageous. Do not be terrified, for YHWH your Creator will be with you. — Yehoshua 1:9"
+    },
+    {
+      "ref": "Yehoshua 2",
+      "question": "How did Rahav signal safety to the Israelites when Yeriho was attacked?",
+      "options": [
+        "She waved a white garment",
+        "She tied a scarlet cord in her window",
+        "She left her door open",
+        "She painted her house with lamb's blood"
+      ],
+      "correct": 1,
+      "source_quote": "She tied the scarlet cord in the window. — Yehoshua 2:21"
+    },
+    {
+      "ref": "Yehoshua 3",
+      "question": "What caused the Jordan River to stop flowing?",
+      "options": [
+        "YHWH sent a wind",
+        "Yehoshua struck the water with his staff",
+        "The priests carrying the Ark stepped into the water",
+        "The ark was placed on a rock upstream"
+      ],
+      "correct": 2,
+      "source_quote": "As soon as the priests who carried the Ark set foot in the Jordan, the water stood up in a heap. — Yehoshua 3:15-16"
+    },
+    {
+      "ref": "Yehoshua 6",
+      "question": "How did the walls of Yeriho fall?",
+      "options": [
+        "Israelite soldiers dug under the foundations",
+        "An earthquake sent by YHWH during the siege",
+        "After marching and trumpets on the seventh day, the people shouted and the walls collapsed",
+        "Rahav opened the gates from inside"
+      ],
+      "correct": 2,
+      "source_quote": "The wall collapsed and they took the city. — Yehoshua 6:20"
+    },
+    {
+      "ref": "Yehoshua 7",
+      "question": "Why did Yisra'el lose the battle at Ai?",
+      "options": [
+        "They did not pray before the battle",
+        "Yehoshua sent too few soldiers",
+        "Akhan had violated the Kherem by taking goods from Yeriho",
+        "They approached from the wrong direction"
+      ],
+      "correct": 2,
+      "source_quote": "Akhan son of Karmi confessed: I have sinned against YHWH. — Yehoshua 7:20"
+    },
+    {
+      "ref": "Yehoshua 4",
+      "question": "What was set up at Gilgal as a memorial of the Jordan crossing?",
+      "options": [
+        "A bronze serpent",
+        "Twelve stones from the Jordan riverbed",
+        "An altar with twelve burnt offerings",
+        "A written record sealed in a jar"
+      ],
+      "correct": 1,
+      "source_quote": "Joshua set up the twelve stones at Gilgal. — Yehoshua 4:20"
+    },
+    {
+      "ref": "Yehoshua 5",
+      "question": "What ceremony took place at Gilgal before the Yeriho campaign?",
+      "options": [
+        "The Passover sacrifice for the first time in Kena'an, and circumcision of the wilderness generation",
+        "A war council of all twelve tribes",
+        "The reading of the entire Torah",
+        "The installation of Yehoshua as king"
+      ],
+      "correct": 0,
+      "source_quote": "YHWH said to Joshua: Today I have rolled away the reproach of Egypt — circumcision restored. — Yehoshua 5:9"
+    },
+    {
+      "ref": "Yehoshua 8:30-35",
+      "question": "What did Yehoshua do immediately after the Ai campaign?",
+      "options": [
+        "Sent spies north to Hazor",
+        "Divided the land by lot",
+        "Built an altar on Mount Eival and read the entire Torah to all Yisra'el",
+        "Returned to Gilgal to rest"
+      ],
+      "correct": 2,
+      "source_quote": "Then Joshua built on Mount Ebal an altar to YHWH and read the Torah. — Yehoshua 8:30-35"
+    },
+    {
+      "ref": "Yehoshua 7",
+      "question": "What happened to Akhan after his sin was exposed?",
+      "options": [
+        "He was exiled from the camp",
+        "He was given thirty days to restore what he took",
+        "He and his household were executed in the Valley of Akhor",
+        "He was assigned to serve the priests"
+      ],
+      "correct": 2,
+      "source_quote": "They stoned Akhan and his household and burned them in the Valley of Akhor. — Yehoshua 7:25"
+    },
+    {
+      "ref": "Yehoshua 2",
+      "question": "What was the spies' report to Yehoshua after their return from Yeriho?",
+      "options": [
+        "The city is too strong — we cannot take it",
+        "We did not find any intelligence",
+        "YHWH has given all the land to us and all the inhabitants are melting in fear",
+        "The city has no walls on the northern side"
+      ],
+      "correct": 2,
+      "source_quote": "YHWH has surely given the whole land into our hands; all the people are melting in fear. — Yehoshua 2:24"
+    }
   ],
   "faq": [
     {
-      "question": "What land did Yisra'EL cross into?",
-      "answer": "The land west of the Yarden (Jordan River). This territory sits on the African tectonic plate — the Nubian Plate. The Jordan Rift Valley is the geological boundary between Africa and the Arabian Plate. Land west of the Jordan is physically African soil. Before the Suez Canal was dug in 1869, there was no water barrier separating this territory from the rest of Africa. The covenant people entered African land and received the promise made to Avraham on African soil."
+      "question": "How does Yehoshua's opening connect to Mosheh's death at the end of Devarim?",
+      "answer": "Yehoshua opens immediately after Mosheh's death: 'After the death of Mosheh the servant of YHWH, YHWH spoke to Yehoshua.' There is no gap — the covenant leadership transfers without interruption. YHWH's commission to Yehoshua directly parallels what was said to Mosheh: 'Be strong and courageous.' The Torah promises made to Avraham, Yitzhak, and Ya'akov are now being fulfilled. Yehoshua's first task is not military planning but immersion in the Torah: 'Meditate on the Book of the Torah day and night.' Covenant fidelity comes before military strategy."
     },
     {
-      "question": "Why does YHWH say 'I have rolled away the reproach of Egypt'?",
-      "answer": "At Gilgal, YHWH declares: 'Today I have rolled away the reproach of Egypt from you' (5:9). The Hebrew galal (to roll) gives Gilgal its name. The reproach of Egypt is the identity of slavery — being known as enslaved people rather than as YHWH's covenant nation. The circumcision at Gilgal marks the transition: the wilderness generation (who were not circumcised) is renewed, and the covenant mark is restored. The pattern applies to every restoration: the reproach of bondage is rolled away when the covenant people reclaim their identity through the covenant itself."
+      "question": "Why is Rahav significant?",
+      "answer": "Rahav is a Kenaanite woman — not an Israelite — who acts with greater faith than many in Yisra'el. She hides the spies, deceives the king of Yeriho, and negotiates covenant protection for her family. Her declaration to the spies is theologically precise: 'YHWH your Creator is the Creator in heaven above and on the earth below.' This is the Shema's core claim, stated by an outsider. Rahav is preserved and her household is spared — the promise is kept. Her scarlet cord becomes the sign of covenant protection, echoing the blood on the doorposts at the first Passover."
     },
     {
-      "question": "What does the commander of YHWH's army reveal?",
-      "answer": "Before Yericho, Yehoshua encounters a man with a drawn sword (5:13-15). Yehoshua asks: are you for us or for our adversaries? The answer: 'Neither — I have come as commander of YHWH's army.' The commander is not on Yisra'EL's side or the enemy's side. He is on YHWH's side. The War Scroll (1QM) at Qumran describes this same framework: the final battle is YHWH's war, not a human political project. The angels fight alongside the Sons of Light because the cause is YHWH's, not because the Sons of Light have earned it."
+      "question": "Why is the Jordan crossing structured as a parallel to the Red Sea crossing?",
+      "answer": "The Jordan crossing in Yehoshua 3-4 deliberately mirrors the Red Sea crossing in Shemot 14: both involve water being stopped by YHWH's power, both create dry ground for the people to cross, and both are covenant demonstrations that YHWH fights for Yisra'el. The difference: at the Red Sea the people were fleeing; at the Jordan they are advancing. The covenant generation that grew up in the wilderness needed to witness their own founding miracle. The twelve stones at Gilgal serve the same function as the song of the sea — a memorial that future generations will ask about and be told the answer."
+    },
+    {
+      "question": "What is Kherem and why does Akhan's violation matter so much?",
+      "answer": "Kherem is total consecration — devoted destruction. When YHWH commands Kherem, every living thing and every valuable is YHWH's; nothing may be taken for private use. The Yeriho Kherem was explicit. Akhan's violation was not an accident or a minor theft — it was treating YHWH's property as his own and hiding it. The covenant consequence is corporate: all of Yisra'el is affected by one person's hidden sin. This is the covenant's communal accountability principle — the community is one body, and hidden transgression poisons the whole. The public exposure and execution at Akhor is a covenant surgery removing the contamination."
+    },
+    {
+      "question": "What is the significance of the covenant renewal at Mount Eival?",
+      "answer": "Mosheh had commanded in Devarim 27 that when Yisra'el entered the land, they should build an altar on Mount Eival and read the Torah — blessings and curses — to the entire assembly. Yehoshua does exactly this in 8:30-35: immediately after the Ai campaign, with the land barely secured, the entire nation assembles for covenant renewal. The timing matters: the first order of business in the land is covenant recommitment, not further military conquest. And the reading is comprehensive: 'not a word of all that Mosheh commanded was omitted.' The entry into the land is a covenant ceremony, not primarily a military campaign."
+    },
+    {
+      "question": "What is the contrast between the Qadesh-Barnea spies and the Yeriho spies?",
+      "answer": "In Bamidbar 13-14 (Qadesh-Barnea), ten of twelve spies brought back a report of fear — 'we were like grasshoppers in our own sight.' That failure cost the entire generation their entry into the land. In Yehoshua 2, the two spies return from Yeriho with a completely different report: 'YHWH has given all the land — all the inhabitants are melting in fear of us.' Same land, different generation, different faith. The contrast is deliberate: the wilderness period produced a generation capable of the trust that the previous generation failed. Kalev and Yehoshua — the two faithful Qadesh-Barnea spies — are still present, now leading."
+    },
+    {
+      "question": "How is the fall of Yeriho different from the conquest of Ai?",
+      "answer": "Yeriho falls through direct divine action — no siege machines, no military strategy, just marching, trumpets, and shouting. YHWH gives the city. Ai is different: after the Akhan contamination is removed, Yehoshua uses a tactical ambush — a feigned retreat to draw out Ai's defenders while a hidden force takes the city from behind. YHWH gives the victory but through military strategy. The two campaigns together show YHWH working through both supernatural intervention and human tactical wisdom. Neither approach is more 'holy' than the other — both operate under YHWH's command."
+    },
+    {
+      "question": "What is Gilgal's theological significance in the first chapters of Yehoshua?",
+      "answer": "Gilgal is the first campsite in Kena'an and the base of operations for the initial campaign. Three covenant events happen there: the Jordan memorial stones are erected (covenant memory), the wilderness generation is circumcised (covenant sign restored), and the first Passover in the land is celebrated (covenant calendar kept). YHWH declares at Gilgal: 'Today I have rolled away the reproach of Mitzrayim.' The name Gilgal is linked to the Hebrew root for 'rolling' (galal). Gilgal is the threshold point — where Yisra'el becomes fully covenant-active in the land, not merely in transit."
+    },
+    {
+      "question": "What is the significance of Yehoshua 1:8 — meditating on the Torah day and night?",
+      "answer": "YHWH's first instruction to Yehoshua before any military action: 'The Book of the Torah shall not depart from your mouth. You shall meditate on it day and night, so that you may be careful to do all that is written in it.' Military success is explicitly tied to Torah fidelity. This reverses the conventional expectation that a military commander needs tactical training above all. Yehoshua's strength comes from covenant obedience, not martial skill. The Qumran community found this framework directly applicable to their own situation: covenant fidelity in the wilderness is the preparation for YHWH's victory, not human force."
+    },
+    {
+      "question": "Who are the two spies Yehoshua sends and what is their mission?",
+      "answer": "The book does not name the two spies. Their mission: reconnaissance of Yeriho — specifically to understand its defenses and the population's morale. They are hidden by Rahav and escape via rope through her window. The mission produces intelligence about morale (everyone is terrified) and establishes the covenant promise to Rahav. The un-named spies contrast with the twelve named spies of Bamidbar 13 — the emphasis is on their function (faithful reconnaissance resulting in a confident report) rather than their individual identity. Their faith produces a positive report; the named Qadesh-Barnea majority produced a faithless one."
     }
   ]
 }

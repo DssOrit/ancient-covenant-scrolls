@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_32",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_32",
   "label": "Shemu'el Bet (2 Samuel) — Part 3 — Chapters 13–18",
   "volume": 13,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Amnon rapes his half-sister Tamar. Dawid is angry but does nothing. Avshalom waits two years, then kills Amnon. Avshalom flees to Geshur for three years. Yo'av arranges his return through the wise woman of Teqo'a. Avshalom conspires to take the throne — he steals the hearts of the men of Yisra'EL. Avshalom declares himself king at Hevron. Dawid flees Yerushalayim on foot, weeping, head covered. Chushai the Arkite defeats the counsel of Achitofel. Avshalom pursues Dawid across the Yarden. In the forest of Efrayim, Avshalom's hair catches in a terebinth tree. Yo'av kills Avshalom against Dawid's explicit orders. Dawid weeps: O my son Avshalom, my son, my son Avshalom! Would I had died instead of you!",
   "summary_scholarly": "The ACR reads from 4QSam-a and the Orit Ge'ez. The Avshalom rebellion (chs 13-18) is the direct consequence of Natan's prophecy: 'the sword shall never depart from your house' (12:10). YHWH's word operates through cause and effect — Dawid's sin with Bat-Sheva produces generational consequences. The rape of Tamar (ch 13) exposes the failure of patriarchal power: Dawid is angry but does nothing, leaving Avshalom to take justice into his own hands. 4QSam-a preserves textual variants in the Avshalom narrative. The Orit Ge'ez provides independent witness to the account. Avshalom's rebellion follows the pattern of contested kingship — he goes to Hevron, the same city where Dawid was first anointed, to declare his own kingship.",
   "key_terms": [
-    { "term": "Avshalom", "phonetic": "Av-shah-LOHM", "definition": "Son of Dawid. Kills Amnon for raping Tamar. Rebels against Dawid and declares himself king at Hevron. Dies when his hair catches in a tree and Yo'av strikes him. His name means 'father of peace' — an ironic name for a man whose life is defined by violence and rebellion. Anglicized as Absalom." },
-    { "term": "Tamar", "phonetic": "Tah-MAHR", "definition": "Daughter of Dawid, sister of Avshalom. Raped by her half-brother Amnon (ch 13). She tears her long-sleeved robe — the garment of royal virgin daughters — and puts ashes on her head. Dawid is angry but takes no action. Her name means 'date palm.'" },
-    { "term": "Yo'av", "phonetic": "Yo-AHV", "definition": "Commander of Dawid's army. Arranges Avshalom's return from exile through the wise woman of Teqo'a. Later kills Avshalom in the forest of Efrayim against Dawid's orders. Anglicized as Joab." }
+    {
+      "term": "Amnon and Tamar",
+      "phonetic": "am-NON, ta-MAR",
+      "definition": "In 2 Shemu'el 13, David's firstborn son Amnon becomes obsessed with his half-sister Tamar (Avshalom's full sister). Advised by his cousin Yonadav, Amnon feigns illness to get Tamar alone, then rapes her. His obsession turns to hatred and he drives her out. Tamar lives in desolation at Avshalom's house. David is furious but does not punish Amnon because he loved him as his firstborn."
+    },
+    {
+      "term": "Avshalom",
+      "phonetic": "av-sha-LOM",
+      "definition": "David's third son — described as the most beautiful man in Yisra'el, without a blemish from head to toe, with exceptionally heavy hair. He is Tamar's full brother. After Amnon's rape of Tamar, Avshalom waits two years then kills Amnon. He flees to his grandfather's kingdom (Geshur) for three years. Eventually returns to Yerushalayim, is reconciled superficially with David, then launches a full rebellion against his father."
+    },
+    {
+      "term": "Avshalom's Rebellion",
+      "phonetic": "",
+      "definition": "Avshalom's coup against David (2 Shemu'el 15-18) is the most serious threat David faces in his own kingdom. Avshalom systematically steals the hearts of Yisra'el by sitting at the city gate, hearing disputes, and implying David is neglecting justice. He then goes to Hevron under the pretense of a vow and there is proclaimed king. David flees Yerushalayim on foot, weeping. The rebellion fulfills Natan's prophecy that adversity would rise from David's own household."
+    },
+    {
+      "term": "Khushai the Arkhite",
+      "phonetic": "khu-SHAI ha-AR-ki",
+      "definition": "David's friend and advisor who stays in Yerushalayim as a double agent when David flees (2 Shemu'el 15:32-37). Avshalom accepts him as a defector. When Akhitofel gives Avshalom brilliant tactical advice (pursue David immediately with 12,000 men tonight), Khushai counters with deliberately bad advice (wait and gather all Yisra'el). Avshalom follows Khushai's advice — the delay allows David to escape — and Natan's intelligence network relays updates to David through the priests' sons."
+    },
+    {
+      "term": "Akhitofel",
+      "phonetic": "a-khi-TO-fel",
+      "definition": "David's most trusted counselor — the text says his advice was considered as if one inquired of YHWH. He joins Avshalom's rebellion (his granddaughter was Bat-Sheva, suggesting personal grievance). Akhitofel advises Avshalom to lie with David's concubines publicly (fulfilling Natan's prophecy exactly) and then immediately pursue David before he can regroup. When Avshalom rejects his tactical advice in favor of Khushai's, Akhitofel recognizes the rebellion is doomed, goes home, sets his house in order, and hangs himself."
+    },
+    {
+      "term": "Ziba and Mefivoshet",
+      "phonetic": "tzee-VAH, me-fee-VEH-shet",
+      "definition": "When David flees, Tziva — Mefivoshet's servant — meets him with provisions and reports that Mefivoshet has stayed in Yerushalayim, hoping to regain Sha'ul's kingdom. David gives Tziva all Mefivoshet's land. When David returns, Mefivoshet appears in mourning — unwashed and unkempt since David left — and claims Tziva deceived David. David cannot determine who is lying and divides the land between them."
+    },
+    {
+      "term": "Shimei ben Gera",
+      "phonetic": "shi-MEI ben geh-RA",
+      "definition": "A man from Sha'ul's clan who comes out throwing stones and cursing David as he flees Yerushalayim (2 Shemu'el 16:5-14). He calls David a murderer and a worthless man. Avishai wants to kill him. David restrains him: 'If YHWH told him to curse David, who are you to stop him?' David accepts the cursing as a possible YHWH-sent affliction. When David returns victorious, Shimei begs forgiveness; David spares him despite Yoav's recommendation to execute him."
+    },
+    {
+      "term": "Avshalom's Hair",
+      "phonetic": "",
+      "definition": "The narrator records that Avshalom's hair was so heavy he had to cut it once a year — it weighed 200 shekels by the royal standard (2 Shemu'el 14:26). The detail is ironic: his famous hair causes his death when it catches in the branches of a great oak tree during battle, leaving him hanging helpless. Yoav plunges three javelins into Avshalom's heart while he hangs in the tree, against David's explicit order to spare his son."
+    },
+    {
+      "term": "David Weeping for Avshalom",
+      "phonetic": "",
+      "definition": "When Avshalom is killed, David goes up to the room above the gate and weeps, crying: 'O my son Avshalom! My son, my son Avshalom! If only I had died instead of you — O Avshalom, my son, my son!' (2 Shemu'el 18:33). The victory becomes a day of mourning. Yoav rebukes David sharply: his men risked their lives and David shames them by weeping for the son who tried to kill him. David must come out and address the army."
+    },
+    {
+      "term": "The Wise Woman of Teko'a",
+      "phonetic": "te-KO-a",
+      "definition": "In 2 Shemu'el 14, Yoav sends a wise woman from Teko'a to tell David a parable — she claims her son killed his brother and the clan wants the killer son executed, leaving her no heir. David rules in her son's favor. She then reveals the parable's real target: why has the king not brought home his banished son (Avshalom)? David recognizes Yoav's hand and allows Avshalom to return to Yerushalayim, though at first he refuses to see him for two years."
+    }
   ],
   "fill_blank": [
-    { "ref": "18:33", "prompt": "And the king was deeply moved and went up to the chamber over the gate and wept. And as he went, he said: O my son Avshalom, my son, my son Avshalom! Would I had died instead of ______!", "answer": "you", "source_quote": "O my son Avshalom, my son, my son Avshalom! Would I had died instead of you, O Avshalom, my son, my son!" },
-    { "ref": "15:6", "prompt": "So Avshalom stole the ______ of the men of Yisra'EL.", "answer": "hearts", "source_quote": "So Avshalom stole the hearts of the men of Yisra'EL." }
+    {
+      "ref": "2 Shemu'el 13:1-14",
+      "prompt": "Amnon raped his half-sister Tamar, and his obsession turned immediately to ___.",
+      "answer": "hatred",
+      "source_quote": "Amnon hated her with intense hatred... his hatred for her was greater than the love he had felt for her. — 2 Shemu'el 13:15"
+    },
+    {
+      "ref": "2 Shemu'el 13:20",
+      "prompt": "After her rape, Tamar lived in ___ at her brother Avshalom's house.",
+      "answer": "desolation",
+      "source_quote": "Tamar lived in her brother Absalom's house, a desolate woman. — 2 Shemu'el 13:20"
+    },
+    {
+      "ref": "2 Shemu'el 14:26",
+      "prompt": "Avshalom's hair was so heavy that when he cut it once a year it weighed ___ shekels by the royal standard.",
+      "answer": "two hundred (200)",
+      "source_quote": "Whenever he cut the hair of his head — his hair had become heavy on him... it weighed two hundred shekels by the royal standard. — 2 Shemu'el 14:26"
+    },
+    {
+      "ref": "2 Shemu'el 15:12",
+      "prompt": "Avshalom was anointed king at ___, the city where YHWH had first anointed David.",
+      "answer": "Hevron (Hebron)",
+      "source_quote": "Absalom had sent secret messengers throughout the tribes of Israel to say, 'As soon as you hear the sound of the trumpets, then say, Absalom is king in Hebron.' — 2 Shemu'el 15:10"
+    },
+    {
+      "ref": "2 Shemu'el 15:30",
+      "prompt": "David went up the Mount of Olives, ___, with his head covered and walking barefoot.",
+      "answer": "weeping",
+      "source_quote": "But David continued up the Mount of Olives, weeping as he went. — 2 Shemu'el 15:30"
+    },
+    {
+      "ref": "2 Shemu'el 16:21",
+      "prompt": "Akhitofel advised Avshalom to lie with his father's ___ in the sight of all Yisra'el.",
+      "answer": "concubines",
+      "source_quote": "Lie with your father's concubines whom he left to take care of the palace. — 2 Shemu'el 16:21"
+    },
+    {
+      "ref": "2 Shemu'el 17:23",
+      "prompt": "When Avshalom rejected his advice, Akhitofel went home, set his house in order, and ___.",
+      "answer": "hanged himself",
+      "source_quote": "He put his house in order and then hanged himself. — 2 Shemu'el 17:23"
+    },
+    {
+      "ref": "2 Shemu'el 18:9",
+      "prompt": "Avshalom's ___ caught in the branches of a large oak tree and he was left hanging in the air.",
+      "answer": "head (hair)",
+      "source_quote": "His head got caught in the tree. He was left hanging in midair. — 2 Shemu'el 18:9"
+    },
+    {
+      "ref": "2 Shemu'el 18:33",
+      "prompt": "David cried: 'O my son Avshalom! My son, my son Avshalom! If only I had ___ instead of you!'",
+      "answer": "died",
+      "source_quote": "O my son Absalom! My son, my son Absalom! If only I had died instead of you. — 2 Shemu'el 18:33"
+    },
+    {
+      "ref": "2 Shemu'el 16:11",
+      "prompt": "David said of Shimei's cursing: 'Leave him alone and let him curse, for YHWH has ___ him to do it.'",
+      "answer": "told (commanded)",
+      "source_quote": "Leave him alone; let him curse, for YHWH has told him to. — 2 Shemu'el 16:11"
+    }
   ],
   "multiple_choice": [
-    { "ref": "13:28-29", "question": "Why did Avshalom kill Amnon?", "options": ["For the throne", "Because Amnon raped Tamar and Dawid did nothing", "Over a land dispute", "YHWH commanded it"], "correct": 1, "source_quote": "Avshalom commanded his servants: Mark when Amnon's heart is merry with wine, and when I say to you, strike Amnon, then kill him." },
-    { "ref": "18:9-15", "question": "How did Avshalom die?", "options": ["He fell in battle", "His hair caught in a tree and Yo'av struck him", "He was captured and executed", "He drowned in the Yarden"], "correct": 1, "source_quote": "Avshalom's head caught fast in the oak, and he was suspended between heaven and earth, while the mule that was under him went on. And Yo'av took three darts in his hand and thrust them into the heart of Avshalom." }
+    {
+      "ref": "2 Shemu'el 13",
+      "question": "Who advised Amnon how to get Tamar alone?",
+      "options": [
+        "Yoav ben Tzruyah",
+        "Akhitofel",
+        "His cousin Yonadav",
+        "David himself"
+      ],
+      "correct": 2,
+      "source_quote": "Now Amnon had an adviser named Jonadab... a very shrewd man. — 2 Shemu'el 13:3"
+    },
+    {
+      "ref": "2 Shemu'el 13:28-29",
+      "question": "How long did Avshalom wait before killing Amnon?",
+      "options": [
+        "One week",
+        "Three months",
+        "Two years",
+        "Seven years"
+      ],
+      "correct": 2,
+      "source_quote": "Absalom hated Amnon because he had disgraced his sister Tamar. Two years later... — 2 Shemu'el 13:22-23"
+    },
+    {
+      "ref": "2 Shemu'el 14",
+      "question": "What was the message of the Wise Woman of Teko'a's parable to David?",
+      "options": [
+        "That David must punish Amnon's killers",
+        "That David should bring back his banished son Avshalom",
+        "That the people wanted a new king",
+        "That David should give Mefivoshet his land back"
+      ],
+      "correct": 1,
+      "source_quote": "Why have you devised a thing like this against the people of God? — 2 Shemu'el 14:13"
+    },
+    {
+      "ref": "2 Shemu'el 15:6",
+      "question": "How did Avshalom steal the hearts of Yisra'el?",
+      "options": [
+        "By military victories",
+        "By distributing silver to the people",
+        "By sitting at the city gate and implying David was neglecting their disputes",
+        "By marrying the daughters of tribal leaders"
+      ],
+      "correct": 2,
+      "source_quote": "Absalom behaved in this way toward all the Israelites who came to the king asking for justice... so Absalom stole the hearts of the people of Israel. — 2 Shemu'el 15:6"
+    },
+    {
+      "ref": "2 Shemu'el 16:5-9",
+      "question": "What did Shimei ben Gera do as David fled Yerushalayim?",
+      "options": [
+        "Offered David provisions",
+        "Pleaded with David to stay and fight",
+        "Cursed David and threw stones at him and his servants",
+        "Tried to assassinate David in the road"
+      ],
+      "correct": 2,
+      "source_quote": "Shimei cursed as he went: 'Get out, get out, you murderer, you scoundrel!' — 2 Shemu'el 16:7"
+    },
+    {
+      "ref": "2 Shemu'el 17:1-14",
+      "question": "What was Akhitofel's tactical advice to Avshalom, and why was Khushai's counter-advice accepted?",
+      "options": [
+        "Akhitofel said wait; Khushai said attack immediately — Avshalom chose Khushai",
+        "Akhitofel said pursue David immediately with 12,000 men tonight; Khushai countered with wait and gather all Yisra'el — YHWH frustrated Akhitofel's counsel",
+        "Akhitofel said surrender to David; Khushai said fight to the death",
+        "Akhitofel said kill David's generals first; Khushai said negotiate"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH had determined to frustrate the good advice of Ahithophel in order to bring disaster on Absalom. — 2 Shemu'el 17:14"
+    },
+    {
+      "ref": "2 Shemu'el 18:9",
+      "question": "How did Avshalom die?",
+      "options": [
+        "Killed by Yoav's sword in battle",
+        "His horse threw him into a river and he drowned",
+        "His head/hair caught in an oak tree; Yoav ran javelins into him while he hung there",
+        "David's personal guard killed him as commanded"
+      ],
+      "correct": 2,
+      "source_quote": "His head got caught in the tree. He was left hanging in midair... Joab took three javelins in his hand and plunged them into Absalom's heart. — 2 Shemu'el 18:9, 14"
+    },
+    {
+      "ref": "2 Shemu'el 17:23",
+      "question": "What did Akhitofel do when Avshalom rejected his advice?",
+      "options": [
+        "Defected to David's camp",
+        "Tried to kill Avshalom himself",
+        "Went home, set his house in order, and hanged himself",
+        "Fled the country"
+      ],
+      "correct": 2,
+      "source_quote": "He put his house in order and then hanged himself. — 2 Shemu'el 17:23"
+    },
+    {
+      "ref": "2 Shemu'el 18:33",
+      "question": "How did David react to news of Avshalom's death?",
+      "options": [
+        "Gave thanks to YHWH for his deliverance",
+        "Wept bitterly: 'O my son Avshalom! If only I had died instead of you'",
+        "Immediately organized a victory celebration",
+        "Said nothing and withdrew into silence"
+      ],
+      "correct": 1,
+      "source_quote": "O my son Absalom! My son, my son Absalom! If only I had died instead of you. — 2 Shemu'el 18:33"
+    },
+    {
+      "ref": "2 Shemu'el 16:21-22",
+      "question": "Akhitofel's advice for Avshalom to lie with David's concubines fulfills which prior prophecy?",
+      "options": [
+        "Avigayil's warning to David",
+        "Natan's covenant prophecy that adversity would come from David's own house and his neighbor would take his wives openly",
+        "Shmuel's earlier warning about kings",
+        "Gad the seer's warning about the census"
+      ],
+      "correct": 1,
+      "source_quote": "So they pitched a tent for Absalom on the roof, and he lay with his father's concubines in the sight of all Israel. — 2 Shemu'el 16:22"
+    }
   ],
   "faq": [
     {
-      "question": "What does the rape of Tamar reveal about justice systems and institutional failure?",
-      "answer": "Amnon rapes Tamar. Dawid — the king, the father, the covenant leader — is angry but does nothing (13:21). The institution of the monarchy fails to deliver justice for the violated woman. Avshalom takes justice into his own hands after two years of waiting. The pattern: when the institution charged with justice fails to act, individuals resort to vigilante justice, which produces further cycles of violence. The Qumran community documented this same pattern in the Jerusalem priesthood — institutional corruption that went unaddressed, leading to the community's withdrawal. The Great Eraser operates within this dynamic: institutional systems that fail to deliver justice also control the narrative. Tamar's rape is in the text, but how many sermons, church studies, or academic curricula address it? The institution decides which parts of the text are taught and which are silenced."
+      "question": "How does the rape of Tamar set off a chain of disasters for David's family?",
+      "answer": "Tamar's rape by Amnon is the first link in the chain Natan's prophecy described. David is furious but does not punish Amnon — the text says he loved him as his firstborn. Avshalom waits two full years in silence, then kills Amnon at a sheep-shearing feast and flees to Geshur for three years. When Avshalom returns, David refuses to see him for two more years. The estrangement festers until Avshalom burns Yoav's field to get a meeting — and that meeting leads directly to Avshalom's coup. The pattern is clear: David's failure to enforce justice at home creates the conditions for the rebellion."
     },
     {
-      "question": "How does Avshalom's rebellion connect to the African and Indigenous experience of contested sovereignty?",
-      "answer": "Avshalom goes to Hevron — the city where Dawid was first anointed — to declare his counter-kingship. He uses the language of justice: 'If only I were made judge in the land, then every man who has a dispute could come to me, and I would give him justice' (15:4). He critiques the ruling power's failure to deliver justice — and uses that critique to seize power for himself. This is the pattern of every colonial and neo-colonial power that claimed to bring 'civilization' and 'justice' to African and Indigenous peoples while actually extracting resources and consolidating control. The language of justice used to seize unjust power is one of the Great Eraser's primary tools. Avshalom's rebellion fails because YHWH's covenant choice — Dawid — cannot be overturned by human political manipulation."
+      "question": "Who is Akhitofel and why is his suicide so significant?",
+      "answer": "Akhitofel is described as the wisest counselor in David's court — his advice was treated as if one had inquired of YHWH directly. His defection to Avshalom is catastrophic for David. His first advice — that Avshalom lie with David's concubines publicly — is immediately taken and fulfills Natan's prophecy exactly. His second advice — pursue David immediately with 12,000 men — was sound and would likely have succeeded. When Avshalom chooses Khushai's deliberately bad advice instead, Akhitofel recognizes the rebellion is doomed. He goes home, makes his will, and hangs himself. The narrator says YHWH frustrated his counsel to bring disaster on Avshalom."
+    },
+    {
+      "question": "What is the role of Khushai the Arkhite in saving David?",
+      "answer": "Khushai is David's friend who meets him weeping at the Mount of Olives. David sends him back as a double agent: appear to serve Avshalom and counter Akhitofel's advice. Khushai's counter-advice succeeds precisely because it flatters Avshalom's ego — it tells him he is personally so formidable that all Yisra'el should gather around him. The delay Khushai buys allows David to cross the Yarden, receive supplies from Makir and Barzillai, and organize a proper army. Khushai also passes intelligence through the priests Tzadok and Evyatar, whose sons relay messages to David through a woman at En-Rogel."
+    },
+    {
+      "question": "Why does David restrain Avishai from killing Shimei?",
+      "answer": "David's restraint of Avishai when Shimei curses him is one of the most theologically rich moments of the narrative. David says: 'If YHWH told him to curse David, who are you to interfere?' David frames his own humiliation as a possible divine judgment — he is not certain YHWH is behind it, but he is open to the possibility. 'Perhaps YHWH will look on my affliction and repay me with good for his cursing today.' This is not weakness; it is a man processing the consequences of his own sins without deflecting blame onto a convenient target."
+    },
+    {
+      "question": "What does Avshalom's sitting at the city gate tell us about ancient Israelite government?",
+      "answer": "In ancient Yisra'el, the city gate was the place of judicial proceedings. Elders sat there, disputes were heard, and legal decisions were made. Avshalom goes to the gate and intercepts people coming to David for judgment — he hears their case, declares their claim is good, and says: 'If only I were judge in this land, everyone who had a dispute or a case could come to me and I would see that he received justice.' He implies David has no one designated to hear these cases. He is exploiting a real governance gap to build a political base, and it works — the text says he stole the hearts of Yisra'el."
+    },
+    {
+      "question": "How does Avshalom's death fulfill the irony of his famous hair?",
+      "answer": "The text goes out of its way in 2 Shemu'el 14:25-26 to describe Avshalom's beauty and his exceptional hair — 200 shekels a year when cut, an extraordinary weight. The detail seems like a boast, establishing Avshalom as the pinnacle of Israelite male beauty. When his death comes, the same hair is the instrument of his capture: riding under a great oak tree, his head (or hair) catches in the branches, leaving him hanging. His horse rides on without him. He is completely helpless — the most beautiful man in Yisra'el suspended, unable to free himself — until Yoav comes."
+    },
+    {
+      "question": "Why does Yoav kill Avshalom against David's explicit command?",
+      "answer": "David explicitly commands his generals: 'Be gentle with the young man Avshalom, for my sake.' Every officer hears this. When Yoav learns Avshalom is hanging in the oak tree, he goes himself and plunges three javelins into Avshalom's chest. When a soldier challenges Yoav about disobeying David, Yoav says he would not wait with 1000 pieces of silver — meaning Avshalom had to die. Yoav's military logic is pragmatic: leaving Avshalom alive means perpetual civil war and David never being safe on his throne. His disobedience is the same pattern as killing Avner — Yoav always prioritizes the military/political reality over David's emotional wishes."
+    },
+    {
+      "question": "What does David's weeping for Avshalom teach about parental grief?",
+      "answer": "David's grief — 'O my son Avshalom! If only I had died instead of you!' — is one of the most raw expressions of parental grief in any ancient text. He does not celebrate his military victory. He does not condemn Avshalom. He cannot stop mourning. Yoav rebukes him: 'You have humiliated all your men today — they saved your life and the lives of your sons and daughters. You have made clear that your officers and men mean nothing to you.' The rebuke is fair by military standards, but David's grief is also real and human. The scene captures the impossibility of David's position: victorious king and broken father simultaneously."
+    },
+    {
+      "question": "What happens to Mefivoshet during Avshalom's rebellion?",
+      "answer": "When David flees, Tziva (Mefivoshet's servant) meets him with donkeys, bread, figs, and wine. He tells David that Mefivoshet stayed in Yerushalayim, hoping to regain his grandfather Sha'ul's kingdom. David, in need and angry, gives Tziva all of Mefivoshet's land. When David returns, Mefivoshet comes to meet him — unwashed, unkempt, beard untrimmed since David left. He claims Tziva saddled a donkey for himself and betrayed Mefivoshet's intent, which was to accompany David but was physically unable. David cannot know who is lying, so he divides the land between them. Mefivoshet responds: 'Let Tziva take it all — the king has returned safely.'"
+    },
+    {
+      "question": "What is the route of David's flight and how is he received?",
+      "answer": "David flees from Yerushalayim eastward, crossing the Kidron Valley, going up the Mount of Olives barefoot and weeping, then continuing toward the wilderness. Along the way: Tzadok and the Levites bring the Ark — David sends it back (if YHWH wants him to return, the Ark will be there; if not, let YHWH do what seems good). Khushai the Arkhite meets him and is sent back. Tziva meets him with supplies but reports Mefivoshet's betrayal. Shimei curses him. He reaches Makhanaim, east of the Yarden, where Makir, Barzillai, and Shobi bring provisions for David and his people. The variety of responses — loyalty, betrayal, hostility, generosity — maps the full political landscape of the crisis."
     }
   ]
 }

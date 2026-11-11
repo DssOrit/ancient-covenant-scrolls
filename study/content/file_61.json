@@ -1,38 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_61",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_61",
   "label": "The Twelve — Part 2 — Yoel and Amos",
   "volume": 19,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "Yoel describes a devastating locust invasion — the land stripped bare, the grain offering and drink offering cut off from the house of YHWH. Blow the shofar in Tziyon! YHWH promises to pour out his ruach on all flesh — your sons and daughters shall prophesy, your old men shall dream dreams, your young men shall see visions. Even on the male and female servants I will pour out my ruach. YHWH will gather all the nations and bring them down to the Valley of Yehoshafat and enter into judgment with them there on account of my people Yisra'EL. Amos — a herdsman from Teqoa — declares YHWH's roar from Tziyon against the nations. For three transgressions and for four. YHWH demands justice: let justice roll down like waters and righteousness like an ever-flowing stream. You who turn justice to wormwood and cast down righteousness to the earth. YHWH says: I hate, I despise your festivals — I take no delight in your solemn assemblies. But let justice roll down.",
   "summary_scholarly": "The ACR reads from the Minor Prophets Scroll (4QXII, 8HevXIIgr, and Murabba'at) and the Orit Ge'ez. Yoel's ruach-pouring prophecy (2:28-29/3:1-2 in the Hebrew) is among the most significant in the prophetic literature — YHWH's ruach poured out on all flesh regardless of gender or social status, including servants. Acts 2 cites this passage at Pentecost, but the original text promises prophetic empowerment to all covenant people — not the establishment of a new institution. Amos is the foundational social justice prophet. His background — a herdsman, not a professional prophet (7:14) — establishes that prophetic authority comes from YHWH's call, not institutional training. The judgment formula 'for three transgressions and for four' covers Damascus, Gaza, Tyre, Edom, Ammon, Moav, Yehudah, and Yisra'EL — YHWH judges all nations by the same standard of justice.",
   "key_terms": [
-    { "term": "Yoel", "phonetic": "Yo-EL", "definition": "Prophet whose name means 'YHWH is Creator.' He prophesies the outpouring of YHWH's ruach on all flesh and the gathering of nations for judgment in the Valley of Yehoshafat. Anglicized as Joel." },
-    { "term": "Amos", "phonetic": "Ah-MOS", "definition": "A herdsman and dresser of sycamore figs from Teqoa. Not a professional prophet nor a prophet's son (7:14). YHWH took him from following the flock and sent him to prophesy. He demands justice and righteousness — and condemns the wealthy who oppress the poor." },
-    { "term": "Ruach on All Flesh", "phonetic": "ROO-akh", "definition": "Yoel 2:28-29 (3:1-2 in Hebrew numbering): YHWH will pour out his ruach (spirit/breath/wind) on all flesh — sons, daughters, old men, young men, male servants, female servants. No gender or class restriction on prophetic empowerment." },
-    { "term": "Valley of Yehoshafat", "phonetic": "Yeh-ho-shah-FAHT", "definition": "Yoel 3:2 (4:2 in Hebrew): YHWH will gather all nations and bring them down to the Valley of Yehoshafat for judgment. The name means 'YHWH judges.' This is the location of the final reckoning between YHWH and the nations that scattered his people." }
+    {
+      "term": "Ovadyah",
+      "phonetic": "oh-vad-YAH",
+      "definition": "The shortest book among the prophets; a single-chapter oracle pronouncing YHWH's judgment against Edom for its pride and its betrayal of Yisra'el in the day of disaster."
+    },
+    {
+      "term": "Edom Oracle",
+      "phonetic": "Ovadyah 1",
+      "definition": "YHWH's decree against Edom (descendants of Esav): their mountain fortress pride will be brought down; as they did to Yisra'el they will receive in return."
+    },
+    {
+      "term": "Yonah",
+      "phonetic": "YOH-nah",
+      "definition": "A prophet who fled from YHWH's commission to warn Nineveh; swallowed by a great fish; and ultimately confronted with YHWH's compassion extending beyond Yisra'el."
+    },
+    {
+      "term": "The Great Fish",
+      "phonetic": "Yonah 1:17",
+      "definition": "YHWH appointed a great fish to swallow Yonah for three days and three nights after he was thrown overboard. This ancient text is the source; NT writers borrowed the sign of Yonah's three days."
+    },
+    {
+      "term": "Nineveh Repents",
+      "phonetic": "Yonah 3",
+      "definition": "The entire city of Nineveh — king, people, and animals — fasted and turned from violence when Yonah's warning reached them, and YHWH relented from the announced judgment."
+    },
+    {
+      "term": "YHWH's Mercy (Yonah 4)",
+      "phonetic": "Yonah 4:11",
+      "definition": "YHWH challenges Yonah's anger at divine compassion: 'Should I not be concerned about Nineveh, that great city, in which there are more than 120,000 persons who do not know their right hand from their left?'"
+    },
+    {
+      "term": "Mikhah",
+      "phonetic": "mee-KHAH",
+      "definition": "A prophet from Moresheth who addressed both the northern and southern kingdoms; his oracles include sharp social justice indictments and famous summations of what YHWH requires."
+    },
+    {
+      "term": "Justice, Kindness, Humility (Mikhah 6:8)",
+      "phonetic": "Mikhah 6:8",
+      "definition": "YHWH's answer to what covenant faithfulness requires: 'to do justice, to love kindness, and to walk humbly with YHWH your Creator.'"
+    },
+    {
+      "term": "Ruler from Beit-Lekhem (Mikhah 5:2)",
+      "phonetic": "Mikhah 5:2",
+      "definition": "YHWH announces a ruler will come from Beit-Lekhem of Yehudah, whose origins are from of old. Ancient source text; NT writers borrowed from Mikhah 5:2."
+    },
+    {
+      "term": "Nakhum",
+      "phonetic": "nah-KHOOM",
+      "definition": "A prophet whose name means 'comfort'; his entire book is an oracle of YHWH's judgment against Nineveh — the same city Yonah warned a generation earlier; this time no repentance comes."
+    }
   ],
   "fill_blank": [
-    { "ref": "Amos 5:24", "prompt": "But let justice roll down like ______, and righteousness like an ever-flowing stream.", "answer": "waters", "source_quote": "But let justice roll down like waters, and righteousness like an ever-flowing stream." },
-    { "ref": "Yoel 2:28", "prompt": "I will pour out my ruach on all ______ — your sons and your daughters shall prophesy.", "answer": "flesh", "source_quote": "And it shall come to pass afterward that I will pour out my ruach on all flesh — your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions." },
-    { "ref": "Amos 7:14", "prompt": "I was no prophet, nor a prophet's son — but I was a ______ and a dresser of sycamore figs.", "answer": "herdsman", "source_quote": "I was no prophet, nor a prophet's son, but I was a herdsman and a dresser of sycamore figs. And YHWH took me from following the flock, and YHWH said to me: Go, prophesy to my people Yisra'EL." }
+    {
+      "ref": "Ovadyah 1:3",
+      "prompt": "The ___ of your heart has deceived you, you who live in the clefts of the rock, in your lofty dwelling.",
+      "answer": "pride",
+      "source_quote": "The pride of your heart has deceived you, you who live in the clefts of the rock, in your lofty dwelling."
+    },
+    {
+      "ref": "Ovadyah 1:15",
+      "prompt": "As you have done, it shall be ___ to you; your deeds shall return on your own head.",
+      "answer": "done",
+      "source_quote": "As you have done, it shall be done to you; your deeds shall return on your own head."
+    },
+    {
+      "ref": "Yonah 1:3",
+      "prompt": "But Yonah rose to ___ from the presence of YHWH and went down to Yafo and found a ship going to Tarshish.",
+      "answer": "flee",
+      "source_quote": "But Yonah rose to flee from the presence of YHWH and went down to Yafo and found a ship going to Tarshish."
+    },
+    {
+      "ref": "Yonah 1:17",
+      "prompt": "And YHWH appointed a great ___ to swallow up Yonah, and Yonah was in the belly of the fish three days and three nights.",
+      "answer": "fish",
+      "source_quote": "And YHWH appointed a great fish to swallow up Yonah, and Yonah was in the belly of the fish three days and three nights."
+    },
+    {
+      "ref": "Yonah 3:5",
+      "prompt": "And the people of Nineveh believed YHWH. They called for a ___ and put on sackcloth, from the greatest of them to the least of them.",
+      "answer": "fast",
+      "source_quote": "And the people of Nineveh believed YHWH. They called for a fast and put on sackcloth, from the greatest of them to the least of them."
+    },
+    {
+      "ref": "Yonah 4:11",
+      "prompt": "'And should I not be ___ about Nineveh, that great city, in which there are more than 120,000 persons who do not know their right hand from their left?'",
+      "answer": "concerned",
+      "source_quote": "And should I not be concerned about Nineveh, that great city, in which there are more than 120,000 persons who do not know their right hand from their left?"
+    },
+    {
+      "ref": "Mikhah 4:3",
+      "prompt": "They shall beat their ___ into plowshares, and their spears into pruning hooks; nation shall not lift up sword against nation, neither shall they learn war anymore.",
+      "answer": "swords",
+      "source_quote": "They shall beat their swords into plowshares, and their spears into pruning hooks; nation shall not lift up sword against nation, neither shall they learn war anymore."
+    },
+    {
+      "ref": "Mikhah 5:2",
+      "prompt": "But you, O Beit-Lekhem of Yehudah, who are too little to be among the clans of Yehudah, from you shall come forth for me one who is to be ___ in Yisra'el.",
+      "answer": "ruler",
+      "source_quote": "But you, O Beit-Lekhem of Yehudah, who are too little to be among the clans of Yehudah, from you shall come forth for me one who is to be ruler in Yisra'el."
+    },
+    {
+      "ref": "Mikhah 6:8",
+      "prompt": "What does YHWH require of you but to do ___, and to love kindness, and to walk humbly with YHWH your Creator?",
+      "answer": "justice",
+      "source_quote": "What does YHWH require of you but to do justice, and to love kindness, and to walk humbly with YHWH your Creator?"
+    },
+    {
+      "ref": "Nakhum 1:3",
+      "prompt": "YHWH is slow to ___ and great in power, and YHWH will by no means clear the guilty.",
+      "answer": "anger",
+      "source_quote": "YHWH is slow to anger and great in power, and YHWH will by no means clear the guilty."
+    }
   ],
   "multiple_choice": [
-    { "ref": "Yoel 3:1-2", "question": "What does YHWH declare about the nations in the Valley of Yehoshafat?", "options": ["He will bless them and forgive them", "He will gather them for judgment on account of his people Yisra'EL", "He will make a covenant with them", "He will scatter them as he scattered Yisra'EL"], "correct": 1, "source_quote": "I will gather all the nations and bring them down to the Valley of Yehoshafat, and I will enter into judgment with them there on account of my people and my heritage Yisra'EL." },
-    { "ref": "Amos 5:21-24", "question": "What does YHWH say about the festivals and solemn assemblies?", "options": ["He delights in them above all else", "He hates and despises them — he demands justice and righteousness instead", "He commands more of them", "He will attend them in person"], "correct": 1, "source_quote": "I hate, I despise your festivals, and I take no delight in your solemn assemblies. But let justice roll down like waters, and righteousness like an ever-flowing stream." },
-    { "ref": "Amos 7:14-15", "question": "What was Amos before YHWH called him?", "options": ["A temple priest", "A royal scribe", "A herdsman and dresser of sycamore figs", "A Levitical singer"], "correct": 2, "source_quote": "I was no prophet, nor a prophet's son, but I was a herdsman and a dresser of sycamore figs. And YHWH took me from following the flock." }
+    {
+      "ref": "Ovadyah 1:3",
+      "question": "According to Ovadyah, what had deceived Edom and led to their downfall?",
+      "options": [
+        "Military overconfidence",
+        "The pride of their heart",
+        "Trusting in foreign alliances",
+        "Worshipping idols"
+      ],
+      "correct": 1,
+      "source_quote": "The pride of your heart has deceived you."
+    },
+    {
+      "ref": "Ovadyah 1:15",
+      "question": "What principle does YHWH apply to Edom in Ovadyah 1:15?",
+      "options": [
+        "Those who repent will be spared",
+        "As you have done, so it shall be done to you",
+        "The humble will inherit the land",
+        "YHWH will rebuild what Edom destroyed"
+      ],
+      "correct": 1,
+      "source_quote": "As you have done, it shall be done to you; your deeds shall return on your own head."
+    },
+    {
+      "ref": "Yonah 1:3",
+      "question": "Where did Yonah try to flee when YHWH sent him to Nineveh?",
+      "options": [
+        "Babylon",
+        "Mitzrayim",
+        "Tarshish",
+        "Assyria"
+      ],
+      "correct": 2,
+      "source_quote": "Yonah rose to flee from the presence of YHWH and went down to Yafo and found a ship going to Tarshish."
+    },
+    {
+      "ref": "Yonah 1:17",
+      "question": "How long was Yonah inside the great fish?",
+      "options": [
+        "One day and one night",
+        "Seven days",
+        "Three days and three nights",
+        "Forty days"
+      ],
+      "correct": 2,
+      "source_quote": "Yonah was in the belly of the fish three days and three nights."
+    },
+    {
+      "ref": "Yonah 3:5-6",
+      "question": "How did Nineveh respond to Yonah's warning?",
+      "options": [
+        "They laughed at Yonah and had him arrested",
+        "The king refused to believe and increased idol worship",
+        "The whole city fasted and wore sackcloth, from the king to the least",
+        "Only the poor people repented while the wealthy ignored the warning"
+      ],
+      "correct": 2,
+      "source_quote": "The people of Nineveh believed YHWH. They called for a fast and put on sackcloth, from the greatest of them to the least of them."
+    },
+    {
+      "ref": "Yonah 4:11",
+      "question": "What was YHWH's final question to Yonah that closes the book?",
+      "options": [
+        "Why did you flee from my presence?",
+        "Should I not be concerned about Nineveh with its 120,000 people?",
+        "Will you serve me faithfully from now on?",
+        "Did you not know that I am creator of all nations?"
+      ],
+      "correct": 1,
+      "source_quote": "Should I not be concerned about Nineveh, that great city, in which there are more than 120,000 persons?"
+    },
+    {
+      "ref": "Mikhah 4:3",
+      "question": "Mikhah 4:3 describes a future time when swords will be beaten into what?",
+      "options": [
+        "Shields",
+        "Spears",
+        "Plowshares",
+        "Chariots"
+      ],
+      "correct": 2,
+      "source_quote": "They shall beat their swords into plowshares, and their spears into pruning hooks."
+    },
+    {
+      "ref": "Mikhah 5:2",
+      "question": "From which town does Mikhah say a ruler for Yisra'el will emerge?",
+      "options": [
+        "Yerushalayim",
+        "Shomron",
+        "Beit-Lekhem",
+        "Teqoa"
+      ],
+      "correct": 2,
+      "source_quote": "But you, O Beit-Lekhem of Yehudah, from you shall come forth for me one who is to be ruler in Yisra'el."
+    },
+    {
+      "ref": "Mikhah 6:8",
+      "question": "According to Mikhah 6:8, what three things does YHWH require?",
+      "options": [
+        "Sacrifices, prayer, and tithing",
+        "Justice, kindness, and humble walking with YHWH",
+        "Fasting, Shabbat observance, and Temple attendance",
+        "Repentance, faith, and holy living"
+      ],
+      "correct": 1,
+      "source_quote": "What does YHWH require of you but to do justice, and to love kindness, and to walk humbly with YHWH your Creator?"
+    },
+    {
+      "ref": "Nakhum 1:3",
+      "question": "How does Nakhum describe YHWH at the opening of his oracle?",
+      "options": [
+        "YHWH is quick to anger and merciless",
+        "YHWH is slow to anger but great in power and will not clear the guilty",
+        "YHWH has abandoned Nineveh to its fate",
+        "YHWH rejoices when the wicked are punished"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH is slow to anger and great in power, and YHWH will by no means clear the guilty."
+    }
   ],
   "faq": [
     {
-      "question": "How did the Great Eraser domesticate Amos's demand for justice?",
-      "answer": "Amos 5:24 — 'let justice roll down like waters and righteousness like an ever-flowing stream' — is quoted routinely in Western culture, stripped of its context. The full passage (5:21-24) begins: 'I hate, I despise your festivals. I take no delight in your solemn assemblies. Even though you offer me your burnt offerings and grain offerings, I will not accept them. Take away from me the noise of your songs.' YHWH is not requesting justice as an addition to religious practice — he is rejecting religious practice that exists without justice. The Great Eraser turned Amos into a motivational quote on church walls while the churches themselves participated in slavery, Jim Crow, colonialism, and wealth extraction from the covenant people. Amos was a herdsman — not seminary-trained, not institutionally authorized. YHWH took him from following the flock and sent him to confront the religious establishment. The institutional religious system he confronted in the 8th century BCE is structurally identical to the one that quotes him while perpetuating injustice."
+      "question": "What is the book of Ovadyah about and why is it significant?",
+      "answer": "Ovadyah is the shortest book in the Hebrew prophetic collection — a single chapter oracle against Edom. Its significance lies in the accountability principle: Edom had stood by while Yisra'el suffered, even assisting enemies, and YHWH announces that every deed returns on its doer's own head."
     },
     {
-      "question": "What does Yoel's ruach prophecy mean for the covenant community?",
-      "answer": "Yoel 2:28-29 (3:1-2 in Hebrew numbering) promises the outpouring of YHWH's ruach on all flesh — explicitly including sons, daughters, old men, young men, male servants, and female servants. No gender exclusion. No class exclusion. No institutional gatekeeping. Acts 2 claims the fulfillment of this passage at Pentecost — but immediately thereafter, the institutional Church built a hierarchy that excluded women from leadership and denied servants prophetic authority. The promise is YHWH's ruach on ALL flesh. The Great Eraser restricted prophetic authority to ordained male clergy within institutional structures — the exact opposite of what Yoel prophesied. The restoration of the covenant community requires the restoration of what Yoel described: prophetic empowerment without institutional permission, without gender restriction, without class barriers."
+      "question": "Why did Yonah flee from YHWH's commission to go to Nineveh?",
+      "answer": "The book itself reveals the reason only at the end: Yonah knew that YHWH is compassionate and slow to anger, and he feared that if Nineveh repented, YHWH would relent from judgment. He fled to Tarshish rather than be an instrument of mercy toward an enemy nation."
     },
     {
-      "question": "Why does YHWH gather the nations for judgment specifically 'on account of my people Yisra'EL'?",
-      "answer": "Yoel 3:2 (4:2): 'I will enter into judgment with them there on account of my people and my heritage Yisra'EL, whom they have scattered among the nations. They have divided up my land.' The judgment of the nations is not abstract — it is specifically for the scattering of Yisra'EL and the division of the land. Every empire that participated in the scattering — Assyria, Babylon, Rome, the Arab slave trade, the European slave trade, the colonial partition of Africa — is subject to this judgment. The Great Eraser removed this specificity: the Valley of Yehoshafat judgment is universalized into a generic 'last judgment' about individual sin. But the text is specific: the nations are judged for what they did to YHWH's people. The scattering. The land division. The identity erasure. These are the charges."
+      "question": "What is the significance of the great fish in Yonah's story?",
+      "answer": "YHWH appointed the fish as the instrument of rescue — not punishment. Yonah was swallowed when thrown overboard and prayed from inside the fish (Yonah ch.2). The three days and three nights inside the fish is the ancient text; NT writers borrowed this imagery for their invented figure's burial claim. The original is about YHWH's rescue of Yonah."
+    },
+    {
+      "question": "How did Nineveh's response in Yonah 3 demonstrate genuine repentance?",
+      "answer": "When Yonah's warning reached Nineveh, the entire city — from the king on his throne to the lowest person — fasted, put on sackcloth, and turned from violence. The king issued a decree commanding the city to call earnestly to YHWH. YHWH saw their turning and relented from the announced judgment."
+    },
+    {
+      "question": "Why was Yonah angry at YHWH's compassion in chapter 4?",
+      "answer": "Yonah was angry because YHWH's mercy toward Nineveh felt unjust to him. He had declared the city would be overthrown in forty days, and when it was not, his prophetic message seemed to have failed. YHWH's response — 'Should I not be concerned about 120,000 people?' — rebukes prophetic nationalism over divine compassion."
+    },
+    {
+      "question": "What is Mikhah 6:8 and why is it considered one of the most important covenant statements?",
+      "answer": "Mikhah 6:8 is YHWH's direct answer to what the covenant truly demands: do justice, love kindness, and walk humbly with YHWH your Creator. It strips away all religious performance and reduces covenant faithfulness to three inseparable things: righteous action, loyal love, and humble relationship — all under YHWH's authority, not human institutions."
+    },
+    {
+      "question": "What ancient text does Mikhah 5:2 contain and what did NT writers do with it?",
+      "answer": "Mikhah 5:2 announces that from Beit-Lekhem of Yehudah a ruler will emerge for Yisra'el, whose origins are from ancient days. This is an ancient Hebrew covenant text about Yehudah's future ruler. NT writers borrowed this text to construct the birth narrative for the invented figure; the original ancient source predates that borrowing by centuries."
+    },
+    {
+      "question": "How does Nakhum's oracle against Nineveh differ from Yonah's?",
+      "answer": "Yonah's generation saw Nineveh repent and YHWH relent. By Nakhum's time, Nineveh's empire had become the terror of the ancient world under the Assyrian empire. Nakhum's oracle announces YHWH's coming judgment against the city with no call to repentance — the time for that has passed."
+    },
+    {
+      "question": "What does Mikhah 4:3 envision for the future and how does it compare to Yoel 3:10?",
+      "answer": "Mikhah 4:3 (also found nearly identically in Yesha'yahu 2:4) describes a future age of peace where weapons are beaten into agricultural tools — swords into plowshares, spears into pruning hooks. Yoel 3:10 deliberately reverses this image, calling the nations to arm themselves for battle. Both are authentic ancient texts; the reversal is deliberate prophetic tension."
+    },
+    {
+      "question": "What is the lasting impact of the book of Yonah on Hebrew covenant understanding?",
+      "answer": "Yonah confronts the assumption that YHWH's compassion is the exclusive property of Yisra'el. YHWH is not a tribal deity but the Creator whose concern extends to Nineveh's 120,000 inhabitants and their animals. The book also documents a prophet who fled and failed — and YHWH's purposes were accomplished anyway."
     }
   ]
 }

@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_21",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_21",
   "label": "Yehoshua (Joshua) — Part 2 — Chapters 9–15",
   "volume": 10,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The Giv'onites deceive Yehoshua into making a peace treaty. The sun stands still at Giv'on while Yisra'EL defeats the five Amorite kings. The southern and northern campaigns are completed. Yehoshua takes the whole land as YHWH promised. The land is divided among the tribes. Kalev receives Hevron — he says: I am as strong today as I was the day Moshe sent me, and he drives out the Anakites.",
   "summary_scholarly": "The ACR reads from 4QJosh-a, 4QJosh-b and the Orit Ge'ez. The land division (ch 13-15) allocates African-plate territory among the twelve tribes. The tribal boundaries recorded here define the covenant inheritance — the physical land YHWH promised in Bereshit 15. Kalev's possession of Hevron (ch 14) connects to the Makhpelah cave where Avraham, Sarah, Yitzhak, Rivkah, Yaakov, and Leah are buried.",
   "key_terms": [
-    { "term": "Kalev", "phonetic": "Kah-LEV", "definition": "One of only two spies (with Yehoshua) who gave a faithful report. Forty-five years later he claims Hevron at age 85, saying he is as strong as when Moshe sent him. Anglicized as Caleb." },
-    { "term": "Land Division", "phonetic": "", "definition": "Chapters 13-19 record the division of the covenant land among the tribes by lot. Each tribe receives a specific inheritance. Levi receives no territorial portion — YHWH is their inheritance." }
+    {
+      "term": "Gibeonites",
+      "phonetic": "giv-o-NEEM",
+      "definition": "Hivite inhabitants of Givon who deceived Yehoshua into making a peace treaty by disguising themselves as distant travelers. Though Yehoshua was deceived, the sworn covenant held — the Gibeonites became woodcutters and water-carriers for the assembly and the altar."
+    },
+    {
+      "term": "Sun Standing Still at Givon",
+      "phonetic": "",
+      "definition": "In Yehoshua 10, during the battle against the five Amorite kings, Yehoshua commands: 'Sun, stand still at Givon, and moon in the valley of Ayalon.' The sun halted and did not set for a full day. The text declares: 'There was no day like it before or after, when YHWH listened to a human voice — for YHWH fought for Yisra'el.'"
+    },
+    {
+      "term": "Five Amorite Kings",
+      "phonetic": "",
+      "definition": "The five kings of Yerushalayim, Hevron, Yarmut, Lakhish, and Eglon who formed a coalition against Givon (which had made peace with Yisra'el). Yehoshua defeated their armies; they hid in a cave at Makkedah and were executed there."
+    },
+    {
+      "term": "Kalev ben Yefunneh",
+      "phonetic": "ka-LEV ben ye-fu-NEH",
+      "definition": "One of the two faithful spies from the Qadesh-Barnea reconnaissance (along with Yehoshua). At age 85, Kalev presents himself and says: 'I am still as strong today as when Mosheh sent me.' He requests and receives Hevron as his inheritance, driving out the Anakim giants."
+    },
+    {
+      "term": "Hevron",
+      "phonetic": "hev-RON",
+      "definition": "The city Kalev receives as his tribal inheritance (ch.14-15). Hevron was associated with Avraham (his burial cave, Makhpelah, is there) and was held by Anakim giants. Kalev, at 85, drives them out. Hevron's covenant resonance — Avraham, the cave, the patriarchs — makes it a loaded inheritance."
+    },
+    {
+      "term": "Tribal Allotments",
+      "phonetic": "",
+      "definition": "Chapters 13-19 record YHWH's division of Kena'an among the twelve tribes by lot. Each tribe receives a defined territory. The allotments are not purely military achievement but covenant fulfillment — YHWH giving the land promised to Avraham, Yitzhak, and Ya'akov to their descendants, tribe by tribe."
+    },
+    {
+      "term": "Makkedah",
+      "phonetic": "mak-KE-dah",
+      "definition": "The cave where the five Amorite kings hid during their defeat. Yehoshua sealed the cave with stones, pursued the battle, then returned and executed all five kings. Their bodies were hung on five trees until evening, then removed and placed back in the cave."
+    },
+    {
+      "term": "Covenant of Deception",
+      "phonetic": "",
+      "definition": "The Gibeonite treaty in ch.9 — made under false pretenses, the Gibeonites claiming to be from a distant land. When the deception was discovered, the leaders of Yisra'el refused to break the sworn covenant: 'We swore to them by YHWH.' The covenant held even though it was obtained through deception, because the oath invoked YHWH's name."
+    },
+    {
+      "term": "Achsah",
+      "phonetic": "akh-SAH",
+      "definition": "The daughter of Kalev who requests and receives additional water springs from her father after marrying Otniel (the first judge). Achsah's initiative — 'Give me also springs of water' — results in both upper and lower springs. She is an active claimant of her inheritance, not a passive recipient."
+    },
+    {
+      "term": "Yehudah's Allotment",
+      "phonetic": "",
+      "definition": "Chapter 15 details the territory of Yehudah — the largest tribal portion, stretching from the southern wilderness to the western sea. Yehudah's portion includes Hevron (given specifically to Kalev), Yerushalayim (which Yehudah did not fully take), and the coastal Shephelah. The Davidic kingship will later emerge from this tribe."
+    }
   ],
   "fill_blank": [
-    { "ref": "10:13", "prompt": "And the sun stood still, and the ______ stopped, until the nation took vengeance on their enemies.", "answer": "moon", "source_quote": "And the sun stood still, and the moon stopped, until the nation took vengeance on their enemies." },
-    { "ref": "14:11", "prompt": "I am still as strong today as I was in the day that Moshe sent me — my ______ now is as my ______ was then.", "answer": "strength", "source_quote": "I am still as strong today as I was in the day that Moshe sent me — my strength now is as my strength was then, for war and for going and coming." }
+    {
+      "ref": "Yehoshua 10:14",
+      "prompt": "There was no day like it before or after, when YHWH listened to a human voice — for ___ fought for Yisra'el.",
+      "answer": "YHWH",
+      "source_quote": "There was no day like it before or after, for YHWH fought for Yisra'el. — Yehoshua 10:14"
+    },
+    {
+      "ref": "Yehoshua 9",
+      "prompt": "The Gibeonites deceived Yehoshua into a peace treaty by pretending to come from a ___ land.",
+      "answer": "distant / far",
+      "source_quote": "We have come from a very distant country. — Yehoshua 9:9"
+    },
+    {
+      "ref": "Yehoshua 9:19",
+      "prompt": "Though deceived, Yisra'el's leaders would not break the Gibeonite treaty because they had sworn by ___.",
+      "answer": "YHWH",
+      "source_quote": "We have sworn to them by YHWH, the Creator of Yisra'el. — Yehoshua 9:19"
+    },
+    {
+      "ref": "Yehoshua 10:12",
+      "prompt": "Yehoshua commanded: 'Sun, stand still at ___, and moon in the valley of Ayalon.'",
+      "answer": "Givon",
+      "source_quote": "Sun, stand still at Givon, and moon in the valley of Ayalon. — Yehoshua 10:12"
+    },
+    {
+      "ref": "Yehoshua 14:10-11",
+      "prompt": "Kalev said to Yehoshua: 'I am ___ years old today, yet as strong as when Mosheh sent me.'",
+      "answer": "85 / eighty-five",
+      "source_quote": "I am eighty-five years old today, still as strong as the day Mosheh sent me. — Yehoshua 14:10-11"
+    },
+    {
+      "ref": "Yehoshua 10",
+      "prompt": "The five Amorite kings hid in a cave at ___ and were later executed there by Yehoshua.",
+      "answer": "Makkedah",
+      "source_quote": "The five kings had fled and hidden in the cave at Makkedah. — Yehoshua 10:16-17"
+    },
+    {
+      "ref": "Yehoshua 15:19",
+      "prompt": "Achsah asked her father Kalev for springs of water in addition to the ___ land he had given her.",
+      "answer": "dry / Negev",
+      "source_quote": "Since you have given me land in the Negev, give me also springs of water. — Yehoshua 15:19"
+    },
+    {
+      "ref": "Yehoshua 14",
+      "prompt": "Kalev drove out the ___ giants from Hevron to claim his inheritance.",
+      "answer": "Anakim",
+      "source_quote": "Kalev drove out from there the three sons of Anak. — Yehoshua 15:14"
+    },
+    {
+      "ref": "Yehoshua 10",
+      "prompt": "The five Amorite kings formed a coalition against ___, which had made peace with Yisra'el.",
+      "answer": "Givon / Gibeon",
+      "source_quote": "The kings of Jerusalem, Hebron, Jarmuth, Lachish, and Eglon joined forces and attacked Gibeon. — Yehoshua 10:5"
+    },
+    {
+      "ref": "Yehoshua 13-19",
+      "prompt": "The land was divided among the twelve tribes by ___ after the initial conquest.",
+      "answer": "lot / divine lot",
+      "source_quote": "They divided the land by lot before YHWH. — Yehoshua 18:10"
+    }
   ],
   "multiple_choice": [
-    { "ref": "10:12-13", "question": "What happened at Giv'on during the battle?", "options": ["The walls fell", "The sun stood still until Yisra'EL prevailed", "Lightning struck the enemy", "The earth opened"], "correct": 1, "source_quote": "The sun stood still, and the moon stopped, until the nation took vengeance on their enemies." },
-    { "ref": "14:10-12", "question": "How old was Kalev when he took Hevron?", "options": ["40", "65", "85", "120"], "correct": 2, "source_quote": "And now, behold, I am this day eighty-five years old." }
+    {
+      "ref": "Yehoshua 9",
+      "question": "How did the Gibeonites deceive Yehoshua into a peace treaty?",
+      "options": [
+        "They offered gold and silver as tribute",
+        "They bribed Yisra'el's leaders",
+        "They disguised themselves as travelers from a distant land",
+        "They pretended to be part of a different tribe of Yisra'el"
+      ],
+      "correct": 2,
+      "source_quote": "We have come from a very distant country. — Yehoshua 9:9"
+    },
+    {
+      "ref": "Yehoshua 9:19",
+      "question": "Why did Yisra'el keep the Gibeonite treaty even after discovering the deception?",
+      "options": [
+        "The Gibeonites were too powerful to fight",
+        "Yehoshua feared YHWH's anger if the treaty was broken",
+        "The leaders had sworn by YHWH and could not break the oath",
+        "The Gibeonites controlled the water supply"
+      ],
+      "correct": 1,
+      "source_quote": "We have sworn to them by YHWH. — Yehoshua 9:19"
+    },
+    {
+      "ref": "Yehoshua 10:12-14",
+      "question": "What happened at Givon when Yehoshua commanded the sun to stand still?",
+      "options": [
+        "The sun reversed course and went backward",
+        "The sun stood still for a full day while YHWH fought for Yisra'el",
+        "The sun set early to end the battle",
+        "The sun appeared twice in one day"
+      ],
+      "correct": 1,
+      "source_quote": "The sun stood still and the moon stopped... YHWH fought for Yisra'el. — Yehoshua 10:13-14"
+    },
+    {
+      "ref": "Yehoshua 14:10-11",
+      "question": "How old was Kalev when he claimed Hevron as his inheritance?",
+      "options": [
+        "60",
+        "70",
+        "85",
+        "100"
+      ],
+      "correct": 2,
+      "source_quote": "I am eighty-five years old today, still as strong as when Mosheh sent me. — Yehoshua 14:10-11"
+    },
+    {
+      "ref": "Yehoshua 10",
+      "question": "Where did the five Amorite kings hide after their army was defeated?",
+      "options": [
+        "In Yerushalayim's citadel",
+        "In a cave at Makkedah",
+        "In the Jordan River valley",
+        "Across the border into Moav"
+      ],
+      "correct": 1,
+      "source_quote": "The five kings had hidden in the cave at Makkedah. — Yehoshua 10:16-17"
+    },
+    {
+      "ref": "Yehoshua 15:19",
+      "question": "What did Achsah ask her father Kalev for?",
+      "options": [
+        "A city in the hill country",
+        "Freedom to marry whom she chose",
+        "Springs of water in addition to her land in the Negev",
+        "A larger portion of Hevron's territory"
+      ],
+      "correct": 2,
+      "source_quote": "Since you have given me land in the Negev, give me also springs of water. — Yehoshua 15:19"
+    },
+    {
+      "ref": "Yehoshua 14",
+      "question": "What did Kalev drive out of Hevron to claim it?",
+      "options": [
+        "Moabite armies",
+        "Anakim giants",
+        "Jebusites",
+        "Philistine garrisons"
+      ],
+      "correct": 1,
+      "source_quote": "Kalev drove out the three sons of Anak from there. — Yehoshua 15:14"
+    },
+    {
+      "ref": "Yehoshua 9",
+      "question": "What role did the Gibeonites receive after the treaty was upheld despite their deception?",
+      "options": [
+        "They became soldiers in Yisra'el's army",
+        "They were given land in the Negev",
+        "They became woodcutters and water-carriers for the assembly and altar",
+        "They were expelled to a territory east of the Jordan"
+      ],
+      "correct": 2,
+      "source_quote": "They became woodcutters and water-carriers for the assembly and the altar. — Yehoshua 9:27"
+    },
+    {
+      "ref": "Yehoshua 10:14",
+      "question": "What does the account of the sun standing still declare about YHWH?",
+      "options": [
+        "YHWH controls only the stars, not the sun",
+        "There was no day like it — YHWH listened to a human voice and fought for Yisra'el",
+        "The sun's movement follows a fixed pattern that YHWH does not alter",
+        "YHWH fights only through human armies"
+      ],
+      "correct": 1,
+      "source_quote": "There was no day like it before or after, for YHWH fought for Yisra'el. — Yehoshua 10:14"
+    },
+    {
+      "ref": "Yehoshua 13-19",
+      "question": "How was the land of Kena'an divided among the tribes?",
+      "options": [
+        "Yehoshua assigned territories based on population size",
+        "Each tribe chose by majority vote",
+        "The land was divided by lot before YHWH",
+        "Mosheh had already written the assignments before he died"
+      ],
+      "correct": 2,
+      "source_quote": "They divided the land by lot before YHWH. — Yehoshua 18:10"
+    }
   ],
   "faq": [
     {
-      "question": "What does the tribal land division mean geologically?",
-      "answer": "The tribal boundaries in chapters 13-19 allocate territory that sits entirely on the African tectonic plate (Nubian Plate). From Dan in the north to Beersheva in the south, from the Mediterranean coast to the Yarden — all of it is physically African soil. The Jordan Rift Valley is the geological boundary. The covenant inheritance given to the twelve tribes is African land. Every boundary stone, every city of refuge, every Levitical city — all on the African continent."
+      "question": "Why did the oath to the Gibeonites hold even though it was obtained by deception?",
+      "answer": "The leaders of Yisra'el had sworn the covenant 'by YHWH, the Creator of Yisra'el.' Once the Name of YHWH was invoked, the oath was binding regardless of the circumstances under which it was made. Breaking it would be a greater sin than the original deception. The leaders acknowledged this explicitly: 'We may not touch them.' The Gibeonites were consequently assigned a permanent role — woodcutters and water-carriers for the altar — a subordinate place within the covenant community. The covenant principle: an oath sworn in YHWH's name is not conditional on the worthiness of the oath-taker or the circumstances."
     },
     {
-      "question": "Why does Kalev's claim of Hevron matter?",
-      "answer": "Kalev claims Hevron — the city where Avraham purchased the Makhpelah cave to bury Sarah (Bereshit 23). Avraham, Sarah, Yitzhak, Rivkah, Yaakov, and Leah are all buried there. The patriarchal burial site is the physical anchor connecting the covenant people to their land. In every ancient Afro-Asiatic civilization — Egyptian, Canaanite, Israelite — burial sites were where genealogy, identity, and territorial claim were physically anchored. The documented destruction of cemeteries in Gaza and Lebanon (documented in Amnesty International 2025 and UN OHCHR reports) severs living populations from this same ancestral anchor."
+      "question": "What is the significance of the sun standing still at Givon?",
+      "answer": "The book of Yehoshua presents this as the most extraordinary day in YHWH's military intervention for Yisra'el: no day like it before or after, when YHWH actually listened to a human voice. Yehoshua's command to the sun and moon was the boldest possible request — asking YHWH to hold the cosmos in place for a battle. The fact that it happened confirms the covenant: YHWH fights for Yisra'el. The text cites the Book of Yashar as an additional source, indicating this was a known tradition beyond the Torah itself."
+    },
+    {
+      "question": "What makes Kalev's claim on Hevron significant?",
+      "answer": "Kalev is 85 years old and physically strong enough to drive out the Anakim giants. He frames his claim as the fulfillment of YHWH's promise made 45 years earlier at Qadesh-Barnea: 'Because you have wholly followed YHWH your Creator, the land on which your foot has trodden shall be your inheritance.' Kalev waited 45 years for this promise. His claim is a covenant act — holding YHWH to his specific word. The city he receives (Hevron) is also the burial city of Avraham, Yitzhak, and Ya'akov — the covenant is rooted in the patriarchal promise being fulfilled in the land."
+    },
+    {
+      "question": "How does the tribal allotment system work?",
+      "answer": "After the initial campaign, Yehoshua (with Eleazar the priest and the tribal leaders) divides the remaining land by lot before YHWH at Shilo. Each tribe receives a defined territory with specific boundary descriptions. The lot is not random chance — it is a divine decision made through a human ritual process. Some portions are given specifically (Kalev's Hevron, Yehoshua's own city of Timnat-Serah). The Levites receive no territorial portion — their inheritance is YHWH himself and the cities within other tribes' territories. The allotment system is covenant distribution, not conquest reward."
+    },
+    {
+      "question": "Who is Achsah and why is her story included?",
+      "answer": "Achsah is the daughter of Kalev, given in marriage to Otniel (who becomes the first judge in Shofetim) for capturing the city of Devir. After the marriage, she approaches her father and asks for springs of water in addition to her land in the Negev. Kalev gives her both upper and lower springs. Her story is embedded in the allotment section to show that covenant inheritance is active — claimants are expected to request what they need. Achsah models covenant initiative: she identifies what she needs, makes her request directly, and receives it. Her name is preserved as the first specific woman given an inheritance in Kena'an."
+    },
+    {
+      "question": "What happened to the five Amorite kings at Makkedah?",
+      "answer": "After their armies were routed and while Yehoshua's force was still pursuing the fleeing soldiers, the five kings hid in a cave at Makkedah. Yehoshua ordered the cave sealed with large stones and guards posted, then continued the pursuit. After the battle was complete, Yehoshua returned, had the cave opened, and summoned his commanders to place their feet on the necks of the kings — a visual demonstration of complete subjugation. Then Yehoshua killed the five kings, hung their bodies on trees until evening (following Torah law: the body must not hang overnight), and placed them back in the cave. It is a deliberate covenant ritual, not merely execution."
+    },
+    {
+      "question": "What does Yehoshua 10 reveal about how YHWH fights?",
+      "answer": "YHWH's intervention in the Givon battle is multi-layered: he sends large hailstones that kill more of the enemy than Yisra'el's swords; he stops the sun for a full day at Yehoshua's command; and he routes the five-king coalition before Yehoshua's army arrives. YHWH fights through natural catastrophe (hailstones), through suspended cosmic order (sun standing still), and through human armies — all in a single battle. The text explicitly attributes the victory to YHWH fighting for Yisra'el, with the human army as his instrument. This establishes the pattern: covenant obedience unlocks YHWH's direct intervention."
+    },
+    {
+      "question": "Why did Yehudah not fully take Yerushalayim in chapter 15?",
+      "answer": "Chapter 15:63 notes: 'The Yevusites who lived in Yerushalayim, the people of Yehudah could not drive out, so the Yevusites have lived with the people of Yehudah in Yerushalayim to this day.' This is an honest acknowledgment of incomplete conquest embedded in the allotment section. The land was given by YHWH, but the actual taking of it depended on covenant fidelity and military follow-through. The same pattern appears across multiple tribes. Yerushalayim would not be fully Israelite until David's reign — the conquest of chapter 10 did not translate automatically into permanent possession."
+    },
+    {
+      "question": "What is the connection between the Gibeonite treaty and later events in Yisra'el's history?",
+      "answer": "In 2 Shemu'el 21, a three-year famine strikes during David's reign. YHWH reveals it is because of Sha'ul's violation of the Gibeonite treaty — Sha'ul had tried to kill the Gibeonites. David must make reparations to the Gibeonites to end the famine. This demonstrates that the covenant made by Yehoshua's generation was still binding generations later. The Gibeonite treaty is not just a historical footnote — it is a legally active covenant whose violation brings consequences. The event confirms the seriousness of the oath invoked at Givon."
+    },
+    {
+      "question": "What is the significance of Yehoshua's southern campaign as a whole?",
+      "answer": "The southern campaign (ch.10-12) is YHWH's systematic fulfillment of the land promise to Avraham. Yehoshua moves from Givon through the Shephelah and Negev, taking the major cities of Lakhish, Eglon, Hevron, Devir, and others. The text notes the speed of the campaign: Yehoshua took all these kings and their lands at one time, 'because YHWH, the Creator of Yisra'el, fought for Yisra'el.' The northern campaign follows in ch.11. Together, they establish Yisra'el's presence in the land — not complete possession, but covenantal claim on territory. The covenant promise is being fulfilled in stages."
     }
   ]
 }

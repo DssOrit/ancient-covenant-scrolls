@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_24",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_24",
   "label": "Shofetim (Judges) — Part 2 — Chapters 8–14",
   "volume": 11,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "After Gid'on's victory, the people ask him to rule over them — he refuses: YHWH will rule over you. But Gid'on makes a golden ephod that becomes a snare. His son Avimelekh murders seventy brothers and makes himself king at Shekhem — the first Israelite to claim kingship by force. Yotam speaks the parable of the trees. YHWH raises Yiftach as judge — he makes a rash vow. Shimshon is born — a Nazirite from the womb, whose strength comes from YHWH.",
   "summary_scholarly": "The ACR reads from 4QJudg-a, 4QJudg-b and the Orit Ge'ez. Gid'on's refusal of kingship (8:23) is the clearest statement of theocratic principle in the pre-monarchic period. Avimelekh's self-made kingship at Shekhem (ch 9) is the anti-model — human power seized without YHWH's appointment. Shimshon's Nazirite dedication (ch 13) connects to the Bamidbar 6 Nazirite laws.",
   "key_terms": [
-    { "term": "Avimelekh", "phonetic": "Ah-vee-MEH-lekh", "definition": "Gid'on's son by a Shekhemite concubine. He murders seventy of his brothers and makes himself king at Shekhem. His kingship is self-appointed, not YHWH-appointed. He dies when a woman drops a millstone on his head." },
-    { "term": "Shimshon", "phonetic": "Shim-SHON", "definition": "A Nazirite from birth — set apart by YHWH before his birth. His strength is from YHWH, not from his hair. Anglicized as Samson." },
-    { "term": "Yiftach", "phonetic": "Yif-TAKH", "definition": "A judge who defeats the Ammonites. He makes a rash vow — whatever comes out of his house first will be offered to YHWH. His daughter comes out. Anglicized as Jephthah." }
+    {
+      "term": "Avimelekh",
+      "phonetic": "av-ee-ME-lekh",
+      "definition": "The son of Gid'on and a Shekhem concubine who murders 70 of his brothers on one stone to seize rule over Shekhem. His name means 'my father is king' — the irony being that Gid'on refused the kingship but his son takes it by force. Avimelekh rules three years and dies when a woman drops a millstone on his head from a tower wall."
+    },
+    {
+      "term": "Yotam's Parable",
+      "phonetic": "mashal Yotam",
+      "definition": "In Shofetim 9, the one surviving brother (Yotam) stands on Mount Gerizim and tells a parable: the trees seek a king; the olive tree, fig tree, and vine all refuse (they have better things to do); only the bramble agrees — and the bramble threatens to burn down the cedars of Levanon. The parable exposes the worthlessness of Avimelekh's rule and the people's foolishness in choosing him."
+    },
+    {
+      "term": "Yiftah",
+      "phonetic": "yif-TAH",
+      "definition": "The son of Gilead and a prostitute, driven away by his legitimate brothers. When Ammon threatens, the elders of Gilead bring him back and commission him as leader. He negotiates with Ammon diplomatically before fighting, makes a rash vow before the battle, and defeats Ammon. His vow then destroys his only child."
+    },
+    {
+      "term": "Yiftah's Vow",
+      "phonetic": "neder Yiftah",
+      "definition": "Before the battle against Ammon, Yiftah vows to YHWH: 'Whatever comes out of the doors of my house to meet me when I return in peace... I will offer it up as a burnt offering.' His daughter — his only child — comes out first with tambourines. The text presents his grief and her acceptance without condemning him or resolving the theological tension."
+    },
+    {
+      "term": "Yiftah's Daughter",
+      "phonetic": "bat Yiftah",
+      "definition": "Unnamed in the text, she receives the vow without protest, asks only for two months to mourn her virginity in the hills with her companions, then returns. The daughters of Yisra'el afterward go four days a year to mourn her — an annual lament preserved in Yisra'el's covenant memory. She is the innocent victim of her father's rash oath."
+    },
+    {
+      "term": "Shimshon",
+      "phonetic": "shim-SHON",
+      "definition": "The last judge named before Shmu'el — a Nazirite from birth (his mother given the vow before he was born), who delivers Yisra'el from the Philistines through personal feats of strength. His power is tied to his Nazirite status (the uncut hair), and his fatal flaw is his attraction to Philistine women, which repeatedly compromises him."
+    },
+    {
+      "term": "Shimshon's Riddle",
+      "phonetic": "khidato shel Shimshon",
+      "definition": "At his wedding feast to a Philistine woman, Shimshon poses a riddle about honey found in a lion's carcass: 'Out of the eater came something to eat; out of the strong came something sweet.' The Philistine guests coerce his wife into extracting the answer. When they give it, Shimshon knows they cheated, and he pays the wager by killing 30 Philistines and taking their garments."
+    },
+    {
+      "term": "Nazirite Vow",
+      "phonetic": "neder naziyr",
+      "definition": "A vow consecrating a person to YHWH (Bamidbar 6): no cutting of hair, no grape products, no contact with corpses. For Shimshon, the vow was set before his birth by YHWH's messenger. His uncut hair is the visible sign of his consecration and the source of his supernatural strength — not magic but covenant sign. When the hair is cut, the sign is broken and YHWH's presence departs."
+    },
+    {
+      "term": "Shibboleth / Sibboleth",
+      "phonetic": "shib-BO-let",
+      "definition": "The word used in Shofetim 12 to identify Efrayimites fleeing after Yiftah's battle with them. The Gileadites at the Jordan crossing asked each man to say 'shibboleth' (a grain stalk). Efrayim's dialect could not produce the 'sh' sound, so they said 'sibboleth.' 42,000 Efrayimites were killed by this linguistic test."
+    },
+    {
+      "term": "Millstone Justice",
+      "phonetic": "",
+      "definition": "Avimelekh's death in Shofetim 9: he attacks the tower at Tevetz and approaches the door to set it on fire. A woman drops an upper millstone on his head, fatally wounding him. Aware he is dying, he commands his armor-bearer to run him through with a sword 'lest they say a woman killed him.' Yotam's curse ('may YHWH judge between Avimelekh and the men of Shekhem') is fulfilled. YHWH repaid his evil."
+    }
   ],
   "fill_blank": [
-    { "ref": "8:23", "prompt": "Gid'on said to them: I will not rule over you, and my son will not rule over you. ______ will rule over you.", "answer": "YHWH", "source_quote": "Gid'on said to them: I will not rule over you, and my son will not rule over you. YHWH will rule over you." },
-    { "ref": "13:5", "prompt": "The child shall be a ______ to The Creator from the womb, and he shall begin to save Yisra'EL from the hand of the Philistines.", "answer": "Nazirite", "source_quote": "For behold, you shall conceive and bear a son. No razor shall come upon his head, for the child shall be a Nazirite to The Creator from the womb." }
+    {
+      "ref": "Shofetim 9",
+      "prompt": "Yotam's parable ended: only the ___ accepted the trees' offer to be king, threatening to devour the cedars.",
+      "answer": "bramble / thornbush",
+      "source_quote": "Then all the trees said to the bramble, Come and reign over us. — Shofetim 9:14"
+    },
+    {
+      "ref": "Shofetim 11:30-31",
+      "prompt": "Yiftah vowed: 'Whatever ___ out of the doors of my house to meet me... I will offer it up as a burnt offering.'",
+      "answer": "comes out / comes forth",
+      "source_quote": "Whatever comes out of the doors of my house to meet me when I return... I will offer it up as a burnt offering. — Shofetim 11:30-31"
+    },
+    {
+      "ref": "Shofetim 14:14",
+      "prompt": "Shimshon's riddle: 'Out of the ___ came something to eat; out of the strong came something sweet.'",
+      "answer": "eater",
+      "source_quote": "Out of the eater came something to eat; out of the strong came something sweet. — Shofetim 14:14"
+    },
+    {
+      "ref": "Shofetim 9:18",
+      "prompt": "Avimelekh murdered ___ of his brothers on one stone to seize power in Shekhem.",
+      "answer": "70 / seventy",
+      "source_quote": "You have killed his seventy sons on one stone. — Shofetim 9:18"
+    },
+    {
+      "ref": "Shofetim 9",
+      "prompt": "A woman dropped an upper ___ on Avimelekh's head from the tower at Tevetz, fatally wounding him.",
+      "answer": "millstone",
+      "source_quote": "A certain woman threw an upper millstone on Abimelech's head and crushed his skull. — Shofetim 9:53"
+    },
+    {
+      "ref": "Shofetim 12",
+      "prompt": "The Gileadites used the word '___ to identify Efrayimites who could not pronounce the 'sh' sound.",
+      "answer": "shibboleth",
+      "source_quote": "Say Shibboleth — and he said Sibboleth, for he could not say it right. — Shofetim 12:6"
+    },
+    {
+      "ref": "Shofetim 13",
+      "prompt": "Shimshon was a ___ from birth — consecrated to YHWH with no wine, no haircut, no corpse contact.",
+      "answer": "Nazirite",
+      "source_quote": "The boy shall be a Nazirite to YHWH from the womb. — Shofetim 13:5"
+    },
+    {
+      "ref": "Shofetim 11",
+      "prompt": "Yiftah's daughter asked for two months in the hills to mourn her ___ before the vow was fulfilled.",
+      "answer": "virginity",
+      "source_quote": "Let me alone two months, that I may go and wander on the mountains and weep for my virginity. — Shofetim 11:37"
+    },
+    {
+      "ref": "Shofetim 9:8-15",
+      "prompt": "In Yotam's parable, the ___ tree and the vine both refused kingship because they had their own purpose to fulfill.",
+      "answer": "olive / fig",
+      "source_quote": "The trees once went out to anoint a king over them, and they said to the olive tree, Reign over us. — Shofetim 9:8"
+    },
+    {
+      "ref": "Shofetim 11",
+      "prompt": "Before leading Gilead's army, Yiftah was a mighty warrior who had been driven away by his brothers because his mother was a ___.",
+      "answer": "prostitute / harlot",
+      "source_quote": "Jephthah was the son of a prostitute. — Shofetim 11:1"
+    }
   ],
   "multiple_choice": [
-    { "ref": "8:23", "question": "What did Gid'on say when asked to be king?", "options": ["He accepted", "YHWH will rule over you — I will not", "He asked for time to decide", "He appointed his son"], "correct": 1, "source_quote": "I will not rule over you, and my son will not rule over you. YHWH will rule over you." },
-    { "ref": "9:1-6", "question": "How did Avimelekh become king?", "options": ["YHWH anointed him", "He was chosen by lot", "He murdered seventy brothers and seized power", "The people elected him"], "correct": 2, "source_quote": "Avimelekh went to his mother's relatives at Shekhem — and they gave him seventy pieces of silver. He hired worthless and reckless fellows and killed his seventy brothers." }
+    {
+      "ref": "Shofetim 9",
+      "question": "What is the main point of Yotam's parable of the trees?",
+      "options": [
+        "Trees represent the twelve tribes choosing their representative",
+        "Good leaders refuse power; worthless leaders seize it and threaten everyone",
+        "The cedar of Levanon is Yisra'el's true king",
+        "Olive oil is a symbol of YHWH's anointing"
+      ],
+      "correct": 1,
+      "source_quote": "If you are acting in good faith... rejoice in Abimelech; but if not, let fire come out from Abimelech. — Shofetim 9:19-20"
+    },
+    {
+      "ref": "Shofetim 9:53",
+      "question": "How did Avimelekh die?",
+      "options": [
+        "He was cut down by Yotam in revenge",
+        "He drowned crossing the Jordan",
+        "A woman dropped an upper millstone on his head from a tower",
+        "He was killed by his own armor-bearer in battle"
+      ],
+      "correct": 2,
+      "source_quote": "A certain woman threw an upper millstone on Abimelech's head. — Shofetim 9:53"
+    },
+    {
+      "ref": "Shofetim 11:30-31",
+      "question": "What was the content of Yiftah's vow before the battle against Ammon?",
+      "options": [
+        "He would sacrifice his best ox if YHWH gave the victory",
+        "Whatever came out of his house first to meet him would be offered as a burnt offering",
+        "He would fast for seven days after the battle",
+        "He would not cut his hair until YHWH gave the victory"
+      ],
+      "correct": 1,
+      "source_quote": "Whatever comes out of the doors of my house to meet me... I will offer it up as a burnt offering. — Shofetim 11:30-31"
+    },
+    {
+      "ref": "Shofetim 11:38-40",
+      "question": "What did the daughters of Yisra'el do in memory of Yiftah's daughter?",
+      "options": [
+        "Built a monument at the site of Yiftah's battle",
+        "Went four days each year to mourn and lament for her",
+        "Named their firstborn daughters after her",
+        "Established a law against rash vows"
+      ],
+      "correct": 1,
+      "source_quote": "The daughters of Israel went year by year to lament the daughter of Jephthah. — Shofetim 11:40"
+    },
+    {
+      "ref": "Shofetim 14:14",
+      "question": "What was Shimshon's riddle based on?",
+      "options": [
+        "A vision he received from YHWH at night",
+        "Honey he found in the carcass of a lion he had killed",
+        "A parable his father taught him",
+        "A battle victory from his youth"
+      ],
+      "correct": 1,
+      "source_quote": "Out of the eater came something to eat; out of the strong came something sweet. — Shofetim 14:14"
+    },
+    {
+      "ref": "Shofetim 13",
+      "question": "What was the sign of Shimshon's Nazirite consecration?",
+      "options": [
+        "A special garment he wore from birth",
+        "His beard which could never be shaved",
+        "His uncut hair, which was the outward mark of his covenant status",
+        "A ritual tattoo his mother received before his birth"
+      ],
+      "correct": 2,
+      "source_quote": "No razor shall come upon his head, for the boy shall be a Nazirite to YHWH from the womb. — Shofetim 13:5"
+    },
+    {
+      "ref": "Shofetim 12",
+      "question": "How many Efrayimites were killed at the Jordan crossing when identified by the Shibboleth test?",
+      "options": [
+        "12,000",
+        "30,000",
+        "42,000",
+        "7,000"
+      ],
+      "correct": 2,
+      "source_quote": "Forty-two thousand of the Ephraimites fell at that time. — Shofetim 12:6"
+    },
+    {
+      "ref": "Shofetim 9",
+      "question": "How many of Gid'on's sons did Avimelekh kill on one stone?",
+      "options": [
+        "30",
+        "50",
+        "70",
+        "12"
+      ],
+      "correct": 2,
+      "source_quote": "He killed his brothers the sons of Jerubbaal, seventy men, on one stone. — Shofetim 9:5"
+    },
+    {
+      "ref": "Shofetim 11",
+      "question": "What did Yiftah's daughter ask for before the vow was fulfilled?",
+      "options": [
+        "Release from the vow through a priestly ruling",
+        "To be buried in her homeland",
+        "Two months in the hills to mourn her virginity with her companions",
+        "Permission to marry before she died"
+      ],
+      "correct": 2,
+      "source_quote": "Let me alone two months... that I may weep for my virginity. — Shofetim 11:37"
+    },
+    {
+      "ref": "Shofetim 9",
+      "question": "What happened to Yotam after he delivered his parable?",
+      "options": [
+        "He was captured and imprisoned by Avimelekh",
+        "He fled and lived in Be'er out of fear of his brother",
+        "He raised an army and fought Avimelekh directly",
+        "He became the next judge of Yisra'el"
+      ],
+      "correct": 1,
+      "source_quote": "Jotham ran away and fled and went to Beer and lived there, away from Abimelech his brother. — Shofetim 9:21"
+    }
   ],
   "faq": [
     {
-      "question": "What does Gid'on's refusal of kingship mean?",
-      "answer": "Gid'on says: 'I will not rule over you, and my son will not rule over you. YHWH will rule over you' (8:23). This is the clearest statement of theocratic principle in the pre-monarchic period. YHWH is the direct king. Human monarchy is not the covenant design. When the people later demand a king in 1 Shemu'el 8, YHWH tells Shemu'el: they have rejected me from being king over them. The Qumran community returned to this pre-monarchic framework — no king, no institutional hierarchy, just the covenant texts and YHWH's direct governance."
+      "question": "What does Yotam's parable say about the nature of power?",
+      "answer": "Yotam's parable is the Tanakh's most direct political critique. The worthy trees — olive, fig, vine — all refuse to be king because they have genuine purpose: oil, sweetness, wine 'that cheers' the Creator and human beings. Only the bramble, which produces nothing of value, agrees to be king, and immediately threatens destruction. The parable's argument: those who seek power are precisely those who should not have it; those who should lead have better things to do. Avimelekh is the bramble — useless, dangerous, capable only of burning down what others built. The parable is preserved as covenant wisdom about leadership selection."
     },
     {
-      "question": "What does Avimelekh's kingship reveal?",
-      "answer": "Avimelekh seizes power through murder — killing seventy brothers on a single stone (9:5). His kingship is the anti-model: human power seized without YHWH's appointment, through violence, funded by the temple of Baal-Berith (9:4). He dies when a woman drops a millstone on his head (9:53). The text's message: self-appointed power, seized through violence and funded by false worship, ends in destruction. Every empire documented in the Great Eraser research — Roman, British, Portuguese, Belgian — followed the same pattern: power seized through violence, maintained through institutional systems, and destined for judgment."
+      "question": "Is Yiftah's vow a tragedy or a covenant violation?",
+      "answer": "The text presents it as both without resolving the tension. Yiftah clearly did not intend to vow his daughter — he vowed 'whatever comes out of my house,' likely expecting an animal. He tore his clothes and said 'you have brought me very low.' But the vow was made in YHWH's name, and the daughter affirms it must be kept: 'Do to me what you have vowed — YHWH has given you victory.' The annual lament of the daughters of Yisra'el treats her death as a genuine tragedy worth communal mourning. The Torah's provision against rash vows (Bamidbar 30) exists precisely because vows spoken in YHWH's name carry binding weight regardless of consequences. The text holds the tension: vows are serious; this one was rash; both things are true."
+    },
+    {
+      "question": "What does Shimshon's story say about the Nazirite consecration?",
+      "answer": "Shimshon was consecrated before birth — his mother received the commission from YHWH's messenger before he was conceived. This makes his case different from voluntary Nazirite vows: Shimshon did not choose consecration, he was born into it. His strength is explicitly tied to the Nazirite sign: when his hair is cut, the text says 'YHWH had left him.' The hair is not magical — it is a covenant sign. When the sign is broken (through his own disclosure to Delilah), the covenant presence that enabled his strength withdraws. Shimshon's story is a sustained illustration of what happens when covenant consecration is treated casually."
+    },
+    {
+      "question": "Why is the Shibboleth story significant beyond its immediate use?",
+      "answer": "The Shibboleth episode (the Efrayim-Gilead conflict in Shofetim 12) is the first documented instance in human record of a linguistic test used for lethal identification. 42,000 people died because of a sound they could not produce. The episode also reveals intra-Israelite violence: this is not Yisra'el against Ammon but tribe against tribe. After Yiftah's victory over Ammon, Efrayim came to claim credit and threatened Yiftah. The civil war that followed and the Jordan crossing test demonstrate how the judges period's covenant breakdown was not only about foreign oppression but about Yisra'el tearing itself apart."
+    },
+    {
+      "question": "What does the annual lament for Yiftah's daughter mean?",
+      "answer": "The daughters of Yisra'el went four days each year to lament. This is a formal covenant memory practice — a recognized communal ritual preserving the memory of an injustice that could not be undone. It is striking that she is never named in the text; she is remembered only through the practice of remembrance itself. The annual lament is Yisra'el's honest accounting of what rash vows cost. Covenant memory is not selective — it includes failures and innocent victims alongside victories. The daughters preserving this memory may be one of the most remarkable acts of corporate covenant honesty in Shofetim."
+    },
+    {
+      "question": "How does Avimelekh's death fulfill Yotam's curse?",
+      "answer": "When Yotam delivered his parable from Mount Gerizim, he ended with a formal curse: 'If you have acted in bad faith... let fire come out from Avimelekh and devour the men of Shekhem, and let fire come out from the men of Shekhem and devour Avimelekh.' The book records exactly that: Shekhem rebelled against Avimelekh, he burned the tower of Shekhem killing a thousand people, then he was killed by a millstone at the tower of Tevetz. The text explicitly notes: 'Thus YHWH repaid the evil of Avimelekh... and also all the evil of the men of Shekhem YHWH returned on their heads.' Covenant curses spoken in YHWH's name are fulfilled."
+    },
+    {
+      "question": "Who was Jephthah before he became a judge?",
+      "answer": "Yiftah was the illegitimate son of Gilead and a prostitute. His legitimate brothers drove him away: 'You shall not inherit in our father's house, for you are the son of another woman.' He fled to the land of Tov and gathered a band of worthless men around him. When Ammon threatened, the elders of Gilead came to him — the same community that had expelled him. Yiftah negotiated his terms: 'If you bring me home to fight Ammon and YHWH gives them to me, I will be your head.' The pattern is consistent with Shofetim: YHWH chooses the rejected, the outcast, the last in line. Yiftah's social marginalization is the qualification, not an obstacle."
+    },
+    {
+      "question": "What does Shimshon's engagement with Philistine women mean for his story?",
+      "answer": "Shimshon is called by YHWH to 'begin to save Yisra'el from the hand of the Philistines,' but he pursues Philistine women three times. His father objects to his first marriage: 'Is there not a woman among all our people, that you go to get a wife from the uncircumcised Philistines?' The text notes YHWH was behind it: 'his father and mother did not know it was from YHWH.' This introduces a troubling element: YHWH uses Shimshon's personal weakness as an instrument for confronting the Philistines. The theology is not clean. Shimshon is a covenant instrument whose fatal flaw is simultaneously his means of engagement with the enemy. His story resists tidy moral categories."
+    },
+    {
+      "question": "What is the significance of Avimelekh dying at a woman's hand?",
+      "answer": "The death by millstone is covenant irony piled on covenant irony. Gid'on refused the kingship Yisra'el offered. His son Avimelekh seized it by killing 70 brothers on one stone. He dies with his skull crushed by a woman throwing an upper millstone. He commands his armor-bearer to finish him 'lest they say a woman killed me' — but the text records exactly that: the woman killed him. His final act was trying to suppress the truth of his end. YHWH repaid his evil through the instrument Avimelekh most feared and least respected. The military glory Avimelekh sought ended at a woman's hand, with his own sword completing what she started."
+    },
+    {
+      "question": "How does the Jephthah episode advance the theme of words and covenant?",
+      "answer": "Covenant speech in Shofetim carries fatal weight. Yotam speaks a curse from Mount Gerizim and it is fulfilled. Yiftah speaks a vow and his daughter dies from it. The book is tracking what happens when covenant language is handled carelessly. YHWH's covenant is verbal — it was established through his words to Avraham, Yitzhak, Ya'akov, Mosheh. Human speech that invokes YHWH's name participates in that covenant reality. Yiftah's vow was not theologically defective — the problem was speaking without thinking. The annual lament is Yisra'el's liturgical acknowledgment that they know what unthinking covenant speech costs."
     }
   ]
 }

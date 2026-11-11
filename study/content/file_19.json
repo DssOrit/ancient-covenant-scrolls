@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_19",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_19",
   "label": "Visions of Amram (4QAmram) — Complete",
   "volume": 9,
-  "content_version": 1,
+  "content_version": 2,
   "summary_plain": "The Visions of Amram record the deathbed vision of Amram — father of Moshe, Aharon, and Miryam. Amram sees two beings contending over him — one of light and one of darkness. The being of light is Malki-Tzedek (King of Righteousness). The being of darkness is Malki-Resha (King of Wickedness). Amram must choose between them. The vision establishes the cosmic dualism that runs through the entire Qumran literature — Sons of Light versus Sons of Darkness.",
   "summary_scholarly": "4QAmram (4Q543-548) is preserved in Aramaic fragments from Qumran Cave 4. The text is a testament — Amram's words to his sons before death. The cosmic dualism between Malki-Tzedek and Malki-Resha parallels the War Scroll's Sons of Light versus Sons of Darkness framework. The text establishes that the covenant struggle between light and darkness precedes the Mosaic covenant — it is already operative in the generation before Sinai.",
   "key_terms": [
-    { "term": "Amram", "phonetic": "Am-RAHM", "definition": "Father of Moshe, Aharon, and Miryam. A Levite. His testament records a vision of two cosmic beings — one of light, one of darkness — contending over his destiny." },
-    { "term": "Malki-Tzedek", "phonetic": "Mal-kee-TZEH-dek", "definition": "King of Righteousness — the being of light in Amram's vision. The same figure appears in Bereshit 14 (the priest-king of Shalem who blesses Avram)." },
-    { "term": "Malki-Resha", "phonetic": "Mal-kee-REH-shah", "definition": "King of Wickedness — the being of darkness. The adversarial counterpart to Malki-Tzedek. This dualism structures the War Scroll framework." }
+    {
+      "term": "Amram",
+      "phonetic": "am-RAM",
+      "definition": "Father of Mosheh, Aharon, and Miriam — grandson of Levi. The 4QAmram text presents a vision Amram received near his death, in which two angelic figures appear and claim dominion over him. The text functions as a priestly covenant document connecting the Levi-Aharon-Mosheh line."
+    },
+    {
+      "term": "Melchi-Resha",
+      "phonetic": "mel-khee-REH-shah",
+      "definition": "King of Wickedness — the dark angelic figure in Amram's vision, identified with the Angel of Darkness and Belial. He claims dominion over Amram's children in his realm. His counterpart is the angelic figure of light, identified variously as Melchi-Zedek or the Prince of Lights."
+    },
+    {
+      "term": "Melchi-Zedek",
+      "phonetic": "mel-khee-ZEH-dek",
+      "definition": "King of Righteousness — the angelic figure of light in Amram's vision, contrasted with Melchi-Resha. The name appears in Bereshit 14 as the priest-king of Shalem. The 11QMelchizedek scroll from Cave 11 presents him as a heavenly figure who will execute judgment at the end of days."
+    },
+    {
+      "term": "Two Figures Fighting",
+      "phonetic": "",
+      "definition": "The central vision of 4QAmram: Amram sees two figures struggling over him. When he asks who they are, they describe themselves as rulers over all humanity — one over light, one over darkness. This two-powers framework parallels 1QS's Two Spirits doctrine."
+    },
+    {
+      "term": "4QAmram (4Q543-4Q548)",
+      "phonetic": "",
+      "definition": "The six Aramaic manuscript fragments from Cave 4 that preserve the Visions of Amram. The text survives only in fragments and multiple manuscript copies, indicating it was important enough to copy repeatedly in the community."
+    },
+    {
+      "term": "Priestly Lineage",
+      "phonetic": "",
+      "definition": "The Visions of Amram functions as a priestly lineage document: Amram receives this vision and transmits it, connecting the patriarchal covenant through Levi and Qehat to Amram, Aharon, and Mosheh. The Levitical covenant is confirmed through the visionary experience."
+    },
+    {
+      "term": "Covenant Transmission",
+      "phonetic": "",
+      "definition": "The literary form of the Visions of Amram — a deathbed vision/testament addressed to children — parallels Yovelim's testamentary sections and the testaments of the patriarchs. Covenant identity and responsibility are transmitted from one generation to the next through these dying-patriarchal-speech frameworks."
+    },
+    {
+      "term": "Angel of Darkness",
+      "phonetic": "",
+      "definition": "The Belial figure who claims dominion over some portion of humanity in Amram's vision. This figure corresponds to the Ruakh HaAvel (Spirit of Deceit) in 1QS and to Belial in the Damascus Document and War Scroll. The same cosmic conflict is described from multiple angles across the DSS corpus."
+    },
+    {
+      "term": "Deathbed Vision",
+      "phonetic": "",
+      "definition": "The literary genre of Amram's Visions: a dying patriarch receives a heavenly vision and transmits wisdom to his children. This genre appears in Yovelim, the Testaments of the Twelve Patriarchs, and the Book of Giants (Chanokh's testament to Metushelakh). It is a vehicle for covenant transmission across generations."
+    },
+    {
+      "term": "Watchers Connection",
+      "phonetic": "",
+      "definition": "The two figures in Amram's vision are described in terms that connect to the Watcher tradition: they are angelic powers with dominion claims over humanity. The Visions of Amram positions the Levi-Aharon-Mosheh priestly line as the humans most directly at the contested boundary between the two cosmic powers."
+    }
   ],
   "fill_blank": [
-    { "ref": "4Q544", "prompt": "Amram saw two beings contending over him — one of ______ and one of darkness.", "answer": "light", "source_quote": "Amram saw two beings — one of light and one of darkness — contending over his destiny." },
-    { "ref": "4Q544", "prompt": "The being of light was called Malki-Tzedek, which means King of ______.", "answer": "Righteousness", "source_quote": "The being of light is Malki-Tzedek — King of Righteousness." }
+    {
+      "ref": "4QAmram",
+      "prompt": "In Amram's vision, the dark angelic figure is called ___, meaning 'King of Wickedness.'",
+      "answer": "Melchi-Resha",
+      "source_quote": "Melchi-Resha — King of Wickedness. — 4QAmram (4Q544 col.3)"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The figure of light in Amram's vision is associated with ___, meaning 'King of Righteousness.'",
+      "answer": "Melchi-Zedek",
+      "source_quote": "Melchi-Zedek — associated with the Prince of Light. — 4QAmram (4Q544)"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "Amram sees ___ fighting over him in his vision.",
+      "answer": "two figures / two angels",
+      "source_quote": "I saw two figures fighting over me. — 4QAmram (4Q543)"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The Visions of Amram is transmitted as a ___ vision — a dying patriarch's revelation to his children.",
+      "answer": "deathbed",
+      "source_quote": "In the year of his death, Amram saw a vision. — 4QAmram (4Q543)"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "Amram is the father of Mosheh, Aharon, and ___.",
+      "answer": "Miriam",
+      "source_quote": "Amram, father of Mosheh, Aharon, and Miriam. — Shemot 6:20"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The primary manuscript fragments of the Visions of Amram are catalogued as 4Q___.",
+      "answer": "543-548",
+      "source_quote": "4Q543-4Q548 — the Visions of Amram fragments, Cave 4."
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The two-figures framework in Amram's vision parallels the ___ doctrine in 1QS.",
+      "answer": "Two Spirits",
+      "source_quote": "The Two Spirits doctrine of 1QS III-IV parallels Amram's vision of two powers. — DSS comparison"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The Levi-Qehat-Amram covenant lineage positions the Levitical ___ line as the primary vehicle of covenant transmission.",
+      "answer": "priestly",
+      "source_quote": "The Amram text functions as a priestly covenant document. — 4QAmram context"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The dark figure in Amram's vision corresponds to ___ in the Damascus Document and War Scroll.",
+      "answer": "Belial",
+      "source_quote": "Belial — the Angel of Darkness — corresponds to Melchi-Resha. — DSS comparison"
+    },
+    {
+      "ref": "4QAmram",
+      "prompt": "The Visions of Amram confirms the covenant through ___ the priestly lineage from Levi to Mosheh.",
+      "answer": "visionary experience / revelation",
+      "source_quote": "The vision confirms the priestly covenant. — 4QAmram interpretation"
+    }
   ],
   "multiple_choice": [
-    { "ref": "4Q544", "question": "Who is Amram in the covenant lineage?", "options": ["Father of Avraham", "Father of Moshe, Aharon, and Miryam", "Father of Dawid", "Father of Shelomoh"], "correct": 1, "source_quote": "Amram — father of Moshe, Aharon, and Miryam." },
-    { "ref": "4Q544", "question": "What does Malki-Resha mean?", "options": ["King of Peace", "King of Wickedness", "King of Salem", "King of the East"], "correct": 1, "source_quote": "Malki-Resha — King of Wickedness — the being of darkness." }
+    {
+      "ref": "4QAmram",
+      "question": "What does Amram see in his visionary experience?",
+      "options": [
+        "A heavenly temple with twelve gates",
+        "Two figures fighting over him",
+        "YHWH seated on a throne",
+        "The exodus from Mitzrayim"
+      ],
+      "correct": 1,
+      "source_quote": "I saw two figures fighting over me. — 4QAmram (4Q543)"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "What does the name 'Melchi-Resha' mean?",
+      "options": [
+        "King of Peace",
+        "Prince of Lights",
+        "King of Wickedness",
+        "Ruler of the Many"
+      ],
+      "correct": 2,
+      "source_quote": "Melchi-Resha — King of Wickedness. — 4QAmram (4Q544 col.3)"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "Who is Amram in the biblical genealogy?",
+      "options": [
+        "The son of Avraham and Hagar",
+        "The father of Mosheh, Aharon, and Miriam",
+        "The first high priest of Yisra'el",
+        "The son of Yehudah"
+      ],
+      "correct": 1,
+      "source_quote": "Amram, father of Mosheh, Aharon, and Miriam. — Shemot 6:20"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "How does the Visions of Amram's two-figure framework parallel another DSS text?",
+      "options": [
+        "It parallels the messianic banquet in 1QSa",
+        "It parallels the Two Spirits doctrine in 1QS cols 3-4",
+        "It parallels the Temple Scroll's architectural plan",
+        "It parallels the Book of Giants' flood narrative"
+      ],
+      "correct": 1,
+      "source_quote": "The Two Spirits doctrine of 1QS parallels Amram's vision of two powers."
+    },
+    {
+      "ref": "4QAmram",
+      "question": "In what literary form is the Visions of Amram presented?",
+      "options": [
+        "A pesher on prophetic scripture",
+        "A legal code like the Damascus Document",
+        "A deathbed vision/testament addressed to Amram's children",
+        "A collection of hymns like the Hodayot"
+      ],
+      "correct": 2,
+      "source_quote": "In the year of his death, Amram saw a vision. — 4QAmram (4Q543)"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "What figure of light is associated with Amram's vision of the two cosmic powers?",
+      "options": [
+        "The Teacher of Righteousness",
+        "Chanokh",
+        "Melchi-Zedek",
+        "Yehoshua the high priest"
+      ],
+      "correct": 2,
+      "source_quote": "Melchi-Zedek — associated with the Prince of Light. — 4QAmram (4Q544)"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "Why is the Levi-Qehat-Amram priestly lineage significant in this text?",
+      "options": [
+        "It establishes the Davidic kingship",
+        "It confirms the priestly covenant transmission from the patriarchs to Mosheh and Aharon",
+        "It explains the origin of the Levitical cities",
+        "It documents the Exodus route from Mitzrayim"
+      ],
+      "correct": 1,
+      "source_quote": "The Amram text functions as a priestly covenant document connecting Levi through Mosheh."
+    },
+    {
+      "ref": "4QAmram",
+      "question": "How many manuscript copies of the Visions of Amram were found at Qumran?",
+      "options": [
+        "One complete copy",
+        "Two partial fragments",
+        "Six fragmentary copies (4Q543-4Q548)",
+        "Eleven copies across multiple caves"
+      ],
+      "correct": 2,
+      "source_quote": "4Q543-4Q548 — six fragmentary manuscripts from Cave 4."
+    },
+    {
+      "ref": "4QAmram",
+      "question": "The dark figure Melchi-Resha corresponds to which figure in other DSS texts?",
+      "options": [
+        "The Teacher of Righteousness",
+        "Chanokh",
+        "Melchi-Zedek",
+        "Belial"
+      ],
+      "correct": 3,
+      "source_quote": "Belial — the Angel of Darkness — corresponds to Melchi-Resha. — DSS comparison"
+    },
+    {
+      "ref": "4QAmram",
+      "question": "The genre of a dying patriarch transmitting a vision to his children appears in which other texts?",
+      "options": [
+        "Only in 4QAmram",
+        "Only in the Book of Giants",
+        "Yovelim, the Book of Giants, and the Testaments of the Twelve Patriarchs",
+        "Only in the Psalms Scroll"
+      ],
+      "correct": 2,
+      "source_quote": "The deathbed vision/testament genre appears across Yovelim, Book of Giants, and Testaments of the Twelve Patriarchs."
+    }
   ],
   "faq": [
     {
-      "question": "How does the Amram vision connect to the War Scroll?",
-      "answer": "The cosmic dualism in Amram's vision — Malki-Tzedek (light) versus Malki-Resha (darkness) — is the same framework that structures the entire War Scroll (1QM): Sons of Light versus Sons of Darkness. The Amram text establishes that this cosmic struggle precedes the Mosaic covenant — it is already operative in the generation before Sinai. The covenant people's struggle against domination is not a historical accident. It is part of a cosmic contest between righteousness and wickedness that the ancient texts describe as bounded and destined for resolution."
+      "question": "What is the Visions of Amram?",
+      "answer": "The Visions of Amram (4QAmram) is an Aramaic text found in six fragmentary manuscripts from Cave 4 (4Q543-4Q548). It presents a deathbed vision of Amram, the father of Mosheh, Aharon, and Miriam. In the vision, Amram sees two angelic figures fighting over him. When he asks who they are, they describe themselves as cosmic rulers over humanity — one of light (Melchi-Zedek) and one of darkness (Melchi-Resha). The text functions as a priestly covenant document, connecting the Levitical line from Levi through Qehat to Amram, Mosheh, and Aharon."
     },
     {
-      "question": "Did the New Testament figure fulfill the Prince of Light or Melchizedek role?",
-      "answer": "No. The New Testament's invented figure cannot be the Prince of Light of Amram's vision. In the ancient texts Malki-Tzedek is a created being who serves YHWH, subordinate to the Creator. Christian writers later took Tehillim 110:4 and Bereshit 14 and grafted their manufactured deity onto this ancient figure, claiming in the New Testament book of Hebrews that their invented Son was an eternal priest after the order of Melchizedek, and even that Melchizedek had no father, mother, or beginning. That is a later manipulation, not the covenant record. Malki-Tzedek serves YHWH; YHWH alone delivers, and no invented figure stands in the Creator's place."
+      "question": "Who are Melchi-Zedek and Melchi-Resha?",
+      "answer": "In the Visions of Amram, two cosmic figures claim dominion over humanity: Melchi-Zedek (King of Righteousness) rules the realm of light, and Melchi-Resha (King of Wickedness) rules the realm of darkness. This framework parallels the Two Spirits doctrine in 1QS cols 3-4 and the Angel of Light/Angel of Darkness language throughout the DSS. Melchi-Zedek appears in other Qumran texts (11QMelchizedek) as a heavenly figure who will execute final judgment. The two figures represent the same cosmic conflict described from different angles across the DSS corpus."
+    },
+    {
+      "question": "Why is the priestly lineage from Levi to Mosheh significant in this text?",
+      "answer": "The Visions of Amram establishes the legitimacy of the Levitical priesthood through visionary confirmation. Amram is the last in the Levi-Qehat-Amram chain before Mosheh and Aharon — the figures who will receive and transmit the Torah and establish the Tabernacle worship. By giving Amram a heavenly vision that confirms the two-powers cosmic framework, the text authenticates the priestly line as spiritually connected to heavenly reality. The Qumran community, who traced their own priestly legitimacy through the sons of Zadok (Levitical priests), would have valued this document as confirming their own standing."
+    },
+    {
+      "question": "How does the Visions of Amram relate to the Two Spirits doctrine in 1QS?",
+      "answer": "The two figures in Amram's vision — one of light, one of darkness, fighting over humanity — directly parallel the Two Spirits doctrine of 1QS cols 3-4, which describes the Spirit of Truth and the Spirit of Deceit as two cosmic powers created by YHWH and contending over human souls. The Visions of Amram provides the same framework in a narrative/vision genre rather than the theological exposition of 1QS. Both texts confirm that this two-powers worldview was fundamental to the Qumran community's understanding of cosmic reality."
+    },
+    {
+      "question": "What is the significance of the deathbed vision genre?",
+      "answer": "Deathbed visions and testaments — a dying patriarch transmitting covenant knowledge to children — appear across the DSS literature: in Yovelim, in the Book of Giants (Chanokh to Metushelakh), in the Visions of Amram, and in texts related to the Testaments of the Twelve Patriarchs. The genre serves several functions: it establishes the authority of the content by grounding it in a named patriarchal figure; it creates a chain of transmission from the distant past to the present; and it frames covenant identity as something that must be consciously transmitted from parent to child, not merely assumed. The genre is a teaching vehicle."
+    },
+    {
+      "question": "Why was the Visions of Amram copied multiple times at Qumran?",
+      "answer": "Six separate manuscript copies (4Q543-4Q548) indicate the text was treated as important enough to preserve and study repeatedly. Its content — the two-powers framework, the priestly lineage confirmation, the deathbed vision genre — fit directly into the Qumran community's theological priorities: cosmic dualism, priestly legitimacy, and covenant transmission. The multiple copies suggest it was used in community instruction alongside 1QS and the Damascus Document as part of the community's theological curriculum."
+    },
+    {
+      "question": "What does Melchi-Zedek represent in the broader DSS corpus?",
+      "answer": "Melchi-Zedek appears in three different contexts in the DSS: Bereshit 14 (the priest-king of Shalem who blesses Avraham), the Visions of Amram (a figure of light opposing Melchi-Resha), and 11QMelchizedek (a heavenly deliverer who will execute final judgment in the tenth Yovel period). In the DSS, Melchi-Zedek has been elevated from a historical priest-king into a heavenly figure of cosmic significance. This trajectory — from earth-king to heavenly deliverer — is a characteristic Enochic move: elevating figures who encountered YHWH to cosmic roles in the eschatological drama."
+    },
+    {
+      "question": "How does the Visions of Amram contribute to understanding evil in the DSS worldview?",
+      "answer": "The text confirms that evil has a personal angelic agent — Melchi-Resha/Belial — who actively contends over human souls. Evil is not merely human weakness or moral failure; it is a cosmic power with a named ruler. This matters because it means the battle against evil is not merely personal moral effort but cosmic warfare. The community's strict discipline, separation, and covenant fidelity were understood as participation in the cosmic battle on the side of Melchi-Zedek/the Prince of Lights against Melchi-Resha/Belial. The Visions of Amram grounds this framework in the patriarchal era itself — the cosmic conflict is as old as the covenant community."
+    },
+    {
+      "question": "What is the connection between Amram and the Exodus?",
+      "answer": "Amram is the bridge figure between the patriarchal covenant era (Levi, Qehat) and the Exodus/Sinai event (Mosheh, Aharon). His deathbed vision occurs at the moment this transition is about to happen — his children will be the generation that leaves Mitzrayim and receives the Torah. By giving Amram a vision that confirms the cosmic framework, the text anchors the Exodus and covenant within the heavenly reality Amram perceives. The covenant at Sinai is not a new invention but the formal transmission of what was always the heavenly order — now delivered through Mosheh, Amram's son."
+    },
+    {
+      "question": "What does the fragmentary state of the Visions of Amram tell us?",
+      "answer": "The fact that 4QAmram survives only in fragments — multiple manuscripts, all partial — means we do not have a complete text. Scholars have reconstructed a partial narrative, but significant portions remain missing. What we have confirms the vision of two powers, the deathbed setting, the priestly lineage context, and the Melchi-Zedek/Melchi-Resha names. The gaps in the text mean that some details of Amram's vision — including possibly the full response of both figures — are not recoverable from the surviving manuscripts. The Ge'ez Orit tradition does not preserve a Visions of Amram equivalent, so the Qumran Aramaic fragments are the primary source."
     }
   ]
 }
