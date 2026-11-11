@@ -1305,7 +1305,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
       <div class="mpill" data-mode="tools" onclick="setMode('tools')"><i class="ri-tools-line"></i> Useful Tools</div>
-      <div class="mpill" data-mode="workbook" onclick="setMode('workbook')"><i class="ri-gamepad-line"></i> Q&amp;A Workbook</div>
+      <div class="mpill" data-mode="workbook" onclick="setMode('workbook')"><i class="ri-gamepad-line"></i> Quiz Games</div>
     </div>
   </div>
 
@@ -1371,7 +1371,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
         </div>
         <div class="feat-card feat-card-wide" onclick="setMode('workbook')">
           <div class="fc-icon"><i class="ri-gamepad-line"></i></div>
-          <div class="fc-title">Interactive Q&amp;A Workbook</div>
+          <div class="fc-title">Quiz Games</div>
           <div class="fc-desc">Five games built entirely from this site's own primary-source data. Rounds of 10, with harder rounds unlocking as you master each one.</div>
         </div>
       </div>
@@ -1605,7 +1605,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
     <!-- WORKBOOK -->
     <div id="workbook-view" style="display:none">
       <div class="wb-back" onclick="setMode('home')"><i class="ri-arrow-left-s-line"></i> Home</div>
-      <div class="sv-hdr" style="padding:4px 14px 0">Interactive Q&amp;A Workbook</div>
+      <div class="sv-hdr" style="padding:4px 14px 0">Quiz Games</div>
       <div class="sv-sub">Five games, all built from this site's own primary-source data. Every round is 10 real items. Score 8 of 10 to unlock the next, harder round.</div>
       <div id="workbook-panel"></div>
     </div>
@@ -11953,11 +11953,11 @@ function wbBuildPaleo() {
 }
 
 var WB_GAMES = [
-  { id: 'spotchange', icon: 'ri-git-compare-line', title: 'Scroll or No Scroll', desc: 'Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.', mechanic: 'deal', build: wbBuildSpotChange },
-  { id: 'claimsort', icon: 'ri-user-search-line', title: 'The Imposter', desc: 'Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.', mechanic: 'imposter', build: wbBuildClaimSort },
-  { id: 'rootmatch', icon: 'ri-grid-line', title: 'Clue Grid', desc: 'A root’s meaning is the clue. Tap its true match on the board — one tile is a trap.', mechanic: 'cluegrid', build: wbBuildRootMatch },
-  { id: 'timeline', icon: 'ri-time-line', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
-  { id: 'paleo', icon: 'ri-layout-grid-line', title: 'Memory Match', desc: 'Flip tiles to match each paleo-Hebrew glyph to its name.', mechanic: 'memory', build: wbBuildPaleo }
+  { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', title: 'Scroll or No Scroll', desc: 'Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.', mechanic: 'deal', build: wbBuildSpotChange },
+  { id: 'claimsort', icon: 'ri-user-search-line', color: '#3498DB', title: 'The Imposter', desc: 'Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.', mechanic: 'imposter', build: wbBuildClaimSort },
+  { id: 'rootmatch', icon: 'ri-grid-line', color: '#9B59B6', title: 'Clue Grid', desc: 'A root’s meaning is the clue. Tap its true match on the board — one tile is a trap.', mechanic: 'cluegrid', build: wbBuildRootMatch },
+  { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
+  { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', title: 'Memory Match', desc: 'Flip tiles to match each paleo-Hebrew glyph to its name.', mechanic: 'memory', build: wbBuildPaleo }
 ];
 var WB_STATE = null;
 function wbTotalRounds(gameId) {
@@ -11992,8 +11992,8 @@ function renderWorkbookHome() {
     var totalTiers = wbTotalRounds(g.id);
     var tier = Math.min(wbMastery(g.id), totalTiers);
     var metaText = tier === 0 ? ('Round 1 of ' + totalTiers + ' — not started') : (tier >= totalTiers ? ('All ' + totalTiers + ' rounds mastered') : ('Round ' + (tier + 1) + ' of ' + totalTiers + ' unlocked'));
-    html += '<div class="wb-game-card" onclick="wbStartGame(\'' + g.id + '\')">' +
-      '<div class="wb-game-icon"><i class="' + g.icon + '"></i></div>' +
+    html += '<div class="wb-game-card" style="border-left-color:' + g.color + '" onclick="wbStartGame(\'' + g.id + '\')">' +
+      '<div class="wb-game-icon" style="color:' + g.color + '"><i class="' + g.icon + '"></i></div>' +
       '<div class="wb-game-info">' +
       '<div class="wb-game-title">' + esc(g.title) + '</div>' +
       '<div class="wb-game-desc">' + esc(g.desc) + '</div>' +
@@ -12016,11 +12016,12 @@ function wbStartGame(gameId) {
   if (!pool.length) { wbShowEmpty(game.title); return; }
   var totalTiers = wbTotalRounds(gameId);
   var tier = Math.min(wbMastery(gameId), totalTiers - 1);
-  if (game.mechanic === 'deal') { wbStartDeal(gameId, game.title, tier, totalTiers, pool); return; }
-  if (game.mechanic === 'imposter') { wbStartImposter(gameId, game.title, tier, totalTiers, pool); return; }
-  if (game.mechanic === 'cluegrid') { wbStartClue(gameId, game.title, tier, totalTiers, pool); return; }
-  if (game.mechanic === 'memory') { wbStartMemory(gameId, game.title, tier, totalTiers, pool); return; }
-  wbStartGeneric(gameId, game.title, tier, totalTiers, pool);
+  var color = game.color || 'var(--gold)';
+  if (game.mechanic === 'deal') { wbStartDeal(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'imposter') { wbStartImposter(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'cluegrid') { wbStartClue(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'memory') { wbStartMemory(gameId, game.title, color, tier, totalTiers, pool); return; }
+  wbStartGeneric(gameId, game.title, color, tier, totalTiers, pool);
 }
 
 // ── Shared round-finish / mastery / results ────────────────────────────────
@@ -12043,15 +12044,15 @@ function wbFinishRound(ctx) {
     '<div class="wb-results"><div class="wb-results-score">' + esc(ctx.scoreLabel) + '</div>' +
     '<div class="wb-results-label">' + esc(ctx.gameTitle) + '</div>' +
     '<div class="wb-results-msg">' + esc(msg) + '</div></div>' +
-    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Workbook</button>';
+    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Quiz Games</button>';
 }
 
 // ── TIMELINE ORDER (unchanged tap-to-order engine) ─────────────────────────
-function wbStartGeneric(gameId, gameTitle, tier, totalTiers, pool) {
+function wbStartGeneric(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   var start = tier * 10;
   var items = pool.slice(start, start + 10);
   if (items.length < 10) items = items.concat(wbShuffle(pool).slice(0, 10 - items.length));
-  WB_STATE = { gameId: gameId, gameTitle: gameTitle, mechanic: 'generic', tier: tier, totalTiers: totalTiers, idx: 0, correct: 0, items: items, missed: [], isRemix: false, tapped: [], answered: false };
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'generic', tier: tier, totalTiers: totalTiers, idx: 0, correct: 0, items: items, missed: [], isRemix: false, tapped: [], answered: false };
   wbRenderGeneric();
 }
 function wbRenderGeneric() {
@@ -12066,7 +12067,7 @@ function wbRenderGeneric() {
   }
   var it = s.items[s.idx];
   var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>';
-  html += '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
+  html += '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
   html += '<div class="wb-q-box"><div class="wb-q-text">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
   html += '<div class="wb-order-slots">';
   for (var slot = 0; slot < it.events.length; slot++) {
@@ -12106,11 +12107,11 @@ function wbGenericNext() {
 }
 
 // ── SCROLL OR NO SCROLL (Deal or No Deal) ──────────────────────────────────
-function wbStartDeal(gameId, gameTitle, tier, totalTiers, pool) {
+function wbStartDeal(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   var start = tier * 12;
   var slice = pool.slice(start, start + 12);
   if (slice.length < 12) slice = slice.concat(wbShuffle(pool).slice(0, 12 - slice.length));
-  WB_STATE = { gameId: gameId, gameTitle: gameTitle, mechanic: 'deal', tier: tier, totalTiers: totalTiers, isRemix: false,
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'deal', tier: tier, totalTiers: totalTiers, isRemix: false,
     playthroughs: [slice.slice(0, 6), slice.slice(6, 12)], ptIdx: 0, results: [] };
   wbDealNewPlaythrough();
 }
@@ -12172,7 +12173,7 @@ function wbRenderDeal() {
   var panel = document.getElementById('workbook-panel');
   if (!panel) return;
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
-    '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Scroll set ' + (s.ptIdx + 1) + ' of ' + s.playthroughs.length + '</div></div>';
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Scroll set ' + (s.ptIdx + 1) + ' of ' + s.playthroughs.length + '</div></div>';
   var html = '<div class="wb-q-box">';
   if (D.phase === 'pick') {
     html += '<div class="wb-q-text">Pick a scroll to keep. The other five will be opened to reveal what the primary source actually says.</div><div class="wb-case-grid">';
@@ -12223,9 +12224,9 @@ function wbBuildImposterSets(pool, count) {
   }
   return sets;
 }
-function wbStartImposter(gameId, gameTitle, tier, totalTiers, pool) {
+function wbStartImposter(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   var sets = wbBuildImposterSets(pool, 10);
-  WB_STATE = { gameId: gameId, gameTitle: gameTitle, mechanic: 'imposter', tier: tier, totalTiers: totalTiers, isRemix: false, sets: sets, idx: 0, correct: 0, phase: 'guess', chosen: null, missed: [] };
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'imposter', tier: tier, totalTiers: totalTiers, isRemix: false, sets: sets, idx: 0, correct: 0, phase: 'guess', chosen: null, missed: [] };
   wbRenderImposter();
 }
 function wbImposterGuess(slot) {
@@ -12255,7 +12256,7 @@ function wbRenderImposter() {
   if (!panel) return;
   var set = s.sets[s.idx];
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
-    '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Set ' + (s.idx + 1) + '/' + s.sets.length + ' · ' + s.correct + ' correct</div></div>';
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Set ' + (s.idx + 1) + '/' + s.sets.length + ' · ' + s.correct + ' correct</div></div>';
   var html = '<div class="wb-q-box"><div class="wb-q-text">Two of these three are manuscript-attested primary source. One is the institutional claim with no primary-source backing. Tap the imposter.</div><div class="wb-imposter-cards">';
   set.cards.forEach(function(c, i) {
     var cls = 'wb-imposter-card';
@@ -12277,11 +12278,11 @@ function wbRenderImposter() {
 }
 
 // ── CLUE GRID ───────────────────────────────────────────────────────────────
-function wbStartClue(gameId, gameTitle, tier, totalTiers, pool) {
+function wbStartClue(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   var start = tier * 10;
   var boards = pool.slice(start, start + 10);
   if (boards.length < 10) boards = boards.concat(wbShuffle(pool).slice(0, 10 - boards.length));
-  WB_STATE = { gameId: gameId, gameTitle: gameTitle, mechanic: 'cluegrid', tier: tier, totalTiers: totalTiers, isRemix: false, boards: boards, idx: 0, correct: 0, missed: [] };
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'cluegrid', tier: tier, totalTiers: totalTiers, isRemix: false, boards: boards, idx: 0, correct: 0, missed: [] };
   wbClueNewBoard();
 }
 function wbClueNewBoard() {
@@ -12326,7 +12327,7 @@ function wbRenderClue() {
   if (!panel) return;
   var done = C.phase !== 'playing';
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
-    '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Clue ' + (s.idx + 1) + '/' + s.boards.length + ' · ' + s.correct + ' correct</div></div>';
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Clue ' + (s.idx + 1) + '/' + s.boards.length + ' · ' + s.correct + ' correct</div></div>';
   var html = '<div class="wb-q-box"><div class="wb-clue-banner"><span class="wb-clue-label">CLUE</span><span class="wb-clue-word">' + esc(board.clueHeb) + ' (' + esc(board.clueTranslit) + ')</span></div>' +
     '<div class="wb-q-text">Tap the tile that is this root’s true meaning. One tile is a trap — a real but wrong meaning from a different root.</div><div class="wb-clue-grid">';
   C.tiles.forEach(function(t, i) {
@@ -12347,7 +12348,7 @@ function wbRenderClue() {
 }
 
 // ── MEMORY MATCH ────────────────────────────────────────────────────────────
-function wbStartMemory(gameId, gameTitle, tier, totalTiers, pool) {
+function wbStartMemory(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
   var start = tier * 6;
   var letters = pool.slice(start, start + 6);
   if (letters.length < 6) letters = letters.concat(wbShuffle(pool).slice(0, 6 - letters.length));
@@ -12356,7 +12357,7 @@ function wbStartMemory(gameId, gameTitle, tier, totalTiers, pool) {
     tiles.push({ pairIdx: i, kind: 'glyph', text: l.g, matched: false });
     tiles.push({ pairIdx: i, kind: 'name', text: l.name, matched: false });
   });
-  WB_STATE = { gameId: gameId, gameTitle: gameTitle, mechanic: 'memory', tier: tier, totalTiers: totalTiers, isRemix: false,
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'memory', tier: tier, totalTiers: totalTiers, isRemix: false,
     letters: letters, tiles: wbShuffle(tiles), flipped: [], mismatches: 0, matchedCount: 0, busy: false };
   wbRenderMemory();
 }
@@ -12394,7 +12395,7 @@ function wbRenderMemory() {
   var panel = document.getElementById('workbook-panel');
   if (!panel) return;
   var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
-    '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.matchedCount + '/' + s.letters.length + ' matched · ' + s.mismatches + ' mismatches</div></div>';
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.matchedCount + '/' + s.letters.length + ' matched · ' + s.mismatches + ' mismatches</div></div>';
   var html = '<div class="wb-q-box"><div class="wb-q-text">Flip two tiles at a time. Match each paleo-Hebrew glyph to its name.</div><div class="wb-memory-grid">';
   s.tiles.forEach(function(t, i) {
     var faceUp = t.matched || s.flipped.indexOf(i) !== -1;
