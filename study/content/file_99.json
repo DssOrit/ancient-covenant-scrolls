@@ -1,30 +1,293 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_99",
-  "label": "Rule of the Congregation 1QSa (Serekh HaEdah) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_99",
+  "label": "Rule of the Congregation 1QSa (Serekh HaEdah) — Complete",
   "volume": 37,
-  "content_version": 1,
-  "summary_plain": "The Rule of the Congregation describes the assembly of the entire congregation of Yisra\u2019el in the last days. All Yisra\u2019el shall be instructed in the statutes of the covenant from youth. At age twenty a man takes his place among the clans. At age twenty-five he takes a role in the service of the congregation. At thirty he may serve as a judge. The text describes the messianic banquet: when YHWH begets the Mashiach among them, the priest shall enter first, then the Mashiach of Yisra\u2019el, then the congregation by rank. No one shall extend his hand to the bread before the priest blesses it.",
-  "summary_scholarly": "1QSa (Serekh HaEdah \u2014 Rule of the Congregation) was found appended to the Community Rule (1QS) in Cave 1. It legislates not for the present sectarian community but for \u2018all the congregation of Yisra\u2019el in the last days\u2019 \u2014 an eschatological document describing the restored covenant assembly. The age-graded system (youth instruction, age 20 enrollment, age 25 service, age 30 judicial authority) mirrors Bamidbar (Numbers). The messianic banquet (Col II:11-22) is the most explicit description of the Mashiach at a communal meal found in any Dead Sea Scroll. The text presupposes a dual-messianic expectation: the priestly Mashiach takes precedence over the Mashiach of Yisra\u2019el (the royal Mashiach). The meal is the covenant meal \u2014 bread and wine blessed by the priest first.",
+  "content_version": 2,
+  "summary_plain": "The Rule of the Congregation describes the assembly of the entire congregation of Yisra’el in the last days. All Yisra’el shall be instructed in the statutes of the covenant from youth. At age twenty a man takes his place among the clans. At age twenty-five he takes a role in the service of the congregation. At thirty he may serve as a judge. The text describes the messianic banquet: when YHWH begets the Mashiach among them, the priest shall enter first, then the Mashiach of Yisra’el, then the congregation by rank. No one shall extend his hand to the bread before the priest blesses it.",
+  "summary_scholarly": "1QSa (Serekh HaEdah — Rule of the Congregation) was found appended to the Community Rule (1QS) in Cave 1. It legislates not for the present sectarian community but for ‘all the congregation of Yisra’el in the last days’ — an eschatological document describing the restored covenant assembly. The age-graded system (youth instruction, age 20 enrollment, age 25 service, age 30 judicial authority) mirrors Bamidbar (Numbers). The messianic banquet (Col II:11-22) is the most explicit description of the Mashiach at a communal meal found in any Dead Sea Scroll. The text presupposes a dual-messianic expectation: the priestly Mashiach takes precedence over the Mashiach of Yisra’el (the royal Mashiach). The meal is the covenant meal — bread and wine blessed by the priest first.",
   "key_terms": [
-    { "term": "Serekh HaEdah", "phonetic": "SEH-rekh Ha-Eh-DAH", "definition": "Hebrew for \u2018Rule of the Congregation.\u2019 An eschatological document legislating for the restored assembly of all Yisra\u2019el in the last days, found appended to 1QS in Cave 1." },
-    { "term": "Messianic Banquet", "phonetic": "", "definition": "The communal meal described in 1QSa Col II where the priestly Mashiach and the Mashiach of Yisra\u2019el sit together. The priest blesses the bread and wine first. No one eats before the priestly blessing. This is the most detailed messianic meal description in the Dead Sea Scrolls." }
+    {
+      "term": "Serekh HaEdah",
+      "phonetic": "SE-rekh ha-e-DAH",
+      "definition": "Rule of the Congregation — the full title of 1QSa. Governs the assembly of all Yisra'el in the end of days, specifying the roles, ranking, age structure, and participation rules for the eschatological covenant community. Found on the first column of the same scroll as 1QS (Cave 1)."
+    },
+    {
+      "term": "Aharit HaYamim",
+      "phonetic": "a-ha-REET ha-ya-MEEM",
+      "definition": "End of Days — the eschatological framework of 1QSa. The document opens: 'This is the rule for all the congregation of Yisra'el in the end of days.' All its regulations are designed for the final era when the covenant community will be fully assembled."
+    },
+    {
+      "term": "Mashiakh Yisra'el",
+      "phonetic": "ma-SHEE-akh yis-ra-EL",
+      "definition": "Messiah of Israel — the royal, Davidic Messiah expected in 1QSa. Distinguished from the priestly Mashiakh Aharon. At the messianic banquet, the Mashiakh Yisra'el enters only after the priest has blessed and arranged the bread and wine — the priest leads, the king follows."
+    },
+    {
+      "term": "Mashiakh Aharon",
+      "phonetic": "ma-SHEE-akh ah-ha-RON",
+      "definition": "Messiah of Aaron — the priestly Messiah expected in 1QSa, who ranks above the Mashiakh Yisra'el at the messianic banquet. The priest opens the assembly and blesses the food before the royal Messiah arrives. This two-Messiah hierarchy places priestly authority above royal authority."
+    },
+    {
+      "term": "Messianic Banquet",
+      "phonetic": "",
+      "definition": "The eschatological meal described in 1QSa cols 2:11-22. YHWH's Messiah is 'begotten' at the assembly; the priest blesses the bread and wine first; then the Mashiakh Yisra'el extends his hand; then the congregation eats in rank order. This scene describes the covenant community's final assembly at YHWH's table."
+    },
+    {
+      "term": "Angelic Presence",
+      "phonetic": "",
+      "definition": "1QSa specifies that the final assembly is in the presence of the holy angels. Members with physical blemishes, skin disease, paralysis, deafness, or old-age impairment are excluded from the assembly because the angels are there. This mirrors the Temple purity regulations and the Songs of Sabbath Sacrifice's dual-register worship."
+    },
+    {
+      "term": "Purity Requirements",
+      "phonetic": "",
+      "definition": "1QSa specifies strict physical and moral purity for assembly membership: no one struck by impurity may enter the full assembly. The angels' presence demands the same purity required by the heavenly Temple. Physical disqualifications mirror the Torah's regulations for priests — applied here to all assembly members in the end of days."
+    },
+    {
+      "term": "Age Structure",
+      "phonetic": "",
+      "definition": "1QSa specifies a detailed age hierarchy: from youth, children are taught the Torah; at twenty they may be enrolled and may marry; at twenty-five they begin service; at thirty they may take their place in the assembly and hold office. This mirrors the Levitical age structure in Bamidbar."
+    },
+    {
+      "term": "Assembly of All Yisra'el",
+      "phonetic": "",
+      "definition": "The full eschatological gathering described in 1QSa — not the Qumran Yahad alone but all of covenant Yisra'el assembled at the end of days. The document envisions the entire covenant people gathered under the rule of the two Messiahs and the priestly leadership."
+    },
+    {
+      "term": "Education from Youth",
+      "phonetic": "",
+      "definition": "1QSa begins with the instruction that children are to be taught the Torah and the community's rules from youth, trained in the Book of Hagu (a community text), and gradually integrated into the assembly's life by age. This continuity of covenant teaching from childhood to full standing reflects the community's investment in multi-generational covenant fidelity."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col II:11-12", "prompt": "When YHWH begets the Mashiach among them, the ______ shall enter at the head of all the congregation of Yisra\u2019el.", "answer": "priest", "source_quote": "When YHWH begets the Mashiach among them, the priest shall enter at the head of all the congregation of Yisra\u2019el." },
-    { "ref": "Col I:6-8", "prompt": "From his youth they shall instruct him in the book of ______ and shall teach him the statutes of the covenant.", "answer": "Haguy", "source_quote": "From his youth they shall instruct him in the book of Haguy and shall teach him according to his age the statutes of the covenant." }
+    {
+      "ref": "1QSa I:1",
+      "prompt": "1QSa opens: 'This is the rule for all the congregation of Yisra'el in the ___.'",
+      "answer": "end of days / Aharit HaYamim",
+      "source_quote": "This is the rule for all the congregation of Israel in the end of days. — 1QSa I:1"
+    },
+    {
+      "ref": "1QSa II:11-14",
+      "prompt": "At the messianic banquet, the ___ blesses the bread and wine before the Messiah of Israel extends his hand.",
+      "answer": "priest",
+      "source_quote": "The priest shall come first, and he shall bless the first fruits of bread and wine. — 1QSa II:11-14"
+    },
+    {
+      "ref": "1QSa I:8-9",
+      "prompt": "From youth, children are taught the ___ and the statutes of the covenant.",
+      "answer": "Torah / Book of Hagu",
+      "source_quote": "From his youth he shall be instructed in the Book of Hagu and in all the statutes of the covenant. — 1QSa I:8-9"
+    },
+    {
+      "ref": "1QSa II:3-9",
+      "prompt": "No one with a physical blemish may enter the assembly because the ___ are present.",
+      "answer": "holy angels",
+      "source_quote": "They shall not enter among the congregation of men because the holy angels are in their midst. — 1QSa II:3-9"
+    },
+    {
+      "ref": "1QSa I:12-13",
+      "prompt": "At the age of ___, a man may be enrolled in the congregation and may take a wife.",
+      "answer": "twenty",
+      "source_quote": "At the age of twenty he shall be enrolled in the congregation and shall take a wife. — 1QSa I:12-13"
+    },
+    {
+      "ref": "1QSa I:14-16",
+      "prompt": "A man may take his full place in the assembly and hold a position of authority at the age of ___.",
+      "answer": "thirty",
+      "source_quote": "At the age of thirty he shall take his place among the leaders of the thousands. — 1QSa I:14-16"
+    },
+    {
+      "ref": "1QSa II:11-14",
+      "prompt": "Before any assembly takes place, even if only ten are gathered, a ___ must be present.",
+      "answer": "priest",
+      "source_quote": "Before any assembly of ten men, let there be a man who is a priest. — 1QSa II:11-14"
+    },
+    {
+      "ref": "1QSa II:12",
+      "prompt": "The Messiah of ___ is begotten at the head of the whole congregation of Yisra'el.",
+      "answer": "Israel / Yisra'el",
+      "source_quote": "When YHWH begets the Messiah with them. — 1QSa II:12"
+    },
+    {
+      "ref": "1QSa I:28-29",
+      "prompt": "In all their affairs and in all their journeys, men of the congregation follow the ___ of the priests.",
+      "answer": "word / rule / command",
+      "source_quote": "They shall do according to the rule of the sons of Zadok the priests. — 1QSa I:28-29"
+    },
+    {
+      "ref": "1QSa",
+      "prompt": "1QSa was found on the same scroll as ___, in Cave 1.",
+      "answer": "1QS / Community Rule / Serekh HaYakhad",
+      "source_quote": "1QSa (The Rule of the Congregation) was appended to the same scroll as 1QS in Cave 1."
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col II:17-21", "question": "Who blesses the bread and wine at the messianic banquet?", "options": ["The Mashiach of Yisra\u2019el", "The Teacher of Righteousness", "The priest (priestly Mashiach)", "The overseer (mevaqqer)"], "correct": 2, "source_quote": "The priest shall bless the first fruits of bread and wine and shall stretch out his hand to the bread first." },
-    { "ref": "Col I:8-12", "question": "At what age may a man serve as a judge in the congregation?", "options": ["Twenty", "Twenty-five", "Thirty", "Forty"], "correct": 2, "source_quote": "At the age of thirty years he may take his place among the judges." }
+    {
+      "ref": "1QSa I:1",
+      "question": "What time frame does 1QSa (Rule of the Congregation) apply to?",
+      "options": [
+        "The current Yahad community only",
+        "The end of days — the eschatological final assembly",
+        "The desert period before entering the land",
+        "The Second Temple period"
+      ],
+      "correct": 1,
+      "source_quote": "This is the rule for all the congregation of Israel in the end of days. — 1QSa I:1"
+    },
+    {
+      "ref": "1QSa II:11-14",
+      "question": "At the messianic banquet, who acts first — before the Messiah of Israel extends his hand?",
+      "options": [
+        "The Messiah of Israel blesses the assembly",
+        "The Teacher of Righteousness speaks",
+        "The priest blesses the bread and wine",
+        "The twelve elders vote"
+      ],
+      "correct": 2,
+      "source_quote": "The priest shall come first, and he shall bless the first fruits of bread and wine. — 1QSa II:11-14"
+    },
+    {
+      "ref": "1QSa II:3-9",
+      "question": "Why are those with physical blemishes excluded from the full assembly in 1QSa?",
+      "options": [
+        "They lack the knowledge required for full standing",
+        "Because the holy angels are present in the assembly",
+        "Their impurity might spread to others during the meal",
+        "The rule was adopted from the Jerusalem Temple's priesthood exam"
+      ],
+      "correct": 1,
+      "source_quote": "They shall not enter among the congregation of men because the holy angels are in their midst. — 1QSa II:3-9"
+    },
+    {
+      "ref": "1QSa I:12-13",
+      "question": "At what age may a man enroll in the congregation and take a wife?",
+      "options": [
+        "Fifteen",
+        "Eighteen",
+        "Twenty",
+        "Thirty"
+      ],
+      "correct": 2,
+      "source_quote": "At the age of twenty he shall be enrolled in the congregation and shall take a wife. — 1QSa I:12-13"
+    },
+    {
+      "ref": "1QSa I:14-16",
+      "question": "At what age may a man take full standing in the assembly and hold office?",
+      "options": [
+        "Twenty",
+        "Twenty-five",
+        "Thirty",
+        "Forty"
+      ],
+      "correct": 2,
+      "source_quote": "At the age of thirty he shall take his place among the leaders of the thousands. — 1QSa I:14-16"
+    },
+    {
+      "ref": "1QSa",
+      "question": "How many Messiahs does 1QSa anticipate?",
+      "options": [
+        "One royal Messiah from David",
+        "One priestly Messiah only",
+        "Two — a priestly Messiah of Aaron and a royal Messiah of Israel",
+        "Three — prophet, priest, and king"
+      ],
+      "correct": 2,
+      "source_quote": "Until the Messiahs of Aaron and Israel. — 1QSa (echoing 1QS IX:11)"
+    },
+    {
+      "ref": "1QSa II:12",
+      "question": "At the messianic banquet, whose rank takes precedence — the priest or the Mashiakh Yisra'el?",
+      "options": [
+        "The Mashiakh Yisra'el leads the assembly",
+        "The priest leads — he blesses before the Mashiakh Yisra'el extends his hand",
+        "They act simultaneously",
+        "The Teacher of Righteousness presides over both"
+      ],
+      "correct": 1,
+      "source_quote": "The priest shall come first... then the Messiah of Israel shall extend his hand. — 1QSa II:11-14"
+    },
+    {
+      "ref": "1QSa I:8-9",
+      "question": "What is children's education focused on in 1QSa?",
+      "options": [
+        "Military training for the final war",
+        "The Torah and the Book of Hagu (a community text)",
+        "Temple sacrifice procedures",
+        "The pesher writings of the Teacher"
+      ],
+      "correct": 1,
+      "source_quote": "From his youth he shall be instructed in the Book of Hagu and in all the statutes of the covenant. — 1QSa I:8-9"
+    },
+    {
+      "ref": "1QSa I:28-29",
+      "question": "In all affairs and journeys, the congregation follows:",
+      "options": [
+        "The Mashiakh Yisra'el's command",
+        "The rule of the priests — the sons of Zadok",
+        "The majority vote of the Many",
+        "The Maskil's teaching alone"
+      ],
+      "correct": 1,
+      "source_quote": "They shall do according to the rule of the sons of Zadok the priests. — 1QSa I:28-29"
+    },
+    {
+      "ref": "1QSa",
+      "question": "1QSa (Rule of the Congregation) was found:",
+      "options": [
+        "In Cave 4 as an isolated fragment",
+        "On the same scroll as 1QS in Cave 1",
+        "At Masada as a separate copy",
+        "In the Cairo Genizah"
+      ],
+      "correct": 1,
+      "source_quote": "1QSa was appended to the same scroll as 1QS in Cave 1."
+    }
   ],
   "faq": [
     {
-      "question": "What does the Rule of the Congregation reveal about the restoration of all Yisra\u2019el?",
-      "answer": "1QSa legislates not for the small Qumran sect alone but for \u2018all the congregation of Yisra\u2019el in the last days.\u2019 This is an eschatological document \u2014 it envisions the full restoration of the covenant people, organized by tribes and clans, instructed in the Torah from youth, and gathered around the messianic table. The Qumran community did not believe they were the final form of the covenant people. They believed they were the remnant preserving the blueprint for restoration. The Great Eraser operates by convincing scattered covenant people that restoration is impossible \u2014 that the scattering is permanent, that the tribal identities are lost forever, that the covenant community can never be reassembled. 1QSa says the opposite: there is a rule already written for the day when all Yisra\u2019el gathers again."
+      "question": "What is 1QSa and how does it relate to 1QS?",
+      "answer": "1QSa is the Rule of the Congregation (Serekh HaEdah), found on the same scroll as the Community Rule (1QS) in Cave 1. It is a companion document describing not the current Yahad community's daily life (1QS's subject) but the ideal assembly of all Yisra'el at the end of days. 1QS governs the present community; 1QSa describes the future eschatological community that will exist when YHWH's purposes are fully realized and both Messiahs have come."
     },
     {
-      "question": "Why does the priestly Mashiach take precedence over the royal Mashiach in this text?",
-      "answer": "In 1QSa, the priest enters first, blesses the bread and wine first, and sits at the head of the assembly. The Mashiach of Yisra\u2019el (the royal figure) comes second. This priestly precedence reflects the Qumran community\u2019s conviction that the covenant is fundamentally a priestly institution \u2014 the restored community requires correct worship before it requires political authority. The Great Eraser has systematically inverted this priority. Both Christian and rabbinic traditions elevated either the royal-messianic or the scholarly-interpretive role above the priestly function. The Qumran texts preserve an older model where the priesthood \u2014 direct service to YHWH according to the Torah \u2014 takes precedence over all other communal functions."
+      "question": "What is the messianic banquet?",
+      "answer": "1QSa cols 2:11-22 describes an eschatological meal at the end of days. YHWH begets the Messiah at the assembly; a priest takes his place first and blesses the bread and wine; then the Mashiakh Yisra'el (royal Messiah) extends his hand and the congregation eats in rank order. This is not an ordinary meal — it is the final covenant gathering at YHWH's table, with the two Messiahs present, the assembly ranked in full order, and the holy angels in their midst. The scene establishes that priestly authority (the priest and the Mashiakh Aharon) ranks above royal authority (the Mashiakh Yisra'el) in the final era."
+    },
+    {
+      "question": "Why are two Messiahs expected rather than one?",
+      "answer": "The two-Messiah framework reflects the two offices established in the Torah: the high priestly office and the royal/Davidic office. These were separated in the Torah itself — Aharon was high priest, Mosheh was neither priest nor king. The Qumran community saw the corruption of the Jerusalem establishment as partly a confusion of these roles — the Hasmonean priest-kings held both offices, which the community rejected. The end of days would restore both offices separately: a priestly Messiah of Aharon and a royal Messiah of Yisra'el, with the priest taking precedence at the final assembly."
+    },
+    {
+      "question": "Why are those with physical blemishes excluded from the end-of-days assembly?",
+      "answer": "1QSa specifies that men with physical impairments — blindness, deafness, paralysis, skin disease, or old-age impairment — may not enter the full assembly because the holy angels are present. The purity standard for the eschatological assembly matches the standard for the heavenly Temple. This mirrors the Torah's regulations for priests serving in the sanctuary. In the end of days, the entire covenant community worships at the same level as the priestly service — which means meeting the same purity standard."
+    },
+    {
+      "question": "What is the age structure in 1QSa?",
+      "answer": "1QSa specifies a detailed progression: from youth, children are taught the Torah and the Book of Hagu; at twenty they are enrolled in the congregation and may marry; at twenty-five they begin communal service; at thirty they take their full place in the assembly and may hold leadership positions. This mirrors the Levitical age structure in Bamidbar (25 and 30 years for different levels of Levitical service). The progression reflects the community's belief that full covenant standing must be earned through years of formation, not simply assumed."
+    },
+    {
+      "question": "What does 'begetting' the Messiah mean in 1QSa col.2?",
+      "answer": "1QSa col.2:11-12 says 'when YHWH begets the Messiah among them.' This language draws on the Davidic covenant promise in 2 Shemu'el 7:14 and Tehillim 2:7, where YHWH declares 'You are My son, today I have begotten you.' In the 1QSa context, 'begetting' refers to the eschatological moment of the Messiah's formal installation or public appearance at the final assembly — not a metaphysical claim about divine birth. The Messiah is YHWH's anointed king brought forth at the appointed time. This ancient text is the source; NT adoptions of similar language (Psalm 2:7 applied to the invented figure) are borrowings from this prior tradition."
+    },
+    {
+      "question": "What is the Book of Hagu and why is it mentioned?",
+      "answer": "The Book of Hagu is a community text mentioned in 1QSa and the Damascus Document as essential reading — children are instructed in it from youth. What the Book of Hagu actually contains is not fully established from surviving manuscripts; it may be a name for the Torah itself or for an interpretive community document. What matters in 1QSa's context is that covenant formation begins in childhood: the community's rules, the Torah, and the community's interpretive traditions are taught from the earliest years, so that by the time a person reaches enrollment age at twenty, they have been shaped by this tradition for their entire conscious life."
+    },
+    {
+      "question": "How does 1QSa's vision of the future differ from the current Yahad community?",
+      "answer": "The current Yahad (1QS) is a small remnant — a focused community of volunteers separated from a corrupt society, waiting out the present era. 1QSa envisions the eschatological community of all Yisra'el — not just the Qumran remnant but the full covenant people assembled at the end of days under the two Messiahs. The Yahad's separation and discipline is a preparation and a holding pattern for 1QSa's vision of full restoration. The Yahad maintains YHWH's covenant during the corrupt era; 1QSa describes what that covenant will look like when it is fully and finally restored."
+    },
+    {
+      "question": "What role do the priests play at the messianic banquet?",
+      "answer": "The priest takes precedence over the royal Messiah at the messianic banquet: the priest arrives first, blesses the bread and wine first, and only after his blessing does the Mashiakh Yisra'el extend his hand to begin the meal. 'Before any assembly of ten, let there be a priest present' — the minimum quorum for a full assembly requires priestly presence. This hierarchy reflects the community's rejection of the Hasmonean priest-kings who combined both offices illegitimately. At the end of days, the proper order is restored: priest leads, king follows, and the two Messiahs are distinct."
+    },
+    {
+      "question": "How does 1QSa's two-Messiah framework compare to later single-Messiah traditions?",
+      "answer": "The two-Messiah framework of the Qumran community (priestly Messiah of Aharon, royal Messiah of Yisra'el) predates the NT. The NT combined these into a single figure who is simultaneously priest and king — a configuration the Qumran community explicitly rejected in its own day (condemning the Hasmonean priest-kings for doing exactly that). The ancient two-Messiah framework is the source tradition; the NT's single-Messiah synthesis is a later construction built on elements borrowed from the older texts. 1QSa's template shows what the original expectation looked like before that synthesis."
+    },
+    {
+      "question": "What does 1QSa reveal about how the Qumran community understood its own purpose?",
+      "answer": "1QSa reveals that the Qumran community understood itself as the nucleus of the final covenant people — the present community training for and anticipating the full eschatological assembly described in this document. Their rigorous purity standards, age hierarchy, priestly authority, and communal discipline were not ends in themselves but preparations for the end of days. The Yahad's daily life — the annual reviews, the communal meals, the ranked seating, the priestly blessing before eating — was a practice run for the messianic banquet, performed now in anticipation of when YHWH's purposes would be fully realized."
     }
   ]
 }

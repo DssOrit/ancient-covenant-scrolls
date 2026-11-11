@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_110",
-  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 2 \u2014 Col 23\u201344",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_110",
+  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) — Part 2 — Col 23–44",
   "volume": 46,
-  "content_version": 1,
-  "summary_plain": "The middle section of the Temple Scroll continues with the architecture of the outer court, the buildings, and the purity regulations for the Temple city. The outer court is vast \u2014 large enough for all Yisra\u2019el to assemble. Chambers are designated for specific priestly functions. Detailed purity laws govern who may enter each court and when. The scroll describes the slaughtering places, the drains, and the storage for sacred vessels. Regulations for the king are given: the king shall not multiply horses, he shall not take many wives, he shall write a copy of the Torah and read it all the days of his life. The king\u2019s guard is composed of twelve thousand warriors from all the tribes.",
-  "summary_scholarly": "Columns 23-44 of the Temple Scroll cover the outer Temple architecture, the purity regulations, and the Law of the King (columns 56-59, with its foundation laid in this section). The outer court dimensions create a sacred precinct far larger than the Second Temple\u2019s actual footprint. The purity regulations are stricter than both the Masoretic Torah and later rabbinic halakhah. The Law of the King rewrites Devarim 17:14-20 with significant expansions: the king\u2019s council of thirty-six (twelve priests, twelve Levites, twelve Yisra\u2019elites), the prohibition against taking foreign wives, the king\u2019s obligation to consult the high priest, and the standing army of 12,000. The text presents an alternative constitutional order for Yisra\u2019el that limits royal power through priestly oversight and tribal representation.",
+  "content_version": 2,
+  "summary_plain": "The middle section of the Temple Scroll continues with the architecture of the outer court, the buildings, and the purity regulations for the Temple city. The outer court is vast — large enough for all Yisra’el to assemble. Chambers are designated for specific priestly functions. Detailed purity laws govern who may enter each court and when. The scroll describes the slaughtering places, the drains, and the storage for sacred vessels. Regulations for the king are given: the king shall not multiply horses, he shall not take many wives, he shall write a copy of the Torah and read it all the days of his life. The king’s guard is composed of twelve thousand warriors from all the tribes.",
+  "summary_scholarly": "Columns 23-44 of the Temple Scroll cover the outer Temple architecture, the purity regulations, and the Law of the King (columns 56-59, with its foundation laid in this section). The outer court dimensions create a sacred precinct far larger than the Second Temple’s actual footprint. The purity regulations are stricter than both the Masoretic Torah and later rabbinic halakhah. The Law of the King rewrites Devarim 17:14-20 with significant expansions: the king’s council of thirty-six (twelve priests, twelve Levites, twelve Yisra’elites), the prohibition against taking foreign wives, the king’s obligation to consult the high priest, and the standing army of 12,000. The text presents an alternative constitutional order for Yisra’el that limits royal power through priestly oversight and tribal representation.",
   "key_terms": [
-    { "term": "Torat HaMelekh", "phonetic": "Toh-RAHT Ha-MEH-lekh", "definition": "The \u2018Law of the King\u2019 section of the Temple Scroll, expanding Devarim 17:14-20. It limits royal power: the king must not multiply horses, must not take many wives, must write a copy of the Torah, and must consult the high priest before making war." },
-    { "term": "Council of Thirty-Six", "phonetic": "", "definition": "The Temple Scroll\u2019s king\u2019s council: twelve priests, twelve Levites, and twelve laymen from Yisra\u2019el. The king may not act without the consent of this council. This structure ensures tribal and priestly oversight of royal authority." }
+    {
+      "term": "Festival Calendar (Temple Scroll)",
+      "phonetic": "",
+      "definition": "Columns 13-29 of the Temple Scroll describe a festival calendar based on the 364-day solar year — including standard Torah festivals plus additional first-fruits festivals for wine, oil, and wood not found in the standard festival list of Vayikra/Devarim."
+    },
+    {
+      "term": "New Wine Festival",
+      "phonetic": "",
+      "definition": "An additional festival in the Temple Scroll's calendar — 50 days after Shavuot (Feast of Weeks), the New Wine festival celebrates the first fruits of the vine. This is not in the standard Torah festival list; the Temple Scroll expands the calendar."
+    },
+    {
+      "term": "New Oil Festival",
+      "phonetic": "",
+      "definition": "Another additional festival in the Temple Scroll — 50 days after the New Wine festival, celebrating the first fruits of olive oil. Part of the Temple Scroll's expanded first-fruits framework that applies the Shavuot pattern to wine and oil."
+    },
+    {
+      "term": "Wood Festival",
+      "phonetic": "",
+      "definition": "The Temple Scroll specifies a festival for bringing wood to the Temple (cols 23-25) — a 6-day ceremony where each tribe brings its assigned wood offering on appointed days. This corresponds to a Nehemiah 10:35 reference but is elaborated in the Temple Scroll far beyond any other ancient text."
+    },
+    {
+      "term": "Shavuot Pattern",
+      "phonetic": "sha-vu-OT",
+      "definition": "The Temple Scroll's festival calendar expands the Shavuot (Feast of Weeks) pattern — counting 50 days from one festival to the next — to generate the New Wine and New Oil festivals. The result is a calendar that fills the summer months with covenant celebration."
+    },
+    {
+      "term": "First-Fruits Theology",
+      "phonetic": "",
+      "definition": "The Temple Scroll's expanded first-fruits framework: not just grain (Shavuot) but wine and oil are presented to YHWH as first-fruits, with their own 50-day counting cycles. Every agricultural product flows to YHWH first before the community uses it."
+    },
+    {
+      "term": "Purity Regulations (Temple Scroll)",
+      "phonetic": "",
+      "definition": "Columns 45-51 of the Temple Scroll contain detailed purity laws governing who may enter the Temple city, how long various impurities last, and the rules for cleansing. Part 2 (cols 23-44) transitions from the festival calendar into the purity framework."
+    },
+    {
+      "term": "Holy City Boundaries",
+      "phonetic": "",
+      "definition": "The Temple Scroll defines a 'holy city' (ir hamikdash) with specific boundaries — a designated area around the Temple within which stricter purity rules apply. The city of the Temple is not just the Temple mount but a larger sacred zone."
+    },
+    {
+      "term": "Sacrificial Calendar Coordination",
+      "phonetic": "",
+      "definition": "The Temple Scroll coordinates the sacrificial offerings for each festival with the 364-day solar calendar — specific offerings on specific days, in specific quantities, following the Torah's festival laws but organized by the solar calendar framework."
+    },
+    {
+      "term": "364-Day Festival Framework",
+      "phonetic": "",
+      "definition": "The Temple Scroll's Part 2 is organized by the 364-day solar calendar — festivals always fall on fixed weekdays, the Wood Festival and first-fruits festivals fill the calendar with covenant celebration, and the purity laws are timed to the calendar's structure."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col LVI:12-15", "prompt": "The king shall not multiply ______ for himself, nor cause the people to return to Mitzrayim for war.", "answer": "horses", "source_quote": "The king shall not multiply horses for himself, nor cause the people to return to Mitzrayim to multiply horses." },
-    { "ref": "Col LVII:11-14", "prompt": "The king\u2019s council shall consist of twelve priests, twelve Levites, and twelve men of ______.", "answer": "Yisra\u2019el", "source_quote": "Twelve from the priests, twelve from the Levites, and twelve from all Yisra\u2019el shall sit with him." }
+    {
+      "ref": "11Q19 col.19-23",
+      "prompt": "The New Wine Festival in the Temple Scroll occurs ___ days after Shavuot.",
+      "answer": "50",
+      "source_quote": "New Wine Festival — 50 days after Shavuot. — 11Q19 col.XIX-XXIII"
+    },
+    {
+      "ref": "11Q19 col.23-25",
+      "prompt": "The ___ Festival is a 6-day ceremony where each tribe brings assigned wood offerings on appointed days.",
+      "answer": "Wood",
+      "source_quote": "Wood Festival — 6-day ceremony with tribal wood offerings. — 11Q19 col.XXIII-XXV"
+    },
+    {
+      "ref": "11Q19 col.21-23",
+      "prompt": "The New ___ Festival follows 50 days after the New Wine Festival.",
+      "answer": "Oil",
+      "source_quote": "New Oil Festival — 50 days after New Wine. — 11Q19 col.XXI-XXIII"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll's festival calendar is organized by the ___ solar year.",
+      "answer": "364-day",
+      "source_quote": "Festival calendar organized by the 364-day solar year. — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.19-23",
+      "prompt": "The Temple Scroll expands the ___ pattern — counting 50 days — to generate New Wine and New Oil festivals.",
+      "answer": "Shavuot",
+      "source_quote": "Shavuot pattern expanded to New Wine and New Oil — 11Q19 col.XIX-XXIII"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll's first-fruits theology: every agricultural product — grain, wine, ___ — goes to YHWH first.",
+      "answer": "oil",
+      "source_quote": "First-fruits: grain (Shavuot), wine, oil — all to YHWH first. — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.44-50",
+      "prompt": "The Temple Scroll defines a ___ city with stricter purity rules extending beyond the Temple mount itself.",
+      "answer": "holy",
+      "source_quote": "Holy city (ir hamikdash) — stricter purity zone around the Temple. — 11Q19 col.XLIV-L"
+    },
+    {
+      "ref": "11Q19 col.23-25",
+      "prompt": "The Wood Festival is elaborated in the Temple Scroll far beyond the brief reference in ___.",
+      "answer": "Nehemiah 10:35",
+      "source_quote": "Wood Festival — corresponds to Nehemiah 10:35 but massively elaborated. — 11Q19 col.XXIII-XXV"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll's expanded first-fruits framework fills the ___ months with covenant celebration.",
+      "answer": "summer",
+      "source_quote": "New Wine and New Oil festivals fill the summer months. — 11Q19"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll coordinates sacrificial ___ for each festival with specific offerings on specific days.",
+      "answer": "calendar / offerings",
+      "source_quote": "Sacrificial calendar coordination — specific offerings for each festival day. — 11Q19"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col LVI-LVII", "question": "What does the Temple Scroll\u2019s Law of the King require?", "options": ["The king has absolute authority over all Yisra\u2019el", "The king must consult a council of 36, write a Torah copy, and not multiply horses or wives", "The king must be from the tribe of Levi", "The king must conquer all surrounding nations"], "correct": 1, "source_quote": "The king shall write for himself a copy of this Torah. He shall not multiply horses. He shall not take many wives. Twelve priests, twelve Levites, and twelve of Yisra\u2019el shall sit with him." },
-    { "ref": "Col XLVI-XLVII", "question": "How do the Temple Scroll\u2019s purity regulations compare to other sources?", "options": ["They are identical to the Masoretic Torah", "They are less strict than rabbinic law", "They are stricter than both the Masoretic Torah and later rabbinic halakhah", "They eliminate all purity requirements"], "correct": 2, "source_quote": "The purity regulations are stricter than both the Masoretic Torah and later rabbinic halakhah." }
+    {
+      "ref": "11Q19 col.19-23",
+      "question": "When does the New Wine Festival occur?",
+      "options": [
+        "50 days before Passover",
+        "50 days after Shavuot",
+        "On the first day of the seventh month",
+        "14 days into the third month"
+      ],
+      "correct": 1,
+      "source_quote": "New Wine Festival — 50 days after Shavuot. — 11Q19 col.XIX-XXIII"
+    },
+    {
+      "ref": "11Q19 col.23-25",
+      "question": "What is the Wood Festival?",
+      "options": [
+        "A festival for the planting season",
+        "A 6-day ceremony where each tribe brings assigned wood offerings",
+        "A celebration of the Temple's construction",
+        "The day the community replaces its Torah scroll"
+      ],
+      "correct": 1,
+      "source_quote": "Wood Festival — 6-day ceremony with tribal wood offerings. — 11Q19 col.XXIII-XXV"
+    },
+    {
+      "ref": "11Q19 col.21-23",
+      "question": "What follows the New Wine Festival after 50 days?",
+      "options": [
+        "The Day of Atonement",
+        "Sukkot (Feast of Booths)",
+        "The New Oil Festival",
+        "The beginning of the second year"
+      ],
+      "correct": 2,
+      "source_quote": "New Oil Festival — 50 days after New Wine. — 11Q19 col.XXI-XXIII"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What pattern does the Temple Scroll use to generate the New Wine and New Oil festivals?",
+      "options": [
+        "The seven-week pattern of the Yovel (Jubilee)",
+        "The 50-day Shavuot counting pattern applied to wine and oil",
+        "The lunar month pattern of the Jerusalem Temple",
+        "The seven-day creation week pattern"
+      ],
+      "correct": 1,
+      "source_quote": "Shavuot 50-day pattern expanded to New Wine and New Oil. — 11Q19 col.XIX-XXIII"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What is the Temple Scroll's first-fruits theology?",
+      "options": [
+        "Only grain needs to be brought as first-fruits",
+        "Wine and oil do not require first-fruits presentation",
+        "Every agricultural product — grain, wine, oil — is presented to YHWH first before community use",
+        "First-fruits are voluntary offerings, not mandatory"
+      ],
+      "correct": 2,
+      "source_quote": "First-fruits: grain (Shavuot), wine, oil — all to YHWH first. — 11Q19"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What calendar framework governs the Temple Scroll's festival calendar?",
+      "options": [
+        "The lunar calendar of the Jerusalem Temple",
+        "The 364-day solar calendar — festivals always fall on fixed weekdays",
+        "The Babylonian astronomical calendar",
+        "An original calendar unique to the Temple Scroll"
+      ],
+      "correct": 1,
+      "source_quote": "Festival calendar organized by the 364-day solar year. — 11Q19"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What is the holy city (ir hamikdash) in the Temple Scroll?",
+      "options": [
+        "The name used only for the innermost court",
+        "A designated area around the Temple with stricter purity rules extending beyond the mount",
+        "The heavenly city described in the Shirot",
+        "The city of Yerushalayim as a whole"
+      ],
+      "correct": 1,
+      "source_quote": "Holy city — stricter purity zone extending beyond the Temple mount. — 11Q19 col.XLIV-L"
+    },
+    {
+      "ref": "11Q19 col.23-25",
+      "question": "The Wood Festival in the Temple Scroll expands on a brief reference in:",
+      "options": [
+        "Yehezkel 44",
+        "Nehemiah 10:35",
+        "Vayikra 23",
+        "Devarim 16"
+      ],
+      "correct": 1,
+      "source_quote": "Wood Festival — corresponds to Nehemiah 10:35, massively elaborated. — 11Q19 col.XXIII-XXV"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What season do the New Wine and New Oil festivals fill?",
+      "options": [
+        "Autumn — after the harvest",
+        "Winter — before the new planting year",
+        "Summer — after Shavuot",
+        "Spring — before Passover"
+      ],
+      "correct": 2,
+      "source_quote": "New Wine and New Oil festivals fill the summer months. — 11Q19"
+    },
+    {
+      "ref": "11Q19",
+      "question": "How does the Temple Scroll's festival calendar differ from the standard Torah festival list in Vayikra/Devarim?",
+      "options": [
+        "It removes Yom Kippur from the calendar",
+        "It adds New Wine, New Oil, and Wood festivals not in the standard Torah list",
+        "It replaces Passover with a spring equinox festival",
+        "It has no Sukkot (Feast of Booths)"
+      ],
+      "correct": 1,
+      "source_quote": "New Wine, New Oil, and Wood festivals added beyond the standard Torah list. — 11Q19"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Temple Scroll\u2019s Law of the King reveal about governance?",
-      "answer": "The Temple Scroll\u2019s Law of the King creates a constitutional monarchy limited by priestly and tribal oversight. The king cannot act alone \u2014 he must consult a council of thirty-six drawn equally from priests, Levites, and lay Yisra\u2019elites. He cannot multiply horses (military power), cannot take many wives (foreign alliances through marriage), and must write a personal copy of the Torah and read it daily. This is a radically different model from both the Hasmonean monarchy that existed in the community\u2019s time and from any later political system. The Great Eraser has suppressed the knowledge that the covenant community had detailed constitutional thinking that predated all Western political theory. The Temple Scroll\u2019s governance model \u2014 with its separation of powers, its tribal representation, and its requirement that the ruler be subject to the law \u2014 was sealed in a cave while Europe developed its own political philosophy in ignorance of this precedent."
+      "question": "What additional festivals does the Temple Scroll add to the standard Torah calendar?",
+      "answer": "The Temple Scroll adds three major festivals not in the standard Torah festival list of Vayikra 23 and Devarim 16: the New Wine Festival (50 days after Shavuot), the New Oil Festival (50 days after New Wine), and the Wood Festival (a 6-day ceremony for tribal wood offerings, mentioned briefly in Nehemiah 10:35 but massively elaborated here). These festivals fill the summer months between Shavuot and the autumn feasts — using the 50-day counting pattern of Shavuot applied to wine and oil."
     },
     {
-      "question": "Why does the Temple Scroll describe a Temple far larger than the actual Second Temple?",
-      "answer": "The Temple Scroll\u2019s outer court creates a sacred precinct vastly larger than the Second Temple compound. This is intentional: the scroll envisions a Temple for all Yisra\u2019el, not just for the priesthood and the pilgrims who could fit into the existing courts. The enlarged design implies that the Second Temple was inadequate \u2014 too small, too restricted, and built according to compromised specifications. The Great Eraser benefits from presenting the Second Temple as definitive. If the Second Temple was the correct design, then its destruction in 70 CE was the end of the Temple era. But if the Temple Scroll preserves YHWH\u2019s actual blueprint \u2014 a design that was never fully built \u2014 then the Temple era has not ended. The design awaits its construction."
+      "question": "How does the 50-day pattern work in the Temple Scroll's calendar?",
+      "answer": "Shavuot (Feast of Weeks) is defined by counting 50 days from the day after the Sabbath following Passover. The Temple Scroll takes this 50-day counting structure and extends it: New Wine arrives 50 days after Shavuot; New Oil arrives 50 days after New Wine; and the Wood Festival follows. This creates a chain of festivals through the summer, each 50 days apart, organized by the 364-day solar calendar so that each festival falls on a fixed weekday every year."
+    },
+    {
+      "question": "What is the Wood Festival?",
+      "answer": "A 6-day ceremony in which each of the twelve tribes brings its assigned portion of wood to the Temple. The wood is used for the altar fires — the Temple requires a continuous supply of fuel for the daily burnt offerings. The brief reference in Nehemiah 10:35 mentions a wood offering but gives no detail. The Temple Scroll elaborates it into a full week-long tribal ceremony with assigned days for each tribe or family group. This shows the community's attention to the practical logistics of Temple service."
+    },
+    {
+      "question": "What is the first-fruits theology in the Temple Scroll?",
+      "answer": "The Temple Scroll's principle: every agricultural product belongs to YHWH first. Grain has Shavuot's first-fruits offering. Wine has the New Wine festival. Oil has the New Oil festival. This comprehensive first-fruits framework means the community cannot use any major agricultural product — grain, wine, oil — until it has first been presented to YHWH in a festival context. The creation's produce flows to YHWH before flowing to the community. This is not mere ritual; it is a statement about who owns the land's abundance."
+    },
+    {
+      "question": "How does the Temple Scroll's calendar differ from the Jerusalem Temple's calendar?",
+      "answer": "The Jerusalem Temple used a lunar calendar, meaning its festivals fell on different days of the week from year to year. The Temple Scroll uses the 364-day solar calendar — festivals always fall on fixed weekdays. Beyond the fixed/variable calendar difference, the Temple Scroll adds New Wine, New Oil, and Wood festivals that the Jerusalem Temple did not observe. For the community, this meant the Jerusalem Temple was celebrating YHWH's feasts on the wrong days and missing entire festivals YHWH had commanded."
+    },
+    {
+      "question": "What is the holy city (ir hamikdash) concept?",
+      "answer": "The Temple Scroll designates a large zone around the Temple as the 'holy city' — a sacred area with stricter purity regulations than the city of Yerushalayim as a whole. Within this holy city zone, more activities are restricted, impurities are more serious, and special rules govern who may sleep inside it, what may be done there, and how purification works. This concept expands the sacred geography: holiness does not stop at the Temple gate but radiates outward into a designated urban zone."
+    },
+    {
+      "question": "How does the Temple Scroll's expanded festival calendar connect to the community's covenant identity?",
+      "answer": "The expanded festivals — New Wine, New Oil, Wood — are covenant celebrations: they bring every major agricultural product before YHWH, affirm tribal identity through the Wood Festival's tribal assignments, and use the summer months (normally a gap in the festival calendar) for covenant celebration. A community that observes these festivals is a community that acknowledges YHWH's ownership of the land's abundance in every product, throughout every season. The expanded calendar is a comprehensive covenant life, not just an annual cycle of seven standard feasts."
+    },
+    {
+      "question": "What connects the Temple Scroll's festival calendar to 4QMMT and 1 Chanokh?",
+      "answer": "All three texts — the Temple Scroll, 4QMMT, and 1 Chanokh's Astronomical Book — share the 364-day solar calendar. The festival calendar dispute in 4QMMT (which lists the solar calendar in Section A as the first dispute with Jerusalem) is the same calendar that governs the Temple Scroll's festivals and that 1 Chanokh's Astronomical Book describes cosmologically. The solar calendar was not a minor preference — it was the foundational covenant issue that the community considered worth separating from Jerusalem over."
+    },
+    {
+      "question": "How does the Temple Scroll's purity geography work?",
+      "answer": "The Temple Scroll creates a series of nested purity zones: the innermost court (priests only), the middle court (Levites and pure Yisra'elite males), the outer court (women, purifying individuals, resident aliens), the Temple mount, and the larger holy city zone. Each zone has its own rules about who may enter and what disqualifies entry. This graduated geography maps covenant holiness spatially — the closer to YHWH's presence, the more intense the purity requirement. The structure is not punitive but architectural: it reflects the structure of holiness itself radiating outward from YHWH's dwelling."
+    },
+    {
+      "question": "Why is the Wood Festival significant?",
+      "answer": "The Wood Festival represents something otherwise absent from the standard festival calendar: a ceremony specifically organized by all twelve tribes together, each with an assigned day and role. The twelve-tribe participation in a shared annual ceremony is a statement about Yisra'el's corporate covenant identity — the whole community, through all its tribal divisions, participates together in sustaining YHWH's altar. This tribal unity through covenant service is the Wood Festival's theological point, beyond its practical function of supplying altar wood."
     }
   ]
 }

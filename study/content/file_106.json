@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_106",
-  "label": "Songs of Sabbath Sacrifice (Shirot Olat HaShabbat) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_106",
+  "label": "Songs of Sabbath Sacrifice (Shirot Olat HaShabbat) — Complete",
   "volume": 43,
-  "content_version": 1,
-  "summary_plain": "The Songs of Sabbath Sacrifice are thirteen songs for the first thirteen Shabbatot of the year. Each song describes the angelic worship in the heavenly Temple. The angels praise YHWH in the holy of holies above. The merkavah \u2014 the divine chariot-throne \u2014 is described with voices of blessing and the sound of divine silence. The angels of the presence serve before YHWH. Seven angelic priesthoods minister in the seven sanctuaries. The songs progress from the outer courts to the innermost chamber of the heavenly Temple, where the kavod (glory) of YHWH dwells.",
-  "summary_scholarly": "4Q400-407 and 11Q17 (Shirot Olat HaShabbat \u2014 Songs of Sabbath Sacrifice) were found in multiple copies across Caves 4 and 11 at Qumran and also at Masada (Mas1k). The presence at Masada proves the text circulated beyond the Qumran community. The thirteen songs correspond to the first thirteen Shabbatot of the year (one quarter). The songs describe angelic liturgy in the heavenly Temple \u2014 a Temple not built with hands. The text is the earliest Hebrew mystical composition, predating the later Hekhalot literature by centuries. The merkavah imagery draws on Yehezkel 1 and 10 but expands it significantly. The seven angelic priesthoods serving in seven sanctuaries suggest a heavenly architecture that mirrors and transcends the earthly Temple. The community\u2019s Shabbat worship was understood as participation in the angelic liturgy.",
+  "content_version": 2,
+  "summary_plain": "The Songs of Sabbath Sacrifice are thirteen songs for the first thirteen Shabbatot of the year. Each song describes the angelic worship in the heavenly Temple. The angels praise YHWH in the holy of holies above. The merkavah — the divine chariot-throne — is described with voices of blessing and the sound of divine silence. The angels of the presence serve before YHWH. Seven angelic priesthoods minister in the seven sanctuaries. The songs progress from the outer courts to the innermost chamber of the heavenly Temple, where the kavod (glory) of YHWH dwells.",
+  "summary_scholarly": "4Q400-407 and 11Q17 (Shirot Olat HaShabbat — Songs of Sabbath Sacrifice) were found in multiple copies across Caves 4 and 11 at Qumran and also at Masada (Mas1k). The presence at Masada proves the text circulated beyond the Qumran community. The thirteen songs correspond to the first thirteen Shabbatot of the year (one quarter). The songs describe angelic liturgy in the heavenly Temple — a Temple not built with hands. The text is the earliest Hebrew mystical composition, predating the later Hekhalot literature by centuries. The merkavah imagery draws on Yehezkel 1 and 10 but expands it significantly. The seven angelic priesthoods serving in seven sanctuaries suggest a heavenly architecture that mirrors and transcends the earthly Temple. The community’s Shabbat worship was understood as participation in the angelic liturgy.",
   "key_terms": [
-    { "term": "Shirot Olat HaShabbat", "phonetic": "Shee-ROHT Oh-LAHT Ha-Shah-BAHT", "definition": "Hebrew for \u2018Songs of the Sabbath Sacrifice.\u2019 Thirteen liturgical compositions for the first thirteen Shabbatot of the year, describing the angelic worship in the heavenly Temple." },
-    { "term": "Merkavah", "phonetic": "Mer-kah-VAH", "definition": "The divine chariot-throne described in Yehezkel 1 and 10 and elaborated in the Songs of Sabbath Sacrifice. The angelic hosts surround the merkavah, and the kavod (glory) of YHWH is enthroned above it." }
+    {
+      "term": "Shirot Olat HaShabbat",
+      "phonetic": "shi-ROT oh-LAT ha-sha-BAT",
+      "definition": "Songs of Sabbath Sacrifice — a cycle of 13 songs for the first 13 Sabbaths of the year, coordinated with the 364-day solar calendar. Found across Cave 4 (4Q400-407), Cave 11 (11Q17), and Masada. The songs describe the angelic priesthood's service in the heavenly temple."
+    },
+    {
+      "term": "Angelic Priesthood",
+      "phonetic": "",
+      "definition": "The central subject of the Shirot: the heavenly temple has seven angelic priests and their deputies serving before YHWH. The songs describe the angelic service in precise liturgical detail — the exaltation, the blessing, the structured heavenly worship that the community's earthly service mirrors."
+    },
+    {
+      "term": "Heavenly Temple",
+      "phonetic": "",
+      "definition": "The Shirot describes a heavenly temple with seven halls (devirs), seven sets of angelic priests, angelic thrones, chariots, and cherubim — a complete heavenly cultic geography. The community's earthly Sabbath worship participates in and mirrors this heavenly reality."
+    },
+    {
+      "term": "Dual-Register Worship",
+      "phonetic": "",
+      "definition": "The Shirot's theological framework: earthly covenant community and heavenly angelic community worship YHWH simultaneously. The earthly Sabbath service participates in the heavenly service. This is not metaphor — the community understood the two worships as structurally unified."
+    },
+    {
+      "term": "Seven Angelic Princes",
+      "phonetic": "",
+      "definition": "The Shirot's first song introduces seven angelic princes ('roshim') who lead the heavenly priestly service. Each prince blesses YHWH and calls on the heavenly beings to praise him. This angelic hierarchy serves YHWH — they do not receive worship. Rule 30: they serve, never worshipped."
+    },
+    {
+      "term": "Merkavah (Divine Chariot)",
+      "phonetic": "mer-ka-VAH",
+      "definition": "The divine chariot — a central image in Shirot's later songs (songs 11-13). The heavenly temple has chariots, cherubim, and wheels, drawn from Yehezkel's chariot vision. The songs describe the chariot's motion and the beings that surround it, culminating in YHWH's presence."
+    },
+    {
+      "term": "Devir",
+      "phonetic": "de-VEER",
+      "definition": "The inner sanctuary — the most holy place in both the earthly Temple and the heavenly temple. The Shirot describes multiple devirs in the heavenly temple, each with its own angelic priests and divine furnishings."
+    },
+    {
+      "term": "364-Day Calendar Frame",
+      "phonetic": "",
+      "definition": "The 13 songs of the Shirot are explicitly for the 13 Sabbaths of the first quarter of the 364-day solar year (Sabbaths 1-13). This ties the heavenly worship cycle directly to the covenant calendar — the right calendar enables the right worship."
+    },
+    {
+      "term": "Masada Copy",
+      "phonetic": "",
+      "definition": "A copy of the Shirot was found at Masada — the fortress defended by the last Zealot holdouts against Rome in 73-74 CE. This confirms the Shirot's circulation beyond the Qumran community, showing it was used by multiple groups within the broader DSS movement."
+    },
+    {
+      "term": "Angelic Beings Serve YHWH",
+      "phonetic": "",
+      "definition": "Critical distinction in the Shirot: the angels, princes, and beings of the heavenly temple serve YHWH and bless his Name. They are not objects of worship. The community worships alongside them, participating in the same YHWH-directed worship. No being receives worship except YHWH."
+    }
   ],
   "fill_blank": [
-    { "ref": "4Q403 1 I:30-35", "prompt": "The angels of the presence praise YHWH in the seven ______.", "answer": "sanctuaries", "source_quote": "Seven angelic priesthoods minister before YHWH in the seven sanctuaries of the heavenly Temple." },
-    { "ref": "4Q405 20-22", "prompt": "The chariot-throne of YHWH is surrounded by the sound of divine ______.", "answer": "silence", "source_quote": "The merkavah is surrounded by the sound of divine silence and the blessing of the angels of the presence." }
+    {
+      "ref": "Shirot Song 1",
+      "prompt": "The Shirot contains ___ songs, one for each Sabbath of the first quarter of the solar year.",
+      "answer": "13",
+      "source_quote": "Songs of Sabbath Sacrifice — 13 songs for the 13 Sabbaths of the year's first quarter. — Shirot"
+    },
+    {
+      "ref": "Shirot Song 1",
+      "prompt": "The Shirot's seven angelic ___ lead the heavenly priestly service, blessing YHWH and calling on the heavenly beings to praise him.",
+      "answer": "princes / priests",
+      "source_quote": "Seven angelic princes (roshim) lead the heavenly service. — Shirot Song 1"
+    },
+    {
+      "ref": "Shirot Songs 11-13",
+      "prompt": "The later Shirot songs describe the heavenly ___ — chariots, cherubim, and wheels drawn from Yehezkel's vision.",
+      "answer": "chariot / merkavah",
+      "source_quote": "The divine chariot (merkavah) — chariots, cherubim, and wheels. — Shirot Songs 11-13"
+    },
+    {
+      "ref": "Shirot",
+      "prompt": "The Shirot's theological framework: earthly community and heavenly angelic community worship YHWH ___, participating in the same unified service.",
+      "answer": "simultaneously / together",
+      "source_quote": "Dual-register worship — earthly and heavenly simultaneously. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "prompt": "A copy of the Shirot was found at ___, confirming its circulation beyond the Qumran community.",
+      "answer": "Masada",
+      "source_quote": "Shirot found at Masada — confirming wider circulation. — Shirot manuscript evidence"
+    },
+    {
+      "ref": "Shirot Song 1",
+      "prompt": "The heavenly temple in the Shirot has seven inner sanctuaries called ___.",
+      "answer": "devirs",
+      "source_quote": "Seven devirs — the inner sanctuaries of the heavenly temple. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "prompt": "The 13 Shirot songs are tied to the first 13 Sabbaths of the ___ solar calendar.",
+      "answer": "364-day",
+      "source_quote": "The 13 songs for Sabbaths 1-13 of the 364-day calendar's first quarter. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "prompt": "In the Shirot, the angels and princes serve ___ — they are not worshipped, they worship.",
+      "answer": "YHWH",
+      "source_quote": "The angelic beings serve YHWH — they do not receive worship. — Shirot throughout"
+    },
+    {
+      "ref": "Shirot",
+      "prompt": "The Shirot was found across Cave ___ and Cave 11, plus Masada.",
+      "answer": "4",
+      "source_quote": "Shirot found in 4Q400-407, 11Q17, and Masada."
+    },
+    {
+      "ref": "Shirot Song 1",
+      "prompt": "In the Shirot's first song, the angelic princes bless ___ and call the heavenly assembly to praise him.",
+      "answer": "YHWH",
+      "source_quote": "Each prince blesses YHWH and calls on the heavenly beings to praise him. — Shirot Song 1"
+    }
   ],
   "multiple_choice": [
-    { "ref": "4Q400-407", "question": "How many songs make up the Songs of Sabbath Sacrifice?", "options": ["Seven, one for each day of creation", "Twelve, one for each tribe", "Thirteen, one for each of the first thirteen Shabbatot", "Fifty-two, one for each Shabbat of the year"], "correct": 2, "source_quote": "Thirteen songs for the first thirteen Shabbatot of the year." },
-    { "ref": "Masada copy", "question": "What is significant about the Songs of Sabbath Sacrifice being found at Masada?", "options": ["It proves the text was written at Masada", "It proves the text circulated beyond the Qumran community", "It proves the text was rejected at Qumran", "It proves the text was written by the Zealots"], "correct": 1, "source_quote": "The presence at Masada proves the text circulated beyond the Qumran community." }
+    {
+      "ref": "Shirot",
+      "question": "What is the primary subject of the Songs of Sabbath Sacrifice?",
+      "options": [
+        "The earthly Temple's daily burnt offerings",
+        "The angelic priesthood's service in the heavenly temple",
+        "The community's military preparation for the final battle",
+        "The Teacher's personal thanksgiving to YHWH"
+      ],
+      "correct": 1,
+      "source_quote": "Shirot — the angelic priesthood's service in the heavenly temple."
+    },
+    {
+      "ref": "Shirot",
+      "question": "How many songs does the Shirot cycle contain?",
+      "options": [
+        "7 — one for each day of the creation week",
+        "12 — one for each month",
+        "13 — one for each Sabbath of the first quarter",
+        "52 — one for each Sabbath of the year"
+      ],
+      "correct": 2,
+      "source_quote": "13 songs for the 13 Sabbaths of the year's first quarter. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "question": "What calendar frame governs the Shirot?",
+      "options": [
+        "The lunar calendar of the Jerusalem Temple",
+        "The 364-day solar calendar — the first 13 Sabbaths of its first quarter",
+        "The Egyptian 365-day agricultural calendar",
+        "The Babylonian 360-day calendar"
+      ],
+      "correct": 1,
+      "source_quote": "13 songs for Sabbaths 1-13 of the 364-day calendar's first quarter. — Shirot"
+    },
+    {
+      "ref": "Shirot Song 1",
+      "question": "What do the seven angelic princes do in the Shirot's first song?",
+      "options": [
+        "They guard the heavenly temple gates",
+        "They receive offerings from the earthly community",
+        "They bless YHWH and call on the heavenly assembly to praise him",
+        "They deliver messages to the Teacher of Righteousness"
+      ],
+      "correct": 2,
+      "source_quote": "Seven angelic princes bless YHWH and call on the heavenly beings to praise him. — Shirot Song 1"
+    },
+    {
+      "ref": "Shirot Songs 11-13",
+      "question": "What vision does the Shirot draw on in its later songs (11-13)?",
+      "options": [
+        "Yesha'yahu's throne vision",
+        "Yehezkel's divine chariot (merkavah) vision",
+        "Moshe's encounter at the burning bush",
+        "Daniel's vision of the Ancient of Days"
+      ],
+      "correct": 1,
+      "source_quote": "The divine chariot — drawn from Yehezkel's chariot vision. — Shirot Songs 11-13"
+    },
+    {
+      "ref": "Shirot",
+      "question": "Where else was a copy of the Shirot found, beyond Qumran's caves?",
+      "options": [
+        "The Cairo Genizah",
+        "Elephantine Island",
+        "Masada",
+        "The Ethiopian manuscripts"
+      ],
+      "correct": 2,
+      "source_quote": "A copy found at Masada — confirming wider circulation. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "question": "What is the dual-register worship concept in the Shirot?",
+      "options": [
+        "The community worships YHWH in two different languages simultaneously",
+        "Earthly and heavenly worship occur simultaneously — the community participates in the angelic service",
+        "Two groups within the community alternate worship duties weekly",
+        "YHWH is worshipped on earth by humans and in heaven by angels separately"
+      ],
+      "correct": 1,
+      "source_quote": "Dual-register worship — earthly and heavenly simultaneously. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "question": "In the Shirot, what is the role of the angelic beings?",
+      "options": [
+        "They are objects of worship alongside YHWH",
+        "They serve YHWH in the heavenly temple — they worship, they are not worshipped",
+        "They guard the community against the Sons of Darkness",
+        "They deliver the Torah to the Teacher of Righteousness"
+      ],
+      "correct": 1,
+      "source_quote": "The angelic beings serve YHWH — they do not receive worship. — Shirot throughout"
+    },
+    {
+      "ref": "Shirot",
+      "question": "The devir in the Shirot refers to:",
+      "options": [
+        "The community's ritual bathing pool",
+        "The desert gathering place of the community",
+        "The inner sanctuary — the most holy place in the heavenly temple",
+        "The cave where the scrolls were stored"
+      ],
+      "correct": 2,
+      "source_quote": "Seven devirs — the inner sanctuaries of the heavenly temple. — Shirot"
+    },
+    {
+      "ref": "Shirot",
+      "question": "Why is the Masada copy of the Shirot significant?",
+      "options": [
+        "It is older than all the Qumran copies",
+        "It confirms the Shirot circulated beyond Qumran — used by multiple groups in the broader movement",
+        "It contains chapters not found in the Qumran copies",
+        "It is the only copy written in Aramaic"
+      ],
+      "correct": 1,
+      "source_quote": "Shirot at Masada — confirming wider use beyond the Qumran community."
+    }
   ],
   "faq": [
     {
-      "question": "What does the angelic liturgy in the Songs of Sabbath Sacrifice reveal about Qumran worship?",
-      "answer": "The Songs of Sabbath Sacrifice describe the community\u2019s Shabbat worship as participation in the angelic liturgy of the heavenly Temple. When the community sang these songs on Shabbat, they understood themselves as joining the angels before YHWH\u2019s throne. This is critical: the community had no access to the earthly Temple in Yerushalayim (they considered its priesthood corrupt), yet they did not consider themselves without a Temple. The heavenly Temple was their sanctuary. Their worship connected them directly to YHWH\u2019s presence without institutional mediation. The Great Eraser operates by convincing the covenant people that worship requires an institution \u2014 a physical Temple, a recognized priesthood, an authorized denomination. The Songs of Sabbath Sacrifice demonstrate that the Qumran community worshipped YHWH in a Temple not built with hands, accessible through Torah-prescribed Shabbat observance."
+      "question": "What are the Songs of Sabbath Sacrifice (Shirot)?",
+      "answer": "The Shirot Olat HaShabbat is a cycle of 13 songs for the first 13 Sabbaths of the 364-day solar calendar year. Found across Cave 4 (4Q400-407), Cave 11 (11Q17), and Masada, the songs describe the heavenly temple's angelic priestly service — the seven angelic princes, their deputies, the seven inner sanctuaries (devirs), and culminating in the divine chariot imagery of Yehezkel's vision. The songs are for the community's earthly Sabbath worship, understood as participation in the simultaneous heavenly worship."
     },
     {
-      "question": "Why is the presence of this text at both Qumran and Masada significant?",
-      "answer": "The Songs of Sabbath Sacrifice were found in multiple copies at Qumran (Caves 4 and 11) and in one copy at Masada. Masada was a Zealot stronghold, not a Qumran community site. The presence of the same liturgical text at both locations proves that the Songs circulated among different groups of covenant-observant communities in the first century CE. This destroys the Great Eraser\u2019s narrative that the Dead Sea Scrolls represent a single isolated sect. The angelic liturgy was shared across communities with different political positions \u2014 the pacifist Qumranites and the militant Masada defenders both sang the same Shabbat songs. The texts belonged to a broader movement of Torah-faithful communities, not to an eccentric fringe."
+      "question": "What is the dual-register worship theology of the Shirot?",
+      "answer": "The Shirot presents the community's earthly Sabbath worship as structurally unified with the heavenly angelic service. When the community gathers on Sabbath, the angelic priests are simultaneously serving in the heavenly temple. The two worships are not separate events that happen to run in parallel — they are one unified worship of YHWH from two registers of reality. This framework explains why purity was so important for community gatherings: the holy angels are present (as 1QSa confirms), so the assembly must be as pure as the heavenly one."
+    },
+    {
+      "question": "Who are the seven angelic princes in the Shirot?",
+      "answer": "The seven angelic princes (roshim) are the leading figures of the heavenly priestly service — each one heads a cohort of angelic priests serving before YHWH. They bless YHWH and call on the heavenly assembly to praise him. They are servants of YHWH, not independent powers. The structure mirrors the earthly priestly hierarchy: seven princes, their deputies, organized service. The Shirot describes this hierarchy in enough liturgical detail that the community's own service could be understood as the earthly echo of the heavenly structure."
+    },
+    {
+      "question": "How do the Shirot songs relate to the 364-day calendar?",
+      "answer": "The 13 songs explicitly correspond to the 13 Sabbaths of the year's first quarter. The 364-day solar year divides into four equal quarters of 91 days (13 weeks). The Shirot cycle covers one full quarter — after which, presumably, the cycle could repeat or a full 52-song set existed (fragmentary evidence suggests there may have been more). The calendar tie is not incidental: the right Sabbath worship requires the right calendar. Using the wrong lunar calendar of the Jerusalem Temple means being out of sync with the heavenly service the Shirot describes."
+    },
+    {
+      "question": "What is the merkavah (chariot) in the Shirot?",
+      "answer": "The divine chariot — drawn from Yehezkel's vision in chapters 1 and 10 — appears in the Shirot's later songs (11-13). The heavenly temple has chariots, cherubim, and wheels of fire. The songs describe their motion, their sound, the creatures that surround the chariot, and the approach toward YHWH's throne. This is the most intense section of the Shirot — the community's liturgical participation in the heavenly service reaches its climax as the chariot imagery brings them to the threshold of YHWH's presence."
+    },
+    {
+      "question": "Why is the Masada copy of the Shirot significant?",
+      "answer": "Masada was the final Zealot stronghold that fell to Rome in 73-74 CE — far from the Qumran community and from a different political-religious tradition. The presence of the Shirot at Masada confirms that the songs were not exclusive to Qumran but circulated among multiple groups within the broader Second Temple period movement. It suggests the Shirot's liturgical vision of heavenly worship was appealing across sectarian lines, even among those who (unlike Qumran) were actively fighting Rome rather than withdrawing from society."
+    },
+    {
+      "question": "How does the Shirot relate to later Jewish mysticism (Merkavah mysticism)?",
+      "answer": "The Shirot is one of the earliest known Jewish texts focused on the heavenly temple and divine chariot in devotional liturgical form. Later Merkavah mysticism (Hekhalot literature, 3rd-7th century CE) develops many of the same themes: angelic priesthood, heavenly palaces (hekhalot), the divine chariot, the approach to YHWH's presence. The Shirot demonstrates that this tradition predates the Rabbinic period by centuries. The DSS did not invent it — they drew on earlier prophetic traditions (Yehezkel, Yesha'yahu 6) — but the Shirot is a critical early document in this trajectory."
+    },
+    {
+      "question": "How do the angelic beings in the Shirot serve YHWH rather than being worshipped?",
+      "answer": "Throughout the Shirot, the angelic princes, the heavenly priests, the cherubim, and all the beings of the heavenly temple are oriented toward YHWH — they bless him, praise him, serve him. Their existence and activity is defined by YHWH-directed worship. The community that participates in the Shirot liturgy is worshipping alongside the angels, not worshipping the angels. This distinction is sharp and consistent: YHWH is the sole recipient of worship; the angels are the heavenly community in which the earthly community participates. This is fully consistent with Rule 30's requirement."
+    },
+    {
+      "question": "What is the significance of the devir (inner sanctuary) imagery in the Shirot?",
+      "answer": "The devir is the innermost holy chamber — the most holy place. The Shirot describes seven devirs in the heavenly temple, each with its own angelic priests and divine furnishings. This sevenfold structure multiplies the earthly Temple's single devir into a heavenly expansion of that same sacred architecture. For the community, whose access to the earthly Temple was cut off by the corrupt priesthood, the heavenly temple of the Shirot offered a more authentic sacred space — one not compromised by the Jerusalem establishment's corruption."
+    },
+    {
+      "question": "How does the Shirot connect to the Rule of Congregation (1QSa)?",
+      "answer": "1QSa col.2 states that those with physical defects may not enter the final assembly because 'the holy angels are present in their congregation.' The Shirot is the liturgical document that explains why the angels are present: the community's Sabbath worship is a dual-register worship alongside the heavenly angelic service. The two texts reinforce each other — 1QSa gives the purity implication of the angelic presence; the Shirot gives the liturgical content of the shared worship. Together they describe a community that understands itself as genuinely co-worshipping with the heavenly assembly."
     }
   ]
 }

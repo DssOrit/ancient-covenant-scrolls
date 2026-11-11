@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_105",
-  "label": "Pesher Habakkuk (Commentary on Habakkuk) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_105",
+  "label": "Pesher Habakkuk (Commentary on Habakkuk) — Complete",
   "volume": 42,
-  "content_version": 1,
-  "summary_plain": "Pesher Habakkuk is a continuous commentary on the prophetic book of Habakkuk, interpreting its words as prophecy about the community\u2019s own time. The Kittim are the instrument of YHWH\u2019s judgment \u2014 they come from afar, swift and violent, conquering all lands. The Teacher of Righteousness received from YHWH\u2019s mouth the interpretation of the prophets\u2019 words. The Wicked Priest pursued the Teacher of Righteousness to swallow him up on the Day of Atonement. The righteous shall live by his faithfulness \u2014 this applies to those who observe the Torah in the house of Yehudah, whom YHWH will deliver because of their toil and their faithfulness to the Teacher of Righteousness.",
-  "summary_scholarly": "1QpHab (Pesher Habakkuk) was among the first seven scrolls discovered in Cave 1 in 1947. It is the best-preserved pesher and the most important text for understanding the Qumran hermeneutical method. The commentary covers Habakkuk 1-2 verse by verse. The Kittim are identified as Rome \u2014 they sacrifice to their standards, they come from the coastlands, they conquer by systematic military force. The Teacher of Righteousness is YHWH\u2019s chosen interpreter of the prophets. The Wicked Priest is a Jerusalem priest who initially walked in truth but was corrupted by wealth and power. Habakkuk 2:4 (\u2018the righteous shall live by his faithfulness\u2019) is interpreted as applying specifically to Torah-observers faithful to the Teacher. The pesher method assumes that the prophets wrote about the future \u2014 the community\u2019s own time \u2014 and that YHWH revealed the meaning to the Teacher of Righteousness.",
+  "content_version": 2,
+  "summary_plain": "Pesher Habakkuk is a continuous commentary on the prophetic book of Habakkuk, interpreting its words as prophecy about the community’s own time. The Kittim are the instrument of YHWH’s judgment — they come from afar, swift and violent, conquering all lands. The Teacher of Righteousness received from YHWH’s mouth the interpretation of the prophets’ words. The Wicked Priest pursued the Teacher of Righteousness to swallow him up on the Day of Atonement. The righteous shall live by his faithfulness — this applies to those who observe the Torah in the house of Yehudah, whom YHWH will deliver because of their toil and their faithfulness to the Teacher of Righteousness.",
+  "summary_scholarly": "1QpHab (Pesher Habakkuk) was among the first seven scrolls discovered in Cave 1 in 1947. It is the best-preserved pesher and the most important text for understanding the Qumran hermeneutical method. The commentary covers Habakkuk 1-2 verse by verse. The Kittim are identified as Rome — they sacrifice to their standards, they come from the coastlands, they conquer by systematic military force. The Teacher of Righteousness is YHWH’s chosen interpreter of the prophets. The Wicked Priest is a Jerusalem priest who initially walked in truth but was corrupted by wealth and power. Habakkuk 2:4 (‘the righteous shall live by his faithfulness’) is interpreted as applying specifically to Torah-observers faithful to the Teacher. The pesher method assumes that the prophets wrote about the future — the community’s own time — and that YHWH revealed the meaning to the Teacher of Righteousness.",
   "key_terms": [
-    { "term": "Kittim", "phonetic": "Kit-TEEM", "definition": "In the Dead Sea Scrolls, the Kittim are Rome. They come from the coastlands of the sea, conquer systematically, and sacrifice to their military standards. In Pesher Habakkuk, they are YHWH\u2019s instrument of judgment against the corrupt Jerusalem establishment." },
-    { "term": "HaKohen HaRasha", "phonetic": "Ha-Koh-HEN Ha-Rah-SHAH", "definition": "The \u2018Wicked Priest\u2019 \u2014 a Jerusalem priest who began in truth but was corrupted by wealth and power. He pursued the Teacher of Righteousness and tried to destroy him on the Day of Atonement. His identity is debated but likely refers to a Hasmonean high priest." }
+    {
+      "term": "Pesher Habakkuk",
+      "phonetic": "PEH-sher kha-ba-KOOK",
+      "definition": "Commentary on Habakkuk — 1QpHab, one of the original seven Cave 1 scrolls. A continuous pesher on Habakkuk chs 1-2, interpreting the oracle against Chaldea as a prophecy about the community's situation: Kittim (Rome), the Wicked Priest, and the revelation given to the Teacher of Righteousness."
+    },
+    {
+      "term": "Wicked Priest",
+      "phonetic": "",
+      "definition": "The major antagonist of Pesher Habakkuk — a Jerusalem high priest who was legitimate at first but became corrupt. He pursued the Teacher of Righteousness, appeared at the Teacher's place of exile on Yom Kippur to confuse the community's fast, and was eventually punished by YHWH through the Kittim."
+    },
+    {
+      "term": "Kittim (Rome)",
+      "phonetic": "kit-EEM",
+      "definition": "In Pesher Habakkuk, Kittim refers to Rome — the instrument of YHWH's judgment against the Wicked Priest and the corrupt establishment. The Kittim are powerful, swift, terrifying, and they will execute judgment — but they serve YHWH's purposes even in their brutality."
+    },
+    {
+      "term": "Teacher of Righteousness (Pesher)",
+      "phonetic": "",
+      "definition": "In Pesher Habakkuk, the Teacher of Righteousness is the one to whom YHWH revealed 'all the mysteries of the words of his servants the prophets.' The Teacher's specific role: unlocking the hidden meaning of prophecy through divine revelation. This is the Teacher's unique pesher authority."
+    },
+    {
+      "term": "Revelation of Mysteries",
+      "phonetic": "",
+      "definition": "Pesher Habakkuk col.7:1-5 states that YHWH revealed to the Teacher of Righteousness all the mysteries of the prophets' words. This divine revelation is the basis of the pesher method — the Teacher did not reason his way to the interpretation; YHWH directly disclosed it to him."
+    },
+    {
+      "term": "Yom Kippur Attack",
+      "phonetic": "",
+      "definition": "An event described in Pesher Habakkuk: the Wicked Priest appeared at the Teacher's place of exile on the Day of Atonement (Yom Kippur) to disrupt the community's fast and mislead them. This attack on the community's most sacred day illustrates the depth of the Wicked Priest's corruption."
+    },
+    {
+      "term": "1QpHab",
+      "phonetic": "",
+      "definition": "The Cave 1 designation for Pesher Habakkuk — one of the original seven 1947 scrolls. Unlike most pesharim (found in Cave 4), Pesher Habakkuk comes from Cave 1 and is exceptionally well preserved — the best-preserved continuous pesher in the DSS corpus."
+    },
+    {
+      "term": "Righteous by Faith",
+      "phonetic": "",
+      "definition": "Pesher Habakkuk's interpretation of Habakkuk 2:4 ('the righteous shall live by his faithfulness/emunah'): the community understands this as those who observe the Torah and trust in the Teacher of Righteousness's interpretation. This is the community's covenant life — faithful observance anchored in the Teacher's revealed interpretation."
+    },
+    {
+      "term": "Delay of the End",
+      "phonetic": "",
+      "definition": "Pesher Habakkuk col.7:9-14 discusses the delay of the final appointed time: even if it delays, wait for it, it will surely come. The community addressed the theological problem of a delayed eschatological fulfillment by trusting in YHWH's timing."
+    },
+    {
+      "term": "YHWH's Judgment Through Kittim",
+      "phonetic": "",
+      "definition": "A central Pesher Habakkuk theology: YHWH uses the terrifying Kittim (Rome) as his instrument of judgment against the corrupt Wicked Priest and the Jerusalem establishment. The enemy is simultaneously horrifying and divinely purposeful."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col VII:1-5", "prompt": "YHWH told Habakkuk to write down the things that would come upon the last generation, but the completion of the end he did not make known to him. Its pesher concerns the Teacher of Righteousness to whom YHWH made known all the mysteries of the words of his servants the ______.", "answer": "prophets", "source_quote": "Its pesher concerns the Teacher of Righteousness to whom YHWH made known all the mysteries of the words of his servants the prophets." },
-    { "ref": "Col VIII:1-3", "prompt": "The righteous shall live by his ______. Its pesher concerns all observers of the Torah in the house of Yehudah.", "answer": "faithfulness", "source_quote": "The righteous shall live by his faithfulness. Its pesher concerns all observers of the Torah in the house of Yehudah, whom YHWH will deliver because of their toil and their faithfulness to the Teacher of Righteousness." }
+    {
+      "ref": "1QpHab col.7:1-5",
+      "prompt": "YHWH revealed to the Teacher of Righteousness all the ___ of the words of the prophets.",
+      "answer": "mysteries",
+      "source_quote": "YHWH revealed to the Teacher of Righteousness all the mysteries of the words of his servants the prophets. — 1QpHab col.VII:1-5"
+    },
+    {
+      "ref": "1QpHab col.7:9-14",
+      "prompt": "Even if the appointed end ___, wait for it — it will surely come.",
+      "answer": "delays",
+      "source_quote": "Even if it delays, wait for it; it will surely come and will not delay. — 1QpHab col.VII:9-14"
+    },
+    {
+      "ref": "1QpHab col.11:4-8",
+      "prompt": "The Wicked Priest appeared at the Teacher's place of exile on ___ to disrupt the community's fast.",
+      "answer": "Yom Kippur / the Day of Atonement",
+      "source_quote": "He appeared to them at the end of their fast — on the Day of Atonement. — 1QpHab col.XI:4-8"
+    },
+    {
+      "ref": "1QpHab col.8:1-3",
+      "prompt": "Habakkuk 2:4 is interpreted by the pesher as: those who observe the Torah and trust in the ___ shall live.",
+      "answer": "Teacher of Righteousness",
+      "source_quote": "Its interpretation concerns those who observe the Torah — those who trust in the Teacher of Righteousness. — 1QpHab col.VIII:1-3"
+    },
+    {
+      "ref": "1QpHab col.6:3-5",
+      "prompt": "The ___ are the instrument of YHWH's judgment — swift, terrifying, executing punishment against the corrupt.",
+      "answer": "Kittim / Romans",
+      "source_quote": "The Kittim — swift and powerful, they execute YHWH's judgment. — 1QpHab col.VI:3-5"
+    },
+    {
+      "ref": "1QpHab col.9:9-12",
+      "prompt": "The Wicked Priest was legitimate at first but became ___ through pursuit of wealth and betrayal of the covenant.",
+      "answer": "corrupt / wicked",
+      "source_quote": "The Wicked Priest was called by the name of truth at the beginning of his standing, but when he ruled over Yisra'el his heart became proud. — 1QpHab col.VIII:9-12"
+    },
+    {
+      "ref": "1QpHab",
+      "prompt": "1QpHab was one of the original ___ Cave 1 scrolls found in 1947.",
+      "answer": "seven",
+      "source_quote": "1QpHab — one of the original seven Cave 1 scrolls, 1947 discovery."
+    },
+    {
+      "ref": "1QpHab col.7:1-5",
+      "prompt": "The Teacher's pesher authority comes from ___ revelation, not human reasoning.",
+      "answer": "divine / YHWH's",
+      "source_quote": "YHWH revealed to the Teacher of Righteousness all the mysteries. — 1QpHab col.VII:1-5"
+    },
+    {
+      "ref": "1QpHab col.11:12-15",
+      "prompt": "The Wicked Priest will receive judgment from YHWH because of what he did to the ___ and the community.",
+      "answer": "Teacher of Righteousness / poor",
+      "source_quote": "Because of the violence done to the Teacher of Righteousness and the men of his council. — 1QpHab col.XI:12-15"
+    },
+    {
+      "ref": "1QpHab",
+      "prompt": "In Pesher Habakkuk, the Kittim are both terrifying enemies and ___'s instrument of judgment against the corrupt establishment.",
+      "answer": "YHWH",
+      "source_quote": "The Kittim — YHWH's instrument of judgment against the Wicked Priest. — 1QpHab"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col XI:2-8", "question": "What did the Wicked Priest do to the Teacher of Righteousness?", "options": ["He appointed him as high priest", "He pursued him to swallow him up on the Day of Atonement", "He sent him into exile in Babylon", "He invited him to a feast in the Temple"], "correct": 1, "source_quote": "The Wicked Priest pursued the Teacher of Righteousness to swallow him up on his day of fasting, on the Day of Atonement." },
-    { "ref": "Col II-III", "question": "Who are the Kittim in Pesher Habakkuk?", "options": ["The Greeks under Alexander", "The Persians under Koresh", "The Romans, who come from the coastlands and sacrifice to their standards", "The Babylonians under Nevukhadnetzar"], "correct": 2, "source_quote": "The Kittim come from the coastlands of the sea, swift and terrible, conquering all peoples. They sacrifice to their standards and worship their weapons of war." }
+    {
+      "ref": "1QpHab col.7:1-5",
+      "question": "How did the Teacher of Righteousness receive his pesher interpretations?",
+      "options": [
+        "Through careful study of biblical parallels",
+        "Through YHWH's direct revelation of all the prophets' mysteries",
+        "Through inherited Zadokite priestly tradition",
+        "Through community council discussion and vote"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH revealed to the Teacher all the mysteries of his servants the prophets. — 1QpHab col.VII:1-5"
+    },
+    {
+      "ref": "1QpHab col.11:4-8",
+      "question": "On which day did the Wicked Priest appear at the Teacher's exile to disrupt the community?",
+      "options": [
+        "Passover / Pesach",
+        "Shavuot / Feast of Weeks",
+        "Yom Kippur / Day of Atonement",
+        "Sukkot / Feast of Booths"
+      ],
+      "correct": 2,
+      "source_quote": "He appeared to them at the end of their fast — on the Day of Atonement. — 1QpHab col.XI:4-8"
+    },
+    {
+      "ref": "1QpHab col.8:1-3",
+      "question": "How does Pesher Habakkuk interpret 'the righteous shall live by his faithfulness' (Habakkuk 2:4)?",
+      "options": [
+        "As referring to individual faith in YHWH alone",
+        "As those who observe the Torah and trust in the Teacher of Righteousness's interpretation",
+        "As the military victory of the Sons of Light",
+        "As the priestly blessing conferring life"
+      ],
+      "correct": 1,
+      "source_quote": "Those who observe the Torah and trust in the Teacher of Righteousness. — 1QpHab col.VIII:1-3"
+    },
+    {
+      "ref": "1QpHab",
+      "question": "In Pesher Habakkuk, what does 'Kittim' refer to?",
+      "options": [
+        "The Seleucid Greeks",
+        "Egypt and its armies",
+        "Rome — the dominant terrifying power of the community's day",
+        "The Babylonians of Habakkuk's own time"
+      ],
+      "correct": 2,
+      "source_quote": "Kittim = Rome in the Pesher Habakkuk context. — 1QpHab"
+    },
+    {
+      "ref": "1QpHab col.9:9-12",
+      "question": "What happened to the Wicked Priest?",
+      "options": [
+        "He repented and joined the Qumran community",
+        "He was legitimate at first but became corrupt through wealth and arrogance",
+        "He was killed by the Kittim immediately upon his rule",
+        "He was appointed by the Teacher of Righteousness himself"
+      ],
+      "correct": 1,
+      "source_quote": "He was called by the name of truth at first, but his heart became proud when he ruled. — 1QpHab col.VIII:9-12"
+    },
+    {
+      "ref": "1QpHab col.7:9-14",
+      "question": "How does Pesher Habakkuk address the problem of the delayed end?",
+      "options": [
+        "It says the end has already come secretly",
+        "It says YHWH canceled the end because of the community's sin",
+        "It says: even if it delays, wait for it; it will surely come",
+        "It says the Teacher of Righteousness will announce the exact date"
+      ],
+      "correct": 2,
+      "source_quote": "Even if it delays, wait for it; it will surely come. — 1QpHab col.VII:9-14"
+    },
+    {
+      "ref": "1QpHab",
+      "question": "1QpHab is the best-preserved continuous pesher in the DSS corpus because:",
+      "options": [
+        "It was written on more durable copper",
+        "It was found in Cave 1, which preserved documents exceptionally well",
+        "It was recopied by the community every generation",
+        "It was stored in clay jars specifically designed for preservation"
+      ],
+      "correct": 1,
+      "source_quote": "1QpHab — Cave 1, one of the best-preserved DSS pesharim."
+    },
+    {
+      "ref": "1QpHab col.11:12-15",
+      "question": "Why will the Wicked Priest receive judgment?",
+      "options": [
+        "Because he used the wrong calendar",
+        "Because of the violence done to the Teacher of Righteousness and the community",
+        "Because he accepted payment from the Kittim",
+        "Because he abolished animal sacrifice"
+      ],
+      "correct": 1,
+      "source_quote": "Because of the violence done to the Teacher and the men of his council. — 1QpHab col.XI:12-15"
+    },
+    {
+      "ref": "1QpHab",
+      "question": "What chapters of Habakkuk does Pesher Habakkuk comment on?",
+      "options": [
+        "All three chapters",
+        "Only chapter 3",
+        "Chapters 1 and 2 only",
+        "Chapter 2 only"
+      ],
+      "correct": 2,
+      "source_quote": "1QpHab covers Habakkuk chapters 1-2, with chapter 3 not included."
+    },
+    {
+      "ref": "1QpHab col.6:3-5",
+      "question": "How does Pesher Habakkuk describe the Kittim?",
+      "options": [
+        "As righteous allies of the community",
+        "As a fallen power YHWH has already defeated",
+        "As swift, terrifying, and executing YHWH's judgment — both enemy and instrument",
+        "As the future Messiah's army"
+      ],
+      "correct": 2,
+      "source_quote": "The Kittim — swift and powerful, YHWH's instrument of judgment. — 1QpHab col.VI:3-5"
+    }
   ],
   "faq": [
     {
-      "question": "What does Pesher Habakkuk reveal about the Kittim as Rome?",
-      "answer": "Pesher Habakkuk identifies the Kittim with specific detail: they come from the coastlands of the sea, they conquer systematically, they sacrifice to their military standards, they worship their weapons of war, they impose tribute on the nations annually. Every detail matches Rome. The identification of the Kittim as Rome is critical for the Great Eraser framework because it demonstrates that the Qumran community recognized Rome as the current instrument of oppression \u2014 the same Rome that would destroy the Temple in 70 CE, scatter the covenant people, and establish the institutional infrastructure (roads, administration, state religion) upon which later erasure mechanisms would be built. The pesher\u2019s identification of Rome is not abstract \u2014 it is a covenant community\u2019s documented assessment of the empire that would, within decades, destroy them."
+      "question": "What is Pesher Habakkuk?",
+      "answer": "Pesher Habakkuk (1QpHab) is a continuous commentary on the first two chapters of Habakkuk, found as one of the original seven Cave 1 scrolls from 1947. It is the best-preserved pesher in the DSS corpus. The text applies Habakkuk's oracle against the Chaldeans to the community's own time: the Kittim (Rome), the Wicked Priest (a corrupt Jerusalem high priest), and the Teacher of Righteousness's divine revelation."
     },
     {
-      "question": "Why is Habakkuk 2:4 \u2014 \u2018the righteous shall live by his faithfulness\u2019 \u2014 important in the Dead Sea Scrolls?",
-      "answer": "Pesher Habakkuk interprets \u2018the righteous shall live by his faithfulness\u2019 as applying specifically to those who observe the Torah and remain faithful to the Teacher of Righteousness. This interpretation is pre-Christian and pre-rabbinic. It roots \u2018faithfulness\u2019 (emunah) in Torah observance, not in abstract belief. The Great Eraser has appropriated this verse into frameworks that disconnect it from its Torah-observance context. The Qumran pesher preserves the original interpretive tradition: faithfulness means doing the works of the Torah under persecution, trusting YHWH when the Wicked Priest attacks, maintaining covenant practice when the institution fails. The verse is not about theology in the abstract. It is about covenant people keeping the Torah when keeping the Torah could get them killed."
+      "question": "Who is the Wicked Priest in Pesher Habakkuk?",
+      "answer": "The Wicked Priest is a Jerusalem high priest who, according to the pesher, was legitimate at first ('called by the name of truth at the beginning of his standing') but became corrupt through wealth, arrogance, and betrayal of the covenant. He actively persecuted the Teacher of Righteousness, appearing at the Teacher's place of exile on Yom Kippur to disrupt the community's fast. He was eventually punished by YHWH through the Kittim (Rome). Various historical high priests have been proposed as candidates — the question of his exact identity remains debated."
+    },
+    {
+      "question": "What is the Teacher of Righteousness's role in Pesher Habakkuk?",
+      "answer": "In Pesher Habakkuk col.7, the Teacher is described as the one to whom YHWH revealed 'all the mysteries of the words of his servants the prophets.' This is the Teacher's unique authority: not human learning or priestly lineage alone, but direct divine revelation of prophetic meaning. The Teacher does not interpret Habakkuk by reasoning; YHWH disclosed the oracle's true meaning to him. This divine-revelation basis is what distinguishes the pesher method from ordinary commentary."
+    },
+    {
+      "question": "How does Pesher Habakkuk interpret Habakkuk 2:4?",
+      "answer": "Habakkuk 2:4 says 'the righteous shall live by his emunah (faithfulness/faith).' The pesher interprets this as: those who observe the Torah and trust in the Teacher of Righteousness's interpretation. Life comes from faithful Torah observance anchored in the Teacher's revealed interpretation. The NT later uses this same verse (Romans 1:17, Galatians 3:11) for a different theological framework. The pesher's interpretation is earlier: the verse is about covenant faithfulness in the community's specific situation, not an abstract principle of individual faith."
+    },
+    {
+      "question": "What does the Yom Kippur attack reveal about the Wicked Priest?",
+      "answer": "The Wicked Priest appeared at the Teacher's place of exile on the Day of Atonement specifically to disrupt the community's fast and mislead them. This is not a coincidental visit — Yom Kippur was the most sacred day of the year, the day of covenant renewal and atonement. By attacking on this day, the Wicked Priest demonstrated the depth of his corruption: he was willing to desecrate the holiest moment to strike at the Teacher. The pesher uses this event to confirm the Wicked Priest's judgment by YHWH."
+    },
+    {
+      "question": "What is the theological significance of the Kittim in Pesher Habakkuk?",
+      "answer": "The Kittim (Rome) are both terrifying enemies and YHWH's instruments of judgment. This is a classic prophetic pattern: YHWH uses a foreign power to execute judgment on his own corrupt people. The Kittim do not know they serve YHWH's purposes; they act from their own imperial drive. But their power is ultimately accountable to YHWH's design. This framework allows the community to understand Roman power without despair: Rome is not outside YHWH's sovereignty — it is working within it, however unwittingly."
+    },
+    {
+      "question": "How does the 'delay of the end' discussion in 1QpHab function?",
+      "answer": "The community expected an eschatological end that had not yet arrived by the time Pesher Habakkuk was composed. This delay was a real theological problem. The pesher addresses it by citing Habakkuk 2:3: 'even if it delays, wait for it; it will surely come.' The delay is reframed not as a failure of prophecy but as a test of faithful waiting. The community that waits faithfully is the righteous community; the ones who abandon waiting are those without genuine covenant faith."
+    },
+    {
+      "question": "Why does Pesher Habakkuk stop at chapter 2?",
+      "answer": "Habakkuk chapter 3 is a psalm — a prayer of Habakkuk with musical notation. The DSS pesher method works on prophetic oracles, not psalms. The pesher commentary applied to chapters 1 and 2 (the oracle) but the psalm in chapter 3 was treated differently. Its absence from 1QpHab is consistent with the pesher method's focus on oracular/prophetic prose rather than liturgical poetry."
+    },
+    {
+      "question": "How does Pesher Habakkuk compare to Pesher Nahum?",
+      "answer": "Both are continuous pesharim applying ancient prophets to the community's current situation. Pesher Nahum is unique in naming historical figures (Demetrius); Pesher Habakkuk consistently uses code names (Wicked Priest, Teacher of Righteousness, Kittim). Both interpret Kittim as Rome in their later layers. Pesher Habakkuk is from Cave 1 and far better preserved; Pesher Nahum is from Cave 4. Pesher Habakkuk has the most developed Teacher of Righteousness portrait in the DSS corpus."
+    },
+    {
+      "question": "What does Pesher Habakkuk tell us about the community's approach to prophecy?",
+      "answer": "Prophecy in Pesher Habakkuk is never self-interpreting — it requires the Teacher's divinely given key. The prophets themselves did not fully understand what they wrote ('the Teacher of Righteousness was told all the mysteries of the prophets' words'). Ancient prophecy was encrypted foreknowledge; the Teacher's revelation unlocked the encryption for the community's time. This is a distinctive prophetic epistemology: scripture's meaning is hidden until YHWH reveals it to the right interpreter."
     }
   ]
 }

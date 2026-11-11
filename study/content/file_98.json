@@ -1,31 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_98",
-  "label": "Community Rule 1QS (Serekh HaYakhad) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_98",
+  "label": "Community Rule 1QS (Serekh HaYakhad) — Complete",
   "volume": 36,
-  "content_version": 1,
-  "summary_plain": "The Community Rule governs the covenant community at Qumran. Those who enter the covenant commit to seek YHWH with all their heart and soul, to do what is good and upright before him, and to walk no more in the stubbornness of a guilty heart. New members undergo examination and a two-year probationary period. The community practices common meals, common prayer, and nightly Torah study. The Two Spirits doctrine teaches that YHWH created two spirits \u2014 the Spirit of Truth and the Spirit of Deceit \u2014 and all humanity walks in their ways. The community is governed by the sons of Tzadok and by the council of the community. The rule concludes with a hymn praising YHWH\u2019s righteousness.",
-  "summary_scholarly": "The Community Rule (1QS \u2014 Serekh HaYakhad) was among the first seven scrolls found in Cave 1 in 1947. It is the foundational governance document of the Qumran community. The text includes: entry procedures and oath formulas (Col I-III), the Two Spirits doctrine (Col III:13-IV:26), community discipline and hierarchy (Col V-IX), and a closing hymn (Col X-XI). The Two Spirits doctrine is a dualistic theological framework unlike anything in the Masoretic canon \u2014 YHWH created both spirits and appointed them until the final visitation. The community structure presupposes a functioning alternative society with its own legal system, calendar, and liturgy. Multiple copies were found in Cave 4 (4Q255-264, 4Q280, 4Q286-287), showing the text\u2019s central importance.",
+  "content_version": 2,
+  "summary_plain": "The Community Rule governs the covenant community at Qumran. Those who enter the covenant commit to seek YHWH with all their heart and soul, to do what is good and upright before him, and to walk no more in the stubbornness of a guilty heart. New members undergo examination and a two-year probationary period. The community practices common meals, common prayer, and nightly Torah study. The Two Spirits doctrine teaches that YHWH created two spirits — the Spirit of Truth and the Spirit of Deceit — and all humanity walks in their ways. The community is governed by the sons of Tzadok and by the council of the community. The rule concludes with a hymn praising YHWH’s righteousness.",
+  "summary_scholarly": "The Community Rule (1QS — Serekh HaYakhad) was among the first seven scrolls found in Cave 1 in 1947. It is the foundational governance document of the Qumran community. The text includes: entry procedures and oath formulas (Col I-III), the Two Spirits doctrine (Col III:13-IV:26), community discipline and hierarchy (Col V-IX), and a closing hymn (Col X-XI). The Two Spirits doctrine is a dualistic theological framework unlike anything in the Masoretic canon — YHWH created both spirits and appointed them until the final visitation. The community structure presupposes a functioning alternative society with its own legal system, calendar, and liturgy. Multiple copies were found in Cave 4 (4Q255-264, 4Q280, 4Q286-287), showing the text’s central importance.",
   "key_terms": [
-    { "term": "Serekh HaYakhad", "phonetic": "SEH-rekh Ha-YAH-khad", "definition": "Hebrew for \u2018Rule of the Community\u2019 or \u2018Order of the Unity.\u2019 The foundational governance document of the Qumran covenant community, prescribing entry procedures, discipline, hierarchy, and communal practices." },
-    { "term": "Two Spirits Doctrine", "phonetic": "", "definition": "1QS Col III-IV teaches that YHWH created two spirits \u2014 the Spirit of Truth (Ruakh Ha\u2019Emet) and the Spirit of Deceit (Ruakh Ha\u2019Avel). All humanity is divided between these two spirits. The Angel of Light leads the sons of righteousness; the Angel of Darkness leads the sons of deceit. YHWH will destroy the Spirit of Deceit at the final visitation." },
-    { "term": "Benei Tzadok", "phonetic": "Beh-NEI Tzah-DOK", "definition": "The \u2018Sons of Tzadok\u2019 \u2014 the priestly line that governed the Qumran community. They are the priests who kept the charge of YHWH\u2019s sanctuary when the sons of Yisra\u2019el strayed." }
+    {
+      "term": "Serekh HaYakhad",
+      "phonetic": "SE-rekh ha-YA-khad",
+      "definition": "The Community Rule — the foundational governing document of the Qumran Yahad found in Cave 1 (1QS) and six Cave 4 copies. Contains the entry rite, the Two Spirits doctrine, the penal code, the Maskil's hymn, and the community's covenant identity."
+    },
+    {
+      "term": "Yakhad",
+      "phonetic": "ya-KHAD",
+      "definition": "Unity / together — the name the Qumran community used for itself. 'The community of the Yakhad.' Members were called 'men of the Yakhad.' Yakhad signifies total communal commitment: shared property, shared meals, shared purpose under YHWH's covenant."
+    },
+    {
+      "term": "Bnei Or",
+      "phonetic": "b-NEI or",
+      "definition": "Sons of Light — the Yakhad community members in the Two Spirits doctrine. Ruled by the Angel of Light (Prince of Lights), destined for eternal life. Opposed to the Bnei Khoshekh (Sons of Darkness) in the cosmic conflict described in cols 3-4."
+    },
+    {
+      "term": "Bnei Khoshekh",
+      "phonetic": "b-NEI kho-SHEKH",
+      "definition": "Sons of Darkness — in the 1QS Two Spirits doctrine, all those outside the covenant community and ruled by the Angel of Darkness. Destined for eternal destruction at the end of days. The cosmic antagonists of the Bnei Or."
+    },
+    {
+      "term": "Ruakh HaEmet",
+      "phonetic": "ROO-akh ha-E-met",
+      "definition": "Spirit of Truth — one of the two spirits YHWH placed in humanity at creation, according to 1QS cols 3-4. The Spirit of Truth rules the Sons of Light. YHWH loves the Spirit of Truth and its deeds; it leads to life. The other spirit is the Ruakh HaAvel."
+    },
+    {
+      "term": "Ruakh HaAvel",
+      "phonetic": "ROO-akh ha-A-vel",
+      "definition": "Spirit of Deceit (Spirit of Injustice/Perversion) — the opposing spirit placed in humanity at creation. Rules the Sons of Darkness. Leads to the deeds of darkness and destruction. Both spirits are at war within each person until the end of days, when YHWH will purify the Sons of Light completely."
+    },
+    {
+      "term": "Maskil",
+      "phonetic": "mas-KEEL",
+      "definition": "Instructor / Teacher — the community official responsible for teaching the new members, composing the community's hymns and prayers, and leading the community's wisdom traditions. The final section of 1QS (col.9-11) is a hymn and rule attributed to the Maskil. Distinguished from the Mevaqqer (Overseer) of the Damascus Document."
+    },
+    {
+      "term": "Ha-Rabbim",
+      "phonetic": "ha-ra-BEEM",
+      "definition": "The Many — the full assembly of community members in 1QS. Major decisions, member disputes, and annual reviews are conducted 'before the Many.' The Many vote on admissions and punishments. The term emphasizes collective governance — no individual acts alone."
+    },
+    {
+      "term": "Annual Review",
+      "phonetic": "",
+      "definition": "The yearly examination of every community member required by 1QS col.5: each year, every member is ranked according to their spirit and their deeds. Those who improve move up in rank; those who deteriorate move down. The ranking determines seating order at communal meals and participation in debates."
+    },
+    {
+      "term": "Council of the Yahad",
+      "phonetic": "",
+      "definition": "The governing council of twelve laymen and three priests specified in 1QS col.8, structured on the twelve tribes plus three priestly functions. This council is described as the foundation stone, an eternal planting, a holy of holies — the core of the community's spiritual purpose."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col I:1-2", "prompt": "To seek YHWH with all the heart and with all the soul, to do what is good and upright before him as he commanded through Moshe and through all his servants the ______.", "answer": "prophets", "source_quote": "To seek YHWH with all the heart and with all the soul, to do what is good and upright before him as he commanded through Moshe and through all his servants the prophets." },
-    { "ref": "Col III:18-19", "prompt": "He created the spirits of Light and Darkness, and upon them he founded every ______.", "answer": "deed", "source_quote": "He created the spirits of Light and Darkness, and upon them he founded every deed." }
+    {
+      "ref": "1QS III:17-19",
+      "prompt": "YHWH created two spirits for humanity: the ___ of Truth and the Spirit of Deceit.",
+      "answer": "Spirit",
+      "source_quote": "He created two spirits so that they might walk in them until the appointed time of His visitation. — 1QS III:17-19"
+    },
+    {
+      "ref": "1QS III:20-21",
+      "prompt": "The Spirit of Truth is called the Prince of ___ and the Spirit of Deceit is the Angel of Darkness.",
+      "answer": "Lights",
+      "source_quote": "He is the Prince of Lights, and in his hand is dominion over all Sons of Light. — 1QS III:20"
+    },
+    {
+      "ref": "1QS V:1-3",
+      "prompt": "The rule for the men of the community who have volunteered to turn from all evil and to hold fast to everything He commanded according to His ___ will.",
+      "answer": "good",
+      "source_quote": "This is the rule for the men of the community who have volunteered to turn from all evil and to hold fast to everything He commanded according to His good will. — 1QS V:1"
+    },
+    {
+      "ref": "1QS VIII:1",
+      "prompt": "In the Council of the Yahad there shall be ___ men and three priests.",
+      "answer": "twelve",
+      "source_quote": "In the council of the community there shall be twelve men and three priests. — 1QS VIII:1"
+    },
+    {
+      "ref": "1QS V:20-22",
+      "prompt": "Every year the members are examined and ranked according to their ___ and their deeds before the Many.",
+      "answer": "spirit / understanding",
+      "source_quote": "They shall examine their spirit and their deeds year by year, and shall promote a man according to his understanding. — 1QS V:20-22"
+    },
+    {
+      "ref": "1QS VI:13-16",
+      "prompt": "Any man entering the community places all his property at the disposal of the ___.",
+      "answer": "Mevaqqer / Overseer / Many",
+      "source_quote": "He shall bring with him all his property and place it at the disposal of the Mevaqqer. — 1QS VI:13-16"
+    },
+    {
+      "ref": "1QS IV:9-11",
+      "prompt": "The deeds of the Spirit of Deceit include greed, deceit, pride, lies, cruelty, and ___.",
+      "answer": "impurity / blasphemy",
+      "source_quote": "The deeds of the Spirit of Deceit include... greed, impurity, blasphemy, and scoffing at the truth. — 1QS IV:9-11"
+    },
+    {
+      "ref": "1QS IX:11",
+      "prompt": "The community expects the coming of a ___ of Aharon and a prophet.",
+      "answer": "Messiah / Mashiakh",
+      "source_quote": "Until the coming of the Prophet and the Messiahs of Aaron and Israel. — 1QS IX:11"
+    },
+    {
+      "ref": "1QS III:13",
+      "prompt": "The Maskil is charged to instruct all the Sons of Light in the ___ of all humanity.",
+      "answer": "nature / deeds",
+      "source_quote": "The Maskil shall instruct all the Sons of Light and teach them the nature of all the sons of man. — 1QS III:13"
+    },
+    {
+      "ref": "1QS VIII:5-7",
+      "prompt": "When these things are in Yisra'el, the council of the community shall be established in ___ and truth.",
+      "answer": "truth / righteousness",
+      "source_quote": "When these things exist in Israel, the council of the community shall be established in truth as an eternal planting. — 1QS VIII:5-7"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col VI:13-23", "question": "How long is the probationary period for someone entering the community?", "options": ["Six months", "One year", "Two years", "Seven years"], "correct": 2, "source_quote": "If it is his destiny to enter the community, he shall be inscribed among his brethren in the order of his rank. After completing one year he shall be examined, and after completing a second year he shall be admitted to full membership." },
-    { "ref": "Col III:13-IV:26", "question": "According to the Two Spirits doctrine, what did YHWH create?", "options": ["Two temples for two peoples", "Two spirits \u2014 the Spirit of Truth and the Spirit of Deceit", "Two torot \u2014 one written and one oral", "Two calendars \u2014 one solar and one lunar"], "correct": 1, "source_quote": "He created the spirits of Light and Darkness, and upon them he founded every deed." }
+    {
+      "ref": "1QS III:17-19",
+      "question": "According to the Two Spirits doctrine in 1QS cols 3-4, what did YHWH create for humanity?",
+      "options": [
+        "One righteous spirit and one fallen angel",
+        "Two spirits — the Spirit of Truth and the Spirit of Deceit",
+        "A divine council of seven spirits",
+        "A single spirit that changes over time"
+      ],
+      "correct": 1,
+      "source_quote": "He created two spirits so that they might walk in them until the appointed time of His visitation. — 1QS III:17-19"
+    },
+    {
+      "ref": "1QS VIII:1",
+      "question": "How many men comprise the Council of the Yahad in 1QS?",
+      "options": [
+        "Seven elders and one high priest",
+        "Twelve men and three priests",
+        "Ten men per the biblical quorum",
+        "Twenty-four like the Temple divisions"
+      ],
+      "correct": 1,
+      "source_quote": "In the council of the community there shall be twelve men and three priests. — 1QS VIII:1"
+    },
+    {
+      "ref": "1QS V:20-22",
+      "question": "What happens at the annual review described in 1QS?",
+      "options": [
+        "Members confess sins to the priests",
+        "Every member is ranked by spirit and deeds, moving up or down accordingly",
+        "New leaders are elected by vote",
+        "The community expels its lowest-ranked members"
+      ],
+      "correct": 1,
+      "source_quote": "They shall examine their spirit and their deeds year by year, and shall promote or demote according to his understanding. — 1QS V:20-22"
+    },
+    {
+      "ref": "1QS VI:13-16",
+      "question": "What does a new member do with his property upon entering the Yahad?",
+      "options": [
+        "He donates half to the Temple",
+        "He keeps it but registers it with the community",
+        "He places all of it at the disposal of the Overseer",
+        "He distributes it to his family before entering"
+      ],
+      "correct": 2,
+      "source_quote": "He shall bring with him all his property and place it at the disposal of the Mevaqqer. — 1QS VI:13-16"
+    },
+    {
+      "ref": "1QS III:20-21",
+      "question": "Who rules the Sons of Light according to 1QS?",
+      "options": [
+        "The Maskil (Instructor)",
+        "The Prince of Lights / Angel of Light",
+        "The Teacher of Righteousness",
+        "The Council of twelve"
+      ],
+      "correct": 1,
+      "source_quote": "He is the Prince of Lights, and in his hand is dominion over all Sons of Light. — 1QS III:20"
+    },
+    {
+      "ref": "1QS IX:11",
+      "question": "What does 1QS col.9 say the community awaits?",
+      "options": [
+        "The rebuilding of the Jerusalem Temple",
+        "The Prophet and the Messiahs of Aaron and Israel",
+        "YHWH's direct appearance in the desert",
+        "The final battle of the Sons of Light"
+      ],
+      "correct": 1,
+      "source_quote": "Until the coming of the Prophet and the Messiahs of Aaron and Israel. — 1QS IX:11"
+    },
+    {
+      "ref": "1QS III:13",
+      "question": "What is the Maskil's primary role according to 1QS?",
+      "options": [
+        "Managing the communal treasury",
+        "Presiding over the annual feast",
+        "Instructing all Sons of Light in the nature of humanity and the two spirits",
+        "Adjudicating disputes between members"
+      ],
+      "correct": 2,
+      "source_quote": "The Maskil shall instruct all the Sons of Light and teach them the nature of all the sons of man. — 1QS III:13"
+    },
+    {
+      "ref": "1QS IV:9-11",
+      "question": "According to the Two Spirits doctrine, the deeds of the Spirit of Deceit include:",
+      "options": [
+        "Charity, fasting, and prayer",
+        "Greed, deceit, pride, lies, and impurity",
+        "Silence, fasting, and study",
+        "Valor, strength, and war"
+      ],
+      "correct": 1,
+      "source_quote": "The deeds of the Spirit of Deceit include greed, impurity, blasphemy, and scoffing at the truth. — 1QS IV:9-11"
+    },
+    {
+      "ref": "1QS V:1-3",
+      "question": "The community rule applies to those who have:",
+      "options": [
+        "Been born into the priestly families",
+        "Volunteered to turn from all evil and hold fast to YHWH's commands",
+        "Passed the Jerusalem Temple's examination",
+        "Completed forty years of study"
+      ],
+      "correct": 1,
+      "source_quote": "This is the rule for the men of the community who have volunteered to turn from all evil. — 1QS V:1"
+    },
+    {
+      "ref": "1QS VIII:5-7",
+      "question": "The Council of the Yahad is described as:",
+      "options": [
+        "A temporary governing body until the Temple is rebuilt",
+        "An eternal planting, a holy of holies, the foundation stone of the community",
+        "The military command structure for the final war",
+        "A consultative panel with no binding authority"
+      ],
+      "correct": 1,
+      "source_quote": "When these things exist in Israel, the council of the community shall be established in truth as an eternal planting. — 1QS VIII:5-7"
+    }
   ],
   "faq": [
     {
-      "question": "What does the Community Rule reveal about covenant community self-governance?",
-      "answer": "The Community Rule (1QS) demonstrates that the Qumran community operated as a fully self-governing covenant society. They had their own entry procedures, judicial system, economic structure (shared property), liturgical calendar, and disciplinary code. They did not rely on the Jerusalem Temple establishment for authority. Their governance derived directly from the Torah as interpreted by the Teacher of Righteousness and the sons of Tzadok. This is significant for the Great Eraser framework: the community proved that covenant identity can be maintained without institutional dependency. When the Temple was corrupt, they built an alternative. When the priesthood was compromised, they preserved the priestly functions within their own community. The Community Rule is a blueprint for covenant survival outside institutional control \u2014 the same challenge every scattered covenant community has faced since."
+      "question": "What is the Two Spirits doctrine in 1QS?",
+      "answer": "Columns 3-4 of the Community Rule describe YHWH's creation of two spirits at the foundation of humanity: the Spirit of Truth (Ruakh HaEmet) and the Spirit of Deceit (Ruakh HaAvel). Every person is allocated a portion of each spirit, though the Sons of Light are dominated by the Spirit of Truth and the Sons of Darkness by the Spirit of Deceit. The Prince of Lights rules the Sons of Light; the Angel of Darkness rules the Sons of Darkness. All of human life — the battle between right and wrong conduct — is the working out of this cosmic conflict within and between people. At the end of days, YHWH will purify the Sons of Light completely."
     },
     {
-      "question": "Why does the Two Spirits doctrine matter for understanding YHWH\u2019s sovereignty?",
-      "answer": "The Two Spirits doctrine (1QS III:13-IV:26) states that YHWH created both the Spirit of Truth and the Spirit of Deceit. This is not dualism in the Zoroastrian sense \u2014 it is radical monotheism. YHWH is sovereign over both spirits. The Angel of Darkness operates only within the boundaries YHWH has set, and YHWH will destroy him at the appointed time. The Great Eraser framework benefits from obscuring this doctrine. If the Spirit of Deceit operates by YHWH\u2019s permission and within YHWH\u2019s timeline, then the Great Eraser itself \u2014 the systematic suppression of covenant identity \u2014 operates within YHWH\u2019s sovereign plan and has an expiration date. The Community Rule teaches that the present age of darkness is temporary. YHWH has appointed the time of its end. This is the theological foundation for the claim that identity erasure will not succeed permanently."
+      "question": "How does someone enter the Qumran Yahad?",
+      "answer": "Entry is a multi-year process documented in 1QS cols 5-7. A candidate presents themselves to the Overseer (Mevaqqer), who examines their spirit and deeds. If accepted, the candidate begins a period of instruction but does not yet share in communal meals or property. After the first year, the Many vote on whether to advance the candidate. After a second year of full participation in community life — but still separate from the full communal property pool — the Many vote again. Only after this probation does the member's property merge fully into the communal fund and they receive full standing in the assembly."
+    },
+    {
+      "question": "What does Yakhad mean and why is it significant?",
+      "answer": "Yakhad means 'unity' or 'together.' The community took this as its self-designation — they were the community of the Yakhad, defined by their total collective commitment. Members shared all property, shared meals, ranked together at assembly, and were accountable to one another. The name signals that individual identity was inseparable from communal identity. This is a sharper form of communal covenant than the Damascus Document's camp communities, where members maintained individual households."
+    },
+    {
+      "question": "What is the role of the Maskil?",
+      "answer": "The Maskil (Instructor) is the spiritual and educational leader of the community described in 1QS cols 3 and 9-11. The Maskil teaches all Sons of Light the Two Spirits doctrine — the nature of humanity, the conflict of the two spirits, and the deeds appropriate to each. The final section of 1QS (cols 9-11) is attributed to the Maskil: a rule for how the Instructor should conduct himself — speaking truth, keeping counsel, understanding timing, and composing hymns of praise for YHWH. The Maskil is not the same as the Teacher of Righteousness; the Teacher was a historical founder figure, the Maskil is a continuing office."
+    },
+    {
+      "question": "What is the annual review and what are its consequences?",
+      "answer": "Every year the full assembly (the Many) reviews each member's spirit and deeds. Members are ranked by understanding — those who have grown in knowledge and righteous conduct move up; those who have deteriorated move down. The ranking is not abstract: it determines where a member sits at communal meals, the order in which they speak in debates, and their authority within the community. This creates a living meritocracy of covenant obedience — not based on birth, wealth, or tribal origin alone, but on how a person lives the covenant year by year."
+    },
+    {
+      "question": "What does the community await according to 1QS col.9?",
+      "answer": "1QS col.9 says the community conducts itself according to these rules 'until the coming of the Prophet and the Messiahs of Aaron and Israel.' Three figures are expected: a Prophet (echoing Devarim 18 and Mosheh's promise of a coming prophet), a priestly Messiah of Aharon (the anointed high priest of the final era), and a royal Messiah of Yisra'el (the anointed king). This two-Messiah framework — priestly and royal — is distinct from the later Christian single-Messiah framework. The community lived in a holding pattern, maintaining covenant purity until these figures would appear."
+    },
+    {
+      "question": "How does property work in the Yahad community?",
+      "answer": "Full communal property sharing — the most distinctive feature of the Yahad compared to the Damascus Document camps. Upon completing the two-year probation, a new member's property becomes the property of the Many, managed by the Overseer. No member holds private property separate from the community. Violations — lying about property, taking more than one's share — are treated as serious covenant breaches subject to punishment. The One Rule (1QS col.6) explicitly states: 'No man of the members of the community shall give any of the property of the community into the hand of a man of falsehood.'"
+    },
+    {
+      "question": "What offenses lead to expulsion from the Yahad?",
+      "answer": "The 1QS penal code (cols 6-7) lists graduated punishments. Lesser offenses — speaking foolishly, interrupting a fellow, falling asleep in an assembly, bearing a grudge against a brother — lead to temporary reductions in food rations or exclusion from the pure food for set periods. Serious offenses — deliberate violation of a Mosaic commandment, betrayal of the community to outsiders, blaspheming YHWH's Name — lead to permanent expulsion. A permanently expelled member may never return. The gradation reflects the distinction between human weakness and deliberate rebellion."
+    },
+    {
+      "question": "How does the Two Spirits doctrine differ from later Christian ideas?",
+      "answer": "The 1QS Two Spirits doctrine frames the cosmic conflict as two spirits that YHWH created and placed in humanity, with every person carrying a portion of each. This is not Persian dualism — YHWH created both spirits and rules over both. The Angel of Darkness's power exists because YHWH permits it, not as a rival deity. The NT borrowed its Spirit/flesh and light/darkness language from traditions like 1QS — the ancient text is the source; the NT adapted what was already there. The 1QS framework also does not demonize the material world itself — the conflict is between obedience and rebellion, not between matter and spirit."
+    },
+    {
+      "question": "What is the significance of the Council of twelve laymen and three priests?",
+      "answer": "The twelve laymen echo the twelve tribes of Yisra'el — the full covenant people. The three priests echo the three priestly families (Aharon, Eleazar, Itamar) or the three patriarchs. Together the fifteen form the foundational council, described as 'an eternal planting, a holy of holies, witnesses of truth for judgment, and the chosen of lovingkindness appointed to atone for the land.' The council is the community's spiritual foundation — the reason the Yahad's covenant life has cosmic significance: they stand in for the purified covenant people, maintaining YHWH's purposes even while Jerusalem is corrupt."
     }
   ]
 }

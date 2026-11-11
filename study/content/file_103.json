@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_103",
-  "label": "Hodayot (Thanksgiving Hymns) \u2014 Part 1 \u2014 Col 1\u20134",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_103",
+  "label": "Hodayot (Thanksgiving Hymns) — Part 1 — Col 1–4",
   "volume": 41,
-  "content_version": 1,
-  "summary_plain": "The Hodayot are thanksgiving hymns praising YHWH for his mercy and election. The speaker gives thanks: I thank you, YHWH, for you have placed my soul in the bundle of the living. You have redeemed me from the pit. The hymns confess human weakness: what is flesh that you should do marvelous things with it? A creature of clay, kneaded with water \u2014 what counsel can it understand? Yet YHWH has chosen this creature of clay and placed his truth in the speaker\u2019s heart. The hymns describe persecution by enemies and deliverance by YHWH. The speaker was rejected by his community but sustained by YHWH\u2019s covenant.",
-  "summary_scholarly": "The Hodayot (1QH \u2014 Thanksgiving Hymns) were among the first seven scrolls discovered in Cave 1. Columns 1-4 contain both \u2018Teacher Hymns\u2019 (attributed to the Teacher of Righteousness) and \u2018Community Hymns\u2019 (expressing collective piety). The hymns are structured on the formula \u2018I thank you, YHWH\u2019 (odekha adonai) or \u2018Blessed are you, YHWH\u2019 (barukh attah adonai). The theology is radically theocentric: human beings are \u2018creatures of clay\u2019 with no merit, and all knowledge, righteousness, and election come from YHWH alone. This predestinarian theology parallels the Two Spirits doctrine of 1QS. The persecution language suggests a leader who was expelled from the establishment and found refuge in YHWH\u2019s direct guidance. Additional copies were found in Cave 4 (4Q427-432).",
+  "content_version": 2,
+  "summary_plain": "The Hodayot are thanksgiving hymns praising YHWH for his mercy and election. The speaker gives thanks: I thank you, YHWH, for you have placed my soul in the bundle of the living. You have redeemed me from the pit. The hymns confess human weakness: what is flesh that you should do marvelous things with it? A creature of clay, kneaded with water — what counsel can it understand? Yet YHWH has chosen this creature of clay and placed his truth in the speaker’s heart. The hymns describe persecution by enemies and deliverance by YHWH. The speaker was rejected by his community but sustained by YHWH’s covenant.",
+  "summary_scholarly": "The Hodayot (1QH — Thanksgiving Hymns) were among the first seven scrolls discovered in Cave 1. Columns 1-4 contain both ‘Teacher Hymns’ (attributed to the Teacher of Righteousness) and ‘Community Hymns’ (expressing collective piety). The hymns are structured on the formula ‘I thank you, YHWH’ (odekha adonai) or ‘Blessed are you, YHWH’ (barukh attah adonai). The theology is radically theocentric: human beings are ‘creatures of clay’ with no merit, and all knowledge, righteousness, and election come from YHWH alone. This predestinarian theology parallels the Two Spirits doctrine of 1QS. The persecution language suggests a leader who was expelled from the establishment and found refuge in YHWH’s direct guidance. Additional copies were found in Cave 4 (4Q427-432).",
   "key_terms": [
-    { "term": "Hodayot", "phonetic": "Hoh-dah-YOHT", "definition": "Hebrew for \u2018Thanksgivings.\u2019 A collection of hymns from Qumran expressing gratitude to YHWH for election, deliverance, and revelation. The hymns emphasize human unworthiness and YHWH\u2019s sovereign grace." },
-    { "term": "Yetzer Khomer", "phonetic": "YEH-tzer KHOH-mer", "definition": "Hebrew for \u2018creature of clay.\u2019 The Hodayot repeatedly describe the speaker as a creature of clay, kneaded with water, formed from dust \u2014 emphasizing that all righteousness comes from YHWH, not from human merit." }
+    {
+      "term": "Hodayot",
+      "phonetic": "ho-da-YOT",
+      "definition": "Thanksgiving Hymns — 1QH, the largest liturgical scroll from Cave 1. Contains approximately 25-30 hymns of thanksgiving and praise. Divided into two groups: Teacher Hymns (believed to come from the Teacher of Righteousness personally) and Community Hymns (broader community use)."
+    },
+    {
+      "term": "Teacher Hymns",
+      "phonetic": "",
+      "definition": "The group of Hodayot hymns (cols 10-17 in the standard numbering) believed by most scholars to have been composed by the Teacher of Righteousness himself, based on their intense first-person language about persecution, rejection, and divine vindication."
+    },
+    {
+      "term": "Odeh Lekha Adonai",
+      "phonetic": "oh-DEH le-KHA a-do-NAI",
+      "definition": "Opening formula of the Hodayot hymns: 'I thank you, YHWH' — not literally 'Adonai' as a divine name, but here used as a formal opening phrase, corrected in ACR usage to 'I thank you, YHWH.' The formula establishes the hymn as direct address to YHWH."
+    },
+    {
+      "term": "Covenant of Grace",
+      "phonetic": "",
+      "definition": "A central Hodayot theme: the singer does not earn YHWH's favor by their own righteousness. YHWH's covenant is entirely an act of grace — the singer acknowledges their own unworthiness while resting on YHWH's steadfast love. This is a pre-Pauline covenant-of-grace theology embedded in the DSS."
+    },
+    {
+      "term": "Spirit of YHWH",
+      "phonetic": "",
+      "definition": "The Hodayot frequently invoke YHWH's spirit as the source of the singer's wisdom, understanding, and strength. This is not the later Rabbinic or Christian personification of spirit but a direct expression of YHWH's active presence enabling covenant faithfulness."
+    },
+    {
+      "term": "Persecution and Vindication",
+      "phonetic": "",
+      "definition": "The Teacher Hymns are saturated with accounts of the singer's persecution: enemies who seek their life, traitors within the community, the Man of the Lie. YHWH vindicates the singer against these enemies — the Hodayot express confident trust in that vindication."
+    },
+    {
+      "term": "Man of the Lie",
+      "phonetic": "",
+      "definition": "The major antagonist named in the Hodayot's Teacher Hymns — a figure who contradicted the Teacher, led members away from the covenant, and was the Teacher's primary internal opponent. Also called the 'Pouring of Lies.' Usually identified with the opposing religious leader who opposed the Teacher."
+    },
+    {
+      "term": "1QH",
+      "phonetic": "",
+      "definition": "The Cave 1 scroll designation for the Hodayot — Hymn scroll, 1Q35. One of the original seven Cave 1 scrolls found in 1947. Contains the most personal, devotional writing in the entire DSS corpus."
+    },
+    {
+      "term": "Hymn of Knowledge",
+      "phonetic": "",
+      "definition": "The first major hymn in the Hodayot, often called the Hymn of Knowledge (cols 1-3), which praises YHWH's creation and the gift of understanding to the singer. YHWH has implanted knowledge in the community — this knowledge is what separates them from those who walk in darkness."
+    },
+    {
+      "term": "Watery Pit",
+      "phonetic": "",
+      "definition": "An image in the Hodayot for the depths of despair or danger the singer has been pulled from — YHWH rescues them from the watery pit of destruction. This is covenant-rescue imagery drawn from Tehillim and the broader Hebrew poetic tradition."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col II:20-21", "prompt": "I thank you, YHWH, for you have placed my soul in the bundle of the ______.", "answer": "living", "source_quote": "I thank you, YHWH, for you have placed my soul in the bundle of the living." },
-    { "ref": "Col III:23-24", "prompt": "What is flesh that you should do marvelous things with it? A creature of ______, kneaded with water.", "answer": "clay", "source_quote": "What is flesh that you should do marvelous things with it? A creature of clay, kneaded with water." }
+    {
+      "ref": "1QH col.1:21-24",
+      "prompt": "The Hodayot's first great theme: I was formed of ___, to be a foundation of shame and a source of impurity.",
+      "answer": "clay / dust",
+      "source_quote": "I was formed of clay, kneaded with water, a foundation of shame. — 1QH col.I:21-24"
+    },
+    {
+      "ref": "1QH col.2:13-15",
+      "prompt": "Despite the singer's unworthiness, YHWH has established them through the ___ of the covenant of grace.",
+      "answer": "covenant",
+      "source_quote": "You have established me through your covenant of grace. — 1QH col.II:13-15"
+    },
+    {
+      "ref": "1QH col.4:5-7",
+      "prompt": "The Hodayot's Teacher Hymns describe the ___ who led community members away from the covenant.",
+      "answer": "Man of the Lie / Pouring of Lies",
+      "source_quote": "The Man of the Lie... who leads your people astray. — 1QH col.IV:5-7"
+    },
+    {
+      "ref": "1QH col.1:1-3",
+      "prompt": "The opening formula of each Hodayot hymn is: '___ YHWH, for...' — direct thanksgiving to YHWH.",
+      "answer": "I thank you / I praise you",
+      "source_quote": "I thank you, YHWH, for... — 1QH, standard Hodayot opening formula"
+    },
+    {
+      "ref": "1QH col.3:19-22",
+      "prompt": "YHWH rescues the singer from the ___ pit of destruction — covenant rescue imagery.",
+      "answer": "watery",
+      "source_quote": "You drew me up from the watery pit of Sheol. — 1QH col.III:19-22"
+    },
+    {
+      "ref": "1QH col.2:3-7",
+      "prompt": "The Spirit of YHWH is invoked in the Hodayot as the source of the singer's ___ and understanding.",
+      "answer": "wisdom / knowledge",
+      "source_quote": "Through your holy spirit you have given me knowledge. — 1QH col.II:3-7"
+    },
+    {
+      "ref": "1QH",
+      "prompt": "The Hodayot were found in Cave ___ as one of the original seven scrolls of the 1947 discovery.",
+      "answer": "1",
+      "source_quote": "1QH — Cave 1 Hodayot scroll, one of the original 1947 finds."
+    },
+    {
+      "ref": "1QH col.4",
+      "prompt": "The Teacher Hymns (cols 10-17) are believed by most scholars to have been composed by the ___ himself.",
+      "answer": "Teacher of Righteousness",
+      "source_quote": "The Teacher Hymns — widely attributed to the Teacher of Righteousness. — 1QH"
+    },
+    {
+      "ref": "1QH col.1:21-24",
+      "prompt": "The Hodayot's theology of covenant grace: the singer acknowledges their own ___ while resting on YHWH's steadfast love.",
+      "answer": "unworthiness / sin",
+      "source_quote": "I am formed of clay... yet you have established me through your covenant. — 1QH col.I-II"
+    },
+    {
+      "ref": "1QH col.3:3-5",
+      "prompt": "In the Hodayot, YHWH has implanted ___ in the community — separating them from those who walk in darkness.",
+      "answer": "knowledge / understanding",
+      "source_quote": "You have implanted knowledge in me. — 1QH col.III:3-5"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col II-III", "question": "How does the speaker of the Hodayot describe human beings?", "options": ["As co-creators with YHWH", "As creatures of clay with no merit, entirely dependent on YHWH\u2019s grace", "As powerful warriors of the covenant", "As equals to the angels"], "correct": 1, "source_quote": "What is flesh that you should do marvelous things with it? A creature of clay, kneaded with water." },
-    { "ref": "Col II:20", "question": "What formula opens many of the Hodayot hymns?", "options": ["Hear, O Yisra\u2019el", "I thank you, YHWH", "Thus says YHWH", "Blessed is the man"], "correct": 1, "source_quote": "I thank you, YHWH, for you have placed my soul in the bundle of the living." }
+    {
+      "ref": "1QH",
+      "question": "What does 'Hodayot' mean?",
+      "options": [
+        "Psalms of praise",
+        "Thanksgiving Hymns",
+        "Songs of Mourning",
+        "Words of the Teacher"
+      ],
+      "correct": 1,
+      "source_quote": "Hodayot — Thanksgiving Hymns. — 1QH"
+    },
+    {
+      "ref": "1QH",
+      "question": "What are the Teacher Hymns in the Hodayot?",
+      "options": [
+        "Hymns written to the Teacher by his students",
+        "A group of hymns (cols 10-17) believed composed by the Teacher of Righteousness himself",
+        "Hymns recited only on the annual review day",
+        "The community's response to the Teacher's persecution"
+      ],
+      "correct": 1,
+      "source_quote": "Teacher Hymns — cols 10-17, widely attributed to the Teacher of Righteousness. — 1QH"
+    },
+    {
+      "ref": "1QH col.1:21-24",
+      "question": "How does the Hodayot describe the singer's nature before YHWH?",
+      "options": [
+        "As a warrior of righteousness",
+        "As a vessel of pure gold prepared by YHWH",
+        "As formed of clay — a foundation of shame and impurity",
+        "As an angel in human form"
+      ],
+      "correct": 2,
+      "source_quote": "I was formed of clay, kneaded with water, a foundation of shame. — 1QH col.I:21-24"
+    },
+    {
+      "ref": "1QH col.2:13-15",
+      "question": "What does the Hodayot's covenant theology emphasize?",
+      "options": [
+        "Earning YHWH's favor through perfect Torah observance",
+        "YHWH's covenant is an act of grace — the singer rests on YHWH's steadfast love, not their own righteousness",
+        "The community's military victory as proof of YHWH's approval",
+        "The high priest's intercession as the basis for acceptance"
+      ],
+      "correct": 1,
+      "source_quote": "You have established me through your covenant of grace. — 1QH col.II:13-15"
+    },
+    {
+      "ref": "1QH col.4:5-7",
+      "question": "Who is the Man of the Lie in the Hodayot?",
+      "options": [
+        "The Roman governor who persecuted the community",
+        "The Teacher of Righteousness's primary internal opponent who led members away",
+        "A Babylonian false prophet from the exile period",
+        "The corrupted high priest of the Ptolemaic era"
+      ],
+      "correct": 1,
+      "source_quote": "The Man of the Lie — the Teacher's primary internal opponent in the Hodayot. — 1QH col.IV:5-7"
+    },
+    {
+      "ref": "1QH col.3:19-22",
+      "question": "What does the Hodayot describe YHWH rescuing the singer from?",
+      "options": [
+        "The armies of the Kittim",
+        "The legal trap of the Pharisees",
+        "The watery pit of destruction (Sheol imagery)",
+        "The corruption of the Jerusalem Temple"
+      ],
+      "correct": 2,
+      "source_quote": "You drew me up from the watery pit of Sheol. — 1QH col.III:19-22"
+    },
+    {
+      "ref": "1QH col.2:3-7",
+      "question": "What does YHWH give the singer through his holy spirit in the Hodayot?",
+      "options": [
+        "Military strength and courage",
+        "Knowledge and understanding",
+        "Long life and many descendants",
+        "The right to interpret the Torah"
+      ],
+      "correct": 1,
+      "source_quote": "Through your holy spirit you have given me knowledge. — 1QH col.II:3-7"
+    },
+    {
+      "ref": "1QH",
+      "question": "What cave did the Hodayot come from?",
+      "options": [
+        "Cave 4",
+        "Cave 11",
+        "Cave 1",
+        "Cave 7"
+      ],
+      "correct": 2,
+      "source_quote": "1QH — Cave 1 Hodayot scroll, one of the original 1947 finds."
+    },
+    {
+      "ref": "1QH",
+      "question": "What is unique about the Hodayot in the DSS corpus?",
+      "options": [
+        "It is the only text written in Aramaic",
+        "It contains the most personal, devotional writing in the entire DSS corpus",
+        "It preserves the community's military planning",
+        "It is the longest single scroll found at Qumran"
+      ],
+      "correct": 1,
+      "source_quote": "1QH — the most personal, devotional writing in the entire DSS corpus."
+    },
+    {
+      "ref": "1QH col.1:21-24",
+      "question": "The Hodayot's theology of human nature says the singer is:",
+      "options": [
+        "A divine being who has descended to earth",
+        "A fully righteous member of the covenant by birth",
+        "Formed of clay and utterly dependent on YHWH's grace",
+        "A priest qualified by purity and lineage alone"
+      ],
+      "correct": 2,
+      "source_quote": "I was formed of clay... yet you have established me through your covenant. — 1QH col.I-II"
+    }
   ],
   "faq": [
     {
-      "question": "What do the Hodayot reveal about election preceding institutions?",
-      "answer": "The Hodayot express a theology where YHWH\u2019s election of the individual precedes all institutional affiliation. The speaker is a \u2018creature of clay\u2019 with no inherent merit. YHWH placed truth in his heart, sustained him when he was persecuted, and redeemed him from the pit \u2014 not because of institutional standing but because of YHWH\u2019s sovereign choice. The Teacher Hymns suggest that the Teacher of Righteousness was expelled from the institutional priesthood but was sustained by YHWH\u2019s direct election. This is the Great Eraser\u2019s deepest challenge: if election comes from YHWH alone and not from institutional gatekeepers, then no institution can erase what YHWH has chosen. The Hodayot ground covenant identity in YHWH\u2019s sovereign act, not in human organizational membership."
+      "question": "What are the Hodayot?",
+      "answer": "The Hodayot (1QH) are the Thanksgiving Hymns — a scroll of approximately 25-30 hymns found in Cave 1 as one of the original seven scrolls of the 1947 discovery. They contain the most personal and devotional writing in the entire DSS corpus. Each hymn opens with the formula 'I thank you, YHWH' and moves through themes of personal unworthiness, YHWH's covenant grace, persecution and divine rescue, and the gift of knowledge and understanding."
     },
     {
-      "question": "How do the Hodayot connect to the Great Eraser framework?",
-      "answer": "The Hodayot describe a speaker who was rejected by the establishment, persecuted by enemies, and cut off from the community \u2014 yet sustained by YHWH. The hymns were sealed in a cave in 68 CE and not read again for 1,900 years. The prayers of a covenant community were physically erased from human access for nearly two millennia. When they were found in 1947, the publication monopoly kept them restricted for another 40+ years. The Hodayot are a case study in multi-layered erasure: the community was destroyed, the texts were hidden, and when found, they were institutionally gatekept. Yet YHWH preserved them. The clay jars in the cave did what the institutions could not \u2014 they kept the words intact until the appointed time."
+      "question": "What are the Teacher Hymns?",
+      "answer": "The Teacher Hymns are a subset of the Hodayot (generally cols 10-17 in the standard numbering) that most DSS scholars believe were composed by the Teacher of Righteousness personally. The evidence: intense first-person language about specific persecution, rejection by former colleagues, the Man of the Lie's opposition, and confident trust in YHWH's vindication. The emotional specificity suggests personal authorship rather than general liturgical composition."
+    },
+    {
+      "question": "What is the covenant of grace theology in the Hodayot?",
+      "answer": "The Hodayot present a consistent theology: the singer cannot earn YHWH's covenant favor through their own righteousness. 'I was formed of clay... a foundation of shame' — the singer acknowledges radical insufficiency. Yet YHWH has established them through his covenant of grace, not because of their merit. This is not Pauline or NT theology — it is pre-existing DSS covenant theology that the NT later adapted. The Hodayot document this theology in the community's own first-century BCE devotional life."
+    },
+    {
+      "question": "Who is the Man of the Lie in the Hodayot?",
+      "answer": "The Man of the Lie (or Pouring of Lies) is the Teacher of Righteousness's primary internal opponent — a figure who contradicted the Teacher, led community members away from the covenant, and built a following against the Teacher. Some identify him with the Wicked Priest of Pesher Habakkuk; others see them as distinct figures. The Hodayot's Teacher Hymns are saturated with the pain of this opposition and the confidence that YHWH will vindicate the Teacher against it."
+    },
+    {
+      "question": "What does 'watery pit' imagery mean in the Hodayot?",
+      "answer": "The watery pit (of Sheol or destruction) is a rescue image drawn from Tehillim and other Hebrew poetry: the singer was pulled down toward death and destruction, and YHWH reached in and drew them out. It captures the experience of near-destruction — physical threat, social rejection, despair — and YHWH's decisive intervention. The Hodayot use this imagery repeatedly because the Teacher's situation was genuinely one of repeated near-destruction: persecution, betrayal, exile from community."
+    },
+    {
+      "question": "How does the Hodayot's view of the Spirit of YHWH differ from later NT usage?",
+      "answer": "In the Hodayot, YHWH's spirit is a direct expression of YHWH's active presence enabling the singer's wisdom and faithfulness — 'through your holy spirit you have given me knowledge.' It is not a personified third member of a divine triad. It is YHWH acting directly. The NT's later construction of the 'Holy Spirit' as a distinct divine person is an elaboration built on this earlier framework. The direction is clear: the DSS preserves the older, non-personified usage; the NT builds a new theological structure on top of it."
+    },
+    {
+      "question": "What is the structure of a Hodayot hymn?",
+      "answer": "Each hymn typically opens with the thanksgiving formula ('I thank you, YHWH'), followed by a reason for thanksgiving (often a rescue or gift), a lament or account of the situation of danger, an affirmation of trust in YHWH's covenant, and a closing declaration or petition. The structure is flexible but always moves from YHWH's character to the singer's situation to YHWH's response. It is a movement from outside the self (YHWH's nature) through the self (situation) back outside the self (YHWH's action)."
+    },
+    {
+      "question": "How do the Hodayot connect to the Psalms of Tehillim?",
+      "answer": "The Hodayot are deeply indebted to Tehillim — drawing on its vocabulary, imagery (watery pit, enemies surrounding, YHWH as rock and refuge), and hymn structures. But the Hodayot are not commentary on Tehillim; they are original compositions by community members (and possibly the Teacher) using the same devotional language. The Qumran community revered Tehillim deeply (the longest Cave 11 scroll is Tehillim) and their own hymnody naturally grew from that tradition."
+    },
+    {
+      "question": "What does the Hodayot tell us about the Teacher of Righteousness's experience?",
+      "answer": "If the Teacher Hymns are genuinely from the Teacher, they reveal a person of intense piety and profound suffering. He was opposed from within — the Man of the Lie turned colleagues against him. He was under threat — 'they seek my life.' He was rejected — the community he built was partly subverted. And he maintained radical trust in YHWH's vindication, expressed not through defiance but through grateful acknowledgment of YHWH's grace. The Hodayot is the Teacher's spiritual autobiography, in hymn form."
+    },
+    {
+      "question": "Why are the Hodayot significant for understanding the NT?",
+      "answer": "The covenant of grace theology in the Hodayot is the same framework Paul claims as distinctively 'Christian' — righteousness not from works but from YHWH's grace. The DSS document this theology in the late 2nd/early 1st century BCE, long before Paul. The NT did not invent this framework; it borrowed it from the existing covenant tradition. The Hodayot also show that personal, devotional, first-person prayer addressed to YHWH was alive and well in the DSS community — the NT's prayer tradition grows from this soil."
     }
   ]
 }
