@@ -151,6 +151,30 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .wb-results-label{font-size:12px;color:var(--tx2);margin-bottom:16px}
 .wb-results-msg{font-size:12.5px;color:var(--tx1);line-height:1.6;margin-bottom:4px}
 .wb-back{padding:14px 14px 0;font-size:12px;color:var(--tx3);cursor:pointer}
+.wb-case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.wb-case{background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:16px 4px;font-size:15px;font-weight:700;color:var(--tx1);cursor:pointer;text-align:center;font-family:inherit}
+.wb-case.mine{border-color:var(--gold);color:var(--gold);display:flex;flex-direction:column;gap:2px}
+.wb-case.mine span{font-size:8.5px;font-weight:600;text-transform:uppercase;color:var(--tx3)}
+.wb-case.opened{opacity:0.35;color:var(--tx3)}
+.wb-imposter-cards{display:flex;flex-direction:column;gap:8px}
+.wb-imposter-card{background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:12px 13px;font-size:12px;color:var(--tx1);line-height:1.55;cursor:pointer;text-align:left;font-family:inherit}
+.wb-imposter-card.disabled{pointer-events:none}
+.wb-imposter-card.imposter{background:rgba(192,57,43,0.18);border-color:#c0392b}
+.wb-imposter-card.wrong-pick{opacity:0.5}
+.wb-clue-banner{display:flex;align-items:baseline;gap:9px;margin-bottom:10px}
+.wb-clue-label{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px}
+.wb-clue-word{font-size:15px;font-weight:700;color:#fff}
+.wb-clue-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px}
+.wb-clue-tile{background:var(--s2);border:1px solid #2a2a2a;border-radius:9px;padding:10px 8px;font-size:11px;color:var(--tx1);cursor:pointer;text-align:center;line-height:1.4;font-family:inherit;display:flex;flex-direction:column;gap:3px;align-items:center}
+.wb-clue-tile.match{background:rgba(39,174,96,0.2);border-color:#27ae60}
+.wb-clue-tile.wrong{opacity:0.4}
+.wb-clue-tile.trap{background:rgba(192,57,43,0.22);border-color:#c0392b}
+.wb-clue-tile.missed{background:rgba(39,174,96,0.12);border-color:#27ae60;opacity:0.7}
+.wb-clue-tag{font-size:8px;font-weight:700;letter-spacing:0.3px;color:var(--gold)}
+.wb-memory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.wb-memory-tile{aspect-ratio:1;background:var(--s2);border:1px solid #2a2a2a;border-radius:9px;font-size:16px;color:var(--tx3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:4px}
+.wb-memory-tile.face-up{background:var(--s1);border-color:var(--gold);color:var(--tx1);font-size:11px}
+.wb-memory-tile.matched{opacity:0.45;border-color:#27ae60}
 
 /* FILTER BAR */
 .filter-bar{display:flex;gap:5px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
@@ -11832,24 +11856,6 @@ function wbShuffle(arr) {
 function wbArgsort(arr) {
   return arr.map(function(v, i) { return i; }).sort(function(a, b) { return arr[a] - arr[b]; });
 }
-function wbFinalizeMC(items) {
-  if (!items.length) return [];
-  return items.map(function(it, i) {
-    var others = items.filter(function(x, j) { return j !== i && x.answer !== it.answer; }).map(function(x) { return x.answer; });
-    var distractors = wbShuffle(others).slice(0, 3);
-    while (distractors.length < 3 && others.length) distractors.push(others[distractors.length % others.length]);
-    var options = wbShuffle([it.answer].concat(distractors));
-    return {
-      type: 'mc',
-      prompt: it.prompt,
-      options: options,
-      correctIdx: options.indexOf(it.answer),
-      hintSrc: it.src || '',
-      reveal: it.reveal || '',
-      key: it.q
-    };
-  }).filter(function(q) { return q.options.length >= 2; });
-}
 function wbBuildOrderProblems(pool, label) {
   var problems = [];
   for (var i = 0; i + 4 <= pool.length; i++) {
@@ -11873,15 +11879,15 @@ function wbBuildSpotChange() {
     var e = ntdb[ref];
     var answer = e.original_dss_reading || e.dss_contradiction;
     if (!answer) return;
-    raw.push({ q: ref, prompt: 'What does the primary-source record actually show, against the claim made at ' + ref + '?', answer: answer, src: e.oldest_manuscript || 'Dead Sea Scrolls / primary record', reveal: e.verdict || '' });
+    raw.push({ label: ref, value: 4000, reveal: answer, src: e.oldest_manuscript || 'Dead Sea Scrolls / primary record', verdict: e.verdict || '' });
   });
   (typeof SEPTUAGINT_PROPHESIES !== 'undefined' ? SEPTUAGINT_PROPHESIES : []).forEach(function(s) {
-    raw.push({ q: s.ref, prompt: 'What does the Hebrew text actually say at ' + s.ref + ', before the Greek rendering was built into a claim?', answer: s.hebrew, src: 'Hebrew consonantal text, ' + s.ref, reveal: s.context || '' });
+    raw.push({ label: s.ref, value: 2500, reveal: s.hebrew, src: 'Hebrew consonantal text, ' + s.ref, verdict: s.context || '' });
   });
   (typeof FISHING_IMAGE_INVERSION !== 'undefined' ? FISHING_IMAGE_INVERSION : []).forEach(function(f) {
-    raw.push({ q: f.ref, prompt: 'What does the primary source actually mean at ' + f.ref + '?', answer: f.source, src: f.ref, reveal: f.context || '' });
+    raw.push({ label: f.ref, value: 2500, reveal: f.source, src: f.ref, verdict: f.context || '' });
   });
-  return wbFinalizeMC(raw);
+  return wbShuffle(raw);
 }
 
 function wbBuildClaimSort() {
@@ -11909,15 +11915,20 @@ function wbBuildClaimSort() {
 
 function wbBuildRootMatch() {
   var keys = Object.keys((typeof ROOT_ETYM !== 'undefined' ? ROOT_ETYM : {}));
-  var fwd = keys.map(function(k) {
+  var all = keys.map(function(k) {
     var r = ROOT_ETYM[k];
-    return { q: k + '-fwd', prompt: 'What does the root ' + r.heb + ' (' + r.translit + ') carry as its primary meaning?', answer: r.meaning, src: r.lang || 'Hebrew / Aramaic', reveal: (r.range || '').slice(0, 420) };
+    return { key: k, heb: r.heb, translit: r.translit, meaning: r.meaning, reveal: (r.range || '').slice(0, 420) };
   });
-  var rev = keys.map(function(k) {
-    var r = ROOT_ETYM[k];
-    return { q: k + '-rev', prompt: 'Which root carries this meaning: "' + r.meaning + '"?', answer: r.heb + '  (' + r.translit + ')', src: r.lang || 'Hebrew / Aramaic', reveal: (r.range || '').slice(0, 420) };
+  return all.map(function(root) {
+    var others = wbShuffle(all.filter(function(x) { return x.key !== root.key; }));
+    var trap = others[0];
+    var fillers = others.slice(1, 7);
+    var tiles = wbShuffle([
+      { text: root.meaning, kind: 'match' },
+      { text: trap.meaning, kind: 'trap' }
+    ].concat(fillers.map(function(f) { return { text: f.meaning, kind: 'filler' }; })));
+    return { clueHeb: root.heb, clueTranslit: root.translit, reveal: root.reveal, tiles: tiles };
   });
-  return wbFinalizeMC(fwd).concat(wbFinalizeMC(rev));
 }
 
 function wbBuildTimeline() {
@@ -11938,22 +11949,24 @@ function wbBuildTimeline() {
 }
 
 function wbBuildPaleo() {
-  var letters = (typeof PALEO_ALPHA !== 'undefined' ? PALEO_ALPHA : []);
-  var p1 = letters.map(function(l) { return { q: l.name + '-name', prompt: 'What is the name of this paleo-Hebrew letter: ' + l.g, answer: l.name, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' — pictograph: ' + l.picto + '. Numeric value ' + l.num + '.' }; });
-  var p2 = letters.map(function(l) { return { q: l.name + '-glyph', prompt: 'Which glyph is ' + l.name + '?', answer: l.g, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' — pictograph: ' + l.picto + '. Numeric value ' + l.num + '.' }; });
-  var p3 = letters.map(function(l) { return { q: l.name + '-num', prompt: 'What is the numeric value of ' + l.g + ' (' + l.name + ')?', answer: String(l.num), src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' = ' + l.num + '.' }; });
-  var p4 = letters.map(function(l) { return { q: l.name + '-pic', prompt: 'What does the pictograph behind ' + l.g + ' (' + l.name + ') represent?', answer: l.picto, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' comes from the image of: ' + l.picto + '.' }; });
-  return wbFinalizeMC(p1).concat(wbFinalizeMC(p2), wbFinalizeMC(p3), wbFinalizeMC(p4));
+  return (typeof PALEO_ALPHA !== 'undefined' ? PALEO_ALPHA : []);
 }
 
 var WB_GAMES = [
-  { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', title: 'Spot the Change', desc: 'What did the primary source actually say, before the later tradition rewrote it?', build: wbBuildSpotChange },
-  { id: 'claimsort', icon: 'ri-scales-3-line', color: '#3498DB', title: 'Primary Source or Claim?', desc: 'Sort each statement: manuscript-attested primary source, or an institutional claim with no primary-source backing.', build: wbBuildClaimSort },
-  { id: 'rootmatch', icon: 'ri-text', color: '#9B59B6', title: 'Root Match', desc: 'Match the ancient root to its true meaning, both directions.', build: wbBuildRootMatch },
-  { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and from the documented canon history.', build: wbBuildTimeline },
-  { id: 'paleo', icon: 'ri-font-size-2', color: '#E74C3C', title: 'Paleo Gauntlet', desc: 'Drill all 22 paleo-Hebrew letters: glyph, name, numeric value, and pictograph.', build: wbBuildPaleo }
+  { id: 'spotchange', icon: 'ri-find-replace-line', color: '#E67E22', title: 'Scroll or No Scroll', desc: 'Pick a scroll to keep. Open the others — each reveals what the primary source actually says. The Scribe will make you an offer.', mechanic: 'deal', build: wbBuildSpotChange },
+  { id: 'claimsort', icon: 'ri-user-search-line', color: '#3498DB', title: 'The Imposter', desc: 'Two of three statements are manuscript-attested. One is the institutional claim with no primary-source backing. Find it.', mechanic: 'imposter', build: wbBuildClaimSort },
+  { id: 'rootmatch', icon: 'ri-grid-line', color: '#9B59B6', title: 'Clue Grid', desc: 'A root’s meaning is the clue. Tap its true match on the board — one tile is a trap.', mechanic: 'cluegrid', build: wbBuildRootMatch },
+  { id: 'timeline', icon: 'ri-time-line', color: '#1ABC9C', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and the documented canon history.', mechanic: 'generic', build: wbBuildTimeline },
+  { id: 'paleo', icon: 'ri-layout-grid-line', color: '#E74C3C', title: 'Memory Match', desc: 'Flip tiles to match each paleo-Hebrew glyph to its name.', mechanic: 'memory', build: wbBuildPaleo }
 ];
 var WB_STATE = null;
+function wbTotalRounds(gameId) {
+  var game = WB_GAMES.filter(function(g) { return g.id === gameId; })[0];
+  if (!game) return 1;
+  var pool = game.build();
+  var perRound = { deal: 12, imposter: 30, cluegrid: 10, memory: 6, generic: 10 }[game.mechanic] || 10;
+  return Math.max(1, Math.ceil(pool.length / perRound));
+}
 
 function wbMastery(gameId) { return wbGet('mastery_' + gameId, 0); }
 function wbSetMastery(gameId, tier) { wbSet('mastery_' + gameId, tier); }
@@ -11976,8 +11989,7 @@ function renderWorkbookHome() {
   }
   html += '<div class="wb-game-grid">';
   WB_GAMES.forEach(function(g) {
-    var pool = g.build();
-    var totalTiers = Math.max(1, Math.ceil(pool.length / 10));
+    var totalTiers = wbTotalRounds(g.id);
     var tier = Math.min(wbMastery(g.id), totalTiers);
     var metaText = tier === 0 ? ('Round 1 of ' + totalTiers + ' — not started') : (tier >= totalTiers ? ('All ' + totalTiers + ' rounds mastered') : ('Round ' + (tier + 1) + ' of ' + totalTiers + ' unlocked'));
     html += '<div class="wb-game-card" style="border-left-color:' + g.color + '" onclick="wbStartGame(\'' + g.id + '\')">' +
@@ -11992,138 +12004,91 @@ function renderWorkbookHome() {
   panel.innerHTML = html;
 }
 
-function wbStartGame(gameId) {
-  var game = WB_GAMES.filter(function(g) { return g.id === gameId; })[0];
-  if (!game) return;
-  var pool = game.build();
-  if (!pool.length) { wbShowEmpty(game.title); return; }
-  var totalTiers = Math.max(1, Math.ceil(pool.length / 10));
-  var masteredTier = Math.min(wbMastery(gameId), totalTiers - 1);
-  var start = masteredTier * 10;
-  var items = pool.slice(start, start + 10);
-  if (items.length < 10) items = items.concat(wbShuffle(pool).slice(0, 10 - items.length));
-  WB_STATE = { gameId: gameId, gameTitle: game.title, gameColor: game.color || 'var(--gold)', totalTiers: totalTiers, tier: masteredTier, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: false };
-  wbRenderQuestion();
-}
-
-function wbStartRemix() {
-  var q = wbRemixQueue();
-  if (!q.length) return;
-  var items = q.slice(0, 10).map(function(e) { return e.item; });
-  WB_STATE = { gameId: 'remix', gameTitle: 'Remix Round', totalTiers: 1, tier: 0, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: true };
-  wbClearRemix();
-  wbRenderQuestion();
-}
-
 function wbShowEmpty(title) {
   var panel = document.getElementById('workbook-panel');
   if (panel) panel.innerHTML = '<div class="wb-q-box">No items available yet for ' + esc(title) + '.</div>';
 }
 
-function wbRenderQuestion() {
+function wbStartGame(gameId) {
+  var game = WB_GAMES.filter(function(g) { return g.id === gameId; })[0];
+  if (!game) return;
+  var pool = game.build();
+  if (!pool.length) { wbShowEmpty(game.title); return; }
+  var totalTiers = wbTotalRounds(gameId);
+  var tier = Math.min(wbMastery(gameId), totalTiers - 1);
+  var color = game.color || 'var(--gold)';
+  if (game.mechanic === 'deal') { wbStartDeal(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'imposter') { wbStartImposter(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'cluegrid') { wbStartClue(gameId, game.title, color, tier, totalTiers, pool); return; }
+  if (game.mechanic === 'memory') { wbStartMemory(gameId, game.title, color, tier, totalTiers, pool); return; }
+  wbStartGeneric(gameId, game.title, color, tier, totalTiers, pool);
+}
+
+// ── Shared round-finish / mastery / results ────────────────────────────────
+function wbFinishRound(ctx) {
+  if (!ctx.isRemix) (ctx.missed || []).forEach(function(m) { wbAddRemix(m); });
+  var mastered = false;
+  if (!ctx.isRemix && ctx.passed) {
+    var prevMastery = wbMastery(ctx.gameId);
+    if (ctx.tier >= prevMastery && ctx.tier < ctx.totalTiers - 1) { wbSetMastery(ctx.gameId, ctx.tier + 1); mastered = true; }
+    else if (ctx.tier >= prevMastery && ctx.tier >= ctx.totalTiers - 1) { wbSetMastery(ctx.gameId, ctx.totalTiers); }
+  }
+  var msg;
+  if (ctx.isRemix) msg = 'Remix Round complete.';
+  else if (ctx.passed && ctx.tier >= ctx.totalTiers - 1) msg = 'All rounds of ' + ctx.gameTitle + ' mastered.';
+  else if (ctx.passed) msg = mastered ? ('Round ' + (ctx.tier + 2) + ' unlocked.') : 'You’ve already cleared this round before — nice recall.';
+  else msg = ctx.failMsg || 'Clear this round to unlock the next one.';
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  panel.innerHTML = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-results"><div class="wb-results-score">' + esc(ctx.scoreLabel) + '</div>' +
+    '<div class="wb-results-label">' + esc(ctx.gameTitle) + '</div>' +
+    '<div class="wb-results-msg">' + esc(msg) + '</div></div>' +
+    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Quiz Games</button>';
+}
+
+// ── TIMELINE ORDER (unchanged tap-to-order engine) ─────────────────────────
+function wbStartGeneric(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var start = tier * 10;
+  var items = pool.slice(start, start + 10);
+  if (items.length < 10) items = items.concat(wbShuffle(pool).slice(0, 10 - items.length));
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'generic', tier: tier, totalTiers: totalTiers, idx: 0, correct: 0, items: items, missed: [], isRemix: false, tapped: [], answered: false };
+  wbRenderGeneric();
+}
+function wbRenderGeneric() {
   var s = WB_STATE;
   var panel = document.getElementById('workbook-panel');
   if (!s || !panel) return;
-  if (s.idx >= s.items.length) { wbRenderResults(); return; }
+  if (s.idx >= s.items.length) {
+    wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: s.isRemix,
+      scoreLabel: s.correct + '/' + s.items.length, passed: s.correct >= 8, missed: s.missed,
+      failMsg: 'Score 8 of 10 to unlock the next round. Missed items will come back in the Remix Round.' });
+    return;
+  }
   var it = s.items[s.idx];
   var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>';
-  html += '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor||'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + (s.isRemix ? '' : (' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers)) + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
-  html += '<div class="wb-q-box">';
-  if (it.type === 'mc') {
-    html += '<div class="wb-q-text">' + esc(it.prompt) + '</div>';
-    it.options.forEach(function(opt, i) {
-      var cls = 'wb-opt';
-      if (s.eliminated.indexOf(i) !== -1) cls += ' disabled';
-      if (s.answered) {
-        cls += ' disabled';
-        if (i === it.correctIdx) cls += ' correct';
-        else if (i === s.pickedIdx) cls += ' wrong';
-      }
-      html += '<button class="' + cls + '" onclick="wbAnswerMC(' + i + ')">' + esc(opt) + '</button>';
-    });
-  } else if (it.type === 'sort') {
-    html += '<div class="wb-q-text">"' + esc(it.statement) + '"</div>';
-    var pCls = 'wb-sort-btn primary', cCls = 'wb-sort-btn claim';
-    if (s.answered) {
-      pCls += ' disabled'; cCls += ' disabled';
-      if (it.answer === 'primary') pCls += ' correct'; else if (s.pickedAnswer === 'primary') pCls += ' wrong';
-      if (it.answer === 'claim') cCls += ' correct'; else if (s.pickedAnswer === 'claim') cCls += ' wrong';
-    }
-    html += '<div class="wb-sort-row">' +
-      '<button class="' + pCls + '" onclick="wbAnswerSort(\'primary\')"><i class="ri-scroll-line"></i><br>Primary Source</button>' +
-      '<button class="' + cCls + '" onclick="wbAnswerSort(\'claim\')"><i class="ri-megaphone-line"></i><br>Institutional Claim</button>' +
-      '</div>';
-  } else if (it.type === 'order') {
-    html += '<div class="wb-q-text">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
-    html += '<div class="wb-order-slots">';
-    for (var slot = 0; slot < it.events.length; slot++) {
-      var tapped = s.tapped || [];
-      var filled = tapped[slot] !== undefined;
-      html += '<div class="wb-order-slot' + (filled ? ' filled' : '') + '">' + (filled ? esc(it.events[tapped[slot]]) : ('Position ' + (slot + 1))) + '</div>';
-    }
-    html += '</div><div class="wb-order-pool">';
-    it.events.forEach(function(ev, i) {
-      var picked = (s.tapped || []).indexOf(i) !== -1;
-      html += '<div class="wb-order-item' + (picked ? ' picked' : '') + '" onclick="' + (picked ? '' : ('wbTapOrder(' + i + ')')) + '">' + esc(ev) + '</div>';
-    });
-    html += '</div>';
+  html += '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
+  html += '<div class="wb-q-box"><div class="wb-q-text">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
+  html += '<div class="wb-order-slots">';
+  for (var slot = 0; slot < it.events.length; slot++) {
+    var filled = s.tapped[slot] !== undefined;
+    html += '<div class="wb-order-slot' + (filled ? ' filled' : '') + '">' + (filled ? esc(it.events[s.tapped[slot]]) : ('Position ' + (slot + 1))) + '</div>';
   }
-  if (s.answered) {
-    html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(it.hintSrc || it.poolLabel || '') + '</div>' + esc(it.reveal || '') + '</div>';
-  } else if (s.hintLevel >= 1 && it.hintSrc) {
-    html += '<div class="wb-reveal"><div class="wb-reveal-src">Cited source</div>' + esc(it.hintSrc) + '</div>';
-  }
+  html += '</div><div class="wb-order-pool">';
+  it.events.forEach(function(ev, i) {
+    var picked = s.tapped.indexOf(i) !== -1;
+    html += '<div class="wb-order-item' + (picked ? ' picked' : '') + '" onclick="' + (picked ? '' : ('wbTapOrder(' + i + ')')) + '">' + esc(ev) + '</div>';
+  });
   html += '</div>';
-  if (!s.answered && it.type !== 'order' && (it.hintSrc || it.reveal)) {
-    var hintLabel = s.hintLevel === 0 ? 'Hint: show source' : 'Hint: narrow to 2';
-    if (s.hintLevel < 2) html += '<button class="wb-hint-btn" onclick="wbUseHint()">' + hintLabel + '</button>';
-  }
-  if (s.answered) {
-    html += '<button class="wb-next-btn" onclick="wbNext()">' + (s.idx + 1 >= s.items.length ? 'See results' : 'Next') + '</button>';
-  }
+  if (s.answered) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(it.poolLabel) + '</div>' + esc(it.reveal || '') + '</div>';
+  html += '</div>';
+  if (s.answered) html += '<button class="wb-next-btn" onclick="wbGenericNext()">' + (s.idx + 1 >= s.items.length ? 'See results' : 'Next') + '</button>';
   panel.innerHTML = html;
 }
-
-function wbUseHint() {
-  var s = WB_STATE;
-  if (!s) return;
-  var it = s.items[s.idx];
-  s.hintLevel++;
-  if (it.type === 'mc' && s.hintLevel >= 2) {
-    var wrongIdx = [];
-    it.options.forEach(function(o, i) { if (i !== it.correctIdx) wrongIdx.push(i); });
-    s.eliminated = wbShuffle(wrongIdx).slice(0, 1);
-  }
-  wbRenderQuestion();
-}
-
-function wbAnswerMC(i) {
-  var s = WB_STATE;
-  if (!s || s.answered) return;
-  var it = s.items[s.idx];
-  s.answered = true;
-  s.pickedIdx = i;
-  if (i === it.correctIdx) s.correct++;
-  else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
-  wbRenderQuestion();
-}
-
-function wbAnswerSort(choice) {
-  var s = WB_STATE;
-  if (!s || s.answered) return;
-  var it = s.items[s.idx];
-  s.answered = true;
-  s.pickedAnswer = choice;
-  if (choice === it.answer) s.correct++;
-  else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
-  wbRenderQuestion();
-}
-
 function wbTapOrder(i) {
   var s = WB_STATE;
-  if (!s) return;
+  if (!s || s.answered) return;
   var it = s.items[s.idx];
-  s.tapped = s.tapped || [];
   if (s.tapped.indexOf(i) !== -1) return;
   s.tapped.push(i);
   if (s.tapped.length === it.events.length) {
@@ -12131,45 +12096,344 @@ function wbTapOrder(i) {
     var right = true;
     for (var k = 0; k < it.correctIdx.length; k++) { if (s.tapped[k] !== it.correctIdx[k]) { right = false; break; } }
     if (right) s.correct++;
-    else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
+    else s.missed.push({ gameId: s.gameId, item: { label: it.poolLabel, reveal: it.reveal, src: it.poolLabel } });
   }
-  wbRenderQuestion();
+  wbRenderGeneric();
 }
-
-function wbNext() {
+function wbGenericNext() {
   var s = WB_STATE;
-  if (!s) return;
-  s.idx++;
-  s.answered = false;
-  s.hintLevel = 0;
-  s.eliminated = [];
-  s.tapped = [];
-  s.pickedIdx = undefined;
-  s.pickedAnswer = undefined;
-  wbRenderQuestion();
+  s.idx++; s.answered = false; s.tapped = [];
+  wbRenderGeneric();
 }
 
-function wbRenderResults() {
+// ── SCROLL OR NO SCROLL (Deal or No Deal) ──────────────────────────────────
+function wbStartDeal(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var start = tier * 12;
+  var slice = pool.slice(start, start + 12);
+  if (slice.length < 12) slice = slice.concat(wbShuffle(pool).slice(0, 12 - slice.length));
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'deal', tier: tier, totalTiers: totalTiers, isRemix: false,
+    playthroughs: [slice.slice(0, 6), slice.slice(6, 12)], ptIdx: 0, results: [] };
+  wbDealNewPlaythrough();
+}
+function wbDealNewPlaythrough() {
+  var s = WB_STATE;
+  var items = s.playthroughs[s.ptIdx];
+  s.deal = { items: items, caseMap: wbShuffle([0, 1, 2, 3, 4, 5]), myCase: null, opened: [], lastReveal: null, offerAmount: 0, phase: 'pick', finalResult: null };
+  wbRenderDeal();
+}
+function wbDealPickCase(i) {
+  var D = WB_STATE.deal;
+  if (D.phase !== 'pick') return;
+  D.myCase = i;
+  D.phase = 'eliminate';
+  wbRenderDeal();
+}
+function wbDealOpenCase(i) {
+  var D = WB_STATE.deal;
+  if (D.phase !== 'eliminate') return;
+  var it = D.items[D.caseMap[i]];
+  D.opened.push(i);
+  D.lastReveal = it;
+  var remainingOther = 5 - D.opened.length;
+  if (remainingOther <= 0) { wbDealEnd(false); return; }
+  if (D.opened.length >= 2) {
+    var greed = [0.55, 0.7, 0.82, 0.92, 1.05];
+    var step = Math.min(D.opened.length - 2, greed.length - 1);
+    var remainingValues = [];
+    for (var ci = 0; ci < 6; ci++) { if (ci === D.myCase || D.opened.indexOf(ci) !== -1) continue; remainingValues.push(D.items[D.caseMap[ci]].value); }
+    var avg = remainingValues.length ? (remainingValues.reduce(function(a, b) { return a + b; }, 0) / remainingValues.length) : 0;
+    D.offerAmount = Math.round((avg * greed[step]) / 50) * 50;
+    D.phase = 'offer';
+  }
+  wbRenderDeal();
+}
+function wbDealAccept() { wbDealEnd(true); }
+function wbDealReject() { WB_STATE.deal.phase = 'eliminate'; wbRenderDeal(); }
+function wbDealEnd(tookDeal) {
+  var D = WB_STATE.deal;
+  var myWord = D.items[D.caseMap[D.myCase]];
+  D.finalResult = { deal: tookDeal, amount: tookDeal ? D.offerAmount : myWord.value, item: myWord };
+  D.phase = 'ended';
+  var par = D.items.reduce(function(a, b) { return a + b.value; }, 0) / D.items.length;
+  WB_STATE.results.push({ amount: D.finalResult.amount, won: D.finalResult.amount >= par });
+  wbRenderDeal();
+}
+function wbDealContinue() {
+  var s = WB_STATE;
+  s.ptIdx++;
+  if (s.ptIdx < s.playthroughs.length) { wbDealNewPlaythrough(); return; }
+  var totalAmount = s.results.reduce(function(a, r) { return a + r.amount; }, 0);
+  var wonCount = s.results.filter(function(r) { return r.won; }).length;
+  wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: s.isRemix,
+    scoreLabel: totalAmount.toLocaleString() + ' pts', passed: wonCount >= 1, missed: [],
+    failMsg: 'Beat the Scribe’s average on at least one scroll set to unlock the next round.' });
+}
+function wbRenderDeal() {
+  var s = WB_STATE, D = s.deal;
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Scroll set ' + (s.ptIdx + 1) + ' of ' + s.playthroughs.length + '</div></div>';
+  var html = '<div class="wb-q-box">';
+  if (D.phase === 'pick') {
+    html += '<div class="wb-q-text">Pick a scroll to keep. The other five will be opened to reveal what the primary source actually says.</div><div class="wb-case-grid">';
+    for (var i = 0; i < 6; i++) html += '<button class="wb-case" onclick="wbDealPickCase(' + i + ')">' + (i + 1) + '</button>';
+    html += '</div>';
+  } else {
+    html += '<div class="wb-case-grid">';
+    for (var j = 0; j < 6; j++) {
+      if (j === D.myCase) html += '<div class="wb-case mine">' + (j + 1) + '<span>Yours</span></div>';
+      else if (D.opened.indexOf(j) !== -1) html += '<div class="wb-case opened">' + (j + 1) + '</div>';
+      else html += '<button class="wb-case" onclick="wbDealOpenCase(' + j + ')" ' + (D.phase === 'offer' || D.phase === 'ended' ? 'disabled' : '') + '>' + (j + 1) + '</button>';
+    }
+    html += '</div>';
+    if (D.lastReveal) {
+      html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(D.lastReveal.label) + ' — ' + esc(D.lastReveal.src) + '</div>&ldquo;' + esc(D.lastReveal.reveal) + '&rdquo;' + (D.lastReveal.verdict ? ('<div style="margin-top:6px">' + esc(D.lastReveal.verdict) + '</div>') : '') + '</div>';
+    }
+    if (D.phase === 'offer') {
+      html += '<div class="wb-q-text" style="margin-top:12px">The Scribe offers <b>' + D.offerAmount.toLocaleString() + ' points</b> to stop here. Take it, or open another scroll?</div>' +
+        '<div class="wb-sort-row"><button class="wb-sort-btn primary" onclick="wbDealAccept()">Take the Offer</button><button class="wb-sort-btn claim" onclick="wbDealReject()">Keep Going</button></div>';
+    }
+    if (D.phase === 'ended') {
+      var R = D.finalResult;
+      html += '<div class="wb-q-text" style="margin-top:12px">' + (R.deal ? ('You took the offer: <b>' + R.amount.toLocaleString() + ' points</b>.') : 'You played to the end. Your scroll held:') + '</div>';
+      if (!R.deal) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(R.item.label) + '</div>&ldquo;' + esc(R.item.reveal) + '&rdquo;</div>';
+      html += '<button class="wb-next-btn" onclick="wbDealContinue()">' + (s.ptIdx + 1 < s.playthroughs.length ? 'Next scroll set' : 'See results') + '</button>';
+    }
+  }
+  html += '</div>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── THE IMPOSTER ────────────────────────────────────────────────────────────
+function wbBuildImposterSets(pool, count) {
+  var primaries = pool.filter(function(x) { return x.answer === 'primary'; });
+  var claims = pool.filter(function(x) { return x.answer === 'claim'; });
+  var sets = [];
+  for (var n = 0; n < count; n++) {
+    var majorityIsPrimary = Math.random() < 0.5;
+    var majPool = majorityIsPrimary ? primaries : claims;
+    var minPool = majorityIsPrimary ? claims : primaries;
+    if (majPool.length < 2 || !minPool.length) continue;
+    var maj2 = wbShuffle(majPool).slice(0, 2);
+    var imp = wbShuffle(minPool)[0];
+    var imposterIdx = Math.floor(Math.random() * 3);
+    var cards = []; var mi = 0;
+    for (var c = 0; c < 3; c++) cards.push(c === imposterIdx ? imp : maj2[mi++]);
+    sets.push({ cards: cards, imposterIdx: imposterIdx });
+  }
+  return sets;
+}
+function wbStartImposter(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var sets = wbBuildImposterSets(pool, 10);
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'imposter', tier: tier, totalTiers: totalTiers, isRemix: false, sets: sets, idx: 0, correct: 0, phase: 'guess', chosen: null, missed: [] };
+  wbRenderImposter();
+}
+function wbImposterGuess(slot) {
+  var s = WB_STATE;
+  var set = s.sets[s.idx];
+  if (s.phase !== 'guess') return;
+  s.chosen = slot;
+  s.phase = 'result';
+  if (slot === set.imposterIdx) s.correct++;
+  else s.missed.push({ gameId: s.gameId, item: { label: 'Spot the imposter', reveal: set.cards[set.imposterIdx].reveal, src: set.cards[set.imposterIdx].src } });
+  wbRenderImposter();
+}
+function wbImposterNext() {
+  var s = WB_STATE;
+  s.idx++; s.chosen = null; s.phase = 'guess';
+  if (s.idx >= s.sets.length) {
+    wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: s.isRemix,
+      scoreLabel: s.correct + '/' + s.sets.length, passed: s.correct >= 8, missed: s.missed,
+      failMsg: 'Score 8 of 10 to unlock the next round. Missed items will come back in the Remix Round.' });
+    return;
+  }
+  wbRenderImposter();
+}
+function wbRenderImposter() {
   var s = WB_STATE;
   var panel = document.getElementById('workbook-panel');
-  if (!s || !panel) return;
-  s.missed.forEach(function(m) { wbAddRemix(m); });
-  var mastered = false;
-  if (!s.isRemix && s.correct >= 8) {
-    var prevMastery = wbMastery(s.gameId);
-    if (s.tier >= prevMastery && s.tier < s.totalTiers - 1) { wbSetMastery(s.gameId, s.tier + 1); mastered = true; }
-    else if (s.tier >= prevMastery && s.tier >= s.totalTiers - 1) { wbSetMastery(s.gameId, s.totalTiers); }
+  if (!panel) return;
+  var set = s.sets[s.idx];
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Set ' + (s.idx + 1) + '/' + s.sets.length + ' · ' + s.correct + ' correct</div></div>';
+  var html = '<div class="wb-q-box"><div class="wb-q-text">Two of these three are manuscript-attested primary source. One is the institutional claim with no primary-source backing. Tap the imposter.</div><div class="wb-imposter-cards">';
+  set.cards.forEach(function(c, i) {
+    var cls = 'wb-imposter-card';
+    if (s.phase === 'result') {
+      cls += ' disabled';
+      if (i === set.imposterIdx) cls += ' imposter';
+      else if (i === s.chosen) cls += ' wrong-pick';
+    }
+    html += '<button class="' + cls + '" onclick="wbImposterGuess(' + i + ')">' + esc(c.statement) + '</button>';
+  });
+  html += '</div>';
+  if (s.phase === 'result') {
+    var imp = set.cards[set.imposterIdx];
+    html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(imp.src || '') + '</div>' + esc(imp.reveal || '') + '</div>';
   }
-  var msg;
-  if (s.isRemix) msg = 'Remix Round complete.';
-  else if (s.correct >= 8 && s.tier >= s.totalTiers - 1) msg = 'All rounds of ' + esc(s.gameTitle) + ' mastered.';
-  else if (s.correct >= 8) msg = mastered ? ('Round ' + (s.tier + 2) + ' unlocked.') : 'You’ve already cleared this round before — nice recall.';
-  else msg = 'Score 8 of 10 to unlock the next round. Missed items will come back in the Remix Round.';
-  panel.innerHTML = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
-    '<div class="wb-results"><div class="wb-results-score">' + s.correct + '/' + s.items.length + '</div>' +
-    '<div class="wb-results-label">' + esc(s.gameTitle) + '</div>' +
-    '<div class="wb-results-msg">' + esc(msg) + '</div></div>' +
-    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Quiz Games</button>';
+  html += '</div>';
+  if (s.phase === 'result') html += '<button class="wb-next-btn" onclick="wbImposterNext()">' + (s.idx + 1 >= s.sets.length ? 'See results' : 'Next') + '</button>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── CLUE GRID ───────────────────────────────────────────────────────────────
+function wbStartClue(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var start = tier * 10;
+  var boards = pool.slice(start, start + 10);
+  if (boards.length < 10) boards = boards.concat(wbShuffle(pool).slice(0, 10 - boards.length));
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'cluegrid', tier: tier, totalTiers: totalTiers, isRemix: false, boards: boards, idx: 0, correct: 0, missed: [] };
+  wbClueNewBoard();
+}
+function wbClueNewBoard() {
+  var s = WB_STATE;
+  var board = s.boards[s.idx];
+  s.clue = { tiles: board.tiles.map(function(t) { return { text: t.text, kind: t.kind, status: 'hidden' }; }), strikes: 0, phase: 'playing' };
+  wbRenderClue();
+}
+function wbClueGuess(tileIdx) {
+  var s = WB_STATE, C = s.clue;
+  if (C.phase !== 'playing') return;
+  var tile = C.tiles[tileIdx];
+  if (tile.status !== 'hidden') return;
+  var board = s.boards[s.idx];
+  if (tile.kind === 'match') { tile.status = 'match'; C.phase = 'won'; s.correct++; }
+  else if (tile.kind === 'trap') {
+    tile.status = 'trap'; C.phase = 'lost-trap';
+    s.missed.push({ gameId: s.gameId, item: { label: 'Clue Grid', reveal: board.reveal, src: board.clueHeb + ' (' + board.clueTranslit + ')' } });
+  } else {
+    tile.status = 'wrong'; C.strikes++;
+    if (C.strikes >= 3) {
+      C.phase = 'lost-strikes';
+      s.missed.push({ gameId: s.gameId, item: { label: 'Clue Grid', reveal: board.reveal, src: board.clueHeb + ' (' + board.clueTranslit + ')' } });
+    }
+  }
+  wbRenderClue();
+}
+function wbClueNext() {
+  var s = WB_STATE;
+  s.idx++;
+  if (s.idx >= s.boards.length) {
+    wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: s.isRemix,
+      scoreLabel: s.correct + '/' + s.boards.length, passed: s.correct >= 8, missed: s.missed,
+      failMsg: 'Clear 8 of 10 boards to unlock the next round. Missed boards will come back in the Remix Round.' });
+    return;
+  }
+  wbClueNewBoard();
+}
+function wbRenderClue() {
+  var s = WB_STATE, C = s.clue, board = s.boards[s.idx];
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var done = C.phase !== 'playing';
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">Clue ' + (s.idx + 1) + '/' + s.boards.length + ' · ' + s.correct + ' correct</div></div>';
+  var html = '<div class="wb-q-box"><div class="wb-clue-banner"><span class="wb-clue-label">CLUE</span><span class="wb-clue-word">' + esc(board.clueHeb) + ' (' + esc(board.clueTranslit) + ')</span></div>' +
+    '<div class="wb-q-text">Tap the tile that is this root’s true meaning. One tile is a trap — a real but wrong meaning from a different root.</div><div class="wb-clue-grid">';
+  C.tiles.forEach(function(t, i) {
+    var cls = 'wb-clue-tile'; var tag = '';
+    if (t.status === 'match') { cls += ' match'; tag = 'CORRECT'; }
+    else if (t.status === 'wrong') { cls += ' wrong'; tag = 'NOT A MATCH'; }
+    else if (t.status === 'trap') { cls += ' trap'; tag = 'TRAP'; }
+    else if (done && t.kind === 'match') { cls += ' missed'; tag = 'WAS THE MATCH'; }
+    var disabled = done || t.status !== 'hidden';
+    html += '<button class="' + cls + '" ' + (disabled ? 'disabled' : ('onclick="wbClueGuess(' + i + ')"')) + '>' + esc(t.text) + (tag ? ('<span class="wb-clue-tag">' + tag + '</span>') : '') + '</button>';
+  });
+  html += '</div>';
+  if (done) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(board.clueHeb) + ' (' + esc(board.clueTranslit) + ')</div>' + esc(board.reveal) + '</div>';
+  else html += '<div class="wb-round-prog" style="margin-top:8px">Strikes: ' + C.strikes + '/3</div>';
+  html += '</div>';
+  if (done) html += '<button class="wb-next-btn" onclick="wbClueNext()">' + (s.idx + 1 >= s.boards.length ? 'See results' : 'Next clue') + '</button>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── MEMORY MATCH ────────────────────────────────────────────────────────────
+function wbStartMemory(gameId, gameTitle, gameColor, tier, totalTiers, pool) {
+  var start = tier * 6;
+  var letters = pool.slice(start, start + 6);
+  if (letters.length < 6) letters = letters.concat(wbShuffle(pool).slice(0, 6 - letters.length));
+  var tiles = [];
+  letters.forEach(function(l, i) {
+    tiles.push({ pairIdx: i, kind: 'glyph', text: l.g, matched: false });
+    tiles.push({ pairIdx: i, kind: 'name', text: l.name, matched: false });
+  });
+  WB_STATE = { gameId: gameId, gameTitle: gameTitle, gameColor: gameColor, mechanic: 'memory', tier: tier, totalTiers: totalTiers, isRemix: false,
+    letters: letters, tiles: wbShuffle(tiles), flipped: [], mismatches: 0, matchedCount: 0, busy: false };
+  wbRenderMemory();
+}
+function wbMemoryFlip(i) {
+  var s = WB_STATE;
+  if (s.busy) return;
+  var t = s.tiles[i];
+  if (t.matched || s.flipped.indexOf(i) !== -1) return;
+  s.flipped.push(i);
+  if (s.flipped.length === 2) {
+    var a = s.tiles[s.flipped[0]], b = s.tiles[s.flipped[1]];
+    if (a.pairIdx === b.pairIdx && a.kind !== b.kind) {
+      a.matched = true; b.matched = true; s.matchedCount++;
+      s.flipped = [];
+      wbRenderMemory();
+      if (s.matchedCount === s.letters.length) setTimeout(wbMemoryFinish, 400);
+    } else {
+      s.mismatches++; s.busy = true;
+      wbRenderMemory();
+      setTimeout(function() { s.flipped = []; s.busy = false; wbRenderMemory(); }, 700);
+    }
+  } else {
+    wbRenderMemory();
+  }
+}
+function wbMemoryFinish() {
+  var s = WB_STATE;
+  wbFinishRound({ gameId: s.gameId, gameTitle: s.gameTitle, tier: s.tier, totalTiers: s.totalTiers, isRemix: s.isRemix,
+    scoreLabel: s.letters.length + '/' + s.letters.length + ' pairs, ' + s.mismatches + ' mismatch' + (s.mismatches === 1 ? '' : 'es'),
+    passed: s.mismatches <= s.letters.length, missed: [],
+    failMsg: 'Clear the board with ' + s.letters.length + ' or fewer mismatches to unlock the next round.' });
+}
+function wbRenderMemory() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var hdr = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr" style="border-top:3px solid ' + (s.gameColor || 'var(--gold)') + ';margin-top:0;padding-top:10px"><div class="wb-round-title">' + esc(s.gameTitle) + ' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers + '</div><div class="wb-round-prog">' + s.matchedCount + '/' + s.letters.length + ' matched · ' + s.mismatches + ' mismatches</div></div>';
+  var html = '<div class="wb-q-box"><div class="wb-q-text">Flip two tiles at a time. Match each paleo-Hebrew glyph to its name.</div><div class="wb-memory-grid">';
+  s.tiles.forEach(function(t, i) {
+    var faceUp = t.matched || s.flipped.indexOf(i) !== -1;
+    var cls = 'wb-memory-tile' + (t.matched ? ' matched' : '') + (faceUp ? ' face-up' : '');
+    html += '<button class="' + cls + '" onclick="wbMemoryFlip(' + i + ')" ' + (faceUp ? 'disabled' : '') + '>' + (faceUp ? esc(t.text) : '?') + '</button>';
+  });
+  html += '</div></div>';
+  panel.innerHTML = hdr + html;
+}
+
+// ── REMIX ROUND (uniform across mechanics) ─────────────────────────────────
+function wbStartRemix() {
+  var q = wbRemixQueue();
+  if (!q.length) return;
+  var items = q.slice(0, 10).map(function(e) { return e.item; });
+  wbClearRemix();
+  WB_STATE = { gameId: 'remix', gameTitle: 'Remix Round', mechanic: 'remix', idx: 0, items: items, revealed: false };
+  wbRenderRemix();
+}
+function wbRemixReveal() { WB_STATE.revealed = true; wbRenderRemix(); }
+function wbRemixNext() {
+  var s = WB_STATE;
+  s.idx++; s.revealed = false;
+  if (s.idx >= s.items.length) { renderWorkbookHome(); return; }
+  wbRenderRemix();
+}
+function wbRenderRemix() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var it = s.items[s.idx];
+  var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-round-hdr"><div class="wb-round-title">Remix Round</div><div class="wb-round-prog">' + (s.idx + 1) + '/' + s.items.length + '</div></div>' +
+    '<div class="wb-q-box"><div class="wb-q-text">' + esc(it.label || '') + '</div>';
+  if (s.revealed) html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(it.src || '') + '</div>' + esc(it.reveal || '') + '</div>';
+  html += '</div>';
+  html += s.revealed ? ('<button class="wb-next-btn" onclick="wbRemixNext()">' + (s.idx + 1 >= s.items.length ? 'Done' : 'Next') + '</button>') : '<button class="wb-next-btn" onclick="wbRemixReveal()">Show answer</button>';
+  panel.innerHTML = html;
 }
 
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
