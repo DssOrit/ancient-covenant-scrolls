@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_101",
-  "label": "Words of the Luminaries (Divrei HaMe\u2019orot) \u2014 Complete",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_101",
+  "label": "Words of the Luminaries (Divrei HaMe’orot) — Complete",
   "volume": 39,
-  "content_version": 1,
-  "summary_plain": "The Words of the Luminaries is a collection of prayers assigned to specific days of the week. Each prayer recalls YHWH\u2019s mighty acts in the history of Yisra\u2019el. The prayers for the Shabbat and for the weekdays invoke YHWH\u2019s covenant with Avraham, the deliverance from Mitzrayim, the giving of the Torah, and the promise of the land. The community confesses its sins and asks for YHWH\u2019s mercy. Remember your wonders of old. You chose Yisra\u2019el from all peoples. You established your covenant with our fathers. Do not abandon us among the nations.",
-  "summary_scholarly": "4QDibHam (4Q504-506 \u2014 Divrei HaMe\u2019orot, \u2018Words of the Luminaries\u2019) is a liturgical collection from Qumran Cave 4 assigning specific prayers to each day of the week. The title \u2018Luminaries\u2019 (me\u2019orot) likely refers to the celestial bodies that mark the days \u2014 connecting the prayer cycle to the creation calendar of Bereshit 1:14-18. The prayers are liturgical compositions that recite the salvation history of Yisra\u2019el: creation, the patriarchal promises, the exodus, Sinai, the conquest, and the exile. They include confession of communal sin and petitions for restoration. The prayers presuppose a community that understands itself as the continuation of the covenant people in exile, praying daily for the same restoration that the prophets promised.",
+  "content_version": 2,
+  "summary_plain": "The Words of the Luminaries is a collection of prayers assigned to specific days of the week. Each prayer recalls YHWH’s mighty acts in the history of Yisra’el. The prayers for the Shabbat and for the weekdays invoke YHWH’s covenant with Avraham, the deliverance from Mitzrayim, the giving of the Torah, and the promise of the land. The community confesses its sins and asks for YHWH’s mercy. Remember your wonders of old. You chose Yisra’el from all peoples. You established your covenant with our fathers. Do not abandon us among the nations.",
+  "summary_scholarly": "4QDibHam (4Q504-506 — Divrei HaMe’orot, ‘Words of the Luminaries’) is a liturgical collection from Qumran Cave 4 assigning specific prayers to each day of the week. The title ‘Luminaries’ (me’orot) likely refers to the celestial bodies that mark the days — connecting the prayer cycle to the creation calendar of Bereshit 1:14-18. The prayers are liturgical compositions that recite the salvation history of Yisra’el: creation, the patriarchal promises, the exodus, Sinai, the conquest, and the exile. They include confession of communal sin and petitions for restoration. The prayers presuppose a community that understands itself as the continuation of the covenant people in exile, praying daily for the same restoration that the prophets promised.",
   "key_terms": [
-    { "term": "Divrei HaMe\u2019orot", "phonetic": "Div-REI Ha-Meh-oh-ROHT", "definition": "Hebrew for \u2018Words of the Luminaries.\u2019 A Qumran prayer collection organized by the days of the week, each prayer recalling YHWH\u2019s covenant acts in the history of Yisra\u2019el. The \u2018luminaries\u2019 are the celestial bodies that mark time." },
-    { "term": "Me\u2019orot", "phonetic": "Meh-oh-ROHT", "definition": "Hebrew for \u2018luminaries\u2019 or \u2018lights.\u2019 In Bereshit 1:14-16, YHWH created the me\u2019orot to divide day from night and to mark seasons, days, and years. The prayer collection is named for these lights because the prayers follow the daily cycle they govern." }
+    {
+      "term": "Divrei HaMe'orot",
+      "phonetic": "div-REH ha-me-oh-ROT",
+      "definition": "Words of the Luminaries — 4QDibHam, a liturgical prayer text from Cave 4. Contains daily prayers for each day of the week, structured around the covenant history from creation through exile and return. The luminaries (sun, moon, stars) of the 364-day calendar frame the prayer cycle."
+    },
+    {
+      "term": "Daily Liturgical Prayer",
+      "phonetic": "",
+      "definition": "4QDibHam's distinctive feature: separate prayers for each day of the week. This is one of the earliest examples of a structured daily prayer cycle in the DSS corpus, anticipating the later Rabbinic Shacharit/Minchah/Ma'ariv structure but with a different framework."
+    },
+    {
+      "term": "Covenant History Framework",
+      "phonetic": "",
+      "definition": "The 4QDibHam prayers are organized around a recitation of YHWH's covenant acts: creation, the gift of the Torah, the exile, and the plea for restoration. Each prayer grounds its petition in YHWH's past faithfulness to the covenant people."
+    },
+    {
+      "term": "Vidui (Confession)",
+      "phonetic": "vi-DOO-ee",
+      "definition": "Confession — a central element of 4QDibHam. The prayers include communal confession of sin: 'we have been wicked, we have transgressed your covenant.' This confession grounds the prayer's petition for restoration in honest covenant accounting."
+    },
+    {
+      "term": "Exile and Restoration",
+      "phonetic": "",
+      "definition": "The 4QDibHam prayers are saturated with exile theology: the people's sin brought exile; YHWH's faithfulness grounds the hope for restoration. The community prays from within what they understood as a continuing exile — the return from Babylon was incomplete; the true restoration was still awaited."
+    },
+    {
+      "term": "364-Day Calendar Frame",
+      "phonetic": "",
+      "definition": "The structure of 4QDibHam is tied to the Qumran solar calendar — the daily prayers cycle through the week of a 364-day year. The luminaries in the title refer to the fixed, predictable solar calendar bodies that govern the covenant's appointed times."
+    },
+    {
+      "term": "YHWH's Covenant Faithfulness",
+      "phonetic": "",
+      "definition": "The theological core of 4QDibHam: YHWH does not abandon the covenant despite the people's unfaithfulness. Each prayer appeals to this faithfulness as the basis for petition. The community understood its own existence as evidence of YHWH's ongoing covenant loyalty."
+    },
+    {
+      "term": "4Q504-4Q506",
+      "phonetic": "",
+      "definition": "The Cave 4 manuscript designations for Divrei HaMe'orot — three overlapping manuscripts that together preserve the text. 4Q504 is the most complete; 4Q505 and 4Q506 are more fragmentary."
+    },
+    {
+      "term": "Communal Voice",
+      "phonetic": "",
+      "definition": "4QDibHam prays in the first-person plural throughout — 'we have sinned,' 'you chose us,' 'do not abandon us.' This communal voice distinguishes it from the individual Maskil's hymn in 1QS cols 10-11. These are community prayers, not individual declarations."
+    },
+    {
+      "term": "Adoni / YHWH Address",
+      "phonetic": "",
+      "definition": "4QDibHam addresses YHWH directly — the prayers open with direct address to YHWH. The covenant name governs the entire prayer framework. No substitute titles are used as the primary address."
+    }
   ],
   "fill_blank": [
-    { "ref": "Fragment 1-2, Col V", "prompt": "Remember your wonders of old, and the signs and portents that you performed in ______.", "answer": "Mitzrayim", "source_quote": "Remember your wonders of old, and the signs and portents that you performed in Mitzrayim." },
-    { "ref": "Fragment 1-2, Col VI", "prompt": "You chose Yisra\u2019el from all ______ and established your covenant with our fathers.", "answer": "peoples", "source_quote": "You chose Yisra\u2019el from all peoples and established your covenant with our fathers." }
+    {
+      "ref": "4QDibHam frag.1-2",
+      "prompt": "The Divrei HaMe'orot contains daily prayers for each ___ of the week.",
+      "answer": "day",
+      "source_quote": "4QDibHam organizes prayers by day of the week — a separate prayer for each of the seven days. — 4Q504"
+    },
+    {
+      "ref": "4QDibHam",
+      "prompt": "The title 'Words of the Luminaries' connects the prayer cycle to the ___ calendar's solar bodies.",
+      "answer": "364-day / solar",
+      "source_quote": "The luminaries of the title refer to the solar calendar bodies governing the covenant's appointed times."
+    },
+    {
+      "ref": "4QDibHam frag.1-2",
+      "prompt": "The prayers in 4QDibHam include communal ___ of sin: 'we have been wicked, we have transgressed your covenant.'",
+      "answer": "confession",
+      "source_quote": "We have been wicked, we have transgressed your covenant. — 4QDibHam (4Q504 frag.1-2)"
+    },
+    {
+      "ref": "4QDibHam",
+      "prompt": "4QDibHam was found in manuscripts ___ through 4Q506 in Cave 4.",
+      "answer": "4Q504",
+      "source_quote": "4QDibHam preserved in 4Q504-4Q506 from Cave 4."
+    },
+    {
+      "ref": "4QDibHam frag.4",
+      "prompt": "The prayers appeal to YHWH's covenant ___ as the ground for petition even after the people's sin.",
+      "answer": "faithfulness",
+      "source_quote": "Remember your covenant faithfulness, do not abandon us. — 4QDibHam (4Q504 frag.4)"
+    },
+    {
+      "ref": "4QDibHam",
+      "prompt": "4QDibHam prays in the first-person ___, distinguishing it from individual declarations like the Maskil's hymn.",
+      "answer": "plural / communal voice",
+      "source_quote": "We have sinned... you chose us... do not abandon us. — 4QDibHam throughout"
+    },
+    {
+      "ref": "4QDibHam",
+      "prompt": "The covenant history recited in 4QDibHam moves from creation through the Torah's gift through ___ and hoped-for restoration.",
+      "answer": "exile",
+      "source_quote": "4QDibHam organizes around covenant history: creation, Torah, exile, restoration plea."
+    },
+    {
+      "ref": "4QDibHam frag.1-2",
+      "prompt": "The community in 4QDibHam understands itself as still in a form of ___ — the true restoration not yet complete.",
+      "answer": "exile",
+      "source_quote": "The return from Babylon was incomplete; the true restoration was still awaited. — 4QDibHam exile theology"
+    },
+    {
+      "ref": "4QDibHam frag.3",
+      "prompt": "YHWH is praised in 4QDibHam for choosing the covenant people from among all the ___ of the earth.",
+      "answer": "nations / peoples",
+      "source_quote": "You chose us from among all the peoples of the earth. — 4QDibHam (4Q504 frag.3)"
+    },
+    {
+      "ref": "4QDibHam",
+      "prompt": "4QDibHam is one of the earliest examples of a structured ___ prayer cycle in the DSS corpus.",
+      "answer": "daily / daily liturgical",
+      "source_quote": "4QDibHam — one of the earliest structured daily prayer cycles found among the DSS."
+    }
   ],
   "multiple_choice": [
-    { "ref": "4Q504", "question": "How are the prayers in the Words of the Luminaries organized?", "options": ["By the festivals of the year", "By the days of the week", "By the months of the year", "By the jubilee cycles"], "correct": 1, "source_quote": "The Words of the Luminaries assigns specific prayers to specific days of the week." },
-    { "ref": "4Q504 Fragment 1-2", "question": "What historical events do the prayers of the Luminaries recall?", "options": ["Only the creation account", "The covenant with Avraham, the deliverance from Mitzrayim, and the giving of the Torah", "Only the destruction of the Temple", "Events from the Greek period only"], "correct": 1, "source_quote": "The prayers recite the salvation history of Yisra\u2019el: creation, the patriarchal promises, the exodus, Sinai, the conquest, and the exile." }
+    {
+      "ref": "4QDibHam",
+      "question": "What does 'Divrei HaMe'orot' mean?",
+      "options": [
+        "Words of the Holy Ones",
+        "Words of the Luminaries",
+        "Songs of the Covenant",
+        "Prayers of the Teacher"
+      ],
+      "correct": 1,
+      "source_quote": "Divrei HaMe'orot — Words of the Luminaries. — 4QDibHam title"
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "How is 4QDibHam structured?",
+      "options": [
+        "By festival cycle — one prayer per feast",
+        "By day of the week — a separate prayer for each of the seven days",
+        "By covenant covenant tier — one prayer per community rank",
+        "By prophet — prayers derived from each major prophet"
+      ],
+      "correct": 1,
+      "source_quote": "4QDibHam organizes prayers by day of the week. — 4Q504"
+    },
+    {
+      "ref": "4QDibHam frag.1-2",
+      "question": "What element of prayer is central in 4QDibHam?",
+      "options": [
+        "Thanksgiving for military victory",
+        "Communal confession of sin and covenant transgression",
+        "Individual petitions for healing",
+        "Praise for the Jerusalem Temple"
+      ],
+      "correct": 1,
+      "source_quote": "We have been wicked, we have transgressed your covenant. — 4QDibHam (4Q504 frag.1-2)"
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "What cave manuscripts preserve 4QDibHam?",
+      "options": [
+        "1Q28a-b",
+        "4Q504-4Q506",
+        "11Q5-11Q6",
+        "4Q394-4Q399"
+      ],
+      "correct": 1,
+      "source_quote": "4QDibHam preserved in 4Q504-4Q506 from Cave 4."
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "In what voice does 4QDibHam pray?",
+      "options": [
+        "Third person — describing the community from outside",
+        "Second person — the Teacher's address to the community",
+        "First person singular — individual petitions",
+        "First person plural — communal 'we' throughout"
+      ],
+      "correct": 3,
+      "source_quote": "We have sinned... you chose us... do not abandon us. — 4QDibHam throughout"
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "What theological history does 4QDibHam recite?",
+      "options": [
+        "The creation of the angels and their hierarchy",
+        "Covenant history: creation, Torah, exile, and plea for restoration",
+        "The wars of the Sons of Light against the Kittim",
+        "The founding of the Qumran community"
+      ],
+      "correct": 1,
+      "source_quote": "4QDibHam organizes around covenant history: creation, Torah, exile, restoration plea."
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "What does the 'luminary' framing of 4QDibHam connect to?",
+      "options": [
+        "The angelic hierarchy of the Shirot",
+        "The 364-day solar calendar's fixed cycle",
+        "The seven branched menorah of the Temple",
+        "The seven seals of the final battle"
+      ],
+      "correct": 1,
+      "source_quote": "The luminaries refer to the solar calendar bodies governing the covenant's appointed times."
+    },
+    {
+      "ref": "4QDibHam frag.4",
+      "question": "On what basis does 4QDibHam petition YHWH for restoration?",
+      "options": [
+        "The community's own righteousness",
+        "YHWH's covenant faithfulness despite the people's sin",
+        "The intercession of the Teacher of Righteousness",
+        "The sacrifice of the community's property"
+      ],
+      "correct": 1,
+      "source_quote": "Remember your covenant faithfulness, do not abandon us. — 4QDibHam (4Q504 frag.4)"
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "How does the exile theology of 4QDibHam differ from mainstream post-exilic view?",
+      "options": [
+        "The community believed Babylon was still the present empire",
+        "The community understood the true restoration as still incomplete — the return was inadequate",
+        "The community rejected any connection between sin and exile",
+        "The community believed exile had ended with Ezra's return"
+      ],
+      "correct": 1,
+      "source_quote": "The community prays from within continuing exile — the true restoration still awaited. — 4QDibHam exile theology"
+    },
+    {
+      "ref": "4QDibHam",
+      "question": "What makes 4QDibHam historically significant for Jewish liturgy?",
+      "options": [
+        "It contains the oldest known version of the Amidah",
+        "It is one of the earliest structured daily prayer cycles in the DSS corpus",
+        "It preserves the Temple's daily burnt-offering liturgy verbatim",
+        "It documents the Qumran community's hymns for Yom Kippur"
+      ],
+      "correct": 1,
+      "source_quote": "4QDibHam — one of the earliest structured daily prayer cycles found among the DSS."
+    }
   ],
   "faq": [
     {
-      "question": "What does the daily prayer cycle in the Words of the Luminaries reveal about Qumran practice?",
-      "answer": "The Words of the Luminaries assigns specific prayers to each day of the week, tied to the celestial luminaries that YHWH created to mark time (Bereshit 1:14). This is not spontaneous prayer \u2014 it is a structured liturgical cycle embedded in the creation calendar. The community prayed specific words on specific days, reciting the history of YHWH\u2019s covenant acts. This practice predates and is independent of the later rabbinic prayer cycle (the Amidah and its daily structure). The Great Eraser has presented rabbinic liturgy as the sole heir to Second Temple worship. The Words of the Luminaries proves that an alternative prayer tradition existed \u2014 one rooted directly in the creation calendar rather than in post-destruction rabbinic reconstruction."
+      "question": "What is 4QDibHam (Divrei HaMe'orot)?",
+      "answer": "Divrei HaMe'orot — Words of the Luminaries — is a liturgical prayer text from Cave 4 (manuscripts 4Q504-4Q506). It contains daily prayers structured for each day of the week, making it one of the earliest known examples of a weekly daily prayer cycle in any ancient Jewish text. The prayers are organized around a recitation of covenant history — creation, the Torah's gift, exile, and the plea for restoration — and include communal confession of sin alongside appeals to YHWH's covenant faithfulness."
     },
     {
-      "question": "Why does this prayer collection petition YHWH not to abandon Yisra\u2019el among the nations?",
-      "answer": "The petition \u2018do not abandon us among the nations\u2019 reveals a community that understood itself as already scattered. They prayed this prayer daily \u2014 not as a hypothetical fear but as a present reality. The covenant people were among the nations. The prayer asks YHWH to remember the covenant with Avraham, the deliverance from Mitzrayim, and the giving of the Torah \u2014 precisely because these memories are what the scattering threatens to erase. The Great Eraser operates through the passage of time: each generation in exile is further from the primary events, and the prayer of remembrance is the countermeasure. The Words of the Luminaries is a daily act of resistance against forgetting \u2014 a structured recitation of identity that prevents the exile from becoming permanent."
+      "question": "Why is 4QDibHam called 'Words of the Luminaries'?",
+      "answer": "The 'luminaries' refer to the sun, moon, and stars — the fixed bodies that govern the 364-day solar calendar. The prayer cycle is tied to this calendar's structure, moving through the days of the week as the solar bodies move through their fixed courses. The title connects liturgical practice to the covenant calendar: proper prayer, like proper festival observance, is inseparable from the right calendar."
+    },
+    {
+      "question": "What is the exile theology in 4QDibHam?",
+      "answer": "The 4QDibHam prayers understand the community as still living in a form of exile — not geographically in Babylon, but in a situation of incomplete restoration. The return from Babylon under Ezra and Nehemiah was real but insufficient; the full covenant restoration — YHWH's presence truly dwelling among the people, the legitimate priesthood functioning, the proper calendar observed — had not yet occurred. The prayers plead for this complete restoration while confessing the sins that caused the original exile."
+    },
+    {
+      "question": "How does the communal confession in 4QDibHam work?",
+      "answer": "The confession (vidui) is a core element of each prayer: 'we have been wicked, we have transgressed your covenant.' This is communal, not individual — the entire covenant community confesses collectively. This collective accountability means no one stands outside the community's moral reckoning. The confession is not self-condemnation but covenant discipline — honest accounting before YHWH that grounds the subsequent petition for restoration."
+    },
+    {
+      "question": "How does 4QDibHam relate to later Jewish daily prayer?",
+      "answer": "4QDibHam is one of the earliest known structured daily prayer cycles — it anticipates the later Rabbinic framework of daily prayer (Shacharit/Minchah/Ma'ariv) but with a different structure: organized by day of the week rather than time of day, and saturated with covenant-historical recitation. The existence of 4QDibHam shows that structured daily prayer was developing in the DSS period, well before the Rabbinic codification of prayer forms after 70 CE."
+    },
+    {
+      "question": "What does 4QDibHam say about YHWH's choice of the covenant people?",
+      "answer": "Several prayers in 4QDibHam affirm YHWH's election of the covenant people from among all the nations of the earth — a core covenant identity claim. This election is not based on the people's merit (the prayers simultaneously confess sin) but on YHWH's own sovereign faithfulness. The community's confidence in being heard is grounded entirely in YHWH's covenant loyalty, not in their own record."
+    },
+    {
+      "question": "How does 4QDibHam connect to the broader DSS prayer tradition?",
+      "answer": "4QDibHam is part of a cluster of DSS liturgical texts that show the community had a rich prayer life parallel to their scriptural study. Other related texts include the Daily Prayers (4Q503), the Festival Prayers (4Q507-509), and the Psalms scrolls. Together they document a community for whom prayer was as central as Torah study and correct purity practice — a three-part covenant life of study, purity, and prayer."
+    },
+    {
+      "question": "What does the daily prayer structure of 4QDibHam reveal about the community's calendar?",
+      "answer": "The seven-day structure of 4QDibHam's prayer cycle is inseparable from the 364-day solar calendar — a year that divides exactly into 52 complete weeks, so festivals always fall on fixed weekdays. Each day of the week has its own prayer, just as each day has its fixed place in the solar calendar's structure. The regularity of the calendar enables the regularity of the prayer cycle — a connection the community understood as deliberate covenant design."
+    },
+    {
+      "question": "How does 4QDibHam's theology differ from the Psalms of Tehillim?",
+      "answer": "While 4QDibHam shares Tehillim's pattern of praise and petition, it has a more systematic covenant-historical structure — each prayer works through the arc of YHWH's covenant acts before petitioning. Tehillim's psalms are often more situational or emotionally immediate. 4QDibHam is liturgically structured for weekly recitation as a community exercise in covenant memory and petition. It is a community prayer manual, not a personal devotional collection."
+    },
+    {
+      "question": "What role does confession play in 4QDibHam's prayer theology?",
+      "answer": "Confession in 4QDibHam is not shameful self-condemnation but honest covenant accounting — the prerequisite for legitimate petition. The logic: YHWH knows the community's sin; acknowledging it plainly ('we have transgressed your covenant') honors both YHWH's knowledge and the covenant's accountability structure. Only after this honest reckoning can the petition be grounded in YHWH's faithfulness rather than the community's merit. This prevents the kind of hollow petition that claims YHWH's favor without acknowledging covenant reality."
     }
   ]
 }

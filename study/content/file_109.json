@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_109",
-  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) \u2014 Part 1 \u2014 Col 1\u201322",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_109",
+  "label": "Temple Scroll 11Q19 (Megillat HaMikdash) — Part 1 — Col 1–22",
   "volume": 46,
-  "content_version": 1,
-  "summary_plain": "The Temple Scroll is the longest of the Dead Sea Scrolls. YHWH speaks in the first person \u2014 I will consecrate my Temple, I will dwell among them forever. The scroll describes an ideal Temple with three concentric courts: the inner court for priests, the middle court for males over twenty, and the outer court for all Yisra\u2019el. Detailed instructions are given for the altar, the laver, the stairhouse, and the chambers. The festival calendar prescribes additional festivals not found in the Masoretic Torah: a Festival of New Wine, a Festival of New Oil, and a Festival of Wood Offering. The text rewrites Devarim as direct divine speech.",
-  "summary_scholarly": "The Temple Scroll (11Q19 \u2014 Megillat HaMikdash) was acquired from Bethlehem antiquities dealers and is the longest Dead Sea Scroll at over 8 meters. It was edited by Yigael Yadin and published in 1977. Columns 1-22 cover the festival calendar and the inner Temple architecture. The scroll\u2019s most distinctive feature is its first-person divine voice: where the Torah reports YHWH\u2019s speech through Moshe (\u2018YHWH said to Moshe\u2019), the Temple Scroll presents YHWH speaking directly (\u2018I will dwell among them\u2019). The additional festivals (New Wine, New Oil, Wood Offering) are attested in Yovelim (Jubilees) and the 364-day calendar texts, confirming the Temple Scroll\u2019s connection to the broader Qumran calendar tradition. The three-court Temple design differs significantly from both the Solomonic Temple and the Second Temple.",
+  "content_version": 2,
+  "summary_plain": "The Temple Scroll is the longest of the Dead Sea Scrolls. YHWH speaks in the first person — I will consecrate my Temple, I will dwell among them forever. The scroll describes an ideal Temple with three concentric courts: the inner court for priests, the middle court for males over twenty, and the outer court for all Yisra’el. Detailed instructions are given for the altar, the laver, the stairhouse, and the chambers. The festival calendar prescribes additional festivals not found in the Masoretic Torah: a Festival of New Wine, a Festival of New Oil, and a Festival of Wood Offering. The text rewrites Devarim as direct divine speech.",
+  "summary_scholarly": "The Temple Scroll (11Q19 — Megillat HaMikdash) was acquired from Bethlehem antiquities dealers and is the longest Dead Sea Scroll at over 8 meters. It was edited by Yigael Yadin and published in 1977. Columns 1-22 cover the festival calendar and the inner Temple architecture. The scroll’s most distinctive feature is its first-person divine voice: where the Torah reports YHWH’s speech through Moshe (‘YHWH said to Moshe’), the Temple Scroll presents YHWH speaking directly (‘I will dwell among them’). The additional festivals (New Wine, New Oil, Wood Offering) are attested in Yovelim (Jubilees) and the 364-day calendar texts, confirming the Temple Scroll’s connection to the broader Qumran calendar tradition. The three-court Temple design differs significantly from both the Solomonic Temple and the Second Temple.",
   "key_terms": [
-    { "term": "Megillat HaMikdash", "phonetic": "Meh-gee-LAHT Ha-Mik-DAHSH", "definition": "Hebrew for \u2018Scroll of the Temple.\u2019 The longest Dead Sea Scroll, presenting YHWH\u2019s direct instructions for an ideal Temple with three concentric courts and an expanded festival calendar." },
-    { "term": "Three Courts", "phonetic": "", "definition": "The Temple Scroll prescribes three concentric courts: the inner court for priests and Levites, the middle court for males of Yisra\u2019el over twenty years old, and the outer court for all Yisra\u2019el including women and children. This design has no parallel in other Temple descriptions." }
+    {
+      "term": "Megillat HaMikdash",
+      "phonetic": "me-gi-LAT ha-mik-DASH",
+      "definition": "Temple Scroll — 11Q19, the longest of all the Dead Sea Scrolls (8.6 meters when unrolled). Found in Cave 11. Contains YHWH's direct address to Moshe describing the ideal Temple architecture, festival calendar, laws of purity, and the statutes of the king. Part 1 (cols 1-22) covers the Temple's sacred architecture."
+    },
+    {
+      "term": "11Q19",
+      "phonetic": "",
+      "definition": "The official Cave 11 manuscript designation for the Temple Scroll — the longest DSS text. Yigael Yadin purchased it from an antiquities dealer in 1967 and published it in 1977. A second copy (11Q20) also exists but is more fragmentary."
+    },
+    {
+      "term": "YHWH's Direct Speech",
+      "phonetic": "",
+      "definition": "The Temple Scroll's distinctive literary feature: unlike all other DSS texts that quote or comment on the Torah, the Temple Scroll presents itself as YHWH speaking directly to Moshe — 'I command you to build my sanctuary.' This rewriting positions the scroll as equivalent in authority to the Torah itself."
+    },
+    {
+      "term": "Tripartite Temple Courts",
+      "phonetic": "",
+      "definition": "The Temple Scroll describes three concentric courts around the central sanctuary: the innermost court (priests), the middle court (Levites and Yisra'elite males), and the outer court (women, resident aliens, those under purification). This structure creates a graduated holiness map around YHWH's presence."
+    },
+    {
+      "term": "Inner Court Dimensions",
+      "phonetic": "",
+      "definition": "The Temple Scroll specifies precise measurements for the inner court and Temple buildings — dimensions, materials, doorways, columns, and gates. The architectural precision reflects the community's belief that YHWH gave Moshe the exact measurements for his dwelling place."
+    },
+    {
+      "term": "Four Gates of the Inner Court",
+      "phonetic": "",
+      "definition": "The inner court of the Temple Scroll has four gates named for the sons of Levi, Yehudah, Yosef, and Reuven — the twelve-tribe gate arrangement that organizes the sacred space by covenant lineage."
+    },
+    {
+      "term": "Twelve-Tribe Gate Arrangement",
+      "phonetic": "",
+      "definition": "The Temple Scroll organizes the Temple courts' gates by the twelve tribes of Yisra'el — each tribe has its assigned gate and position around the Temple. This arrangement maps the entire covenant community's identity onto the sacred architecture."
+    },
+    {
+      "term": "Sanctuary (Miqdash)",
+      "phonetic": "mik-DASH",
+      "definition": "The central sanctuary of the Temple Scroll — the dwelling place of YHWH. The scroll describes its dimensions, its furnishings, its altar, and its inner structure. The Miqdash is the theological center around which all the Temple courts and their purity regulations are organized."
+    },
+    {
+      "term": "Yigael Yadin",
+      "phonetic": "yi-GA-el ya-DEEN",
+      "definition": "The Israeli archaeologist and general who purchased the Temple Scroll from an antiquities dealer after the 1967 Six-Day War. He published the definitive edition in 1977. The scroll had been in private hands for two decades after its discovery."
+    },
+    {
+      "term": "Staircase Towers",
+      "phonetic": "",
+      "definition": "The Temple Scroll's inner court is flanked by staircase towers at the corners — a distinctive architectural element described in cols 5-13 that is not found in Yehezkel's temple vision. The Temple Scroll envisions a more elaborate structure than any previous biblical description."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col XXIX:8-10", "prompt": "I will consecrate my Temple with my ______, for I will cause my ______ to dwell upon it until the day of creation.", "answer": "glory", "source_quote": "I will consecrate my Temple with my glory, for I will cause my glory to dwell upon it until the day of creation." },
-    { "ref": "Col XIX-XXI", "prompt": "The Temple Scroll prescribes additional festivals not in the Masoretic Torah: a Festival of New Wine, a Festival of New Oil, and a Festival of ______.", "answer": "Wood Offering", "source_quote": "The festival calendar prescribes a Festival of New Wine, a Festival of New Oil, and a Festival of Wood Offering." }
+    {
+      "ref": "11Q19 col.3-13",
+      "prompt": "The Temple Scroll is unique among DSS texts because YHWH speaks ___ to Moshe — 'I command you to build my sanctuary.'",
+      "answer": "directly",
+      "source_quote": "I will sanctify my sanctuary with my glory... I command you to build a sanctuary for me. — 11Q19 col.III-IV"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll is the ___ of all the Dead Sea Scrolls — 8.6 meters unrolled.",
+      "answer": "longest",
+      "source_quote": "11Q19 — the longest DSS text at 8.6 meters. — Temple Scroll"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll was purchased from an antiquities dealer by ___ after the 1967 Six-Day War.",
+      "answer": "Yigael Yadin",
+      "source_quote": "Yigael Yadin purchased the Temple Scroll from an antiquities dealer in 1967."
+    },
+    {
+      "ref": "11Q19 cols 5-13",
+      "prompt": "The inner court of the Temple Scroll is flanked by ___ towers at the corners — not found in Yehezkel's vision.",
+      "answer": "staircase",
+      "source_quote": "Staircase towers at the corners of the inner court. — 11Q19 cols 5-13"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll describes ___ concentric courts around the central sanctuary, creating a graduated holiness map.",
+      "answer": "three",
+      "source_quote": "Three concentric courts: inner (priests), middle (Levites/males), outer (women, aliens, purifying). — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.11-13",
+      "prompt": "The gates of the inner court are named for the sons of Levi, Yehudah, ___, and Reuven.",
+      "answer": "Yosef",
+      "source_quote": "Four gates named for Levi, Yehudah, Yosef, Reuven. — 11Q19 col.XI-XIII"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The ___ arrangement maps the entire covenant community's identity onto the Temple's sacred architecture.",
+      "answer": "twelve-tribe gate",
+      "source_quote": "Twelve-tribe gate arrangement — each tribe has its gate. — 11Q19"
+    },
+    {
+      "ref": "11Q19",
+      "prompt": "The Temple Scroll's Cave 11 designation is ___, with a second fragmentary copy at 11Q20.",
+      "answer": "11Q19",
+      "source_quote": "11Q19 — official Cave 11 designation. Second copy: 11Q20."
+    },
+    {
+      "ref": "11Q19 col.3-4",
+      "prompt": "The Temple Scroll positions itself as equivalent in authority to the Torah by using ___ direct speech.",
+      "answer": "YHWH / first-person",
+      "source_quote": "YHWH speaks directly to Moshe — 'I command you.' — 11Q19 col.III-IV"
+    },
+    {
+      "ref": "11Q19 col.3-13",
+      "prompt": "The innermost court of the Temple Scroll is designated for the ___, the middle court for Levites and Yisra'elite males.",
+      "answer": "priests",
+      "source_quote": "Three courts: innermost — priests; middle — Levites and male Yisra'elites; outer — others. — 11Q19"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col XXIX", "question": "How does YHWH speak in the Temple Scroll?", "options": ["Through Moshe as intermediary", "Through angels", "In the first person directly: \u2018I will dwell among them\u2019", "Through the Teacher of Righteousness"], "correct": 2, "source_quote": "YHWH speaks in the first person: I will consecrate my Temple, I will dwell among them forever." },
-    { "ref": "Col XIX-XXI", "question": "What festivals does the Temple Scroll add beyond the Masoretic Torah?", "options": ["Purim and Hanukkah", "Festival of New Wine, Festival of New Oil, and Festival of Wood Offering", "Festival of Lights and Festival of Lots", "No additional festivals"], "correct": 1, "source_quote": "The festival calendar prescribes additional festivals: a Festival of New Wine, a Festival of New Oil, and a Festival of Wood Offering." }
+    {
+      "ref": "11Q19",
+      "question": "What is distinctive about the Temple Scroll's literary style?",
+      "options": [
+        "It quotes Yekhezkel's vision of the future temple",
+        "YHWH speaks directly to Moshe — 'I command you to build my sanctuary'",
+        "It is written in Aramaic rather than Hebrew",
+        "It presents the community's leader giving instructions"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH speaks directly to Moshe in the Temple Scroll — 'I command you.' — 11Q19 col.III-IV"
+    },
+    {
+      "ref": "11Q19",
+      "question": "How long is the Temple Scroll when unrolled?",
+      "options": [
+        "3 meters",
+        "5.5 meters",
+        "8.6 meters",
+        "12 meters"
+      ],
+      "correct": 2,
+      "source_quote": "11Q19 — 8.6 meters unrolled, the longest DSS text."
+    },
+    {
+      "ref": "11Q19",
+      "question": "Who acquired the Temple Scroll and published it?",
+      "options": [
+        "Eleazar Sukenik, who bought Cave 1 scrolls",
+        "Roland de Vaux, who excavated Qumran",
+        "Yigael Yadin, who published it in 1977",
+        "John Allegro, who published Cave 4 fragments"
+      ],
+      "correct": 2,
+      "source_quote": "Yigael Yadin purchased the Temple Scroll in 1967 and published it in 1977."
+    },
+    {
+      "ref": "11Q19 col.3-13",
+      "question": "How many concentric courts does the Temple Scroll describe?",
+      "options": [
+        "One — the sanctuary only",
+        "Two — inner and outer",
+        "Three — inner, middle, outer",
+        "Seven — corresponding to the heavenly structure"
+      ],
+      "correct": 2,
+      "source_quote": "Three concentric courts around the central sanctuary. — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.11-13",
+      "question": "How are the inner court gates organized?",
+      "options": [
+        "By the four cardinal directions only",
+        "By the names of the twelve tribes",
+        "By the four priestly courses",
+        "By the four seasons of the solar calendar"
+      ],
+      "correct": 1,
+      "source_quote": "Gates named for the tribes — twelve-tribe gate arrangement. — 11Q19 col.XI-XIII"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What cave did the Temple Scroll come from?",
+      "options": [
+        "Cave 1",
+        "Cave 4",
+        "Cave 11",
+        "Cave 3"
+      ],
+      "correct": 2,
+      "source_quote": "11Q19 — Cave 11."
+    },
+    {
+      "ref": "11Q19",
+      "question": "Who is permitted in the innermost court according to the Temple Scroll?",
+      "options": [
+        "All Yisra'elite males who have been purified",
+        "Women, Levites, and priests together",
+        "Priests only",
+        "The Teacher of Righteousness and his council"
+      ],
+      "correct": 2,
+      "source_quote": "Innermost court — priests only. — 11Q19"
+    },
+    {
+      "ref": "11Q19 col.5-13",
+      "question": "What architectural feature of the Temple Scroll's inner court is not found in Yehezkel's vision?",
+      "options": [
+        "The central altar",
+        "Staircase towers at the corners",
+        "The four gates",
+        "The bronze sea"
+      ],
+      "correct": 1,
+      "source_quote": "Staircase towers — not in Yehezkel's vision. — 11Q19 col.V-XIII"
+    },
+    {
+      "ref": "11Q19",
+      "question": "What does the Temple Scroll's direct YHWH speech claim for the scroll's authority?",
+      "options": [
+        "That it is a commentary on the Torah, subordinate to it",
+        "That it is equivalent in authority to the Torah itself",
+        "That it overrides the Torah where they conflict",
+        "That it is a later revision of Yehezkel's Temple vision"
+      ],
+      "correct": 1,
+      "source_quote": "YHWH speaks directly — positioning the scroll as equivalent in authority to the Torah. — 11Q19 col.III"
+    },
+    {
+      "ref": "11Q19",
+      "question": "Who occupies the outer court in the Temple Scroll's tripartite arrangement?",
+      "options": [
+        "Priests and Levites together",
+        "Only the high priest and his deputy",
+        "Women, resident aliens, and those under purification",
+        "Gentile converts on pilgrimage"
+      ],
+      "correct": 2,
+      "source_quote": "Outer court — women, resident aliens, those under purification. — 11Q19"
+    }
   ],
   "faq": [
     {
-      "question": "Why does the Temple Scroll present an alternative Temple design?",
-      "answer": "The Temple Scroll describes a Temple that differs from both the Solomonic Temple and the Second Temple that stood in Yerushalayim. It has three concentric courts instead of two, an expanded festival calendar, and additional architectural features. The scroll presents this design as YHWH\u2019s direct command \u2014 spoken in the first person, not mediated through Moshe. The implication is that the existing Temple in Yerushalayim was not built according to YHWH\u2019s actual instructions. The Great Eraser has presented the Second Temple (and later the synagogue and church) as the definitive worship structures. The Temple Scroll preserves an alternative architectural vision that claims direct divine authority. It raises the question: if the institution deviates from the original blueprint, is it the institution or the blueprint that has authority?"
+      "question": "What is the Temple Scroll?",
+      "answer": "The Temple Scroll (Megillat HaMikdash, 11Q19) is the longest of all the Dead Sea Scrolls — 8.6 meters when unrolled. Found in Cave 11, it was purchased by Israeli archaeologist Yigael Yadin in 1967 and published in 1977. It describes YHWH's ideal Temple: the architecture, courts, gates, purity laws, festival calendar, and statutes of the king. Part 1 (cols 1-22) covers the Temple architecture in precise detail."
     },
     {
-      "question": "What does the Temple Scroll\u2019s first-person divine voice reveal about Torah authority?",
-      "answer": "The Temple Scroll rewrites portions of Devarim so that YHWH speaks directly rather than through Moshe. Where the Masoretic text says \u2018YHWH said to Moshe, say to the children of Yisra\u2019el,\u2019 the Temple Scroll says \u2018I say to you.\u2019 This editorial decision removes the intermediary. The scroll claims to be YHWH\u2019s unmediated instruction. The Great Eraser operates through mediation \u2014 every institution that stands between the covenant people and the primary text is a potential mechanism of distortion. The Temple Scroll\u2019s first-person voice is a radical claim: YHWH speaks directly, and the text that records his speech is the highest authority. No institution, no priesthood, no scholarly consensus can override the direct voice."
+      "question": "Why is the Temple Scroll's direct YHWH speech significant?",
+      "answer": "Every other DSS text — including 1QS, the Damascus Document, the Pesharim — quotes, comments on, or interprets the Torah. The Temple Scroll does something different: it presents itself as YHWH speaking directly to Moshe, using the first person — 'I command you to build my sanctuary.' This literary choice claims for the scroll the same kind of authority as the Torah itself. The community did not read the Temple Scroll as a human document about YHWH's Temple; they read it as YHWH's direct instructions for it."
+    },
+    {
+      "question": "What is the tripartite court structure of the Temple Scroll?",
+      "answer": "Three concentric courts surround the central sanctuary: the innermost court (accessible only to priests), the middle court (Levites and Yisra'elite males who are pure), and the outer court (women, resident aliens, and those undergoing purification). This creates a graduated holiness geography: the closer to the sanctuary, the more restricted the access. The purity requirements intensify as one approaches YHWH's dwelling. This structure is more elaborate and explicitly organized than the Jerusalem Temple's actual courts."
+    },
+    {
+      "question": "How does the twelve-tribe gate arrangement work?",
+      "answer": "The Temple Scroll assigns gates in the courts to the twelve tribes of Yisra'el — each tribe has its named gate and assigned position around the Temple. This maps the entire covenant community's identity onto the sacred architecture. When the community gathers at the Temple, each tribe enters through its own gate — the whole of Yisra'el is architecturally present around YHWH's dwelling. This is not mere decoration; it is a theological statement about the covenant community's collective relationship to YHWH's presence."
+    },
+    {
+      "question": "How does the Temple Scroll's ideal Temple compare to the actual Jerusalem Temple?",
+      "answer": "The Temple Scroll's Temple is larger, more precisely organized, and more strictly regulated than the actual Jerusalem Temple. The tripartite court system is more explicit; the purity requirements more rigorous; the architectural detail more precise. The community saw the Jerusalem Temple as compromised — wrong priests, wrong calendar, wrong purity rules. The Temple Scroll describes what the Temple should be — a standard that the Jerusalem Temple fell short of. For the community, their covenant life was the authentic practice that the Temple should have embodied."
+    },
+    {
+      "question": "How does the Temple Scroll relate to Yehezkel's Temple vision?",
+      "answer": "Yehezkel chapters 40-48 contain a detailed vision of a future ideal Temple. The Temple Scroll draws on this tradition but is not simply a commentary on it. The Temple Scroll adds architectural details (staircase towers) not in Yehezkel, reorganizes the courts differently, and frames the instructions as YHWH's direct command to Moshe rather than as a prophetic vision given to Yehezkel. The two texts share the vision of an ideal Temple but arrive at it through different literary forms."
+    },
+    {
+      "question": "What is the significance of Yadin's acquisition of the Temple Scroll in 1967?",
+      "answer": "The Temple Scroll had been in the hands of an antiquities dealer (and briefly visible to John Allegro in the 1950s) since before the 1967 Six-Day War. After Israel's capture of East Jerusalem in 1967, Yadin learned of the scroll's location and acquired it. This meant the longest DSS text spent two decades in private hands before reaching an institution that could preserve and publish it. Yadin's 1977 publication was a major event in DSS studies."
+    },
+    {
+      "question": "Why does the Temple Scroll have such precise architectural measurements?",
+      "answer": "The community believed YHWH gave Moshe the exact specifications for his dwelling — just as YHWH gave Moshe the Mishkan specifications in Shemot 25-31. The architectural precision is not architectural fantasy; it is revelation. If the community ever had the opportunity to build YHWH's true Temple (after the restoration they awaited), they would need these exact measurements. The Temple Scroll is the building manual for the covenant's restored Temple — preserved until the moment it could be used."
+    },
+    {
+      "question": "How does the Temple Scroll connect to the 364-day calendar?",
+      "answer": "The Temple Scroll's festival calendar (covered in Part 2) is organized according to the 364-day solar calendar — the same calendar documented in 1 Chanokh, Yovelim (Jubilees), and 4QMMT. The Temple Scroll's ideal Temple presupposes the correct calendar: YHWH's feasts must be observed on their proper days according to the solar cycle. The Jerusalem Temple's lunar calendar meant it was celebrating YHWH's feasts on the wrong days — the Temple Scroll describes the Temple that would observe the right calendar."
+    },
+    {
+      "question": "What is the staircase tower feature of the inner court?",
+      "answer": "The Temple Scroll's inner court is flanked by staircase towers at the corners — a distinctive architectural element providing access to the court's upper level and enabling the priests to perform duties at different heights around the sacred space. This feature is not described in Yehezkel's temple vision and represents the Temple Scroll's own architectural elaboration. It reflects a detailed, practical understanding of how the Temple's service would actually function in three-dimensional space."
     }
   ]
 }

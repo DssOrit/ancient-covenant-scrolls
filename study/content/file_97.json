@@ -1,30 +1,289 @@
 {
-  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",  "id": "file_97",
-  "label": "Damascus Document (Brit Damesek) \u2014 Part 2 \u2014 Columns 9\u201316",
+  "_copyright": "Copyright (c) 2026 LBond. All Rights Reserved.",
+  "_license": "Proprietary. No permission granted to copy, modify, distribute, or use commercially. See LICENSE at the repository root.",
+  "_rights": "The Ancient Covenant Record compilation — including textual selection, editorial choices, chapter organization, translations, commentary, summaries, study questions, FAQs, and all derivative study materials — is the original compilation work of LBond.",
+  "id": "file_97",
+  "label": "Damascus Document (Brit Damesek) — Part 2 — Columns 9–16",
   "volume": 35,
-  "content_version": 1,
-  "summary_plain": "The second half of the Damascus Document contains the Laws section \u2014 detailed legal rulings governing community life. Rules for judges: ten judges shall be elected, four from the tribe of Levi and Aharon and six from Yisra\u2019el. Rules about oaths, witnesses, and restitution. Shabbat laws are strict: do not carry, do not kindle fire, do not walk beyond the prescribed distance. Rules for the assembly of the camps: families arranged by tribes. Rules for the overseer (mevaqqer) who instructs the community. The document concludes with warnings about the final visitation and the coming of the Mashiach of Aharon and Yisra\u2019el.",
-  "summary_scholarly": "Columns 9-16 of the Damascus Document constitute the Laws section (Serekh), providing the most detailed halakhic code from Qumran outside the Temple Scroll. The laws govern a community organized in \u2018camps\u2019 (makhanot) \u2014 not a single monastic settlement but a network of scattered communities. The Shabbat code is stricter than later rabbinic halakhah in several respects. The judicial system requires tribal representation (Levi and Yisra\u2019el). The overseer (mevaqqer) functions as an instructor and pastoral leader. The reference to the \u2018Mashiach of Aharon and Yisra\u2019el\u2019 indicates a dual-messianic expectation: one priestly, one royal. The Qumran legal material preserves a pre-rabbinic legal tradition independent of the Mishnah and Talmud.",
+  "content_version": 2,
+  "summary_plain": "The second half of the Damascus Document contains the Laws section — detailed legal rulings governing community life. Rules for judges: ten judges shall be elected, four from the tribe of Levi and Aharon and six from Yisra’el. Rules about oaths, witnesses, and restitution. Shabbat laws are strict: do not carry, do not kindle fire, do not walk beyond the prescribed distance. Rules for the assembly of the camps: families arranged by tribes. Rules for the overseer (mevaqqer) who instructs the community. The document concludes with warnings about the final visitation and the coming of the Mashiach of Aharon and Yisra’el.",
+  "summary_scholarly": "Columns 9-16 of the Damascus Document constitute the Laws section (Serekh), providing the most detailed halakhic code from Qumran outside the Temple Scroll. The laws govern a community organized in ‘camps’ (makhanot) — not a single monastic settlement but a network of scattered communities. The Shabbat code is stricter than later rabbinic halakhah in several respects. The judicial system requires tribal representation (Levi and Yisra’el). The overseer (mevaqqer) functions as an instructor and pastoral leader. The reference to the ‘Mashiach of Aharon and Yisra’el’ indicates a dual-messianic expectation: one priestly, one royal. The Qumran legal material preserves a pre-rabbinic legal tradition independent of the Mishnah and Talmud.",
   "key_terms": [
-    { "term": "Mevaqqer", "phonetic": "Meh-vah-KEHR", "definition": "The \u2018Overseer\u2019 or \u2018Inspector\u2019 of the community. He examines those who seek to join, instructs the community in the works of YHWH, and ensures observance of the covenant laws. A pastoral and administrative leader." },
-    { "term": "Makhanot", "phonetic": "Mah-khah-NOHT", "definition": "The \u2018camps\u2019 \u2014 the organizational units of the Damascus covenant community. Members lived in scattered camps, not a single location. The camp structure mirrors the wilderness encampment of Yisra\u2019el under Moshe." }
+    {
+      "term": "Two Witnesses Rule",
+      "phonetic": "",
+      "definition": "The Damascus Document Part 2 requirement: no accusation may stand on the testimony of a single witness. Two or three witnesses must agree. This protects community members from arbitrary punishment — a stricter evidentiary standard than the Jerusalem Temple's practice."
+    },
+    {
+      "term": "Oath Laws (CD)",
+      "phonetic": "",
+      "definition": "The Damascus Document's detailed regulations on oaths in cols 9-16: oaths may not be taken in the full Name of YHWH in a binding way outside the covenant entry process. Oaths are taken by the covenant of the Torah only."
+    },
+    {
+      "term": "Shabbat Laws (CD)",
+      "phonetic": "sha-BAT",
+      "definition": "The Damascus Document Part 2 contains extensive Sabbath rulings stricter than mainstream practice: no tool may be used, no trade conducted, no travel beyond a measured distance, no assistance to animals. Among the most detailed Sabbath regulations in the DSS corpus."
+    },
+    {
+      "term": "Paqid",
+      "phonetic": "pa-KEED",
+      "definition": "Overseer — the community official responsible for admitting new members and overseeing the camp. Instructs members in the works of the Torah and adjudicates disputes. Must be between 30 and 60 years old, master of languages and community rule."
+    },
+    {
+      "term": "Covenant Entry Oath",
+      "phonetic": "",
+      "definition": "The process by which new members join the covenant community in the Damascus Document: examined by the Paqid, instructed in all the rules, and admitted after probation. Entry is voluntary but subject to strict examination."
+    },
+    {
+      "term": "Penal Code (CD)",
+      "phonetic": "",
+      "definition": "The list of offenses and punishments in cols 9-16: community members who lie about property, bear false witness, murmur against the community, or violate specific laws face suspension or expulsion. Graduated penalties based on offense severity."
+    },
+    {
+      "term": "Nikhsei HaRabbim",
+      "phonetic": "ni-KHSEH ha-ra-BEEM",
+      "definition": "Property of the Many — communal funds managed by the Paqid. Members contribute a minimum of two days' wages per month to the common fund for the poor and needy of the community."
+    },
+    {
+      "term": "Camp Judges",
+      "phonetic": "",
+      "definition": "The Damascus Document specifies that each camp must have a panel of judges — four from Yisra'el and three from Levi and Aharon — a total of ten, echoing the biblical requirement for a quorum of judges."
+    },
+    {
+      "term": "Havdalah",
+      "phonetic": "hav-da-LAH",
+      "definition": "Separation — the Damascus Document's core principle: maintaining separation between the pure and impure, the covenant community and outsiders, the Sabbath and the work week. Separation is covenant discipline, not social isolation."
+    },
+    {
+      "term": "Moshav HaMahhanot",
+      "phonetic": "moh-SHAV ha-ma-ha-NOT",
+      "definition": "The camp arrangement — the Damascus Document describes communities living in camps in towns and villages, governed by the Damascus covenant rules. This distinguishes the broader movement (camp members) from the desert Qumran Yahad community."
+    }
   ],
   "fill_blank": [
-    { "ref": "Col X:4-6", "prompt": "No man shall do work on the sixth day from the time when the sun\u2019s orb is distant from the gate by its own ______.", "answer": "fullness", "source_quote": "No man shall do work on the sixth day from the time when the sun\u2019s orb is distant from the gate by its own fullness." },
-    { "ref": "Col XII:23 - XIII:1", "prompt": "Until the coming of the Mashiach of Aharon and ______.", "answer": "Yisra\u2019el", "source_quote": "Until the coming of the Mashiach of Aharon and Yisra\u2019el." }
+    {
+      "ref": "CD IX:17-19",
+      "prompt": "No one may bring an accusation before the Judges that has not been witnessed by ___ or more witnesses.",
+      "answer": "two",
+      "source_quote": "Only on the evidence of two or three witnesses shall any matter be established. — CD col.IX:17-19"
+    },
+    {
+      "ref": "CD XIII:7-10",
+      "prompt": "The ___ examines anyone who wishes to enter the congregation of the Many, instructing them in all the rules.",
+      "answer": "Paqid / overseer",
+      "source_quote": "The Overseer who is head of the Many shall examine... — CD col.XIII:7-10"
+    },
+    {
+      "ref": "CD XIV:12-16",
+      "prompt": "Members of the covenant contribute at least two days' wages per month to the common fund for the ___.",
+      "answer": "poor / needy",
+      "source_quote": "They shall give the equivalent of at least two days a month into the hand of the Overseer and the Judges, for the poor and needy. — CD col.XIV:12-16"
+    },
+    {
+      "ref": "CD X:14-16",
+      "prompt": "On the Sabbath, one may not do any ___ — not carry anything from house to house or in the field.",
+      "answer": "work / labor",
+      "source_quote": "No man shall do any work on the Sabbath day. — CD col.X:14-16"
+    },
+    {
+      "ref": "CD XIV:3-6",
+      "prompt": "Each camp must have a panel of ___ judges, four from Yisra'el and three from Levi and Aharon.",
+      "answer": "ten",
+      "source_quote": "In each settlement of ten or more men, there shall not be lacking a priest who knows the Book of YHWH. — CD col.XIII:2-3"
+    },
+    {
+      "ref": "CD IX:1",
+      "prompt": "An oath in the Damascus Document may only be sworn by the ___ of the covenant of Moshe, not by the full Name.",
+      "answer": "covenant / laws",
+      "source_quote": "Every oath sworn in the name of YHWH is to be sworn only by the covenant of the Torah of Moshe. — CD col.XV:1-2"
+    },
+    {
+      "ref": "CD IX:7-8",
+      "prompt": "If a person sees a violation but does not rebuke their fellow, they bear ___ for the sin.",
+      "answer": "guilt",
+      "source_quote": "If he holds his peace and does not rebuke him, he shall bear guilt for his sin. — CD col.IX:7-8"
+    },
+    {
+      "ref": "CD XI:19-20",
+      "prompt": "No offering may be sent to the altar through the hand of a man who is ___.",
+      "answer": "impure",
+      "source_quote": "They shall not send to the altar burnt offering or cereal offering through the hand of a man who is impure. — CD col.XI:19-20"
+    },
+    {
+      "ref": "CD IX:2-3",
+      "prompt": "Anyone who takes revenge on their own authority violates the ___ of the covenant.",
+      "answer": "law / commandment",
+      "source_quote": "It is not lawful to take revenge on anyone or bear any grudge against them. — CD col.IX:2-3"
+    },
+    {
+      "ref": "CD",
+      "prompt": "The Damascus Document Part 2 (cols 9-16) primarily contains the community's ___ code and legal rulings.",
+      "answer": "penal",
+      "source_quote": "Columns 9-16 form the Serekh (Order) portion — the legal code. — CD Cols 9-16"
+    }
   ],
   "multiple_choice": [
-    { "ref": "Col X:1-3", "question": "How many judges does the Damascus Document require for the community?", "options": ["Seven judges, all from Levi", "Twelve judges, one per tribe", "Ten judges: four from Levi and Aharon, six from Yisra\u2019el", "Three judges chosen by the Teacher of Righteousness"], "correct": 2, "source_quote": "Ten men shall be elected as judges for the congregation \u2014 four from the tribe of Levi and Aharon and six from Yisra\u2019el." },
-    { "ref": "Col XIII:7-9", "question": "What is the role of the Mevaqqer (Overseer)?", "options": ["He serves as high priest", "He commands the army", "He examines newcomers and instructs the community in the works of YHWH", "He collects taxes for the Temple"], "correct": 2, "source_quote": "He shall examine every man who joins the community regarding his deeds, his understanding, his strength, his courage, and his wealth." }
+    {
+      "ref": "CD IX:17-19",
+      "question": "How many witnesses are required to establish a matter before the judges in the Damascus Document?",
+      "options": [
+        "One reliable witness",
+        "Two or three witnesses",
+        "Five community elders",
+        "The Paqid alone"
+      ],
+      "correct": 1,
+      "source_quote": "Only on the evidence of two or three witnesses shall any matter be established. — CD col.IX:17-19"
+    },
+    {
+      "ref": "CD XIII:7-10",
+      "question": "Who oversees the admission of new members and instruction of the camp?",
+      "options": [
+        "The high priest in Jerusalem",
+        "The Paqid (Overseer)",
+        "The Teacher of Righteousness directly",
+        "A council of twelve"
+      ],
+      "correct": 1,
+      "source_quote": "The Overseer who is head of the Many shall examine each person who wishes to enter. — CD col.XIII:7-10"
+    },
+    {
+      "ref": "CD XIV:3-6",
+      "question": "How many judges must each camp have?",
+      "options": [
+        "Three Levitical priests",
+        "Seven community elders",
+        "Ten — four from Yisra'el and three from Levi/Aharon",
+        "Twelve, echoing the tribes"
+      ],
+      "correct": 2,
+      "source_quote": "In each settlement of ten or more men, there shall not be lacking a priest who knows the Book of YHWH. — CD col.XIII:2-3"
+    },
+    {
+      "ref": "CD XIV:12-16",
+      "question": "How often do community members contribute to the common fund?",
+      "options": [
+        "Once a year at Yom Kippur",
+        "On each Sabbath",
+        "At least two days' wages per month",
+        "Whenever they can afford it"
+      ],
+      "correct": 2,
+      "source_quote": "They shall give the equivalent of at least two days a month into the hand of the Overseer for the poor and needy. — CD col.XIV:12-16"
+    },
+    {
+      "ref": "CD X:14-16",
+      "question": "What is prohibited in the Damascus Document's Sabbath laws?",
+      "options": [
+        "Reading the Torah on Shabbat",
+        "Carrying anything from house to house or in the field",
+        "Praying more than three times on Shabbat",
+        "Eating in a group larger than ten"
+      ],
+      "correct": 1,
+      "source_quote": "No man shall do any work on the Sabbath day, nor carry anything out of his house. — CD col.X:14-16"
+    },
+    {
+      "ref": "CD IX:1",
+      "question": "How may oaths be sworn according to the Damascus Document?",
+      "options": [
+        "By the full Name of YHWH alone, three times",
+        "By the covenant of the Torah of Moshe only, not the full Name",
+        "By the Teacher of Righteousness as witness",
+        "By the heavenly hosts"
+      ],
+      "correct": 1,
+      "source_quote": "Every oath sworn in the name of YHWH is to be sworn only by the covenant of the Torah of Moshe. — CD col.XV:1-2"
+    },
+    {
+      "ref": "CD IX:7-8",
+      "question": "If a community member witnesses a violation but stays silent, what happens?",
+      "options": [
+        "Nothing — silence is permitted in minor matters",
+        "They bear guilt for the sin",
+        "They are automatically expelled",
+        "They must fast as atonement"
+      ],
+      "correct": 1,
+      "source_quote": "If he holds his peace and does not rebuke him, he shall bear guilt for his sin. — CD col.IX:7-8"
+    },
+    {
+      "ref": "CD",
+      "question": "What does 'camp' refer to in the Damascus Document?",
+      "options": [
+        "The military unit defending Qumran",
+        "Communities of covenant members living in towns and villages",
+        "The temporary shelter of desert wanderers",
+        "The Jerusalem Temple court"
+      ],
+      "correct": 1,
+      "source_quote": "In all the settlements of the camp... — CD col.XII:19"
+    },
+    {
+      "ref": "CD XI:19-20",
+      "question": "What does the Damascus Document say about offering sacrifices through an impure person?",
+      "options": [
+        "It is acceptable if he confesses first",
+        "It is forbidden — no offering may go to the altar through an impure hand",
+        "It must be doubled the following day",
+        "The Paqid must approve it in advance"
+      ],
+      "correct": 1,
+      "source_quote": "They shall not send to the altar burnt offering through the hand of a man who is impure. — CD col.XI:19-20"
+    },
+    {
+      "ref": "CD",
+      "question": "The Damascus Document Part 2 (cols 9-16) primarily contains:",
+      "options": [
+        "The history of the Teacher of Righteousness",
+        "A pesher on the prophets",
+        "The community's penal code and legal rulings",
+        "Hymns of thanksgiving"
+      ],
+      "correct": 2,
+      "source_quote": "Columns 9-16 form the community's legal code — the Serekh portion. — CD Cols 9-16"
+    }
   ],
   "faq": [
     {
-      "question": "What does the camp structure in the Damascus Document reveal about scattered covenant communities?",
-      "answer": "The Damascus Document legislates for \u2018camps\u2019 (makhanot) \u2014 not a single settlement at Qumran but a network of communities scattered across different locations. This is critical: the covenant community was never limited to one geographic site. The camp structure mirrors the wilderness encampment of Yisra\u2019el under Moshe \u2014 organized by families and tribes, with overseers, judges, and priests. The Great Eraser tries to confine the Dead Sea Scrolls to a single eccentric sect at a single site. The Damascus Document proves the opposite: this was a movement with communities in multiple locations, governed by a detailed legal code that assumed geographic dispersion. The model of scattered camps maintaining covenant identity through shared law and shared calendar is the template for every subsequent diaspora community."
+      "question": "What is the main content of Damascus Document Part 2?",
+      "answer": "Columns 9-16 form the legal section (the Serekh or Order) of the Damascus Document. Part 2 contains the community's penal code, Sabbath laws, oath regulations, witness requirements, the role of the Paqid (Overseer), rules for admitting new members, and management of communal property. These are the operational rules for covenant communities living in towns and villages across the land — the Damascus communities rather than the isolated Qumran Yahad."
     },
     {
-      "question": "Why does the Damascus Document preserve a legal tradition independent of the Mishnah?",
-      "answer": "The Laws section of the Damascus Document (columns 9-16) contains halakhic rulings that predate the Mishnah by at least 200 years. These rulings are often stricter than later rabbinic law \u2014 the Shabbat code, for instance, prohibits actions that the Mishnah permits. This proves that the rabbinic tradition was not the only heir to Moshe\u2019s Torah. There was a pre-rabbinic legal tradition preserved at Qumran that derived its authority directly from the written Torah rather than from oral tradition transmitted through rabbinic chains. The Great Eraser operates by presenting the rabbinic tradition as the sole legitimate successor to biblical law. The Damascus Document demonstrates that an alternative legal tradition existed, was practiced by covenant communities, and was deliberately excluded from the post-70 CE rabbinic canon."
+      "question": "How strict are the Damascus Document's Sabbath laws?",
+      "answer": "Among the strictest in any ancient Jewish text. Members may not carry anything from house to house or in the field, may not engage in trade, may not travel beyond a measured distance, may not assist animals in difficulties, may not prepare food, and may not use any tool. The Sabbath begins when the sun is a specified distance from the horizon on the sixth day. These rules are more restrictive than the Jerusalem Temple's practice, reflecting the community's belief that the Temple establishment had allowed the Sabbath to be corrupted."
+    },
+    {
+      "question": "What does the two-witness rule mean for the community?",
+      "answer": "It is a protection against arbitrary accusation. No matter may be established on the word of one person. Two or three witnesses must independently agree. If a member witnesses a violation and cannot find a second witness, they must confront the offender directly first. Only after that confrontation fails, and a second witness is established, can the matter be brought before the judges. This applies within the community — it is about internal covenant accountability."
+    },
+    {
+      "question": "What is the role of the Paqid (Overseer)?",
+      "answer": "The Paqid is the camp administrator: they admit new members, instruct members in the works of the Torah, adjudicate disputes, manage the communal fund, and oversee camp life. The Paqid must be between 30 and 60 years old, master of every secret of men and every tongue, gentle and resolute. Each camp has one Paqid. The position is not the same as the high priest or the Teacher of Righteousness — it is a practical administrative and pastoral role."
+    },
+    {
+      "question": "What is the communal fund and who benefits?",
+      "answer": "Members contribute at least two days' wages per month to the hand of the Paqid and judges. This fund supports the poor, the needy, the elderly, those struck by plague, those taken captive, the unmarried, those without family. It is a structured mutual-aid system embedded in the covenant community's legal framework. The Damascus Document's fund is distinct from the more total property-pooling of 1QS (Community Rule)."
+    },
+    {
+      "question": "How does one enter the Damascus covenant community?",
+      "answer": "Entry is examined by the Paqid: the candidate is questioned about their knowledge of the Torah and willingness to follow the community's rules. After instruction in all the rules, the candidate takes an oath binding themselves to the covenant of the Torah of Moshe. Entry is voluntary but once entered, the person is bound by the full penal code. Violation of the rules leads to suspension or, for serious offenses, expulsion."
+    },
+    {
+      "question": "What offenses lead to expulsion?",
+      "answer": "Among the most serious: bearing false witness against another community member, deliberate violation of the Sabbath after being warned, speaking the full Name of YHWH in blasphemy, murmuring against the Many, betraying the community to outsiders, and violating sexual regulations. Lesser offenses result in graduated suspensions. The gradation between suspension and expulsion reflects the distinction between intentional and unintentional violation."
+    },
+    {
+      "question": "How do the Damascus Document's camps differ from the Qumran Yahad?",
+      "answer": "The camps were ordinary towns and villages — the Damascus Document governed a broader movement of covenant-keeping people who lived in society, married, had families, and held property (while contributing to a common fund). The Qumran Yahad (1QS) was a more intensive community that pooled all property fully and separated more completely from society. Both operated under covenant law but the camps were the more accessible form of the movement."
+    },
+    {
+      "question": "What is the significance of the oath laws?",
+      "answer": "They restrict when and how the Name of YHWH may be invoked. Oaths are sworn by the covenant of the Torah only — not casually, not as a rhetorical device, not by the full divine Name. This is consistent with the broader DSS reverence for YHWH's Name. The oath laws also prevent manipulation of the community's legal process through false religious invocations."
+    },
+    {
+      "question": "How does the Damascus Document Part 2 differ from Part 1?",
+      "answer": "Part 1 (cols 1-8) is the Admonition — a theological and historical narrative describing the community's origins, the Teacher of Righteousness, the Man of the Lie, the Three Nets of Belial, and the community's covenant identity. Part 2 (cols 9-16) is the Serekh — the practical legal code that governs daily life. Part 1 explains why the community exists; Part 2 explains how the community operates day to day. Together they form a complete community charter."
     }
   ]
 }
