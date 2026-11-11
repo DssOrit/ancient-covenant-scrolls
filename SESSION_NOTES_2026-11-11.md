@@ -1,13 +1,16 @@
 # Session Notes — 2026-11-11
 
 ## Current State
-- Latest main: `d14fc54` (Merge PR #1229)
+- Latest main: `9086680` (Merge PR #1230 + #1231)
 - Branch: synced to `origin/main`
 - Working tree: clean
-- Cache: `acr-study-v139` live
+- ACR Study cache: `acr-study-v139` live
+- ACR Search cache: `acr-search-v336` live
 
 ## Backups
 - `backup/2026-11-11-acr-study-v139` → SHA `d14fc54` (post-PR-#1229 main HEAD)
+- `backup/2026-11-11-search-pre-workbook-ui` → SHA `d14fc54` (pre-Search UI edits)
+- `backup/2026-11-11-search-v336` → SHA `9086680` (post-PR-#1231 main HEAD)
 
 ## Built Today
 
@@ -18,11 +21,19 @@
 - **Cache**: bumped `acr-study-v139`
 - **Why**: Game modes (Challenge, Fill in the Blank, Multiple Choice, Flashcards, Memory, WordMatch, etc.) were drawing thin pools — 2-8 questions instead of 20-40. All 91 files now give full game boards.
 
+### PR #1231 — ACR Search: Quiz Games rename, icon fix, per-game colors (merged)
+- Renamed "Interactive Q&A Workbook" → "Quiz Games" everywhere (tab pill, heading, back button)
+- Fixed Spot the Change icon: `ri-git-compare-line` (broken) → `ri-find-replace-line`
+- Added distinct color per game: Spot the Change #E67E22, Claim Sort #3498DB, Root Match #9B59B6, Timeline #1ABC9C, Paleo Gauntlet #E74C3C
+- Color applied to home card border, icon, and question header stripe
+- Cache bumped `acr-search-v336`
+
 ## Outstanding / Blocking
 - None
 
 ## Pending / Parked
-- PR #1227 (DSS files 93-111, acr-study-v138) — check if still open or if it was merged earlier
+- **Game images** — user wants images for each Quiz Game card. Prompts provided for all 5 games. When user has generated images, they drop them in `Search/images/` and provide the unlock phrase again to wire them in.
+
 
 ## Capability Gaps
 - Cannot fetch live Pages URL (dssorit.github.io) — use raw.githubusercontent.com to verify deployed files if needed
