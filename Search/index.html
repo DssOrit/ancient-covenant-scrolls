@@ -110,6 +110,48 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
 .fc-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px;line-height:1.3}
 .fc-desc{font-size:10px;color:var(--tx3);line-height:1.5}
 
+/* WORKBOOK */
+.wb-game-grid{display:flex;flex-direction:column;gap:9px;padding:0 14px 20px}
+.wb-game-card{background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:14px;cursor:pointer;border-left:3px solid var(--gold);display:flex;align-items:center;gap:12px}
+.wb-game-card:active{background:var(--s2)}
+.wb-game-icon{font-size:22px;color:var(--gold);width:30px;text-align:center;flex-shrink:0}
+.wb-game-info{flex:1;min-width:0}
+.wb-game-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.wb-game-desc{font-size:10.5px;color:var(--tx3);line-height:1.5;margin-bottom:5px}
+.wb-game-meta{font-size:9.5px;color:var(--gold);font-weight:600}
+.wb-remix-banner{margin:0 14px 14px;padding:11px 13px;background:rgba(200,151,31,0.1);border:1px solid var(--gold);border-radius:var(--r);font-size:11.5px;color:var(--tx1);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wb-round-hdr{padding:10px 14px 0;display:flex;align-items:center;justify-content:space-between}
+.wb-round-title{font-size:13px;font-weight:700;color:#fff}
+.wb-round-prog{font-size:11px;color:var(--tx3);font-weight:600}
+.wb-q-box{margin:12px 14px;background:var(--s1);border:1px solid #1e1e1e;border-radius:var(--r);padding:16px}
+.wb-q-text{font-size:13.5px;color:var(--tx1);line-height:1.6;margin-bottom:14px}
+.wb-opt{display:block;width:100%;text-align:left;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:11px 13px;margin-bottom:8px;font-size:12px;color:var(--tx1);cursor:pointer;line-height:1.5;font-family:inherit}
+.wb-opt:active{background:#2a2a2a}
+.wb-opt.correct{background:rgba(39,174,96,0.18);border-color:#27ae60;color:#fff}
+.wb-opt.wrong{background:rgba(192,57,43,0.18);border-color:#c0392b;color:#fff}
+.wb-opt.disabled{pointer-events:none;opacity:0.55}
+.wb-sort-row{display:flex;gap:8px;margin-top:4px}
+.wb-sort-btn{flex:1;background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:13px 8px;font-size:11.5px;font-weight:700;color:var(--tx1);cursor:pointer;text-align:center;font-family:inherit}
+.wb-sort-btn.primary{border-color:#1A5276;color:#5a9fd4}
+.wb-sort-btn.claim{border-color:#7D6608;color:#d4ac0d}
+.wb-sort-btn.correct{background:rgba(39,174,96,0.22);border-color:#27ae60;color:#fff}
+.wb-sort-btn.wrong{background:rgba(192,57,43,0.22);border-color:#c0392b;color:#fff}
+.wb-order-pool{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.wb-order-item{background:var(--s2);border:1px solid #2a2a2a;border-radius:10px;padding:10px 12px;font-size:11.5px;color:var(--tx1);cursor:pointer;line-height:1.5}
+.wb-order-item.picked{opacity:0.35;pointer-events:none}
+.wb-order-slots{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.wb-order-slot{background:var(--s1);border:1px dashed #333;border-radius:8px;padding:9px 11px;font-size:11px;color:var(--tx3);min-height:16px}
+.wb-order-slot.filled{border-style:solid;border-color:var(--gold);color:var(--tx1)}
+.wb-reveal{margin-top:12px;padding:12px;background:var(--s2);border-radius:10px;border-left:3px solid var(--gold);font-size:11.5px;color:var(--tx2);line-height:1.6}
+.wb-reveal-src{font-size:9.5px;color:var(--gold);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.3px}
+.wb-hint-btn{background:none;border:1px solid var(--gold);border-radius:100px;color:var(--gold);font-size:10.5px;font-weight:600;padding:6px 13px;cursor:pointer;font-family:inherit;margin:0 14px 10px}
+.wb-next-btn{display:block;width:calc(100% - 28px);margin:14px auto 0;background:var(--gold);color:#1a1200;border:none;border-radius:10px;padding:13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.wb-results{margin:20px 14px;text-align:center;padding:24px 16px;background:var(--s1);border-radius:var(--r);border:1px solid #1e1e1e}
+.wb-results-score{font-size:32px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.wb-results-label{font-size:12px;color:var(--tx2);margin-bottom:16px}
+.wb-results-msg{font-size:12.5px;color:var(--tx1);line-height:1.6;margin-bottom:4px}
+.wb-back{padding:14px 14px 0;font-size:12px;color:var(--tx3);cursor:pointer}
+
 /* FILTER BAR */
 .filter-bar{display:flex;gap:5px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
 .filter-bar::-webkit-scrollbar{display:none}
@@ -1239,6 +1281,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="mpill" data-mode="alphabet" onclick="setMode('alphabet')">Paleo Alphabet</div>
       <div class="mpill" data-mode="dna" onclick="setMode('dna')"><i class="ri-dna-line"></i> Hebrew DNA</div>
       <div class="mpill" data-mode="tools" onclick="setMode('tools')"><i class="ri-tools-line"></i> Useful Tools</div>
+      <div class="mpill" data-mode="workbook" onclick="setMode('workbook')"><i class="ri-gamepad-line"></i> Q&amp;A Workbook</div>
     </div>
   </div>
 
@@ -1301,6 +1344,11 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
           <div class="fc-icon"><i class="ri-team-line"></i></div>
           <div class="fc-title">Figure Studies</div>
           <div class="fc-desc">Verse-by-verse parallels between covenant figures across the Nevi'im — the full connected pattern, not just a shared theme tag.</div>
+        </div>
+        <div class="feat-card feat-card-wide" onclick="setMode('workbook')">
+          <div class="fc-icon"><i class="ri-gamepad-line"></i></div>
+          <div class="fc-title">Interactive Q&amp;A Workbook</div>
+          <div class="fc-desc">Five games built entirely from this site's own primary-source data. Rounds of 10, with harder rounds unlocking as you master each one.</div>
         </div>
       </div>
     </div>
@@ -1528,6 +1576,14 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--fon
       <div class="sv-hdr">Uncover the Text</div>
       <div class="sv-sub">Peel back the layers. Each passage starts with what the received text says, then shows what changed and when, then reaches the primary sources — the Dead Sea Scrolls and the Ge'ez Orit. The manipulations are datable, named, and specific.</div>
       <div id="uncover-panel"></div>
+    </div>
+
+    <!-- WORKBOOK -->
+    <div id="workbook-view" style="display:none">
+      <div class="wb-back" onclick="setMode('home')"><i class="ri-arrow-left-s-line"></i> Home</div>
+      <div class="sv-hdr" style="padding:4px 14px 0">Interactive Q&amp;A Workbook</div>
+      <div class="sv-sub">Five games, all built from this site's own primary-source data. Every round is 10 real items. Score 8 of 10 to unlock the next, harder round.</div>
+      <div id="workbook-panel"></div>
     </div>
 
     <!-- ROOT SEARCH -->
@@ -3169,7 +3225,7 @@ function hardRefresh() {
 
 function setMode(mode) {
   currentMode = mode;
-  var views = ['home','results','nt','paganism','racism','body','figures','figurestudy','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','miracles','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez'];
+  var views = ['home','results','nt','paganism','racism','body','figures','figurestudy','explore','qumran','citywalker','uncover','library','solarcal','exodus','diaspora','courtroom','suppressed','contradictions','root-search','studypath','conceptmap','journal','guide','volumebrowser','record','news','propheticwatch','practices','miracles','places','beliefs','hebrew','alphabet','dna','covenant-nations','tools','promises','names','lineage','moedim','timeline','finaldays','watchers','geez','workbook'];
   views.forEach(function(v) {
     var el = document.getElementById(v + '-view');
     if (el) el.style.display = (v === mode) ? 'block' : 'none';
@@ -3188,6 +3244,7 @@ function setMode(mode) {
   document.getElementById('main').scrollTop = 0;
   if (mode === 'journal') renderJournal(document.getElementById('jn-search').value);
   if (mode === 'figurestudy') renderFigureStudies();
+  if (mode === 'workbook') renderWorkbookHome();
 }
 
 // ── SITE INDEX ────────────────────────────────────────────────────────────────
@@ -11748,6 +11805,371 @@ function renderWatchersPanel() {
   '<div class="hr-sec-sub">The pre-Rabbinic, pre-Second-Temple standing of Yom Kippur, and the later overlay laid on top of it. This continues the Azazel and Dudael thread above.</div>' +
   '<div class="td-item"><div class="td-topic">Yom Kippur Is Pre-Rabbinic and Pre-Second-Temple, and the Later Overlay Added on Top</div><div class="td-text">The Day of Atonement itself is genuinely ancient. It predates both the Second Temple and the Rabbinic period. The instruction is Torah wilderness law, not a later addition: Vayikra 16 sets the two-goat ritual, with Vayikra 23:26-32 and Bamidbar 29:7-11 fixing the day. This is First Temple covenant memory, centuries before the Second Temple (built about 516 BCE) and long before the Rabbinic period after 70 CE. The pre-Rabbinic Alkebulan (African) covenant sources keep it: the covenant record itself details the Day of Atonement offerings (Vayikra 16; 23:26-32; Bamidbar 29:7-11), the Qumran calendar texts fix it on the 10th of the seventh month, always the sixth day of the week on the 364-day covenant calendar; the Ge\'ez Orit preserves the same Vayikra instruction. The primary-source ritual: two goats, one for YHWH, killed, its blood brought in for the cleansing of the sanctuary; one for Azazel, the sins confessed over it, and the goat sent away alive into the wilderness (Vayikra 16:22), returning the sin to its source (Chanokh 10:8). What is later overlay, not the original: the practice of hurling the scapegoat off a cliff to its death (Mishnah Yoma) reverses the primary source, which releases the goat alive; and the post-70 CE synagogue service that replaced the blood ritual with the fasting liturgy, Kol Nidre (medieval), and the recited Avodah. The Day of Atonement and its two-goat structure are pre-Rabbinic and pre-Second-Temple; the cliff-killing and the synagogue liturgy are the later layer laid on top.</div></div>'
 ;
+}
+
+// ── INTERACTIVE Q&A WORKBOOK ──────────────────────────────────────────────────
+// Every item below is built from data already live elsewhere on this site
+// (DATA.nt_database, DATA.suppressed_verses, DATA.timeline, SEPTUAGINT_PROPHESIES,
+// FISHING_IMAGE_INVERSION, ROOT_ETYM, LINEAGE_TREE, PALEO_ALPHA). Nothing here is
+// new content — it is the existing primary-source material, reorganized into
+// quizzable rounds. Per Rule 29, no text is fabricated.
+var WB_STORE_PREFIX = 'acr_search_wb_';
+function wbGet(key, fallback) {
+  try { var v = localStorage.getItem(WB_STORE_PREFIX + key); return v === null ? fallback : JSON.parse(v); }
+  catch (e) { return fallback; }
+}
+function wbSet(key, val) {
+  try { localStorage.setItem(WB_STORE_PREFIX + key, JSON.stringify(val)); } catch (e) {}
+}
+function wbShuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function wbArgsort(arr) {
+  return arr.map(function(v, i) { return i; }).sort(function(a, b) { return arr[a] - arr[b]; });
+}
+function wbFinalizeMC(items) {
+  if (!items.length) return [];
+  return items.map(function(it, i) {
+    var others = items.filter(function(x, j) { return j !== i && x.answer !== it.answer; }).map(function(x) { return x.answer; });
+    var distractors = wbShuffle(others).slice(0, 3);
+    while (distractors.length < 3 && others.length) distractors.push(others[distractors.length % others.length]);
+    var options = wbShuffle([it.answer].concat(distractors));
+    return {
+      type: 'mc',
+      prompt: it.prompt,
+      options: options,
+      correctIdx: options.indexOf(it.answer),
+      hintSrc: it.src || '',
+      reveal: it.reveal || '',
+      key: it.q
+    };
+  }).filter(function(q) { return q.options.length >= 2; });
+}
+function wbBuildOrderProblems(pool, label) {
+  var problems = [];
+  for (var i = 0; i + 4 <= pool.length; i++) {
+    var slice = pool.slice(i, i + 4);
+    var shuffled = wbShuffle(slice);
+    problems.push({
+      type: 'order',
+      poolLabel: label,
+      events: shuffled.map(function(ev) { return ev.label; }),
+      correctIdx: wbArgsort(shuffled.map(function(ev) { return ev.key; })),
+      reveal: slice.slice().sort(function(a, b) { return a.key - b.key; }).map(function(ev) { return ev.label + (ev.cite ? (' — ' + ev.cite) : ''); }).join(' then ')
+    });
+  }
+  return problems;
+}
+
+function wbBuildSpotChange() {
+  var raw = [];
+  var ntdb = (DATA && DATA.nt_database) || {};
+  Object.keys(ntdb).forEach(function(ref) {
+    var e = ntdb[ref];
+    var answer = e.original_dss_reading || e.dss_contradiction;
+    if (!answer) return;
+    raw.push({ q: ref, prompt: 'What does the primary-source record actually show, against the claim made at ' + ref + '?', answer: answer, src: e.oldest_manuscript || 'Dead Sea Scrolls / primary record', reveal: e.verdict || '' });
+  });
+  (typeof SEPTUAGINT_PROPHESIES !== 'undefined' ? SEPTUAGINT_PROPHESIES : []).forEach(function(s) {
+    raw.push({ q: s.ref, prompt: 'What does the Hebrew text actually say at ' + s.ref + ', before the Greek rendering was built into a claim?', answer: s.hebrew, src: 'Hebrew consonantal text, ' + s.ref, reveal: s.context || '' });
+  });
+  (typeof FISHING_IMAGE_INVERSION !== 'undefined' ? FISHING_IMAGE_INVERSION : []).forEach(function(f) {
+    raw.push({ q: f.ref, prompt: 'What does the primary source actually mean at ' + f.ref + '?', answer: f.source, src: f.ref, reveal: f.context || '' });
+  });
+  return wbFinalizeMC(raw);
+}
+
+function wbBuildClaimSort() {
+  var items = [];
+  var sv = (DATA && DATA.suppressed_verses) || {};
+  Object.keys(sv).forEach(function(cat) {
+    sv[cat].forEach(function(v) {
+      items.push({ type: 'sort', statement: v.text, answer: 'primary', src: (v.ms || '') + (v.ref ? (' — ' + v.ref) : ''), reveal: 'Primary-source reading. It directly contradicts: ' + (v.contradicts || '') + '.' });
+    });
+  });
+  var ntdb = (DATA && DATA.nt_database) || {};
+  Object.keys(ntdb).forEach(function(ref) {
+    var e = ntdb[ref];
+    if (!e.nt_text) return;
+    items.push({ type: 'sort', statement: e.nt_text, answer: 'claim', src: ref + (e.oldest_manuscript ? (' — ' + e.oldest_manuscript) : ''), reveal: e.verdict || '' });
+  });
+  (typeof SEPTUAGINT_PROPHESIES !== 'undefined' ? SEPTUAGINT_PROPHESIES : []).forEach(function(s) {
+    items.push({ type: 'sort', statement: s.nt, answer: 'claim', src: s.ref, reveal: s.context || '' });
+  });
+  (typeof FISHING_IMAGE_INVERSION !== 'undefined' ? FISHING_IMAGE_INVERSION : []).forEach(function(f) {
+    items.push({ type: 'sort', statement: f.ntUse, answer: 'claim', src: f.ref, reveal: f.context || '' });
+  });
+  return wbShuffle(items);
+}
+
+function wbBuildRootMatch() {
+  var keys = Object.keys((typeof ROOT_ETYM !== 'undefined' ? ROOT_ETYM : {}));
+  var fwd = keys.map(function(k) {
+    var r = ROOT_ETYM[k];
+    return { q: k + '-fwd', prompt: 'What does the root ' + r.heb + ' (' + r.translit + ') carry as its primary meaning?', answer: r.meaning, src: r.lang || 'Hebrew / Aramaic', reveal: (r.range || '').slice(0, 420) };
+  });
+  var rev = keys.map(function(k) {
+    var r = ROOT_ETYM[k];
+    return { q: k + '-rev', prompt: 'Which root carries this meaning: "' + r.meaning + '"?', answer: r.heb + '  (' + r.translit + ')', src: r.lang || 'Hebrew / Aramaic', reveal: (r.range || '').slice(0, 420) };
+  });
+  return wbFinalizeMC(fwd).concat(wbFinalizeMC(rev));
+}
+
+function wbBuildTimeline() {
+  var poolA = (typeof LINEAGE_TREE !== 'undefined' ? LINEAGE_TREE : []).filter(function(e) {
+    return e.type === 'gen' && e.year && e.year !== '—' && /\d/.test(e.year);
+  }).map(function(e) {
+    return { label: e.name, key: parseInt(String(e.year).replace('~', ''), 10), cite: e.cite };
+  });
+  var poolB = ((DATA && DATA.timeline) || []).map(function(t) {
+    var m = /(\d+)/.exec(t.period || '');
+    var n = m ? parseInt(m[1], 10) : 0;
+    if (/BCE/.test(t.period || '')) n = -n;
+    return { label: t.label + ' (' + t.period + ')', key: n, cite: t.desc };
+  });
+  var problems = wbBuildOrderProblems(poolA, 'Covenant Genealogy')
+    .concat(wbBuildOrderProblems(poolB, 'Canon &amp; Manuscript History'));
+  return wbShuffle(problems);
+}
+
+function wbBuildPaleo() {
+  var letters = (typeof PALEO_ALPHA !== 'undefined' ? PALEO_ALPHA : []);
+  var p1 = letters.map(function(l) { return { q: l.name + '-name', prompt: 'What is the name of this paleo-Hebrew letter: ' + l.g, answer: l.name, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' — pictograph: ' + l.picto + '. Numeric value ' + l.num + '.' }; });
+  var p2 = letters.map(function(l) { return { q: l.name + '-glyph', prompt: 'Which glyph is ' + l.name + '?', answer: l.g, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' — pictograph: ' + l.picto + '. Numeric value ' + l.num + '.' }; });
+  var p3 = letters.map(function(l) { return { q: l.name + '-num', prompt: 'What is the numeric value of ' + l.g + ' (' + l.name + ')?', answer: String(l.num), src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' = ' + l.num + '.' }; });
+  var p4 = letters.map(function(l) { return { q: l.name + '-pic', prompt: 'What does the pictograph behind ' + l.g + ' (' + l.name + ') represent?', answer: l.picto, src: 'Paleo-Hebrew Alphabet', reveal: l.name + ' comes from the image of: ' + l.picto + '.' }; });
+  return wbFinalizeMC(p1).concat(wbFinalizeMC(p2), wbFinalizeMC(p3), wbFinalizeMC(p4));
+}
+
+var WB_GAMES = [
+  { id: 'spotchange', icon: 'ri-git-compare-line', title: 'Spot the Change', desc: 'What did the primary source actually say, before the later tradition rewrote it?', build: wbBuildSpotChange },
+  { id: 'claimsort', icon: 'ri-scales-3-line', title: 'Primary Source or Claim?', desc: 'Sort each statement: manuscript-attested primary source, or an institutional claim with no primary-source backing.', build: wbBuildClaimSort },
+  { id: 'rootmatch', icon: 'ri-text', title: 'Root Match', desc: 'Match the ancient root to its true meaning, both directions.', build: wbBuildRootMatch },
+  { id: 'timeline', icon: 'ri-time-line', title: 'Timeline Order', desc: 'Put real dated events in chronological order, from the covenant genealogy and from the documented canon history.', build: wbBuildTimeline },
+  { id: 'paleo', icon: 'ri-font-size-2', title: 'Paleo Gauntlet', desc: 'Drill all 22 paleo-Hebrew letters: glyph, name, numeric value, and pictograph.', build: wbBuildPaleo }
+];
+var WB_STATE = null;
+
+function wbMastery(gameId) { return wbGet('mastery_' + gameId, 0); }
+function wbSetMastery(gameId, tier) { wbSet('mastery_' + gameId, tier); }
+function wbRemixQueue() { return wbGet('remix', []); }
+function wbAddRemix(entry) {
+  var q = wbRemixQueue();
+  q.push(entry);
+  if (q.length > 40) q = q.slice(q.length - 40);
+  wbSet('remix', q);
+}
+function wbClearRemix() { wbSet('remix', []); }
+
+function renderWorkbookHome() {
+  var panel = document.getElementById('workbook-panel');
+  if (!panel) return;
+  var remix = wbRemixQueue();
+  var html = '';
+  if (remix.length) {
+    html += '<div class="wb-remix-banner" onclick="wbStartRemix()"><span><b>Remix Round</b> — ' + remix.length + ' missed question' + (remix.length === 1 ? '' : 's') + ' waiting, asked again a different way.</span><i class="ri-arrow-right-s-line"></i></div>';
+  }
+  html += '<div class="wb-game-grid">';
+  WB_GAMES.forEach(function(g) {
+    var pool = g.build();
+    var totalTiers = Math.max(1, Math.ceil(pool.length / 10));
+    var tier = Math.min(wbMastery(g.id), totalTiers);
+    var metaText = tier === 0 ? ('Round 1 of ' + totalTiers + ' — not started') : (tier >= totalTiers ? ('All ' + totalTiers + ' rounds mastered') : ('Round ' + (tier + 1) + ' of ' + totalTiers + ' unlocked'));
+    html += '<div class="wb-game-card" onclick="wbStartGame(\'' + g.id + '\')">' +
+      '<div class="wb-game-icon"><i class="' + g.icon + '"></i></div>' +
+      '<div class="wb-game-info">' +
+      '<div class="wb-game-title">' + esc(g.title) + '</div>' +
+      '<div class="wb-game-desc">' + esc(g.desc) + '</div>' +
+      '<div class="wb-game-meta">' + esc(metaText) + '</div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  panel.innerHTML = html;
+}
+
+function wbStartGame(gameId) {
+  var game = WB_GAMES.filter(function(g) { return g.id === gameId; })[0];
+  if (!game) return;
+  var pool = game.build();
+  if (!pool.length) { wbShowEmpty(game.title); return; }
+  var totalTiers = Math.max(1, Math.ceil(pool.length / 10));
+  var masteredTier = Math.min(wbMastery(gameId), totalTiers - 1);
+  var start = masteredTier * 10;
+  var items = pool.slice(start, start + 10);
+  if (items.length < 10) items = items.concat(wbShuffle(pool).slice(0, 10 - items.length));
+  WB_STATE = { gameId: gameId, gameTitle: game.title, totalTiers: totalTiers, tier: masteredTier, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: false };
+  wbRenderQuestion();
+}
+
+function wbStartRemix() {
+  var q = wbRemixQueue();
+  if (!q.length) return;
+  var items = q.slice(0, 10).map(function(e) { return e.item; });
+  WB_STATE = { gameId: 'remix', gameTitle: 'Remix Round', totalTiers: 1, tier: 0, idx: 0, correct: 0, hintLevel: 0, answered: false, eliminated: [], items: items, missed: [], isRemix: true };
+  wbClearRemix();
+  wbRenderQuestion();
+}
+
+function wbShowEmpty(title) {
+  var panel = document.getElementById('workbook-panel');
+  if (panel) panel.innerHTML = '<div class="wb-q-box">No items available yet for ' + esc(title) + '.</div>';
+}
+
+function wbRenderQuestion() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!s || !panel) return;
+  if (s.idx >= s.items.length) { wbRenderResults(); return; }
+  var it = s.items[s.idx];
+  var html = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>';
+  html += '<div class="wb-round-hdr"><div class="wb-round-title">' + esc(s.gameTitle) + (s.isRemix ? '' : (' — Round ' + (s.tier + 1) + ' of ' + s.totalTiers)) + '</div><div class="wb-round-prog">Q' + (s.idx + 1) + '/' + s.items.length + ' · ' + s.correct + ' correct</div></div>';
+  html += '<div class="wb-q-box">';
+  if (it.type === 'mc') {
+    html += '<div class="wb-q-text">' + esc(it.prompt) + '</div>';
+    it.options.forEach(function(opt, i) {
+      var cls = 'wb-opt';
+      if (s.eliminated.indexOf(i) !== -1) cls += ' disabled';
+      if (s.answered) {
+        cls += ' disabled';
+        if (i === it.correctIdx) cls += ' correct';
+        else if (i === s.pickedIdx) cls += ' wrong';
+      }
+      html += '<button class="' + cls + '" onclick="wbAnswerMC(' + i + ')">' + esc(opt) + '</button>';
+    });
+  } else if (it.type === 'sort') {
+    html += '<div class="wb-q-text">"' + esc(it.statement) + '"</div>';
+    var pCls = 'wb-sort-btn primary', cCls = 'wb-sort-btn claim';
+    if (s.answered) {
+      pCls += ' disabled'; cCls += ' disabled';
+      if (it.answer === 'primary') pCls += ' correct'; else if (s.pickedAnswer === 'primary') pCls += ' wrong';
+      if (it.answer === 'claim') cCls += ' correct'; else if (s.pickedAnswer === 'claim') cCls += ' wrong';
+    }
+    html += '<div class="wb-sort-row">' +
+      '<button class="' + pCls + '" onclick="wbAnswerSort(\'primary\')"><i class="ri-scroll-line"></i><br>Primary Source</button>' +
+      '<button class="' + cCls + '" onclick="wbAnswerSort(\'claim\')"><i class="ri-megaphone-line"></i><br>Institutional Claim</button>' +
+      '</div>';
+  } else if (it.type === 'order') {
+    html += '<div class="wb-q-text">Tap these in the order they happened, earliest first (' + esc(it.poolLabel) + '):</div>';
+    html += '<div class="wb-order-slots">';
+    for (var slot = 0; slot < it.events.length; slot++) {
+      var tapped = s.tapped || [];
+      var filled = tapped[slot] !== undefined;
+      html += '<div class="wb-order-slot' + (filled ? ' filled' : '') + '">' + (filled ? esc(it.events[tapped[slot]]) : ('Position ' + (slot + 1))) + '</div>';
+    }
+    html += '</div><div class="wb-order-pool">';
+    it.events.forEach(function(ev, i) {
+      var picked = (s.tapped || []).indexOf(i) !== -1;
+      html += '<div class="wb-order-item' + (picked ? ' picked' : '') + '" onclick="' + (picked ? '' : ('wbTapOrder(' + i + ')')) + '">' + esc(ev) + '</div>';
+    });
+    html += '</div>';
+  }
+  if (s.answered) {
+    html += '<div class="wb-reveal"><div class="wb-reveal-src">' + esc(it.hintSrc || it.poolLabel || '') + '</div>' + esc(it.reveal || '') + '</div>';
+  } else if (s.hintLevel >= 1 && it.hintSrc) {
+    html += '<div class="wb-reveal"><div class="wb-reveal-src">Cited source</div>' + esc(it.hintSrc) + '</div>';
+  }
+  html += '</div>';
+  if (!s.answered && it.type !== 'order' && (it.hintSrc || it.reveal)) {
+    var hintLabel = s.hintLevel === 0 ? 'Hint: show source' : 'Hint: narrow to 2';
+    if (s.hintLevel < 2) html += '<button class="wb-hint-btn" onclick="wbUseHint()">' + hintLabel + '</button>';
+  }
+  if (s.answered) {
+    html += '<button class="wb-next-btn" onclick="wbNext()">' + (s.idx + 1 >= s.items.length ? 'See results' : 'Next') + '</button>';
+  }
+  panel.innerHTML = html;
+}
+
+function wbUseHint() {
+  var s = WB_STATE;
+  if (!s) return;
+  var it = s.items[s.idx];
+  s.hintLevel++;
+  if (it.type === 'mc' && s.hintLevel >= 2) {
+    var wrongIdx = [];
+    it.options.forEach(function(o, i) { if (i !== it.correctIdx) wrongIdx.push(i); });
+    s.eliminated = wbShuffle(wrongIdx).slice(0, 1);
+  }
+  wbRenderQuestion();
+}
+
+function wbAnswerMC(i) {
+  var s = WB_STATE;
+  if (!s || s.answered) return;
+  var it = s.items[s.idx];
+  s.answered = true;
+  s.pickedIdx = i;
+  if (i === it.correctIdx) s.correct++;
+  else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
+  wbRenderQuestion();
+}
+
+function wbAnswerSort(choice) {
+  var s = WB_STATE;
+  if (!s || s.answered) return;
+  var it = s.items[s.idx];
+  s.answered = true;
+  s.pickedAnswer = choice;
+  if (choice === it.answer) s.correct++;
+  else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
+  wbRenderQuestion();
+}
+
+function wbTapOrder(i) {
+  var s = WB_STATE;
+  if (!s) return;
+  var it = s.items[s.idx];
+  s.tapped = s.tapped || [];
+  if (s.tapped.indexOf(i) !== -1) return;
+  s.tapped.push(i);
+  if (s.tapped.length === it.events.length) {
+    s.answered = true;
+    var right = true;
+    for (var k = 0; k < it.correctIdx.length; k++) { if (s.tapped[k] !== it.correctIdx[k]) { right = false; break; } }
+    if (right) s.correct++;
+    else if (!s.isRemix) s.missed.push({ gameId: s.gameId, item: it });
+  }
+  wbRenderQuestion();
+}
+
+function wbNext() {
+  var s = WB_STATE;
+  if (!s) return;
+  s.idx++;
+  s.answered = false;
+  s.hintLevel = 0;
+  s.eliminated = [];
+  s.tapped = [];
+  s.pickedIdx = undefined;
+  s.pickedAnswer = undefined;
+  wbRenderQuestion();
+}
+
+function wbRenderResults() {
+  var s = WB_STATE;
+  var panel = document.getElementById('workbook-panel');
+  if (!s || !panel) return;
+  s.missed.forEach(function(m) { wbAddRemix(m); });
+  var mastered = false;
+  if (!s.isRemix && s.correct >= 8) {
+    var prevMastery = wbMastery(s.gameId);
+    if (s.tier >= prevMastery && s.tier < s.totalTiers - 1) { wbSetMastery(s.gameId, s.tier + 1); mastered = true; }
+    else if (s.tier >= prevMastery && s.tier >= s.totalTiers - 1) { wbSetMastery(s.gameId, s.totalTiers); }
+  }
+  var msg;
+  if (s.isRemix) msg = 'Remix Round complete.';
+  else if (s.correct >= 8 && s.tier >= s.totalTiers - 1) msg = 'All rounds of ' + esc(s.gameTitle) + ' mastered.';
+  else if (s.correct >= 8) msg = mastered ? ('Round ' + (s.tier + 2) + ' unlocked.') : 'You’ve already cleared this round before — nice recall.';
+  else msg = 'Score 8 of 10 to unlock the next round. Missed items will come back in the Remix Round.';
+  panel.innerHTML = '<div class="wb-back" onclick="renderWorkbookHome()"><i class="ri-arrow-left-s-line"></i> All games</div>' +
+    '<div class="wb-results"><div class="wb-results-score">' + s.correct + '/' + s.items.length + '</div>' +
+    '<div class="wb-results-label">' + esc(s.gameTitle) + '</div>' +
+    '<div class="wb-results-msg">' + esc(msg) + '</div></div>' +
+    '<button class="wb-next-btn" onclick="renderWorkbookHome()">Back to Workbook</button>';
 }
 
 window.addEventListener('load',function(){if(document.getElementById('dna-grid'))filterDNA();});
